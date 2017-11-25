@@ -141,13 +141,12 @@ gulp.task('server.mockup', (callback) => {
   }
 })
 
-gulp.task('release', (callback) => {
+gulp.task('release', () => {
   runSequence(
     'release.clean',
     'release.build',
     ['release.js', 'release.css', 'release.assets', 'release.html', 'release.compatible'],
     'zip',
-    callback,
   )
 })
 
@@ -354,12 +353,12 @@ gulp.task('zip', () => {
     .pipe(zip('forehead_wx.zip'))
     .pipe(gulp.dest('www'))
 })
+
 // 字体提取格式转换，原生字体推荐ttf原生格式
-gulp.task('font.min', (callback) => {
+gulp.task('font.min', () => {
   runSequence(
     'font.minimal',
     'font.dest',
-    callback,
   )
 })
 
@@ -421,7 +420,7 @@ gulp.task('font.dest', (callback) => {
     del([`./src/base/fonts/${fontInfo.target}.css`])
     console.log(`./src/base/fonts/${fontInfo.target}.css`)
 
-    imports.push(`fonts/${fontInfo.target}`)
+    imports.push(`"fonts/${fontInfo.target}"`)
   })
 
   fs.writeFile('./src/base/styles/_fonts.scss', `@charset "UTF-8";\n@import\n${imports.join(',\n')};`, callback)
