@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+@import
+"~base/styles/imports";
+
+.num-range {
+  display: inline-block;
+  border: 1px solid $new-inverse-color;
+
+  > {
+    .num-range-left {
+      font-size: 12px;
+      float: left;
+      padding: 1px 6px;
+      border-right: 1px solid $new-inverse-color;
+      cursor: pointer;
+
+      &.disabled {
+        cursor: default;
+        color: #c1c1c1;
+      }
+    }
+    .num-range-center {
+      float: left;
+      color: $new-inverse-color;
+      height: 20px;
+      width: 48px;
+      border: none;
+      padding: 1px;
+      text-align: center;
+      background-color: transparent;
+      outline: 0;
+      &:hover, &:active {
+        outline: 0;
+      }
+    }
+    .num-range-right {
+      font-size: 12px;
+      float: left;
+      padding: 1px 6px;
+      border-left: 1px solid $new-inverse-color;
+      cursor: pointer;
+
+      &.disabled {
+        cursor: default;
+        color: #c1c1c1;
+      }
+    }
+  }
+}

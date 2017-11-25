@@ -1,0 +1,63 @@
+<form action="javascript:void(0);" class="js-uc-vip-returnVisit-form form-horizontal uc-personalManage-form">
+  <!--<div class="js-uc-personalManage-form form-horizontal uc-personalManage-form">-->
+  <div class="control-group uc-personalManage-div">
+    <label class="control-label color-dark "></label>
+    <div class="controls">
+      <span class="js-uc-userName hint" >温馨提示：我们的回访时间是10：00~18：00，请保持电话畅通</span>
+    </div>
+  </div>
+
+  <div class="control-group uc-personalManage-div">
+    <label class="control-label color-dark">您的称呼：</label>
+    <div class="controls">
+    <input type="text" name="username" class="js-name" data-parsley-customername  data-placement="bottom" title="输入内容错误" data-trigger="manual" required>
+      <span class="help-inline">2-16个字符，支持中英文</span>
+    </div>
+  </div>
+
+  <div class="control-group uc-personalManage-div">
+    <label class="control-label color-dark "></label>
+    <div class="controls sex">
+      <label class="m-right-md inline-block"><input type="radio" name="sex" class="js-sex m-bottom-sm m-right-sm" value="0"  checked="checked" required>先生</label>
+      <label class="m-right-md inline-block"><input type="radio" name="sex" class="js-sex m-bottom-sm m-right-sm" value="1" required>女士</label>
+    </div>
+  </div>
+
+
+    <div class="control-group uc-personalManage-div">
+      <label class="control-label color-dark">联系电话：</label>
+      <div class="controls">
+      <input type="text" name="phone" class="js-phone"  data-placement="bottom" title="输入内容错误" data-trigger="manual" data-parsley-phone required>
+        &nbsp<span>8-11位数字</span>
+      </div>
+    </div>
+
+    <div class="control-group uc-personalManage-div">
+      <label class="control-label color-dark">问题描述：</label>
+      <div class="controls ">
+        <textarea placeholder="请勿超过200字" name="question"  rows="4" cols="30" class="js-question input-jb"  data-parsley-zhmaxlength=200  data-placement="bottom" title="输入内容错误" data-trigger="manual" required></textarea>
+
+      </div>
+    </div>
+
+    <!--<div class="control-group">-->
+      <!--<label class="control-label">回访时间：</label>-->
+      <!--<div class="controls">-->
+        <!--<select  class="js-as-questionSelect required" >-->
+          <!--<option  value="">随时</option>-->
+          <!--<option value="01">10:00-12:00-->
+          <!--<option value="02">12:00-14:00-->
+          <!--<option value="03">14:00-18:00-->
+          <!--<option value="03">18:00-21:00-->
+        <!--</select>-->
+      <!--</div>-->
+    <!--</div>-->
+
+  <div class="control-group uc-personalManage-btn-div">
+    <label class="control-label color-dark"></label>
+    <div class="controls">
+      <button type="button" class="js-uc-confirm btn btn-sun btn-linear input4" data-loading-text="保存中">提交</button>
+    </div>
+  </div>
+  <!--</div>-->
+</form>

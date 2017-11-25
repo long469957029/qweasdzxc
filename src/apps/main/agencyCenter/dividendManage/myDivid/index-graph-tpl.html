@@ -1,0 +1,58 @@
+<div class="ac-dm-md-graph clearfix ">
+  <%if(userType==1){%>
+  <div >
+    <div class="ac-dm-md-graph-icon ac-dm-md-graph-betTotal"></div>
+    <div class="ac-dm-md-graph-label">团队总投注额</div>
+    <div ><span class="js-ac-dm-md-betTotal"><%=betTotal%></span>元</div>
+  </div>
+  <%}%>
+
+  <div >
+    <div class="ac-dm-md-graph-icon ac-dm-md-graph-profitTotal"></div>
+    <div class="ac-dm-md-graph-label">团队总盈亏</div>
+    <div ><span class="js-ac-dm-md-profitTotal"><%=profitTotal%></span>元</div>
+  </div>
+
+  <%if(userType==1 && gameType==1){%>
+  <div >
+    <div class="ac-dm-md-graph-icon ac-dm-md-graph-activeUser"></div>
+    <div class="ac-dm-md-graph-label">活跃用户</div>
+    <div ><span class="js-ac-dm-md-activeUser"><%=activeUser%></span>人</div>
+  </div>
+  <%}%>
+  <%if(userType==0 ){%>
+  <div >
+    <div class="ac-dm-md-graph-icon ac-dm-md-graph-subDividTotal"></div>
+    <div class="ac-dm-md-graph-label">下级直属总分红</div>
+    <div ><span class="js-ac-dm-md-subDividTotal"><%=subDividTotal%></span>元</div>
+  </div>
+  <%}%>
+  <%if(userType==0 && gameType==0){%>
+  <div >
+    <div class="ac-dm-md-graph-icon ac-dm-md-graph-rebatTotalTotal"></div>
+    <div class="ac-dm-md-graph-label">月度返点总额</div>
+    <div ><span class="js-ac-dm-md-rebatTotalTotal"><%=rebatTotal%></span>元</div>
+  </div>
+  <%}%>
+  <%if(userType==0 && gameType==1){%>
+  <div >
+    <div class="ac-dm-md-graph-icon ac-dm-md-graph-lastMonthNegativeProfitTotal"></div>
+    <div class="ac-dm-md-graph-label">上月负结余</div>
+    <div ><span class="js-ac-dm-md-lastMonthNegativeProfitTotal"><%=lastMonthNegativeProfitTotal%></span>元</div>
+  </div>
+  <%}%>
+  <div >
+    <div class="ac-dm-md-graph-icon ac-dm-md-graph-divid"></div>
+    <div class="ac-dm-md-graph-label">分红比例(持续统计)</div>
+    <div ><span class="js-ac-dm-md-divid"><%=divid%></span>%</div>
+  </div>
+
+  <div >
+    <div class="ac-dm-md-graph-icon ac-dm-md-graph-dividTotal"></div>
+    <div class="ac-dm-md-graph-label">应得分红金额</div>
+    <div >
+      <span class="js-ac-dm-md-dividTotal"><%=dividTotal%></span>元
+
+    </div>
+  </div>
+</div>

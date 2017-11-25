@@ -1,0 +1,59 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jquery": true
+  },
+  // 当ESlint 访问没有定义的变量时会发出警告，这时可以使用 globals 来定义这些全局变量
+  "globals" : {
+    "moment": false,
+    "Backbone": false,
+    "Base": false,
+    "Global": false,
+    "_": false,
+    "lo": false,
+    "R": false,
+    "require": false,
+    "exports": false,
+    "module": false,
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false,
+    "define": false
+  },
+  "extends": "airbnb-base",
+  "rules": {
+    "semi": [2, "never"], // [设定] 句尾后面不要有分号
+    "arrow-body-style": ["error", "always"],
+    "no-console": 0,
+    "linebreak-style": 0,
+    "space-before-function-paren": [0, "always"], // [取消] function 后面小括号的前面有空白
+    "no-trailing-spaces": [0, "always"],
+    "no-param-reassign": 0, // [取消] 禁止对传入函数的参数重新赋值
+
+    // import / require 路径问题
+    "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/extensions": 0,
+
+    // 因为专案太多这种用法，所以暂时允许
+    "no-underscore-dangle": 0, // [取消] 禁止 "_" 当做变数名
+    "no-new": 0, // [取消] 禁止使用 new
+    "global-require": 0, // [取消] 禁止require 用在 function 里面
+    "consistent-return": 0, //
+    "no-mixed-operators": 0,
+    "camelcase": 0,
+    "no-useless-escape": 0,
+    "max-len": [2, 200],
+
+    // 建议使用的 几乎跟 ES6有关
+    "prefer-template": 1, // [建议] 使用 template literal
+    "prefer-destructuring": 1, // [建议] 使用 阵列或物件解构
+    "prefer-rest-params": 1 // [建议] 使用 剩馀参数
+  }
+}

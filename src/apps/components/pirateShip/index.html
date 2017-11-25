@@ -1,0 +1,91 @@
+<div class="mask js-pirateship-mask hidden">
+    <div class="pop js-pop">
+        <div class="close_btn js-close"></div>
+        <div id="animation_container" style="background-color:rgba(255, 255, 255, 0.00); width:550px; height:650px">
+            <canvas id="canvas" width="550" height="650"
+                    style="position: absolute; display: block; background-color:rgba(255, 255, 255, 0.00);"></canvas>
+            <div id="dom_overlay_container"
+                 style="pointer-events:none; overflow:hidden; width:550px; height:650px; position: absolute; left: 0px; top: 0px; display: block;">
+            </div>
+        </div>
+        <div class="btn_lump">
+            <div class="btn_01 js-grab"></div>
+            <div class="btn_02 js-cash"></div>
+        </div>
+        <div class="info_01">
+            <p>无耻的海盗！他们居然在周年庆这天劫掠了一批要发给玩家的iPhone 7，趁他们还没跑远，老船长带你抢回iPhone 7，谁抢到归谁的，还等什么？快上船！！</p>
+            <div class="btn_notice js-Spec"></div>
+        </div>
+        <div class="info_02">
+            <div>iphone7库存情况：<span class="js-total"></span>/<span class="js-rest "></span></div>
+            <div class="prompt_lump">
+                <div class="prompt_content_ps ">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="lottery_wheel" style="position: absolute; left: 78px; top: 190px">
+            <img src="images/iphone7/disc-rotate.png" name="imgs" width="306" alt="" height="306" class="image"
+                 id="imgs"
+                 style="position: absolute; left: 37px; top: 29px; width: 306px; height: 306px;" viewbox="0 0 352 30"/>
+            <div class="arrow">
+            </div>
+            <div class="lot-btn first">
+                <span></span></div>
+        </div>
+    </div>
+    <!--各种提示信息-->
+    <div class="notice_circle1">
+        <div class="pop_close_btn js-return"></div>
+        <div class="notice_infor_text1">你想干嘛！</div>
+        <div class="btn_03 js-return"></div>
+    </div>
+    <div class="notice_circle2">
+        <div class="pop_close_btn js-return"></div>
+        <div class="notice_infor_text2 ">您的消费额还不足<span></span><br>暂无法抽奖</div>
+        <div class="btn_03 js-return"></div>
+    </div>
+    <div class="notice_circle3">
+        <div class="pop_close_btn js-return"></div>
+        <div class="notice_infor_text3">您当前已投注<span></span>元<br>可以抢1次，是否开抢？</div>
+        <div class="btn_04 js-start-draw"></div>
+        <div class="btn_05 js-return"></div>
+    </div>
+    <div class="notice_circle4">
+        <div class="pop_close_btn js-return"></div>
+        <div class="notice_infor_text4">您当前已投注<span></span>元<br>可以抢<span></span>次，是否开抢？</div>
+        <div class="btn_04 js-start-draw"></div>
+        <div class="btn_05 js-return "></div>
+        <div class="btn_06 js-start-draw-all">消耗所有次数，全抢了！</div>
+    </div>
+    <div class="notice_circle5 ">
+        <div class="pop_close_btn js-return"></div>
+        <div class="notice_infor_text5">您当前投注额<span></span>元，还不足以直接兑换！<br>要加油哟，我的大船可是越开越快的，哈哈！</div>
+        <div class="btn_03 js-return"></div>
+    </div>
+    <div class="notice_circle6 js-return">
+        <div class="pop_close_btn js-return"></div>
+        <div class="notice_infor_text6">谢谢老板，这台iPhone送你了，略表心意！<br>多一点您这样的老板，我们就不用做海盗了！</div>
+        <div class="btn_03"></div>
+    </div>
+    <div class="notice_circle7">
+        <div class="pop_close_btn js-return"></div>
+        <div class="notice_infor_text7"></div>
+        <div class="btn_03 js-return"></div>
+    </div>
+    <div class="notice js-ps-notice">
+        <p><span class="js-ta-active-time"></span>期间，只要追上狡猾的海盗就能抢到iphone 7，可以通过两种方式来达成：<br><br>
+             
+            1、只要当天您在平台投注达<span class="js-ps-draw-condition"></span>元，都可以点击“抢”，即有机会抢到从海盗船上丢下来的iPhone 7，每投注<span class="js-ps-draw-condition"></span>元可参与抢一次，上不封顶。<br><br>
+             
+            2、当天投注额累积达到<span class="js-ps-prize-limit"></span>元，就可以在当天找大胡子直接兑换一台iphone 7，投注额限当天有效，隔天重新累积。<br><br>
+             
+            3、“抢”与“兑”可叠加使用，使用“抢”不会影响兑换，如您当天成功抢到一台iphone7，但当天的投注额也达到了兑换要求，就可以再额外兑换一台iphone7。 <br><br>
+             
+            4、为了保护玩家的隐私，iPhone7将按官方零售价<span class="js-ps-prize-condition"></span>元折现，在玩家抢或兑换后，平台将直接加币至您的平台账号中，敬请留意查看。<br><br>
+
+            5、活动中禁止任何刷奖行为，投注注数不能超过总注数的70%，无限娱乐拥有活动的最终解释权。</p>
+        <div class="btn_game js-return"></div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+.wrapper {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+
+  .wrapper-main {
+    position: relative;
+  }
+
+  &.no-navigation {
+    padding-top: 0;
+  }
+
+  &.front-end-wrapper {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  &.no-footer {
+    padding-bottom: 0;
+  }
+}

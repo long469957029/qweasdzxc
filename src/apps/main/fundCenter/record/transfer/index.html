@@ -1,0 +1,49 @@
+<div class="search-condition-table">
+  <div class="control-group row2">
+    <label class="">查询日期:</label>
+    <span class="js-pf-timeset input-date"></span>
+    <label class="m-left-sm">来自:</label>
+    <select name="fromChannelId" class=" " style="width:85px;">
+      <option value="" selected>全部</option>
+      <option value="0" >中心钱包</option>
+      <option value="1">AG平台</option>
+      <option value="2">EBET平台</option>
+      <option value="3">BBIN平台</option>
+      <option value="6">GG平台</option>
+      <option value="4">PT平台</option>
+      <option value="5">MG平台</option>
+      <!--<option value="7">188平台</option>-->
+    </select>
+    <label class="m-left-sm">转到:</label>
+    <select name="toChannelId" style="width:85px; ">
+      <option value="" selected>全部</option>
+      <option value="0" >中心钱包</option>
+      <option value="1">AG平台</option>
+      <option value="2">EBET平台</option>
+      <option value="3">BBIN平台</option>
+      <option value="6">GG平台</option>
+      <option value="4">PT平台</option>
+      <option value="5">MG平台</option>
+      <!--<option value="7">188平台</option>-->
+    </select>
+    <label>状态:</label>
+    <select name="status" style="width:85px; margin-right: 4px;">
+      <option value="-1">全部</option>
+      <option value="0">处理中</option>
+      <option value="1">转账成功</option>
+      <option value="2">转账失败</option>
+      <!--<option value="3">撤销申请</option>-->
+    </select>
+
+    <button type="submit" class="btn ac-rm-btn">搜索</button>
+    <!--<button type="reset" class="btn btn-link btn-link-inverse">清空条件</button>-->
+    <input type="hidden" name="pageSize" value="20">
+
+  </div>
+
+  <!--<div class="control-group row2" align="right">-->
+    <!--<button type="submit" class="btn ac-rm-btn">搜索</button>-->
+    <!--<button type="reset" class="btn btn-link btn-link-inverse">清空条件</button>-->
+    <!--<input type="hidden" name="pageSize" value="20">-->
+  <!--</div>-->
+</div>

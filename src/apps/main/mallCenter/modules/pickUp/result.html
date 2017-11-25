@@ -1,0 +1,76 @@
+<!-- awardTypeId -->
+<!-- 夺宝 -->
+<div class="treasure-content">
+  <div class="container">
+    <a class="close-btn" data-dismiss="modal">×</a>
+    <!-- 标题 -->
+    <% if (isSuccess) { %>
+      <!-- 谢谢惠顾 -->
+      <% if (awardTypeId === 0) { %>
+        <div class="title">谢谢您的参与</div>
+        <% } else { %>
+          <div class="title">恭喜您<%= treasureType === 'rob' ? '成功夺得' : '幸运获得' %></div>
+          <% } %>
+
+            <div class="content">
+              <!-- 图片 -->
+              <% if (awardTypeId === 1) { %>
+                <div class="<%= treasureType %>-coupon coupon-<%= couponType %>">
+                  <div class="validDay">
+                    <%= validDay ? validDay + '天有效' : '' %>
+                  </div>
+                </div>
+
+            </div>
+            <% } else if (awardTypeId === 2) { %>
+              <img src="<%= picUrl %>" alt="" class="picUrl">
+              <% } else if (awardTypeId === 3) { %>
+                <div class="<%= treasureType %>-integral"></div>
+                <% } else if (awardTypeId === 0) { %>
+                  <div class="rob-thanks"></div>
+                  <% } %>
+
+                    <!-- 资讯 -->
+                    <!-- 补贴  加奖  返水 会用到 -->
+                    <% if (couponType === 2 || couponType === 3 || couponType === 4 ) { %>
+                      <div class="statName">
+                        <% if (statName === '全平台') { %>
+                          <% statName %>
+                        <% } else { %>
+                          <%= statName ? statName : '' %>
+                        <% } %>
+                      </div>
+                    <% } %>
+
+                    <div class="desc">
+                      <%= desc ? desc : '' %>
+                    </div>
+                    <div class="itemName">
+                      <%= itemName ? itemName : '' %>
+                    </div>
+                    <div class="integral">
+                      <%= integral ? '积分 ' + '<span class="red">' + _(integral).formatDiv(10000) + '</span>': '' %></span>
+                    </div>
+                    <div class="validEndDate">
+                      <%= validEndDate ? '有效期至：' + _(validEndDate).toTime('YYYY.MM.DD HH:mm:ss') : '' %>
+                    </div>
+  </div>
+
+  <% } else { %>
+    <div class="title">
+      <%= treasureType === 'rob' ? '夺宝失败' : '参与失败' %>
+    </div>
+    <div class="content">
+      <!-- 图片 -->
+      <div class="fail">
+      </div>
+      <!-- 资讯 -->
+      <div class="msg">
+        <%= msg %>
+      </div>
+    </div>
+    <% } %>
+      <!-- 按钮 -->
+      <div class="button" data-dismiss="modal">确定</div>
+</div>
+</div>

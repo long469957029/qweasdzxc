@@ -1,0 +1,194 @@
+@charset "UTF-8";
+
+@import
+"~base/styles/imports";
+
+
+.fc-fm-portlet{
+  margin: 16px 36px;
+
+  .fc-fm-amount-desc{
+    font-size: 0px;
+    vertical-align: middle;
+    margin-bottom: 12px;
+    li{
+      width: 391px;
+      height: 91px;
+      display: inline-block;
+      background: #fff;
+      margin-right: 30px;
+      padding: 3px;
+      border: 1px solid #e3e3e3;
+      border-radius: 6px;
+      overflow: hidden;
+
+      .fc-fm-sum-left{
+        padding: 20px;
+        width: 202px;
+        border-right: 1px solid #e3e3e3;
+        vertical-align: middle;
+        .fc-fm-sum-name{
+          vertical-align: middle;
+          height: 23px;
+          line-height: 23px;
+          font-size: 16px;
+          color: #333;
+          margin-bottom: 10px;
+          .sfa{
+            vertical-align: -14%;
+          }
+        }
+        .fc-fm-amount-sum{
+          font-size: 18px;
+          width: 84px;
+          border-radius: 4px;
+          color: #fe6760;
+          border: 0 ;
+        }
+      }
+      &:nth-child(2){
+        .sfa{
+          vertical-align: -21%;
+        }
+      }
+
+      .fc-fm-sum-operation{
+        padding: 31px;
+        width: 84px;
+        .fc-fm-re-btn{
+          width: 84px;
+          height: 30px;
+          border-radius: 4px;
+          background: #e8675d;
+        }
+        .fc-fm-wd-btn{
+          width: 84px;
+          height: 30px;
+          border-radius: 4px;
+          background: #0ea8b5;
+          border: 0;
+        }
+      }
+      &:last-child{
+        margin-right: 0;
+      }
+    }
+  }
+
+  .fc-fm-mb-qu{
+    border: 1px solid #e3e3e3;
+    border-radius: 6px;
+    font-size: 0px;
+    vertical-align: middle;
+    li.fc-fm-mb-item{
+      position: relative;
+      width: 409px;
+      height: 94px;
+      line-height: 94px;
+      display: inline-block;
+      background: #fff;
+      padding: 3px;
+      border-right: 1px solid #e3e3e3;
+      border-bottom: 1px solid #e3e3e3;
+
+      vertical-align: middle;
+      overflow: hidden;
+      font-size: 16px;
+      .fc-fm-channel-name{
+        height: 91px;
+        width: 106px;
+        line-height: 94px;
+        vertical-align: middle;
+        display: inline-block;
+        margin-left: 16px;
+
+
+      }
+      &:nth-child(1){
+        .sfa{
+          vertical-align: -5%;
+        }
+      }
+      &:nth-child(2){
+        .sfa{
+          vertical-align: -1%;
+        }
+      }
+      &:nth-child(3){
+        .sfa{
+          vertical-align: -4%;
+        }
+      }
+      &:nth-child(4){
+        .sfa{
+          vertical-align: -6%;
+        }
+      }
+      &:nth-child(5){
+        .sfa{
+          vertical-align: -4%;
+        }
+      }
+      &:nth-child(6){
+        .sfa{
+          vertical-align: -6%;
+        }
+      }
+      &:nth-child(7){
+        .sfa{
+          vertical-align: -4%;
+        }
+      }
+      .fc-fm-channel-amount{
+        height: 91px;
+        width: 96px;
+        line-height: 94px;
+        vertical-align: middle;
+        display: inline-block;
+        color: #e8675d;
+        text-align: right;
+        padding-right: 54px;
+      }
+      .fc-fm-refresh{
+        position: absolute;
+        top: 44px;
+        right: 163px;
+        color: #999;
+      }
+      .fc-fm-channel-operation{
+        height: 91px;
+        width: 127px;
+        line-height: 85px;
+        vertical-align: middle;
+        display: inline-block;
+        button{
+          font-size: 13px;
+          color: #0ea8b5;
+          margin: 0 15px 0 18px;
+          background: #fff;
+          text-decoration: underline;
+          outline: none;
+        }
+      }
+
+      &:nth-of-type(2n){
+        border-right: 0px solid #e3e3e3;
+      }
+      &:nth-child(1){
+        border-radius: 6px 0 0 0 ;
+      }
+      &:nth-child(2){
+        border-radius: 0 6px 0 0;
+      }
+      &:nth-last-child(1){
+        border-radius: 0 0 6px 0 ;
+        border-bottom: 0px solid #e3e3e3;
+      }
+      &:nth-last-child(2){
+        border-radius: 0 0 0 6px;
+        border-bottom: 0px solid #e3e3e3;
+      }
+    }
+  }
+
+}

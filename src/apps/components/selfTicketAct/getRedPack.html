@@ -1,0 +1,25 @@
+<div class="red-pack-main js-red-pack-main bg-def">
+    <div class="red-pack-def js-red-pack-def ">
+        <div class="def-text">
+            <div class="font-jb">恭喜您!</div>
+            <div class="font-xs">获得一个现金红包</div>
+        </div>
+        <div class="money"></div>
+        <div class="open-now js-open-now"></div>
+    </div>
+    <div class="red-pack-open js-red-pack-open hidden">
+        <a class="close" data-dismiss="modal"></a>
+        <div class="red-pack-money"><%=_(data.amount).convert2yuan()%>元</div>
+        <div class="give-text">
+            恭喜您获得<span class="font-md">"<%=data.ticketName || data.typeName%>"</span>体验金
+        </div>
+        <div class="btn-list">
+            <% if(_.isUndefined(data.typeName)){%>
+            <a href="#bc/<%=data.ticketId%>" class="router go-consumption js-go-consumption" data-dismiss="modal"></a>
+            <% } %>
+            <a class="js-look-red-pack btn btn-link look-red-pack" data-dismiss="modal">查看红包</a>
+        </div>
+
+    </div>
+
+</div>

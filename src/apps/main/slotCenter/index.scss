@@ -1,0 +1,328 @@
+@charset "UTF-8";
+
+@import '../misc/variable';
+@import '../misc/mixin';
+
+[class*="col-"] {
+  background: transparent !important;
+}
+
+.sc-banner {
+  @include border-box();
+  @include banner-background('http://horrorjapan.com/botanbotandoro/wp-content/uploads/2017/04/Attack-on-Titan-Game-PC-PS4-1-1900x700_c.jpg?x65902');
+  width: 100%;
+  height: 700px;
+
+  .sc-banner-mask {
+    @include mask(700px, .5);
+  }
+
+  .sc-banner-hot {
+    background: $background-gray;
+    position: absolute;
+    width: 1200px;
+    height: 160px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    bottom: 15px;
+    z-index: 2;
+    border-radius: 15px;
+  }
+
+  .banner-hot-logo, .banner-hot-container {
+    @include inline-block-list();
+  }
+
+  .banner-hot-logo {
+    width: 140px;
+    height: 100%;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .banner-hot-container {
+    width: 1059px;
+  }
+
+  .banner-hot-row {
+    @include row($marginHorizontal);
+    padding: 15px 20px 5px;
+    height: 159px;
+  }
+
+  .banner-hot-item {
+    @include with-margin($marginHorizontal);
+  }
+
+  .hot-item-img {
+    background: url('https://cbu01.alicdn.com/img/ibank/2016/401/871/3719178104_955951636.search.jpg');
+    border-radius: 5px;
+    background-size: cover;
+    margin-bottom: 5px;
+    height: 110px;
+  }
+
+  .hot-item-title {
+    color: $font-gray;
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+.sc-navbar {
+  @include center-container(1200px);
+  @include border-box();
+  width: 100%;
+  height: 60px;
+  padding: 10px 0;
+  background: $background-gray;
+}
+
+.sc-navbar-container {
+  @include center-container(1200px);
+}
+
+.sc-navbar-select-container {
+  @include inline-block();
+  span {
+    color: $font-dark;
+    font-size: 16px;
+  }
+
+  .sc-navbar-select {
+    width: 100px;
+    height: 30px;
+  }
+}
+
+.sc-navbar-option-container {
+  width: 760px;
+  @include inline-block();
+  .sc-navbar-option {
+    padding: 10px 15px;
+    color: $font-dark;
+    font-size: 16px;
+    float: left;
+
+    &:hover, &:active {
+      color: white;
+    }
+  }
+}
+
+.sc-navbar-search-container {
+  @include inline-block();
+
+  input {
+    width: 188px;
+    height: 35px;
+    padding: 10px 30px;
+    background: white;
+    border: none;
+    outline: none;
+    border-radius: 35px / 35px;
+  }
+}
+
+.sc-container {
+  @include center-container(1200px);
+  @include border-box();
+  margin-bottom: 130px;
+
+  .sc-sidebar {
+    float: left;
+    width: 270px;
+  }
+
+  .sc-content {
+    float: left;
+    width: 930px;
+  }
+
+  .sc-entry-container, .sc-content-container, .sc-win-container {
+    @include with-margin(8px);
+    margin-top: 30px
+  }
+}
+.sc-row {
+  @include row(8px);
+}
+
+.sc-game-row {
+  margin-right: -20px;
+  margin-left: -8px;
+}
+
+.sc-entry-container {
+  border: 1px solid $font-gray;
+  border-radius: 5px;
+}
+
+.sc-entry-item {
+  padding: 30px 15px;
+
+  [class^="entry-item-"] {
+    @include inline-block();
+  }
+  .entry-item-logo {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    background: gray;
+    border-radius: 99px;
+    margin-right: 10px;
+  }
+
+  .entry-item-title {
+    color: $font-dark;
+    font-size: 18px;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 10px;
+    width: 120px;
+  }
+
+  .entry-item-rest {
+    color: $font-black;
+    font-size: 14px;
+    margin-bottom: 10px;
+    margin-right: 50px;
+  }
+
+  .entry-item-transfer {
+    color: $font-dark;
+    font-size: 12px;
+    text-decoration: underline;
+    margin-bottom: 10px;
+  }
+
+  .entry-item-btn {
+    width: 100px;
+    height: 32px;
+    line-height: 32px;
+    background: $font-gray;
+    border: none;
+    color: white;
+    text-align: center;
+    margin: 0 4px;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+}
+
+.sc-win-container {
+  border: 1px solid $font-gray;
+  border-radius: 5px;
+  background: $background-gray;
+  padding: 15px 5px;
+
+
+  .sc-win-title {
+    color: $font-dark;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+}
+
+.sc-win-item {
+  background: white;
+  padding: 10px 5px;
+  margin-bottom: 3px;
+
+  [class^="win-item-"] {
+    @include inline-block();
+  }
+
+  .win-item-name {
+    color: $font-dark;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  .win-item-amount {
+    color: $font-black;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .win-item-game {
+    color: $font-dark;
+    font-size: 12px;
+  }
+}
+
+.sc-game-item {
+  @include with-margin(8px);
+  width: 220px;
+  height: 160px;
+  position: relative;
+
+  .sc-game-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: -25px;
+    font-size: 16px;
+    color: $font-dark;
+  }
+}
+
+.sc-game-img {
+  width: 220px;
+  height: 160px;
+  border-radius: 5px;
+  overflow: hidden;
+
+  img {
+    transition: transform .3s;
+  }
+}
+
+.sc-game-mask {
+  @include mask(160px, 0);
+  transition: opacity .3s;
+  top: 0;
+  padding-top: 30px;
+
+  .sc-game-btn {
+    width: 140px;
+    height: 43px;
+    line-height: 43px;
+    margin: 0 auto;
+    display: block;
+    border-radius: 5px;
+    border: none;
+    opacity: 0;
+    transition: opacity .3s;
+    color: $font-dark;
+    margin-bottom: 20px;
+
+    &.dark {
+      background: $background-gray;
+    }
+
+    &.light {
+      background: $background-light;
+    }
+  }
+
+  &:hover, &:active {
+    @include mask(160px, .5);
+
+    .sc-game-btn {
+      opacity: 1;
+    }
+
+    + .sc-game-img img {
+      transform: scale(1.1);
+    }
+  }
+}
+
+
+

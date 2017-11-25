@@ -1,0 +1,56 @@
+<div class="js-novice-pack novice-pack">
+  <div class="content">
+    <div class="js-novice-pack-content novice-pack-content">
+      <div class="js-np-bg bg">
+        <div class="js-novice-check novice-check-btn"></div>
+        <!-- <div class="js-novice-pack-off novice-pack-off"></div> -->
+      </div>
+    </div>
+    <div class="js-novice-pack-expand novice-pack-expand hidden">
+      <div class="js-np-dialog-bg dialog-bg">
+        <div class="js-np-dialog-sidebar dialog-sidebar">
+          <div class="js-np-dialog-btn dialog-btn active">我的礼包</div>
+          <div class="js-np-dialog-btn dialog-btn">使用说明</div>
+        </div>
+        <div class="js-novice-pack-off novice-dialog-off"></div>
+        <!-- 使用说明内容 -->
+        <div class="js-np-content js-np-dialog-explain dialog-explain opacity-0">
+          <p>1、游戏红包请在平台的“我的红包”中进行查看使用方法。</p>
+          <p>2、在平台首次充值任意金额即可返<%= rechargeAmount %>元奖励，自领取礼包之日起有效期三天，领取礼包日期作为第一天。</p>
+          <p>3、投注返水奖励有效期为三天，领取礼包日期作为第一天，三天结束后系统自动结算奖励。</p>
+          <p>4、该活动的最终解释归无限娱乐所有。</p>
+        </div>
+        <!-- 我的礼包内容  -->
+        <div class="js-np-content js-np-dialog-present dialog-present">
+          <% _.each(itemList, function(item) { %>
+            <div class="present-item">
+              <div class="stamp ticket-stamp"></div>
+              <div class="name">
+                <%= item.ticketName %>
+              </div>
+              <div class="reward">
+                <%=item.amount%>元</div>
+              <!-- <div class="deadline">有限期: 8.9-9.9</div> -->
+            </div>
+            <% }) %>
+
+              <div class="present-item">
+                <div class="stamp used-stamp <%= rechargeStatus === 1 ? '' : 'hidden' %>"></div> 
+                <div class="name">首次充值奖励</div>
+                <div class="reward">
+                  <%= rechargeAmount %>元</div>
+                <!-- <div class="deadline"></div> -->
+              </div>
+              <div class="present-item">
+                <div class="stamp used-stamp <%= betStatus === 1 ? '' : 'hidden' %>"></div> 
+                <div class="name">首次投注返水</div>
+                <div class="reward">
+                  <%= betRate %>%</div>
+                <!-- <div class="deadline"></div> -->
+              </div>
+        </div>
+        <div class="js-np-go-to-draw go-to-draw"><a href="#fc/re">马上充值</a></div>
+      </div>
+    </div>
+  </div>
+</div>

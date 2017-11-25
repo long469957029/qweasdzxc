@@ -1,0 +1,191 @@
+@charset "UTF-8";
+
+@import
+"~base/styles/imports";
+
+//top-nav entry/index.html中定义
+.top-nav {
+  //position: absolute;
+  background-color: $header-color;
+  height: $header-height;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  position: relative;
+
+  .gl-vip-level{
+    display: inline-block;
+    position: relative;
+    top: -3px;
+    width: 60px;
+    height: 26px;
+    //margin: 5px;
+    color: #ffc501;
+    text-shadow: 0 2px 0px #d19139;
+    background:url(~base/images/vip-header-top-bg.png);
+    line-height: 26px;
+    text-align: center;
+    color: #450f0e;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .gl-mall-level{
+    position: relative;
+    top: -5px;
+  }
+
+  .head-part-two{
+    height: 14px;
+    line-height: 14px;
+    display: inline-block;
+    .gl-hd-letter{
+      position: relative;
+      font-size: 16px;
+      .gl-hd-msg-num{
+        display: inline-block;
+        position: absolute;
+        top: -5px;
+        right: -10px;
+        font-size: 12px;
+        line-height: 15px;
+        text-align: center;
+        background: #e8675d;
+        border-radius:15px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  .header-menu{
+    .drop-menu{
+      >li{
+        >a{
+          text-align: center;
+
+          .header-menu-title{
+            width: 100%;
+          }
+          &:hover{
+            background: none;
+            color: #17c0c8;
+          }
+        }
+        &:after{
+          position: absolute;
+          right: 0px;
+          top: 10px;
+          content: '';
+          width:1px;
+          height: 14px;
+          border-right: 1px solid #bbbcbc;
+        }
+      }
+      .menu-1{
+        width: 93px;
+        overflow: visible;
+      }
+      .menu-2{
+        width: 100%;
+        padding-left: 10px;
+        overflow: visible;
+        .is-show{
+          left: 10px;
+        }
+        .gl-hd-money{
+          display: inline-block;
+          padding: 0 4px;
+          margin-top: 6px;
+          height: 25px;
+          line-height: 25px;
+          border-radius: 3px;
+          color: $color-gold;
+          background: $deep-gray-color;
+        }
+        .drop-submenu{
+          width: 170px;
+          .header-menu-arrow{
+            left: 78px;
+          }
+        }
+      }
+
+      .is-show{
+        top: 41px;
+        left: -13px;
+      }
+      .drop-submenu{
+        border-radius: 12px;
+
+        .header-menu-arrow{
+          display: block;
+          position: absolute;
+          top: -9px;
+          left: 53px;
+          content: '';
+          width: 8px;
+          height: 8px;
+          transform: rotate(45deg);
+          border: 0;
+          border-bottom: 8px solid #3d3d3d;
+          z-index: -1;
+        }
+        li{
+          overflow: hidden;
+          a{
+            width: 94px;
+            margin: 0 auto;
+            border-bottom: 1px solid #666868;
+           &:hover{
+             color: #17c0c8;
+             background: none;//#555757;//#d0d6d8;
+           }
+          }
+          &:first-child{
+            border-radius: 12px 12px 0  0;
+          }
+          &:last-child{
+            border-radius: 0 0 12px 12px ;
+          }
+        }
+
+
+
+      }
+    }
+  }
+
+  .header-menu {
+    height: 37px;
+  }
+
+  .header-btn-group{
+    //height:37px;
+    //padding: 7px 0;
+    padding-top: 7px;
+    .header-btn{
+      font-size: 14px;
+      color: #fff;
+      width: 44px;
+      height: 20px;
+      background: #e8675d;
+      text-align: center;
+      margin-right: 12px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .header-recharge{
+      background: #e8675d;
+    }
+    .header-withdraw{
+      background: #0ea8b5;
+    }
+    .header-transfer{
+      background: #d08400;
+    }
+  }
+}
+
+
+

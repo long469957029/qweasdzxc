@@ -1,0 +1,22 @@
+<div class="activity activity-bg">
+  <% _(list).each(function(item) { %>
+  <div class="js-activity-item activity-item <% if (item.status !== 0) { %>ended<% } %>">
+    <div class="activity-item-inner clearfix">
+      <div class="activity-pic">
+        <img src="<%=item.picUrl %>" />
+      </div>
+      <div class="activity-main">
+        <div class="activity-title"><%=item.title %></div>
+        <div class="activity-brief">
+          <%=item.brief %> </div>
+        <div class="activity-time">
+          <% if (item.showTime) { %>
+          活动时间：<span class="js-time"><%=item.startTime %><% if (item.endTime) { %>－<%=item.endTime %><% } %></span>
+          <% } %>
+        </div>
+        <div class="activity-status"><%=item.formatStatus %></div>
+      </div>
+    </div>
+  </div>
+  <% }); %>
+</div>

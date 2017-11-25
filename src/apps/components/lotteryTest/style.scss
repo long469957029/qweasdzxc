@@ -1,0 +1,128 @@
+@mixin position-css{
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+ul,ol{
+	margin:0;
+}
+.lotteryTest{
+	@include position-css;
+	position: fixed;
+	background: rgba(0,0,0,0.7);
+	z-index: 9;
+}
+
+.lotteryTest-content{
+	position: relative;
+	@include position-css;
+	width: 1116px;
+	height: 650px;
+	margin:10% auto;
+	background: #f0d289;
+	border-radius: 20px;
+	h2{
+		background: #debf73;
+		height: 71px;
+		margin:0;
+		border-top-left-radius: 20px;
+		border-top-right-radius: 20px;
+		line-height: 71px;
+		text-align: center;
+	}
+	p{
+		font-size: 26px;
+		color: #333333;
+		line-height: 28px;
+		margin: 6px 0;
+		line-height: 40px;
+		text-align: center;
+	}
+	img{
+		display: block;
+		margin: 0 auto;
+	}
+	ul{
+		margin: 0 auto;
+		width: 736px;
+		li{
+			height: 70px;
+			margin-bottom: 20px;
+			background: #fff;
+			color: #333333;
+			font-size: 24px;
+			text-indent: 100px;
+			line-height: 70px;
+			cursor: pointer;
+			border-radius: 8px;
+		}
+		.lottery-choice{
+			background: #d1aa4b;
+			color: #fff;
+		}
+	}
+	button{
+		position: absolute;
+		bottom: 22px;
+		right: 0;
+		left: 0;
+		display: block;
+		background: #eaeaea;
+		width: 200px;
+		height: 58px;
+		text-align: center;
+		line-height: 58px;
+		color: #333333;
+		border:none;
+		border-radius: 8px;
+		font-size: 24px;
+		box-shadow: 0 3px 0 #dedede;
+		margin: 0 auto;
+	}
+}
+
+.lotteryTest01{
+	img{
+		width: 136px;
+		height: 125px;
+	}
+}
+
+.lotteryTest02{
+	img{
+		width: 193px;
+		height: 143px;
+	}
+}
+
+.lotteryTest03{
+	img{
+		width: 206px;
+		height: 155px;
+	}
+}
+
+.lottery-icon{
+	width: 90%;
+	margin: 0 auto;
+	overflow: hidden;
+	li{
+		float: left;
+		width: 33%;
+		text-align: center;
+		line-height: 100px;
+		color: #000;
+		font-size: 30px;
+	}
+}
+
+.lottery-off{
+	float: right;
+	width: 32px;
+	height: 32px;
+	background: url(./img/lottery-off.png);
+	margin:16px 16px 0 0;
+	cursor: pointer;
+}
+

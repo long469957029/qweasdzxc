@@ -1,0 +1,21 @@
+<!-- 中央控制面板 -->
+<div class="center">
+  <div class="luckey-value-container">
+    <div class="star"></div>
+    <span>当前幸运值:</span>
+    <span class="value"><%= myLucky %></span>
+  </div>
+  <div class="action-container">
+    <div class="integral-rob js-treasure-rob" data-value="<%= integralRob %>" data-type="0">
+      <div class="value">
+        <%= integralRob %>
+      </div>
+      <div class="text">积分夺宝</div>
+    </div>
+    <div class="dollar-rob js-treasure-rob" data-value="<%= cashRob %>" data-type="1">
+      <div class="value">
+        <%= cashRob %>元</div>
+      <div class="text">现金夺宝</div>
+    </div>
+  </div>
+</div>

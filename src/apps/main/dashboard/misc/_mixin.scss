@@ -1,0 +1,15 @@
+@mixin slide-nav-item($sfas) {
+  @each $class, $val in $sfas {
+    &.#{$class} {
+      background: url(map_get($val, default)) no-repeat no-repeat;
+      width: 123px;
+      height: 127px;
+
+      &:hover {
+        background: url(map_get($val, active)) no-repeat no-repeat;
+        width: 156px;
+        height: 158px;
+      }
+    }
+  }
+}

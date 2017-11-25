@@ -1,0 +1,66 @@
+.badge {
+  display: inline-block;
+  padding: 4px 5px;
+  font-size: 12px;
+  line-height: 14px;
+  color: $new-light-color;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #626666;
+  &:empty {
+    display: none;
+  }
+}
+
+.badge-success, .label-success {
+  background-color: #2baab1;
+  color: $new-light-color;
+}
+
+.badge-danger, .label-danger {
+  background-color: #e36159;
+  color: $new-light-color;
+}
+
+.badge-warning, .label-warning {
+  background-color: #edbc6c;
+  color: $new-light-color;
+}
+
+.badge-info, .label-info {
+  background-color: #23b7e5;
+  color: $new-light-color;
+}
+
+.badge-primary, .label-primary {
+  background-color: #3278b3;
+  color: $new-light-color;
+}
+
+.badge-cool {
+  background-color: $new-main-deep-color;
+  color: $new-light-color;
+}
+
+.tag {
+  background: #7266ba;
+  color: $new-light-color;
+  border: 1px solid #6254b2;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  display: block;
+  float: left;
+  padding: 5px;
+  text-decoration: none;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-family: helvetica;
+  font-size: 13px;
+
+  a {
+    color: $new-light-color;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 11px;
+  }
+}

@@ -1,0 +1,125 @@
+@charset "UTF-8";
+
+@import "~base/styles/imports";
+
+.gc-slot-tab{
+  .gc-slot-tab-search{
+    position: absolute;
+    top: 52px;
+    right: 25px;
+    border-radius: 13px;
+    height: 26px;
+    width: 219px;
+    background: #e1e1e0;
+    .slot-tab-query{
+      position: absolute;
+      left: 7px;
+      top: 6px;
+    }
+    .gc-slot-tab-input{
+      position: absolute;
+      top: 0px;
+      right: 7px;
+      outline: none;
+      width: 185px;
+      height: 25px;
+      border: 0;
+      background: #e1e1e0;
+    }
+  }
+}
+
+.gc-slot-page{
+  height: 561px;
+
+  .gc-slot-type-container{
+    ul{
+      width: 100%;
+      height: 41px;
+      margin-left: 43px;
+      li{
+        display: inline-block;
+        min-width: 100px;
+        height: 20px;
+        padding: 2px 3px;
+        margin: 15px 5px 0;
+        text-align: center;
+        font-size: 14px;
+        color: $new-inverse-color;
+        border: 1px solid $new-inverse-color;
+        border-radius: 6px;
+
+        &:hover{
+          background: $new-main-deep-color;
+          color: $new-light-color;
+          border: 1px solid $new-main-deep-color;
+        }
+        &.active{
+          background: $new-main-deep-color;
+          color: $new-light-color;
+          border: 1px solid $new-main-deep-color;
+        }
+
+      }
+    }
+    .gc-slot-notice{
+      margin: 10px 0 10px 50px;
+    }
+  }
+
+  .gc-slot-game-list{
+    height: 481px;
+    overflow-y: auto;
+    margin: 15px 24px 0;
+    .gc-slot-game{
+      width: 207px;
+      height: 199px;
+      //cursor: pointer;
+      margin-left: 24px;
+      position: relative;
+      img{
+        width: 207px;
+        height: 153px;
+      }
+      .gc-slot-collect{
+        position: absolute;
+        right: 13px;
+        top:10px;
+        cursor: pointer;
+      }
+      .gc-slot-game-operation{
+        width:100%;
+        height: 43px;
+        font-size: 14px;
+        line-height: 43px;
+        background: #0ea8b5;
+        text-align: center;
+        color: #fff;
+        .gc-slot-game-name{
+          display: inline-block;
+        }
+        .gc-slot-entry-desc{
+          display: none;
+        }
+
+      }
+      &:hover{
+        .gc-slot-game-operation{
+          background: #fe6760;
+          .gc-slot-game-name{
+            display: none;
+          }
+          .gc-slot-entry-desc{
+            display: inline-block;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+
+  }
+  .gc-slot-pagination{
+    margin: 8px 24px;
+  }
+}

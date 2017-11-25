@@ -1,0 +1,704 @@
+//global setting
+$body-width: 1356px !default;
+
+//new
+$new-main-deep-dark-color: #066067 !default;
+$new-main-dark-color: #057c86 !default;
+$new-main-deep-color: #16a4aa !default;
+$new-dark-color: #555757 !default;
+$new-light-color: #f0efee !default;
+$new-inverse-color: #666666 !default;
+$new-gray-color: #f1e1e0 !default;
+$new-hot-color: #fe6760 !default;
+$new-pink-color: #fda4a0 !default;
+
+$new-black-color: #2F2F2F !default;
+$deep-gray-color: #494949 !default;
+
+$dark-color: #562e0f !default;
+$light-color: #f0efee !default;
+$main-pale-color: #3dafc0 !default;
+$main-light-color: #10a4aa !default;
+$main-color: #0197ad !default;
+$main-deep-color: $new-main-deep-color;
+$color-pleasant: #e8675d !default;
+$color-peaceful: #48bfd1 !default;
+$color-hot: #b01e34 !default;
+$color-sunshine: #aafb92!default;
+$color-gold: #f7d368!default;
+$color-dar-turquoise: #007e88 !default;
+
+$color-white-gray: #d0d6d8 !default;
+
+$font-color: $new-light-color;
+$font-deep-color: $main-color;
+$inverse-color: $new-inverse-color;
+
+$input-disable-color: #cac9ca !default;
+
+$inverse-border-color: #878585 !default;
+
+$table-border-color: #b1b1b1 !default;
+
+$background-color: white;
+
+//
+$brand-primary: #eae8e6 !default;
+$brand-info: #eae8e6 !default;
+
+//global-props
+$globalBtnRadius: 0;
+$globalInputRadius: 0;
+
+//font-size
+$font-xs: 12px !default;
+$font-sm: 14px !default;
+$font-md: 16px !default;
+$font-lg: 18px !default;
+$font-jb: 20px !default;
+$font-30: 30px !default;
+$font-40: 40px !default;
+$font-80: 80px !default;
+
+$font-sizes: (
+  xs: $font-xs,
+  sm: $font-sm,
+  md: $font-md,
+  lg: $font-lg,
+  jb: $font-jb,
+  30: $font-30,
+  40: $font-40,
+  80: $font-80
+);
+
+//font-color
+$font-default: $new-light-color;
+$font-dark: #2a2a2a !default;
+$font-mute: #ededed !default;
+$font-primary: $font-color;
+$font-light: $main-light-color;
+$font-light-primary: $main-pale-color;
+$font-info: $main-color;
+$font-success: #2baab1 !default;
+$font-danger: #e8675d !default;
+$font-warning: #e8675d !default;
+$font-light-pleasant: #fc9792 !default;
+$font-main: #e8675d !default;
+$font-inverse: $new-inverse-color;
+$font-passion: #fbd663 !default;
+
+$font-colors: (
+  default: $new-black-color,
+  primary: $font-primary,
+  pleasant: $color-pleasant,
+  light: $new-light-color,
+  inverse: $new-inverse-color,
+  dark: $new-dark-color,
+  passion: $font-passion,
+  cool: $new-main-deep-color,
+  sunshine: $color-sunshine,
+  hot: $color-hot,
+  pink: $new-pink-color,
+  black: $new-black-color,
+
+  important: $font-light-pleasant,
+  info: $font-info,
+  success: $font-success,
+  warning: $font-warning,
+  danger: $font-danger,
+  main: $font-main,
+  turquoise: $color-dar-turquoise
+);
+
+$bg-mute: $font-mute;
+$bg-mute-font-color: $inverse-color;
+
+$bg-info: $font-info;
+$bg-info-font-color: $font-default;
+
+$bg-success: $font-success;
+$bg-success-font-color: $font-default;
+
+$bg-warning: $font-warning;
+$bg-warning-font-color: $font-default;
+
+$bg-danger: $font-danger;
+$bg-danger-font-color: $font-default;
+
+$bg-main: $font-main;
+$bg-main-font-color: $font-default;
+
+$bg-colors: (
+  default: (bg: $font-default, color: $new-black-color),
+  deep: (bg: $new-main-deep-color, color: $new-light-color),
+  hot: (bg: $new-hot-color, color: $new-light-color),
+  primary: (bg: $main-light-color, color: $new-light-color),
+  black: (bg: $new-light-color, color: $new-black-color),
+  cool: (bg: $new-main-deep-color, color: $new-light-color),
+  footer: (bg: #f3d5d3, color: $new-black-color),
+  mute: (bg: $bg-mute, color: $bg-mute-font-color),
+  info: (bg: $bg-info, color: $bg-info-font-color),
+  success: (bg: $bg-success, color: $bg-success-font-color),
+  warning: (bg: $bg-warning, color: $bg-warning-font-color),
+  danger: (bg: $bg-danger, color: $bg-danger-font-color),
+  bread: (bg: #f3d5d3, color: $new-black-color)
+);
+
+
+$width-xs: 50px !default;
+$width-sm: 100px !default;
+$width-smd: 176px !default;
+$width-md: 300px !default;
+$width-lg: 500px !default;
+$width-jb: 905px !default;
+
+$widths: (xs: $width-xs, sm: $width-sm, smd: $width-smd, md: $width-md, lg: $width-lg, jb: $width-jb);
+
+$height-xs: 50px !default;
+$height-sm: 100px !default;
+$height-smd: 200px !default;
+$height-md: 300px !default;
+$height-mlg: 500px !default;
+$height-lg: 500px !default;
+$height-jb: 760px !default;
+
+$heights: (xs: $height-xs, sm: $height-sm, smd: $height-smd, md: $height-md, mlg: $height-mlg, lg: $height-lg, jb: $height-jb);
+
+$filter-xs: 5px !default;
+$filter-sm: 10px !default;
+$filter-smd: 15px !default;
+$filter-md: 20px !default;
+$filter-mlg: 30px !default;
+$filter-lg: 40px !default;
+
+$filters: (xs: $filter-xs, sm: $filter-sm, smd: $filter-smd, md: $filter-md, mlg: $filter-mlg, lg: $filter-lg);
+
+$spans: (
+  1: 75px,
+  2: 150px,
+  3: 215px,
+  4: 300px
+);
+
+$squares: (
+  xs: 50px,
+  60: 60px,
+  75: 75px,
+  120: 120px,
+  125: 125px,
+  150: 150px,
+  sm: 100px,
+  md: 300px,
+  lg: 500px
+);
+
+$input-widths: (
+  xs: 50px,
+  sm: 90px,
+  md: 134px,
+  lg: 210px,
+  jb: 270px
+);
+
+//input
+$inputs: (
+  default: (
+    color: $new-inverse-color,
+    bg-color: transparent,
+    border-color: $font-color
+  ),
+  inverse: (
+    color: $inverse-color,
+    bg-color: transparent,
+    border-color: $inverse-border-color
+  ),
+  black: (
+    color: $new-black-color,
+    bg-color: transparent,
+    border-color: $new-inverse-color
+  )
+);
+
+//select
+$select: (
+  default: (
+    border-color: $font-color,
+    color: $font-color,
+    background: url(~base/images/select-caret.png) no-repeat scroll 97% center transparent
+  ),
+  inverse: (
+    border-color: $new-inverse-color,
+    color: $inverse-color,
+    background: url(~base/images/select-caret-black.png) no-repeat scroll 97% center transparent
+  ),
+  black: (
+    border-color: $new-inverse-color,
+    color: $new-black-color,
+    background: url(~base/images/select-caret-black.png) no-repeat scroll 97% center transparent
+  )
+);
+
+$disabled: (
+  default: (
+    color: #82d7e4,
+    border-color: #0fb8d0,
+    bg-color: #27a9bc
+  ),
+  inverse: (
+    bg-color: $input-disable-color
+  ),
+  black: (
+    bg-color: $input-disable-color
+  )
+);
+
+$borders: (
+  default: $font-color,
+  cool: $main-deep-color,
+  table: $table-border-color,
+  inverse: $new-inverse-color
+);
+
+$basics: (
+  default: (
+    select: map_get($select, default),
+    input: map_get($inputs, default),
+    disabled: map_get($disabled, default)
+  ),
+  white: (
+    select: map_get($select, inverse),
+    input: map_get($inputs, inverse),
+    disabled: map_get($disabled, inverse),
+    bg-color: #ffffff,
+    color: $inverse-color
+  ),
+  inverse: (
+    select: map_get($select, inverse),
+    input: map_get($inputs, inverse),
+    disabled: map_get($disabled, inverse),
+    bg-color: $new-light-color,
+    color: $new-inverse-color
+  ),
+  side-main: (
+    select: map_get($select, inverse),
+    input: map_get($inputs, inverse),
+    disabled: map_get($disabled, inverse),
+    bg-color: $new-light-color,
+    color: $new-inverse-color
+  )
+);
+
+//checkbox
+$checkboxes: (
+  default: (
+    bg-color: $font-color,
+    active-bg-color: $main-color,
+    hook-color: $font-color,
+    border-color: #929092
+  ),
+  inverse: (
+    bg-color: $font-color,
+    active-bg-color: $main-color,
+    hook-color: $font-color,
+    border-color: #929092
+  ),
+  deep: (
+    bg-color: $main-light-color,
+    active-bg-color: $main-deep-color,
+    hook-color: $font-color,
+    border-color: $font-default
+  ),
+  pleasant: (
+    bg-color: $new-light-color,
+    active-bg-color: $color-pleasant,
+    hook-color: $new-light-color,
+    border-color: $new-inverse-color
+  )
+);
+
+//radio
+$radios: (
+  default: (
+    bg-color: $new-light-color,
+    wrapper-color: $new-black-color,
+    inner-color: $new-black-color
+  ),
+  inverse: (
+    bg-color: $font-color,
+    wrapper-color: $inverse-color,
+    inner-color: $inverse-color,
+
+    disabled-bg-color: #70999e,
+    disabled-wrapper-color: #989898,
+    disabled-inner-color: #989898
+  )
+);
+
+//popover
+$popovers: (
+  default: (
+    title-color: $font-default,
+    title-bg-color: $main-deep-color,
+    content-color: $inverse-color,
+    content-bg-color: $font-default
+  )
+);
+
+$btns: (
+  default: (
+    color: $font-color,
+    bg-color: $color-pleasant,
+    border-color: $color-pleasant,
+    hover: (
+      color: $font-color,
+      bg-color: $color-pleasant
+    ),
+    focus: (
+      color: $font-color,
+      bg-color: $color-pleasant
+    ),
+    active: (
+      color: $font-color,
+      bg-color: $color-pleasant
+    )
+  ),
+  primary: (
+    //color: #ffffff,
+    bg-color: $main-color,
+    border-color: $main-color,
+    hover: (
+      //color: #ffffff,
+      bg-color: $main-color
+    ),
+    focus: (
+      //color: #ffffff,
+      bg-color: $main-color
+    ),
+    active: (
+      //color: #ffffff,
+      bg-color: $main-color
+    )
+  ),
+  cool: (
+    //color: #ffffff,
+    bg-color: $main-deep-color,
+    border-color: $main-deep-color,
+    hover: (
+      //color: #ffffff,
+      bg-color: $main-deep-color
+    ),
+    focus: (
+      //color: #ffffff,
+      bg-color: $main-deep-color
+    ),
+    active: (
+      //color: #ffffff,
+      bg-color: $main-deep-color
+    )
+  ),
+  peaceful: (
+    //color: #ffffff,
+    bg-color: $color-peaceful,
+    border-color: $color-peaceful,
+    hover: (
+      //color: #ffffff,
+      bg-color: $color-peaceful
+    ),
+    focus: (
+      //color: #ffffff,
+      bg-color: $color-peaceful
+    ),
+    active: (
+      //color: #ffffff,
+      bg-color: $color-peaceful
+    )
+  ),
+  pure: (
+    color: $inverse-color,
+    bg-color: $font-default,
+    border-color: $font-default,
+    hover: (
+      color: $inverse-color,
+      bg-color: $font-default
+    ),
+    focus: (
+      color: $inverse-color,
+      bg-color: $font-default
+    ),
+    active: (
+      color: $inverse-color,
+      bg-color: $font-default
+    )
+  ),
+  silent: (
+    color: $new-inverse-color,
+    bg-color: transparent,
+    border-color: transparent,
+    hover: (
+      color: $new-inverse-color,
+      bg-color: transparent
+    ),
+    focus: (
+      color: $font-default,
+      bg-color: $color-pleasant
+      //box-shadow: none
+    ),
+    active: (
+      color: $font-default,
+      bg-color: $color-pleasant,
+      //box-shadow: none
+    )
+  ),
+  hollow: (
+    color: $new-black-color,
+    bg-color: transparent,
+    border-color: $new-black-color,
+    hover: (
+      color: $new-black-color,
+      bg-color: transparent,
+    ),
+    focus: (
+      color: $new-black-color,
+      bg-color: transparent,
+    ),
+    active: (
+      color: $new-black-color,
+      bg-color: transparent,
+    )
+  ),
+  orange: (
+    bg-color: #fba540,
+    border-color: #fba540,
+    hover: (
+      bg-color: #fba540
+    ),
+    focus: (
+      bg-color: #fba540
+    ),
+    active: (
+      bg-color: #fba540
+    )
+  ),
+  cloud: (
+    //color: #ffffff,
+    bg-color: $main-deep-color,
+    //border-color: $main-deep-color,
+    linear-color: linear-gradient(to bottom, #00d8ff, #00bbff),
+    hover: (
+      //color: #ffffff,
+      linear-color: linear-gradient(to bottom, #00d8ff, #00bbff),
+      bg-color: $main-deep-color
+    ),
+    focus: (
+      //color: #ffffff,
+      linear-color: linear-gradient(to bottom, #00d8ff, #00bbff),
+      bg-color: $main-deep-color
+    ),
+    active: (
+      //color: #ffffff,
+      linear-color: linear-gradient(to bottom, #00d8ff, #00bbff),
+      bg-color: $main-deep-color
+    )
+  ),
+);
+
+//==========================================
+
+//cursors
+$cursors: (
+  default: default,
+  pointer: pointer,
+  text: text,
+  move: move
+);
+
+$top-nav-height: 40px;
+
+//icon block
+$icon-block: (
+  bg-color: #9fa0a0,
+  color: $new-light-color,
+  icon-size: 18px,
+  size: 17px,
+  radius: 3px
+);
+
+//modal
+$modals: (
+  sm: 290px,
+  lg: 825px
+);
+
+$tables: (
+  default: (
+    th-bg-color: $new-main-deep-color,
+    th-color: $new-light-color,
+    td-bg-color: $new-light-color,
+    td-bg-hover-color: $new-gray-color,
+    td-color: $new-black-color
+  ),
+  similar: (
+    th-bg-color: $main-light-color,
+    th-color: $font-color,
+    td-bg-color: $main-light-color,
+    td-bg-hover-color: $main-pale-color,
+    td-color: $font-color
+  ),
+  deep: (
+    th-bg-color: $new-main-deep-color,
+    th-color: $font-color,
+    td-bg-color: #1daab0,
+    td-color: $font-color
+  )
+);
+
+//portlet
+
+$portlets: (
+  default: (
+    header-bg: $main-deep-color,
+    header-color: $font-color,
+    border-color: $main-deep-color,
+    body-bg: $new-light-color,
+    body-color: $new-black-color
+  ),
+  similar: (
+    header-bg: $main-light-color,
+    header-color: $font-color,
+    border-color: $main-deep-color,
+    body-bg: $main-light-color,
+    body-color: $font-color
+  ),
+  inverse: (
+    header-bg: $font-color,
+    header-color: $inverse-color,
+    border-color: $main-deep-color,
+    body-bg: $font-color,
+    body-color: $inverse-color
+  ),
+  side-main: (
+    header-bg: $new-main-dark-color,
+    header-color: $new-light-color,
+    border-color: $main-deep-color,
+    body-bg: $new-light-color,
+    body-color: $new-inverse-color
+  )
+);
+
+//alert
+$alerts: (
+  default: (
+    bg-color: $new-gray-color,
+    color: $new-inverse-color
+  ),
+
+  warning: (
+    bg-color: #fcf8e3,
+    color: $main-deep-color
+  ),
+  info: (
+    bg-color: #e2f1fc,
+    color: #446e77
+  ),
+  light: (
+    bg-color: $main-light-color,
+    color: $font-color
+  )
+);
+
+//nav-pills
+$nav-pills-TB: 21px !default;
+
+//carousel
+$carousel-indicators-border-color: $font-color;
+$carousel-indicators-border-width: 2px;
+$carousel-indicators-width: 10px - $carousel-indicators-border-width;
+$carousel-indicators-margin: 0 10px;
+
+//text-circle
+
+$text-circle-colors: (
+  default: (
+    color: $font-deep-color,
+    background: $font-default
+  ),
+  cool: (
+    color: $new-light-color,
+    background: $new-main-deep-color
+  ),
+  pleasant: (
+    color: $new-light-color,
+    background: $color-pleasant
+  )
+);
+
+$text-circle-sizes: (
+  sm: (
+    width: 35px,
+    font-size: $font-jb
+  ),
+  md: (
+    width: 40px,
+    font-size: $font-jb
+  ),
+  lg: (
+    width: 55px,
+    font-size: $font-jb
+  )
+);
+
+//nav
+$navTabs: (
+  default: (
+    border-color: $new-inverse-color,
+    color: $new-inverse-color,
+    bg-color: $new-light-color,
+    active-color: $new-dark-color,
+    active-bg-color: $new-main-deep-color
+  ),
+  inverse: (
+    border-color: $main-deep-color,
+    color: $font-inverse,
+    bg-color: transparent,
+    active-color: $font-color,
+    active-bg-color: $main-deep-color
+  )
+);
+
+$tab-circle-sizes: (
+  sm: (
+    width: 30px,
+    font-size: $font-md
+  ),
+  md: (
+    width: 40px,
+    font-size: $font-jb
+  )
+);
+
+//wrapper
+$wrapper-margin-left: 65px !default;
+$wrapper-margin-right: 70px !default;
+
+//modal
+$modal-fade-opacity: 0.3 !default;
+
+//header
+$header-color: #555757;
+$header-height: 37px !default;
+
+//card
+$cards-width: 217px !default;
+$cards-height: 142px !default;
+
+//steps
+$steps: (
+  indent: 20px,
+  active-color: $font-deep-color,
+  disabled-color: $font-default
+);
+
+$validate: (
+  invalid-border-color: $color-pleasant
+);
+

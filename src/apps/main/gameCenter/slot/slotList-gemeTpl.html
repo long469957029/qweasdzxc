@@ -1,0 +1,17 @@
+<%_(gameList).each(function(item,index){%>
+<li class="js-gc-slot-game gc-slot-game span4" data-id="<%=item.gameId%>">
+  <div class="thumbnail">
+    <!--<img data-src="<%=item.icon%>" alt="item.name" src="queen.png">-->
+    <span class="sfa sfa-slot-<%=item.channelId%>-<%=item.gameCode%>"><span class="js-gc-slot-collect  gc-slot-collect sfa sfa-slot-tab-collect<%=(item.collect ? 'ed' : '' )%>" data-id="<%=item.gameId%>"></span></span>
+    <!--<img data-src="<%=item.icon%>" alt="item.name">-->
+    <div class="js-gc-slot-entry gc-slot-game-operation" >
+      <span class="js-gc-slot-game-name gc-slot-game-name"><%=item.name%></span>
+      <span class="js-gc-slot-entry-desc gc-slot-entry-desc m-right-sm" data-type="0" data-id="<%=item.gameId%>">进入游戏</span>
+      <%if(item.trail){%>
+      <span class="js-gc-slot-entry-desc gc-slot-entry-desc m-left-sm" data-type="1" data-id="<%=item.gameId%>">免费试玩</span>
+      <%}%>
+      <!--<button>免费试玩</button>-->
+    </div>
+  </div>
+</li>
+<%});%>

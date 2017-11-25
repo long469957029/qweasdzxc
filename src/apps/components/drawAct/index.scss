@@ -1,0 +1,419 @@
+.mask_mid {
+    background: rgba(0, 0, 0, .7);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 101;
+}
+
+.activity_mid {
+    * {
+        margin: 0px;
+        padding: 0px;
+        font-family: "微软雅黑", "黑体";
+    }
+
+    ul, li {
+        list-style: none;
+    }
+
+    img {
+        border: none;
+        overflow: hidden;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    .clear_div {
+        clear: both;
+    }
+
+    .mask {
+        background: rgba(0, 0, 0, .7);
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+    }
+
+    .main_contain {
+        position: absolute;
+        width: 650px;
+        height: auto;
+        top:320px;
+        left:0;
+        right:0;
+        bottom:0;
+        margin:auto;
+    }
+
+    .bg_lump_01 {
+        position: relative;
+        width: 566px;
+        height: auto;
+        margin: 0px auto;
+    }
+
+    .bg_lump_02 {
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid white;
+        border-radius: 8px;
+        position: relative;
+        width: 535px;
+        height: 140px;
+        margin: 0px auto;
+    }
+
+    .con_li {
+        position: relative;
+        margin: 0px auto;
+        width: 590px;
+        height: auto;
+    }
+
+    .con_right {
+        width: 394px;
+        height: 129px;
+        margin-top: 87px;
+        float: right;
+        background: white;
+        border-radius: 2px;
+    }
+
+    .right_title {
+        background: url("images/gqtz/right_title.png") no-repeat;
+        width: 419px;
+        height: 88px;
+        position: absolute;
+        right: 0px;
+        top: -4px;
+    }
+
+    .con_text {
+        font-size: 12px;
+        width: 370px;
+        height: auto;
+        margin: 0px auto;
+        margin-top: 10px;
+        line-height: 18px;
+        color: #000;
+    }
+
+    .con_text span {
+        font-weight: bold;
+        display: block;
+        float: left;
+    }
+    .con_text p {
+        display: block;
+        float: left;
+    }
+
+    .con_left {
+        background: url("images/gqtz/table_lump.png") no-repeat;
+        width: 191px;
+        height: 216px;
+        float: left;
+    }
+
+    .con_left table {
+        width: 177px;
+        display: block;
+        margin: 0px auto;
+        margin-left: 14px;
+        border-collapse: collapse;
+    }
+
+    .con_left td {
+        width: 138px;
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    .con_left td.td_menu {
+        font-size: 12px;
+        background: none;
+        color: white;
+        line-height: 28px;
+    }
+
+    .con_left td.td_gray {
+        color: #555;
+        background: #e7e7e7;
+        font-size: 12px;
+        line-height: 32px;
+    }
+
+    .con_left td.td_white {
+        color: #555;
+        background: white;
+        font-size: 12px;
+        line-height: 32px;
+    }
+
+    .con_left td div.td_btn {
+        background: url("images/gqtz/td_btn.png") no-repeat;
+        width: 50px;
+        height: 23px;
+        text-align: center;
+        color: white;
+        line-height: 23px;
+        font-size: 12px;
+        margin: 0px auto;
+        margin-left: 15px;
+        cursor: pointer;
+    }
+
+    .title_pic {
+        position: absolute;
+        background: url("images/gqtz/title_pic.png") no-repeat;
+        width: 683px;
+        height: 517px;
+        top: -205px;
+        left: 0px;
+    }
+
+    .title_bg {
+        position: absolute;
+        background: url("images/gqtz/title_bg.png") no-repeat;
+        width: 693px;
+        height: 486px;
+        top: -185px;
+        left: 0px;
+    }
+
+    .title_text_2 {
+        position: absolute;
+        background: url("images/gqtz/title_text_2.png") no-repeat;
+        width: 423px;
+        height: 181px;
+        top: 85px;
+        left: 210px;
+        z-index: 30;
+    }
+
+    .li_btn {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        width: 106px;
+        height: 37px;
+        cursor: pointer;
+    }
+
+    .close_btn {
+        position: absolute;
+        top: -60px;
+        right: -50px;
+        width: 47px;
+        height: 47px;
+        cursor: pointer;
+    }
+
+    .close_rotarytable {
+        position: absolute;
+        top: -60px;
+        right: -50px;
+        width: 47px;
+        height: 47px;
+        cursor: pointer;
+    }
+
+    .close_return {
+        position: absolute;
+        top: -130px;
+        right: -50px;
+        width: 47px;
+        height: 47px;
+        cursor: pointer;
+    }
+
+    .icon_01 {
+        position: absolute;
+        top: -120px;
+        left: 185px;
+        background: url("images/gqtz/icon_01.png") no-repeat;
+        width: 168px;
+        height: 169px
+    }
+
+    .icon_02 {
+        position: absolute;
+        top: -120px;
+        left: 185px;
+        background: url("images/gqtz/icon_02.png") no-repeat;
+        width: 168px;
+        height: 169px
+    }
+
+    .icon_03 {
+        position: absolute;
+        top: -120px;
+        left: 185px;
+        background: url("images/gqtz/icon_03.png") no-repeat;
+        width: 168px;
+        height: 169px
+    }
+
+    .icon_04 {
+        position: absolute;
+        top: -120px;
+        left: 185px;
+        background: url("images/gqtz/icon_04.png") no-repeat;
+        width: 168px;
+        height: 169px
+    }
+
+    .pop_text_01 {
+        font-size: 26px;
+        text-align: center;
+        color: white;
+        width: 80%;
+        height: auto;
+        margin: 0px auto;
+        margin-top: 60px;
+    }
+
+    .pop_text_02 {
+        position: relative;
+        font-size: 20px;
+        width: 50%;
+        height: auto;
+        margin: 0px auto;
+        top: 35px;
+    }
+
+    .btn_lump {
+        width: 270px;
+        height: auto;
+        position: absolute;
+        left: 160px;
+        bottom: 30px;
+    }
+
+    .btn_01 {
+        text-align: center;
+        font-size: 22px;
+        line-height: 37px;
+        background: url("images/gqtz/btn_01.png") no-repeat;
+        width: 169px;
+        height: 42px;
+        margin: 0px auto;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+
+    .btn_02 {
+        width: 123px;
+        height: 37px;
+        float: right;
+    }
+
+    .btn_sure {
+        position: absolute;
+        left: 230px;
+        bottom: 30px;
+        width: 107px;
+        height: 37px;
+    }
+
+}
+
+
+
+/*   */
+#lottery {
+    background: url(images/gqtz/disc-bg.png) no-repeat scroll 0 0 transparent;
+    width: 370px;
+    height: 368px;
+    position: absolute;
+    left: 100px;
+    top: -20px;
+    z-index: 13;
+}
+
+#lottery .arrow {
+    background: url(images/gqtz/arrow.png) no-repeat scroll 0 0 transparent;
+    width: 28px;
+    height: 24px;
+    position: absolute;
+    top: 120px;
+    left: 167px;
+    z-index: 40;
+}
+
+#lottery .lot-btn {
+    width: 83px;
+    height: 82px;
+    overflow: hidden;
+    position: absolute;
+    top: 90px;
+    left: 90px;
+    z-index: 40;
+}
+
+#lottery .lot-btn span {
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+    display: block;
+    position: relative;
+}
+
+#lottery .first span {
+    background: url(images/gqtz/buttons_01.png) no-repeat scroll 0 0 transparent;
+}
+
+.status_fullscreen {
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0.2;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: none;
+}
+
+.status_get {
+    width: auto;
+    height: auto;
+    padding: 10px;
+    border-radius: 10px;
+    position: fixed;
+    display: none;
+    z-index: 20;
+}
+
+.td_btn_gray1 {
+    background: url(images/gqtz/td_btn_gray.png) no-repeat;
+    width: 50px;
+    height: 23px;
+    text-align: center;
+    color: black;
+    line-height: 28px;
+    margin: 0px auto;
+    cursor: pointer;
+    margin-left: 13px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

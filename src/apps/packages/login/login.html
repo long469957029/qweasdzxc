@@ -1,0 +1,116 @@
+<div class="js-loading"></div>
+<div class="js-header"></div>
+<div class="js-bg"></div>
+<div class="js-footer"></div>
+
+<div class="sign-in clearfix js-default-dialog">
+  <div class="toggle-btn-container">
+    <div class="arrow-hint">扫码登陆更安全</div>
+    <div class="to-qrcode js-to-qrcode"></div>
+  </div>
+  <div class="form-title">
+    无限娱乐会员登录
+  </div>
+  <div class="divider"></div>
+  <form id="loginForm" class="js-login-form login-form two-input" action="javascript:void(0);">
+    <div class="input-control two-input">
+      <div class="user-icon"></div>
+      <input type="text" class="input-block-level user js-login-user" name="username" value="<%=remember %>" placeholder="请输入您的用户名" autocomplete="off"
+        required data-parsley-username data-parsley-errors-messages-disabled>
+    </div>
+    <div class="input-control two-input">
+      <div class="password-icon"></div>
+      <input type="password" class="input-block-level password js-login-password" name="loginPwd" placeholder="请输入登录密码" autocomplete="off" required data-parsley-length="[6, 20]"
+        data-parsley-errors-messages-disabled>
+    </div>
+    <div class="js-login-valRegion val-region clearfix hidden input-control">
+        <div class="valcode-icon"></div>
+        <input type="hidden" class="js-login-valCode input-block-level input-varCode hidden" name="" placeholder="请输入验证码" maxlength="4"
+          required data-parsley-length="[4, 4]" data-parsley-errors-messages-disabled>
+        <i class="icon-ok"></i>
+        <input type="hidden" class="js-login-valResult" value="0">
+      <img class="js-login-valImg pull-right var-code">
+    </div>
+    <div class="m-bottom-sm clearfix m-top-sm">
+      <div class="pull-left">
+        <label style="visibility: hidden;">
+          <span class="custom-checkbox">
+            <input type="checkbox" id="jsRemember" class="inbox-check" <% if (remember) { %>checked<% } %> />
+            <label class="checkbox-label" for="jsRemember"></label>
+        </span>
+        <span class='remember-account'>记住账号</span>
+        </label>
+      </div>
+      <a href="resetPassword.html" class="forget-password">忘记密码 ?</a>
+    </div>
+    <div class="m-bottom-sm">
+      <button type="submit" class="js-login-login-btn login-login-btn btn btn-orange btn-lg btn-block" data-loading-text="登录中">登录</button>
+    </div>
+    <ul class="parsley-errors-list filled font-sm">
+      <li class="login-error-message parsley-required"></li>
+    </ul>
+  </form>
+
+  <a href="/changeUrl.html" class="change-url">速度慢? 点我切换</a>
+  <a href="/setup.exe" target="_blank" class="logger">下载极速登录器</a>
+  <div class="js-to-register register-link">
+    还没有账号?立即注册
+  </div>
+</div>
+
+<div class="sign-in clearfix js-qrcode-dialog hidden">
+  <div class="toggle-btn-container">
+    <div class="arrow-hint">密码登录在这里</div>
+    <div class="to-default js-to-login"></div>
+  </div>
+  <div class="qrcode js-qrcode"></div>
+  <div class="qrcode-hint"></div>
+  <a href="newDownload.html" class="download-app" target="_blank">没有无限手机APP? 去下载安装</a>
+  <div class="js-to-register register-link">
+    还没有账号?立即注册
+  </div>
+</div>
+
+<div class="register-up clearfix js-register-dialog hidden">
+  <div class="toggle-btn-container"></div>
+  <div class="form-title">
+    无限娱乐会员注册
+  </div>
+  <div class="divider"></div>
+  <!-- Form  -->
+  <form id="registerForm" class="js-register-form login-form" action="javascript:void(0);">
+    <div class="input-control register-input">
+      <div class="user-icon"></div>
+      <input type="text" class="input-block-level user js-register-username" name="userName" placeholder="请输入您的用户名" autocomplete="off"
+        required data-parsley-username data-parsley-errors-messages-disabled>
+      <div class="js-register-username-err register-err">*4-16个字符，支持英文和数字，不能以数字开头</div>
+      <input type="hidden" class="js-username-validate" value="1">
+    </div>
+    <div class="input-control register-input">
+      <div class="password-icon"></div>
+      <input type="password" class="input-block-level password js-register-password" name="loginPwd" placeholder="请输入登录密码" autocomplete="off" required data-parsley-length="[6, 20]"
+        data-parsley-errors-messages-disabled>
+      <div class="js-register-password-err register-err">*6-20位字符组成（不含空格），区分大小写，不能是9位以下的纯数字</div>
+      <input type="hidden" class="js-password-validate" value="1">
+    </div>
+    <div class="js-register-valRegion val-region clearfix input-control register-input">
+        <div class="valcode-icon"></div>
+        <input type="text" class="js-register-valCode input-block-level input-varCode" name="" placeholder="请输入验证码" maxlength="4"
+          required data-parsley-length="[4, 4]" data-parsley-errors-messages-disabled>
+        <input type="hidden" class="js-valcode-validate" value="0">
+        <div class="js-register-valcode-err register-err"></div>
+      <img class="js-register-valImg pull-right var-code">
+    </div>
+
+    <div class="m-bottom-sm">
+      <button type="submit" class="js-register-register-btn login-login-btn btn btn-orange btn-lg btn-block" data-loading-text="注册中">注册</button>
+    </div>
+    <input type="text" class="hidden js-re-linkId" name="linkId">
+  </form>
+  <!-- link -->
+  <div class="js-to-login login-link">
+    已有账号?立即登录
+  </div>
+</div>
+
+</div>

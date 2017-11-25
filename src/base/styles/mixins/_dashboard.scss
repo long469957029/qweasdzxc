@@ -1,0 +1,9 @@
+@mixin slide-nav-item($sfas) {
+  @each $class, $val in $sfas {
+    &.#{$class} {
+      &:hover {
+        @include sprite($val);
+      }
+    }
+  }
+}

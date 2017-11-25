@@ -1,0 +1,18 @@
+.slide-nav {
+
+  .slide-nav-panel {
+    overflow: hidden;
+    display: none;
+    .slide-nav-item {
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      padding: 30px 50px;
+      width: 156px;
+      height: 158px;
+    }
+    &.active {
+      display: block;
+    }
+  }
+}

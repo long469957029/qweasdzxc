@@ -1,0 +1,47 @@
+<table id="mark6Table" width="100%" border="1" cellpadding="0" cellspacing="1">
+    <tr class="thead_tr">
+        <td width="15%">期号</td>
+        <td width="45%">
+            <div class="thead-numDiv">
+                <div>正码1</div>
+                <div>正码2</div>
+                <div>正码3</div>
+                <div>正码4</div>
+                <div>正码5</div>
+                <div>正码6</div>
+                <div>特码</div>
+            </div>
+        </td>
+        <td width="15%" colspan="2">特码</td>
+        <td width="25%" colspan="3">和值</td>
+    </tr>
+    <% _(list).each(function(info) { %>
+    <tr>
+        <td><%=info.ticketPlanId %></td>
+        <td>
+            <div class="numDiv">
+                <% _(info.numInfo).each(function(num, index) { %>
+
+                <% if(info.numInfo.length-1==index){ %>
+                <div class="add-signDiv"><span class="<%=num.color %>"><%=num.num %></span><div class="add-sign"></div></div>
+                <% }else{ %>
+                <div><span class="<%=num.color %>"><%=num.num %></span></div>
+                <% } %>
+
+                <% }); %>
+            </div>
+            <div class="sxDiv">
+                <% _(info.numInfo).each(function(num, index) { %>
+                <div><span><%=num.sx %></span></div>
+                <% }); %>
+            </div>
+        </td>
+        <td><%=info.tmNumType %></td>
+        <td><%=info.tmNumEvenOrOdd %></td>
+        <td width="8.33%"><%=info.sumValType %></td>
+        <td width="8.33%"><%=info.sumValEvenOrOdd %></td>
+        <td width="8.33%"><%=info.sumVal %></td>
+    </tr>
+    <% }); %>
+
+</table>

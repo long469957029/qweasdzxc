@@ -1,0 +1,22 @@
+<div class="sidebar">
+  <div class="sidebar-title sfa-sidebar-<%=menus.icon %>-banner">
+    <div class="sidebar-title-inner">
+      <span class="sfa sfa-sidebar-dot"></span>
+      <span class="sfa sfa-sidebar-<%=menus.icon %> block m-center"></span>
+      <%=menus.name %>
+    </div>
+  </div>
+
+  <ul class="sidebar-list">
+    <% _(menus.sub).each(function(menu) { %>
+    <% if (!menu.needAuth || menu.auth) { %>
+    <li role="presentation" class="<% if (menu.isActive) { %>active<% } %>">
+      <a class="router" href="#<%=menu.router %>">
+        <%=menu.name %>
+        <% if (menu.isActive) { %><span class="sfa sfa-sidebar-chevron-right"></span><% } %>
+      </a>
+    </li>
+    <% } %>
+    <% }); %>
+  </ul>
+</div>

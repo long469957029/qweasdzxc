@@ -1,0 +1,149 @@
+@charset "UTF-8";
+
+@import
+"~base/styles/imports";
+
+$pg-filter: 5px !default;
+$mall-pg-filter: 12px !default;
+
+$pg-item: (
+  color: $font-inverse,
+  bg-color: $font-default,
+  hover-color: $font-default,
+  bg-hover-color: $font-light-pleasant,
+  active-color: $font-default,
+  bg-active-color: $color-pleasant,
+  disabled-color: #888888,
+  bg-disabled-color: $font-default
+);
+$mall-pg-item: (
+  color: #696969,
+  bg-color: #ffffff,
+  hover-color: $font-default,
+  bg-hover-color: #00abb8,
+  active-color: $font-default,
+  bg-active-color: #00abb8,
+  disabled-color: #888888,
+  bg-disabled-color: $font-default
+);
+
+.pagination {
+  margin: 0;
+  ul {
+    display: inline-block;
+    *display: inline;
+    margin-right: 20px;
+    *zoom: 1;
+    > {
+      li {
+        display: inline-block;
+        margin-left: $pg-filter;
+        > {
+          span {
+            padding: 3px 6px;
+            line-height: 15px;
+            display: inline-block;
+            cursor: pointer;
+            border: 1px solid $new-inverse-color;
+
+            background-color: map_get($pg-item, bg-color);
+            color: map_get($pg-item, color);
+            &:hover, &:focus {
+              background-color: map_get($pg-item, bg-hover-color);
+              color: map_get($pg-item, hover-color);
+            }
+          }
+        }
+      }
+      .active > {
+        span {
+          background-color: map_get($pg-item, bg-active-color);
+          color: map_get($pg-item, active-color);
+          //cursor: default;
+        }
+      }
+      .disabled > {
+        span {
+          background-color: map_get($pg-item, bg-disabled-color);
+          color: map_get($pg-item, disabled-color);
+          cursor: default;
+          &:hover, &:focus {
+            background-color: map_get($pg-item, bg-disabled-color);
+            color: map_get($pg-item, disabled-color);
+          }
+        }
+      }
+    }
+  }
+
+  >.active {
+    > span,
+    > span:focus,
+    > span:hover {
+      background-color: #1bbb9e;
+      border: 1px solid #05b499;
+    }
+  }
+  .pagination-curt-page {
+    width: 32px;
+    padding: 3px;
+    vertical-align: initial;
+    text-align: center;
+  }
+
+  .pagination-go-to {
+    padding: 3px 8px;
+    vertical-align: initial;
+  }
+}
+.pagination-mall{
+  margin: 0;
+  ul {
+    display: inline-block;
+    *display: inline;
+    margin-right: 20px;
+    *zoom: 1;
+    > {
+      li {
+        display: inline-block;
+        margin-left: $mall-pg-filter;
+        > {
+          span {
+            padding: 0px 15px;
+            height: 36px;
+            line-height: 36px;
+            display: inline-block;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid #dcdcdc;
+
+            background-color: map_get($mall-pg-item, bg-color);
+            color: map_get($mall-pg-item, color);
+            &:hover, &:focus {
+              background-color: map_get($mall-pg-item, bg-hover-color);
+              color: map_get($mall-pg-item, hover-color);
+            }
+          }
+        }
+      }
+      .active > {
+        span {
+          background-color: map_get($mall-pg-item, bg-active-color);
+          color: map_get($mall-pg-item, active-color);
+          //cursor: default;
+        }
+      }
+      .disabled > {
+        span {
+          background-color: map_get($mall-pg-item, bg-disabled-color);
+          color: map_get($mall-pg-item, disabled-color);
+          cursor: default;
+          &:hover, &:focus {
+            background-color: map_get($mall-pg-item, bg-disabled-color);
+            color: map_get($mall-pg-item, disabled-color);
+          }
+        }
+      }
+    }
+  }
+}

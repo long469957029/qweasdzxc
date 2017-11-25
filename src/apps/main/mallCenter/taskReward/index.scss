@@ -1,0 +1,165 @@
+@charset "UTF-8";
+
+@import "~base/styles/imports";
+.main-task{
+  p{
+    margin: 0;
+    padding: 0;
+  }
+  .mc-daily-content{
+    width:1200px;
+    height:530px;
+    position: relative;
+    margin-top: 25px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border:1px solid #dedede;
+    box-sizing: border-box;
+  }
+  .daily-title,.weekly-title{
+    width: 1200px;
+    height: 47px;
+    background: url('../misc/mall-task-day-bg.png') no-repeat;
+    position: absolute;
+    top: -5px;
+  }
+  .weekly-title{
+    background: url('../misc/mall-task-week-bg.png') no-repeat;
+  }
+  .title-task-tip{
+    width: 22px;
+    height: 22px;
+    background: url("../misc/task-tip.png") no-repeat;
+    margin-right: 10px;
+    margin-top: 12px;
+    float: right;
+  }
+  .mc-weekly-content{
+    position: relative;
+    width:1200px;
+    height:530px;
+    margin-top: 20px;
+    margin-bottom: 55px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border:1px solid #dedede;
+    box-sizing: border-box;
+  }
+  .title-task-type{
+    color: #ffffff;
+    line-height: 48px;
+    float: left;
+    margin-left: 75px;
+  }
+  .title-update-type{
+    color: #999999;
+    line-height: 48px;
+    font-size: 14px;
+    float: right;
+    margin-right: 35px;
+  }
+  .main-content{
+    height: 435px;
+    margin: 50px auto 40px;
+    padding: 0 30px;
+    .mc-block-list-left{
+      width:560px;
+      height: 215px;
+      background: url("./images/little-block-bg.png") no-repeat;
+      float: left;
+      margin-top: 15px;
+    }
+    .mc-block-list-right{
+      width:560px;
+      height: 215px;
+      float: right;
+      background: url("./images/little-block-bg.png") no-repeat;
+      margin-top: 15px;
+    }
+    .content-left{
+      width: 230px;
+      height: 215px;
+      float: left;
+      img{
+        margin: 34px 30px;
+      }
+    }
+    .content-right{
+      width: 330px;
+      height: 215px;
+      float: right;
+      .content-right-title{
+        color: #333333;
+        padding-top: 30px;
+        font-size: 18px;
+      }
+      .content-right-text{
+        color: #666666;
+        padding-top: 15px;
+        font-size: 12px;
+        height: 16px;
+        line-height: 16px;
+        span{
+          color: #f28880;
+        }
+        .money-number{
+          font-size: 16px;
+        }
+      }
+      .content-right-progress{
+        color: #666666;
+        padding-top: 15px;
+        font-size: 13px;
+        .progress-content{
+          width: 190px;
+          height: 15px;
+          display: inline-block;
+        }
+        .progress-number{
+          display: inline-block;
+          margin-left: 4px;
+          transform: translateY(-2px);
+        }
+      }
+      .content-right-btn{
+        padding-top: 25px;
+        font-size: 16px;
+        color: #ffffff;
+        .mc-pick-up-btn{
+          width: 110px;
+          height: 38px;
+          background: #e8675d;
+          border-radius: 10px;
+          outline: none;
+        }
+        .mc-pick-up-no-btn{
+          width: 110px;
+          height: 38px;
+          background: #f3b3ae;
+          border-radius: 10px;
+          outline: none;
+          cursor: default;
+        }
+        .mc-pick-up-over-btn{
+          width: 110px;
+          height: 38px;
+          background: #c7c7c7;
+          border-radius: 10px;
+          outline: none;
+          cursor: default;
+          opacity:0.65;
+        }
+        .mc-pick-up-none-btn{
+          width: 145px;
+          height: 38px;
+          background: #c7c7c7;
+          border-radius: 10px;
+          outline: none;
+          cursor: default;
+        }
+      }
+    }
+  }
+}
+
+

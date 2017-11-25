@@ -1,0 +1,69 @@
+<div class="ac-openAccount-rebate-notice">
+  <div class="js-ac-quota-container alert hidden as-fund-pwd-head">
+    <!--<i class="fa fa-exclamation-circle font-md"></i>-->
+    <div class="text-bold-dark">温馨提示：</div>
+    您目前拥有<span class="js-ac-open-limit"></span>，有配额限制请使用手动开户。
+  </div>
+  <form class="js-ac-openAccountManual-form ac-openAccountManual-form form-horizontal">
+    <div class=" control-group">
+      <label class="control-label text-bold-dark">开户类型：</label>
+
+      <div class="controls">
+        <div class="btn-group js-ac-userType" data-toggle="buttons-radio">
+          <button type="button" class="btn btn-cool active" data-type="0">代理</button>
+          <button type="button" class="btn btn-cool" data-type="1">玩家</button>
+        </div>
+      </div>
+    </div>
+    <div class=" control-group">
+      <label class="control-label text-bold-dark">用户名：</label>
+
+      <div class="controls">
+        <!--<input type="text" class="js-ac-userName" autocomplete="off" name="userName" data-parsley-username>-->
+        <input type="text" class="js-ac-userName" autocomplete="off" name="userName">
+        <span class="help-inline text-inverse">4-16个字符，支持英文和数字，不能以数字开头</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label text-bold-dark">密码：</label>
+
+      <div class="controls">
+        <!--<input type="password" id='jsACPassword' class="js-ac-password" data-parsley-length="[6, 20]">-->
+        <input type="password" id='jsACPassword' class="js-ac-password">
+        <span class="help-inline text-inverse">6-20位字符组成（不含空格），区分大小写，不能是9位以下的纯数字</span>
+      </div>
+    </div>
+    <!--<div class="control-group">-->
+      <!--<label class="control-label text-bold-dark">确认密码：</label>-->
+
+      <!--<div class="controls">-->
+        <!--<input type="password" class="js-ac-repeatPassword" data-parsley-length="[6, 20]" data-parsley-equalto="#jsACPassword">-->
+        <!--<span class="help-inline text-inverse">再次输入密码</span>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="control-group">
+      <label class="control-label text-bold-dark">设置返点：</label>
+
+      <div class="controls">
+        <div class="js-ac-rebate-set-container">
+          <input type="text" class="js-ac-manual-rebate" value="" data-parsley-oneDecimal data-parsley-range="" />
+          <div class="js-ac-manual-rebate-info ac-manual-rebate-info">
+            <span class="text-inverse">% (范围：<span class="js-ac-bonus-range-Prompt"></span>)</span>
+            <a class="js-look-bonus text-pleasant look-bonus" data-ticket="constant">查看对应奖金</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<div class="control-group">-->
+      <!--<div class="controls">-->
+        <!--<div class="js-ac-rebate-set-container ac-op-manual-rebate-set-container"></div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="ac-submit-btn-div">
+      <div class="controls">
+        <button type="button" class="js-ac-submitOpenAccountInfo btn ac-open-account-manual-button" data-loading-text="保存中">立即开户</button>
+      </div>
+    </div>
+  </form>
+</div>
+

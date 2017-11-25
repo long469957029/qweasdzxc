@@ -1,0 +1,46 @@
+<a class="mc-close-btn" data-dismiss="modal">×</a>
+<% if (status === 0) { %>
+
+  <% if (moneyImg === true) { %>
+    <div class="mc-top-content-ok mc-img-type-m-ok">
+  <% } else { %>
+    <div class="mc-top-content-ok mc-img-type-n-ok">
+  <% } %>
+      <span class="mc-status"><%= title %></span>
+    </div>
+  <div class="mc-mid-content">
+    <div class="mc-mid-title">
+      <%= msg %>
+    </div>
+    <div class="mc-mid-text">
+      <%= text %>
+    </div>
+  </div>
+<% } else { %>
+  <% if (moneyImg === true) { %>
+    <div class="mc-top-content-no mc-img-type-m-no">
+  <% } else { %>
+    <div class="mc-top-content-no mc-img-type-n-no">
+  <% } %>
+      <span class="mc-status"><%= title %></span>
+    </div>
+    <div class="mc-mid-content">
+      <div class="mc-fail-title">
+        <%= msg %>
+      </div>
+    </div>
+<% } %>
+  <% if(showLookBtn){
+      var className = 'js-my-cou-info';
+      var btn = '查看';
+     }else{
+      var className = 'js-set-info';
+      var btn = '确定';
+     }
+  %>
+  <div class="mc-bottom-content clearfix">
+    <button data-dismiss="modal" class="<%=className%>"><%=btn%></button>
+  </div>
+<% if (seal==true) { %>
+  <img class="ms-seal-pic" src="./images/seal.png" alt="">
+<% } %>

@@ -1,0 +1,45 @@
+{
+	"result": 0,
+	"msg": null,
+	"sign": null,
+	"root":
+	{
+		"dataList": [
+		{
+			"date": "20170401",
+			"beforeLevel": "2",
+			"afterLevel": "2",
+			"upgradeType": "保级",
+			"remark": ""
+		},
+		{
+			"date": "20170301",
+			"beforeLevel": "5",
+			"afterLevel": "2",
+			"upgradeType": "降级",
+			"remark": ""
+		},
+		{
+			"date": "20170201",
+			"beforeLevel": "2",
+			"afterLevel": "5",
+			"upgradeType": "升级",
+			"remark": ""
+		},
+		{
+			"date": "20170101",
+			"beforeLevel": "6",
+			"afterLevel": "2",
+			"upgradeType": "降级",
+			"remark": ""
+		},
+		{
+			"date": "20161201",
+			"beforeLevel": "0",
+			"afterLevel": "6",
+			"upgradeType": "升级",
+			"remark": ""
+		}],
+		"rowCount": 5
+	}
+}

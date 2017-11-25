@@ -1,0 +1,37 @@
+<a class="mc-close-btn" data-dismiss="modal">×</a>
+<div class="mall-form-header">
+  <span class="title"><%= title %></span>
+</div>
+<div class="mall-form-content">
+  <form action="javascript:void(0);" class="js-set-info-form form-horizontal">
+    <div class="warning">温馨提示: 请准确提供您的收货信息以便我们发货，在我们发货前您可以在礼物兑换列表修改您的收货信息。</div>
+
+    <div class="control-group input-div">
+      <label class="control-label">收货人: </label>
+      <div class="controls">
+        <input type="text" name="exName" class="" placeholder="收货人姓名" data-parsley-range="[2,10]" value="<%= exName %>" required/>
+      </div>
+    </div>
+    <div class="control-group input-div">
+      <label class="control-label">联系电话：</label>
+
+      <div class="controls">
+        <input type="text" name="exPhone" class="" placeholder="请填写手机号码" data-parsley-phone value="<%= exPhone %>" required/>
+      </div>
+    </div>
+    <div class="control-group input-div">
+      <label class="control-label">收货地址：</label>
+
+      <div class="controls">
+        <textarea type="text" rows="5" name="exAddr" class="" placeholder="请填写详情的收货地址" data-parsley-range="[0,200]" required><%= exAddr %></textarea>
+      </div>
+    </div>
+    <div>
+      <input type="hidden" name="itemId" value="<%= itemId %>">
+    </div>
+
+    <div class="mc-bottom-content clearfix">
+      <button type="submit" class="js-set-info-confirm">确定</button>
+    </div>
+  </form>
+</div>

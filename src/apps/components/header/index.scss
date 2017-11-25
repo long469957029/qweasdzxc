@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+@import
+"~base/styles/imports";
+
+.logo {
+  background: url('./images/logo.png');
+  width: 98px;
+  height: 95px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 51;
+}
+
+.header {
+  width: 100vw;
+  height: 75px;
+  position: absolute;
+  background: #c1e4f9;
+  z-index: 50;
+}
+
+.navbar {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  color: black;
+  list-style: none;
+
+  li {
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 12px;
+  }
+
+  a {
+    color: #0e777c;
+    transform: translateY(-1px);
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .title {
+    transform: translate(5px, -9px);
+    display: inline-block;
+  }
+}

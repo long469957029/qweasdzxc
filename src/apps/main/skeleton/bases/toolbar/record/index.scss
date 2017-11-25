@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+@import '../../../../misc/variable';
+@import '../../../../misc/mixin';
+
+@mixin float-item($font-size, $color, $width, $height, $margin) {
+  font-size: $font-size;
+  color: $color;
+  height: $height;
+  line-height: $height;
+  margin-bottom: $margin;
+  float: left;
+  width: $width;
+}
+
+.sidebar-record-container {
+  @include border-box();
+
+  .record-total {
+    padding: 20px;
+    border-bottom: 1px solid $font-dark;
+  }
+
+  .record-total-item {
+    float: left;
+    width: 50%;
+    text-align: center;
+    border-right: 1px solid $font-light;
+
+    &:nth-child(2) {
+      border-right: none;
+    }
+
+    .total-title {
+      color: $font-gray;
+      font-size: 14px;
+      margin-bottom: 20px
+    }
+
+    .total-amount {
+      color: $font-dark;
+      font-size: 18px;
+    }
+  }
+}
+
+.record-recent-container {
+  padding: 20px;
+
+  .recent-title {
+    font-size: 12px;
+    color: $font-dark;
+    margin-bottom: 10px;
+  }
+
+  .recent-game {
+    padding-bottom: 15px;
+    border-bottom: 1px solid $font-light;
+
+    .game-date, .game-title {
+      @include float-item(14px, $font-gray, 50%, 30px, 0);
+      font-size: 12px;
+    }
+
+    .game-title {
+      text-align: left;
+    }
+
+    .game-date {
+      text-align: right;
+    }
+
+    .game-type, .game-amount, .game-state {
+      @include float-item(12px, $font-dark, 33%, 30px, 0);
+    }
+
+    .game-type {
+      text-align: left;
+    }
+
+    .game-amount {
+      text-align: center;
+    }
+
+    .game-state {
+      text-align: right;
+    }
+  }
+
+  .recent-more {
+    display: block;
+    font-size: 14px;
+    color: $font-dark;
+    text-align: center;
+    margin: 30px auto;
+    text-decoration: underline;
+  }
+}
+
+
+
+

@@ -1,0 +1,246 @@
+.mask {
+    background: rgba(0, 0, 0, .7);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 3
+}
+
+.activity_bet{
+
+    color: #000;
+    font-size: 17px;
+
+    * {
+        margin: 0px;
+        padding: 0px;
+        font-family: "微软雅黑", "黑体";
+    }
+
+    ul, li {
+        list-style: none;
+    }
+
+    img {
+        border: none;
+        overflow: hidden;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    .clear_div {
+        clear: both;
+    }
+
+
+
+    .main_contain {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        margin: 350px auto;
+        top: 0;
+        left: 0;
+    }
+
+    .bg_lump_01 {
+        position: relative;
+        background: url("./images/tz/bg_lump_01.png") no-repeat;
+        width: 632px;
+        height: 225px;
+        margin: 0px auto;
+    }
+
+    .bg_lump_02 {
+        position: relative;
+        background: url("./images/tz/bg_lump_02.png") no-repeat;
+        width: 579px;
+        height: 298px;
+        margin: -120px auto;
+    }
+
+    .bg_lump_03 {
+        position: relative;
+        background: url("./images/tz/bg_lump_03.png") no-repeat;
+        width: 579px;
+        height: 368px;
+        margin: -120px auto;
+    }
+
+    .title_pic {
+        position: absolute;
+        background: url("./images/tz/title_pic.png") no-repeat;
+        width: 435px;
+        height: 204px;
+        top: -250px;
+        left: 90px;
+    }
+
+    .sunshine {
+        position: absolute;
+        background: url("./images/tz/sunshine.png") no-repeat;
+        width: 470px;
+        height: 470px;
+        top: -370px;
+        left: 86px;
+    }
+
+    .title_pic_info {
+        color: white;
+        position: relative;
+        width: 100%;
+        height: auto;
+        text-align: center;
+        margin: 0px auto;
+        padding-top: 0px;
+        top: -43px;
+    }
+
+    .title_pic_info span {
+        font-size: 24px;
+        color: #ffcc00;
+    }
+
+    .con_li {
+        position: relative;
+        top: -19px;
+        width: auto;
+        height: auto;
+        margin-left: 6px;
+    }
+
+    .con_li li {
+        font-size: 13px;
+        text-align: center;
+        background: url("./images/tz/li_bg.png") no-repeat;
+        position: relative;
+        display: block;
+        width: 97px;
+        height: 67px;
+        padding-top: 30px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        float: left;
+        top: 9px;
+    }
+
+    .con_li li span.blue {
+        font-size: 15px;
+        color: #0048ff;
+    }
+
+    .con_li li span.red {
+        font-size: 15px;
+        color: red;
+    }
+
+    .li_btn {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        width: 106px;
+        height: 37px;
+        cursor: pointer;
+    }
+
+    .notice {
+        color: white;
+        width: 100%;
+        height: auto;
+        font-size: 16px;
+        text-align: center;
+        margin: 0px auto;
+        margin-top: 20px;
+    }
+
+    .submit_btn {
+        position: relative;
+        margin: 0px auto;
+        bottom: -20px;
+        width: 131px;
+        height: 37px;
+    }
+
+    .close_btn {
+        position: absolute;
+        top: -22px;
+        right: -18px;
+        width: 47px;
+        height: 47px;
+        cursor: pointer;
+    }
+
+    .person_icon_01 {
+        position: relative;
+        top: 20px;
+        margin: 0px auto;
+        background: url("./images/tz/person_icon_01.png") no-repeat;
+        width: 121px;
+        height: 121px
+    }
+
+    .person_icon_02 {
+        position: relative;
+        top: 20px;
+        margin: 0px auto;
+        background: url("./images/tz/person_icon_02.png") no-repeat;
+        width: 121px;
+        height: 121px
+    }
+
+    .pop_text_01 {
+        font-size: 20px;
+        text-align: center;
+        width: 80%;
+        height: auto;
+        margin: 0px auto;
+        margin-top: 30px;
+    }
+
+    .pop_text_02 {
+        position: relative;
+        font-size: 20px;
+        width: 50%;
+        height: auto;
+        margin: 0px auto;
+        top: 35px;
+    }
+
+    .btn_lump {
+        width: 270px;
+        height: auto;
+        position: absolute;
+        left: 160px;
+        bottom: 30px;
+    }
+
+    .btn_01 {
+        width: 123px;
+        height: 37px;
+        float: left;
+    }
+
+    .btn_02 {
+        width: 123px;
+        height: 37px;
+        float: right;
+    }
+
+    .btn_sure {
+        position: absolute;
+        left: 230px;
+        bottom: 30px;
+        width: 107px;
+        height: 37px;
+    }
+}
+
+

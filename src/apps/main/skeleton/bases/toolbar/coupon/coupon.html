@@ -1,0 +1,74 @@
+<div class="coupon-outer">
+
+    <div class="coupon <%= styleClass %>">
+      <% if (from === 0) { %>
+      <% if (!_.isNull(levelLimit) && limitRange !== 0 && limitRange !== 1 && limitRange !== 2) { %>
+        <div class="label yellow">Lv.<%= levelLimit %><% if(limitLevelType === 0){ %> 专享 <%}else{%> 以上 <%}%></div>
+      <% } %>
+      <% if (limitRange === 0) { %>
+        <div class="label green">新用户专享</div>
+      <% } %>
+      <% if (limitRange === 1) { %>
+        <div class="label red">老用户专享</div>
+      <% } %>
+      <% if (limitRange === 2) { %>
+        <div class="label green">总代专享</div>
+      <% } %>
+      <% } %>
+      <div class="type <% if (lastNum && !_.isNull(lastNum)) { %> p-type <% } %> ">
+        <% if (lastNum && !_.isNull(lastNum)) { %>
+        <div class="last-num last-num-bg-<%=styleClass%>">剩 <span class="font-sm"><%=lastNum%></span> 张</div>
+        <% } %>
+        <%= couponName %>
+      </div>
+      <div class="seal">
+        <% if (from === 0 && couponStatus === 3) { %>
+        <div class="sfa sfa-mall-none-stamp"></div>
+        <% }else if(from === 1){
+          if(couponStatus === 1) { %>
+          <div class="sfa sfa-mall-have-use"></div>
+          <% }else if(couponStatus === 2){ %>
+          <div class="sfa sfa-mall-has-expired"></div>
+          <% } %>
+        <% } %>
+      </div>
+      <div class="info">
+        <div class="price">
+          <% if (couponBonusType === 1) { %>
+            <span class="sfa sfa-mall-rmb-big-<%= styleClass %>"></span>
+          <%= bigShowNum %>
+          <% } else { %>
+          <%= bigShowNum %>
+            <span class="sfa mall-percent-icon sfa-mall-percent-big-<%= styleClass %>"></span>
+          <% } %>
+        </div>
+        <div class="desc"><%= couponType === 5 ? '投注时直接使用' : couponDesc  %></div>
+        <div class="sub-info">
+          <div class="container">
+            <div class="rebet"><%= couponDetailDesc %></div>
+            <div class="time"><%= validStartDate %>-<%= validEndDate %></div>
+          </div>
+        </div>
+      </div>
+      <div class="integral">
+        <% if(from === 0){ %>
+        <span class="sfa sfa-mall-integral-icon-gray"></span>
+        <span>兑换积分:</span>
+        <span class="amount"><%= requireIntegral %></span>
+        <% if (couponStatus === 0) { %>
+          <button class="btn btn-mall-coupon-action not-ready" data-id="<%= couponId %>" disabled>即将开始</button>
+        <% } else if (couponStatus === 1) { %>
+          <button class="btn btn-mall-coupon-action js-coupon-exchange" data-id="<%= couponId %>">立即兑换</button>
+        <% } else if (couponStatus === 2) { %>
+          <button class="btn btn-mall-coupon-action disabled" data-id="<%= couponId %>" disabled>已兑换</button>
+        <% } else if (couponStatus === 3) { %>
+          <button class="btn btn-mall-coupon-action disabled" data-id="<%= couponId %>" disabled>已抢完</button>
+        <% } %>
+
+        <% }else if(from === 1){ %>
+        <span class="sfa sfa-mall-product-num vertical-middle"></span>
+        <span>券编号：<%= couponToken %></span>
+        <% } %>
+      </div>
+    </div>
+  </div>

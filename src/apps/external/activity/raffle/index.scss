@@ -1,0 +1,786 @@
+*{
+  padding:0px;
+  margin:0px;
+}
+img{
+  border:none;
+  overflow:hidden;
+}
+a{
+  font-family:"宋体";
+  font-size:12px;
+  text-decoration:none;
+}
+li{
+  list-style:none;
+  display:block;
+}
+tabel,tr,td{
+  border:none;
+}
+.clear_div{
+  clear:both;
+}
+body{
+  background:#a10207;
+}
+.container{
+  width:auto;
+  height:auto;
+  position:relative;
+}
+.bg_top{
+  width:100%;
+  height:auto;
+  position:absolute;
+  top:0px;
+  left:0px;
+  z-index:11;
+}
+.bg_top img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.bg_bottom{
+  width:100%;
+  height:auto;
+  position:fixed;
+  left:0px;
+  bottom:0px;
+}
+.bg_bottom img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.rocket{
+  width:35%;
+  height:auto;
+  position:absolute;
+  top:20px;
+  left:36%;
+}
+.rocket img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.note_lump{
+  width: 30%;
+  height: auto;
+  position: absolute;
+  top: 182px;
+  left: 38px;
+}
+.note_lump img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.note_text{
+  position:absolute;
+  top:25px;
+  left:10%;
+  color:#3e134f;
+  font-family:"Microsoft Yahei";
+  font-size:16px;
+  line-height:30px;
+}
+.note_text span{
+  font-weight:bold;
+}
+.title_pic{
+  width:56%;
+  height:auto;
+  position:absolute;
+  top:0px;
+  left:28%;
+  z-index:12;
+}
+.title_pic img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.sure_btn{
+  width:16%;
+  height:auto;
+  position:absolute;
+  top:760px;
+  left:42%;
+  cursor:pointer;
+}
+.sure_btn img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.sure_btn_text{
+  width:100%;
+  height:auto;
+  text-align:center;
+  position:absolute;
+  top:30px;
+  left:0px;
+  color:#e74824;
+  font-family:"Microsoft Yahei";
+  font-size:40px;
+  line-height:30px;
+}
+.status_false{
+  width:auto;
+  height:auto;
+  padding:10px;
+  background:white;
+  border:6px solid #ffee35;
+  border-radius:10px;
+  position:fixed;
+  top:0px;
+  left:0px;
+  display:none;
+  z-index:20;
+}
+.icon_hate{
+  width:98px;
+  height:98px;
+  float:left;
+}
+.icon_smile{
+  background:url(./smile.png) no-repeat;
+  width:98px;
+  height:98px;
+  float:left;
+}
+.icon_smile_text{
+  height:100px;
+  float:left;
+  color:#3e134f;
+  font-family:"Microsoft Yahei";
+  font-size:22px;
+  line-height:100px;
+  text-align:center;
+}
+.icon_smile_text span{
+  margin-left:10px;
+  color:red;
+  font-size:26px;
+}
+.status_table{
+  font-family:"Microsoft Yahei";
+  font-size:16px;
+  width:480px;
+  height:auto;
+  margin:20px auto;
+  border-collapse:collapse;
+}
+.status_table td{
+  text-align:center;
+  width:120px;
+  height:36px;
+  line-height:36px;
+  border:1px solid black;
+}
+.status_table tr td span{
+  font-weight:bold;
+  color:red;
+}
+.s_tr{
+  background:#ffcc33;
+}
+.s_tr2{
+  background:#ffd862;
+}
+.hate_text{
+  width:400px;
+  height:170px;
+  float:left;
+  color:#3e134f;
+  font-family:"Microsoft Yahei";
+  font-size:30px;
+  line-height:80px;
+  text-align:center;
+}
+.hate_text span{
+  color:red;
+  font-size:26px;
+}
+.status_fullscreen{
+  width:100%;
+  height:100%;
+  background:black;
+  opacity:0.2;
+  position:fixed;
+  top:0px;
+  left:0px;
+  display:none;
+}
+.status_get{
+  width:auto;
+  height:auto;
+  padding:10px;
+  background:white;
+  border:6px solid #ffee35;
+  border-radius:10px;
+  position:fixed;
+  top:0px;
+  left:0px;
+  display:none;
+  z-index:20;
+}
+.close_btn{
+  font-size:16px;
+  font-weight:bold;
+  color:white;
+  background:#3F3F3F;
+  width:30px;
+  height:30px;
+  text-align:center;
+  line-height:30px;
+  border-radius:30px;
+  position:absolute;
+  top:5px;
+  right:5px;
+  cursor:pointer;
+}
+.time_lump{
+  color: #333333;
+}
+
+@media (min-width:1280px) and (max-width:1366px){
+  .title_pic{
+    width:40%;
+    height:auto;
+    position:absolute;
+    top:0px;
+    left:35%;
+    z-index:12;
+  }
+  .title_pic img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  #lottery {
+    background:url(./disc-bg.png) no-repeat scroll 0 0 transparent;
+    width: 450px;
+    height: 450px;
+    position:absolute;
+    left:460px;
+    top:220px;
+    z-index:13;
+  }
+  .time_lump{
+    font-size:14px;
+    font-weight:bold;
+    width:80%;
+    height:auto;
+    position:absolute;
+    bottom:50px;
+    left:12%;
+  }
+  .note_lump{
+    width:30%;
+    height:auto;
+    position:absolute;
+    top:290px;
+    left:50px;
+  }
+  .note_lump img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .note_text{
+    position:absolute;
+    top:110px;
+    left:5%;
+    font-family:"Microsoft Yahei";
+    font-size:12px;
+    line-height:23px;
+  }
+  .note_text span{
+    font-weight:bold;
+  }
+  .sure_btn{
+    width:16%;
+    height:auto;
+    position:absolute;
+    top:410px;
+    left:75%;
+    cursor:pointer;
+  }
+  .sure_btn img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .sure_btn_text{
+    width:100%;
+    height:auto;
+    text-align:center;
+    position:absolute;
+    top:18px;
+    left:0px;
+    color:#e74824;
+    font-family:"Microsoft Yahei";
+    font-size:28px;
+    line-height:30px;
+  }
+  .lump_top_01{
+    background:white;
+    border:6px #ffcc00 solid;
+    border-radius:6px;
+    width:690px;
+    height:36px;
+    line-height:36px;
+    position:absolute;
+    top:700px;
+    left:340px;
+    z-index:10;
+  }
+  .prompt_lump2{
+    width:690px;
+    height:36px;
+    margin:0px auto;
+  }
+  .prompt_title2{
+    font-size:14px;
+    line-height:34px;
+    padding-left:10px;
+    height:26px;
+    float:left;
+  }
+  .prompt_content2{
+    width:600px;
+    height:32px;
+    overflow:hidden;
+    text-align:center;
+    position:relative;
+    float:left;
+  }
+  .prompt_content2 ul{
+    display:block;
+    width:1000px;
+    height:32px;
+    position:absolute;
+    top:0px;
+    left:0px;
+  }
+  .prompt_content2 li{
+    width:200px;
+    font-size:12px;
+    line-height:34px;
+    color:#333;
+    float:left;
+  }
+  .prompt_content2 li span{
+    color:red;
+  }
+}
+@media (min-width:1366px) and (max-width:1440px){
+  .title_pic{
+    width:42%;
+    height:auto;
+    position:absolute;
+    top:0px;
+    left:32%;
+    z-index:12;
+  }
+  .title_pic img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  #lottery {
+    background:url(./disc-bg.png) no-repeat scroll 0 0 transparent;
+    width: 450px;
+    height: 450px;
+    position:absolute;
+    left:460px;
+    top:220px;
+    z-index:13;
+  }
+  .time_lump{
+    font-size: 17px;
+    font-weight:bold;
+    width:80%;
+    height:auto;
+    position:absolute;
+    bottom:60px;
+    left:10%;
+  }
+  .note_lump{
+    width:28%;
+    height:auto;
+    position:absolute;
+    top:320px;
+    left:50px;
+  }
+  .note_lump img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .note_text{
+    position:absolute;
+    top:110px;
+    left:5%;
+    right: 5%;
+    font-family:"Microsoft Yahei";
+    font-size:12px;
+    line-height:22px;
+  }
+  .note_text span{
+    font-weight:bold;
+  }
+  .sure_btn{
+    width:16%;
+    height:auto;
+    position:absolute;
+    top:440px;
+    left:75%;
+    cursor:pointer;
+  }
+  .sure_btn img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .sure_btn_text{
+    width:100%;
+    height:auto;
+    text-align:center;
+    position:absolute;
+    top:20px;
+    left:0px;
+    color:#e74824;
+    font-family:"Microsoft Yahei";
+    font-size:28px;
+    line-height:30px;
+  }
+  .lump_top_01{
+    background:white;
+    border:6px #ffcc00 solid;
+    border-radius:6px;
+    width:690px;
+    height:36px;
+    line-height:36px;
+    position:absolute;
+    top:690px;
+    left:360px;
+    z-index:10;
+  }
+  .prompt_lump2{
+    width:690px;
+    height:36px;
+    margin:0px auto;
+  }
+  .prompt_title2{
+    font-size:14px;
+    line-height:34px;
+    padding-left:10px;
+    height:26px;
+    float:left;
+  }
+  .prompt_content2{
+    width:600px;
+    height:32px;
+    overflow:hidden;
+    text-align:center;
+    position:relative;
+    float:left;
+  }
+  .prompt_content2 ul{
+    display:block;
+    width:1000px;
+    height:32px;
+    position:absolute;
+    top:0px;
+    left:0px;
+  }
+  .prompt_content2 li{
+    width:200px;
+    font-size:12px;
+    line-height:34px;
+    color:#333;
+    float:left;
+  }
+  .prompt_content2 li span{
+    color:red;
+  }
+}
+@media (min-width:1440px){
+  #lottery {
+    background:url(./disc-bg.png) no-repeat scroll 0 0 transparent;
+    width: 450px;
+    height: 450px;
+    position:absolute;
+    left:520px;
+    top:330px;
+    z-index:13;
+  }
+  .time_lump{
+    font-size:22px;
+    font-weight:bold;
+    width:80%;
+    height:auto;
+    position:absolute;
+    bottom:85px;
+    left:10%;
+  }
+  .note_lump{
+    width:26%;
+    height:auto;
+    position:absolute;
+    top:400px;
+    left:50px;
+  }
+  .note_lump img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .note_text{
+    position:absolute;
+    top:108px;
+    left:5%;
+    font-family:"Microsoft Yahei";
+    font-size:14px;
+    line-height:26px;
+  }
+  .note_text span{
+    font-weight:bold;
+  }
+  .sure_btn{
+    width:16%;
+    height:auto;
+    position:absolute;
+    top:540px;
+    left:75%;
+    cursor:pointer;
+  }
+  .sure_btn img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .sure_btn_text{
+    width:100%;
+    height:auto;
+    text-align:center;
+    position:absolute;
+    top:23px;
+    left:0px;
+    color:#e74824;
+    font-family:"Microsoft Yahei";
+    font-size:32px;
+    line-height:30px;
+  }
+  .lump_top_01{
+    background:white;
+    border:6px #ffcc00 solid;
+    border-radius:6px;
+    width:690px;
+    height:36px;
+    line-height:36px;
+    position:absolute;
+    top:820px;
+    left:420px;
+    z-index:10;
+  }
+  .prompt_lump2{
+    width:690px;
+    height:36px;
+    margin:0px auto;
+  }
+  .prompt_title2{
+    font-size:14px;
+    line-height:34px;
+    padding-left:10px;
+    height:26px;
+    float:left;
+  }
+  .prompt_content2{
+    width:600px;
+    height:32px;
+    overflow:hidden;
+    text-align:center;
+    position:relative;
+    float:left;
+  }
+  .prompt_content2 ul{
+    display:block;
+    width:1000px;
+    height:32px;
+    position:absolute;
+    top:0px;
+    left:0px;
+  }
+  .prompt_content2 li{
+    width:200px;
+    font-size:12px;
+    line-height:34px;
+    color:#333;
+    float:left;
+  }
+  .prompt_content2 li span{
+    color:red;
+  }
+}
+@media (min-width:1900px){
+  #lottery {
+    background:url(./disc-bg.png) no-repeat scroll 0 0 transparent;
+    width: 450px;
+    height: 450px;
+    position:absolute;
+    left:750px;
+    top:430px;
+    z-index:13;
+  }
+  .time_lump{
+    font-size:26px;
+    font-weight:bold;
+    width:80%;
+    height:auto;
+    position:absolute;
+    bottom:110px;
+    left:14%;
+  }
+  .note_lump{
+    width:26%;
+    height:auto;
+    position:absolute;
+    top:400px;
+    left:50px;
+  }
+  .note_lump img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .note_text{
+    position: absolute;
+    top: 148px;
+    left: 5%;
+    right: 5%;
+    font-family: "Microsoft Yahei";
+    font-size: 14px;
+    line-height: 30px;
+  }
+  .note_text span{
+    font-weight:bold;
+  }
+  .sure_btn{
+    width:16%;
+    height:auto;
+    position:absolute;
+    top:560px;
+    left:75%;
+    cursor:pointer;
+  }
+  .sure_btn img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .sure_btn_text{
+    width:100%;
+    height:auto;
+    text-align:center;
+    position:absolute;
+    top:30px;
+    left:0px;
+    color:#e74824;
+    font-family:"Microsoft Yahei";
+    font-size:40px;
+    line-height:30px;
+  }
+
+  .lump_top_01{
+    background:white;
+    border:6px #ffcc00 solid;
+    border-radius:6px;
+    width:690px;
+    height:36px;
+    line-height:36px;
+    position:absolute;
+    top:885px;
+    left:640px;
+    z-index:10;
+  }
+  .prompt_lump2{
+    width:690px;
+    height:36px;
+    margin:0px auto;
+  }
+  .prompt_title2{
+    font-size:14px;
+    line-height:34px;
+    padding-left:10px;
+    height:26px;
+    float:left;
+  }
+  .prompt_content2{
+    width:600px;
+    height:32px;
+    overflow:hidden;
+    text-align:center;
+    position:relative;
+    float:left;
+  }
+  .prompt_content2 ul{
+    display:block;
+    width:1000px;
+    height:32px;
+    position:absolute;
+    top:0px;
+    left:0px;
+  }
+  .prompt_content2 li{
+    width:200px;
+    font-size:12px;
+    line-height:34px;
+    color:#333;
+    float:left;
+  }
+  .prompt_content2 li span{
+    color:red;
+  }
+}
+
+#lottery .arrow {
+  background: url(./arrow.png) no-repeat scroll 0 0 transparent;
+  width: 75px;
+  height: 58px;
+  position: absolute;
+  top: 115px;
+  left: 214px;
+}
+#lottery .arrow2 {
+  background: url(./arrow2.png) no-repeat scroll 0 0 transparent;
+  width: 49px;
+  height: 94px;
+  position: absolute;
+  top: 11px;
+  left: 210px;
+}
+#lottery .lot-btn {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  position: absolute;
+  top: 156px;
+  left: 163px;
+}
+#lottery .lot-btn span {
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  display: block;
+  position: relative;
+}
+
+#lottery .first span {
+  background: url(buttons_01.png) no-repeat scroll 0 0 transparent;
+}

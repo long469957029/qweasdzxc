@@ -1,0 +1,19 @@
+{
+  "result": 0,
+  "msg": "ok",
+  "root": {
+    "totalAmount": 1000000,
+    "useAmount": 200000,
+    "getRechargeBonus": 0,
+    "rechargeAmount": 10000000,
+    "rechargeBonus": 0,
+    "betAmount": 500000,
+    "betBonus": 250000,
+    "completeMission": true,
+    "missionBonus": 600000,
+    "getBetBonus": 0,
+    "otherBonus": 0,
+    "bindBankCard": true,
+    "bindMobile": true
+  }
+}

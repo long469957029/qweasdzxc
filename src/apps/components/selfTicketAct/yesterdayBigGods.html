@@ -1,0 +1,22 @@
+<div class="big-gods-main">
+    <div class="big-gods-worship-main js-big-gods-worship-main">
+        <a class="close" data-dismiss="modal"></a>
+        <div class="big-gods-worship-info-main">
+            <div class="info-list info-name">昨日大神：<%=data.userName%></div>
+            <div class="info-list info-prize">累计中奖金额：<%=_(data.prize).convert2yuan()%>元</div>
+            <div class="info-list info-amount">获得额外奖励：<%=_(data.amount).convert2yuan()%>元</div>
+            <div class="info-worShip-btn js-info-worShip-btn"></div>
+        </div>
+    </div>
+    <div class="big-gods-cheats-main js-big-gods-cheats-main hidden">
+        <a class="close" data-dismiss="modal"></a>
+        <div class="big-gods-cheats-info-main">
+            <div class="cheats-info-list">大神投注彩种：<%=data.ticketName%></div>
+            <div class="cheats-info-list">大神玩法：<%=data.playName%></div>
+            <div class="cheats-info-list">大神投注参考：</div>
+            <div class="cheats-info-bet-num">中奖号码：<%=data.betNum%></div>
+            <a class="cheats-info-btn js-cheats-info-btn" data-dismiss="modal"></a>
+        </div>
+    </div>
+    <div class="big-gods-cheats-prompt js-big-gods-cheats-main hidden">注：大神投注情况每天都在变化，该投注仅供参考。</div>
+</div>

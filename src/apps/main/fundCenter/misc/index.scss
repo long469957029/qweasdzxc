@@ -1,0 +1,1265 @@
+@charset "UTF-8";
+
+@import
+"~base/styles/imports";
+
+
+.fc-security-notice-div {
+  background-image: url(security.png);
+
+  .fc-security-notice-content {
+    padding-top: 325px;
+    padding-bottom: 20px;
+  }
+  .fc-security-notice-link {
+    height: 106px;
+    text-align: center;
+  }
+
+  .security-notice-type-div {
+    text-align: left;
+    width: 240px;
+    margin: 10px auto;
+  }
+  .security-notice-shadow {
+    margin-left: 290px;
+    margin-top:20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 340px;
+    min-height: 60px;
+    background-color:rgba(50, 50, 50, 0.3);
+    border-radius: 10px;
+  }
+  .security-notice-img {
+    width: 40px;
+    height: 34px;
+    margin-right: 10px;
+    display: inline-block;
+    text-align: left;
+  }
+  .security-notice-span {
+    width: 120px;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+}
+
+.fc-security-notice-div.dialog-money-locked,
+.fc-security-notice-div.dialog-money-unlocked{
+  .fc-security-notice-content {
+    padding-top: 45px;
+  }
+}
+
+.fc-recharge {
+  padding: 0px;
+
+  ul {
+    //    margin: 13px 0 0 0;
+  }
+  //online bank
+  .fc-lesson-div {
+    position: relative;
+    top: -38px;
+    right: 30px;
+  }
+
+  .fc-lesson-text {
+    padding-top: 10px;
+    font-size: 14px;
+  }
+
+  .fc-lesson-withdraw-text {
+    font-size: 14px;
+  }
+
+  input {
+    width:166px;
+  }
+
+  .btn {
+    width: 248px;
+    height: 40px;
+    background-color: $new-hot-color;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+
+
+}
+
+
+
+.fc-moneyWithdrawal-view {
+  padding: 15px 15px 0 15px;
+  input {
+    width: 166px;
+  }
+  .fc-wd-password{
+    width: 152px;
+    height: 14px;
+  }
+  .btn {
+    width: 166px;
+    height: 32px;
+  }
+}
+
+.fc-bankInfoForm {
+  width: 550px;
+  display: inline-block;
+}
+
+.fc-countdown {
+  display: inline-block;
+  margin-top: 80px;
+  vertical-align: top;
+
+  .sfa-cd-icon {
+    vertical-align: top;
+    margin-top: 5px;
+  }
+}
+
+.fc-trade-no-label {
+  width: 250px;
+  display: inline-block;
+}
+.fc-trade-no-input {
+  width: 160px;
+  margin-left: 2px;
+}
+.fc-trade-type-label {
+  //width: 231px;
+  display: inline-block;
+}
+
+.fc-bet-time-div {
+  display: inline-block;
+}
+
+.fc-bet-time-label {
+  margin-left: 13px;
+  width: 57px;
+  display: inline-block;
+}
+
+.fc-page-size-label {
+  //width: 250px;
+  display: inline-block;
+}
+
+
+
+//withdrawal
+
+.fc-cardList {
+  margin-top: 5px;
+  position: relative;
+  width: 640px;
+  min-height: 55px;
+  max-height: 225px;
+  overflow: auto;
+
+  .fc-card-item {
+    list-style: none;
+    padding: 7px 0 7px 15px;
+    margin-bottom: 10px;
+    border: 1px solid $table-border-color ;
+
+    &.unActive {
+      background-color: #b1b1b1;
+    }
+
+    .fc-wd-bankName {
+      width: 100px;
+      font-size: 16px;
+      display: inline-block;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+    .fc-wd-frozenTime {
+      width: 100px;
+      float: right;
+      .fc-wd-effective-title {
+        color: white;
+        text-align: center;
+        font-size:13px;
+        font-weight: 400;
+      }
+      .fc-wd-effective-time {
+        color: white;
+        text-align: center;
+        font-size: 17px;
+        font-weight: 700;
+      }
+    }
+    .fc-wd-newCard {
+      width: 53px;
+      margin-top: -7px;
+      float: right;
+    }
+  }
+  .fc-card-pic {
+    width: 68px;
+    height: 38px;
+  }
+}
+.sfa-fee-free {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 16px;
+  font-weight: bold;
+  .sfa-fee-free-inner {
+    color: $new-light-color;
+    width: 35px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}
+
+.fc-withdrawal-confirm-form {
+  font-size: 14px;
+  background-image: url(withdraw.png);
+  height: 550px;
+
+  .fc-w-bank {
+    background-image: url(bank.png);
+    float: left;
+    width: 24px;
+    height: 25px;
+  }
+  .fc-w-name {
+    background-image: url(name.png);
+    float: left;
+    width: 24px;
+    height: 24px;
+  }
+  .fc-w-cardNo {
+    background-image: url(cardNo.png);
+    float: left;
+    width: 24px;
+    height: 24px;
+  }
+  .fc-w-branch {
+    background-image: url(branch.png);
+    float: left;
+    width: 24px;
+    height: 25px;
+  }
+  .fc-w-amount {
+    background-image: url(amount.png);
+    float: left;
+    width: 30px;
+    height: 25px;
+  }
+
+  &.fc-group {
+    .control-confirm {
+      .controls {
+        margin-left: 120px;
+      }
+    }
+  }
+}
+
+.fc-withdrawal-confirm {
+  width: 300px;
+  height: 240px;
+  position: relative;
+  margin: 0 0 40px 290px;
+  padding: 65px 20px 1px;
+  .fc-wd-confirm-content{
+    font-size: 16px;
+  }
+}
+
+//moneyTransfer
+
+.fc-group {
+  .control-label {
+    width: 125px;
+  }
+
+  .controls {
+    margin-left: 130px;
+  }
+
+  &.fc-group-lg {
+
+    .control-label {
+      width: 120px;
+    }
+    .controls {
+      margin-left: 120px;
+    }
+  }
+}
+
+//fc
+.bank-card {
+  display: inline-block;
+  width: 158px;
+  height: 158px;
+  margin-right: 53px;
+  font-size: 0;
+  cursor: pointer;
+
+  border: 3px solid transparent;
+  border-radius: 35px;
+  &.bank-card-active0 {
+    &.active {
+      border-color: #bb8b88;
+    }
+  }
+  &.bank-card-active1 {
+    &.active {
+      border-color: #8ea77a;
+    }
+  }
+  &.bank-card-active2 {
+    &.active {
+      border-color: #8298b2;
+    }
+  }
+}
+
+.uc-card-text-disable {
+  color: #a4a4a4;
+}
+
+
+.fc-re-div1 {
+  //border: 1px solid #d4d4d4;
+  border-bottom: 0;
+}
+.fc-re-div2 {
+  //border: 1px solid #d4d4d4;
+  border-top: 0;
+  //padding: 20px 20px 0 20px;
+  background-color: #fff;
+  .control-label{
+    width: 83px;
+  }
+  .controls{
+    margin-left: 93px;
+  }
+}
+
+.fc-bkselect{
+  margin: 10px 0 0 13px;
+  float: left;
+  font-size: 14px;
+}
+.fc-re-bankList-main{
+  margin-bottom: 10px !important;
+  padding-right: 94px;
+  position: relative;
+}
+.fc-re-bankList-select{
+  width: 248px;
+  height: 37px;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  display: inline-block;
+  position: relative;
+  line-height: 37px;
+  text-align: left;
+  cursor: pointer;
+  .ch-bank-icon{
+    display: inline-block;
+    vertical-align: middle;
+    background-size: 100% 100%;
+    margin-left: 10px;
+    margin-bottom: 3px;
+  }
+  .cj-bank-name{
+    display: inline-block;
+    margin-left: 10px;
+  }
+  .select-down{
+    width: 18px;
+    height: 10px;
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    background: url("select-down.png") no-repeat;
+    &.up{
+      transform: rotate(180deg);
+    }
+  }
+}
+.fc-re-bankList{
+  position: absolute;
+  width: 530px;
+  height: 185px;
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  top: 45px;
+  left: 35%;
+  background: #ffffff;
+  z-index: 999;
+  &:before{
+    content: ' ';
+    border: 5px solid transparent;
+    border-bottom-color: #e1e1e1;
+    width: 0px;
+    height: 5px;
+    position: absolute;
+    left: 42%;
+    top: -15px;
+  }
+  .fc-re-bank{
+    width: 110px;
+    height: 32px;
+    box-sizing: border-box;
+    float: left;
+    margin-left: 15px;
+    margin-top: 11px;
+    line-height: 28px;
+    cursor: pointer;
+    &.active,&:hover{
+      border: 2px solid #17c0c8;
+      border-radius: 10px;
+    }
+  }
+  .fc-bank-icon{
+    //width: 18px;
+    //height: 18px;
+    display: block;
+    float: left;
+    margin-top: 5px;
+    background-size: 100% 100%;
+    margin-left: 10px;
+  }
+  .fc-bank-name{
+    float: right;
+    margin-right: 15px;
+  }
+}
+.fc-re-bankList-bg{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  top: 0px;
+  left: 0px;
+}
+//.fc-re-bankList {
+//  //border:1px  solid #d4d4d4;
+//  border-left: 0;
+//  border-right: 0;
+//  border-bottom: 0;
+//  text-align: left;
+//  width: 90%;
+//  line-height: 46px;
+//  white-space: nowrap;
+//  margin-left: 93px;
+//  td {
+//    // border:1px solid #d4d4d4;
+//    width: 25%;
+//    height: 46px;
+//    span {
+//      display: block;
+//      line-height: 30px;
+//      margin-left: 10px;
+//      padding-left: 50px;
+//      margin-top: -15px;
+//    }
+//  }
+//  .fc-re-bank {
+//    //cursor: pointer;
+//    //border:1px solid #d4d4d4;
+//    background: url('bank_bg1.png') no-repeat;
+//    padding-top: 8px;
+//  }
+//
+//  td.active{
+//    //background-color: $color-sunshine;
+//    background: url('bank_bg.png') no-repeat;
+//    padding-top: 8px;
+//  }
+//}
+
+.fc-re-amount-div {
+  margin-left: -35px;
+  margin-right: 20px;
+
+}
+.fc-re-amount-label{
+  margin-right: 20px;
+}
+.fc-re-amount {
+  width: 236px;
+}
+.fc-re-quickAmounts{
+  margin-left: -220px;
+}
+.fc-re-quickAmount {
+  list-style-type: none;
+  margin-left: 217px;
+  text-align: left;
+  transform: translateX(318px);
+  li{
+    text-align: center;
+    margin-right: 5px;
+    display: inline-block;
+    width: auto;
+    cursor: pointer;
+    min-width: 45px;
+    max-width: 45px;
+    white-space: nowrap;
+    background: #e6e6e6;
+    border-radius: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  li:focus {
+    background-color: lightgrey;
+  }
+  li:hover {
+    background-color: lightgrey;
+  }
+}
+.fc-re-commit {
+  width: 250px;
+  //background-color: $color-bright-red;
+}
+.fc-re-alipay {
+  //background: url('alipay.png') no-repeat;
+  //padding-left: 30px !important;
+  //margin-left: 20px;
+  //line-height: 30px !important;
+}
+.fc-re-union {
+  //background: url('union.png') no-repeat;
+  //padding-left: 45px !important;
+  //margin-left: 20px;
+  //line-height: 30px !important;
+}
+.fc-re-wechat {
+  //background: url('wechat.png') no-repeat;
+  //padding-left: 32px !important;
+  //margin-left: 20px;
+  //line-height: 30px !important;
+}
+
+
+.fc-re-bank-zhongguo {
+  width: 16px;
+  height: 16px;
+  background: url('zhongguoL.png') no-repeat;
+}
+.fc-re-bank-gongshang {
+  width: 19px;
+  height: 19px;
+  background: url('gongshangL.png') no-repeat;
+}
+.fc-re-bank-nongye {
+  width: 21px;
+  height: 21px;
+  background: url('nongyeL.png') no-repeat;
+}
+.fc-re-bank-jianshe {
+  width: 20px;
+  height: 21px;
+  background: url('jiansheL.png') no-repeat;
+}
+
+.fc-re-bank-jiaotong {
+  width: 20px;
+  height: 22px;
+  background: url('jiaotongL.png') no-repeat;
+}
+.fc-re-bank-minsheng {
+  width: 19px;
+  height: 14px;
+  background: url('minshengL.png') no-repeat;
+}
+.fc-re-bank-guangfa {
+  width: 22px;
+  height: 19px;
+  background: url('guangfaL.png') no-repeat;
+}
+.fc-re-bank-guangda {
+  width: 28px;
+  height: 12px;
+  background: url('guangdaL.png') no-repeat;
+}
+
+.fc-re-bank-pufa {
+  width: 19px;
+  height: 16px;
+  background: url('pufaL.png') no-repeat;
+}
+.fc-re-bank-zhaoshang {
+  width: 17px;
+  height: 17px;
+  background: url('zhaoshangL.png') no-repeat;
+}
+.fc-re-bank-pingan {
+  width: 27px;
+  height: 15px;
+  background: url('pinganL.png') no-repeat;
+}
+.fc-re-bank-xingye {
+  width: 25px;
+  height: 16px;
+  background: url('xingyeL.png') no-repeat;
+}
+.fc-re-bank-zhongxin {
+  width: 18px;
+  height: 18px;
+  background: url('zhongxinL.png') no-repeat;
+}
+.fc-re-bank-youzheng {
+  width: 20px;
+  height: 19px;
+  background: url('youzhengL.png') no-repeat;
+}
+.fc-re-bank-huaxia {
+  width: 23px;
+  height: 22px;
+  background: url('huaxiaL.png') no-repeat;
+}
+
+.p-body-size{
+  width:550px;
+  height: 250px;
+  border: 0px;
+}
+
+.p-dialog-body-logo{
+  float: left;
+  margin: 5px;
+}
+
+.p-dialog-body-title{
+  margin: 10px;
+  font-size: 18px;
+  width: 350px;
+  text-align: left;
+
+}
+
+.p-dialog-body-context{
+  margin-left: 10px;
+  text-align: left;
+  font-size: 13px;
+  width: 350px;
+}
+
+.p-dialog-btn-scale{
+  float: left;
+  margin-left: 100px;
+  margin-right: 10px;
+  width: 100px;
+  height: 30px;
+
+}
+
+.p-dialog-record{
+  float: left;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  color: black;
+  text-decoration: underline;
+}
+
+.tab-select{
+  //background-color: #057c86 !important;
+  //border:1px !important;
+}
+.tab-select1{
+  //background-color: #fff !important;
+  //border:1px !important;
+}
+
+.fc-re-content{
+  height: 567px;
+  background-color: #fff;
+  //margin: 10px !important;
+}
+.fc-re-nav-manual-tabs{
+  padding-left: 20px;
+  font-size: 13.5px !important;
+  background: linear-gradient(to bottom, #ffffff,#ededed);
+  //margin-bottom: 0px;
+  border-bottom: 1px solid #dddddd;
+
+  .sfa-recommend, .sfa-fc-new {
+    transform: translate(3px, -2px);
+  }
+
+  .fc-re-payment-type{
+    margin-bottom: 0px;
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 54px;
+    text-align: center;
+    line-height: 60px;
+    position: relative;
+    .fc-re-nav-tab-a{
+      margin-right: 0px;
+      padding-left: 8px;
+      padding-right: 8px;
+      color: #333333;
+    }
+    &:after{
+      content: ' ';
+      width: 1px;
+      height: 20px;
+      display: block;
+      background: #d1d1d1;
+      position: absolute;
+      top:20px;
+      right: 0px;
+    }
+    &:last-child{
+      &:after{
+        display: none;
+      }
+    }
+    &.active{
+      .fc-re-nav-tab-a{
+        color: #17c0c8;
+        position: relative;
+        &:before{
+          content: ' ';
+          border: 3px solid transparent;
+          border-bottom-color: #17c0c8;
+          width: 0px;
+          height: 5px;
+          position: absolute;
+          bottom: -13px;
+          left: 45%;
+        }
+        &:after{
+          content: ' ';
+          width: 100%;
+          height: 3px;
+          background:#17c0c8;
+          position: absolute;
+          bottom: -16px;
+          left: 0px;
+        }
+      }
+    }
+  }
+}
+.tip-info {
+  position: relative;
+  overflow-y: auto;
+  height: 460px;
+  overflow-x: hidden;
+  color: #666;
+
+  .warning {
+    color: #c14640;
+    transform: translate(5px, 5px);
+  }
+
+  & .controls > .info-content {
+    width: 250px;
+    height: 35px;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    padding: 0px 20px;
+    box-sizing: border-box;
+  }
+
+  .info-center-content {
+    width: 520px;
+    margin: 0 auto;
+    font-size: 13px;
+    .control-label {
+      line-height: 35px;
+    }
+
+    .fc-re-lookTransferTutorial {
+      color: #3d83c1;
+      text-decoration: underline;
+      margin-left: 10px;
+    }
+  }
+
+  .fe-re-copy {
+    color: #4b4b4b;
+    background: #e7e7e7;
+    border-radius: 3px;
+    width: 65px;
+    height: 28px;
+    line-height: 28px;
+    position: absolute;
+    transform: translateY(-7px);
+    &:hover, &:hover {
+      color: #4b4b4b;
+    }
+  }
+
+  .form-center {
+    margin-top: -25px;
+  }
+  .control-group {
+    background-color: white;
+    margin-bottom: 10px;
+    // border-bottom: 1px solid #ccc;
+    color: #333;
+  }
+  .fc-re-gotoAliPay-div,
+  .fc-re-gotoBank-div{
+    background-color: transparent; border: 0px;
+  }
+
+  .fc-re-gotoAliPay-div>div,
+  .fc-re-gotoBank-div>div{
+    margin-left: 125px; margin-top: 10px;
+  }
+  .control-label {
+    // border-right: 1px dashed #ccc;
+    margin: 0px;
+    line-height: 40px;
+    padding-top: 0px;
+    padding-right: 15px;
+  }
+  .controls > span {
+    margin-top: 0px;
+    display: inline-block;
+    line-height: 36px;
+    margin-left: 5px;
+    height:40px;
+  }
+  .tip-info-prompt-div{
+    background-color: transparent;
+    border-bottom: 0px;
+    margin-top: 25px;
+    .fc-re-aliPayTransfer-prompt{
+      color: red;
+    }
+    .fc-re-bankTransfer-prompt{
+      color: #333;
+      .fc-starBank{
+        color: red;
+      }
+      .fc-isSameBank{
+        margin-left: 4px;
+        margin-right: 4px;
+      }
+      .fc-endBank{
+        color: red;
+        margin-right: 4px;
+      }
+    }
+  }
+  .fc-important-notice{
+    background: url(./important-notice.png) no-repeat ;
+    width: 162px;
+    height: 341px;
+    position: absolute;
+    color: #ff5958;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    padding: 62px 36px;
+    top: 14px;
+    right: 39px;
+  }
+}
+
+
+.fc-re-userName{
+  position: relative;
+  //margin-top: 45px;
+  margin-left: -106px;
+  .aliPayTransfer-prompt{
+    position: absolute;
+    top: -40px;
+    left: 3px;
+    color: red;
+  }
+  .tip{
+    color: #c14640;
+    margin-left: 124px;
+  }
+}
+
+.fc-re-login-div{
+  margin-left: 125px;
+}
+
+.fe-re-copy{
+  background-color: #fff;
+  border: 1px solid #ccc;
+  width: 65px;
+  height: 20px;
+  border-radius: 5px;
+  line-height: 20px;
+  text-align: center;
+  color: #8c8c8c;
+  margin-left: 15px;
+}
+
+.fc-re-bankUrl{
+  color: #333;
+  text-decoration: underline;
+  line-height: 40px;
+  margin-left: 20px;
+  &:hover{
+    color: #989898;
+    text-decoration: underline;
+  }
+  &:active{
+    color: #333;
+  }
+  &:focus{
+    color: #333;
+  }
+}
+
+.fc-wd-div1 {
+  margin-left: 74px;
+}
+.fc-wd-quickAmount {
+  margin-left: 66px;
+  list-style-type: none;
+  li{
+    text-align: center;
+    margin-right: 5px;
+    display:inline-block;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+    width:auto;
+    cursor: pointer;
+
+    min-width: 25px;
+    max-width: 30px;
+    white-space: nowrap;
+
+  }
+  li:focus {
+    background-color: $color-sunshine;
+  }
+  li:hover {
+    background-color: $color-sunshine;
+  }
+}
+
+.fc-wd-commit {
+  width: 250px;
+}
+
+.fc-wd-bankList {
+  width: 250px;
+  height: 30px;
+}
+
+.fc-wd-amount {
+  width: 236px;
+  height: 30px;
+}
+
+.refresh {
+  color: #ff0000;
+  padding-left: 5px;
+  text-decoration: underline;
+}
+
+.inline-margin {
+  margin-left: 20px;
+}
+
+.money-unlocked-btn{
+  margin-left: -60px;
+}
+
+.fc-re-formArea{
+  overflow-y: auto;
+  max-height: 513px;
+  overflow-x: hidden;
+  position: relative;
+  .fc-re-next-div{
+    position: relative;
+    transform: translateX(315px);
+  }
+  .fc-re-lookTransferTutorial{
+    color: #3d83c1;
+    text-decoration: underline;
+    position: absolute;
+    left: 260px;
+    bottom: 10px;
+  }
+}
+
+.fc-re-rechargeActivity{
+  overflow: hidden;
+  padding: 0 10px 10px 10px;
+  li{
+    float: left;
+    width: 180px;
+    height: 83px;
+    padding-top: 23px;
+    background: url(./recharge-back-bg.png);
+    text-align: center;
+    line-height: 24px;
+    color: #066666;
+    cursor: pointer;
+    margin:0 10px;
+    position: relative;
+    span{
+      font-size: 22px;
+      font-weight: bold;
+    }
+    b{
+      width: 36px;
+      height: 37px;
+      background: url(./activity-hot.png);
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  .activity-current{
+    background: url(./recharge-back-current-bg.png);
+  }
+}
+
+.unlock-confirm{
+  .unlock-question-input-div{
+    margin-left: 71px;
+  }
+}
+
+.unPaymentOrder-bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.3);
+  //#00abb8
+  z-index: 99;
+  .mt-refresh {
+    float: left;
+  }
+
+  .unPaymentOrder {
+    width: 563px;
+    background-color: #ffffff;
+    border: 1px solid #fff;
+    margin: 150px auto;
+    position: relative;
+    border-radius: 8px;
+
+    .unPaymentOrder-tit {
+      width: 100%;
+      height: 55px;
+      margin: 0;
+      line-height: 55px;
+      text-align: center;
+      background: #ffffff;
+      border-radius:8px 8px 0 0;
+      border-bottom: 1px solid #d9d9d9;
+      .unPaymentOrder-title-text {
+       font-size: 16px;
+        font-weight: bold;
+        color: #333333;
+      }
+      .unPaymentOrder-close {
+        position: absolute;
+        top: 13px;
+        right: 10px;
+        cursor: pointer;
+      }
+    }
+    .unPaymentOrder-hr {
+      width: 100%;
+      color: #d9d9d9;
+    }
+    .unPaymentOrder-info {
+      padding: 25px 95px 40px;
+      font-size: 14px;
+      line-height: 35px;
+
+      .unPaymentOrder-list {
+        height: 35px;
+        line-height: 30px;
+        font-size: 14px;
+        font-weight: 600;
+
+        .unPaymentOrder-list-l {
+          width: 100px;
+          text-align: right;
+          color: #333;
+        }
+        .unPaymentOrder-list-r {
+          color: #fa5c56;
+        }
+        .unPaymentOrder-r {
+          float: right;
+          color: #00cc99;
+          cursor: pointer;
+        }
+      }
+
+      .unPaymentOrder-revoke {
+        height: 40px;
+        line-height: 40px;
+        margin-bottom: 10px;
+        //padding-left: 120px;
+
+        .unPaymentOrder-btn {
+          background-color: #00abb8;
+          width: 106px;
+          height: 25px;
+          border-radius: 5px;
+          border: none;
+          margin: 7px 0;
+          font-size: 14px;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+.fc-re-tips{
+  width: 100%;
+  //max-height: 100px;
+  min-height: 58px;
+  border-bottom: 1px solid #dddddd;
+  position: relative;
+  padding: 16px 0 16px 48px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  .fc-re-tips-info{
+    // position: absolute;
+    // top: 50%;
+    // transform: translateY(-50%);
+  }
+}
+.payment-captions{
+  width: 100%;
+  height: 30px;
+  //margin-top: 38px;
+  a{
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 20px;
+    color: #333333;
+    cursor: pointer;
+    font-size: 14px;
+    background: #f2f2f2;
+    margin-bottom: 20px;
+    display: inline-block;
+    &.active{
+      background: #17c0c8;
+      color: #ffffff;
+    }
+  }
+}
+.line-gray{
+  width: 1px;
+  height: 14px;
+  background: #333333;
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.fc-re-fee{
+  transform: translateX(315px);
+}
+.p-right-list{
+  padding-right: 76px;
+}
+.fc-pay-type{
+  display: inline-block;
+  margin-right: 15px;
+  transform: translateY(3px);
+  cursor: pointer;
+  .type-checkbox{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url("check-box-def.png") no-repeat;
+  }
+  .type-alipay-icon{
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: url("alipay-icon.png") no-repeat;
+    vertical-align: bottom;
+  }
+  .type-weixin-icon{
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: url("weixin-icon.png") no-repeat;
+    vertical-align: bottom;
+  }
+  .type-name{
+    vertical-align: text-bottom;
+    transform: translate(-2px, -2px);
+    display: inline-block
+  }
+  &.active{
+    .type-checkbox{
+      background: url("check-box-on.png") no-repeat;
+    }
+  }
+}
+.fc-pay-type-main{
+  //transform: translateX(-70px);
+  margin-left: 246px;
+}
+.text-turquoise-new{
+  color: #17c0c8;
+}
+.fc-text-gray{
+  color: #a0a0a0;
+}
+.fc-re-input{
+  width: 236px !important;
+  height: 29px !important;
+  border-radius: 5px;
+  border-color: #e1e1e1 !important;
+}
+.fc-re-resultShow{
+  width: 565px;
+  height: 321px;
+  border-radius: 15px;
+  background: #ffffff;
+  color: #333333;
+  font-size: 16px;
+  .fc-re-result-title{
+    width: 100%;
+    height: 55px;
+    line-height: 55px;
+    position: relative;
+    border-bottom: 1px solid #d9d9d9;
+    font-weight: bold;
+    .unPaymentOrder-close{
+      position: absolute;
+      top:15px;
+      right: 20px;
+      cursor: pointer;
+    }
+  }
+  .fc-result-money{
+    margin-left: -25px;
+  }
+  .fc-re-result-btn{
+    width: 107px;
+    height: 32px;
+    background: #17c0c8;
+    border-radius: 5px;
+    color: #ffffff;
+  }
+}

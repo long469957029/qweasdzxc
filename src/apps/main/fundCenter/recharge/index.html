@@ -1,0 +1,242 @@
+<form class="js-fc-re-form form-inline form-horizontal  row" action="/fund/recharge/dopaymentrecharge" method="post" target="_blank">
+  <div class="fc-re-content">
+
+    <div class="fc-re-div1">
+      <ul class="js-fc-re-tabs fc-re-nav-manual-tabs " style=""></ul>
+    </div>
+
+    <div class="js-fc-re-formArea fc-re-formArea">
+      <div class="js-fc-re-div2 fc-re-div2">
+        <div class="fc-re-tips clearfix">
+          <div class="fc-re-tips-info">
+            <span class="font-bold">温馨提示：</span>
+            <label class="js-fc-re-amountLimit-tip m-left-sm"></label>
+            <div class="js-fc-re-tip-list"></div>
+            <!--<label class="js-fc-re-userName-tip-alipay hidden block m-left-lg p-left-lg">2.晚上<span class="text-hot">23:30-01:00</span>，使用支付宝转账到银行卡时如果提示第二天到账，请勿付款</label>-->
+            <!--<label class="js-fc-re-userName-tip-alipay hidden block m-left-lg p-left-lg">3.平台账户会不定时更换，请在获得最新信息后充值，否则损失自负</label>-->
+            <!--<label class="js-fc-re-userName-tip-bank hidden block m-left-lg p-left-lg">2.平台账户会不定时更换，请在获得最新信息后充值，否则损失自负</label>-->
+          </div>
+        </div>
+        <div class="js-payment-captions payment-captions m-bottom-sm text-center">
+
+        </div>
+        <div class="text-center fc-re-bankList-main m-top-md">
+          <span class="js-fc-bkselect">银行选择：</span>
+          <div class="js-fc-re-bankList-select hidden fc-re-bankList-select">
+            <span class="js-ch-bank-icon ch-bank-icon"></span>
+            <span class="js-cj-bank-name cj-bank-name"></span>
+            <span class="select-down js-select-down"></span>
+          </div>
+          <div class="js-fc-re-bankList fc-re-bankList hidden"></div>
+        </div>
+
+        <div class="control-group text-center js-fc-re-userName fc-re-userName hidden ">
+          <label class="inline-block">存款人姓名：</label>
+          <div class="inline-block">
+            <input type="text" name="name" class="js-fc-re-name fc-re-input" autocomplete="off">
+          </div>
+          <div class="tip">*请与实际付款账户姓名保持一致，否则会影响到账</div>
+        </div>
+        <div class="control-group js-fc-pay-type fc-pay-type-main hidden m-bottom-md">
+          <label class="inline-block">支付类型：</label>
+          <div class="inline-block">
+            <div class="js-pay-type-btn js-pay-type-alipay fc-pay-type hidden" data-type="alipay">
+              <span class="type-checkbox m-right-sm"></span>
+              <span class="type-alipay-icon m-right-sm"></span>
+              <span class="type-name">支付宝</span>
+            </div>
+            <div class="js-pay-type-btn js-pay-type-weixin fc-pay-type hidden" data-type="weixin">
+              <span class="type-checkbox m-right-sm"></span>
+              <span class="type-weixin-icon m-right-sm"></span>
+              <span class="type-name">微信</span>
+            </div>
+          </div>
+        </div>
+        <div class=" text-center p-right-list m-top-md m-bottom-sm">
+          <label class="inline-block">充值金额：</label>
+          <div class="inline-block">
+            <input type="text" name="amount" class="js-fc-re-amount fc-re-amount fc-re-input" autocomplete="off" required data-parsley-type="integer">&nbsp;元
+            <span class="js-info-quickAmounts"></span>
+          </div>
+        </div>
+
+        <div class=" m-bottom-md text-center fc-re-quickAmounts">
+          <ul class="js-fc-re-quickAmounts fc-re-quickAmount"></ul>
+        </div>
+
+        <div class=" m-top-md text-left fc-re-fee js-fare-alert hidden">
+          <label class="inline-block js-fc-re-fee-title">手续费：</label>
+          <div class="inline-block">
+            <span class=" js-fare-result text-hot rc-input-result "></span>
+          </div>
+          <span class="line-gray"></span>
+          <label class="inline-block">到账金额：</label>
+          <div class="inline-block">
+            <span class=" js-jine-result text-hot rc-input-result "></span>
+          </div>
+        </div>
+
+      </div>
+      <div class="js-fc-re-bankList-bg fc-re-bankList-bg hidden"></div>
+      <!--<ul class="js-fc-re-rechargeActivity fc-re-rechargeActivity">-->
+
+      <!--</ul>-->
+      <div class="text-left m-bottom-lg fc-re-next-div">
+        <button type="button" class="js-fc-re-commit btn btn-pleasure btn-liner fc-re-commit">去支付</button>
+        <button type="button" class="js-fc-re-next btn btn-hot btn-lg p-LR-lg hidden" data-loading-text="正在提交...">下一步</button>
+        <a class="js-fc-re-lookTransferTutorial fc-re-lookTransferTutorial m-top-sm inline-block hidden" href="">查看转账教程</a>
+      </div>
+      <input type="hidden" name="token" value="<%=Global.memoryCache.get('acctInfo').token %>">
+      <input type="hidden" name="paymentType">
+      <input type="hidden" name="paymentId">
+      <input type="hidden" name="bankId">
+      <input type="hidden" name="bankCode">
+      <input type="hidden" name="device" value="0">
+    </div>
+
+    <div class="js-tip-info tip-info" style="display: none;">
+      <div class="form-center">
+
+        <div class="control-group tip-info-prompt-div">
+          <div class="fc-re-tips clearfix">
+            <div class="fc-re-tips-info">
+              <span class="font-bold">温馨提示：</span>
+              <label class="js-fc-re-amountLimit-tip m-left-sm"></label>
+              <div class="js-fc-re-tip-list"></div>
+              <!--<label class="js-fc-re-userName-tip-alipay hidden block m-left-lg p-left-lg">2.晚上<span class="text-hot">23:30-01:00</span>，使用支付宝转账到银行卡时如果提示第二天到账，请勿付款</label>-->
+              <!--<label class="js-fc-re-userName-tip-alipay hidden block m-left-lg p-left-lg">3.平台账户会不定时更换，请在获得最新信息后充值，否则损失自负</label>-->
+              <!--<label class="js-fc-re-userName-tip-bank hidden block m-left-lg p-left-lg">2.平台账户会不定时更换，请在获得最新信息后充值，否则损失自负</label>-->
+            </div>
+          </div>
+          <!-- <label class="js-fc-re-aliPayTransfer-prompt fc-re-aliPayTransfer-prompt hidden">*提示：23:30-01:00，使用支付宝转账到银行卡时如果提示第二天到账，请勿付款</label>
+          <label class="js-fc-re-bankTransfer-prompt fc-re-bankTransfer-prompt hidden">您目前你选择的是 <label class="js-starBank fc-starBank">中国农业银行</label><label class="js-isSameBank fc-isSameBank"></label><label class="js-endBank fc-endBank">招商银行</label>充值服务</label> -->
+        </div>
+
+        <div class="info-center-content">
+          <div class="control-group">
+            <label class="control-label">收款银行：</label>
+            <div class="controls  ">
+              <!-- <a class=" js-fe-re-copy fe-re-copy  m-top-sm inline-block">复制</a> -->
+              <span class="js-fc-re-cardInfo info-content"></span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">开户行地址：</label>
+            <div class="controls">
+              <!-- <a class=" js-fe-re-copy fe-re-copy  m-top-sm inline-block">复制</a> -->
+              <span class="js-fc-re-cardAddress info-content"></span>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">收款户名：</label>
+            <div class="controls">
+              <span class="js-fc-re-recName info-content"></span>
+              <a class=" js-fe-re-copy fe-re-copy  m-top-sm inline-block">复制</a>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">收款账号：</label>
+            <div class="controls">
+              <span class="js-fc-re-num info-content"></span>
+              <a class=" js-fe-re-copy fe-re-copy  m-top-sm inline-block">复制</a>
+            </div>
+          </div>
+
+
+          <div class="control-group">
+            <label class="control-label">充值金额：</label>
+            <div class="controls">
+              <span class="js-fc-re-money info-content"></span>
+              <a class=" js-fe-re-copy fe-re-copy  m-top-sm inline-block">复制</a>
+              <p class="warning">*实际转账金额请与此金额保持一致，否则将无法及时到账</p>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">附言：</label>
+            <div class="controls">
+              <span class="js-fc-re-ps info-content"></span>
+              <a class=" js-fe-re-copy fe-re-copy  m-top-sm inline-block">复制</a>
+              <p class="warning">*请务必填写附言，否则将无法及时到账</p>
+            </div>
+          </div>
+
+          <!-- <div class="control-group js-fc-re-bankUrl-div hidden">
+          <label class="control-label">网站入口：</label>
+          <div class="controls">
+            <a class="js-fc-re-bankUrl fc-re-bankUrl" href="" target="_blank"></a>
+          </div>
+        </div> -->
+
+          <div class="control-group js-fc-re-gotoAliPay-div fc-re-gotoAliPay-div hidden">
+            <div class="controls">
+              <button type="button" class="js-fc-re-gotoAliPay btn btn-hot btn-lg p-LR-lg">登录支付宝</button>
+              <a class="js-fc-re-lookTransferTutorial fc-re-lookTransferTutorial m-top-sm inline-block hidden" href="">查看转账教程</a>
+            </div>
+          </div>
+
+          <div class="control-group js-fc-re-gotoBank-div fc-re-gotoBank-div hidden">
+            <div class="controls">
+              <button type="button" class="js-fc-re-gotoBank btn btn-hot btn-lg p-LR-lg">进入官方银行转账</button>
+              <a class="js-fc-re-lookTransferTutorial fc-re-lookTransferTutorial m-top-sm inline-block hidden" href="">转账充值教程</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- <div class="fc-important-notice">平台收款账号会不定时频繁更换，请勿保存请到充值页面复制最新的收款信息后充值，如因个人原因导致的资金损失，平台一律不予承担！</div> -->
+    </div>
+
+  </div>
+  <div class="js-unPaymentOrder-bg unPaymentOrder-bg hidden">
+    <div class="unPaymentOrder">
+      <div class="unPaymentOrder-tit">
+        <div class="unPaymentOrder-title-text">温馨提示</div>
+        <span class="js-unPaymentOrder-close sfa sfa-dialog-close unPaymentOrder-close" data-dismiss="modal"></span>
+      </div>
+      <!--<hr class="unPaymentOrder-hr">-->
+      <div class="unPaymentOrder-info">
+        <div class="unPaymentOrder-list text-turquoise-new">很抱歉，您尚有一笔充值申请未完成，请完成后再发起充值</div>
+        <div class="unPaymentOrder-list js-fc-re-paymentType">
+          <div class="mt-refresh">
+            <div class="mt-refresh unPaymentOrder-list-l">充值方式：</div>
+            <div class="js-paymentType mt-refresh unPaymentOrder-list-r"></div>
+          </div>
+          <div class="js-donopay-btn unPaymentOrder-r hidden"><a class="js-donopay-open" href="#" target="_blank" style="color: #00cc99;">马上付款>></a></div>
+        </div>
+        <div class="unPaymentOrder-list js-fc-re-payType">
+          <div class="mt-refresh unPaymentOrder-list-l">充值银行：</div>
+          <div class="js-payType mt-refresh unPaymentOrder-list-r"></div>
+        </div>
+        <div class="unPaymentOrder-list js-fc-re-rechargeType">
+          <div class="mt-refresh unPaymentOrder-list-l">收款银行：</div>
+          <div class="js-rechargeType mt-refresh unPaymentOrder-list-r"></div>
+        </div>
+        <div class="unPaymentOrder-list js-fc-re-accountName">
+          <div class="mt-refresh unPaymentOrder-list-l">收款账户姓名：</div>
+          <div class="js-accountName mt-refresh unPaymentOrder-list-r"></div>
+        </div>
+        <div class="unPaymentOrder-list js-fc-re-accountNum">
+          <div class="mt-refresh unPaymentOrder-list-l">收款账号：</div>
+          <div class="js-accountNum mt-refresh unPaymentOrder-list-r"></div>
+        </div>
+        <div class="unPaymentOrder-list js-fc-re-amount">
+          <div class="mt-refresh unPaymentOrder-list-l">充值金额：</div>
+          <div class="js-amount mt-refresh unPaymentOrder-list-r"></div>
+        </div>
+        <div class="unPaymentOrder-list js-fc-re-refresh">
+          <div class="mt-refresh unPaymentOrder-list-l">附言：</div>
+          <div class="js-keyword mt-refresh unPaymentOrder-list-r"></div>
+        </div>
+        <div class="unPaymentOrder-revoke unPaymentOrder-list">
+
+          <span  class="mt-refresh unPaymentOrder-list-l">你还可以：</span>
+          <button type="button" class="js-fc-re-cancel btn  unPaymentOrder-btn mt-refresh unPaymentOrder-list-r">撤销申请</button>
+        </div>
+        <div class="unPaymentOrder-list  fc-text-gray">注意：如您已完成付款，请勿撤销，我们将尽快为您处理</div>
+      </div>
+    </div>
+  </div>
+  <div class="js-pop-bg pop-bg hidden"></div>
+</form>

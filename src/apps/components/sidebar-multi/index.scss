@@ -1,0 +1,42 @@
+@charset "UTF-8";
+@import "~base/styles/imports";
+
+.multi-slide {
+  > li {
+    padding-right: 12px;
+    padding-left: 12px;
+    padding-top: 16px;
+    padding-bottom: 6px;
+    display: block;
+    border-bottom: 1px solid #108186;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    .multi-title {
+      display: block;
+      margin-bottom: 20px;
+      font-size: $font-md;
+      img {
+        width: 25px;
+        margin-right: 5px;
+      }
+    }
+    .multi-slide-inner {
+      list-style-type: none;
+      a {
+        font-size: $font-sm;
+        margin-bottom: $filter-sm;
+        padding: 2px 0;
+        display: block;
+        position: relative;
+        text-indent: 35px;
+
+        &:hover {
+          background-color: #3aacb1;
+        }
+      }
+    }
+  }
+}

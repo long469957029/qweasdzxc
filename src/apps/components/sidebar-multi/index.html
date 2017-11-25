@@ -1,0 +1,42 @@
+<div class="sidebar width-md main-height">
+  <div class="bg-hot shadow-block">
+    <div class="sidebar-title sfa-sidebar-user-banner">
+      <div class="sidebar-title-inner">
+        <span class="sfa sfa-sidebar-dot"></span>
+        <span class="sfa sfa-sidebar-<%=menus.icon %> block m-center"></span>
+        <%=menus.name %>
+      </div>
+    </div>
+  </div>
+  <div class="shadow-block bg-deep">
+    <div class="js-com-multi-main">
+      <ul class="multi-slide">
+        <% _(menus.sub).each(function(menu) { %>
+        <li role="presentation">
+          <a
+          <% if (menu.args) { %>
+          class="js-com-multi-item multi-title"
+          data-args="<%=menu.args %>"
+          href="#<%=menus.router %>?<%=menu.args %>"
+          <% } else { %>
+          class="multi-title"
+          href="javascript:void(0)"
+          <% } %>>
+          <% if (menu.icon) { %>
+          <img class="" src="<%=menu.icon %>" />
+          <% } %>
+          <%=menu.name %>
+          </a>
+          <ul class="multi-slide-inner">
+            <% _(menu.sub).each(function(subMenu) { %>
+            <li>
+              <a class="js-com-multi-item" data-args="<%=subMenu.args %>" href="#<%=menus.router %>?<%=subMenu.args %>"><%=subMenu.name %></a>
+            </li>
+            <% }); %>
+          </ul>
+        </li>
+        <% }); %>
+      </ul>
+    </div>
+  </div>
+</div>

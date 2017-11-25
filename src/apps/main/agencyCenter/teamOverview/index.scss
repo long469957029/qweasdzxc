@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+@import
+"~base/styles/imports";
+
+.ac-so-view{
+
+  .ac-to-search-bar{
+    margin: 10px 30px;
+    .ac-to-btnGroup {
+      border-right: none;
+      font-size: 0;
+      vertical-align: top;
+      border: 1px solid #90908f;
+      .btn {
+        border-right: 1px solid #606060;
+        min-width: 75px;
+        margin-right: -1px;
+      }
+    }
+
+  }
+
+  .ac-to-panel-bar{
+    margin: 0 20px;
+    ul{
+      font-size: 0;
+      li{
+        display: inline-block;
+        width: 151px;
+        height: 58px;
+        border: 1px solid #c3c3c3;
+        text-align: center;
+        margin: 10px;
+        &:nth-child(1){
+          background: #d9d9d9;
+        }
+        &:nth-child(2){
+          background: #d9d9d9;
+        }
+        .ac-to-li-title{
+          width: 100%;
+          margin-top: 10px;
+          height: 20px;
+          line-height: 20px;
+          font-size: 14px;
+          color: #666;
+        }
+        .ac-to-li-value{
+          width: 100%;
+          font-size: 16px;
+          color: #333;
+          height: 20px;
+          line-height: 20px;
+          margin-bottom: 10px;
+        }
+
+      }
+    }
+  }
+  .ac-to-chart-title{
+    padding-left: 10px;
+    margin: 15px 10px -22px;
+    border-left:3px solid #666;
+    height: 26px;
+    line-height: 26px;
+    font-size: 14px;
+  }
+
+  .ac-to-chart{
+    margin: 0 0 0 -20px;
+    width: 905px;
+    height: 341px;
+  }
+}

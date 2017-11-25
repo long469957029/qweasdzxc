@@ -1,0 +1,26 @@
+<div class="header">
+  <div class="logo"></div>
+  <div class="navbar">
+    <% if (hasCollect) { %>
+    <li>
+      <a class="js-collect">
+        <span class="sfa sfa-hd-collect"></span>
+        <span class="title">收藏我们</span>
+      </a>
+    </li>
+    <% } %>
+    <li>
+      <a href="newDownload.html" target="_blank">
+        <span class="sfa sfa-hd-download"></span>
+        <span class="title">下载中心</span>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" onclick="newwin = window.open('<%= _.getCustomerServiceUrl() %>','service','width=800,height=680'); newwin.moveTo(100,50);"
+        title="联系客服">
+        <span class="sfa sfa-hd-customer"></span>
+        <span class="title">在线客服</span>
+      </a>
+    </li>
+  </div>
+</div>

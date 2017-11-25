@@ -1,0 +1,71 @@
+<div class="panel basic-white">
+  <div class="panel-header"><img src="update.png"/>修改密码</div>
+  <div class="panel-main">
+
+    <div class="js-pg-resetPassword-main wizard clearfix ac-update-body" role="application" id="steps-uid-0">
+      <form action="javascript:void(0);" class="js-uu-updateUUContainer form-horizontal hidden">
+        <div class="control-group row ac-line-height">
+          <label class="control-label span4 ac-title-size">用户名：</label>
+
+          <div class="controls span8">
+            <input type="text" class="js-uu-userName ac-input-size" required readonly/><span class="help-inline"></span>
+          </div>
+        </div>
+        <div class="control-group ac-line-height">
+          <label class="control-label ac-title-size">昵称：</label>
+
+          <div class="controls">
+            <input type="text" class="js-uu-uName ac-input-size"/>
+            <span class="help-inline ac-des-size">&nbsp;4-16个字符，支持中英文和数字，不能以数字开头</span>
+            <span class="error-inline js-uu-verify-userUName"></span>
+            <input type="hidden" class="js-uu-userUName-val-res" value="1">
+          </div>
+          <div class="controls">
+            <span class="js-uu-tip text-danger form-control hidden"></span>
+          </div>
+        </div>
+        <div class=" ac-divider"></div>
+        <div class="control-group ac-pwd-line-height">
+          <label class="control-label ac-title-size">旧登录密码：</label>
+
+          <div class="controls">
+            <input type="password" id="oldLoginPassword" class="ac-input-size">
+            <span class="help-inline"></span>
+            <span class="error-inline js-uu-verify-passwordOld"></span>
+            <input type="hidden" class="js-uu-passwordOld-val-res" value="1">
+          </div>
+        </div>
+        <div class="control-group ac-line-height">
+          <label class="control-label ac-title-size">新登录密码：</label>
+
+          <div class="controls">
+            <input type="password" id="newLoginPassword" class="ac-input-size">
+            <span class="help-inline ac-des-size">&nbsp;6-20位字符组成（不含空格），区分大小写，不能是9位以下的纯数字</span>
+            <span class="error-inline js-uu-verify-password"></span>
+            <input type="hidden" class="js-uu-password-val-res" value="1">
+          </div>
+        </div>
+        <div class="control-group ac-input-button-height">
+          <label class="control-label ac-title-size">确认新密码：</label>
+          <div class="controls">
+            <input type="password" id="newLoginPassword1" class="ac-input-size">
+            <span class="help-inline ac-des-size">&nbsp;再次输入密码</span>
+            <span class="error-inline js-uu-verify-password1"></span>
+          </div>
+            <input type="hidden" class="js-uu-password1-val-res" value="1">
+        </div>
+        <div class="control-group ac-button-lan">
+          <button type="submit" class="js-uu-changePassword-submit btn btn-cool ac-modify-button-sub" data-loading-text="保存中">
+            修改
+          </button>
+          <button type="button" class="js-uu-changePassword-return btn  ac-modify-button-sub"
+                  data-loading-text="取消中">退出
+          </button>
+        </div>
+        <div class="js-uu-notice-page1">
+        </div>
+        <input type="hidden" class="js-uu-status">
+      </form>
+    </div>
+  </div>
+</div>

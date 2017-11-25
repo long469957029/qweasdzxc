@@ -1,0 +1,161 @@
+@charset "UTF-8";
+
+@import
+"~base/styles/imports";
+
+
+.ac-dm{
+  margin: 10px 5px;
+  //我的分红配置 样式
+  .ac-dm-my-config{
+    position: absolute;
+    top: 66px;
+    right: 64px;
+    font-size: 14px;
+    color: #16a4aa;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  //公共导航按钮样式，彩票分红，其他游戏分红
+  .ac-dm-nav-btn{
+    width: 96px;
+    height: 28px;
+    border-radius: 13px;
+    text-align: center;
+    line-height: 28px;
+    font-size: 13px;
+    background: #9b9b9b;
+    color: #fff;
+    outline: none;
+    &.active{
+      background: #16a4aa;
+    }
+  }
+
+  .ac-dividend {
+    margin: 10px;
+  }
+
+  .ac-effect-date {
+    position: absolute;
+    top: 10px;
+    color: $new-light-color;
+    right: 15px;
+  }
+
+  .ac-agreement-top {
+    background-color: #f1e1e0;
+    padding: 20px 10px;
+    margin-bottom: 16px;
+    font-size: $font-sm;
+  }
+
+  .ac-countdown {
+    margin-top: -5px;
+  }
+  .ac-countdown-inner {
+    width: 220px;
+  }
+
+  .ac-agreement-content {
+    .portlet-body {
+      height: 100px;
+      overflow: auto;
+      box-sizing: border-box;
+      padding-bottom: 0;
+    }
+    .pre {
+      line-height: 28px;
+    }
+  }
+
+  .ac-dm {
+    .dot-divider {
+      margin-bottom: 12px;
+    }
+  }
+
+  //topLevel
+  .ac-topLevel {
+    margin: 10px 15px 0;
+    position: relative;
+
+    .ac-add-user {
+      position: absolute;
+      top: 2px;
+      right: 15px;
+    }
+
+    .ac-low-level-top {
+      .portlet {
+        margin-bottom: 10px;
+      }
+      .portlet-title {
+        font-size: 14px;
+      }
+      .portlet-body {
+        background: #d2e7e8;
+        height: 215px;
+        overflow: auto;
+      }
+    }
+
+    .ac-low-level-overview {
+      width: 45%;
+      display: inline-block;
+      float: left;
+
+      table {
+        width: 100%;
+        tbody {
+          td {
+            text-indent: 55px;
+          }
+        }
+      }
+    }
+    .ac-low-level-rule {
+      display: inline-block;
+      width: 53%;
+      float: right;
+    }
+
+
+
+    .ac-effect-date {
+      top: -40px;
+    }
+
+    .ac-agreement-content {
+      .portlet-body {
+        height: 90px;
+      }
+    }
+  }
+
+  .ac-break-off {
+    textarea {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      resize: none;
+      height: 110px;
+    }
+  }
+
+
+  .ac-verify-form {
+    input[readonly], textarea[readonly] {
+      border-style: dashed;
+      background: $new-light-color;
+    }
+  }
+  .ac-official {
+    white-space: pre;
+    height: 500px;
+    overflow: auto;
+    word-wrap: break-word;
+    line-height: 30px;
+  }
+
+}

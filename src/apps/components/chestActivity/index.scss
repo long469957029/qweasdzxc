@@ -1,0 +1,461 @@
+.chest-mask {
+  //background: rgba(0, 0, 0, .7);
+  position: absolute;
+  width: 100%;
+  height: 130px;
+  margin: 0 auto;
+
+  //top: 0px;
+  //right: 0px;
+  bottom: 0px;
+  //left: 0px;
+  //z-index:11;
+  //height: 100%;
+  //overflow:auto;
+  .descriptions{
+    position: absolute;
+    left:0px;
+    right: 0px;
+    top: 0px;
+    margin: -780px auto 0;
+    width: 857px;
+    height: 560px;
+    background: url(./images/descriptions/activity-description-modal.png) no-repeat;
+    .rate{
+      width:116px;
+      height:41px;
+      line-height: 41px;
+      color: #685300;
+      position: absolute;
+      right: 75px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .rate1{
+      bottom: 216px;
+    }
+    .rate2{
+      bottom: 175px;
+    }
+    .rate3{
+      bottom: 134px;
+    }
+    .description-get{
+      background: #1f92ec;
+      width:116px;
+      height:36px;
+      border-radius: 2px;
+      position: absolute;
+      bottom: 20px;
+      left: 292px;
+    }
+    .description-return{
+      position: absolute;
+      background: #ec1f39;
+      width:116px;
+      height:36px;
+      border-radius: 2px;
+      bottom: 20px;
+      left: 476px;
+    }
+  }
+  .got-modal{
+    position: absolute;
+    left:0px;
+    right: 0px;
+    top: 0px;
+    margin: -780px auto 0;
+    padding: 117px 36px;
+    box-sizing: border-box;
+    width: 857px;
+    height: 560px;
+    background:  url(./images/got/final-treasure-modal.png) no-repeat;
+    .got-treasure{
+      position: relative;
+      float: left ;
+      width: 131px;
+      height:150px;
+      margin: 0 13px;
+      .treasure-day{
+        width: 131px;
+        height:114px;
+        background: #bea057 no-repeat;
+      }
+      .days{
+        margin-top:10px;
+        line-height: 34px;
+        margin-bottom: -40px;
+        background: #937530 no-repeat;
+        color: #fff;
+        font-size: 16px;
+        text-align: center ;
+        width:131px;
+        height:34px;
+      }
+    }
+
+    .got-final-treasure{
+      margin: 175px auto;
+      width: 251px;
+      height: 157px;
+      .treasure-big{
+        width: 251px;
+        height: 157px;
+        background: #bea057 no-repeat;
+      }
+      .days{
+        margin-top:10px;
+        line-height: 34px;
+        margin-bottom: -40px;
+        background: #937530 no-repeat;
+        color: #fff;
+        font-size: 16px;
+        text-align: center ;
+        width:251px;
+        height:34px;
+      }
+    }
+
+    .got-get{
+      background: linear-gradient(to top, #195293, #26a1f6);
+      width:120px;
+      height:36px;
+      border-radius: 2px;
+      position: absolute;
+      bottom: 20px;
+      left: 237px;
+      outline: none;
+    }
+    .got-disabled{
+      background: linear-gradient(to top, #888, #ccc);
+    }
+    .got-return{
+      position: absolute;
+      background: linear-gradient(to top, #9a1114, #f62646  );
+      width:116px;
+      height:36px;
+      border-radius: 2px;
+      bottom: 20px;
+      left: 490px;
+      outline: none;
+    }
+
+    .treasure-grade-1{
+      width: 131px;
+      height:114px;
+      background:url(./images/treasure/treasure-1-open.png) no-repeat center,url(./images/got/opened-bg.png) no-repeat center ;
+      background-size: cover;
+    }
+    .treasure-grade-2{
+      width: 131px;
+      height:114px;
+      background: url(./images/treasure/treasure-2-open.png) no-repeat center,url(./images/got/opened-bg.png) no-repeat center ;
+      background-size: cover;
+    }
+    .treasure-grade-3{
+      width: 131px;
+      height:114px;
+      background: url(./images/treasure/treasure-3-open.png) no-repeat center,url(./images/got/opened-bg.png) no-repeat center ;
+      background-size: contain;
+    }
+    .treasure-grade-4{
+      width: 131px;
+      height:114px;
+      background: url(./images/treasure/treasure-4-open.png) no-repeat center,url(./images/got/opened-bg.png) no-repeat center ;
+      background-size: cover;
+    }
+    .treasure-grade-5{
+      width: 131px;
+      height:114px;
+      background: url(./images/treasure/treasure-5-open.png) no-repeat center,url(./images/got/opened-bg.png) no-repeat center ;
+      background-size: cover;
+    }
+    .treasure-grade-6-closed{
+      width: 251px;
+      height: 157px;
+      background: url(./images/got/treasure-6-closed.png) no-repeat center;
+      background-size: contain;
+    }
+    .treasure-grade-6-opened{
+      width: 251px;
+      height: 157px;
+      background: url(./images/got/treasure-6-open.png) no-repeat center;//url(./images/got/opened-bg.png) no-repeat center
+      background-size: contain;
+    }
+    .treasure-interrogation{
+      width: 131px;
+      height:114px;
+      background: url(./images/got/final-interrogation-mark.png) no-repeat center;
+    }
+  }
+  .getting-modal-vip{
+    background: url(./images/getting/treasure-content-modal-vip.png) no-repeat !important;
+  }
+  .getting-modal{
+    position: absolute;
+    left:0px;
+    right: 0px;
+    top: 0px;
+    margin: -728px auto 0;
+    width: 857px;
+    height: 560px;
+    background: url(./images/getting/treasure-content-modal.png) no-repeat;
+
+    .content-amount{
+      position:absolute;
+      top: 131px;
+      left:42px;
+      width:250px;
+      height:155px;
+      font-size: 60px;
+      font-weight: 600;
+      color: #eb5842;
+      line-height: 155px;
+      text-align: center;
+    }
+
+    .content-integral{
+      position:absolute;
+      top: 131px;
+      left:434px;
+      width:250px;
+      height:155px;
+      font-size: 60px;
+      font-weight: 600;
+      color: #eb5842;
+      line-height: 155px;
+      text-align: center;
+    }
+    .content-confirm{
+      position:absolute;
+      top: 345px;
+      left: 321px;
+      margin: 100px auto 0;
+      width: 234px;
+      height: 59px;
+      background: url(./images/getting/treasure-content-confirm-btn.png) no-repeat;
+    }
+  }
+  .treasure-modal{
+    position: absolute;
+    right: 0px;
+    bottom: 10px;
+    left: 0px;
+    margin: 0 auto ;
+    padding: 5px ;
+    width: 1100px;
+    height: 30px;
+    background: url(./images/treasure/treasure-bg.png) no-repeat;
+    .progress{
+      position: relative;
+      max-width: 1100px;
+      margin:0;
+      border-radius: 5px;
+      width: 5%;
+      //background:radial-gradient(ellipse,closest-side,#ffe100,#ff8d00);//#a93907
+      background:url(./images/treasure/line.png) repeat-x ,linear-gradient(#ff8d00, #ffe100, #ff8d00) !important;
+    }
+
+    .description-entry{
+      position: absolute;
+      left: -50px;
+      top: -25px;
+      width: 131px;
+      height: 77px;
+      line-height: 77px;
+      text-align: center;
+      font-size: 14px;
+      background: url(./images/treasure/activity-explain.png) no-repeat;
+      cursor: pointer;
+    }
+
+    .treasure{
+      cursor: pointer;
+      &:hover{
+        .sc-tcc-integral{
+          display: block;
+        }
+      }
+      &:nth-child(3){
+        .sc-tcc-integral {
+          top: -45px;
+          left: -4px;
+          width: 120px;
+        }
+      }
+      &:nth-child(4){
+        .sc-tcc-integral {
+          top: -30px;
+          left: 0px;
+        }
+      }
+      &:nth-child(5){
+        .sc-tcc-integral {
+          top: -26px;
+          left: 0px;
+        }
+      }
+      &:nth-child(6){
+        .sc-tcc-integral {
+          top: -14px;
+          left: 0px;
+        }
+      }
+      &:nth-child(7){
+        .sc-tcc-integral {
+          top: -28px;
+          left: 0px;
+        }
+      }
+
+    }
+    .click-me{
+
+      &:after{
+        display: inline-block;
+        position: absolute;
+        left: 0px;
+        //top: -90px;
+        bottom: 100px;
+        content: '';
+        width: 112px;
+        height: 72px;
+        background: url(./images/treasure/click-me.png) no-repeat ;
+        background-size: contain;
+      }
+    }
+    .treasure-1-closed{
+      position: absolute;
+      top: -25px;
+      left: 137px;
+      width: 112px;
+      height:84px;
+      background: url(./images/treasure/treasure-1-closed.png) no-repeat;
+      background-size: contain;
+    }
+    .treasure-1-opened{
+      position: absolute;
+      top: -61px;
+      left: 135px;
+      width: 125px;
+      height:115px;
+      background: url(./images/treasure/treasure-1-open.png) no-repeat;
+      background-size: contain;
+    }
+    .treasure-2-closed{
+      position: absolute;
+      top: -40px;
+      left: 299px;
+      width: 118px;
+      height:98px;
+      background: url(./images/treasure/treasure-2-closed.png) no-repeat;
+      background-size: contain;
+    }
+    .treasure-2-opened{
+      position: absolute;
+      top: -59px;
+      left: 300px;
+      width: 132px;
+      height:114px;
+      background: url(./images/treasure/treasure-2-open.png) no-repeat;
+      background-size: contain;
+    }
+    .treasure-3-closed{
+      position: absolute;
+      top: -45px;
+      left: 471px;
+      width: 120px;
+      height:104px;
+      background: url(./images/treasure/treasure-3-closed.png) no-repeat;
+      background-size: contain;
+    }
+    .treasure-3-opened{
+      position: absolute;
+      top: -60px;
+      left: 457px;
+      width: 145px;
+      height:118px;
+      background: url(./images/treasure/treasure-3-open.png) no-repeat;
+      background-size: contain;
+    }
+    .treasure-4-closed{
+      position: absolute;
+      top: -57px;
+      left: 628px;
+      width: 142px;
+      height:121px;
+      background: url(./images/treasure/treasure-4-closed.png) no-repeat;
+      background-size: contain;
+    }
+    .treasure-4-opened{
+      position: absolute;
+      top: -72px;
+      left: 640px;
+      width: 159px;
+      height:143px;
+      background: url(./images/treasure/treasure-4-open.png) no-repeat;
+    }
+    .treasure-5-closed{
+      position: absolute;
+      top: -44px;
+      left: 803px;
+      width: 126px;
+      height:104px;
+      background: url(./images/treasure/treasure-5-closed.png) no-repeat;
+      background-size: contain;
+    }
+    .treasure-5-opened{
+      position: absolute;
+      top: -66px;
+      left: 803px;
+      width: 144px;
+      height:125px;
+      background: url(./images/treasure/treasure-5-open.png) no-repeat;
+      background-size: contain;
+    }
+
+    .sc-tcc-integral{
+      display: none;
+      position: absolute;
+      top: -32px;
+      left: 0px;
+      width:110px;
+      height: 20px;
+      line-height: 20px;
+      font-size: 20px;
+      color: #fff;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .super-entry{
+      position: absolute;
+      top: -25px;
+      right: 0;
+      width: 131px;
+      height: 77px;
+      line-height: 77px;
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+      background: url(./images/treasure/activity-explain.png) no-repeat;
+    }
+
+    .close{
+      position: absolute;
+      top: -78px;
+      right: -20px;
+      width: 32px;
+      height: 32px;
+      background: url(./images/treasure/close-btn.png) no-repeat;
+    }
+
+
+
+  }
+  @media screen and (min-height:930px) {
+    .treasure-modal {
+      bottom: 195px;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.mask {
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.anniversary{
+  background: url("images/anniversary-bg1.png") no-repeat;
+  width: 1375px;
+  height: 899px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.close-btn {
+    margin: 87px 10% 0 0;
+    float: right;
+    width: 47px;
+    height: 47px;
+    cursor: pointer;
+}
+

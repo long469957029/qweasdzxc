@@ -1,0 +1,56 @@
+<div class="item-outer">
+  <div class="item">
+    <% if (status === 3) { %>
+      <div class="sfa sfa-mall-none-stamp"></div>
+    <% } %>
+    <% if(!_.isNull(levelLimit) && limitRange !== 2){ %>
+      <div class="item-level">
+        <div class="item-level-info">Lv.<%=levelLimit%></div>
+        <div class="font-xxs"><% if(limitLevelType === 0){ %> 专享 <%}else{%> 以上 <%}%></div>
+      </div>
+    <% } %>
+    <% if (limitRange === 2) { %>
+      <div class="item-level">
+          <div class="item-level-info">总代</div>
+          <div class="font-xxs">专享</div>
+      </div>
+    <% } %>
+    <% if (lastNum && !_.isNull(lastNum)) { %>
+    <div class="last-num">剩 <%=lastNum%></div>
+    <% } %>
+    <div class="item-top">
+      <div class="item-img">
+        <img src="<%= picUrl %>" alt="">
+      </div>
+      <div class="item-information">
+        <div class="item-name">
+          <div class="item-title" title="<%= itemName %>">
+            <%= itemName %>
+          </div>
+          <div class="item-subtitle"><%= itemDesc %></div>
+        </div>
+        <div class="item-price">
+          参考价:
+          <span class="red">
+            ¥
+            <%= refPrice > 99999 ? Math.floor(refPrice / 10000) + '万' : refPrice %>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="item-action">
+      <div class="item-require">
+        <span class="sfa sfa-mall-integral-icon mall-integral-icon"></span> 积分要求:
+        <span class="integral"><%= requireIntegral %></span>
+      </div>
+      <% if (status === 0) { %>
+        <button class="btn btn-mall-item-action js-gift-exchange not-ready" data-id="<%= itemId %>" disabled>即将开始</button>
+      <% } else if (status === 1) { %>
+        <button class="btn btn-mall-item-action js-gift-exchange" data-id="<%= itemId %>" >立即兑换</button>
+      <% } else if (status === 3) { %>
+        <button class="btn btn-mall-item-action js-gift-exchange disabled" data-id="<%= itemId %>" disabled>已抢完</button>
+      <% } %>
+    </div>
+  </div>
+</div>
+

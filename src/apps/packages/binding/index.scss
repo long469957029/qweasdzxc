@@ -1,0 +1,89 @@
+body { font: .85em/1.4 "微软雅黑","Microsoft Yahei",'Arial','san-serif'; color: #333333; margin: 0; padding: 0;background: #fff;}
+img { max-width: 100%; height: auto; width: auto; -ms-interpolation-mode: bicubic; vertical-align: middle;}
+input { border: 0 none; margin: 0;}
+ul,p { padding: 0; margin: 0;}
+h1,h2,h3,h4,h5,h6 { margin: 0; font-weight: 100;}
+ul,li { list-style: none;}
+a { color: #666; cursor: pointer;}
+a,a:hover { text-decoration: none;}
+a:focus { outline: none;}
+
+.hidden { display: none;}
+
+.content {
+  width: 100%;
+  height: 100%;
+}
+.content-main {
+  width: 83.33333333%;
+  margin: 0 auto;
+  padding: 0;
+  float: none;
+  padding-top: 10rem;
+}
+.div-img {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  margin-bottom: 1.5rem;
+}
+.div-txt {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.div-time {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 60px;
+  font-weight: 600;
+}
+.div-input {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+.input-css {
+  width: 100%;
+  height: 43px !important;
+  line-height: 43px !important;
+  border: 1px solid #e5e5e5 !important;
+  font-size: 12px !important;
+  text-indent: 10px;
+  display: block;
+  padding: 0 !important;
+  color:#414141 !important;
+}
+.btn-css {
+  width: 100%;
+  padding: 0.5em 0;
+  border: 1px solid #186ea2;
+  font-size: 12px;
+  line-height: 30px;
+  text-indent: 10px;
+  display: block;
+  text-align: center;
+}
+.btn-css {
+  width: 100%;
+  height: 29px;
+  line-height: 29px;
+  background:linear-gradient(to bottom,#26a4e2,#103f84,#26a4e2);
+  cursor: pointer;
+  border-bottom: 1px solid #18254d;
+  color: #ffffff;
+  text-align: center;
+  font-size: 14px;
+  text-shadow:#186ea2 1px 0 0,#186ea2 0 1px 0,#186ea2 -1px 0 0,#186ea2 0 -1px 0;
+  -webkit-text-shadow:#186ea2 1px 0 0,#186ea2 0 1px 0,#186ea2 -1px 0 0,#186ea2 0 -1px 0;
+  -moz-text-shadow:#186ea2 1px 0 0,#186ea2 0 1px 0,#186ea2 -1px 0 0,#186ea2 0 -1px 0;
+  *filter: Glow(color=#186ea2, strength=1);
+}
+.btn-css:hover {
+  background:-webkit-linear-gradient(#26a4e2, #103f84);
+  background:-o-linear-gradient(#26a4e2, #103f84);
+  background:linear-gradient(#26a4e2, #103f84);
+}
+.btn-css:active {
+  background: #26a4e2;
+}

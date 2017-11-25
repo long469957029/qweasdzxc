@@ -1,0 +1,204 @@
+.pg-game-box1{
+  position: fixed;
+  width: 350px;
+  height: 210px;
+  bottom: 10px;
+  right:10px;
+  background: #ffffff;
+  border-radius: 10px;
+  .pg-new-user{
+    width: 350px;
+    height: 75px;
+    position: relative;
+    overflow: hidden;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    background: #19adb4;
+    .title-msg{
+      text-align: center;
+      font-size: 16px;
+      height: 40px;
+      padding-top: 18px;
+      line-height: 22px;
+      .player-num{
+        color: #ff5d5d;
+      }
+    }
+    .close-btn-icon{
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      right:-30px;
+      top:-30px;
+      cursor: pointer;
+      border-radius: 60px;
+      background: #179298;
+    }
+    .span-close{
+      font-size: 24px;
+      cursor: pointer;
+      color: #ffffff;
+      position: absolute;
+      top:2px;
+      right:4px;
+      z-index: 10;
+    }
+    //.span-close:hover + .close-btn-icon{
+    //  background: #19adb4;
+    //}
+  }
+  .pe-play-game{
+    width: 300px;
+    height:75px;
+    margin: 30px auto;
+    .icon-div{
+      float: left;
+      width: 40px;
+    }
+    .font-div{
+      float:left;
+      width: 180px;
+      color: #000000;
+      p{
+        margin: 0;
+        line-height: 25px;
+      }
+      .font-h{
+        font-size: 15px;
+      }
+      .font-name{
+        font-size: 15px;
+        color: #17c0c8;
+      }
+      .font-type{
+        font-size: 13px;
+        color: #666666;
+      }
+    }
+    .btn-div{
+      float: left;
+      width: 80px;
+      height: 75px;
+      .btn-betting{
+        height: 30px;
+        width: 80px;
+        margin-top: 45px;
+        background: url("./btn-betting-now.png") no-repeat;
+        outline: none;
+      }
+    }
+  }
+}
+
+
+.pg-game-box2{
+  position: fixed;
+  width: 350px;
+  height: 210px;
+  bottom: 10px;
+  right:10px;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  .pe-play-game{
+    width: 300px;
+    height:75px;
+    margin: 20px auto 15px;
+    .icon-div{
+      float: left;
+      width: 40px;
+    }
+    .font-div{
+      float:left;
+      width: 180px;
+      color: #000000;
+      p{
+        margin: 0;
+        line-height: 25px;
+      }
+      .font-h{
+        font-size: 15px;
+      }
+      .font-name{
+        font-size: 15px;
+        color: #17c0c8;
+      }
+      .font-type{
+        width: 180px;
+        font-size: 13px;
+        color: #666666;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        -o-text-overflow:ellipsis;
+        white-space:nowrap;
+      }
+    }
+    .btn-div{
+      float: left;
+      width: 80px;
+      height: 75px;
+      .btn-betting{
+        height: 30px;
+        width: 80px;
+        margin-top: 45px;
+        background: url("./btn-betting-now.png") no-repeat;
+        outline: none;
+      }
+    }
+  }
+  .pe-mall-notice{
+    width: 300px;
+    height: 100%;
+    margin: 0 auto;
+    margin-top: 48px;
+    .mall-notice-title{
+      font-size: 15px;
+      color: #333333;
+    }
+    .mall-notice-content{
+      font-size: 13px;
+      color: #666666;
+    }
+    .font-div{
+      width:255px;
+    }
+    .btn-div{
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      a{
+        display: block;
+        width: 80px;
+        height: 28px;
+        background: #1AADB4;
+        color: #ffffff;
+        text-align: center;
+        line-height: 28px;
+        font-size: 14px;
+        border-radius: 15px;
+      }
+    }
+  }
+  .close-btn-icon{
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    right:-30px;
+    top:-30px;
+    cursor: pointer;
+    border-radius: 60px;
+    background: #179298;
+  }
+  .span-close{
+    font-size: 24px;
+    cursor: pointer;
+    color: #ffffff;
+    position: absolute;
+    top:2px;
+    right:4px;
+    z-index: 10;
+  }
+  //.span-close:hover + .close-btn-icon{
+  //  background: #19adb4;
+  //}
+}

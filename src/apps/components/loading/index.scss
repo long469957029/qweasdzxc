@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+@import
+"~base/styles/imports";
+
+.loading-bg {
+  background: #cce9fb;
+  width: 100vw;
+  height: 100vh;
+  z-index: 60;
+  position: absolute;
+  overflow: hidden;
+
+  .loading-ball, .loading-shadow {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 auto;
+  }
+  .loading-ball {
+    background: url('./images/loading-ball.png');
+    width: 105px;
+    height: 105px;
+    z-index: 62;
+    animation: jump 1s infinite;
+  }
+
+  .loading-shadow {
+    filter: blur(3px);
+    background: #b7d1de;
+    width: 120px;
+    height: 40px;
+    border-radius: 120px / 40px;
+    z-index: 61;
+    animation: shrink 1s infinite;
+    margin-top: 55px;
+  }
+}
+
+@keyframes jump {
+	0% {margin-top: -120px;
+		animation-timing-function: ease-in;
+	}
+	40% {}
+	50% {margin-top: -15px;
+		height: 105px;
+		animation-timing-function: ease-out;
+	}
+	55% {margin-top: 0px; height: 90px; border-radius: 52.5px / 45px;
+		animation-timing-function: ease-in;}
+	65% {margin-top: -30px; height: 105px; border-radius: 52.5px;
+		animation-timing-function: ease-out;}
+	95% {
+		margin-top: -120px;
+		animation-timing-function: ease-in;
+	}
+	100% {margin-top: -120px;
+		animation-timing-function: ease-in;
+	}
+}
+
+@keyframes shrink {
+  0% {
+    filter: blur(5px);
+    width: 120px;
+    height: 40px;
+    border-radius: 120px / 40px;
+    animation-timing-function: ease-in;
+  }
+
+  50% {
+    filter: blur(1px);
+    width: 40px;
+    height: 13px;
+    border-radius: 40px / 13px;
+    animation-timing-function: ease-out;
+  }
+
+  100% {
+    filter: blur(5px);
+    width: 120px;
+    height: 40px;
+    border-radius: 120px / 40px;
+    animation-timing-function: ease-in;
+  }
+}

@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+@import '../misc/variable';
+@import '../misc/mixin';
+
+[class*="col-"] {
+  background: transparent !important;
+}
+
+.sp-banner {
+  @include border-box();
+  @include banner-background('https://i.pinimg.com/originals/82/0e/1d/820e1dd0d185dcf3d737975033755ac3.jpg');
+  width: 100%;
+  height: 1200px;
+
+  .iframe-container {
+    @include center-container(1012px);
+    background: white;
+    height: 100%;
+  }
+}

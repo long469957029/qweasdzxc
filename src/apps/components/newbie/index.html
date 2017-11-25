@@ -1,0 +1,12 @@
+<% _(newbies).each(function(newbie, index) { %>
+  <% var uniqueId = _.uniqueId('js-newbie-') %>
+  <div class="js-pf-newbie <% if (index !== 0) { %>hidden<% } %>">
+    <img class="newbie-pic" style="background-image: url(<%=newbie.pic %>)" usemap="#<%=uniqueId %>" />
+    <img class="hidden" src="<%=newbie.pic %>" />
+    <map name="<%=uniqueId %>">
+      <%_(newbie.areas).each(function(area) { %>
+      <area class="<%=area.className %>" shape="rect" coords="<%=area.coords.join(',') %>" href="javascript:void(0)">
+      <% }); %>
+    </map>
+  </div>
+<% }) %>

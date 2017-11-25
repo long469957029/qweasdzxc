@@ -1,0 +1,275 @@
+header,.bettingBreach-tip{
+	margin: 0 auto;
+}
+button{
+	border:none;
+}
+i{
+	font-style: normal;
+}
+.bettingBreach{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99;
+	.bettingBreach-off-box{
+		transform: scale(1);
+		animation:popoff 0.5s forwards;
+	}
+	@keyframes popoff{
+		0%{transform:scale(1);}
+		100%{transform:scale(0);}
+	}
+
+	.bettingBreach-content{
+		position: relative;
+		width: 887px;
+		margin:6% auto;
+		transform: scale(0);
+		animation:pop 0.5s forwards;
+	}
+	@keyframes pop{
+		0%{transform:scale(0);}
+		50%{transform:scale(1.2);}
+		100%{transform:scale(1);}
+	}
+
+	.bettingBreach-off{
+		width: 47px;
+		height: 47px;
+		background: url(./images/close_btn.png);
+		position: absolute;
+		top: 180px;
+		right: -20px;
+		z-index: 2;
+		cursor: pointer;
+	}
+
+	header{
+		width: 824px;
+		height: 212px;
+		background: url('./images/title_pic.png');
+		position: relative;
+		z-index: 1;
+	}
+
+	.bettingBreach-box{
+		position: relative;
+		height: 463px;
+		border: 4px solid #03a8ff;
+		background: #fff;
+		margin-top: -9px;
+	}
+
+	.bettingBreach-tip{
+		width: 850px;
+		height: 35px;
+		background: #ffcc66;
+		border-radius: 6px;
+		margin-top: 10px;
+		text-align:center;
+		line-height: 35px;
+		color: #000;
+		font-family: "宋体";
+	}
+
+	.zoom{
+		border: 1px solid #ccc;
+		float: left;
+		margin-top:50px;
+		margin-right: 16px;
+		position: relative;
+		height: 300px;
+		box-sizing: border-box;
+		h4{
+			position: absolute;
+			top: -15px;
+			left: 0;
+			right: 0;
+			margin:auto;
+			font-weight: normal;
+			color: #fff;
+			width: 120px;
+			height: 30px;
+			background: #ff923f;
+			border-radius: 1000px;
+			text-align: center;
+			line-height: 30px;
+			font-size: 14px;
+		}
+	}
+	.bettingBreach-challenge{
+		margin-left: 30px;
+		width: 240px;
+		text-align: center;
+		color: #000;
+		padding: 0 10px;
+		p{
+			font-size: 12px;
+			font-family: "宋体";
+			background: #0fc4ff;
+			border-radius: 3px;
+			padding: 6px 4px;
+		}
+		button{
+			width: 90px;
+			height: 36px;
+			background: url(./images/btn_01.jpg);
+			border-radius: 4px;
+			margin:0 6px;
+			font-size: 20px;
+			color: #fff;
+		}
+		.bettingBreach-reset{
+			background: #414141;
+		}
+		.disable{
+			background: url(./images/btn_02.jpg);
+		}
+	}
+	.challenge-money{
+		padding: 130px 0 16px 0;
+		display: inline-block;
+		font-size: 30px;
+	}
+
+	.bettingBreach-reward{
+		width: 560px;
+		ul{
+			height: 100%;
+			text-align: center;
+			position: relative;
+			li{
+				width: 96px;
+				overflow: hidden;
+				position: absolute;
+				left: 9px ;
+				bottom: 0;
+				span{
+					display: inline-block;
+				}
+				button{
+					background: url(./images/btn_03.jpg);
+					width: 90px;
+					height: 36px;
+					border-radius: 6px;
+					margin:10px 0;
+					font-size: 20px;
+				}
+				.disable{
+					background: url(./images/btn_02.jpg);
+				}
+				.column{
+					transition:height 0.5s;
+				}
+				&:nth-child(2){
+					left: 120px;
+					.column{
+						height: 86px;
+						background: #d4ff61;
+						border: 3px solid #c9ffa9;
+					}
+				}
+				&:nth-child(3){
+					left: 231px;
+					.column{
+						height: 106px;
+						background: #a9faff;
+						border: 3px solid #61f2ff;
+					}
+				}
+				&:nth-child(4){
+					left: 342px;
+					.column{
+						height: 126px;
+						background: #61afff;
+						border: 3px solid #a9c7ff;
+					}
+				}
+				&:nth-child(5){
+					left: 454px;
+					.column{
+						height: 146px;
+						background: #ee61ff;
+						border: 3px solid #f2a9ff;
+					}
+				}
+			}
+		}
+		.bonus{
+			color: #000;
+			font-size: 18px;
+		}
+		.arrow{
+			width: 100%;
+			height: 23px;
+			background: url(./images/arrow.png) no-repeat center;
+		}
+		.column{
+			width: 100%;
+			height: 66px;
+			background: #ffc561;
+			border: 3px solid #fff4a9;
+			border-radius: 6px;
+			box-sizing: border-box;
+			color: #000;
+			position: relative;
+			p{
+				position: absolute;
+				bottom: 4px;
+				font-size: 12px;
+				margin:0;
+				line-height: 16px;
+				width: 100%;
+			}
+		}
+	}
+
+	.bettingBreach-confirm{
+		margin-top: 20px;
+		width: 90px;
+		height: 36px;
+		background: url(./images/btn_01.jpg);
+		font-size: 20px;
+		color: #fff;
+		margin-left: 100px;
+		border-radius: 3px;
+	}
+
+	.disable{
+		background: url(./images/btn_02.jpg);
+	}
+
+
+}
+.bettingBreach-pop{
+  text-align: center;
+  height: 305px;
+  border:4px solid #00a8ff;
+  p{
+    height: 243px;
+    text-align: center;
+    line-height: 100px;
+    font-size: 20px;
+    color: #000;
+  }
+  button{
+    width: 200px;
+    height: 30px;
+    margin:0 10px;
+    background: #b8efff;
+    border: 1px solid #99dcff;
+    cursor: pointer;
+    border-radius: 6px;
+    width: 180px;
+    height: 32px;
+    color: #000;
+  }
+}
+
+.bettingBreach-pop-modal .bettingBreach-pop-body{
+  padding: 0;
+}

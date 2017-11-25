@@ -1,0 +1,53 @@
+@charset "UTF-8";
+@import "~base/styles/imports";
+
+.sidebar {
+  height: 1100px;
+  border-right: 1px solid gray;
+  border-left: 1px solid gray;
+  .sidebar-title {
+    text-align: center;
+    font-size: 16px;
+    height: 130px;
+  }
+  .sidebar-title-inner {
+    padding-top: 22px;
+  }
+  .sfa-sidebar-dot {
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+  }
+  .sidebar-list {
+    > li {
+      padding: 0 20px;
+      margin-bottom: -1px;
+      list-style: none;
+      > a {
+        font-size: $font-md;
+        line-height: 50px;
+        display: block;
+        border-bottom: 1px dashed #62c1c5;
+        text-indent: 30px;
+        .vip{
+          display: block;
+        }
+      }
+      .sfa-sidebar-chevron-right {
+        float: right;
+        margin: 17px 0;
+      }
+
+      &.active {
+        background-color: #057c86;
+        > a {
+          border-bottom-color: transparent;
+        }
+
+        ~ li {
+          margin-bottom: -1px;
+        }
+      }
+    }
+  }
+}

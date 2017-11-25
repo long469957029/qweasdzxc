@@ -1,0 +1,38 @@
+.mobilDown{
+	position: fixed;
+	z-index: 99;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0,0,0,0.8);
+
+}
+.mobilDown-bg{
+	background: url(./images/mobileDown-bg.png);
+	width: 910px;
+	height: 791px;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin:auto;
+}
+.off-mobilDown{
+	width: 42px;
+	height: 42px;
+	background: url(./images/off.png);
+	float: right;
+	cursor: pointer;
+}
+.mobilDown-btn{
+	display: block;
+		width: 204px;
+		height: 52px;
+		background: url(./images/btn.png);
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 134px;
+		margin:auto;
+}

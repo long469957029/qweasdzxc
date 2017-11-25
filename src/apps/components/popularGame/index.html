@@ -1,0 +1,80 @@
+<div class="animated fadeInUp hidden js-pg-game1 pg-game-box1">
+  <!--新用户-->
+  <div class="js-new-user pg-new-user">
+    <p class="title-msg">
+      欢迎您来到无限娱乐平台，恭喜您成为 <br>
+      第&nbsp;<span class="js-player-num player-num">123456789</span>&nbsp;位用户
+    </p>
+    <div class="span-close js-close-btn-user">×</div>
+    <div class="close-btn-icon"></div>
+  </div>
+  <div class="pe-play-game">
+    <div class="icon-div"><img src="icon-hot-game.png" alt=""></div>
+    <div class="font-div">
+      <p class="font-h">大家都在玩的游戏</p>
+      <p class="font-name js-new-ticket-name">无限分分彩</p>
+      <p class="font-type">热门玩法：<span class="js-hot-play-type">后三直选复式</span></p>
+    </div>
+    <div class="btn-div">
+      <a class="js-all-play-path"><button class="btn-betting js-betting-btn"></button></a>
+    </div>
+  </div>
+</div>
+
+<div class="animated fadeInUp hidden js-pg-game2 pg-game-box2">
+  <div class="pe-play-game"><!--<span class="sfa sfa-icon-near-game"></span>-->
+    <div class="icon-div">
+      <img src="icon-near-game.png" alt="">
+    </div>
+    <div class="font-div">
+      <p class="font-h">您最近投注的游戏</p>
+      <p class="font-name js-before-game">AG视讯</p>
+      <p class="font-type js-null-game"><span class="js-game-name-type">投注游戏</span>：<span class="js-game-name"></span></p>
+    </div>
+    <div class="btn-div">
+      <a class="js-nearGame-path"><button class="btn-betting js-betting-btn"></button></a>
+    </div>
+  </div>
+  <div class="pe-play-game">
+    <div class="icon-div"><img src="icon-hot-game.png" alt=""></div>
+    <div class="font-div">
+      <p class="font-h">大家都在玩的游戏</p>
+      <p class="font-name js-be-ticket-name">无限分分彩</p>
+      <p class="font-type">热门玩法：<span class="js-be-play-type">后三直选复式</span></p>
+    </div>
+    <div class="btn-div">
+      <a class="js-hotGame-path"><button class="btn-betting js-betting-btn"></button></a>
+    </div>
+
+    <form class="js-game-form hidden" action="/info/game/jump" target="_blank">
+      <input type="hidden" class="js-form-game-id" name="gameId">
+      <input type="hidden" class="js-form-token" name="token">
+    </form>
+
+    <form class="js-gc-slot-form hidden" action="/info/game/jump" target="_blank">
+      <input type="hidden" class="js-gc-slot-gameId" name="gameId">
+      <input type="hidden" class="js-gc-slot-token" name="token">
+      <input type="hidden" class="js-gc-slot-type" name="type">
+    </form>
+  </div>
+
+  <div class="span-close js-close-btn-game">×</div>
+  <div class="close-btn-icon"></div>
+</div>
+<div class="animated fadeInUp hidden js-mall-notice pg-game-box2">
+  <div class="pe-mall-notice"><!--<span class="sfa sfa-icon-near-game"></span>-->
+    <div class="icon-div pull-left">
+      <img src="icon-mall-noitce.png" alt="">
+    </div>
+    <div class="font-div pull-left m-left-smd">
+      <p class="mall-notice-title js-mall-notice-title"></p>
+      <p class="mall-notice-content js-mall-notice-content"></p>
+    </div>
+    <div class="btn-div">
+      <a href="#ma" class="js-close-btn-mall">点击进入</a>
+    </div>
+  </div>
+
+  <div class="span-close js-close-btn-mall">×</div>
+  <div class="close-btn-icon"></div>
+</div>

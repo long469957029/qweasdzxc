@@ -1,0 +1,27 @@
+.countdown {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  vertical-align: middle;
+
+  .countdown-item {
+    margin: 0 11px;
+  }
+  .countdown-item-sm {
+    margin: 0 4px;
+  }
+}
+
+.countdown-colon {
+  font-size: 30px;
+  line-height: 30px;
+  font-weight: bold;
+}
+
+.countdown-red-colon {
+  font-size: 30px;
+  line-height: 30px;
+  vertical-align: sub;
+  font-weight: bold;
+  color: #fe6760;
+}

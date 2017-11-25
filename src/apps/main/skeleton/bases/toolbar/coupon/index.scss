@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+@import '../../../../misc/variable';
+@import '../../../../misc/mixin';
+
+
+
+.sidebar-coupon-container {
+  @include border-box();
+}
+
+.mall-coupon-container.sidebar-coupon {
+  .coupon-outer {
+    padding: 0 20px;
+    height: 172px;
+    width: 409px;
+    float: left;
+    transform: scale(0.7);
+    margin-left: -45px;
+    margin-bottom: -35px;
+  }
+}

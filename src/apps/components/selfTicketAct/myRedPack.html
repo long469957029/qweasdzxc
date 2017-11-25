@@ -1,0 +1,65 @@
+<div class="my-red-pack-main js-my-red-pack-main clearfix">
+    <a class="close" data-dismiss="modal"></a>
+    <!--<div class="money-total">-->
+        <!--<span class="total-text">红包总额</span>-->
+        <!--<div class="total-num"><span class="font-30"><%=_(data.amountTotal).convert2yuan()%></span>元</div>-->
+    <!--</div>-->
+    <div class="pack-main-list js-pack-main-list">
+        <div class="pack-main-red-list js-pack-main-red-list">
+            <% if((data.dataList && _.isEmpty(data.dataList)) && (data.gameDataList && _.isEmpty(data.gameDataList))){ %>
+            <div class="no-have-red">
+                <div class="no-have-red-bg"></div>
+                <div class="text-center m-top-sm">暂无红包</div>
+            </div>
+            <% }else{ %>
+            <div class="money-total">您的红包余额：<span class="money"><%=_(data.amountTotal).convert2yuan()%></span></div>
+            <div class="ticket-list">
+                <%
+                var ticketId = 0;
+                _(data.dataList).each(function(item){
+                if(item.amount && item.amount > 0){
+
+                %>
+                <div class="list-info">
+                    <div class="info-title"><%=item.ticketName%></div>
+                    <div class="info-money"><span class="info-money-detail"><%=_(item.amount).convert2yuan()%></span>元</div>
+                    <div class="info-btn"><a href="#bc/<%=item.ticketId%>" class="router" data-dismiss="modal">去投注</a></div>
+                </div>
+                <% } }) %>
+                <%
+                _(data.gameDataList).each(function(item){
+                    if(item.amount && item.amount > 0){ %>
+                <div class="list-info live-info">
+                    <div class="info-title live-title"><%=item.typeName%></div>
+                    <div class="info-money game-money-color"><span class="font-jb"><%=_(item.amount).convert2yuan()%></span>元</div>
+                    <div class="text-center">流水要求：<span class="game-money-color"><%=_(item.bet).convert2yuan()%></span></div>
+                    <div class="text-center">有效期至：<%=_(item.endTime).toTime('YYYY.MM.DD')%></div>
+                </div>
+                <% } })%>
+            </div>
+            <% } %>
+        </div>
+
+        <div class="rule clearfix">
+            <div class="title">红包说明：</div>
+            <div class="rule-info">
+                <div>1、彩票类红包只能在对应的彩种中消费，在投注时勾选使用红包余额即可使用红包进行投注</div>
+                <div>2、真人游戏红包请在对应类型的游戏中达到相应的流水，平台会自动发放奖励至账户中</div>
+                <div>3、该活动最终解释权归无限娱乐所有</div>
+            </div>
+        </div>
+        <a class="look-red-info js-look-red-info"></a>
+        <!--<a href="#bc/<%=(ticketId === 0 ? 10 : ticketId)%>" class="router go-consumption" data-dismiss="modal"></a>-->
+    </div>
+    <div class="pack-detail-info js-pack-detail-info hidden">
+        <div class="pack-detail-top clearfix">
+            <a class="go-back js-go-back"></a>
+            <div class="title-tab">
+                <div class="info-btn js-top-info-btn" data-type="1">彩票红包</div>
+                <div class="info-btn js-top-info-btn" data-type="2">游戏红包</div>
+            </div>
+        </div>
+        <div class="detail-main js-detail-main"></div>
+    </div>
+
+</div>

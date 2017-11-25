@@ -1,0 +1,34 @@
+<table id="chartsTable1" width="100%" border="0" cellpadding="0" cellspacing="1">
+
+    <tr style="background-color: #0000cc;height: 40px;color: #fff">
+        <td >期号</td>
+        <td colspan="5">开奖号码</td>
+        <!--<td></td>-->
+        <td colspan="20">原始号源</td>
+    </tr>
+
+    <% _(list).each(function(info) { %>
+    <tr>
+        <td class="issue ellipsis"><%=info.ticketPlanId %></td>
+        <% var openedNums = info.ticketOpenNum.split(',') %>
+        <% var openedNums = openedNums.splice(0, count) %>
+        <% _(openedNums).each(function(num) { %>
+        <td align="center" class="tdwth"><div class="wth"><%=num %></div></td>
+        <% }); %>
+
+        <!--<td class="issue ellipsis">-->
+            <% var ticketOrgOpenNum = info.ticketOrgOpenNum.split(',') %>
+            <% _(ticketOrgOpenNum).each(function(num) { %>
+                <td align="center" class="tdwth"><div class="wth"><%=num %></div></td>
+            <% }); %>
+
+        <!--</td>-->
+
+    </tr>
+    <% }); %>
+
+
+
+
+
+</table>

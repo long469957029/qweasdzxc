@@ -1,0 +1,275 @@
+@charset "UTF-8";
+@import "~base/styles/imports";
+$box-shadow: #a8a8a8;
+$border: #e5e5e5;
+$action-red: #e8675d;
+$action-light: #f3b3ae;
+$action-gray: #c7c7c7;
+$black: #666;
+$gray: #999;
+$blue-green: #77cfd5;
+$green: #77d5c9;
+$purple: #8977d5;
+$blue: #6caae9;
+$yellow: #eea24a;
+$red: #e9796c;
+// 1充值 blue-green
+// 2加奖 green
+// 3补贴 purple
+// 4返水 blue
+// 5代金 yellow
+// 6现金 red
+.mall-coupon-container {
+  height: 566px;
+  min-height: 566px;
+  * {
+    box-sizing: border-box;
+  }
+  .row {
+    margin: 0 -20px 25px;
+  }
+  .coupon-outer {
+    padding: 0 20px;
+    height: 172px;
+    width: 33.333%;
+    float: left;
+  }
+
+  .seal {
+    position: absolute;
+    right: 85px;
+    top: 17px;
+    z-index: 2;
+    background-color: rgba(255,255,255,1);
+  }
+  .coupon:before,
+  .coupon:after {
+    z-index: -1;
+    position: absolute;
+    content: "";
+    bottom: 15px;
+    left: 10px;
+    width: 50%;
+    top: 80%;
+    max-width: 300px;
+    background: $box-shadow;
+    box-shadow: 0 15px 15px $box-shadow;
+    transform: rotate(-5deg);
+  }
+  .coupon:after {
+    transform: rotate(5deg);
+    right: 10px;
+    left: auto;
+  }
+  .coupon {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: white;
+    .info {
+      padding: 20px 15px 0px;
+    }
+
+    .label {
+      position: absolute;
+      top: -3px;
+      left: -7px;
+      width: 74px;
+      height: 34px;
+      padding: 3px 0 0 6px;
+      font-size: 12px;
+      &.red {
+        background: url('../misc/mall-label-red.png');
+      }
+      &.yellow {
+        background: url('../misc/mall-label-yellow.png');
+      }
+      &.green {
+        background: url('../misc/mall-label-green.png');
+      }
+    }
+    .sub-info {
+      position: relative;
+      height: 54px;
+      margin-top: 6px;
+      .container {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+    .type {
+      position: absolute;
+      z-index: 1;
+      right: 0;
+      background: url('../misc/mall-coupon-blue.png');
+      width: 80px;
+      height: 172px;
+      padding: 30px 20px;
+      font-size: 24px;
+      line-height: 35px;
+      font-weight: bold;
+      text-align: center;
+      color: white;
+      .last-num{
+        position: absolute;
+        width: 80px;
+        height: 37px;
+        //background: url("../misc/mall-coupon-blue-sm.png") no-repeat;
+        text-align: center;
+        font-size: 12px;
+        color: #ffffff;
+        top: 0;
+        right:0;
+        line-height: 35px;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .last-num-bg-green{
+        background: url('../misc/mall-coupon-green-sm.png') no-repeat;
+      }
+      .last-num-bg-blue-green{
+        background: url('../misc/mall-coupon-blue-green-sm.png') no-repeat;
+      }
+      .last-num-bg-purple{
+        background: url('../misc/mall-coupon-purple-sm.png') no-repeat;
+      }
+      .last-num-bg-blue{
+        background: url('../misc/mall-coupon-blue-sm.png') no-repeat;
+      }
+      .last-num-bg-yellow{
+        background: url('../misc/mall-coupon-yellow-sm.png') no-repeat;
+      }
+      .last-num-bg-red{
+        background: url('../misc/mall-coupon-red-sm.png') no-repeat;
+      }
+      &.p-type{
+        padding: 45px 20px;
+      }
+    }
+    .price {
+      font-size: 45px;
+      line-height: 45px;
+      display: inline-block;
+      transform: translateY(3px);
+      span {
+        transform: translateY(-6px);
+        margin-right: -9px;
+      }
+      .mall-percent-icon{
+        transform: translate(-6px,-16px);
+        margin-right: -2px;
+      }
+    }
+    .desc {
+      font-size: 12px;
+      display: inline-block;
+      color: $black;
+      width: 110px;
+    }
+    .rebet, .time {
+      font-size: 12px;
+      color: $gray;
+      //margin-top: -3px;
+    }
+
+    .integral {
+      position: absolute;
+      bottom: 0;
+      padding: 10px 15px;
+      color: $gray;
+      width: 100%;
+      border-top: 1px dashed $border;
+    }
+
+    .amount {
+      color: $black;
+    }
+  }
+
+  .sfa-mall-integral-icon-gray {
+    transform: translateY(5px);
+  }
+
+  .btn-mall-coupon-action {
+    width: 85px;
+    height: 25px;
+    font-size: 12px;
+    border-radius: 5px;
+    background: $action-red;
+    position: absolute;
+    right: 93px;
+    top: 10px;
+
+    &.disabled {
+      background: $action-gray;
+      border: 1px solid $action-gray;
+      color: white;
+    }
+    &.not-ready {
+      background: $action-light;
+      border: 1px solid $action-light;
+      color: white;
+    }
+  }
+  .coupon {
+    &.blue-green {
+      .type {
+        background: url('../misc/mall-coupon-blue-green.png');
+      }
+      .price {
+        color: $blue-green;
+      }
+    }
+    &.green {
+      .type {
+        background: url('../misc/mall-coupon-green.png');
+      }
+      .price {
+        color: $green;
+      }
+    }
+    &.purple {
+      .type {
+        background: url('../misc/mall-coupon-purple.png');
+      }
+      .price {
+        color: $purple;
+      }
+    }
+    &.blue {
+      .type {
+        background: url('../misc/mall-coupon-blue.png');
+      }
+      .price {
+        color: $blue;
+      }
+    }
+    &.yellow {
+      .type {
+        background: url('../misc/mall-coupon-yellow.png');
+      }
+      .price {
+        color: $yellow;
+      }
+    }
+    &.red {
+      .type {
+        background: url('../misc/mall-coupon-red.png');
+      }
+      .price {
+        color: $red;
+      }
+    }
+    &.no{
+      .type {
+        background: url('../misc/mall-coupon-no.png');
+      }
+      .price {
+        color: #cacaca;
+      }
+    }
+  }
+}

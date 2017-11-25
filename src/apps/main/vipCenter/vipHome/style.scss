@@ -1,0 +1,127 @@
+@charset "UTF-8";
+
+.vip-home{
+  height: 569px;
+  overflow: auto;
+  padding: 0 42px;
+}
+
+.vip-home-top{
+  width: 821px;
+  height: 247px;
+  background: url(./images/home-vip-top-bg.jpg);
+  margin: 10px auto;
+  margin-bottom: 5px;
+}
+
+.vip-tips{
+  color: #666666;
+  line-height: 24px;
+  a{
+    color: #3c0db3;
+    text-decoration: underline;
+  }
+  margin: 5px 0;
+}
+
+.vip-home-info{
+  border: 2px solid #057f84;
+}
+
+.vip-home-info-bg{
+  li{
+    display: inline-block;
+    width: 70px;
+    overflow: hidden;
+    text-align: center;
+    margin-top: 4px;
+    margin-left: 16px;
+    p{
+      width: 47px;
+      line-height: 17px;
+      background: #057f84;
+      border-radius: 30px;
+      margin: 0 auto;
+      color: #fff;
+    }
+    .vip-icon{
+      height: 68px;
+    }
+    .vip-icon0{
+      background: url(./images/icon0.png);
+    }
+    .vip-icon1{
+      background: url(./images/icon1.png);
+    }
+    .vip-icon2{
+      background: url(./images/icon2.png);
+    }
+    .vip-icon3{
+      background: url(./images/icon3.png);
+    }
+    .vip-icon4{
+      background: url(./images/icon4.png);
+    }
+    .vip-icon5{
+      background: url(./images/icon5.png);
+    }
+    .vip-icon6{
+      background: url(./images/icon6.png);
+    }
+    .vip-icon7{
+      background: url(./images/icon7.png);
+    }
+    .vip-icon8{
+      background: url(./images/icon8.png);
+    }
+  }
+}
+.vip-home-grade{
+  
+}
+.vip-home-jurisdiction{
+  a{
+    display:inline-block;
+    color: #000;
+    height: 20px;
+    width: 60px;
+    background: #414141;
+    padding-top: 64px;
+    text-align: center;
+    margin-right: 10px;
+  }
+  .vip-home-birthday{
+    background: url(./images/vip-home-birthday.png) no-repeat center top;
+  }
+  .vip-home-festival{
+    background: url(./images/vip-home-festival.png) no-repeat center top;
+  }
+  .vip-home-monthly{
+    background: url(./images/vip-home-monthly.png) no-repeat center top;
+  }
+  /*.vip-home-privilege{
+    background: url(./images/vip-home-privilege.png) no-repeat center top;
+  }*/
+  .vip-home-awards{
+    background: url(./images/vip-home-awards.png) no-repeat center top;
+  }
+  .vip-home-reputation{
+    background: url(./images/vip-home-reputation.png) no-repeat center top;
+  }
+  .vip-home-RW{
+    background: url(./images/vip-home-RW.png) no-repeat center top;
+  }
+}
+
+.vip-home-menu{
+  padding:4px 0;
+}
+
+.vip-a{
+  color: #16a4aa;
+  text-decoration: underline;
+  &:hover{
+    color: #16a4aa;
+    text-decoration: none;
+  }
+}

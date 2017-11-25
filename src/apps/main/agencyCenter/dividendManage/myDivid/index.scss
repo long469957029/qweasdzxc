@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+@import
+"~base/styles/imports";
+
+.ac-dm-md-main{
+  margin-left: 29px;
+  .ac-dm-md-head{
+    height: 48px;
+    width: 808px;
+    padding-top:5px;
+    .ac-dm-md-label{
+      margin-left: 45px;
+      font-size: 13px;
+      color: #666;
+      line-height: 28px;
+    }
+    .ac-dm-md-cycle{
+      width: 122px;
+      height: 28px;
+    }
+    .ac-dm-md-status{
+      width: 72px;
+      height: 28px;
+      font-size: 14px;
+      line-height: 28px;
+      background: #a8a8a8;
+      text-align: center;
+      color: #fff;
+      float: right;
+      outline: none;
+      &.active{
+        background: #e8675d;
+      }
+    }
+
+  }
+
+  .ac-dm-md-body{
+
+    .ac-dm-md-graph{
+      width: 808px;
+      height: 135px;
+      border: 1px solid #b6b6b5;
+      font-size: 0;
+      margin-bottom: 17px;
+
+      >div{
+        display: inline-block;
+        width: 201px;
+        height:135px;
+        border-right: 1px solid #b6b6b5;
+        font-size: 16px;
+        color: #666;
+        text-align: center;
+        overflow: hidden;
+
+        .ac-dm-md-graph-icon{
+          width: 74px;
+          height: 74px;
+          margin: 12px auto 2px;
+        }
+        .ac-dm-md-graph-betTotal{
+          background: url(./md-betTotal.png);
+        }
+        .ac-dm-md-graph-profitTotal{
+          background: url(./md-profitTotal.png);
+        }
+        .ac-dm-md-graph-activeUser{
+          background: url(./md-user.png);
+        }
+        .ac-dm-md-graph-subDividTotal{
+          background: url(./md-subDividTotal.png);
+        }
+        .ac-dm-md-graph-rebatTotalTotal{
+          background: url(./md-rebatTotalTotal.png);
+        }
+        .ac-dm-md-graph-lastMonthNegativeProfitTotal{
+          background: url(./md-lastMonth.png);
+        }
+        .ac-dm-md-graph-divid{
+          background: url(./md-divid.png);
+        }
+        .ac-dm-md-graph-dividTotal{
+          background: url(./md-dividTotal.png);
+        }
+        .ac-dm-md-graph-label{
+          font-size: 14px;
+          color: #666;
+        }
+        &:last-child{
+          border-right: 0;
+        }
+      }
+    }
+    .ac-dm-dm-grid-5{
+      .ac-dm-md-graph{
+        >div{
+          width:160px;
+        }
+      }
+
+    }
+    .ac-dm-md-settle-grid{
+      width: 808px;
+
+    }
+  }
+}

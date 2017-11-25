@@ -1,0 +1,139 @@
+<!-- navbar为首页上方的进入口列表，分为1.体育投注 2.真人视讯 3.电子游戏 4.捕鱼游戏 5.彩票投注 6.优惠活动 7.手机投注 8.积分商城 9.在线客服 -->
+<!-- 形式有三种 1.dropdown 2.outer-link(优惠活动，手机投注) 3.js-gl-service(客服) 4.link -->
+<!-- dropdown 样式有三种 1.列表(体育投注) 2.入口(真人，电子，捕鱼) 3.分类列表(彩票)-->
+<div class="main-display">
+  <span class="js-db-nav-scroll scroll-btn"></span>
+  <div class="js-db-nav-main nav-main">
+    <div class="">
+      <div class="js-gl-main-navbar">
+        <ul class="nav">
+          <% _(navbar).each(function(menu) { %>
+            <li class="<%= menu.className || '' %>">
+              <% if (menu.navItemType === 1) { %>
+                <a href="#<%= menu.router %>"><%= menu.name %></a>
+              <% } else if (menu.navItemType === 2) { %>
+                <a href="<%=menu.first || menu.router %>" target="_blank"><%= menu.name %></a>
+              <% } else if (menu.navItemType === 3) { %>
+                <a class="js-gl-service">在线客服</a>
+              <% } else if (menu.navItemType === 4) { %>
+                <a href="#<%=menu.first || menu.router %>"><%= menu.name %></a>
+              <% } %>
+
+              <% if (menu.mask) { %>
+                <!-- 为了遮住下滑而出的下拉选单 -->
+                <div class="navbar-mask"></div>
+              <% } %>
+              <% if (menu.dropdownType === 1) { %>
+                <div class="js-nav-channel-container nav-channel-container">
+                  <ul>
+                    <div class="nav-channel-banner">
+                      <div class="banner-title"><%= menu.bannerTitle %></div>
+                      <div class="banner-desc"><%= menu.bannerDesc %></div>
+                    </div>
+                    <div class="nav-channel-list-container">
+                      <%_(menu.subGame).each(function(channel){%>
+                        <li class="list-item">
+                          <span class="sfa sfa-mall-sport-icon"></span>
+                          <a src="#<%= channel.gameLink %>" class="list-item-title"><%= channel.channelName %></a>
+                         </li>
+                        <%})%>
+                    </div>
+                  </ul>
+                </div>
+              <% } %>
+              <% if (menu.dropdownType === 2) { %>
+                <div class="js-nav-channel-container nav-channel-container">
+                  <ul>
+                    <div class="nav-channel-banner">
+                      <div class="banner-title"><%= menu.bannerTitle %></div>
+                      <div class="banner-desc"><%= menu.bannerDesc %></div>
+                    </div>
+                    <div class="nav-channel-entry-container">
+                      <%_(menu.subGame).each(function(channel){%>
+                        <li class="entry-item">
+                          <div class="entry-item-img">
+                            <img src="<%= channel.imgSrc %>" alt="">
+                          </div>
+                          <div class="entry-item-content">
+                            <div class="entry-item-title"><%= channel.channelName %></div>
+                            <div class="entry-item-desc"><%= channel.desc %></div>
+                            <div class="js-nav-channel-btn btn entry-item-btn" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="<%=menu.type%>">进入游戏</div>
+                            <a class="js-nav-channel-btn nav-channel-link" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="<%=menu.type%>">试玩版</a>
+                            <a class="js-nav-channel-btn nav-channel-link" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="<%=menu.type%>">手机版</a>
+                          </div>
+                        </li>
+                      <%})%>
+                    </div>
+                  </ul>
+                </div>
+              <% } %>
+              <% if (menu.dropdownType === 3) { %>
+                <div class="js-nav-channel-container nav-channel-container">
+                  <ul>
+                    <div class="nav-channel-banner">
+                      <div class="banner-title"><%= menu.bannerTitle %></div>
+                      <div class="banner-desc"><%= menu.bannerDesc %></div>
+                    </div>
+                    <div class="nav-channel-classic-container">
+                      <div class="classic-title">
+                        <h3><%= classicTicketList.title %></h3>
+                        <p><%= classicTicketList.desc %></p>
+                      </div>
+                      <% _(classicTicketList.list).each(function(list, index){%>
+                        <div class="classic-section">
+                          <% _(list).each(function(ticket, index) { %>
+                            <li>
+                              <a href="#bc/<%= ticket.id %>"><%= ticket.zhName %></a>
+                              <% if (ticket.badge) { %>
+                                <span class="sfa sfa-navbar-ticket-icon-<%= ticket.badge %>"></span>
+                              <% } %>
+                            </li>
+                          <% }) %>
+                        </div>
+                      <%})%>
+                    </div>
+
+                    <div class="nav-channel-classic-container">
+                        <div class="classic-title">
+                          <h3><%= handicapTicketList.title %></h3>
+                          <p><%= handicapTicketList.desc %></p>
+                        </div>
+                        <% _(handicapTicketList.list).each(function(list, index){%>
+                          <div class="classic-section">
+                            <% _(list).each(function(ticket, index) { %>
+                              <li>
+                                <a href="#bc/<%= ticket.id %>"><%= ticket.zhName %></a>
+                                <% if (ticket.badge) { %>
+                                  <span class="sfa sfa-navbar-ticket-icon-<%= ticket.badge %>"></span>
+                                <% } %>
+                              </li>
+                            <% }) %>
+                          </div>
+                        <%})%>
+                      </div>
+                  </ul>
+                </div>
+              <% } %>
+            </li>
+            <% }) %>
+        </ul>
+        <div class="nav-mall-sub js-nav-mall-sub hidden">
+          <i class="sfa-up_icon"></i>
+          <div class="mall-sub-title">
+            <span class="sfa sfa-mall-entry-rec"></span> 商城最新推荐
+          </div>
+          <ul class="js-nav-mall-sub-list">
+          </ul>
+          <div class="mall-more">
+            <a href="#ma" target="_blank">查看更多&gt;&gt;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<form class="js-nav-form hidden" action="/info/game/jump" target="_blank">
+  <input type="hidden" class="js-nav-form-game-id" name="gameId">
+  <input type="hidden" class="js-nav-form-token" name="token">
+</form>
+</div>

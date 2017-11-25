@@ -1,0 +1,61 @@
+{
+	"result": 0,
+	"msg": "ok",
+	"sign": null,
+	"root": {
+		"fromDate": 1503417600000,
+		"endDate": 1506700800000,
+		"status": 1,
+		"available": true,
+		"itemList": [
+			{
+				"sales": 200000,
+				"days": [
+					{
+						"bet": 6000000,
+						"status": 0
+					},
+					{
+						"bet": 7000000,
+						"status": 1
+					},
+					{
+						"bet": 8000000,
+						"status": 0
+					},
+					{
+						"bet": 9000000,
+						"status": 0
+					}
+				]
+			},
+			{
+				"sales": 300000,
+				"days": [
+					{
+						"bet": 10000000,
+						"status": 0
+					},
+					{
+						"bet": 11000000,
+						"status": 2
+					},
+					{
+						"bet": 12000000,
+						"status": 0
+					},
+					{
+						"bet": 13000000,
+						"status": 0
+					}
+				]
+			}
+		],
+		"prizedList": [
+			{
+				"username": "frank",
+				"bonus": 5000000
+			}
+		]
+	}
+}

@@ -1,0 +1,27 @@
+<% if (awardTypeId === 1) { %>
+  <div class="pane js-pane-<%= paneIndex %>" data-id="<%= id %>">
+    <div class="item-img coupon treasure-coupon-<%= couponType %>"><%= validDay ? validDay + '天有效' : '' %></div>
+    <%if (couponType === 2 || couponType === 3 || couponType === 4) { %>
+      <div class="item-two-first"><%= statName %></div>
+      <div class="item-two-second"><%= desc %></div>
+    <% } else { %>1
+      <div class="item-one"><%= desc %></div>
+    <% } %>
+  </div>
+<% } else if (awardTypeId === 2) { %>
+  <div class="pane js-pane-<%= paneIndex %>" data-id="<%= id %>">
+    <img src="<%= picUrl %>" alt="">
+    <div class="item-one"><%= itemName %></div>
+  </div>
+<% } else if (awardTypeId === 3) { %>
+  <div class="pane js-pane-<%= paneIndex %>" data-id="<%= id %>">
+    <div class="item-img integral"></div>
+    <div class="item-one">积分 <%= integral %></div>
+  </div>
+<% } else if (awardTypeId === 0) { %>
+  <div class="pane js-pane-6">
+    <div class="item-img thanks"></div>
+    <div class="item-one">谢谢惠顾</div>
+  </div>
+<% } %>
+

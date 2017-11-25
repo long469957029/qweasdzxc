@@ -1,0 +1,57 @@
+<!-- awardTypeId 1:优惠券, 2:礼物, 3:积分 -->
+
+<% if (awardTypeId === 1) { %>
+  <div class="scratch-item">
+    <div class="header">
+      <div class="value">
+        <%= rate %>%</div>
+      <div class="text">获奖概率</div>
+    </div>
+    <div class="coupon-<%= couponType %>">
+      <span class="value"><%= validDay ? validDay + '天有效' : '' %></span>
+    </div>
+    <div class="info">
+      <%= desc %>
+    </div>
+    <div class="exchange-btn js-treasure-scratch" data-id="<%= id %>">
+      <%= lucky %> 幸运值兑换</div>
+  </div>
+  <% } else if (awardTypeId === 2) { %>
+    <div class="scratch-item">
+      <div class="header">
+        <div class="value">
+          <%= rate %>%</div>
+        <div class="text">获奖概率</div>
+      </div>
+      <img src="<%= picUrl %>" alt="">
+      <div class="info">
+        <%= itemName %>
+      </div>
+      <div class="exchange-btn js-treasure-scratch" data-id="<%= id %>">
+        <%= lucky %> 幸运值兑换</div>
+    </div>
+    <% } else if (awardTypeId === 3) { %>
+      <div class="scratch-item">
+        <div class="header">
+          <div class="value">
+            <%= rate %>%</div>
+          <div class="text">获奖概率</div>
+        </div>
+        <div class="integral"></div>
+        <div class="info">积分
+          <%= integral %>
+        </div>
+        <div class="exchange-btn js-treasure-scratch" data-id="<%= id %>">
+          <%= lucky %> 幸运值兑换</div>
+      </div>
+      <% } else { %>
+        <div class="scratch-item">
+          <div class="header">
+            <div class="value">100%</div>
+            <div class="text">获奖概率</div>
+          </div>
+          <img src="../misc/scratch-money.png" alt="">
+          <div class="info">现金大奖100万</div>
+          <div class="exchange-btn js-treasure-scratch" data-id="<%= id %>">10幸运值兑换</div>
+        </div>
+        <% } %>

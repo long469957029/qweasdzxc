@@ -1,0 +1,54 @@
+.rain {
+  .raindrop {
+    position: fixed;
+    z-index: 10000;
+    transition: top 8s ease, left 8s ease;
+    cursor: pointer;
+
+    top: -50%;
+    left: 40%;
+
+    &.redbag-blur {
+      animation-delay: 1s;
+      margin-left: -200px;
+      margin-top: -62px;
+    }
+
+    &.raindrop-filpx {
+      img {
+        transform: scaleX(-1);
+      }
+    }
+
+    .redbag {
+      width: 100px;
+      float: left;
+      max-width: inherit;
+    }
+  }
+  &.rain-back {
+    .raindrop {
+      z-index: 10;
+    }
+  }
+}
+.rain-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-size: 50px !important;
+  cursor: pointer;
+  &:hover {
+    color: #cccccc;
+  }
+}
+
+@keyframes redbag-roll {
+  from {
+    transform: rotate3d(1, 1, 0, 0deg) rotate(-45deg);
+  }
+  to {
+    transform: rotate3d(1, 1, 0, 360deg) rotate(-45deg);
+  }
+}

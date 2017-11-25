@@ -1,0 +1,133 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.clear_div {
+    clear: both;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+.mask {
+    background: rgba(0, 0, 0, .7);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.con {
+    position: absolute;
+    width: 1348px;
+    height: auto;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+}
+
+.title_pic {
+    background: url("images/cjbdy/title_pic.png") no-repeat;
+    width: 950px;
+    height: 228px;
+    margin: 0px auto;
+}
+
+.cloud_01 {
+    background: url("images/cjbdy/cloud_01.png") no-repeat;
+    width: 1348px;
+    height: 335px;
+    margin: 0px auto;
+}
+
+.cloud_02 {
+    background: url("images/cjbdy/cloud_02.png") no-repeat;
+    width: 1226px;
+    height: 221px;
+    position: absolute;
+    left: 60px;
+    bottom: -30px;
+}
+.des {
+    background: url("images/cjbdy/des.png") no-repeat;
+    width: 582px;
+    height: 66px;
+    position: absolute;
+    left: 0px;
+    right:0px;
+    bottom:75px;
+    margin:auto;
+}
+
+.animal_lump {
+    position: absolute;
+    left: 55px;
+    bottom: 140px;
+}
+
+.animal_lump ul {
+    text-align: center;
+}
+
+.animal_lump li {
+    display: inline-block;
+}
+
+.animal_lump .animal {
+    position: relative;
+    width: 103px;
+    height: 88px;
+    opacity: 0;
+}
+
+.animal_lump li.game {
+    position: relative;
+    width: 101px;
+    height: 131px;
+    cursor: pointer;
+    .logo{
+        max-width: 131px;
+    }
+}
+
+.animal_lump li.game img {
+    position: absolute;
+    top:0px;
+    left: 0px;
+    display: block;
+}
+.animal{
+    .chicken{
+        max-width: 186px;
+    }
+}
+.close_btn{
+    background: url("images/cjbdy/close_btn.png") no-repeat;
+    width: 47px;
+    height: 47px;
+    position:absolute;
+    top:10px;
+    right: 110px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+

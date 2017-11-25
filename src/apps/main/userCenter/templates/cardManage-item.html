@@ -1,0 +1,23 @@
+<li class="js-fc-payment">
+  <div class="js-uc-cmSingleCard-container binding-card">
+      <div class="binding-card-bg" style="background-image: url(<%=locked ? card.lockPic : card.pic %>);">
+        <div class="binding-card-main ">
+          <div ><%=card.name %> <%=card.bankName %></div>
+          <div class="js-uc-cmSingCardName&Num"><%=card.cardNo %></div>
+          <div class="js-uc-cmSingCardBindTime  ">绑定时间:<%=_(card.bindTime).toTime() %></div>
+        </div>
+        <div class="binding-card-op">
+          <% if (!locked) { %>
+
+          <a type="button" class="js-uc-cmDeleteSingCard  text-light  " data-type="<%=card.cardId %>">
+            <!--<i class="fa fa-trash font-lg"></i>-->
+            <img src="<%=deletePng %>"/>&nbsp;
+            删除
+          </a>
+          <% } else {%>
+            <img src="<%=lockPng %>"/>&nbsp;&nbsp;已锁定
+          <% } %>
+        </div>
+      </div>
+  </div>
+</li>

@@ -1,0 +1,103 @@
+<div class="winloss_mask js-winloss_mask">
+    <div class="js-main-contain main_contain">
+        <div class="bg_lump">
+            <div class="diamond_lump">
+                <div class="diamond_01"></div>
+                <div class="diamond_02"></div>
+                <div class="diamond_03"></div>
+                <div class="diamond_04"></div>
+                <div class="diamond_05"></div>
+            </div>
+            <div class="title_pic">
+            	<div class="luster lus_01"></div>
+            	<div class="luster lus_02"></div>
+            	<div class="luster lus_03"></div>
+            	<div class="luster lus_04"></div>
+            	<div class="luster lus_05"></div>
+            	<div class="luster lus_06"></div>
+            	<div class="luster lus_07"></div>
+            	<div class="luster lus_08"></div>
+            </div>
+            <div class="title_pic_info_ready">离今日加奖/补贴开启，还有</div>
+            <div class="title_pic_info_begin">离今日加奖/补贴结束，还有</div>
+            <div class="time_lump time_ready">
+                <div class="hour">24</div>
+                <div class="minute">00</div>
+                <div class="second">00</div>
+                <div class="time_luster"></div>
+            </div>
+            <div class="notice">
+                活动规则：<br>
+                1、每天<span class="js-from-time">15：00</span>-<span class="js-end-time">24：00</span>，参与平台任意彩种投注，且中奖的情况下，都可额外获得中奖金额<span class="js-ward">0.3</span>%的加奖返利；若出现亏损还可领取<span class="js-bate">0.5</span>%的亏损补贴！同一时间仅可领取一种奖励。<br>
+                2、盈利=活动期间所有中奖的订单，亏损=投注-中奖（结果为正数则补贴亏损额，为负则无补贴）<br>
+                3、活动仅计算每天<span class="js-from-time">15点</span>之后、<span class="js-end-time">24点</span>之前开奖的订单。<br>
+                4、奖金/补贴需手动在此领取，活动期间可多次领取，当天奖金当天领取，逾期作废。<br>
+                5、相同IP仅限一个账号参与，活动期间发现任何对冲刷奖金的账号，将直接冻结。<br>
+                6、无限娱乐拥有活动的最终解释权。
+            </div>
+            <div class="js-accept-btn btn_01">领取奖金</div>
+            <div class="js-close-btn close_btn"><img src="images/wxyk/close_btn.png" width="47" height="47"></div>
+        </div>
+    </div>
+    <div class="js-success-contain pop_contain" style="display: none;">
+        <div class="bg_lump">
+            <div class="icon_01"></div>
+            <div class="pop_text_01"><span>领取成功！</span><br>
+                <p class="js-sucmes">暂无可领取的奖金，请在活动时间内中奖后再来领取。</p>
+            </div>
+            <div class="js-close-btn btn_02">确定</div>
+            <div class="js-close-btn close_btn" style="top: 117px;"><img src="images/wxyk/close_btn.png" width="47" height="47"
+                                                            style="top: -22px; left: -18px;"></div>
+        </div>
+    </div>
+    <div class="js-failure-contain pop_contain" style="display: none">
+        <div class="bg_lump">
+            <div class="icon_02"></div>
+            <div class="pop_text_01"><span>领取失败！</span><br>
+                <p class="js-failmes">暂无可领取的奖金，请在活动时间内中奖后再来领取。</p>
+            </div>
+            <div class="js-close-btn btn_02">确定</div>
+            <div class="js-close-btn close_btn" style="top: 117px;"><img src="images/wxyk/close_btn.png" width="47" height="47"
+                                                            style="top: -22px; left: -18px;"></div>
+        </div>
+    </div>
+    <div class="js-error-contain pop_contain" style="display: none">
+        <div class="bg_lump">
+            <div class="icon_03"></div>
+            <div class="pop_text_02">
+                <p><span>领取失败！</span><br>
+                    请查看是否有以下问题：<br>
+                    1、同一IP下仅限一个账号参与<br>
+                    2、不在活动时间内<br>
+                    3、奖金已经领取<br>
+                    · 其他疑问请咨询在线客服</p>
+            </div>
+            <div class="btn_02">确定</div>
+            <div class="js-close-btn close_btn" style="top: 117px;"><img src="images/wxyk/close_btn.png" width="47" height="47"
+                                                            style="top: -22px; left: -18px;"></div>
+        </div>
+    </div>
+    <div class="js-accept-contain pop_contain" style="display: none">
+        <div class="bg_lump">
+            <div class="pop_text_03">
+                <p><span>请根据投注情况选择奖励类型，同一时间只可选择一种奖励</span></p>
+                <div class="notice_ele_01">
+                    <div class="notice_text">活动时间里所有中奖的订单，加奖<span class="js-ward">0.3</span>%</div>
+                    <div class="notice_des">您当前中奖 <span class="js-win-money">XX</span> 元<br>
+                        可加奖 <span class="js-ward-money">XX</span> 元</div>
+                    <div class="js-acceptwin-btn btn_03">领取加奖</div>
+                </div>
+                <div class="notice_ele_02">
+                    <div class="notice_text">投注-中奖=结果为正数则补贴亏损额的<br><span class="js-bate">0.5</span>%，为负则不亏损</div>
+                    <div class="notice_des">您当前亏损 <span class="js-loss-money">XX</span> 元<br>
+                        可补贴 <span class="js-bate-money">XX</span> 元</div>
+                    <div class="js-acceptloss-btn btn_03">领取补贴</div>
+                </div>
+                <p style="position:absolute;bottom:10px;padding:0;width:610px;font-size:16px;"><span>活动时间内可多次领取，不限次数！</span></p>
+                <div class="clear_div"></div>
+            </div>
+            <div class="js-close-btn close_btn" style="top: 35px;"><img src="images/wxyk/close_btn.png" width="47" height="47"
+                                                            style="top: -22px; left: -18px;"></div>
+        </div>
+    </div>
+</div>

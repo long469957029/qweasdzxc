@@ -1,0 +1,449 @@
+.volcanic {
+  &.volcanic-mask {
+    //background: rgba(0, 0, 0, .7);
+    //position: absolute;
+    //top: 0px;
+    //right: 0px;
+    //bottom: 0px;
+    //left: 0px;
+    //z-index: 100;
+  }
+
+  .text_info_lump {
+    position: absolute;
+    width: 820px;
+    height: auto;
+  }
+
+  .mountain_lump {
+    position: absolute;
+    width: 944px;
+    height: auto;
+    .mountain_bg_lump{
+      position: relative;
+      width: 944px;
+      height: auto;
+      margin: 0px auto;
+    }
+  }
+
+  .pop_contain {
+    position: absolute;
+    width: 820px;
+    min-height: 700px;
+    height: auto;
+  }
+  .pop_contain_02 {
+    position: absolute;
+    width: 820px;
+    min-height: 700px;
+    height: auto;
+  }
+
+  .bg_lump {
+    position: relative;
+    width: 650px;
+    height: auto;
+    margin: 0px auto;
+  }
+
+  .title_pic {
+    position: absolute;
+    background: url("./images/title_pic.png") no-repeat;
+    width: 377px;
+    height: 126px;
+    top: -90px;
+    left: 160px;
+  }
+
+  .mountain_pic {
+    position: relative;
+    display: none;
+    background: url(./images/mountain.png) no-repeat;
+    width: 944px;
+    height: 368px;
+    margin: 0px auto;
+  }
+
+  .gas {
+    display: none;
+    position: absolute;
+    background: url("./images/gas.png") no-repeat;
+    width: 108px;
+    height: 100px;
+    top: -70px;
+    left: 418px;
+  }
+
+  .mountain_shake {
+    position: absolute;
+    width: 944px;
+    height: 368px;
+    margin-top: -368px;
+  }
+
+  .game_name {
+    color: white;
+    font-size: 16px;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 5px;
+    left: 234px;
+  }
+
+  .title_game_name span {
+    color: #fff600;
+  }
+
+  .luster {
+    background: url(./images/luster.png) no-repeat;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    opacity: 0;
+  }
+
+  .lus_01 {
+    top: 75px;
+    left: 170px;
+  }
+
+  .lus_02 {
+    top: 65px;
+    left: 220px;
+  }
+
+  .lus_03 {
+    top: 60px;
+    left: 272px;
+  }
+  .notice {
+    position: relative;
+    top: -30px;
+    left: 20px;
+    border: 1px solid rgba(255, 255, 255, .5);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, .7);
+    width: 610px;
+    height: auto;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 26px;
+    font-family: "宋体";
+    font-size: 12px;
+    color: white;
+  }
+
+  .board_lump {
+    width: 380px;
+    height: auto;
+    margin: 45px auto;
+  }
+
+  .board_01 {
+    position: relative;
+    background: url(./images/board_01.png) no-repeat;
+    width: 164px;
+    height: 95px;
+    float: left;
+  }
+
+  .board_01 span {
+    display: block;
+    width: 110px;
+    position: absolute;
+    font-size: 31px;
+    font-weight: bold;
+    color: red;
+    text-align: center;
+    top: 20px;
+    left: 40px;
+  }
+
+  .board_02 {
+    position: relative;
+    background: url(./images/board_02.png) no-repeat;
+    width: 164px;
+    height: 95px;
+    float: right;
+  }
+
+  .board_02 span {
+    position: absolute;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    color: black;
+    top: 15px;
+    left: 55px;
+  }
+
+  .submit_btn {
+    position: relative;
+    margin: 0px auto;
+    bottom: -35px;
+    width: 131px;
+    height: 37px;
+  }
+
+  .time_lump {
+    position: relative;
+    z-index: 1000;
+    font-size: 48px;
+    width: 340px;
+    height: 92px;
+    margin: 0px auto;
+    margin-top: 15px;
+  }
+
+  .hour {
+    position: absolute;
+    text-align: center;
+    width: 64px;
+    height: 77px;
+    line-height: 67px;
+    top: 12px;
+    left: 88px;
+    color: black;
+  }
+
+  .minute {
+    position: absolute;
+    text-align: center;
+    width: 64px;
+    height: 77px;
+    line-height: 67px;
+    top: 12px;
+    left: 178px;
+    color: black;
+  }
+
+  .second {
+    position: absolute;
+    text-align: center;
+    width: 64px;
+    height: 77px;
+    top: 12px;
+    left: 268px;
+    line-height: 67px;
+    color: black;
+  }
+
+  .time_luster {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: url("./images/time_luster.png") no-repeat;
+    width: 340px;
+    height: 92px;
+  }
+
+  .time_begin {
+    background: url("./images/time_begin.png") no-repeat;
+  }
+
+  .close_btn {
+    position: absolute;
+    top: 40px;
+    right: -40px;
+    width: 47px;
+    height: 47px;
+    cursor: pointer;
+  }
+  .close_mountain {
+    position: absolute;
+    top: -50px;
+    right: 60px;
+    width: 47px;
+    height: 47px;
+    cursor: pointer;
+  }
+
+  .close_pop {
+    position: absolute;
+    top: 117px;
+    right: -40px;
+    width: 47px;
+    height: 47px;
+    cursor: pointer;
+  }
+  .close_pop_02 {
+    position: absolute;
+    top: 117px;
+    right: -40px;
+    width: 47px;
+    height: 47px;
+    cursor: pointer;
+  }
+
+  .btn_01 {
+    background: url("./images/btn_01.png") no-repeat;
+    position: relative;
+    font-size: 23px;
+    text-align: center;
+    color: black;
+    left: 10px;
+    width: 175px;
+    height: 45px;
+    line-height: 40px;
+    margin: 0px auto;
+    cursor: pointer;
+  }
+
+  .btn_02 {
+    background: url("./images/btn_01.png") no-repeat;
+    position: relative;
+    font-size: 23px;
+    text-align: center;
+    color: #a63f01;
+    left: 10px;
+    width: 175px;
+    height: 45px;
+    line-height: 40px;
+    margin: 0px auto;
+    cursor: pointer;
+  }
+
+  .icon_01 {
+    position: relative;
+    background: url("./images/icon_01.png") no-repeat;
+    width: 168px;
+    height: 169px;
+    margin: 0px auto;
+    z-index: 110;
+  }
+
+  .icon_02 {
+    position: relative;
+    background: url("./images/icon_02.png") no-repeat;
+    width: 168px;
+    height: 169px;
+    margin: 0px auto;
+    z-index: 110;
+  }
+
+  .icon_03 {
+    position: relative;
+    background: url("./images/icon_03.png") no-repeat;
+    width: 168px;
+    height: 169px;
+    margin: 0px auto;
+    z-index: 110;
+  }
+
+  .pop_text_01 {
+    text-align: center;
+    color: white;
+    position: relative;
+    top: -30px;
+    left: 20px;
+    border: 1px solid rgba(255, 255, 255, .5);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, .7);
+    width: 610px;
+    height: auto;
+    padding: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    line-height: 40px;
+    font-size: 20px;
+  }
+
+  .pop_text_01 span {
+    font-size: 26px;
+  }
+
+  .pop_text_01 b {
+    font-size: 30px;
+    color: red;
+  }
+
+  .pop_text_02 span {
+    font-size: 26px;
+  }
+
+  .pop_text_02 {
+    color: white;
+    position: relative;
+    top: -30px;
+    left: 20px;
+    border: 1px solid rgba(255, 255, 255, .5);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, .7);
+    width: 610px;
+    height: auto;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 26px;
+    font-size: 20px;
+  }
+
+  .pop_text_02 p {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    width: 400px;
+    line-height: 40px;
+    height: auto;
+    margin: 0px auto;
+  }
+
+  .pop_text_02 p span {
+    font-size: 26px;
+  }
+  .red_bag_01 {
+    display: none;
+    background: url("./images/red_bag.png") no-repeat;
+    width: 82px;
+    height: 85px;
+    position: absolute;
+    top: -150px;
+    left: 478px;
+    cursor: pointer;
+  }
+
+  .red_bag_02 {
+    display: none;
+    background: url("./images/red_bag.png") no-repeat;
+    width: 82px;
+    height: 85px;
+    position: absolute;
+    top: -80px;
+    left: 378px;
+    cursor: pointer;
+  }
+
+  .red_bag_03 {
+    display: none;
+    background: url("./images/red_bag.png") no-repeat;
+    width: 82px;
+    height: 85px;
+    position: absolute;
+    top: -130px;
+    left: 378px;
+    cursor: pointer;
+  }
+  .red_bag_04 {
+    display: none;
+    background: url("./images/red_bag.png") no-repeat;
+    width: 82px;
+    height: 85px;
+    position: absolute;
+    top: -150px;
+    left: 478px;
+    cursor: pointer;
+  }
+
+  .red_bag_05 {
+    display: none;
+    background: url("./images/red_bag.png") no-repeat;
+    width: 82px;
+    height: 85px;
+    position: absolute;
+    top: -130px;
+    left: 378px;
+    cursor: pointer;
+  }
+}

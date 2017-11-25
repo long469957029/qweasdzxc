@@ -1,0 +1,516 @@
+$steps-height: 30px;
+
+$steps-width: 80px;
+$steps-width-m: 50px;
+$steps-width-s: 20px;
+
+$steps-circle: 20px;
+$steps-circle-s: $steps-circle * 0.5;
+$steps-circle-l: $steps-circle * 1.25;
+
+$steps-tooltip: 150px;
+
+// Timer
+$steps-timer: 200ms;
+$steps-timer-l: 400ms;
+
+// Text Color
+$steps-color: #ffffff;
+$steps-color-current: #f3b852;
+
+$c-text-light: #fff;
+$font-base: 13px;
+
+
+// -------------------------------------
+//   Mixins
+// -------------------------------------
+
+@mixin point-size($_size) {
+  width: $_size;
+  height: $_size;
+  margin-top: -($_size / 2);
+  margin-right: -($_size / 2);
+}
+
+@mixin circle-size($_size) {
+  width: $_size;
+  height: $_size;
+  line-height: $_size;
+  border-radius: $_size / 2;
+}
+
+@mixin steps-color($_left-color, $_left-color-position, $_right-color, $_right-color-position) {
+  background: $steps-color;
+  background: linear-gradient(to right, $_left-color $_left-color-position, $_right-color $_right-color-position);
+  background-size: 200% 100%;
+  background-position: right top;
+}
+
+.steps-box {
+  display: block;
+  margin: 0 auto;
+  height: 140px;
+  text-align: center;
+  &:before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em;
+  }
+}
+
+.steps {
+  position: relative;
+  display: inline-block;
+  width: $steps-width;
+  height: $steps-height;
+  font-size: $font-base;
+  color: $c-text-light;
+
+  // Steps Line
+  &:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 100%;
+    height: 7px;
+    margin-top: -3.5px;
+    z-index: -1;
+    // Style
+    @include steps-color($steps-color, 50%, $steps-color, 50%);
+  }
+
+  // First Child
+  &:nth-child(1) {
+    width: 0 !important;
+    &:before {
+      display: none;
+    }
+  }
+
+}
+
+
+.steps-point {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  @include point-size($steps-circle);
+  &:hover {
+    padding-bottom: 15px; // Extend hover area - Thanks @ryanmcnz
+  }
+}
+
+
+.steps-circle {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  transition: transform $steps-timer-l ease-out;
+  // Size
+  @include circle-size($steps-circle);
+  // Style
+  @include steps-color($steps-color, 50%, $steps-color, 50%);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+
+  // Completed Icon
+  &:before {
+    content: "\f00c";
+    font-family: 'FontAwesome', sans-serif;
+    font-size: $font-base;
+    display: none;
+  }
+
+  &:hover {
+    transform: scale(1.1, 1.1);
+  }
+}
+
+.steps-end {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(-90deg);
+  background: transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 20px solid #ffffff;
+}
+
+
+// -------------------------------------
+//   States Title
+// -------------------------------------
+
+.steps-title {
+  opacity: 0;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  line-height: 1.2;
+  color: darken($c-text-light, 20%);
+  transition: color $steps-timer-l ease-out;
+  // Overflow Ellipsis
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: $steps-width;
+  margin-left: - ($steps-width / 2);
+}
+
+
+// -------------------------------------
+//   States Tooltip
+// -------------------------------------
+
+.steps-tooltip {
+  display: none;
+  position: absolute;
+  top: $steps-circle + 10px;
+  left: ($steps-circle / 2) - 15px;
+  width: $steps-tooltip + 20px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  text-align: left;
+  border-radius: 3px;
+  z-index: 1;
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 5px 5px 5px;
+    border-color: transparent transparent rgba(0, 0, 0, 0.8) transparent;
+  }
+  .tooltip-step {
+    font-weight: bold;
+    &:after {
+      display: inline-block;
+      content: "(uncompleted)";
+      margin-left: 5px;
+      color: orange;
+    }
+  }
+  .tooltip-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  &.tooltip-pure {
+    background: transparent;
+    text-align: left;
+    border-radius: 3px;
+    z-index: 1;
+    width: 120px;
+    border: 1px solid #a9c2c4;
+    top: -70px !important;
+
+    .change {
+      text-decoration: underline !important;
+    }
+
+    &:before {
+      bottom: -5px;
+      top: initial;
+      left: initial;
+      right: 10px;
+      width: 7px;
+      height: 7px;
+      border-width: 1px;
+      background: #04a4b2;
+      border-color: transparent transparent #a9c2c4 #a9c2c4;
+      transform: rotate(-45deg);
+    }
+  }
+}  // END steps-tooltip
+
+
+// -------------------------------------
+//   Statements
+// -------------------------------------
+
+.steps {
+
+  //*** Mini State ***//
+  &.is-mini {
+    width: $steps-width-s;
+    .steps-point {
+      @include point-size($steps-circle-s);
+    }
+    .steps-circle {
+      font-size: 0;
+      @include circle-size($steps-circle-s);
+      &:before, &:after {font-size: $font-base - 5px;}
+    }
+    .steps-title {
+      display: none;
+    }
+    .steps-tooltip {
+      top: $steps-circle-s + 10px;
+      left: ($steps-circle-s / 2) - 15px;
+    }
+    // If next not mini
+    & + :not(.is-mini) {
+      width: $steps-width-m;
+    }
+  }
+
+  .complete-icon {
+    display: none;
+  }
+
+  //*** Completed State ***//
+  &.is-completed {
+    // Show completed-icon
+    .steps-circle {
+      font-size: 0;
+      &:before {display: inline-block;}
+      &:after {display: none;}
+    }
+    // Change color of next line
+    .steps-circle,
+    & + .is-completed:before,
+    & + .is-current:before {
+      @include steps-color($steps-color-current, 50%, $steps-color, 50%);
+    }
+    .steps-tooltip .tooltip-step:after {
+      display: none;
+    }
+
+    .un-complete-icon {
+      display: none;
+    }
+    .complete-icon {
+      display: inline-block;
+    }
+  }
+
+  //*** Current State ***//
+  &.is-current {
+    .steps-point {
+      @include point-size($steps-circle-l);
+    }
+    .steps-circle {
+      @include circle-size($steps-circle-l);
+      // Text Style
+      font-size: $font-base + 5px;
+      font-weight: bold;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+      &:after {display: none;}
+    }
+    .steps-title {
+      color: $c-text-light;
+      font-weight: bold;
+    }
+    .steps-tooltip {
+      top: $steps-circle-l + 10px;
+      left: ($steps-circle-l / 2) - 15px;
+    }
+    .steps-circle {
+      @include steps-color($steps-color-current, 50%, $steps-color, 50%);
+    }
+    // Change color of next line
+    & + .steps:before {
+      @include steps-color($steps-color-current, 0, $steps-color, 40%);
+    }
+    .steps-tooltip .tooltip-step:after {
+      display: none;
+    }
+    // Hide uncomplete icon after current
+    & ~ .steps {
+      .steps-circle:after {
+        display: none;
+      }
+      .steps-tooltip .tooltip-step:after {
+        display: none;
+      }
+    }
+
+    .un-complete-icon {
+      display: none;
+    }
+    .complete-icon {
+      display: inline-block;
+    }
+  }
+
+  &.is-best {
+    .steps-circle {
+      background: #55ff00;
+    }
+  }
+
+} // END steps-point
+
+
+// -------------------------------------
+//   Hover
+// -------------------------------------
+
+.steps-point:hover {
+  .steps-title {
+    color: $c-text-light;
+  }
+  .steps-tooltip {
+    display: block;
+    animation: stepsTooltipIn $steps-timer-l linear forwards;
+  }
+}
+
+.step-btn {
+  margin-left: 40px;
+  display: inline-block;
+  text-decoration: underline;
+  color: orange;
+  &:hover {
+    color: orange;
+    text-decoration: none;
+  }
+}
+
+// -------------------------------------
+//   Animation
+// -------------------------------------
+
+.steps {
+
+  //*** Circle & Line Enter ***//
+  &.is-circle-entering {
+    &:before {
+      opacity: 0;
+      animation: stepsBounceIn $steps-timer-l linear forwards;
+      transform-origin: (0, 0);
+    }
+    .steps-circle {
+      opacity: 0;
+      animation: stepsBounceIn $steps-timer-l linear forwards;
+    }
+  }
+
+  //*** Line Flow ***//
+  &.is-line-entering {
+    &:before {
+      opacity: 1;
+      animation: stepsLineIn $steps-timer linear forwards;
+    }
+    .steps-circle {
+      opacity: 1;
+      animation: stepsLineIn $steps-timer $steps-timer linear forwards;
+    }
+  }
+
+  //*** Title Enter ***//
+  &.is-title-entering {
+    .steps-title {
+      opacity: 0;
+      animation: stepsTitleIn $steps-timer-l linear forwards;
+    }
+  }
+
+
+} // END steps
+
+
+// -------------------------------------
+//   Animation Keyframes
+//   Bounce: http://daneden.github.io/animate.css/
+// -------------------------------------
+
+// ----- Tooltip In ----- //
+
+@keyframes stepsTooltipIn {
+  from {
+    transform: translate(0, -10px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes stepsTooltipIn {
+  from {
+    -webkit-transform: translate(0, -10px);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+
+// ----- Bounce In ----- //
+
+@keyframes stepsBounceIn {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    transition-time-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  0% {
+    transform: scale(.3, .3);
+    opacity: 1;
+  }
+
+  20% {
+    transform: scale(1.1, 1.1);
+    opacity: 1;
+  }
+
+  40% {
+    transform: scale(.9, .9);
+    opacity: 1;
+  }
+
+  60% {
+    transform: scale(1.03, 1.03);
+    opacity: 1;
+  }
+
+  80% {
+    transform: scale(.97, .97);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+// ----- Line In ----- //
+
+@keyframes stepsLineIn {
+  from {
+    background-position: right top;
+    opacity: 1;
+  }
+  to {
+    background-position: left top;
+    opacity: 1;
+  }
+}
+
+// ----- Title In ----- //
+
+@keyframes stepsTitleIn {
+  from {
+    transform: translate(0, 10px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}

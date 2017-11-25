@@ -1,0 +1,54 @@
+
+.bg-contain{
+    width: 100%;
+    background: url(./misc/join-bg.png)  no-repeat  center -80px ;
+    //padding-top: 80px;
+    .main-container{
+        position: relative;
+        width: 1218px;
+        height: 1367px;
+        margin: 0 auto;
+        background: url(./misc/main-bg.png)  no-repeat 80px 0% ;
+        .expedition-time{
+            position: absolute;
+            top: 844px;
+            right: 213px;
+            width: 156px;
+            text-align: center;
+            font-size: 14px;
+            color: #edf4fc;
+            font-weight: 600;
+        }
+        .expedition-login{
+            position: absolute;
+            top: 879px;
+            right: 540px;
+            height: 57px;
+            width: 156px;
+            background-color: transparent;
+            border: 0;
+            &:focus{
+                outline: 0;
+            }
+        }
+        .notice{
+            font-size: 14px;
+            position: absolute;
+            top: 901px;
+            right: 410px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .expedition-pop{
+            position: absolute;
+            top: 735px;
+            right: 52px;
+            width: 301px;
+            height: 188px;
+            background: url(./misc/join-notice.png) no-repeat;
+            padding: 15px 0 0 60px;
+            color: #000;
+        }
+    }
+
+}

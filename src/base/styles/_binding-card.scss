@@ -1,0 +1,26 @@
+.binding-container {
+  width: 770px;
+  margin: 0 auto;
+  font-size: 12px;
+}
+
+.binding-card {
+
+  margin-bottom: 9px;
+  color: $new-light-color;
+
+  .binding-card-bg {
+    width: $cards-width;
+    height: $cards-height;
+
+    .binding-card-main {
+      color: $new-light-color;
+      padding: 45px 10px 5px 30px;
+    }
+    .binding-card-op {
+      text-align: center;
+      height: 32px;
+      line-height: 36px;
+    }
+  }
+}

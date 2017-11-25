@@ -1,0 +1,225 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  font-family: "微软雅黑", "宋体";
+  font-size: 16px;
+  height:100%;
+  background: #f4b33f;
+}
+.container{
+  width: 100%;
+  min-width: 1000px;
+  height: 934px;
+  background: url("./images/bg-img.png") no-repeat;
+  background-size:100% 100%;
+  .winning-content{
+    width: 710px;
+    height: 75px;
+    margin: 40px auto;
+    background: url("./images/winning-img.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .content-body{
+    position: relative;
+    width: 100%;
+    min-width: 1000px;
+    height: 100%;
+    margin: 0 auto;
+    .notice-img{
+      position: absolute;
+      bottom:0;
+      left:0;
+    }
+    .time_text{
+      position: absolute;
+      bottom:145px;
+      left:415px;
+      color:#ffffff;
+      transform:rotate(10deg);
+      .title-time{
+        font-weight: bold;
+      }
+      .js-end-date{
+        font-size: 18px;
+      }
+    }
+    .main-con{
+      width: 640px;
+      height: 720px;
+      position: absolute;
+      right: 150px;
+      bottom: 40px;
+      background: url("./images/main-con.png") no-repeat;
+      .main-con-text{
+        width: 560px;
+        height: 260px;
+        margin: 100px auto 0;
+        background: #f1eee1;
+        text-align: center;
+        padding-top: 45px;
+        line-height: 45px;
+        .yt-money{
+          width: 180px;
+          float: left;
+        }
+        .take-area{
+          width: 20px;
+          float: left;
+        }
+        .fee-money{
+          width: 160px;
+          float: left;
+        }
+        .and-area{
+          width: 20px;
+          float: left;
+        }
+        .get-money{
+          width: 180px;
+          float: left;
+        }
+      }
+      .round-area{
+        display: inline-block;
+        width: 140px;
+        height: 45px;
+        line-height: 45px;
+        margin: 0 auto;
+        background: #e1decd;
+        border-radius: 20px;
+      }
+      .validity-area{
+        margin-top: 25px;
+        font-size: 14px;
+        span{
+          color:#ee210c;
+          font-weight: bold;
+        }
+      }
+      .pick-up-btn{
+        width: 168px;
+        height: 50px;
+        margin-top: 20px;
+        background: #ee210c;
+        color:#ffffff;
+        font-size: 16px;
+        border-radius: 25px;
+        outline: none;
+        border: none;
+      }
+      .instruction-area{
+        width: 560px;
+        padding-top: 40px;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+  .table_lump{
+    padding:10px;
+    background:white;
+    width:360px;
+    height:auto;
+    border:8px solid #92c7ff;
+    border-radius:6px;
+    left:3%;
+    top:20px;
+    z-index:11;
+  }
+  .lump_top_01{
+    width:710px;
+    height:75px;
+    line-height:75px;
+    z-index:10;
+  }
+  .prompt_lump2{
+    width:685px;
+    height:75px;
+    margin:0px auto;
+  }
+  .prompt_title2{
+    color: #ffffff;
+    font-size:14px;
+    line-height:75px;
+    padding-left:10px;
+    height:75px;
+    float:left;
+  }
+  .prompt_content2{
+    width:600px;
+    height:75px;
+    overflow:hidden;
+    text-align:center;
+    position:relative;
+    float:left;
+  }
+  .prompt_content2 ul{
+    display:block;
+    width:1000px;
+    height:75px;
+    position:absolute;
+    top:0px;
+    left:0px;
+  }
+  .prompt_content2 li{
+    width:200px;
+    font-size:14px;
+    line-height:75px;
+    color: #ffffff;
+    float:left;
+    list-style: none;
+  }
+  .prompt_content2 li span{
+    color:#ed9d0c;
+  }
+.status_fullscreen{
+  width:100%;
+  height:100%;
+  background:black;
+  opacity:0.2;
+  position:fixed;
+  top:0px;
+  left:0px;
+  display:none;
+}
+.show-fail-msg{
+  width: 800px;
+  height: 130px;
+  position: absolute;
+  display: none;
+  z-index: 999;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 6px solid yellow;
+  img{
+    width: 100px;
+    height: 100px;
+    margin-top: 15px;
+    margin-left: 10px;
+    display:block;
+    float: left;
+  }
+  .show-title-msg{
+    width: 650px;
+    height: 130px;
+    line-height: 130px;
+    float: left;
+    font-size: 30px;
+    padding-left: 20px;
+  }
+  .close-btn{
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background: #000000;
+    position: absolute;
+    color:#ffffff;
+    text-align: center;
+    font-size: 20px;
+    top:5px;
+    right: 5px;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,34 @@
+
+<form class="js-fc-withdrawal-confirm-form fc-group fc-group-lg fc-withdrawal-confirm-form form-horizontal" action="javascript:void(0);">
+  <div class="fc-withdrawal-confirm">
+    <!--<div class="sfa sfa-fee-free">-->
+      <!--<div class="sfa-fee-free-inner">免手续费</div>-->
+    <!--</div>-->
+    <div class="control-group">
+      <label class="control-label"><span class="fc-w-bank"></span>银行名称：</label>
+      <div class="controls"><span><%=cardInfo.bankName %></span></div>
+    </div>
+    <div class="control-group">
+      <label class="control-label"><span class="fc-w-name"></span>开户人姓名：</label>
+      <div class="controls"><span><%=cardInfo.name %></span></div>
+    </div>
+    <div class="control-group">
+      <label class="control-label"><span class="fc-w-cardNo"></span>银行卡号：</label>
+      <div class="controls"><span><%=cardInfo.cardNo %></span></div>
+    </div>
+    <div class="control-group">
+      <label class="control-label"><span class="fc-w-branch"></span>支行名称：</label>
+      <div class="controls"><span><%=cardInfo.bankBranchName %></span></div>
+    </div>
+    <div class="control-group">
+      <label class="control-label"><span class="fc-w-amount"></span>提现金额：</label>
+      <div class="controls text-bold-pleasant"><span><%=amount %> 元</span></div>
+    </div>
+  </div>
+  <div class="m-top-md text-center margin-lg text-bold-dark fc-wd-confirm-content "><strong class="font-16">请确认以上您的提现信息
+  </div>
+  <div class="control-group text-center">
+      <button type="submit" class="js-fc-confirm btn" data-loading-text="提交中">提交</button>
+      <button type="reset" class="js-fc-back btn btn-cool btn-right">返回</button>
+  </div>
+</form>

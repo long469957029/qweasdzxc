@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+@import '../../../../misc/variable';
+@import '../../../../misc/mixin';
+
+.feedback-dialog-container {
+  padding: 15px;
+  position: relative;
+  @include border-box();
+
+  .feedback-close-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .feedback-title {
+    font-size: 16px;
+    color: $font-dark;
+    margin-bottom: 15px;
+  }
+
+  .feedback-content {
+    width: 550px;
+    margin: 0 auto;
+  }
+
+  .feedback-select, .feedback-input {
+    float: left;
+    height: 48px;
+    line-height: 48px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: $font-gray;
+  }
+
+  .feedback-select {
+    width: 150px;
+    border: 1px solid $font-gray;
+  }
+
+  .feedback-input {
+    width: 400px;
+  }
+
+  .feedback-textarea {
+    padding: 20px;
+    width: 100%;
+    font-size: 16px;
+    color: $font-gray;
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+
+  .feedback-btn {
+    @include button(190px, 45px, $background-gray, white, 16px);
+    margin: 0 auto;
+    display: block;
+    border-radius: 20px / 20px;
+  }
+
+}

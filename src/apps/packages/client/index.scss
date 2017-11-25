@@ -1,0 +1,283 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul, li {
+    list-style: none;
+}
+
+img {
+    border: none;
+    overflow: hidden;
+}
+
+.clear_div {
+    clear: both;
+}
+
+body {
+    font-family: "微软雅黑", "宋体";
+    background: #049cad;
+}
+
+a {
+    border: none;
+    text-decoration: none;
+}
+
+/*幻灯片样式*/
+.home_slide_pic_lump {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.home_slide_pic_lump li {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+
+.home_slide_pic_lump li img {
+    width: 100%;
+    height: auto;
+}
+
+.home_slide_pic_btn {
+    width: 84px;
+    height: 16px;
+    overflow: hidden;
+    position: absolute;
+    left: calc(50% - 38px);
+    bottom: 15px;
+    z-index: 2;
+}
+
+.home_slide_pic_btn span {
+    display: block;
+    width: 11px;
+    height: 11px;
+    margin-right: 10px;
+    float: left;
+    cursor: pointer;
+}
+
+.home_slide_pic_btn span em {
+    display: block;
+    width: 11px;
+    height: 11px;
+    border-radius: 11px;
+    background: white;
+}
+
+.home_slide_pic_btn span.blue em {
+    background: #3399ff;
+    box-shadow: 2px 2px 2px #2a7ccf inset;
+}
+
+.slide_btn_lump {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 20%;
+    left: 0px;
+}
+
+.slide_btn_ele_left {
+    width: 48%;
+    height: auto;
+    padding-right: 2%;
+    float: left;
+}
+
+.slide_btn_ele_left div {
+    float: right;
+}
+
+.slide_btn_ele_right {
+    width: 48%;
+    height: auto;
+    padding-left: 2%;
+    float: right;
+}
+
+@media (max-width: 1080px) {
+    .slide_brand_text {
+        font-size: 30px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 20%;
+        left: 0px;
+    }
+
+    .slide_btn {
+        font-size: 18px;
+        font-weight: bold;
+        background: #33beff;
+        width: 160px;
+        height: 35px;
+        line-height: 35px;
+        border-radius: 6px;
+        border-bottom: 3px solid #1d9bd5;
+        text-align: center;
+    }
+
+    .slide_btn_lump {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        bottom: 25%;
+        left: 0px;
+    }
+}
+
+@media (min-width: 1080px) {
+    .slide_brand_text {
+        font-size: 45px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 20%;
+        left: 0px;
+    }
+
+    .slide_btn {
+        font-size: 24px;
+        font-weight: bold;
+        background: #33beff;
+        width: 220px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 6px;
+        border-bottom: 3px solid #1d9bd5;
+        text-align: center;
+    }
+}
+
+@media (min-width: 1280px) {
+    .slide_brand_text {
+        font-size: 55px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 20%;
+        left: 0px;
+    }
+
+    .slide_btn {
+        font-size: 24px;
+        font-weight: bold;
+        background: #33beff;
+        width: 220px;
+        height: 55px;
+        line-height: 55px;
+        border-radius: 6px;
+        border-bottom: 3px solid #1d9bd5;
+        text-align: center;
+    }
+}
+
+@media (min-width: 1900px) {
+    .slide_brand_text {
+        font-size: 62px;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 30%;
+        left: 0px;
+    }
+
+    .slide_btn {
+        font-size: 30px;
+        font-weight: bold;
+        background: #33beff;
+        width: 275px;
+        height: 65px;
+        line-height: 65px;
+        border-radius: 6px;
+        border-bottom: 3px solid #1d9bd5;
+        text-align: center;
+    }
+}
+
+.slide_btn a {
+    color: white;
+}
+
+.slide_btn a:hover {
+    color: white;
+}
+
+/*幻灯片样式_over*/
+
+/*首页产品样式*/
+.main_contain {
+    width: 100%;
+    height: auto;
+}
+
+.content_lump {
+    background: #049cad;
+    width: 1280px;
+    height: 300px;
+    margin: 0px auto;
+    margin-top: 50px;
+}
+
+.content_lump li {
+    width: 25%;
+    height: auto;
+    float: left;
+}
+
+.icon_ele {
+    width: 136px;
+    height: 145px;
+    margin-left: 20px;
+    float: left;
+}
+
+.icon_ele_text {
+    font-size: 24px;
+    color: white;
+    width: 136px;
+    height: auto;
+    text-align: center;
+    margin-top: 30px;
+    margin-right: 20px;
+    float: right;
+    line-height: initial;
+}
+
+.icon_ele_info {
+    border-radius: 6px;
+    background: #047282;
+    font-size: 16px;
+    color: white;
+    width: 210px;
+    height: auto;
+    line-height: 24px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0px auto;
+}

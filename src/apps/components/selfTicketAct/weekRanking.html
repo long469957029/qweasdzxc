@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="index.scss">
+<div class="weekRank-main clearfix">
+    <a class="close" data-dismiss="modal"></a>
+    <div class="week-info-main clearfix">
+        <div class="info-week inline-block border-week-right">
+            <div class="week-title"><% if(data.week && !_.isNull(data.week)) {%> 周榜一览 <% } %></div>
+            <div class="info-week-half border-week-right">
+                <div class="week-sm-title special"><% if(data.week && !_.isNull(data.week)) {%> 周排行 <% } %></div>
+                <ul class="week-rank-list list-special">
+                    <% _(data.week).each(function(item,index){ %>
+                    <li class="list-info"><span class="rank-num rank-<%=(index+1)%>"><%=(index+1) > 3 ? (index+1) : '' %></span><span class="rank-week-name"><%=item.userName.slice(0,3)%>***</span></li>
+                    <% }) %>
+                </ul>
+            </div>
+            <div class="info-week-half">
+                <div class="week-sm-title special"><% if(data.week && !_.isNull(data.week)) {%> 预计奖励 <% } %></div>
+                <ul class="week-rank-list list-special">
+                    <% _(data.week).each(function(item,index){ %>
+                    <li class="list-info"><%=_(item.amount).convert2yuan()%></li>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+        <%
+        var nullNum = 0;
+        var weekArr = [{num:data.sunday,name:'周日'},{num:data.saturday,name:'周六'},{num:data.friday,name:'周五'},{num:data.thursday,name:'周四'},{num:data.wednesday,name:'周三'},{num:data.tuesday,name:'周二'},{num:data.monday,name:'周一'}]
+        _(weekArr).each(function(arr,arrIndex){
+            if(arr.num && !_.isEmpty(arr.num)){ %>
+            <div class="info-week inline-block  border-week-right">
+                <div class="week-title"><%=arr.name%></div>
+                <div class="info-week-half border-week-right">
+                    <div class="week-sm-title">排行榜</div>
+                    <ul class="week-rank-list">
+                        <% _(arr.num).each(function(item,index){ %>
+                        <li class="list-info"><%=item.userName.slice(0,3)%>***</li>
+                        <% }) %>
+                    </ul>
+                </div>
+                <div class="info-week-half">
+                    <div class="week-sm-title">投注</div>
+                    <ul class="week-rank-list">
+                        <% _(arr.num).each(function(item,index){ %>
+                        <li class="list-info"><%=_(item.bet).convert2yuan()%></li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+            <% }else{
+                nullNum += 1;
+            }
+        })
+        for(var i = 0;i < nullNum;i++){ %>
+        <div class="info-week inline-block  border-week-right">
+            <div class="week-title"></div>
+            <div class="info-week-half border-week-right">
+                <div class="week-sm-title"></div>
+                <ul class="week-rank-list">
+
+                </ul>
+            </div>
+            <div class="info-week-half">
+                <div class="week-sm-title"></div>
+                <ul class="week-rank-list">
+
+                </ul>
+            </div>
+        </div>
+        <% } %>
+    </div>
+    <div class="week-rule">
+        <div class="rule-title">活动说明：</div>
+        <div class="m-top-xs">1、每天24点前，保持排名在<span class="text-yellow">前十名的用户</span>可以获得当天的富豪奖励；</div>
+        <div class="m-top-xs">2、 七天一个周期，七天累计投注均占据<span class="text-yellow">富豪榜前三</span>，还可获得额外奖励；</div>
+        <div class="m-top-xs">3、该活动最终解释权归无限娱乐所有。</div>
+    </div>
+</div>

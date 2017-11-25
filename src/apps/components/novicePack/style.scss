@@ -1,0 +1,214 @@
+header,.millionBreakthrough-tip{
+	margin: 0 auto;
+}
+button{
+	border:none;
+}
+i{
+	font-style: normal;
+}
+
+.novice-pack-off-box{
+		transform: scale(1);
+		animation: popoff 0.5s forwards;
+	}
+	@keyframes popoff{
+		0%{transform:scale(1);}
+		100%{transform:scale(0);}
+	}
+
+.novice-pack{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0,0,0,0.3);
+	z-index: 99;
+
+
+	.novice-pack-content{
+		position: relative;
+		width: 887px;
+		margin:6% auto;
+		transform: scale(0);
+		animation:pop 0.5s forwards;
+  }
+
+  .novice-pack-expand {
+    transform: scale(0);
+		animation:pop 0.5s forwards;
+  }
+
+	@keyframes pop{
+		0%{transform:scale(0);}
+		50%{transform:scale(1.2);}
+		100%{transform:scale(1);}
+	}
+
+	.novice-pack-off{
+		width: 35px;
+		height: 36px;
+		background: url(./images/close_btn.png);
+		position: absolute;
+		top: -10px;
+		right: -25px;
+		z-index: 2;
+		cursor: pointer;
+  }
+
+  .novice-dialog-off {
+    width: 40px;
+		height: 41px;
+    background: url(./images/close_btn.png);
+    background-size: cover;
+		position: absolute;
+		top: 20px;
+		right: 18px;
+		z-index: 2;
+		cursor: pointer;
+  }
+
+	.bg {
+		width: 561px;
+		height: 388px;
+		background: url('./images/present.png');
+		position: relative;
+    z-index: 1;
+    margin: 20% auto 0;
+  }
+
+  .novice-check-btn {
+    width: 196px;
+    height: 57px;
+    position: absolute;
+    background: url('./images/check_btn.png');
+    z-index: 2;
+    bottom: -70px;
+    right: 175px;
+    cursor: pointer;
+  }
+
+  .dialog-bg {
+    width: 872px;
+    height: 502px;
+    background: url('./images/dialog_bg.png');
+    position: relative;
+    z-index: 1;
+    margin: 10% auto 0;
+  }
+
+  .dialog-explain {
+    width: 508px;
+    height: 198px;
+    position: absolute;
+    z-index: 3;
+    bottom: 155px;
+    left: 180px;
+    transition: opacity .3s;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 30px;
+    color: #9b2116;
+  }
+
+  .dialog-sidebar {
+    width: 100px;
+    position: absolute;
+    left: 15px;
+    top: 110px;
+  }
+
+  .dialog-btn {
+    font-size: 18px;
+    background: #cab287;
+    color: white;
+    width: 100px;
+    height: 32px;
+    border-radius: 20px;
+    transition: all .3s;
+    margin-bottom: 23px;
+    text-align: center;
+    line-height: 32px;
+    cursor: pointer;
+    &.active {
+      background: #d65449
+    }
+  }
+
+  .go-to-draw {
+    font-size: 18px;
+    color: white;
+    background: #e53d2f;
+    width: 155px;
+    height: 40px;
+    position: absolute;
+    border-radius: 5px;
+    bottom: 8px;
+    left: 357px;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    a {
+      padding: 8px 40px;
+    }
+  }
+
+  .dialog-present {
+    width: 635px;
+    height: 338px;
+    position: absolute;
+    top: 99px;
+    left: 128px;
+    padding: 10px 50px;
+    z-index: 3;
+    transition: opacity .3s;
+  }
+
+  .present-item {
+    background: url('./images/present-item.png');
+    position: relative;
+    width: 175px;
+    height: 141px;
+    display: inline-block;
+    // padding-top: 60px;
+    padding-top: 68px;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 8px 50px;
+    // &:nth-child(3), &:nth-child(4) {
+    //   padding-top: 68px;
+    // }
+    .stamp {
+      width: 56px;
+      height: 54px;
+      position: absolute;
+      top: 45px;
+      left: 0;
+      &.ticket-stamp {
+        background: url('./images/ticket-stamp.png')
+      }
+      &.used-stamp {
+        background: url('./images/used-stamp.png')
+      }
+    }
+
+    .name {
+      font-size: 16px;
+      color: #b7a076;
+      font-weight: bold;
+    }
+
+    .reward {
+      font-size: 25px;
+      font-weight: bold;
+      color: #f62917;
+      margin-top: 8px;
+    }
+
+    .deadline {
+      margin-top: 5px;
+      color: #b7a076;
+    }
+  }
+}
