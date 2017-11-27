@@ -4,13 +4,14 @@ $body-width: 1356px !default;
 //new
 $new-main-deep-dark-color: #066067 !default;
 $new-main-dark-color: #057c86 !default;
-$new-main-deep-color: #16a4aa !default;
+$new-main-deep-color: #14b1bb !default;
 $new-dark-color: #555757 !default;
 $new-light-color: #f0efee !default;
 $new-inverse-color: #666666 !default;
 $new-gray-color: #f1e1e0 !default;
 $new-hot-color: #fe6760 !default;
 $new-pink-color: #fda4a0 !default;
+$def-white-color: #ffffff !default;
 
 $new-black-color: #2F2F2F !default;
 $deep-gray-color: #494949 !default;
@@ -130,7 +131,7 @@ $bg-main-font-color: $font-default;
 
 $bg-colors: (
   default: (bg: $font-default, color: $new-black-color),
-  deep: (bg: $new-main-deep-color, color: $new-light-color),
+  deep: (bg: $new-main-deep-color, color: $def-white-color),
   hot: (bg: $new-hot-color, color: $new-light-color),
   primary: (bg: $main-light-color, color: $new-light-color),
   black: (bg: $new-light-color, color: $new-black-color),
@@ -269,7 +270,7 @@ $basics: (
     select: map_get($select, inverse),
     input: map_get($inputs, inverse),
     disabled: map_get($disabled, inverse),
-    bg-color: #ffffff,
+    bg-color: $def-white-color,
     color: $inverse-color
   ),
   inverse: (

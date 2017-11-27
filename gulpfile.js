@@ -207,7 +207,7 @@ gulp.task('build.sprite', (callback) => {
         },
       }))
 
-  spriteData.img
+  const imgStream = spriteData.img
     .pipe(imagemin({
       progressive: true,
       svgoPlugins: [{ removeViewBox: false }],

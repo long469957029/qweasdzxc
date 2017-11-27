@@ -6,13 +6,143 @@
 '~uiCom/pulse/index.scss';
 
 .bc-main{
-  width: 1210px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
+.bc-main-quick{
+  width: 100%;
+  height: 70px;
+  background-color: #f3fbfc;
+  ul{
+    width: 95%;
+    height: 70px;
+    line-height: 70px;
+    li{
+      display: inline-block;
+      margin-left: 10px;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: $main-deep-color;
+      font-size:$font-md;
+      cursor: pointer;
+      &.active,&:hover{
+        background-color: $main-deep-color;
+        color: $def-white-color;
+      }
+      i{
+        position: absolute;
+      }
+    }
+  }
+  .quick-more{
+    width: 5%;
+    height: 70px;
+    line-height: 70px;
+    position: relative;
+    a{
+      margin-top: 24.5px;
+    }
+    .quick-ticket-list{
+      position: absolute;
+      width: 200px;
+      height: 300px;
+      border: 1px solid #c1c1c1;
+      border-radius: 10px;
+      left: -160px;
+      z-index: 2;
+      background: $def-white-color;
+      top: 55px;
+      color: #000000;
+      animation: bounceInRight 1s;
+    }
+  }
+ }
 .bc-main-area {
-  min-height: 650px;
-
+  height: 140px;
+  .bc-area-ticket-info{
+    width: 145px;
+    margin: 15px 40px;
+    .ticket-info{
+      width: 100%;
+      height: 27px;
+      background-color: #129fa8;
+      color: $def-white-color;
+      line-height: 27px;
+      font-size: 12px;
+      text-align: center;
+    }
+  }
+  .bc-plan-main {
+     margin-top: 40px;
+    .bc-plan-title {
+      margin-right: 20px;
+      font-weight: bold;
+      text-align: right;
+      //margin-left: 85px;
+      margin-bottom: 25px;
+    }
+   }
+  .bc-curt-plan-main {
+    margin-top: 40px;
+    .bc-plan-title {
+     // padding-top: 3px;
+    }
+  }
+  .bc-entry-list{
+    padding-top: 10px;
+    a{
+      display: block;
+      width: 95px;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 20px;
+      color: $def-white-color;
+      margin-top: 10px;
+      text-align: center;
+      &.entry-list-open{
+        background-color: #108e96;
+      }
+      &.entry-list-trend{
+        background-color: #129fa8;
+      }
+      &.entry-list-des{
+        background-color: #129fa8;
+      }
+    }
+  }
   .betting-mode {
     color: $new-black-color;
+  }
+}
+.bc-play-main{
+  .bc-play-left{
+    width: 920px;
+  }
+  .bc-records{
+    width: 278px;
+    height: 845px;
+  }
+  .bc-basic-rules {
+    .tab-toolbar {
+      margin-bottom: 0;
+    }
+  }
+  .bc-play-select-area {
+    min-height: 71px;
+
+    .bc-advance-rules {
+      .tab-toolbar {
+        &:last-of-type {
+          margin-bottom: 3px;
+        }
+      }
+    }
+
+    .tab-toolbar {
+      .tab-group {
+        margin-left: 100px;
+      }
+    }
   }
 }
 
@@ -22,47 +152,12 @@
   color: #7f8081;
 }
 
-.bc-plan-main {
-  .bc-banner {
-    position: absolute;
-    top: -6px;
-    left: 9px;
-    z-index: 1;
-  }
-  .bc-plan-inner {
-    padding: 25px 0 20px;
-    .bc-plan-title {
-      margin-right: 20px;
-      font-weight: bold;
-      text-align: right;
-      //margin-left: 85px;
-      margin-bottom: 25px;
-    }
-  }
-  .pulse {
-    top: -5px;
-    left: 13px;
-    width: 54px;
-    height: 67px;
-    margin: 0;
-    &:before,&:after {
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
-  }
-}
 .bc-select-item {
   margin-bottom: 10px;
 }
 
 .bc-optional-main {
   margin-bottom: 5px;
-}
-
-.bc-curt-plan-main {
-  .bc-plan-title {
-    padding-top: 3px;
-  }
 }
 
 .bc-plan-id {
@@ -95,29 +190,6 @@
   width: 680px;
   height: 170px;
   padding: 10px;
-}
-
-.bc-play-select-area {
-  min-height: 71px;
-  .bc-basic-rules {
-    .tab-toolbar {
-      margin-bottom: 0;
-    }
-  }
-
-  .bc-advance-rules {
-    .tab-toolbar {
-      &:last-of-type {
-        margin-bottom: 3px;
-      }
-    }
-  }
-
-  .tab-toolbar {
-    .tab-group {
-      margin-left: 100px;
-    }
-  }
 }
 
 .db-ticket-bread-item {
@@ -306,14 +378,14 @@
 
 .sfa-bc-muisc {
   background: url("~base/images/music_open.png") no-repeat;
-  width: 31px;
-  height: 27px;
+  width: 21px;
+  height: 16px;
 }
 
 .sfa-bc-muisc1 {
   background: url("~base/images/music_close.png") no-repeat;
-  width: 37px;
-  height: 27px;
+  width: 21px;
+  height: 16px;
 }
 
 .bc-operate-section {
@@ -745,3 +817,35 @@
     color: #000;
   }
 }
+
+//** animate **
+@keyframes bounceInRight{
+
+  from, 60%, 75%, 90%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(3000px, 0, 0);
+    transform: translate3d(3000px, 0, 0);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: translate3d(-25px, 0, 0);
+    transform: translate3d(-25px, 0, 0);
+  }
+  75% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+  90% {
+    -webkit-transform: translate3d(-5px, 0, 0);
+    transform: translate3d(-5px, 0, 0);
+  }
+  to {
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+//** animate **
