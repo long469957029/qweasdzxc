@@ -1,0 +1,12 @@
+@font-face {
+    font-family: "sysh";
+    src: url("~base/fonts/sysh.eot"); /* IE9 */
+    src: local("sysh"), url("~base/fonts/sysh.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("~base/fonts/sysh.woff") format("woff"), /* chrome, firefox */
+    url("~base/fonts/sysh.ttf") format("truetype"), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url("~base/fonts/sysh.svg#sysh") format("svg"); /* iOS 4.1- */
+    font-style: normal;
+    font-weight: normal;
+}
+
+

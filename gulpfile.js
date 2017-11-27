@@ -31,9 +31,9 @@ const productionFactory = require('./webpack.production.factory')
 
 const mainConfig = require('./webpack.main.config')
 const externalConfig = require('./webpack.external.config')
+const Fontmin = require('fontmin')
 const zip = require('gulp-zip')
 const svgo = require('imagemin-svgo')
-const Fontmin = require('fontmin')
 const fs = require('fs')
 const rename = require('gulp-rename')
 const fontConfig = require('./font-config.json')
@@ -385,7 +385,6 @@ gulp.task('font.minimal', () => {
 
     if (_(fontInfo.targets).contains('svg')) {
       fontmin.use(Fontmin.ttf2svg())
-        .use(svgo())
     }
 
     fontmin.use(Fontmin.css({
