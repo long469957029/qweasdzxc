@@ -147,7 +147,7 @@ gulp.task('release', (cb) => {
     'release.build',
     ['release.js', 'release.css', 'release.assets', 'release.html', 'release.compatible'],
     'zip',
-    cb,
+    cb
   )
 })
 
@@ -360,7 +360,7 @@ gulp.task('font.min', (cb) => {
   runSequence(
     'font.minimal',
     'font.dest',
-    cb,
+    cb
   )
 })
 

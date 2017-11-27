@@ -20,6 +20,7 @@ mockup.config.js
 **/wow.min.js
 **/js/effect.js
 **/*.min.js
+**/gulpfile.js
 
 **/webpack*.js
 
