@@ -40,6 +40,8 @@
     "import/no-unresolved": 0,
     "import/no-extraneous-dependencies": 0,
     "import/extensions": 0,
+    "no-unused-expressions": ["error", {"allowTernary": true}],
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
 
     // 因为专案太多这种用法，所以暂时允许
     "no-underscore-dangle": 0, // [取消] 禁止 "_" 当做变数名
