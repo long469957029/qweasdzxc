@@ -141,12 +141,13 @@ gulp.task('server.mockup', (callback) => {
   }
 })
 
-gulp.task('release', () => {
+gulp.task('release', (cb) => {
   runSequence(
     'release.clean',
     'release.build',
     ['release.js', 'release.css', 'release.assets', 'release.html', 'release.compatible'],
     'zip',
+    cb,
   )
 })
 
@@ -355,10 +356,11 @@ gulp.task('zip', () => {
 })
 
 // 字体提取格式转换，原生字体推荐ttf原生格式
-gulp.task('font.min', () => {
+gulp.task('font.min', (cb) => {
   runSequence(
     'font.minimal',
     'font.dest',
+    cb,
   )
 })
 
@@ -405,7 +407,7 @@ gulp.task('font.minimal', () => {
       console.log(files[0])
 
       // 此处有bug
-      // cb();
+      // cb()
       // => { contents: <Buffer 00 01 00 ...> }
     })
   })
