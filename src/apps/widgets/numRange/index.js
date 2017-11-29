@@ -14,6 +14,7 @@ $.widget('gl.numRange', {
     max: 100,
     onChange: _.noop,
     onOverMax: _.noop,
+    size: 'lg',
   },
 
   _create() {
@@ -22,7 +23,8 @@ $.widget('gl.numRange', {
     this.$number = this.element.find('.js-wt-number')
     this.$btnMinus = this.element.find('.js-wt-num-range-btn.num-range-left')
     this.$btnAdd = this.element.find('.js-wt-num-range-btn.num-range-right')
-
+    this.$rangeMain = this.element.find('.js-num-range-main')
+    this.$rangeMain.addClass(`num-range-${this.options.size}`)
     this._bindEvents()
   },
 
@@ -75,7 +77,7 @@ $.widget('gl.numRange', {
 
   // event handlers
 
-  numberInputHandler(e) {
+  numberInputHandler() {
     this.numChange(Math.floor(this.$number.val()) || 0)
 
     this.options.onChange(Number(this.$number.val()))

@@ -6,7 +6,7 @@
 '~uiCom/pulse/index.scss';
 
 @mixin select-def {
-  //color: $def-black-color;
+  color: $def-black-color;
   border-radius: 5px;
   //border-color: $def-gray-color !important;
   //background-color: $def-white-color !important;
@@ -229,15 +229,18 @@
   }
   .bc-unit-select{
     width: 70px;
-    height: 31px;
+    height: 30px;
     padding-left: 12px;
     margin-left: 20px;
     @include select-def;
   }
   .bc-vouchers-select{
     width: 106px;
-    height: 31px;
+    height: 30px;
     @include select-def;
+  }
+  .bc-multi-range {
+    height: 30px;
   }
 }
 
@@ -267,10 +270,6 @@
 
 .bc-main-text {
   color: $font-passion;
-}
-
-.bc-multi-range {
-  height: 26px;
 }
 
 .bc-lottery-preview {

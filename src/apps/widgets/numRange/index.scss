@@ -3,17 +3,46 @@
 @import
 "~base/styles/imports";
 
+@mixin linear-bg{
+  background: linear-gradient(to bottom,#fafafa,#e3e3e3);
+}
 .num-range {
   display: inline-block;
-  border: 1px solid $new-inverse-color;
-
+  border: 1px solid $sec-gray-color;
+  border-radius: 5px;
+  &.num-range-lg{
+    .num-range-left,.num-range-right{
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+    }
+    .num-range-center{
+      width: 60px;
+      height: 28px;
+    }
+  }
+  &.num-range-md{
+    .num-range-left,.num-range-right{
+      width: 19px;
+      height: 18px;
+      line-height: 18px;
+    }
+    .num-range-center{
+      width: 45px;
+      height: 18px;
+    }
+  }
   > {
     .num-range-left {
       font-size: 12px;
       float: left;
-      padding: 1px 6px;
-      border-right: 1px solid $new-inverse-color;
+      text-align: center;
+      //padding: 1px 6px;
+      border-right: 1px solid $sec-gray-color;
       cursor: pointer;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      @include linear-bg;
 
       &.disabled {
         cursor: default;
@@ -22,11 +51,12 @@
     }
     .num-range-center {
       float: left;
-      color: $new-inverse-color;
-      height: 20px;
-      width: 48px;
+      color: $def-black-color;
+      //height: 20px;
+      //width: 48px;
       border: none;
-      padding: 1px;
+      //padding: 1px;
+      padding: 0;
       text-align: center;
       background-color: transparent;
       outline: 0;
@@ -37,10 +67,13 @@
     .num-range-right {
       font-size: 12px;
       float: left;
-      padding: 1px 6px;
-      border-left: 1px solid $new-inverse-color;
+      //padding: 1px 6px;
+      text-align: center;
+      border-left: 1px solid $sec-gray-color;
       cursor: pointer;
-
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      @include linear-bg;
       &.disabled {
         cursor: default;
         color: #c1c1c1;
