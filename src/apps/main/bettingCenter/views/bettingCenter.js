@@ -45,6 +45,7 @@ const BettingCenterView = Base.ItemView.extend({
     'click .js-music': 'openMusicHandler',
     'click .js-bc-select-item': 'selectBcItemHandler',
     'click .js-bc-user-redPack-btn': 'checkUserRedPackHanler',
+    'click .js-bc-quick-more': 'showTicketListHandler',
   },
 
   serializeData() {
@@ -146,6 +147,7 @@ const BettingCenterView = Base.ItemView.extend({
     this.$lastResults = this.$('.js-bc-last-plan-results')
     this.$hgcalculate = this.$('.js-hgcalculate-example')
     // this.$lastResults2 = this.$('.js-bc-last-plan-results2');
+    this.$quickTicketList = this.$('.js-quick-ticket-list')
 
     this.$saleStop = this.$('.js-bc-sale-stop')
     this.$salePending = this.$('.js-bc-sale-pending')
@@ -1604,6 +1606,17 @@ const BettingCenterView = Base.ItemView.extend({
     Number(type) === 0 ? $target.removeClass('sfa sfa-checkbox-def').addClass('sfa sfa-checkbox-on') : $target.removeClass('sfa sfa-checkbox-on').addClass('sfa sfa-checkbox-def')
     Number(type) === 0 ? $target.data('type', 1) : $target.data('type', 0)
     this.model.set('usePack', $target.data('type'))
+  },
+  showTicketListHandler (e) {
+    const $target = $(e.currentTarget)
+    const type = $target.data('type')
+    if (type === 0) {
+      $target.data('type', 1)
+      this.$quickTicketList.removeClass('hidden')
+    } else {
+      $target.data('type', 0)
+      this.$quickTicketList.addClass('hidden')
+    }
   },
 })
 

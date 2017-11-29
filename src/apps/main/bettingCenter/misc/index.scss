@@ -53,15 +53,13 @@
     }
     .quick-ticket-list{
       position: absolute;
-      width: 200px;
-      height: 300px;
-      border: 1px solid #c1c1c1;
-      border-radius: 10px;
-      left: -160px;
+      width: 1200px;
+      height: 180px;
+      left: -1140px;
       z-index: 2;
-      background: $def-white-color;
-      top: 55px;
-      color: #000000;
+      background: $main-deep-color;
+      top: 70px;
+      color: $def-white-color;
       animation: bounceInRight 1s;
     }
   }
