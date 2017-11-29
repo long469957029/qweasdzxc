@@ -5,32 +5,84 @@
 '~uiCom/tab-toolbar/index.scss',
 '~uiCom/pulse/index.scss';
 
+@mixin select-def {
+  color: $def-black-color;
+  border-radius: 5px;
+}
+@mixin fontFamily{
+  font-family: "Microsoft Yahei",微软雅黑;
+}
 .bc-main{
-  width: 1210px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: $def-white-color;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.4);
 }
+.bc-main-quick{
+  width: 100%;
+  height: 70px;
+  background-color: #f3fbfc;
+  ul{
+    width: 95%;
+    height: 70px;
+    line-height: 70px;
+    li{
+      display: inline-block;
+      margin-left: 10px;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: $main-deep-color;
+      font-size:$font-md;
+      cursor: pointer;
+      &.active,&:hover{
+        background-color: $main-deep-color;
+        color: $def-white-color;
+      }
+      i{
+        position: absolute;
+      }
+    }
+  }
+  .quick-more{
+    width: 5%;
+    height: 70px;
+    line-height: 70px;
+    position: relative;
+    a{
+      margin-top: 24.5px;
+    }
+    .quick-ticket-list{
+      position: absolute;
+      width: 200px;
+      height: 300px;
+      border: 1px solid #c1c1c1;
+      border-radius: 10px;
+      left: -160px;
+      z-index: 2;
+      background: $def-white-color;
+      top: 55px;
+      color: #000000;
+      animation: bounceInRight 1s;
+    }
+  }
+ }
 .bc-main-area {
-  min-height: 650px;
-
-  .betting-mode {
-    color: $new-black-color;
+  height: 140px;
+  .bc-area-ticket-info{
+    width: 145px;
+    margin: 15px 40px;
+    .ticket-info{
+      width: 100%;
+      height: 27px;
+      background-color: #129fa8;
+      color: $def-white-color;
+      line-height: 27px;
+      font-size: 12px;
+      text-align: center;
+    }
   }
-}
-
-.bc-play-tip {
-  margin-top: 5px;
-  margin-bottom: 10px;
-  color: #7f8081;
-}
-
-.bc-plan-main {
-  .bc-banner {
-    position: absolute;
-    top: -6px;
-    left: 9px;
-    z-index: 1;
-  }
-  .bc-plan-inner {
-    padding: 25px 0 20px;
+  .bc-plan-main {
+     margin-top: 40px;
     .bc-plan-title {
       margin-right: 20px;
       font-weight: bold;
@@ -38,31 +90,217 @@
       //margin-left: 85px;
       margin-bottom: 25px;
     }
-  }
-  .pulse {
-    top: -5px;
-    left: 13px;
-    width: 54px;
-    height: 67px;
-    margin: 0;
-    &:before,&:after {
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
+   }
+  .bc-curt-plan-main {
+    margin-top: 40px;
+    .bc-plan-title {
+     // padding-top: 3px;
     }
   }
+  .bc-entry-list{
+    padding-top: 10px;
+    a{
+      display: block;
+      width: 95px;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 20px;
+      color: $def-white-color;
+      margin-top: 10px;
+      text-align: center;
+      &.entry-list-open{
+        background-color: #108e96;
+      }
+      &.entry-list-trend{
+        background-color: #129fa8;
+      }
+      &.entry-list-des{
+        background-color: #129fa8;
+      }
+    }
+  }
+  .betting-mode {
+    color: $new-black-color;
+  }
 }
+.bc-play-main{
+  .bc-play-left{
+    width: 922px;
+    color: $inverse-color;
+    .bc-line{
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to bottom,#dcdcdc,#f0f0f0);
+    }
+  }
+  .bc-records{
+    width: 278px;
+    height: 845px;
+  }
+  .bc-basic-rules {
+    .tab-toolbar {
+      margin-bottom: 0;
+      padding-left: 10px;
+      .tab.active{
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+    }
+  }
+  .bc-play-select-area {
+    min-height: 86px;
+
+    .bc-advance-rules {
+      color: #666666;
+      width: 80%;
+      .tab-toolbar {
+        &:last-of-type {
+          margin-bottom: 3px;
+        }
+      }
+    }
+
+    .tab-toolbar {
+      .tab-group {
+        margin-left: 100px;
+      }
+    }
+    .bc-advance-mode-main{
+      width: 20%;
+      font-size: $font-xs;
+      color: $inverse-color;
+      .advance-bouns{
+        margin-right: 15px;
+        margin-top: 15px;
+        float: right;
+      }
+      .advance-play-des{
+        width: 86px;
+        height: 23px;
+        display: block;
+        border: 1px solid #f0f0f0;
+        border-radius: 15px;
+        line-height: 23px;
+        margin-right: 15px;
+        margin-top: 10px;
+        color: #8094A6;
+        float: right;
+        text-align: center;
+      }
+    }
+  }
+  .bc-play-area {
+    position: relative;
+    height: 100px;
+    &.loaded {
+      height: auto;
+    }
+    .bc-missOptional-main{
+      width: 100%;
+      margin: 15px 5px;
+      .bc-missOption-btn{
+        width: 74px;
+        height: 26px;
+        border: 1px solid $def-gray-color;
+        color: $inverse-color;
+        border-radius: 3px;
+        font-size: $font-xs;
+        text-align: center;
+        line-height: 24px;
+        display: inline-block;
+        cursor: pointer;
+        &.active{
+          color: $def-white-color;
+          background-color: $main-deep-color;
+          border-color: $main-deep-color;
+        }
+      }
+    }
+    .bc-playArea-items{
+      margin: 28px 10px 26px 0px;
+    }
+    .bc-quick-select{
+      width: 221px;
+      height: 39px;
+      border-top: 1px solid $def-gray-color;
+      border-radius: 20px;
+      background-color: $sec-line-color;
+    }
+  }
+  .bc-unit-select{
+    width: 70px;
+    height: 30px;
+    padding-left: 12px;
+    margin-left: 5px;
+    @include select-def;
+  }
+  .bc-vouchers-select{
+    width: 106px;
+    height: 30px;
+    @include select-def;
+  }
+  .bc-multi-range {
+    height: 30px;
+  }
+  .bc-md-btn {
+    font-size: $font-sm;
+    width: 120px;
+    padding: 5px 10px;
+    font-weight: 600;
+    @include fontFamily;
+    transform: translateY(-5px);
+    border-bottom: 3px solid rgba(0,0,0,0.4);
+  }
+  .bc-jb-btn{
+    font-size: $font-md;
+    width: 180px;
+    height: 48px;
+    border-bottom: 3px solid rgba(0,0,0,0.4);
+    @include fontFamily;
+    font-weight: 600;
+  }
+  .ba-chase-tip{
+    position: absolute;
+    width: 120px;
+    height: 21px;
+    color:  $def-white-color;
+    background-color: $main-deep-color;
+    text-align: center;
+    font-size:$font-xs;
+    top:-2px;
+    left: 80px;
+    border-radius: 3px;
+    &:before{
+      content: ' ';
+      position: absolute;
+      width: 0px;
+      height: 0px;
+      border: 5px transparent solid;
+      border-right-color: $main-deep-color;
+      left: -10px;
+      top: 5px;
+    }
+  }
+  .bc-bottom-area{
+    width: 100%;
+    height: 257px;
+    overflow: hidden;
+  }
+}
+
+
+.bc-play-tip {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #7f8081;
+}
+
 .bc-select-item {
   margin-bottom: 10px;
 }
 
 .bc-optional-main {
   margin-bottom: 5px;
-}
-
-.bc-curt-plan-main {
-  .bc-plan-title {
-    padding-top: 3px;
-  }
 }
 
 .bc-plan-id {
@@ -78,13 +316,11 @@
   color: $font-passion;
 }
 
-.bc-multi-range {
-  height: 26px;
-}
-
 .bc-lottery-preview {
   width: 878px;
   margin-right: 10px;
+  height: 190px;
+  border-radius: $globalBtnRadius;
   table {
     td {
      //padding: 9px;
@@ -97,44 +333,11 @@
   padding: 10px;
 }
 
-.bc-play-select-area {
-  min-height: 71px;
-  .bc-basic-rules {
-    .tab-toolbar {
-      margin-bottom: 0;
-    }
-  }
-
-  .bc-advance-rules {
-    .tab-toolbar {
-      &:last-of-type {
-        margin-bottom: 3px;
-      }
-    }
-  }
-
-  .tab-toolbar {
-    .tab-group {
-      margin-left: 100px;
-    }
-  }
-}
-
 .db-ticket-bread-item {
   &.active {
     a {
       color: #02eefd;
     }
-  }
-}
-
-.bc-play-area {
-  //min-height: 250px;
-  position: relative;
-  height: 100px;
-
-  &.loaded {
-    height: auto;
   }
 }
 
@@ -193,11 +396,7 @@
   width: 94px;
   padding: 10px 10px;
 }
-.bc-md-btn {
-  font-size: $font-sm;
-  width: 100px;
-  padding: 7px 10px;
-}
+
 .bc-margin-xs {
   margin-bottom: 3px;
 }
@@ -306,19 +505,19 @@
 
 .sfa-bc-muisc {
   background: url("~base/images/music_open.png") no-repeat;
-  width: 31px;
-  height: 27px;
+  width: 21px;
+  height: 16px;
 }
 
 .sfa-bc-muisc1 {
   background: url("~base/images/music_close.png") no-repeat;
-  width: 37px;
-  height: 27px;
+  width: 21px;
+  height: 16px;
 }
 
 .bc-operate-section {
   width: 878px;
-  border: 1px solid $table-border-color;
+  //border: 1px solid $table-border-color;
   border-top: 0;
   padding: 5px 0;
   margin-bottom: 4px;
@@ -745,3 +944,35 @@
     color: #000;
   }
 }
+
+//** animate **
+@keyframes bounceInRight{
+
+  from, 60%, 75%, 90%, to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(3000px, 0, 0);
+    transform: translate3d(3000px, 0, 0);
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: translate3d(-25px, 0, 0);
+    transform: translate3d(-25px, 0, 0);
+  }
+  75% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0);
+  }
+  90% {
+    -webkit-transform: translate3d(-5px, 0, 0);
+    transform: translate3d(-5px, 0, 0);
+  }
+  to {
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+//** animate **

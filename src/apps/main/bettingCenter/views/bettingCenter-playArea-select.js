@@ -11,6 +11,8 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
 
   playItemsTpl: _.template(require('bettingCenter/templates/bettingCenter-playArea-items.html')),
 
+  missOptionTpl: _.template(require('bettingCenter/templates/bettingCenter-playArea-missOption.html')),
+
   events: {
     'change .js-bc-playArea-position-item': 'positionChooseHandler',
     'click .js-bc-select-item': 'selectNumberHandler',
@@ -31,6 +33,9 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
         optionals: this.options.optionals.list,
       }))
     }
+    // if (this.options.showMiss && this.options.ticketId!=19 && this.options.ticketId!=20 ){
+    html.push(this.missOptionTpl())
+    // }
     if (this.options.page) {
       const pageCount = Math.ceil(_.div(this.options.list.length, 5))
       for (let i = 0; i < pageCount; i++) {
@@ -72,7 +77,9 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
     this.$el.html(html.join(''))
     this.$page = this.$('.jc-page-content')
 
-    const pageControl = '<div class="bc-page-control"><button class="js-toggle-page bc-togglePage-btn btn m-right-md active" pageindex="0">第一名~第五名</button><button class="js-toggle-page bc-togglePage-btn btn" pageindex="1">第六名~第十名</button></div>'
+    const pageControl = '<div class="bc-page-control">' +
+      '<button class="js-toggle-page bc-togglePage-btn btn m-right-md active" pageindex="0">第一名~第五名</button>' +
+      '<button class="js-toggle-page bc-togglePage-btn btn" pageindex="1">第六名~第十名</button></div>'
 
     if (this.$page) {
       this.$('.jc-page-content:first').addClass('active')
@@ -92,8 +99,8 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
       let selected = []
 
       if (item.isShow) {
-        selected = _(this.$rows.filter(`.js-bc-playArea-items-${item.id}`).find('.js-bc-select-item.active')).map((item) => {
-          return $(item).data('num')
+        selected = _(this.$rows.filter(`.js-bc-playArea-items-${item.id}`).find('.js-bc-select-item.active')).map((itemInfo) => {
+          return $(itemInfo).data('num')
         })
       }
 
@@ -173,14 +180,14 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
 
   // event handlers
 
-  positionChooseHandler(e) {
+  positionChooseHandler() {
     this.calculateCoefficient()
     this.statisticsLottery()
   },
 
   selectNumberHandler(e) {
     const $target = $(e.currentTarget)
-    if (_.indexOf(this.mark6TicketIdArr, parseInt(this.options.ticketId)) > -1) {
+    if (_.indexOf(this.mark6TicketIdArr, parseInt(this.options.ticketId, 10)) > -1) {
       const $itemsToolbars = $target.closest('.js-bc-playArea-items')
       this._mark6SelectNumber($target, $itemsToolbars)
     } else {
@@ -200,7 +207,7 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
   _selectNumber($target, $parent) {
     const data = $target.data()
     const active = $target.hasClass('active')
-    const data1 = $parent.data()
+    // const data1 = $parent.data()
     // 横向不允许冲突/超过最大选择数
     if (!active && $target.hasClass('conflict-x')) {
       if (!data.conflictXNum || data.conflictXNum === 1) {
@@ -247,21 +254,25 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
     const op = $target.data('op')
     const $items = $itemsToolbars.find('.js-bc-select-item')
 
-    if (_.indexOf(this.mark6TicketIdArr, parseInt(this.options.ticketId)) > -1) {
+    if (_.indexOf(this.mark6TicketIdArr, parseInt(this.options.ticketId, 10)) > -1) {
       if ($target.hasClass('active')) {
         $target.removeClass('active')
         $items.removeClass('active')
       } else {
+        const selectEle = []
+        const opid = $target.data('opid')
+        const selectNum = this.options.list[0].htmlNeedInfo.groupSelectData[parseInt(opid, 10)]
+        let thisColorArr = ''
+        let arrStr = 'redArr'
+        let weiNum = ''
+        let touNum
         switch (op) {
-          case 'shu':	case 'niu': case 'hu': case 'tu': case '_long': case 'she':
+          case 'shu': case 'niu': case 'hu': case 'tu': case '_long': case 'she':
           case 'ma': case 'yang': case 'hou': case 'ji': case 'gou': case 'zhu':
-            var opid = $target.data('opid')
-            var selectEle = []
-            var selectNum = this.options.list[0].htmlNeedInfo.groupSelectData[parseInt(opid)]
             $items.each((index, ele) => {
               const $this = $(ele)
-              _(selectNum.nums).each((num, index) => {
-                if (parseInt(num) == parseInt($this.data('num'))) {
+              _(selectNum.nums).each((num) => {
+                if (parseInt(num, 10) === parseInt($this.data('num'), 10)) {
                   selectEle.push($this)
                 }
               })
@@ -276,14 +287,13 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
             self._selectNumbers($items.removeClass('active').filter(':lt(24)'), $itemsToolbars)
             break
           case 'red': case 'blue': case 'green':
-            var arrStr = 'redArr'
-            if (op == 'blue') { arrStr = 'blueArr' } else if (op == 'green') { arrStr = 'greenArr' }
-            var thisColorArr = this.options.list[0].htmlNeedInfo.colorArr[arrStr]
-            var selectEle = []
+            if (op === 'blue') { arrStr = 'blueArr' } else if (op === 'green') { arrStr = 'greenArr' }
+            thisColorArr = this.options.list[0].htmlNeedInfo.colorArr[arrStr]
+            // let selectEle = []
             $items.each((index, ele) => {
               const $this = $(ele)
-              _(thisColorArr).each((num, index) => {
-                if (parseInt(num) == parseInt($this.data('num'))) {
+              _(thisColorArr).each((num) => {
+                if (parseInt(num, 10) === parseInt($this.data('num'), 10)) {
                   selectEle.push($this)
                 }
               })
@@ -293,12 +303,12 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
             break
           case 'wei0': case 'wei1': case 'wei2': case 'wei3': case 'wei4':
           case 'wei5': case 'wei6': case 'wei7': case 'wei8': case 'wei9':
-            var weiNum = op.substring(op.length - 1)
-            var selectEle = []
+            weiNum = op.substring(op.length - 1)
+            // let selectEle = []
             $items.each((index, ele) => {
               const $this = $(ele)
               const currentNum = $this.data('num').toString()
-              if (currentNum.substring(currentNum.length - 1) == weiNum) {
+              if (currentNum.substring(currentNum.length - 1) === weiNum) {
                 selectEle.push($this)
               }
             })
@@ -306,12 +316,12 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
             this._selectNumbers($(selectEle), $itemsToolbars)
             break
           case 'tou0': case 'tou1': case 'tou2': case 'tou3': case 'tou4':
-            var touNum = op.substring(op.length - 1)
-            var selectEle = []
+            touNum = op.substring(op.length - 1)
+            // let selectEle = []
             $items.each((index, ele) => {
               const $this = $(ele)
               const currentNum = $this.data('num').toString()
-              if (currentNum.substring(0, 1) == touNum) {
+              if (currentNum.substring(0, 1) === touNum) {
                 selectEle.push($this)
               }
             })
@@ -340,6 +350,8 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
             $items.removeClass('active')
             $playArea.find('.js-bc-select-op').removeClass('active')
             break
+          default:
+            break
         }
         $target.addClass('active')
       }
@@ -351,8 +363,8 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
           // $items.removeClass('active').trigger('click');
           break
         case 'big':
-          _(this.options.list).map((item) => {
-            if (item.items.length == 16) {
+          _(this.options.list).each((item) => {
+            if (item.items.length === 16) {
               self._selectNumbers($items.removeClass('active').filter(':gt(7)'), $playArea)
             } else {
               self._selectNumbers($items.removeClass('active').filter(':gt(4)'), $playArea)
@@ -361,8 +373,8 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
           // $items.removeClass('active').filter(':gt(4)').trigger('click');
           break
         case 'small':
-          _(this.options.list).map((item) => {
-            if (item.items.length == 16) {
+          _(this.options.list).each((item) => {
+            if (item.items.length === 16) {
               self._selectNumbers($items.removeClass('active').filter(':lt(8)'), $playArea)
             } else {
               self._selectNumbers($items.removeClass('active').filter(':lt(5)'), $playArea)
@@ -391,6 +403,8 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
         case 'clear':
           $items.removeClass('active')
           break
+        default:
+          break
       }
     }
 
@@ -411,10 +425,10 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
   },
   // 六合号码选择
   _mark6SelectNumber ($target, $parent) {
-    const active = $target.hasClass('active')
+    // const active = $target.hasClass('active')
     $target.toggleClass('active')
     const $activeItem = $parent.find('.js-bc-select-item.active')
-    if ($activeItem.length == 0) {
+    if ($activeItem.length === 0) {
       $target.closest('.js-bc-playArea-items').find('.js-bc-select-op').removeClass('active')
     }
     this.updateRowTitle($target)

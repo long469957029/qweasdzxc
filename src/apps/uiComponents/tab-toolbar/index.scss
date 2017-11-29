@@ -9,12 +9,13 @@ $tab-toolbar-title-width: 76px !default;
 $tab-toolbar-circle-colors: (
   default: (
     default: (
-      color: $new-black-color,
-      background: $new-gray-color
+      color: $inverse-color,
+      background: $def-white-color
     ),
     active: (
       color: $new-light-color,
-      background: $color-pleasant
+      background: $main-deep-color,
+      border-radius:15px
     )
   )
 );
@@ -23,7 +24,7 @@ $tab-toolbar-circle-colors: (
   margin-bottom: 7px;
   .tab-title {
     float: left;
-    font-weight: bold;
+    //font-weight: bold;
     width: $tab-toolbar-title-width;
 
     height: $tab-toolbar-height;
@@ -35,7 +36,7 @@ $tab-toolbar-circle-colors: (
     margin-left: $tab-toolbar-title-width + 20;
 
     .tab {
-      font-size: 13px;
+      font-size: 12px;
       cursor: pointer;
       display: inline-block;
       text-align: center;
@@ -59,7 +60,7 @@ $tab-toolbar-circle-colors: (
         width: 65px;
         &.active {
           color: #16a4aa;
-          background-color: $new-light-color;
+          background-color: $def-white-color;
         }
       }
     }
@@ -67,9 +68,9 @@ $tab-toolbar-circle-colors: (
     &.tab-pill-main {
       .tab-title {
         float: left;
-        font-weight: bold;
+        //font-weight: bold;
         width: $tab-toolbar-title-width;
-        font-size: 14px;
+        font-size: 12px;
         text-align: center;
         margin-left: 10px;
 
@@ -101,40 +102,53 @@ $tab-toolbar-circle-colors: (
 
   &.tab-circle {
     margin-bottom: 0;
-
+    .tab-group{
+      margin-left: 55px;
+    }
     .tab-title {
-      font-size: 15px;
+      font-size: 14px;
+      color: $def-black-color;
       line-height: 34px;
-      text-align: center;
-      background-position: 0px -419px;
-      width: 89px;
-      height: 34px;
-      font-weight: bold;
-      @include sprite($sfa-bc-tab-arrow);
+      //text-align: center;
+      //background-position: 0px -419px;
+      width: auto;
+      height: 40px;
+      margin-left: 5px;
+      //font-weight: bold;
+      //@include sprite($sfa-bc-tab-arrow);
 
       > div {
         margin-right: 10px;
       }
 
-      &.active {
-        color: $new-light-color;
-        @include sprite($sfa-bc-tab-arrow-active);
-      }
+      //&.active {
+      //  color: $new-light-color;
+      //  @include sprite($sfa-bc-tab-arrow-active);
+      //}
     }
     .tab {
       margin-right: 14px;
       padding: 0;
       font-size: 20px;
-      line-height: 33px;
-      height: 33px;
-      width: 33px;
-      border-radius: 100px;
-      border: 1px solid $new-inverse-color;
+      line-height: 38px;
+      height: 38px;
+      width: 38px;
+      border-radius: 50%;
+      border: 1px solid $def-gray-color;
+      color: $def-black-color;
+      background-color: $sec-line-color;
+
+      &:hover {
+        color: $main-deep-color;
+        background-color: $sec-line-color;
+        border: 1px solid $color-pleasant;
+      }
 
       &.active {
-        color: $new-light-color;
-        background-color: $color-pleasant;
-        border: 1px solid $color-pleasant;
+        color: $def-white-color;
+        background-color: $main-deep-color;
+        border: 1px solid $main-deep-color;
+        box-shadow: 0px 2px 3px #108f97 inset;
       }
 
       &.treble1 {
@@ -152,22 +166,23 @@ $tab-toolbar-circle-colors: (
 
     .tab {
       width: 22px;
-      height: 22px;
-      line-height: 22px;
-      border: 1px solid $new-inverse-color;
-      margin-right: 15px;
+      height: 40px;
+      line-height: 36px;
+      //border: 1px solid $new-inverse-color;
+      margin-right: 10px;
       float: left;
+      color: $def-black-color;
 
       &:hover {
-        color: $new-light-color;
-        border: 1px solid $color-pleasant;
-        background-color: $color-pleasant;
+        color: $main-deep-color;
+        //border: 1px solid $color-pleasant;
+        //background-color: $color-pleasant;
       }
 
       &.active {
-        color: $new-light-color;
-        border: 1px solid $color-pleasant;
-        background-color: $color-pleasant;
+        color: $main-deep-color;
+        //border: 1px solid $color-pleasant;
+        //background-color: $color-pleasant;
       }
     }
   }

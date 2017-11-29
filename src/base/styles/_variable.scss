@@ -4,13 +4,24 @@ $body-width: 1356px !default;
 //new
 $new-main-deep-dark-color: #066067 !default;
 $new-main-dark-color: #057c86 !default;
-$new-main-deep-color: #16a4aa !default;
+$new-main-deep-color: #14b1bb !default;
 $new-dark-color: #555757 !default;
 $new-light-color: #f0efee !default;
 $new-inverse-color: #666666 !default;
 $new-gray-color: #f1e1e0 !default;
 $new-hot-color: #fe6760 !default;
 $new-pink-color: #fda4a0 !default;
+
+$def-white-color: #ffffff !default;
+$def-black-color: #333333 !default;
+$def-line-color: #d7d7d7 !default;
+$sec-line-color: #f0f0f0 !default;
+$third-line-color: #e6e6e6 !default;
+$def-gray-color: #cccccc !default;
+$sec-gray-color: #b8b8b8 !default;
+$prominent-color: #f09932 !default;
+$prominent-hover-color: #d8892d !default;
+$new-main-deep-hover-color: #129fa8 !default;
 
 $new-black-color: #2F2F2F !default;
 $deep-gray-color: #494949 !default;
@@ -21,7 +32,7 @@ $main-pale-color: #3dafc0 !default;
 $main-light-color: #10a4aa !default;
 $main-color: #0197ad !default;
 $main-deep-color: $new-main-deep-color;
-$color-pleasant: #e8675d !default;
+$color-pleasant: #109fa8 !default;
 $color-peaceful: #48bfd1 !default;
 $color-hot: #b01e34 !default;
 $color-sunshine: #aafb92!default;
@@ -30,7 +41,7 @@ $color-dar-turquoise: #007e88 !default;
 
 $color-white-gray: #d0d6d8 !default;
 
-$font-color: $new-light-color;
+$font-color: $def-white-color;
 $font-deep-color: $main-color;
 $inverse-color: $new-inverse-color;
 
@@ -47,7 +58,7 @@ $brand-primary: #eae8e6 !default;
 $brand-info: #eae8e6 !default;
 
 //global-props
-$globalBtnRadius: 0;
+$globalBtnRadius: 5px;
 $globalInputRadius: 0;
 
 //font-size
@@ -99,7 +110,8 @@ $font-colors: (
   sunshine: $color-sunshine,
   hot: $color-hot,
   pink: $new-pink-color,
-  black: $new-black-color,
+  black: $def-black-color,
+  prominent: $prominent-color,
 
   important: $font-light-pleasant,
   info: $font-info,
@@ -130,7 +142,7 @@ $bg-main-font-color: $font-default;
 
 $bg-colors: (
   default: (bg: $font-default, color: $new-black-color),
-  deep: (bg: $new-main-deep-color, color: $new-light-color),
+  deep: (bg: $new-main-deep-color, color: $def-white-color),
   hot: (bg: $new-hot-color, color: $new-light-color),
   primary: (bg: $main-light-color, color: $new-light-color),
   black: (bg: $new-light-color, color: $new-black-color),
@@ -222,9 +234,9 @@ $inputs: (
 //select
 $select: (
   default: (
-    border-color: $font-color,
-    color: $font-color,
-    background: url(~base/images/select-caret.png) no-repeat scroll 97% center transparent
+    border-color: $sec-gray-color,
+    color: $def-black-color,
+    background: url(~base/images/select-caret-bg-lg.png) no-repeat scroll 102% center transparent
   ),
   inverse: (
     border-color: $new-inverse-color,
@@ -253,7 +265,7 @@ $disabled: (
 );
 
 $borders: (
-  default: $font-color,
+  default: $def-gray-color,
   cool: $main-deep-color,
   table: $table-border-color,
   inverse: $new-inverse-color
@@ -269,7 +281,7 @@ $basics: (
     select: map_get($select, inverse),
     input: map_get($inputs, inverse),
     disabled: map_get($disabled, inverse),
-    bg-color: #ffffff,
+    bg-color: $def-white-color,
     color: $inverse-color
   ),
   inverse: (
@@ -385,15 +397,15 @@ $btns: (
     border-color: $main-deep-color,
     hover: (
       //color: #ffffff,
-      bg-color: $main-deep-color
+      bg-color: $new-main-deep-hover-color
     ),
     focus: (
       //color: #ffffff,
-      bg-color: $main-deep-color
+      bg-color: $new-main-deep-hover-color
     ),
     active: (
       //color: #ffffff,
-      bg-color: $main-deep-color
+      bg-color: $new-main-deep-hover-color
     )
   ),
   peaceful: (
@@ -467,16 +479,17 @@ $btns: (
     )
   ),
   orange: (
-    bg-color: #fba540,
-    border-color: #fba540,
+    bg-color: $prominent-color,
+    border-color: $prominent-color,
+    color: $def-white-color,
     hover: (
-      bg-color: #fba540
+      bg-color: $prominent-hover-color
     ),
     focus: (
-      bg-color: #fba540
+      bg-color: $prominent-hover-color
     ),
     active: (
-      bg-color: #fba540
+      bg-color: $prominent-hover-color
     )
   ),
   cloud: (
@@ -531,11 +544,11 @@ $modals: (
 
 $tables: (
   default: (
-    th-bg-color: $new-main-deep-color,
-    th-color: $new-light-color,
-    td-bg-color: $new-light-color,
-    td-bg-hover-color: $new-gray-color,
-    td-color: $new-black-color
+    th-bg-color: $sec-line-color,
+    th-color: $def-black-color,
+    td-bg-color: $def-white-color,
+    td-bg-hover-color: $def-white-color,
+    td-color: $sec-line-color
   ),
   similar: (
     th-bg-color: $main-light-color,
@@ -619,8 +632,8 @@ $carousel-indicators-margin: 0 10px;
 
 $text-circle-colors: (
   default: (
-    color: $font-deep-color,
-    background: $font-default
+    color: $new-main-deep-color,
+    background: $def-white-color
   ),
   cool: (
     color: $new-light-color,
