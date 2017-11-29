@@ -181,7 +181,7 @@ const BettingCenterView = Base.ItemView.extend({
     // total
     this.$totalLottery = this.$('.js-bc-total-lottery')
     this.$totalMoney = this.$('.js-bc-total-money')
-    this.$totalRebateMoney = this.$('.js-bc-total-rebateMoney')
+    // this.$totalRebateMoney = this.$('.js-bc-total-rebateMoney')
 
     this.$recordsContainer = this.$('.js-bc-records')
 
@@ -866,7 +866,7 @@ const BettingCenterView = Base.ItemView.extend({
   renderTotalLotteryInfo(model, totalInfo) {
     this.$totalLottery.text(totalInfo.totalLottery)
     this.$totalMoney.text(_(totalInfo.totalMoney).convert2yuan())
-    this.$totalRebateMoney.text(_(totalInfo.totalRebateMoney).convert2yuan())
+    // this.$totalRebateMoney.text(_(totalInfo.totalRebateMoney).convert2yuan())
   },
 
   getBonusMode(bonus, unit, userRebate, betMethod) {
