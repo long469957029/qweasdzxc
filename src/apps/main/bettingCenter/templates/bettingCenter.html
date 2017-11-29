@@ -41,7 +41,7 @@
         <div class="js-bc-countdown text-center m-bottom-md pull-left"></div>
       </div>
     </div>
-    <div class="bc-plan-main pull-left">
+    <div class="bc-plan-main pull-left m-left-md">
       <div class="bc-plan-inner clearfix">
         <div class="bc-plan-title pull-left">
           第 <span class="js-bc-last-planId font-bold">-</span> 期
@@ -76,7 +76,7 @@
         </div>
       </div>
     </div>
-    <div class="bc-entry-list pull-left m-left-md">
+    <div class="bc-entry-list pull-right m-right-md">
       <a href="#bc/1" class="entry-list-open">
         <!--跳转到历史分析-->
         <span class="sfa sfa-bc-icon-open-num vertical-middle"></span>
@@ -104,25 +104,20 @@
     <div class="js-bc-basic-rules bc-basic-rules bg-deep"></div>
     <div class="bc-play-container clearfix">
       <div class="bc-play-left pull-left">
-        <div class="bc-play-select-area">
-          <div class="js-bc-advance-rules bc-advance-rules bg-default p-top-xs"></div>
-        </div>
-
-
-        <div class="dot-divider"></div>
-
-        <div class="m-LR-smd">
-          <div class="bc-play-tip">
-            <div class="pull-left">玩法说明：</div>
-            <div class="overflow-hidden">
-              <span class="js-bc-play-tip">-</span>
-              <!--<div>-->
-              <a class="js-bc-play-example bc-play-example btn-link btn-link-pleasant" href="javascript:void(0)">中奖举例</a>
-              <a class="btn-link btn-link-pleasant hide mark6-help" href="#hc?page=mark6">&nbsp;</a>
-              <!--</div>-->
+        <div class="bc-play-select-area clearfix">
+          <div class="js-bc-advance-rules bc-advance-rules p-top-smd pull-left"></div>
+          <div class="pull-right bc-advance-mode-main">
+            <div class="advance-bouns">
+              单注奖金：<span class="font-md text-prominent js-bc-bet-mode"></span>元
             </div>
+            <a class="advance-play-des js-bc-play-example">
+              <span class="sfa sfa-bc-light vertical-middle"></span>
+              玩法说明
+            </a>
           </div>
-
+        </div>
+        <div class="bc-line"></div>
+        <div class="m-LR-smd">
           <div class="js-bc-play-area bc-play-area">
             <div class="gl-loading">
               <%=Global.ui.loader.get() %>
@@ -130,58 +125,49 @@
           </div>
         </div>
 
-        <div class="dot-divider"></div>
+        <div class="div-line"></div>
 
-        <div class="m-LR-smd text-center">
+        <div class="m-LR-smd m-top-md m-bottom-md">
           <div class="form-inline m-TB-xs">
-            <div class="inline-block m-right-mlg">
-              <label class="m-right-sm font-bold">倍数</label>
+            <select name="" class="js-bc-unit-select bc-unit-select">
+              <option value="10000">元</option>
+              <option value="1000">角</option>
+              <option value="100">分</option>
+              <option value="10">厘</option>
+            </select>
+            <div class="inline-block m-left-smd">
               <span class="js-bc-multi-range  vertical-middle bc-multi-range inline-block"></span>
+              <label class="m-left-xs">倍</label>
             </div>
 
-            <div class="inline-block m-right-mlg basic-inverse">
-              <label class="betting-mode font-bold">当前投注模式</label>
-              <select class="js-bc-bet-mode bc-bet-mode"></select>
+            <div class="inline-block m-left-smd">
+              <span>共</span>
+              <span class="js-bc-statistics-lottery text-pleasant font-md font-bold">0</span>
+              <span>注，金额</span>
+              <span class="js-bc-statistics-money text-prominent font-md font-bold">0</span>
+              <span>元</span>
             </div>
-            <div class="tab-toolbar inline-block m-right-mlg no-margin vertical-top tab-border clearfix">
-              <div class="tab-group no-margin">
-                <span class="js-bc-monetary-unit tab m-right-sm active" data-rate="10000">元</span>
-                <span class="js-bc-monetary-unit tab m-right-sm" data-rate="1000">角</span>
-                <span class="js-bc-monetary-unit tab m-right-sm" data-rate="100">分</span>
-                <span class="js-bc-monetary-unit tab m-right-sm" data-rate="10">厘</span>
-              </div>
+            <select name="" class="js-bc-vouchers-select m-left-smd bc-vouchers-select">
+              <option value="">使用代金券</option>
+            </select>
+            <div class="pull-right m-right-sm">
+              <!--<div class="js-bc-user-red m-right-sm inline-block hidden">-->
+                <!--<span class="sfa sfa-checkbox-def js-bc-user-redPack-btn cursor-pointer vertical-middle" data-type="0"></span>-->
+                <!--<span>使用红包余额</span>-->
+                <!--<span class="text-hot js-bc-red-money"></span>-->
+              <!--</div>-->
+              <button class="js-bc-btn-lottery-buy btn btn-pleasant bc-md-btn m-bottom-xs" data-loading-text="提交中">
+                <i class="fa fa-bolt" aria-hidden="true"></i>
+                直接投注
+              </button>
+              <button class="js-bc-btn-lottery-add btn btn-cool bc-md-btn m-bottom-xs">
+                <i class="fa fa-plus" aria-hidden="true"></i> 添加号码
+              </button>
             </div>
           </div>
         </div>
 
-        <div class="dot-divider m-bottom-xs"></div>
-
         <div class="m-bottom-xs m-left-smd">
-          <div class="inline-block m-top-xs">
-            <span>选择</span>
-            <span class="js-bc-statistics-lottery text-pleasant font-bold">0</span>
-            <span>注，共</span>
-            <span class="js-bc-statistics-money text-pleasant font-bold">0</span>
-            <!--<span>元，奖金</span>-->
-            <!--<span class="js-bc-statistics-bonus text-pleasant">0</span>-->
-            <span>元，返款</span>
-            <span class="js-bt-statistics-rebateMoney text-pleasant font-bold">0</span>
-            <span>元</span>
-          </div>
-          <div class="pull-right m-right-sm">
-            <div class="js-bc-user-red m-right-sm inline-block hidden">
-              <span class="sfa sfa-checkbox-def js-bc-user-redPack-btn cursor-pointer vertical-middle" data-type="0"></span>
-              <span>使用红包余额</span>
-              <span class="text-hot js-bc-red-money"></span>
-            </div>
-            <button class="js-bc-btn-lottery-buy btn btn-pleasant bc-md-btn m-bottom-xs" data-loading-text="提交中">
-              <i class="fa fa-bolt" aria-hidden="true"></i> 直接投注
-            </button>
-            <button class="js-bc-btn-lottery-add btn btn-cool bc-md-btn m-bottom-xs">
-              <i class="fa fa-plus" aria-hidden="true"></i> 添加号码
-            </button>
-          </div>
-
           <div class="clearfix bc-margin-xs">
             <div class="js-bc-lottery-preview bc-lottery-preview pull-left border-table-all"></div>
 

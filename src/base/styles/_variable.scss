@@ -12,6 +12,11 @@ $new-gray-color: #f1e1e0 !default;
 $new-hot-color: #fe6760 !default;
 $new-pink-color: #fda4a0 !default;
 $def-white-color: #ffffff !default;
+$def-black-color: #333333 !default;
+$def-line-color: #d7d7d7 !default;
+$sec-line-color: #f0f0f0 !default;
+
+$def-gray-color: #cccccc !default;
 
 $new-black-color: #2F2F2F !default;
 $deep-gray-color: #494949 !default;
@@ -22,7 +27,7 @@ $main-pale-color: #3dafc0 !default;
 $main-light-color: #10a4aa !default;
 $main-color: #0197ad !default;
 $main-deep-color: $new-main-deep-color;
-$color-pleasant: #e8675d !default;
+$color-pleasant: #109fa8 !default;
 $color-peaceful: #48bfd1 !default;
 $color-hot: #b01e34 !default;
 $color-sunshine: #aafb92!default;
@@ -40,6 +45,8 @@ $input-disable-color: #cac9ca !default;
 $inverse-border-color: #878585 !default;
 
 $table-border-color: #b1b1b1 !default;
+
+$text-prominent-color: #f09932 !default;
 
 $background-color: white;
 
@@ -101,6 +108,7 @@ $font-colors: (
   hot: $color-hot,
   pink: $new-pink-color,
   black: $new-black-color,
+  prominent: $text-prominent-color,
 
   important: $font-light-pleasant,
   info: $font-info,

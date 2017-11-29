@@ -3,7 +3,7 @@
   $sizeProp: map_get($sizeProps, $class);
   $size: map_get($sizeProp, width);
   $font-size: map_get($sizeProp, font-size);
-  
+
   //.tab-title {
   //  height: $size;
   //  line-height: $size;
@@ -31,5 +31,6 @@
   &.active {
     color: map-get($active, color);
     background-color: map-get($active, background);
+    border-radius: map-get($active, border-radius);
   }
 }

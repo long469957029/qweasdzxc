@@ -1,4 +1,4 @@
-<div class="js-bc-playArea-items js-bc-playArea-items-<%=row.id %> m-right-sm" data-id="<%=row.id %>">
+<div class="js-bc-playArea-items js-bc-playArea-items-<%=row.id %> bc-playArea-items" data-id="<%=row.id %>">
   <div class="js-be-playArea-items-toolbar inline-block tab-toolbar tab-circle">
     <% if (row.title) {
     if ( row.title == '无') { %>
@@ -125,7 +125,7 @@
   </div>
 
   <% if (row.hasOp) { %>
-  <div class="tab-toolbar tab-border tab-toolbar-sm inline-block vertical-middle">
+  <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select inline-block m-left-lg vertical-middle">
     <div class="tab-group m-left-md">
       <% if (row.op.all) { %>
       <span class="js-bc-select-op tab" data-op="all">全</span>

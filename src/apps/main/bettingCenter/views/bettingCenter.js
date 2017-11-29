@@ -32,7 +32,7 @@ const BettingCenterView = Base.ItemView.extend({
     'click .js-bc-basic-rule': 'baseRuleChangeHandler',
     'click .js-bc-advance-rule': 'advanceRuleChangeHandler',
     'change .js-bc-bet-mode': 'betModeChangeHandler',
-    'click .js-bc-monetary-unit': 'monetaryUnitChangeHandler',
+    'change .js-bc-unit-select': 'monetaryUnitChangeHandler',
     'click .js-bc-btn-lottery-add': 'lotteryAddHandler',
     'click .js-bc-lottery-auto': 'lotteryAutoAddHandler',
     'click .js-bc-lottery-clear': 'lotteryClearHandler',
@@ -157,7 +157,7 @@ const BettingCenterView = Base.ItemView.extend({
     this.$advanceRules = this.$('.js-bc-advance-rules')
 
     // playInfo
-    this.$playTip = this.$('.js-bc-play-tip')
+    // this.$playTip = this.$('.js-bc-play-tip')
     this.$playExample = this.$('.js-bc-play-example')
     this.$playBetMode = this.$('.js-bc-bet-mode')
 
@@ -170,7 +170,7 @@ const BettingCenterView = Base.ItemView.extend({
     //
     this.$statisticsLottery = this.$('.js-bc-statistics-lottery')
     this.$statisticsMoney = this.$('.js-bc-statistics-money')
-    this.$statisticsRebateMoney = this.$('.js-bt-statistics-rebateMoney')
+    // this.$statisticsRebateMoney = this.$('.js-bt-statistics-rebateMoney')
 
     // 疑似失效属性
     this.$statisticsBonus = this.$('.js-bc-statistics-bonus')
@@ -604,7 +604,7 @@ const BettingCenterView = Base.ItemView.extend({
    * 参数 playInfo 是由bettingRules调出的 游戏规则 对象，包含了当前游戏模式下 所有的 信息，包括 奖金 赔率 最高倍数等 */
   renderPlayInfo(playInfo) {
     // 游戏说明
-    this.$playTip.text(playInfo.playDes)
+    // this.$playTip.text(playInfo.playDes)
 
     // 中奖举例
     if (this.$playExample.data('popover')) {
@@ -614,7 +614,7 @@ const BettingCenterView = Base.ItemView.extend({
       trigger: 'hover',
       container: this.$el,
       html: true,
-      content: playInfo.playExample.replace(/\|/g, '<br />'),
+      content: `<div><span class="font-bold">玩法说明：</span>${playInfo.playDes}</div><div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
       placement: 'bottom',
     })
 
@@ -639,37 +639,38 @@ const BettingCenterView = Base.ItemView.extend({
   renderPlayBetMode() {
     const unit = _(100000000).div(this.model.get('unit')) // 投注单位 元 角 分 厘
     const playInfo = this.rulesCollection.getCurrentPlay() // 彩种信息
-
+    this.$playBetMode.html(_(playInfo.betMethodMax).chain().formatDiv(unit).floor(4)
+      .value())
     // 赔率/返水率f
-    let modeHtml = ''
-    if (playInfo.betBonus === null) { // 是否有奖励数组，没有则用默认的双奖励，有则用数组奖励
-      modeHtml += `<option value="0" data-max="${playInfo.betMultiLimitMax}" data-max-bonus="${playInfo.betMethodMax}">${_(playInfo.betMethodMax).chain().formatDiv(unit).floor(4)
-        .value()}/0.0%</option>`
-      if (Number(playInfo.userRebate) !== 0) {
-        modeHtml += `<option value="1" data-max="${playInfo.betMultiLimitMin}" data-max-bonus="${playInfo.betMethodMin}">${ 
-          _(playInfo.betMethodMin).chain().formatDiv(unit).floor(4)
-            .value()}/${_(playInfo.userRebate).div(10)}%</option>`
-      }
-      // 六合彩特码、正码类型的号码球更改赔率数值，投注模式文字修改
-      if (_.indexOf(this.mark6TicketIdArr, parseInt(this.model.get('ticketId'), 10)) > -1) {
-        this.$playArea.find('.mark6-odds').html(this.setMark6NumberOdds(playInfo.betMethodMax))
-        modeHtml = `<option value="0" data-max="${playInfo.betMultiLimitMax}" data-max-bonus="${playInfo.betMethodMax}">高奖金模式</option>`
-        if (Number(playInfo.userRebate) !== 0) {
-          modeHtml += `<option value="1" data-max="${playInfo.betMultiLimitMin}" data-max-bonus="${playInfo.betMethodMin}">高返点模式</option>`
-        }
-      }
-    } else { // 目前有多种奖励方式的 仅有 龙虎和
-      modeHtml += this.selectBcItemHandler()
-    }
-
-    const currentVal = this.$playBetMode.val()
-    this.$playBetMode.html(modeHtml)
-
-    if (currentVal) { // 给select赋值并触发change事件
-      this.$playBetMode.val(currentVal).trigger('change')
-    } else {
-      this.$playBetMode.val(0).trigger('change')
-    }
+    // let modeHtml = ''
+    // if (playInfo.betBonus === null) { // 是否有奖励数组，没有则用默认的双奖励，有则用数组奖励
+    //   modeHtml += `<option value="0" data-max="${playInfo.betMultiLimitMax}" data-max-bonus="${playInfo.betMethodMax}">${_(playInfo.betMethodMax).chain().formatDiv(unit).floor(4)
+    //     .value()}/0.0%</option>`
+    //   if (Number(playInfo.userRebate) !== 0) {
+    //     modeHtml += `<option value="1" data-max="${playInfo.betMultiLimitMin}" data-max-bonus="${playInfo.betMethodMin}">${
+    //       _(playInfo.betMethodMin).chain().formatDiv(unit).floor(4)
+    //         .value()}/${_(playInfo.userRebate).div(10)}%</option>`
+    //   }
+    //   // 六合彩特码、正码类型的号码球更改赔率数值，投注模式文字修改
+    //   if (_.indexOf(this.mark6TicketIdArr, parseInt(this.model.get('ticketId'), 10)) > -1) {
+    //     this.$playArea.find('.mark6-odds').html(this.setMark6NumberOdds(playInfo.betMethodMax))
+    //     modeHtml = `<option value="0" data-max="${playInfo.betMultiLimitMax}" data-max-bonus="${playInfo.betMethodMax}">高奖金模式</option>`
+    //     if (Number(playInfo.userRebate) !== 0) {
+    //       modeHtml += `<option value="1" data-max="${playInfo.betMultiLimitMin}" data-max-bonus="${playInfo.betMethodMin}">高返点模式</option>`
+    //     }
+    //   }
+    // } else { // 目前有多种奖励方式的 仅有 龙虎和
+    //   modeHtml += this.selectBcItemHandler()
+    // }
+    //
+    // const currentVal = this.$playBetMode.val()
+    // this.$playBetMode.html(modeHtml)
+    //
+    // if (currentVal) { // 给select赋值并触发change事件
+    //   this.$playBetMode.val(currentVal).trigger('change')
+    // } else {
+    //   this.$playBetMode.val(0).trigger('change')
+    // }
   },
   // 加载号码球
   renderPlayArea() {
@@ -764,7 +765,7 @@ const BettingCenterView = Base.ItemView.extend({
     const statisticsInfo = this.model.getStatisticsInfo()
     this.$statisticsLottery.text(statisticsInfo.statistics)
     this.$statisticsMoney.text(statisticsInfo.prefabMoney)
-    this.$statisticsRebateMoney.text(statisticsInfo.rebateMoney)
+    // this.$statisticsRebateMoney.text(statisticsInfo.rebateMoney)
   },
 
   // 疑似失效方法
@@ -1108,9 +1109,9 @@ const BettingCenterView = Base.ItemView.extend({
 
   monetaryUnitChangeHandler(e) {
     const $target = $(e.currentTarget)
-    $target.addClass('active').siblings().removeClass('active')
+    // $target.addClass('active').siblings().removeClass('active')
 
-    this.model.set('unit', $target.data('rate'))
+    this.model.set('unit', $target.val())
   },
 
   lotteryAddHandler() {

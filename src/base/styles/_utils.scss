@@ -284,6 +284,17 @@
     margin-bottom: 30px;
   }
 }
+.div-line {
+  height: 1px;
+  position: relative;
+  &:after {
+    content: '';
+    border-bottom: 1px solid $sec-line-color;
+    position: absolute;
+    width: 98%;
+    left: 1%
+  }
+}
 
 .block-divider {
   height: 7px;
