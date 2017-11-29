@@ -6,11 +6,11 @@
 '~uiCom/pulse/index.scss';
 
 @mixin select-def {
-  color: $def-black-color;
+  //color: $def-black-color;
   border-radius: 5px;
-  border-color: $def-gray-color !important;
-  background-color: $def-white-color !important;
-  background:url(~base/images/select-caret-bg-lg.png)  no-repeat scroll 100% center transparent !important;
+  //border-color: $def-gray-color !important;
+  //background-color: $def-white-color !important;
+  //background:url(~base/images/select-caret-bg-lg.png)  no-repeat scroll 100% center transparent !important;
 }
 .bc-main{
   max-width: 1200px;
