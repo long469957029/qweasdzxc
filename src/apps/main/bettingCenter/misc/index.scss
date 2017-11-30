@@ -47,9 +47,11 @@
   .quick-more{
     width: 5%;
     height: 70px;
-    line-height: 70px;
     position: relative;
     .quick-list-info{
+      margin-top: 24.5px;
+    }
+    .bc-quick-more-btn{
       margin-top: 24.5px;
     }
     .quick-ticket-list{
@@ -64,6 +66,9 @@
       &.quick-ticket-list-animate{
         animation: bounceInRight 1s forwards;
       }
+      .quick-ticket-main{
+        margin: 30px 60px 0;
+      }
       .quick-ticket-type-name{
         font-size:$font-md;
         color: $def-white-color;
@@ -73,6 +78,14 @@
       .ticket-ssc-list{
         display: inline-block;
         vertical-align: top;
+      }
+      .quick-ticket-line{
+        float: left;
+        width: 1px;
+        height: 100px;
+        background-color: $def-white-color;
+        opacity: .5;
+        margin: 10px 30px;
       }
     }
   }
