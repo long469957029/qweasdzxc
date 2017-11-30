@@ -1612,10 +1612,12 @@ const BettingCenterView = Base.ItemView.extend({
     const type = $target.data('type')
     if (type === 0) {
       $target.data('type', 1)
-      this.$quickTicketList.removeClass('hidden')
+      this.$quickTicketList.addClass('quick-ticket-list-animate')
+      $target.removeClass('sfa-bc-quick-more').addClass('sfa-bc-quick-close')
     } else {
       $target.data('type', 0)
-      this.$quickTicketList.addClass('hidden')
+      this.$quickTicketList.removeClass('quick-ticket-list-animate')
+      $target.removeClass('sfa-bc-quick-close').addClass('sfa-bc-quick-more')
     }
   },
 })
