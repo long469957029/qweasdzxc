@@ -54,6 +54,7 @@ const BettingCenterView = Base.ItemView.extend({
       ticketInfo: this.options.ticketInfo,
       mark6TicketIdArr: this.mark6TicketIdArr,
       audio,
+      ticketList: ticketConfig.getCompleteAll(),
     }
   },
 
