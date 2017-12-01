@@ -12,7 +12,7 @@ const BettingRecordsView = Base.ItemView.extend({
 
   height: 256,
 
-  tableClass: 'table table-dashed table-deep table-center no-margin',
+  tableClass: 'table table-dashed table-center no-margin',
 
   initialize() {
     this.options.type = 'draw'
@@ -153,10 +153,10 @@ const BettingRecordsView = Base.ItemView.extend({
           formatter (val) {
             const numArr = val.split(',')
             const sumVal = _.reduce(numArr, (memo, num) => {
-              return memo + parseInt(num)
+              return memo + parseInt(num, 10)
             }, 0)
             return sumVal
-          }, 
+          },
         },
       ],
       url: '/ticket/ticketmod/openhistory.json',
