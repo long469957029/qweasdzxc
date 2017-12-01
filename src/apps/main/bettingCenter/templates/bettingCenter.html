@@ -20,7 +20,6 @@
           <div class="pull-left">
             <div class="quick-ticket-type-name">经典模式</div>
             <div class="ticket-ssc-list quick-ticket-ssc clearfix">
-              <% console.log(ticketList) %>
               <% _(ticketList[0].list).each((item)=>{ %>
               <a href="#bc/<%=item.id%>" class="ticket-info <% if(item.id === ticketInfo.info.id){%> active <%}%>">
                 <%=item.zhName%>
@@ -270,7 +269,7 @@
           </div>
         </div>
       </div>
-      <div class="js-bc-records bc-records bg-primary pull-right"></div>
+      <div class="js-bc-side-area bc-side-area pull-right"></div>
     </div>
     <div class="bc-bottom-area js-bc-records"></div>
   </div>

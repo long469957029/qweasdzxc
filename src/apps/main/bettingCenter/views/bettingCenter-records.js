@@ -10,18 +10,18 @@ const BettingRecordsView = Base.ItemView.extend({
     'click .js-bc-records-tab': 'toggleTabHandler',
   },
 
-  height: 256,
+  height: 125,
 
-  tableClass: 'table table-dashed table-center no-margin',
+  tableClass: 'table table-similar table-center no-margin',
 
   initialize() {
-    this.options.type = 'draw'
+    this.options.type = 'betting'
   },
 
   onRender() {
     this.$bettingRecords = this.$('.js-bc-betting-records')
     this.$drawRecords = this.$('.js-bc-draw-records')
-    this.renderDrawRecords()
+    this.renderBettingRecords()
   },
 
   renderBettingRecords() {
@@ -30,22 +30,46 @@ const BettingRecordsView = Base.ItemView.extend({
       this.bettingRecords = this.$bettingRecords.staticGrid({
         tableClass: this.tableClass,
         colModel: [
-          // {label: '投注时间', name: 'betTime', width: '10%', formatter: function(val) {
-          //  return _(val).toTime();
-          // }},
-          // {label: '彩种', name: 'ticketName', width: '10%'},
+          {
+            label: '投注时间',
+            name: 'betTime',
+            width: '12%',
+            formatter(val) {
+              return _(val).toTime()
+            },
+          },
+          {
+            label: '玩法',
+            name: 'playName',
+            width: '10%',
+          },
           {
             label: '期号',
             name: 'ticketPlanId',
-            width: '40%',
+            width: '12%',
             formatter(val, index, bet) {
-              return `<a class="router btn-link btn-link-light" href="#bc/br/detail/${self.options.ticketId}/${bet.ticketTradeNo}">${val}</a>`
+              return `<a class="router btn-link btn-link-inverse" href="#bc/br/detail/${self.options.ticketId}/${bet.ticketTradeNo}">${val}</a>`
             },
+          },
+          {
+            label: '开奖号码 ',
+            name: 'ticketResult',
+            width: '12%',
+          },
+          {
+            label: '投注内容 ',
+            name: 'betNum',
+            width: '12%',
+          },
+          {
+            label: '注数/倍数/模式 ',
+            name: 'ticketName',
+            width: '12%',
           },
           {
             label: '投注金额',
             name: 'betTotalMoney',
-            width: '32%',
+            width: '10%',
             formatter(val) {
               return _(val).fixedConvert2yuan()
             },
@@ -53,7 +77,7 @@ const BettingRecordsView = Base.ItemView.extend({
           {
             label: '状态',
             name: 'prizeTotalMoney',
-            width: '28%',
+            width: '10%',
             formatter(val, index, bet) {
             // 0:未中奖，1：已中奖，2：用户撤单，3：系统撤单,ticketResult,prizeTotalMoney
               let status = ''
@@ -77,22 +101,129 @@ const BettingRecordsView = Base.ItemView.extend({
               return status
             },
           },
-          // {label: '是否追号', name: 'chaseId', width: '10%', formatter: function(val) {
-          //  return val ? '是' : '否';
-          // }}
+          {
+            label: '操作 ',
+            name: 'ticketPlanId',
+            width: '10%',
+            formatter(bet) {
+              let btnlist = `<a class="btn btn-link btn-link-inverse js-bc-records-detail" data-id="${bet.ticketTradeNo}">查看</a>`
+              if (bet.canCancel) {
+                btnlist = `<a class="btn btn-link btn-link-inverse js-bc-records-cancel" data-id="${bet.ticketTradeNo}">撤单</a> / ${btnlist}`
+              }
+              return btnlist
+            },
+          },
         ],
         emptyTip: '最近无投注记录',
         url: '/ticket/bethistory/userbethistory.json',
         abort: false,
         height: this.height,
         data: {
-          pageSize: 30,
+          pageSize: 10,
           ticketId: this.options.ticketId,
         },
         dataProp: 'root.betList',
       }).staticGrid('instance')
     } else {
       this.bettingRecords.update()
+    }
+  },
+
+  renderChaseHandler () {
+    if (!this.bettingChaseRecords) {
+      this.bettingChaseRecords = this.$drawRecords.staticGrid({
+        tableClass: this.tableClass,
+        colModel: [
+          {
+            label: '追号时间',
+            name: 'chaseTime',
+            width: '12%',
+            formatter(val) {
+              return _(val).toTime()
+            },
+          },
+          {
+            label: '彩种',
+            name: 'ticketName',
+            width: '10%',
+            formatter(val) {
+              return val
+            },
+          },
+          {
+            label: '玩法',
+            name: 'playName',
+            width: '10%',
+          },
+          {
+            label: '开始奖期',
+            name: 'ticketPlanId',
+            width: '12%',
+          },
+          {
+            label: '追号进度',
+            name: 'chaseAllPeriods',
+            width: '12%',
+            formatter(val, index, bet) {
+              return `${bet.chaseBetCount}/${bet.chaseAllPeriods}`
+            },
+          },
+          {
+            label: '追号总金额',
+            name: 'chaseAllMoney',
+            width: '12%',
+            formatter(val, index, bet) {
+              return `${_(bet.chaseBetMoney).convert2yuan()}/${_(bet.chaseAllMoney).convert2yuan()}`
+            },
+          },
+          {
+            label: '中奖金额',
+            name: 'chasePrizeMoney',
+            width: '12%',
+            formatter(val) {
+              return val === 0 ? '—' : _(val).fixedConvert2yuan()
+            },
+          },
+          {
+            label: '追号状态',
+            name: 'chaseStatus',
+            width: '10%',
+            formatter(val) {
+              let html = ''
+              if (val === 0) {
+                html = '未开始'
+              } else if (val === 1) {
+                html = '进行中'
+              } else if (val === 2) {
+                html = '已完成'
+              } else {
+                html = '已中止'
+              }
+              return html
+            },
+          },
+          {
+            label: '操作',
+            name: 'ticketTradeNo',
+            width: '10%',
+            formatter(val, index, bet) {
+              return `<a class="btn-link btn-link-inverse js-bc-chase-detail"  data-id="${bet.ticketTradeNo}" >查看</a>`
+            },
+          },
+        ],
+        emptyTip: '无追号记录',
+        url: 'ticket/bethistory/userchasehistory.json',
+        abort: false,
+        showHeader: true,
+        height: this.height,
+        data: {
+          pageSize: 20,
+          ticketId: this.options.ticketId,
+        },
+        dataProp: 'root.chaseList',
+      }).staticGrid('instance')
+    } else {
+      this.bettingChaseRecords.update()
     }
   },
 
@@ -258,17 +389,17 @@ const BettingRecordsView = Base.ItemView.extend({
 
   // common APIs
   update() {
-    const resizeHeight = $('.js-bc-main-area-right').height() - 394
-    if (this.options.type === 'draw') {
-      this.renderDrawRecords()
+    // const resizeHeight = $('.js-bc-main-area-right').height() - 394
+    if (this.options.type === 'chase') {
+      this.renderChaseHandler()
       this.$bettingRecords.addClass('hidden')
       this.$drawRecords.removeClass('hidden')
-      this.resizeRecords(this.$drawRecords, resizeHeight)
+      // this.resizeRecords(this.$drawRecords, resizeHeight)
     } else {
       this.renderBettingRecords()
       this.$bettingRecords.removeClass('hidden')
       this.$drawRecords.addClass('hidden')
-      this.resizeRecords(this.$bettingRecords, resizeHeight)
+      // this.resizeRecords(this.$bettingRecords, resizeHeight)
     }
   },
 
@@ -280,9 +411,9 @@ const BettingRecordsView = Base.ItemView.extend({
     this.update()
   },
   // 调整最近开奖记录区的长度
-  resizeRecords ($parent, resizeHeight) {
-    $parent.find('.slimScrollDiv,.js-wt-body-main').css({ height: resizeHeight, 'min-height': this.options.height })
-  },
+  // resizeRecords ($parent, resizeHeight) {
+  //   $parent.find('.slimScrollDiv,.js-wt-body-main').css({ height: resizeHeight, 'min-height': this.options.height })
+  // },
 })
 
 module.exports = BettingRecordsView

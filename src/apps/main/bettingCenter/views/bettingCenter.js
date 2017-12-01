@@ -105,7 +105,7 @@ const BettingCenterView = Base.ItemView.extend({
         statistics: 0,
       })
       this.resizeFooter()
-      this.resizeRecords()
+      // this.resizeRecords()
     })
 
     this.listenTo(this.model, 'change:formatMaxMultiple', this.renderNumRange)
@@ -642,8 +642,21 @@ const BettingCenterView = Base.ItemView.extend({
   renderPlayBetMode() {
     const unit = _(100000000).div(this.model.get('unit')) // 投注单位 元 角 分 厘
     const playInfo = this.rulesCollection.getCurrentPlay() // 彩种信息
-    this.$playBetMode.html(_(playInfo.betMethodMax).chain().formatDiv(unit).floor(4)
-      .value())
+
+    let betMethod = ''
+    if (playInfo.betBonus == null) {
+      betMethod = _(playInfo.betMethodMax).chain().formatDiv(unit).floor(4)
+        .value()
+    } else {
+      betMethod = this.selectBcItemHandler()
+    }
+    this.model.set({
+      betBonus: playInfo.betBonus,
+      maxBonus: playInfo.betMethodMax,
+      betMethod: 0, // 高奖金
+      maxMultiple: playInfo.betMultiLimitMax,
+    })
+    this.$playBetMode.html(betMethod)
     // 赔率/返水率f
     // let modeHtml = ''
     // if (playInfo.betBonus === null) { // 是否有奖励数组，没有则用默认的双奖励，有则用数组奖励
@@ -1386,7 +1399,7 @@ const BettingCenterView = Base.ItemView.extend({
     // const commit_ticketName = this.options.ticketName
     // const commit_buyInfo = this.model.get('buyInfo')
 
-    $target.button('loading')
+    // $target.button('loading')
     self.model.buyBettingXhr(planId)
       .always(() => {
         $target.button('reset')
@@ -1578,9 +1591,9 @@ const BettingCenterView = Base.ItemView.extend({
     }
   },
   // 选择其他玩法时，调整最近开奖记录区的长度
-  resizeRecords () {
-    this.$recordsContainer.find('.slimScrollDiv,.js-wt-body-main').css({ height: this.$bcMainAreaRight.height() - 394 })
-  },
+  // resizeRecords () {
+  //   this.$recordsContainer.find('.slimScrollDiv,.js-wt-body-main').css({ height: this.$bcMainAreaRight.height() - 394 })
+  // },
   getUsePackStatus () {
     const self = this
     this.getUsePackInfoXhr()

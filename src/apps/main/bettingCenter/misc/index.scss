@@ -191,9 +191,9 @@
       background: linear-gradient(to bottom,#dcdcdc,#f0f0f0);
     }
   }
-  .bc-records{
+  .bc-side-area{
     width: 278px;
-    height: 845px;
+    min-height: 845px;
   }
   .bc-basic-rules {
     .tab-toolbar {
@@ -368,6 +368,15 @@
           top: 0;
           left: 0;
         }
+      }
+    }
+  }
+  .bc-records-tables{
+    width: 100%;
+    height: 168px;
+    table{
+      thead{
+        border-bottom: 1px solid $def-line-color;
       }
     }
   }
