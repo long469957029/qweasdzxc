@@ -1,6 +1,6 @@
 
 
-const slimscroll = require('jquery-slimscroll')
+// const slimscroll = require('jquery-slimscroll')
 
 $.widget('gl.staticGrid', {
 
@@ -89,13 +89,14 @@ $.widget('gl.staticGrid', {
       })
       .done((res) => {
         if (res && res.result === 0) {
-          self.renderRow(_(self.options.dataProp.split('.')).reduce((res, prop) => {
-            let data = res[prop]
+          self.currentData = _(self.options.dataProp.split('.')).reduce((_res, prop) => {
+            let data = _res[prop]
             if (!data) {
               data = []
             }
             return data
-          }, res))
+          }, res)
+          self.renderRow(self.currentData)
           self.element.trigger('update:done', res.root, res)
         } else {
           self.renderFail()
@@ -145,7 +146,7 @@ $.widget('gl.staticGrid', {
       if (colInfo.merge) {
         _(data).reduceRight((repeat, info) => {
           if (!_(repeat.val).isUndefined() && info[colInfo.name] === repeat.val) {
-            ++repeat.num
+            repeat.num += 1
           } else {
             repeat.val = info[colInfo.name]
             repeat.num = 0
@@ -165,12 +166,16 @@ $.widget('gl.staticGrid', {
       let cellContent = ''
 
       if (colInfo.merge && index > 0 && row[colInfo.name] === data[index - 1][colInfo.name]) {
-
+        cell.push('')
       } else {
         cell.push(`<td rowspan="${row[`${colInfo.name}Rowspan`] || 1}">`)
-
-        cellContent = colInfo.formatter ? colInfo.formatter(row[colInfo.name], index, row) :
-          (row[colInfo.name] || row[colInfo.name] == 0) ? row[colInfo.name] : ''
+        if (colInfo.formatter) {
+          cellContent = colInfo.formatter(row[colInfo.name], index, row)
+        } else if (row[colInfo.name] || row[colInfo.name] === 0) {
+          cellContent = row[colInfo.name]
+        }
+        // cellContent = colInfo.formatter ? colInfo.formatter(row[colInfo.name], index, row) :
+        //   (row[colInfo.name] || row[colInfo.name] === 0) ? row[colInfo.name] : ''
 
         cell.push(cellContent)
 
@@ -265,6 +270,18 @@ $.widget('gl.staticGrid', {
     }
 
     return $rows
+  },
+
+  reformat(gridOps) {
+    if (this.currentData) {
+      if (gridOps) {
+        this._create(_(gridOps).extend({
+          initRemote: false,
+          row: this.currentData,
+        }))
+      }
+      // this.renderRow();
+    }
   },
 
   renderEmpty() {

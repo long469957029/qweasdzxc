@@ -9,6 +9,7 @@ function _create(ticketId) {
 
   // 直选复式
   factory.addRule([ticketId, '010101'], {
+    formType: 'GROUP',
     algorithm: algorithm.mulAll,
     list: factory.createList(['百位', '十位', '个位']),
     create: algorithm.getCreateFunc(3, {
@@ -19,6 +20,7 @@ function _create(ticketId) {
   // 直选单式
   factory.addRule([ticketId, '010102'], {
     type: 'input',
+    formType: 'GROUP',
     validate: algorithm.getValidateFunc(3),
     create: algorithm.getCreateFunc(3, {
       slice: [2],
@@ -29,6 +31,7 @@ function _create(ticketId) {
 
   // 直选和值
   factory.addRule([ticketId, '010103'], {
+    formType: 'GROUP',
     algorithm: algorithm.statistics,
     algorithmProps: {
       selectCount: 3,
@@ -44,6 +47,7 @@ function _create(ticketId) {
 
   // 组三
   factory.addRule([ticketId, '010201'], {
+    formType: 'GROUP',
     algorithm: algorithm.factorial,
     algorithmProps: {
       mainRow: 0,
@@ -57,6 +61,7 @@ function _create(ticketId) {
 
   // 组六
   factory.addRule([ticketId, '010202'], {
+    formType: 'GROUP',
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -70,6 +75,7 @@ function _create(ticketId) {
 
   // 组选和值
   factory.addRule([ticketId, '010203'], {
+    formType: 'GROUP',
     algorithm: algorithm.fromConfig,
     algorithmProps: {
       config: [null, 1, 2, 2, 4, 5, 6, 8, 10, 11, 13, 14, 14, 15, 15, 14, 14, 13, 11, 10, 8, 6, 5, 4, 2, 2, 1],
@@ -86,6 +92,7 @@ function _create(ticketId) {
   // 混合组选
   factory.addRule([ticketId, '010204'], {
     type: 'input',
+    formType: 'GROUP',
     validate: algorithm.getValidateFunc(3, {
       acceptRepeat: 1,
       maxRepeat: 2,
@@ -105,6 +112,7 @@ function _create(ticketId) {
     let rule = rules.shift()
     // 直选复式
     factory.addRule(rule.ids, {
+      formType: 'PAIR',
       algorithm: algorithm.mulAll,
       list: factory.createList(rule.list),
       create: algorithm.getCreateFunc(2, {
@@ -117,6 +125,7 @@ function _create(ticketId) {
     // 直选单式
     factory.addRule(rule.ids, {
       type: 'input',
+      formType: 'PAIR',
       validate: algorithm.getValidateFunc(2),
       create: algorithm.getCreateFunc(2, {
         slice: [1],
@@ -128,6 +137,7 @@ function _create(ticketId) {
     rule = rules.shift()
     // 组选复式
     factory.addRule(rule.ids, {
+      formType: 'PAIR',
       algorithm: algorithm.group,
       algorithmProps: {
         mainRow: 0,
@@ -143,6 +153,7 @@ function _create(ticketId) {
     // 组选单式
     factory.addRule(rule.ids, {
       type: 'input',
+      formType: 'PAIR',
       validate: algorithm.getValidateFunc(2, {
         acceptRepeat: 0,
         innerSort: true,
