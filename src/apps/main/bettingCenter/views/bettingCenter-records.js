@@ -25,7 +25,6 @@ const BettingRecordsView = Base.ItemView.extend({
   },
 
   renderBettingRecords() {
-    const self = this
     if (!this.bettingRecords) {
       this.bettingRecords = this.$bettingRecords.staticGrid({
         tableClass: this.tableClass,
@@ -47,9 +46,9 @@ const BettingRecordsView = Base.ItemView.extend({
             label: '期号',
             name: 'ticketPlanId',
             width: '12%',
-            formatter(val, index, bet) {
-              return `<a class="router btn-link btn-link-inverse" href="#bc/br/detail/${self.options.ticketId}/${bet.ticketTradeNo}">${val}</a>`
-            },
+            // formatter(val, index, bet) {
+            //   return `<a class="router btn-link btn-link-inverse" href="#bc/br/detail/${self.options.ticketId}/${bet.ticketTradeNo}">${val}</a>`
+            // },
           },
           {
             label: '开奖号码 ',

@@ -378,6 +378,12 @@
       thead{
         border-bottom: 1px solid $def-line-color;
       }
+      th{
+        font-weight: bold;
+      }
+      tr{
+        border-bottom: 1px dashed $sec-line-color;
+      }
     }
   }
 }
