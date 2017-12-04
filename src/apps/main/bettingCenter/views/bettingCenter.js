@@ -100,12 +100,14 @@ const BettingCenterView = Base.ItemView.extend({
     })
 
     this.listenTo(this.model, 'change:playId', function(model, playId) {
+      const playRule = betRulesConfig.get(this.model.pick('playId'))
       this.renderPlayArea()
       this.renderPlayInfo(this.rulesCollection.getPlayInfo(model.get('groupId'), playId))
       this.model.set({
         statistics: 0,
       })
-      this.resizeFooter()
+      this.recordsOpenView.updateByPlayRule(playRule)
+      // this.resizeFooter()
       // this.resizeRecords()
     })
 
@@ -228,7 +230,7 @@ const BettingCenterView = Base.ItemView.extend({
       ticketId: this.options.ticketId,
     }).render()
 
-    this.hisAnalysisView = new HisAnalysisView({
+    this.recordsOpenView = new HisAnalysisView({
       el: this.$bcSideArea,
       ticketId: this.options.ticketId,
     }).render()
@@ -463,6 +465,7 @@ const BettingCenterView = Base.ItemView.extend({
     }
 
     this.bettingRecordsView.update()
+    this.recordsOpenView.update()
   },
 
   _slotMachineEffect(openNum, show) {

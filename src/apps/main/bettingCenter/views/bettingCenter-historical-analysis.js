@@ -6,71 +6,109 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
   template: require('bettingCenter/templates/bettingCenter-historical-analysis.html'),
 
-  height: 650,
+  height: 750,
 
-  tableClass: 'table table-center',
+  tableClass: 'table table-center table-default',
+
+  url: '/ticket/ticketmod/openhistory.json',
 
   events: {
-    'click .js-bc-his-num': 'bcHisNumHandler',
-    'click .js-his-reduction': 'recoveryHandler',
   },
 
-  widthId: '50%',
-  widthNum: '50%',
+  GridOps: {
+    ssc: {
+      pageSize: 15,
+      formats: [
+        function(val) {
+          return val
+        },
+        function(val) {
+          const html = ['<div class="open-nums">']
+          const numList = val.split(',')
+          _(numList).each(function (num, index) {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index]) {
+              html.push(`<span class="key-num">${num}</span>`)
+            } else {
+              html.push(`<span>${num}</span>`)
+            }
+          }, this)
+          html.push('</div>')
+
+          return html.join('')
+        },
+        function(val) {
+          return this.getFormType(val, this.playRule && this.playRule.keyPosition, this.playRule && this.playRule.formType)
+        },
+      ],
+    },
+    115: {
+      pageSize: 15,
+      formats: [
+        null,
+        function(val) {
+          const html = ['<div class="open-nums">']
+          const numList = val.split(',')
+          _(numList).each((num) => {
+            html.push(`<span>${num}</span>`)
+          }, this)
+          html.push('</div>')
+
+          return html.join('')
+        },
+        null,
+      ],
+    },
+    DPC: {
+      pageSize: 15,
+      formats: [
+        function (val) {
+          return val.substring(4)
+        },
+        function(val) {
+          const html = ['<div class="open-nums">']
+          const numList = val.split(',')
+          _(numList).each(function (num, index) {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index] && this.playRule.keyPosition.indexOf(null) > -1) {
+              html.push(`<span class="key-num">${num}</span>`)
+            } else {
+              html.push(`<span>${num}</span>`)
+            }
+          }, this)
+          html.push('</div>')
+
+          return html.join('')
+        },
+        function(val) {
+          return this.getFormType(val, this.playRule && this.playRule.keyPosition, this.playRule && this.playRule.formType)
+        },
+      ],
+    },
+    pk10: {
+      pageSize: 15,
+      formats: [
+        null,
+        function(val) {
+          let nums = val.split('\,')
+          if (nums.length === 10) {
+            nums = _(nums).map((item) => {
+              if (item.indexOf('0') === 0) {
+                return item.substr(1)
+              }
+              return item
+            })
+          }
+          val = nums.join(',')
+          return val
+        },
+      ],
+    },
+  },
 
   serializeData () {
     this.sscTicketIdArr = _(ticketConfig.getSccList()).pluck('id')
     this.c115TicketIdArr = _(ticketConfig.getChoose5List()).pluck('id')
     this.dpcTicketIdArr = _(ticketConfig.getLowList()).pluck('id')
     this.bjpk10TicketIdArr = _(ticketConfig.getHappyList()).pluck('id')
-    // if(_(this.sscTicketIdArr).indexOf(this.options.ticketId)!==-1){
-    //     var numCount = _.range(0,10);
-    //     this.className = 'm-left-sm m-right-sm';
-    //     this.numClassName = 'm-left-sm m-right-sm';
-    // }else if(_(this.c115TicketIdArr).indexOf(this.options.ticketId)!==-1){
-    //     var numCount = ['01','02','03','04','05','06','07','08','09','10','11'];
-    //     this.className = '';
-    //     this.numClassName = 'm-left-sm m-right-xs';
-    //     this.widthId = '40%';
-    //     this.widthNum = '60%';
-    // }else if(_(this.dpcTicketIdArr).indexOf(this.options.ticketId)!==-1){
-    //     var numCount = _.range(0,10);
-    //     this.className = 'm-left-sm m-right-sm';
-    //     this.numClassName = 'm-left-sm m-right-sm';
-    // }else if(_(this.bjpk10TicketIdArr).indexOf(this.options.ticketId)!==-1) {
-    //     var numCount = ['01','02','03','04','05','06','07','08','09','10'];
-    //     this.className = 'm-left-s m-right-s';
-    //     this.numClassName = 'm-right-s';
-    //     this.widthId = '25%';
-    //     this.widthNum = '75%';
-    // }
-    // return {
-    //     ticketId: this.options.ticketId,
-    //     numCount:numCount,
-    //     className: this.className
-    // }
-
-    // if(_(this.sscTicketIdArr).indexOf(this.options.ticketId)!==-1){
-    //     var numCount = _.range(0,10);
-    //     this.className = 'm-left-sm m-right-sm';
-    //     this.numClassName = 'm-left-sm m-right-sm';
-    // }else if(_(this.c115TicketIdArr).indexOf(this.options.ticketId)!==-1){
-    //     var numCount = ['1','2','3','4','5','6','7','8','9','10','11'];
-    //     this.className = 'm-right-sm';
-    //     this.numClassName = 'm-right-sm inline-block width-15';
-    //     this.widthId = '40%';
-    //     this.widthNum = '60%';
-    // }else if(_(this.dpcTicketIdArr).indexOf(this.options.ticketId)!==-1){
-    //     var numCount = _.range(0,10);
-    //     this.className = 'm-left-sm m-right-sm';
-    //     this.numClassName = 'm-left-sm m-right-sm';
-    // }else if(_(this.bjpk10TicketIdArr).indexOf(this.options.ticketId)!==-1) {
-    //     var numCount = ['1','2','3','4','5','6','7','8','9','10'];
-    //     this.className = 'm-left-sm m-right-sm';
-    //     this.numClassName = 'm-right-sm';
-    //     this.widthId = '25%';
-    //     this.widthNum = '75%';
-    // }
     return {
       ticketId: this.options.ticketId,
     }
@@ -89,137 +127,169 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
     this.$hisList = this.$('.js-his-both-list')
     this.renderDrawRecords()
   },
-  update (data, needUpdate) {
-    if (Number(data) === 21 || Number(data) === 16) {
-      this.$sscMain.addClass('hidden')
-      this.$hisHoth.removeClass('hidden')
-      this.widthId = '50%'
-      this.widthNum = '50%'
-      // if(needUpdate){
-      this.renderBothRecords()
-      // }
-    } else {
-      this.$hisHoth.addClass('hidden')
-      this.$sscMain.removeClass('hidden')
-      if (needUpdate) {
-        this.renderDrawRecords()
-      }
+  update () {
+    this.renderDrawRecords()
+  },
+  updateByPlayRule (playRule) {
+    this.playRule = playRule
+
+    if (this.drawRecords) {
+      this.drawRecords.reformat(this.generateGridOptions(this.gridOps))
     }
   },
   renderDrawRecords() {
-    const self = this
     if (!this.drawRecords) {
-      this.drawRecords = this.$drawRecords.staticGrid({
-        tableClass: this.tableClass,
-        colModel: [
-          {
-            label: '',
-            name: 'ticketPlanId',
-            width: `${self.widthId}`,
-            formatter(val) {
-              return val
-            },
-          },
-          {
-            label: '',
-            name: '',
-            width: '1%',
-            formatter() {
-              return '<span class="gray-line"></span>'
-            },
-          },
-          {
-            label: '',
-            name: 'ticketOpenNum',
-            width: `${self.widthNum}`,
-            formatter(val) {
-              const ticketArr = val.split(',')
-              const html = []
-              _(ticketArr).each((info) => {
-                // html.push('<span class="js-his-num-list js-his-num'+ parseInt(info, 10) +' '+ self.numClassName +'">'+ parseInt(info, 10) +'</span>');
-                html.push(`<span class="js-his-num-list js-his-num${info} ${self.numClassName}">${info}</span>`)
-              })
-              return html.join('')
-            },
-          },
-        ],
-        url: '/ticket/ticketmod/openhistory.json',
-        emptyTip: '最近无开奖记录',
-        abort: false,
-        // initRemote: false,
-        showHeader: false,
-        height: this.height,
-        data: {
-          pageSize: 15,
-          ticketId: this.options.ticketId,
-        },
-        dataProp: 'root.openedList',
-      }).staticGrid('instance')
+      let gridTable = {}
+      const sscTicketIdArr = _(ticketConfig.getSccList()).pluck('id')
+      const c115TicketIdArr = _(ticketConfig.getChoose5List()).pluck('id')
+      const dpcTicketIdArr = _(ticketConfig.getLowList()).pluck('id')
+      const bjpk10TicketIdArr = _(ticketConfig.getHappyList()).pluck('id')
+      // const threeDTicketIdArr = _(ticketConfig.get3DList()).pluck('id')
+
+      if (_(sscTicketIdArr).contains(this.options.ticketId)) {
+        this.gridOps = this.GridOps.ssc
+      } else if (_(c115TicketIdArr).contains(this.options.ticketId)) {
+        this.gridOps = this.GridOps['115']
+      } else if (_(dpcTicketIdArr).contains(this.options.ticketId)) {
+        this.gridOps = this.GridOps.DPC
+      } else if (_(bjpk10TicketIdArr).indexOf(this.options.ticketId) !== -1) {
+        this.gridOps = this.GridOps.pk10
+      }
+      gridTable = this.generateGridOptions(this.gridOps)
+      this.drawRecords = this.$drawRecords.staticGrid(gridTable).staticGrid('instance')
     } else {
       this.drawRecords.update()
     }
   },
-  renderBothRecords() {
+  generateGridOptions (ops) {
     const self = this
-    if (!this.bothRecords) {
-      this.bothRecords = this.$hisList.staticGrid({
-        tableClass: this.tableClass,
-        colModel: [
-          {
-            label: '',
-            name: 'type',
-            width: `${self.widthId}`,
-            formatter(val, prop, info) {
-              return `${_.getBothSides(info.type)}-${info.result}`
-            },
-          },
-          {
-            label: '',
-            name: '',
-            width: '1%',
-            formatter() {
-              return '<span class="gray-line"></span>'
-            },
-          },
-          {
-            label: '',
-            name: 'count',
-            width: `${self.widthNum}`,
-            formatter(val, prop, info) {
-              return `${info.count}期`
-            },
-          },
-        ],
-        url: `${_.jsonpUrl()}/trends/trend/twoSideList.json`,
-        type: 'get',
-        dataType: 'jsonp',
-        jsonp: 'callback',
-        emptyTip: '最近无开奖记录',
-        abort: false,
-        // initRemote: false,
-        showHeader: false,
-        height: this.height,
-        data: {
-          pageSize: 20,
-          ticketId: this.options.ticketId,
-        },
-        dataProp: 'root',
-      }).staticGrid('instance')
-    } else {
-      this.bothRecords.update()
+    const options = {
+      tableClass: this.tableClass,
+      url: this.url,
+      // emptyTip: '最近无开奖记录',
+      emptyTip: '',
+      abort: false,
+      height: this.height,
+      colModel: [],
+      data: {
+        pageSize: ops.pageSize,
+        ticketId: this.options.ticketId,
+      },
+      dataProp: 'root.openedList',
     }
+
+    options.colModel.push({
+      label: '期号',
+      name: 'ticketPlanId',
+      width: '32%',
+      formatter: ops.formats && ops.formats[0] ? function () {
+        return ops.formats[0].apply(self, arguments)
+      } : null,
+    })
+
+    options.colModel.push({
+      label: '开奖号码',
+      name: 'ticketOpenNum',
+      width: '50%',
+      formatter: ops.formats && ops.formats[1] ? function () {
+        return ops.formats[1].apply(self, arguments)
+      } : null,
+    })
+
+    if (this.playRule && this.playRule.formType) {
+      options.colModel.push({
+        label: '形态',
+        name: 'ticketOpenNum',
+        width: '18%',
+        // formatter: ops.formats && ops.formats[2] ? function () {
+        //   return ops.formats[2].apply(self, arguments)
+        // } : null,
+      })
+    }
+
+    return options
   },
-  bcHisNumHandler (e) {
-    const $target = $(e.currentTarget)
-    const num = $target.data('id')
-    $target.toggleClass('checkedBox')
-    // this.$('.js-his-num-list').removeClass('text-hot');
-    this.$(`.js-his-num${num}`).toggleClass('text-hot font-bold')
+  // 取得形态
+  getFormType(nums, keyPosition, type) {
+    let formType
+    const numList = nums.split(',')
+    switch (type) {
+      case 'GROUP':
+        formType = this.getFormGroup(numList, keyPosition)
+        break
+      case 'PAIR':
+        formType = this.getFormPair(numList, keyPosition)
+        break
+      case 'DRAGON':
+        formType = this.getFormDragon(numList, keyPosition)
+        break
+      default:
+        formType = ''
+        break
+    }
+
+    return formType
   },
-  recoveryHandler () {
-    this.$hisNum.removeClass('checkedBox')
-    this.$('.js-his-num-list').removeClass('text-hot font-bold')
+
+  getFormGroup (numList, keyPosition) {
+    let formType = ''
+
+    const tempList = _(numList).chain().filter((val, index) => {
+      return keyPosition[index]
+    }).union()
+      .value('')
+    switch (tempList.length) {
+      case 1:
+        formType = '豹子'
+        break
+      case 2:
+        formType = '组三'
+        break
+      case 3:
+        formType = '组六'
+        break
+      default:
+        break
+    }
+    return formType
   },
+
+  getFormPair (numList, keyPosition) {
+    let formType = ''
+
+    const tempList = _(numList).chain().filter((val, index) => {
+      return keyPosition[index]
+    }).union()
+      .value('')
+    switch (tempList.length) {
+      case 1:
+        formType = '对子'
+        break
+      case 2:
+        formType = '单号'
+        break
+      default:
+        break
+    }
+    return formType
+  },
+
+  getFormDragon (numList, keyPosition) {
+    let formType = ''
+
+    const tempList = _(numList).filter((val, index) => {
+      return keyPosition[index]
+    })
+    if (tempList[0] > tempList[1]) {
+      formType = '<div class="text-circle text-circle-xs text-circle-hot">龙</div>'
+    } else if (tempList[0] < tempList[1]) {
+      formType = '<div class="text-circle text-circle-xs text-circle-sky">虎</div>'
+    } else {
+      formType = '<div class="text-circle text-circle-xs text-circle-peaceful">和</div>'
+    }
+    return formType
+  },
+
 })
 
 module.exports = BettingCenterHisAnalysisDetailView
