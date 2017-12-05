@@ -26,7 +26,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
           const html = ['<div class="open-nums">']
           const numList = val.split(',')
           _(numList).each(function (num, index) {
-            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index]) {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index] && this.playRule.formType !== 'FIVE') {
               html.push(`<span class="key-num">${num}</span>`)
             } else {
               html.push(`<span>${num}</span>`)
@@ -210,6 +210,9 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
     let formType
     const numList = nums.split(',')
     switch (type) {
+      case 'FIVE':
+        formType = this.getFormFive(numList, keyPosition)
+        break
       case 'GROUP':
         formType = this.getFormGroup(numList, keyPosition)
         break
@@ -226,7 +229,31 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
     return formType
   },
+  getFormFive (numList, keyPosition) {
+    let formType = ''
 
+    const tempList = _(numList).chain().filter((val, index) => {
+      return keyPosition[index]
+    }).union()
+      .value('')
+    switch (tempList.length) {
+      case 2:
+        formType = '组选10'
+        break
+      case 3:
+        formType = '组选30'
+        break
+      case 4:
+        formType = '组选60'
+        break
+      case 5:
+        formType = '组选120'
+        break
+      default:
+        break
+    }
+    return formType
+  },
   getFormGroup (numList, keyPosition) {
     let formType = ''
 

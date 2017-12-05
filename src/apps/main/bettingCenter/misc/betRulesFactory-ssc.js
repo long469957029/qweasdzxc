@@ -12,6 +12,8 @@ function _create(ticketId) {
 
   // 复式
   factory.addRule([ticketId, '010101'], {
+    formType: 'FIVE',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.mulAll,
     list: factory.createList(['万位', '千位', '百位', '十位', '个位']),
     create: algorithm.getCreateFunc(5, {
