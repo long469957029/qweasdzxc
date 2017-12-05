@@ -21,7 +21,8 @@ $.widget('gl.staticGrid', {
     dataProp: 'root',
   },
 
-  _create() {
+  _create(gridOps) {
+    this.options = gridOps ? _(this.options).extend(gridOps) : this.options
     this.options.hasBorder = _.isUndefined(this.options.hasBorder) ? this.options.tableClass.indexOf('table-bordered') > -1 : this.options.hasBorder
 
     this.element.html(_(this.template).template()(_({
@@ -280,7 +281,7 @@ $.widget('gl.staticGrid', {
           row: this.currentData,
         }))
       }
-      // this.renderRow();
+      // this.renderRow()
     }
   },
 

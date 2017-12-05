@@ -103,10 +103,10 @@ const BettingCenterView = Base.ItemView.extend({
       const playRule = betRulesConfig.get(this.model.pick('playId'))
       this.renderPlayArea()
       this.renderPlayInfo(this.rulesCollection.getPlayInfo(model.get('groupId'), playId))
+      this.recordsOpenView.updateByPlayRule(playRule)
       this.model.set({
         statistics: 0,
       })
-      this.recordsOpenView.updateByPlayRule(playRule)
       // this.resizeFooter()
       // this.resizeRecords()
     })
@@ -225,13 +225,13 @@ const BettingCenterView = Base.ItemView.extend({
       emptyTip: '',
     }).staticGrid('instance')
 
-    this.bettingRecordsView = new BettingRecordsView({
-      el: this.$recordsContainer,
+    this.recordsOpenView = new HisAnalysisView({
+      el: this.$bcSideArea,
       ticketId: this.options.ticketId,
     }).render()
 
-    this.recordsOpenView = new HisAnalysisView({
-      el: this.$bcSideArea,
+    this.bettingRecordsView = new BettingRecordsView({
+      el: this.$recordsContainer,
       ticketId: this.options.ticketId,
     }).render()
 

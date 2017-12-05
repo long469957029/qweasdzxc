@@ -6,7 +6,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
   template: require('bettingCenter/templates/bettingCenter-historical-analysis.html'),
 
-  height: 750,
+  height: 700,
 
   tableClass: 'table table-center table-default',
 
@@ -105,10 +105,6 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
   },
 
   serializeData () {
-    this.sscTicketIdArr = _(ticketConfig.getSccList()).pluck('id')
-    this.c115TicketIdArr = _(ticketConfig.getChoose5List()).pluck('id')
-    this.dpcTicketIdArr = _(ticketConfig.getLowList()).pluck('id')
-    this.bjpk10TicketIdArr = _(ticketConfig.getHappyList()).pluck('id')
     return {
       ticketId: this.options.ticketId,
     }
@@ -125,7 +121,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
     this.$hisHoth = this.$('.js-his-both')
     this.$sscMain = this.$('.js-ssc-main')
     this.$hisList = this.$('.js-his-both-list')
-    this.renderDrawRecords()
+    // this.renderDrawRecords()
   },
   update () {
     this.renderDrawRecords()
@@ -201,9 +197,9 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
         label: '形态',
         name: 'ticketOpenNum',
         width: '18%',
-        // formatter: ops.formats && ops.formats[2] ? function () {
-        //   return ops.formats[2].apply(self, arguments)
-        // } : null,
+        formatter: ops.formats && ops.formats[2] ? function () {
+          return ops.formats[2].apply(self, arguments)
+        } : null,
       })
     }
 
@@ -281,11 +277,11 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
       return keyPosition[index]
     })
     if (tempList[0] > tempList[1]) {
-      formType = '<div class="text-circle text-circle-xs text-circle-hot">龙</div>'
+      formType = '龙'
     } else if (tempList[0] < tempList[1]) {
-      formType = '<div class="text-circle text-circle-xs text-circle-sky">虎</div>'
+      formType = '虎'
     } else {
-      formType = '<div class="text-circle text-circle-xs text-circle-peaceful">和</div>'
+      formType = '和'
     }
     return formType
   },
