@@ -13,7 +13,7 @@
   }
 
   .aa-banner-container {
-    @include double-center();
+    @include center-center();
     width: 1200px;
   }
 
