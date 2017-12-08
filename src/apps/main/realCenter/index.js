@@ -6,11 +6,8 @@ const RealCenterView = Base.ItemView.extend({
 
   template: require('realCenter/index.html'),
 
-  // itemTpl: _(require('activeCenter/activityItem.html')).template(),
-
   events: {
     'mouseenter .js-rc-main-item': 'enterHandler',
-    // 'mouseleave .js-rc-main-item': 'leaveHandler'
   },
 
   onRender() {

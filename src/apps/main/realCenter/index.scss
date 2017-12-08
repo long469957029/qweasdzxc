@@ -20,19 +20,16 @@
     @include center-center();
     width: 1200px;
     height: 480px;
-    overflow: hidden;
   }
 
   .rc-main-item {
     width: 240px;
     height: 100%;
     float: left;
-    padding: 85px 27px 0 31px;
     position: relative;
     overflow: hidden;
-    transition: width 1s;
 
-    > div {
+    > div > div {
       position: relative;
       z-index: 1;
     }
@@ -61,18 +58,21 @@
       font-size: 24px;
       color: white;
       margin-bottom: 15px;
+      transition: margin-top 1s;
     }
 
     .rc-item-subtitle {
       font-size: 14px;
       color: rgba(255, 255, 255, .6);
       margin-bottom: 34px;
+      transition: margin-top 1s;
     }
 
     .rc-item-amount {
       font-size: 14px;
       color: white;
       margin-bottom: 18px;
+      transition: margin-top 1s;
 
       span {
         color: $prominent-color;
@@ -86,6 +86,7 @@
       font-size: 14px;
       cursor: pointer;
       margin-bottom: 62px;
+      transition: margin-top 1s;
 
       &:hover, &:active {
         text-decoration: none;
@@ -128,26 +129,43 @@
     }
 
 
-    &.ag {
+    & .ag {
       background: url('./images/rc-item-ag.png');
       background-position: center;
+      width: 240px;
+      transition: width 1s;
+      padding: 85px 27px 0 31px;
+      height: 480px;
     }
 
-    &.bbin {
+    & .bbin {
       background: url('./images/rc-item-bbin.png');
       background-position: 65%;
+      width: 240px;
+      transition: width 1s;
+      padding: 85px 27px 0 31px;
+      height: 480px;
     }
 
-    &.ebet {
+    & .ebet {
       background: url('./images/rc-item-ebet.png');
       background-position: center;
       padding: 85px 58px 0 31px;
+      width: 240px;
+      transition: width 1s;
+      padding: 85px 27px 0 31px;
+      height: 480px;
     }
 
     // 会因为鼠标移入而改变样式的元件
     &.active {
       width: 720px;
-      padding: 77px 0 0 66px;
+
+      & .ag, & .bbin, & .ebet {
+        width: 720px;
+        height: 480px;
+        padding: 77px 0 0 66px;
+      }
 
       .rc-item-title {
         font-size: 30px;
@@ -175,6 +193,50 @@
 
       .rc-item-mask {
         background: rgba(26, 102, 155, 0.2);
+      }
+    }
+  }
+
+  .rc-reward-container {
+    position: absolute;
+    width: 1200px;
+    height: 50px;
+    bottom: -98px;
+    background: url('./images/rc-reward-container.png');
+    padding-left: 54px;
+    line-height: 50px;
+
+    .rc-reward-icon {
+      width: 28px;
+      height: 32px;
+      background: url('./images/rc-reward-icon.png');
+      float: left;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+
+    .rc-reward-title {
+      font-size: 18px;
+      color: white;
+      margin-right: 7px;
+      float: left;
+    }
+
+    .rc-reward-list {
+      width: 975px;
+      height: 50px;
+      float: left;
+      line-height: 50px;
+      padding-left: 16px;
+
+      li {
+        display: inline-block;
+        font-size: 14px;
+        color: white;
+      }
+
+      .amount {
+        color: $prominent-color;
       }
     }
   }
