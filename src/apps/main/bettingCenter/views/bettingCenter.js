@@ -47,6 +47,7 @@ const BettingCenterView = Base.ItemView.extend({
     'click .js-bc-select-item': 'selectBcItemHandler',
     'click .js-bc-user-redPack-btn': 'checkUserRedPackHanler',
     'click .js-bc-quick-more': 'showTicketListHandler',
+    'change .js-bc-unit-select-add': 'changeUnitSelect',
   },
 
   serializeData() {
@@ -213,16 +214,21 @@ const BettingCenterView = Base.ItemView.extend({
       tableClass: 'table table-dashed',
       colModel: [
         {
-          label: '玩法/投注内容  ', name: 'title', key: true, width: '35%',
+          label: '玩法', name: 'title', key: true, width: '15%',
         },
-        { label: '奖金模式', name: 'bonusMode', width: '20%' },
-        { label: '注数/倍数/模式', name: 'mode', width: '20%' },
-        { label: '投注金额', name: 'bettingMoney', width: '10%' },
-        { label: '<div class="text-right js-bc-lottery-clear m-right-md cursor-pointer"><i class="fa fa-trash font-jb"></i> 清除</div>', name: 'operate', width: '15%' },
+        {
+          label: '投注内容', name: 'betNum', key: true, width: '17%',
+        },
+        { label: '注数', name: 'note', width: '10%' },
+        { label: '倍数', name: 'multiple', width: '12.5%' },
+        { label: '模式', name: 'mode', width: '12.5%' },
+        { label: '投注金额', name: 'bettingMoney', width: '12.5%' },
+        { label: '预期盈利', name: 'profit', width: '12.5%' },
+        { label: '<div class="js-bc-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清除</div>', name: 'operate', width: '8%' },
       ],
       height: 110,
       startOnLoading: false,
-      emptyTip: '',
+      emptyTip: '暂未添加选号',
     }).staticGrid('instance')
 
     this.recordsOpenView = new HisAnalysisView({
@@ -895,36 +901,57 @@ const BettingCenterView = Base.ItemView.extend({
     // this.$totalRebateMoney.text(_(totalInfo.totalRebateMoney).convert2yuan())
   },
 
-  getBonusMode(bonus, unit, userRebate, betMethod) {
-    let bonusMode = _(bonus).chain().div(10000).mul(unit)
+  getBonusMode(bonus, unit) {
+    const bonusMode = _(bonus).chain().div(10000).mul(unit)
       .convert2yuan()
       .value()
-    if (betMethod) {
-      bonusMode += `/${_(userRebate).div(10)}%`
-    } else {
-      bonusMode += '/0.0%'
-    }
-    return bonusMode
+    // if (betMethod) {
+    //   bonusMode += `/${_(userRebate).div(10)}%`
+    // } else {
+    //   bonusMode += '/0.0%'
+    // }
+    return `${bonusMode}元`
   },
-
+  changePreviewMultiple(index, num) {
+    // this.model.delPrevBetting($row.index())
+    console.log(`${index},${num}`)
+  },
+  changeUnitSelect(e) {
+    const $target = $(e.currentTarget)
+    const $row = $target.closest('.js-gl-static-tr')
+    const val = $target.val()
+    // this.model.delPrevBetting($row.index())
+    console.log(`${$row.index()},${val}`)
+  },
   renderLotteryPreviewAdd() {
     const previewList = this.model.get('previewList')
     const self = this
 
     const rows = _(previewList).map(function(previewInfo) {
-      let title = `[${previewInfo.levelName}_${previewInfo.playName}] `
+      const title = `${previewInfo.levelName}_${previewInfo.playName}`
+      let betNum = ''
       if (previewInfo.formatBettingNumber.length > 20) {
-        title += `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link">${ 
+        betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link">${ 
           previewInfo.formatBettingNumber.slice(0, 20)}...</a>`
       } else {
-        title += previewInfo.formatBettingNumber
+        betNum = previewInfo.formatBettingNumber
       }
+      const multipleDiv = '<div class="js-bc-betting-multiple-add p-top-xs"></div>'
+      const modeSelect = `<select name="" class="js-bc-unit-select-add select-default bc-unit-select-add">
+              <option value="10000" ${previewInfo.multiple === 10000 ? 'selected' : ''}>元</option>
+              <option value="1000" ${previewInfo.multiple === 1000 ? 'selected' : ''}>角</option>
+              <option value="100" ${previewInfo.multiple === 100 ? 'selected' : ''}>分</option>
+              <option value="10" ${previewInfo.multiple === 10 ? 'selected' : ''}>厘</option>
+            </select>`
 
       return {
         title,
-        bonusMode: this.getBonusMode(previewInfo.maxBonus, previewInfo.unit, previewInfo.userRebate, previewInfo.betMethod),
-        mode: `${previewInfo.statistics}注/${previewInfo.multiple}倍/${previewInfo.formatUnit}`,
+        betNum,
+        note: `${previewInfo.statistics}注`,
+        multiple: multipleDiv,
+        mode: modeSelect,
         bettingMoney: `${_(previewInfo.prefabMoney).convert2yuan()}元`,
+        profit: this.getBonusMode(previewInfo.maxBonus, previewInfo.unit, previewInfo.userRebate, previewInfo.betMethod),
         operate: '<div class="js-bc-lottery-preview-del lottery-preview-del icon-block m-right-md pull-right"></div>',
       }
     }, this)
@@ -934,6 +961,7 @@ const BettingCenterView = Base.ItemView.extend({
     $rows.each(function(index, row) {
       const $row = $(row)
       const $detail = $row.find('.js-bc-betting-preview-detail')
+      const $multipleAdd = $row.find('.js-bc-betting-multiple-add')
       let betNumber = previewList[index].bettingNumber
       const is11X5 = (self.options.ticketInfo.title.indexOf('11选5') !== -1)
       betNumber = is11X5 ? betNumber : betNumber.replace(/ /g, '')
@@ -947,6 +975,17 @@ const BettingCenterView = Base.ItemView.extend({
           betNumber = previewList[index].formatBettingNumber
         }
       }
+      $multipleAdd.numRange({
+        defaultValue: previewList[index].multiple,
+        size: 'md',
+        onChange(num) {
+          self.changePreviewMultiple(index, num)
+        },
+        onOverMax(maxNum) {
+          Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
+            ${_(self.rulesCollection.limitMoney).convert2yuan()}</span>元，已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
+        },
+      })
 
       if ($detail.length) {
         $detail.popover({

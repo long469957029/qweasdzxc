@@ -531,11 +531,11 @@ $top-nav-height: 40px;
 
 //icon block
 $icon-block: (
-  bg-color: #9fa0a0,
-  color: $new-light-color,
+  bg-color: $def-gray-color,
+  color: $def-white-color,
   icon-size: 18px,
   size: 17px,
-  radius: 3px
+  radius: 25px
 );
 
 //modal
