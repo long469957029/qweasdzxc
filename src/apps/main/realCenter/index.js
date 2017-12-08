@@ -8,9 +8,20 @@ const RealCenterView = Base.ItemView.extend({
 
   // itemTpl: _(require('activeCenter/activityItem.html')).template(),
 
-  events: {},
+  events: {
+    'mouseenter .js-rc-main-item': 'enterHandler',
+    // 'mouseleave .js-rc-main-item': 'leaveHandler'
+  },
 
   onRender() {
+  },
+
+  enterHandler(e) {
+    const $target = $(e.currentTarget)
+    $('.js-rc-main-item').each((index, dom) => {
+      $(dom).removeClass('active')
+    })
+    $target.addClass('active')
   },
 
 })
