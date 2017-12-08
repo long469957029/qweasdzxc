@@ -16,6 +16,7 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '010101'], {
     algorithm: algorithm.mulAllNotRepeat,
+    keyPosition: ['冠军'],
     list: factory.createList(['冠军'], {
       items: ten,
     }),
@@ -32,6 +33,7 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '020101'], {
     algorithm: algorithm.mulAllNotRepeat,
+    keyPosition: ['冠军', '亚军'],
     list: factory.createList(['冠军', '亚军'], {
       items: ten,
     }),
@@ -45,6 +47,7 @@ function _create(ticketId) {
   // 直选单式
   factory.addRule([ticketId, '020102'], {
     type: 'input',
+    keyPosition: ['冠军', '亚军'],
     splitReg,
     validate: algorithm.getValidateFunc(2, {
       range: ten,
@@ -66,6 +69,7 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '030101'], {
     algorithm: algorithm.mulAllNotRepeat,
+    keyPosition: ['冠军', '亚军', '季军'],
     list: factory.createList(['冠军', '亚军', '季军'], {
       items: ten,
     }),
@@ -79,6 +83,7 @@ function _create(ticketId) {
   // 直选单式
   factory.addRule([ticketId, '030102'], {
     type: 'input',
+    keyPosition: ['冠军', '亚军', '季军'],
     splitReg,
     validate: algorithm.getValidateFunc(3, {
       range: ten,
@@ -100,6 +105,7 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '040101'], {
     algorithm: algorithm.mulAllNotRepeat,
+    keyPosition: ['冠军', '亚军', '季军', '第四名'],
     list: factory.createList(['冠军', '亚军', '季军', '第四名'], {
       items: ten,
     }),
@@ -113,6 +119,7 @@ function _create(ticketId) {
   // 直选单式
   factory.addRule([ticketId, '040102'], {
     type: 'input',
+    keyPosition: ['冠军', '亚军', '季军', '第四名'],
     splitReg,
     validate: algorithm.getValidateFunc(4, {
       range: ten,
@@ -134,6 +141,7 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '050101'], {
     algorithm: algorithm.mulAllNotRepeat,
+    keyPosition: ['冠军', '亚军', '季军', '第四名', '第五名'],
     list: factory.createList(['冠军', '亚军', '季军', '第四名', '第五名'], {
       items: ten,
     }),
@@ -147,6 +155,7 @@ function _create(ticketId) {
   // 直选单式
   factory.addRule([ticketId, '050102'], {
     type: 'input',
+    keyPosition: ['冠军', '亚军', '季军', '第四名', '第五名'],
     splitReg,
     validate: algorithm.getValidateFunc(5, {
       range: ten,
@@ -184,6 +193,7 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '070101'], {
     algorithm: algorithm.addAll,
+    keyPosition: ['冠军', '亚军', '季军'],
     list: factory.createList(['冠军', '亚军', '季军'], {
       items: danshuang,
       operate: 'none',
@@ -199,6 +209,8 @@ function _create(ticketId) {
   // 冠亚军和值
   factory.addRule([ticketId, '170101'], {
     algorithm: algorithm.addAll,
+    formType: 'SUM',
+    keyPosition: ['冠军', '亚军'],
     list: factory.createList([''], {
       items: _.range(3, 20),
       operate: 'none',
@@ -208,6 +220,8 @@ function _create(ticketId) {
   // 冠亚季军和值
   factory.addRule([ticketId, '170102'], {
     algorithm: algorithm.addAll,
+    formType: 'SUM',
+    keyPosition: ['冠军', '亚军', '季军'],
     list: factory.createList([''], {
       items: _.range(6, 28),
       operate: 'none',

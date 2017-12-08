@@ -15,6 +15,8 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
   events: {
   },
 
+  llhKeysArr: ['w', 'k', 'b', 's', 'g'],
+
   GridOps: {
     ssc: {
       pageSize: 15,
@@ -25,8 +27,11 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
         function(val) {
           const html = ['<div class="open-nums">']
           const numList = val.split(',')
+          const keyPositionRelly = _(this.playRule.keyPosition).filter((item) => {
+            return item
+          })
           _(numList).each(function (num, index) {
-            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index] && this.playRule.formType !== 'FIVE') {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index] && keyPositionRelly.length !== 5) {
               html.push(`<span class="key-num">${num}</span>`)
             } else {
               html.push(`<span>${num}</span>`)
@@ -48,8 +53,12 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
         function(val) {
           const html = ['<div class="open-nums">']
           const numList = val.split(',')
-          _(numList).each((num) => {
-            html.push(`<span>${num}</span>`)
+          _(numList).each((num, index) => {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index]) {
+              html.push(`<span class="key-num">${num}</span>`)
+            } else {
+              html.push(`<span>${num}</span>`)
+            }
           }, this)
           html.push('</div>')
 
@@ -67,8 +76,11 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
         function(val) {
           const html = ['<div class="open-nums">']
           const numList = val.split(',')
+          const keyPosition = _(this.playRule.keyPosition).filter((item) => {
+            return item
+          })
           _(numList).each(function (num, index) {
-            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index] && this.playRule.keyPosition.indexOf(null) > -1) {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index] && keyPosition.length < 3) {
               html.push(`<span class="key-num">${num}</span>`)
             } else {
               html.push(`<span>${num}</span>`)
@@ -88,17 +100,21 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
       formats: [
         null,
         function(val) {
-          let nums = val.split('\,')
-          if (nums.length === 10) {
-            nums = _(nums).map((item) => {
-              if (item.indexOf('0') === 0) {
-                return item.substr(1)
-              }
-              return item
-            })
-          }
-          val = nums.join(',')
-          return val
+          const html = ['<div class="open-nums">']
+          const numList = val.split(',')
+          _(numList).each(function (num, index) {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index]) {
+              html.push(`<span class="key-num">${num}</span>`)
+            } else {
+              html.push(`<span>${num}</span>`)
+            }
+          }, this)
+          html.push('</div>')
+
+          return html.join('')
+        },
+        function(val) {
+          return this.getFormType(val, this.playRule && this.playRule.keyPosition, this.playRule && this.playRule.formType)
         },
       ],
     },
@@ -192,14 +208,15 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
       } : null,
     })
 
-    if (this.playRule && this.playRule.formType) {
+    if (this.playRule && this.playRule.formType && ops.formats && ops.formats[2]) {
+      const fromData = ops.formats[2].apply(self, arguments)
       options.colModel.push({
-        label: '形态',
-        name: 'ticketOpenNum',
+        label: fromData.name,
+        name: fromData.keyName,
         width: '18%',
-        formatter: ops.formats && ops.formats[2] ? function () {
-          return ops.formats[2].apply(self, arguments)
-        } : null,
+        // formatter: ops.formats && ops.formats[2] ? function () {
+        //   return ops.formats[2].apply(self, arguments)
+        // } : null,
       })
     }
 
@@ -208,19 +225,22 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
   // 取得形态
   getFormType(nums, keyPosition, type) {
     let formType
-    const numList = nums.split(',')
+    // const numList = nums.split(',')
     switch (type) {
-      case 'FIVE':
-        formType = this.getFormFive(numList, keyPosition)
+      case 'SUM':
+        formType = this.getFormSumAndSpan(keyPosition, 1)
+        break
+      case 'SPAN':
+        formType = this.getFormSumAndSpan(keyPosition, 2)
         break
       case 'GROUP':
-        formType = this.getFormGroup(numList, keyPosition)
+        formType = this.getFormGroup(keyPosition)
         break
       case 'PAIR':
-        formType = this.getFormPair(numList, keyPosition)
+        formType = this.getFormPair(keyPosition)
         break
       case 'DRAGON':
-        formType = this.getFormDragon(numList, keyPosition)
+        formType = this.getFormDragon(keyPosition)
         break
       default:
         formType = ''
@@ -229,88 +249,84 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
     return formType
   },
-  getFormFive (numList, keyPosition) {
-    let formType = ''
-
-    const tempList = _(numList).chain().filter((val, index) => {
-      return keyPosition[index]
-    }).union()
-      .value('')
-    switch (tempList.length) {
-      case 2:
-        formType = '组选10'
-        break
-      case 3:
-        formType = '组选30'
-        break
-      case 4:
-        formType = '组选60'
-        break
-      case 5:
-        formType = '组选120'
-        break
-      default:
-        break
+  getFormSumAndSpan (keyPosition, type) { // type 1 代表和值 2代表跨度
+    const formType = {
+      name: type === 1 ? '和值' : '跨度',
+      keyName: '',
     }
-    return formType
-  },
-  getFormGroup (numList, keyPosition) {
-    let formType = ''
-
-    const tempList = _(numList).chain().filter((val, index) => {
-      return keyPosition[index]
-    }).union()
-      .value('')
-    switch (tempList.length) {
-      case 1:
-        formType = '豹子'
-        break
-      case 2:
-        formType = '组三'
-        break
-      case 3:
-        formType = '组六'
-        break
-      default:
-        break
-    }
-    return formType
-  },
-
-  getFormPair (numList, keyPosition) {
-    let formType = ''
-
-    const tempList = _(numList).chain().filter((val, index) => {
-      return keyPosition[index]
-    }).union()
-      .value('')
-    switch (tempList.length) {
-      case 1:
-        formType = '对子'
-        break
-      case 2:
-        formType = '单号'
-        break
-      default:
-        break
-    }
-    return formType
-  },
-
-  getFormDragon (numList, keyPosition) {
-    let formType = ''
-
-    const tempList = _(numList).filter((val, index) => {
-      return keyPosition[index]
+    const tempList = _(keyPosition).filter((val) => {
+      return val
     })
-    if (tempList[0] > tempList[1]) {
-      formType = '龙'
-    } else if (tempList[0] < tempList[1]) {
-      formType = '虎'
-    } else {
-      formType = '和'
+    if (tempList.length === 3) {
+      if (!_.isNull(keyPosition[0])) {
+        formType.keyName = type === 1 ? 'sum.qianSan' : 'span.qianSan'
+      } else if (_.isNull(keyPosition[0]) && !_.isNull(keyPosition[1])) {
+        formType.keyName = type === 1 ? 'sum.zhongSan' : 'span.zhongSan'
+      } else {
+        formType.keyName = type === 1 ? 'sum.houSan' : 'span.houSan'
+      }
+    } else if (tempList.length === 2) {
+      if (!_.isNull(keyPosition[0]) && !_.isNull(keyPosition[1])) {
+        formType.keyName = type === 1 ? 'sum.qianEr' : 'span.qianEr'
+      } else if (!_.isNull(keyPosition[3]) && !_.isNull(keyPosition[4])) {
+        formType.keyName = type === 1 ? 'sum.houEr' : 'span.houEr'
+      }
     }
     return formType
+  },
+  getFormGroup (keyPosition) {
+    const formType = {
+      name: '形态',
+      keyName: '',
+    }
+
+    const tempList = _(keyPosition).filter((val) => {
+      return val
+    })
+    if (tempList.length === 5) {
+      formType.keyName = 'star5Type'
+    } else if (tempList.length === 4) {
+      formType.keyName = 'star4Type'
+    } else if (tempList.length === 3) {
+      if (!_.isNull(keyPosition[0])) {
+        formType.keyName = 'qianSan'
+      } else if (_.isNull(keyPosition[0]) && !_.isNull(keyPosition[1])) {
+        formType.keyName = 'zhongSan'
+      } else {
+        formType.keyName = 'houSan'
+      }
+    }
+    return formType
+  },
+
+  getFormDragon (keyPosition) {
+    const formType = {
+      name: '形态',
+      keyName: '',
+    }
+    const v = _(keyPosition).filter((val) => {
+      return val
+    })
+    const keys = _(v).map((item) => {
+      return _(keyPosition).indexOf(item)
+    })
+
+    formType.keyName = this.getDragonValue(keys)
+
+    // const tempList = _(numList).filter((val, index) => {
+    //   return keyPosition[index]
+    // })
+    // if (tempList[0] > tempList[1]) {
+    //   formType = '龙'
+    // } else if (tempList[0] < tempList[1]) {
+    //   formType = '虎'
+    // } else {
+    //   formType = '和'
+    // }
+    return formType
+  },
+  getDragonValue(keys) {
+    return `lhh.${this.llhKeysArr[keys[0]]}${this.llhKeysArr[keys[1]]}`
   },
 
 })

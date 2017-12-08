@@ -165,15 +165,24 @@ $.widget('gl.staticGrid', {
     return _(self.options.colModel).reduce((formatRow, colInfo) => {
       const cell = []
       let cellContent = ''
-
-      if (colInfo.merge && index > 0 && row[colInfo.name] === data[index - 1][colInfo.name]) {
+      let rowName = ''
+      let dataName = ''
+      if (_(colInfo.name).indexOf('.') > -1) {
+        const arr = colInfo.name.split('.')
+        rowName = row[`${arr[0]}`][`${arr[1]}`]
+        dataName = index > 0 ? data[index - 1][`${arr[0]}`][`${arr[1]}`] : ''
+      } else {
+        rowName = row[`${colInfo.name}`]
+        dataName = index > 0 ? data[index - 1][`${colInfo.name}`] : ''
+      }
+      if (colInfo.merge && index > 0 && rowName === dataName) {
         cell.push('')
       } else {
         cell.push(`<td rowspan="${row[`${colInfo.name}Rowspan`] || 1}">`)
         if (colInfo.formatter) {
-          cellContent = colInfo.formatter(row[colInfo.name], index, row)
-        } else if (row[colInfo.name] || row[colInfo.name] === 0) {
-          cellContent = row[colInfo.name]
+          cellContent = colInfo.formatter(rowName, index, row)
+        } else if (rowName || rowName === 0) {
+          cellContent = rowName
         }
         // cellContent = colInfo.formatter ? colInfo.formatter(row[colInfo.name], index, row) :
         //   (row[colInfo.name] || row[colInfo.name] === 0) ? row[colInfo.name] : ''

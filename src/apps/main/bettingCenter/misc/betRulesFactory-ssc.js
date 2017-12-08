@@ -12,7 +12,7 @@ function _create(ticketId) {
 
   // 复式
   factory.addRule([ticketId, '010101'], {
-    formType: 'FIVE',
+    formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.mulAll,
     list: factory.createList(['万位', '千位', '百位', '十位', '个位']),
@@ -24,6 +24,8 @@ function _create(ticketId) {
   // 单式
   factory.addRule([ticketId, '010102'], {
     type: 'input',
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     validate: algorithm.getValidateFunc(5),
     create: algorithm.getCreateFunc(5, {
       slice: [4],
@@ -34,6 +36,8 @@ function _create(ticketId) {
 
   // 组选120
   factory.addRule([ticketId, '010201'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -47,6 +51,8 @@ function _create(ticketId) {
 
   // 组选60
   factory.addRule([ticketId, '010202'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 1,
@@ -60,6 +66,8 @@ function _create(ticketId) {
 
   // 组选30
   factory.addRule([ticketId, '010203'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -73,6 +81,8 @@ function _create(ticketId) {
 
   // 组选20
   factory.addRule([ticketId, '010204'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 1,
@@ -86,6 +96,8 @@ function _create(ticketId) {
 
   // 组选10
   factory.addRule([ticketId, '010205'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -99,6 +111,8 @@ function _create(ticketId) {
 
   // 组选5
   factory.addRule([ticketId, '010206'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -152,6 +166,7 @@ function _create(ticketId) {
 
   // 复式
   factory.addRule([ticketId, '020101'], {
+    formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
     algorithm: algorithm.mulAll,
     list: factory.createList([null, '千位', '百位', '十位', '个位']),
@@ -163,6 +178,7 @@ function _create(ticketId) {
 
   // 单式
   factory.addRule([ticketId, '020102'], {
+    formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
     type: 'input',
     validate: algorithm.getValidateFunc(4),
@@ -175,6 +191,7 @@ function _create(ticketId) {
 
   // 组选24
   factory.addRule([ticketId, '020201'], {
+    formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
@@ -189,6 +206,7 @@ function _create(ticketId) {
 
   // 组选12
   factory.addRule([ticketId, '020202'], {
+    formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
@@ -203,6 +221,7 @@ function _create(ticketId) {
 
   // 组选6
   factory.addRule([ticketId, '020203'], {
+    formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
@@ -217,6 +236,7 @@ function _create(ticketId) {
 
   // 组选4
   factory.addRule([ticketId, '020204'], {
+    formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
@@ -285,7 +305,7 @@ function _create(ticketId) {
 
     // 直选和值
     factory.addRule(rules[2].ids, {
-      formType: 'GROUP',
+      formType: 'SUM',
       keyPosition: rules[0].list,
       algorithm: algorithm.statistics,
       algorithmProps: {
@@ -302,7 +322,7 @@ function _create(ticketId) {
 
     // 跨度
     factory.addRule(rules[3].ids, {
-      formType: 'GROUP',
+      formType: 'SPAN',
       keyPosition: rules[0].list,
       algorithm: algorithm.fromConfig,
       algorithmProps: {
@@ -343,7 +363,7 @@ function _create(ticketId) {
 
     // 组选和值
     factory.addRule(rules[6].ids, {
-      formType: 'GROUP',
+      formType: 'SUM',
       keyPosition: rules[0].list,
       algorithm: algorithm.fromConfig,
       algorithmProps: {
@@ -428,7 +448,6 @@ function _create(ticketId) {
 
     // 一码不定位
     factory.addRule(rules[11].ids, {
-      formType: 'GROUP',
       keyPosition: rules[0].list,
       algorithm: algorithm.group,
       algorithmProps: {
@@ -441,7 +460,6 @@ function _create(ticketId) {
 
     // 二码不定位
     factory.addRule(rules[12].ids, {
-      formType: 'GROUP',
       keyPosition: rules[0].list,
       algorithm: algorithm.group,
       algorithmProps: {
@@ -524,7 +542,7 @@ function _create(ticketId) {
   function addTwoRules(rules) {
     // 直选复式
     factory.addRule(rules[0].ids, {
-      formType: 'PAIR',
+      formType: 'SUM',
       keyPosition: rules[0].list,
       algorithm: algorithm.mulAll,
       list: factory.createList(rules[0].list),
@@ -535,7 +553,7 @@ function _create(ticketId) {
     })
     // 直选单式
     factory.addRule(rules[1].ids, {
-      formType: 'PAIR',
+      formType: 'SUM',
       type: 'input',
       keyPosition: rules[0].list,
       validate: algorithm.getValidateFunc(2),
@@ -548,7 +566,7 @@ function _create(ticketId) {
 
     // 直选和值
     factory.addRule(rules[2].ids, {
-      formType: 'PAIR',
+      formType: 'SUM',
       keyPosition: rules[0].list,
       algorithm: algorithm.statistics,
       algorithmProps: {
@@ -564,7 +582,7 @@ function _create(ticketId) {
     })
     // 跨度
     factory.addRule(rules[3].ids, {
-      formType: 'PAIR',
+      formType: 'SPAN',
       keyPosition: rules[0].list,
       algorithm: algorithm.fromConfig,
       algorithmProps: {
@@ -575,7 +593,7 @@ function _create(ticketId) {
     })
     // 组选复式
     factory.addRule(rules[4].ids, {
-      formType: 'PAIR',
+      formType: 'SUM',
       keyPosition: rules[0].list,
       algorithm: algorithm.group,
       algorithmProps: {
@@ -589,7 +607,7 @@ function _create(ticketId) {
     })
     // 组选单式
     factory.addRule(rules[5].ids, {
-      formType: 'PAIR',
+      formType: 'SUM',
       keyPosition: rules[0].list,
       type: 'input',
       validate: algorithm.getValidateFunc(2, {
@@ -604,7 +622,7 @@ function _create(ticketId) {
 
     // 组选和值
     factory.addRule(rules[6].ids, {
-      formType: 'PAIR',
+      formType: 'SUM',
       keyPosition: rules[0].list,
       algorithm: algorithm.fromConfig,
       algorithmProps: {
@@ -621,7 +639,7 @@ function _create(ticketId) {
 
     // 组选包胆
     factory.addRule(rules[7].ids, {
-      formType: 'PAIR',
+      formType: 'SUM',
       keyPosition: rules[0].list,
       algorithm: algorithm.staticVal,
       algorithmProps: {
@@ -1025,6 +1043,8 @@ function _create(ticketId) {
 
   // 一帆风顺
   factory.addRule([ticketId, '160301'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -1036,6 +1056,8 @@ function _create(ticketId) {
 
   // 好事成双
   factory.addRule([ticketId, '160302'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -1047,6 +1069,8 @@ function _create(ticketId) {
 
   // 三星报喜
   factory.addRule([ticketId, '160303'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -1058,6 +1082,8 @@ function _create(ticketId) {
 
   // 四季发财
   factory.addRule([ticketId, '160304'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
