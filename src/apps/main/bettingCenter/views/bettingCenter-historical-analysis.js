@@ -15,6 +15,8 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
   events: {
   },
 
+  llhKeysArr: ['w', 'k', 'b', 's', 'g'],
+
   GridOps: {
     ssc: {
       pageSize: 15,
@@ -25,8 +27,11 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
         function(val) {
           const html = ['<div class="open-nums">']
           const numList = val.split(',')
+          const keyPositionRelly = _(this.playRule.keyPosition).filter((item) => {
+            return item
+          })
           _(numList).each(function (num, index) {
-            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index]) {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index] && keyPositionRelly.length !== 5) {
               html.push(`<span class="key-num">${num}</span>`)
             } else {
               html.push(`<span>${num}</span>`)
@@ -48,8 +53,12 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
         function(val) {
           const html = ['<div class="open-nums">']
           const numList = val.split(',')
-          _(numList).each((num) => {
-            html.push(`<span>${num}</span>`)
+          _(numList).each((num, index) => {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index]) {
+              html.push(`<span class="key-num">${num}</span>`)
+            } else {
+              html.push(`<span>${num}</span>`)
+            }
           }, this)
           html.push('</div>')
 
@@ -67,8 +76,11 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
         function(val) {
           const html = ['<div class="open-nums">']
           const numList = val.split(',')
+          const keyPosition = _(this.playRule.keyPosition).filter((item) => {
+            return item
+          })
           _(numList).each(function (num, index) {
-            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index] && this.playRule.keyPosition.indexOf(null) > -1) {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index] && keyPosition.length < 3) {
               html.push(`<span class="key-num">${num}</span>`)
             } else {
               html.push(`<span>${num}</span>`)
@@ -88,17 +100,21 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
       formats: [
         null,
         function(val) {
-          let nums = val.split('\,')
-          if (nums.length === 10) {
-            nums = _(nums).map((item) => {
-              if (item.indexOf('0') === 0) {
-                return item.substr(1)
-              }
-              return item
-            })
-          }
-          val = nums.join(',')
-          return val
+          const html = ['<div class="open-nums">']
+          const numList = val.split(',')
+          _(numList).each(function (num, index) {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index]) {
+              html.push(`<span class="key-num">${num}</span>`)
+            } else {
+              html.push(`<span>${num}</span>`)
+            }
+          }, this)
+          html.push('</div>')
+
+          return html.join('')
+        },
+        function(val) {
+          return this.getFormType(val, this.playRule && this.playRule.keyPosition, this.playRule && this.playRule.formType)
         },
       ],
     },
@@ -291,9 +307,11 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
     const v = _(keyPosition).filter((val) => {
       return val
     })
-    const keys = _(keyPosition).findKey(v)
+    const keys = _(v).map((item) => {
+      return _(keyPosition).indexOf(item)
+    })
 
-    console.log(keys)
+    formType.keyName = this.getDragonValue(keys)
 
     // const tempList = _(numList).filter((val, index) => {
     //   return keyPosition[index]
@@ -306,6 +324,9 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
     //   formType = '和'
     // }
     return formType
+  },
+  getDragonValue(keys) {
+    return `lhh.${this.llhKeysArr[keys[0]]}${this.llhKeysArr[keys[1]]}`
   },
 
 })

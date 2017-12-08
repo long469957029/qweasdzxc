@@ -1043,6 +1043,8 @@ function _create(ticketId) {
 
   // 一帆风顺
   factory.addRule([ticketId, '160301'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -1054,6 +1056,8 @@ function _create(ticketId) {
 
   // 好事成双
   factory.addRule([ticketId, '160302'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -1065,6 +1069,8 @@ function _create(ticketId) {
 
   // 三星报喜
   factory.addRule([ticketId, '160303'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -1076,6 +1082,8 @@ function _create(ticketId) {
 
   // 四季发财
   factory.addRule([ticketId, '160304'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,

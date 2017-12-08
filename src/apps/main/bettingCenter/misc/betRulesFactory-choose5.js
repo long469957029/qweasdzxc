@@ -36,6 +36,7 @@ function _create(ticketId) {
 
   // 直选复式
   factory.addRule([ticketId, '010101'], {
+    keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.mulAllNotRepeat,
     list: factory.createList(['第一位', '第二位', '第三位'], {
       items: eleven,
@@ -51,6 +52,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '010102'], {
     type: 'input',
     splitReg,
+    keyPosition: ['万位', '千位', '百位', null, null],
     validate: algorithm.getValidateFunc(3, {
       range: eleven,
       acceptRepeat: 1,
@@ -69,6 +71,7 @@ function _create(ticketId) {
 
   // 组选复式
   factory.addRule([ticketId, '010201'], {
+    keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -86,6 +89,7 @@ function _create(ticketId) {
   // 组选单式
   factory.addRule([ticketId, '010202'], {
     type: 'input',
+    keyPosition: ['万位', '千位', '百位', null, null],
     splitReg,
     validate: algorithm.getValidateFunc(3, {
       range: eleven,
@@ -122,6 +126,7 @@ function _create(ticketId) {
 
   // 直选复式
   factory.addRule([ticketId, '020101'], {
+    keyPosition: ['万位', '千位', null, null, null],
     algorithm: algorithm.mulAllNotRepeat,
     list: factory.createList(['第一位', '第二位'], {
       items: eleven,
@@ -136,6 +141,7 @@ function _create(ticketId) {
   // 直选单式
   factory.addRule([ticketId, '020102'], {
     type: 'input',
+    keyPosition: ['万位', '千位', null, null, null],
     splitReg,
     validate: algorithm.getValidateFunc(2, {
       range: eleven,
@@ -153,6 +159,7 @@ function _create(ticketId) {
 
   // 组选复式
   factory.addRule([ticketId, '020201'], {
+    keyPosition: ['万位', '千位', null, null, null],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -170,6 +177,7 @@ function _create(ticketId) {
   // 组选单式
   factory.addRule([ticketId, '020202'], {
     type: 'input',
+    keyPosition: ['万位', '千位', null, null, null],
     splitReg,
     validate: algorithm.getValidateFunc(2, {
       range: eleven,
@@ -205,6 +213,7 @@ function _create(ticketId) {
 
   // 前三一码不定位
   factory.addRule([ticketId, '030101'], {
+    keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: eleven,
@@ -219,6 +228,7 @@ function _create(ticketId) {
   // 定位胆
 
   factory.addRule([ticketId, '040101'], {
+    keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.addAll,
     list: factory.createList(['第一位', '第二位', '第三位'], {
       items: eleven,

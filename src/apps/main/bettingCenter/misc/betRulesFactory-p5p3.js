@@ -9,6 +9,8 @@ function _create(ticketId) {
 
   // 直选复式
   factory.addRule([ticketId, '010101'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.mulAll,
     list: factory.createList(['万位', '千位', '百位']),
     create: algorithm.getCreateFunc(3, {
@@ -19,6 +21,8 @@ function _create(ticketId) {
   // 直选单式
   factory.addRule([ticketId, '010102'], {
     type: 'input',
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', null, null],
     validate: algorithm.getValidateFunc(3),
     create: algorithm.getCreateFunc(3, {
       slice: [2],
@@ -29,6 +33,8 @@ function _create(ticketId) {
 
   // 直选和值
   factory.addRule([ticketId, '010103'], {
+    formType: 'SUM',
+    keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.statistics,
     algorithmProps: {
       selectCount: 3,
@@ -44,6 +50,8 @@ function _create(ticketId) {
 
   // 组三
   factory.addRule([ticketId, '010201'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.factorial,
     algorithmProps: {
       mainRow: 0,
@@ -57,6 +65,8 @@ function _create(ticketId) {
 
   // 组六
   factory.addRule([ticketId, '010202'], {
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -70,6 +80,8 @@ function _create(ticketId) {
 
   // 组选和值
   factory.addRule([ticketId, '010203'], {
+    formType: 'SUM',
+    keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.fromConfig,
     algorithmProps: {
       config: [null, 1, 2, 2, 4, 5, 6, 8, 10, 11, 13, 14, 14, 15, 15, 14, 14, 13, 11, 10, 8, 6, 5, 4, 2, 2, 1],
@@ -86,6 +98,8 @@ function _create(ticketId) {
   // 混合组选
   factory.addRule([ticketId, '010204'], {
     type: 'input',
+    formType: 'GROUP',
+    keyPosition: ['万位', '千位', '百位', null, null],
     validate: algorithm.getValidateFunc(3, {
       acceptRepeat: 1,
       maxRepeat: 2,
@@ -102,9 +116,11 @@ function _create(ticketId) {
   // 二星
 
   function addTwoRules(rules) {
+    const ruleDef = rules[0]
     let rule = rules.shift()
     // 直选复式
     factory.addRule(rule.ids, {
+      keyPosition: ruleDef.list,
       algorithm: algorithm.mulAll,
       list: factory.createList(rule.list),
       create: algorithm.getCreateFunc(2, {
@@ -117,6 +133,7 @@ function _create(ticketId) {
     // 直选单式
     factory.addRule(rule.ids, {
       type: 'input',
+      keyPosition: ruleDef.list,
       validate: algorithm.getValidateFunc(2),
       create: algorithm.getCreateFunc(2, {
         slice: [1],
@@ -128,6 +145,7 @@ function _create(ticketId) {
     rule = rules.shift()
     // 组选复式
     factory.addRule(rule.ids, {
+      keyPosition: ruleDef.list,
       algorithm: algorithm.group,
       algorithmProps: {
         mainRow: 0,
@@ -143,6 +161,7 @@ function _create(ticketId) {
     // 组选单式
     factory.addRule(rule.ids, {
       type: 'input',
+      keyPosition: ruleDef.list,
       validate: algorithm.getValidateFunc(2, {
         acceptRepeat: 0,
         innerSort: true,
