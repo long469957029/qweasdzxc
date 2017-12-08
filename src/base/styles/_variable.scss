@@ -4,25 +4,19 @@ $body-width: 1356px !default;
 //new
 $new-main-deep-dark-color: #066067 !default;
 $new-main-dark-color: #057c86 !default;
-$new-main-deep-color: #14b1bb !default;
+
 $new-dark-color: #555757 !default;
 $new-light-color: #f0efee !default;
-$new-inverse-color: #666666 !default;
 $new-gray-color: #f1e1e0 !default;
 $new-hot-color: #fe6760 !default;
 $new-pink-color: #fda4a0 !default;
 
-$def-white-color: #ffffff !default;
-$def-black-color: #333333 !default;
-$def-line-color: #d7d7d7 !default;
-$sec-line-color: #f0f0f0 !default;
+// UI 规范 - 色彩
+@import "ui_variable.scss";
+
 $third-line-color: #e6e6e6 !default;
-$def-gray-color: #cccccc !default;
 $sec-gray-color: #b8b8b8 !default;
-$prominent-color: #f09932 !default;
-$prominent-hover-color: #d8892d !default;
 $new-main-deep-hover-color: #129fa8 !default;
-$font-auxiliary-color: #999999 !default;
 
 $new-black-color: #2F2F2F !default;
 $deep-gray-color: #494949 !default;
