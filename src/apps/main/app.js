@@ -5,6 +5,8 @@ import FooterView from 'skeleton/bases/footer'
 import ToolbarView from 'skeleton/bases/toolbar'
 
 import RechargeView from 'com/fundOperate/recharge'
+
+import './index.css'
 // import WithDrawView from 'com/fundOperate/withdraw'
 // import TransferView from 'com/fundOperate/transfer'
 
