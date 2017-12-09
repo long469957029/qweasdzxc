@@ -913,8 +913,9 @@ const BettingCenterView = Base.ItemView.extend({
     return `${bonusMode}元`
   },
   changePreviewMultiple(index, num) {
-    // this.model.delPrevBetting($row.index())
-    console.log(`${index},${num}`)
+    if (num && !_.isNull(num)) {
+      this.model.changePreviewMultipleBet(index, num)
+    }
   },
   changeUnitSelect(e) {
     const $target = $(e.currentTarget)
@@ -936,7 +937,7 @@ const BettingCenterView = Base.ItemView.extend({
       } else {
         betNum = previewInfo.formatBettingNumber
       }
-      const multipleDiv = '<div class="js-bc-betting-multiple-add p-top-xs"></div>'
+      // const multipleDiv = `<div class="js-bc-betting-multiple-add-${index} p-top-xs"></div>`
       const modeSelect = `<select name="" class="js-bc-unit-select-add select-default bc-unit-select-add">
               <option value="10000" ${previewInfo.multiple === 10000 ? 'selected' : ''}>元</option>
               <option value="1000" ${previewInfo.multiple === 1000 ? 'selected' : ''}>角</option>
@@ -948,7 +949,7 @@ const BettingCenterView = Base.ItemView.extend({
         title,
         betNum,
         note: `${previewInfo.statistics}注`,
-        multiple: multipleDiv,
+        multiple: previewInfo.multiple, // multipleDiv
         mode: modeSelect,
         bettingMoney: `${_(previewInfo.prefabMoney).convert2yuan()}元`,
         profit: this.getBonusMode(previewInfo.maxBonus, previewInfo.unit, previewInfo.userRebate, previewInfo.betMethod),
@@ -961,7 +962,7 @@ const BettingCenterView = Base.ItemView.extend({
     $rows.each(function(index, row) {
       const $row = $(row)
       const $detail = $row.find('.js-bc-betting-preview-detail')
-      const $multipleAdd = $row.find('.js-bc-betting-multiple-add')
+      // const $multipleAdd = $row.find(`.js-bc-betting-multiple-add-${index}`)
       let betNumber = previewList[index].bettingNumber
       const is11X5 = (self.options.ticketInfo.title.indexOf('11选5') !== -1)
       betNumber = is11X5 ? betNumber : betNumber.replace(/ /g, '')
@@ -975,17 +976,17 @@ const BettingCenterView = Base.ItemView.extend({
           betNumber = previewList[index].formatBettingNumber
         }
       }
-      $multipleAdd.numRange({
-        defaultValue: previewList[index].multiple,
-        size: 'md',
-        onChange(num) {
-          self.changePreviewMultiple(index, num)
-        },
-        onOverMax(maxNum) {
-          Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
-            ${_(self.rulesCollection.limitMoney).convert2yuan()}</span>元，已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
-        },
-      })
+      // $multipleAdd.numRange({
+      //   defaultValue: previewList[index].multiple,
+      //   size: 'md',
+      //   onChange(num) {
+      //     self.changePreviewMultiple(index, num)
+      //   },
+      //   onOverMax(maxNum) {
+      //     Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
+      //       ${_(self.rulesCollection.limitMoney).convert2yuan()}</span>元，已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
+      //   },
+      // })
 
       if ($detail.length) {
         $detail.popover({

@@ -105,7 +105,24 @@ const BettingChoiceModel = Model.extend({
     })
 
     this.on('change:unit', function(model, unit) {
-      this.set('formatUnit', unit === 10000 ? '元' : unit === 1000 ? '角' : unit === 100 ? '分' : '厘')
+      let unitText = ''
+      switch (unit) {
+        case 10000:
+          unitText = '元'
+          break
+        case 1000:
+          unitText = '角'
+          break
+        case 100:
+          unitText = '分'
+          break
+        case 10:
+          unitText = '厘'
+          break
+        default:
+          break
+      }
+      this.set('formatUnit', unitText)
       this.calculateByPrefab()
     })
 
@@ -213,7 +230,7 @@ const BettingChoiceModel = Model.extend({
         // 如果有值，则用该符号隔开number
         if (options.format) {
           return row.join(options.format.symbol)
-        } 
+        }
         // 同行是否用空格隔开
         return row.join(options.type === 'display' ? '' : ' ')
       }).join(',')
@@ -229,14 +246,14 @@ const BettingChoiceModel = Model.extend({
   // 将球上的文字转换成对应的数值
   _formatToNum(betNum, options) {
     let newNum = betNum
-    if (_.indexOf(this.mark6TicketIdArr, parseInt(options.ticketId)) > -1) {
+    if (_.indexOf(this.mark6TicketIdArr, parseInt(options.ticketId, 10)) > -1) {
       if (options.formatToNumInfo) {
         const newNumArr = []
         const replaceArr = options.formatToNumInfo
         const selectArr = newNum.split(',')
         _(selectArr).each((text) => {
           _(replaceArr).each((item) => {
-            if (text == item.name) {
+            if (text === item.name) {
               newNumArr.push(item.value)
             }
           })
@@ -244,8 +261,8 @@ const BettingChoiceModel = Model.extend({
         newNum = newNumArr.join()
       }
     } else {
-      while (newNum.indexOf('大') != -1 || newNum.indexOf('小') != -1 || newNum.indexOf('单') != -1 || newNum.indexOf('双') != -1
-      || newNum.indexOf('龙') != -1 || newNum.indexOf('虎') != -1 || newNum.indexOf('和') != -1 || newNum.indexOf('三同号通选') != -1 || newNum.indexOf('三连号通选') != -1) {
+      while (newNum.indexOf('大') !== -1 || newNum.indexOf('小') !== -1 || newNum.indexOf('单') !== -1 || newNum.indexOf('双') !== -1
+      || newNum.indexOf('龙') !== -1 || newNum.indexOf('虎') !== -1 || newNum.indexOf('和') !== -1 || newNum.indexOf('三同号通选') !== -1 || newNum.indexOf('三连号通选') !== -1) {
         newNum = newNum.replace('大', 1)
         newNum = newNum.replace('小', 2)
         newNum = newNum.replace('单', 3)
@@ -403,7 +420,7 @@ const BettingChoiceModel = Model.extend({
       }
       this.emptyBuyBetting()
       return this._addBets([bettingInfo], _(options || {}).extend(selectInfo))
-    } 
+    }
     return false
   },
 
@@ -421,13 +438,21 @@ const BettingChoiceModel = Model.extend({
     this.trigger('change:previewList:del', this, index)
     this.trigger('change:previewList', this, index)
   },
-  
+
   emptyBuyBetting() {
     this.set('buyList', [])
 
     this.trigger('change:buyList:del', this)
     this.trigger('change:buyList', this)
   },
+
+  changePreviewMultipleBet(index, num) {
+    const previewList = this.get('previewList')
+    previewList[index].multiple = parseInt(num, 10)
+    console.log(previewList)
+    this.trigger('change:previewList', this, index)
+  },
+
 
 })
 
