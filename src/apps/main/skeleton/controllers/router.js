@@ -34,8 +34,10 @@ const RouterController = Base.Controller.extend({
     } else {
       this._changeMainReginView(mainView, config)
     }
-
     Global.ui.menu.selectMenuFromCurrentHash()
+
+    // 在路由变换变更主区域内容的时候 设定 .ripple-btn 有水波纹效果
+    this._setRippleBtns()
   },
 
   _changeSideMenuMainReginView(mainView, config) {
@@ -119,6 +121,33 @@ const RouterController = Base.Controller.extend({
       parentRouter: config.parentRouter,
     }, {
       destroyDiff: config.destroyDiff,
+    })
+  },
+
+
+  _setRippleBtns() {
+    const buttons = document.querySelectorAll('.ripple-btn')
+
+    function createRipple(e) {
+      const circle = document.createElement('div')
+      this.appendChild(circle)
+
+      const d = Math.max(this.clientWidth, this.clientHeight)
+
+      circle.style.width = `${d}px`
+      circle.style.height = `${d}px`
+
+      const rect = this.getBoundingClientRect()
+      circle.style.left = `${e.clientX - rect.left - d / 2}px`
+      circle.style.top = `${e.clientY - rect.top - d / 2}px`
+
+      console.log(this)
+
+      circle.classList.add('ripple')
+    }
+
+    Array.prototype.forEach.call(buttons, (b) => {
+      b.addEventListener('click', createRipple)
     })
   },
 })

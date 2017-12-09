@@ -121,11 +121,19 @@
 
     .rc-item-primary-btn {
       background: $prominent-color;
+
+      &:hover, &:active {
+        background: $prominent-hover-color;
+      }
     }
 
     .rc-item-secondary-btn {
       background: $new-main-deep-color;
       bottom: 81px;
+
+      &:hover, &:active {
+        background: $new-main-deep-hover-color;
+      }
     }
 
 
@@ -133,8 +141,9 @@
       background: url('./images/rc-item-ag.png');
       background-position: center;
       width: 240px;
-      transition: width 1s;
-      padding: 85px 27px 0 31px;
+      transition: width 1s, padding-left .5s;
+      padding: 85px 27px 0 0;
+      padding-left: 31px;
       height: 480px;
     }
 
@@ -142,18 +151,19 @@
       background: url('./images/rc-item-bbin.png');
       background-position: 65%;
       width: 240px;
-      transition: width 1s;
-      padding: 85px 27px 0 31px;
+      transition: width 1s, padding-left .5s;
+      padding: 85px 27px 0 0;
+      padding-left: 31px;
       height: 480px;
     }
 
     & .ebet {
       background: url('./images/rc-item-ebet.png');
       background-position: center;
-      padding: 85px 58px 0 31px;
       width: 240px;
-      transition: width 1s;
-      padding: 85px 27px 0 31px;
+      transition: width 1s, padding-left .5s;
+      padding: 85px 27px 0 0;
+      padding-left: 31px;
       height: 480px;
     }
 
