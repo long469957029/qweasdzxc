@@ -141,8 +141,6 @@ const RouterController = Base.Controller.extend({
       circle.style.left = `${e.clientX - rect.left - d / 2}px`
       circle.style.top = `${e.clientY - rect.top - d / 2}px`
 
-      console.log(this)
-
       circle.classList.add('ripple')
     }
 
