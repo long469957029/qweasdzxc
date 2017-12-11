@@ -1,5 +1,5 @@
 
-import { menuConfig } from 'skeleton/misc/menuConfig' // eslint-disable-line
+import { getRouter, menuConfig } from 'skeleton/misc/menuConfig' // eslint-disable-line
 
 const dividendConfig = require('agencyCenter/dividendManage/dividendConfig')
 
@@ -45,9 +45,10 @@ const SidemenuModule = Base.Module.extend({
   },
 
   get(router) {
-    return _(this.menuConfig).findWhere({
-      router,
-    })
+    // return _(this.menuConfig).findWhere({
+    //   router,
+    // })
+    return getRouter(router)
   },
 
   selectMenuFromCurrentHash() {

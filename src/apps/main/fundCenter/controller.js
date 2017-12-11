@@ -10,7 +10,7 @@ import TransferView from 'fundCenter/transfer'
 
 import './misc/index.scss'
 
-const sidebar = Global.ui.menu.get('uc')
+const sidebar = Global.ui.menu.get(['fc', 'uc'])
 
 const FundCenterController = RouterController.extend({
 

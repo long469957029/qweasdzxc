@@ -14,18 +14,19 @@ const CardBindingView = require('userCenter/views/cardBinding')
 const PriceDetailsView = require('userCenter/views/priceDetails')
 
 
-const ucMenuConfig = Global.ui.menu.get('uc')
-const gcMenuConfig = Global.ui.menu.get('gc')
+// const ucMenuConfig = Global.ui.menu.get('uc')
+// const gcMenuConfig = Global.ui.menu.get('gc')
+const sidebar = Global.ui.menu.get(['fc', 'uc'])
 
 const UserCenterController = RouterController.extend({
 
   bettingRecords() {
     this.changeMainReginView(new BettingRecordView(), {
       main: {
-        icon: gcMenuConfig.icon,
+        // icon: gcMenuConfig.icon,
         title: '投注记录',
       },
-      sidebar: gcMenuConfig,
+      sidebar,
     })
   },
 
@@ -44,10 +45,10 @@ const UserCenterController = RouterController.extend({
   trackRecords() {
     this.changeMainReginView(new TrackRecordView(), {
       main: {
-        icon: gcMenuConfig.icon,
+        // icon: gcMenuConfig.icon,
         title: '追号记录',
       },
-      sidebar: gcMenuConfig,
+      sidebar,
     })
   },
   // 追号详情
@@ -75,26 +76,26 @@ const UserCenterController = RouterController.extend({
   personalManage() {
     this.changeMainReginView(new PersonalManageView(), {
       main: {
-        icon: ucMenuConfig.icon,
+        // icon: ucMenuConfig.icon,
         title: '个人资料',
       },
-      sidebar: ucMenuConfig,
+      sidebar,
     })
   },
 
   cardManage() {
     this.changeMainReginView(new CardManageView(), {
       main: {
-        icon: ucMenuConfig.icon,
+        // icon: ucMenuConfig.icon,
         title: '银行卡管理',
       },
-      sidebar: ucMenuConfig,
+      sidebar,
     })
   },
   cardBinding() {
     this.changeSubReginView(new CardBindingView(), {
       main: {
-        icon: ucMenuConfig.icon,
+        // icon: ucMenuConfig.icon,
         title: '银行卡管理',
       },
       parentRouter: 'uc/cm',
@@ -104,10 +105,10 @@ const UserCenterController = RouterController.extend({
   priceDetails() {
     this.changeMainReginView(new PriceDetailsView(), {
       main: {
-        icon: ucMenuConfig.icon,
+        // icon: ucMenuConfig.icon,
         title: '奖金详情',
       },
-      sidebar: ucMenuConfig,
+      sidebar,
     })
   },
 

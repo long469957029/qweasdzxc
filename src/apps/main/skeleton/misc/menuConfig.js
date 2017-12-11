@@ -26,40 +26,34 @@ const menuConfig = [
   {
     router: 'uc',
     name: '个人中心',
-    first: 'gc/gr',
+    first: 'uc/pm',
     icon: 'user',
     notNav: true,
     sub: [
-      {
-        id: 500,
-        router: 'fc/fm',
-        name: '资金总览',
-        notShow: true,
-        quickShowName: '资金<br/>管理',
-      },
-      {
-        id: 504,
-        router: 'fc/ad',
-        name: '账变明细',
-        quickShowName: '账户<br/>明细',
-      }, {
-        id: 506,
-        router: 'fc/re',
-        name: '充提记录',
-        quickShowName: '充提<br/>记录',
-      },
-      {
-        id: 306,
-        router: 'gc/tr',
-        name: '游戏记录',
-        quickShowName: '游戏<br/>记录',
-      },
-      {
-        id: 505,
-        router: 'fc/rb',
-        name: '红利记录',
-        quickShowName: '红利<br/>记录',
-      },
+      // {
+      //   id: 500,
+      //   router: 'fc/fm',
+      //   name: '资金总览',
+      //   notShow: true,
+      //   quickShowName: '资金<br/>管理',
+      // },
+      // {
+      //   id: 504,
+      //   router: 'fc/ad',
+      //   name: '账变明细',
+      //   quickShowName: '账户<br/>明细',
+      // }, {
+      //   id: 506,
+      //   router: 'fc/re',
+      //   name: '充提记录',
+      //   quickShowName: '充提<br/>记录',
+      // },
+      // {
+      //   id: 306,
+      //   router: 'gc/tr',
+      //   name: '游戏记录',
+      //   quickShowName: '游戏<br/>记录',
+      // },
       {
         id: 300,
         router: 'uc/pm',
@@ -78,12 +72,12 @@ const menuConfig = [
         name: '帐户安全',
         quickShowName: '帐户<br/>安全',
       },
-      {
-        id: 304,
-        router: 'as/sq',
-        name: '密保问题',
-        quickShowName: '密保<br/>问题',
-      },
+      // {
+      //   id: 304,
+      //   router: 'as/sq',
+      //   name: '密保问题',
+      //   quickShowName: '密保<br/>问题',
+      // },
       {
         id: 302,
         router: 'uc/pd',
@@ -96,12 +90,12 @@ const menuConfig = [
         name: '我的消息',
         quickShowName: '我的<br/>消息',
       },
-      {
-        id: 305,
-        router: 'as/ll',
-        name: '登录日志',
-        quickShowName: '登录<br/>日志',
-      },
+      // {
+      //   id: 305,
+      //   router: 'as/ll',
+      //   name: '登录日志',
+      //   quickShowName: '登录<br/>日志',
+      // },
     ],
   },
   {
@@ -181,61 +175,67 @@ const menuConfig = [
       {
         id: 500,
         router: 'fc/fm',
-        name: '资金管理',
+        name: '资金总览',
         notShow: true,
-        quickShowName: '资金<br/>管理',
+        quickShowName: '资金<br/>总览',
       },
-      {
-        id: 501,
-        router: 'fc/re',
-        name: '在线充值',
-        notShow: true,
-        quickShowName: '在线<br/>充值',
-      },
-      {
-        id: 502,
-        router: 'fc/wd',
-        name: '在线提现',
-        notShow: true,
-        quickShowName: '在线<br/>提现',
-      },
-      {
-        id: 503,
-        router: 'fc/tr',
-        name: '平台转账',
-        notShow: true,
-        quickShowName: '平台<br/>转账',
-      },
+      // {
+      //   id: 501,
+      //   router: 'fc/re',
+      //   name: '在线充值',
+      //   notShow: true,
+      //   quickShowName: '在线<br/>充值',
+      // },
+      // {
+      //   id: 502,
+      //   router: 'fc/wd',
+      //   name: '在线提现',
+      //   notShow: true,
+      //   quickShowName: '在线<br/>提现',
+      // },
+      // {
+      //   id: 503,
+      //   router: 'fc/tr',
+      //   name: '平台转账',
+      //   notShow: true,
+      //   quickShowName: '平台<br/>转账',
+      // },
       {
         id: 504,
         router: 'fc/ad',
-        name: '账户明细',
-        quickShowName: '账户<br/>明细',
+        name: '账变明细',
+        quickShowName: '账变<br/>明细',
       },
-      {
-        id: 505,
-        router: 'fc/rb',
-        name: '返水记录',
-        quickShowName: '返水<br/>记录',
-      },
+      // {
+      //   id: 505,
+      //   router: 'fc/rb',
+      //   name: '返水记录',
+      //   quickShowName: '返水<br/>记录',
+      // },
       {
         id: 506,
-        router: 'fc/rr',
-        name: '充值记录',
-        quickShowName: '充值<br/>记录',
+        router: 'fc/rd',
+        name: '充提记录',
+        quickShowName: '充提<br/>记录',
       },
       {
-        id: 507,
-        router: 'fc/wr',
-        name: '提现记录',
-        quickShowName: '提现<br/>记录',
+        id: 306,
+        router: 'gc/tr',
+        name: '投注记录',
+        quickShowName: '投注<br/>记录',
       },
-      {
-        id: 508,
-        router: 'fc/tfr',
-        name: '转账记录',
-        quickShowName: '转账<br/>记录',
-      },
+      // {
+      //   id: 507,
+      //   router: 'fc/wr',
+      //   name: '提现记录',
+      //   quickShowName: '提现<br/>记录',
+      // },
+      // {
+      //   id: 508,
+      //   router: 'fc/tfr',
+      //   name: '转账记录',
+      //   quickShowName: '转账<br/>记录',
+      // },
     ],
   },
   {
@@ -403,4 +403,23 @@ const menuConfig = [
   },
 ]
 
-export { navItemType, dropdownType, channelId, menuConfig }
+function getRouter(router) {
+  if (_(router).isArray()) {
+    return _(router).map((item) => {
+      return _(menuConfig).findWhere({
+        router: item,
+      })
+    })
+  } 
+  return _(menuConfig).findWhere({
+    router,
+  })
+}
+
+export {
+  navItemType,
+  dropdownType,
+  channelId,
+  menuConfig,
+  getRouter,
+}

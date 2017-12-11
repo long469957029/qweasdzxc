@@ -1,5 +1,5 @@
 <div class="sidebar">
-  <% if(menus.router === 'uc'){ %>
+  <% if(showUserInfo){ %>
   <div class="sidebar-user-info clearfix">
     <div class="user-info-photo">
       <img src=""  />
@@ -29,17 +29,22 @@
     </div>
   </div>
   <% } %>
-
+  <% _(menus).each((item) => { %>
+  <div class="sidebar-sub-title">
+    <span class="sfa sfa-sidebar-<%=item.icon%> vertical-middle"></span>
+    <%=item.name%>
+  </div>
   <ul class="sidebar-list">
-    <% _(menus.sub).each(function(menu) { %>
+    <% _(item.sub).each(function(menu) { %>
     <% if (!menu.needAuth || menu.auth) { %>
     <li role="presentation" class="<% if (menu.isActive) { %>active<% } %>">
       <a class="router" href="#<%=menu.router %>">
         <%=menu.name %>
-        <% if (menu.isActive) { %><span class="sfa sfa-sidebar-chevron-right"></span><% } %>
       </a>
     </li>
     <% } %>
     <% }); %>
   </ul>
+  <% }) %>
+
 </div>
