@@ -1,4 +1,26 @@
 <div class="sidebar">
+  <% if(menus.router === 'uc'){ %>
+  <div class="sidebar-user-info clearfix">
+    <div class="user-info-photo">
+      <img src=""  />
+    </div>
+    <div class="user-info-name text-inverse text-center m-top-smd font-sm">您好，<span class="js-user-name">iris123</span></div>
+    <div class="m-top-sm text-center">
+      <span class="sfa sfa-icon-lock m-right-xs"></span>
+      <span class="sfa sfa-icon-light-bulb m-right-xs"></span>
+      <span class="sfa sfa-icon-mobile m-right-xs"></span>
+      <span class="sfa sfa-icon-mail-over"></span>
+    </div>
+    <div class="user-info-safe text-center">
+      <span>账户安全：</span>
+      <div class="safe-progress-bg inline-block">
+        <div class="safe-progress-bar"></div>
+      </div>
+      <span class="js-user-info-safe-level">低</span>
+      <a href="" class="js-user-info-safe-up text-auxiliary m-left-sm">提升&gt;</a>
+    </div>
+  </div>
+  <% }else{ %>
   <div class="sidebar-title sfa-sidebar-<%=menus.icon %>-banner">
     <div class="sidebar-title-inner">
       <span class="sfa sfa-sidebar-dot"></span>
@@ -6,6 +28,7 @@
       <%=menus.name %>
     </div>
   </div>
+  <% } %>
 
   <ul class="sidebar-list">
     <% _(menus.sub).each(function(menu) { %>
