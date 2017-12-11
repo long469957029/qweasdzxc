@@ -47,6 +47,31 @@
 
   .banner-hot-item {
     @include with-margin(8px);
+    position: relative;
+  }
+
+  .sc-hot-game-mask {
+    @include mask(110px, 0);
+    transition: opacity .3s, transform .3s;
+    top: 0;
+    border-radius: 5px;
+
+    .sc-play-btn {
+      background: url('./images/sc-play-btn.png');
+      width: 87px;
+      height: 87px;
+      opacity: 0;
+      margin: 11px auto;
+      transition: opacity .3s;
+    }
+
+    &:hover, &:active {
+      @include mask(110px, .5);
+
+      .sc-play-btn {
+        opacity: 1;
+      }
+    }
   }
 
   .hot-item-img {
@@ -106,6 +131,15 @@
     float: left;
     cursor: pointer;
 
+    .sc-collect-icon {
+      background: url('./images/sc-collect-icon.png');
+      width: 17px;
+      height: 15px;
+      display: inline-block;
+      margin-right: 5px;
+      transform: translateY(2px);
+    }
+
     &:hover, &:active {
       background: $new-main-deep-hover-color;
     }
@@ -115,6 +149,16 @@
 .sc-navbar-search-container {
   @include inline-block();
 
+
+  .sc-search-icon {
+    background: url('./images/sc-search-icon.png');
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    right: 50px;
+    top: 16px;
+    cursor: pointer;
+  }
   input {
     width: 220px;
     height: 30px;
@@ -128,6 +172,19 @@
     line-height: 30px;
     margin-top: 10px;
   }
+
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #1e7980;
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: #1e7980;
+  }
+  :-ms-input-placeholder { /* IE 10+ */
+    color: #1e7980;
+  }
+  :-moz-placeholder { /* Firefox 18- */
+    color: #1e7980;
+  }
 }
 
 .sc-body {
@@ -138,7 +195,6 @@
 .sc-container {
   @include center-container(1200px);
   @include border-box();
-  margin-bottom: 130px;
   border-left: 1px solid #ebedf0;
   border-right: 1px solid #ebedf0;
   padding: 40px 20px;
@@ -153,6 +209,29 @@
   .sc-content {
     float: left;
     width: 868px;
+  }
+
+  .sc-load-more {
+
+  }
+
+  .sc-load-more-btn {
+    width: 240px;
+    height: 50px;
+    line-height: 50px;
+    background: $new-main-deep-color;
+    border: none;
+    color: white;
+    text-align: center;
+    margin: 0 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 25px / 25px;
+    transition: all .3s;
+    &:hover, &:active {
+      background: $new-main-deep-hover-color;
+
+    }
   }
 }
 
@@ -182,6 +261,12 @@
     &.sc-pt-icon {
       background: url('./images/sc-pt-icon.png');
     }
+
+    &.sc-mg-icon {
+      background: url('./images/sc-mg-icon.png');
+      width: 24px;
+      height: 24px;
+    }
   }
 
   .entry-item-title {
@@ -194,7 +279,11 @@
     color: #42495c;
     font-size: 14px;
     margin-bottom: 20px;
-    margin-right: 58px;
+
+    .unit {
+      font-size: 18px;
+    }
+
     span {
       font-size: 24px;
       color: $prominent-color;
@@ -203,13 +292,22 @@
 
   .entry-item-transfer {
     color: #42495c;
-    font-size: 12px;
+    font-size: 14px;
+    float: right;
     text-decoration: underline;
     margin-bottom: 20px;
     cursor: pointer;
 
     &:hover, &:active {
       text-decoration: none;
+    }
+
+    .sc-icon-right {
+      background: url('./images/sc-icon-right.png');
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      transform: translateY(2px);
     }
   }
 
@@ -230,12 +328,16 @@
       background: url('./images/sc-pc-icon.png');
       width: 17px;
       height: 16px;
+      display: inline-block;
+      transform: translateY(2px);
     }
 
     .sc-phone-icon {
       background: url('./images/sc-phone-icon.png');
       width: 12px;
       height: 18px;
+      display: inline-block;
+      transform: translateY(3px);
     }
     &:hover, &:active {
       background: $new-main-deep-hover-color;
@@ -248,27 +350,24 @@
   border: 1px solid #e9e9e9;
   border-radius: 5px;
   background: #f9fbfe;
-  padding: 13px 10px;
+  padding: 72px 10px 0;
   margin-top: 20px;
+  position: relative;
 
-  .sc-win-icon {
-    background: url('./images/sc-pt-icon.png');
-    width: 20px;
-    height: 26px;
-  }
-
-
-  .sc-win-title {
-    color: white;
-    font-size: 18px;
-    text-align: center;
-    margin-bottom: 15px;
+  .sc-win-head {
+    background: url('./images/sc-win-head.png');
+    width: 231px;
+    height: 46px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
   }
 }
 
 .sc-win-item {
   background: #f0f0f0;
-  padding: 10px 5px;
   height: 48px;
   border-radius: 24px / 24px;
   margin-bottom: 25px;
@@ -277,16 +376,55 @@
     @include inline-block();
   }
 
+  .win-item-avator {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    float: left;
+    margin: 5px 15px 5px 5px
+  }
+
   .win-item-name {
-    color: $font-dark;
+    color: $font-gray;
     font-size: 12px;
-    margin-bottom: 10px;
+    text-align: left;
+    float: left;
+    width: 80px;
+    margin-left: 10px;
+
+    .user {
+      margin-bottom: 2px;
+      margin-top: 2px;
+    }
+
+    .game {
+      font-size: 12px;
+      color: $font-dark;
+      text-align: left;
+    }
   }
   .win-item-amount {
     color: $font-black;
-    font-size: 14px;
-    margin-bottom: 10px;
-    font-weight: bold;
+    font-size: 12px;
+    float: left;
+    text-align: right;
+    width: 78px;
+
+    .title {
+      font-size: 12px;
+      color: $font-light;
+      margin-top: 2px;
+    }
+
+    .amount {
+      font-size: 18px;
+      color: $prominent-color;
+    }
+
+    .unit {
+      font-size: 14px;
+      color: $prominent-color
+    }
   }
   .win-item-game {
     color: $font-dark;
@@ -326,9 +464,29 @@
 
 .sc-game-mask {
   @include mask(150px, 0);
-  transition: opacity .3s;
+  transition: opacity .3s, transform .3s;
   top: 0;
   padding-top: 30px;
+  border-radius: 5px;
+
+  .sc-like-btn {
+    width: 24px;
+    height: 20px;
+    background: url('./images/sc-like-btn.png');
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    opacity: 0;
+    transition: opacity .3s;
+    &.liked {
+      background: url('./images/sc-liked-btn.png');
+    }
+  }
+
+  + .sc-game-img {
+    transition: transform .3s;
+  }
 
   .sc-game-btn {
     width: 120px;
@@ -365,12 +523,17 @@
 
   &:hover, &:active {
     @include mask(150px, .5);
+    transform: scale(1.1);
 
     .sc-game-btn {
       opacity: 1;
     }
 
-    + .sc-game-img img {
+    .sc-like-btn {
+      opacity: 1;
+    }
+
+    + .sc-game-img {
       transform: scale(1.1);
     }
   }
