@@ -110,12 +110,14 @@
   }
 
   .sc-navbar-select {
-    width: 100px;
+    width: 130px;
     height: 30px;
     line-height: 30px;
     margin-top: -6px;
     font-size: 14px;
     margin-left: 6px;
+    background: white;
+    color: #333;
   }
 }
 
@@ -155,7 +157,7 @@
     width: 17px;
     height: 17px;
     position: absolute;
-    right: 50px;
+    right: 25px;
     top: 16px;
     cursor: pointer;
   }
@@ -212,7 +214,15 @@
   }
 
   .sc-load-more {
+    margin: 100px auto 0;
+    transition: all .5s;
 
+    .sc-load-icon {
+      background: url('./images/sc-load-icon.png');
+      width: 6px;
+      height: 31px;
+      margin: 10px auto;
+    }
   }
 
   .sc-load-more-btn {
@@ -223,7 +233,7 @@
     border: none;
     color: white;
     text-align: center;
-    margin: 0 4px;
+    margin: 0 auto;
     cursor: pointer;
     font-size: 14px;
     border-radius: 25px / 25px;
