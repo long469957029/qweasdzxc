@@ -23,14 +23,14 @@ $boder-def-color:#e6e6e6;
       margin-top: 45px;
     }
     .safe-progress-bg{
-      width: 40px;
-      height: 4px;
+      width: 42px;
+      height: 6px;
       background-color: $def-white-color;
       position: relative;
       vertical-align: middle;
       .safe-progress-bar{
         position: absolute;
-        height: 4px;
+        height: 6px;
         width: 30%;
         background-color: $prominent-color;
       }

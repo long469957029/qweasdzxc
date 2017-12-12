@@ -333,8 +333,8 @@ $radios: (
   ),
   inverse: (
     bg-color: $font-color,
-    wrapper-color: $inverse-color,
-    inner-color: $inverse-color,
+    wrapper-color: $def-gray-color,
+    inner-color: $new-main-deep-color,
 
     disabled-bg-color: #70999e,
     disabled-wrapper-color: #989898,

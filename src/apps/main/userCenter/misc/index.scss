@@ -207,7 +207,9 @@
 
   //特定长度输入框
   .input4 {
-    width: 153px;
+    width: 148px;
+    border-radius: 3px;
+    padding: 10px 15px;
   }
   .color-dark {
     color: $new-dark-color;
