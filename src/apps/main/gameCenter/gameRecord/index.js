@@ -1,8 +1,9 @@
 
+import { channelId } from 'skeleton/misc/menuConfig'
 
 const TabView = require('com/tabView')
 
-const GameRecordView = require('gameCenter/gameRecord/gameRecord')
+const PlatfomrMoneyDetailView = require('gameCenter/gameRecord/gameRecord')
 const ChaseRecordView = require('userCenter/views/trackRecords')
 const TicketRecordView = require('userCenter/views/bettingRecords')
 
@@ -30,15 +31,61 @@ const TeamBettingRecordView = TabView.extend({
           router: 'gc/cr',
           view: ChaseRecordView,
         },
+        // {
+        //   label: '游戏投注',
+        //   name: 'jsGcGrGr',
+        //   id: 'jsGcGrGr',
+        //   router: 'gc/gr',
+        //   view: GameRecordView,
+        // },
         {
-          label: '游戏投注',
-          name: 'jsGcGrGr',
-          id: 'jsGcGrGr',
-          router: 'gc/gr',
-          view: GameRecordView,
+          label: 'AG',
+          name: 'jsFcMdPlatform',
+          id: 'jsFcMdPlatform',
+          view: PlatfomrMoneyDetailView,
+          options: { channelId: channelId.ag },
+        }, {
+          label: 'EBET',
+          name: 'jsFcMdPlatform',
+          id: 'jsFcMdPlatform',
+          view: PlatfomrMoneyDetailView,
+          options: { channelId: channelId.ebet },
+        }, {
+          label: 'BBIN',
+          name: 'jsFcMdPlatform',
+          id: 'jsFcMdPlatform',
+          view: PlatfomrMoneyDetailView,
+          options: { channelId: channelId.bbin },
         },
-
+        {
+          label: 'PT',
+          name: 'jsFcMdPlatform',
+          id: 'jsFcMdPlatform',
+          view: PlatfomrMoneyDetailView,
+          options: { channelId: channelId.pt },
+        }, {
+          label: 'MG',
+          name: 'jsFcMdPlatform',
+          id: 'jsFcMdPlatform',
+          view: PlatfomrMoneyDetailView,
+          options: { channelId: channelId.mg },
+        },
+        {
+          label: 'GG',
+          name: 'jsFcMdPlatform',
+          id: 'jsFcMdPlatform',
+          view: PlatfomrMoneyDetailView,
+          options: { channelId: channelId.gg },
+        },
+        {
+          label: '188体育',
+          name: 'jsFcMdPlatform',
+          id: 'jsFcMdPlatform',
+          view: PlatfomrMoneyDetailView,
+          options: { channelId: channelId.sport },
+        },
       ],
+      title: '投注记录',
     })
   },
 })

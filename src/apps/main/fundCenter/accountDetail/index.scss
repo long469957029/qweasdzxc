@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+@import "~base/styles/imports";
+
+.view-container{
+  margin-left: 10px;
+  margin-right: 10px;
+  .portlet-inverse{
+    height:80px;
+    .portlet-body{
+      padding-top: 15px;
+      padding-bottom: 25px;
+      height: 30px;
+      .input-md {
+        border: 1px solid #cccccc;
+        font-size: 12px;
+        color: #666666;
+        width: 160px !important;
+        top: 7px;
+        position: relative;
+        .sfa-time-input {
+          font-size: 12px;
+          color: #666666;
+        }
+        &.active, &:hover {
+          border: 1px solid #14b1bb;
+          background-color: transparent;
+        }
+
+      }
+      .select-sm{
+        width: 110px!important;
+        border-color:#cccccc;
+        margin-bottom: 5px;
+        &.active, &:hover {
+          border: 1px solid #14b1bb;
+          background-color: transparent;
+        }
+      }
+      .fc-fm-btn{
+        margin-bottom: 5px;
+      }
+    }
+  }
+  .portlet-filter{
+    margin:0;
+    table{
+      border:0;
+      tr{
+        th{
+          background-color: #f5f5f5;
+          td{
+            border:0
+          }
+        }
+      }
+    }
+    .table-bordered th, .table-bordered td{
+      border:0
+    }
+  }
+}

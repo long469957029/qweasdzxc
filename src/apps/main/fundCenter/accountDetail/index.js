@@ -11,7 +11,7 @@ const AccountDetailsView = TabView.extend({
 
   events: {},
 
-  className: 'as-passwordManage',
+  className: 'fc-detail',
 
   initialize() {
     _(this.options).extend({
@@ -71,6 +71,7 @@ const AccountDetailsView = TabView.extend({
         },
 
       ],
+      title: '帐变明细',
     })
   },
 })
