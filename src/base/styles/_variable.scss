@@ -212,8 +212,8 @@ $input-widths: (
 $inputs: (
   default: (
     color: $new-inverse-color,
-    bg-color: transparent,
-    border-color: $font-color
+    bg-color: #f9f9f9,
+    border-color: $def-gray-color
   ),
   inverse: (
     color: $inverse-color,

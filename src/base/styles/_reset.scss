@@ -7,7 +7,7 @@ body, html {
 body {
   background-color: $background-color;
   color: $def-white-color;
-  font-family: Tahoma,Arial,"宋体",sans-serif;
+  font-family: Tahoma,Arial,"Microsoft YaHei UI","Microsoft Yahei",sans-serif;
   font-size: 12px;
   line-height: 20px;
   margin: 0;
@@ -386,7 +386,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
 }
 
 input {
-  color: $font-color;
+  //color: $font-color;
   &[type="file"]:focus, &[type="radio"]:focus, &[type="checkbox"]:focus {
     outline: thin dotted #333;
     outline-offset: -2px;
@@ -404,7 +404,7 @@ input {
     height: 15px;
     padding: 4px 6px;
     margin-bottom: 0;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 15px;
     color: $font-color;
     vertical-align: middle;

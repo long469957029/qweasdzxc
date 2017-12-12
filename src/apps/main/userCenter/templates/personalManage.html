@@ -1,24 +1,108 @@
 <form action="javascript:void(0);" class="js-uc-personalManage-form form-horizontal uc-personalManage-form">
-  <div class="control-group uc-personalManage-div">
-    <label class="control-label font-bold color-dark ">用户名：</label>
-    <div class="controls">
-      <span class="js-uc-userName" ></span>
+  <div class="uc-personalManage-promat clearfix">
+    <span class="promat-title">个人资料</span>
+    <div class="promat-info">
+      <p>温馨提示：为了您的账号与资金安全，请完善一下信息，以方便我们及时与您取得联系。在逢年过节或玩家生日时，</p>
+      <p>我们会给忠实会员派送礼金或礼品呦！</p>
+    </div>
+  </div>
+  <div class="uc-personalManage-info clearfix">
+    <div class="uc-personal-title pull-left">个人信息</div>
+    <div class="uc-personal-container pull-left">
+      <div class="control-group">
+        <label class="control-label font-bold">用户名：</label>
+        <div class="controls">
+          <span class="js-uc-userName" ></span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label font-bold">注册日期：</label>
+        <div class="controls">
+          <span class="js-uc-regTime" ></span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label font-bold">昵称：</label>
+        <div class="controls">
+          <input type="text" class="js-uc-uName input4" name="uname"
+                 data-parsley-zhLength="[4,16]" data-parsley-userUName
+                 data-parsley-remote data-parsley-remote-validator="checkusername"
+                 data-parsley-remote-options='{"type": "POST"}'
+                 data-parsley-remote-message="昵称已被使用" required />
+          <span class="help-inline">4-16个字符，支持中英文和数字，不能以数字开头</span>
+          <input type="hidden" class="js-uc-userUName-val-res" value="1">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label font-bold">性别：</label>
+        <div class="controls">
+          <input type="radio" name="sex">男
+          <input type="radio" name="sex">女
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label font-bold">生日：</label>
+        <div class="controls">
+          <select name="bday1" class="js-bday1 input1" style="width: 81px" required>
+            <option value="" selected>月
+            <option value="01">1月
+            <option value="02">2月
+            <option value="03">3月
+            <option value="04">4月
+            <option value="05">5月
+            <option value="06">6月
+            <option value="07">7月
+            <option value="08">8月
+            <option value="09">9月
+            <option value="10">10月
+            <option value="11">11月
+            <option value="12">12月
+          </select>
+          <select name="bday2" class="js-bday2 input1" style="width: 81px" required>
+            <option value="" selected>日
+            <option value="01">1日
+            <option value="02">2日
+            <option value="03">3日
+            <option value="04">4日
+            <option value="05">5日
+            <option value="06">6日
+            <option value="07">7日
+            <option value="08">8日
+            <option value="09">9日
+            <option value="10">10日
+            <option value="11">11日
+            <option value="12">12日
+            <option value="13">13日
+            <option value="14">14日
+            <option value="15">15日
+            <option value="16">16日
+            <option value="17">17日
+            <option value="18">18日
+            <option value="19">19日
+            <option value="20">20日
+            <option value="21">21日
+            <option value="22">22日
+            <option value="23">23日
+            <option value="24">24日
+            <option value="25">25日
+            <option value="26">26日
+            <option value="27">27日
+            <option value="28">28日
+            <option value="29">29日
+            <option value="30">30日
+            <option value="31">31日
+          </select>
+          <span class="help-inline ">生日信息提交之后，将不可再修改</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label font-bold">头像：</label>
+        <div class="controls">
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="control-group uc-personalManage-div">
-    <label class="control-label font-bold color-dark">昵称：</label>
-    <div class="controls">
-      <input type="text" class="js-uc-uName input4" name="uname"
-             data-parsley-zhLength="[4,16]" data-parsley-userUName
-             data-parsley-remote data-parsley-remote-validator="checkusername"
-             data-parsley-remote-options='{"type": "POST"}'
-             data-parsley-remote-message="昵称已被使用" required />
-      <span class="help-inline">4-16个字符，支持中英文和数字，不能以数字开头</span>
-      <input type="hidden" class="js-uc-userUName-val-res" value="1">
-    </div>
-  </div>
-  <div class="dot-divider dot-divider-lg"></div>
   <div class="control-group uc-personalManage-div">
     <label class="control-label font-bold color-dark">会员等级：</label>
     <div class="controls">
@@ -38,12 +122,7 @@
       <a class="router text-danger m-left-sm btn-link" href="#fc/fm">查看资金明细</a>
     </div>
   </div>
-  <div class="control-group uc-personalManage-div">
-    <label class="control-label font-bold color-dark">注册日期：</label>
-    <div class="controls">
-      <span class="js-uc-regTime" ></span>
-    </div>
-  </div>
+
   <div class="dot-divider dot-divider-lg"></div>
 
   <div class="control-group uc-personalManage-div">

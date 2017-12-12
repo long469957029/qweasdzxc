@@ -143,10 +143,66 @@
 //begin 3 个人资料
 .uc-personalManage-form {
 
-  padding: 20px 14px 14px 0;
+  //padding: 20px 14px 14px 0;
   padding-bottom: 0;
   margin-bottom: 0;
 
+  .uc-personalManage-promat{
+    width: 100%;
+    height: 99px;
+    border-bottom: 1px solid $third-line-color;
+    .promat-title{
+      float: left;
+      font-size: $font-md;
+      color: $def-black-color;
+      margin: 40px 20px 0px 40px;
+      position: relative;
+      &:after{
+        content: '';
+        width: 1px;
+        height: 16px;
+        background-color: $def-gray-color;
+        position: absolute;
+        top: 3px;
+        right: -10px;
+      }
+    }
+    .promat-info{
+      float: left;
+      color: $font-auxiliary-color;
+      margin-top: 26px;
+    }
+  }
+  .uc-personalManage-info{
+    width: 100%;
+    height: 460px;
+    border-bottom: 1px solid $third-line-color;
+    color: $inverse-color;
+    .uc-personal-title{
+      font-size: $font-md;
+      color: $main-deep-color;
+      margin: 23px 40px;
+      position: relative;
+      &:before{
+        content: '';
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: $main-deep-color;
+        position: absolute;
+        top: 6px;
+        left: -16px;
+        display: block;
+      }
+    }
+    .uc-personal-container{
+      margin-top: 20px;
+      .control-label{
+        text-align: left;
+        color: $def-black-color;
+      }
+    }
+  }
 
 
   //特定长度输入框
