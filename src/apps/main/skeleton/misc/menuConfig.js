@@ -245,7 +245,7 @@ const menuConfig = [
     mask: true,
   },
   {
-    name: '体育投注',
+    name: '体育',
     router: 'sp',
     navItemType: navItemType.dropdown,
     hasDropdown: true,
@@ -280,7 +280,7 @@ const menuConfig = [
     ],
   },
   {
-    name: '真人视讯',
+    name: '娱乐场',
     router: 'rc',
     navItemType: navItemType.dropdown,
     hasDropdown: true,
@@ -316,7 +316,7 @@ const menuConfig = [
     ],
   },
   {
-    name: '电子游戏',
+    name: '老虎机',
     type: 3,
     router: 'sc',
     navItemType: navItemType.dropdown,
@@ -343,7 +343,7 @@ const menuConfig = [
     ],
   },
   {
-    name: '捕鱼游戏',
+    name: '捕鱼',
     router: 'fc',
     navItemType: navItemType.dropdown,
     hasDropdown: true,
@@ -371,7 +371,7 @@ const menuConfig = [
   },
   {
     router: 'bc/19',
-    name: '彩票投注',
+    name: '彩票',
     navItemType: navItemType.dropdown,
     hasDropdown: true,
     dropdownType: dropdownType.classifyList,
@@ -385,14 +385,8 @@ const menuConfig = [
   },
   {
     router: 'newDownload.html',
-    name: '客户端下载',
+    name: '手机投注',
     navItemType: navItemType.outerLink,
-  },
-  {
-    router: '#ma?type=0',
-    name: '在线客服',
-    navItemType: navItemType.jsClass,
-    className: 'js-gl-service nav-right',
   },
 
   {
@@ -410,7 +404,7 @@ function getRouter(router) {
         router: item,
       })
     })
-  } 
+  }
   return _(menuConfig).findWhere({
     router,
   })
