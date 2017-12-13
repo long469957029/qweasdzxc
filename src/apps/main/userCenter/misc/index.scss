@@ -1,0 +1,373 @@
+@charset "UTF-8";
+
+@import "~base/styles/imports";
+
+//begin 1投追记录页查询栏样式
+.search-condition-table {
+  margin-top: 5px;
+  .row1 {
+    margin-bottom: 13px;
+  }
+  .row2 {
+    margin-bottom: 3px;
+  }
+  .control-label {
+    width: 70px;
+    text-align: right;
+  }
+  .label1 {
+    width: 44px;
+  }
+  .label2 {
+    width: 35px;
+  }
+  .input-date {
+    margin-left: -4px;
+    margin-right: 3px;
+    input {
+      width: 117px !important;
+      padding-left: 5px;
+      padding-right: 5px;
+      font-size: 12px;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+  }
+  .input-date-sm {
+    margin-left: -4px;
+    margin-right: 0px;
+    input {
+      width: 80px !important;
+      padding-left: 5px;
+      padding-right: 5px;
+      font-size: 12px;
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+  }
+  .margin-add {
+    margin-right: 4px;
+  }
+  .select1 {
+    width: 129px;
+  }
+  .select2 {
+    width: 120px;
+    margin-right: 3px;
+  }
+
+  .input2 {
+    width: 104px;
+  }
+  .input3 {
+    width: 115px;
+  }
+
+  button {
+    width: 72px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 11px;
+  }
+
+  //下级管理页面
+  .ac-llm-unActive-day-label {
+    width: 100px;
+  }
+
+  .ac-rm-btn {
+    width: 72px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 6px;
+  }
+}
+
+//end 1投追记录页查询栏样式
+
+//begin 2 明细页
+//公共小弹窗提示
+.js-pf-popover {
+  min-height: 20px;
+  max-height: 100px;
+  overflow-y: auto;
+  word-break: break-all;
+}
+.ac-optionalBettingDetail-num {
+  border: 1px solid $table-border-color;
+  height: 168px;
+  overflow-y: auto;
+  word-break: break-all;
+}
+
+.uc-bet-detail {
+  table {
+    th {
+      font-size: 14px;
+    }
+    td {
+      font-size: 14px;
+    }
+  }
+}
+
+.uc-trackDetail-view {
+  .uc-trackDetail-playDetail-bottom {
+    margin-bottom: 18px;
+  }
+
+}
+
+.uc-bet-detail-table {
+  padding: 8px 8px 8px 8px;
+  table {
+
+    font-size: 1.167rem;
+  }
+
+  .text-circle.text-circle-pleasant{
+    &.red{
+      background-color: #e8675d;
+    }
+    &.blue{
+      background-color: #7092FF;
+    }
+    &.green{
+      background-color: #9DCE28;
+    }
+  }
+}
+
+//end 2明细
+
+//begin 3 个人资料
+.uc-personalManage-form {
+
+  //padding: 20px 14px 14px 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+
+  .uc-personalManage-promat{
+    width: 100%;
+    height: 99px;
+    border-bottom: 1px solid $third-line-color;
+    .promat-title{
+      float: left;
+      font-size: $font-md;
+      color: $def-black-color;
+      margin: 40px 20px 0px 40px;
+      position: relative;
+      &:after{
+        content: '';
+        width: 1px;
+        height: 16px;
+        background-color: $def-gray-color;
+        position: absolute;
+        top: 3px;
+        right: -10px;
+      }
+    }
+    .promat-info{
+      float: left;
+      color: $font-auxiliary-color;
+      margin-top: 26px;
+    }
+  }
+  .uc-personalManage-info{
+    width: 100%;
+    height: 460px;
+    border-bottom: 1px solid $third-line-color;
+    color: $inverse-color;
+    .uc-personal-title{
+      font-size: $font-md;
+      color: $main-deep-color;
+      margin: 23px 40px;
+      position: relative;
+      &:before{
+        content: '';
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: $main-deep-color;
+        position: absolute;
+        top: 6px;
+        left: -16px;
+        display: block;
+      }
+    }
+    .uc-personal-container{
+      margin-top: 20px;
+      .control-label{
+        text-align: left;
+        color: $def-black-color;
+      }
+    }
+  }
+
+
+  //特定长度输入框
+  .input4 {
+    width: 148px;
+    border-radius: 3px;
+    padding: 10px 15px;
+  }
+  .color-dark {
+    color: $new-dark-color;
+  }
+  .uc-personalManage-div {
+    margin-bottom: 15px !important;
+  }
+  .uc-personalManage-btn-div {
+    margin-top: 40px !important;
+    margin-bottom: 30px !important;
+  }
+  .uc-amount-color {
+    color: $new-main-deep-color;
+  }
+  .btn {
+    width: 167px;
+    height: 32px;
+  }
+}
+
+//end 个人资料
+
+//卡管理
+.uc-cardManage-view {
+
+  //begin 密码设置页
+  .uc-cm-fund-pwd-png-div {
+    height: 300px;
+  }
+  .uc-cm-text-dark {
+    margin: 50px auto 25px auto;
+    font-size: 16px;
+    color: $new-dark-color;
+  }
+  .uc-cm-link-dark {
+    margin: 0 auto 50px 0;
+    color: $new-dark-color;
+    font-size: 14px;
+  }
+  //end 密码设置页
+
+  //密码输入begin
+  .uc-cm-fund-pwd-form {
+    padding: 17px 14px 14px 25px;
+    text-align: center;
+    .uc-cm-fund-pwd-div {
+      margin-top: 300px;
+      margin-bottom: 5px !important;
+      font-size: 16px;
+      input {
+        width: 150px;
+        height: 19px;
+      }
+      .uc-cm-fund-label {
+        font-size: 16px;
+        padding-bottom: 5px;
+      }
+    }
+    .btn-wd {
+      width: 165px;
+      height: 32px;
+    }
+    .uc-cm-fund-pwd-notice-div {
+      height: 20px;
+      margin-top: 10px;
+      margin-bottom: 25px;
+    }
+  }
+  //密码输入end
+
+  //管理页
+  .uc-cm-notice-div {
+    margin: 5px 5px;
+  }
+  .btn {
+    width: 70px;
+  }
+  .btn-right {
+    margin-left: 33px;
+  }
+  .uc-cm-lg-btn {
+    width: 166px;
+    height: 32px;
+  }
+  .uc-bank-manage-lock {
+    background-image: url(./keyboard.png);
+    height: 487px;
+    overflow: hidden;
+    text-align: center;
+    padding-top: 35px;
+    padding-bottom: 15px;
+  }
+}
+
+//绑定页
+.uc-cbCardBindingForm {
+  padding: 40px 0 0 11px;
+  .control-group {
+    padding: 0 0 5px 0;
+  }
+  .select1 {
+    width: 137px;
+    height: 25px;
+  }
+  .select2 {
+    width: auto;
+    min-width: 137px;
+    height: 25px;
+  }
+  .input1 {
+    width: 123px;
+    height: 15px;
+  }
+  .input2 {
+    width: 228px;
+    height: 15px;
+  }
+  .uc-cm-lg-btn {
+    width: 166px;
+    height: 32px;
+  }
+}
+
+.uc-lg-input {
+  width: 340px;
+}
+
+.price-ul {
+  position: relative;
+  ul {
+    margin: 13px 15px 15px;
+  }
+  .fc-lesson {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+  }
+}
+.uc-prize {
+  height: 410px;
+}
+
+.bc-btn-cancel {
+  position: absolute;
+  top: 5px;
+  right: 74px;
+  padding: 4px 15px;
+  height: 32px;
+}
+.bc-btn-print{
+  position: absolute;
+  top: 5px;
+  right: 163px;
+  padding: 4px 15px;
+  height:32px;
+}
+.level-info{
+  position: relative;
+  top:-5px;
+}
+
