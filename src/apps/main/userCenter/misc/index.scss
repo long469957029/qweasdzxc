@@ -222,6 +222,12 @@
         border-color: $main-deep-color;
         &:after{
           content: '';
+          width: 17px;
+          height: 17px;
+          background: url("~base/images/checked-icon.png") no-repeat;
+          position: absolute;
+          bottom: -4px;
+          right: -3px;
         }
       }
     }
