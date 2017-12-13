@@ -2,9 +2,9 @@
 
 const PersonalManageView = Base.ItemView.extend({
 
-  template: require('userCenter/templates/personalManage.html'),
-
   startOnLoading: true,
+
+  template: require('../templates/personalManage.html'),
 
   events: {
     'submit .js-uc-personalManage-form': 'updatePersonalInfoHandler',

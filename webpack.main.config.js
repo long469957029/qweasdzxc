@@ -105,7 +105,7 @@ module.exports = {
       entry: ['./src/apps/packages/logger/index.js']
     }
   },
-  port: 3004,
+  port: 3002,
   commonChunks: {
     'common.1': []
   },
