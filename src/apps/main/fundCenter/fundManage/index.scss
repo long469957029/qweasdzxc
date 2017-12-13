@@ -401,10 +401,6 @@
         }
         .img-recharge {
           background: url("../misc/v2/icon-rechage-gray.png") no-repeat;
-          &.active {
-            display: block;
-            background: url("../misc/v2/icon-recharge-green.png") no-repeat;
-          }
         }
         .img-withdraw {
           background: url("../misc/v2/icon-withdraw-gray.png") no-repeat;
@@ -446,16 +442,41 @@
           .fc-fm-info-item-num-value {
             font-size: 16px;
             color: #333333;
-            &.active {
-              color: #f09932;
-            }
-          }
-          &.active {
-            color: #f09932;
           }
         }
       }
-
+      &.active{
+        .img-recharge {
+            background: url("../misc/v2/icon-recharge-green.png") no-repeat;
+        }
+        .img-withdraw {
+          background: url("../misc/v2/icon-withdraw-gray.png") no-repeat;
+        }
+        .img-bet {
+          background: url("../misc/v2/icon-bet-gray.png") no-repeat;
+        }
+        .img-award {
+          background: url("../misc/v2/icon-award-gray.png") no-repeat;
+        }
+        .img-rebate {
+          background: url("../misc/v2/icon-rebate-gray.png") no-repeat;
+        }
+        .img-back {
+          background: url("../misc/v2/icon-back-gray.png") no-repeat;
+        }
+        .img-activity {
+          background: url("../misc/v2/icon-activity-gray.png") no-repeat;
+        }
+        .img-profit {
+          background: url("../misc/v2/icon-profit-gray.png") no-repeat;
+        }
+        .fc-fm-info-item-num {
+          .fc-fm-info-item-num-value {
+              color: #f09932;
+          }
+            color: #f09932;
+        }
+      }
     }
   }
 
