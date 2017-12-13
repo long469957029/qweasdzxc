@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+@import "~base/styles/imports";
+
+.fc-detail {
+  margin: 20px;
+  .tab-header {
+    margin-top: 25px;
+    height: 20px;
+    margin-bottom: 10px;
+    .tab-header-title {
+      font-size: 16px;
+      color: #333333;
+      margin-left: 20px;
+      margin-right: 10px;
+    }
+    .tab-header-des {
+      height: 12px;
+      line-height: 12px;
+      font-size: 12px;
+      color: #999999;
+      padding-left:10px;
+      border-left:1px solid #cccccc;
+    }
+
+  }
+  .nav-tabs{
+    border-bottom: 1px solid #cccccc;
+    height: 51px;
+    padding-left: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    li{
+      text-align: center;
+      width: 80px;
+      a{
+        background: transparent;
+        span{
+          font-size:14px;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+    }
+    >.active{
+      a{
+        color: #14b1bb;
+        background-color: transparent;
+        border-bottom: 2px solid #14b1bb;
+        border-top:0;
+        border-left:0;
+        border-right:0;
+        &:after{
+          background-color:transparent;
+        }
+      }
+    }
+  }
+}

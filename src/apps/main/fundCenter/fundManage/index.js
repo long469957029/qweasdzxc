@@ -39,22 +39,22 @@ const FundManageView = Base.ItemView.extend({
   rechargeHandler() {
     $('.js-gl-hd-re').trigger('click')
   },
-  // withdrawHandler() {
-  //   const acctInfo = Global.memoryCache.get('acctInfo')
-  //
-  //   if (!acctInfo || acctInfo.userStatus === 100) {
-  //     Global.ui.notification.show('用户已被冻结，无法进行提现操作。')
-  //     return false
-  //   }
-  //   if (Global.memoryCache.get('acctInfo').foundsLock) {
-  //     Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
-  //       'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" ' +
-  //       'class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
-  //     return false
-  //   }
-  //
-  //   Global.appRouter.navigate('#fc/wd', {trigger: true, replace: false})
-  // },
+  withdrawHandler() {
+    const acctInfo = Global.memoryCache.get('acctInfo')
+
+    if (!acctInfo || acctInfo.userStatus === 100) {
+      Global.ui.notification.show('用户已被冻结，无法进行提现操作。')
+      return false
+    }
+    if (Global.memoryCache.get('acctInfo').foundsLock) {
+      Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
+        'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" ' +
+        'class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
+      return false
+    }
+
+    Global.appRouter.navigate('#fc/wd', { trigger: true, replace: false })
+  },
   goToTransferHandler(e) {
     const $target = $(e.currentTarget)
     const channelId = $target.closest('.js-fc-fm-channel-operation').data('channelid')

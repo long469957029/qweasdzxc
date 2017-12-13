@@ -1,4 +1,4 @@
-
+import './index.scss'
 
 const TabView = Base.LayoutView.extend({
 
@@ -40,6 +40,7 @@ const TabView = Base.LayoutView.extend({
       tabs: this.tabs,
       triggerTab: this.triggerTab,
       append: this.append,
+      title: this.options.title,
     })
 
     if (this.startOnLoading) {
@@ -63,8 +64,6 @@ const TabView = Base.LayoutView.extend({
   },
 
   onRender() {
-    const self = this
-
     this._initTabs()
   },
 
@@ -103,7 +102,7 @@ const TabView = Base.LayoutView.extend({
 
       if (tabInfo.view) {
         if (!self._tabViews[tabInfo.name]) {
-          self._tabViews[tabInfo.name] = new tabInfo.view(tabInfo.options || {})
+          self._tabViews[tabInfo.name] = new tabInfo.View(tabInfo.options || {})
           self._tabViews[tabInfo.name]._parentView = self
         }
 
@@ -111,11 +110,11 @@ const TabView = Base.LayoutView.extend({
           forceShow: tabInfo.toggleInit,
         })
       } else {
-        const staticView = Base.ItemView.extend({
+        const StaticView = Base.ItemView.extend({
           template: tabInfo.template,
         })
 
-        self[tabInfo.name].show(new staticView())
+        self[tabInfo.name].show(new StaticView())
         // self.$('#' + tabInfo.id).html(_(tabInfo.template).template());
         // 调用onRender方法
         self[`on${_($target.data('name')).ucFirst()}Render`]()

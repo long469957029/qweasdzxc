@@ -1,8 +1,9 @@
 
+require('./index.scss')
 
-import SearchGrid from 'com/searchGrid'
-import Timeset from 'com/timeset'
-import tradingStatusConfig from 'fundCenter/misc/tradingStatusConfig'
+const SearchGrid = require('com/searchGrid')
+const Timeset = require('com/timeset')
+const tradingStatusConfig = require('fundCenter/misc/tradingStatusConfig')
 
 const MoneyDetailView = SearchGrid.extend({
 
@@ -68,6 +69,7 @@ const MoneyDetailView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD',
       },
+      showIcon: true,
     }).render()
 
     this.$('select[name=tradeType]').html(_(tradingStatusConfig.get()).map((status) => {

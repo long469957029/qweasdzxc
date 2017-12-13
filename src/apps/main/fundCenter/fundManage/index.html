@@ -20,8 +20,11 @@
       <div class="fc-fm-wd-sum-operation inline-block">
         <button class="btn js-fc-fm-wd-btn fc-fm-wd-btn">提现</button>
       </div>
-    </li>
 
+    </li>
+    <div class="fc-fm-wd-bankCard inline-block">
+      <span class="fc-fm-wd-bankCard-img"></span>
+    </div>
   </ul>
 
   <ul class="fc-fm-mb-qu">
@@ -81,7 +84,7 @@
     <div class="inline-block fc-fm-mb-qu-right">
       <div class="js-fc-tf-out fc-tf-div">
         <span class="fc-tf-div-name">转出钱包：</span>
-        <select class="js-fc-tf-in-input fc-tf-input" name="out">
+        <select class="js-fc-tf-in-input fc-tf-select" name="out">
           <option value="">请选择转出钱包</option>
           <option value=0">中心钱包</option>
           <option value="6">GG钱包</option>
@@ -95,7 +98,7 @@
       </div>
       <div class="js-fc-tf-out fc-tf-div">
         <span class="fc-tf-div-name">转入钱包：</span>
-        <select class="js-fc-tf-in-input fc-tf-input" name="in">
+        <select class="js-fc-tf-in-input fc-tf-select" name="in">
           <option value="">请选择转入钱包</option>
           <option value=0">中心钱包</option>
           <option value="6">GG钱包</option>
@@ -115,6 +118,10 @@
         <button class="btn js-fc-fm-re-btn fc-fm-tf-btn">确定</button>
       </div>
     </div>
+    <div class="inline-block fc-tf-change">
+      <span class="inline-block js-fc-tf-change-img fc-tf-change-img"></span>
+    </div>
+
   </ul>
   <ul>
     <div class="fc-tf-personal-info-select">
@@ -134,14 +141,14 @@
           <span class="fc-fm-info-item-img-area img-recharge active"></span>
         </div>
         <div class="inline-block fc-fm-info-item-info">
-        <div class="fc-fm-info-item-name">
-          充值
-        </div>
-        <div class="fc-fm-info-item-num active">
+          <div class="fc-fm-info-item-name">
+            充值
+          </div>
+          <div class="fc-fm-info-item-num active">
           <span class="fc-fm-info-item-num-value active">
             0.00</span>
             元
-        </div>
+          </div>
         </div>
       </li>
       <li class="fc-fm-info-item">

@@ -9,7 +9,7 @@
     vertical-align: middle;
     border-bottom: 1px solid #cccccc;
     li {
-      width: 490px;
+      width: 460px;
       height: 97px;
       display: inline-block;
       background: #fff;
@@ -48,6 +48,7 @@
             font-size: 17px;
           }
         }
+
       }
       &:nth-child(2) {
         .sfa {
@@ -95,7 +96,7 @@
         .fc-fm-wd-btn {
           width: 95px;
           height: 30px;
-          margin-top: 20px;
+          margin-top: 25px;
           border-radius: 4px;
           background: #0ea8b5;
           border: 0;
@@ -105,9 +106,25 @@
       &:last-child {
         margin-right: 0;
       }
+
+    }
+    .fc-fm-wd-bankCard {
+      width: 65px;
+      height: 91px;
+      .fc-fm-wd-bankCard-img {
+        width: 40px;
+        height: 40px;
+        display: block;
+        margin-top: 30px;
+        margin-left: -40px;
+        background: url("../misc/v2/icon-bankCard-gray.png") no-repeat;
+        &.active, &:hover {
+          background: url("../misc/v2/icon-backCard-deepGray.png") no-repeat
+        }
+      }
+
     }
   }
-
   .fc-fm-mb-qu {
     border-bottom: 1px solid #e3e3e3;
     font-size: 0px;
@@ -117,6 +134,7 @@
       width: 590px;
       margin-top: 30px;
       margin-left: 30px;
+      float: left;
       li.fc-fm-mb-item {
         position: relative;
         width: 220px;
@@ -180,7 +198,7 @@
           line-height: 65px;
           vertical-align: middle;
           display: inline-block;
-          color: #e8675d;
+          color: #333333;
           text-align: right;
         }
 
@@ -228,8 +246,9 @@
       }
     }
     .fc-fm-mb-qu-right {
-      width: 300px;
-      padding: 25px;
+      width: 246px;
+      padding-top: 35px;
+      padding-left: 20px;
       font-size: 14px;
       margin-left: 30px;
       color: #666666;
@@ -239,9 +258,32 @@
           display: block;
           margin-bottom: 5px;
         }
-        .fc-tf-input {
+        .fc-tf-select {
           height: 33px;
           width: 245px;
+          font-size: 12px;
+          appearance: none;
+          -moz-appearance: none;
+          -webkit-appearance: none;
+          background: url('../misc/v2/icon-select-down.png') no-repeat 97% center;
+          text-align-last: center;
+          text-align: center;
+          border-radius: 4px;
+          border-color: #cccccc!important;
+          &.active, &:hover {
+            border-color: #cccccc!important;
+          }
+        }
+        .fc-tf-input {
+          height: 28px;
+          width: 245px;
+          border-radius: 4px;
+          border:1px solid;
+          border-color: #cccccc!important;
+          &.active, &:hover {
+            border:1px solid;
+            border-color: #14b1bb!important;
+          }
         }
         .js-fc-fm-re-btn {
           width: 175px;
@@ -253,6 +295,27 @@
         }
       }
 
+    }
+    .fc-tf-change{
+      height: 80px;
+      width: 20px;
+      float: right;
+      margin-top: 72px;
+      border-top: 1px solid #cccccc;
+      border-right: 1px solid #cccccc;
+      border-bottom: 1px solid #cccccc;
+      margin-right: 63px;
+      .fc-tf-change-img{
+        width: 19px;
+        height:19px;
+        display: block;
+        margin-top: 30px;
+        margin-left: 11px;
+        background: url('../misc/v2/icon-change.png') no-repeat 97% center;
+        &.active, &:hover {
+          background: url('../misc/v2/icon-change-Deep.png') no-repeat 97% center;
+        }
+      }
     }
   }
   .fc-tf-personal-info-select {
@@ -326,69 +389,71 @@
       height: 100px;
       border: 1px solid #cccccc;
       margin: 10px;
-      .fc-fm-info-item-img{
+      .fc-fm-info-item-img {
         margin: 30px 0px 30px 30px;
-        width:40px;
-        height:40px;
+        width: 40px;
+        height: 40px;
         float: left;
-        .fc-fm-info-item-img-area{
-          width:40px;
-          height:40px;
+        .fc-fm-info-item-img-area {
+          width: 40px;
+          height: 40px;
           display: block;
         }
-        .img-recharge{
+        .img-recharge {
           background: url("../misc/v2/icon-rechage-gray.png") no-repeat;
           &.active {
+            display: block;
             background: url("../misc/v2/icon-recharge-green.png") no-repeat;
           }
         }
-        .img-withdraw{
+        .img-withdraw {
           background: url("../misc/v2/icon-withdraw-gray.png") no-repeat;
         }
-        .img-bet{
+        .img-bet {
           background: url("../misc/v2/icon-bet-gray.png") no-repeat;
         }
-        .img-award{
+        .img-award {
           background: url("../misc/v2/icon-award-gray.png") no-repeat;
         }
-        .img-rebate{
+        .img-rebate {
           background: url("../misc/v2/icon-rebate-gray.png") no-repeat;
         }
-        .img-back{
+        .img-back {
           background: url("../misc/v2/icon-back-gray.png") no-repeat;
         }
-        .img-activity{
+        .img-activity {
           background: url("../misc/v2/icon-activity-gray.png") no-repeat;
         }
-        .img-profit{
+        .img-profit {
           background: url("../misc/v2/icon-profit-gray.png") no-repeat;
         }
       }
-      .fc-fm-info-item-info{
+      .fc-fm-info-item-info {
         margin: 24px 0px 24px 0px;
         width: 140px;
         height: 52px;
         backgroud-color: transparent;
         text-align: center;
-        .fc-fm-info-item-name{
+        .fc-fm-info-item-name {
           padding: 3px;
-          font-size:14px;
-          color:#999999;
+          font-size: 14px;
+          color: #999999;
         }
-        .fc-fm-info-item-num{
+        .fc-fm-info-item-num {
           padding: 3px;
-          font-size:14px;
-          color:#333333;
-          .fc-fm-info-item-num-value{
-            font-size:16px;
-            color:#333333;
+          font-size: 14px;
+          color: #333333;
+          .fc-fm-info-item-num-value {
+            font-size: 16px;
+            color: #333333;
+            &.active {
+              color: #f09932;
+            }
           }
-          &.active{
-            color:#f09932;
+          &.active {
+            color: #f09932;
           }
-        }&.active{
-           color:#f09932;
-         }
+        }
       }
 
     }

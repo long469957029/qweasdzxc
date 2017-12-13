@@ -68,6 +68,7 @@ const MoneyDetailView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD',
       },
+      showIcon: true,
     }).render()
 
     // this.$('select[name=tradeType]').html(_(tradingStatusConfig.get()).map(function(status) {
