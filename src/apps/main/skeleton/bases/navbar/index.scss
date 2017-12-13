@@ -259,7 +259,9 @@
 
 .nav-channel-container{
   position: absolute;
-  background: $background-light;
+  background: url('./images/nav-channel-container.png');
+  width: 100vw;
+  height: 200px;
   // transform: scaleY(0);
   z-index: 2;
   width: 100vw;
@@ -271,21 +273,24 @@
 
     .nav-channel-banner {
       @include inline-block-list();
-      width: 250px;
-      height: 196px;
-      background: darken($background-gray, 50%);
-      padding: 40px 20px;
+      width: 240px;
+      height: 200px;
+      background-size: cover;
 
-      .banner-title {
-        font-size: 18px;
-        color: white;
-        margin-bottom: 20px;
+      &.slotPic {
+        background: url('./images/banner-slot.png');
       }
 
-      .banner-desc {
-        font-size: 16px;
-        color: white;
-        line-height: 20px;
+      &.fishPic {
+        background: url('./images/banner-fish.png');
+      }
+
+      &.realPic {
+        background: url('./images/banner-real.png');
+      }
+
+      &.ticketPic {
+        background: url('./images/banner-ticket.png');
       }
     }
 
@@ -321,30 +326,65 @@
 
     .nav-channel-entry-container, .nav-channel-classic-container {
       @include inline-block-list();
-      height: 196px;
-      padding: 20px 25px;
+      height: 200px;
     }
 
     .entry-item {
       @include inline-block-list();
       position: relative;
-      width: 275px;
-      height: 160px;
-      margin-right: 20px;
+      width: 320px;
+      height: 200px;
+      border-right: 1px solid #f0f0f0;
+      padding: 40px 0 0 45px;
+
+      &.half-width {
+        width: 480px;
+        padding: 14px 0 0 45px;
+      }
+
       > div {
         @include inline-block-list();
       }
     }
 
     .entry-item-img {
-      width: 138px;
-      height: 138px;
+      width: 104px;
+      height: 100px;
       margin-right: 15px;
       margin-top: 10px;
 
-      img {
-        width: 100%;
-        height: auto;
+      &.icon-real-ag {
+        background: url('./images/icon-real-ag.png');
+      }
+      &.icon-real-ebet {
+        background: url('./images/icon-real-ebet.png');
+      }
+      &.icon-real-bbin {
+        background: url('./images/icon-real-bbin.png');
+      }
+
+      &.icon-slot-pt {
+        background: url('./images/icon-slot-pt.png');
+        width: 233px;
+        height: 149px;
+      }
+
+      &.icon-slot-mg {
+        background: url('./images/icon-slot-mg.png');
+        width: 233px;
+        height: 149px;
+      }
+
+      &.icon-fish-ag {
+        background: url('./images/icon-fish-ag.png');
+        width: 156px;
+        height: 137px;
+      }
+
+      &.icon-fish-gg {
+        background: url('./images/icon-fish-gg.png');
+        width: 155px;
+        height: 137px;
       }
     }
 
@@ -354,38 +394,46 @@
     }
 
     .entry-item-title {
-      font-size: 20px;
-      color: $font-dark;
+      font-size: 16px;
+      color: $font-gray;
       margin-bottom: 10px
     }
 
     .entry-item-desc {
       font-size: 14px;
-      color: $font-gray;
-      margin-bottom: 10px
+      color: $font-light;
+      margin-bottom: 17px
     }
 
     .entry-item-btn {
-      width: 120px;
-      height: 32px;
-      border-radius: 32px / 32px;
-      color: $font-dark;
+      width: 90px;
+      height: 28px;
+      border-radius: 14px / 14px;
+      border: none;
+      color: white;
       font-size: 14px;
-      line-height: 32px;
-      margin-bottom: 10px;
-      background: transparent;
+      line-height: 28px;
+      background: $new-main-deep-color;
       padding: 0;
+      display: block;
+      margin: 0 auto 10px;
+
+      &:hover, &:active {
+        background: $new-main-deep-hover-color;
+      }
     }
 
     .nav-channel-link {
       background: transparent;
-      color: $font-gray;
+      color: $new-main-deep-color;
       font-size: 14px;
       text-decoration: underline;
       text-align: center;
       padding: 0px 7px;
-      &:nth-child(1) {
-        border-right: 1px solid $font-gray;
+      cursor: pointer;
+
+      &.prominent-link {
+        color: $prominent-color;
       }
     }
 
