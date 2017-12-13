@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label p-top-sm">昵称：</label>
+        <label class="control-label p-top-xs">昵称：</label>
         <div class="controls">
           <input type="text" class="js-uc-uName input4 font-sm" name="uname"
                  data-parsley-zhLength="[4,16]" data-parsley-userUName
@@ -116,28 +116,32 @@
   </div>
 
   <div class="uc-personalManage-info clearfix">
-    <div class="uc-personal-title pull-left">收货地址</div>
-    <div class="uc-personal-container pull-left">
+    <div class="uc-personal-title pull-left p-top-sm">收货地址</div>
+    <div class="uc-personal-container p-top-sm pull-left">
       <div class="control-group">
-        <label class="control-label p-top-sm">收货人：</label>
+        <label class="control-label p-top-xs">收货人：</label>
         <div class="controls">
-          <input type="text" class="font-sm" name="exName"
+          <input type="text" class="font-sm input4 input-jb" name="exName"
                  data-parsley-range="[2,10]" required />
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label p-top-sm">收货手机：</label>
+        <label class="control-label p-top-xs">收货手机：</label>
         <div class="controls">
-          <input type="text" class="font-sm" name="exPhone"
+          <input type="text" class="font-sm input4 input-jb" name="exPhone"
                  data-parsley-phone required />
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="control-group uc-personalManage-btn-div">
-    <div class="controls">
-      <button type="submit" class="js-uc-confirm btn input4" data-loading-text="保存中">保存资料</button>
+      <div class="control-group">
+        <label class="control-label p-top-xs">省市区：</label>
+        <div class="controls">
+          <input type="text" class="font-sm input4" name="exPhone"
+                 data-parsley-phone required />
+        </div>
+      </div>
+      <div class="controls">
+        <button type="submit" class="js-uc-confirm btn input4" data-loading-text="保存中">保存资料</button>
+      </div>
     </div>
   </div>
 </form>
