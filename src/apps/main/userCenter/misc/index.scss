@@ -206,23 +206,33 @@
       }
     }
   }
-  .head-img{
-    display: inline-block;
-    width: 45px;
-    height: 45px;
-    margin-right: 10px;
-    margin-bottom: 20px;
-    border: 3px solid $def-gray-color;
-    border-radius: 50%;
-    position: relative;
-    cursor: pointer;
-    &.active{
-      border-color: $main-deep-color;
-      &:after{
-        content: '';
+  .uc-head-icon-list{
+    width: 580px;
+    .icon-info{
+      display: inline-block;
+      width: 45px;
+      height: 45px;
+      margin-right: 10px;
+      margin-bottom: 20px;
+      border: 3px solid $def-gray-color;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+      &.active{
+        border-color: $main-deep-color;
+        &:after{
+          content: '';
+        }
       }
     }
+    .head-img{
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      animation: flipInY 1s;
+    }
   }
+
   //特定长度输入框
   .input4 {
     width: 148px;
@@ -395,3 +405,32 @@
   top:-5px;
 }
 
+@keyframes flipInY{
+
+  from {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+  40% {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+  }
+  60% {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+    opacity: 1;
+  }
+  80% {
+    -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+  }
+  to {
+    -webkit-transform: perspective(400px);
+    transform: perspective(400px);
+  }
+}

@@ -232,18 +232,18 @@ $select: (
   default: (
     border-color: $sec-gray-color,
     color: $def-black-color,
-    background: url(~base/images/select-caret-bg-lg.png) no-repeat scroll 102% center transparent
+    background: url(~base/images/select-arrow-black.png) no-repeat scroll 90% center transparent
   ),
   inverse: (
-    border-color: $new-inverse-color,
-    color: $inverse-color,
-    background: url(~base/images/select-caret-black.png) no-repeat scroll 97% center transparent
+    border-color: $sec-gray-color,
+    color: $def-black-color,
+    background: url(~base/images/select-caret-bg-lg.png) no-repeat scroll 102% center transparent
   ),
   black: (
     border-color: $new-inverse-color,
     color: $new-black-color,
     background: url(~base/images/select-caret-black.png) no-repeat scroll 97% center transparent
-  )
+  ),
 );
 
 $disabled: (
@@ -284,7 +284,7 @@ $basics: (
     select: map_get($select, inverse),
     input: map_get($inputs, inverse),
     disabled: map_get($disabled, inverse),
-    bg-color: $new-light-color,
+    bg-color: $def-white-color,
     color: $new-inverse-color
   ),
   side-main: (

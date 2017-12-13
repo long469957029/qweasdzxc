@@ -11,6 +11,12 @@ const PersonalManageView = Base.ItemView.extend({
     'click .js-uc-reset': 'resetPageHandler',
   },
 
+  getHeadIconXhr() {
+    return Global.sync.ajax({
+      url: '/acct/userinfo/headIconList.json',
+    })
+  },
+
   onRender() {
     const self = this
     this.$form = this.$('.js-uc-personalManage-form')
@@ -25,6 +31,7 @@ const PersonalManageView = Base.ItemView.extend({
     this.$province = this.$('.js-uc-province')
     this.$city = this.$('.js-uc-city')
     this.$area = this.$('.js-uc-area')
+    this.$headIconList = this.$('.js-uc-head-icon-list')
 
     Global.sync.ajax({
       url: '/acct/userinfo/userdetail.json',
@@ -37,15 +44,11 @@ const PersonalManageView = Base.ItemView.extend({
         if (res && res.result === 0) {
           self.$('.js-uc-userName').html(res.root.userName)
           self.$('.js-uc-uName').val(res.root.uName)
-          // self.$('.js-uc-balance').html(_(res.root.balance).convert2yuan())
-          // self.$('.js-uc-vip-level').html(`<span class="sfa mall-level-${res.root.memberLevel} level-info"></span>`)// self.levelName(res.root.memberLevel)
-          // self.$('.js-uc-vip-integral').html(_(res.root.integral).formatDiv(10000))
+          self.iconId = res.root.headIconId
           self.$('.js-uc-regTime').html(_(res.root.userRegTime).toTime())
           if (!_.isNull(res.root.gender)) {
             self.$(':radio[name="ucSex"]').attr('checked', res.root.gender)
           }
-          // self.$('.js-uc-qqNum').val(res.root.userQq)
-          // self.$('.js-uc-eMail').val(res.root.userEmail)
           const bday = res.root.userBithday
           if (bday !== null && bday !== '' && bday !== '-') {
             const _bday = bday.split('-')
@@ -59,6 +62,14 @@ const PersonalManageView = Base.ItemView.extend({
           self.$receiver.val(res.root.receiverName)
           self.$phone.val(res.root.receivePhone)
           self.$addressDetail.val(res.root.receiverDetailAddr)
+          self.getHeadIconXhr()
+            .done((_res) => {
+              if (_res && _res.result === 0) {
+                if (_res.root && _res.root.records) {
+                  self.formateHeadIconList(_res.root.records)
+                }
+              }
+            })
         } else {
           Global.ui.notification.show('获取用户个人信息失败')
         }
@@ -71,19 +82,14 @@ const PersonalManageView = Base.ItemView.extend({
     }, '/acct/userinfo/checkuname.json')
   },
 
-  // levelName (level) {
-  //   let levelName = ''
-  //   switch (parseInt(level)) {
-  //     case 0: levelName = '骑士'; break
-  //     case 1: levelName = '男爵'; break
-  //     case 2: levelName = '子爵'; break
-  //     case 3: levelName = '伯爵'; break
-  //     case 4: levelName = '侯爵'; break
-  //     case 5: levelName = '公爵'; break
-  //     case 6: levelName = '大公'; break
-  //   }
-  //   return levelName
-  // },
+  formateHeadIconList(data) {
+    if (data) {
+      this.$headIconList.empty()
+      _(data).each((item) => {
+        this.$headIconList.append(`<li class="icon-info js-head-icon-info ${item.id === this.iconId ? 'active' : ''}"><img src="${item.url}" class="head-img"></li>`)
+      })
+    }
+  },
 
   updatePersonalInfoHandler() {
     const self = this
