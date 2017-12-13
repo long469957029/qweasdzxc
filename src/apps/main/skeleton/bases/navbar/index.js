@@ -18,10 +18,10 @@ const NavsView = Base.ItemView.extend({
     'mouseleave .js-nav-game-type': 'gameTypeLeaveHandler',
     // 'click .js-nav-channel-item': 'channelItemClickHandler',
     'click .js-nav-channel-btn': 'jumpGamePageHandler',
-    'click .nav-sub a': 'ckSubHanler',
     'mouseenter .js-nav-mall': 'navMallMouseenterrInHandler',
     'mouseleave .js-nav-mall': 'navMallmouseLeaveHandler',
     'mouseleave .js-nav-mall-sub': 'outMallSelectHandler',
+    'click .js-navbar-tab': 'tabEffectHandler',
   },
   // gameTypeEnterHandler(e) {
   //   const $target = $(e.currentTarget)
@@ -45,6 +45,27 @@ const NavsView = Base.ItemView.extend({
       data,
       async: false,
     })
+  },
+
+  tabEffectHandler(e) {
+    const self = this
+    const $target = $(e.currentTarget)
+
+    self.$('.js-navbar-nav').find('.js-navbar-tab').each((index, tab) => {
+      $(tab).removeClass('active')
+    })
+    $target.addClass('active')
+
+    const tabIndex = parseInt($target.closest('li').data('index'), 10)
+
+    if (tabIndex === 0) {
+      this.$underLine.addClass('hidden')
+    } else {
+      this.$underLine.removeClass('hidden')
+      this.$underLine.animate({
+        left: `${196 + (tabIndex - 1) * 99}px`,
+      })
+    }
   },
 
   // channelItemClickHandler(e) {
@@ -198,6 +219,8 @@ const NavsView = Base.ItemView.extend({
 
     this.showMallList = false // 接口如果没有返回值或者报错 将不显示下拉
 
+    this.$underLine = this.$('.js-navbar-slide-underline')
+
     this.formateMallEntryList()
   },
   formateMallEntryList () {
@@ -307,9 +330,6 @@ const NavsView = Base.ItemView.extend({
     }
   },
   outTicketSelectHandler () {
-    this.$navSubtogglo.css('display', 'none')
-  },
-  ckSubHanler () {
     this.$navSubtogglo.css('display', 'none')
   },
   navMallMouseenterrInHandler () {

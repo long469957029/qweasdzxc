@@ -2,8 +2,6 @@
 
 const PersonalManageView = Base.ItemView.extend({
 
-  template: require('userCenter/templates/personalManage.html'),
-
   startOnLoading: true,
 
   events: {
@@ -31,9 +29,9 @@ const PersonalManageView = Base.ItemView.extend({
           self.$('.js-uc-regTime').html(_(res.root.userRegTime).toTime())
           self.$('.js-uc-qqNum').val(res.root.userQq)
           self.$('.js-uc-eMail').val(res.root.userEmail)
-          var bday = res.root.userBithday
-          if (bday != null && bday != '' && bday != '-') {
-            var bday = bday.split('-')
+          let bday = res.root.userBithday
+          if (bday !== null && bday !== '' && bday !== '-') {
+            bday = bday.split('-')
             if (bday && bday.length === 2) {
               self.$('.js-bday1').val(bday[0])
               self.$('.js-bday2').val(bday[1])
@@ -60,7 +58,7 @@ const PersonalManageView = Base.ItemView.extend({
 
   levelName (level) {
     let levelName = ''
-    switch (parseInt(level)) {
+    switch (parseInt(level, 10)) {
       case 0: levelName = '骑士'; break
       case 1: levelName = '男爵'; break
       case 2: levelName = '子爵'; break
@@ -68,11 +66,13 @@ const PersonalManageView = Base.ItemView.extend({
       case 4: levelName = '侯爵'; break
       case 5: levelName = '公爵'; break
       case 6: levelName = '大公'; break
+      default:
+        break
     }
     return levelName
   },
 
-  updatePersonalInfoHandler(e) {
+  updatePersonalInfoHandler() {
     const self = this
     this.$btnConfirm.button('loading')
     const month = this.$('.js-bday1').val()

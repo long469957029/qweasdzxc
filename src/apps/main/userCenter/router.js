@@ -1,7 +1,3 @@
-
-
-require('./misc/index.scss')
-
 const UserCenterController = require('userCenter/controller')
 
 exports.install = function() {

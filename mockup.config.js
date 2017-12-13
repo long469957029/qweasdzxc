@@ -25,5 +25,7 @@ module.exports = {
     '/mall/coupon/couponList.json': 'mockup/couponList.json',
     '/mall/integral/detailList.json':'mockup/integral.json',
     '/mall/gift/myGiftList.json':'mockup/gifExchange.json',
+    '/ticket/game/prizeList.json': 'mockup/prizeList.json',
+    '/ticket/game/sublist.json': 'mockup/subList.json',
   }
 };
