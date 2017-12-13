@@ -1,0 +1,38 @@
+{
+  "msg": "ok",
+  "result": 0,
+  "root": {
+    "records": [
+      {
+        "userName": "fra***",
+        "gameName": "百家乐",
+        "prize": 5000000
+      },
+      {
+        "userName": "fra***",
+        "gameName": "百家乐",
+        "prize": 5000000
+      },
+      {
+        "userName": "fra***",
+        "gameName": "百家乐",
+        "prize": 5000000
+      },
+      {
+        "userName": "fra***",
+        "gameName": "百家乐",
+        "prize": 5000000
+      },
+      {
+        "userName": "fra***",
+        "gameName": "百家乐",
+        "prize": 5000000
+      },
+      {
+        "userName": "fra***",
+        "gameName": "百家乐",
+        "prize": 5000000
+      }
+    ]
+  }
+}

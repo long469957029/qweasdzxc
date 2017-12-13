@@ -1,46 +1,7 @@
 <div class="sc-banner">
-  <div class="sc-banner-mask"></div>
   <div class="sc-banner-hot">
-    <div class="banner-hot-logo">热门游戏</div>
     <div class="banner-hot-container">
-      <div class="banner-hot-row">
-        <div class="col-md-2">
-          <div class="banner-hot-item">
-            <div class="hot-item-img"></div>
-            <div class="hot-item-title">美国队长</div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="banner-hot-item">
-            <div class="hot-item-img"></div>
-            <div class="hot-item-title">美国队长</div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="banner-hot-item">
-            <div class="hot-item-img"></div>
-            <div class="hot-item-title">美国队长</div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="banner-hot-item">
-            <div class="hot-item-img"></div>
-            <div class="hot-item-title">美国队长</div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="banner-hot-item">
-            <div class="hot-item-img"></div>
-            <div class="hot-item-title">美国队长</div>
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="banner-hot-item">
-            <div class="hot-item-img"></div>
-            <div class="hot-item-title">美国队长</div>
-          </div>
-        </div>
-      </div>
+      <div class="banner-hot-row js-hotGames"></div>
     </div>
   </div>
 </div>
@@ -49,135 +10,100 @@
   <div class="sc-navbar-container">
     <div class="sc-navbar-select-container">
       <span>游戏平台</span>
-      <select name="sc-navbar-select js-channel-select" id="">
+      <select class="sc-navbar-select js-channel-select" id="">
         <option value="">全部</option>
         <option value="1">PT</option>
         <option value="1">MG</option>
       </select>
     </div>
-    <div class="sc-navbar-option-container">
-      <div class="sc-navbar-option js-type-option">热门游戏</div>
-      <div class="sc-navbar-option js-type-option">累计游戏</div>
-      <div class="sc-navbar-option js-type-option">老虎机</div>
-      <div class="sc-navbar-option js-type-option">桌面游戏</div>
-      <div class="sc-navbar-option js-type-option">视频游戏</div>
-      <div class="sc-navbar-option js-type-option">街机游戏</div>
-      <div class="sc-navbar-option js-type-option">刮刮乐</div>
-      <div class="sc-navbar-option js-type-option">全部游戏</div>
+    <div class="sc-navbar-option-container js-type-option-container">
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="1">热门游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="2">累计游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="3">老虎机</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="4">桌面游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="5">视频游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="6">街机游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option">全部游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" >
+        <span class="sc-collect-icon"></span>我的收藏
+      </div>
     </div>
     <div class="sc-navbar-search-container">
       <div class="sc-search-icon"></div>
-      <input type="text" class="sc-search">
+      <input type="text" class="js-sc-search sc-search" placeholder="请输入游戏名称">
     </div>
   </div>
 </div>
 
-<div class="sc-container">
-  <div class="sc-row">
+<div class="fc-body">
+  <div class="sc-container">
     <div class="sc-sidebar">
       <div class="sc-entry-container">
         <div class="sc-entry-item">
-          <div class="entry-item-logo"></div>
-          <div class="entry-item-title">PT 老虎机</div>
-          <div class="entry-item-rest">PT馀额： 120.00</div>
-          <div class="entry-item-transfer">转帐></div>
-          <div class="btn entry-item-btn">PC客户端</div>
-          <div class="btn entry-item-btn">手机版</div>
+          <div class="entry-item-logo sc-pt-icon"></div>
+          <div class="entry-item-title">
+            PT老虎机
+          </div>
+          <div class="entry-item-rest">
+            PT馀额：<span class="unit">￥</span><span class="js-ptBalance">0.00</span></div>
+          <div class="entry-item-transfer">
+            转帐
+            <div class="sc-icon-right"></div>
+          </div>
+          <div class="clearfix"></div>
+          <div>
+            <div class="entry-item-btn ripple-btn">
+              <div class="sc-pc-icon"></div> PC客户端
+            </div>
+            <div class="entry-item-btn ripple-btn">
+              <div class="sc-phone-icon"></div> 手机版
+            </div>
+          </div>
         </div>
         <div class="sc-entry-item">
-          <div class="entry-item-logo"></div>
-          <div class="entry-item-title">MG 老虎机</div>
-          <div class="entry-item-rest">MG馀额： 120.00</div>
-          <div class="entry-item-transfer">转帐></div>
-          <div class="btn entry-item-btn">PC客户端</div>
-          <div class="btn entry-item-btn">手机版</div>
+          <div class="entry-item-logo sc-mg-icon"></div>
+          <div class="entry-item-title">
+            MG老虎机
+          </div>
+          <div class="entry-item-rest">
+            MG馀额：<span class="unit">￥</span><span class="js-mgBalance">0.00</span></div>
+          <div class="entry-item-transfer">
+            转帐
+            <div class="sc-icon-right"></div>
+          </div>
+          <div class="clearfix"></div>
+          <div>
+            <div class="entry-item-btn ripple-btn">
+              <div class="sc-pc-icon"></div> PC客户端
+            </div>
+            <div class="entry-item-btn ripple-btn">
+              <div class="sc-phone-icon"></div> 手机版
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="sc-win-container">
-        <div class="sc-win-title">优胜榜单</div>
-        <div class="sc-win-list">
-          <div class="sc-win-item">
-            <div class="win-item-name">bm365***huanqi</div>
-            <div class="win-item-amount">￥256.46</div>
-            <div class="win-item-game">钢铁侠</div>
-          </div>
-          <div class="sc-win-item">
-            <div class="win-item-name">bm365***huanqi</div>
-            <div class="win-item-amount">￥256.46</div>
-            <div class="win-item-game">钢铁侠</div>
-          </div>
-          <div class="sc-win-item">
-            <div class="win-item-name">bm365***huanqi</div>
-            <div class="win-item-amount">￥256.46</div>
-            <div class="win-item-game">钢铁侠</div>
-          </div>
-          <div class="sc-win-item">
-            <div class="win-item-name">bm365***huanqi</div>
-            <div class="win-item-amount">￥256.46</div>
-            <div class="win-item-game">钢铁侠</div>
-          </div>
-          <div class="sc-win-item">
-            <div class="win-item-name">bm365***huanqi</div>
-            <div class="win-item-amount">￥256.46</div>
-            <div class="win-item-game">钢铁侠</div>
-          </div>
+        <div class="sc-win-head"></div>
+        <div class="sc-win-content">
+          <div class="sc-win-list js-rewardList"></div>
         </div>
       </div>
     </div>
     <div class="sc-content">
-      <div class="sc-content-container">
-        <div class="sc-game-row">
-          <div class="col-md-3">
-            <div class="sc-game-item">
-              <div class="sc-game-mask">
-                <div class="btn sc-game-btn dark">免费试玩</div>
-                <div class="btn sc-game-btn light">开始游戏</div>
-              </div>
-              <div class="sc-game-img">
-                <img src="http://www.jiyouliao.com/wp-content/uploads/2017/07/20170711_59650a334fa25.jpg?width=220&height=160" alt="">
-              </div>
-              <div class="sc-game-title">美国队长</div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="sc-game-item">
-              <div class="sc-game-mask">
-                <div class="btn sc-game-btn dark">免费试玩</div>
-                <div class="btn sc-game-btn light">开始游戏</div>
-              </div>
-              <div class="sc-game-img">
-                <img src="http://www.jiyouliao.com/wp-content/uploads/2017/07/20170711_59650a334fa25.jpg?width=220&height=160" alt="">
-              </div>
-              <div class="sc-game-title">美国队长</div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="sc-game-item">
-              <div class="sc-game-mask">
-                <div class="btn sc-game-btn dark">免费试玩</div>
-                <div class="btn sc-game-btn light">开始游戏</div>
-              </div>
-              <div class="sc-game-img">
-                <img src="http://www.jiyouliao.com/wp-content/uploads/2017/07/20170711_59650a334fa25.jpg?width=220&height=160" alt="">
-              </div>
-              <div class="sc-game-title">美国队长</div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="sc-game-item">
-              <div class="sc-game-mask">
-                <div class="btn sc-game-btn dark">免费试玩</div>
-                <div class="btn sc-game-btn light">开始游戏</div>
-              </div>
-              <div class="sc-game-img">
-                <img src="http://www.jiyouliao.com/wp-content/uploads/2017/07/20170711_59650a334fa25.jpg?width=220&height=160" alt="">
-              </div>
-              <div class="sc-game-title">美国队长</div>
-            </div>
-          </div>
-        </div>
+      <div class="sc-content-container js-sc-content-container">
+      </div>
+      <div class="sc-load-more">
+        <div class="sc-load-more-btn ripple-btn">点击加载更多</div>
+        <div class="sc-load-icon"></div>
       </div>
     </div>
   </div>
 </div>
+
+<form class="js-sc-slot-form hidden" action="/info/game/jump" target="_blank">
+  <input type="hidden" class="js-sc-gameId" name="gameId">
+  <input type="hidden" class="js-sc-token" name="token">
+  <input type="hidden" class="js-sc-type" name="type">
+  <input type="hidden" class="js-sc-device" name="device">
+</form>
