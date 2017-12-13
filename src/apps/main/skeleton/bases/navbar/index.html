@@ -31,10 +31,7 @@
                 <% if (menu.dropdownType === 1) { %>
                   <div class="js-nav-channel-container nav-channel-container">
                     <ul>
-                      <div class="nav-channel-banner">
-                        <div class="banner-title"><%= menu.bannerTitle %></div>
-                        <div class="banner-desc"><%= menu.bannerDesc %></div>
-                      </div>
+                      <div class="nav-channel-banner <%= menu.bannerPicClass %>"></div>
                       <div class="nav-channel-list-container">
                         <%_(menu.subGame).each(function(channel){%>
                           <li class="list-item">
@@ -49,22 +46,17 @@
                 <% if (menu.dropdownType === 2) { %>
                   <div class="js-nav-channel-container nav-channel-container">
                     <ul>
-                      <div class="nav-channel-banner">
-                        <div class="banner-title"><%= menu.bannerTitle %></div>
-                        <div class="banner-desc"><%= menu.bannerDesc %></div>
-                      </div>
+                      <div class="nav-channel-banner <%= menu.bannerPicClass %>"></div>
                       <div class="nav-channel-entry-container">
-                        <%_(menu.subGame).each(function(channel){%>
-                          <li class="entry-item">
-                            <div class="entry-item-img">
-                              <img src="<%= channel.imgSrc %>" alt="">
-                            </div>
+                        <%_(menu.subGame).each(function(channel, index, subGame){%>
+                          <li class="entry-item <%= subGame.length === 2 ? 'half-width' : '' %>">
+                            <div class="entry-item-img <%= channel.imgSrc %>"></div>
                             <div class="entry-item-content">
                               <div class="entry-item-title"><%= channel.channelName %></div>
                               <div class="entry-item-desc"><%= channel.desc %></div>
-                              <div class="js-nav-channel-btn btn entry-item-btn" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="<%=menu.type%>">进入游戏</div>
-                              <a class="js-nav-channel-btn nav-channel-link" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="<%=menu.type%>">试玩版</a>
-                              <a class="js-nav-channel-btn nav-channel-link" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="<%=menu.type%>">手机版</a>
+                              <div class="js-nav-channel-btn btn entry-item-btn ripple-btn" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="<%=menu.type%>">进入游戏</div>
+                              <a class="js-nav-channel-btn nav-channel-link prominent-link" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="1">试玩版</a>
+                              <a class="js-nav-channel-btn nav-channel-link" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="0">手机版</a>
                             </div>
                           </li>
                         <%})%>
@@ -75,10 +67,7 @@
                 <% if (menu.dropdownType === 3) { %>
                   <div class="js-nav-channel-container nav-channel-container">
                     <ul>
-                      <div class="nav-channel-banner">
-                        <div class="banner-title"><%= menu.bannerTitle %></div>
-                        <div class="banner-desc"><%= menu.bannerDesc %></div>
-                      </div>
+                      <div class="nav-channel-banner <%= menu.bannerPicClass %>"></div>
                       <div class="nav-channel-classic-container">
                         <div class="classic-title">
                           <h3><%= classicTicketList.title %></h3>
