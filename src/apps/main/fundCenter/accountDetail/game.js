@@ -41,7 +41,7 @@ const MoneyDetailView = SearchGrid.extend({
         //   width: '15%'
         // }
       ],
-      tip: '<div class="tip-hot"><span>提示</span> 帐户明细只保留30天数据。</div>',
+      // tip: '<div class="tip-hot"><span>提示</span> 帐户明细只保留30天数据。</div>',
       gridOps: {
         emptyTip: '没有账户明细',
       },
@@ -63,10 +63,10 @@ const MoneyDetailView = SearchGrid.extend({
       endTimeHolder: '结束日期',
       endDefaultDate: _(moment().add('day', 0)).toDate(),
       startOps: {
-        format: 'YYYY-MM-DD',
+        format: 'YYYY-MM-DD HH:mm:ss',
       },
       endOps: {
-        format: 'YYYY-MM-DD',
+        format: 'YYYY-MM-DD HH:mm:ss',
       },
       showIcon: true,
     }).render()
@@ -95,11 +95,11 @@ const MoneyDetailView = SearchGrid.extend({
     // 加上统计行
     this.grid.addFooterRows({
       trClass: 'tr-footer',
-      columnEls: [
-        '<strong>所有页总计</strong>',
-        '', '', '',
-        _(gridData.amountTotal).fixedConvert2yuan(),
-      ],
+      // columnEls: [
+      //   '<strong>所有页总计</strong>',
+      //   '', '', '',
+      //   _(gridData.amountTotal).fixedConvert2yuan(),
+      // ],
     }).hideLoading()
   },
 

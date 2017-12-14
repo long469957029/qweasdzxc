@@ -1,5 +1,3 @@
-
-
 require('./index.scss')
 
 $.widget('gl.pagination', {
@@ -7,7 +5,7 @@ $.widget('gl.pagination', {
   options: {
     namespace: 'glPagination',
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 12,
     maxPaginationNum: 6,
     onPaginationChange: _.noop,
     totalSize: 0,
@@ -58,22 +56,20 @@ $.widget('gl.pagination', {
     pageIndex = pageIndex || 0
     totalSize = totalSize || 0
 
-    let pageSize = this.options.pageSize,
-      totalPage = Math.ceil(totalSize / pageSize),
-      pageIndexs = totalPage,
-      html = [],
-      i,
-      // 最小区间
-      minSphere,
-      // 最大区间
-      maxSphere,
-      size = 0
-
+    const pageSize = this.options.pageSize
+    const totalPage = Math.ceil(totalSize / pageSize)
+    const pageIndexs = totalPage
+    const html = []
+    let i
+    // 最小区间
+    let minSphere
+    // 最大区间
+    let maxSphere
+    // let size
     //
     // if (totalSize === 0) {
-      // return;
+    // return;
     // }
-
     // maxSphere,
     minSphere = pageIndex - Math.floor(_(this.options.maxPaginationNum).div(2))
     minSphere = minSphere > 0 ? minSphere : 0
@@ -82,16 +78,16 @@ $.widget('gl.pagination', {
       (Math.floor(_(this.options.maxPaginationNum).div(2)) - pageIndex + minSphere) - 1
     maxSphere = maxSphere > (totalPage - 1) ? (totalPage - 1) : maxSphere
 
-    if (pageIndexs <= this.options.maxPaginationNum) {
-      size = pageIndexs
-    } else {
-      size = this.options.maxPaginationNum
-    }
+    // if (pageIndexs <= this.options.maxPaginationNum) {
+    //   size = pageIndexs
+    // } else {
+    //   size = this.options.maxPaginationNum
+    // }
 
     html.push('<div class="clearfix">')
 
     if (this.options.pageStyle === 'default') {
-      html.push('<div class="pull-right">')
+      html.push('<div class="text-center foot-nav">')
 
       html.push(`<div class="inline-block m-right-xs">共<span class="total-size">${totalSize}</span>条记录</span></div>`)
 
@@ -99,32 +95,75 @@ $.widget('gl.pagination', {
       html.push('<ul>')
 
       if (pageIndex > 0) {
-        html.push('<li class="pagination-pre" data-pageIndex="prev"><span>&lt;上一页</span></li>')
+        html.push('<li class="pagination-pre" data-pageIndex="prev"><span>&lt;</span></li>')
       } else {
-        html.push('<li class="pagination-pre disabled" data-pageIndex="prev"><span>&lt;上一页</span></li>')
+        html.push('<li class="pagination-pre disabled" data-pageIndex="prev"><span>&lt;</span></li>')
+        // html.push('<li class="pagination-pre disabled" data-pageIndex="prev"><span>&lt;上一页</span></li>')
+      }
+      if (maxSphere <= 3) {
+        for (i = minSphere; i <= maxSphere; ++i) {
+          html.push(`<li data-pageIndex="${i}"`)
+          if (i === pageIndex) {
+            html.push(' class="active" ')
+          }
+          html.push(`><span>${i + 1}</span></li>`)
+        }
+      } else {
+        const preHtml = []
+        const lastHtml = []
+        if (pageIndex < 1) {
+          lastHtml.push(`<li data-pageIndex="${maxSphere}" ><span>${maxSphere + 1}</span></li>`)
+          for (i = minSphere; i <= 1; ++i) {
+            if (i === pageIndex) {
+              preHtml.push(`<li data-pageIndex="${i}" class="active"><span>${i + 1}</span></li>`)
+            } else {
+              preHtml.push(`<li data-pageIndex="${i}" ><span>${i + 1}</span></li>`)
+            }
+          }
+          html.push(preHtml.join(''))
+          html.push('<li class="foot-nav-null">···</li>')
+          html.push(lastHtml)
+        } else if (pageIndex >= maxSphere - 1) {
+          preHtml.push('<li data-pageIndex="0"><span>1</span></li>')
+          for (i = maxSphere - 1; i <= maxSphere; ++i) {
+            if (i === pageIndex) {
+              lastHtml.push(`<li data-pageIndex="${i}" class="active"><span>${i + 1}</span></li>`)
+            } else {
+              lastHtml.push(`<li data-pageIndex="${i}" ><span>${i + 1}</span></li>`)
+            }
+          }
+          html.push(preHtml)
+          html.push('<li class="foot-nav-null">···</li>')
+          html.push(lastHtml.join(''))
+        } else {
+          lastHtml.push(`<li data-pageIndex="${maxSphere}" ><span>${maxSphere + 1}</span></li>`)
+          for (i = pageIndex - 1; i <= pageIndex; ++i) {
+            if (i === pageIndex) {
+              preHtml.push(`<li data-pageIndex="${i}" class="active"><span>${i + 1}</span></li>`)
+            } else {
+              preHtml.push(`<li data-pageIndex="${i}" ><span>${i + 1}</span></li>`)
+            }
+          }
+          html.push(preHtml.join(''))
+          html.push('<li class="foot-nav-null">···</li>')
+          html.push(lastHtml)
+        }
       }
 
-      for (i = minSphere; i <= maxSphere; ++i) {
-        html.push(`<li data-pageIndex="${i}"`)
-        if (i === pageIndex) {
-          html.push(' class="active" ')
-        }
-        html.push(`><span>${i + 1}</span></li>`)
-      }
 
       if (pageIndex < totalPage - 1) {
-        html.push(`<li class="pagination-next" data-pageIndex="next" data-maxPageIndex="${pageIndexs}"><span>&gt;下一页</span></li>`)
+        html.push(`<li class="pagination-next" data-pageIndex="next" data-maxPageIndex="${pageIndexs}"><span>&gt;</span></li>`)
       } else {
-        html.push(`<li class="pagination-next disabled" data-pageIndex="next" data-maxPageIndex="${pageIndexs}"><span>下一页&gt;</span></li>`)
+        html.push(`<li class="pagination-next disabled" data-pageIndex="next" data-maxPageIndex="${pageIndexs}"><span>&gt;</span></li>`)
       }
 
       html.push('</ul>')
 
       html.push('<span>跳转至 </span>')
       html.push(`<input type="text" value="${pageIndex + 1}" data-cur-page="${pageIndex}" class="js-wt-grid-curt-page pagination-curt-page" />`)
-
-      html.push(`</span><span> / <span class="total-page">${totalPage}</span> `)
-      html.push('<button class="js-wt-grid-btn-go-to pagination-go-to btn">确定</button>')
+      html.push('</span>')
+      // html.push(`</span><span> / <span class="total-page">${totalPage}</span> `)
+      html.push('<button class="js-wt-grid-btn-go-to pagination-go-to btn">GO</button>')
 
       html.push('</div>')
       html.push('</div>')
@@ -169,17 +208,19 @@ $.widget('gl.pagination', {
   // event handlers
 
   paginationClickHandler(e) {
-    let $paginationItem = $(e.currentTarget),
-      pageIndex = $paginationItem.attr('data-pageIndex')
+    const $paginationItem = $(e.currentTarget)
+    const pageIndex = $paginationItem.attr('data-pageIndex')
 
     if ($paginationItem.hasClass('disabled')) {
       return
     }
 
     if (pageIndex === 'prev') {
-      --this.options.pageIndex
+      // --this.options.pageIndex
+      this.options.pageIndex = this.options.pageIndex - 1
     } else if (pageIndex === 'next') {
-      ++this.options.pageIndex
+      // ++this.options.pageIndex
+      this.options.pageIndex = this.options.pageIndex + 1
     } else {
       this.options.pageIndex = pageIndex
     }
@@ -189,7 +230,7 @@ $.widget('gl.pagination', {
     return false
   },
 
-  gotoPageSubmitHandler(e) {
+  gotoPageSubmitHandler() {
     if (this.options.totalSize) {
       const $gotoInput = this.element.find('.js-wt-grid-curt-page')
 

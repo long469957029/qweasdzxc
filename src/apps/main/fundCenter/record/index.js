@@ -9,7 +9,7 @@ import TransferView from './transfer'
 const FundRecordsView = TabView.extend({
 
   // className: 'ac-wr-view',
-  className: 'ac-openAccount-view',
+  className: 'fc-detail',
 
   initialize() {
     _(this.options).extend({
@@ -31,6 +31,7 @@ const FundRecordsView = TabView.extend({
           view: TransferView,
         },
       ],
+      title: '充提记录',
     })
   },
 })

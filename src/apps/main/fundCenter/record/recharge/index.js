@@ -1,5 +1,5 @@
 
-
+require('../index.scss')
 const SearchGrid = require('com/searchGrid')
 
 const Timeset = require('com/timeset')
@@ -60,15 +60,23 @@ const RechargeView = SearchGrid.extend({
     // 初始化时间选择
     new Timeset({
       el: this.$('.js-pf-timeset'),
-      startDefaultDate: this.options.reqData.startTime ? this.options.reqData.startTime : _(moment().startOf('day')).toTime(),
-      endDefaultDate: this.options.reqData.endTime ? this.options.reqData.endTime : _(moment().endOf('day')).toTime(),
+      startTimeHolder: '起始日期',
+      startDefaultDate: _(moment().add('day', 0)).toDate(),
+      endTimeHolder: '结束日期',
+      endDefaultDate: _(moment().add('day', 0)).toDate(),
+      startOps: {
+        format: 'YYYY-MM-DD HH:mm:ss',
+      },
+      endOps: {
+        format: 'YYYY-MM-DD HH:mm:ss',
+      },
+      showIcon: true,
     }).render()
-
     SearchGrid.prototype.onRender.apply(this, arguments)
   },
 
   renderGrid(gridData) {
-    const rowsData = _(gridData.rechargeList).map(function(info, index, list) {
+    const rowsData = _(gridData.rechargeList).map(function (info, index, list) {
       return {
         columnEls: this.formatRowData(info, index, list),
         dataAttr: info,
@@ -85,10 +93,10 @@ const RechargeView = SearchGrid.extend({
 
     this.grid.addFooterRows({
       trClass: 'tr-footer',
-      columnEls: [
-        '<strong>所有页总计</strong>', '', '',
-        gridData.amountTotal / 10000, '', '',
-      ],
+      // columnEls: [
+      //   '<strong>所有页总计</strong>', '', '',
+      //   gridData.amountTotal / 10000, '', '',
+      // ],
     })
       .hideLoading()
   },

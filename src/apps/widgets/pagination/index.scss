@@ -26,7 +26,10 @@ $mall-pg-item: (
   disabled-color: #888888,
   bg-disabled-color: $font-default
 );
-
+.foot-nav{
+  font-size:14px;
+  color:#666666;
+}
 .pagination {
   margin: 0;
   ul {
@@ -40,13 +43,13 @@ $mall-pg-item: (
         margin-left: $pg-filter;
         > {
           span {
-            padding: 3px 6px;
+            padding: 7px 10px;
             line-height: 15px;
             display: inline-block;
             cursor: pointer;
-            border: 1px solid $new-inverse-color;
-
-            background-color: map_get($pg-item, bg-color);
+            border: 1px solid #cccccc;
+            background-color: transparent;
+            border-radius: 5px;
             color: map_get($pg-item, color);
             &:hover, &:focus {
               background-color: map_get($pg-item, bg-hover-color);
@@ -57,14 +60,14 @@ $mall-pg-item: (
       }
       .active > {
         span {
-          background-color: map_get($pg-item, bg-active-color);
+          background-color: #14b1bb;
           color: map_get($pg-item, active-color);
           //cursor: default;
         }
       }
       .disabled > {
         span {
-          background-color: map_get($pg-item, bg-disabled-color);
+          background-color: #ffffff;
           color: map_get($pg-item, disabled-color);
           cursor: default;
           &:hover, &:focus {
@@ -80,20 +83,26 @@ $mall-pg-item: (
     > span,
     > span:focus,
     > span:hover {
-      background-color: #1bbb9e;
-      border: 1px solid #05b499;
+      background-color: #14b1bb;
+      border: 1px solid #14b1bb;
     }
   }
   .pagination-curt-page {
-    width: 32px;
-    padding: 3px;
+    width: 40px;
+    padding: 7px;
     vertical-align: initial;
     text-align: center;
+    background-color: #ffffff;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+
   }
 
   .pagination-go-to {
-    padding: 3px 8px;
+    padding: 7px 5px;
     vertical-align: initial;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 }
 .pagination-mall{

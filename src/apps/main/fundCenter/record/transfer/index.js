@@ -60,8 +60,17 @@ const TransferView = SearchGrid.extend({
     // 初始化时间选择
     new Timeset({
       el: this.$('.js-pf-timeset'),
-      startDefaultDate: this.options.reqData.startTime ? this.options.reqData.startTime : _(moment().startOf('day')).toTime(),
-      endDefaultDate: this.options.reqData.endTime ? this.options.reqData.endTime : _(moment().endOf('day')).toTime(),
+      startTimeHolder: '起始日期',
+      startDefaultDate: _(moment().add('day', 0)).toDate(),
+      endTimeHolder: '结束日期',
+      endDefaultDate: _(moment().add('day', 0)).toDate(),
+      startOps: {
+        format: 'YYYY-MM-DD HH:mm:ss',
+      },
+      endOps: {
+        format: 'YYYY-MM-DD HH:mm:ss',
+      },
+      showIcon: true,
     }).render()
 
     SearchGrid.prototype.onRender.apply(this, arguments)
@@ -85,10 +94,10 @@ const TransferView = SearchGrid.extend({
 
     this.grid.addFooterRows({
       trClass: 'tr-footer',
-      columnEls: [
-        '<strong>所有页总计</strong>', '', '', '',
-        _(gridData.amountTotal).convert2yuan(), '',
-      ],
+      // columnEls: [
+      //   '<strong>所有页总计</strong>', '', '', '',
+      //   _(gridData.amountTotal).convert2yuan(), '',
+      // ],
     })
       .hideLoading()
   },
