@@ -45,7 +45,7 @@ const MoneyDetailView = SearchGrid.extend({
           width: '15%',
         },
       ],
-      tip: '<div class="tip-hot"><span>提示</span> 帐户明细只保留30天数据。</div>',
+      // tip: '<div class="tip-hot"><span>提示</span> 帐户明细只保留30天数据。</div>',
       gridOps: {
         emptyTip: '没有账户明细',
       },
@@ -64,10 +64,10 @@ const MoneyDetailView = SearchGrid.extend({
       endTimeHolder: '结束日期',
       endDefaultDate: _(moment().add('day', 0)).toDate(),
       startOps: {
-        format: 'YYYY-MM-DD',
+        format: 'YYYY-MM-DD HH:mm:ss',
       },
       endOps: {
-        format: 'YYYY-MM-DD',
+        format: 'YYYY-MM-DD HH:mm:ss',
       },
       showIcon: true,
     }).render()
@@ -95,12 +95,12 @@ const MoneyDetailView = SearchGrid.extend({
     // 加上统计行
     this.grid.addFooterRows({
       trClass: 'tr-footer',
-      columnEls: [
-        '<strong>所有页总计</strong>',
-        '', '',
-        _(_(gridData.income).add(gridData.spending)).fixedConvert2yuan(),
-        '', '',
-      ],
+      // columnEls: [
+      //   '<strong>所有页总计</strong>',
+      //   '', '',
+      //   _(_(gridData.income).add(gridData.spending)).fixedConvert2yuan(),
+      //   '', '',
+      // ],
     }).hideLoading()
   },
 
@@ -119,12 +119,12 @@ const MoneyDetailView = SearchGrid.extend({
     // row.push(tradingStatusConfig.toZh(info.tradeType));
     row.push(info.tradeType)
     if (info.amount >= 0) {
-      row.push(`<span class="text-bold-pleasant">+${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-cut">+${_(info.amount).convert2yuan()}</span>`)
     } else {
-      row.push(`<span class="">${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-add">${_(info.amount).convert2yuan()}</span>`)
     }
 
-    row.push(`<span class="text-bold-cool">+${_(info.balance).convert2yuan()}</span>`)
+    row.push(`<span class="">+${_(info.balance).convert2yuan()}</span>`)
     let remark = info.remark
 
     if (remark.replace(/[\u4e00-\u9fa5]/g, '**').length > 16) {

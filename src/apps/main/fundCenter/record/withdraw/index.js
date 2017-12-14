@@ -63,8 +63,17 @@ const WithdrawView = SearchGrid.extend({
     // 初始化时间选择
     new Timeset({
       el: this.$('.js-pf-timeset'),
-      startDefaultDate: this.options.startTime ? this.options.startTime : _(moment().startOf('day')).toTime(),
-      endDefaultDate: this.options.endTime ? this.options.endTime : _(moment().endOf('day')).toTime(),
+      startTimeHolder: '起始日期',
+      startDefaultDate: _(moment().add('day', 0)).toDate(),
+      endTimeHolder: '结束日期',
+      endDefaultDate: _(moment().add('day', 0)).toDate(),
+      startOps: {
+        format: 'YYYY-MM-DD HH:mm:ss',
+      },
+      endOps: {
+        format: 'YYYY-MM-DD HH:mm:ss',
+      },
+      showIcon: true,
     }).render()
 
     SearchGrid.prototype.onRender.apply(this, arguments)
@@ -87,10 +96,10 @@ const WithdrawView = SearchGrid.extend({
 
     this.grid.addFooterRows({
       trClass: 'tr-footer',
-      columnEls: ['<strong>所有页总计</strong>', '', '',
-        _(gridData.amountTotal).fixedConvert2yuan(),
-        '', '', '',
-      ],
+      // columnEls: ['<strong>所有页总计</strong>', '', '',
+      //   _(gridData.amountTotal).fixedConvert2yuan(),
+      //   '', '', '',
+      // ],
     })
       .hideLoading()
     this.grid.hideLoading()

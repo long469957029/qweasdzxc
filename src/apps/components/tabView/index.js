@@ -102,7 +102,7 @@ const TabView = Base.LayoutView.extend({
 
       if (tabInfo.view) {
         if (!self._tabViews[tabInfo.name]) {
-          self._tabViews[tabInfo.name] = new tabInfo.View(tabInfo.options || {})
+          self._tabViews[tabInfo.name] = new tabInfo.view(tabInfo.options || {})
           self._tabViews[tabInfo.name]._parentView = self
         }
 
