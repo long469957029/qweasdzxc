@@ -111,7 +111,6 @@
         <label class="control-label">头像：</label>
         <div class="controls">
           <ul class="js-uc-head-icon-list uc-head-icon-list">
-
           </ul>
         </div>
       </div>
@@ -138,15 +137,27 @@
       <div class="control-group">
         <label class="control-label p-top-xs">省市区：</label>
         <div class="controls">
-          <select name="province" class="js-province select-address font-sm js-uc-province" required>
-            <option value="" selected>省
-          </select>
-          <select name="city" class="js-city select-address font-sm js-uc-city" required>
-            <option value="" selected>市
-          </select>
-          <select name="area" class="js-area select-address font-sm js-uc-area" required>
-            <option value="" selected>区
-          </select>
+          <div class="address-choose dropup">
+            <div class="select-address font-sm dropdown-toggle" data-toggle="dropdown">
+              <span class="address-name m-left-sm js-uc-province">省</span>
+              <span class="select-icon"></span>
+            </div>
+            <ul class="choose-list js-province-list dropdown-menu"></ul>
+          </div>
+          <div class="address-choose dropup">
+            <div class="select-address font-sm dropdown-toggle" data-toggle="dropdown">
+              <span class="address-name m-left-sm js-uc-city">市</span>
+              <span class="select-icon"></span>
+            </div>
+            <ul class="choose-list js-city-list dropdown-menu"></ul>
+          </div>
+          <div class="address-choose dropup">
+            <div class="select-address font-sm dropdown-toggle" data-toggle="dropdown">
+              <span class="address-name m-left-sm js-uc-area">区</span>
+              <span class="select-icon"></span>
+            </div>
+            <ul class="choose-list js-area-list dropdown-menu"></ul>
+          </div>
         </div>
       </div>
       <div class="control-group">
