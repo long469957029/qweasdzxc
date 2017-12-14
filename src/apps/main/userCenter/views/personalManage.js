@@ -18,6 +18,11 @@ const PersonalManageView = Base.ItemView.extend({
       url: '/acct/userinfo/headIconList.json',
     })
   },
+  getCityListXhr() {
+    return Global.sync.ajax({
+      url: '/info/city/list.json',
+    })
+  },
   getProvinceXhr() {
     return Global.sync.ajax({
       url: '/info/city/provincelist.json',
@@ -91,11 +96,13 @@ const PersonalManageView = Base.ItemView.extend({
                 }
               }
             })
-          self.getProvinceXhr()
+          self.getCityListXhr()
             .done((resp) => {
               if (resp && resp.result === 0) {
                 if (resp.root) {
-                  self.formateProvinceList(resp.root, 1)
+                  self.cityList = resp.root
+                  console.log(self.cityList)
+                  // self.formateProvinceList(resp.root, 1)
                 }
               }
             })
