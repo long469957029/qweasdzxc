@@ -248,9 +248,9 @@ $select: (
 
 $disabled: (
   default: (
-    color: #82d7e4,
-    border-color: #0fb8d0,
-    bg-color: #27a9bc
+    color: $new-inverse-color,
+    border-color: $sec-gray-color,
+    bg-color: #f9f9f9
   ),
   inverse: (
     bg-color: $input-disable-color

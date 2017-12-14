@@ -73,16 +73,16 @@ const PersonalManageView = Base.ItemView.extend({
           const bday = res.root.userBithday
           if (bday !== null && bday !== '' && bday !== '-') {
             const _bday = bday.split('-')
-            if (bday && bday.length === 2) {
+            if (_bday && _bday.length === 2) {
               self.$bday1.val(_bday[0])
               self.$bday2.val(_bday[1])
               self.$bday1.attr('disabled', true)
               self.$bday2.attr('disabled', true)
             }
           }
-          self.$receiver.val(res.root.receiverName)
-          self.$phone.val(res.root.receivePhone)
-          self.$addressDetail.val(res.root.receiverDetailAddr)
+          self.$receiver.val(res.root.receiverData.receiverName)
+          self.$phone.val(res.root.receiverData.receivePhone)
+          self.$addressDetail.val(res.root.receiverData.receiverDetailAddr)
           self.getHeadIconXhr()
             .done((_res) => {
               if (_res && _res.result === 0) {
