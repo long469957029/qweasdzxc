@@ -61,7 +61,7 @@ const TrackRecordsView = TabView.extend({
       titleDes: '单期高频彩奖金最大值为<span class="text-prominent"><span class="js-ac-pd-ssc-maxBonus" ></span>元</span>,' +
         '单期低频彩奖金最大值为<span class="text-prominent"><span class="js-ac-pd-low-maxBonus" ></span>元</span>;' +
         '中奖概率低于<span class="text-prominent"><span class="js-ac-pd-num"></span>%</span>的投注均为单挑模式,' +
-        '单期奖金最大值为<span class="text-prominent"><span class="js-ac-pd-num-maxBonus"></span>%</span>',
+        '单期奖金最大值为<span class="text-prominent"><span class="js-ac-pd-num-maxBonus"></span>元</span>',
     })
 
     // 未传递此参数时使用当前用户的id,分别用于个人中心及代理中心的奖金详情查询

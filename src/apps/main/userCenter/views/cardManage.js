@@ -65,45 +65,41 @@ const CardManageView = Base.ItemView.extend({
   },
 
   onRender() {
-    const self = this
+    // const self = this
 
     this.$validateError = this.$('.js-uc-cmValPayPwdNotice')
     this.hasBeenVerified = Global.memoryCache.get('hasBeenVerified')
 
-    if (!this.hasBeenVerified) {
-      // 判断是否设置资金密码
-      this.checkPayPwdXhr()
-        .always(() => {
-          self.loadingFinish()
-        })
-        .done((res) => {
-          if (res && res.result === 0) {
-            // 设置了则弹出验证框
-            self.$('.js-uc-cm-fundPwdInput').removeClass('hidden')
-          } else if (res && res.result === 1) {
-            // 未设置则弹出链接到资金密码设置页面的提示框
-            // self.$('.js-uc-cm-fundPwdSetNotice').securityTip({
-            //  content: '请补充完您的安全信息后再绑卡',
-            //  hasMoneyPwd: false,
-            //  hasBankCard: true,
-            //  body:self.$el
-            // });
-            self.$('.js-uc-cm-fundPwdSetNotice').removeClass('hidden')
-            // self.$el.removeClass('hidden');
-          }
-        })
-    } else {
-      Global.memoryCache.clear('hasBeenVerified')
-      this.initializeCardManagePage()
-      this.loadingFinish()
-    }
+    // if (!this.hasBeenVerified) {
+    //   // 判断是否设置资金密码
+    //   this.checkPayPwdXhr()
+    //     .always(() => {
+    //       self.loadingFinish()
+    //     })
+    //     .done((res) => {
+    //       if (res && res.result === 0) {
+    //         // 设置了则弹出验证框
+    //         // self.$('.js-uc-cm-fundPwdInput').removeClass('hidden')
+    //         Global.memoryCache.clear('hasBeenVerified')
+    //         self.initializeCardManagePage()
+    //         self.loadingFinish()
+    //       } else if (res && res.result === 1) {
+    //         Global.ui.notification.show('您还未设置资金密码，')
+    //       }
+    //     })
+    // } else {
+    //   Global.memoryCache.clear('hasBeenVerified')
+    //   this.initializeCardManagePage()
+    //   this.loadingFinish()
+    // }
+    this.initializeCardManagePage()
+    this.loadingFinish()
   },
 
   // 验证完毕后初始化管理页面
   initializeCardManagePage() {
     const self = this
     // 获取已有银行卡信息列表
-    self.$('.js-uc-cm-notice-div').removeClass('hidden')
     this.getBankCardListXhr()
       .done((res) => {
         if (res.result === 0) {
@@ -231,13 +227,13 @@ const CardManageView = Base.ItemView.extend({
 
   // "#uc/cm/bind"
   // 绑定按钮
-  goToBingBankCardHandler(e) {
-    const $target = $(e.currentTarget)
+  goToBingBankCardHandler() {
+    // const $target = $(e.currentTarget)
     const size = this.$('.js-uc-cmCardNum').val()
     if (this.locked) {
       Global.ui.notification.show('银行卡已锁定，不能增加银行卡。')
 
-      return 
+      return
     }
     if (size && Number(size) === 0) {
       // 直接跳转
@@ -280,11 +276,11 @@ const CardManageView = Base.ItemView.extend({
         const cardNo = $dialog.find('.js-uc-cmCardNo').val()
         if (!accountName || accountName === '') {
           $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl('姓名不能为空'))
-          return 
+          return
         }
         if (!cardNo || cardNo === '') {
           $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl('卡号不能为空'))
-          return 
+          return
         }
         const data = { name: accountName, cardNo }
         self.verifyCardInfoXhr(data)
@@ -328,7 +324,7 @@ const CardManageView = Base.ItemView.extend({
     const payPwd = this.$('.js-uc-cmPayPwd').val()
     if (!payPwd || payPwd === '') {
       this.$validateError.html('资金密码不能为空')
-      return 
+      return
     }
 
     const data = {
