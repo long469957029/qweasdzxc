@@ -37,132 +37,132 @@ module.exports = {
       template: './entry/index.html',
       chunks: ['common.1', '2.vendor', '4.base', '1.main']
     },
-    login: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.login']
-    },
-    register: {
-      title: '无限娱乐',
-      template: './entry/register.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.register']
-    },
-    trend: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.trend']
-    },
-    charge: {
-      title: '充值结果',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.charge']
-    },
-    mmc: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common.1', '4.base', '1.mmc']
-    },
-    merchants: {
-      title: '无限娱乐',
-      template: './entry/merchants.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.merchants']
-    },
-    resetPassword: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.resetPassword']
-    },
-    updateUserInfo: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.updateUserInfo']
-    },
-    404: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common.1', '4.base', '1.404']
-    },
-    changeUrl: {
-      title: '线路检测',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.changeUrl']
-    },
-
-    leaflets: {
-      title: '宣传页',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.leaflets']
-    },
-    //client: {
-    //  title: '无限娱乐 - 客户端下载',
-    //  template: './entry/package.html',
-    //  chunks: ['common.1', '4.base', '1.client']
-    //},
-    download: {
-      title: '无限娱乐 - 客户端下载',
-      template: './entry/package.html',
-      chunks: ['common.1', '4.base', '1.download']
-    },
-    dragonAndTiger: {
-      title: '无限娱乐 - 龙虎彩',
-      template: './entry/package.html',
-      chunks: ['common.1', '4.base', '1.dragonAndTiger']
-    },
-    oneYear: {
-      title: '无限娱乐周年庆',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.oneYear']
-    },
-    oneYear: {
-      title: '无限娱乐周年庆',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.oneYear']
-    },
-    vip: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.vip']
-    },
-    expedition: {
-      title: '无限娱乐 携手共进 远征星辰',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.expedition']
-    },
-    newDownload: {
-      title: '无限娱乐 - 客户端下载',
-      template: './entry/package.html',
-      chunks: ['common.1', '4.base', '1.newDownload']
-    },
-    integration: {
-      title: '无限娱乐 - integration',
-      template: './entry/package.html',
-      chunks: ['common.1', '4.base', '1.integration']
-    },
-    binding: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common.1', '4.base', '1.binding']
-    },
-    regist: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.regist']
-    },
-    update: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.update15']
-    },
-    rebateDesc: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common.1', '2.vendor', '4.base', '1.rebateDesc']
-    },
-    logger: {
-      title: '无限在线娱乐',
-      template: './src/apps/packages/logger/index.html',
-      chunks: ['common.1', '1.logger']
-    },
+    // login: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.login']
+    // },
+    // register: {
+    //   title: '无限娱乐',
+    //   template: './entry/register.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.register']
+    // },
+    // trend: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.trend']
+    // },
+    // charge: {
+    //   title: '充值结果',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.charge']
+    // },
+    // mmc: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '4.base', '1.mmc']
+    // },
+    // merchants: {
+    //   title: '无限娱乐',
+    //   template: './entry/merchants.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.merchants']
+    // },
+    // resetPassword: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.resetPassword']
+    // },
+    // updateUserInfo: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.updateUserInfo']
+    // },
+    // 404: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '4.base', '1.404']
+    // },
+    // changeUrl: {
+    //   title: '线路检测',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.changeUrl']
+    // },
+    //
+    // leaflets: {
+    //   title: '宣传页',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.leaflets']
+    // },
+    // //client: {
+    // //  title: '无限娱乐 - 客户端下载',
+    // //  template: './entry/package.html',
+    // //  chunks: ['common.1', '4.base', '1.client']
+    // //},
+    // download: {
+    //   title: '无限娱乐 - 客户端下载',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '4.base', '1.download']
+    // },
+    // dragonAndTiger: {
+    //   title: '无限娱乐 - 龙虎彩',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '4.base', '1.dragonAndTiger']
+    // },
+    // oneYear: {
+    //   title: '无限娱乐周年庆',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.oneYear']
+    // },
+    // oneYear: {
+    //   title: '无限娱乐周年庆',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.oneYear']
+    // },
+    // vip: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.vip']
+    // },
+    // expedition: {
+    //   title: '无限娱乐 携手共进 远征星辰',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.expedition']
+    // },
+    // newDownload: {
+    //   title: '无限娱乐 - 客户端下载',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '4.base', '1.newDownload']
+    // },
+    // integration: {
+    //   title: '无限娱乐 - integration',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '4.base', '1.integration']
+    // },
+    // binding: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '4.base', '1.binding']
+    // },
+    // regist: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.regist']
+    // },
+    // update: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.update15']
+    // },
+    // rebateDesc: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common.1', '2.vendor', '4.base', '1.rebateDesc']
+    // },
+    // logger: {
+    //   title: '无限在线娱乐',
+    //   template: './src/apps/packages/logger/index.html',
+    //   chunks: ['common.1', '1.logger']
+    // },
   },
   output: {
     path: 'main',
@@ -215,6 +215,7 @@ module.exports = {
     /underscore.string/, /underscore/, /backbone/, /es5/, /^jquery$/, /moment/,
     /echarts/,
     /base\/scripts/,
-    /html/
+    /html/,
+    /path.join(__dirname, 'node_modules')/
   ]
 };
