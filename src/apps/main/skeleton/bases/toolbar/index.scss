@@ -3,9 +3,9 @@
 @import '../../../misc/variable';
 @import '../../../misc/mixin';
 
-$space: 40px;
+$space: 20px;
 $sidebar-width: 320px;
-$toolbar-option-width: 40px;
+$toolbar-option-width: 36px;
 
 .home-toolbar-container {
   position: fixed;
@@ -22,6 +22,10 @@ $toolbar-option-width: 40px;
   &.open {
     width: $sidebar-width;
   }
+
+  * {
+    box-sizing: border-box;
+  }
 }
 
 .toolbar-option-container {
@@ -34,13 +38,79 @@ $toolbar-option-width: 40px;
   .toolbar-option {
     width: $toolbar-option-width;
     height: $toolbar-option-width;
-    background: $background-gray;
+    background: #9b9fa8;
     color: white;
     border-radius: 3px;
     margin-bottom: 2px;
     text-align: center;
-    font-size: 15px;
+    color: transparent;
     cursor: pointer;
+    font-size: 12px;
+    line-height: 36px;
+    text-align: left;
+    padding-left: 10px;
+    transition: all .3s;
+    white-space: nowrap;
+
+    > div {
+      position: absolute;
+      transition: all .3s, color 0s;
+    }
+
+    .money {
+      background: url('./images/money-icon.png');
+      width: 20px;
+      height: 24px;
+      transform: translate(8px, 5px);
+      right: 16px;
+    }
+
+    .record {
+      background: url('./images/record-icon.png');
+      width: 18px;
+      height: 18px;
+      transform: translate(9px, 9px);
+      right: 17px;
+    }
+
+    .ticket {
+      background: url('./images/ticket-icon.png');
+      width: 20px;
+      height: 14px;
+      transform: translate(8px, 11px);
+      right: 16px;
+    }
+
+    .chat {
+      background: url('./images/chat-icon.png');
+      width: 20px;
+      height: 18px;
+      transform: translate(8px, 11px);
+      right: 16px;
+    }
+
+    .feedback {
+      background: url('./images/feedback-icon.png');
+      width: 19px;
+      height: 18px;
+      transform: translate(10px, 9px);
+      right: 17px;
+    }
+
+    .up {
+      background: url('./images/up-icon.png');
+      width: 17px;
+      height: 9px;
+      transform: translate(9px, 12px);
+      right: 18px;
+    }
+
+    &:hover, &:active, &.active {
+      width: 105px;
+      margin-left: -69px;
+      background: $new-main-deep-color;
+      color: white;
+    }
   }
 }
 
