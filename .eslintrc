@@ -35,7 +35,7 @@
     "space-before-function-paren": [0, "always"], // [取消] function 后面小括号的前面有空白
     "no-trailing-spaces": [0, "always"],
     "no-param-reassign": 0, // [取消] 禁止对传入函数的参数重新赋值
-
+	"new-cap": [2, {newIsCap: false, capIsNew: false}],
     // import / require 路径问题
     "import/no-unresolved": 0,
     "import/no-extraneous-dependencies": 0,
