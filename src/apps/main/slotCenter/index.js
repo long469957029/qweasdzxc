@@ -15,6 +15,12 @@ const SlotCenterView = Base.ItemView.extend({
     'click .js-type-option': 'tabHandler',
     'keyup .js-sc-search': 'debounceQuery',
     'click .js-sc-game-btn': 'jumpIntoGameHandler',
+    'click .js-sc-load-more-btn': 'loadMoreHandler',
+    'change .js-channel-select': 'changeTypeHandler',
+  },
+
+  options: {
+    pageIndex: 0,
   },
 
   getSummaryXhr() {
@@ -126,7 +132,7 @@ const SlotCenterView = Base.ItemView.extend({
       })
   },
 
-  rolling () {
+  rolling() {
     const self = this
     clearInterval(this.$rollTime)
     this.$rollTime = setInterval(() => {
@@ -140,9 +146,39 @@ const SlotCenterView = Base.ItemView.extend({
     }, 3000)
   },
 
+  changeTypeHandler() {
+    const self = this
+    self.$tab.each((index, tab) => {
+      if (index === 5) {
+        $(tab).addClass('active')
+        return
+      }
+      $(tab).removeClass('active')
+    })
+    self.options.pageIndex = 0
+
+    self.renderGameList()
+  },
+
   searchHandler() {
-    // const gameName = $search.val()
-    // self.renderGameList()
+    const self = this
+    const gameName = self.$search.val()
+    self.getGameListXhr({ gameName })
+      .done((res) => {
+        if (res.result === 0 && res.root) {
+          const { gameList } = res.root
+          const html = lo.chunk(gameList, 4).map((rowItems) => {
+            const game = _.map(rowItems, (item) => {
+              return self.gameTpl(item)
+            }).join('')
+            return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
+          })
+
+          self.$gameList.html(html)
+        } else {
+          Global.ui.notification.show('获取游戏列表失败')
+        }
+      })
   },
 
   tabHandler(e) {
@@ -152,17 +188,26 @@ const SlotCenterView = Base.ItemView.extend({
       $(tab).removeClass('active')
     })
     $target.addClass('active')
+    self.options.pageIndex = 0
 
     self.renderGameList()
   },
 
   getParamsHandler() {
     const self = this
-    const subType = self.$tabContainer.find('.js-type-option.active').data('subtype')
-    const collect = false
+    const type = 3
+    const channelId = self.$('.js-channel-select').val()
+    const subType = self.$tabContainer.find('.js-type-option.active').data('subtype') || ''
+    const collect = self.$tabContainer.find('.js-type-option.active').data('collect') || 0
+    const pageSize = 16
+    const pageIndex = 0
     return {
+      channelId,
+      type,
       subType,
       collect,
+      pageSize,
+      pageIndex,
     }
   },
 
@@ -174,13 +219,10 @@ const SlotCenterView = Base.ItemView.extend({
         if (res.result === 0 && res.root) {
           const { gameList } = res.root
           const html = lo.chunk(gameList, 4).map((rowItems) => {
-            const game = _.map(rowItems, (item, index) => {
-              if (index === 3) {
-                return `${self.gameTpl(item)}<div class="clearfix"></div>`
-              }
+            const game = _.map(rowItems, (item) => {
               return self.gameTpl(item)
             }).join('')
-            return `<div class="sc-game-row">${game}</div>`
+            return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
           })
 
           self.$gameList.html(html)
@@ -209,6 +251,44 @@ const SlotCenterView = Base.ItemView.extend({
     this.$('.js-sc-type').val(type)
 
     self.$slotForm.submit()
+  },
+
+  loadMoreHandler() {
+    const self = this
+    const type = 3
+    const channelId = self.$('.js-channel-select').val()
+    const subType = self.$tabContainer.find('.js-type-option.active').data('subtype') || ''
+    const collect = self.$tabContainer.find('.js-type-option.active').data('collect') || 0
+    const pageIndex = self.options.pageIndex + 1
+    self.options.pageIndex += 1
+    const pageSize = 16
+
+    const data = {
+      channelId,
+      type,
+      subType,
+      collect,
+      pageSize,
+      pageIndex,
+    }
+
+
+    self.getGameListXhr(data)
+      .done((res) => {
+        if (res.result === 0 && res.root) {
+          const { gameList } = res.root
+          const html = lo.chunk(gameList, 4).map((rowItems) => {
+            const game = _.map(rowItems, (item) => {
+              return self.gameTpl(item)
+            }).join('')
+            return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
+          })
+
+          self.$gameList.append(html)
+        } else {
+          Global.ui.notification.show('获取游戏列表失败')
+        }
+      })
   },
 
 })

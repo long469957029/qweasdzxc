@@ -1,9 +1,15 @@
 <div class="col-md-2">
   <div class="banner-hot-item">
     <div class="sc-hot-game-mask">
-      <div class="sc-play-btn"></div>
+      <div
+        class="sc-play-btn js-sc-game-btn"
+        data-game-id="<%= gameId %>"
+        data-type="0"
+        data-device="0"
+      >
+      </div>
     </div>
-    <img src="./images/hot-item-test-1.png" class="hot-item-img">
-    <div class="hot-item-title">美国队长</div>
+    <span class="sfa sfa-slot-<%=channelId%>-<%=gameCode%>"></span>
+    <div class="hot-item-title"><%= gameName %></div>
   </div>
 </div>

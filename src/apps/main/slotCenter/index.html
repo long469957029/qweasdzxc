@@ -10,21 +10,19 @@
   <div class="sc-navbar-container">
     <div class="sc-navbar-select-container">
       <span>游戏平台</span>
-      <select class="sc-navbar-select js-channel-select" id="">
-        <option value="">全部</option>
-        <option value="1">PT</option>
-        <option value="1">MG</option>
+      <select class="sc-navbar-select js-channel-select">
+        <option value="4">PT</option>
+        <option value="5">MG</option>
       </select>
     </div>
     <div class="sc-navbar-option-container js-type-option-container">
-      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="1">热门游戏</div>
-      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="2">累计游戏</div>
-      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="3">老虎机</div>
-      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="4">桌面游戏</div>
-      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="5">视频游戏</div>
-      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="6">街机游戏</div>
-      <div class="sc-navbar-option ripple-btn js-type-option">全部游戏</div>
-      <div class="sc-navbar-option ripple-btn js-type-option" >
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="1">电动老虎机</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="2">经典老虎机</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="3">刮刮乐</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="4">接机游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="5">牌桌游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option active">全部游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-collect="1">
         <span class="sc-collect-icon"></span>我的收藏
       </div>
     </div>
@@ -52,9 +50,9 @@
           </div>
           <div class="clearfix"></div>
           <div>
-            <div class="entry-item-btn ripple-btn">
+            <a target="_blank" href="/wx.exe" class="entry-item-btn ripple-btn">
               <div class="sc-pc-icon"></div> PC客户端
-            </div>
+            </a>
             <div class="entry-item-btn ripple-btn">
               <div class="sc-phone-icon"></div> 手机版
             </div>
@@ -73,9 +71,9 @@
           </div>
           <div class="clearfix"></div>
           <div>
-            <div class="entry-item-btn ripple-btn">
+            <a target="_blank" href="/wx.exe" class="entry-item-btn ripple-btn">
               <div class="sc-pc-icon"></div> PC客户端
-            </div>
+            </a>
             <div class="entry-item-btn ripple-btn">
               <div class="sc-phone-icon"></div> 手机版
             </div>
@@ -94,7 +92,7 @@
       <div class="sc-content-container js-sc-content-container">
       </div>
       <div class="sc-load-more">
-        <div class="sc-load-more-btn ripple-btn">点击加载更多</div>
+        <div class="sc-load-more-btn js-sc-load-more-btn ripple-btn">点击加载更多</div>
         <div class="sc-load-icon"></div>
       </div>
     </div>
