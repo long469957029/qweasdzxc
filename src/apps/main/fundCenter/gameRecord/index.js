@@ -3,16 +3,16 @@ import { channelId } from 'skeleton/misc/menuConfig'
 
 const TabView = require('com/tabView')
 
-const PlatfomrMoneyDetailView = require('gameCenter/gameRecord/gameRecord')
-const ChaseRecordView = require('userCenter/views/trackRecords')
-const TicketRecordView = require('userCenter/views/bettingRecords')
+const PlatfomrMoneyDetailView = require('fundCenter/gameRecord/gameRecord')
+const ChaseRecordView = require('fundCenter/gameRecord/trackRecords')
+const TicketRecordView = require('fundCenter/gameRecord/bettingRecords')
 
 
 const TeamBettingRecordView = TabView.extend({
 
   events: {},
 
-  className: 'as-passwordManage',
+  className: 'fc-detail',
 
   initialize() {
     _(this.options).extend({
@@ -21,7 +21,7 @@ const TeamBettingRecordView = TabView.extend({
           label: '彩票投注',
           name: 'jsGcGrTr',
           id: 'jsGcGrTr',
-          router: 'gc/tr',
+          router: 'fc/td',
           view: TicketRecordView,
         },
         {
@@ -86,6 +86,7 @@ const TeamBettingRecordView = TabView.extend({
         },
       ],
       title: '投注记录',
+      titleDes: '投注记录只保留30天记录。',
     })
   },
 })

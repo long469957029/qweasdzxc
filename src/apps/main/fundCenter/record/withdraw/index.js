@@ -103,7 +103,7 @@ const WithdrawView = SearchGrid.extend({
     const rowTop = (index * 40) + 63
     row.push(rowInfo.tradeNo)
     row.push(_(rowInfo.createTime).toTime())
-    row.push(`<span class="m-right-sm"></span>[${rowInfo.bankName}]`)
+    row.push(rowInfo.bankName)
     row.push(`<span class="text-cut">${_(rowInfo.amount).fixedConvert2yuan()}</span>`)
     const statusList = []
     if (rowInfo.flowStatus === 0) {

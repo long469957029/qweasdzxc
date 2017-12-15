@@ -1,5 +1,3 @@
-
-
 const SearchGrid = require('com/searchGrid')
 
 const Timeset = require('com/timeset')
@@ -8,13 +6,13 @@ const gameConfig = require('skeleton/misc/gameConfig')
 
 const fishBetRecordView = SearchGrid.extend({
 
-  template: require('gameCenter/gameRecord/gameRecord.html'),
+  template: require('fundCenter/gameRecord/gameRecord.html'),
 
   events: {
     'change .js-gc-gr-channelId': 'channelIdChangeHandler',
     'change .js-gc-gr-channelId-type': 'channelTypeChangeHandler',
   },
-  channelTypeChangeHandler(e) {
+  channelTypeChangeHandler() {
     const game = this.$('select[name="channelIdType"]').val()
     const channelId = game.substr(0, 1)
     const type = game.substr(1, 1)
@@ -68,7 +66,7 @@ const fishBetRecordView = SearchGrid.extend({
       },
 
       listProp: 'root.dataList',
-      tip: '<div class="tip-hot"><span>注意</span> 游戏记录只保留最近30天。</div>',
+      // tip: '<div class="tip-hot"><span>注意</span> 游戏记录只保留最近30天。</div>',
       height: 320,
     })
   },
@@ -82,10 +80,10 @@ const fishBetRecordView = SearchGrid.extend({
       endTimeHolder: '结束日期',
       endDefaultDate: _(moment().add('day', 0)).toDate(),
       startOps: {
-        format: 'YYYY-MM-DD',
+        format: 'YYYY-MM-DD HH;mm:ss',
       },
       endOps: {
-        format: 'YYYY-MM-DD',
+        format: 'YYYY-MM-DD HH;mm:ss',
       },
     }).render()
 
@@ -93,8 +91,7 @@ const fishBetRecordView = SearchGrid.extend({
   },
 
   renderGrid(gridData) {
-    const num = 0
-    const rowsData = _(gridData.dataList).map(function(bet, index, betList) {
+    const rowsData = _(gridData.dataList).map(function (bet, index, betList) {
       return {
         columnEls: this.formatRowData(bet, index, betList),
         dataAttr: bet,
@@ -182,12 +179,26 @@ const fishBetRecordView = SearchGrid.extend({
 
     ]
     switch (Number(channelId)) {
-      case 1: $type.html(options[0].options.concat(options[2].options).join('')); break
-      case 2: $type.html(options[0].options.join('')); break
-      case 3: $type.html(options[0].options.join('')); break
-      case 4: $type.html(options[1].options.join('')); break
-      case 5: $type.html(options[1].options.join('')); break
-      case 6: $type.html(options[2].options.join('')); break
+      case 1:
+        $type.html(options[0].options.concat(options[2].options).join(''))
+        break
+      case 2:
+        $type.html(options[0].options.join(''))
+        break
+      case 3:
+        $type.html(options[0].options.join(''))
+        break
+      case 4:
+        $type.html(options[1].options.join(''))
+        break
+      case 5:
+        $type.html(options[1].options.join(''))
+        break
+      case 6:
+        $type.html(options[2].options.join(''))
+        break
+      default:
+        break
     }
   },
 })

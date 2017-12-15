@@ -9,15 +9,15 @@ const TicketSelectGroup = Base.PrefabView.extend({
     playClass: 'js-pf-select-ticket-play',
     defaultList: {
       list: {
-        label: '所有彩种',
+        label: '彩种',
         value: '',
       },
       level: {
-        label: '所有玩法群',
+        label: '玩法群',
         value: '',
       },
       play: {
-        label: '所有玩法',
+        label: '玩法',
         value: '',
       },
     },
@@ -28,7 +28,7 @@ const TicketSelectGroup = Base.PrefabView.extend({
 
     events[`change .${this.options.listClass}`] = 'listChangeHandler'
     events[`change .${this.options.levelClass}`] = 'levelChangeHandler'
-  
+
     return events
   },
 
@@ -71,10 +71,9 @@ const TicketSelectGroup = Base.PrefabView.extend({
     this._initListXhr()
       .done((res) => {
         if (res && res.result === 0) {
-          self.$(`.${self.options.listClass}`).html(_(res.root).reduce((html, ticket) => {
+          self.$(`.${self.options.listClass}`).html(_(res.root).each((ticket) => {
             html.push(`<option value="${ticket.ticketId}">${ticket.ticketName}</option>`)
-            return html
-          }, html))
+          }))
         }
         // self.trigger('ticketList:init', 0);
       })
@@ -98,10 +97,9 @@ const TicketSelectGroup = Base.PrefabView.extend({
       })
         .done((res) => {
           if (res && res.result === 0) {
-            self.$(`.${self.options.levelClass}`).html(_(res.root).reduce((html, ticket) => {
+            self.$(`.${self.options.levelClass}`).html(_(res.root).each((ticket) => {
               html.push(`<option value="${ticket.ticketLevelId}">${ticket.ticketLevelName}</option>`)
-              return html
-            }, html).join(''))
+            }).join(''))
           }
         })
     }
@@ -122,10 +120,10 @@ const TicketSelectGroup = Base.PrefabView.extend({
       })
         .done((res) => {
           if (res && res.result === 0) {
-            self.$(`.${self.options.playClass}`).html(_(res.root).reduce((html, ticket) => {
+            self.$(`.${self.options.playClass}`).html(_(res.root).each((ticket) => {
               html.push(`<option value="${ticket.ticketPlayId}">${ticket.ticketPlayName}</option>`)
-              return html
-            }, html).join(''))
+              // return html1
+            }).join(''))
           }
         })
     }
