@@ -17,6 +17,11 @@
               <!-- 为了遮住下滑而出的下拉选单 -->
               <div class="navbar-mask"></div>
             <% } %>
+            <% } else if (menu.name === '积分商城') { %>
+              <li class="<%= menu.className || '' %>" data-index="<%= index %>">
+                <span class="nav-mall-icon"></span>
+                <a href="#<%=menu.first || menu.router %>" class="js-navbar-tab"><%= menu.name %></a>
+              </li>
             <% } else { %>
               <li class="<%= menu.className || '' %>" data-index="<%= index %>">
                 <% if (menu.navItemType === 1) { %>
@@ -54,7 +59,7 @@
                             <div class="entry-item-content">
                               <div class="entry-item-title"><%= channel.channelName %></div>
                               <div class="entry-item-desc"><%= channel.desc %></div>
-                              <div class="js-nav-channel-btn btn entry-item-btn ripple-btn" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="<%=menu.type%>">进入游戏</div>
+                              <a href="#<%= channel.router %>" class="btn entry-item-btn">进入游戏</a>
                               <a class="js-nav-channel-btn nav-channel-link prominent-link" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="1">试玩版</a>
                               <a class="js-nav-channel-btn nav-channel-link" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="0">手机版</a>
                             </div>
@@ -69,17 +74,15 @@
                     <ul>
                       <div class="nav-channel-banner <%= menu.bannerPicClass %>"></div>
                       <div class="nav-channel-classic-container">
-                        <div class="classic-title">
-                          <h3><%= classicTicketList.title %></h3>
-                          <p><%= classicTicketList.desc %></p>
-                        </div>
+                        <div class="classic-title-classic"></div>
                         <% _(classicTicketList.list).each(function(list, index){%>
                           <div class="classic-section">
                             <% _(list).each(function(ticket, index) { %>
                               <li>
+                                <span class="navbar-ticket-chavon"></span>
                                 <a href="#bc/<%= ticket.id %>"><%= ticket.zhName %></a>
                                 <% if (ticket.badge) { %>
-                                  <span class="sfa sfa-navbar-ticket-icon-<%= ticket.badge %>"></span>
+                                  <span class="navbar-ticket-icon-<%= ticket.badge %>"></span>
                                 <% } %>
                               </li>
                             <% }) %>
@@ -88,17 +91,15 @@
                       </div>
 
                       <div class="nav-channel-classic-container">
-                          <div class="classic-title">
-                            <h3><%= handicapTicketList.title %></h3>
-                            <p><%= handicapTicketList.desc %></p>
-                          </div>
+                          <div class="classic-title-handicap"></div>
                           <% _(handicapTicketList.list).each(function(list, index){%>
                             <div class="classic-section">
                               <% _(list).each(function(ticket, index) { %>
                                 <li>
+                                  <span class="navbar-ticket-chavon"></span>
                                   <a href="#bc/<%= ticket.id %>"><%= ticket.zhName %></a>
                                   <% if (ticket.badge) { %>
-                                    <span class="sfa sfa-navbar-ticket-icon-<%= ticket.badge %>"></span>
+                                    <span class="navbar-ticket-icon-<%= ticket.badge %>"></span>
                                   <% } %>
                                 </li>
                               <% }) %>

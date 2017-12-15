@@ -293,6 +293,7 @@ const menuConfig = [
         channelName: 'AG娱乐场',
         desc: '最具创新人气最旺',
         imgSrc: 'icon-real-ag',
+        router: 'rc',
       },
       {
         channelId: channelId.ebet,
@@ -300,6 +301,7 @@ const menuConfig = [
         channelName: 'EBET娱乐场',
         desc: '亚洲最稳健的平台',
         imgSrc: 'icon-real-ebet',
+        router: 'rc',
       },
       {
         channelId: channelId.bbin,
@@ -307,6 +309,7 @@ const menuConfig = [
         channelName: 'BBIN娱乐场',
         desc: '移动娱乐第一品牌',
         imgSrc: 'icon-real-bbin',
+        router: 'rc',
       },
 
     ],
@@ -325,6 +328,7 @@ const menuConfig = [
         channelName: 'PT老虎机',
         desc: '玩法丰富，实力超群',
         imgSrc: 'icon-slot-pt',
+        router: '#sc?channelId=4',
       },
       {
         channelId: channelId.mg,
@@ -332,6 +336,7 @@ const menuConfig = [
         desc: '欧美最流行老虎机',
         // router: '#gc/scmg',
         imgSrc: 'icon-slot-mg',
+        router: '#sc?channelId=5',
       },
     ],
   },
@@ -349,6 +354,7 @@ const menuConfig = [
         channelName: 'AG捕鱼王',
         desc: '纯3D捕鱼，百万奖金',
         imgSrc: 'icon-fish-ag',
+        router: 'fc',
       },
       {
         channelId: channelId.gg,
@@ -356,6 +362,7 @@ const menuConfig = [
         channelName: 'GG捕鱼天下',
         desc: '高清全景游戏画面',
         imgSrc: 'icon-fish-gg',
+        router: 'fc',
       },
     ],
   },
