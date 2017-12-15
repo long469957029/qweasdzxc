@@ -2,28 +2,28 @@
 
 @import "~base/styles/imports";
 
+.tab-header {
+  margin-top: 25px;
+  height: 20px;
+  margin-bottom: 10px;
+  .tab-header-title {
+    font-size: 16px;
+    color: #333333;
+    margin-left: 20px;
+    margin-right: 10px;
+  }
+  .tab-header-des {
+    height: 12px;
+    line-height: 12px;
+    font-size: 12px;
+    color: #999999;
+    padding-left:10px;
+    border-left:1px solid #cccccc;
+  }
+
+}
 .fc-detail {
   margin: 20px;
-  .tab-header {
-    margin-top: 25px;
-    height: 20px;
-    margin-bottom: 10px;
-    .tab-header-title {
-      font-size: 16px;
-      color: #333333;
-      margin-left: 20px;
-      margin-right: 10px;
-    }
-    .tab-header-des {
-      height: 12px;
-      line-height: 12px;
-      font-size: 12px;
-      color: #999999;
-      padding-left:10px;
-      border-left:1px solid #cccccc;
-    }
-
-  }
   .nav-tabs{
     border-bottom: 1px solid #cccccc;
     height: 70px;

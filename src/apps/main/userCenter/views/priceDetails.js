@@ -1,5 +1,4 @@
 const TabView = require('com/tabView')
-const cup = require('../misc/cup.png')
 
 const TrackRecordsView = TabView.extend({
 
@@ -42,12 +41,12 @@ const TrackRecordsView = TabView.extend({
           id: 'jsUCQSanTab',
           template: '<div class="js-uc-QSanContainer"><div class="js-uc-QSanNotice"></div><div class="js-uc-QSanGrid portlet-filter uc-prize"></div></div>',
         },
-        {
-          label: '六合彩',
-          name: 'Mark6',
-          id: 'jsMark6Tab',
-          template: '<div class="js-uc-Mark6Container"><div class="js-uc-Mark6Notice"></div><div class="js-uc-Mark6Grid portlet-filter uc-prize"></div></div>',
-        },
+        // {
+        //   label: '六合彩',
+        //   name: 'Mark6',
+        //   id: 'jsMark6Tab',
+        //   template: '<div class="js-uc-Mark6Container"><div class="js-uc-Mark6Notice"></div><div class="js-uc-Mark6Grid portlet-filter uc-prize"></div></div>',
+        // },
 
         // {
         //   label: '秒秒彩',
@@ -57,11 +56,11 @@ const TrackRecordsView = TabView.extend({
         // }
 
       ],
-      append: `${'<div class="controls fc-lesson">' +
-      '<div class="pull-right fc-lesson-text text-pleasant">' +
-      '<img class="" src="'}${cup}">` +
-      '</span>单期最高奖金限制：<span class="js-ac-pd-maxBonus" >300,000</span>元</div>' +
-      '</div>',
+      title: '我的奖金组',
+      titleDes: '单期高频彩奖金最大值为<span class="text-prominent"><span class="js-ac-pd-ssc-maxBonus" ></span>元</span>,' +
+        '单期低频彩奖金最大值为<span class="text-prominent"><span class="js-ac-pd-low-maxBonus" ></span>元</span>;' +
+        '中奖概率低于<span class="text-prominent"><span class="js-ac-pd-num"></span>%</span>的投注均为单挑模式,' +
+        '单期奖金最大值为<span class="text-prominent"><span class="js-ac-pd-num-maxBonus"></span>%</span>',
     })
 
     // 未传递此参数时使用当前用户的id,分别用于个人中心及代理中心的奖金详情查询
@@ -71,32 +70,26 @@ const TrackRecordsView = TabView.extend({
   },
 
   onConstantRender () {
-    const self = this
     const params = { ticketSeriesId: 1, subAcctId: this.options.userId }
     this._loadPage(params, 'js-uc-constGrid')
   },
   onElevRender () {
-    const self = this
     const params = { ticketSeriesId: 2, subAcctId: this.options.userId }
     this._loadPage(params, 'js-uc-ElevGrid')
   },
   onLowRender () {
-    const self = this
     const params = { ticketSeriesId: 3, subAcctId: this.options.userId }
     this._loadPage(params, 'js-uc-lowGrid')
   },
   onHappyRender () {
-    const self = this
     const params = { ticketSeriesId: 4, subAcctId: this.options.userId }
     this._loadPage(params, 'js-uc-happyGrid')
   },
   onQSanRender () {
-    const self = this
     const params = { ticketSeriesId: 7, subAcctId: this.options.userId }
     this._loadPage(params, 'js-uc-QSanGrid')
   },
   onMark6Render () {
-    const self = this
     const params = { ticketSeriesId: 8, subAcctId: this.options.userId }
     this._loadPage(params, 'js-uc-Mark6Grid')
   },
@@ -118,7 +111,7 @@ const TrackRecordsView = TabView.extend({
     }
     this._getBonusData(params).done((res) => {
       if (res.result === 0) {
-        if (res.root.playBonusList.ticketId == 34) { // 六合彩特殊处理34
+        if (res.root.playBonusList.ticketId === 34) { // 六合彩特殊处理34
           self.getMark6Table(self.formatMark6(res.root.playBonusList.levels), classValue)
         } else {
           self._getTable(self._formatNewGroups(self._formatLevelData(res.root.playBonusList.levels)), classValue)
@@ -159,11 +152,11 @@ const TrackRecordsView = TabView.extend({
   },
   formatMark6 (data) {
     const row = []
-    _(data).map((items, index) => {
-      _(items.groups).map((groups) => {
-        _(groups.plays).map((plays) => {
+    _(data).each((items) => {
+      _(items.groups).each((groups) => {
+        _(groups.plays).each((plays) => {
           if (plays.betBonus != null) {
-            _(plays.betBonus).map((betBonus) => {
+            _(plays.betBonus).each((betBonus) => {
               row.push({
                 playLevel: items.ticketLevelName,
                 playGroup: plays.ticketPlayName,
@@ -171,7 +164,7 @@ const TrackRecordsView = TabView.extend({
                 bonusMin: _(betBonus.betMethodMin).formatDiv(10000, { fixed: 4 }),
                 rebate: `${_(plays.userRebate).formatDiv(10)}%`,
                 bonusMax: _(betBonus.betMethodMax).formatDiv(10000, { fixed: 4 }),
-              })  
+              })
             })
           } else {
             row.push({
@@ -182,7 +175,7 @@ const TrackRecordsView = TabView.extend({
               rebate: `${_(plays.userRebate).formatDiv(10)}%`,
               bonusMax: _(plays.ticketPlayMaxBonus).formatDiv(10000, { fixed: 4 }),
             })
-          }      
+          }
         })
       })
     })
@@ -196,7 +189,7 @@ const TrackRecordsView = TabView.extend({
       height: this.options.height,
       colModel: [
         {
-          label: '玩法群', name: 'playLevel', merge: true, width: 100, 
+          label: '玩法群', name: 'playLevel', merge: true, width: 100,
         },
         {
           label: '玩法组', name: 'playGroup', merge: true, width: 120,
@@ -234,7 +227,7 @@ const TrackRecordsView = TabView.extend({
         if (play.betBonus === null) {
           bonusMin = _(play.ticketPlayBonus).convert2yuan()
           bonusMax = `<span class="text-bold-pleasant">${_(play.ticketPlayMaxBonus).convert2yuan()}</span>`
-        } else if (self.ticketSeriesIdFlag == 7) {
+        } else if (self.ticketSeriesIdFlag === 7) {
           bonusMin = '3或18 354.24</br>' +
                         '4或17 118.08</br>' +
                         '5或16 59.04</br>' +
@@ -251,7 +244,7 @@ const TrackRecordsView = TabView.extend({
                         '8或13 19.54</br>' +
                         '9或12 16.42</br>' +
                         '10或11 15.20</span>'
-        } else if (self.ticketSeriesIdFlag == 4) {
+        } else if (self.ticketSeriesIdFlag === 4) {
           const groupByBetMethodMin = _.groupBy(play.betBonus, 'betMethodMin')
           const groupByBetMethodMax = _.groupBy(play.betBonus, 'betMethodMax')
 
@@ -285,8 +278,8 @@ const TrackRecordsView = TabView.extend({
           bonusMin = bonusMinHtml
           bonusMax = bonusMaxHtml
         } else {
-          bonusMinObj = _(play.betBonus).min((bonus) => { return bonus.betMethodMin })
-          bonusMaxObj = _(play.betBonus).max((bonus) => { return bonus.betMethodMin })
+          const bonusMinObj = _(play.betBonus).min((bonus) => { return bonus.betMethodMin })
+          const bonusMaxObj = _(play.betBonus).max((bonus) => { return bonus.betMethodMin })
           bonusMin = `龙虎:${_(bonusMinObj.betMethodMin).convert2yuan()} 和:${_(bonusMaxObj.betMethodMin).convert2yuan()}`
           bonusMax = `<span class="text-bold-pleasant">龙虎:${_(bonusMinObj.betMethodMax).convert2yuan()} 和:${_(bonusMaxObj.betMethodMax).convert2yuan()}</span>`
         }
@@ -305,16 +298,16 @@ const TrackRecordsView = TabView.extend({
 
   formatMoney(s, type) {
     if (/[^0-9\.]/.test(s)) { return '0' }
-    if (s == null || s == '') { return '0' }
+    if (s === null || s === '') { return '0' }
     s = s.toString().replace(/^(\d*)$/, '$1.')
     s = (`${s}00`).replace(/(\d*\.\d\d)\d*/, '$1')
     s = s.replace('.', ',')
     const re = /(\d)(\d{3},)/
     while (re.test(s)) { s = s.replace(re, '$1,$2') }
     s = s.replace(/,(\d\d)$/, '.$1')
-    if (type == 0) { // 不带小数位(默认是有小数位)
+    if (type === 0) { // 不带小数位(默认是有小数位)
       const a = s.split('.')
-      if (a[1] == '00') {
+      if (a[1] === '00') {
         s = a[0]
       }
     }
