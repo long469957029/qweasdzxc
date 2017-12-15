@@ -18,6 +18,12 @@ const PersonalManageView = Base.ItemView.extend({
       url: '/acct/userinfo/headIconList.json',
     })
   },
+  getCityListXhr() {
+    return Global.sync.ajax({
+      url: '/info/city/list.json',
+      type: 'GET',
+    })
+  },
   getProvinceXhr() {
     return Global.sync.ajax({
       url: '/info/city/provincelist.json',
@@ -53,6 +59,7 @@ const PersonalManageView = Base.ItemView.extend({
     this.$area = this.$('.js-uc-area')
     this.$areaList = this.$('.js-area-list')
     this.$headIconList = this.$('.js-uc-head-icon-list')
+    this.$addressListError = this.$('.js-address-list-error')
 
     Global.sync.ajax({
       url: '/acct/userinfo/userdetail.json',
@@ -68,21 +75,21 @@ const PersonalManageView = Base.ItemView.extend({
           self.iconId = res.root.headIconId
           self.$('.js-uc-regTime').html(_(res.root.userRegTime).toTime())
           if (!_.isNull(res.root.gender)) {
-            self.$(':radio[name="ucSex"]').attr('checked', res.root.gender)
+            self.$(`input[name="ucSex"][value=${res.root.gender}]`).attr('checked', true)
           }
           const bday = res.root.userBithday
           if (bday !== null && bday !== '' && bday !== '-') {
             const _bday = bday.split('-')
-            if (bday && bday.length === 2) {
+            if (_bday && _bday.length === 2) {
               self.$bday1.val(_bday[0])
               self.$bday2.val(_bday[1])
               self.$bday1.attr('disabled', true)
               self.$bday2.attr('disabled', true)
             }
           }
-          self.$receiver.val(res.root.receiverName)
-          self.$phone.val(res.root.receivePhone)
-          self.$addressDetail.val(res.root.receiverDetailAddr)
+          self.$receiver.val(_.isNull(res.root.receiverData) ? '' : res.root.receiverData.receiverName)
+          self.$phone.val(_.isNull(res.root.receiverData) ? '' : res.root.receiverData.receivePhone)
+          self.$addressDetail.val(_.isNull(res.root.receiverData) ? '' : res.root.receiverData.receiverDetailAddr)
           self.getHeadIconXhr()
             .done((_res) => {
               if (_res && _res.result === 0) {
@@ -91,11 +98,15 @@ const PersonalManageView = Base.ItemView.extend({
                 }
               }
             })
-          self.getProvinceXhr()
+          self.getCityListXhr()
             .done((resp) => {
               if (resp && resp.result === 0) {
                 if (resp.root) {
+                  self.cityList = resp.root
                   self.formateProvinceList(resp.root, 1)
+                  if (!_.isNull(res.root.receiverData)) {
+                    self.formateHasChooseCityList(res.root.receiverData)
+                  }
                 }
               }
             })
@@ -118,6 +129,22 @@ const PersonalManageView = Base.ItemView.extend({
         this.$headIconList.append(`<li class="icon-info js-head-icon-info ${item.id === this.iconId ? 'active' : ''}" data-id="${item.id}"><img src="${item.url}" class="head-img"></li>`)
       })
     }
+  },
+  formateHasChooseCityList(data) {
+    const pInfo = _(this.cityList).findWhere({ provinceId: data.receiverProvinceId })
+    const pName = pInfo.province
+    const cInfo = _(pInfo.cityList).findWhere({ cityId: data.receiverCityId })
+    const cName = cInfo.city
+    let aName = ''
+    if (data.receiverAreaId === 99999) {
+      aName = '其他'
+    } else {
+      const aInfo = _(cInfo.areaList).findWhere({ areaId: data.receiverAreaId })
+      aName = aInfo.area
+    }
+    this.$province.attr('data-id', data.receiverProvinceId).html(pName)
+    this.$city.attr('data-id', data.receiverCityId).html(cName)
+    this.$area.attr('data-id', data.receiverAreaId).html(aName)
   },
   formateProvinceList(data, type) {
     if (data) {
@@ -144,10 +171,20 @@ const PersonalManageView = Base.ItemView.extend({
   },
   updatePersonalInfoHandler() {
     const self = this
-    this.$btnConfirm.button('loading')
     const month = this.$bday1.val()
     const day = this.$bday2.val()
-
+    const pid = this.$province.data('id')
+    const cid = this.$city.data('id')
+    const aid = this.$area.data('id')
+    if (_.isUndefined(pid) || _.isUndefined(cid) || _.isUndefined(aid)) {
+      const data = {
+        el: this.$addressListError,
+        errorText: '*请选择正确的省市区',
+      }
+      this.formateError(data)
+      return false
+    }
+    this.$btnConfirm.button('loading')
     Global.sync.ajax({
       url: '/acct/userinfo/saveuser.json',
       data: {
@@ -157,9 +194,9 @@ const PersonalManageView = Base.ItemView.extend({
         receiverName: this.$receiver.val(),
         receiverPhone: this.$phone.val(),
         receiverDetailAddr: this.$addressDetail.val(),
-        receiverCityId: this.$province.data('id'),
-        receiverProvinceId: this.$city.data('id'),
-        receiverAreaId: this.$area.data('id'),
+        receiverCityId: cid,
+        receiverProvinceId: pid,
+        receiverAreaId: aid,
         headIconId: this.iconId,
       },
     })
@@ -177,7 +214,6 @@ const PersonalManageView = Base.ItemView.extend({
       })
   },
   addressInfoHandler(e) {
-    const self = this
     const $target = $(e.currentTarget)
     const id = $target.data('id')
     const name = $target.html()
@@ -186,31 +222,13 @@ const PersonalManageView = Base.ItemView.extend({
       this.$province.attr('data-id', id).html(name)
       this.$city.removeAttr('data-id').html('市')
       this.$area.removeAttr('data-id').html('区')
-      this.getCityXhr({ province: name })
-        .done((res) => {
-          if (res && res.result === 0) {
-            if (res.root) {
-              self.formateProvinceList(res.root, 2)
-            }
-          }
-        })
-        .fail((res) => {
-          Global.ui.notification.show(res.msg === 'fail' ? '获取城市列表失败' : res.msg)
-        })
+      this.chooseProvince = _(this.cityList).findWhere({ provinceId: id }).cityList
+      this.formateProvinceList(this.chooseProvince, 2)
     } else if (type === 2) {
       this.$city.attr('data-id', id).html(name)
       this.$area.removeAttr('data-id').html('区')
-      this.getAreaXhr({ cityId: id })
-        .done((res) => {
-          if (res && res.result === 0) {
-            if (res.root) {
-              self.formateProvinceList(res.root, 3)
-            }
-          }
-        })
-        .fail((res) => {
-          Global.ui.notification.show(res.msg === 'fail' ? '获取城市列表失败' : res.msg)
-        })
+      const areaInfo = _(this.chooseProvince).findWhere({ cityId: id }).areaList
+      this.formateProvinceList(areaInfo, 3)
     } else if (type === 3) {
       this.$area.attr('data-id', id).html(name)
     }
@@ -219,6 +237,10 @@ const PersonalManageView = Base.ItemView.extend({
     const $target = $(e.currentTarget)
     $target.addClass('active').siblings().removeClass('active')
     this.iconId = $target.data('id')
+  },
+  formateError(data) {
+    const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon m-right-xs vertical-middle"></i>${data.errorText}</span>`
+    data.el.html(errorTpl)
   },
 })
 
