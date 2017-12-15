@@ -124,7 +124,7 @@ gulp.task('server.webpack', () => {
       console.log(err)
     }
 
-    console.log(`Listening at localhost:${devConfig.port}`)
+    console.log(`Listening at localhost:${devConfig.devServer.port}`)
   })
 })
 

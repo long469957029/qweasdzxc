@@ -1,109 +1,31 @@
 module.exports = {
   entry: {
-    '1.main': {
-      entry: ['./src/apps/main/index.js'],
-      hot: true
-    },
-    '1.login': {
-      entry: ['./src/apps/packages/login/login.js'],
-      hot: true
-    },
-    '1.register': {
-      entry: ['./src/apps/packages/register/register.js'],
-      //hot: true
-    },
-    '1.trend': {
-      entry: ['./src/apps/packages/trend/index.js'],
-      //hot: true
-    },
-    '1.resetPassword': {
-      entry: ['./src/apps/packages/resetPassword/resetPassword.js'],
-      //hot: true
-    },
-    '1.updateUserInfo': {
-      entry: ['./src/apps/packages/updateUserInfo/updateUserInfo.js'],
-      //hot: true
-    },
-    '1.merchants': {
-      entry: ['./src/apps/packages/merchants/index.js'],
-      //hot: true
-    },
-    '1.404': {
-      entry: ['./src/apps/packages/404/index.js'],
-      //hot: true
-    },
-    '1.mmc': {
-      entry: ['./src/apps/packages/mmc/index.js'],
-      //hot: true
-    },
-    '1.charge': {
-      entry: ['./src/apps/packages/charge/index.js'],
-      //hot: true
-    },
-    '1.changeUrl': {
-      entry: ['./src/apps/packages/changeUrl/index.js'],
-    },
-    '1.leaflets': {
-      entry: ['./src/apps/packages/leaflets/index.js'],
-    },
-    //'1.client': {
-    //  entry: ['./src/apps/packages/client/index.js'],
-    //  //hot: true
-    //},
-    '1.download': {
-      entry: ['./src/apps/packages/download/index.js'],
-      //hot: true
-    },
-    '1.dragonAndTiger': {
-      entry: ['./src/apps/packages/dragonAndTiger/index.js'],
-      //hot: true
-    },
-    '4.base': {
-      entry: ['./src/base/build.base.js'],
-      //hot: true
-    },
-    '2.vendor': {
-      entry: ['./src/vendor/build.core.js']
-    },
-    '1.oneYear': {
-      entry: ['./src/apps/packages/oneYear/index.js'],
-      //hot: true
-    },
-    '1.vip': {
-      entry: ['./src/apps/packages/vip/index.js'],
-      hot: true
-    },
-    '1.expedition': {
-      entry: ['./src/apps/packages/expedition/index.js'],
-      // hot: true
-    },
-    '1.newDownload': {
-      entry: ['./src/apps/packages/newDownload/index.js'],
-      //hot: true
-    },
-    '1.integration': {
-      entry: ['./src/apps/packages/integration/index.js'],
-      //hot: true
-    },
-    '1.binding': {
-      entry: ['./src/apps/packages/binding/index.js'],
-      //  //hot: true
-    },
-    '1.regist': {
-      entry: ['./src/apps/packages/registers/index.js'],
-      hot: true
-    },
-    '1.update15': {
-      entry: ['./src/apps/packages/update/update15.js'],
-      // hot: true
-    },
-    '1.rebateDesc': {
-      entry: ['./src/apps/packages/rebateDescription/rebateDescription.js'],
-      // hot: true
-    },
-    '1.logger': {
-      entry: ['./src/apps/packages/logger/index.js']
-    }
+    '1.main': './src/apps/main/index.js',
+    '1.login': './src/apps/packages/login/login.js',
+    '1.register': './src/apps/packages/register/register.js',
+    '1.trend': './src/apps/packages/trend/index.js',
+    '1.resetPassword': './src/apps/packages/resetPassword/resetPassword.js',
+    '1.updateUserInfo': './src/apps/packages/updateUserInfo/updateUserInfo.js',
+    '1.merchants': './src/apps/packages/merchants/index.js',
+    '1.404': './src/apps/packages/404/index.js',
+    '1.mmc': './src/apps/packages/mmc/index.js',
+    '1.charge': './src/apps/packages/charge/index.js',
+    '1.changeUrl': './src/apps/packages/changeUrl/index.js',
+    '1.leaflets': './src/apps/packages/leaflets/index.js',
+    '1.download': './src/apps/packages/download/index.js',
+    '1.dragonAndTiger': './src/apps/packages/dragonAndTiger/index.js',
+    '4.base': './src/base/build.base.js',
+    '2.vendor': './src/vendor/build.core.js',
+    '1.oneYear': './src/apps/packages/oneYear/index.js',
+    '1.vip': './src/apps/packages/vip/index.js',
+    '1.expedition': './src/apps/packages/expedition/index.js',
+    '1.newDownload': './src/apps/packages/newDownload/index.js',
+    '1.integration': './src/apps/packages/integration/index.js',
+    '1.binding': './src/apps/packages/binding/index.js',
+    '1.regist': './src/apps/packages/registers/index.js',
+    '1.update15': './src/apps/packages/update/update15.js',
+    '1.rebateDesc': './src/apps/packages/rebateDescription/rebateDescription.js',
+    '1.logger': './src/apps/packages/logger/index.js',
   },
   port: 3002,
   commonChunks: {
