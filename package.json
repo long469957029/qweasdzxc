@@ -126,12 +126,7 @@
     "vinyl": "^1.0.0",
     "vue-loader": "^13.5.0",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7",
-    "moment": "~2.10.6",
-    "underscore.string": "~3.2.2",
-    "backbone": "~1.2.3",
-    "es5-shim": "~4.1.13",
-    "mathjs": "~2.4.1"
+    "webpack-dev-server": "^2.9.7"
   },
   "engines": {
     "node": ">=0.12.0"

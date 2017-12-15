@@ -171,7 +171,7 @@ module.exports = function(options) {
   if (options.debug) {
     module.rules.push({
       test:   /\.scss$/,
-      use: ['style-loader', 'css-loader?sourceMap', 'postcss?pack=rem', 'sass'],
+      use: ['style-loader', 'css-loader?sourceMap', 'postcss-loader?pack=rem', 'sass-loader'],
       include: [path.join(__dirname, 'src/apps/packages/merchants')]
     });
 

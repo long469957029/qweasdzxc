@@ -30,11 +30,11 @@ require('./scripts/module')
 
 require('jquery-ui/ui/core')
 require('jquery-ui/ui/widget')
-require('jquery-ui/ui/mouse')
+require('jquery-ui/ui/widgets/mouse')
 require('jquery-ui/ui/position')
 require('jquery-ui/ui/widgets/button')
 require('jquery-ui/ui/widgets/slider')
-require('./scripts/spinner')
+require('jquery-ui/ui/widgets/spinner')
 
 $.widget.bridge('uiButton', $.ui.button)
 
