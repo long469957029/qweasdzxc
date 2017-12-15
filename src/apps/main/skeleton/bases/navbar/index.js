@@ -7,7 +7,6 @@ const ticketConfig = require('skeleton/misc/ticketConfig')
 const NavsView = Base.ItemView.extend({
 
   template: require('./index.html'),
-  // gameTemplate: require('./game-temp.html'),
 
   events: {
     'click .js-db-nav-scroll': 'navScrollToggleHandler',
@@ -18,9 +17,6 @@ const NavsView = Base.ItemView.extend({
     'mouseleave .js-nav-game-type': 'gameTypeLeaveHandler',
     // 'click .js-nav-channel-item': 'channelItemClickHandler',
     'click .js-nav-channel-btn': 'jumpGamePageHandler',
-    'mouseenter .js-nav-mall': 'navMallMouseenterrInHandler',
-    'mouseleave .js-nav-mall': 'navMallmouseLeaveHandler',
-    'mouseleave .js-nav-mall-sub': 'outMallSelectHandler',
     'click .js-navbar-tab': 'tabEffectHandler',
   },
   // gameTypeEnterHandler(e) {
@@ -213,11 +209,7 @@ const NavsView = Base.ItemView.extend({
 
     this.$navSubtogglo = this.$('.nav-sub')
 
-    this.$navMallSub = this.$('.js-nav-mall-sub')
-
     this.$navMallSubList = this.$('.js-nav-mall-sub-list')
-
-    this.showMallList = false // 接口如果没有返回值或者报错 将不显示下拉
 
     this.$underLine = this.$('.js-navbar-slide-underline')
 
@@ -331,19 +323,6 @@ const NavsView = Base.ItemView.extend({
   },
   outTicketSelectHandler () {
     this.$navSubtogglo.css('display', 'none')
-  },
-  navMallMouseenterrInHandler () {
-    if (this.showMallList) {
-      this.$navMallSub.removeClass('hidden')
-    }
-  },
-  navMallmouseLeaveHandler (e) {
-    if (e.clientY < 90) {
-      this.$navMallSub.addClass('hidden')
-    }
-  },
-  outMallSelectHandler () {
-    this.$navMallSub.addClass('hidden')
   },
 })
 

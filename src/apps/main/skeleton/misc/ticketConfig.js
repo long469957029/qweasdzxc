@@ -349,20 +349,15 @@ module.exports = {
   getBeginlist() {
     return {
       classic: {
-        title: '经典模式',
-        desc: '经典元角分投注模式',
         list: [
           sscConfig.list,
           oneFiveConfig.list,
           threeDConfig.concat(p5p3Config, mark6Config),
-          bjPKConfig.concat(this.getById(29)), // 北京pk10, 江苏快三
         ],
       },
       handicap: {
-        title: '盘口模式',
-        desc: '金额自定义/多种玩法同时投注',
         list: [
-          _.filter(sscConfig.list, (item) => { return item.id === 27 }), // 除了东京1.5的所有时时彩彩种
+          _.filter(sscConfig.list, (item) => { return item.id !== 27 }), // 除了东京1.5的所有时时彩彩种
           bjPKConfig.concat(this.getById(34), this.getById(35)), // ['北京PK10', '香港六合彩', '无限六合彩'],
         ],
       },

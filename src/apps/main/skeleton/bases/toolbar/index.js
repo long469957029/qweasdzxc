@@ -32,6 +32,9 @@ const ToolbarView = Base.ItemView.extend({
   closeSidebarHandler() {
     const self = this
 
+    self.$sidebar.closest('.js-toolbar-container').find('.js-toolbar-option').each((index, dom) => {
+      $(dom).removeClass('active')
+    })
     self.$sidebar.closest('.js-toolbar-container').removeClass('open')
     self.$closeMask.addClass('hidden')
   },
@@ -41,6 +44,10 @@ const ToolbarView = Base.ItemView.extend({
     const $target = $(e.currentTarget)
     const option = $target.data('option')
 
+    self.$sidebar.closest('.js-toolbar-container').find('.js-toolbar-option').each((index, dom) => {
+      $(dom).removeClass('active')
+    })
+    $target.addClass('active')
     self.$sidebar.closest('.js-toolbar-container').addClass('open')
     self.$closeMask.removeClass('hidden')
 
