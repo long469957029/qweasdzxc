@@ -71,9 +71,10 @@ const TicketSelectGroup = Base.PrefabView.extend({
     this._initListXhr()
       .done((res) => {
         if (res && res.result === 0) {
-          self.$(`.${self.options.listClass}`).html(_(res.root).each((ticket) => {
-            html.push(`<option value="${ticket.ticketId}">${ticket.ticketName}</option>`)
-          }))
+          self.$(`.${self.options.listClass}`).html(_(res.root).reduce((html1, ticket) => {
+            html1.push(`<option value="${ticket.ticketId}">${ticket.ticketName}</option>`)
+            return html1
+          }, html))
         }
         // self.trigger('ticketList:init', 0);
       })
@@ -97,9 +98,10 @@ const TicketSelectGroup = Base.PrefabView.extend({
       })
         .done((res) => {
           if (res && res.result === 0) {
-            self.$(`.${self.options.levelClass}`).html(_(res.root).each((ticket) => {
-              html.push(`<option value="${ticket.ticketLevelId}">${ticket.ticketLevelName}</option>`)
-            }).join(''))
+            self.$(`.${self.options.levelClass}`).html(_(res.root).reduce((html1, ticket) => {
+              html1.push(`<option value="${ticket.ticketLevelId}">${ticket.ticketLevelName}</option>`)
+              return html1
+            }, html).join(''))
           }
         })
     }
@@ -120,10 +122,10 @@ const TicketSelectGroup = Base.PrefabView.extend({
       })
         .done((res) => {
           if (res && res.result === 0) {
-            self.$(`.${self.options.playClass}`).html(_(res.root).each((ticket) => {
-              html.push(`<option value="${ticket.ticketPlayId}">${ticket.ticketPlayName}</option>`)
-              // return html1
-            }).join(''))
+            self.$(`.${self.options.playClass}`).html(_(res.root).reduce((html1, ticket) => {
+              html1.push(`<option value="${ticket.ticketPlayId}">${ticket.ticketPlayName}</option>`)
+              return html1
+            }, html).join(''))
           }
         })
     }
