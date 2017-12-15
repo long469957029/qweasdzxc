@@ -48,7 +48,7 @@ const WithdrawView = SearchGrid.extend({
         subUser: 0,
       },
       listProp: 'root.withdrawList',
-      height: 310,
+      height: 530,
     })
   },
 

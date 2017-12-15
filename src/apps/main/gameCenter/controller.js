@@ -2,7 +2,7 @@
 
 const RouterController = require('skeleton/controllers/router')
 
-const menuConfig = Global.ui.menu.get('uc')
+const menuConfig = Global.ui.menu.get(['fc', 'uc'])
 
 const GameRecordView = require('gameCenter/gameRecord/index')
 // var RealBetRecordView = require('gameCenter/real/betRecord');

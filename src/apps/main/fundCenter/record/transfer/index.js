@@ -14,7 +14,7 @@ const TransferView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
-      height: '370',
+      height: '530',
       columns: [
         {
           name: '交易流水号',
