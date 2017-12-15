@@ -274,10 +274,12 @@ module.exports = {
 
       'snap': 'Snap.svg/dist/snap.svg',
       'bootstrap': 'vendor/scripts/bootstrap',
-      'modernizr': 'vendor/scripts/modernizr'
+      'modernizr': 'vendor/scripts/modernizr',
+      'vue': 'vue/dist/vue.js'
     }
   },
   providePlugin: {
+    'Vue': 'vue',
     'jQuery': 'jquery',
     '$': 'jquery',
     'window.jQuery': 'jquery',

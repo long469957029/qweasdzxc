@@ -1,5 +1,3 @@
-
-
 const App = require('./app')
 const modules = require('skeleton/modules')
 

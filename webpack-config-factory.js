@@ -58,7 +58,7 @@ module.exports = function(options) {
       path.join(__dirname, 'node_modules')
     ],
     modulesDirectories: ['local_modules', 'node_modules'],
-    extensions: ['', '.js', '.scss', 'html'],
+    extensions: ['', '.js', '.vue', '.scss', 'html'],
     alias: appConfig.resolve.alias
   };
 
@@ -142,6 +142,11 @@ module.exports = function(options) {
       {
         test: /snap/,
         loader: 'imports?this=>window,fix=>module.exports=0'
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        include: [path.join(__dirname, 'src')]
       },
       {
         test: /\.js$/,

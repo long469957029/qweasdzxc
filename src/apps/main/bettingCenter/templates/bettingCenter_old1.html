@@ -1,0 +1,277 @@
+<div class="bc-main">
+  <audio id="overAudio" src="<%=audio.over%>"></audio>
+  <audio id="prizeAudio" src="<%=audio.prize%>"></audio>
+  <audio id="openAudio" src="<%=audio.openCode%>"></audio>
+  <div class="bc-main-quick">
+    <div class="pull-left quick-list">
+      <a href="#bc/1" class="quick-list-info active">重庆时时彩<i class="sfa-badge-hot"></i></a>
+      <a href="#bc/10" class="quick-list-info">北京pk10<i class="sfa-badge-new"></i></a>
+      <a class="quick-list-info">无限分分彩</a>
+      <a class="quick-list-info">qq30秒</a>
+      <a class="quick-list-info">新加坡2分彩</a>
+      <a class="quick-list-info">韩国乐透1.5分彩</a>
+      <a class="quick-list-info">东京1.5分彩</a>
+      <a class="quick-list-info">无限秒秒彩</a>
+    </div>
+    <div class="quick-more pull-right">
+      <a class="sfa sfa-bc-quick-more cursor-pointer js-bc-quick-more bc-quick-more-btn" data-type="0"></a>
+      <div class="quick-ticket-list js-quick-ticket-list">
+        <div class="quick-ticket-main clearfix">
+          <div class="pull-left">
+            <div class="quick-ticket-type-name">经典模式</div>
+            <div class="ticket-ssc-list quick-ticket-ssc clearfix">
+              <% _(ticketList[0].list).each((item)=>{ %>
+              <a href="#bc/<%=item.id%>" class="ticket-info <% if(item.id === ticketInfo.info.id){%> active <%}%>">
+                <%=item.zhName%>
+                <% if(item.badge === 'hot'){ %>
+                <i class="sfa-badge-hot"></i>
+                <% } else if(item.badge === 'new'){ %>
+                <i class="sfa-badge-new"></i>
+                <% }%>
+              </a>
+              <% }) %>
+            </div>
+          </div>
+          <div class="quick-ticket-line"></div>
+          <div class="pull-left">
+            <div class="quick-ticket-type-name">十一选五</div>
+            <div class="ticket-ssc-list quick-ticket-choose5 clearfix">
+              <% _(ticketList[1].list).each((item)=>{ %>
+              <a href="#bc/<%=item.id%>" class="ticket-info <% if(item.id === ticketInfo.info.id){%> active <%}%>">
+                <%=item.zhName%>
+                <% if(item.badge === 'hot'){ %>
+                <i class="sfa-badge-hot"></i>
+                <% } else if(item.badge === 'new'){ %>
+                <i class="sfa-badge-new"></i>
+                <% }%>
+              </a>
+              <% }) %>
+            </div>
+          </div>
+          <div class="quick-ticket-line"></div>
+          <div class="pull-left">
+            <div class="quick-ticket-type-name">低频彩</div>
+            <div class="ticket-ssc-list quick-ticket-low clearfix">
+              <% _(ticketList[2].list).each((item)=>{ %>
+              <a href="#bc/<%=item.id%>" class="ticket-info <% if(item.id === ticketInfo.info.id){%> active <%}%>">
+                <%=item.zhName%>
+                <% if(item.badge === 'hot'){ %>
+                <i class="sfa-badge-hot"></i>
+                <% } else if(item.badge === 'new'){ %>
+                <i class="sfa-badge-new"></i>
+                <% }%>
+              </a>
+              <% }) %>
+            </div>
+          </div>
+          <div class="quick-ticket-line"></div>
+          <div class="pull-left">
+            <div class="quick-ticket-type-name">快乐彩</div>
+            <div class="ticket-ssc-list quick-ticket-happy clearfix">
+              <% _(ticketList[3].list).each((item)=>{ %>
+              <a href="#bc/<%=item.id%>" class="ticket-info <% if(item.id === ticketInfo.info.id){%> active <%}%>">
+                <%=item.zhName%>
+                <% if(item.badge === 'hot'){ %>
+                <i class="sfa-badge-hot"></i>
+                <% } else if(item.badge === 'new'){ %>
+                <i class="sfa-badge-new"></i>
+                <% }%>
+              </a>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bc-main-area bg-deep clearfix">
+    <div class="bc-area-ticket-info pull-left">
+      <div class="sfa sfa-bc-ssc-cq"></div>
+      <div class="ticket-info">10:00-20:00/共130期</div>
+    </div>
+    <div class="bc-curt-plan-main pull-left">
+      <div class="clearfix">
+        <div class="js-bc-plan-title bc-plan-title text-right m-right-sm pull-left">
+          第
+          <span class="js-bc-planId font-bold">------------</span>
+          <span class="js-bc-planId-stop hidden">------------</span>
+          期
+          <div><span class="js-music sfa sfa-bc-muisc m-right-xs vertical-sub cursor-pointer" title="开奖声音"></span>投注截止
+          </div>
+        </div>
+        <div class="js-bc-plan-title-pending bc-plan-title text-right font-bold m-right-sm pull-left">
+          距离维护结束
+          <div>时间还剩</div>
+        </div>
+        <div class="js-bc-countdown text-center m-bottom-md pull-left"></div>
+      </div>
+    </div>
+    <div class="bc-plan-main pull-left m-left-md">
+      <div class="bc-plan-inner relative clearfix">
+        <div class="bc-plan-title pull-left">
+          第 <span class="js-bc-last-planId font-bold">-</span> 期
+          <div>开奖号码</div>
+        </div>
+
+        <div class="js-bc-last-plan-results bc-last-plan-results pull-left">
+          <span class="text-circle">-</span>
+          <span class="text-circle">-</span>
+          <span class="text-circle">-</span>
+          <span class="text-circle">-</span>
+          <span class="text-circle">-</span>
+        </div>
+        <div class="js-hgcalculate-example bc-hgcalculate-example ">
+          <div class="bc-hgcaculate-examplerow">万位:<span class="js-bc-wan"></span></div>
+          <div class="bc-hgcaculate-examplerow">千位:<span class="js-bc-qian"></span></div>
+          <div class="bc-hgcaculate-examplerow">百位:<span class="js-bc-bai"></span></div>
+          <div class="bc-hgcaculate-examplerow">十位:<span class="js-bc-shi"></span></div>
+          <div class="bc-hgcaculate-examplerow">个位:<span class="js-bc-ge"></span></div>
+        </div>
+        <div class="js-bc-sale-stop pull-left hidden">
+          <span class="text-circle">暂</span>
+          <span class="text-circle">停</span>
+          <span class="text-circle">销</span>
+          <span class="text-circle">售</span>
+        </div>
+        <div class="js-bc-sale-pending pull-left hidden">
+          <span class="text-circle">等</span>
+          <span class="text-circle">待</span>
+          <span class="text-circle">开</span>
+          <span class="text-circle">奖</span>
+        </div>
+      </div>
+    </div>
+    <div class="bc-entry-list pull-right m-right-md">
+      <a href="#bc/1" class="entry-list-open">
+        <!--跳转到历史分析-->
+        <span class="sfa sfa-bc-icon-open-num vertical-middle"></span>
+        开奖号码
+      </a>
+      <a href="trend.html?ticketId=<%=ticketInfo.info.id %>" target="_blank" class="entry-list-trend">
+        <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
+        号码走势
+      </a>
+      <%
+      var ticketParameter = null;
+      if(ticketInfo.info.id==29){ticketParameter="quick3"}else if(_.indexOf(mark6TicketIdArr,
+      parseInt(ticketInfo.info.id))>-1){ticketParameter="mark6"}else{ticketParameter=ticketInfo.id}
+      %>
+      <a href="#hc?page=<%=ticketParameter %>" class="router entry-list-des">
+        <span class="sfa sfa-bc-icon-des vertical-middle"></span>
+        游戏说明
+      </a>
+    </div>
+  </div>
+
+  <input type="hidden" class="js-music-status" value="0">
+  <div
+    class="js-bc-main-area-right width-100 bc-play-main <%=_.indexOf(mark6TicketIdArr, parseInt(ticketInfo.info.id))>-1?'mark6':''%>">
+
+    <div class="js-bc-basic-rules bc-basic-rules bg-deep"></div>
+    <div class="bc-play-container clearfix">
+      <div class="bc-play-left basic-inverse pull-left">
+        <div class="bc-play-select-area clearfix">
+          <div class="js-bc-advance-rules bc-advance-rules p-top-smd pull-left"></div>
+          <div class="pull-right bc-advance-mode-main">
+            <div class="advance-bouns">
+              单注奖金：<span class="font-md text-prominent js-bc-bet-mode"></span>元
+            </div>
+            <a class="advance-play-des js-bc-play-example">
+              <span class="sfa sfa-bc-light vertical-middle"></span>
+              玩法说明
+            </a>
+          </div>
+        </div>
+        <div class="bc-line"></div>
+        <div class="m-LR-smd">
+          <div class="js-bc-play-area bc-play-area clearfix">
+            <div class="gl-loading">
+              <%=Global.ui.loader.get() %>
+            </div>
+          </div>
+        </div>
+
+        <div class="div-line"></div>
+
+        <div class="m-LR-smd m-top-md m-bottom-md">
+          <div class="form-inline m-TB-xs">
+            <select name="" class="js-bc-unit-select select-default bc-unit-select">
+              <option value="10000">元</option>
+              <option value="1000">角</option>
+              <option value="100">分</option>
+              <option value="10">厘</option>
+            </select>
+            <div class="inline-block m-left-smd">
+              <span class="js-bc-multi-range  vertical-middle bc-multi-range inline-block"></span>
+              <label class="m-left-xs">倍</label>
+            </div>
+
+            <div class="inline-block m-left-smd">
+              <span>共</span>
+              <span class="js-bc-statistics-lottery text-pleasant font-sm font-bold">0</span>
+              <span>注，金额</span>
+              <span class="js-bc-statistics-money text-prominent font-sm font-bold">0</span>
+              <span>元</span>
+            </div>
+            <select name="" class="js-bc-vouchers-select m-left-smd bc-vouchers-select">
+              <option value="">使用代金券</option>
+            </select>
+            <div class="pull-right m-right-sm">
+              <button class="js-bc-btn-lottery-buy btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中">
+                <span class="sfa sfa-btn-icon-bolt vertical-middle"></span>
+                快捷投注
+              </button>
+              <button class="js-bc-btn-lottery-add btn btn-cool bc-md-btn m-bottom-xs">
+                <span class="sfa sfa-btn-icon-add vertical-middle"></span> 添加号码
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="m-bottom-xs m-left-md">
+          <div class="clearfix bc-margin-xs">
+            <div class="js-bc-lottery-preview bc-lottery-preview border-table-all"></div>
+            <div class="overflow-hidden font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
+                <span>
+                  <span>预期盈利</span>
+                  <span class="js-bc-total-rebateMoney text-prominent font-bold">0</span>
+                  <span>元，</span>
+                </span>
+                <span>
+                  <span>总投注 【</span>
+                  <span class="js-bc-total-lottery text-pleasant font-bold">0</span>
+                  <span>】 注， </span>
+                </span>
+                <span>
+                  <span>总金额</span>
+                  <span class="js-bc-total-money text-prominent m-left-xs m-right-xs font-bold">0</span>
+                  <span>元</span>
+                </span>
+                <a class="js-bc-chase inline-block text-black cursor-pointer m-left-md relative">
+                  <span class="sfa sfa-checkmark vertical-middle"></span>
+                  我要追号
+                  <span class="ba-chase-tip">追号能提高中奖率</span>
+                </a>
+            </div>
+            <div class="m-top-md p-top-sm text-center m-bottom-md">
+              <button class="js-bc-btn-lottery-confirm btn btn-orange bc-jb-btn"
+                      data-loading-text="提交中"> 确认投注
+              </button>
+            </div>
+
+            <!--<div class="pull-left margin-md">-->
+            <!--<div class="btn-group btn-group-vertical">-->
+            <!--<button type="button" class="js-bc-lottery-auto btn m-bottom-sm" data-times="1">机选一注</button>-->
+            <!--<button type="button" class="js-bc-lottery-auto btn m-bottom-sm" data-times="5">机选五注</button>-->
+            <!--<button type="button" class="js-bc-lottery-clear btn m-bottom-sm">清空号码</button>-->
+            <!--</div>-->
+            <!--</div>-->
+          </div>
+        </div>
+      </div>
+      <div class="js-bc-side-area bc-side-area pull-right"></div>
+    </div>
+    <div class="bc-bottom-area js-bc-records"></div>
+  </div>
+</div>

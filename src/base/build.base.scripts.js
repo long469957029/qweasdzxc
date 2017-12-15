@@ -1,6 +1,7 @@
 
 
 window.Backbone = require('backbone')
+window.Vue = require('vue')
 window.Base = require('./scripts/base')
 
 require('./scripts/under-helper')

@@ -17,7 +17,9 @@
     "imagemin-pngquant": "^4.2.2",
     "imagemin-svgo": "^6.0.0",
     "lodash": "^4.17.4",
-    "rambda": "^1.0.0"
+    "rambda": "^1.0.0",
+    "vue": "^2.5.10",
+    "vue-backbone": "^0.1.1"
   },
   "scripts": {
     "dev.main": "gulp server",
@@ -91,7 +93,7 @@
     "minimatch": "^2.0.1",
     "minimist": "~1.1.0",
     "modernizr": "^3.1.0",
-    "node-sass": "^3.3.3",
+    "node-sass": "^4.7.2",
     "parsleyjs": "2.1.2",
     "postcss-filter-gradient": "^0.1.1",
     "postcss-loader": "^0.8.0",
@@ -112,6 +114,7 @@
     "url-loader": "^0.5.6",
     "url-pattern": "^0.6.0",
     "vinyl": "^1.0.0",
+    "vue-loader": "^13.5.0",
     "webpack": "^1.12.9",
     "webpack-dev-server": "1.14.1"
   },
