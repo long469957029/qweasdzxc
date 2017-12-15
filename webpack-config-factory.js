@@ -48,10 +48,9 @@ module.exports = function(options) {
   //==============resolve================
   const resolve = {
     modules: [
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'node_modules'),
       'node_modules',
-      path.join(__dirname, 'src'),
-      path.join(__dirname, 'bower_components'),
-      path.join(__dirname, 'node_modules')
     ],
     extensions: ['.js', '.vue', '.scss', 'html'],
     alias: appConfig.resolve.alias
@@ -67,33 +66,6 @@ module.exports = function(options) {
     }),
     new webpack.ProvidePlugin(appConfig.providePlugin),
     new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /zh-cn/),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        postcss: (loader) => [
-          require('postcss-cssnext')(),
-          require('postcss-unrgba')({
-            method: 'clone'
-          }),
-          require('gradient')(),
-          require('autoprefixer')({browsers: ['Chrome > 30','ie >= 8','> 1%']}),
-          require('cssnano')()
-        ]
-      }
-    })
-    // {
-    //   options: {
-    //     ident: 'postcss',
-    //     plugins: (loader) => [
-    //       require('postcss-cssnext')(),
-    //       require('postcss-unrgba')({
-    //         method: 'clone'
-    //       }),
-    //       require('gradient')(),
-    //       require('autoprefixer')({browsers: ['Chrome > 30','ie >= 8','> 1%']}),
-    //       require('cssnano')()
-    //     ]
-    //   }
-    // }
   ];
 
   if (options.debug) {
@@ -184,7 +156,7 @@ module.exports = function(options) {
       },
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
