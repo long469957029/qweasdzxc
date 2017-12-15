@@ -67,11 +67,9 @@ module.exports = function(options) {
     }),
     new webpack.ProvidePlugin(appConfig.providePlugin),
     new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /zh-cn/),
-    {
-      loader: 'postcss-loader',
+    new webpack.LoaderOptionsPlugin({
       options: {
-        ident: 'postcss',
-        plugins: (loader) => [
+        postcss: (loader) => [
           require('postcss-cssnext')(),
           require('postcss-unrgba')({
             method: 'clone'
@@ -81,7 +79,21 @@ module.exports = function(options) {
           require('cssnano')()
         ]
       }
-    }
+    })
+    // {
+    //   options: {
+    //     ident: 'postcss',
+    //     plugins: (loader) => [
+    //       require('postcss-cssnext')(),
+    //       require('postcss-unrgba')({
+    //         method: 'clone'
+    //       }),
+    //       require('gradient')(),
+    //       require('autoprefixer')({browsers: ['Chrome > 30','ie >= 8','> 1%']}),
+    //       require('cssnano')()
+    //     ]
+    //   }
+    // }
   ];
 
   if (options.debug) {
@@ -187,20 +199,20 @@ module.exports = function(options) {
   if (options.debug) {
     module.rules.push({
       test:   /\.scss$/,
-      use: 'style-loader!css-loader?sourceMap!postcss?pack=rem!sass',
+      use: ['style-loader', 'css-loader?sourceMap', 'postcss?pack=rem', 'sass'],
       include: [path.join(__dirname, 'src/apps/packages/merchants')]
     });
 
     module.rules.push({
       test:   /\.scss$/,
-      use: 'style-loader!css-loader?sourceMap!postcss!sass',
+      use: ['style-loader', 'css-loader?sourceMap', 'postcss-loader', 'sass-loader'],
       include: [path.join(__dirname, 'src')],
       exclude: [path.join(__dirname, 'src/apps/packages/merchants')]
     });
 
     module.rules.push({
       test: /\.css$/,
-      use: 'style-loader!css-loader!postcss-loader'
+      use: ['style-loader', 'css-loader', 'postcss-loader']
     });
 
   } else {
@@ -244,17 +256,6 @@ module.exports = function(options) {
     resolve: resolve,
     plugins: plugins,
     module: module,
-    // postcss: function () {
-    //   return {
-    //     defaults: [
-    //     ],
-    //     rem: [
-    //       pxtorem({
-    //         root_value: 12,
-    //         unit_precision: 5,
-    //         prop_white_list: [],
-    //         replace: false
-    //       })
     //     ]
     //   };
     // },
