@@ -119,7 +119,7 @@ gulp.task('server.webpack', () => {
     stats: {
       colors: true,
     },
-  }).listen(devConfig.port, 'localhost', (err) => {
+  }).listen(devConfig.devServer.port, 'localhost', (err) => {
     if (err) {
       console.log(err)
     }

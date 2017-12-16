@@ -2,8 +2,6 @@ var _ = require('underscore');
 var path = require('path');
 var webpack = require('webpack');
 
-// var pxtorem = require('postcss-pxtorem');
-
 var AssetsPlugin = require('assets-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -13,20 +11,16 @@ module.exports = function(options) {
   var appConfig = options.appConfig;
 
   //==============entry================
-  var entry = appConfig.entry;
-  // var entry = _(appConfig.entry).reduce(function(entries, entryInfo, entryName) {
-  //   var entry = entryInfo.entry;
-  //   // if (entryInfo.hot && options.debug) {
-  //   //   entry = [
-  //   //     'webpack-dev-server/client?http://localhost:' + appConfig.port,
-  //   //     'webpack/hot/only-dev-server'
-  //   //   ].concat(entry);
-  //   // }
-  //
-  //   entries[entryName] = entry;
-  //
-  //   return entries;
-  // }, {});
+  var entry = _(appConfig.entry).reduce(function(entries, entry, entryName) {
+    entry = [
+      'webpack-dev-server/client?http://localhost:' + appConfig.port,
+      // 'webpack/hot/only-dev-server'
+    ].concat(entry);
+
+    entries[entryName] = entry;
+
+    return entries;
+  }, {});
 
   //==============output================
   var output = {
@@ -100,6 +94,7 @@ module.exports = function(options) {
       filename: entryName + '.html',
       template: entryInfo.template,
       chunks: entryInfo.chunks,
+      chunksSortMode: 'manual',
       inject: 'body',
       favicon: entryInfo.favicon,
       resources : entryInfo.resources
@@ -154,17 +149,24 @@ module.exports = function(options) {
         },
         include: [path.join(__dirname, 'src')]
       },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            // presets: ['@babel/preset-env']
-          }
-        },
-        include: [path.join(__dirname, 'src')]
-      },
+      // {
+      //   test: /\.js$/,
+      //   use: {
+      //     loader: 'babel-loader',
+      //     options: {
+      //       presets: ['@babel/preset-env'],
+      //       ignore: [
+      //         './src/apps/widgets/upload/jquery.fileupload-5.42.3.js',
+      //         // '',
+      //         // '',
+      //         // '',
+      //         // ''
+      //       ]
+      //     }
+      //   },
+      //   include: [path.join(__dirname, 'src')],
+      //   exclude: /node_modules/,
+      // },
     ]
   };
 

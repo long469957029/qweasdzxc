@@ -17,4 +17,4 @@ const FundView = Base.ItemView.extend({
   },
 })
 
-module.exports = FundView
+export default FundView
