@@ -80,22 +80,36 @@ gulp.task('server.webpack', () => {
     appConfig: packageConfig,
   })
 
-  let proxy = [
-    {
-      path: '*.json',
+  // let proxy = [
+  //   {
+  //     path: '*.json',
+  //     target: serverIP,
+  //     changeOrigin: true,
+  //   },
+  //   {
+  //     path: 'mock/*.json',
+  //     target: 'http://localhost:7070/',
+  //   },
+  //   {
+  //     path: '*',
+  //     target: serverIP,
+  //     changeOrigin: true,
+  //   },
+  // ]
+
+  let proxy = {
+    '*.json': {
       target: serverIP,
       changeOrigin: true,
     },
-    {
-      path: 'mock/*.json',
+    'mock/*.json': {
       target: 'http://localhost:7070/',
     },
-    {
-      path: '*',
+    '*': {
       target: serverIP,
       changeOrigin: true,
     },
-  ]
+  };
 
   if (argv.mockup) {
     proxy = _(mockupConfig.routers).map((val, pathInfo) => {
