@@ -149,24 +149,17 @@ module.exports = function(options) {
         },
         include: [path.join(__dirname, 'src')]
       },
-      // {
-      //   test: /\.js$/,
-      //   use: {
-      //     loader: 'babel-loader',
-      //     options: {
-      //       presets: ['@babel/preset-env'],
-      //       ignore: [
-      //         './src/apps/widgets/upload/jquery.fileupload-5.42.3.js',
-      //         // '',
-      //         // '',
-      //         // '',
-      //         // ''
-      //       ]
-      //     }
-      //   },
-      //   include: [path.join(__dirname, 'src')],
-      //   exclude: /node_modules/,
-      // },
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          }
+        },
+        include: [path.join(__dirname, 'src')],
+        exclude: /node_modules|jquery|jqmeter|turn.html4/,
+      },
     ]
   };
 
