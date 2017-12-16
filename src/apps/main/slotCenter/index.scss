@@ -48,10 +48,15 @@
   .banner-hot-item {
     @include with-margin(8px);
     position: relative;
+
+    .sfa {
+      transform: scale(0.78);
+      transform-origin: top left;
+    }
   }
 
   .sc-hot-game-mask {
-    @include mask(110px, 0);
+    @include mask(120px, 0);
     transition: opacity .3s, transform .3s;
     top: 0;
     border-radius: 5px;
@@ -59,7 +64,7 @@
     .sc-play-btn {
       background: url('./images/sc-play-btn.png');
       width: 87px;
-      height: 87px;
+      height: 97px;
       opacity: 0;
       margin: 11px auto;
       transition: opacity .3s;
@@ -67,7 +72,7 @@
     }
 
     &:hover, &:active {
-      @include mask(110px, .5);
+      @include mask(120px, .5);
 
       .sc-play-btn {
         opacity: 1;
@@ -87,6 +92,7 @@
     color: white;
     font-size: 14px;
     text-align: center;
+    margin-top: -30px;
   }
 }
 
@@ -493,9 +499,8 @@
   border-radius: 5px;
   overflow: hidden;
 
-  img {
-    height: 150px;
-    transition: transform .3s;
+  .sfa {
+    transform: scale(1.02);
   }
 }
 

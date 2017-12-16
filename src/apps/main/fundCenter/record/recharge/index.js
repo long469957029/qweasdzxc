@@ -1,4 +1,3 @@
-
 require('../index.scss')
 const SearchGrid = require('com/searchGrid')
 
@@ -10,35 +9,34 @@ const RechargeView = SearchGrid.extend({
 
   template: require('./index.html'),
 
-  events: {},
+  events: {
+    'mouseover .js-fc-img-container': 'showRemarkHandler',
+    'mouseout .js-fc-img-container': 'hiddenRemarkHandler',
+  },
 
   initialize () {
     _(this.options).extend({
-      height: '310',
+      height: '530',
       columns: [
         {
           name: '交易流水号',
           width: '20%',
         },
         {
-          name: '充值时间',
+          name: '时间',
           width: '20%',
         },
         {
-          name: '充值方式',
-          width: '15%',
+          name: '方式',
+          width: '20%',
         },
         {
-          name: '充值金额',
-          width: '15%',
-        },
-        {
-          name: '账户余额',
-          width: '15%',
+          name: '金额',
+          width: '18%',
         },
         {
           name: '状态',
-          width: '15%',
+          width: '22%',
         },
       ],
       gridOps: {
@@ -101,16 +99,49 @@ const RechargeView = SearchGrid.extend({
       .hideLoading()
   },
 
-  formatRowData(rowInfo) {
+  formatRowData(rowInfo, index) {
     const row = []
-
+    const rowTop = (index * 40) + 63
     row.push(rowInfo.tradeNo)
     row.push(_(rowInfo.payTime).toTime())
-    row.push(rowInfo.type)
-    row.push(rowInfo.amount / 10000)
-    row.push(rowInfo.balance / 10000)
-    row.push(rowInfo.status)
+    row.push(`<span class="m-right-sm">${rowInfo.type}</span>[${rowInfo.bankName}]`)
+    row.push(`<span class="text-add">+${_(rowInfo.amount) / 10000}</span>`)
+    // row.push(rowInfo.balance / 10000)
+
+    const statusList = []
+    if (rowInfo.flowStatus === 0) {
+      statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">待支付</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已到账</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-line"></span></span></div>')
+      statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
+    } else if (rowInfo.flowStatus === 1) {
+      statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">待支付</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已到账</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-line"></span></span></div>')
+      statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
+    } else if (rowInfo.flowStatus === 2) {
+      statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">待支付</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已到账</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-line"></span></span></div>')
+      statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
+    } else {
+      statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">待支付</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">未通过</span><span class="fc-rc-status-line-unPass">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-img"></span></span></div>')
+      statusList.push('<div class="inline-block js-fc-img-container fc-rc-status-img-container "><i class="fa fa-exclamation-circle" aria-hidden="true"></i></div>' +
+        `<div class="fc-rc-status-text-container hidden" style="top:${rowTop}px"><div class="fc-rc-status-text">${rowInfo.status}</div></div>`)
+    }
+    row.push(statusList.join(''))
     return row
+  },
+
+  showRemarkHandler(e) {
+    const $target = $(e.currentTarget)
+    $target.closest('td').find('.fc-rc-status-text-container').removeClass('hidden')
+  },
+  hiddenRemarkHandler(e) {
+    const $target = $(e.currentTarget)
+    $target.closest('td').find('.fc-rc-status-text-container').addClass('hidden')
   },
 })
 

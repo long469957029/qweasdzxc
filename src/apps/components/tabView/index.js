@@ -41,6 +41,7 @@ const TabView = Base.LayoutView.extend({
       triggerTab: this.triggerTab,
       append: this.append,
       title: this.options.title,
+      titleDes: this.options.titleDes,
     })
 
     if (this.startOnLoading) {
@@ -102,7 +103,8 @@ const TabView = Base.LayoutView.extend({
 
       if (tabInfo.view) {
         if (!self._tabViews[tabInfo.name]) {
-          self._tabViews[tabInfo.name] = new tabInfo.view(tabInfo.options || {})
+          const TabinfoView = tabInfo.view
+          self._tabViews[tabInfo.name] = new TabinfoView(tabInfo.options || {})
           self._tabViews[tabInfo.name]._parentView = self
         }
 

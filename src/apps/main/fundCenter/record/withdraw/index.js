@@ -1,5 +1,3 @@
-
-
 const SearchGrid = require('com/searchGrid')
 
 const Timeset = require('com/timeset')
@@ -8,7 +6,10 @@ const WithdrawView = SearchGrid.extend({
 
   template: require('./index.html'),
 
-  events: {},
+  events: {
+    'mouseover .js-fc-img-container': 'showRemarkHandler',
+    'mouseout .js-fc-img-container': 'hiddenRemarkHandler',
+  },
 
   initialize () {
     _(this.options).extend({
@@ -16,31 +17,23 @@ const WithdrawView = SearchGrid.extend({
       columns: [
         {
           name: '交易流水号',
-          width: '16%',
+          width: '20%',
         },
         {
-          name: '提现时间',
-          width: '16%',
+          name: '时间',
+          width: '20%',
         },
         {
-          name: '提现银行',
-          width: '10%',
+          name: '方式',
+          width: '20%',
         },
         {
           name: '金额',
-          width: '10%',
-        },
-        {
-          name: '余额',
-          width: '11%',
+          width: '18%',
         },
         {
           name: '状态',
-          width: '8%',
-        },
-        {
-          name: '备注',
-          width: '15%',
+          width: '22%',
         },
       ],
       //      tip: '<div class="tip-hot"><span>提示</span>   </div>',
@@ -55,7 +48,7 @@ const WithdrawView = SearchGrid.extend({
         subUser: 0,
       },
       listProp: 'root.withdrawList',
-      height: 310,
+      height: 530,
     })
   },
 
@@ -80,7 +73,7 @@ const WithdrawView = SearchGrid.extend({
   },
 
   renderGrid(gridData) {
-    const rowsData = _(gridData.withdrawList).map(function(info, index, list) {
+    const rowsData = _(gridData.withdrawList).map(function (info, index, list) {
       return {
         columnEls: this.formatRowData(info, index, list),
         dataAttr: info,
@@ -105,16 +98,52 @@ const WithdrawView = SearchGrid.extend({
     this.grid.hideLoading()
   },
 
-  formatRowData(rowInfo) {
+  formatRowData(rowInfo, index) {
     const row = []
+    const rowTop = (index * 40) + 63
     row.push(rowInfo.tradeNo)
     row.push(_(rowInfo.createTime).toTime())
-    row.push(rowInfo.bankName)
-    row.push(_(rowInfo.amount).fixedConvert2yuan())
-    row.push(_(rowInfo.balance).fixedConvert2yuan())
-    row.push(rowInfo.status)
-    row.push(rowInfo.remark)
+    row.push(`<span class="m-right-sm"></span>[${rowInfo.bankName}]`)
+    row.push(`<span class="text-cut">${_(rowInfo.amount).fixedConvert2yuan()}</span>`)
+    const statusList = []
+    if (rowInfo.flowStatus === 0) {
+      statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">审核中</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已通过</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已出款</span><span class="fc-rc-status-line"></span></span></div>')
+      statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
+    } else if (rowInfo.flowStatus === 1) {
+      statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">审核中</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已通过</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已出款</span><span class="fc-rc-status-line"></span></span></div>')
+      statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
+    } else if (rowInfo.flowStatus === 2) {
+      statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">审核中</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已通过</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已出款</span><span class="fc-rc-status-line"></span></span></div>')
+      statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
+    } else if (rowInfo.flowStatus === 3) {
+      statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">审核中</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">未通过</span><span class="fc-rc-status-line-unPass">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已出款</span><span class="fc-rc-status-img"></span></span></div>')
+      statusList.push('<div class="inline-block js-fc-img-container fc-rc-status-img-container "><i class="fa fa-exclamation-circle" aria-hidden="true"></i></div>' +
+        `<div class="fc-rc-status-text-container hidden" style="top:${rowTop}px"><div class="fc-rc-status-text">${rowInfo.remark}</div></div>`)
+    } else if (rowInfo.flowStatus === 4) {
+      statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">审核中</span><span class="fc-rc-status-line">-</span></span>')
+      statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已通过</span><span class="fc-rc-status-line-unPass">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">出款失败</span><span class="fc-rc-status-img"></span></span></div>')
+      statusList.push('<div class="inline-block js-fc-img-container fc-rc-status-img-container "><i class="fa fa-exclamation-circle" aria-hidden="true"></i></div>' +
+        `<div class="fc-rc-status-text-container hidden" style="top:${rowTop}px"><div class="fc-rc-status-text">${rowInfo.remark}</div></div>`)
+    }
+    row.push(statusList.join(''))
     return row
+  },
+  showRemarkHandler(e) {
+    const $target = $(e.currentTarget)
+    $target.closest('td').find('.fc-rc-status-text-container').removeClass('hidden')
+  },
+  hiddenRemarkHandler(e) {
+    const $target = $(e.currentTarget)
+    $target.closest('td').find('.fc-rc-status-text-container').addClass('hidden')
   },
 })
 

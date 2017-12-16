@@ -14,7 +14,7 @@ const TransferView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
-      height: '370',
+      height: '530',
       columns: [
         {
           name: '交易流水号',
@@ -116,7 +116,11 @@ const TransferView = SearchGrid.extend({
     row.push(_(rowInfo.createTime).toTime())
     row.push(rowInfo.fromChannelId === 0 ? '中心钱包' : (_.getChannelById(rowInfo.fromChannelId).channelName))
     row.push(_.getChannelById(rowInfo.toChannelId).channelName)
-    row.push(_(rowInfo.amount).convert2yuan())
+    if (rowInfo.amount >= 0) {
+      row.push(`<span class="text-add">+${_(rowInfo.amount).convert2yuan()}</span>`)
+    } else {
+      row.push(`<span class="text-cut">${_(rowInfo.amount).convert2yuan()}</span>`)
+    }
     let status = ''
     switch (rowInfo.status) {
       case 0: status = '处理中'; break
