@@ -2,9 +2,12 @@ import Vue from 'vue'
 
 import ticketConfig from 'skeleton/misc/ticketConfig'
 
+import store from '../../../store'
 import bettingCenterTpl from '../templates/bettingCenter.html'
 
-import bettingQuickNav from './bettingQuickNav'
+// vue components
+import bettingQuickNav from './betting-quick-nav'
+import ticketInfoBanner from './ticket-info-banner'
 
 
 import over from '../misc/over.wav'
@@ -25,7 +28,7 @@ const BettingCenterView = Base.ItemView.extend({
     this.options.ticketInfo = ticketConfig.getComplete(this.options.ticketId)
     const ticketInfo = this.options.ticketInfo
 
-    let ticketParameter = null
+    let ticketParameter = ''
     if (ticketInfo.info.id === 29) {
       ticketParameter = 'quick3'
     } else if (_.indexOf(this.mark6TicketIdArr, ticketInfo.info.id) > -1) {
@@ -34,11 +37,13 @@ const BettingCenterView = Base.ItemView.extend({
       ticketParameter = ticketInfo.id
     }
 
-    new Vue({
+    const bettingCenter = new Vue({
       el: '#js-bc-main',
       components: {
         bettingQuickNav,
+        ticketInfoBanner,
       },
+      store,
       data: {
         ticketId: Number(this.options.ticketId),
         ticketInfo: this.options.ticketInfo,
@@ -51,6 +56,8 @@ const BettingCenterView = Base.ItemView.extend({
       methods: {
       },
     })
+
+    bettingCenter.$store.dispatch('getTicketInfo', this.options.ticketId)
   },
 })
 

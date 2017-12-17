@@ -1,0 +1,89 @@
+<template>
+  <div class="bc-main-area bg-deep clearfix">
+    <div class="bc-area-ticket-info pull-left">
+      <div class="sfa sfa-bc-ssc-cq"></div>
+      <div class="ticket-info">10:00-20:00/共130期</div>
+    </div>
+    <div class="bc-curt-plan-main pull-left">
+      <div class="clearfix">
+        <div class="js-bc-plan-title bc-plan-title text-right m-right-sm pull-left">
+          第
+          <span class="js-bc-planId font-bold">------------</span>
+          <span class="js-bc-planId-stop hidden">------------</span>
+          期
+          <div><span class="js-music sfa sfa-bc-muisc m-right-xs vertical-sub cursor-pointer" title="开奖声音"></span>投注截止
+          </div>
+        </div>
+        <div class="js-bc-plan-title-pending bc-plan-title text-right font-bold m-right-sm pull-left">
+          距离维护结束
+          <div>时间还剩</div>
+        </div>
+        <div class="js-bc-countdown text-center m-bottom-md pull-left"></div>
+      </div>
+    </div>
+    <div class="bc-plan-main pull-left m-left-md">
+      <div class="bc-plan-inner relative clearfix">
+        <div class="bc-plan-title pull-left">
+          第 <span class="js-bc-last-planId font-bold">-</span> 期
+          <div>开奖号码</div>
+        </div>
+
+        <div class="js-bc-last-plan-results bc-last-plan-results pull-left">
+          <span class="text-circle">-</span>
+          <span class="text-circle">-</span>
+          <span class="text-circle">-</span>
+          <span class="text-circle">-</span>
+          <span class="text-circle">-</span>
+        </div>
+        <div class="js-hgcalculate-example bc-hgcalculate-example ">
+          <div class="bc-hgcaculate-examplerow">万位:<span class="js-bc-wan"></span></div>
+          <div class="bc-hgcaculate-examplerow">千位:<span class="js-bc-qian"></span></div>
+          <div class="bc-hgcaculate-examplerow">百位:<span class="js-bc-bai"></span></div>
+          <div class="bc-hgcaculate-examplerow">十位:<span class="js-bc-shi"></span></div>
+          <div class="bc-hgcaculate-examplerow">个位:<span class="js-bc-ge"></span></div>
+        </div>
+        <div class="js-bc-sale-stop pull-left hidden">
+          <span class="text-circle">暂</span>
+          <span class="text-circle">停</span>
+          <span class="text-circle">销</span>
+          <span class="text-circle">售</span>
+        </div>
+        <div class="js-bc-sale-pending pull-left hidden">
+          <span class="text-circle">等</span>
+          <span class="text-circle">待</span>
+          <span class="text-circle">开</span>
+          <span class="text-circle">奖</span>
+        </div>
+      </div>
+    </div>
+    <div class="bc-entry-list pull-right m-right-md">
+      <a href="#bc/1" class="entry-list-open">
+        <!--跳转到历史分析-->
+        <span class="sfa sfa-bc-icon-open-num vertical-middle"></span>
+        开奖号码
+      </a>
+      <a :href="'trend.html?ticketId=' + ticketInfo.info.id" target="_blank" class="entry-list-trend">
+        <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
+        号码走势
+      </a>
+      <a :href="'#hc?page=' + ticketParameter" class="router entry-list-des">
+        <span class="sfa sfa-bc-icon-des vertical-middle"></span>
+        游戏说明
+      </a>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "ticket-info-banner",
+    props: {
+      ticketInfo: Object,
+      ticketParameter: String
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>

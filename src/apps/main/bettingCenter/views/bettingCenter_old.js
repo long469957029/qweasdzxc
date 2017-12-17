@@ -131,16 +131,6 @@ const BettingCenterView = Base.ItemView.extend({
     })
   },
 
-  getNewPlan() {
-    this.infoModel.fetch({
-      abort: false,
-      type: 'post',
-      data: {
-        ticketId: this.options.ticketId,
-      },
-    })
-  },
-
   onRender() {
     const self = this
     this.$countdown = this.$('.js-bc-countdown')
