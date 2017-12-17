@@ -11,8 +11,8 @@
       <a class="quick-list-info">无限秒秒彩</a>
     </div>
     <div class="quick-more pull-right">
-      <a class="sfa sfa-bc-quick-more cursor-pointer js-bc-quick-more bc-quick-more-btn" data-type="0" @click="showTicketList"></a>
-      <div class="quick-ticket-list js-quick-ticket-list">
+      <a :class="['sfa cursor-pointer bc-quick-more-btn', isShowMore ? 'sfa-bc-quick-close' : 'sfa-bc-quick-more']" @click="showTicketList"></a>
+      <div :class="['quick-ticket-list', isShowMore ? 'quick-ticket-list-animate' : '']">
         <div class="quick-ticket-main clearfix">
           <div v-for="ticketInfo in ticketList">
             <div class="pull-left">
@@ -37,23 +37,15 @@
   export default {
     name: "betting-quick-nav",
     props: {
-      ticketList: Array
+      ticketList: Array,
+      isShowMore: {
+        type: Boolean,
+        default: false
+      }
     },
     methods: {
-      showTicketList(e) {
-        this.$quickTicketList = $('.js-quick-ticket-list')
-
-        const $target = $(e.currentTarget)
-        const type = $target.data('type')
-        if (type === 0) {
-          $target.data('type', 1)
-          this.$quickTicketList.addClass('quick-ticket-list-animate')
-          $target.removeClass('sfa-bc-quick-more').addClass('sfa-bc-quick-close')
-        } else {
-          $target.data('type', 0)
-          this.$quickTicketList.removeClass('quick-ticket-list-animate')
-          $target.removeClass('sfa-bc-quick-close').addClass('sfa-bc-quick-more')
-        }
+      showTicketList() {
+        this.isShowMore = !this.isShowMore
       }
     }
   }

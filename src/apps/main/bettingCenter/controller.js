@@ -1,8 +1,9 @@
-require('./misc/index.scss')
+import BettingCenterView from './views/bettingCenter'
+
+import './misc/index.scss'
 
 const RouterController = require('skeleton/controllers/router')
 
-const BettingCenterView = require('bettingCenter/views/bettingCenter')
 // const BettingCenterView = require('bettingCenter/views/bettingCenter_old1')
 
 const BettingDetailView = require('bettingCenter/views/bettingCenter-detail')

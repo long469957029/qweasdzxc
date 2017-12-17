@@ -63,11 +63,11 @@
         <span class="sfa sfa-bc-icon-open-num vertical-middle"></span>
         开奖号码
       </a>
-      <a href="'trend.html?ticketId=' + {{ticketInfo.info.id}}" target="_blank" class="entry-list-trend">
+      <a :href="'trend.html?ticketId=' + ticketInfo.info.id" target="_blank" class="entry-list-trend">
         <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
         号码走势
       </a>
-      <a href="#hc?page={{ticketParameter}}" class="router entry-list-des">
+      <a :href="'#hc?page=' + ticketParameter" class="router entry-list-des">
         <span class="sfa sfa-bc-icon-des vertical-middle"></span>
         游戏说明
       </a>

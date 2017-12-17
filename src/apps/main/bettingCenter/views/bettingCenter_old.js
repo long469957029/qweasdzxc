@@ -29,7 +29,6 @@ const BettingCenterView = Base.ItemView.extend({
   commitTpl: _.template(require('bettingCenter/templates/bettingCenter-commit.html')),
 
   events: {
-    // 'click .js-bc-video': 'openVideoHandler',
     'click .js-bc-basic-rule': 'baseRuleChangeHandler',
     'click .js-bc-advance-rule': 'advanceRuleChangeHandler',
     'change .js-bc-bet-mode': 'betModeChangeHandler',
@@ -46,7 +45,6 @@ const BettingCenterView = Base.ItemView.extend({
     'click .js-music': 'openMusicHandler',
     'click .js-bc-select-item': 'selectBcItemHandler',
     'click .js-bc-user-redPack-btn': 'checkUserRedPackHanler',
-    'click .js-bc-quick-more': 'showTicketListHandler',
     'change .js-bc-unit-select-add': 'changeUnitSelect',
   },
 
@@ -151,13 +149,9 @@ const BettingCenterView = Base.ItemView.extend({
     this.$lastPlanId = this.$('.js-bc-last-planId')
     this.$lastResults = this.$('.js-bc-last-plan-results')
     this.$hgcalculate = this.$('.js-hgcalculate-example')
-    // this.$lastResults2 = this.$('.js-bc-last-plan-results2');
-    this.$quickTicketList = this.$('.js-quick-ticket-list')
 
     this.$saleStop = this.$('.js-bc-sale-stop')
     this.$salePending = this.$('.js-bc-sale-pending')
-
-    // this.$videoMain = this.$('.js-bc-video-main')
 
     // rules
     this.$basicRules = this.$('.js-bc-basic-rules')
@@ -855,15 +849,9 @@ const BettingCenterView = Base.ItemView.extend({
                 if (lastOpenIdNumCache !== null && lastOpenIdNumCache !== '') {
                   if (prize > 0) {
                     // 播放中奖声音
-                    // var audioElement = document.createElement('audio');
-                    // audioElement.setAttribute('src', 'audio/prize.wav');
-                    // audioElement.setAttribute('autoplay', 'autoplay'); //打开自动播放
                     document.getElementById('prizeAudio').play()
                   } else {
                     // 播放开奖声音
-                    // var audioElement = document.createElement('audio');
-                    // audioElement.setAttribute('src', 'audio/openCode.wav');
-                    // audioElement.setAttribute('autoplay', 'autoplay'); //打开自动播放
                     document.getElementById('openAudio').play()
                   }
                 }
@@ -1082,12 +1070,6 @@ const BettingCenterView = Base.ItemView.extend({
   },
 
   // event handlers
-
-  // openVideoHandler(e) {
-  //   //const $target = $(e.currentTarget)
-  //
-  //  // $target.attr('href', this.infoModel.getVideoUrl() || 'javascript:void(0)')
-  // },
 
   baseRuleChangeHandler(e) {
     const $target = $(e.currentTarget)
@@ -1670,19 +1652,6 @@ const BettingCenterView = Base.ItemView.extend({
     Number(type) === 0 ? $target.removeClass('sfa sfa-checkbox-def').addClass('sfa sfa-checkbox-on') : $target.removeClass('sfa sfa-checkbox-on').addClass('sfa sfa-checkbox-def')
     Number(type) === 0 ? $target.data('type', 1) : $target.data('type', 0)
     this.model.set('usePack', $target.data('type'))
-  },
-  showTicketListHandler (e) {
-    const $target = $(e.currentTarget)
-    const type = $target.data('type')
-    if (type === 0) {
-      $target.data('type', 1)
-      this.$quickTicketList.addClass('quick-ticket-list-animate')
-      $target.removeClass('sfa-bc-quick-more').addClass('sfa-bc-quick-close')
-    } else {
-      $target.data('type', 0)
-      this.$quickTicketList.removeClass('quick-ticket-list-animate')
-      $target.removeClass('sfa-bc-quick-close').addClass('sfa-bc-quick-more')
-    }
   },
 })
 

@@ -1,18 +1,21 @@
 import Vue from 'vue'
 
-// import './bettingQuickNav'
+import ticketConfig from 'skeleton/misc/ticketConfig'
 
-const ticketConfig = require('skeleton/misc/ticketConfig')
+import bettingCenterTpl from '../templates/bettingCenter.html'
 
-const audio = {
-  over: require('bettingCenter/misc/over.wav'),
-  prize: require('bettingCenter/misc/prize.wav'),
-  openCode: require('bettingCenter/misc/openCode.wav'),
-}
+import bettingQuickNav from './bettingQuickNav'
+
+
+import over from '../misc/over.wav'
+import prize from '../misc/prize.wav'
+import openCode from '../misc/openCode.wav'
+
+const audio = { over, prize, openCode }
 
 const BettingCenterView = Base.ItemView.extend({
 
-  template: require('bettingCenter/templates/bettingCenter.html'),
+  template: bettingCenterTpl,
 
   initialize () {
     this.mark6TicketIdArr = ticketConfig.getMark6TicketIdArr()
@@ -33,6 +36,9 @@ const BettingCenterView = Base.ItemView.extend({
 
     new Vue({
       el: '#js-bc-main',
+      components: {
+        bettingQuickNav,
+      },
       data: {
         ticketId: Number(this.options.ticketId),
         ticketInfo: this.options.ticketInfo,
@@ -48,4 +54,4 @@ const BettingCenterView = Base.ItemView.extend({
   },
 })
 
-module.exports = BettingCenterView
+export default BettingCenterView
