@@ -8,7 +8,11 @@ import RechargeView from 'fundCenter/recharge'
 import WithdrawView from 'fundCenter/withdraw'
 import TransferView from 'fundCenter/transfer'
 
-import './misc/index.scss'
+
+const GameRecordView = require('fundCenter/gameRecord/index')
+
+const menuConfig = Global.ui.menu.get(['fc', 'uc'])
+require('./misc/index.scss')
 
 const sidebar = Global.ui.menu.get(['fc', 'uc'])
 
@@ -85,6 +89,33 @@ const FundCenterController = RouterController.extend({
         title: '充提记录',
       },
       sidebar,
+    })
+  },
+  ticketRecordDetail() {
+    this.changeMainReginView(new GameRecordView({ triggerTab: 'jsGcGrTr' }), {
+      main: {
+        icon: menuConfig.icon,
+        title: '游戏记录',
+      },
+      sidebar: menuConfig,
+    })
+  },
+  chaseRecord() {
+    this.changeMainReginView(new GameRecordView({ triggerTab: 'jsGcGrCr' }), {
+      main: {
+        icon: menuConfig.icon,
+        title: '追号记录',
+      },
+      sidebar: menuConfig,
+    })
+  },
+  gameRecord() {
+    this.changeMainReginView(new GameRecordView({ triggerTab: 'jsGcGrGr' }), {
+      main: {
+        icon: menuConfig.icon,
+        title: '游戏记录',
+      },
+      sidebar: menuConfig,
     })
   },
 })

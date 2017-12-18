@@ -220,7 +220,7 @@ const menuConfig = [
       },
       {
         id: 306,
-        router: 'gc/tr',
+        router: 'fc/td',
         name: '投注记录',
         quickShowName: '投注<br/>记录',
       },

@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+@import "~base/styles/imports";
+
+.portlet-inverse {
+  height: 80px;
+  .portlet-body {
+    padding-top: 15px;
+    padding-bottom: 25px;
+    height: 30px;
+    .input-md {
+      border: 1px solid #cccccc;
+      font-size: 12px;
+      color: #666666;
+      width: 160px !important;
+      top: 7px;
+      position: relative;
+      .sfa-time-input {
+        font-size: 12px;
+        color: #666666;
+        width: 116px !important;
+      }
+      &.active, &:hover {
+        border: 1px solid #14b1bb;
+        background-color: transparent;
+      }
+
+    }
+    .select-record {
+      height: 25px;
+      width: 80px;
+      font-size: 12px;
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      background: url(~base/images/select-caret-black.png) no-repeat scroll 97% center transparent;
+      text-align-last: left;
+      text-align: left;
+      border-radius: 4px;
+      color: #666666;
+      margin-top:-6px;
+      border-color: #cccccc !important;
+      &.active, &:hover {
+        border-color: #cccccc !important;
+      }
+    }
+    .fc-fm-btn {
+      margin-bottom: 5px;
+      background-color: #14b1bb;
+    }
+  }
+}
+
+.portlet-filter {
+  margin: 0;
+  .slimScrollDiv {
+    height: 495px !important;
+    margin-bottom: 30px;
+    .js-wt-body-main {
+      height: 495px !important;
+      table {
+        border: 0;
+        tr {
+          border-bottom: 1px solid #cccccc;
+          th {
+            background-color: #f5f5f5;
+            td {
+              border-right: 0;
+            }
+          }
+        }
+      }
+      .table-bordered th, .table-bordered td {
+        border: 0
+      }
+      .table th, .table td {
+        padding: 10px 3px;
+      }
+      .text-add {
+        color: #14b1bb;
+        font-weight: bold;
+      }
+      .text-cut {
+        color: #f09932;
+        font-weight: bold;
+      }
+    }
+
+  }
+  .table-bordered th, .table-bordered td {
+    border: 0
+  }
+  .table-bordered {
+    border: 0
+  }
+}
+

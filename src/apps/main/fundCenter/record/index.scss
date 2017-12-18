@@ -160,5 +160,20 @@
     .table-bordered {
       border: 0
     }
+    .fc-td-record-status{
+      position: absolute;
+      z-index: 99;
+      width: 16px;
+      height: 18px;
+      top: 15px;
+      left: 23px;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 3px;
+      background: #e84c4c;
+      color: #ffffff;
+      font-size: 10px!important;
+      padding: 0px;
+    }
   }
 }
