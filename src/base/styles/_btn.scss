@@ -183,4 +183,10 @@ button.btn.btn-xs, input[type="submit"].btn.btn-xs {
     }
   }
 }
+.btn-close{
+  transition: transform .5s;
+  &:hover{
+    transform: rotate(180deg);
+  }
+}
 

@@ -92,7 +92,7 @@ const CardManageView = Base.ItemView.extend({
     //   this.initializeCardManagePage()
     //   this.loadingFinish()
     // }
-    this.initializeCardManagePage()
+    // this.initializeCardManagePage()
     this.loadingFinish()
   },
 
