@@ -8,6 +8,7 @@ import bettingCenterTpl from '../templates/bettingCenter.html'
 // vue components
 import bettingQuickNav from './betting-quick-nav'
 import ticketInfoBanner from './ticket-info-banner'
+import bettingMainArea from './betting-main-area'
 
 
 import over from '../misc/over.wav'
@@ -37,11 +38,12 @@ const BettingCenterView = Base.ItemView.extend({
       ticketParameter = ticketInfo.id
     }
 
-    const bettingCenter = new Vue({
+    this.bettingCenter = new Vue({
       el: '#js-bc-main',
       components: {
         bettingQuickNav,
         ticketInfoBanner,
+        bettingMainArea,
       },
       store,
       data: {
@@ -57,7 +59,13 @@ const BettingCenterView = Base.ItemView.extend({
       },
     })
 
-    bettingCenter.$store.dispatch('getTicketInfo', this.options.ticketId)
+    // 取得当前彩票信息
+    this.bettingCenter.$store.dispatch('getTicketInfo', this.options.ticketId)
+    // 取得当前彩票规则
+    this.bettingCenter.$store.dispatch('getTicketRules', this.options.ticketId)
+  },
+  onDestroy() {
+    this.bettingCenter.$destroy()
   },
 })
 

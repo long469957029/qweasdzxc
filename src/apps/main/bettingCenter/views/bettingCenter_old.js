@@ -2,7 +2,6 @@
 
 const BettingChoiceModel = require('bettingCenter/models/bettingChoice')
 const BettingInfoModel = require('bettingCenter/models/bettingInfo')
-const BettingRulesCollection = require('bettingCenter/collections/bettingRules')
 
 const PlayAreaSelectView = require('bettingCenter/views/bettingCenter-playArea-select')
 const PlayAreaInputView = require('bettingCenter/views/bettingCenter-playArea-input')
@@ -11,8 +10,6 @@ const BettingChaseView = require('bettingCenter/views/bettingCenter-chase')
 const ticketConfig = require('skeleton/misc/ticketConfig')
 const betRulesConfig = require('bettingCenter/misc/betRulesConfig')
 const HisAnalysisView = require('bettingCenter/views/bettingCenter-historical-analysis')
-
-const Countdown = require('com/countdown')
 
 const audio = {
   over: require('bettingCenter/misc/over.wav'),
@@ -40,9 +37,6 @@ const BettingCenterView = Base.ItemView.extend({
     'click .js-bc-chase': 'lotteryChaseHandler',
     'click .js-bc-btn-lottery-confirm': 'lotteryConfirmHandler',
     'click .js-bc-btn-lottery-buy': 'lotteryBuyHandler',
-    'mouseover .js-bc-last-plan-results': 'bchgCalculateshow',
-    'mouseout .js-bc-last-plan-results': 'bchgCalculatehide',
-    'click .js-music': 'openMusicHandler',
     'click .js-bc-select-item': 'selectBcItemHandler',
     'click .js-bc-user-redPack-btn': 'checkUserRedPackHanler',
     'change .js-bc-unit-select-add': 'changeUnitSelect',
@@ -61,25 +55,12 @@ const BettingCenterView = Base.ItemView.extend({
   initialize () {
     this.model = new BettingChoiceModel()
     this.infoModel = new BettingInfoModel()
-    this.rulesCollection = new BettingRulesCollection()
     this.mark6TicketIdArr = ticketConfig.getMark6TicketIdArr()
-    /* if(this.options.ticketId == 34){
-     this.rulesCollection.url = '/ticket/ticketmod/ticketplaylist2.json';
-     } */
 
     // 如果是六合彩加载生肖对应的球
     if (_.indexOf(this.mark6TicketIdArr, parseInt(this.options.ticketId, 10)) > -1) {
       this.getMark6SxNumber({ ticketId: this.options.ticketId })
     }
-
-    this.rulesCollection.fetch({
-      abort: false,
-      localCache: true,
-      cacheName: `ticketList.${this.options.ticketId}`,
-      data: {
-        ticketId: this.options.ticketId,
-      },
-    })
 
     this.getNewPlan()
     this.serializeData()
@@ -133,18 +114,10 @@ const BettingCenterView = Base.ItemView.extend({
 
   onRender() {
     const self = this
-    this.$countdown = this.$('.js-bc-countdown')
     this.$planId = this.$('.js-bc-planId')
     this.$planIdStop = this.$('.js-bc-planId-stop')
-    this.$lastPlanId = this.$('.js-bc-last-planId')
-    this.$lastResults = this.$('.js-bc-last-plan-results')
-    this.$hgcalculate = this.$('.js-hgcalculate-example')
-
-    this.$saleStop = this.$('.js-bc-sale-stop')
-    this.$salePending = this.$('.js-bc-sale-pending')
 
     // rules
-    this.$basicRules = this.$('.js-bc-basic-rules')
     this.$advanceRules = this.$('.js-bc-advance-rules')
 
     // playInfo
@@ -184,15 +157,10 @@ const BettingCenterView = Base.ItemView.extend({
     this.$btnConfirm = this.$('.js-bc-btn-lottery-confirm')
     this.$btnChase = this.$('.js-bc-chase')
     this.$btnBuy = this.$('.js-bc-btn-lottery-buy')
-    this.$PlanTitle = this.$('.js-bc-plan-title')
-    this.$PlanTitlePending = this.$('.js-bc-plan-title-pending')
-    this.$bcMainAreaRight = this.$('.js-bc-main-area-right')
     this.$footer = $('#footer')
     this.$bcSideArea = this.$('.js-bc-side-area')
 
     this.initNumRange()
-
-    this.renderCountdown()
 
     this.lotteryPreview = this.$lotteryPreview.staticGrid({
       tableClass: 'table table-dashed',
@@ -233,17 +201,6 @@ const BettingCenterView = Base.ItemView.extend({
     }
 
 
-    const status = Global.cookieCache.get('music-status')
-    if (status === '0') {
-      this.$('.js-music').removeClass('sfa-bc-muisc1')
-      this.$('.js-music').addClass('sfa-bc-muisc')
-      this.$('.js-music-status').val('0')
-    }
-    if (status === '1') {
-      this.$('.js-music').removeClass('sfa-bc-muisc')
-      this.$('.js-music').addClass('sfa-bc-muisc1')
-      this.$('.js-music-status').val('1')
-    }
     this.getUsePackStatus()
     // var ruleId = _.getUrl('ruleId');
     // if(ruleId && !_.isUndefined(ruleId) && !_.isNull(ruleId)){
@@ -301,19 +258,9 @@ const BettingCenterView = Base.ItemView.extend({
     this.$btnChase.prop('disabled', !sale)
     this.$btnBuy.prop('disabled', !sale)
 
-    this.$lastResults.toggleClass('hidden', !sale)
-    // this.$lastResults2.toggleClass('hidden', !sale);
-    this.$saleStop.toggleClass('hidden', sale)
-    this.$salePending.toggleClass('hidden', !pending)
-
-    this.$planId.toggleClass('hidden', !sale)
-    this.$planIdStop.toggleClass('hidden', sale)
-    this.$PlanTitlePending.toggleClass('hidden', !pending)
-
     if (sale) {
       this.getNewPlan()
       if (pending) {
-        this.$lastResults.toggleClass('hidden', true)
         // 等待开奖时按钮不可点
         this.$btnAdd.prop('disabled', true)
         this.$btnConfirm.prop('disabled', true)
@@ -324,7 +271,6 @@ const BettingCenterView = Base.ItemView.extend({
       }
     } else {
       // 停售的优先级更高
-      this.$salePending.toggleClass('hidden', true)
       this.infoModel.set('leftSecond', 0)
       this.updateCountdown()
       if (this.$el.closest('html').length !== 0) {
@@ -348,112 +294,7 @@ const BettingCenterView = Base.ItemView.extend({
     })
   },
 
-  renderCountdown() {
-    const self = this
-    let times = 1
-
-    this.countdown = new Countdown({
-      el: this.$countdown,
-    }).render().on('change:leftTime', (e) => {
-      // var curtLeftTime = moment().diff(moment(e.timeStamp));
-      // var curtLeftTime = moment(self.infoModel.get('leftTime')).diff(moment(e.timeStamp));
-      times -= 1
-      if (times === 0) {
-        const leftTime = moment.duration(e.finalDate.getTime() - new Date().getTime()).asSeconds()
-
-        const status = self.$('.js-music-status').val()
-        if (status === 0) {
-          const ticketId = self.infoModel.get('ticketId') // 彩种
-          if (parseInt(leftTime, 10) === 3) { // 虽然是倒数5秒的声音，但是判断为3才能吻合
-            const url = window.location.href
-            const index1 = url.indexOf('#bc')
-            if (index1 > 0) {
-              const str = url.substr(index1, url.length)
-              if (str === (`#bc/${ticketId}`)) {
-                document.getElementById('overAudio').play()
-              }
-            }
-          }
-        }
-
-        self.trigger('change:leftTime', leftTime, self.infoModel.get('totalSecond'))
-        // self.trigger('change:leftTime', self.infoModel.get('leftTime'), _(self.infoModel.get('totalSecond')).mul(1000));
-        times = 1
-      }
-    })
-  },
-
-  renderLastPlan(model) {
-    const self = this
-    const planInfo = model.pick('lastOpenId', 'lastOpenNum', 'lastOrgOpenNum', 'pending')
-    const ticket = model.pick('ticketId')
-    this.$lastPlanId.html(planInfo.lastOpenId)
-    if (planInfo.pending) {
-      this.$lastPlanId.html(Number(planInfo.lastOpenId) + 1)
-    }
-    const options = this.options
-    this.$lastResults.html(_(model.get('lastOpenNum')).map((num, key) => {
-      if (ticket.ticketId === 18) {
-        return `<span class="text-circle circle-sm">${num}</span>`
-      } else if (_.indexOf(self.mark6TicketIdArr, parseInt(ticket.ticketId, 10)) > -1) {
-        const numberColor = options.ticketInfo.info.numberColor
-        let colorClass = 'green'
-        if (_.indexOf(numberColor.redArr, parseInt(num, 10)) > -1) {
-          colorClass = 'red'
-        } else if (_.indexOf(numberColor.blueArr, parseInt(num, 10)) > -1) {
-          colorClass = 'blue'
-        }
-        const spanDiv = `<span class="text-circle circle-mark6 ${colorClass}">${num}</span>`
-        const separateDiv = '<span class="text-circle circle-mark6 separate">&nbsp;</span>'
-        if (key === 5) {
-          return spanDiv + separateDiv
-        }
-        return spanDiv
-      }
-      return `<span class="text-circle">${num}</span>`
-    }))
-
-    this.$ticketId = ticket.ticketId
-    this.$showNumberDetail = this.options.ticketInfo.info.showNumberDetail
-
-    // if(ticket.ticketId === 21){
-    if (this.$showNumberDetail) {
-      let count
-      let result
-      let first
-      let last
-      const openNun = planInfo.lastOrgOpenNum.split(',')
-      $.each(openNun, (key, value) => {
-        if (key === 0 || key === 4 || key === 8 || key === 12 || key === 16) {
-          count = 0
-          result = 0
-        }
-        count = `${count}+${value}`
-        result += parseInt(value, 10)
-        if (key === 3) {
-          first = (`${result}`).substring(0, (`${result}`).length - 1)
-          last = `<font color='red'>${(`${result}`).substring((`${result}`).length - 1, (`${result}`).length)}</font>`
-          self.$('.js-bc-wan').html(`${count.replace('0+', '')}=${first}${last}`)
-        } else if (key === 7) {
-          first = (`${result}`).substring(0, (`${result}`).length - 1)
-          last = `<font color='red'>${(`${result}`).substring((`${result}`).length - 1, (`${result}`).length)}</font>`
-          self.$('.js-bc-qian').html(`${count.replace('0+', '')}=${first}${last}`)
-        } else if (key === 11) {
-          first = (`${result}`).substring(0, (`${result}`).length - 1)
-          last = `<font color='red'>${(`${result}`).substring((`${result}`).length - 1, (`${result}`).length)}</font>`
-          self.$('.js-bc-bai').html(`${count.replace('0+', '')}=${first}${last}`)
-        } else if (key === 15) {
-          first = (`${result}`).substring(0, (`${result}`).length - 1)
-          last = `<font color='red'>${(`${result}`).substring((`${result}`).length - 1, (`${result}`).length)}</font>`
-          self.$('.js-bc-shi').html(`${count.replace('0+', '')}=${first}${last}`)
-        } else if (key === 19) {
-          first = (`${result}`).substring(0, (`${result}`).length - 1)
-          last = `<font color='red'>${(`${result}`).substring((`${result}`).length - 1, (`${result}`).length)}</font>`
-          self.$('.js-bc-ge').html(`${count.replace('0+', '')}=${first}${last}`)
-        }
-      })
-    }
-
+  renderLastPlan() {
     this.bettingRecordsView.update()
     this.recordsOpenView.update()
   },
@@ -496,10 +337,6 @@ const BettingCenterView = Base.ItemView.extend({
 
   renderBasicInfo(model) {
     const planInfo = model.pick('planId', 'lastPlanId', 'sale', 'pending')
-
-    this.$planId.html(planInfo.planId)
-    this.$PlanTitle.toggleClass('hidden', planInfo.pending)
-    this.$PlanTitlePending.toggleClass('hidden', !planInfo.pending)
 
     if (this.infoModel.get('init')) {
       this.infoModel.changeToUpdate()
@@ -787,90 +624,6 @@ const BettingCenterView = Base.ItemView.extend({
   // 疑似失效方法
   renderMaxBonus(model, formatMaxBonus) {
     this.$statisticsBonus.text(_(formatMaxBonus).convert2yuan())
-  },
-
-  updateCountdown() {
-    const self = this
-
-    const leftSecond = this.infoModel.get('leftSecond')
-    const sale = this.infoModel.get('sale')
-    const nextTime = _(sale ? leftSecond : 0).mul(1000)
-    const leftTime = nextTime
-    this.infoModel.set('leftTime', leftTime)
-
-    clearInterval(self.timer)
-    clearInterval(self.goToNextTimer)
-    clearInterval(self.nextTimer)
-
-    // alert(this.$ticketId)
-    this.timer = _.delay(() => {
-      self.getNewPlan()
-
-      let status = Global.cookieCache.get('music-status')
-      if (status === '0') {
-        self.$('.js-music').removeClass('sfa-bc-muisc1')
-        self.$('.js-music').addClass('sfa-bc-muisc')
-        self.$('.js-music-status').val('0')
-      }
-      if (status === '1') {
-        self.$('.js-music').removeClass('sfa-bc-muisc')
-        self.$('.js-music').addClass('sfa-bc-muisc1')
-        self.$('.js-music-status').val('1')
-      }
-      status = self.$('.js-music-status').val()
-      if (status === 0) {
-        const prize = self.infoModel.get('prize')
-        const ticketId = self.infoModel.get('ticketId') // 彩种
-        const lastOpenId = self.infoModel.get('lastOpenId')// 期号
-        const lastOpenIdNumCache = Global.cookieCache.get(`lastOpenId${ticketId}`)
-
-        //
-        const url = window.location.href
-        const index1 = url.indexOf('#bc')
-        if (index1 > 0) {
-          const str = url.substr(index1, url.length)
-
-          if (str === (`#bc/${ticketId}`)) {
-            if (lastOpenId !== lastOpenIdNumCache) {
-              Global.cookieCache.set(`lastOpenId${ticketId}`, lastOpenId)
-              const bcTag = Global.cookieCache.get('bcTag')
-              // console.log(bcTag +"####"+str)
-              if (bcTag === str) {
-                if (lastOpenIdNumCache !== null && lastOpenIdNumCache !== '') {
-                  if (prize > 0) {
-                    // 播放中奖声音
-                    document.getElementById('prizeAudio').play()
-                  } else {
-                    // 播放开奖声音
-                    document.getElementById('openAudio').play()
-                  }
-                }
-              } else {
-                Global.cookieCache.set('bcTag', str)
-              }
-            }
-          }
-        }
-      }
-    }, 2200)
-
-    // 只有销售时才进行倒计时
-    if (sale) {
-      this.goToNextTimer = _.delay(() => {
-        self.infoModel.goToNextPlan()
-      }, _(leftSecond).mul(1000))
-
-      // 取得下一期的信息延迟一秒再做
-      this.nextTimer = _.delay(() => {
-        self.getNewPlan()
-      }, _(leftSecond + 1).mul(1000))
-    }
-
-    this.infoModel.set('leftSecond', 0, {
-      silent: true,
-    })
-
-    this.countdown.render(leftTime)
   },
 
   renderTotalLotteryInfo(model, totalInfo) {
@@ -1530,34 +1283,7 @@ const BettingCenterView = Base.ItemView.extend({
     }
     return this.$playBetMode.html()
   },
-  openMusicHandler() {
-    // const music = $('.js-music')
-    const status = this.$('.js-music-status').val()
-    if (status === '0') {
-      this.$('.js-music').removeClass('sfa-bc-muisc')
-      this.$('.js-music').addClass('sfa-bc-muisc1')
-      this.$('.js-music-status').val('1')
-      Global.cookieCache.set('music-status', '1')
-    }
-    if (status === '1') {
-      this.$('.js-music').removeClass('sfa-bc-muisc1')
-      this.$('.js-music').addClass('sfa-bc-muisc')
-      this.$('.js-music-status').val('0')
-      Global.cookieCache.set('music-status', '0')
-    }
-  },
 
-  bchgCalculateshow () {
-    if (this.$showNumberDetail) {
-      this.$hgcalculate.show()
-    }
-  },
-
-  bchgCalculatehide () {
-    if (this.$showNumberDetail) {
-      this.$hgcalculate.hide()
-    }
-  },
   getTicketInfotXhr(data) {
     return Global.sync.ajax({
       url: '/ticket/ticketmod/ticketinfo.json',
@@ -1612,10 +1338,6 @@ const BettingCenterView = Base.ItemView.extend({
       }
     }
   },
-  // 选择其他玩法时，调整最近开奖记录区的长度
-  // resizeRecords () {
-  //   this.$recordsContainer.find('.slimScrollDiv,.js-wt-body-main').css({ height: this.$bcMainAreaRight.height() - 394 })
-  // },
   getUsePackStatus () {
     const self = this
     this.getUsePackInfoXhr()

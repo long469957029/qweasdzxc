@@ -1,7 +1,6 @@
-  <div
-    class="js-bc-main-area-right width-100 bc-play-main <%=_.indexOf(mark6TicketIdArr, parseInt(ticketInfo.info.id))>-1?'mark6':''%>">
-
-    <div class="js-bc-basic-rules bc-basic-rules bg-deep"></div>
+<template>
+  <div :class="'width-100 bc-play-main' + wrapperClass">
+    <betting-rules class="bc-basic-rules bg-deep" :play-levels="playLevels" :type="normal" ></betting-rules>
     <div class="bc-play-container clearfix">
       <div class="bc-play-left basic-inverse pull-left">
         <div class="bc-play-select-area clearfix">
@@ -19,8 +18,7 @@
         <div class="bc-line"></div>
         <div class="m-LR-smd">
           <div class="js-bc-play-area bc-play-area clearfix">
-            <div class="gl-loading">
-              <%=Global.ui.loader.get() %>
+            <div class="gl-loading" v-html="loading">
             </div>
           </div>
         </div>
@@ -71,35 +69,27 @@
                   <span class="js-bc-total-rebateMoney text-prominent font-bold">0</span>
                   <span>元，</span>
                 </span>
-                <span>
+              <span>
                   <span>总投注 【</span>
                   <span class="js-bc-total-lottery text-pleasant font-bold">0</span>
                   <span>】 注， </span>
                 </span>
-                <span>
+              <span>
                   <span>总金额</span>
                   <span class="js-bc-total-money text-prominent m-left-xs m-right-xs font-bold">0</span>
                   <span>元</span>
                 </span>
-                <a class="js-bc-chase inline-block text-black cursor-pointer m-left-md relative">
-                  <span class="sfa sfa-checkmark vertical-middle"></span>
-                  我要追号
-                  <span class="ba-chase-tip">追号能提高中奖率</span>
-                </a>
+              <a class="js-bc-chase inline-block text-black cursor-pointer m-left-md relative">
+                <span class="sfa sfa-checkmark vertical-middle"></span>
+                我要追号
+                <span class="ba-chase-tip">追号能提高中奖率</span>
+              </a>
             </div>
             <div class="m-top-md p-top-sm text-center m-bottom-md">
               <button class="js-bc-btn-lottery-confirm btn btn-orange bc-jb-btn"
                       data-loading-text="提交中"> 确认投注
               </button>
             </div>
-
-            <!--<div class="pull-left margin-md">-->
-            <!--<div class="btn-group btn-group-vertical">-->
-            <!--<button type="button" class="js-bc-lottery-auto btn m-bottom-sm" data-times="1">机选一注</button>-->
-            <!--<button type="button" class="js-bc-lottery-auto btn m-bottom-sm" data-times="5">机选五注</button>-->
-            <!--<button type="button" class="js-bc-lottery-clear btn m-bottom-sm">清空号码</button>-->
-            <!--</div>-->
-            <!--</div>-->
           </div>
         </div>
       </div>
@@ -107,4 +97,32 @@
     </div>
     <div class="bc-bottom-area js-bc-records"></div>
   </div>
-</div>
+</template>
+
+<script>
+  import bettingRules from './betting-rules'
+
+  export default {
+    name: "betting-main-area",
+    props: {
+      ticketInfo: Object,
+      mark6TicketIdArr: Array,
+    },
+    components: {
+      bettingRules
+    },
+    data() {
+      return {
+        wrapperClass: _.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id)) > -1 ? 'mark6' : '',
+        loading: Global.ui.loader.get()
+      }
+    },
+    computed: mapState({
+      bettingInfo: 'bettingInfo',
+    })
+  }
+</script>
+
+<style scoped>
+
+</style>

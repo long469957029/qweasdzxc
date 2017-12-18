@@ -4,11 +4,12 @@ import * as types from '../mutation-types'
 const initState = () => {
   return {
     // 最后的开奖期号
-    lastOpenId: '',
+    lastOpenId: '-',
     // 最后的开奖号码
     lastOpenNum: [],
+    lastOrgOpenNum: '',
     // 当前期期号
-    planId: '',
+    planId: '------------',
     // 当前期剩余时间
     leftSecond: 0,
     // 当前期总共时间
@@ -30,7 +31,74 @@ const initState = () => {
 
 // getters
 const getters = {
-  getAll: (state) => { return state },
+  playLevels() {
+    const normalList = []
+    const specialList = []
+    this.each((ruleModel) => {
+      normalList.push({
+        type: 'normal',
+        id: ruleModel.get('playLevelId'),
+        title: ruleModel.get('playLevelName'),
+      })
+    })
+
+    if (specialList.length) {
+      normalList.push({
+        type: 'special',
+        title: '任选',
+      })
+    }
+
+    return {
+      normalList,
+      specialList,
+    }
+  },
+
+  playGroups: () => {
+    return (levelId) => {
+      const levelInfoModel = this.findWhere({
+        playLevelId: levelId,
+      })
+      const groups = levelInfoModel && levelInfoModel.get('ticketPlayGroupInfo') || []
+
+      this.currentLevel = groups
+
+      return _(groups).map((group) => {
+        return {
+          id: group.playGroupId,
+          title: group.playGroupName,
+          playList: _(group.ticketPlayInfo).map((play) => {
+            return {
+              id: play.playId,
+              title: play.playName,
+            }
+          }),
+        }
+      })
+    }
+  },
+
+  playInfo: () => {
+    return (groupId, playId) => {
+      const groupInfo = _(this.currentLevel).findWhere({
+        playGroupId: groupId,
+      })
+
+
+      const playInfo = _(groupInfo.ticketPlayInfo).findWhere({
+        playId,
+      })
+
+      this.currentPlay = playInfo
+
+      return this.currentPlay
+    }
+  },
+
+  currentPlay() {
+    return this.currentPlay
+  },
 }
 
 // actions
@@ -39,23 +107,38 @@ const actions = {
     commit(types.CHECKOUT_TICKET_INFO)
     betting.getTicketInfo(
       ticketId,
-      () => { return commit(types.CHECKOUT_SUCCESS) },
-      () => { return commit(types.CHECKOUT_FAILURE) },
+      (res) => { return commit(types.GET_TICKET_INFO_SUCCESS, res) },
+      () => { return commit(types.GET_TICKET_INFO_FAILURE) },
     )
   },
 }
 
 // mutations
 const mutations = {
+  [types.GO_TO_NEXT_PLAN] (state) {
+    state.lastPlanId = state.planId
+    state.planId = state.nextPlanId
+    state.leftSecond = state.nextTotalSecond
+    state.totalSecond = state.nextTotalSecond
+  },
+
   [types.CHECKOUT_TICKET_INFO] (state) {
     // clear
     Object.assign(state, initState())
   },
 
-  [types.GET_TICKET_INFO_SUCCESS] (state) {
-    state.checkoutStatus = 'successful'
+  [types.GET_TICKET_INFO_SUCCESS] (state, res) {
+    if (res && res.result === 0) {
+      const data = res.root || {}
+
+      // 格式化开奖结果
+      data.lastOpenNum = (data.lastOpenNum || '').split(',') || []
+
+      Object.assign(state, data)
+    }
   },
 
+  // 暂时没有处理失败的逻辑
   [types.GET_TICKET_INFO_FAILURE] (state) {
     state.checkoutStatus = 'failed'
   },
