@@ -125,7 +125,7 @@ const BettingRecordsView = SearchGrid.extend({
             title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
             trigger: 'click',
             html: true,
-            content: `<div class="js-pf-popover"><span class="word-break">${items.betNum}</span></div>`,
+            content: `<span>详细号码</span><div class="js-pf-popover"><span class="word-break">${items.betNum}</span></div>`,
             placement: 'bottom',
           })
         } else {
@@ -133,7 +133,7 @@ const BettingRecordsView = SearchGrid.extend({
             title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
             trigger: 'click',
             html: true,
-            content: `<div class="js-pf-popover"><span class="word-break">${items.betNum}</span></div>`,
+            content: `<span>详细号码</span><div class="js-pf-popover"><span class="word-break">${items.betNum}</span></div>`,
             placement: 'top',
           })
         }

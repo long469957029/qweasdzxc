@@ -455,8 +455,51 @@
 
 .price-ul {
   position: relative;
+  table{
+    border: 1px solid $third-line-color;
+    tr{
+      border: 1px solid $third-line-color;
+      th{
+        border-right: 1px solid $third-line-color;
+        &:last-child{
+          border: none;
+        }
+      }
+      td{
+        border-right: 1px solid $third-line-color;
+        &:last-child{
+          border: none;
+        }
+      }
+    }
+  }
   ul {
-    margin: 13px 15px 15px;
+    border: none;
+    padding-left: 20px;
+    li{
+      width: 90px;
+      min-width: 90px;
+      border-radius: 20px;
+      height: 30px;
+      line-height: 30px;
+      margin: 20px 20px 30px 0px;
+      a{
+        padding: 0;
+        line-height: 30px;
+        border-radius: 20px;
+        background-color: $new-main-body-color;
+        &:hover{
+          color: $def-white-color;
+          background-color: $new-main-deep-color;
+        }
+      }
+      &.active{
+        a{
+          color: $def-white-color;
+          background-color: $new-main-deep-color;
+        }
+      }
+    }
   }
   .fc-lesson {
     position: absolute;

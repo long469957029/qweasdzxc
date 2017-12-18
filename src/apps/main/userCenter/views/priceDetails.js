@@ -8,7 +8,8 @@ const TrackRecordsView = TabView.extend({
 
   initialize() {
     _(this.options).defaults({
-      height: 400,
+      height: 800,
+      tabClass: 'nav-inverse',
       tabs: [
         {
           label: '时时彩',
@@ -184,7 +185,7 @@ const TrackRecordsView = TabView.extend({
   // 获取表格
   _getTable (tableInfo, classValue) {
     this.$(`.${classValue}`).staticGrid({
-      tableClass: 'table table-bordered table-center',
+      tableClass: 'table table-similar table-center',
       wrapperClass: 'border-table-bottom',
       height: this.options.height,
       colModel: [
@@ -226,7 +227,7 @@ const TrackRecordsView = TabView.extend({
         let bonusMax = ''
         if (play.betBonus === null) {
           bonusMin = _(play.ticketPlayBonus).convert2yuan()
-          bonusMax = `<span class="text-bold-pleasant">${_(play.ticketPlayMaxBonus).convert2yuan()}</span>`
+          bonusMax = `<span class="text-bold-prominent">${_(play.ticketPlayMaxBonus).convert2yuan()}</span>`
         } else if (self.ticketSeriesIdFlag === 7) {
           bonusMin = '3或18 354.24</br>' +
                         '4或17 118.08</br>' +
@@ -236,7 +237,7 @@ const TrackRecordsView = TabView.extend({
                         '8或13 16.87</br>' +
                         '9或12 14.17</br>' +
                         '10或11 13.12'
-          bonusMax = '<span class="text-bold-pleasant">3或18 410.40</br>' +
+          bonusMax = '<span class="text-bold-prominent">3或18 410.40</br>' +
                         '4或17 136.80</br>' +
                         '5或16 68.40</br>' +
                         '6或15 41.04</br>' +
@@ -281,7 +282,7 @@ const TrackRecordsView = TabView.extend({
           const bonusMinObj = _(play.betBonus).min((bonus) => { return bonus.betMethodMin })
           const bonusMaxObj = _(play.betBonus).max((bonus) => { return bonus.betMethodMin })
           bonusMin = `龙虎:${_(bonusMinObj.betMethodMin).convert2yuan()} 和:${_(bonusMaxObj.betMethodMin).convert2yuan()}`
-          bonusMax = `<span class="text-bold-pleasant">龙虎:${_(bonusMinObj.betMethodMax).convert2yuan()} 和:${_(bonusMaxObj.betMethodMax).convert2yuan()}</span>`
+          bonusMax = `<span class="text-bold-prominent">龙虎:${_(bonusMinObj.betMethodMax).convert2yuan()} 和:${_(bonusMaxObj.betMethodMax).convert2yuan()}</span>`
         }
         return {
           playLevel: group.playLevel,

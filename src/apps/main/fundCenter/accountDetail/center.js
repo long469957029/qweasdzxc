@@ -18,7 +18,7 @@ const MoneyDetailView = SearchGrid.extend({
     })
 
     _(this.options).extend({
-      height: '310',
+      height: '495',
       columns: [
         {
           name: '交易流水号',

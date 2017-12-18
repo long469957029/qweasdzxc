@@ -547,11 +547,11 @@ $tables: (
     td-color: $inverse-color
   ),
   similar: (
-    th-bg-color: $def-white-color,
-    th-color: $inverse-color,
+    th-bg-color: $new-main-body-color,
+    th-color: $def-black-color,
     td-bg-color: $def-white-color,
     td-bg-hover-color: $def-white-color,
-    td-color: $inverse-color
+    td-color: $new-inverse-color
   ),
   deep: (
     th-bg-color: $new-main-deep-color,
@@ -666,11 +666,11 @@ $navTabs: (
     active-bg-color: $new-main-deep-color
   ),
   inverse: (
-    border-color: $main-deep-color,
-    color: $font-inverse,
-    bg-color: transparent,
-    active-color: $font-color,
-    active-bg-color: $main-deep-color
+    border-color: transparent,
+    color: $def-black-color,
+    bg-color: $new-main-body-color,
+    active-color: $def-white-color,
+    active-bg-color: $new-main-deep-color
   )
 );
 

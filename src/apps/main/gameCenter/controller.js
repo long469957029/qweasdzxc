@@ -3,6 +3,9 @@
 const RouterController = require('skeleton/controllers/router')
 
 
+// const menuConfig = Global.ui.menu.get(['fc', 'uc'])
+
+
 // var RealBetRecordView = require('gameCenter/real/betRecord');
 // var SlotBetRecordView = require('gameCenter/slot/betRecord');
 // var SportBetRecordView = require('gameCenter/sport/betRecord');
