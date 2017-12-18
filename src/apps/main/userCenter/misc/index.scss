@@ -370,6 +370,25 @@
   }
   .uc-cmBtnContainer-list{
     padding: 23px 0px 0px 94px;
+    ul{
+      list-style: none;
+    }
+    .uc-cmContainer-add-card{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: $def-white-color;
+      z-index: 2;
+      top: 0;
+      left: 0;
+      .add-card-close{
+        display: block;
+        font-size: 16px;
+        color: $new-inverse-color;
+        margin: 31px 40px;
+        cursor: pointer;
+      }
+    }
   }
   .uc-cmCard-add{
     width: 249px;
@@ -384,7 +403,7 @@
     padding-top: 33px;
     box-shadow: none;
     margin: 36px 30px 0px 0px;
-    display: inline-block;
+    float: left;
     .add-icon{
       display: block;
       width: 40px;
@@ -407,6 +426,8 @@
     width: 250px;
     height: 135px;
     position: relative;
+    float: left;
+    margin: 36px 30px 0px 0px;
     .card-del{
       width: 14px;
       height: 14px;
@@ -494,6 +515,10 @@
 }
 
 //绑定页
+.uc-cbCardBinding-container{
+  width: 520px;
+  margin: 0 auto;
+}
 .uc-cbCardBindingForm {
   padding: 40px 0 0 11px;
   .control-group {

@@ -13,7 +13,7 @@ exports.install = function() {
 
     'uc/pm': 'personalManage',
     'uc/cm': 'cardManage', // 银行卡管理
-    'uc/cm/bind': 'cardBinding', // 银行卡绑定
+    // 'uc/cm/bind': 'cardBinding', // 银行卡绑定
     'uc/pd': 'priceDetails', // 奖金详情
   })
 }

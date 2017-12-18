@@ -5,7 +5,7 @@ define((require, exports, module) => {
 
     events: {
       'click .js-uc-cbCardBinding-check': 'checkCardBindingInfoHandler',
-      'change   .js-uc-cbProvince': 'selectProvinceHandler',
+      'change .js-uc-cbProvince': 'selectProvinceHandler',
       'change .js-uc-cbCity': 'selectCityAndBankHandler',
       'change .js-uc-cbBankId': 'selectCityAndBankHandler',
     },
@@ -44,6 +44,8 @@ define((require, exports, module) => {
     },
     onRender () {
       const self = this
+      this.$CardBindContainer = this.$('.js-uc-cbCardBinding-container')
+      this._initSteps()
       this.$bankBranch = this.$('.js-uc-cbBankBranch')
       this.$bankId = this.$('.js-uc-cbBankId')
       this.$province = this.$('.js-uc-cbProvince')
@@ -54,7 +56,7 @@ define((require, exports, module) => {
       this.getBankListXhr().done((res) => {
         if (res.result === 0) {
           const bankOptions = []
-          _(res.root).each((bank, index, bankList) => {
+          _(res.root).each((bank) => {
             bankOptions.push(`<option value="${bank.bankId}">${bank.bankName}</option>`)
           })
           self.$bankId.append(bankOptions.join(''))
@@ -66,7 +68,7 @@ define((require, exports, module) => {
         .done((res) => {
           if (res.result === 0) {
             const provinceOptions = []
-            _(res.root).each((province, index, provinceList) => {
+            _(res.root).each((province) => {
               provinceOptions.push(`<option value="${province.provinceId}">${province.province}</option>`)
             })
             self.$province.append(provinceOptions.join(''))
@@ -75,7 +77,18 @@ define((require, exports, module) => {
           }
         })
     },
-
+    _initSteps() {
+      this.$CardBindContainer.steps({
+        headerTag: 'h3',
+        bodyTag: '.js-uc-steps',
+        forceMoveForward: false,
+        enablePagination: false,
+        transitionEffect: 'slideLeft',
+        onStepChanging(event, currentIndex, newIndex) {
+          return newIndex !== 3
+        },
+      })
+    },
     selectProvinceHandler (e) {
       const self = this
       const $target = $(e.currentTarget)
@@ -88,7 +101,7 @@ define((require, exports, module) => {
           if (res.result === 0) {
             const cityOptions = []
             cityOptions.push('<option value="">城市</option>')
-            _(res.root).each((city, index, cityList) => {
+            _(res.root).each((city) => {
               cityOptions.push(`<option value="${city.cityId}">${city.city}</option>`)
             })
             self.$city.html('').html(cityOptions.join(''))
@@ -101,7 +114,7 @@ define((require, exports, module) => {
       const self = this
       const cityId = this.$city.val()
       const bankId = this.$bankId.val()
-      if (cityId == '' || bankId == '') {
+      if (cityId === '' || bankId === '') {
         return
       }
       const data = {
@@ -113,7 +126,7 @@ define((require, exports, module) => {
           if (res.result === 0) {
             const branchOptions = []
             branchOptions.push('<option value="">支行</option>')
-            _(res.root).each((branch, index, branchList) => {
+            _(res.root).each((branch) => {
               branchOptions.push(`<option value="${branch.branchId}">${branch.branchName}</option>`)
             })
             self.$bankBranch.html('').html(branchOptions.join(''))
@@ -123,8 +136,8 @@ define((require, exports, module) => {
         })
     },
 
-    checkCardBindingInfoHandler (e) {
-      const $target = $(e.currentTarget)
+    checkCardBindingInfoHandler () {
+      // const $target = $(e.currentTarget)
       const $form = this.$bindForm
       const clpValidate = $form.parsley().validate()
       if (!clpValidate) {
@@ -155,7 +168,7 @@ define((require, exports, module) => {
     },
 
     submitBankCard (e) {
-      const self = this
+      // const self = this
       const $target = $(e.currentTarget)
       const $cardBindingForm = this.$bindForm
       const clpValidate = $cardBindingForm.parsley().validate()
@@ -198,7 +211,7 @@ define((require, exports, module) => {
     },
 
   })
-    
+
 
   module.exports = TrackRecordsView
 })

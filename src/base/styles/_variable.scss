@@ -703,9 +703,9 @@ $cards-height: 142px !default;
 
 //steps
 $steps: (
-  indent: 20px,
-  active-color: $font-deep-color,
-  disabled-color: $font-default
+  indent: 0px,
+  active-color: $def-black-color,
+  disabled-color: $font-auxiliary-color
 );
 
 $validate: (

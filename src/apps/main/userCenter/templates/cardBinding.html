@@ -1,82 +1,72 @@
-<form class="js-uc-cbCardBindingForm form-horizontal uc-cbCardBindingForm">
-  <div class="control-group">
-    <label class="control-label text-bold-dark">银行名称：</label>
-
-    <div class="controls">
-      <select class="js-uc-cbBankId select1" required>
-        <option value="">请选择</option>
-      </select>
+<div class="js-uc-cbCardBinding-container uc-cbCardBinding-container wizard-long clearfix">
+  <h3>1.验证资金密码</h3>
+  <form class="js-uc-steps js-uc-cb-fund-form form-horizontal">
+    <div class="text-black font-sm text-center">请输入资金密码</div>
+    <input type="password" name="fundPwd" class="js-uc-cb-fundPwd" required>
+    <div class="text-center">
+      <button type="button" class="js-uc-cb-btn btn btn-cool font-md" data-loading-text="校验中">确定</button>
     </div>
-  </div>
+  </form>
 
-  <div class="control-group">
-    <label class="control-label text-bold-dark">开户城市：</label>
+  <h3>2.绑定新银行卡</h3>
+  <form class="js-uc-cbCardBindingForm js-uc-steps form-horizontal uc-cbCardBindingForm">
+    <div class="control-group">
+      <label class="control-label text-bold-dark">开户行：</label>
 
-    <div class="controls">
-      <select class="js-uc-cbProvince select1" required>
-        <option value="">省份</option>
-      </select>
-      <select class="js-uc-cbCity select1" required>
-        <option value="">城市</option>
-      </select>
+      <div class="controls">
+        <select class="js-uc-cbBankId select1" required>
+          <option value="">请选择</option>
+        </select>
+      </div>
     </div>
-  </div>
+    <div class="control-group">
+      <label class="control-label text-bold-dark">银行卡号：</label>
 
-  <div class="dot-divider dot-divider-lg "></div>
-
-  <div class="control-group">
-    <label class="control-label text-bold-dark">支行名称：</label>
-
-    <div class="controls">
-      <input type="text" class="js-uc-cbBankBranch input1" data-parsley-length="[2,100]" data-parsley-zhAndLDBMaxLen="20" required >
-      <span class="text-inverse help-inline">请务必选择正确，否则会导致提现失败</span>
-    </div>
-    <!-- <div class="controls">
-      <select class="js-uc-cbBankBranch select2 "  required >
-        <option value="">支行</option>
-      </select>
-      <span class="text-inverse help-inline">请务必选择正确，否则会导致提现失败</span>
-    </div> -->
-
-  </div>
-
-  <div class="control-group">
-    <label class="control-label text-bold-dark">开户人姓名：</label>
-
-    <div class="controls">
-      <input type="text" class="js-uc-cbAccountName input1" data-parsley-length="[2,50]" data-parsley-zhAndLDBMaxLen="20" required >
-    </div>
-  </div>
-
-  <div class="dot-divider dot-divider-lg "></div>
-
-  <div class="control-group">
-    <label class="control-label text-bold-dark">银行卡号：</label>
-
-    <div class="controls">
-      <input type="text" class="js-uc-cbCardNo uc-lg-input input2"  data-parsley-num data-parsley-length="[13,19]" required>
-      <span class="text-inverse help-inline">银行卡号由16位或19位数字组成</span>
-    </div>
-
-  </div>
-
-  <div class="control-group">
-    <label class="control-label text-bold-dark">确认银行卡号：</label>
-
-    <div class="controls">
-      <input type="text" class="js-uc-cbCardNo1 uc-lg-input input2" onpaste="return false;"  data-parsley-equalto=".js-uc-cbCardNo" required data-parsley-num data-parsley-length="[13,19]">
-      <span class="text-inverse help-inline">只可手动输入，不可粘贴</span>
-    </div>
-
-  </div>
-
-  <div class="dot-divider dot-divider-lg "></div>
-
-  <div class="control-group">
-    <div class="controls">
-      <button type="button" class="js-uc-cbCardBinding-check btn uc-cm-lg-btn" data-loading-text="绑定中">立即绑定</button>
+      <div class="controls">
+        <input type="text" class="js-uc-cbCardNo uc-lg-input input2" data-parsley-num data-parsley-length="[13,19]"
+               required>
+        <span class="text-inverse help-inline">银行卡号由16位或19位数字组成</span>
+      </div>
 
     </div>
-  </div>
+    <div class="control-group">
+      <label class="control-label text-bold-dark">开户人姓名：</label>
 
-</form>
+      <div class="controls">
+        <input type="text" class="js-uc-cbAccountName input1" data-parsley-length="[2,50]"
+               data-parsley-zhAndLDBMaxLen="20" required>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label text-bold-dark">开户行地址：</label>
+
+      <div class="controls">
+        <select class="js-uc-cbProvince select1" required>
+          <option value="">省份</option>
+        </select>
+        <select class="js-uc-cbCity select1" required>
+          <option value="">城市</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label text-bold-dark">支行名称：</label>
+
+      <div class="controls">
+        <input type="text" class="js-uc-cbBankBranch input1" data-parsley-length="[2,100]"
+               data-parsley-zhAndLDBMaxLen="20" required>
+      </div>
+
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <button type="button" class="js-uc-cbCardBinding-check btn uc-cm-lg-btn" data-loading-text="绑定中">绑定银行卡</button>
+      </div>
+    </div>
+
+  </form>
+
+  <h3>3.绑定成功！</h3>
+  <div class="js-uc-steps">您的银行卡已绑定成功！</div>
+</div>

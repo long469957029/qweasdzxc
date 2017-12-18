@@ -78,7 +78,7 @@
         display: block;
         width: auto;
         margin-left: map_get($steps, indent);
-        padding: 0 10px;
+        //padding: 0 10px;
         text-decoration: none;
         color: map_get($steps, active-color);
         line-height: 23px;
@@ -258,40 +258,41 @@
 
       &.current {
         &:after {
-          background: $new-main-deep-color;
+          background: linear-gradient(to right,$new-main-deep-color,transparent);
         }
         .number {
           background: $new-main-deep-color;
         }
         .title {
-          color: $new-main-deep-color;
+          color: $new-inverse-color;
         }
       }
 
       &:after {
         content: '';
         position: absolute;
-        width: 100%;
+        width: 162px;
         height: 5px;
-        background: #cccccb;
+        background: $def-gray-color;
         top: 10px;
       }
 
       .number {
-        width: 28px;
-        height: 28px;
-        background: #cccccb;
+        width: 34px; 
+        height: 34px;
+        background: $def-gray-color;
         border-radius: 100px;
         color: #fff;
         font-size: 18px;
-        line-height: 28px;
-        font-weight: bold;
-        margin: 0 auto 10px auto;
+        line-height: 34px;
         position: relative;
         z-index: 1;
+        margin: 0 auto;
       }
       .title {
-        color: #cccccb;
+        color: $font-auxiliary-color;
+        font-size: $font-sm;
+        margin-top: 15px;
       }
     }
     .content > .body {
@@ -310,7 +311,7 @@
   &.wizard-long {
     > {
       .steps > ul > li {
-        width: 240px;
+        width: 173px;
       }
     }
   }
