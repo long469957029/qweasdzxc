@@ -1,6 +1,6 @@
 <template>
   <div :class="'width-100 bc-play-main' + wrapperClass">
-    <betting-rules class="bc-basic-rules bg-deep" :play-levels="playLevels" :type="normal" ></betting-rules>
+    <betting-rules class="bc-basic-rules bg-deep" :play-levels="playLevels" :type="normalType" ></betting-rules>
     <div class="bc-play-container clearfix">
       <div class="bc-play-left basic-inverse pull-left">
         <div class="bc-play-select-area clearfix">
@@ -100,6 +100,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import bettingRules from './betting-rules'
 
   export default {
@@ -114,10 +115,14 @@
     data() {
       return {
         wrapperClass: _.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id)) > -1 ? 'mark6' : '',
-        loading: Global.ui.loader.get()
+        loading: Global.ui.loader.get(),
+        normalType: 'normal',
       }
     },
     computed: mapState({
+      playLevels: function() {
+        return this.$store.getters.playLevels
+      },
       bettingInfo: 'bettingInfo',
     })
   }

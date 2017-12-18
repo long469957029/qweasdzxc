@@ -12,7 +12,7 @@ export default {
     return Global.sync.ajax({
       url: '/ticket/ticketmod/ticketplaylist.json',
       localCache: true,
-      cacheName: `ticketList.${this.options.ticketId}`,
+      cacheName: `ticketList.${ticketId}`,
       data: { ticketId },
       success,
       error,
