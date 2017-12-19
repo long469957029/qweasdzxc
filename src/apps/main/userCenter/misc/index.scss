@@ -27,6 +27,7 @@
   width: 190px;
   height: 40px;
   border-radius: 20px;
+  font-size: $font-sm;
 }
 //begin 1投追记录页查询栏样式
 .search-condition-table {
@@ -378,17 +379,28 @@
     .uc-cmContainer-add-card{
       position: absolute;
       width: 100%;
-      height: 100%;
+      height: 600px;
       background-color: $def-white-color;
       z-index: 2;
       top: 0;
       left: 0;
+      color: $new-inverse-color;
       .add-card-close{
         display: block;
         font-size: 16px;
         color: $new-inverse-color;
         margin: 31px 40px;
         cursor: pointer;
+      }
+      .content{
+        height: 600px;
+      }
+    }
+    .uc-cmContainer-card-list{
+      .uc-cm-lg-btn {
+        @include btnDef;
+        margin-top: 90px;
+        margin-left: -75px;
       }
     }
   }
@@ -499,13 +511,6 @@
   .btn-right {
     margin-left: 33px;
   }
-  .uc-cm-lg-btn {
-    width: 190px;
-    height: 40px;
-    border-radius: 20px;
-    margin-top: 90px;
-    margin-left: -75px;
-  }
   .uc-bank-manage-lock {
     background-image: url(./keyboard.png);
     height: 487px;
@@ -520,22 +525,27 @@
 .uc-cbCardBinding-container{
   width: 520px;
   margin: 0 auto;
-}
-.uc-cb-fundPwd{
-  width: 286px;
-  height: 28px !important;
-}
-.btn{
-  @include btnDef;
-}
-.uc-cbCardBindingForm {
-  padding: 40px 0 0 11px;
+  .uc-cb-fundPwd{
+    width: 286px;
+    height: 28px !important;
+  }
+  .btn{
+    @include btnDef;
+  }
+  .uc-cbCardBindingForm {
+    padding: 20px 0 0 11px;
+    .uc-cm-lg-btn {
+      @include btnDef;
+    }
+  }
   .control-group {
-    padding: 0 0 5px 0;
+    .control-label{
+      padding-top: 8px;
+    }
   }
   .select1 {
-    width: 137px;
-    height: 25px;
+    width: 298px;
+    height: 38px;
   }
   .select2 {
     width: auto;
@@ -543,16 +553,13 @@
     height: 25px;
   }
   .input1 {
-    width: 123px;
-    height: 15px;
+    width: 284px;
+    height: 28px;
   }
-  .input2 {
-    width: 228px;
-    height: 15px;
-  }
-  .uc-cm-lg-btn {
-    width: 166px;
-    height: 32px;
+  .select2 {
+    width: 140px;
+    height: 38px;
+    margin-right: 16px;
   }
 }
 

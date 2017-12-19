@@ -29,7 +29,7 @@ $main-color: #0197ad !default;
 $main-deep-color: $new-main-deep-color;
 $color-pleasant: #109fa8 !default;
 $color-peaceful: #48bfd1 !default;
-$color-hot: #b01e34 !default;
+$color-hot: #e84c4c !default;
 $color-sunshine: #aafb92!default;
 $color-gold: #f7d368!default;
 $color-dar-turquoise: #007e88 !default;
@@ -233,17 +233,20 @@ $select: (
   default: (
     border-color: $sec-gray-color,
     color: $def-black-color,
-    background: url(~base/images/select-arrow-black.png) no-repeat scroll 90% center transparent
+    background: url(~base/images/select-arrow-black.png) no-repeat scroll 95% center transparent,
+    bg-color: #f9f9f9
   ),
   inverse: (
     border-color: $sec-gray-color,
     color: $def-black-color,
-    background: url(~base/images/select-caret-bg-lg.png) no-repeat scroll 102% center transparent
+    background: url(~base/images/select-caret-bg-lg.png) no-repeat scroll 102% center transparent,
+    bg-color: $def-white-color
   ),
   black: (
     border-color: $new-inverse-color,
     color: $new-black-color,
-    background: url(~base/images/select-caret-black.png) no-repeat scroll 97% center transparent
+    background: url(~base/images/select-caret-black.png) no-repeat scroll 97% center transparent,
+    bg-color: #f9f9f9
   ),
 );
 

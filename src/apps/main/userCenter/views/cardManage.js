@@ -1,6 +1,6 @@
 
 
-// const bindBankConfig = require('../misc/bankConfig')
+const bindBankConfig = require('../misc/bankConfig')
 const CardBind = require('./cardBinding')
 
 const CardManageView = Base.ItemView.extend({
@@ -182,9 +182,11 @@ const CardManageView = Base.ItemView.extend({
     }
 
     const cardInfoHtmlArr = _(cardList).map(function(card) {
+      const bankInfo = bindBankConfig.get(card.bankId)
       return this.itemTpl({
         card,
         locked,
+        bankInfo,
       })
     }, this)
 
@@ -220,7 +222,7 @@ const CardManageView = Base.ItemView.extend({
           })
       } else {
         Global.memoryCache.clear('hasBeenVerified')
-        self.showAddCard({ firstBind: false })
+        self.showAddCard({ firstBind: true })
       }
     } else if (this.locked) {
       Global.ui.notification.show('银行卡已锁定，不能增加银行卡。')
@@ -230,7 +232,9 @@ const CardManageView = Base.ItemView.extend({
   },
   showAddCard(data) { // data判断是否为第一次绑定银行卡
     this.$addCardContainer.removeClass('hidden')
-    this.cardBindView = new CardBind(data)
+    this.cardBindView = new CardBind(data).off('bind:success').on('bind:success', () => {
+      this.render()
+    })
     this.$addCardMain.html(this.cardBindView.render().el)
   },
 
