@@ -644,6 +644,43 @@
   top:-5px;
 }
 
+//账户安全
+
+.uc-account-safe{
+  .promat-title{
+    @include promat-title;
+    margin-top: 25px;
+  }
+  .promat-info{
+    @include promat-info;
+  }
+  .uc-account-safe-info{
+    width:920px;
+    height: 130px;
+    border-radius: $globalBtnRadius;
+    background-color: #f8f8f8;
+    margin: 0 auto;
+  }
+  .uc-account-setting{
+    width: 920px;
+    margin: 0 auto;
+    .setting-info{
+      width: 918px;
+      min-height: 98px;
+      border: 1px solid $third-line-color;
+      border-radius: $globalBtnRadius;
+      margin-top: 20px;
+      cursor: pointer;
+      &:hover{
+        border-color: $new-main-deep-color;
+        box-shadow: 0px 0px 3px rgba(0,0,0,.5);
+      }
+    }
+  }
+}
+
+//账户安全  end
+
 @keyframes flipInY{
 
   from {

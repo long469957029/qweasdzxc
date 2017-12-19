@@ -8,7 +8,7 @@ const PasswordManageView = require('accountCenter/views/passwordManage')
 const SecurityQuestionView = require('accountCenter/views/securityQuestion')
 const LoginLogView = require('accountCenter/views/loginLog')
 
-const ucMenuConfig = Global.ui.menu.get('uc')
+const ucMenuConfig = Global.ui.menu.get(['fc', 'uc'])
 
 const AccountCenterController = RouterController.extend({
 

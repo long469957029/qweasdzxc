@@ -12,6 +12,7 @@ const PersonalManageView = require('userCenter/views/personalManage')
 const CardManageView = require('userCenter/views/cardManage')
 const CardBindingView = require('userCenter/views/cardBinding')
 const PriceDetailsView = require('userCenter/views/priceDetails')
+const AccountSafeViewInfo = require('userCenter/views/accountSafe')
 
 
 // const ucMenuConfig = Global.ui.menu.get('uc')
@@ -111,7 +112,14 @@ const UserCenterController = RouterController.extend({
       sidebar,
     })
   },
-
+  accountSafe() {
+    this.changeMainReginView(new AccountSafeViewInfo(), {
+      main: {
+        title: '账户安全',
+      },
+      sidebar,
+    })
+  },
 })
 
 module.exports = UserCenterController
