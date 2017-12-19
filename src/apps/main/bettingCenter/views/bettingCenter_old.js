@@ -3,8 +3,8 @@
 const BettingChoiceModel = require('bettingCenter/models/bettingChoice')
 const BettingInfoModel = require('bettingCenter/models/bettingInfo')
 
-const PlayAreaSelectView = require('bettingCenter/views/bettingCenter-playArea-select')
-const PlayAreaInputView = require('bettingCenter/views/bettingCenter-playArea-input')
+// const PlayAreaSelectView = require('bettingCenter/views/bettingCenter-playArea-select')
+// const PlayAreaInputView = require('bettingCenter/views/bettingCenter-playArea-input')
 const BettingRecordsView = require('bettingCenter/views/bettingCenter-records')
 const BettingChaseView = require('bettingCenter/views/bettingCenter-chase')
 const ticketConfig = require('skeleton/misc/ticketConfig')
@@ -358,8 +358,6 @@ const BettingCenterView = Base.ItemView.extend({
       placement: 'bottom',
     })
 
-    // this.renderPlayBetMode(); 调换了一下顺序！！！！
-
     // 更改 bettingChoice 模型的 倍数 返水率 奖金组
     this.model.set({
       maxMultiple: playInfo.betMultiLimitMax,
@@ -394,42 +392,12 @@ const BettingCenterView = Base.ItemView.extend({
       maxMultiple: playInfo.betMultiLimitMax,
     })
     this.$playBetMode.html(betMethod)
-    // 赔率/返水率f
-    // let modeHtml = ''
-    // if (playInfo.betBonus === null) { // 是否有奖励数组，没有则用默认的双奖励，有则用数组奖励
-    //   modeHtml += `<option value="0" data-max="${playInfo.betMultiLimitMax}" data-max-bonus="${playInfo.betMethodMax}">${_(playInfo.betMethodMax).chain().formatDiv(unit).floor(4)
-    //     .value()}/0.0%</option>`
-    //   if (Number(playInfo.userRebate) !== 0) {
-    //     modeHtml += `<option value="1" data-max="${playInfo.betMultiLimitMin}" data-max-bonus="${playInfo.betMethodMin}">${
-    //       _(playInfo.betMethodMin).chain().formatDiv(unit).floor(4)
-    //         .value()}/${_(playInfo.userRebate).div(10)}%</option>`
-    //   }
-    //   // 六合彩特码、正码类型的号码球更改赔率数值，投注模式文字修改
-    //   if (_.indexOf(this.mark6TicketIdArr, parseInt(this.model.get('ticketId'), 10)) > -1) {
-    //     this.$playArea.find('.mark6-odds').html(this.setMark6NumberOdds(playInfo.betMethodMax))
-    //     modeHtml = `<option value="0" data-max="${playInfo.betMultiLimitMax}" data-max-bonus="${playInfo.betMethodMax}">高奖金模式</option>`
-    //     if (Number(playInfo.userRebate) !== 0) {
-    //       modeHtml += `<option value="1" data-max="${playInfo.betMultiLimitMin}" data-max-bonus="${playInfo.betMethodMin}">高返点模式</option>`
-    //     }
-    //   }
-    // } else { // 目前有多种奖励方式的 仅有 龙虎和
-    //   modeHtml += this.selectBcItemHandler()
-    // }
-    //
-    // const currentVal = this.$playBetMode.val()
-    // this.$playBetMode.html(modeHtml)
-    //
-    // if (currentVal) { // 给select赋值并触发change事件
-    //   this.$playBetMode.val(currentVal).trigger('change')
-    // } else {
-    //   this.$playBetMode.val(0).trigger('change')
-    // }
   },
+
   // 加载号码球
   renderPlayArea() {
-    const playId = this.model.pick('playId').playId
     const playRule = betRulesConfig.get(this.model.pick('playId'))
-    const page = playRule.page
+    // const page = playRule.page
     const levelId = this.model.get('levelId')
     const sxLevelIdArr = betRulesConfig.getMark6SpecialInfo().sxLevelIdArr
     // 如果是六合-生肖显示对应的生肖号码
@@ -472,10 +440,10 @@ const BettingCenterView = Base.ItemView.extend({
     }
     // 六合、无限六合彩
     // 特码-特码、正码-正码、正码-正码1、正码-正码2、正码-正码3、正码-正码4、正码-正码5、正码-正码6
-    const tm_zm_playIdArr = betRulesConfig.getMark6SpecialInfo().tm_zm_playIdArr
-    if ((_.indexOf(tm_zm_playIdArr, playId) > -1) && this.options.mark6SxNumber) {
-      playRule.list[0].htmlNeedInfo.groupSelectData = this.options.mark6SxNumber
-    }
+    // const tm_zm_playIdArr = betRulesConfig.getMark6SpecialInfo().tm_zm_playIdArr
+    // if ((_.indexOf(tm_zm_playIdArr, playId) > -1) && this.options.mark6SxNumber) {
+    //   playRule.list[0].htmlNeedInfo.groupSelectData = this.options.mark6SxNumber
+    // }
 
     if (this.currentPlayAreaView) {
       this.currentPlayAreaView.destroy()
@@ -487,19 +455,16 @@ const BettingCenterView = Base.ItemView.extend({
 
     playRule.ticketId = this.model.get('ticketId')
 
-    switch (playRule.type) {
-      case 'select':
-        this.currentPlayAreaView = new PlayAreaSelectView(playRule, page)
-        break
-      case 'input':
-        this.currentPlayAreaView = new PlayAreaInputView(playRule)
-        break
-      // case 'multiPage':
-      //  this.currentPlayAreaView = new PlayAreaSelectView(playRule, page);
-      //  break;
-      default:
-        break
-    }
+    // switch (playRule.type) {
+    //   case 'select':
+    //     this.currentPlayAreaView = new PlayAreaSelectView(playRule, page)
+    //     break
+    //   case 'input':
+    //     this.currentPlayAreaView = new PlayAreaInputView(playRule)
+    //     break
+    //   default:
+    //     break
+    // }
 
     this.options.type = playRule.type
 

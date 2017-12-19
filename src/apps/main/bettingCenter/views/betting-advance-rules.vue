@@ -30,9 +30,11 @@
         handler(newVal, oldVal) {
           this.rulesList = this.$store.getters.playGroups(newVal)
 
+
           const rules = this.rulesList[0]
-          rules.playList[0].selected = true
-          this.$set(this.rulesList, 0, rules)
+
+          ruleSelect(this, rules.playList[0], rules, 0)
+          // this.$set(this.rulesList, 0, rules)
         }
       }
     },
@@ -45,23 +47,31 @@
 
     methods: {
       ruleChange(rule, rules, index) {
-        this.rulesList.forEach(function(rules) {
-          rules.playList.forEach(function(rule) {
-            rule.selected = false
-          });
-        })
-        rule.selected = true
-        this.$set(this.rulesList, index, rules)
-
-        this.$store.commit({
-          type: types.SET_PLAY,
-          groupId: rules.id,
-          groupName: rules.title,
-          playId: rule.id,
-          playName: rule.title
-        });
+        ruleSelect(this, rule, rules, index)
       }
     },
+  }
+
+  function ruleSelect({rulesList, $store, $set}, rule, rules, index) {
+    if (!rule) {
+      return
+    }
+
+    rulesList.forEach(function(rules) {
+      rules.playList.forEach(function(rule) {
+        rule.selected = false
+      });
+    })
+    rule.selected = true
+    $set(rulesList, index, rules)
+
+    $store.commit({
+      type: types.SET_PLAY,
+      groupId: rules.id,
+      groupName: rules.title,
+      playId: rule.id,
+      playName: rule.title
+    });
   }
 </script>
 

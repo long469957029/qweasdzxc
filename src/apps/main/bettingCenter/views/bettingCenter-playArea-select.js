@@ -1,5 +1,3 @@
-
-
 const betRulesAlgorithm = require('bettingCenter/misc/betRulesAlgorithm')
 const ticketConfig = require('skeleton/misc/ticketConfig')
 

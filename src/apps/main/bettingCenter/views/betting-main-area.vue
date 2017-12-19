@@ -17,9 +17,13 @@
         </div>
         <div class="bc-line"></div>
         <div class="m-LR-smd">
-          <div class="js-bc-play-area bc-play-area clearfix">
-            <div class="gl-loading" v-html="loading">
-            </div>
+          <div class="bc-play-area clearfix">
+            <betting-play-area-select class="bc-play-area clearfix" :play-rule="playRule" v-if="playRule.type === 'select'">
+              <div class="gl-loading" v-html="loading"></div>
+            </betting-play-area-select>
+            <betting-play-area-input class="bc-play-area clearfix" :play-rule="playRule" v-else-if="playRule.type === 'input'">
+              <div class="gl-loading" v-html="loading"></div>
+            </betting-play-area-input>
           </div>
         </div>
 
@@ -101,8 +105,13 @@
 
 <script>
   import { mapState } from 'vuex'
+  import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
+
   import bettingRules from './betting-rules'
   import bettingAdvanceRules from './betting-advance-rules'
+  import bettingPlayAreaSelect from './betting-play-area-select'
+  import bettingPlayAreaInput from './betting-play-area-input'
+
 
   export default {
     name: "betting-main-area",
@@ -112,20 +121,32 @@
     },
     components: {
       bettingRules,
-      bettingAdvanceRules
+      bettingAdvanceRules,
+      bettingPlayAreaSelect,
+      bettingPlayAreaInput,
     },
     data() {
       return {
         wrapperClass: _.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id)) > -1 ? 'mark6' : '',
         loading: Global.ui.loader.get(),
+        playRule: {}
       }
     },
     computed: mapState({
       playLevels: function() {
         return this.$store.getters.playLevels
       },
+      bettingChoice: 'bettingChoice',
       bettingInfo: 'bettingInfo',
-    })
+    }),
+
+    watch: {
+      'bettingChoice.playId': {
+        handler: function(newVal, oldVal) {
+          this.playRule = betRulesConfig.get(newVal)
+        }
+      },
+    }
   }
 </script>
 

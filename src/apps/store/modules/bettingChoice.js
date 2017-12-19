@@ -3,13 +3,13 @@ import * as types from '../mutation-types'
 
 const initState = () => {
   return {
-    levelId: 0,
+    levelId: -1,
     levelName: '',
-    // groupId: 1,
-    // groupName: '',
+    groupId: -1,
+    groupName: '',
     // multiple: 1,
-    // playId: 1,
-    // playName: '',
+    playId: -1,
+    playName: '',
     betBonus: {},
     maxBonus: 195000,
     unit: 10000,
@@ -50,7 +50,7 @@ const mutations = {
   },
 
   [types.SET_PLAY] (state, {
-    groupId, groupName, playId, playName, 
+    groupId, groupName, playId, playName,
   }) {
     // 变更所选基本玩法
     state.groupId = groupId

@@ -93,6 +93,9 @@
   }
 
   function ruleSelect({rules, $store}, rule) {
+    if (!rule) {
+      return
+    }
     rules.forEach(function(rule) {
       rule.selected = false
     })
