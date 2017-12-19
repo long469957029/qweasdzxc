@@ -33,28 +33,14 @@
       initialRules() {
         this.rules = this.initialRules
 
-        this.ruleChange(this.rules[0])
+        ruleSelect(this, this.rules[0])
       }
     },
 
     methods: {
       ruleChange: function(rule) {
-        this.ruleSelect(rule)
+        ruleSelect(this, rule)
       }
-    },
-
-
-    ruleSelect(rule) {
-      this.rules.forEach(function(rule) {
-        rule.selected = false
-      })
-      rule.selected = true
-
-      this.$store.commit({
-        type: types.SET_LEVEL,
-        levelId: rule.id,
-        levelName: rule.title
-      });
     },
 
     selectDefaultPlay() {
@@ -104,6 +90,19 @@
         this.$basicRules.find('.js-bc-basic-rule').eq(0).trigger('click')
       }
     },
+  }
+
+  function ruleSelect({rules, $store}, rule) {
+    rules.forEach(function(rule) {
+      rule.selected = false
+    })
+    rule.selected = true
+
+    $store.commit({
+      type: types.SET_LEVEL,
+      levelId: rule.id,
+      levelName: rule.title
+    });
   }
 </script>
 
