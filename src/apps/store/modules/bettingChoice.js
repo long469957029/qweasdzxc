@@ -3,10 +3,10 @@ import * as types from '../mutation-types'
 
 const initState = () => {
   return {
+    levelId: 0,
+    levelName: '',
     // groupId: 1,
     // groupName: '',
-    // levelId: 1,
-    // levelName: '',
     // multiple: 1,
     // playId: 1,
     // playName: '',
@@ -43,32 +43,20 @@ const actions = {
 
 // mutations
 const mutations = {
-  [types.GO_TO_NEXT_PLAN] (state) {
-    state.lastPlanId = state.planId
-    state.planId = state.nextPlanId
-    state.leftSecond = state.nextTotalSecond
-    state.totalSecond = state.nextTotalSecond
+  [types.SET_LEVEL] (state, { levelId, levelName }) {
+    // 变更所选基本玩法
+    state.levelId = levelId
+    state.levelName = levelName
   },
 
-  [types.CHECKOUT_TICKET_INFO] (state) {
-    // clear
-    Object.assign(state, initState())
-  },
-
-  [types.GET_TICKET_INFO_SUCCESS] (state, res) {
-    if (res && res.result === 0) {
-      const data = res.root || {}
-
-      // 格式化开奖结果
-      data.lastOpenNum = (data.lastOpenNum || '').split(',') || []
-
-      Object.assign(state, data)
-    }
-  },
-
-  // 暂时没有处理失败的逻辑
-  [types.GET_TICKET_INFO_FAILURE] (state) {
-    state.checkoutStatus = 'failed'
+  [types.SET_PLAY] (state, {
+    groupId, groupName, playId, playName, 
+  }) {
+    // 变更所选基本玩法
+    state.groupId = groupId
+    state.groupName = groupName
+    state.playId = playId
+    state.playName = playName
   },
 }
 

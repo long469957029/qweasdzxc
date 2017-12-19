@@ -188,6 +188,7 @@ module.exports = {
       helpCenter: 'apps/main/helpCenter',
       gameCenter: 'apps/main/gameCenter',
       mallCenter: 'apps/main/mallCenter',
+      'mutation-types': 'apps/store/mutation-types',
 
       snap: 'Snap.svg/dist/snap.svg',
       bootstrap: 'vendor/scripts/bootstrap',

@@ -4,6 +4,7 @@ import * as actions from './actions'
 import * as getters from './getters'
 import bettingInfo from './modules/bettingInfo'
 import rulesList from './modules/rulesList'
+import bettingChoice from './modules/bettingChoice'
 
 Vue.use(Vuex)
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
   modules: {
     bettingInfo,
     rulesList,
+    bettingChoice,
   },
   strict: debug,
 })

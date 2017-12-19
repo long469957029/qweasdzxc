@@ -1,10 +1,10 @@
 <template>
   <div :class="'width-100 bc-play-main' + wrapperClass">
-    <betting-rules class="bc-basic-rules bg-deep" :initial-rules="playLevels" :type="normalType" ></betting-rules>
+    <betting-rules :initial-rules="playLevels"></betting-rules>
     <div class="bc-play-container clearfix">
       <div class="bc-play-left basic-inverse pull-left">
         <div class="bc-play-select-area clearfix">
-          <div class="js-bc-advance-rules bc-advance-rules p-top-smd pull-left"></div>
+          <betting-advance-rules></betting-advance-rules>
           <div class="pull-right bc-advance-mode-main">
             <div class="advance-bouns">
               单注奖金：<span class="font-md text-prominent js-bc-bet-mode"></span>元
@@ -102,6 +102,7 @@
 <script>
   import { mapState } from 'vuex'
   import bettingRules from './betting-rules'
+  import bettingAdvanceRules from './betting-advance-rules'
 
   export default {
     name: "betting-main-area",
@@ -110,13 +111,13 @@
       mark6TicketIdArr: Array,
     },
     components: {
-      bettingRules
+      bettingRules,
+      bettingAdvanceRules
     },
     data() {
       return {
         wrapperClass: _.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id)) > -1 ? 'mark6' : '',
         loading: Global.ui.loader.get(),
-        normalType: 'normal',
       }
     },
     computed: mapState({

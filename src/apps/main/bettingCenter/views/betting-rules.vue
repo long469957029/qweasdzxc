@@ -1,15 +1,19 @@
 <template>
-  <div :class="['js-bc-rules-toolbar tab-toolbar', type === 'normal' ? 'tab-pill tab-pill-deep' : '']" data-id="<%=obj.id %>" data-title="<%=obj.title %>">
-    <div class="tab-title" v-if="title">{{title}}</div>
-    <div :class="['tab-group',  !title ? 'no-margin' : '']">
+  <div class="bc-basic-rules bg-deep">
+    <div class="tab-toolbar tab-pill tab-pill-deep">
+      <div class="tab-title" v-if="title">{{title}}</div>
+      <div :class="['tab-group',  !title ? 'no-margin' : '']">
       <span class="tab" :class="{active: rule.selected}" v-for="rule in rules" @click="ruleChange(rule)">
         <span class="tab-inner">{{rule.title}}</span>
       </span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import * as types from 'mutation-types'
+
   export default {
     name: "betting-rules",
     props: {
@@ -28,16 +32,29 @@
     watch: {
       initialRules() {
         this.rules = this.initialRules
+
+        this.ruleChange(this.rules[0])
       }
     },
 
     methods: {
-      ruleChange(rule) {
-        this.rules.forEach(function(todo) {
-          todo.selected = false
-        })
-        rule.selected = true
+      ruleChange: function(rule) {
+        this.ruleSelect(rule)
       }
+    },
+
+
+    ruleSelect(rule) {
+      this.rules.forEach(function(rule) {
+        rule.selected = false
+      })
+      rule.selected = true
+
+      this.$store.commit({
+        type: types.SET_LEVEL,
+        levelId: rule.id,
+        levelName: rule.title
+      });
     },
 
     selectDefaultPlay() {
@@ -48,21 +65,17 @@
           groupId: this.ticketRuleId,
         }
       } else {
-        this.getTicketInfotXhr({ ticketId: this.options.ticketId }).done((res) => {
-          if (res.result === 0 && res.root.lastPlayId) {
-            const lastPlayId = res.root.lastPlayId.toString()
-            const groupId = lastPlayId.substring(0, lastPlayId.length - 4)
-            defaultSelectInfo = {
-              lastPlayId,
-              groupId,
-            }
-          } else {
-            defaultSelectInfo = self.options.ticketInfo.info.defaultSelectPlay.split(',')
+        if (ticketInfo.lastPlayId) {
+          const lastPlayId = ticketInfo.lastPlayId.toString()
+          const groupId = lastPlayId.substring(0, lastPlayId.length - 4)
+          defaultSelectInfo = {
+            lastPlayId,
+            groupId,
           }
-        })
+        } else {
+          defaultSelectInfo = self.options.ticketInfo.info.defaultSelectPlay.split(',')
+        }
       }
-
-      // defaultSelectInfo = [0,1,3];
 
       if (!_(defaultSelectInfo).isEmpty()) {
         if (!_(defaultSelectInfo).isArray() && _(defaultSelectInfo).isObject()) {

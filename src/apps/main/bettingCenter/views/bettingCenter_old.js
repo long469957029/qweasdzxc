@@ -70,11 +70,6 @@ const BettingCenterView = Base.ItemView.extend({
 
     this.listenTo(this.infoModel, 'change:leftSecond', this.updateCountdown)
     this.listenTo(this.infoModel, 'change:planId', this.renderBasicInfo)
-    // this.listenTo(this.infoModel, 'change:openVideoUrl', this.renderVideo)
-
-    this.listenTo(this.model, 'change:levelId', function(model, levelId) {
-      this.renderAdvanceRules(levelId)
-    })
 
     this.listenTo(this.model, 'change:playId', function(model, playId) {
       const playRule = betRulesConfig.get(this.model.pick('playId'))
@@ -113,9 +108,6 @@ const BettingCenterView = Base.ItemView.extend({
     const self = this
     this.$planId = this.$('.js-bc-planId')
     this.$planIdStop = this.$('.js-bc-planId-stop')
-
-    // rules
-    this.$advanceRules = this.$('.js-bc-advance-rules')
 
     // playInfo
     // this.$playTip = this.$('.js-bc-play-tip')
@@ -199,15 +191,6 @@ const BettingCenterView = Base.ItemView.extend({
 
 
     this.getUsePackStatus()
-    // var ruleId = _.getUrl('ruleId');
-    // if(ruleId && !_.isUndefined(ruleId) && !_.isNull(ruleId)){
-    //   var data = {
-    //     ticketRuleId:ruleId,
-    //     ticketPlayId:_.getUrl('advance'),
-    //     num:_.getUrl('betNum')
-    //   }
-    //   this.selectNum(data);
-    // }
     this.subscribe('bet', 'bet:updating', (data) => {
       self.selectNum(data)
     })
@@ -215,8 +198,6 @@ const BettingCenterView = Base.ItemView.extend({
   selectNum (data) {
     const self = this
     if (data && !_.isNull(data) && !_.isUndefined(data) && !_.isEmpty(data)) {
-      // this.$('.js-bc-basic-rule[data-id='+ data.ticketRuleId +']').trigger('click');
-      // this.$('.js-bc-advance-rule[data-id='+ data.ticketPlayId +']').trigger('click');
       this.ticketRuleId = data.ticketRuleId
       this.ticketPlayId = data.ticketPlayId
       this.selectDefaultPlay()
@@ -356,77 +337,6 @@ const BettingCenterView = Base.ItemView.extend({
 
   renderBasicRules() {
     this.selectDefaultPlay()
-  },
-
-  selectDefaultPlay() {
-    const self = this
-
-    let defaultSelectInfo = null
-    if (this.ticketRuleId && this.ticketPlayId && !_.isUndefined(this.ticketRuleId) && !_.isUndefined(this.ticketPlayId)) {
-      defaultSelectInfo = {
-        lastPlayId: this.ticketPlayId,
-        groupId: this.ticketRuleId,
-      }
-    } else {
-      this.getTicketInfotXhr({ ticketId: this.options.ticketId }).done((res) => {
-        if (res.result === 0 && res.root.lastPlayId) {
-          const lastPlayId = res.root.lastPlayId.toString()
-          const groupId = lastPlayId.substring(0, lastPlayId.length - 4)
-          defaultSelectInfo = {
-            lastPlayId,
-            groupId,
-          }
-        } else {
-          defaultSelectInfo = self.options.ticketInfo.info.defaultSelectPlay.split(',')
-        }
-      })
-    }
-
-    // defaultSelectInfo = [0,1,3];
-
-    if (!_(defaultSelectInfo).isEmpty()) {
-      if (!_(defaultSelectInfo).isArray() && _(defaultSelectInfo).isObject()) {
-        this.$basicRules.find(`.js-bc-basic-rule[data-id=${defaultSelectInfo.groupId}]`).trigger('click')
-        this.$advanceRules.find(`.js-bc-advance-rule[data-id=${defaultSelectInfo.lastPlayId}]`).trigger('click')
-      } else if (_(Number(defaultSelectInfo[0])).isFinite()) {
-        this.$basicRules.find('.js-bc-basic-rule').eq(defaultSelectInfo[0]).trigger('click')
-        if (_(Number(defaultSelectInfo[1])).isFinite()) {
-          const levelRules = this.$advanceRules.find('.js-bc-rules-toolbar').eq(defaultSelectInfo[1])
-
-          if (_(Number(defaultSelectInfo[2])).isFinite()) {
-            levelRules.find('.js-bc-advance-rule').eq(defaultSelectInfo[2]).trigger('click')
-          }
-        }
-
-        // 兼容默认玩法的中文名方式配置
-      } else if (!_(Number(defaultSelectInfo[0])).isFinite() && _(defaultSelectInfo[0]).isString()) {
-        const rule = _(this.$basicRules.find('.js-bc-basic-rule')).find((item) => {
-          return $(item).html().indexOf(defaultSelectInfo[0]) >= 0
-        })
-        if (rule) {
-          $(rule).trigger('click')
-        }
-      }
-    } else {
-      this.$basicRules.find('.js-bc-basic-rule').eq(0).trigger('click')
-    }
-  },
-
-  renderAdvanceRules(levelId) {
-    const advanceRules = this.rulesCollection.getPlayGroups(levelId)
-    this.levelId = levelId
-
-    this.$advanceRules.html(_(advanceRules).map(function(rules) {
-      return this.rulesTpl({
-        tabToolbarClass: 'tab-pill tab-pill-main',
-        ruleClass: 'js-bc-advance-rule',
-        id: rules.id,
-        title: rules.title,
-        rules: rules.playList,
-      })
-    }, this))
-
-    this.$advanceRules.find('.js-bc-advance-rule').eq(0).trigger('click')
   },
 
   /** 核心函数

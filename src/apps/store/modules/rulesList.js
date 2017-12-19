@@ -24,14 +24,14 @@ const getters = {
     return normalList
   },
 
-  playGroups: () => {
+  playGroups: (state) => {
     return (levelId) => {
-      const levelInfoModel = this.findWhere({
+      const levelInfo = _(state.playLevels).findWhere({
         playLevelId: levelId,
       })
-      const groups = levelInfoModel && levelInfoModel.get('ticketPlayGroupInfo') || []
+      const groups = levelInfo.ticketPlayGroupInfo || []
 
-      this.currentLevel = groups
+      state.currentLevel = groups
 
       return _(groups).map((group) => {
         return {
@@ -45,7 +45,7 @@ const getters = {
           }),
         }
       })
-    }
+    } 
   },
 
   playInfo: () => {
