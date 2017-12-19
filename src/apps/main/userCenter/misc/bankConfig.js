@@ -4,10 +4,8 @@ const banks = [
   {
     id: 1,
     zhName: '招商银行',
-    pic: require('./zhaoshang.png'),
-    lockPic: require('./lockzhaoshang.png'),
-    logo: require('./zhaoshangL.png'),
-    disLogo: require('./diszhaoshangL.png'),
+    logo: require('./bankImages/zhaoshang.png'),
+    bankClassName: 'zhaoshang',
   },
   {
     id: 2,
@@ -16,6 +14,7 @@ const banks = [
     lockPic: require('./lockgongshang.png'),
     logo: require('./gongshangL.png'),
     disLogo: require('./disgongshangL.png'),
+    bankClassName: 'gongshang',
   },
   {
     id: 3,
@@ -24,6 +23,7 @@ const banks = [
     lockPic: require('./lockjianshe.png'),
     logo: require('./jiansheL.png'),
     disLogo: require('./disjiansheL.png'),
+    bankClassName: 'jianshe',
   },
   {
     id: 4,
@@ -32,6 +32,7 @@ const banks = [
     lockPic: require('./locknongye.png'),
     logo: require('./nongyeL.png'),
     disLogo: require('./disnongyeL.png'),
+    bankClassName: 'nongye',
   },
   {
     id: 5,
@@ -40,6 +41,7 @@ const banks = [
     lockPic: require('./lockzhongguo.png'),
     logo: require('./zhongguoL.png'),
     disLogo: require('./diszhongguoL.png'),
+    bankClassName: 'zhongguo',
   },
   {
     id: 6,
@@ -48,6 +50,7 @@ const banks = [
     lockPic: require('./lockjiaotong.png'),
     logo: require('./jiaotongL.png'),
     disLogo: require('./disjiaotongL.png'),
+    bankClassName: 'jiaotong',
   },
   {
     id: 7,
@@ -56,6 +59,7 @@ const banks = [
     lockPic: require('./lockguangfa.png'),
     logo: require('./guangfaL.png'),
     disLogo: require('./disguangfaL.png'),
+    bankClassName: 'guangfa',
   },
   {
     id: 8,
@@ -64,6 +68,7 @@ const banks = [
     lockPic: require('./lockguangda.png'),
     logo: require('./guangdaL.png'),
     disLogo: require('./disguangdaL.png'),
+    bankClassName: 'guangda',
   },
   {
     id: 9,
@@ -72,6 +77,7 @@ const banks = [
     lockPic: require('./lockpufa.png'),
     logo: require('./pufaL.png'),
     disLogo: require('./dispufaL.png'),
+    bankClassName: 'pufa',
   },
   {
     id: 10,
@@ -80,6 +86,7 @@ const banks = [
     lockPic: require('./lockminsheng.png'),
     logo: require('./minshengL.png'),
     disLogo: require('./disminshengL.png'),
+    bankClassName: 'minsheng',
   },
   {//
     id: 11,
@@ -88,6 +95,7 @@ const banks = [
     lockPic: require('./noLogo.png'),
     logo: require('./noLogo.png'),
     disLogo: require('./noLogo.png'),
+    bankClassName: 'pingan',
   },
   {//
     id: 12,
@@ -96,6 +104,7 @@ const banks = [
     lockPic: require('./noLogo.png'),
     logo: require('./xingyeL.png'),
     disLogo: require('./noLogo.png'),
+    bankClassName: 'xingye',
   },
   {
     id: 13,
@@ -104,6 +113,7 @@ const banks = [
     lockPic: require('./lockzhongxing.png'),
     logo: require('./zhongxingL.png'),
     disLogo: require('./diszhongxingL.png'),
+    bankClassName: 'zhongxin',
   },
   {
     id: 14,
@@ -112,6 +122,7 @@ const banks = [
     lockPic: require('./lockyouzheng.png'),
     logo: require('./youzhengL.png'),
     disLogo: require('./disyouzhengL.png'),
+    bankClassName: 'youzheng',
   },
   {//
     id: 15,
@@ -120,6 +131,7 @@ const banks = [
     lockPic: require('./noLogo.png'),
     logo: require('./noLogo.png'),
     disLogo: require('./noLogo.png'),
+    bankClassName: 'huaxia',
   },
 
 ]

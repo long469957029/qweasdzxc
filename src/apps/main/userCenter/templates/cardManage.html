@@ -7,67 +7,20 @@
     </div>
   </div>
 
-  <div class="js-uc-cmBtnContainer uc-cmBtnContainer-list">
-    <div>
-      <ul class="js-uc-cmCardManage-container thumbnails">
-        <li class="bingding-card-info zhaoshang">
-          <a class="card-del js-uc-cmDeleteSingCard btn-close"></a>
-          <a class="card-lock js-uc-cmLockCard-btn hidden"></a>
-          <div class="card-logo-name">
-            <img class="card-logo" src="../misc/bankImages/zhaoshang.png">
-            <span class="card-name font-sm m-left-sm text-white">招商银行</span>
-          </div>
-          <div class="card-num">*** *** **** *** 213</div>
-          <div class="card-user-time m-left-smd">
-            <div class="card-user font-sm">张xx</div>
-            <div class="card-time">绑定时间：2016-10-14 10:46:02</div>
-          </div>
-        </li>
+  <div class="js-uc-cmBtnContainer uc-cmBtnContainer-list relative">
+    <div class="uc-cmContainer-card-list">
+      <ul class="js-uc-cmCardManage-container clearfix">
       </ul>
-      <div class="js-uc-cmBindCard-btn uc-cmCard-add" data-type="addBankCard">
-        <span class="add-icon"></span>
-        添加银行卡
+      <div class="text-center">
+        <button type="button" class="js-uc-cmLockCard-btn btn btn-cool font-md uc-cm-lg-btn">锁定银行卡</button>
       </div>
+      <input type="hidden" class="js-uc-cmCardNum" value="">
+      <input type="hidden" class="js-uc-pwdToken" value="">
     </div>
-    <div class="text-center">
-      <button type="button" class="js-uc-cmLockCard-btn btn btn-cool font-md uc-cm-lg-btn">锁定银行卡</button>
+    <div class="uc-cmContainer-add-card js-uc-cmContainer-add-card clearfix hidden">
+      <a class="add-card-close js-add-card-close">&laquo;&nbsp;&nbsp;返回</a>
+      <div class="uc-add-card-main js-uc-add-card-main"></div>
     </div>
-    <input type="hidden" class="js-uc-cmCardNum" value="">
-    <input type="hidden" class="js-uc-pwdToken" value="">
   </div>
-
-  <!--<div class="js-uc-cm-fundPwdSetNotice text-center hidden m-top-md">-->
-
-    <!--<div class="uc-cm-fund-pwd-png-div"><img src="../misc/card.png"/></div>-->
-    <!--<div class="uc-cm-text-dark">请补充完您的安全信息后再绑卡</div>-->
-    <!--<div class="uc-cm-link-dark">-->
-      <!--资金密码未设置 <a class="js-fc-aHref btn-link text-pleasant" href="#as/pf">点击设置</a>-->
-    <!--</div>-->
-  <!--</div>-->
-
-  <!--<div class="js-uc-cm-fundPwdInput  hidden ">-->
-    <!--<form class=" uc-cm-fund-pwd-form" action="javascript:void(0)">-->
-      <!--<div class="uc-bank-manage-lock">-->
-        <!--<div class="control-group uc-cm-fund-pwd-div">-->
-          <!--<label class="uc-cm-fund-label">输入资金密码</label>-->
-          <!--<div class="controls">-->
-            <!--<input type="password" class="js-uc-cmPayPwd "/>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="control-group uc-cm-fund-pwd-notice-div">-->
-          <!--<div class="controls">-->
-            <!--<ul class="js-uc-cmValPayPwdNotice parsley-errors-list filled font-sm">-->
-
-            <!--</ul>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="control-group">-->
-          <!--<div class="controls">-->
-            <!--<button type="submit" class="js-uc-cmValidatePayPwd btn btn-wd">确定</button>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</form>-->
-  <!--</div>-->
 
 </div>
