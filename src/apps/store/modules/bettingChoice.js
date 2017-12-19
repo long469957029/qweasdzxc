@@ -7,7 +7,7 @@ const initState = () => {
     levelName: '',
     groupId: -1,
     groupName: '',
-    // multiple: 1,
+    multiple: 1,
     playId: -1,
     playName: '',
     betBonus: {},
@@ -57,6 +57,9 @@ const mutations = {
     state.groupName = groupName
     state.playId = playId
     state.playName = playName
+  },
+  [types.SET_MULTIPLE] (state, num) {
+    state.multiple = Number(num)
   },
 }
 

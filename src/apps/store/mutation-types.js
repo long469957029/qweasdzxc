@@ -11,3 +11,4 @@ export const GET_TICKET_RULES_FAILURE = 'GET_TICKET_RULES_FAILURE'
 
 export const SET_LEVEL = 'SET_LEVEL'
 export const SET_PLAY = 'SET_PLAY'
+export const SET_MULTIPLE = 'SET_MULTIPLE'

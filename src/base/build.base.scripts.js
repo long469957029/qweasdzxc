@@ -43,3 +43,5 @@ require('./scripts/bootstrap')
 window.moment = require('moment')
 
 window.moment.locale('zh-cn')
+
+Object.defineProperty(window.Vue.prototype, '_', { value: _ })

@@ -1,5 +1,5 @@
 <template>
-  <div :class="'width-100 bc-play-main' + wrapperClass">
+  <div :class="'width-100 bc-play-main ' + wrapperClass">
     <betting-rules :initial-rules="playLevels"></betting-rules>
     <div class="bc-play-container clearfix">
       <div class="bc-play-left basic-inverse pull-left">
@@ -17,8 +17,8 @@
         </div>
         <div class="bc-line"></div>
         <div class="m-LR-smd">
-          <div class="bc-play-area clearfix">
-            <betting-play-area-select class="bc-play-area clearfix" :play-rule="playRule" v-if="playRule.type === 'select'">
+          <div class="bc-play-area clearfix loaded">
+            <betting-play-area-select class="bc-play-area clearfix" :play-rule="playRule" :mark6-ticket-id-arr="mark6TicketIdArr" v-if="playRule.type === 'select'">
               <div class="gl-loading" v-html="loading"></div>
             </betting-play-area-select>
             <betting-play-area-input class="bc-play-area clearfix" :play-rule="playRule" v-else-if="playRule.type === 'input'">
@@ -38,7 +38,7 @@
               <option value="10">厘</option>
             </select>
             <div class="inline-block m-left-smd">
-              <span class="js-bc-multi-range  vertical-middle bc-multi-range inline-block"></span>
+              <span class="vertical-middle bc-multi-range inline-block" ref="multiRange"></span>
               <label class="m-left-xs">倍</label>
             </div>
 
@@ -66,7 +66,7 @@
 
         <div class="m-bottom-xs m-left-md">
           <div class="clearfix bc-margin-xs">
-            <div class="js-bc-lottery-preview bc-lottery-preview border-table-all"></div>
+            <div class="bc-lottery-preview border-table-all" ref="lotteryPreview"></div>
             <div class="overflow-hidden font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
                 <span>
                   <span>预期盈利</span>
@@ -97,7 +97,7 @@
           </div>
         </div>
       </div>
-      <div class="js-bc-side-area bc-side-area pull-right"></div>
+      <div ref="bcSideArea" class="bc-side-area pull-right"></div>
     </div>
     <div class="bc-bottom-area js-bc-records"></div>
   </div>
@@ -105,13 +105,19 @@
 
 <script>
   import { mapState } from 'vuex'
+  import * as types from 'mutation-types'
   import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
+
+  //backbone旧组件
+  import HisAnalysisView from './bettingCenter-historical-analysis'
 
   import bettingRules from './betting-rules'
   import bettingAdvanceRules from './betting-advance-rules'
   import bettingPlayAreaSelect from './betting-play-area-select'
   import bettingPlayAreaInput from './betting-play-area-input'
 
+  let lotteryPreview
+  let recordsOpenView
 
   export default {
     name: "betting-main-area",
@@ -144,8 +150,55 @@
       'bettingChoice.playId': {
         handler: function(newVal, oldVal) {
           this.playRule = betRulesConfig.get(newVal)
+
+          recordsOpenView.updateByPlayRule(this.playRule)
         }
       },
+      'bettingInfo.lastOpenId': {
+        handler: function(newVal, oldVal) {
+          recordsOpenView.update()
+        }
+      }
+    },
+
+    mounted: function() {
+      $(this.$refs.multiRange).numRange({
+        onChange: (num) => {
+          this.$store.commit(types.SET_MULTIPLE, num)
+        },
+        onOverMax(maxNum) {
+          Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">${
+              _(self.rulesCollection.limitMoney).convert2yuan()}</span>元，` +
+            `已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
+        },
+      })
+
+      lotteryPreview = $(this.$refs.lotteryPreview).staticGrid({
+        tableClass: 'table table-dashed',
+        colModel: [
+          {
+            label: '玩法', name: 'title', key: true, width: '15%',
+          },
+          {
+            label: '投注内容', name: 'betNum', key: true, width: '17%',
+          },
+          { label: '注数', name: 'note', width: '10%' },
+          { label: '倍数', name: 'multiple', width: '12.5%' },
+          { label: '模式', name: 'mode', width: '12.5%' },
+          { label: '投注金额', name: 'bettingMoney', width: '12.5%' },
+          { label: '预期盈利', name: 'profit', width: '12.5%' },
+          { label: '<div class="js-bc-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清除</div>', name: 'operate', width: '8%' },
+        ],
+        height: 110,
+        startOnLoading: false,
+        emptyTip: '暂未添加选号',
+      }).staticGrid('instance')
+
+
+      recordsOpenView = new HisAnalysisView({
+        el: this.$refs.bcSideArea,
+        ticketId: this.ticketInfo.info.id,
+      }).render()
     }
   }
 </script>

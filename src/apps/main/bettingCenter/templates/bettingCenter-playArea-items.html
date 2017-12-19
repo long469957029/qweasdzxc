@@ -27,10 +27,12 @@
           </span>
           <% if(_.indexOf([9,19,29,39],index)>-1){%></div><div><%}%>
           <% if(row.items.length-1==index){%></div><%}%>
+
           <%}else if(htmlNeedInfo.playClassName.indexOf("tm-lm")>-1){%>
           <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak tab <%=limit %>" data-num="<%=item.name %>">
             <span class="<%= htmlNeedInfo.numberClassName%>"><%=item.name %></span><span>X</span><span class="mark6-odds"></span>
           </span>
+
           <%}else if(htmlNeedInfo.playClassName.indexOf("tm-sebo")>-1){ %>
           <% if(index==0){%><div><%}%>
           <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak tab <%=limit %>" data-num="<%=item.name %>">
@@ -42,6 +44,7 @@
           <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak tab <%=limit %>" data-num="<%=item.name %>">
             <span class="<%= htmlNeedInfo.numberClassName%> <%=item.color%>"><%=item.name %></span><span>X</span><span class="mark6-odds"></span>
           </span>
+
           <%}else if(htmlNeedInfo.playClassName.indexOf("sx-sx")>-1){%>
           <% if(index==0){%><div><%}%>
           <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak tab <%=limit %>" data-num="<%=item.name %>">
@@ -55,6 +58,7 @@
           </span>
           <% if(index==5){%></div><div><%}%>
           <% if(row.items.length-1==index){%></div><%}%>
+
           <%}else if(htmlNeedInfo.playClassName.indexOf("tw-tw")>-1){ %>
           <% if(index==0){%><div><%}%>
           <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak tab <%=limit %>" data-num="<%=item.name %>">
@@ -75,6 +79,7 @@
           </span>
           <% if(index==9){%></div><div><%}%>
           <% if(row.items.length-1==index){%></div><%}%>
+
           <%}else if(htmlNeedInfo.playClassName.indexOf("zh-zh")>-1){ %>
           <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak tab <%=limit %>" data-num="<%=item.name %>">
             <span class="<%= htmlNeedInfo.numberClassName%>"><%=item.name %></span><span>X</span><span class="mark6-odds"></span>
@@ -87,6 +92,7 @@
           <% if(_.indexOf([9,19,29,39],index)>-1){%></div><div><%}%>
           <% if(row.items.length-1==index){%></div><div class="mark6-bz-odds"><label><%=htmlNeedInfo.oddsLabelText%>：</label><label class="mark6-bz-odds-value"></label></div><%}%>
           <%}%>
+
           <% colorClass=null; }); %>
         </div>
       </div>
@@ -96,20 +102,20 @@
     <div class="tab-group">
       <% if(row.items.length==16){ %>
 
-      <%_(row.items).each(function(item,index) {
-      if(index==7){ %>
+        <%_(row.items).each(function(item,index) {
+          if(index==7){ %>
 
-      <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak <%=limit %> tab
-	        	<% if(row.doublenum){ %>treble2<% }%>" <%=limitProps %> data-num="<%=item %>"><%=item %></span><br/>
+          <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak <%=limit %> tab
+                <% if(row.doublenum){ %>treble2<% }%>" <%=limitProps %> data-num="<%=item %>"><%=item %></span><br/>
 
-      <% } else{ %>
+          <% } else{ %>
 
-      <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak <%=limit %> tab
-	        	<% if(row.doublenum){ %>treble2<% }%>" <%=limitProps %> data-num="<%=item %>"><%=item %></span>
+          <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak <%=limit %> tab
+                <% if(row.doublenum){ %>treble2<% }%>" <%=limitProps %> data-num="<%=item %>"><%=item %></span>
 
-      <% } %>
+          <% } %>
 
-      <% }); %>
+        <% }); %>
 
       <% }else{ %>
 

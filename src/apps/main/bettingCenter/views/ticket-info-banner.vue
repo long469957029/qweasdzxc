@@ -11,7 +11,7 @@
           <span :class="{'font-bold': bettingInfo.sale}">{{bettingInfo.planId}}</span>
           期
           <div>
-            <span :class="['sfa m-right-xs vertical-sub cursor-pointer', musicStatus ? 'sfa-bc-muisc1' : 'sfa-bc-muisc']" title="开奖声音" @click="openMusic"></span>投注截止
+            <span :class="['sfa m-right-xs vertical-sub cursor-pointer', musicStatus ? 'sfa-bc-muisc' : 'sfa-bc-muisc1']" title="开奖声音" @click="openMusic"></span>投注截止
           </div>
         </div>
         <div class="bc-plan-title text-right font-bold m-right-sm pull-left" v-else>

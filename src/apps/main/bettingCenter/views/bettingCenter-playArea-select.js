@@ -26,14 +26,6 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
 
   onRender() {
     const html = []
-    if (this.options.optionals && this.options.optionals.list) {
-      html.push(this.positionTpl({
-        optionals: this.options.optionals.list,
-      }))
-    }
-    // if (this.options.showMiss && this.options.ticketId!=19 && this.options.ticketId!=20 ){
-    html.push(this.missOptionTpl())
-    // }
     if (this.options.page) {
       const pageCount = Math.ceil(_.div(this.options.list.length, 5))
       for (let i = 0; i < pageCount; i++) {
@@ -73,6 +65,7 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
     }
 
     this.$el.html(html.join(''))
+
     this.$page = this.$('.jc-page-content')
 
     const pageControl = '<div class="bc-page-control">' +

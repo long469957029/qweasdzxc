@@ -9,7 +9,6 @@ const BettingRecordsView = require('bettingCenter/views/bettingCenter-records')
 const BettingChaseView = require('bettingCenter/views/bettingCenter-chase')
 const ticketConfig = require('skeleton/misc/ticketConfig')
 const betRulesConfig = require('bettingCenter/misc/betRulesConfig')
-const HisAnalysisView = require('bettingCenter/views/bettingCenter-historical-analysis')
 
 const audio = {
   over: require('bettingCenter/misc/over.wav'),
@@ -72,10 +71,8 @@ const BettingCenterView = Base.ItemView.extend({
     this.listenTo(this.infoModel, 'change:planId', this.renderBasicInfo)
 
     this.listenTo(this.model, 'change:playId', function(model, playId) {
-      const playRule = betRulesConfig.get(this.model.pick('playId'))
       this.renderPlayArea()
       this.renderPlayInfo(this.rulesCollection.getPlayInfo(model.get('groupId'), playId))
-      this.recordsOpenView.updateByPlayRule(playRule)
       this.model.set({
         statistics: 0,
       })
@@ -116,9 +113,6 @@ const BettingCenterView = Base.ItemView.extend({
 
     // playArea
     this.$playArea = this.$('.js-bc-play-area')
-
-    // numRange
-    this.$multiRange = this.$('.js-bc-multi-range')
 
     //
     this.$statisticsLottery = this.$('.js-bc-statistics-lottery')
@@ -171,11 +165,6 @@ const BettingCenterView = Base.ItemView.extend({
       startOnLoading: false,
       emptyTip: '暂未添加选号',
     }).staticGrid('instance')
-
-    this.recordsOpenView = new HisAnalysisView({
-      el: this.$bcSideArea,
-      ticketId: this.options.ticketId,
-    }).render()
 
     this.bettingRecordsView = new BettingRecordsView({
       el: this.$recordsContainer,
@@ -274,7 +263,6 @@ const BettingCenterView = Base.ItemView.extend({
 
   renderLastPlan() {
     this.bettingRecordsView.update()
-    this.recordsOpenView.update()
   },
 
   _slotMachineEffect(openNum, show) {
@@ -706,7 +694,6 @@ const BettingCenterView = Base.ItemView.extend({
       betMethod: Number($target.val()),
       maxMultiple,
     })
-    // this.$multiRange.numRange('setRange', 1, maxMultiple);
     if (_.indexOf(this.mark6TicketIdArr, parseInt(this.model.get('ticketId'), 10)) > -1) {
       const betBonus = this.model.get('betBonus')
       if (betBonus) {
