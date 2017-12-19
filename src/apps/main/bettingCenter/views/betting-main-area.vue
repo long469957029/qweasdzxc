@@ -1,6 +1,6 @@
 <template>
   <div :class="'width-100 bc-play-main' + wrapperClass">
-    <betting-rules class="bc-basic-rules bg-deep" :play-levels="playLevels" :type="normalType" ></betting-rules>
+    <betting-rules class="bc-basic-rules bg-deep" :initial-rules="playLevels" :type="normalType" ></betting-rules>
     <div class="bc-play-container clearfix">
       <div class="bc-play-left basic-inverse pull-left">
         <div class="bc-play-select-area clearfix">

@@ -2,40 +2,26 @@ import betting from '../../api/betting'
 import * as types from '../mutation-types'
 
 const initState = () => {
-  return []
+  return {
+    playLevels: [],
+  }
 }
 
 // getters
 const getters = {
   playLevels: (state) => {
     const normalList = []
-    const specialList = []
-    state.forEach((rule) => {
-      // if (ruleModel.get('playLevelName').indexOf('任选') === -1) {
+
+    state.playLevels.forEach((rule) => {
       normalList.push({
         type: 'normal',
         id: rule.playLevelId,
         title: rule.playLevelName,
+        selected: false,
       })
-      // } else {
-      //  specialList.push({
-      //    id: ruleModel.get('playLevelId'),
-      //    title: ruleModel.get('playLevelName')
-      //  });
-      // }
     })
 
-    if (specialList.length) {
-      normalList.push({
-        type: 'special',
-        title: '任选',
-      })
-    }
-
-    return {
-      normalList,
-      specialList,
-    }
+    return normalList
   },
 
   playGroups: () => {
@@ -110,7 +96,7 @@ const mutations = {
       data = res.root && res.root.ticketPlayLevelInfo || []
       // this.limitMoney = res.root && res.root.limitMoney
     }
-    Object.assign(state, data)
+    state.playLevels = data
   },
 
   // 暂时没有处理失败的逻辑

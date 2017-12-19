@@ -26,7 +26,6 @@ const BettingCenterView = Base.ItemView.extend({
   commitTpl: _.template(require('bettingCenter/templates/bettingCenter-commit.html')),
 
   events: {
-    'click .js-bc-basic-rule': 'baseRuleChangeHandler',
     'click .js-bc-advance-rule': 'advanceRuleChangeHandler',
     'change .js-bc-bet-mode': 'betModeChangeHandler',
     'change .js-bc-unit-select': 'monetaryUnitChangeHandler',
@@ -72,8 +71,6 @@ const BettingCenterView = Base.ItemView.extend({
     this.listenTo(this.infoModel, 'change:leftSecond', this.updateCountdown)
     this.listenTo(this.infoModel, 'change:planId', this.renderBasicInfo)
     // this.listenTo(this.infoModel, 'change:openVideoUrl', this.renderVideo)
-
-    this.listenTo(this.rulesCollection, 'sync sync:fromCache', this.renderBasicRules)
 
     this.listenTo(this.model, 'change:levelId', function(model, levelId) {
       this.renderAdvanceRules(levelId)
@@ -358,13 +355,6 @@ const BettingCenterView = Base.ItemView.extend({
   // },
 
   renderBasicRules() {
-    const playLevels = this.rulesCollection.getPlayLevels()
-
-    this.$basicRules.html(this.rulesTpl({
-      tabToolbarClass: 'tab-pill tab-pill-deep',
-      ruleClass: 'js-bc-basic-rule',
-      rules: playLevels.normalList,
-    }))
     this.selectDefaultPlay()
   },
 
@@ -813,15 +803,6 @@ const BettingCenterView = Base.ItemView.extend({
   },
 
   // event handlers
-
-  baseRuleChangeHandler(e) {
-    const $target = $(e.currentTarget)
-    $target.addClass('active').siblings().removeClass('active')
-    this.model.set({
-      levelId: $target.data('id'),
-      levelName: $target.data('title'),
-    })
-  },
 
   advanceRuleChangeHandler(e) {
     const $target = $(e.currentTarget)
