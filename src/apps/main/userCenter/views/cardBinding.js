@@ -8,6 +8,7 @@ define((require, exports, module) => {
       'change .js-uc-cbProvince': 'selectProvinceHandler',
       'change .js-uc-cbCity': 'selectCityAndBankHandler',
       'change .js-uc-cbBankId': 'selectCityAndBankHandler',
+      'click .js-uc-cb-btn': 'fundCheckHandler',
     },
 
     initialize () {
@@ -209,7 +210,9 @@ define((require, exports, module) => {
           })
       }
     },
+    fundCheckHandler() {
 
+    },
   })
 
 

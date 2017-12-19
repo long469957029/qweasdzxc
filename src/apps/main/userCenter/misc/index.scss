@@ -23,7 +23,11 @@
   color: $font-auxiliary-color;
   margin-top: 26px;
 }
-
+@mixin btnDef{
+  width: 190px;
+  height: 40px;
+  border-radius: 20px;
+}
 //begin 1投追记录页查询栏样式
 .search-condition-table {
   margin-top: 5px;
@@ -345,9 +349,7 @@
     background-color: #f9f9f9;
   }
   .btn {
-    width: 190px;
-    height: 40px;
-    border-radius: 20px;
+    @include btnDef;
     margin-left: 45px;
     margin-top: 10px;
   }
@@ -491,9 +493,9 @@
   //密码输入end
 
   //管理页
-  .btn {
-    width: 70px;
-  }
+  //.btn {
+  //  width: 70px;
+  //}
   .btn-right {
     margin-left: 33px;
   }
@@ -518,6 +520,13 @@
 .uc-cbCardBinding-container{
   width: 520px;
   margin: 0 auto;
+}
+.uc-cb-fundPwd{
+  width: 286px;
+  height: 28px !important;
+}
+.btn{
+  @include btnDef;
 }
 .uc-cbCardBindingForm {
   padding: 40px 0 0 11px;
