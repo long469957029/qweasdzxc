@@ -554,12 +554,39 @@
   }
   .input1 {
     width: 284px;
-    height: 28px;
+    height: 30px;
+  }
+  .input2 {
+    width: 244px;
+    height: 30px;
   }
   .select2 {
     width: 140px;
     height: 38px;
     margin-right: 16px;
+  }
+  .uc-cbCardBinding-header{
+    width: 480px;
+    height: 49px;
+    background-color: $sec-line-color;
+    position: relative;
+    text-align: center;
+    line-height: 49px;
+    color: $def-black-color;
+    font-size: $font-md;
+    .close{
+      font-size: 30px;
+      display: block;
+      position: absolute;
+
+    }
+  }
+  .btn-validate{
+    width: 108px;
+    height: 36px;
+    font-size: $font-md;
+    border-radius: $globalBtnRadius;
+    margin-bottom: 30px;
   }
 }
 
