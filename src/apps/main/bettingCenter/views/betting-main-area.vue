@@ -18,7 +18,7 @@
         <div class="bc-line"></div>
         <div class="m-LR-smd">
           <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
-            <betting-play-area-select :play-rule="playRule" :mark6-ticket-id-arr="mark6TicketIdArr" v-if="!_.isEmpty(playRule) && playRule.type === 'select'"></betting-play-area-select>
+            <betting-play-area-select :play-rule="playRule" :mark6-ticket-id-arr="mark6TicketIdArr" :ticket-info="ticketInfo" v-if="!_.isEmpty(playRule) && playRule.type === 'select'"></betting-play-area-select>
             <betting-play-area-input :play-rule="playRule" v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
             <div class="height-100" v-html="loading" v-else></div>
           </div>

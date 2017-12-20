@@ -1,18 +1,8 @@
-const betRulesAlgorithm = require('bettingCenter/misc/betRulesAlgorithm')
-const ticketConfig = require('skeleton/misc/ticketConfig')
-
 const BettingCenterPlayAreaView = Base.ItemView.extend({
 
   template: '',
 
-  positionTpl: _.template(require('bettingCenter/templates/bettingCenter-playArea-position.html')),
-
-  playItemsTpl: _.template(require('bettingCenter/templates/bettingCenter-playArea-items.html')),
-
-  missOptionTpl: _.template(require('bettingCenter/templates/bettingCenter-playArea-missOption.html')),
-
   events: {
-    'change .js-bc-playArea-position-item': 'positionChooseHandler',
     'click .js-bc-select-item': 'selectNumberHandler',
     'click .js-bc-select-op': 'selectOperateHandler',
     'click .js-toggle-page': 'togglePageHandler',
@@ -21,7 +11,7 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
   initialize () {
     this.options.selectOptionals = []
     this.options.rowsResult = []
-    this.mark6TicketIdArr = ticketConfig.getMark6TicketIdArr()
+    // this.mark6TicketIdArr = ticketConfig.getMark6TicketIdArr()
   },
 
   onRender() {
@@ -116,27 +106,27 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
     this.trigger('statistic', count)
   },
 
-  calculateCoefficient() {
-    let coefficient = 1
-    const selectOptionals = []
-
-    const $checkedList = this.$playAreaPosition.find('input[name=optional]').filter(':checked')
-    const length = $checkedList.length
-    if (!_.isEmpty(this.options.optionals)) {
-      coefficient = betRulesAlgorithm.optional(
-        this.options.optionals.coefficient,
-        length,
-      )
-    }
-
-    $checkedList.each((index, checked) => {
-      const $checked = $(checked)
-      selectOptionals.push(Number($checked.val()))
-    })
-
-    this.options.selectOptionals = selectOptionals
-    this.options.coefficient = coefficient
-  },
+  // calculateCoefficient() {
+  //   let coefficient = 1
+  //   const selectOptionals = []
+  //
+  //   const $checkedList = this.$playAreaPosition.find('input[name=optional]').filter(':checked')
+  //   const length = $checkedList.length
+  //   if (!_.isEmpty(this.options.optionals)) {
+  //     coefficient = betRulesAlgorithm.optional(
+  //       this.options.optionals.coefficient,
+  //       length,
+  //     )
+  //   }
+  //
+  //   $checkedList.each((index, checked) => {
+  //     const $checked = $(checked)
+  //     selectOptionals.push(Number($checked.val()))
+  //   })
+  //
+  //   this.options.selectOptionals = selectOptionals
+  //   this.options.coefficient = coefficient
+  // },
 
   // common APIs
 
@@ -170,11 +160,6 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
   },
 
   // event handlers
-
-  positionChooseHandler() {
-    this.calculateCoefficient()
-    this.statisticsLottery()
-  },
 
   selectNumberHandler(e) {
     const $target = $(e.currentTarget)

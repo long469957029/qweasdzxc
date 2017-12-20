@@ -114,7 +114,7 @@
       },
 
       positionChange(optionals) {
-        this, this.$_calculateCoefficient(optionals)
+        this.$_calculateCoefficient(optionals)
         this.$_statisticsLottery()
       },
 
@@ -155,20 +155,20 @@
         this.$emit('statistic', validated && validated.statistics || 0)
       },
 
-      $_calculateCoefficient({list, coefficient}) {
-        let curCoefficient = 1
+      $_calculateCoefficient(optionals) {
+        let coefficient = 1
 
-        const selectedList = list.filter(optional => optional.checked);
+        const selectedList = optionals.list.filter(optional => optional.checked);
         const length = selectedList.length
-        if (!_.isEmpty(this.playRule.optionals)) {
-          curCoefficient = betRulesAlgorithm.optional(
-            coefficient,
+        if (!_.isEmpty(optionals)) {
+          coefficient = betRulesAlgorithm.optional(
+            optionals.coefficient,
             length,
           )
         }
 
         this.selectOptionals = _(selectedList).pluck('id')
-        this.coefficient = curCoefficient
+        this.coefficient = coefficient
       },
 
       $_checkRepeat(numberList) {

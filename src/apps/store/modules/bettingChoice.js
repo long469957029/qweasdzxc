@@ -1,4 +1,3 @@
-import betting from '../../api/betting'
 import * as types from '../mutation-types'
 
 const initState = () => {
@@ -31,14 +30,6 @@ const getters = {
 
 // actions
 const actions = {
-  getTicketInfo ({ commit }, ticketId) {
-    commit(types.CHECKOUT_TICKET_INFO)
-    betting.getTicketInfo(
-      ticketId,
-      (res) => { return commit(types.GET_TICKET_INFO_SUCCESS, res) },
-      () => { return commit(types.GET_TICKET_INFO_FAILURE) },
-    )
-  },
 }
 
 // mutations

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--选择位置-->
-    <betting-play-area-position :optionals="playRule.optionals"></betting-play-area-position>
+    <betting-play-area-position :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
 
     <!--机选-->
     <div class="js-bc-playArea-missOption bc-missOptional-main">
@@ -28,8 +28,8 @@
             <div :class="fRule.row.htmlNeedInfo.levelClassName">
               <div :class="fRule.row.htmlNeedInfo.playClassName">
                 <div v-for="items in fRule.row.fItems">
-                  <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak tab" :class="fRule.limit" v-for="item in items">
-                    <span :class="[fRule.row.htmlNeedInfo.numberClassName, item.color]">{{item.number}}</span>
+                  <span class="bc-select-item cbutton cbutton--effect-novak tab" :class="fRule.limit" v-for="item in items" @click="selectNumber(item, fRule.row)">
+                    <span :class="[fRule.row.htmlNeedInfo.numberClassName, item.color]">{{item.num.number}}</span>
                     <span>X</span>
                     <span class="mark6-odds"></span>
                   </span>
@@ -40,8 +40,8 @@
 
           <div class="tab-group" v-show="_.isEmpty(fRule.row.htmlNeedInfo)">
             <div v-for="items in fRule.row.fItems">
-              <span class="js-bc-select-item bc-select-item cbutton cbutton--effect-novak tab" v-for="item in items"
-                  :class="[fRule.limit, {treble2: fRule.row.doublenum}]">{{item}}
+              <span class="bc-select-item cbutton cbutton--effect-novak tab" v-for="item in items" @click="selectNumber(item, fRule.row)"
+                  :class="[fRule.limit, {treble2: fRule.row.doublenum, active: item.selected}]">{{item.num}}
               </span>
             </div>
           </div>
@@ -109,6 +109,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
   import ticketConfig from 'skeleton/misc/ticketConfig'
   import chunk from "lodash/chunk";
@@ -121,18 +122,29 @@
 
     props: {
       playRule: Object,
+      ticketInfo: Object,
       mark6TicketIdArr: Array,
     },
 
     data: function() {
       return {
         selectOptionals: [],
-        rowsResult: []
+        rowsResult: [],
+        formattedRuleList: []
       }
     },
 
-    computed: {
-      formattedRuleList: function() {
+    watch: {
+      computedRuleList: {
+        handler(newVal, oldVal) {
+          Object.assign(this.formattedRuleList, newVal)
+        },
+        immediate: true
+      },
+    },
+
+    computed: mapState({
+      computedRuleList: function() {
         if (this.playRule.page) {
           this.playRule.formattedList = chunk(this.playRule.list, this.playRule.page)
         } else {
@@ -142,33 +154,39 @@
         return _(this.playRule.formattedList).map((list) => _(list).map((RuleItem) => {
           let fItems
           RuleItem.hasOp = _(RuleItem.op).some()
+          fItems = _(RuleItem.items).map(item => {
+            return {
+              num: item,
+              selected: false
+            }
+          });
           if (!_.isEmpty(RuleItem.htmlNeedInfo)) {
             if (_.indexOf(["mark6-tm-tm","mark6-zm-zm"],RuleItem.htmlNeedInfo.playClassName) > -1) {
-              fItems = chunk(RuleItem.items, 10)
+              fItems = chunk(fItems, 10)
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("tm-lm")>-1) {
-              fItems = [RuleItem.items]
+              fItems = [fItems]
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("tm-sebo")>-1) {
-              fItems = chunk(RuleItem.items, 9)
+              fItems = chunk(fItems, 9)
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("zm-lm")>-1){
-              fItems = [RuleItem.items]
+              fItems = [fItems]
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("sx-sx")>-1) {
-              fItems = chunk(RuleItem.items, 6)
+              fItems = chunk(fItems, 6)
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("tw-tw")>-1) {
-              fItems = chunk(RuleItem.items, 10)
+              fItems = chunk(fItems, 10)
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("zh-zh")>-1) {
-              fItems = [RuleItem.items]
+              fItems = [fItems]
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("bz-bz")>-1) {
-              fItems = chunk(RuleItem.items, 10)
+              fItems = chunk(fItems, 10)
             }
           } else {
             if (RuleItem.items.length === 16) {
-              fItems = chunk(RuleItem.items, 8)
+              fItems = chunk(fItems, 8)
             } else {
-              fItems = [RuleItem.items]
+              fItems = [fItems]
             }
           }
 
-          RuleItem.fItems= fItems
+          this.$set(RuleItem, 'fItems', fItems)
           return {
             limit: _(RuleItem.limits).pluck('name').join(' '),
             row: RuleItem,
@@ -176,7 +194,133 @@
           }
         }))
       }
-    },
+    }),
+
+    methods: {
+      positionChange(optionals) {
+        this.$_calculateCoefficient(optionals)
+        this.$_statisticsLottery()
+      },
+
+      selectNumber(num, items) {
+        //六合
+        if (_.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id, 10)) > -1) {
+          const $itemsToolbars = $target.closest('.js-bc-playArea-items')
+          this._mark6SelectNumber($target, $itemsToolbars)
+        } else {
+          this.$_selectNumber(num, items)
+        }
+      },
+
+      $_calculateCoefficient(optionals) {
+        let coefficient = 1
+
+        const selectedList = list.filter(optional => optional.checked);
+        const length = selectedList.length
+        if (!_.isEmpty(optionals)) {
+          coefficient = betRulesAlgorithm.optional(
+            optionals.coefficient,
+            length,
+          )
+        }
+
+        this.selectOptionals = _(selectedList).pluck('id')
+        this.coefficient = coefficient
+      },
+
+      $_statisticsLottery() {
+        let count = 0
+
+        this.rowsResult = _(this.playRule.list).map(function(item) {
+          let selected = []
+
+          if (item.isShow) {
+            selected = _(this.$rows.filter(`.js-bc-playArea-items-${item.id}`).find('.js-bc-select-item.active')).map((itemInfo) => {
+              return $(itemInfo).data('num')
+            })
+          }
+
+          return selected
+        }, this)
+
+        // 如果系数不存在，根本无需计算
+        if (this.coefficient) {
+          // 任选玩法需要去掉没有选值的行，便于复选计算
+          if (this.algorithmProps && this.algorithmProps.coefficient) {
+            count = Math.round(_(this.coefficient).mul(this.algorithm.call(
+              this,
+              _(this.rowsResult).filter((rowResult) => {
+                return !_.isEmpty(rowResult)
+              }),
+            ) || 0))
+          } else {
+            count = Math.round(_(this.coefficient).mul(this.algorithm.call(this, this.rowsResult) || 0))
+          }
+        }
+
+        this.$emit('statistic', count)
+      },
+
+      $_selectNumber(num, row) {
+        // const data1 = $parent.data()
+        // 横向不允许冲突/超过最大选择数
+        const cx = _.findWhere(row.limits, {name: 'conflict-x'});
+        if (!num.selected && !_.isEmpty(cx)) {
+          if (!cx.data.num || cx.data.num === 1) {
+            _.chain().flatten(row.fItems).each((item) => {
+              if (num !== item) {
+                item.selected = false
+              }
+            })
+            // $target.siblings().removeClass('active')
+          } else {
+            const selecteds = _.chain().flatten(row.fItems).findWhere({selected: true}).value();
+            // const $actives = _(row.fItems).$parent.find('.js-bc-select-item.active')
+            if (selecteds.length >= cx.data.num) {
+              selecteds[0].selected = false
+            }
+          }
+        }
+
+        const cy = _.findWhere(row.limits, {name: 'conflict-y'});
+
+        // 纵向不允许冲突
+        if (!num.selected && !_.isEmpty(cy)) {
+          _.chain().flatten(this.formattedRuleList).each(rule =>  {
+            if (row !== rule.row) {
+              _.chain().flatten(rule.row.fItems).each(item => {
+                const num = _.isNumber(item.num) ? item.num : _.isNumber(item.num.number) ? item.num.number : item.num.name
+                if (num === num.num || num.num * 11 === num || num.num % 10 == num) {
+                  item.selected= false;
+                }
+              })
+            }
+          })
+          // this.$rows.not($parent).find(`.js-bc-select-item[data-num=${data.num}]`).removeClass('active')
+          // this.$rows.not($parent).find(`.js-bc-select-item[data-num=${data.num}${data.num}]`).removeClass('active')
+          // this.$rows.not($parent).find(`.js-bc-select-item[data-num=${data.num % 10}]`).removeClass('active')
+        }
+
+        num.selected = !num.selected
+
+        //去除快捷按钮样式
+        // $target.closest('.js-bc-playArea-items').find('.js-bc-select-op').removeClass('active')
+
+        // this.$_updateRowTitle($target)
+
+        // 当是任选并且没有任选位置时，每次改变重新计算系数
+        if (!_.isEmpty(this.playRule.optionals) && !this.playRule.optionals.list) {
+          this.$_calculateCoefficient(this.playRule.optionals)
+        }
+
+        // this.$_statisticsLottery()
+      },
+
+      // $_updateRowTitle($target) {
+      //   const $row = $target.closest('.js-bc-playArea-items')
+      //   $row.find('.tab-title').toggleClass('active', !!$row.find('.js-bc-select-item').filter('.active').length)
+      // },
+    }
   }
 </script>
 
