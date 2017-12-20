@@ -1,5 +1,3 @@
-
-
 require('./index.scss')
 
 const DialogModule = Base.Module.extend({
@@ -26,24 +24,24 @@ const DialogModule = Base.Module.extend({
         .remove()
     }
 
-    let html = [],
-      id = options.id || (`dialog${_.now()}`)
+    const html = []
+    const id = options.id || (`dialog${_.now()}`)
 
     // 任意宽度
     let dStyle = ''
-    if (options.anySize && options.anySize != '') {
+    if (options.anySize && options.anySize !== '') {
       dStyle = `width:${options.anySize}px; margin-left:-${Number(options.anySize) / 2}px; position: absolute; left: 50%;`
     }
     // 任意高低
     let pStyle = ''
-    if (options.anyPosition && options.anyPosition != '') {
+    if (options.anyPosition && options.anyPosition !== '') {
       pStyle = `margin-top:${options.anyPosition}px;`
     }
     html.push(`<div class="modal fade ${options.modalClass}" id="`)
     html.push(id)
     html.push(`" tabindex="-1" role="dialog" aria-labelledby="${id}Label" aria-hidden="true">`)
     html.push(options.anySize ? `<div style="${dStyle}${pStyle}">` : `<div class="modal-dialog ${options.size}">`)
-    html.push('<div class="modal-content">')
+    html.push(`<div class="modal-content" style=" ${options.bStyle || ''}">`)
 
     if (options.title) {
       html.push('<div class="modal-header">')
@@ -77,14 +75,14 @@ const DialogModule = Base.Module.extend({
         backdrop: 'static',
       })
       if (options.countdown) {
-        var countdownInterval = setInterval(() => {
+        const countdownInterval = setInterval(() => {
           const leftTime = $container.find('.js-pf-notification-countdown').text()
-          if (leftTime == 1) {
+          if (leftTime === 1) {
             clearInterval(countdownInterval)
             modal.modal('hide')
             $container.find(`#${options.id}`).remove()
           }
-          $container.find('.js-pf-notification-countdown').text(parseInt(leftTime) - 1)
+          $container.find('.js-pf-notification-countdown').text(parseInt(leftTime, 10) - 1)
         }, 1000)
       }
     }

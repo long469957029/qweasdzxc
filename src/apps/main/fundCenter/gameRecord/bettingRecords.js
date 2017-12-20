@@ -3,7 +3,7 @@ const SearchGrid = require('com/searchGrid')
 const Timeset = require('com/timeset')
 
 const TicketSelectGroup = require('com/ticketSelectGroup')
-
+const BetDetailView = require('fundCenter/gameRecord/betDetail')
 const betStatusConfig = require('fundCenter/misc/v2/betStatusConfig')
 
 require('./index.scss')
@@ -13,11 +13,12 @@ const BettingRecordsView = SearchGrid.extend({
   template: require('fundCenter/gameRecord/bettingRecords.html'),
 
   events: {
-    'click .js-uc-betDetail-off': 'offbBetDetailHandler',
+    'click .js-show-betRecord-btn': 'showBetRecordHandler',
   },
 
   initialize () {
     _(this.options).extend({
+      height: '515',
       columns: [
         {
           name: '投注时间',
@@ -61,7 +62,6 @@ const BettingRecordsView = SearchGrid.extend({
       },
       listProp: 'root.betList',
       // tip: '<div class="tip-hot"><span>注意</span> 投注记录只保留最近30天。</div>',
-      height: 280,
     })
   },
 
@@ -72,7 +72,7 @@ const BettingRecordsView = SearchGrid.extend({
       startTimeHolder: '起始日期',
       startDefaultDate: _(moment().add('day', 0)).toDate(),
       endTimeHolder: '结束日期',
-      endDefaultDate: _(moment().add('day', 0)).toDate(),
+      endDefaultDate: _(moment().add('day', 1)).toDate(),
       startOps: {
         format: 'YYYY-MM-DD HH:mm:ss',
       },
@@ -80,6 +80,7 @@ const BettingRecordsView = SearchGrid.extend({
         format: 'YYYY-MM-DD HH:mm:ss',
       },
       showIcon: true,
+      size: 'timer-record-input',
     }).render()
 
     // 初始化彩种选择
@@ -122,18 +123,18 @@ const BettingRecordsView = SearchGrid.extend({
       if ((items.betNum).length >= 16) {
         if (index === 0 || index === 1) {
           $('.js-uc-betDetail-betNum').eq(num).popover({
-            title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
+            // title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
             trigger: 'click',
             html: true,
-            content: `<span>详细号码</span><div class="js-pf-popover"><span class="word-break">${items.betNum}</span></div>`,
+            content: `<span class="inline-block text-account-add m-right-sm">详细号码：</span><span class="js-pf-popover inline-block word-break">${items.betNum}</span>`,
             placement: 'bottom',
           })
         } else {
           $('.js-uc-betDetail-betNum').eq(num).popover({
-            title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
+            // title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
             trigger: 'click',
             html: true,
-            content: `<span>详细号码</span><div class="js-pf-popover"><span class="word-break">${items.betNum}</span></div>`,
+            content: `<span class="inline-block text-account-add m-right-sm">详细号码：</span><span class="js-pf-popover inline-block word-break">${items.betNum}</span>`,
             placement: 'top',
           })
         }
@@ -148,12 +149,13 @@ const BettingRecordsView = SearchGrid.extend({
 
   formatRowData(rowInfo, index) {
     const row = []
-    const rowTop = (index * 40) + 15
+    const rowTop = (index * 40) + 11
     // 投注时间
     if (rowInfo.chaseId) {
-      row.push(`<div class="fc-td-record-status" style="top:${rowTop}:px">追</div><a class="router btn-link" href="${_.getUrl(`/detail/${rowInfo.ticketTradeNo}`)}">${_(rowInfo.betTime).toTime()}</a>`)
+      row.push('<div class="fc-td-record-status" ' +
+        `style="top:${rowTop}px">追</div><button class="js-show-betRecord-btn btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
     } else {
-      row.push(`<a class="router btn-link" href="${_.getUrl(`/detail/${rowInfo.ticketTradeNo}`)}">${_(rowInfo.betTime).toTime()}</a>`)
+      row.push(`<button class="js-show-betRecord-btn btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
     }
     // 彩种
     row.push(rowInfo.ticketName)
@@ -193,13 +195,54 @@ const BettingRecordsView = SearchGrid.extend({
     } else if (rowInfo.prizeTotalMoney === 0) {
       status = '未中奖'
     } else {
-      status = `<span class="text-add">${_(rowInfo.prizeTotalMoney).convert2yuan()}</span>`
+      status = `<span class="text-account-cut">${_(rowInfo.prizeTotalMoney).convert2yuan()}</span>`
     }
     row.push(status)
     /* row.push(rowInfo.chaseId ? '是' : '否');
      row.push(_(rowInfo.betTime).toTime()); */
 
     return row
+  },
+
+  // 查看用户投注记录
+  showBetRecordHandler (e) {
+    const $target = $(e.currentTarget)
+    const tradeNo = $target.data('id')
+    const $dialog = Global.ui.dialog.show({
+      size: 'modal-bet',
+      bStyle: 'width: 535px;height:620px;',
+      body: '<div class="fc-gr-bet-detail"></div>',
+    })
+    const $selectContainer = $dialog.find('.fc-gr-bet-detail')
+    const editBetDetailView = new BetDetailView({ tradeno: tradeNo })
+    $selectContainer.html(editBetDetailView.render().el)
+
+    // $dialog.on('hidden.bs.modal', function () {
+    //   $(this).remove()
+    //   editBetDetailView.destroy()
+    // })
+    $dialog.off('click.cancelBet')
+      .on('click.cancelBet', '.js-gr-submitBtn', (ev) => {
+        const $currContainer = $dialog.find('.fc-gr-bet-detail-form')
+        const clpValidate = $currContainer.parsley().validate()
+        if (clpValidate) {
+          const $target2 = $(ev.currentTarget)
+          $target2.button('loading')
+          return Global.sync.ajax({
+            url: '/ticket/bet/cancel.json',
+            data: {
+              betId: $dialog.find('.js-gr-ticketBetId').val(),
+            },
+          }).done((res) => {
+            if (res && res.result === 0) {
+              Global.ui.notification.show('操作成功。')
+              $dialog.modal('hide')
+            } else {
+              Global.ui.notification.show('操作失败。')
+            }
+          })
+        }
+      })
   },
 })
 

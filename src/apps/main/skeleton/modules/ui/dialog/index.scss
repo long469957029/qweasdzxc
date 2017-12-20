@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
-@import
-"~base/styles/imports";
+@import "~base/styles/imports";
 
 .modal-backdrop {
   position: fixed;
@@ -48,7 +47,6 @@
     }
   }
 
-
   &.modal-notification {
     .modal-dialog {
       opacity: 0.85;
@@ -65,35 +63,35 @@
     .modal-dialog {
       border: 0;
     }
-    .cloud-pic{
-      background:url(./cloud-pic.png) no-repeat;
-      width:563px;
-      height:366px;
+    .cloud-pic {
+      background: url(./cloud-pic.png) no-repeat;
+      width: 563px;
+      height: 366px;
       position: relative;
     }
     .close-icon {
-      width:45px;
-      height:45px;
-      position:absolute;
-      top:50px;
-      right:105px;
-      cursor:pointer;
+      width: 45px;
+      height: 45px;
+      position: absolute;
+      top: 50px;
+      right: 105px;
+      cursor: pointer;
     }
-    .des-infor{
-      text-align:center;
-      width:360px;
-      height:110px;
-      margin:0 auto;
-      padding-top:130px;
-      font-size:18px;
-      line-height:26px;
+    .des-infor {
+      text-align: center;
+      width: 360px;
+      height: 110px;
+      margin: 0 auto;
+      padding-top: 130px;
+      font-size: 18px;
+      line-height: 26px;
       color: #000000;
     }
     .btn {
-      width:157px;
+      width: 157px;
       padding: 18px 0;
-      margin:0 auto;
-      margin-bottom:30px;
+      margin: 0 auto;
+      margin-bottom: 30px;
       font-size: 20px;
     }
   }
@@ -106,6 +104,26 @@
   overflow: hidden;
 }
 
+.modal-bet {
+  border: 0;
+  width: 525px!important;
+  .modal-body {
+    width: 100%;
+    border-radius: 9px;
+    padding: 0;
+    background: transparent;
+  }
+}
+.modal-chase {
+  border: 0;
+  width: 850px!important;
+  .modal-body {
+    width: 100%;
+    border-radius: 9px;
+    padding: 0;
+    background: transparent;
+  }
+}
 .modal-content {
   outline: 0;
 }
@@ -200,6 +218,7 @@ button.close {
   margin-top: 10px;
   margin-bottom: -20px;
 }
-.no-bg{
+
+.no-bg {
   background: none;
 }

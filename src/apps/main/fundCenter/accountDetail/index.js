@@ -11,7 +11,7 @@ const AccountDetailsView = TabView.extend({
 
   events: {},
 
-  className: 'fc-detail',
+  className: 'fc-ad-detail',
 
   initialize() {
     _(this.options).extend({
@@ -72,6 +72,7 @@ const AccountDetailsView = TabView.extend({
 
       ],
       title: '帐变明细',
+      titleDes: '帐变明细只保留30天数据。',
     })
   },
 })

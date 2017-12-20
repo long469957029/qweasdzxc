@@ -14,7 +14,7 @@ const MoneyDetailView = SearchGrid.extend({
     })
 
     _(this.options).extend({
-      height: '495',
+      height: '515',
       columns: [
         {
           name: '交易流水号',
@@ -69,6 +69,7 @@ const MoneyDetailView = SearchGrid.extend({
         format: 'YYYY-MM-DD HH:mm:ss',
       },
       showIcon: true,
+      size: 'timer-record-input',
     }).render()
 
     // this.$('select[name=tradeType]').html(_(tradingStatusConfig.get()).map(function(status) {
@@ -122,7 +123,7 @@ const MoneyDetailView = SearchGrid.extend({
     }
     row.push(type)
     if (info.amount >= 0) {
-      row.push(`<span class="text-bold-pleasant">+${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-bold-pleasant">${_(info.amount).convert2yuan()}</span>`)
     } else {
       row.push(`<span class="">${_(info.amount).convert2yuan()}</span>`)
     }
