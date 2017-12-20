@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 import ticketConfig from 'skeleton/misc/ticketConfig'
 
-import store from '../../../store'
+import store from '../../../store/index'
 import bettingCenterTpl from '../templates/bettingCenter.html'
 
 // vue components

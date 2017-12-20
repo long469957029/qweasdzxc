@@ -1,18 +1,7 @@
 <template>
   <div>
     <!--选择位置-->
-    <div class="js-bc-playArea-position form-inline tab-toolbar">
-      <div class="bc-optional-main">
-        <label class="m-right-mlg" v-for="(optional, index) in playRule.optionals.list">
-        <span class="custom-checkbox checkbox-pleasant">
-          <input type="checkbox" :id="'position-' + index" class="js-bc-playArea-position-item" name="optional"
-                 :value="optional.id" v-model="optional.checked">
-          <label class="checkbox-label" :for="'position-' + index"></label>
-        </span>
-          {{optional.title}}
-        </label>
-      </div>
-    </div>
+    <betting-play-area-position :optionals="playRule.optionals"></betting-play-area-position>
 
     <!--机选-->
     <div class="js-bc-playArea-missOption bc-missOptional-main">
@@ -23,9 +12,10 @@
     </div>
 
     <!--选区-->
-    <div class="bc-page-content active">
-      <div class="js-bc-playArea-items bc-playArea-items clearfix" v-for="fRule in formattedRuleList">
+    <div class="bc-page-content active" v-for="(formattedList, index) in formattedRuleList" v-show="index === 0">
+      <div class="js-bc-playArea-items bc-playArea-items clearfix" v-for="fRule in formattedList">
         <div class="js-be-playArea-items-toolbar tab-toolbar tab-circle pull-left">
+
           <div class="js-bc-select-item-title tab-title" v-show="fRule.row.title">
             <div>{{fRule.row.title == '无' ? '' : fRule.row.title}}</div>
           </div>
@@ -122,9 +112,12 @@
   import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
   import ticketConfig from 'skeleton/misc/ticketConfig'
   import chunk from "lodash/chunk";
+  import BettingPlayAreaPosition from "./betting-play-area-position";
 
   export default {
     name: "betting-play-area-select",
+
+    components: {BettingPlayAreaPosition},
 
     props: {
       playRule: Object,
@@ -140,7 +133,13 @@
 
     computed: {
       formattedRuleList: function() {
-        return _(this.playRule.list).map(function(RuleItem) {
+        if (this.playRule.page) {
+          this.playRule.formattedList = chunk(this.playRule.list, this.playRule.page)
+        } else {
+          this.playRule.formattedList = [this.playRule.list]
+        }
+
+        return _(this.playRule.formattedList).map((list) => _(list).map((RuleItem) => {
           let fItems
           RuleItem.hasOp = _(RuleItem.op).some()
           if (!_.isEmpty(RuleItem.htmlNeedInfo)) {
@@ -162,7 +161,7 @@
               fItems = chunk(RuleItem.items, 10)
             }
           } else {
-            if (RuleItem.items.length==16) {
+            if (RuleItem.items.length === 16) {
               fItems = chunk(RuleItem.items, 8)
             } else {
               fItems = [RuleItem.items]
@@ -175,40 +174,7 @@
             row: RuleItem,
             htmlNeedInfo: RuleItem.htmlNeedInfo,
           }
-        });
-      }
-    },
-
-    renderPlayArea() {
-      const html = []
-      if (this.playRule.page) {
-        const pageCount = Math.ceil(_.div(this.playRule.list.length, 5))
-
-        for (let i = 0; i < pageCount; i++) {
-          const newList = []
-
-          for (let j = (i * this.playRule.page); j < this.playRule.page * (i + 1); j++) {
-            newList.push(this.playRule.list[j])
-          }
-
-          html.push(`<div class="jc-page-content bc-page-content js-pageIndex-${i}">${_(newList).map(function(item) {
-            item.hasOp = _(item.op).some()
-            return item.isShow ? this.playItemsTpl({
-              limit: _(item.limits).pluck('name').join(' '),
-              row: item,
-              htmlNeedInfo: item.htmlNeedInfo,
-            }) : ''
-          }, this).join('')}</div>`)
-        }
-      } else {
-        html.push(`<div class="">${_(this.playRule.list).map(function(item) {
-          item.hasOp = _(item.op).some() // 龙虎和为全false
-          return item.isShow ? this.playItemsTpl({
-            limit: _(item.limits).pluck('name').join(' '),
-            row: item,
-            htmlNeedInfo: item.htmlNeedInfo,
-          }) : ''
-        }, this).join('')}</div>`)
+        }))
       }
     },
   }

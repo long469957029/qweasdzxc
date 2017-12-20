@@ -23,7 +23,7 @@ define((require, exports, module) => {
   const betRules = []
 
   function addRule(ids, rule) {
-    rule.optionals = rule.optionals || []
+    rule.optionals = rule.optionals || {}
     rule.type = rule.type || 'select'// 投注方式：输入还是选择
     rule.limits = rule.limits || []// 球上的样式和数据
     rule.algorithm = rule.algorithm || _.noop// 注数的算法
@@ -65,7 +65,7 @@ define((require, exports, module) => {
           doublenum: title.doublenum || options.doublenum,
           htmlNeedInfo: options.htmlNeedInfo,
         }
-      } 
+      }
       return {
         isShow: title !== null,
         title,

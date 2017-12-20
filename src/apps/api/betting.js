@@ -2,7 +2,6 @@ export default {
   getTicketInfo (ticketId, success, error) {
     return Global.sync.ajax({
       url: '/ticket/ticketmod/ticketinfo.json',
-      async: false,
       data: { ticketId },
       success,
       error,
