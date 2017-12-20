@@ -133,6 +133,7 @@ const FundManageView = Base.ItemView.extend({
         format: 'YYYY-MM-DD HH:MM:SS',
       },
       showIcon: true,
+      size: 'timer-record-input',
     }).render()
 
     this.timeset.$startDate.on('dp.change', () => {

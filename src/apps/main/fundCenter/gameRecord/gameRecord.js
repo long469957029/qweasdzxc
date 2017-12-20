@@ -22,6 +22,7 @@ const fishBetRecordView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
+      height: '515',
       columns: [
         {
           name: '注单编号',
@@ -62,12 +63,13 @@ const fishBetRecordView = SearchGrid.extend({
       },
       ajaxOps: {
         url: '/ticket/game/history.json',
-        abort: false,
+        // abort: false,
       },
-
+      reqData: {
+        channelId: this.options.channelId,
+      },
       listProp: 'root.dataList',
       // tip: '<div class="tip-hot"><span>注意</span> 游戏记录只保留最近30天。</div>',
-      height: 320,
     })
   },
 
@@ -78,13 +80,15 @@ const fishBetRecordView = SearchGrid.extend({
       startTimeHolder: '起始日期',
       startDefaultDate: _(moment().add('day', 0)).toDate(),
       endTimeHolder: '结束日期',
-      endDefaultDate: _(moment().add('day', 0)).toDate(),
+      endDefaultDate: _(moment().add('day', 1)).toDate(),
       startOps: {
-        format: 'YYYY-MM-DD HH;mm:ss',
+        format: 'YYYY-MM-DD HH:mm:ss',
       },
       endOps: {
-        format: 'YYYY-MM-DD HH;mm:ss',
+        format: 'YYYY-MM-DD HH:mm:ss',
       },
+      showIcon: true,
+      size: 'timer-record-input',
     }).render()
 
     SearchGrid.prototype.onRender.apply(this, arguments)
@@ -106,14 +110,14 @@ const fishBetRecordView = SearchGrid.extend({
     // 加上统计行
     this.grid.addFooterRows({
       trClass: 'tr-footer',
-      columnEls: [
-        '<strong>所有页总计</strong>',
-        '', '', '',
-        _(gridData.realBetTotal).fixedConvert2yuan(),
-        _(gridData.betTotal).fixedConvert2yuan(),
-        _(gridData.amountTotal).fixedConvert2yuan(),
-        _(gridData.profitTotal).convert2yuan(),
-      ],
+      // columnEls: [
+      //   '<strong>所有页总计</strong>',
+      //   '', '', '',
+      //   _(gridData.realBetTotal).fixedConvert2yuan(),
+      //   _(gridData.betTotal).fixedConvert2yuan(),
+      //   _(gridData.amountTotal).fixedConvert2yuan(),
+      //   _(gridData.profitTotal).convert2yuan(),
+      // ],
     }).hideLoading()
   },
 

@@ -7,9 +7,8 @@ const NotificationModule = Base.Module.extend({
   prevent: false,
 
   show(content, options) {
-    let ops
     let footer
-    const self = this
+    // const self = this
 
     options = options || {}
 
@@ -17,7 +16,7 @@ const NotificationModule = Base.Module.extend({
       return
     }
 
-    ops = {
+    const ops = {
       type: 'info',
       size: 'modal-sm',
       id: 'notification',
@@ -45,30 +44,40 @@ const NotificationModule = Base.Module.extend({
         footer = `<div class="m-TB-md text-center"><button type="button" class="js-pf-notification-btn btn btn-cloud btn-linear" data-dismiss="modal">${options.btnContent}</button></div>`
       }
     } else {
-      body.push(`<div class="m-TB-md text-center"><span class="sfa sfa-dialog-${options.type}"></span></div>`)
-      body.push(`<div class="text-center font-md">${content}</div>`)
+      if (!options.title) { // 根据是否有title判断icon的排列顺序是上下还是左右
+        body.push(`<div class="m-top-md m-bottom-md p-top-xs text-center"><span class="sfa sfa-dialog-${options.type}"></span></div>`)
+        body.push(`<div class="text-center font-md">${content}</div>`)
+      } else {
+        body.push(`<span>${content}</span>`)
+      }
 
       if (options.countdown) {
         body.push(`<div class="js-pf-notification-countdown pf-notification-countdown text-center font-md text-danger">${options.countdown}</div>`)
       }
       if (options.hasFooter) {
+        footer = '<div class="div-line m-top-lg"></div>'
         if (options.type === 'success') {
-          footer = `<div class="m-TB-md text-center"><button type="button" class="js-pf-notification-btn btn btn-lg p-LR-lg" data-dismiss="modal">${options.btnContent}</button></div>`
+          footer += `<div class="m-top-smd m-bottom-md text-center"><button type="button" class="js-pf-notification-btn btn btn-lg p-LR-lg" data-dismiss="modal">${options.btnContent}</button></div>`
         } else {
-          footer = `<div class="m-TB-md text-center"><button type="button" class="js-pf-notification-btn btn btn-lg btn-cool p-LR-lg" data-dismiss="modal">${options.btnContent}</button></div>`
+          footer += `<div class="m-top-smd m-bottom-xs text-center">
+                    <button type="button" class="js-pf-notification-btn btn btn-lg btn-cool p-LR-lg" data-dismiss="modal">${options.btnContent}</button></div>`
         }
       }
     }
 
     body.push(footer)
-
-
-    const $dialog = Global.ui.dialog.show(_({
+    const data = {
       id: this.options.id,
-      body: body.join(''),
-    }).extend(options))
+    }
+    if (!options.title) {
+      data.body = body.join('')
+    } else {
+      data.subTitle = body.join('')
+    }
 
-    $dialog.on('hidden.modal', function(e) {
+    const $dialog = Global.ui.dialog.show(_(data).extend(options))
+
+    $dialog.on('hidden.modal', function() {
       // $(e.currentTarget).next('.modal-backdrop').remove().end().remove();
       $(this).remove()
     })

@@ -9,7 +9,7 @@ import TransferView from './transfer'
 const FundRecordsView = TabView.extend({
 
   // className: 'ac-wr-view',
-  className: 'fc-detail',
+  className: 'fc-rw-detail',
 
   initialize() {
     _(this.options).extend({
@@ -32,6 +32,7 @@ const FundRecordsView = TabView.extend({
         },
       ],
       title: '充提记录',
+      titleDes: '充提记录只保留30天数据。',
     })
   },
 })

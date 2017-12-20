@@ -1,5 +1,4 @@
 
-require('./index.scss')
 
 const SearchGrid = require('com/searchGrid')
 const Timeset = require('com/timeset')
@@ -18,7 +17,7 @@ const MoneyDetailView = SearchGrid.extend({
     })
 
     _(this.options).extend({
-      height: '495',
+      height: '515',
       columns: [
         {
           name: '交易流水号',
@@ -69,6 +68,7 @@ const MoneyDetailView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD HH:mm:ss',
       },
+      size: 'timer-record-input',
       showIcon: true,
     }).render()
 
@@ -119,12 +119,12 @@ const MoneyDetailView = SearchGrid.extend({
     // row.push(tradingStatusConfig.toZh(info.tradeType));
     row.push(info.tradeType)
     if (info.amount >= 0) {
-      row.push(`<span class="text-cut">+${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-account-cut">+${_(info.amount).convert2yuan()}</span>`)
     } else {
-      row.push(`<span class="text-add">${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-account-add">${_(info.amount).convert2yuan()}</span>`)
     }
 
-    row.push(`<span class="">+${_(info.balance).convert2yuan()}</span>`)
+    row.push(`<span class="">${_(info.balance).convert2yuan()}</span>`)
     let remark = info.remark
 
     if (remark.replace(/[\u4e00-\u9fa5]/g, '**').length > 16) {

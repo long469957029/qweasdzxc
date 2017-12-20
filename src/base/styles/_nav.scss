@@ -99,21 +99,25 @@
 }
 
 .nav-tabs {
-  font-size: 16px;
+  //font-size: 16px;
+  height: 46px;
   > {
     li {
-      margin-bottom: -1px;
+      text-align: center;
+      min-width: 80px!important;
+      height: 45px!important;
+      line-height: 45px!important;
       > a {
         //margin-bottom: -1px;
-        line-height: 20px;
         padding-top: 8px;
         padding-bottom: 8px;
-      }
-    }
-    .active > a {
-      cursor: default;
-      &:hover, &:focus {
-        cursor: default;
+        background: transparent;
+        line-height: 44px!important;
+        span{
+          font-size:14px;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
       }
     }
   }
