@@ -15,6 +15,7 @@ const DialogModule = Base.Module.extend({
       bodyClass: '',
       modalClass: '',
       size: '',
+      closeBtn: true,
     })
 
     if (!options.id) {
@@ -26,17 +27,17 @@ const DialogModule = Base.Module.extend({
         .remove()
     }
 
-    let html = [],
-      id = options.id || (`dialog${_.now()}`)
+    const html = []
+    const id = options.id || (`dialog${_.now()}`)
 
     // 任意宽度
     let dStyle = ''
-    if (options.anySize && options.anySize != '') {
+    if (options.anySize && options.anySize !== '') {
       dStyle = `width:${options.anySize}px; margin-left:-${Number(options.anySize) / 2}px; position: absolute; left: 50%;`
     }
     // 任意高低
     let pStyle = ''
-    if (options.anyPosition && options.anyPosition != '') {
+    if (options.anyPosition && options.anyPosition !== '') {
       pStyle = `margin-top:${options.anyPosition}px;`
     }
     html.push(`<div class="modal fade ${options.modalClass}" id="`)
@@ -44,20 +45,26 @@ const DialogModule = Base.Module.extend({
     html.push(`" tabindex="-1" role="dialog" aria-labelledby="${id}Label" aria-hidden="true">`)
     html.push(options.anySize ? `<div style="${dStyle}${pStyle}">` : `<div class="modal-dialog ${options.size}">`)
     html.push('<div class="modal-content">')
-
+    if (options.closeBtn) {
+      html.push('<a class="close btn-close" data-dismiss="modal">&times;</a>')
+    }
     if (options.title) {
-      html.push('<div class="modal-header">')
-      html.push('<button type="button" class="close" data-dismiss="modal">')
-      html.push('<span aria-hidden="true">&times;</span>')
-      html.push('</button>')
-      html.push(`<h4 class="modal-title" id="${id}Label">` +
-        `<span class="portlet-icon sfa sfa-sub-title-user vertical-sub"></span> ${options.title}</h4>`)
-      html.push('</div>')
+      let marginClass = ''
+      if (!options.body && !options.footer) {
+        marginClass = 'margin-big'
+      }
+      html.push(`<div class="modal-header clearfix ${marginClass}">`)
+      html.push('<div class="pull-left"><span class="sfa sfa-dialog-info-sm"></span></span></div>')
+      html.push(`<div class="modal-title-container pull-left" id="${id}Label"><div class="modal-title">${options.title}</div>`)
+      if (options.subTitle) {
+        html.push(`<div class="modal-sub-title">${options.subTitle}</div>`)
+      }
+      html.push('</div></div>')
     }
 
     if (options.body) {
       if (options.wrapperBody) {
-        html.push(`<div class="modal-body basic-inverse ${options.bodyClass}">${options.body}</div>`)
+        html.push(`<div class="modal-body ${options.bodyClass}">${options.body}</div>`)
       } else {
         html.push(options.body)
       }
@@ -77,14 +84,14 @@ const DialogModule = Base.Module.extend({
         backdrop: 'static',
       })
       if (options.countdown) {
-        var countdownInterval = setInterval(() => {
+        const countdownInterval = setInterval(() => {
           const leftTime = $container.find('.js-pf-notification-countdown').text()
-          if (leftTime == 1) {
+          if (leftTime === 1) {
             clearInterval(countdownInterval)
             modal.modal('hide')
             $container.find(`#${options.id}`).remove()
           }
-          $container.find('.js-pf-notification-countdown').text(parseInt(leftTime) - 1)
+          $container.find('.js-pf-notification-countdown').text(parseInt(leftTime, 10) - 1)
         }, 1000)
       }
     }

@@ -29,7 +29,7 @@ $.widget('gl.confirm', {
     let data = {
       id: this.uuid,
       title: this.options.title,
-      body: this.options.content,
+      subTitle: this.options.content,
       size: this.options.size,
       footer: this.options.noFooter ? '' : footer,
     }
@@ -47,13 +47,13 @@ $.widget('gl.confirm', {
         size: 'modal-sm',
         modalClass: 'modal-notification',
         id: this.uuid,
-        body: body.join(''),
+        subTitle: body.join(''),
       }
     }
 
     this.$dialog = Global.ui.dialog.show(data)
 
-    this.$dialog.on('hidden.modal', function(e) {
+    this.$dialog.on('hidden.modal', function() {
       $(this).remove()
       self.destroy()
     })
@@ -85,7 +85,7 @@ $.widget('gl.confirm', {
 
     return false
   },
-  rejectConfirmHandler(e) {
+  rejectConfirmHandler() {
     this.options.rejectCallback()
 
     Global.ui.dialog.hide(this.uuid)
