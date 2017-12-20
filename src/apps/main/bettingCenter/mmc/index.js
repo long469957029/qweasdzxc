@@ -5,10 +5,10 @@ const BettingChoiceModel = require('bettingCenter/models/bettingChoice-mmc')
 const BettingRulesCollection = require('bettingCenter/collections/bettingRules')
 
 const PlayAreaSelectView = require('bettingCenter/views/bettingCenter-playArea-select')
-const PlayAreaInputView = require('bettingCenter/views/bettingCenter-playArea-input')
 const BettingRecordsView = require('bettingCenter/views/bettingCenter-records')
 
 const ticketConfig = require('skeleton/misc/ticketConfig')
+const PlayAreaInputView = require('./bettingCenter-playArea-input')
 
 require('./easing')
 require('./index.scss')
