@@ -524,7 +524,7 @@ const BettingCenterView = Base.ItemView.extend({
         Global.ui.notification.show(
           `<span class="text-prominent">${planInfo.lastPlanId}</span>期已截止<br/>当前期为<span class="text-prominent">${planInfo.planId}</span>期<br/>投注时请注意期号！`,
           {
-            id: 'ticketNotice', hasFooter: false, displayTime: 800, style: 2, title: '温馨提示', 
+            id: 'ticketNotice', hasFooter: false, displayTime: 800, title: '温馨提示',
           },
         )
         // setTimeout(function(){
