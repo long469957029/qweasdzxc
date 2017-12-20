@@ -643,11 +643,13 @@
       height: 30px;
       line-height: 30px;
       margin: 20px 20px 30px 0px;
+      text-align: center;
       a{
         padding: 0;
         line-height: 30px;
         border-radius: 20px;
         background-color: $new-main-body-color;
+        width: 100%;
         &:hover{
           color: $def-white-color;
           background-color: $new-main-deep-color;
