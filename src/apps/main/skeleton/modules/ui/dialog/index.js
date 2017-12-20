@@ -43,7 +43,7 @@ const DialogModule = Base.Module.extend({
     html.push(`<div class="modal fade ${options.modalClass}" id="`)
     html.push(id)
     html.push(`" tabindex="-1" role="dialog" aria-labelledby="${id}Label" aria-hidden="true">`)
-    html.push(options.anySize ? `<div style="${dStyle}${pStyle}">` : `<div class="modal-dialog ${options.size}">`)
+    html.push(`<div class="modal-dialog ${options.size}" style="${dStyle}${pStyle}>`)
     html.push('<div class="modal-content">')
     if (options.closeBtn) {
       html.push('<a class="close btn-close" data-dismiss="modal">&times;</a>')

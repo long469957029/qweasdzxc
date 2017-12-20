@@ -101,14 +101,14 @@ const CardManageView = Base.ItemView.extend({
 
       return
     }
-    const pwdToken = this.$('.js-uc-pwdToken').val()
+    // const pwdToken = this.$('.js-uc-pwdToken').val()
     const cardId = $(e.currentTarget).data('type')
-    if (pwdToken && !(_(pwdToken).isEmpty())) {
-      this.propConfirmModel(cardId, pwdToken)
-    } else {
-      const type = 'delBankCard'
-      this.popValidateCardInfoModal(type, cardId)
-    }
+    // if (pwdToken && !(_(pwdToken).isEmpty())) {
+    //   this.propConfirmModel(cardId, pwdToken)
+    // } else {
+    const type = 'delBankCard'
+    this.popValidateCardInfoModal(type, cardId)
+    // }
   },
 
   propConfirmModel(cardId, pwdToken) {
@@ -143,7 +143,7 @@ const CardManageView = Base.ItemView.extend({
 
     $(document).confirm({
       title: '安全提示',
-      content: '请注意：银行卡锁定以后不能再增加和删除银行卡，解锁需要联系在线客服并提交资料审核',
+      content: '银行卡锁定以后不能再增加和删除银行卡，解锁需要联系在线客服并提交资料审核',
       agreeCallback() {
         $target.button('loading')
         self.lockBankCardXhr()
@@ -243,8 +243,10 @@ const CardManageView = Base.ItemView.extend({
 
     const $dialog = Global.ui.dialog.show({
       title: '安全提示',
+      subTitle: '请提供最近一次绑定的卡号信息！',
+      anySize: '480',
       body: this.validateTpl(),
-      footer: `<button class="js-uc-cmValidateCardInfo btn btn-cool" type="button" data-type="${type}">确定</button>`,
+      footer: `<button class="js-uc-cmValidateCardInfo btn btn-cool width-sm btn-lg" type="button" data-type="${type}">确定</button>`,
     })
     $dialog.on('hidden.modal', function () {
       $(this).remove()
@@ -254,46 +256,41 @@ const CardManageView = Base.ItemView.extend({
       .on('click.validateCardInfo', '.js-uc-cmValidateCardInfo', (ev) => {
         const $valTarget = $(ev.currentTarget)
         const valType = $valTarget.data('type')
-
-        // 验证密码;
-        const accountName = $dialog.find('.js-uc-cmAccountName').val()
-        const cardNo = $dialog.find('.js-uc-cmCardNo').val()
-        if (!accountName || accountName === '') {
-          $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl('姓名不能为空'))
-          return
-        }
-        if (!cardNo || cardNo === '') {
-          $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl('卡号不能为空'))
-          return
-        }
-        const data = { name: accountName, cardNo }
-        self.verifyCardInfoXhr(data)
-          .done((res) => {
-            if (res.result === 0) {
-              $dialog.modal('hide')
-              const token = res.root
-              self.$('.js-uc-pwdToken').val(token)
-              // 如果类型是绑定银行卡
-              if (valType === 'addBankCard') {
-                Global.appRouter.navigate(_('#uc/cm/bind').addHrefArgs({
-                  _t: _.now(),
-                  pwdToken: token,
-                }), { trigger: true, replace: false })
-              } else if (valType === 'delBankCard') {
-                self.propConfirmModel(cardId, token)
-              }
-            } else if (_(res.root).isNull()) {
-              $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,${res.msg}`))
-            } else if (res.root != null && _(res.root).isNumber()) {
-              if (res.root > 0) {
-                $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,剩余${res.root}次机会。`))
+        const $form = $dialog.find('.js-uc-last-form')
+        const formStatus = $form.parsley().validate()
+        if (formStatus) {
+          // 验证密码;
+          const accountName = $dialog.find('.js-uc-cmAccountName').val()
+          const cardNo = $dialog.find('.js-uc-cmCardNo').val()
+          const data = { name: accountName, cardNo }
+          self.verifyCardInfoXhr(data)
+            .done((res) => {
+              if (res.result === 0) {
+                $dialog.modal('hide')
+                const token = res.root
+                self.$('.js-uc-pwdToken').val(token)
+                // 如果类型是绑定银行卡
+                if (valType === 'addBankCard') {
+                  Global.appRouter.navigate(_('#uc/cm/bind').addHrefArgs({
+                    _t: _.now(),
+                    pwdToken: token,
+                  }), { trigger: true, replace: false })
+                } else if (valType === 'delBankCard') {
+                  self.propConfirmModel(cardId, token)
+                }
+              } else if (_(res.root).isNull()) {
+                $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,${res.msg}`))
+              } else if (res.root != null && _(res.root).isNumber()) {
+                if (res.root > 0) {
+                  $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,剩余${res.root}次机会。`))
+                } else {
+                  $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl('验证失败,请一个小时后再验证！'))
+                }
               } else {
-                $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl('验证失败,请一个小时后再验证！'))
+                $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,${res.msg}`))
               }
-            } else {
-              $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,${res.msg}`))
-            }
-          })
+            })
+        }
       })
   },
 
