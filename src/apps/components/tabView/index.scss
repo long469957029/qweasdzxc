@@ -22,38 +22,3 @@
   }
 
 }
-.fc-detail {
-  margin: 20px;
-  .nav-tabs{
-    border-bottom: 1px solid #cccccc;
-    height: 70px;
-    padding-left: 0;
-    margin-left: 10px;
-    margin-right: 10px;
-    li{
-      text-align: center;
-      width: 80px;
-      a{
-        background: transparent;
-        span{
-          font-size:14px;
-          padding-left: 5px;
-          padding-right: 5px;
-        }
-      }
-    }
-    >.active{
-      a{
-        color: #14b1bb;
-        background-color: transparent;
-        border-bottom: 2px solid #14b1bb;
-        border-top:0;
-        border-left:0;
-        border-right:0;
-        &:after{
-          background-color:transparent;
-        }
-      }
-    }
-  }
-}

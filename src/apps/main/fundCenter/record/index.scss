@@ -2,178 +2,82 @@
 
 @import "~base/styles/imports";
 
-.view-container {
-  margin-left: 10px;
-  margin-right: 10px;
-  .portlet-inverse {
-    height: 80px;
-    .portlet-body {
-      padding-top: 15px;
-      padding-bottom: 25px;
-      height: 30px;
-      .input-md {
-        border: 1px solid #cccccc;
-        font-size: 12px;
-        color: #666666;
-        width: 160px !important;
-        top: 7px;
-        position: relative;
-        .sfa-time-input {
-          font-size: 12px;
-          color: #666666;
-        }
-        &.active, &:hover {
-          border: 1px solid #14b1bb;
-          background-color: transparent;
-        }
+.fc-rw-detail {
+  .fc-rc-status-container {
+    float: left;
+    padding-top: 1px;
+    .fc-rc-status {
 
+      color: #666666;
+      .fc-rc-status-button {
+        width: 50px;
+        height: 20px;
+        padding: 2px 6px;
+        border: 1px solid #666666;
       }
-      .select-sm {
-        width: 110px !important;
-        border-color: #cccccc;
-        margin-bottom: 5px;
-        &.active, &:hover {
+      .fc-rc-status-button-unPass {
+        width: 50px;
+        height: 20px;
+        padding: 2px 6px;
+        background: #14b1bb;
+        color: #ffffff;
+        border: 1px solid #14b1bb;
+      }
+      .fc-rc-status-line-unPass {
+        color: #14b1bb;
+      }
+      .fc-rc-status-line {
+        width: 5px;
+      }
+      &.active {
+        color: #14b1bb;
+        .fc-rc-status-button {
           border: 1px solid #14b1bb;
-          background-color: transparent;
         }
-      }
-      .fc-fm-btn {
-        margin-bottom: 5px;
-        background-color: #14b1bb;
       }
     }
   }
-  .portlet-filter {
-    margin: 0;
-    .slimScrollDiv {
-      //height: 530px !important;
-      margin-bottom:0;
-      .js-wt-body-main {
-        //height: 530px !important;
-        table {
-          border: 0;
-          tr {
-            border-bottom: 1px solid #cccccc;
-            th {
-              background-color: #f5f5f5;
-              td {
-                border-right: 0;
-              }
-            }
-          }
-        }
-        .table-bordered th, .table-bordered td {
-          border: 0
-        }
-        .table th, .table td {
-          padding: 9px 3px;
-        }
-        .text-cut {
-          color: #14b1bb;
-          font-weight: bold;
-        }
-        .text-add {
-          color: #f09932;
-          font-weight: bold;
-        }
-        .fc-rc-status-container {
-          float: left;
-          padding-top: 1px;
-          .fc-rc-status {
-
-            color: #666666;
-            .fc-rc-status-button {
-              width: 50px;
-              height: 20px;
-              padding: 2px 6px;
-              border: 1px solid #666666;
-            }
-            .fc-rc-status-button-unPass{
-              width: 50px;
-              height: 20px;
-              padding: 2px 6px;
-              background:#14b1bb ;
-              color: #ffffff;
-              border: 1px solid #14b1bb;
-            }
-            .fc-rc-status-line-unPass{
-              color: #14b1bb;
-            }
-            .fc-rc-status-line {
-              width: 5px;
-            }
-            &.active {
-              color: #14b1bb;
-              .fc-rc-status-button {
-                border: 1px solid #14b1bb;
-              }
-            }
-          }
-        }
-        .fc-rc-status-img-container{
-          margin-left:5px;
-          font-size: 20px;
-          color: #14b1bb;
-          float: left;
-        }
-      }
-        .fc-rc-status-text-container{
-          position: absolute;
-          z-index: 999;
-          width: 218px;
-          height: 50px;
-          top: 63px;
-          right: -104px;
-          transform: translate(-50%, -50%);
-          background: white;
-          box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
-          border: 1px solid #cccccc;
-          border-radius: 3px;
-          &::after {
-            content: "";
-            position: absolute;
-            width: 7px;
-            height: 7px;
-            background: white;
-            transform: translateX(-50%) translateY(-50%) rotate(45deg);
-            top: -1px;
-            border-top: 1px solid #cccccc;
-            border-left: 1px solid #cccccc;
-            right: 16px;
-            border-top-left-radius: 4px;
-          }
-          .fc-rc-status-text{
-            width: 200px;
-            height: 40px;
-            position: absolute;
-            top: 10%;
-            left: 51%;
-            text-align: left;
-            transform: translateX(-50%);
-            overflow: hidden;
-          }
-        }
-    }
-    .table-bordered th, .table-bordered td {
-      border: 0
-    }
-    .table-bordered {
-      border: 0
-    }
-    .fc-td-record-status{
+  .fc-rc-status-img-container {
+    margin-left: 5px;
+    font-size: 20px;
+    color: #14b1bb;
+    float: left;
+  }
+  .fc-rc-status-text-container {
+    position: absolute;
+    z-index: 999;
+    width: 218px;
+    height: 50px;
+    top: 63px;
+    right: -104px;
+    transform: translate(-50%, -50%);
+    background: white;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    &::after {
+      content: "";
       position: absolute;
-      z-index: 99;
-      width: 16px;
-      height: 18px;
-      top: 15px;
-      left: 23px;
-      transform: translate(-50%, -50%);
+      width: 7px;
+      height: 7px;
       background: white;
-      border-radius: 3px;
-      background: #e84c4c;
-      color: #ffffff;
-      font-size: 10px!important;
-      padding: 0px;
+      transform: translateX(-50%) translateY(-50%) rotate(45deg);
+      top: -1px;
+      border-top: 1px solid #cccccc;
+      border-left: 1px solid #cccccc;
+      right: 16px;
+      border-top-left-radius: 4px;
+    }
+    .fc-rc-status-text {
+      width: 200px;
+      height: 40px;
+      position: absolute;
+      top: 10%;
+      left: 51%;
+      text-align: left;
+      transform: translateX(-50%);
+      overflow: hidden;
     }
   }
+
 }

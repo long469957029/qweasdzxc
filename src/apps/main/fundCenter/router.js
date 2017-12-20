@@ -1,7 +1,7 @@
 import FundCenterController from 'fundCenter/controller'
 
 define((require, exports) => {
-  exports.install = function() {
+  exports.install = function () {
     const acctInfo = Global.memoryCache.get('acctInfo')
 
     const fundRouter = {
@@ -16,6 +16,8 @@ define((require, exports) => {
       'fc/td': 'ticketRecordDetail', // 投注记录
       'fc/cr': 'chaseRecord',
       'fc/gr': 'gameRecord',
+      'fc/bd': 'betDetailView', // 注单详情
+      'fc/cd': 'chaseDetailView', // 追号注单详情
       // 'fc/tr/detail/:betId': 'bettingDetail', // 投注详情
       // 'fc/cr/detail/:tradeNo/id/:chaseFormId': 'trackDetail', // 追号记录
       // 'fc/cr/detail/:chaseTradeNo/detail/:tradeNo': 'trackBetDetail', // 追号投注记录

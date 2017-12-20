@@ -70,6 +70,7 @@ const TransferView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD HH:mm:ss',
       },
+      size: 'timer-record-input',
       showIcon: true,
     }).render()
 
@@ -117,9 +118,9 @@ const TransferView = SearchGrid.extend({
     row.push(rowInfo.fromChannelId === 0 ? '中心钱包' : (_.getChannelById(rowInfo.fromChannelId).channelName))
     row.push(_.getChannelById(rowInfo.toChannelId).channelName)
     if (rowInfo.amount >= 0) {
-      row.push(`<span class="text-add">+${_(rowInfo.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-account-add">+${_(rowInfo.amount).convert2yuan()}</span>`)
     } else {
-      row.push(`<span class="text-cut">${_(rowInfo.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-account-cut">${_(rowInfo.amount).convert2yuan()}</span>`)
     }
     let status = ''
     switch (rowInfo.status) {

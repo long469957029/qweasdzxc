@@ -8,8 +8,10 @@ import RechargeView from 'fundCenter/recharge'
 import WithdrawView from 'fundCenter/withdraw'
 import TransferView from 'fundCenter/transfer'
 
-
 const GameRecordView = require('fundCenter/gameRecord/index')
+
+const BetDetailView = require('fundCenter/gameRecord/betDetail')
+const ChaseDetailView = require('fundCenter/gameRecord/chaseDetail')
 
 const menuConfig = Global.ui.menu.get(['fc', 'uc'])
 require('./misc/index.scss')
@@ -117,6 +119,12 @@ const FundCenterController = RouterController.extend({
       },
       sidebar: menuConfig,
     })
+  },
+  betDetailView() {
+    this.changeMainReginView(new BetDetailView())
+  },
+  chaseDetailView() {
+    this.changeMainReginView(new ChaseDetailView())
   },
 })
 

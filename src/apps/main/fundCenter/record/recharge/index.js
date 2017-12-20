@@ -69,6 +69,7 @@ const RechargeView = SearchGrid.extend({
         format: 'YYYY-MM-DD HH:mm:ss',
       },
       showIcon: true,
+      size: 'timer-record-input',
     }).render()
     SearchGrid.prototype.onRender.apply(this, arguments)
   },
@@ -104,7 +105,7 @@ const RechargeView = SearchGrid.extend({
     row.push(rowInfo.tradeNo)
     row.push(_(rowInfo.payTime).toTime())
     row.push(`<span class="m-right-sm">${rowInfo.type}</span>[${rowInfo.bankName}]`)
-    row.push(`<span class="text-add">+${_(rowInfo.amount) / 10000}</span>`)
+    row.push(`<span class="text-account-add">+${_(rowInfo.amount) / 10000}</span>`)
     // row.push(rowInfo.balance / 10000)
 
     const statusList = []
