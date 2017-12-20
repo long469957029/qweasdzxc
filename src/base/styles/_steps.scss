@@ -78,7 +78,7 @@
         display: block;
         width: auto;
         margin-left: map_get($steps, indent);
-        padding: 0 10px;
+        //padding: 0 10px;
         text-decoration: none;
         color: map_get($steps, active-color);
         line-height: 23px;
@@ -255,43 +255,108 @@
   > {
     .steps > ul > li {
       width: 170px;
+      position: relative;
 
-      &.current {
+      &.current{
         &:after {
-          background: $new-main-deep-color;
+          background: linear-gradient(to right,$new-main-deep-color 50%,$def-gray-color);
         }
         .number {
           background: $new-main-deep-color;
+          &:after{
+            border-left-color: $new-main-deep-color;
+          }
+          &:before{
+            border-right-color: $new-main-deep-color;
+          }
         }
         .title {
-          color: $new-main-deep-color;
+          color: $new-inverse-color;
+        }
+      }
+      &.done{
+        &:after {
+          background: $new-main-deep-color;
+        }
+        .number{
+          display: none;
+        }
+        .over{
+          display: block;
+          background: $new-main-deep-color url("~base/images/checked-mark-bg.png") no-repeat center;
+          &:after{
+            border-left-color: $new-main-deep-color;
+          }
+          &:before{
+            border-right-color: $new-main-deep-color;
+          }
         }
       }
 
       &:after {
         content: '';
         position: absolute;
-        width: 100%;
+        width: 162px;
         height: 5px;
-        background: #cccccb;
-        top: 10px;
+        background: $def-gray-color;
+        top: 72%;
+        left: 47%;
+      }
+      &:first-child{
+
+        .number,.over{
+          &:before{
+            display: none;
+          }
+        }
+      }
+      &:last-child{
+        &:after{
+          display: none;
+        }
+        .number,.over{
+          &:after{
+            display: none;
+          }
+        }
       }
 
-      .number {
-        width: 28px;
-        height: 28px;
-        background: #cccccb;
+
+      .number,.over {
+        width: 34px;
+        height: 34px;
+        background: $def-gray-color;
         border-radius: 100px;
         color: #fff;
         font-size: 18px;
-        line-height: 28px;
-        font-weight: bold;
-        margin: 0 auto 10px auto;
+        line-height: 34px;
         position: relative;
         z-index: 1;
+        margin: 0 auto;
+        margin-top: 15px;
+        &:after{
+          content: '';
+          border: 8px solid transparent;
+          border-left-color: $def-gray-color;
+          position: absolute;
+          top: 8.5px;
+          right: -13px
+        }
+        &:before{
+          content: '';
+          border: 8px solid transparent;
+          border-right-color: $def-gray-color;
+          position: absolute;
+          top: 8.5px;
+          left: -13px
+        }
+      }
+      .over{
+        display: none;
       }
       .title {
-        color: #cccccb;
+        color: $font-auxiliary-color;
+        font-size: $font-sm;
       }
     }
     .content > .body {
@@ -310,7 +375,7 @@
   &.wizard-long {
     > {
       .steps > ul > li {
-        width: 240px;
+        width: 173px;
       }
     }
   }

@@ -9,7 +9,7 @@ var ValidatorModule = Base.Module.extend({
   startWithParent: false,
 
   initialize: function() {
-    ParsleyConfig.errorsWrapper = '<div class="tooltip bottom parsley-errors-list tooltip-error"><div class="tooltip-arrow"></div></div>';
+    ParsleyConfig.errorsWrapper = '<div class="tooltip bottom parsley-errors-list tooltip-error"><span class="sfa sfa-error-icon vertical-sub"></span></div>';
     ParsleyConfig.errorTemplate =  '<div class="tooltip-inner">';
     ParsleyConfig.trigger = 'change';
 
