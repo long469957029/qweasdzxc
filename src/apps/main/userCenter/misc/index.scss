@@ -448,8 +448,8 @@
       right: 8px;
     }
     .card-logo-name{
-      padding-top: 10px;
-      padding-left: 12px;
+      padding-top: 17px;
+      padding-left: 45px;
     }
     .card-num{
       margin: 15px 0px 10px 15px;
@@ -458,8 +458,47 @@
     &.zhaoshang{
       background: url("./bankImages/zhaoshang_bg.png") no-repeat;
     }
+    &.gongshang{
+      background: url("./bankImages/gongshang_bg.png") no-repeat;
+    }
+    &.jianshe{
+      background: url("./bankImages/jianshe_bg.png") no-repeat;
+    }
+    &.nongye{
+      background: url("./bankImages/nongye_bg.png") no-repeat;
+    }
+    &.zhongguo{
+      background: url("./bankImages/zhongguo_bg.png") no-repeat;
+    }
     &.jiaotong{
       background: url("./bankImages/jiaotong_bg.png") no-repeat;
+    }
+    &.guangfa{
+      background: url("./bankImages/guangfa_bg.png") no-repeat;
+    }
+    &.guangda{
+      background: url("./bankImages/guangda_bg.png") no-repeat;
+    }
+    &.pufa{
+      background: url("./bankImages/pufa_bg.png") no-repeat;
+    }
+    &.minsheng{
+      background: url("./bankImages/minsheng_bg.png") no-repeat;
+    }
+    &.pingan{
+      background: url("./bankImages/pingan_bg.png") no-repeat;
+    }
+    &.xingye{
+      background: url("./bankImages/xingye_bg.png") no-repeat;
+    }
+    &.zhongxin{
+      background: url("./bankImages/zhongxin_bg.png") no-repeat;
+    }
+    &.youzheng{
+      background: url("./bankImages/youzheng_bg.png") no-repeat;
+    }
+    &.huaxia{
+      background: url("./bankImages/huaxia_bg.png") no-repeat;
     }
   }
 
@@ -542,12 +581,39 @@
   }
   .input1 {
     width: 284px;
-    height: 28px;
+    height: 30px;
+  }
+  .input2 {
+    width: 244px;
+    height: 30px;
   }
   .select2 {
     width: 140px;
     height: 38px;
     margin-right: 16px;
+  }
+  .uc-cbCardBinding-header{
+    width: 480px;
+    height: 49px;
+    background-color: $sec-line-color;
+    position: relative;
+    text-align: center;
+    line-height: 49px;
+    color: $def-black-color;
+    font-size: $font-md;
+    .close{
+      font-size: 30px;
+      display: block;
+      position: absolute;
+
+    }
+  }
+  .btn-validate{
+    width: 108px;
+    height: 36px;
+    font-size: $font-md;
+    border-radius: $globalBtnRadius;
+    margin-bottom: 30px;
   }
 }
 
