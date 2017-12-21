@@ -7,9 +7,9 @@
     <div class="pull-left">
       <div class="safe-info-icon inline-block vertical-top"></div>
       <div class="safe-info-level inline-block vertical-top">
-        <div class="safe-text font-md text-black">安全等级：<span class="text-prominent">低</span></div>
+        <div class="safe-text font-md text-black">安全等级：<span class="text-prominent js-safe-level-text"></span></div>
         <div class="safe-progress-bar">
-          <div class="safe-progress-info"></div>
+          <div class="safe-progress-info js-safe-progress-info"></div>
         </div>
       </div>
     </div>
@@ -18,24 +18,24 @@
       <div class="last-login-info m-top-md">
         <div class="inline-block vertical-top login-info-list">
           <div class="font-sm text-black">日期</div>
-          <div class="font-sm text-black m-top-sm js-safe-info-date">2017/3/8 12:01:06</div>
+          <div class="font-sm text-black m-top-sm js-safe-info-date"></div>
         </div>
         <div class="inline-block vertical-top login-info-list">
           <div class="font-sm text-black">IP</div>
-          <div class="font-sm text-black m-top-sm js-safe-info-ip">115.85.44.18</div>
+          <div class="font-sm text-black m-top-sm js-safe-info-ip"></div>
         </div>
         <div class="inline-block vertical-top login-info-list">
           <div class="font-sm text-black">地址</div>
-          <div class="font-sm text-black m-top-sm js-safe-info-address">菲律宾</div>
+          <div class="font-sm text-black m-top-sm js-safe-info-address"></div>
         </div>
       </div>
     </div>
   </div>
-  <div class="uc-account-setting clearfix">
-    <div class="setting-info active">
+  <div class="uc-account-setting accordion clearfix" id="accordion2">
+    <div class="setting-info js-setting-info accordion-group">
       <div class="setting-info-top clearfix">
         <div class="pull-left">
-          <div class="setting-icon-bg inline-block vertical-top">
+          <div class="setting-icon-bg inline-block vertical-top js-setting-icon" data-type="login">
             <div class="setting-icon pwd-icon"></div>
           </div>
           <div class="setting-text inline-block vertical-top">
@@ -46,69 +46,117 @@
         <div class="pull-right">
           <div class="setting-info-text inline-block text-black m-right-smd">强度:<span class="text-prominent">弱</span>
           </div>
-          <a class="setting-btn js-setting-login-btn inline-block vertical-top m-right-smd">修改</a>
+          <a class="setting-btn js-setting-btn inline-block vertical-top m-right-smd" data-toggle="collapse"
+             data-target="#setting-login-pwd" data-parent="#accordion2" data-type="login">修改</a>
         </div>
       </div>
-      <div class="setting-info-bottom clearfix js-setting-login-pwd">
-
-      </div>
-    </div>
-    <div class="setting-info">
-      <div class="pull-left">
-        <div class="setting-icon-bg inline-block vertical-top">
-          <div class="setting-icon lock-icon"></div>
+      <div class="setting-info-bottom collapse" id="setting-login-pwd">
+        <div class="info-bottom-title clearfix">
+          <div class="pull-left title js-setting-info-title" data-type="login">修改登录密码</div>
+          <a class="pull-right close btn-close js-setting-info-close" data-toggle="collapse"
+             data-target="#setting-login-pwd" data-parent="#accordion2">&times;</a>
         </div>
-        <div class="setting-text inline-block vertical-top">
-          <div class="setting-text-title font-md text-black">资金密码</div>
-          <div class="setting-text-sub-title m-top-sm font-sm text-auxiliary">非常重要！用于提款或转账时验证身份</div>
-        </div>
-      </div>
-      <div class="pull-right">
-        <a class="setting-btn js-setting-fund-btn inline-block vertical-top m-right-smd">立即设置</a>
+        <div class="js-setting-login-pwd"></div>
       </div>
     </div>
-    <div class="setting-info">
-      <div class="pull-left">
-        <div class="setting-icon-bg inline-block vertical-top">
-          <div class="setting-icon wechat-icon"></div>
+    <div class="setting-info js-setting-info accordion-group">
+      <div class="setting-info-top clearfix">
+        <div class="pull-left">
+          <div class="setting-icon-bg inline-block vertical-top js-setting-icon" data-type="fund">
+            <div class="setting-icon lock-icon"></div>
+          </div>
+          <div class="setting-text inline-block vertical-top">
+            <div class="setting-text-title font-md text-black">资金密码</div>
+            <div class="setting-text-sub-title m-top-sm font-sm text-auxiliary">非常重要！用于提款或转账时验证身份</div>
+          </div>
         </div>
-        <div class="setting-text inline-block vertical-top">
-          <div class="setting-text-title font-md text-black">密保问题</div>
-          <div class="setting-text-sub-title m-top-sm font-sm text-auxiliary">用于找回密码，修改账户资料时验证身份</div>
-        </div>
-      </div>
-      <div class="pull-right">
-        <a class="setting-btn js-setting-question-btn inline-block vertical-top m-right-smd">立即设置</a>
-      </div>
-    </div>
-    <div class="setting-info">
-      <div class="pull-left">
-        <div class="setting-icon-bg inline-block vertical-top">
-          <div class="setting-icon phone-icon"></div>
-        </div>
-        <div class="setting-text inline-block vertical-top">
-          <div class="setting-text-title font-md text-black">绑定手机</div>
-          <div class="setting-text-sub-title m-top-sm font-sm text-auxiliary">提供大额提现、账号异常通知及其他安全验证服务，账户操作更安全更健康</div>
+        <div class="pull-right">
+          <a class="setting-btn js-setting-btn inline-block vertical-top m-right-smd" data-toggle="collapse"
+             data-target="#setting-fund-pwd" data-parent="#accordion2" data-type="fund">立即设置</a>
         </div>
       </div>
-      <div class="pull-right">
-        <div class="setting-info-text inline-block text-black m-right-smd js-setting-phone-num"></div>
-        <a class="setting-btn js-setting-phone-btn inline-block vertical-top m-right-smd">立即设置</a>
+      <div class="setting-info-bottom collapse" id="setting-fund-pwd">
+        <div class="info-bottom-title clearfix">
+          <div class="pull-left title js-setting-info-title" data-type="fund">设置资金密码</div>
+          <a class="pull-right close btn-close js-setting-info-close" data-toggle="collapse"
+             data-target="#setting-fund-pwd" data-parent="#accordion2">&times;</a>
+        </div>
+        <div class="js-setting-fund-pwd"></div>
       </div>
     </div>
-    <div class="setting-info">
-      <div class="pull-left">
-        <div class="setting-icon-bg inline-block vertical-top">
-          <div class="setting-icon mail-icon"></div>
+    <div class="setting-info js-setting-info accordion-group">
+      <div class="setting-info-top clearfix">
+        <div class="pull-left">
+          <div class="setting-icon-bg inline-block vertical-top js-setting-icon" data-type="question">
+            <div class="setting-icon wechat-icon"></div>
+          </div>
+          <div class="setting-text inline-block vertical-top">
+            <div class="setting-text-title font-md text-black">密保问题</div>
+            <div class="setting-text-sub-title m-top-sm font-sm text-auxiliary">用于找回密码，修改账户资料时验证身份</div>
+          </div>
         </div>
-        <div class="setting-text inline-block vertical-top">
-          <div class="setting-text-title font-md text-black">绑定邮箱</div>
-          <div class="setting-text-sub-title m-top-sm font-sm text-auxiliary">绑定邮箱可增加账号安全级别，在确保邮箱正常的情况下可提供安全验证服务</div>
+        <div class="pull-right">
+          <a class="setting-btn js-setting-btn inline-block vertical-top m-right-smd" data-toggle="collapse"
+             data-target="#setting-question-pwd" data-parent="#accordion2" data-type="question">立即设置</a>
         </div>
       </div>
-      <div class="pull-right">
-        <div class="setting-info-text inline-block text-black m-right-smd js-setting-phone-num"></div>
-        <a class="setting-btn js-setting-mail-pwd inline-block vertical-top m-right-smd">立即设置</a>
+      <div class="setting-info-bottom collapse" id="setting-question-pwd">
+        <div class="info-bottom-title clearfix">
+          <div class="pull-left title js-setting-info-title" data-type="question">设置密保问题</div>
+          <a class="pull-right close btn-close js-setting-info-close" data-toggle="collapse"
+             data-target="#setting-question-pwd" data-parent="#accordion2">&times;</a>
+        </div>
+        <div class="js-setting-question-pwd"></div>
+      </div>
+    </div>
+    <div class="setting-info js-setting-info">
+      <div class="setting-info-top clearfix">
+        <div class="pull-left">
+          <div class="setting-icon-bg inline-block vertical-top js-setting-icon" data-type="phone">
+            <div class="setting-icon phone-icon"></div>
+          </div>
+          <div class="setting-text inline-block vertical-top">
+            <div class="setting-text-title font-md text-black">绑定手机</div>
+            <div class="setting-text-sub-title m-top-sm font-sm text-auxiliary">提供大额提现、账号异常通知及其他安全验证服务，账户操作更安全更健康</div>
+          </div>
+        </div>
+        <div class="pull-right">
+          <div class="setting-info-text inline-block text-black m-right-smd js-setting-phone-num"></div>
+          <a class="setting-btn js-setting-btn inline-block vertical-top m-right-smd" data-type="phone">立即设置</a>
+        </div>
+      </div>
+      <div class="setting-info-bottom collapse" id="setting-phone-pwd">
+        <div class="info-bottom-title clearfix">
+          <div class="pull-left title js-setting-info-title" data-type="phone">绑定手机</div>
+          <a class="pull-right close btn-close js-setting-info-close" data-toggle="collapse"
+             data-target="#setting-phone-pwd" data-parent="#accordion2">&times;</a>
+        </div>
+        <div class="js-setting-phone-pwd"></div>
+      </div>
+    </div>
+    <div class="setting-info js-setting-info">
+      <div class="setting-info-top clearfix">
+        <div class="pull-left">
+          <div class="setting-icon-bg inline-block vertical-top js-setting-icon" data-type="mail">
+            <div class="setting-icon mail-icon"></div>
+          </div>
+          <div class="setting-text inline-block vertical-top">
+            <div class="setting-text-title font-md text-black">绑定邮箱</div>
+            <div class="setting-text-sub-title m-top-sm font-sm text-auxiliary">绑定邮箱可增加账号安全级别，在确保邮箱正常的情况下可提供安全验证服务</div>
+          </div>
+        </div>
+        <div class="pull-right">
+          <div class="setting-info-text inline-block text-black m-right-smd js-setting-phone-num"></div>
+          <a class="setting-btn js-setting-pwd inline-block vertical-top m-right-smd" data-type="mail">立即设置</a>
+        </div>
+      </div>
+      <div class="setting-info-bottom collapse" id="setting-mail-pwd">
+        <div class="info-bottom-title clearfix">
+          <div class="pull-left title js-setting-info-title" data-type="mail">绑定邮箱</div>
+          <a class="pull-right close btn-close js-setting-info-close" data-toggle="collapse"
+             data-target="#setting-mail-pwd" data-parent="#accordion2">&times;</a>
+        </div>
+        <div class="js-setting-mail-pwd"></div>
       </div>
     </div>
   </div>
