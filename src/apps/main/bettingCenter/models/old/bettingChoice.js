@@ -96,12 +96,34 @@ const BettingChoiceModel = Model.extend({
   },
 
   initialize() {
-    this.on('change:userRebate change:betMethod', this.calculateByPrefab)
+    this.on('change:multiple change:statistics change:userRebate change:betMethod', this.calculateByPrefab)
     this.on('change:maxBonus change:multiple change:unit', this.calculateMaxBonus)
     this.on('change:maxMultiple change:unit', function() {
       const info = this.pick('maxMultiple', 'unit')
       this.set('formatMaxMultiple', _(info.maxMultiple).chain().mul(10000).div(info.unit)
         .value())
+    })
+
+    this.on('change:unit', function(model, unit) {
+      let unitText = ''
+      switch (unit) {
+        case 10000:
+          unitText = '元'
+          break
+        case 1000:
+          unitText = '角'
+          break
+        case 100:
+          unitText = '分'
+          break
+        case 10:
+          unitText = '厘'
+          break
+        default:
+          break
+      }
+      this.set('formatUnit', unitText)
+      this.calculateByPrefab()
     })
 
     this.on('change:previewList', this.calculateTotal)

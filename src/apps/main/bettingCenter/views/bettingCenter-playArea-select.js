@@ -4,7 +4,6 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
 
   events: {
     'click .js-bc-select-item': 'selectNumberHandler',
-    'click .js-bc-select-op': 'selectOperateHandler',
     'click .js-toggle-page': 'togglePageHandler',
   },
 

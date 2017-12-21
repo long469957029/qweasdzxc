@@ -26,7 +26,6 @@ const BettingCenterView = Base.ItemView.extend({
 
   events: {
     'click .js-bc-advance-rule': 'advanceRuleChangeHandler',
-    'change .js-bc-bet-mode': 'betModeChangeHandler',
     'change .js-bc-unit-select': 'monetaryUnitChangeHandler',
     'click .js-bc-btn-lottery-add': 'lotteryAddHandler',
     'click .js-bc-lottery-auto': 'lotteryAutoAddHandler',
@@ -73,11 +72,6 @@ const BettingCenterView = Base.ItemView.extend({
     this.listenTo(this.model, 'change:playId', function(model, playId) {
       this.renderPlayArea()
       this.renderPlayInfo(this.rulesCollection.getPlayInfo(model.get('groupId'), playId))
-      this.model.set({
-        statistics: 0,
-      })
-      // this.resizeFooter()
-      // this.resizeRecords()
     })
 
     this.listenTo(this.model, 'change:formatMaxMultiple', this.renderNumRange)
@@ -333,18 +327,6 @@ const BettingCenterView = Base.ItemView.extend({
   renderPlayInfo(playInfo) {
     // 游戏说明
     // this.$playTip.text(playInfo.playDes)
-
-    // 中奖举例
-    if (this.$playExample.data('popover')) {
-      this.$playExample.popover('destroy')
-    }
-    this.$playExample.popover({
-      trigger: 'hover',
-      container: this.$el,
-      html: true,
-      content: `<div><span class="font-bold">玩法说明：</span>${playInfo.playDes}</div><div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
-      placement: 'bottom',
-    })
 
     // 更改 bettingChoice 模型的 倍数 返水率 奖金组
     this.model.set({
@@ -681,64 +663,6 @@ const BettingCenterView = Base.ItemView.extend({
       playId: $target.data('id'),
       playName: $target.data('title'),
     })
-  },
-
-  // 赔率方式select
-  betModeChangeHandler(e) {
-    const $target = $(e.currentTarget)
-    const $selectedOption = $target.find(':selected')
-    const maxMultiple = $selectedOption.data('max')
-    this.model.set({
-      maxBonus: $selectedOption.data('maxBonus'),
-      // formatBonusMode: $target.find(':selected').text(),
-      betMethod: Number($target.val()),
-      maxMultiple,
-    })
-    if (_.indexOf(this.mark6TicketIdArr, parseInt(this.model.get('ticketId'), 10)) > -1) {
-      const betBonus = this.model.get('betBonus')
-      if (betBonus) {
-        let betMethod = 'betMethodMax'
-        if ($selectedOption.index() === 1) {
-          betMethod = 'betMethodMin'
-        }
-        const selectItem = this.$('.js-bc-select-item')
-        const self = this
-        const playRule = betRulesConfig.get(this.model.pick('playId'))
-        // 六合彩正码-两面类型的号码球更改赔率数值
-        const zm_groupIdArr = betRulesConfig.getMark6SpecialInfo().zm_groupIdArr
-        if (_.indexOf(zm_groupIdArr, parseInt(this.model.get('groupId'), 10)) > -1) {
-          const playInfoBetBonu = _.pick(this.rulesCollection.getCurrentPlay(), 'betMethodMax', 'betMethodMin')
-          selectItem.each((index, ele) => {
-            const $ele = $(ele)
-            const itemInfo = _.findWhere(playRule.formatToNumInfo, { name: $ele.data('num') })
-            let betBonu = _.findWhere(betBonus, { betType: itemInfo.value })
-            // 如果是红、蓝、绿球
-            if (!betBonu) {
-              betBonu = playInfoBetBonu
-            }
-            const odds = self.setMark6NumberOdds(betBonu ? betBonu[betMethod] : '')
-            $ele.find('.mark6-odds').html(odds)
-          })
-        } else {
-          // 六合彩除了特码、正码组下类型的号码球更改赔率数值
-          selectItem.each((index, ele) => {
-            const $ele = $(ele)
-            const itemInfo = _.findWhere(playRule.formatToNumInfo, { name: $ele.data('num') })
-            const betBonu = _.findWhere(betBonus, { betType: itemInfo.value })
-            const odds = self.setMark6NumberOdds(betBonu ? betBonu[betMethod] : '')
-            $ele.find('.mark6-odds').html(odds)
-          })
-        }
-      } else {
-        const bz_groupIdArr = betRulesConfig.getMark6SpecialInfo().bz_groupIdArr
-        // 不中玩法右上角显示赔率
-        if (_.indexOf(bz_groupIdArr, parseInt(this.model.get('groupId'), 10)) > -1) {
-          this.$playArea.find('.mark6-bz-odds-value').html(this.setMark6NumberOdds($selectedOption.data('maxBonus')))
-        } else {
-          this.$playArea.find('.mark6-odds').html(this.setMark6NumberOdds($selectedOption.data('maxBonus')))
-        }
-      }
-    }
   },
 
   monetaryUnitChangeHandler(e) {

@@ -4,6 +4,7 @@ import * as types from '../mutation-types'
 const initState = () => {
   return {
     playLevels: [],
+    limitMoney: 0,
   }
 }
 
@@ -45,12 +46,12 @@ const getters = {
           }),
         }
       })
-    } 
+    }
   },
 
-  playInfo: () => {
-    return (groupId, playId) => {
-      const groupInfo = _(this.currentLevel).findWhere({
+  playInfo: (state) => {
+    return (playId, groupId) => {
+      const groupInfo = _(state.currentLevel).findWhere({
         playGroupId: groupId,
       })
 
@@ -59,14 +60,14 @@ const getters = {
         playId,
       })
 
-      this.currentPlay = playInfo
+      state.playInfo = playInfo
 
-      return this.currentPlay
+      return state.playInfo
     }
   },
 
-  currentPlay() {
-    return this.currentPlay
+  curPlayInfo: (state) => {
+    return state.playInfo
   },
 }
 
@@ -94,7 +95,7 @@ const mutations = {
 
     if (res && res.result === 0) {
       data = res.root && res.root.ticketPlayLevelInfo || []
-      // this.limitMoney = res.root && res.root.limitMoney
+      state.limitMoney = res.root && res.root.limitMoney
     }
     state.playLevels = data
   },
