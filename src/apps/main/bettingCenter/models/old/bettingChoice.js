@@ -410,26 +410,6 @@ const BettingChoiceModel = Model.extend({
     return this._addBets(bettingList)
   },
 
-  addPrevBet(bettingInfo, options) {
-    const selectInfo = this.pick('statistics')
-
-    if (selectInfo.statistics) {
-      if (!_.isNull(this.get('maxBetNums')) && selectInfo.statistics > this.get('maxBetNums')) {
-        this._addBets([bettingInfo], _(options || {}).extend(selectInfo, { buy: true }))
-        return { MaxBetNums: this.get('maxBetNums') }
-      }
-      this.emptyBuyBetting()
-      return this._addBets([bettingInfo], _(options || {}).extend(selectInfo))
-    }
-    return false
-  },
-
-  emptyPrevBetting() {
-    this.set('previewList', [])
-
-    this.trigger('change:previewList:del', this)
-    this.trigger('change:previewList', this)
-  },
 
   delPrevBetting(index) {
     const previewList = this.get('previewList')

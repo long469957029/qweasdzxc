@@ -25,8 +25,6 @@ const BettingCenterView = Base.ItemView.extend({
   commitTpl: _.template(require('bettingCenter/templates/bettingCenter-commit.html')),
 
   events: {
-    'click .js-bc-advance-rule': 'advanceRuleChangeHandler',
-    'change .js-bc-unit-select': 'monetaryUnitChangeHandler',
     'click .js-bc-btn-lottery-add': 'lotteryAddHandler',
     'click .js-bc-lottery-auto': 'lotteryAutoAddHandler',
     'click .js-bc-lottery-clear': 'lotteryClearHandler',
@@ -648,46 +646,6 @@ const BettingCenterView = Base.ItemView.extend({
   },
 
   // event handlers
-
-  advanceRuleChangeHandler(e) {
-    const $target = $(e.currentTarget)
-    const $parent = $target.closest('.js-bc-rules-toolbar')
-
-    this.$advanceRules.find('.js-bc-advance-rule').removeClass('active')
-
-    $target.addClass('active')
-
-    this.model.set({
-      groupId: $parent.data('id'),
-      groupName: $parent.data('title'),
-      playId: $target.data('id'),
-      playName: $target.data('title'),
-    })
-  },
-
-  monetaryUnitChangeHandler(e) {
-    const $target = $(e.currentTarget)
-    // $target.addClass('active').siblings().removeClass('active')
-
-    this.model.set('unit', $target.val())
-  },
-
-  lotteryAddHandler() {
-    if (!this.model.get('multiple')) {
-      Global.ui.notification.show('倍数为0，不能投注')
-      return false
-    }
-    this.rulesCollection.getPlayGroups(this.levelId)
-    this.model.set({
-      maxBetNums: this.rulesCollection.getPlayInfo(this.model.get('groupId'), this.model.get('playId')).maxBetNums,
-    })
-    if (this.options.type === 'select') {
-      this.addSelectLottery()
-    } else {
-      this.addInputLottery()
-    }
-    this.selectBcItemHandler()
-  },
 
   lotteryAutoAddHandler(e) {
     const $target = $(e.currentTarget)

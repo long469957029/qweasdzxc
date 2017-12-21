@@ -61,6 +61,7 @@ const getters = {
       })
 
       state.playInfo = playInfo
+      state.maxBetNums = playInfo.maxBetNums
 
       return state.playInfo
     }

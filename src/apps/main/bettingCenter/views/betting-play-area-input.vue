@@ -134,14 +134,17 @@
         return results
       },
 
-      getBetting() {
-        const repeat = this.checkRepeat(this.split())
-        const validate = this.validate(repeat.passNumbers)
+      addBetting() {
+
+        const repeat = this.$_checkRepeat(this.$_split())
+        const validate = this.$_validate(repeat.passNumbers)
 
 
         this.$store.commit(types.SET_STATISTICS, validate.statistics)
 
         repeat.repeatNumbers = repeat.repeatNumbers.concat(validate.repeatNumbers)
+
+        this.$store.commit(types.SET_PREV_BET)
 
         return {
           passNumbers: _(validate.passNumbers).map((passNumber) => {

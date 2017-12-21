@@ -138,6 +138,114 @@ const mutations = {
     state.fRebateMoney = 0
     state.statistics = 0
   },
+  [types.SET_CHOICE_EMPTY](state) {
+    debugger
+  },
+
+  [types.ADD_PREV_BET](state, bettingInfo, options) {
+    if (state.statistics) {
+      if (!_.isNull(state.maxBetNums) && state.statistics > state.maxBetNums) {
+        this.$_addBets([bettingInfo], _(options || {}).extend({statistics: state.statistics}, { buy: true }))
+        return { MaxBetNums: this.get('maxBetNums') }
+      }
+      this.emptyBuyBetting()
+      return this.$_addBets([bettingInfo], _(options || {}).extend({statistics: state.statistics}))
+    }
+    return false
+  },
+
+
+  [types.EMPTY_PREV_BETTING](state) {
+    state.previewList = []
+  },
+
+  $_addBets(bettingList, options) {
+    const items = []
+    const sameBets = []
+
+    options = _(options || {}).defaults({
+    })
+
+    _(bettingList).each(function(bettingInfo) {
+      let sameBet
+      let statistics
+
+      if (bettingInfo.statistics) {
+        statistics = bettingInfo.statistics
+      } else {
+        statistics = options.statistics
+      }
+
+      let item = {
+        levelName: state.levelName,
+        playId: state.playId,
+        playName: state.playName,
+        bettingNumber: this.formatBettingNumber(bettingInfo.lotteryList, {
+          selectOptionals: bettingInfo.selectOptionals,
+          formatToNum: bettingInfo.formatToNum,
+          playId: state.playId,
+          ticketId: state.ticketId,
+          formatToNumInfo: bettingInfo.formatToNumInfo || false,
+        }),
+        // 显示用
+        formatBettingNumber: this.formatBettingNumber(bettingInfo.lotteryList, {
+          type: 'display',
+          format: bettingInfo.format,
+        }),
+        type: bettingInfo.type,
+        formatBonusMode: state.formatBonusMode,
+        multiple: state.multiple,
+        unit: state.unit,
+        statistics,
+        formatUnit: state.formatUnit,
+        betMethod: state.betMethod,
+        userRebate: state.userRebate,
+        rebateMoney: state.rebateMoney,
+        maxMultiple: state.formatMaxMultiple,
+        maxBonus: state.maxBonus,
+        formatMaxBonus: state.formatMaxBonus,
+      }
+
+      // 判断是否有相同的投注,几个方面比较playId,unit,betMethod,bettingNumber
+      if (!options.buy) {
+        sameBet = _(state.previewList).findWhere({
+          playId: item.playId,
+          unit: item.unit,
+          betMethod: item.betMethod,
+          bettingNumber: item.bettingNumber,
+        })
+
+        if (sameBet) {
+          sameBet.multiple = _(sameBet.multiple).add(item.multiple)
+          // if (sameBet.multiple > sameBet.maxMultiple) {
+          //  sameBet.multiple = sameBet.maxMultiple;
+          // }
+          item = sameBet
+        }
+      }
+
+      // 计算prefabMoney 和 rebateMoney
+
+      item.prefabMoney = _(2).chain()
+        .mul(item.multiple).mul(item.statistics)
+        .mul(item.unit)
+        .value()
+
+      if (sameBet) {
+        sameBets.push(item)
+      } else {
+        items.splice(0, 0, item)
+      }
+    }, this)
+
+    if (!options.buy) {
+      state.previewList = items.concat(state.previewList)
+    } else {
+      state.buyList = items.concat(state.buyList)
+    }
+
+    return sameBets
+  },
 }
 
 

@@ -129,7 +129,7 @@
     data: function() {
       return {
         selectOptionals: [],
-        rowsResult: [],
+        lotteryList: [],
         formattedRuleList: [],
         totalPage: 1,
         coefficient: 1
@@ -369,6 +369,17 @@
         }))
       },
 
+      //自定义事件
+      addBetting(opt) {
+        return this.$store.commit(types.SET_PREV_BET, {
+          lotteryList: this.lotteryList,
+          selectOptionals: this.options.selectOptionals,
+          format: this.options.format,
+          formatToNum: this.options.formatToNum || false, // PK10大小单双文字数字转换标示
+          formatToNumInfo: this.options.formatToNumInfo || false, // 六合彩文字转换数值
+        }, opt)
+      },
+
       $_calculateCoefficient(optionals) {
         let coefficient = 1
 
@@ -388,7 +399,7 @@
       $_statisticsLottery() {
         let count = 0
 
-        this.rowsResult = _(this.playRule.list).map(function(item) {
+        this.lotteryList = _(this.playRule.list).map(function(item) {
           let selected = []
 
           if (item.isShow) {
@@ -404,12 +415,12 @@
           if (this.playRule.algorithmProps && this.playRule.algorithmProps.coefficient) {
             count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(
               this.playRule,
-              _(this.rowsResult).filter((rowResult) => {
-                return !_.isEmpty(rowResult)
+              _(this.lotteryList).filter((list) => {
+                return !_.isEmpty(list)
               }),
             ) || 0))
           } else {
-            count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(this.playRule, this.rowsResult) || 0))
+            count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(this.playRule, this.lotteryList) || 0))
           }
         }
 
