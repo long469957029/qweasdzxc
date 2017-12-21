@@ -25,7 +25,7 @@ const initState = () => {
     prefabMoney: 0,
     rebateMoney: 0,
     fPrefabMoney: 0,
-    fRebateMoney: 0
+    fRebateMoney: 0,
     // ticketId:
   }
 }
@@ -95,13 +95,13 @@ const mutations = {
       betBonus = playInfo.betMethodMax
     }
 
-    state.betBonus = betBonus;
+    state.betBonus = betBonus
 
     state.fBetBonus = _(betBonus).chain().div(10000).mul(state.unit)
       .convert2yuan()
       .value()
   },
-  //indexs 被选中号码的索引
+  // indexs 被选中号码的索引
   [types.UPDATE_BONUS] (state, indexs) {
     let betBonus = 0
     const playInfo = state.playInfo
@@ -123,27 +123,27 @@ const mutations = {
       betBonus = betBonus.betMethodMax
     }
 
-    state.betBonus = betBonus;
+    state.betBonus = betBonus
 
     state.fBetBonus = _(betBonus).chain().div(10000).mul(state.unit)
       .convert2yuan()
       .value()
   },
 
-  //清空选择
+  // 清空选择
   [types.SET_CHECKOUT_CHOICE](state) {
     state.prefabMoney = 0
     state.rebateMoney = 0
     state.fPrefabMoney = 0
     state.fRebateMoney = 0
     state.statistics = 0
-  }
+  },
 }
 
 
 const $_calculateByPrefab = (state) => {
   let prefabMoney = 0
-  let rebateMoney = 0
+  const rebateMoney = 0
 
   if (state.statistics && state.multiple) {
     prefabMoney = _(state.statistics).chain().mul(state.multiple).mul(2)
@@ -152,7 +152,7 @@ const $_calculateByPrefab = (state) => {
 
     state.prefabMoney = prefabMoney
     state.rebateMoney = state.betMethod === 1 ? _(prefabMoney).chain().mul(state.userRebate).div(1000)
-        .value() : 0
+      .value() : 0
   }
 
   state.prefabMoney = prefabMoney

@@ -4,7 +4,7 @@ import * as types from '../mutation-types'
 const initState = () => {
   return {
     playLevels: [],
-    limitMoney: 0
+    limitMoney: 0,
   }
 }
 
