@@ -9,20 +9,18 @@ const SecurityQuestionView = Base.ItemView.extend({
   // 构造修改密保问题页面
   updateSQTpl: _.template(require('userCenter/templates/securityQuestion-update.html')),
 
-  className: 'as-securityQuestion-view',
-
-  startOnLoading: true,
+  className: 'uc-securityQuestion-view',
 
   events: {
     // 1 添加密保问题
-    'click .js-as-inputSecurityQuestion-submit': 'inputSecurityQuestionHandler', // 输入密保问题(与修改页面共用)
-    'click .js-as-confirmSecurityQuestion-submit': 'confirmSecurityQuestionHandler', // 确认密保问题（与修改页面共用）
-    'click .js-as-SecurityQuestion-return': 'securityQuestionGoStepHandler', // 返回按钮（修改页面共用）
-    'change .js-as-questionSelect': 'questionSelectChangeHandler', // 控制三个下拉框的值不能重复选择
-    'change .js-as-question': 'userQuestionSelectChangeHandler', // 控制三个下拉框的值不能重复选择
+    'click .js-uc-inputSecurityQuestion-submit': 'inputSecurityQuestionHandler', // 输入密保问题(与修改页面共用)
+    'click .js-uc-confirmSecurityQuestion-submit': 'confirmSecurityQuestionHandler', // 确认密保问题（与修改页面共用）
+    'click .js-uc-SecurityQuestion-return': 'securityQuestionGoStepHandler', // 返回按钮（修改页面共用）
+    'change .js-uc-questionSelect': 'questionSelectChangeHandler', // 控制三个下拉框的值不能重复选择
+    'change .js-uc-question': 'userQuestionSelectChangeHandler', // 控制三个下拉框的值不能重复选择
 
     // 2 修改密保问题
-    'click .js-as-answerQuestion-submit': 'verifySecurityQuestionHandler', // 验证密保问题
+    'click .js-uc-answerQuestion-submit': 'verifySecurityQuestionHandler', // 验证密保问题
 
   },
 
@@ -37,9 +35,6 @@ const SecurityQuestionView = Base.ItemView.extend({
     Global.sync.ajax({
       url: '/acct/usersecurity/getsecurity.json',
     })
-      .always(() => {
-        self.loadingFinish()
-      })
       .done((res) => {
         if (res && res.result === 0) {
           // 0表示密保问题不存在
@@ -53,17 +48,17 @@ const SecurityQuestionView = Base.ItemView.extend({
           // 1未设置密保问题
           // 1.1展示添加密保问题页面
           self.$el.html(self.addSQTpl())
-          self.$addSecurityQuestionContainer = self.$('.js-as-addSecurityQuestion')
-          // 1.2初始化该页面的整体框架
-          self._initSteps(self.$addSecurityQuestionContainer, (event, currentIndex, newIndex) => {
-            return newIndex !== 3
-          })
+          // self.$addSecurityQuestionContainer = self.$('.js-uc-addSecurityQuestion')
+          // // 1.2初始化该页面的整体框架
+          // self._initSteps(self.$addSecurityQuestionContainer, (event, currentIndex, newIndex) => {
+          //   return newIndex !== 3
+          // })
           // 1.3 初始化设置密保问题页面
           self._initAddSQPage1('add')
         } else if (set === 1) {
           // 2设置了密保问题
           self.$el.html(self.updateSQTpl())
-          self.$updateSecurityQuestionContainer = self.$('.js-as-updateSecurityQuestion')
+          self.$updateSecurityQuestionContainer = self.$('.js-uc-updateSecurityQuestion')
           // 2.2初始化该页面的整体框架
           self._initSteps(self.$updateSecurityQuestionContainer, (event, currentIndex, newIndex) => {
             return newIndex !== 4
@@ -96,7 +91,7 @@ const SecurityQuestionView = Base.ItemView.extend({
 
     const selectedValue = $option.siblings('.selected').removeClass('selected').val()
     const selectingValue = $target.val()
-    const $select = this.$('.js-as-questionSelect')
+    const $select = this.$('.js-uc-questionSelect')
 
     $select.not($target).find(`option[value=${selectedValue}]`).removeClass('hidden')
     $select.not($target).find(`option[value=${selectingValue}]`).addClass('hidden')
@@ -110,7 +105,7 @@ const SecurityQuestionView = Base.ItemView.extend({
 
     const selectedValue = $option.siblings('.selected').removeClass('selected').val()
     const selectingValue = $target.val()
-    const $select = this.$('.js-as-question')
+    const $select = this.$('.js-uc-question')
 
     $select.not($target).find(`option[value=${selectedValue}]`).removeClass('hidden')
     $select.not($target).find(`option[value=${selectingValue}]`).addClass('hidden')
@@ -134,13 +129,13 @@ const SecurityQuestionView = Base.ItemView.extend({
         if (res && res.result === 0) {
           // 成功后,将问题列表加载在下拉框中
           // res.options = [1,2,3,4,5];
-          self.$('.js-as-questionSelect').append(_(res.root).map((option) => {
+          self.$('.js-uc-questionSelect').append(_(res.root).map((option) => {
             return `<option value="${option.qesId}">${option.question}</option>`
           }).join(''))
 
           // 进入下一个页面
           if (type === 'update') {
-            self.$('.js-as-stepContainer').steps('next')
+            self.$('.js-uc-stepContainer').steps('next')
           }
         }
       })
@@ -149,22 +144,22 @@ const SecurityQuestionView = Base.ItemView.extend({
   // TODO录入的密保问题完成 1.3.2初始化 确认密保问题页面
   inputSecurityQuestionHandler (e) {
     const $target = $(e.currentTarget)
-    const $currContainer = this.$('.js-as-inputSQForm')
+    const $currContainer = this.$('.js-uc-inputSQForm')
     const clpValidate = $currContainer.parsley().validate()
 
     if (clpValidate) {
       // 设置按钮为处理中状态
       // $target.button('loading');
       // 复制上一个页面中的元素节点的text到本页面中
-      const $selectedOptions = this.$('.js-as-questionSelect option:selected')
-      const $answers = this.$('.js-as-answer')
-      const $showQuestions = this.$('.js-as-showQuestion')
-      const $showAnswers = this.$('.js-as-showAnswer')
+      const $selectedOptions = this.$('.js-uc-questionSelect option:selected')
+      const $answers = this.$('.js-uc-answer')
+      const $showQuestions = this.$('.js-uc-showQuestion')
+      const $showAnswers = this.$('.js-uc-showAnswer')
       _.each($selectedOptions, (item, index) => {
         $showQuestions.eq(index).html($(item).html())
         $showAnswers.eq(index).html($answers.eq(index).val())
       })
-      const $currentContainer = $target.closest('.js-as-stepContainer')// 找到最近的该class节点
+      const $currentContainer = $target.closest('.js-uc-stepContainer')// 找到最近的该class节点
       $currentContainer.steps('next')
     }
   },
@@ -177,15 +172,15 @@ const SecurityQuestionView = Base.ItemView.extend({
     Global.sync.ajax({
       url: '/acct/usersecurity/resetusersecurity.json',
       data: {
-        'secrityList[0].securityId': $(this.$('.js-as-questionSelect').find('option:selected')[0]).val(),
-        'secrityList[0].securityQes': $(this.$('.js-as-questionSelect').find('option:selected')[0]).text(),
-        'secrityList[0].securityAsw': $(this.$('.js-as-answer')[0]).val(),
-        'secrityList[1].securityId': $(this.$('.js-as-questionSelect').find('option:selected')[1]).val(),
-        'secrityList[1].securityQes': $(this.$('.js-as-questionSelect').find('option:selected')[1]).text(),
-        'secrityList[1].securityAsw': $(this.$('.js-as-answer')[1]).val(),
-        'secrityList[2].securityId': $(this.$('.js-as-questionSelect').find('option:selected')[2]).val(),
-        'secrityList[2].securityQes': $(this.$('.js-as-questionSelect').find('option:selected')[2]).text(),
-        'secrityList[2].securityAsw': $(this.$('.js-as-answer')[2]).val(),
+        'secrityList[0].securityId': $(this.$('.js-uc-questionSelect').find('option:selected')[0]).val(),
+        'secrityList[0].securityQes': $(this.$('.js-uc-questionSelect').find('option:selected')[0]).text(),
+        'secrityList[0].securityAsw': $(this.$('.js-uc-answer')[0]).val(),
+        'secrityList[1].securityId': $(this.$('.js-uc-questionSelect').find('option:selected')[1]).val(),
+        'secrityList[1].securityQes': $(this.$('.js-uc-questionSelect').find('option:selected')[1]).text(),
+        'secrityList[1].securityAsw': $(this.$('.js-uc-answer')[1]).val(),
+        'secrityList[2].securityId': $(this.$('.js-uc-questionSelect').find('option:selected')[2]).val(),
+        'secrityList[2].securityQes': $(this.$('.js-uc-questionSelect').find('option:selected')[2]).text(),
+        'secrityList[2].securityAsw': $(this.$('.js-uc-answer')[2]).val(),
         securityToken: this.security_queToken,
       },
     })
@@ -196,7 +191,7 @@ const SecurityQuestionView = Base.ItemView.extend({
       .done((res) => {
       // 成功后
         if (res && res.result === 0) {
-          const $currentContainer = $target.closest('.js-as-stepContainer')// 找到最近的该class节点
+          const $currentContainer = $target.closest('.js-uc-stepContainer')// 找到最近的该class节点
           $currentContainer.steps('next')
         } else {
           Global.ui.notification.show(`设置密保问题请求失败${res.msg}`)
@@ -208,7 +203,7 @@ const SecurityQuestionView = Base.ItemView.extend({
   // TODO 2.3初始化修改密保问题页面 2.3.1初始化 验证密保问题
   _initUpdateSQPage1 () {
     const self = this
-    // const $currContainer = this.$('.js-as-verifySQForm')
+    // const $currContainer = this.$('.js-uc-verifySQForm')
     // 设置按钮为处理中状态
     // $target.button('loading');
     Global.sync.ajax({
@@ -224,7 +219,7 @@ const SecurityQuestionView = Base.ItemView.extend({
         // 成功后
         if (res && res.result === 0) {
           // todo 添加已选择的密保问题到页面中
-          self.$('.js-as-question').append(_(res.root).map((option) => {
+          self.$('.js-uc-question').append(_(res.root).map((option) => {
             return `<option value="${option.userSecurityId}">${option.userSecurityQuestion}</option>`
           }).join(''))
         }
@@ -235,7 +230,7 @@ const SecurityQuestionView = Base.ItemView.extend({
   verifySecurityQuestionHandler (e) {
     const self = this
     const $target = $(e.currentTarget)
-    const $currContainer = this.$('.js-as-verifySQForm')
+    const $currContainer = this.$('.js-uc-verifySQForm')
     const clpValidate = $currContainer.parsley().validate()
     if (clpValidate) {
       // 设置按钮为处理中状态
@@ -273,7 +268,7 @@ const SecurityQuestionView = Base.ItemView.extend({
   securityQuestionGoStepHandler (e) {
     const $target = $(e.currentTarget)
     const type = $target.data('type')// 需要返回的步骤记录在此
-    const $currentContainer = $target.closest('.js-as-stepContainer')// 找到最近的该class节点
+    const $currentContainer = $target.closest('.js-uc-stepContainer')// 找到最近的该class节点
 
     $currentContainer.steps('goTo', type)
   },

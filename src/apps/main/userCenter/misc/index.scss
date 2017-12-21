@@ -544,6 +544,9 @@
 .uc-cbCardBinding-container{
   width: 520px;
   margin: 0 auto;
+  &.uc-cbCardBinding-dialog{
+    width: 480px;
+  }
   .uc-cb-fundPwd{
     width: 286px;
     height: 28px !important;
