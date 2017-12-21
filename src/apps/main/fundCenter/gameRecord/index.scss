@@ -1,0 +1,279 @@
+@charset "UTF-8";
+
+@import "~base/styles/imports";
+
+.fc-gr-detail {
+  .popover .popover-content {
+    background-color: $def-white-color;
+  }
+  .fc-td-record-status {
+    position: absolute;
+    z-index: 99;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    top: 11px;
+    left: 23px;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 3px;
+    background: $prominent-red-color;
+    color: $def-white-color;
+    font-size: 10px !important;
+    padding: 0px;
+  }
+  .table th, .table td {
+    padding: 7px 3px;
+  }
+}
+
+.fc-gr-bet-detail {
+  width: 472px;
+  height: 590px;
+  background-image: url("../misc/v2/dailog-betting-detail.png");
+  padding: 14px 27px;
+  .fc-gr-bet-detail-title {
+    text-align: center;
+    height: 141px;
+    padding: 0px 10px;
+    .fc-gr-bet-type {
+      padding: 25px 90px;
+      font-size: 14px;
+      color: $def-black-color;
+      .fc-gr-bet-type-no {
+        color: $prominent-color;
+      }
+    }
+    .fc-gr-bet-num {
+      width: 310px;
+      height: 50px;
+      padding: 0px 70px;
+      li {
+        list-style: none;
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        background: $new-main-deep-color;
+        border-radius: 50px;
+        font-size: 22px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        color: $def-white-color;
+        margin: 5px;
+        .gr-bet-num-shadow {
+          display: block;
+          margin-left: 7px;
+          background: radial-gradient(#cccccc, #f9f9f9);
+          box-shadow: 1px 0px 25px #cccccc;
+          width: 27px;
+          height: 12px;
+          -moz-border-radius: 100px / 19px;
+          -webkit-border-radius: 100px / 19px;
+          border-radius: 100px / 19px;
+        }
+      }
+    }
+    .gr-betDetail-close {
+      background-image: url("../misc/v2/dailog-close.png");
+      width: 18px;
+      height: 18px;
+      float: right;
+      margin-top: 16px;
+      z-index: 99;
+      position: absolute;
+
+    }
+  }
+  .fc-gr-bet-detail-container {
+    height: 444px;
+    margin-top: 4px;
+    .gr-bet-detail-item {
+      height: 36px;
+      line-height: 10px;
+      border-bottom: 1px dotted #cccccc;
+
+      .gr-bet-detail-name {
+        width: 60px;
+        color: $def-black-color;
+        margin-left: 30px;
+      }
+      .gr-bet-detail-value {
+        color: $new-inverse-color;
+        padding: 13px 15px;
+      }
+
+    }
+    .item-content {
+      height: 75px !important;
+      .gr-bet-detail-name {
+        float: left;
+        margin-top: 13px;
+      }
+      .gr-bet-content-container {
+        width: 382px;
+        word-wrap: break-word;
+        height: 73px;
+        overflow: auto;
+        .gr-bet-detail-value {
+          width: 345px;
+          height: 80px;
+          padding-top: 7px;
+          line-height: 22px;
+        }
+      }
+    }
+  }
+  .gr-submit-container {
+    margin-top: 75px;
+    text-align: center;
+    .btn-bet-detail {
+      width: 130px;
+      height: 35px;
+      color: $def-white-color;
+      background: $new-main-deep-color;
+    }
+  }
+}
+
+.fc-cd-chase-detail-form {
+  width: 760px;
+  height: 540px;
+  background-image: url("../misc/v2/dailog-chase-detail.png");
+  padding: 14px 45px;
+  .cd-betDetail-close {
+    background-image: url("../misc/v2/dailog-close.png");
+    width: 18px;
+    height: 18px;
+    float: right;
+
+  }
+  .fc-cd-chase-detail-title {
+    height: 151px;
+    padding: 15px 0px 5px 15px;
+    color: $def-black-color;
+    .jc-cd-chase-status {
+      background-color: $new-main-deep-color;
+      color: $def-white-color;
+      width: 42px;
+      height: 20px;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .fc-cd-total-container {
+      margin: 15px 0px;
+      .table-bordered {
+        border: 1px solid $def-gray-color;
+        tr {
+          width: 190px;
+          height: 75px;
+          td {
+            border: 1px solid #cccccc;
+            text-align: left;
+          }
+        }
+      }
+      .total-name {
+        padding-left: 25px;
+        color: $new-inverse-color;
+      }
+      .total-value {
+        padding-left: 25px;
+      }
+    }
+    .fc-cd-bet-num {
+      margin-top: -7px;
+      li {
+        list-style: none;
+        margin-right: 40px;
+        display: inline-block;
+      }
+    }
+  }
+  .fc-cd-chase-detail-container {
+    height: 270px;
+    .fc-cd-chase-chose-container {
+      margin: 18px 0;
+      .cd-bet-select {
+        width: 80px;
+        height: 22px;
+        color: $new-inverse-color;
+        background-color: transparent;
+        border: 0;
+        border-radius: 15px;
+        &.active, &:hover {
+          color: $def-white-color;
+          background-color: $new-main-deep-color;
+          border-radius: 15px;
+        }
+        .content-word {
+          margin-top: 3px;
+        }
+      }
+    }
+    .fc-cd-chase-content-container {
+      padding: 20px;
+      li {
+        list-style: none;
+        color: $new-inverse-color;
+        margin: 10px;
+      }
+      .content-name {
+        width: 80px;
+      }
+      .content-value-container {
+        width: 598px;
+        word-wrap: break-word;
+        height: 70px;
+        overflow: auto;
+        float: right;
+        .content-value {
+          width: 590px;
+          height: 100px;
+          padding-top: 7px;
+          line-height: 21px;
+          margin-top: -7px;
+        }
+      }
+    }
+    .js-cd-no-container {
+      padding-top: -2px;
+      .table thead th {
+        backgroud-color: $def-white-color;
+      }
+      .table-bordered colgroup + thead tr:first-child th {
+        border-bottom: 1px solid $def-gray-color;
+        background: transparent;
+      }
+      .table {
+        background-color: transparent !important;
+      }
+      .slimScrollDiv {
+        height: 184px !important;
+        .table tbody td {
+          background: transparent !important;
+        }
+
+        .table th, .table td {
+          padding: 8px 3px;
+        }
+        tbody td:first-child {
+          border-bottom: 0;
+        }
+        tbody td:last-child {
+          border-bottom: 0;
+        }
+
+      }
+    }
+  }
+  .gr-submit-container{
+    margin-top: 20px;
+    text-align: center;
+  }
+  .btn-link-red{
+    color:$prominent-red-color;
+    background:$def-white-color;
+    border:0
+  }
+}

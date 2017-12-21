@@ -22,14 +22,14 @@ $.widget('gl.confirm', {
 
     this.uuid = this.options.id || `confirm-${_.now()}`
     const body = []
-    let footer = `${'<div class="text-center control-confirm-special ">' +
+    let footer = `${'<div class="text-center control-confirm-special m-top-md">' +
     '<button type="button" class="btn btn-left confirm-agree" data-loading-text="保存中">'}${this.options.btnLeftText}</button>` +
     `<button type="button" class="btn btn-link btn-right confirm-reject" data-dismiss="modal">${this.options.btnRightText}</button></div>`
 
     let data = {
       id: this.uuid,
       title: this.options.title,
-      body: this.options.content,
+      subTitle: this.options.content,
       size: this.options.size,
       footer: this.options.noFooter ? '' : footer,
     }
@@ -39,7 +39,7 @@ $.widget('gl.confirm', {
       body.push(`<div class="text-center font-md">${this.options.content}</div>`)
 
       footer = `${'<div class="m-TB-md text-center"><div class="text-center control-confirm-special ">' +
-        '<button type="button" class="btn btn-left confirm-agree" data-loading-text="处理中">'}${this.options.btnLeftText}</button>` +
+        '<button type="button" class="btn btn-left confirm-agree width-sm btn-lg" data-loading-text="处理中">'}${this.options.btnLeftText}</button>` +
         `<button type="button" class="btn btn-link btn-right confirm-reject" data-dismiss="modal">${this.options.btnRightText}</button></div>`
       body.push(footer)
 
@@ -53,7 +53,7 @@ $.widget('gl.confirm', {
 
     this.$dialog = Global.ui.dialog.show(data)
 
-    this.$dialog.on('hidden.modal', function(e) {
+    this.$dialog.on('hidden.modal', function() {
       $(this).remove()
       self.destroy()
     })
@@ -85,7 +85,7 @@ $.widget('gl.confirm', {
 
     return false
   },
-  rejectConfirmHandler(e) {
+  rejectConfirmHandler() {
     this.options.rejectCallback()
 
     Global.ui.dialog.hide(this.uuid)

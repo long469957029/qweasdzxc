@@ -66,6 +66,7 @@ const WithdrawView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD HH:mm:ss',
       },
+      size: 'timer-record-input',
       showIcon: true,
     }).render()
 
@@ -103,8 +104,8 @@ const WithdrawView = SearchGrid.extend({
     const rowTop = (index * 40) + 63
     row.push(rowInfo.tradeNo)
     row.push(_(rowInfo.createTime).toTime())
-    row.push(`<span class="m-right-sm"></span>[${rowInfo.bankName}]`)
-    row.push(`<span class="text-cut">${_(rowInfo.amount).fixedConvert2yuan()}</span>`)
+    row.push(rowInfo.bankName)
+    row.push(`<span class="text-account-cut">${_(rowInfo.amount).fixedConvert2yuan()}</span>`)
     const statusList = []
     if (rowInfo.flowStatus === 0) {
       statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">审核中</span><span class="fc-rc-status-line">-</span></span>')

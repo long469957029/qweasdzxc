@@ -69,6 +69,7 @@ const RechargeView = SearchGrid.extend({
         format: 'YYYY-MM-DD HH:mm:ss',
       },
       showIcon: true,
+      size: 'timer-record-input',
     }).render()
     SearchGrid.prototype.onRender.apply(this, arguments)
   },
@@ -99,13 +100,12 @@ const RechargeView = SearchGrid.extend({
       .hideLoading()
   },
 
-  formatRowData(rowInfo, index) {
+  formatRowData(rowInfo) {
     const row = []
-    const rowTop = (index * 40) + 63
     row.push(rowInfo.tradeNo)
     row.push(_(rowInfo.payTime).toTime())
     row.push(`<span class="m-right-sm">${rowInfo.type}</span>[${rowInfo.bankName}]`)
-    row.push(`<span class="text-add">+${_(rowInfo.amount) / 10000}</span>`)
+    row.push(`<span class="text-account-add">+${_(rowInfo.amount) / 10000}</span>`)
     // row.push(rowInfo.balance / 10000)
 
     const statusList = []
@@ -113,23 +113,18 @@ const RechargeView = SearchGrid.extend({
       statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">待支付</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已到账</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-line"></span></span></div>')
-      statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
     } else if (rowInfo.flowStatus === 1) {
       statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">待支付</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已到账</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-line"></span></span></div>')
-      statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
     } else if (rowInfo.flowStatus === 2) {
       statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">待支付</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已到账</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-line"></span></span></div>')
-      statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
     } else {
       statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">待支付</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">未通过</span><span class="fc-rc-status-line-unPass">-</span></span>')
       statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-img"></span></span></div>')
-      statusList.push('<div class="inline-block js-fc-img-container fc-rc-status-img-container "><i class="fa fa-exclamation-circle" aria-hidden="true"></i></div>' +
-        `<div class="fc-rc-status-text-container hidden" style="top:${rowTop}px"><div class="fc-rc-status-text">${rowInfo.status}</div></div>`)
     }
     row.push(statusList.join(''))
     return row

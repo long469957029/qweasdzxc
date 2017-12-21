@@ -4,4 +4,5 @@
 
   background: map_get($style, background);
   background: transparent \9;
+  background-color: map_get($style, bg-color);
 }

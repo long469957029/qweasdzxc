@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
-@import
-"~base/styles/imports";
+@import "~base/styles/imports";
 
 .modal-backdrop {
   position: fixed;
@@ -32,7 +31,7 @@
   right: 0;
   z-index: 1050;
   outline: 0;
-  color: $font-deep-color;
+  color: $new-inverse-color;
 
   &.fade {
     top: -25%;
@@ -48,10 +47,9 @@
     }
   }
 
-
   &.modal-notification {
     .modal-dialog {
-      opacity: 0.85;
+      opacity: 1;
     }
     &.in {
       top: 20%;
@@ -65,66 +63,98 @@
     .modal-dialog {
       border: 0;
     }
-    .cloud-pic{
-      background:url(./cloud-pic.png) no-repeat;
-      width:563px;
-      height:366px;
+    .cloud-pic {
+      background: url(./cloud-pic.png) no-repeat;
+      width: 563px;
+      height: 366px;
       position: relative;
     }
     .close-icon {
-      width:45px;
-      height:45px;
-      position:absolute;
-      top:50px;
-      right:105px;
-      cursor:pointer;
+      width: 45px;
+      height: 45px;
+      position: absolute;
+      top: 50px;
+      right: 105px;
+      cursor: pointer;
     }
-    .des-infor{
-      text-align:center;
-      width:360px;
-      height:110px;
-      margin:0 auto;
-      padding-top:130px;
-      font-size:18px;
-      line-height:26px;
+    .des-infor {
+      text-align: center;
+      width: 360px;
+      height: 110px;
+      margin: 0 auto;
+      padding-top: 130px;
+      font-size: 18px;
+      line-height: 26px;
       color: #000000;
     }
     .btn {
-      width:157px;
+      width: 157px;
       padding: 18px 0;
-      margin:0 auto;
-      margin-bottom:30px;
+      margin: 0 auto;
+      margin-bottom: 30px;
       font-size: 20px;
     }
   }
 }
 
 .modal-dialog {
-  width: 560px;
+  width: 380px;
   margin: 30px auto;
-  border: 1px solid $new-main-dark-color;
+  border: 1px solid $def-gray-color;
+  border-radius: $globalBtnRadius;
   overflow: hidden;
+  position: relative;
+  background-color: $def-white-color;
+  min-height: 200px;
 }
 
+.modal-bet {
+  border: 0;
+  width: 525px!important;
+  .modal-body {
+    width: 100%;
+    border-radius: 9px;
+    padding: 0;
+    background: transparent;
+  }
+}
+.modal-chase {
+  border: 0;
+  width: 850px!important;
+  .modal-body {
+    width: 100%;
+    border-radius: 9px;
+    padding: 0;
+    background: transparent;
+  }
+}
 .modal-content {
   outline: 0;
 }
 
 .modal-header {
-  color: $font-color;
-  background-color: $new-main-dark-color;
-  padding: 10px;
-  border-bottom: 1px solid $new-main-dark-color;
-  .close {
-    margin-top: 2px;
-    width: 25px;
-    height: 25px;
+  //color: $font-color;
+  //background-color: $new-main-dark-color;
+  //padding: 10px;
+  //border-bottom: 1px solid $new-main-dark-color;
+  padding: 37px 36px 0px 36px;
+  &.margin-big{
+    padding: 50px 45px 0px 45px;
   }
-  h4 {
-    font-weight: normal;
-    font-size: 16px;
-    margin: 0;
-    line-height: 28px;
+  .modal-title-container{
+    margin-left: 25px;
+    max-width: 215px;
+    .modal-title{
+      font-weight: normal;
+      font-size: 16px;
+      margin: 0;
+      color: $def-black-color;
+    }
+    .modal-sub-title{
+      font-size: $font-sm;
+      color: $new-inverse-color;
+      margin-top: 12px;
+    }
   }
 }
 
@@ -143,8 +173,6 @@
   padding: 14px 15px 15px;
   margin-bottom: 0;
   text-align: right;
-  background-color: #f5f5f5;
-  border-top: 1px solid $main-light-color;
   *zoom: 1;
   &:before {
     display: table;
@@ -170,28 +198,30 @@
 }
 
 .close {
-  float: right;
-  font-size: 23px;
+  font-size: 25px;
   font-weight: normal;
   line-height: 17px;
-  color: $main-light-color;
+  color: $def-line-color;
   outline: 0;
-  width: 17px;
-  height: 17px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  cursor: pointer;
   &:hover, &:focus {
-    //color: #000000;
+    color: $def-line-color;
     text-decoration: none;
-    cursor: pointer;
     outline: 0;
-
-    opacity: 0.4;
   }
+  position: absolute;
+  top:13px;
+  right: 13px;
+  z-index: 2;
 }
 
 button.close {
   padding: 0;
   cursor: pointer;
-  background-color: $font-color;
+  background-color: transparent;
   border: 0;
   -webkit-appearance: none;
 }
@@ -200,6 +230,7 @@ button.close {
   margin-top: 10px;
   margin-bottom: -20px;
 }
-.no-bg{
+
+.no-bg {
   background: none;
 }

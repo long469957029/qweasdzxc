@@ -23,7 +23,12 @@
   color: $font-auxiliary-color;
   margin-top: 26px;
 }
-
+@mixin btnDef{
+  width: 190px;
+  height: 40px;
+  border-radius: 20px;
+  font-size: $font-sm;
+}
 //begin 1投追记录页查询栏样式
 .search-condition-table {
   margin-top: 5px;
@@ -48,18 +53,6 @@
     margin-right: 3px;
     input {
       width: 117px !important;
-      padding-left: 5px;
-      padding-right: 5px;
-      font-size: 12px;
-      margin-left: 4px;
-      margin-right: 4px;
-    }
-  }
-  .input-date-sm {
-    margin-left: -4px;
-    margin-right: 0px;
-    input {
-      width: 80px !important;
       padding-left: 5px;
       padding-right: 5px;
       font-size: 12px;
@@ -345,9 +338,7 @@
     background-color: #f9f9f9;
   }
   .btn {
-    width: 190px;
-    height: 40px;
-    border-radius: 20px;
+    @include btnDef;
     margin-left: 45px;
     margin-top: 10px;
   }
@@ -362,7 +353,6 @@
     height: 100px;
     border-bottom: 1px solid $third-line-color;
     .promat-title{
-
       @include promat-title
     }
     .promat-info{
@@ -371,6 +361,36 @@
   }
   .uc-cmBtnContainer-list{
     padding: 23px 0px 0px 94px;
+    ul{
+      list-style: none;
+    }
+    .uc-cmContainer-add-card{
+      position: absolute;
+      width: 100%;
+      height: 600px;
+      background-color: $def-white-color;
+      z-index: 2;
+      top: 0;
+      left: 0;
+      color: $new-inverse-color;
+      .add-card-close{
+        display: block;
+        font-size: 16px;
+        color: $new-inverse-color;
+        margin: 31px 40px;
+        cursor: pointer;
+      }
+      .content{
+        height: 600px;
+      }
+    }
+    .uc-cmContainer-card-list{
+      .uc-cm-lg-btn {
+        @include btnDef;
+        margin-top: 90px;
+        margin-left: -75px;
+      }
+    }
   }
   .uc-cmCard-add{
     width: 249px;
@@ -385,7 +405,7 @@
     padding-top: 33px;
     box-shadow: none;
     margin: 36px 30px 0px 0px;
-    display: inline-block;
+    float: left;
     .add-icon{
       display: block;
       width: 40px;
@@ -402,6 +422,83 @@
         background: url('./btn-card-add-hover.png') no-repeat;
         animation: flipInY 1s;
       }
+    }
+  }
+  .bingding-card-info{
+    width: 250px;
+    height: 135px;
+    position: relative;
+    float: left;
+    margin: 36px 30px 0px 0px;
+    .card-del{
+      width: 14px;
+      height: 14px;
+      background: url("./delete.png") no-repeat;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+    .card-lock{
+      width: 19px;
+      height: 23px ;
+      background: url("./lock.png") no-repeat;
+      position: absolute;
+      top: 7px;
+      right: 8px;
+    }
+    .card-logo-name{
+      padding-top: 17px;
+      padding-left: 45px;
+    }
+    .card-num{
+      margin: 15px 0px 10px 15px;
+      font-size: 20px;
+    }
+    &.zhaoshang{
+      background: url("./bankImages/zhaoshang_bg.png") no-repeat;
+    }
+    &.gongshang{
+      background: url("./bankImages/gongshang_bg.png") no-repeat;
+    }
+    &.jianshe{
+      background: url("./bankImages/jianshe_bg.png") no-repeat;
+    }
+    &.nongye{
+      background: url("./bankImages/nongye_bg.png") no-repeat;
+    }
+    &.zhongguo{
+      background: url("./bankImages/zhongguo_bg.png") no-repeat;
+    }
+    &.jiaotong{
+      background: url("./bankImages/jiaotong_bg.png") no-repeat;
+    }
+    &.guangfa{
+      background: url("./bankImages/guangfa_bg.png") no-repeat;
+    }
+    &.guangda{
+      background: url("./bankImages/guangda_bg.png") no-repeat;
+    }
+    &.pufa{
+      background: url("./bankImages/pufa_bg.png") no-repeat;
+    }
+    &.minsheng{
+      background: url("./bankImages/minsheng_bg.png") no-repeat;
+    }
+    &.pingan{
+      background: url("./bankImages/pingan_bg.png") no-repeat;
+    }
+    &.xingye{
+      background: url("./bankImages/xingye_bg.png") no-repeat;
+    }
+    &.zhongxin{
+      background: url("./bankImages/zhongxin_bg.png") no-repeat;
+    }
+    &.youzheng{
+      background: url("./bankImages/youzheng_bg.png") no-repeat;
+    }
+    &.huaxia{
+      background: url("./bankImages/huaxia_bg.png") no-repeat;
     }
   }
 
@@ -435,38 +532,39 @@
   //密码输入end
 
   //管理页
-  .btn {
-    width: 70px;
-  }
+  //.btn {
+  //  width: 70px;
+  //}
   .btn-right {
     margin-left: 33px;
-  }
-  .uc-cm-lg-btn {
-    width: 190px;
-    height: 40px;
-    border-radius: 20px;
-    margin-top: 90px;
-    margin-left: -75px;
-  }
-  .uc-bank-manage-lock {
-    background-image: url(./keyboard.png);
-    height: 487px;
-    overflow: hidden;
-    text-align: center;
-    padding-top: 35px;
-    padding-bottom: 15px;
   }
 }
 
 //绑定页
-.uc-cbCardBindingForm {
-  padding: 40px 0 0 11px;
+.uc-cbCardBinding-container{
+  width: 520px;
+  margin: 0 auto;
+  .uc-cb-fundPwd{
+    width: 286px;
+    height: 28px !important;
+  }
+  .btn{
+    @include btnDef;
+  }
+  .uc-cbCardBindingForm {
+    padding: 20px 0 0 11px;
+    .uc-cm-lg-btn {
+      @include btnDef;
+    }
+  }
   .control-group {
-    padding: 0 0 5px 0;
+    .control-label{
+      padding-top: 8px;
+    }
   }
   .select1 {
-    width: 137px;
-    height: 25px;
+    width: 298px;
+    height: 38px;
   }
   .select2 {
     width: auto;
@@ -474,16 +572,40 @@
     height: 25px;
   }
   .input1 {
-    width: 123px;
-    height: 15px;
+    width: 284px;
+    height: 30px;
   }
   .input2 {
-    width: 228px;
-    height: 15px;
+    width: 244px;
+    height: 30px;
   }
-  .uc-cm-lg-btn {
-    width: 166px;
-    height: 32px;
+  .select2 {
+    width: 140px;
+    height: 38px;
+    margin-right: 16px;
+  }
+  .uc-cbCardBinding-header{
+    width: 480px;
+    height: 49px;
+    background-color: $sec-line-color;
+    position: relative;
+    text-align: center;
+    line-height: 49px;
+    color: $def-black-color;
+    font-size: $font-md;
+    .close{
+      font-size: 30px;
+      display: block;
+      position: absolute;
+
+    }
+  }
+  .btn-validate{
+    width: 108px;
+    height: 36px;
+    font-size: $font-md;
+    border-radius: $globalBtnRadius;
+    margin-bottom: 30px;
   }
 }
 
@@ -521,11 +643,13 @@
       height: 30px;
       line-height: 30px;
       margin: 20px 20px 30px 0px;
+      text-align: center;
       a{
         padding: 0;
         line-height: 30px;
         border-radius: 20px;
         background-color: $new-main-body-color;
+        width: 100%;
         &:hover{
           color: $def-white-color;
           background-color: $new-main-deep-color;
@@ -567,6 +691,134 @@
   position: relative;
   top:-5px;
 }
+
+//账户安全
+
+.uc-account-safe{
+  .promat-title{
+    @include promat-title;
+    margin-top: 25px;
+  }
+  .promat-info{
+    @include promat-info;
+  }
+  .uc-account-safe-info{
+    width:920px;
+    height: 130px;
+    border-radius: $globalBtnRadius;
+    background-color: #f8f8f8;
+    margin: 0 auto;
+    .safe-info-icon{
+      width: 63px;
+      height: 75px;
+      background: url('./safe-icon.png') no-repeat;
+      margin: 30px 15px;
+    }
+    .safe-info-level{
+      margin-top: 45px;
+      .safe-progress-bar{
+        margin-top: 15px;
+        width: 235px;
+        height: 10px;
+        border-radius: 10px;
+        background-color: $third-line-color;
+        position: relative;
+      }
+      .safe-progress-info{
+        height: 10px;
+        width: 30%;
+        border-radius: 10px;
+        background-color: $prominent-color;
+      }
+    }
+    .login-info-list{
+      padding: 0px 55px 0px 15px;
+      position: relative;
+      &:after{
+        content: '';
+        width: 1px;
+        height: 36px;
+        background-color: $third-line-color;
+        display: block;
+        position: absolute;
+        top: 5px;
+        left: 0px;
+      }
+    }
+  }
+  .uc-account-setting{
+    width: 920px;
+    margin: 0 auto;
+    .setting-info{
+      width: 918px;
+      min-height: 98px;
+      border: 1px solid $third-line-color;
+      border-radius: $globalBtnRadius;
+      margin-top: 20px;
+      &:hover{
+        border-color: $new-main-deep-color;
+        box-shadow: 0px 0px 3px rgba(0,0,0,.3);
+      }
+    }
+    .setting-icon-bg{
+      width: 62px;
+      height: 62px;
+      border-radius: $globalBtnRadius;
+      background-color: $def-line-color;
+      margin: 18px 14px 18px 19px;
+      &.active{
+        background-color: $new-main-deep-color;
+      }
+      .setting-icon{
+        width: 100%;
+        height: 100%;
+        &.pwd-icon{
+          background: url("./pwd-icon.png") no-repeat center;
+        }
+        &.lock-icon{
+          background: url("./lock-icon.png") no-repeat center;
+        }
+        &.wechat-icon{
+          background: url("./wechat-icon.png") no-repeat center;
+        }
+        &.phone-icon{
+          background: url("./phone-icon.png") no-repeat center;
+        }
+        &.mail-icon{
+          background: url("./mail-icon.png") no-repeat center;
+        }
+      }
+    }
+    .setting-text{
+      margin-top: 25px;
+    }
+    .setting-info-text{
+      height: 98px;
+      line-height: 98px;
+    }
+    .setting-btn{
+      width: 130px;
+      height: 36px;
+      border: 1px solid $def-gray-color;
+      border-radius: 20px;
+      color: $def-black-color;
+      text-align: center;
+      line-height: 35px;
+      cursor: pointer;
+      background: $def-white-color;
+      font-size: $font-sm;
+      margin-top: 30px;
+      transition: background,color 0.5s;
+      &:hover{
+        background: $new-main-deep-color;
+        color: $def-white-color;
+        border-color: $def-white-color;
+      }
+    }
+  }
+}
+
+//账户安全  end
 
 @keyframes flipInY{
 

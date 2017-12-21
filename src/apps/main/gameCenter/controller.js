@@ -2,9 +2,10 @@
 
 const RouterController = require('skeleton/controllers/router')
 
-const menuConfig = Global.ui.menu.get(['fc', 'uc'])
 
-const GameRecordView = require('gameCenter/gameRecord/index')
+// const menuConfig = Global.ui.menu.get(['fc', 'uc'])
+
+
 // var RealBetRecordView = require('gameCenter/real/betRecord');
 // var SlotBetRecordView = require('gameCenter/slot/betRecord');
 // var SportBetRecordView = require('gameCenter/sport/betRecord');
@@ -13,33 +14,6 @@ const SlotCenterView = require('gameCenter/slot/slotTab')
 
 const VipCenterController = RouterController.extend({
 
-  ticketRecord() {
-    this.changeMainReginView(new GameRecordView({ triggerTab: 'jsGcGrTr' }), {
-      main: {
-        icon: menuConfig.icon,
-        title: '游戏记录',
-      },
-      sidebar: menuConfig,
-    })
-  },
-  chaseRecord() {
-    this.changeMainReginView(new GameRecordView({ triggerTab: 'jsGcGrCr' }), {
-      main: {
-        icon: menuConfig.icon,
-        title: '游戏记录',
-      },
-      sidebar: menuConfig,
-    })
-  },
-  gameRecord() {
-    this.changeMainReginView(new GameRecordView({ triggerTab: 'jsGcGrGr' }), {
-      main: {
-        icon: menuConfig.icon,
-        title: '游戏记录',
-      },
-      sidebar: menuConfig,
-    })
-  },
   // realBetRecord: function() {
   //   this.changeMainReginView(new RealBetRecordView(), {
   //     main: {

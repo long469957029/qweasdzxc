@@ -1,5 +1,3 @@
-
-
 const SearchGrid = require('com/searchGrid')
 
 const Timeset = require('com/timeset')
@@ -8,13 +6,13 @@ const gameConfig = require('skeleton/misc/gameConfig')
 
 const fishBetRecordView = SearchGrid.extend({
 
-  template: require('gameCenter/gameRecord/gameRecord.html'),
+  template: require('fundCenter/gameRecord/gameRecord.html'),
 
   events: {
     'change .js-gc-gr-channelId': 'channelIdChangeHandler',
     'change .js-gc-gr-channelId-type': 'channelTypeChangeHandler',
   },
-  channelTypeChangeHandler(e) {
+  channelTypeChangeHandler() {
     const game = this.$('select[name="channelIdType"]').val()
     const channelId = game.substr(0, 1)
     const type = game.substr(1, 1)
@@ -24,6 +22,7 @@ const fishBetRecordView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
+      height: '515',
       columns: [
         {
           name: '注单编号',
@@ -64,12 +63,13 @@ const fishBetRecordView = SearchGrid.extend({
       },
       ajaxOps: {
         url: '/ticket/game/history.json',
-        abort: false,
+        // abort: false,
       },
-
+      reqData: {
+        channelId: this.options.channelId,
+      },
       listProp: 'root.dataList',
-      tip: '<div class="tip-hot"><span>注意</span> 游戏记录只保留最近30天。</div>',
-      height: 320,
+      // tip: '<div class="tip-hot"><span>注意</span> 游戏记录只保留最近30天。</div>',
     })
   },
 
@@ -80,21 +80,22 @@ const fishBetRecordView = SearchGrid.extend({
       startTimeHolder: '起始日期',
       startDefaultDate: _(moment().add('day', 0)).toDate(),
       endTimeHolder: '结束日期',
-      endDefaultDate: _(moment().add('day', 0)).toDate(),
+      endDefaultDate: _(moment().add('day', 1)).toDate(),
       startOps: {
-        format: 'YYYY-MM-DD',
+        format: 'YYYY-MM-DD HH:mm:ss',
       },
       endOps: {
-        format: 'YYYY-MM-DD',
+        format: 'YYYY-MM-DD HH:mm:ss',
       },
+      showIcon: true,
+      size: 'timer-record-input',
     }).render()
 
     SearchGrid.prototype.onRender.apply(this, arguments)
   },
 
   renderGrid(gridData) {
-    const num = 0
-    const rowsData = _(gridData.dataList).map(function(bet, index, betList) {
+    const rowsData = _(gridData.dataList).map(function (bet, index, betList) {
       return {
         columnEls: this.formatRowData(bet, index, betList),
         dataAttr: bet,
@@ -109,14 +110,14 @@ const fishBetRecordView = SearchGrid.extend({
     // 加上统计行
     this.grid.addFooterRows({
       trClass: 'tr-footer',
-      columnEls: [
-        '<strong>所有页总计</strong>',
-        '', '', '',
-        _(gridData.realBetTotal).fixedConvert2yuan(),
-        _(gridData.betTotal).fixedConvert2yuan(),
-        _(gridData.amountTotal).fixedConvert2yuan(),
-        _(gridData.profitTotal).convert2yuan(),
-      ],
+      // columnEls: [
+      //   '<strong>所有页总计</strong>',
+      //   '', '', '',
+      //   _(gridData.realBetTotal).fixedConvert2yuan(),
+      //   _(gridData.betTotal).fixedConvert2yuan(),
+      //   _(gridData.amountTotal).fixedConvert2yuan(),
+      //   _(gridData.profitTotal).convert2yuan(),
+      // ],
     }).hideLoading()
   },
 
@@ -182,12 +183,26 @@ const fishBetRecordView = SearchGrid.extend({
 
     ]
     switch (Number(channelId)) {
-      case 1: $type.html(options[0].options.concat(options[2].options).join('')); break
-      case 2: $type.html(options[0].options.join('')); break
-      case 3: $type.html(options[0].options.join('')); break
-      case 4: $type.html(options[1].options.join('')); break
-      case 5: $type.html(options[1].options.join('')); break
-      case 6: $type.html(options[2].options.join('')); break
+      case 1:
+        $type.html(options[0].options.concat(options[2].options).join(''))
+        break
+      case 2:
+        $type.html(options[0].options.join(''))
+        break
+      case 3:
+        $type.html(options[0].options.join(''))
+        break
+      case 4:
+        $type.html(options[1].options.join(''))
+        break
+      case 5:
+        $type.html(options[1].options.join(''))
+        break
+      case 6:
+        $type.html(options[2].options.join(''))
+        break
+      default:
+        break
     }
   },
 })

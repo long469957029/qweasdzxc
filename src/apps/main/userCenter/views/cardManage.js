@@ -1,8 +1,7 @@
 
 
 const bindBankConfig = require('../misc/bankConfig')
-const lockPng = require('../misc/lock.png')
-const deletePng = require('../misc/delete.png')
+const CardBind = require('./cardBinding')
 
 const CardManageView = Base.ItemView.extend({
 
@@ -15,12 +14,13 @@ const CardManageView = Base.ItemView.extend({
   className: 'uc-cardManage-view',
 
   events: {
-    'click .js-uc-cmBindCard-btn': 'goToBingBankCardHandler', // 绑定按钮
+    'click .js-uc-cmBindCard-btn': 'bingBankCardHandler', // 绑定按钮
     'click .js-uc-cmLockCard-btn': 'lockBankCardHandler', // 锁定按钮
     // 'click .js-uc-cmUpdateSingCard': 'updateSingCardHandler',//修改按钮
     'click .js-uc-cmDeleteSingCard': 'deleteSingCardHandler', // 删除按钮
     // 'click .js-uc-validatePayPwd': 'validatePayPwdHandler'//验证资金密码
     'click .js-uc-cmValidatePayPwd': 'validatePayPwd',
+    'click .js-add-card-close': 'addCloseHandler',
   },
 
   initialize() {
@@ -69,29 +69,9 @@ const CardManageView = Base.ItemView.extend({
 
     this.$validateError = this.$('.js-uc-cmValPayPwdNotice')
     this.hasBeenVerified = Global.memoryCache.get('hasBeenVerified')
+    this.$addCardContainer = this.$('.js-uc-cmContainer-add-card')
+    this.$addCardMain = this.$('.js-uc-add-card-main')
 
-    // if (!this.hasBeenVerified) {
-    //   // 判断是否设置资金密码
-    //   this.checkPayPwdXhr()
-    //     .always(() => {
-    //       self.loadingFinish()
-    //     })
-    //     .done((res) => {
-    //       if (res && res.result === 0) {
-    //         // 设置了则弹出验证框
-    //         // self.$('.js-uc-cm-fundPwdInput').removeClass('hidden')
-    //         Global.memoryCache.clear('hasBeenVerified')
-    //         self.initializeCardManagePage()
-    //         self.loadingFinish()
-    //       } else if (res && res.result === 1) {
-    //         Global.ui.notification.show('您还未设置资金密码，')
-    //       }
-    //     })
-    // } else {
-    //   Global.memoryCache.clear('hasBeenVerified')
-    //   this.initializeCardManagePage()
-    //   this.loadingFinish()
-    // }
     this.initializeCardManagePage()
     this.loadingFinish()
   },
@@ -106,13 +86,8 @@ const CardManageView = Base.ItemView.extend({
           self.locked = res.root.locked
           const cardHtml = self.generateCardInfoHtml(res.root.cardList, res.root.locked)
           self.$('.js-uc-cmCardManage-container').html(cardHtml || '')
-          self.$('.js-uc-cmBtnContainer').removeClass('hidden')
           if (self.locked) {
-            self.$('.js-uc-cmBindCard-btn').prop('disabled', true)
             self.$('.js-uc-cmLockCard-btn').prop('disabled', true)
-            _(self.$('.js-uc-cmDeleteSingCard')).each((delBtn) => {
-              $(delBtn).prop('disabled', true)
-            })
           }
         } else {
           Global.ui.notification.show(`获取银行卡列表失败，${res.msg}`)
@@ -120,21 +95,20 @@ const CardManageView = Base.ItemView.extend({
       })
   },
 
-
   deleteSingCardHandler(e) {
     if (this.locked) {
       Global.ui.notification.show('银行卡已锁定，不能删除银行卡')
 
       return
     }
-    const pwdToken = this.$('.js-uc-pwdToken').val()
+    // const pwdToken = this.$('.js-uc-pwdToken').val()
     const cardId = $(e.currentTarget).data('type')
-    if (pwdToken && !(_(pwdToken).isEmpty())) {
-      this.propConfirmModel(cardId, pwdToken)
-    } else {
-      const type = 'delBankCard'
-      this.popValidateCardInfoModal(type, cardId)
-    }
+    // if (pwdToken && !(_(pwdToken).isEmpty())) {
+    //   this.propConfirmModel(cardId, pwdToken)
+    // } else {
+    // const type = 'delBankCard'
+    this.popValidateCardInfoModal(cardId)
+    // }
   },
 
   propConfirmModel(cardId, pwdToken) {
@@ -169,7 +143,7 @@ const CardManageView = Base.ItemView.extend({
 
     $(document).confirm({
       title: '安全提示',
-      content: '请注意：银行卡锁定以后不能再增加和删除银行卡，解锁需要联系在线客服并提交资料审核',
+      content: '银行卡锁定以后不能再增加和删除银行卡，解锁需要联系在线客服并提交资料审核',
       agreeCallback() {
         $target.button('loading')
         self.lockBankCardXhr()
@@ -198,118 +172,114 @@ const CardManageView = Base.ItemView.extend({
 
     this.$('.js-uc-cmCardNum').val(size)
 
+    const cardAdd = '<li class="js-uc-cmBindCard-btn uc-cmCard-add" data-type="addBankCard">' +
+      '<span class="add-icon"></span>' +
+      '添加银行卡' +
+      '</li>'
+
     if (size === 0) {
-      return
+      return cardAdd
     }
 
     const cardInfoHtmlArr = _(cardList).map(function(card) {
       const bankInfo = bindBankConfig.get(card.bankId)
-
-      if (bankInfo) {
-        card.pic = bankInfo.pic
-        card.lockPic = bankInfo.lockPic
-      } else {
-        card.pic = ''
-        card.lockPic = ''
-      }
-
       return this.itemTpl({
         card,
         locked,
-        lockPng,
-        deletePng,
+        bankInfo,
       })
     }, this)
 
-
+    if (size < 5) {
+      cardInfoHtmlArr.push(cardAdd)
+    }
     return cardInfoHtmlArr.join('')
   },
 
   // "#uc/cm/bind"
   // 绑定按钮
-  goToBingBankCardHandler() {
-    // const $target = $(e.currentTarget)
+  bingBankCardHandler() {
+    const self = this
     const size = this.$('.js-uc-cmCardNum').val()
-    if (this.locked) {
-      Global.ui.notification.show('银行卡已锁定，不能增加银行卡。')
-
-      return
-    }
     if (size && Number(size) === 0) {
-      // 直接跳转
-      Global.appRouter.navigate(_('#uc/cm/bind').addHrefArgs('_t', _.now()), { trigger: true, replace: false })
-    } else {
-      // 弹出验证窗口
-      const type = 'addBankCard'
-      const token = this.$('.js-uc-pwdToken').val()
-      // 如果token存在
-      if (token && !(_(token).isEmpty())) {
-        Global.appRouter.navigate(_('#uc/cm/bind').addHrefArgs({
-          _t: _.now(),
-          pwdToken: token,
-        }), { trigger: true, replace: false })
+      if (this.hasBeenVerified) {
+        // 判断是否设置资金密码
+        this.checkPayPwdXhr()
+          .done((res) => {
+            if (res && res.result === 0) {
+              // 设置了则弹出验证框
+              Global.memoryCache.clear('hasBeenVerified')
+              self.showAddCard({ firstBind: true })
+            } else if (res && res.result === 1) {
+              $(document).confirm({
+                title: '温馨提示',
+                content: '为了您的账户安全，请先设置资金密码后再来绑定银行卡',
+                agreeCallback() {
+                  Global.appRouter.navigate(_('#as/pl').addHrefArgs('_t', _.now()), { trigger: true, replace: false })
+                },
+              })
+            }
+          })
       } else {
-        this.popValidateCardInfoModal(type)
+        Global.memoryCache.clear('hasBeenVerified')
+        self.showAddCard({ firstBind: true })
       }
+    } else if (this.locked) {
+      Global.ui.notification.show('银行卡已锁定，不能增加银行卡。')
+    } else {
+      this.showAddCard({ firstBind: false })
     }
   },
+  showAddCard(data) { // data判断是否为第一次绑定银行卡
+    this.$addCardContainer.removeClass('hidden')
+    this.cardBindView = new CardBind(data).off('bind:success').on('bind:success', () => {
+      this.render()
+    })
+    this.$addCardMain.html(this.cardBindView.render().el)
+  },
 
-  popValidateCardInfoModal(type, cardId) {
+  popValidateCardInfoModal(cardId) {
     const self = this
 
     const $dialog = Global.ui.dialog.show({
-      title: '安全提示',
+      anySize: '480',
       body: this.validateTpl(),
-      footer: `<button class="js-uc-cmValidateCardInfo btn btn-cool" type="button" data-type="${type}">确定</button>`,
+      bodyClass: 'no-padding',
+      closeBtn: false,
     })
     $dialog.on('hidden.modal', function () {
       $(this).remove()
     })
 
     $dialog.off('click.validateCardInfo')
-      .on('click.validateCardInfo', '.js-uc-cmValidateCardInfo', (ev) => {
-        const $valTarget = $(ev.currentTarget)
-        const valType = $valTarget.data('type')
-
-        // 验证密码;
-        const accountName = $dialog.find('.js-uc-cmAccountName').val()
-        const cardNo = $dialog.find('.js-uc-cmCardNo').val()
-        if (!accountName || accountName === '') {
-          $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl('姓名不能为空'))
-          return
-        }
-        if (!cardNo || cardNo === '') {
-          $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl('卡号不能为空'))
-          return
-        }
-        const data = { name: accountName, cardNo }
-        self.verifyCardInfoXhr(data)
-          .done((res) => {
-            if (res.result === 0) {
-              $dialog.modal('hide')
-              const token = res.root
-              self.$('.js-uc-pwdToken').val(token)
-              // 如果类型是绑定银行卡
-              if (valType === 'addBankCard') {
-                Global.appRouter.navigate(_('#uc/cm/bind').addHrefArgs({
-                  _t: _.now(),
-                  pwdToken: token,
-                }), { trigger: true, replace: false })
-              } else if (valType === 'delBankCard') {
+      .on('click.validateCardInfo', '.js-btn-validate', () => {
+        const $form = $dialog.find('.js-uc-last-form')
+        const formStatus = $form.parsley().validate()
+        if (formStatus) {
+          // 验证密码;
+          const accountName = $dialog.find('.js-uc-cmAccountName').val()
+          const cardNo = $dialog.find('.js-uc-cmCardNo').val()
+          const data = { name: accountName, cardNo }
+          self.verifyCardInfoXhr(data)
+            .done((res) => {
+              if (res.result === 0) {
+                $dialog.modal('hide')
+                const token = res.root
+                self.$('.js-uc-pwdToken').val(token)
                 self.propConfirmModel(cardId, token)
-              }
-            } else if (_(res.root).isNull()) {
-              $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,${res.msg}`))
-            } else if (res.root != null && _(res.root).isNumber()) {
-              if (res.root > 0) {
-                $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,剩余${res.root}次机会。`))
+              } else if (_(res.root).isNull()) {
+                $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,${res.msg}`))
+              } else if (res.root != null && _(res.root).isNumber()) {
+                if (res.root > 0) {
+                  $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,剩余${res.root}次机会。`))
+                } else {
+                  $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl('验证失败,请一个小时后再验证！'))
+                }
               } else {
-                $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl('验证失败,请一个小时后再验证！'))
+                $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,${res.msg}`))
               }
-            } else {
-              $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,${res.msg}`))
-            }
-          })
+            })
+        }
       })
   },
 
@@ -349,15 +319,12 @@ const CardManageView = Base.ItemView.extend({
       })
   },
   _getErrorEl (text) {
-    return `${'<div class="alert alert-danger alert-dismissible" role="alert">' +
-        '<button type="button" class="close" data-dismiss="alert">' +
-        '<span aria-hidden="true">×</span>' +
-        '</button>' +
-        '<i class="fa fa-times-circle m-right-xs"></i>' +
-        '<strong>提示！</strong> '}${text 
-    }</div>`
+    return `<span class="text-hot"><i class="sfa sfa-error-icon m-right-xs vertical-sub"></i>${text}</span>`
   },
-
+  addCloseHandler() {
+    this.$addCardContainer.addClass('hidden')
+    this.cardBindView.destroy()
+  },
 })
 
 module.exports = CardManageView

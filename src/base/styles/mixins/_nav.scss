@@ -1,6 +1,6 @@
 @mixin nav-tab($props) {
 
-  $borderColor: map_get($props, border-color);
+  $borderColor: $def-gray-color;
   $color: map_get($props, color);
   $bgColor: map_get($props, bg-color);
   $activeColor: map_get($props, active-color);
@@ -26,19 +26,19 @@
       }
     }
     .active > a {
-      color: $activeColor;
-      border: 1px solid $borderColor;
-      border-bottom-color: transparent;
+      color: $new-main-deep-color;
+      border-bottom: 2px solid $new-main-deep-color;
+      //border-bottom-color: transparent;
 
-      background-color: $bgColor;
+      background-color: $def-white-color;
 
       &:hover, &:focus {
-        color: $activeColor;
-        background-color: $bgColor;
+        color: $new-main-deep-color;
+        background-color: $def-white-color;
       }
-      &:after {
-        background-color: $activeBgColor;
-      }
+      //&:after {
+      //  background-color: $activeBgColor;
+      //}
     }
   }
 }

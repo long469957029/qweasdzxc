@@ -68,7 +68,7 @@ const menuConfig = [
       },
       {
         id: 303,
-        router: 'as/pl',
+        router: 'uc/pl',
         name: '帐户安全',
         quickShowName: '帐户<br/>安全',
       },
@@ -220,7 +220,7 @@ const menuConfig = [
       },
       {
         id: 306,
-        router: 'gc/tr',
+        router: 'fc/td',
         name: '投注记录',
         quickShowName: '投注<br/>记录',
       },
