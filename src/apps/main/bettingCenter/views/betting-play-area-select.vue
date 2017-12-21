@@ -49,12 +49,12 @@
 
         <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select m-left-lg vertical-middle pull-right" v-show="fRule.row.hasOp">
           <div class="tab-group m-left-md">
-            <span class="js-bc-select-op tab" data-op="all" v-show="fRule.row.op.all">全</span>
-            <span class="js-bc-select-op tab" data-op="big" v-show="fRule.row.op.big">大</span>
-            <span class="js-bc-select-op tab" data-op="small" v-show="fRule.row.op.small">小</span>
-            <span class="js-bc-select-op tab" data-op="odd" v-show="fRule.row.op.odd">奇</span>
-            <span class="js-bc-select-op tab" data-op="even" v-show="fRule.row.op.even">偶</span>
-            <span class="js-bc-select-op tab" data-op="clear" v-show="fRule.row.op.clear">清</span>
+            <span class="tab" data-op="all" @click="selectOperate(fRule.row)" v-show="fRule.row.op.all">全</span>
+            <span class="tab" data-op="big" @click="selectOperate(fRule.row)" v-show="fRule.row.op.big">大</span>
+            <span class="tab" data-op="small" @click="selectOperate(fRule.row)" v-show="fRule.row.op.small">小</span>
+            <span class="tab" data-op="odd" @click="selectOperate(fRule.row)" v-show="fRule.row.op.odd">奇</span>
+            <span class="tab" data-op="even" @click="selectOperate(fRule.row)" v-show="fRule.row.op.even">偶</span>
+            <span class="tab" data-op="clear" @click="selectOperate(fRule.row)" v-show="fRule.row.op.clear">清</span>
           </div>
         </div>
 
@@ -212,6 +212,174 @@
         }
       },
 
+      selectOprate6() {
+        const self = this
+        const $target = $(e.currentTarget)
+        const $playArea = $target.closest('.js-bc-playArea-items')
+        const $itemsToolbars = $playArea.find('.js-be-playArea-items-toolbar')
+        const op = $target.data('op')
+        const $items = $itemsToolbars.find('.js-bc-select-item')
+
+        if ($target.hasClass('active')) {
+          $target.removeClass('active')
+          $items.removeClass('active')
+        } else {
+          const selectEle = []
+          const opid = $target.data('opid')
+          const selectNum = this.options.list[0].htmlNeedInfo.groupSelectData[parseInt(opid, 10)]
+          let thisColorArr = ''
+          let arrStr = 'redArr'
+          let weiNum = ''
+          let touNum
+          switch (op) {
+            case 'shu': case 'niu': case 'hu': case 'tu': case '_long': case 'she':
+            case 'ma': case 'yang': case 'hou': case 'ji': case 'gou': case 'zhu':
+            $items.each((index, ele) => {
+              const $this = $(ele)
+              _(selectNum.nums).each((num) => {
+                if (parseInt(num, 10) === parseInt($this.data('num'), 10)) {
+                  selectEle.push($this)
+                }
+              })
+            })
+            $items.removeClass('active')
+            this.$_selectNumbers($(selectEle), $itemsToolbars)
+            break
+            case 'mark6-big':
+              self.$_selectNumbers($items.removeClass('active').filter(':gt(23)'), $itemsToolbars)
+              break
+            case 'mark6-small':
+              self.$_selectNumbers($items.removeClass('active').filter(':lt(24)'), $itemsToolbars)
+              break
+            case 'red': case 'blue': case 'green':
+            if (op === 'blue') { arrStr = 'blueArr' } else if (op === 'green') { arrStr = 'greenArr' }
+            thisColorArr = this.options.list[0].htmlNeedInfo.colorArr[arrStr]
+            // let selectEle = []
+            $items.each((index, ele) => {
+              const $this = $(ele)
+              _(thisColorArr).each((num) => {
+                if (parseInt(num, 10) === parseInt($this.data('num'), 10)) {
+                  selectEle.push($this)
+                }
+              })
+            })
+            $items.removeClass('active')
+            this.$_selectNumbers($(selectEle), $itemsToolbars)
+            break
+            case 'wei0': case 'wei1': case 'wei2': case 'wei3': case 'wei4':
+            case 'wei5': case 'wei6': case 'wei7': case 'wei8': case 'wei9':
+            weiNum = op.substring(op.length - 1)
+            // let selectEle = []
+            $items.each((index, ele) => {
+              const $this = $(ele)
+              const currentNum = $this.data('num').toString()
+              if (currentNum.substring(currentNum.length - 1) === weiNum) {
+                selectEle.push($this)
+              }
+            })
+            $items.removeClass('active')
+            this.$_selectNumbers($(selectEle), $itemsToolbars)
+            break
+            case 'tou0': case 'tou1': case 'tou2': case 'tou3': case 'tou4':
+            touNum = op.substring(op.length - 1)
+            // let selectEle = []
+            $items.each((index, ele) => {
+              const $this = $(ele)
+              const currentNum = $this.data('num').toString()
+              if (currentNum.substring(0, 1) === touNum) {
+                selectEle.push($this)
+              }
+            })
+            $items.removeClass('active')
+            this.$_selectNumbers($(selectEle), $itemsToolbars)
+            break
+            case 'odd':
+              if ($items.eq(0).data('num') % 2) {
+                this.$_selectNumbers($items.removeClass('active').filter(':even'), $itemsToolbars)
+                // $items.removeClass('active').filter(':even').trigger('click');
+              } else {
+                this.$_selectNumbers($items.removeClass('active').filter(':odd'), $itemsToolbars)
+                // $items.removeClass('active').filter(':odd').trigger('click');
+              }
+              break
+            case 'even':
+              if ($items.eq(0).data('num') % 2) {
+                this.$_selectNumbers($items.removeClass('active').filter(':odd'), $itemsToolbars)
+                // $items.removeClass('active').filter(':odd').trigger('click');
+              } else {
+                this.$_selectNumbers($items.removeClass('active').filter(':even'), $itemsToolbars)
+                // $items.removeClass('active').filter(':even').trigger('click');
+              }
+              break
+            case 'clear':
+              $items.removeClass('active')
+              $playArea.find('.js-bc-select-op').removeClass('active')
+              break
+            default:
+              break
+          }
+          $target.addClass('active')
+        }
+      },
+
+      selectOperate(row) {
+        const self = this
+        const $target = $(e.currentTarget)
+        const $playArea = $target.closest('.js-bc-playArea-items')
+        const $itemsToolbars = $playArea.find('.js-be-playArea-items-toolbar')
+        const op = $target.data('op')
+        const $items = $itemsToolbars.find('.js-bc-select-item')
+
+        switch (op) {
+          case 'all':
+            $items.removeClass('active')
+            this.$_selectNumbers($items, $playArea)
+            // $items.removeClass('active').trigger('click');
+            break
+          case 'big':
+            _(this.options.list).each((item) => {
+              if (item.items.length === 16) {
+                self.$_selectNumbers($items.removeClass('active').filter(':gt(7)'), $playArea)
+              } else {
+                self.$_selectNumbers($items.removeClass('active').filter(':gt(4)'), $playArea)
+              }
+            })
+            break
+          case 'small':
+            _(this.options.list).each((item) => {
+              if (item.items.length === 16) {
+                self.$_selectNumbers($items.removeClass('active').filter(':lt(8)'), $playArea)
+              } else {
+                self.$_selectNumbers($items.removeClass('active').filter(':lt(5)'), $playArea)
+              }
+            })
+            break
+          case 'odd':
+            if ($items.eq(0).data('num') % 2) {
+              this.$_selectNumbers($items.removeClass('active').filter(':even'), $playArea)
+            } else {
+              this.$_selectNumbers($items.removeClass('active').filter(':odd'), $playArea)
+            }
+            break
+          case 'even':
+            if ($items.eq(0).data('num') % 2) {
+              this.$_selectNumbers($items.removeClass('active').filter(':odd'), $playArea)
+            } else {
+              this.$_selectNumbers($items.removeClass('active').filter(':even'), $playArea)
+            }
+            break
+          case 'clear':
+            $items.removeClass('active')
+            break
+          default:
+            break
+        }
+
+        this.updateRowTitle($target)
+
+        this.statisticsLottery()
+      },
+
       $_calculateCoefficient(optionals) {
         let coefficient = 1
 
@@ -320,7 +488,13 @@
       //   const $row = $target.closest('.js-bc-playArea-items')
       //   $row.find('.tab-title').toggleClass('active', !!$row.find('.js-bc-select-item').filter('.active').length)
       // },
-    }
+    },
+
+    $_selectNumbers(nums, row) {
+      nums.forEach((num) => {
+        this.$_selectNumber(num, row)
+      })
+    },
   }
 </script>
 

@@ -191,116 +191,117 @@
       calculateToggle(status) {
         this.calculateStatus = status;
       },
+
+      $_renderCountdown() {
+        let times = 1
+
+        return new Countdown({
+          el: this.$refs.countdown,
+        }).render().on('change:leftTime', (e) => {
+          times -= 1
+          if (times === 0) {
+            const leftTime = moment.duration(e.finalDate.getTime() - new Date().getTime()).asSeconds()
+
+            if (this.musicStatus) {
+              if (parseInt(leftTime, 10) === 3) { // 虽然是倒数5秒的声音，但是判断为3才能吻合
+                const url = window.location.href
+                const index1 = url.indexOf('#bc')
+                if (index1 > 0) {
+                  const str = url.substr(index1, url.length)
+                  if (str === (`#bc/${this.bettingInfo.ticketId}`)) {
+                    this.$refs.overAudio.play()
+                  }
+                }
+              }
+            }
+
+            // self.trigger('change:leftTime', leftTime, totalSecond)
+            times = 1
+          }
+        })
+      },
+
+      //TODO 倒计时逻辑里面包含了开奖音效逻辑
+      $_updateCountdown() {
+        const leftSecond = this.bettingInfo.leftSecond
+        const sale = this.bettingInfo.sale
+        const nextTime = _(sale ? leftSecond : 0).mul(1000)
+        const leftTime = nextTime
+        this.bettingInfo.leftTime = leftTime
+
+        clearInterval(timer)
+        clearInterval(goToNextTimer)
+        clearInterval(nextTimer)
+
+        timer = _.delay(() => {
+          this.$store.dispatch('getTicketInfo', this.bettingInfo.ticketId)
+
+          if (this.musicStatus) {
+            const lastOpenIdNumCache = Global.cookieCache.get(`lastOpenId${this.bettingInfo.ticketId}`)
+
+            //
+            const url = window.location.href
+            const index1 = url.indexOf('#bc')
+            if (index1 > 0) {
+              const str = url.substr(index1, url.length)
+
+              if (str === (`#bc/${this.bettingInfo.ticketId}`)) {
+                if (this.bettingInfo.lastOpenId !== lastOpenIdNumCache) {
+                  Global.cookieCache.set(`lastOpenId${this.bettingInfo.ticketId}`, this.bettingInfo.lastOpenId)
+                  const bcTag = Global.cookieCache.get('bcTag')
+                  if (bcTag === str) {
+                    if (lastOpenIdNumCache !== null && lastOpenIdNumCache !== '') {
+                      if (this.bettingInfo.prize > 0) {
+                        // 播放中奖声音
+                        this.$refs.prizeAudio.play()
+                      } else {
+                        // 播放开奖声音
+                        this.$refs.openAudio.play()
+                      }
+                    }
+                  } else {
+                    Global.cookieCache.set('bcTag', str)
+                  }
+                }
+              }
+            }
+          }
+        }, 5300)
+
+        // 只有销售时才进行倒计时
+        if (this.bettingInfo.sale) {
+          goToNextTimer = _.delay(() => {
+
+            this.$store.commit('GO_TO_NEXT_PLAN');
+          }, _(leftSecond).mul(1000))
+
+          // 取得下一期的信息延迟一秒再做
+          nextTimer = _.delay(() => {
+            this.$store.dispatch('getTicketInfo', this.bettingInfo.ticketId)
+          }, _(leftSecond + 1).mul(1000))
+        }
+
+        // this.infoModel.set('leftSecond', 0, {
+        //   silent: true,
+        // })
+
+        this.countdown.render(leftTime)
+      }
     },
 
     mounted() {
-      this.countdown = renderCountdown(this.$refs.countdown, this.musicStatus, this.bettingInfo, this.$refs);
+      this.countdown = this.$_renderCountdown()
     },
 
     watch: {
       'bettingInfo.leftSecond': {
         handler(newVal, oldVal) {
-          updateCountdown(this.countdown, this.musicStatus, this.bettingInfo, this.$store, this.$refs)
+          this.$_updateCountdown()
         }
       }
     }
   }
 
-  const renderCountdown = (countdown, musicStatus, bettingInfo, $refs) => {
-    let times = 1
-
-    return new Countdown({
-      el: countdown,
-    }).render().on('change:leftTime', (e) => {
-      times -= 1
-      if (times === 0) {
-        const leftTime = moment.duration(e.finalDate.getTime() - new Date().getTime()).asSeconds()
-
-        if (!musicStatus) {
-          if (parseInt(leftTime, 10) === 3) { // 虽然是倒数5秒的声音，但是判断为3才能吻合
-            const url = window.location.href
-            const index1 = url.indexOf('#bc')
-            if (index1 > 0) {
-              const str = url.substr(index1, url.length)
-              if (str === (`#bc/${bettingInfo.ticketId}`)) {
-                $refs.overAudio.play()
-              }
-            }
-          }
-        }
-
-        // self.trigger('change:leftTime', leftTime, totalSecond)
-        times = 1
-      }
-    })
-  }
-
-  //TODO 倒计时逻辑里面包含了开奖音效逻辑
-  const updateCountdown = (countdown, musicStatus, bettingInfo, $store, $refs) => {
-    const leftSecond = bettingInfo.leftSecond
-    const sale = bettingInfo.sale
-    const nextTime = _(sale ? leftSecond : 0).mul(1000)
-    const leftTime = nextTime
-    bettingInfo.leftTime = leftTime
-
-    clearInterval(timer)
-    clearInterval(goToNextTimer)
-    clearInterval(nextTimer)
-
-    timer = _.delay(() => {
-      $store.dispatch('getTicketInfo', bettingInfo.ticketId)
-
-      if (!musicStatus) {
-        const lastOpenIdNumCache = Global.cookieCache.get(`lastOpenId${bettingInfo.ticketId}`)
-
-        //
-        const url = window.location.href
-        const index1 = url.indexOf('#bc')
-        if (index1 > 0) {
-          const str = url.substr(index1, url.length)
-
-          if (str === (`#bc/${bettingInfo.ticketId}`)) {
-            if (bettingInfo.lastOpenId !== lastOpenIdNumCache) {
-              Global.cookieCache.set(`lastOpenId${bettingInfo.ticketId}`, bettingInfo.lastOpenId)
-              const bcTag = Global.cookieCache.get('bcTag')
-              if (bcTag === str) {
-                if (lastOpenIdNumCache !== null && lastOpenIdNumCache !== '') {
-                  if (bettingInfo.prize > 0) {
-                    // 播放中奖声音
-                    $refs.prizeAudio.play()
-                  } else {
-                    // 播放开奖声音
-                    $refs.openAudio.play()
-                  }
-                }
-              } else {
-                Global.cookieCache.set('bcTag', str)
-              }
-            }
-          }
-        }
-      }
-    }, 5300)
-
-    // 只有销售时才进行倒计时
-    if (bettingInfo.sale) {
-      goToNextTimer = _.delay(() => {
-
-        $store.commit('GO_TO_NEXT_PLAN');
-      }, _(leftSecond).mul(1000))
-
-      // 取得下一期的信息延迟一秒再做
-      nextTimer = _.delay(() => {
-        $store.dispatch('getTicketInfo', bettingInfo.ticketId)
-      }, _(leftSecond + 1).mul(1000))
-    }
-
-    // this.infoModel.set('leftSecond', 0, {
-    //   silent: true,
-    // })
-
-    countdown.render(leftTime)
-  }
 </script>
 
 <style scoped>
