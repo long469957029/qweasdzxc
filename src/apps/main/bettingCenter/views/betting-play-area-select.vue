@@ -49,12 +49,12 @@
 
         <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select m-left-lg vertical-middle pull-right" v-show="fRule.row.hasOp">
           <div class="tab-group m-left-md">
-            <span class="tab" data-op="all" @click="selectOperate(fRule.row)" v-show="fRule.row.op.all">全</span>
-            <span class="tab" data-op="big" @click="selectOperate(fRule.row)" v-show="fRule.row.op.big">大</span>
-            <span class="tab" data-op="small" @click="selectOperate(fRule.row)" v-show="fRule.row.op.small">小</span>
-            <span class="tab" data-op="odd" @click="selectOperate(fRule.row)" v-show="fRule.row.op.odd">奇</span>
-            <span class="tab" data-op="even" @click="selectOperate(fRule.row)" v-show="fRule.row.op.even">偶</span>
-            <span class="tab" data-op="clear" @click="selectOperate(fRule.row)" v-show="fRule.row.op.clear">清</span>
+            <span class="tab" @click="selectOperate('all', fRule.row)" v-show="fRule.row.op.all">全</span>
+            <span class="tab" @click="selectOperate('big', fRule.row)" v-show="fRule.row.op.big">大</span>
+            <span class="tab" @click="selectOperate('small', fRule.row)" v-show="fRule.row.op.small">小</span>
+            <span class="tab" @click="selectOperate('odd', fRule.row)" v-show="fRule.row.op.odd">奇</span>
+            <span class="tab" @click="selectOperate('even', fRule.row)" v-show="fRule.row.op.even">偶</span>
+            <span class="tab" @click="selectOperate('clear', fRule.row)" v-show="fRule.row.op.clear">清</span>
           </div>
         </div>
 
@@ -322,62 +322,45 @@
         }
       },
 
-      selectOperate(row) {
-        const self = this
-        const $target = $(e.currentTarget)
-        const $playArea = $target.closest('.js-bc-playArea-items')
-        const $itemsToolbars = $playArea.find('.js-be-playArea-items-toolbar')
-        const op = $target.data('op')
-        const $items = $itemsToolbars.find('.js-bc-select-item')
-
+      selectOperate(op, row) {
         switch (op) {
           case 'all':
-            $items.removeClass('active')
-            this.$_selectNumbers($items, $playArea)
-            // $items.removeClass('active').trigger('click');
+            this.$_selectNumbers(row.fItems, row)
             break
           case 'big':
-            _(this.options.list).each((item) => {
-              if (item.items.length === 16) {
-                self.$_selectNumbers($items.removeClass('active').filter(':gt(7)'), $playArea)
-              } else {
-                self.$_selectNumbers($items.removeClass('active').filter(':gt(4)'), $playArea)
-              }
-            })
+            this.$_selectNumbers(_.chain(row.fItems).flatten().filter((num, index) => {
+              num.selected = false
+              return index >= Math.floor((row.items.length) / 2)
+            }).value(), row)
             break
           case 'small':
-            _(this.options.list).each((item) => {
-              if (item.items.length === 16) {
-                self.$_selectNumbers($items.removeClass('active').filter(':lt(8)'), $playArea)
-              } else {
-                self.$_selectNumbers($items.removeClass('active').filter(':lt(5)'), $playArea)
-              }
-            })
+            this.$_selectNumbers(_.chain(row.fItems).flatten().filter((num, index) => {
+              num.selected = false
+              return index < Math.floor((row.items.length) / 2)
+            }).value(), row)
             break
           case 'odd':
-            if ($items.eq(0).data('num') % 2) {
-              this.$_selectNumbers($items.removeClass('active').filter(':even'), $playArea)
-            } else {
-              this.$_selectNumbers($items.removeClass('active').filter(':odd'), $playArea)
-            }
+            this.$_selectNumbers(_.chain(row.fItems).flatten().filter((num, index) => {
+              num.selected = false
+              return num.num % 2
+            }).value(), row)
             break
           case 'even':
-            if ($items.eq(0).data('num') % 2) {
-              this.$_selectNumbers($items.removeClass('active').filter(':odd'), $playArea)
-            } else {
-              this.$_selectNumbers($items.removeClass('active').filter(':even'), $playArea)
-            }
+            this.$_selectNumbers(_.chain(row.fItems).flatten().filter((num, index) => {
+              num.selected = false
+              return !(num.num % 2)
+            }).value(), row)
             break
           case 'clear':
-            $items.removeClass('active')
+            this.$_selectNumbers(row.fItems, row, false)
             break
           default:
             break
         }
 
-        this.updateRowTitle($target)
+        // this.updateRowTitle($target)
 
-        this.statisticsLottery()
+        // this.statisticsLottery()
       },
 
       $_calculateCoefficient(optionals) {
@@ -429,20 +412,19 @@
         this.$emit('statistic', count)
       },
 
-      $_selectNumber(num, row) {
-        // const data1 = $parent.data()
+      $_selectNumber(num, row, toSelected) {
         // 横向不允许冲突/超过最大选择数
         const cx = _.findWhere(row.limits, {name: 'conflict-x'});
         if (!num.selected && !_.isEmpty(cx)) {
           if (!cx.data.num || cx.data.num === 1) {
-            _.chain().flatten(row.fItems).each((item) => {
+            _.chain(row.fItems).flatten().each((item) => {
               if (num !== item) {
                 item.selected = false
               }
             })
             // $target.siblings().removeClass('active')
           } else {
-            const selecteds = _.chain().flatten(row.fItems).findWhere({selected: true}).value();
+            const selecteds = _.chain(row.fItems).flatten().findWhere({selected: true}).value();
             // const $actives = _(row.fItems).$parent.find('.js-bc-select-item.active')
             if (selecteds.length >= cx.data.num) {
               selecteds[0].selected = false
@@ -454,9 +436,9 @@
 
         // 纵向不允许冲突
         if (!num.selected && !_.isEmpty(cy)) {
-          _.chain().flatten(this.formattedRuleList).each(rule =>  {
+          _.chain(this.formattedRuleList).flatten().each(rule =>  {
             if (row !== rule.row) {
-              _.chain().flatten(rule.row.fItems).each(item => {
+              _.chain(rule.row.fItems).flatten().each(item => {
                 const num = _.isNumber(item.num) ? item.num : _.isNumber(item.num.number) ? item.num.number : item.num.name
                 if (num === num.num || num.num * 11 === num || num.num % 10 == num) {
                   item.selected= false;
@@ -469,7 +451,7 @@
           // this.$rows.not($parent).find(`.js-bc-select-item[data-num=${data.num % 10}]`).removeClass('active')
         }
 
-        num.selected = !num.selected
+        num.selected = _.isUndefined(toSelected) ? !num.selected : toSelected
 
         //去除快捷按钮样式
         // $target.closest('.js-bc-playArea-items').find('.js-bc-select-op').removeClass('active')
@@ -488,12 +470,12 @@
       //   const $row = $target.closest('.js-bc-playArea-items')
       //   $row.find('.tab-title').toggleClass('active', !!$row.find('.js-bc-select-item').filter('.active').length)
       // },
-    },
 
-    $_selectNumbers(nums, row) {
-      nums.forEach((num) => {
-        this.$_selectNumber(num, row)
-      })
+      $_selectNumbers(nums, row, toSelected = true) {
+        _.chain(nums).flatten().each((num) => {
+          this.$_selectNumber(num, row, toSelected)
+        })
+      },
     },
   }
 </script>
