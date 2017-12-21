@@ -87,7 +87,7 @@ const BettingRulesCollection = Collection.extend({
       playId,
     })
 
-    this.currentGroup = groupInfo
+    // this.currentGroup = groupInfo
     this.currentPlay = playInfo
 
     return this.currentPlay

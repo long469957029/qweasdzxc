@@ -29,8 +29,8 @@ const argv = require('minimist')(process.argv.slice(2))
 const devFactory = require('./webpack.dev.factory')
 const productionFactory = require('./webpack.production.factory')
 
-const mainConfig = require('./webpack.main.config')
-const externalConfig = require('./webpack.external.config')
+const mainConfig = require('./wp.main.config')
+const externalConfig = require('./wp.external.config')
 const Fontmin = require('fontmin')
 const zip = require('gulp-zip')
 const svgo = require('imagemin-svgo')
@@ -80,22 +80,36 @@ gulp.task('server.webpack', () => {
     appConfig: packageConfig,
   })
 
-  let proxy = [
-    {
-      path: '*.json',
+  // let proxy = [
+  //   {
+  //     path: '*.json',
+  //     target: serverIP,
+  //     changeOrigin: true,
+  //   },
+  //   {
+  //     path: 'mock/*.json',
+  //     target: 'http://localhost:7070/',
+  //   },
+  //   {
+  //     path: '*',
+  //     target: serverIP,
+  //     changeOrigin: true,
+  //   },
+  // ]
+
+  let proxy = {
+    '*.json': {
       target: serverIP,
       changeOrigin: true,
     },
-    {
-      path: 'mock/*.json',
+    'mock/*.json': {
       target: 'http://localhost:7070/',
     },
-    {
-      path: '*',
+    '*': {
       target: serverIP,
       changeOrigin: true,
     },
-  ]
+  };
 
   if (argv.mockup) {
     proxy = _(mockupConfig.routers).map((val, pathInfo) => {
@@ -119,12 +133,12 @@ gulp.task('server.webpack', () => {
     stats: {
       colors: true,
     },
-  }).listen(devConfig.port, 'localhost', (err) => {
+  }).listen(devConfig.devServer.port, 'localhost', (err) => {
     if (err) {
       console.log(err)
     }
 
-    console.log(`Listening at localhost:${devConfig.port}`)
+    console.log(`Listening at localhost:${devConfig.devServer.port}`)
   })
 })
 

@@ -153,7 +153,7 @@ Base.Region = Base.BaseObject.extend({
     if (!this.$el || this.$el.length === 0) {
       if (this.getOption('allowMissingEl')) {
         return false
-      } 
+      }
       throw new Base.Error(`"el" ${this.$el.selector} 在DOM树中必须存在`)
     }
     return true

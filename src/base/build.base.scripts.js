@@ -1,6 +1,7 @@
 
 
 window.Backbone = require('backbone')
+window.Vue = require('vue')
 window.Base = require('./scripts/base')
 
 require('./scripts/under-helper')
@@ -29,11 +30,11 @@ require('./scripts/module')
 
 require('jquery-ui/ui/core')
 require('jquery-ui/ui/widget')
-require('jquery-ui/ui/mouse')
+require('jquery-ui/ui/widgets/mouse')
 require('jquery-ui/ui/position')
-require('jquery-ui/ui/button')
-require('jquery-ui/ui/slider')
-require('./scripts/spinner')
+require('jquery-ui/ui/widgets/button')
+require('jquery-ui/ui/widgets/slider')
+require('jquery-ui/ui/widgets/spinner')
 
 $.widget.bridge('uiButton', $.ui.button)
 
@@ -42,3 +43,5 @@ require('./scripts/bootstrap')
 window.moment = require('moment')
 
 window.moment.locale('zh-cn')
+
+Object.defineProperty(window.Vue.prototype, '_', { value: _ })

@@ -1,14 +1,6 @@
-"use strict";
-
 var _ = require('underscore');
 var path = require('path');
 var webpack = require('webpack');
-
-var autoprefixer = require('autoprefixer');
-var opacity = require('postcss-opacity');
-var unrgba = require('postcss-unrgba');
-var gradient = require('postcss-filter-gradient');
-var pxtorem = require('postcss-pxtorem');
 
 var AssetsPlugin = require('assets-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -19,14 +11,11 @@ module.exports = function(options) {
   var appConfig = options.appConfig;
 
   //==============entry================
-  var entry = _(appConfig.entry).reduce(function(entries, entryInfo, entryName) {
-    var entry = entryInfo.entry;
-    if (entryInfo.hot && options.debug) {
-      entry = [
-        'webpack-dev-server/client?http://localhost:' + appConfig.port,
-        'webpack/hot/only-dev-server'
-      ].concat(entry);
-    }
+  var entry = _(appConfig.entry).reduce(function(entries, entry, entryName) {
+    entry = [
+      'webpack-dev-server/client?http://localhost:' + appConfig.port,
+      // 'webpack/hot/only-dev-server'
+    ].concat(entry);
 
     entries[entryName] = entry;
 
@@ -51,24 +40,26 @@ module.exports = function(options) {
   }
 
   //==============resolve================
-  var resolve = {
-    root: [
-      path.join(__dirname, 'src'),
-      path.join(__dirname, 'bower_components'),
-      path.join(__dirname, 'node_modules')
+  const resolve = {
+    modules: [
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'node_modules'),
+      'node_modules',
     ],
-    modulesDirectories: ['local_modules', 'node_modules'],
-    extensions: ['', '.js', '.scss', 'html'],
+    extensions: ['.js', '.vue', '.scss', 'html'],
     alias: appConfig.resolve.alias
   };
 
   //==============plugins================
   var plugins = [
-    new webpack.ResolverPlugin(
-      new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
-    ),
+    // new webpack.ResolverPlugin(
+    //   new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
+    // ),
+    new webpack.DefinePlugin({
+      DEBUG: Boolean(options.debug),
+    }),
     new webpack.ProvidePlugin(appConfig.providePlugin),
-    new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /zh-cn/)
+    new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /zh-cn/),
   ];
 
   if (options.debug) {
@@ -103,6 +94,7 @@ module.exports = function(options) {
       filename: entryName + '.html',
       template: entryInfo.template,
       chunks: entryInfo.chunks,
+      chunksSortMode: 'manual',
       inject: 'body',
       favicon: entryInfo.favicon,
       resources : entryInfo.resources
@@ -110,87 +102,112 @@ module.exports = function(options) {
   });
 
   //==============module================
-  var module = {
-    loaders: [
+  const module = {
+    noParse: appConfig.noParse,
+    rules: [
       {
         test: /\.jpg$/,
-        loaders: ['url?limit=1024']
+        use: ['url-loader?limit=1024']
       },
       {
         test: /\.gif$/,
-        loaders: ['url?limit=1024']
+        use: ['url-loader?limit=1024']
       },
       {
         test: /\.png$/,
-        loaders: ['url?limit=1024!mimetype=image/png!./file.png']
+        use: ['url-loader?limit=1024!mimetype=image/png!./file.png']
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url?limit=10000&minetype=application/font-woff'
+        use: 'url-loader?limit=10000&minetype=application/font-woff'
       },
       {
         test: /\.(ttf|eot|svg|swf|mp3|wav)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file'
+        use: 'file-loader'
       },
       {
         test: /(.*)\.html$/,
-        loaders: ['html'],
+        use: ['html-loader'],
         include: [
           path.join(__dirname, 'src/apps')
         ]
       },
       {
         test: /snap/,
-        loader: 'imports?this=>window,fix=>module.exports=0'
+        use: 'imports-loader?this=>window,fix=>module.exports=0'
+      },
+      {
+        test: /\.vue$/,
+        use: {
+          loader: 'vue-loader',
+          options: {
+            loaders: {
+              js: 'babel-loader'
+            },
+            presets: ['@babel/preset-env']
+          }
+        },
+        include: [path.join(__dirname, 'src')]
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015']
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          }
         },
-        include: [path.join(__dirname, 'src')]
+        include: [path.join(__dirname, 'src')],
+        exclude: /node_modules|jquery|jqmeter|turn.html4/,
       },
     ]
   };
 
   if (options.debug) {
-    module.loaders.push({
+    module.rules.push({
       test:   /\.scss$/,
-      loader: 'style!css?sourceMap!postcss?pack=rem!sass',
+      use: ['style-loader', 'css-loader?sourceMap', 'postcss-loader?pack=rem', 'sass-loader'],
       include: [path.join(__dirname, 'src/apps/packages/merchants')]
     });
 
-    module.loaders.push({
+    module.rules.push({
       test:   /\.scss$/,
-      loader: 'style!css?sourceMap!postcss!sass',
+      use: ['style-loader', 'css-loader?sourceMap', 'postcss-loader', 'sass-loader'],
       include: [path.join(__dirname, 'src')],
       exclude: [path.join(__dirname, 'src/apps/packages/merchants')]
     });
 
-    module.loaders.push({
+    module.rules.push({
       test: /\.css$/,
-      loader: 'style!css!postcss'
+      use: ['style-loader', 'css-loader', 'postcss-loader']
     });
 
   } else {
 
-    module.loaders.push({
+    module.rules.push({
       test: /\.scss$/,
-      loader: ExtractTextPlugin.extract('style', 'css!postcss!sass'),
+      use: ExtractTextPlugin.extract({
+        fallback: "style-loader",
+        use: ['css-loader', 'postcss-loader', 'sass-loader']
+      }),
       include: [path.join(__dirname, 'src')],
-      exclude: [path.join(__dirname, 'src/apps/packages/merchants')]
     });
 
-    module.loaders.push({
-      test:   /\.scss$/,
-      loader: ExtractTextPlugin.extract('style', 'css!postcss?pack=rem!sass'),
-      include: [path.join(__dirname, 'src/apps/packages/merchants')]
-    });
+    // module.rules.push({
+    //   test:   /\.scss$/,
+    //   use: ExtractTextPlugin.extract({
+    //     fallback: "style-loader",
+    //     use: ['css-loader', 'postcss-loader?pack=rem', 'sass-loader']
+    //   }),
+    //   include: [path.join(__dirname, 'src/apps/packages/merchants')]
+    // });
 
-    module.loaders.push({
+    module.rules.push({
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract('style','css!postcss')
+      use: ExtractTextPlugin.extract({
+        fallback: "style-loader",
+        use: ['css-loader', 'postcss-loader']
+      })
     });
   }
 
@@ -198,71 +215,19 @@ module.exports = function(options) {
     devtool: options.devtool ? options.devtool : false,
     entry: entry,
     output: output,
-    debug: options.debug,
     externals: {
     //require("jquery") 是引用自外部模块的
     //对应全局变量 jQuery
     '$': 'jQuery'
     },
     resolve: resolve,
-    noParse: appConfig.noParse,
     plugins: plugins,
     module: module,
-    postcss: function () {
-      return {
-        defaults: [
-          unrgba({
-            method: 'clone'
-          }),
-          gradient,
-          opacity,
-          autoprefixer({browsers: ['Chrome > 30','ie >= 8','> 1%']})
-        ],
-        rem: [
-          unrgba({
-            method: 'clone'
-          }),
-          gradient,
-          opacity,
-          autoprefixer({browsers: ['Chrome > 30','ie >= 8','> 1%']}),
-          pxtorem({
-            root_value: 12,
-            unit_precision: 5,
-            prop_white_list: [],
-            replace: false
-          })
-        ]
-      };
-    },
-    port: appConfig.port,
-    jshint: {
-      "noempty": true,
-      "noarg": true,
-      "eqeqeq": true,
-      "jquery": true,
-      "browser": true,
-      "bitwise": true,
-      "curly": true,
-      "undef": true,
-      "nonew": true,
-      "strict": false,
-      "forin": true,
-      "globals" : {
-        "moment": false,
-        "Backbone": false,
-        "Base": false,
-        "Global": false,
-        "_": false,
-        "require": false,
-        "exports": false,
-        "module": false,
-        "describe": false,
-        "it": false,
-        "before": false,
-        "beforeEach": false,
-        "after": false,
-        "afterEach": false
-      }
+    //     ]
+    //   };
+    // },
+    devServer: {
+      port: appConfig.port
     }
   };
 };
