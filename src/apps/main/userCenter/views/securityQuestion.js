@@ -9,7 +9,7 @@ const SecurityQuestionView = Base.ItemView.extend({
   // 构造修改密保问题页面
   updateSQTpl: _.template(require('userCenter/templates/securityQuestion-update.html')),
 
-  className: 'uc-securityQuestion-view',
+  className: 'uc-change-pwd-view',
 
   events: {
     // 1 添加密保问题
