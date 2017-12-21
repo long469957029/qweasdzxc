@@ -7,9 +7,9 @@
           <betting-advance-rules></betting-advance-rules>
           <div class="pull-right bc-advance-mode-main">
             <div class="advance-bouns">
-              单注奖金：<span class="font-md text-prominent js-bc-bet-mode"></span>元
+              单注奖金：<span class="font-md text-prominent">{{bettingChoice.fBetBonus}}</span>元
             </div>
-            <a class="advance-play-des js-bc-play-example">
+            <a class="advance-play-des" ref="playExample">
               <span class="sfa sfa-bc-light vertical-middle"></span>
               玩法说明
             </a>
@@ -28,7 +28,7 @@
 
         <div class="m-LR-smd m-top-md m-bottom-md">
           <div class="form-inline m-TB-xs">
-            <select name="" class="js-bc-unit-select select-default bc-unit-select">
+            <select name="unit" class="select-default bc-unit-select" v-model="unit">
               <option value="10000">元</option>
               <option value="1000">角</option>
               <option value="100">分</option>
@@ -41,9 +41,9 @@
 
             <div class="inline-block m-left-smd">
               <span>共</span>
-              <span class="js-bc-statistics-lottery text-pleasant font-sm font-bold">0</span>
+              <span class="text-pleasant font-sm font-bold">{{bettingChoice.statistics}}</span>
               <span>注，金额</span>
-              <span class="js-bc-statistics-money text-prominent font-sm font-bold">0</span>
+              <span class="text-prominent font-sm font-bold">{{bettingChoice.fPrefabMoney}}</span>
               <span>元</span>
             </div>
             <select name="" class="js-bc-vouchers-select m-left-smd bc-vouchers-select">
@@ -132,6 +132,7 @@
       return {
         wrapperClass: _.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id)) > -1 ? 'mark6' : '',
         loading: Global.ui.loader.get(),
+        unit: 10000,
         playRule: {}
       }
     },
@@ -139,6 +140,7 @@
       playLevels: function() {
         return this.$store.getters.playLevels
       },
+      limitMoney: 'rulesList.limitMoney',
       bettingChoice: 'bettingChoice',
       bettingInfo: 'bettingInfo',
     }),
@@ -149,13 +151,36 @@
           this.playRule = betRulesConfig.get(newVal)
 
           recordsOpenView.updateByPlayRule(this.playRule)
-        }
+
+          this.$store.commit(types.SET_CHECKOUT_CHOICE)
+
+          const playInfo = this.$store.getters.playInfo(newVal, this.bettingChoice.groupId);
+
+          this.$store.commit(types.SET_PLAY_INFO, playInfo)
+
+          // 中奖举例
+          if ($(this.$refs.playExample).data('popover')) {
+            $(this.$refs.playExample).popover('destroy')
+          }
+          $(this.$refs.playExample).popover({
+            trigger: 'hover',
+            container: this.$el,
+            html: true,
+            content: `<div><span class="font-bold">玩法说明：</span>${playInfo.playDes}</div><div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
+            placement: 'bottom',
+          })
+        },
       },
       'bettingInfo.lastOpenId': {
         handler: function(newVal, oldVal) {
           recordsOpenView.update()
         }
-      }
+      },
+      unit: {
+        handler: function(newVal, oldVal) {
+          this.$store.commit(types.SET_UNIT, newVal)
+        }
+      },
     },
 
     mounted: function() {
@@ -165,7 +190,7 @@
         },
         onOverMax(maxNum) {
           Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">${
-              _(self.rulesCollection.limitMoney).convert2yuan()}</span>元，` +
+              _(this.limitMoney).convert2yuan()}</span>元，` +
             `已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
         },
       })

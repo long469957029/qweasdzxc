@@ -29,6 +29,7 @@
 </template>
 
 <script>
+  import * as types from 'mutation-types'
   import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
   import BettingPlayAreaPosition from "./betting-play-area-position"
 
@@ -109,8 +110,9 @@
 
       empty() {
         $(this.$refs.fileTip).removeClass('hidden')
-        $(this.$refs.numbersArea).addClass('hidden').val('')
-        this.$emit('statistic', 0)
+        $(this.$refs.numbersArea).addClass('hidden')
+        this.numbers = ''
+        // this.$store.commit(types.SET_STATISTICS, 0)
       },
 
       positionChange(optionals) {
@@ -136,7 +138,8 @@
         const repeat = this.checkRepeat(this.split())
         const validate = this.validate(repeat.passNumbers)
 
-        this.$emit('statistic', validate.statistics)
+
+        this.$store.commit(types.SET_STATISTICS, validate.statistics)
 
         repeat.repeatNumbers = repeat.repeatNumbers.concat(validate.repeatNumbers)
 
@@ -152,7 +155,7 @@
 
       $_statisticsLottery() {
         const validated = this.$_validate(this.$_split())
-        this.$emit('statistic', validated && validated.statistics || 0)
+        this.$store.commit(types.SET_STATISTICS, validated && validated.statistics || 0)
       },
 
       $_calculateCoefficient(optionals) {

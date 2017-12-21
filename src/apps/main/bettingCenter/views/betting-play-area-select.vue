@@ -8,12 +8,12 @@
       <div class="js-bc-missOption bc-missOption-btn active" data-type="lastMissNum">当前遗漏</div>
       <div class="js-bc-missOption bc-missOption-btn" data-type="maxMissNum">最大遗漏</div>
       <div class="js-bc-lottery-auto bc-missOption-btn" data-times="1">机选一注</div>
-      <div class="js-bc-missOption bc-missOption-btn" data-type="clear">清除选号</div>
+      <div class="bc-missOption-btn" @click="clearAllSelected">清除选号</div>
     </div>
 
     <!--选区-->
-    <div class="bc-page-content active" v-for="(formattedList, index) in formattedRuleList" v-show="index === 0">
-      <div class="js-bc-playArea-items bc-playArea-items clearfix" v-for="fRule in formattedList">
+    <div class="bc-page-content active" v-for="n in totalPage" v-show="n === 1">
+      <div class="js-bc-playArea-items bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList" v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
         <div class="js-be-playArea-items-toolbar tab-toolbar tab-circle pull-left">
 
           <div class="js-bc-select-item-title tab-title" v-show="fRule.row.title">
@@ -29,7 +29,7 @@
               <div :class="fRule.row.htmlNeedInfo.playClassName">
                 <div v-for="items in fRule.row.fItems">
                   <span class="bc-select-item cbutton cbutton--effect-novak tab" :class="fRule.limit" v-for="item in items" @click="selectNumber(item, fRule.row)">
-                    <span :class="[fRule.row.htmlNeedInfo.numberClassName, item.color]">{{item.num.number}}</span>
+                    <span :class="[fRule.row.htmlNeedInfo.numberClassName, item.color]">{{item.num}}</span>
                     <span>X</span>
                     <span class="mark6-odds"></span>
                   </span>
@@ -39,8 +39,9 @@
           </div>
 
           <div class="tab-group" v-show="_.isEmpty(fRule.row.htmlNeedInfo)">
-            <div v-for="items in fRule.row.fItems">
-              <span class="bc-select-item cbutton cbutton--effect-novak tab" v-for="item in items" @click="selectNumber(item, fRule.row)"
+            <div v-for="n in fRule.row.totalPage">
+              <span class="bc-select-item cbutton cbutton--effect-novak tab" @click="selectNumber(item, fRule.row)"
+                    v-for="item in fRule.row.fItems" v-if="!fRule.row.page || (index < n * fRule.row.page && index >= (n - 1) * fRule.row.page)"
                   :class="[fRule.limit, {treble2: fRule.row.doublenum, active: item.selected}]">{{item.num}}
               </span>
             </div>
@@ -110,9 +111,8 @@
 
 <script>
   import { mapState } from 'vuex'
+  import * as types from 'mutation-types'
   import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
-  import ticketConfig from 'skeleton/misc/ticketConfig'
-  import chunk from "lodash/chunk";
   import BettingPlayAreaPosition from "./betting-play-area-position";
 
   export default {
@@ -130,28 +130,29 @@
       return {
         selectOptionals: [],
         rowsResult: [],
-        formattedRuleList: []
+        formattedRuleList: [],
+        totalPage: 1,
+        coefficient: 1
       }
     },
 
     watch: {
       computedRuleList: {
         handler(newVal, oldVal) {
-          Object.assign(this.formattedRuleList, newVal)
+          this.formattedRuleList = newVal
         },
         immediate: true
       },
+      'playRule.page': {
+        handler(newVal) {
+          this.totalPage = Math.ceil(this.formattedRuleList.length / newVal)
+        }
+      }
     },
 
     computed: mapState({
       computedRuleList: function() {
-        if (this.playRule.page) {
-          this.playRule.formattedList = chunk(this.playRule.list, this.playRule.page)
-        } else {
-          this.playRule.formattedList = [this.playRule.list]
-        }
-
-        return _(this.playRule.formattedList).map((list) => _(list).map((RuleItem) => {
+        return _(this.playRule.list).map((RuleItem) => {
           let fItems
           RuleItem.hasOp = _(RuleItem.op).some()
           fItems = _(RuleItem.items).map(item => {
@@ -162,37 +163,38 @@
           });
           if (!_.isEmpty(RuleItem.htmlNeedInfo)) {
             if (_.indexOf(["mark6-tm-tm","mark6-zm-zm"],RuleItem.htmlNeedInfo.playClassName) > -1) {
-              fItems = chunk(fItems, 10)
+              RuleItem.page = 10
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("tm-lm")>-1) {
-              fItems = [fItems]
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("tm-sebo")>-1) {
-              fItems = chunk(fItems, 9)
+              RuleItem.page = 9
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("zm-lm")>-1){
-              fItems = [fItems]
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("sx-sx")>-1) {
-              fItems = chunk(fItems, 6)
+              RuleItem.page = 6
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("tw-tw")>-1) {
-              fItems = chunk(fItems, 10)
+              RuleItem.page = 10
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("zh-zh")>-1) {
-              fItems = [fItems]
             } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("bz-bz")>-1) {
-              fItems = chunk(fItems, 10)
+              RuleItem.page = 10
             }
+
+            RuleItem.totalPage = Math.ceil(RuleItem.items.length / RuleItem.page)
           } else {
             if (RuleItem.items.length === 16) {
-              fItems = chunk(fItems, 8)
+              RuleItem.page = 8
+              RuleItem.totalPage = Math.ceil(RuleItem.items.length / RuleItem.page)
             } else {
-              fItems = [fItems]
+            RuleItem.totalPage = 1
             }
           }
 
           this.$set(RuleItem, 'fItems', fItems)
+
           return {
             limit: _(RuleItem.limits).pluck('name').join(' '),
             row: RuleItem,
             htmlNeedInfo: RuleItem.htmlNeedInfo,
           }
-        }))
+        })
       }
     }),
 
@@ -328,25 +330,25 @@
             this.$_selectNumbers(row.fItems, row)
             break
           case 'big':
-            this.$_selectNumbers(_.chain(row.fItems).flatten().filter((num, index) => {
+            this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return index >= Math.floor((row.items.length) / 2)
             }).value(), row)
             break
           case 'small':
-            this.$_selectNumbers(_.chain(row.fItems).flatten().filter((num, index) => {
+            this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return index < Math.floor((row.items.length) / 2)
             }).value(), row)
             break
           case 'odd':
-            this.$_selectNumbers(_.chain(row.fItems).flatten().filter((num, index) => {
+            this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return num.num % 2
             }).value(), row)
             break
           case 'even':
-            this.$_selectNumbers(_.chain(row.fItems).flatten().filter((num, index) => {
+            this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return !(num.num % 2)
             }).value(), row)
@@ -358,9 +360,13 @@
             break
         }
 
-        // this.updateRowTitle($target)
+        this.$_statisticsLottery()
+      },
 
-        // this.statisticsLottery()
+      clearAllSelected() {
+        _.each(this.formattedRuleList, formattedRule => _.each(formattedRule.row.fItem, num => {
+          num.selected = false
+        }))
       },
 
       $_calculateCoefficient(optionals) {
@@ -386,9 +392,7 @@
           let selected = []
 
           if (item.isShow) {
-            selected = _(this.$rows.filter(`.js-bc-playArea-items-${item.id}`).find('.js-bc-select-item.active')).map((itemInfo) => {
-              return $(itemInfo).data('num')
-            })
+            selected = _.chain(this.formattedRuleList[item.id].row.fItems).where({selected: true}).pluck('num').value()
           }
 
           return selected
@@ -397,19 +401,19 @@
         // 如果系数不存在，根本无需计算
         if (this.coefficient) {
           // 任选玩法需要去掉没有选值的行，便于复选计算
-          if (this.algorithmProps && this.algorithmProps.coefficient) {
-            count = Math.round(_(this.coefficient).mul(this.algorithm.call(
-              this,
+          if (this.playRule.algorithmProps && this.playRule.algorithmProps.coefficient) {
+            count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(
+              this.playRule,
               _(this.rowsResult).filter((rowResult) => {
                 return !_.isEmpty(rowResult)
               }),
             ) || 0))
           } else {
-            count = Math.round(_(this.coefficient).mul(this.algorithm.call(this, this.rowsResult) || 0))
+            count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(this.playRule, this.rowsResult) || 0))
           }
         }
 
-        this.$emit('statistic', count)
+        this.$store.commit(types.SET_STATISTICS, count)
       },
 
       $_selectNumber(num, row, toSelected) {
@@ -436,7 +440,7 @@
 
         // 纵向不允许冲突
         if (!num.selected && !_.isEmpty(cy)) {
-          _.chain(this.formattedRuleList).flatten().each(rule =>  {
+          _.each(this.formattedRuleList, rule =>  {
             if (row !== rule.row) {
               _.chain(rule.row.fItems).flatten().each(item => {
                 const num = _.isNumber(item.num) ? item.num : _.isNumber(item.num.number) ? item.num.number : item.num.name
@@ -446,30 +450,26 @@
               })
             }
           })
-          // this.$rows.not($parent).find(`.js-bc-select-item[data-num=${data.num}]`).removeClass('active')
-          // this.$rows.not($parent).find(`.js-bc-select-item[data-num=${data.num}${data.num}]`).removeClass('active')
-          // this.$rows.not($parent).find(`.js-bc-select-item[data-num=${data.num % 10}]`).removeClass('active')
         }
 
         num.selected = _.isUndefined(toSelected) ? !num.selected : toSelected
-
-        //去除快捷按钮样式
-        // $target.closest('.js-bc-playArea-items').find('.js-bc-select-op').removeClass('active')
-
-        // this.$_updateRowTitle($target)
 
         // 当是任选并且没有任选位置时，每次改变重新计算系数
         if (!_.isEmpty(this.playRule.optionals) && !this.playRule.optionals.list) {
           this.$_calculateCoefficient(this.playRule.optionals)
         }
 
-        // this.$_statisticsLottery()
-      },
+        this.$_statisticsLottery()
 
-      // $_updateRowTitle($target) {
-      //   const $row = $target.closest('.js-bc-playArea-items')
-      //   $row.find('.tab-title').toggleClass('active', !!$row.find('.js-bc-select-item').filter('.active').length)
-      // },
+        const indexs = []
+        _(row.fItems).each((item, index) => {
+          if (item.selected) {
+            indexs.push(index)
+          }
+        })
+
+        this.$store.commit(types.UPDATE_BONUS, indexs)
+      },
 
       $_selectNumbers(nums, row, toSelected = true) {
         _.chain(nums).flatten().each((num) => {

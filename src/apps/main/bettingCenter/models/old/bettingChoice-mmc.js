@@ -1,11 +1,13 @@
 
 
+/**
+ * MMC专用，20160525
+ */
 const Model = require('skeleton/model')
-const ticketConfig = require('skeleton/misc/ticketConfig')
 
-const BettingChoiceModel = Model.extend({
+const BettingChoiceModelMMC = Model.extend({
 
-  url: '/ticket/bet/bet.json',
+  url: '/ticket/bet/betMmc.json',
 
   defaults: {
     // groupId: 1,
@@ -15,16 +17,13 @@ const BettingChoiceModel = Model.extend({
     // multiple: 1,
     // playId: 1,
     // playName: '',
-    betBonus: {},
     maxBonus: 195000,
     unit: 10000,
     formatUnit: '元',
     statistics: 0,
     userRebate: 0,
     previewList: [],
-    buyList: [],
     totalInfo: {},
-    buyInfo: {},
     usePack: 0,
     // ticketId:
   },
@@ -33,9 +32,15 @@ const BettingChoiceModel = Model.extend({
     const self = this
 
     const params = this.pick('playId', 'multiple', 'userRebate', 'previewList')
+    let iBetNum = 0
+
     const previewList = _(params.previewList).reduce((list, item) => {
+      iBetNum = item.bettingNumber.replace('龙', 0).replace('虎', 1).replace('和', 2)
+      iBetNum = iBetNum.replace(/大/g, 1).replace(/小/g, 2).replace(/单/g, 3).replace(/双/g, 4)
+
+
       list.push({
-        betNum: item.bettingNumber,
+        betNum: iBetNum,
         playId: item.playId,
         betMultiple: item.multiple,
         moneyMethod: item.unit,
@@ -46,8 +51,9 @@ const BettingChoiceModel = Model.extend({
       return list
     }, [])
 
+
     return Global.sync.ajax({
-      url: '/ticket/bet/bet.json',
+      url: '/ticket/bet/betMmc.json',
       tradition: true,
       data: {
         planId,
@@ -57,46 +63,14 @@ const BettingChoiceModel = Model.extend({
     })
       .done((res) => {
         if (res && res.result === 0) {
-          self.emptyPrevBetting()
-        }
-      })
-  },
+          // self.emptyPrevBetting();
 
-  buyBettingXhr(planId) {
-    const self = this
-
-    const params = this.pick('playId', 'multiple', 'userRebate', 'buyList')
-    const buyList = _(params.buyList).reduce((list, item) => {
-      list.push({
-        betNum: item.bettingNumber,
-        playId: item.playId,
-        betMultiple: item.multiple,
-        moneyMethod: item.unit,
-        // 0 高奖金 1 有返点
-        betMethod: item.betMethod,
-      })
-
-      return list
-    }, [])
-
-    return Global.sync.ajax({
-      url: '/ticket/bet/bet.json',
-      tradition: true,
-      data: {
-        planId,
-        bet: buyList,
-        usePack: this.get('usePack'),
-      },
-    })
-      .done((res) => {
-        if (res && res.result === 0) {
-          self.emptyBuyBetting()
         }
       })
   },
 
   initialize() {
-    this.on('change:userRebate change:betMethod', this.calculateByPrefab)
+    this.on('change:multiple change:statistics change:userRebate change:betMethod', this.calculateByPrefab)
     this.on('change:maxBonus change:multiple change:unit', this.calculateMaxBonus)
     this.on('change:maxMultiple change:unit', function() {
       const info = this.pick('maxMultiple', 'unit')
@@ -104,17 +78,19 @@ const BettingChoiceModel = Model.extend({
         .value())
     })
 
-    this.on('change:previewList', this.calculateTotal)
-    this.on('change:buyList', this.calculateBuyInfo)
+    this.on('change:unit', function(model, unit) {
+      this.set('formatUnit', unit === 10000 ? '元' : unit === 1000 ? '角' : unit === 100 ? '分' : '厘')
+      this.calculateByPrefab()
+    })
 
-    this.mark6TicketIdArr = ticketConfig.getMark6TicketIdArr()
+    this.on('change:previewList', this.calculateTotal)
   },
 
   calculateByPrefab() {
     const info = this.pick('statistics', 'betMethod', 'multiple', 'userRebate')
 
     if (info.statistics && info.multiple) {
-    // if (info.statistics && info.multiple && info.userRebate) {
+      // if (info.statistics && info.multiple && info.userRebate) {
       const prefabMoney = _(info.statistics).chain().mul(info.multiple).mul(2)
         .mul(this.get('unit'))
         .value()
@@ -169,23 +145,6 @@ const BettingChoiceModel = Model.extend({
     this.set('totalInfo', totalInfo)
   },
 
-  calculateBuyInfo() {
-    const buyList = this.get('buyList')
-
-    const buyInfo = _(buyList).reduce((info, item) => {
-      info.totalLottery = _(info.totalLottery).add(item.statistics)
-      info.totalMoney = _(info.totalMoney).add(item.prefabMoney)
-      info.totalRebateMoney = _(info.totalRebateMoney).add(item.rebateMoney)
-      return info
-    }, {
-      totalLottery: 0,
-      totalMoney: 0,
-      totalRebateMoney: 0,
-    })
-
-    this.set('buyInfo', buyInfo)
-  },
-
   // 手动输入和自动生成、选择的唯一区别在于分隔符要用空格
   formatBettingNumber(bettingNumber, options) {
     let number = ''
@@ -208,51 +167,13 @@ const BettingChoiceModel = Model.extend({
         // 如果有值，则用该符号隔开number
         if (options.format) {
           return row.join(options.format.symbol)
-        }
+        } 
         // 同行是否用空格隔开
         return row.join(options.type === 'display' ? '' : ' ')
       }).join(',')
     }
 
-    if (options.formatToNum) {
-      number = this._formatToNum(number, options)
-    }
-
     return number
-  },
-
-  // 将球上的文字转换成对应的数值
-  _formatToNum(betNum, options) {
-    let newNum = betNum
-    if (_.indexOf(this.mark6TicketIdArr, parseInt(options.ticketId, 10)) > -1) {
-      if (options.formatToNumInfo) {
-        const newNumArr = []
-        const replaceArr = options.formatToNumInfo
-        const selectArr = newNum.split(',')
-        _(selectArr).each((text) => {
-          _(replaceArr).each((item) => {
-            if (text === item.name) {
-              newNumArr.push(item.value)
-            }
-          })
-        })
-        newNum = newNumArr.join()
-      }
-    } else {
-      while (newNum.indexOf('大') !== -1 || newNum.indexOf('小') !== -1 || newNum.indexOf('单') !== -1 || newNum.indexOf('双') !== -1
-      || newNum.indexOf('龙') !== -1 || newNum.indexOf('虎') !== -1 || newNum.indexOf('和') !== -1 || newNum.indexOf('三同号通选') !== -1 || newNum.indexOf('三连号通选') !== -1) {
-        newNum = newNum.replace('大', 1)
-        newNum = newNum.replace('小', 2)
-        newNum = newNum.replace('单', 3)
-        newNum = newNum.replace('双', 4)
-        newNum = newNum.replace('龙', 0)
-        newNum = newNum.replace('虎', 1)
-        newNum = newNum.replace('和', 2)
-        newNum = newNum.replace('三同号通选', 0)
-        newNum = newNum.replace('三连号通选', 0)
-      }
-    }
-    return newNum
   },
 
   _addBets(bettingList, options) {
@@ -272,11 +193,9 @@ const BettingChoiceModel = Model.extend({
       'maxMultiple',
       'rebateMoney',
       'formatMaxBonus',
-      'ticketId',
     )
 
     let previewList = this.get('previewList')
-    let buyList = this.get('buyList')
     const items = []
     const sameBets = []
 
@@ -299,10 +218,6 @@ const BettingChoiceModel = Model.extend({
         playName: selectInfo.playName,
         bettingNumber: this.formatBettingNumber(bettingInfo.lotteryList, {
           selectOptionals: bettingInfo.selectOptionals,
-          formatToNum: bettingInfo.formatToNum,
-          playId: selectInfo.playId,
-          ticketId: selectInfo.ticketId,
-          formatToNumInfo: bettingInfo.formatToNumInfo || false,
         }),
         // 显示用
         formatBettingNumber: this.formatBettingNumber(bettingInfo.lotteryList, {
@@ -332,21 +247,19 @@ const BettingChoiceModel = Model.extend({
       // }
 
       // 判断是否有相同的投注,几个方面比较playId,unit,betMethod,bettingNumber
-      if (!options.buy) {
-        sameBet = _(previewList).findWhere({
-          playId: item.playId,
-          unit: item.unit,
-          betMethod: item.betMethod,
-          bettingNumber: item.bettingNumber,
-        })
+      sameBet = _(previewList).findWhere({
+        playId: item.playId,
+        unit: item.unit,
+        betMethod: item.betMethod,
+        bettingNumber: item.bettingNumber,
+      })
 
-        if (sameBet) {
-          sameBet.multiple = _(sameBet.multiple).add(item.multiple)
-          // if (sameBet.multiple > sameBet.maxMultiple) {
-          //  sameBet.multiple = sameBet.maxMultiple;
-          // }
-          item = sameBet
-        }
+      if (sameBet) {
+        sameBet.multiple = _(sameBet.multiple).add(item.multiple)
+        // if (sameBet.multiple > sameBet.maxMultiple) {
+        //  sameBet.multiple = sameBet.maxMultiple;
+        // }
+        item = sameBet
       }
 
       // 计算prefabMoney 和 rebateMoney
@@ -367,19 +280,11 @@ const BettingChoiceModel = Model.extend({
       }
     }, this)
 
-    if (!options.buy) {
-      previewList = items.concat(previewList)
+    previewList = items.concat(previewList)
 
-      this.set('previewList', previewList)
+    this.set('previewList', previewList)
 
-      this.trigger('change:previewList', this)
-    } else {
-      buyList = items.concat(buyList)
-
-      this.set('buyList', buyList)
-
-      this.trigger('change:buyList', this)
-    }
+    this.trigger('change:previewList', this)
 
     return sameBets
   },
@@ -392,13 +297,13 @@ const BettingChoiceModel = Model.extend({
     const selectInfo = this.pick('statistics')
 
     if (selectInfo.statistics) {
+      // return this._addBets([bettingInfo], _(options || {}).extend(selectInfo));
       if (!_.isNull(this.get('maxBetNums')) && selectInfo.statistics > this.get('maxBetNums')) {
-        this._addBets([bettingInfo], _(options || {}).extend(selectInfo, { buy: true }))
+        // this._addBets([bettingInfo], _(options || {}).extend(selectInfo,{buy:true}));
         return { MaxBetNums: this.get('maxBetNums') }
       }
-      this.emptyBuyBetting()
       return this._addBets([bettingInfo], _(options || {}).extend(selectInfo))
-    }
+    } 
     return false
   },
 
@@ -417,21 +322,6 @@ const BettingChoiceModel = Model.extend({
     this.trigger('change:previewList', this, index)
   },
 
-  emptyBuyBetting() {
-    this.set('buyList', [])
-
-    this.trigger('change:buyList:del', this)
-    this.trigger('change:buyList', this)
-  },
-
-  changePreviewMultipleBet(index, num) {
-    const previewList = this.get('previewList')
-    previewList[index].multiple = parseInt(num, 10)
-    console.log(previewList)
-    this.trigger('change:previewList', this, index)
-  },
-
-
 })
 
-module.exports = BettingChoiceModel
+module.exports = BettingChoiceModelMMC
