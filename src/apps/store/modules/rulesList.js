@@ -78,7 +78,7 @@ const actions = {
     commit(types.CHECKOUT_TICKET_RULES)
     betting.getTicketRules(
       ticketId,
-      (res) => { return commit(types.GET_TICKET_RULES_SUCCESS, res) },
+      ({data}) => { return commit(types.GET_TICKET_RULES_SUCCESS, data) },
       () => { return commit(types.GET_TICKET_RULES_FAILURE) },
     )
   },

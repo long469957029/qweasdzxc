@@ -39,7 +39,7 @@ const actions = {
     // commit(types.CHECKOUT_TICKET_INFO)
     betting.getTicketInfo(
       ticketId,
-      (res) => { return commit(types.GET_TICKET_INFO_SUCCESS, res) },
+      ({data}) => { return commit(types.GET_TICKET_INFO_SUCCESS, data) },
       () => { return commit(types.GET_TICKET_INFO_FAILURE) },
     )
   },

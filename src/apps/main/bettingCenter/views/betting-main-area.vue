@@ -51,11 +51,11 @@
             </select>
             <div class="pull-right m-right-sm">
               <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
-                      :disabled="!bettingInfo.sale || bettingInfo.pending">
+                      :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                 <span class="sfa sfa-btn-icon-bolt vertical-middle"></span>
                 快捷投注
               </button>
-              <button class="btn btn-cool bc-md-btn m-bottom-xs" @click="lotteryAdd" :disabled="!bettingInfo.sale || bettingInfo.pending">
+              <button class="btn btn-cool bc-md-btn m-bottom-xs" @click="lotteryAdd" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                 <span class="sfa sfa-btn-icon-add vertical-middle"></span> 添加号码
               </button>
             </div>
@@ -81,7 +81,7 @@
                   <span class="js-bc-total-money text-prominent m-left-xs m-right-xs font-bold">0</span>
                   <span>元</span>
                 </span>
-              <button class="js-bc-chase bc-chase btn-link inline-block cursor-pointer m-left-md relative" :disabled="!bettingInfo.sale || bettingInfo.pending">
+              <button class="js-bc-chase bc-chase btn-link inline-block cursor-pointer m-left-md relative" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                 <span class="sfa sfa-checkmark vertical-middle"></span>
                 我要追号
                 <span class="ba-chase-tip">追号能提高中奖率</span>
@@ -89,7 +89,7 @@
             </div>
             <div class="m-top-md p-top-sm text-center m-bottom-md">
               <button class="js-bc-btn-lottery-confirm btn btn-orange bc-jb-btn"
-                      data-loading-text="提交中" :disabled="!bettingInfo.sale || bettingInfo.pending"> 确认投注
+                      data-loading-text="提交中" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending"> 确认投注
               </button>
             </div>
           </div>
@@ -105,6 +105,7 @@
   import { mapState } from 'vuex'
   import * as types from 'mutation-types'
   import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
+  import ticketConfig from 'skeleton/misc/ticketConfig'
 
   //backbone旧组件
   import HisAnalysisView from './bettingCenter-historical-analysis'
@@ -134,7 +135,9 @@
         wrapperClass: _.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id)) > -1 ? 'mark6' : '',
         loading: Global.ui.loader.get(),
         unit: 10000,
-        playRule: {}
+        playRule: {},
+        //提交中，禁用按钮
+        pushing: false
       }
     },
     computed: mapState({
@@ -191,19 +194,15 @@
           return false
         }
 
-        // this.rulesCollection.getPlayGroups(this.bettingChoice.levelId)
-        // this.model.set({
-        //   maxBetNums: this.rulesCollection.getPlayInfo(this.model.get('groupId'), this.model.get('playId')).maxBetNums,
-        // })
         if (this.playRule.type === 'select') {
           this.$_addSelectLottery({ buy: true })
         } else {
-          this.addInputLottery({ buy: true })
+          this.$_addInputLottery({ buy: true })
         }
-        // do save
-        const info = this.model.pick('buyInfo', 'buyList')
-        let planId = self.infoModel.get('planId')
-        const inputCount = _(info.buyList).reduce((_inputCount, previewInfo) => {
+
+        //do save
+        let planId = this.bettingInfo.planId
+        const inputCount = _(this.bettingChoice.buyList).reduce((_inputCount, previewInfo) => {
           if (previewInfo.type === 'input') {
             _inputCount += previewInfo.statistics
           }
@@ -214,21 +213,15 @@
           Global.ui.notification.show('非常抱歉，目前平台单式投注只支持最多10万注单。')
           return false
         }
-        if (_.isEmpty(info.buyList)) {
+        if (_.isEmpty(this.bettingChoice.buyList)) {
           Global.ui.notification.show('请至少选择一注投注号码！')
           return false
         }
 
         // 腾讯分分彩，金额限制1000元
-        if (this.options.ticketId === 31 && _(info.buyInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
+        if (this.ticketInfo.info.id === 31 && _(this.bettingChoice.buyInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
           Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-          this.model.emptyBuyBetting()
-          return false
-        }
-
-        if (info.buyInfo.totalMoney > Global.memoryCache.get('acctInfo').balance + (Number(this.$userRedPackBtn.data('type')) === 1 ? (this.redMomey * 10000) : 0)) {
-          Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
-          this.model.emptyBuyBetting()
+          this.$store.commit(types.EMPTY_BUY_BETTING)
           return false
         }
 
@@ -237,21 +230,18 @@
             'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
           return false
         }
-        const maxBetNums = this.model.get('maxBetNums')
-        if (maxBetNums && !_.isNull(maxBetNums) && Number(info.buyList[0].statistics) > maxBetNums) {
+        const maxBetNums = this.bettingChoice.playInfo.maxBetNums
+        if (maxBetNums && !_.isNull(maxBetNums) && Number(this.bettingChoice.buyList[0].statistics) > maxBetNums) {
           Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${maxBetNums} 注，请重新选择  `)
-          this.model.emptyBuyBetting()
+          this.$store.commit(types.EMPTY_BUY_BETTING)
           return false
         }
 
-        // const commit_ticketInfo = this.options.ticketInfo
-        // const commit_ticketName = this.options.ticketName
-        // const commit_buyInfo = this.model.get('buyInfo')
+        this.pushing = true
 
-        // $target.button('loading')
-        self.model.buyBettingXhr(planId)
+        this.$store.dispatch('pushBetting', planId)
           .always(() => {
-            $target.button('reset')
+            this.pushing = false
           })
           .done((res) => {
             if (res && res.result === 0) {
@@ -266,15 +256,6 @@
                 displayTime: 800,
               })
               self.getUsePackStatus()
-              // Global.ui.notification.show(self.commitTpl({
-              //   ticketInfo: commit_ticketInfo,
-              //   ticketName: commit_ticketName,
-              //   planId: planId,
-              //   totalInfo: commit_buyInfo
-              // }), {
-              //   hasFooter: false,
-              //   displayTime:2000
-              // });
             } else if (res.root && res.root.errorCode === 101) {
               Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
               self.model.emptyBuyBetting()
@@ -292,8 +273,9 @@
       },
 
       $_addSelectLottery(opt) {
-        const result = this.$refs.areaSelect.addBetting(opt)
+        this.$refs.areaSelect.addBetting(opt)
 
+        const result = this.bettingChoice.addPrevBetResult
         //提交成功
         if (result) {
           if (!_.isEmpty(result)) {
@@ -301,10 +283,10 @@
               Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.MaxBetNums} 注，请重新选择  `)
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
-              this.$store.commit(types.SET_CHOICE_EMPTY)
+              this.$refs.areaSelect.empty()
             }
           } else {
-            this.$store.commit(types.SET_CHOICE_EMPTY)
+            this.$refs.areaSelect.empty()
           }
         } else {
           Global.ui.notification.show('号码选择不完整，请重新选择！')
@@ -312,8 +294,9 @@
       },
 
       $_addInputLottery(opt) {
-        const result= this.$refs.areaInput.addBetting(opt)
+        this.$refs.areaInput.addBetting(opt)
 
+        const result = this.bettingChoice.addPrevBetResult
         if (result) {
           if (!_.isEmpty(result)) {
             if (result.MaxBetNums && !_.isNull(result.MaxBetNums)) {
@@ -335,7 +318,7 @@
             Global.ui.notification.show(html.join(''))
           }
 
-          this.currentPlayAreaView.empty()
+          this.$refs.areaInput.empty()
         } else {
           Global.ui.notification.show('号码选择不完整，请重新选择！')
         }

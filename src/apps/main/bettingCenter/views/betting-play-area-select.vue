@@ -132,7 +132,8 @@
         lotteryList: [],
         formattedRuleList: [],
         totalPage: 1,
-        coefficient: 1
+        coefficient: 1,
+        type: 'select'
       }
     },
 
@@ -370,14 +371,24 @@
       },
 
       //自定义事件
-      addBetting(opt) {
-        return this.$store.commit(types.SET_PREV_BET, {
-          lotteryList: this.lotteryList,
-          selectOptionals: this.options.selectOptionals,
-          format: this.options.format,
-          formatToNum: this.options.formatToNum || false, // PK10大小单双文字数字转换标示
-          formatToNumInfo: this.options.formatToNumInfo || false, // 六合彩文字转换数值
-        }, opt)
+      addBetting(options) {
+        this.$store.commit(types.ADD_PREV_BET, {
+          bettingInfo: {
+            lotteryList: this.lotteryList,
+            selectOptionals: this.selectOptionals,
+            format: this.type,
+            formatToNum: this.formatToNum || false, // PK10大小单双文字数字转换标示
+            formatToNumInfo: this.formatToNumInfo || false, // 六合彩文字转换数值
+          },
+          options
+        })
+      },
+
+      empty() {
+        this.lotteryList = []
+        // this.$el.find('.js-bc-select-item,.js-bc-select-op').removeClass('active')
+
+        this.$store.commit(types.SET_STATISTICS, 0)
       },
 
       $_calculateCoefficient(optionals) {

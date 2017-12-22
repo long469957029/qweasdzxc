@@ -125,7 +125,6 @@ const BettingCenterView = Base.ItemView.extend({
     this.$recordsContainer = this.$('.js-bc-records')
 
     //= =====
-    this.$userRedPackBtn = this.$('.js-bc-user-redPack-btn')
     this.$bcUserRed = this.$('.js-bc-user-red')
     this.$bcRedMoney = this.$('.js-bc-red-money')
     this.$btnAdd = this.$('.js-bc-btn-lottery-add')
@@ -691,19 +690,11 @@ const BettingCenterView = Base.ItemView.extend({
       return false
     }
 
-    if (info.totalInfo.totalMoney > Global.memoryCache.get('acctInfo').balance + (Number(this.$userRedPackBtn.data('type')) === 1 ? (this.redMomey * 10000) : 0)) {
-      Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-pleasant"  data-dismiss="modal" >充值</a>。')
-      return false
-    }
-
     if (Global.memoryCache.get('acctInfo').foundsLock) {
       Global.ui.notification.show('资金已锁定，请先<a id="js-open-fc-unlock" href="javascript:void(0);" ' +
         'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
       return false
     }
-    if (Number(this.$userRedPackBtn.data('type')) === 1) {
-      Global.ui.notification.show('红包不可用于追号')
-    } else {
       let chaseView
       const $dialog = Global.ui.dialog.show({
         title: '追号',
@@ -746,7 +737,6 @@ const BettingCenterView = Base.ItemView.extend({
         self.bettingRecordsView.update()
         $dialog.modal('hide')
       })
-    }
   },
 
   lotteryConfirmHandler(e) {
@@ -775,11 +765,6 @@ const BettingCenterView = Base.ItemView.extend({
     // 腾讯分分彩，金额限制1000元
     if (this.options.ticketId === 31 && _(info.totalInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
       Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-      return false
-    }
-
-    if (info.totalInfo.totalMoney > Global.memoryCache.get('acctInfo').balance + (Number(this.$userRedPackBtn.data('type')) === 1 ? (this.redMomey * 10000) : 0)) {
-      Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-pleasant"  data-dismiss="modal">充值</a>。')
       return false
     }
 
@@ -873,12 +858,6 @@ const BettingCenterView = Base.ItemView.extend({
     // 腾讯分分彩，金额限制1000元
     if (this.options.ticketId === 31 && _(info.buyInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
       Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-      this.model.emptyBuyBetting()
-      return false
-    }
-
-    if (info.buyInfo.totalMoney > Global.memoryCache.get('acctInfo').balance + (Number(this.$userRedPackBtn.data('type')) === 1 ? (this.redMomey * 10000) : 0)) {
-      Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
       this.model.emptyBuyBetting()
       return false
     }

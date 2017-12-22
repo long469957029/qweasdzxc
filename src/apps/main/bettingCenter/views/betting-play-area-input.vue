@@ -48,9 +48,9 @@
         splitReg: /[\r\n,\;:\|\s]+/,
         selectOptionals: [],
         coefficient: 1,
-
         numbers: '',
-        splitNumbers: []
+        splitNumbers: [],
+        type: 'input'
       }
     },
 
@@ -134,7 +134,7 @@
         return results
       },
 
-      addBetting() {
+      addBetting(options) {
 
         const repeat = this.$_checkRepeat(this.$_split())
         const validate = this.$_validate(repeat.passNumbers)
@@ -144,16 +144,18 @@
 
         repeat.repeatNumbers = repeat.repeatNumbers.concat(validate.repeatNumbers)
 
-        this.$store.commit(types.SET_PREV_BET)
-
-        return {
-          passNumbers: _(validate.passNumbers).map((passNumber) => {
-            return passNumber.split(',')
-          }),
-          selectOptionals: this.options.selectOptionals,
-          repeatNumbers: repeat.repeatNumbers,
-          errorNumbers: validate.errorNumbers,
-        }
+        this.$store.commit(types.ADD_PREV_BET, {
+          bettingInfo: {
+            lotteryList: _(validate.passNumbers).map((passNumber) => {
+              return passNumber.split(',')
+            }),
+            format: this.type,
+            selectOptionals: this.selectOptionals,
+            repeatNumbers: repeat.repeatNumbers,
+            errorNumbers: validate.errorNumbers,
+          },
+          options
+        })
       },
 
       $_statisticsLottery() {
