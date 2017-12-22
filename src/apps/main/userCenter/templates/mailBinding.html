@@ -1,0 +1,80 @@
+<div class="uc-bind-main">
+  <% if(!hasBindingEmail){ %>
+  <div class="email-bind-container">
+    <form action="javascript:void(0);" class="js-uc-email-bind-form form-horizontal">
+      <div class="control-group">
+        <label class="control-label">电子邮箱：</label>
+        <div class="controls">
+          <input type="text" class="js-uc-email-num input1" placeholder="请输入电子邮箱" data-parsley-email required>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">验证码：</label>
+        <div class="controls">
+          <div class="inline-block">
+            <input type="text" class="js-uc-email-verification-code input2" placeholder="请输入邮箱验证码" data-parsley-length="[6,6]" data-parsley-type="number" required>
+          </div>
+          <a type="button" class="js-uc-email-reSend uc-conde-reSend" data-status="0" data-type="add"  data-loading="发送中">获取验证码</a>
+        </div>
+      </div>
+      <div class="text-center m-bottom-lg p-top-md">
+        <button type="button" class="btn btn-cool js-email-bind-btn" data-loading="发送中" data-type="add">提交</button>
+      </div>
+    </form>
+  </div>
+  <% }else{ %>
+  <div class="email-change-container js-email-change-container">
+    <h3>1.验证原邮箱</h3>
+    <form action="javascript:void(0);" class="js-uc-last-email-form js-uc-email-steps form-horizontal">
+      <div class="control-group">
+        <label class="control-label">电子邮箱：</label>
+        <div class="controls">
+          <input type="text" class="js-uc-last-email-num input1" placeholder="请输入电子邮箱" data-parsley-email required>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">验证码：</label>
+        <div class="controls">
+          <div class="inline-block">
+            <input type="text" class="js-uc-last-verification-code input2" placeholder="请输入邮箱验证码" data-parsley-length="[6,6]" data-parsley-type="number" required>
+          </div>
+          <a type="button" class="js-uc-email-reSend uc-conde-reSend" data-status="0" data-type="change"  data-loading="发送中">获取验证码</a>
+        </div>
+      </div>
+      <div class="text-center m-bottom-lg p-top-md">
+        <button type="button" class="btn btn-cool js-email-bind-btn" data-loading="发送中" data-type="change">提交</button>
+      </div>
+    </form>
+
+    <h3>2.绑定新邮箱</h3>
+    <form action="javascript:void(0);" class="js-uc-email-change-form js-uc-email-steps form-horizontal">
+      <div class="control-group">
+        <label class="control-label">电子邮箱：</label>
+        <div class="controls">
+          <input type="text" class="js-uc-email-num input1" placeholder="请输入电子邮箱" data-parsley-email required>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">验证码：</label>
+        <div class="controls">
+          <div class="inline-block">
+            <input type="text" class="js-uc-email-verification-code input2" placeholder="请输入邮箱验证码" data-parsley-length="[6,6]" data-parsley-type="number" required>
+          </div>
+          <a type="button" class="js-uc-email-reSend uc-conde-reSend" data-status="0" data-type="change"  data-loading="发送中">获取验证码</a>
+        </div>
+      </div>
+      <div class="text-center m-bottom-lg p-top-md">
+        <button type="button" class="btn btn-cool js-email-bind-btn" data-loading="发送中" data-type="change">提交</button>
+      </div>
+    </form>
+
+    <h3>3.绑定成功</h3>
+    <form action="javascript:void(0);" class="js-uc-email-steps form-horizontal">
+      <div class="text-center m-top-md">
+        <span class="sfa sfa-checkmark-blue m-right-sm vertical-middle"></span>
+        <span>您的邮箱已绑定成功！</span>
+      </div>
+    </form>
+  </div>
+  <% } %>
+</div>
