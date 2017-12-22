@@ -29,7 +29,7 @@ $.widget('gl.numRange', {
   },
 
   _bindEvents() {
-    this._on({
+    this._on(this.element, {
       'blur .js-wt-number': 'numberInputHandler',
       'mousedown .js-wt-num-range-btn': 'btnDownHandler',
     })

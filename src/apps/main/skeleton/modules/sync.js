@@ -166,7 +166,7 @@ const SyncModule = Base.Module.extend({
         withoutToken: false,
         transformRequest: [function (data, headers) {
           // debugger
-          return qs.stringify(data, {arrayFormat: 'brackets'})
+          return qs.stringify(data, { arrayFormat: 'brackets' })
         }],
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -204,11 +204,11 @@ const SyncModule = Base.Module.extend({
         })
       }
 
-      let cancel = null;
-      ajaxOptions.cancelToken = new CancelToken(function executor(c) {
+      let cancel = null
+      ajaxOptions.cancelToken = new CancelToken(((c) => {
         // executor 函数接收一个 cancel 函数作为参数
-        cancel = c;
-      })
+        cancel = c
+      }))
 
       if ((_.isEmpty(ajaxOptions.data) || _.isObject(ajaxOptions.data)) && _.isEmpty(ajaxOptions.files) && !ajaxOptions.withoutToken) {
         ajaxOptions.data = _.extend({
@@ -228,7 +228,7 @@ const SyncModule = Base.Module.extend({
         }
       }
 
-      const localCacheCb = ({data}) => {
+      const localCacheCb = ({ data }) => {
         if (data.sign && data.sign === sign) {
           Object.assign(data, Global.localCache.get(sign))
         } else if (data && data.result === 0 && data.sign && data.root) {
@@ -249,7 +249,7 @@ const SyncModule = Base.Module.extend({
       if (ajaxOptions.abort) {
         this.xhrList[ajaxOptions.url] = {
           promise,
-          cancel
+          cancel,
         }
       }
 

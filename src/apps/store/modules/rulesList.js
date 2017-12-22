@@ -1,5 +1,4 @@
 import betting from '../../api/betting'
-import * as types from '../mutation-types'
 
 const initState = () => {
   return {
@@ -78,7 +77,7 @@ const actions = {
     commit(types.CHECKOUT_TICKET_RULES)
     betting.getTicketRules(
       ticketId,
-      ({data}) => { return commit(types.GET_TICKET_RULES_SUCCESS, data) },
+      ({ data }) => { return commit(types.GET_TICKET_RULES_SUCCESS, data) },
       () => { return commit(types.GET_TICKET_RULES_FAILURE) },
     )
   },
@@ -96,7 +95,9 @@ const mutations = {
 
     if (res && res.result === 0) {
       data = res.root && res.root.ticketPlayLevelInfo || []
-      state.limitMoney = res.root && res.root.limitMoney
+      this.commit(types.SET_LIMIT_MONEY, {
+        limitMoney: res.root && res.root.limitMoney,
+      })
     }
     state.playLevels = data
   },

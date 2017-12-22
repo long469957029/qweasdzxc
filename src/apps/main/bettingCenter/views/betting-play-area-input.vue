@@ -29,7 +29,6 @@
 </template>
 
 <script>
-  import * as types from 'mutation-types'
   import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
   import BettingPlayAreaPosition from "./betting-play-area-position"
 

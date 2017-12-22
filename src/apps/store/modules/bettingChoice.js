@@ -1,6 +1,5 @@
 import ticketConfig from 'skeleton/misc/ticketConfig'
 import betting from '../../api/betting'
-import * as types from '../mutation-types'
 
 const mark6TicketIdArr = ticketConfig.getMark6TicketIdArr()
 
@@ -30,7 +29,9 @@ const initState = () => {
     rebateMoney: 0,
     fPrefabMoney: 0,
     fRebateMoney: 0,
-    // ticketId:
+    maxMultiple: 100,
+    formatMaxMultiple: 100,
+    limitMoney: 0,
   }
 }
 
@@ -40,37 +41,46 @@ const getters = {
 
 // actions
 const actions = {
-  pushBetting ({state, commit}, planId) {
-      const bet = _(state.buyList).reduce((list, item) => {
-        list.push({
-          betNum: item.bettingNumber,
-          playId: item.playId,
-          betMultiple: item.multiple,
-          moneyMethod: item.unit,
-          // 0 高奖金 1 有返点
-          betMethod: item.betMethod,
-        })
+  pushBetting ({ state, commit }, planId) {
+    const bet = _(state.buyList).reduce((list, item) => {
+      list.push({
+        betNum: item.bettingNumber,
+        playId: item.playId,
+        betMultiple: item.multiple,
+        moneyMethod: item.unit,
+        // 0 高奖金 1 有返点
+        betMethod: item.betMethod,
+      })
 
-        return list
-      }, [])
+      return list
+    }, [])
 
-    return betting.pushBetting(
-      {planId, bet, usePack: state.usePack},
-      ({data}) => { return commit(types.GET_TICKET_INFO_SUCCESS, data) },
-      () => { return commit(types.GET_TICKET_INFO_FAILURE) },
-    )
+    return new Promise((resolve) => {
+      betting.pushBetting(
+        { planId, bet, usePack: state.usePack },
+        ({ data }) => {
+          resolve(data)
+          return commit(types.PUSH_BETTING_SUCCESS, data)
+        },
+        () => { return commit(types.PUSH_BETTING_FAILURE) },
+      )
+    })
   },
 }
 
 // this.on('change:multiple change:statistics change:userRebate change:betMethod', this.$_calculateByPrefab)
 // mutations
 const mutations = {
-  [types.PUSH_BETTING_SUCCESS] ({commit}, res) {
+  [types.PUSH_BETTING_SUCCESS] ({ commit }, res) {
     if (res && res.result === 0) {
       commit(types.EMPTY_BUY_BETTING)
     }
   },
-  [types.PUSH_BETTING_FAILURE] ({commit}, res) {
+  [types.PUSH_BETTING_FAILURE] ({ commit }, res) {
+  },
+
+  [types.SET_LIMIT_MONEY] (state, { limitMoney }) {
+    state.limitMoney = limitMoney
   },
 
   [types.SET_LEVEL] (state, { levelId, levelName }) {
@@ -113,6 +123,9 @@ const mutations = {
     }
     state.formatUnit = formatUnit
 
+    state.formatMaxMultiple = _(state.maxMultiple).chain().mul(10000).div(state.unit)
+      .value()
+
     $_calculateByPrefab(state)
   },
   [types.SET_STATISTICS] (state, statistics) {
@@ -131,6 +144,10 @@ const mutations = {
 
     state.fBetBonus = _(betBonus).chain().div(10000).mul(state.unit)
       .convert2yuan()
+      .value()
+
+    state.maxMultiple = playInfo.betMultiLimitMax
+    state.formatMaxMultiple = _(state.maxMultiple).chain().mul(10000).div(state.unit)
       .value()
   },
   // indexs 被选中号码的索引
@@ -170,25 +187,28 @@ const mutations = {
     state.fRebateMoney = 0
     state.statistics = 0
   },
-  [types.SET_CHOICE_EMPTY](state) {
 
+  [types.SET_PREVIEW_MULTIPLE](state, { num, index }) {
+    const previewItem = state.previewList[index]
+    previewItem.multiple = Number(num)
+    $_calculateByPrefab(previewItem)
   },
 
-  [types.ADD_PREV_BET](state, {bettingInfo, options}) {
+  [types.ADD_PREV_BET](state, { bettingInfo, options }) {
     if (state.statistics) {
       if (!_.isNull(state.playInfo.maxBetNums) && state.statistics > state.playInfo.maxBetNums) {
         this.commit(types.ADD_BETS, {
           bettingList: [bettingInfo],
-          options: _(options || {}).extend({statistics: state.statistics}, {buy: true})
+          options: _(options || {}).extend({ statistics: state.statistics }, { buy: true }),
         })
-        state.addPrevBetResult = {MaxBetNums: state.playInfo.maxBetNums}
+        state.addPrevBetResult = { MaxBetNums: state.playInfo.maxBetNums }
       }
 
       this.commit(types.EMPTY_BUY_BETTING)
 
       this.commit(types.ADD_BETS, {
         bettingList: [bettingInfo],
-        options: _(options || {}).extend({statistics: state.statistics})
+        options: _(options || {}).extend({ statistics: state.statistics }),
       })
     } else {
       state.addPrevBetResult = false
@@ -204,7 +224,7 @@ const mutations = {
     state.buyList = []
   },
 
-  [types.ADD_BETS](state, {bettingList, options}) {
+  [types.ADD_BETS](state, { bettingList, options }) {
     const items = []
     const sameBets = []
 
@@ -242,6 +262,9 @@ const mutations = {
         multiple: state.multiple,
         unit: state.unit,
         statistics,
+        formatUnit: state.formatUnit,
+        betBonus: state.betBonus,
+        fBetBonus: state.fBetBonus,
         formatUnit: state.formatUnit,
         betMethod: state.betMethod,
         userRebate: state.userRebate,

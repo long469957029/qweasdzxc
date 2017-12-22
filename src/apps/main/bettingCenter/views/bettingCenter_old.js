@@ -3,18 +3,10 @@
 const BettingChoiceModel = require('bettingCenter/models/bettingChoice')
 const BettingInfoModel = require('bettingCenter/models/bettingInfo')
 
-// const PlayAreaSelectView = require('bettingCenter/views/bettingCenter-playArea-select')
-// const PlayAreaInputView = require('bettingCenter/views/bettingCenter-playArea-input')
 const BettingRecordsView = require('bettingCenter/views/bettingCenter-records')
 const BettingChaseView = require('bettingCenter/views/bettingCenter-chase')
 const ticketConfig = require('skeleton/misc/ticketConfig')
 const betRulesConfig = require('bettingCenter/misc/betRulesConfig')
-
-const audio = {
-  over: require('bettingCenter/misc/over.wav'),
-  prize: require('bettingCenter/misc/prize.wav'),
-  openCode: require('bettingCenter/misc/openCode.wav'),
-}
 
 const BettingCenterView = Base.ItemView.extend({
 
@@ -35,16 +27,6 @@ const BettingCenterView = Base.ItemView.extend({
     'click .js-bc-select-item': 'selectBcItemHandler',
     'click .js-bc-user-redPack-btn': 'checkUserRedPackHanler',
     'change .js-bc-unit-select-add': 'changeUnitSelect',
-  },
-
-  serializeData() {
-    this.options.ticketInfo = ticketConfig.getComplete(this.options.ticketId)
-    return {
-      ticketInfo: this.options.ticketInfo,
-      mark6TicketIdArr: this.mark6TicketIdArr,
-      audio,
-      ticketList: ticketConfig.getCompleteAll(),
-    }
   },
 
   initialize () {
@@ -72,7 +54,6 @@ const BettingCenterView = Base.ItemView.extend({
       this.renderPlayInfo(this.rulesCollection.getPlayInfo(model.get('groupId'), playId))
     })
 
-    this.listenTo(this.model, 'change:formatMaxMultiple', this.renderNumRange)
     this.listenTo(this.model, 'change:unit', this.renderPlayBetMode)
 
     this.listenTo(this.model, 'change:prefabMoney change:rebateMoney', this.renderSelectStatisticsInfo)
@@ -238,20 +219,6 @@ const BettingCenterView = Base.ItemView.extend({
     }
   },
 
-  initNumRange() {
-    const self = this
-    this.$multiRange.numRange({
-      onChange(num) {
-        self.model.set('multiple', num)
-      },
-      onOverMax(maxNum) {
-        Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">${ 
-          _(self.rulesCollection.limitMoney).convert2yuan()}</span>元，` +
-          `已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
-      },
-    })
-  },
-
   renderLastPlan() {
     this.bettingRecordsView.update()
   },
@@ -310,55 +277,8 @@ const BettingCenterView = Base.ItemView.extend({
     }
   },
 
-  // renderVideo() {
-  //   this.$videoMain.toggleClass('hidden', !this.infoModel.getVideoUrl())
-  // },
-
   renderBasicRules() {
     this.selectDefaultPlay()
-  },
-
-  /** 核心函数
-   * 监听 playId 参数变动触发的 渲染游戏和各个组件
-   * 参数 playInfo 是由bettingRules调出的 游戏规则 对象，包含了当前游戏模式下 所有的 信息，包括 奖金 赔率 最高倍数等 */
-  renderPlayInfo(playInfo) {
-    // 游戏说明
-    // this.$playTip.text(playInfo.playDes)
-
-    // 更改 bettingChoice 模型的 倍数 返水率 奖金组
-    this.model.set({
-      maxMultiple: playInfo.betMultiLimitMax,
-      userRebate: playInfo.userRebate,
-      betBonus: playInfo.betBonus,
-      maxBetNums: playInfo.maxBetNums,
-    })
-
-    this.renderPlayBetMode()
-  },
-
-  renderNumRange(model, formatMaxMultiple) {
-    this.$multiRange.numRange('setRange', 1, formatMaxMultiple)
-  },
-
-  // 渲染游戏模式
-  renderPlayBetMode() {
-    const unit = _(100000000).div(this.model.get('unit')) // 投注单位 元 角 分 厘
-    const playInfo = this.rulesCollection.getCurrentPlay() // 彩种信息
-
-    let betMethod = ''
-    if (playInfo.betBonus == null) {
-      betMethod = _(playInfo.betMethodMax).chain().formatDiv(unit).floor(4)
-        .value()
-    } else {
-      betMethod = this.selectBcItemHandler()
-    }
-    this.model.set({
-      betBonus: playInfo.betBonus,
-      maxBonus: playInfo.betMethodMax,
-      betMethod: 0, // 高奖金
-      maxMultiple: playInfo.betMultiLimitMax,
-    })
-    this.$playBetMode.html(betMethod)
   },
 
   // 加载号码球
@@ -474,11 +394,6 @@ const BettingCenterView = Base.ItemView.extend({
     //   bonusMode += '/0.0%'
     // }
     return `${bonusMode}元`
-  },
-  changePreviewMultiple(index, num) {
-    if (num && !_.isNull(num)) {
-      this.model.changePreviewMultipleBet(index, num)
-    }
   },
   changeUnitSelect(e) {
     const $target = $(e.currentTarget)
@@ -695,48 +610,48 @@ const BettingCenterView = Base.ItemView.extend({
         'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
       return false
     }
-      let chaseView
-      const $dialog = Global.ui.dialog.show({
-        title: '追号',
-        size: 'modal-lg',
-        body: '<div class="js-bc-chase-container"></div>',
-        bodyClass: 'p-top-xs no-p-left no-p-right no-p-bottom',
-        footer: '',
-      })
+    let chaseView
+    const $dialog = Global.ui.dialog.show({
+      title: '追号',
+      size: 'modal-lg',
+      body: '<div class="js-bc-chase-container"></div>',
+      bodyClass: 'p-top-xs no-p-left no-p-right no-p-bottom',
+      footer: '',
+    })
 
-      const $chaseContainer = $dialog.find('.js-bc-chase-container')
+    const $chaseContainer = $dialog.find('.js-bc-chase-container')
 
-      $dialog.on('hidden.modal', function() {
-        $(this).remove()
-        chaseView.destroy()
-      })
+    $dialog.on('hidden.modal', function() {
+      $(this).remove()
+      chaseView.destroy()
+    })
 
-      chaseView = new BettingChaseView({
-        el: $chaseContainer,
+    chaseView = new BettingChaseView({
+      el: $chaseContainer,
 
-        limitMoney: this.rulesCollection.limitMoney,
-        ticketInfo: this.options.ticketInfo,
-        planId: this.infoModel.get('planId'),
-        ticketId: this.options.ticketId,
-        previewList: info.previewList,
-        totalLottery: this.model.get('totalInfo').totalLottery,
-        usePack: 0,
-      }).on('check:redPack', () => {
-        self.getUsePackStatus()
-      }).render()
+      limitMoney: this.rulesCollection.limitMoney,
+      ticketInfo: this.options.ticketInfo,
+      planId: this.infoModel.get('planId'),
+      ticketId: this.options.ticketId,
+      previewList: info.previewList,
+      totalLottery: this.model.get('totalInfo').totalLottery,
+      usePack: 0,
+    }).on('check:redPack', () => {
+      self.getUsePackStatus()
+    }).render()
 
-      chaseView.listenTo(this.infoModel, 'change:planId', function() {
-        const planInfo = self.infoModel.pick('planId', 'lastPlanId')
-        if (planInfo.lastPlanId !== planInfo.planId) {
-          this.trigger('change:planId', planInfo.lastPlanId)
-        }
-      })
+    chaseView.listenTo(this.infoModel, 'change:planId', function() {
+      const planInfo = self.infoModel.pick('planId', 'lastPlanId')
+      if (planInfo.lastPlanId !== planInfo.planId) {
+        this.trigger('change:planId', planInfo.lastPlanId)
+      }
+    })
 
-      chaseView.on('submit:complete', () => {
-        self.model.emptyPrevBetting()
-        self.bettingRecordsView.update()
-        $dialog.modal('hide')
-      })
+    chaseView.on('submit:complete', () => {
+      self.model.emptyPrevBetting()
+      self.bettingRecordsView.update()
+      $dialog.modal('hide')
+    })
   },
 
   lotteryConfirmHandler(e) {
@@ -820,65 +735,6 @@ const BettingCenterView = Base.ItemView.extend({
   },
 
   lotteryBuyHandler (e) {
-    const self = this
-    const $target = $(e.currentTarget)
-    // do add
-    if (!this.model.get('multiple')) {
-      Global.ui.notification.show('倍数为0，不能投注')
-      return false
-    }
-    this.rulesCollection.getPlayGroups(this.levelId)
-    this.model.set({
-      maxBetNums: this.rulesCollection.getPlayInfo(this.model.get('groupId'), this.model.get('playId')).maxBetNums,
-    })
-    if (this.options.type === 'select') {
-      this.addSelectLottery({ buy: true })
-    } else {
-      this.addInputLottery({ buy: true })
-    }
-    // do save
-    const info = this.model.pick('buyInfo', 'buyList')
-    let planId = self.infoModel.get('planId')
-    const inputCount = _(info.buyList).reduce((_inputCount, previewInfo) => {
-      if (previewInfo.type === 'input') {
-        _inputCount += previewInfo.statistics
-      }
-      return _inputCount
-    }, 0)
-
-    if (inputCount > 100000) {
-      Global.ui.notification.show('非常抱歉，目前平台单式投注只支持最多10万注单。')
-      return false
-    }
-    if (_.isEmpty(info.buyList)) {
-      Global.ui.notification.show('请至少选择一注投注号码！')
-      return false
-    }
-
-    // 腾讯分分彩，金额限制1000元
-    if (this.options.ticketId === 31 && _(info.buyInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
-      Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-      this.model.emptyBuyBetting()
-      return false
-    }
-
-    if (Global.memoryCache.get('acctInfo').foundsLock) {
-      Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
-        'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
-      return false
-    }
-    const maxBetNums = this.model.get('maxBetNums')
-    if (maxBetNums && !_.isNull(maxBetNums) && Number(info.buyList[0].statistics) > maxBetNums) {
-      Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${maxBetNums} 注，请重新选择  `)
-      this.model.emptyBuyBetting()
-      return false
-    }
-
-    // const commit_ticketInfo = this.options.ticketInfo
-    // const commit_ticketName = this.options.ticketName
-    // const commit_buyInfo = this.model.get('buyInfo')
-
-    // $target.button('loading')
     self.model.buyBettingXhr(planId)
       .always(() => {
         $target.button('reset')
@@ -913,12 +769,6 @@ const BettingCenterView = Base.ItemView.extend({
           self.model.emptyBuyBetting()
         }
       })
-
-    function changePlanId(model, newPlanId) {
-      planId = newPlanId
-      // confirm.element.find('.js-bc-confirm-planId').text(planId);
-    }
-    this.infoModel.off('change:planId', changePlanId).on('change:planId', changePlanId)
   },
 
   /** 获取当前选中号码的元素 */
@@ -1029,45 +879,6 @@ const BettingCenterView = Base.ItemView.extend({
       return odds
     }
     return maxBonus
-  },
-
-  // 六合彩切换玩法类型时，选号区内容过长，footer调整
-  resizeFooter() {
-    const scrollHeight = this.$playArea[0].scrollHeight
-    if (scrollHeight > 0) {
-      if (scrollHeight > 290) {
-        this.$footer.addClass('mark6-footer')
-      } else {
-        this.$footer.removeClass('mark6-footer')
-      }
-    }
-  },
-  getUsePackStatus () {
-    const self = this
-    this.getUsePackInfoXhr()
-      .done((res) => {
-        if (res.result === 0) {
-          if (res.root && res.root !== 0) {
-            self.redMomey = _(res.root).convert2yuan()
-            if (self.options.ticketId === 34 || self.options.ticketId === 35) {
-              self.$bcUserRed.addClass('m-right-lg p-right-lg')
-            }
-            self.$bcUserRed.removeClass('hidden')
-            self.$bcRedMoney.html(`(${_(res.root).convert2yuan()})`)
-          } else {
-            self.$bcUserRed.addClass('hidden')
-            self.model.set('usePack', 0)
-          }
-        }
-      })
-    Global.m.publish('redNum:updating')
-  },
-  checkUserRedPackHanler (e) {
-    const $target = $(e.currentTarget)
-    const type = $target.data('type')
-    Number(type) === 0 ? $target.removeClass('sfa sfa-checkbox-def').addClass('sfa sfa-checkbox-on') : $target.removeClass('sfa sfa-checkbox-on').addClass('sfa sfa-checkbox-def')
-    Number(type) === 0 ? $target.data('type', 1) : $target.data('type', 0)
-    this.model.set('usePack', $target.data('type'))
   },
 })
 

@@ -17,17 +17,17 @@ export default {
       .then(then)
       .catch(fail)
   },
-  pushBetting({planId, bet, usePack}, then, fail) {
+  pushBetting({ planId, bet, usePack }, then, fail) {
     return Global.sync.axios({
       url: '/ticket/bet/bet.json',
       tradition: true,
       data: {
         planId,
         bet,
-        usePack
+        usePack,
       },
     })
       .then(then)
       .catch(fail)
-  }
+  },
 }

@@ -111,7 +111,6 @@
 
 <script>
   import { mapState } from 'vuex'
-  import * as types from 'mutation-types'
   import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
   import BettingPlayAreaPosition from "./betting-play-area-position";
 
@@ -334,25 +333,25 @@
             this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return index >= Math.floor((row.items.length) / 2)
-            }).value(), row)
+            }), row)
             break
           case 'small':
             this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return index < Math.floor((row.items.length) / 2)
-            }).value(), row)
+            }), row)
             break
           case 'odd':
             this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return num.num % 2
-            }).value(), row)
+            }), row)
             break
           case 'even':
             this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return !(num.num % 2)
-            }).value(), row)
+            }), row)
             break
           case 'clear':
             this.$_selectNumbers(row.fItems, row, false)
@@ -365,7 +364,7 @@
       },
 
       clearAllSelected() {
-        _.each(this.formattedRuleList, formattedRule => _.each(formattedRule.row.fItem, num => {
+        _.each(this.formattedRuleList, formattedRule => _.each(formattedRule.row.fItems, num => {
           num.selected = false
         }))
       },
@@ -388,7 +387,8 @@
         this.lotteryList = []
         // this.$el.find('.js-bc-select-item,.js-bc-select-op').removeClass('active')
 
-        this.$store.commit(types.SET_STATISTICS, 0)
+        this.clearAllSelected();
+        // this.$store.commit(types.SET_STATISTICS, 0)
       },
 
       $_calculateCoefficient(optionals) {
