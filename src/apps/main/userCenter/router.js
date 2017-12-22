@@ -16,5 +16,6 @@ exports.install = function() {
     // 'uc/cm/bind': 'cardBinding', // 银行卡绑定
     'uc/pd': 'priceDetails', // 奖金详情
     'uc/pl': 'accountSafe',
+    'uc/mg': 'myMessage',
   })
 }
