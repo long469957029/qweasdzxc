@@ -3,6 +3,7 @@ import LoginPassWord from './passwordManage-loginPwd'
 import FundPassWord from './passwordManage-fundPwd'
 import QuestionPwd from './securityQuestion'
 import PhoneBind from './phoneBinding'
+import EmailBind from './mailBinding'
 
 const AccountSafeView = Base.ItemView.extend({
 
@@ -85,6 +86,9 @@ const AccountSafeView = Base.ItemView.extend({
               self.onRender()
             }).render().el)
             self.$phonePwd.html(new PhoneBind({ hasBindingMobile: data.hasBindingMobile }).on('render:true', () => {
+              self.onRender()
+            }).render().el)
+            self.$mailPwd.html(new EmailBind({ hasBindingEmail: data.hasBindingEmail }).on('render:true', () => {
               self.onRender()
             }).render().el)
           }
