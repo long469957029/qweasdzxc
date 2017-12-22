@@ -21,7 +21,7 @@ const SecurityQuestionView = Base.ItemView.extend({
 
     // 2 修改密保问题
     'click .js-uc-answerQuestion-submit': 'verifySecurityQuestionHandler', // 验证密保问题
-
+    'click .js-uc-inputSecurityQuestion-add': 'inputSecurityAddHandler',
   },
 
   initialize() {
@@ -61,7 +61,7 @@ const SecurityQuestionView = Base.ItemView.extend({
           self.$updateSecurityQuestionContainer = self.$('.js-uc-updateSecurityQuestion')
           // 2.2初始化该页面的整体框架
           self._initSteps(self.$updateSecurityQuestionContainer, (event, currentIndex, newIndex) => {
-            return newIndex !== 4
+            return newIndex !== 3
           })
           // 2.3 初始化修改密保问题页面
           self._initUpdateSQPage1()
@@ -76,7 +76,7 @@ const SecurityQuestionView = Base.ItemView.extend({
   _initSteps ($Container, changingFunc) {
     $Container.steps({
       headerTag: 'h3',
-      bodyTag: 'form',
+      bodyTag: '.js-uc-step-from',
       forceMoveForward: false, // 允许返回
       enablePagination: false,
       transitionEffect: 'slideLeft',
@@ -166,6 +166,7 @@ const SecurityQuestionView = Base.ItemView.extend({
 
   // TODO 确认提交密保问题 1.3.3初始化 成功页面
   confirmSecurityQuestionHandler (e) {
+    const self = this
     const $target = $(e.currentTarget)
     // 设置按钮为处理中状态
     $target.button('loading')
@@ -193,6 +194,9 @@ const SecurityQuestionView = Base.ItemView.extend({
         if (res && res.result === 0) {
           const $currentContainer = $target.closest('.js-uc-stepContainer')// 找到最近的该class节点
           $currentContainer.steps('next')
+          setTimeout(() => {
+            self.trigger('render:true')
+          }, 1000)
         } else {
           Global.ui.notification.show(`设置密保问题请求失败${res.msg}`)
         }
@@ -271,6 +275,41 @@ const SecurityQuestionView = Base.ItemView.extend({
     const $currentContainer = $target.closest('.js-uc-stepContainer')// 找到最近的该class节点
 
     $currentContainer.steps('goTo', type)
+  },
+  inputSecurityAddHandler(e) {
+    const self = this
+    const $target = $(e.currentTarget)
+    const fromStatus = this.$('.js-uc-inputSQForm').parsley().validate()
+    if (fromStatus) {
+      $target.button('loading')
+      Global.sync.ajax({
+        url: '/acct/usersecurity/resetusersecurity.json',
+        data: {
+          'secrityList[0].securityId': $(this.$('.js-uc-questionSelect').find('option:selected')[0]).val(),
+          'secrityList[0].securityQes': $(this.$('.js-uc-questionSelect').find('option:selected')[0]).text(),
+          'secrityList[0].securityAsw': $(this.$('.js-uc-answer')[0]).val(),
+          'secrityList[1].securityId': $(this.$('.js-uc-questionSelect').find('option:selected')[1]).val(),
+          'secrityList[1].securityQes': $(this.$('.js-uc-questionSelect').find('option:selected')[1]).text(),
+          'secrityList[1].securityAsw': $(this.$('.js-uc-answer')[1]).val(),
+          'secrityList[2].securityId': $(this.$('.js-uc-questionSelect').find('option:selected')[2]).val(),
+          'secrityList[2].securityQes': $(this.$('.js-uc-questionSelect').find('option:selected')[2]).text(),
+          'secrityList[2].securityAsw': $(this.$('.js-uc-answer')[2]).val(),
+        },
+      })
+        .always(() => {
+          // 恢复确认按钮的状态
+          $target.button('reset')
+        })
+        .done((res) => {
+          // 成功后
+          if (res && res.result === 0) {
+            Global.ui.notification.show('您已成功设置密保问题！')
+            self.trigger('render:true')
+          } else {
+            Global.ui.notification.show(`设置密保问题请求失败${res.msg}`)
+          }
+        })
+    }
   },
 })
 

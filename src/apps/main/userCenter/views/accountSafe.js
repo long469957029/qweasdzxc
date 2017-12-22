@@ -2,6 +2,7 @@
 import LoginPassWord from './passwordManage-loginPwd'
 import FundPassWord from './passwordManage-fundPwd'
 import QuestionPwd from './securityQuestion'
+import PhoneBind from './phoneBinding'
 
 const AccountSafeView = Base.ItemView.extend({
 
@@ -81,6 +82,9 @@ const AccountSafeView = Base.ItemView.extend({
               self.onRender()
             }).render().el)
             self.$questionPwd.html(new QuestionPwd({ hasSecurityQuestion: data.hasSecurityQuestion }).on('render:true', () => {
+              self.onRender()
+            }).render().el)
+            self.$phonePwd.html(new PhoneBind({ hasBindingMobile: data.hasBindingMobile }).on('render:true', () => {
               self.onRender()
             }).render().el)
           }

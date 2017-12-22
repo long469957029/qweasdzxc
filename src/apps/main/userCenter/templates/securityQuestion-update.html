@@ -1,230 +1,110 @@
-<div  class="js-uc-stepContainer js-uc-updateSecurityQuestion uc-step-container security-question">
+<div class="js-uc-stepContainer js-uc-updateSecurityQuestion uc-step-container ">
   <!-- Step1 验证密保信息 -->
   <h3>验证密保问题</h3>
-  <form action="javascript:void(0);" class="js-uc-verifySQForm form-horizontal ">
-    <div class="uc-securityQuestion-step1-div">
-      <div class=" step-inner">
-        <!--<div class="step-number">1</div>-->
-        <div class="step-inner-main">
-          <div class="control-group">
-            <label  class="control-label">问题一： </label>
-            <div class="controls">
-              <select id="jsASQuestion1"  class="js-uc-question required"><option value="">请选择密保问题</option></select>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label"> 答案：</label>
-            <div class="controls">
-              <input id="jsASAsw1" type="text" class='js-uc-answerQuestion required'/>
-            </div>
-          </div>
-        </div>
+  <form action="javascript:void(0);" class="js-uc-step-from js-uc-verifySQForm form-horizontal ">
+    <div class="control-group">
+      <label class="control-label">问题一： </label>
+      <div class="controls">
+        <select id="jsASQuestion1" class="js-uc-question select1 required">
+          <option value="">请选择密保问题</option>
+        </select>
       </div>
-
-      <div class="dot-divider dot-divider-sm ac-securityQuestion-divider "></div>
-
-      <div class=" step-inner">
-        <!--<div class="step-number">2</div>-->
-        <div class="step-inner-main">
-          <div class="control-group">
-            <label class="control-label">问题二： </label>
-            <div class="controls">
-              <select id="jsASQuestion2" class="js-uc-question required"><option value="">请选择密保问题</option></select></div>
-          </div>
-          <div class="control-group">
-            <label class="control-label"> 答案：</label>
-            <div class="controls">
-              <input type="text" id="jsASAsw2" class='js-uc-answerQuestion required'/>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dot-divider dot-divider-sm ac-securityQuestion-divider"></div>
-
-      <div class=" step-inner">
-        <!--<div class="step-number">3</div>-->
-        <div class="step-inner-main">
-          <div class="control-group">
-            <label  class="control-label">问题三： </label>
-            <div class="controls">
-              <select id="jsASQuestion3" class="js-uc-question required"><option value="">请选择密保问题</option></select>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label"> 答案：</label>
-            <div class="controls">
-              <input type="text" id="jsASAsw3" class='js-uc-answerQuestion required' />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dot-divider dot-divider-sm ac-securityQuestion-divider"></div>
-
     </div>
-    <div class="control-confirm text-center ">
-      <button type="button" class="js-uc-answerQuestion-submit btn" data-loading-text="验证中">下一步</button>
-      <button type="reset" class="btn btn-cool btn-right">重置</button>
+    <div class="control-group">
+      <label class="control-label"> 答案：</label>
+      <div class="controls">
+        <input id="jsASAsw1" type="text" class='js-uc-answerQuestion input1 required' placeholder="请输入密保问题"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">问题二： </label>
+      <div class="controls">
+        <select id="jsASQuestion2" class="js-uc-question select1 required">
+          <option value="">请选择密保问题</option>
+        </select></div>
+    </div>
+    <div class="control-group">
+      <label class="control-label"> 答案：</label>
+      <div class="controls">
+        <input type="text" id="jsASAsw2" class='js-uc-answerQuestion input1 required'  placeholder="请输入密保问题"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">问题三： </label>
+      <div class="controls">
+        <select id="jsASQuestion3" class="js-uc-question select1 required">
+          <option value="">请选择密保问题</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label"> 答案：</label>
+      <div class="controls">
+        <input type="text" id="jsASAsw3" class='js-uc-answerQuestion input1 required' placeholder="请输入密保问题"/>
+      </div>
+    </div>
+    <div class="text-center m-bottom-md">
+      <button type="button" class="js-uc-answerQuestion-submit btn" data-loading-text="验证中">提交</button>
     </div>
   </form>
 
   <!-- Step2 录入新的密保问题 -->
   <h3>输入新密保问题</h3>
-  <form action="javascript:void(0);" class="js-uc-inputSQForm form-horizontal">
+  <form action="javascript:void(0);" class="js-uc-step-from js-uc-inputSQForm form-horizontal">
     <div class="uc-securityQuestion-step1-div">
-    <div class=" step-inner">
-      <!--<div class="step-number">1</div>-->
-      <div class="step-inner-main">
-        <div class="control-group">
-          <label class="control-label">问题一：</label>
-          <div class="controls">
-            <select  class="js-uc-questionSelect required" >
-              <option   value="">请选择密保问题</option>
-            </select>
-          </div>
+      <div class="control-group">
+        <label class="control-label">问题一：</label>
+        <div class="controls">
+          <select class="js-uc-questionSelect select1 required">
+            <option value="">请选择密保问题</option>
+          </select>
         </div>
-        <div class="control-group">
-          <label class="control-label">答案：</label>
-          <div class="controls">
-            <input type="text" class="js-uc-answer required">
-          </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">答案：</label>
+        <div class="controls">
+          <input type="text" class="js-uc-answer input1 required" placeholder="请设置您的答案">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">问题二：</label>
+        <div class="controls">
+          <select class="js-uc-questionSelect select1 required">
+            <option value="">请选择密保问题</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">答案：</label>
+        <div class="controls">
+          <input type="text" class="js-uc-answer input1 required" placeholder="请设置您的答案">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">问题三：</label>
+        <div class="controls">
+          <select class="js-uc-questionSelect select1 required">
+            <option value="">请选择密保问题</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">答案：</label>
+        <div class="controls">
+          <input type="text" class="js-uc-answer input1 required" placeholder="请设置您的答案">
         </div>
       </div>
     </div>
-
-    <div class="dot-divider dot-divider-sm ac-securityQuestion-divider "></div>
-
-    <div class=" step-inner">
-      <!--<div class="step-number">2</div>-->
-      <div class="step-inner-main">
-        <div class="control-group">
-          <label class="control-label">问题二：</label>
-          <div class="controls">
-            <select class="js-uc-questionSelect required">
-              <option  value="">请选择密保问题</option>
-            </select>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">答案：</label>
-          <div class="controls">
-            <input type="text" class="js-uc-answer required">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="dot-divider dot-divider-sm ac-securityQuestion-divider "></div>
-
-    <div class=" step-inner">
-      <!--<div class="step-number">3</div>-->
-      <div class="step-inner-main">
-        <div class="control-group">
-          <label  class="control-label">问题三：</label>
-          <div class="controls">
-            <select class="js-uc-questionSelect required">
-              <option  value="">请选择密保问题</option>
-            </select>
-          </div>
-        </div>
-        <div class="control-group">
-          <label  class="control-label">答案：</label>
-          <div class="controls">
-            <input type="text" class="js-uc-answer required">
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-      <div class="dot-divider dot-divider-sm ac-securityQuestion-divider "></div>
-    </div>
-
-
-    <div class="control-confirm text-center">
-      <button type="button" class="js-uc-inputSecurityQuestion-submit btn" >下一步</button>
-      <button type="reset" class="js-uc-inputSecurityQuestion-reset btn btn-cool btn-right">重置</button>
+    <div class="text-center m-bottom-md">
+      <button type="button" class="js-uc-inputSecurityQuestion-submit btn">提交</button>
     </div>
   </form>
-
-  <!-- Step3 确认密保信息 -->
-  <h3>确认密保问题</h3>
-  <form action="javascript:void(0);" class="form-horizontal">
-    <div class="uc-securityQuestion-step1-div">
-      <div class=" step-inner">
-        <!--<div class="step-number">1</div>-->
-        <div class="step-inner-main">
-          <div class="control-group">
-            <label  class="control-label">问题一： </label>
-            <div class="controls">
-              <span class="js-uc-showQuestion"></span>
-            </div>
-          </div>
-          <div class="control-group">
-            <label  class="control-label"> 答案：</label>
-            <div class="controls">
-              <span class="js-uc-showAnswer" ></span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dot-divider dot-divider-sm ac-securityQuestion-divider "></div>
-
-      <div class=" step-inner">
-        <!--<div class="step-number">2</div>-->
-        <div class="step-inner-main">
-          <div class="control-group">
-            <label  class="control-label">问题二： </label>
-            <div class="controls">
-              <span class="js-uc-showQuestion"></span>
-            </div>
-          </div>
-          <div class="control-group">
-            <label  class="control-label"> 答案：</label>
-            <div class="controls">
-              <span  class="js-uc-showAnswer"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dot-divider dot-divider-sm ac-securityQuestion-divider "></div>
-
-      <div class=" step-inner">
-        <!--<div class="step-number">3</div>-->
-        <div class="step-inner-main">
-          <div class="control-group">
-            <label class="control-label">问题三： </label>
-            <div class="controls">
-              <span class="js-uc-showQuestion"></span>
-            </div>
-          </div>
-          <div class="control-group">
-            <label  class="control-label"> 答案：</label>
-            <div class="controls">
-              <span class="js-uc-showAnswer"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dot-divider dot-divider-sm ac-securityQuestion-divider "></div>
-
-    </div>
-    <div class="control-confirm text-center">
-      <button type="button" class="js-uc-confirmSecurityQuestion-submit btn btn" data-loading-text="保存中">下一步</button>
-      <button type="button" class="js-uc-SecurityQuestion-return btn btn-cool btn-right" data-type="1">返回</button>
-    </div>
-  </form>
-
-  <!-- Step4 完成 -->
+  <!-- Step3 完成 -->
   <h3>设置成功</h3>
-  <form>
-    <div class="text-center">
-      <span class="sfa sfa-face-success m-TB-md"></span>
-      <p class="font-md">恭喜你，设置成功</p>
+  <form class="js-uc-step-from  form-horizontal">
+    <div class="text-center m-top-md">
+      <span class="sfa sfa-checkmark-blue m-right-sm vertical-middle"></span>
+      <span class="text-black font-md">恭喜您！密保设置成功！</span>
     </div>
   </form>
 </div>
