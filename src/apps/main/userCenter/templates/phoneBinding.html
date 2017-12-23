@@ -1,5 +1,5 @@
 <div class="uc-bind-main">
-  <% if(hasBindingMobile){ %>
+  <% if(!hasBindingMobile){ %>
   <div class="phone-bind-container">
     <form action="javascript:void(0);" class="js-uc-phone-bind-form form-horizontal">
       <div class="control-group">
@@ -16,6 +16,7 @@
           </div>
           <a type="button" class="js-uc-mobile-reSend uc-conde-reSend" data-status="0" data-type="add"  data-loading="发送中">获取验证码</a>
         </div>
+        <div class="js-bind-error-text error-text m-top-sm"></div>
       </div>
       <div class="text-center m-bottom-lg p-top-md">
         <button type="button" class="btn btn-cool js-phone-bind-btn" data-loading="发送中" data-type="add">提交</button>
@@ -29,7 +30,7 @@
       <div class="control-group">
         <label class="control-label">手机号码：</label>
         <div class="controls">
-          <input type="text" class="js-uc-last-phone-num input1" placeholder="请输入11位手机号码" data-parsley-mobile required>
+          <input type="text" class="js-uc-last-phone-num input1 input-disable" placeholder="请输入11位手机号码" disabled data-parsley-mobile required>
         </div>
       </div>
       <div class="control-group">
@@ -40,6 +41,7 @@
           </div>
           <a type="button" class="js-uc-mobile-reSend uc-conde-reSend" data-status="0" data-type="change"  data-loading="发送中">获取验证码</a>
         </div>
+        <div class="js-change-error-text error-text m-top-sm"></div>
       </div>
       <div class="text-center m-bottom-lg p-top-md">
         <button type="button" class="btn btn-cool js-phone-bind-btn" data-loading="发送中" data-type="change">提交</button>
@@ -60,8 +62,9 @@
           <div class="inline-block">
             <input type="text" class="js-uc-phone-verification-code input2" placeholder="请输入手机验证码" data-parsley-length="[6,6]" data-parsley-type="number" required>
           </div>
-          <a type="button" class="js-uc-mobile-reSend uc-conde-reSend" data-status="0" data-type="change"  data-loading="发送中">获取验证码</a>
+          <a type="button" class="js-uc-mobile-reSend uc-conde-reSend" data-status="0" data-type="add"  data-loading="发送中">获取验证码</a>
         </div>
+        <div class="js-bind-error-text error-text m-top-sm"></div>
       </div>
       <div class="text-center m-bottom-lg p-top-md">
         <button type="button" class="btn btn-cool js-phone-bind-btn" data-loading="发送中" data-type="change">提交</button>
