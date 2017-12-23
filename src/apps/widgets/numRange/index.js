@@ -102,7 +102,7 @@ $.widget('gl.numRange', {
       }, 50)
     }, 300)
 
-    $(document).off('mouseup.' + this.uuid).one('mouseup.' + this.uuid, () => {
+    $(document).off(`mouseup.${this.uuid}`).one(`mouseup.${this.uuid}`, () => {
       clearTimeout(timeout)
       clearInterval(timer)
       self.options.onChange(self.$number.val())

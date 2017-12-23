@@ -197,7 +197,7 @@ const mutations = {
   },
 
 
-  [types.EMPTY_PREV_BETTING](state, {index}) {
+  [types.EMPTY_PREV_BETTING](state, { index }) {
     if (index) {
       state.previewList.splice(index, 1)
     } else {
@@ -205,13 +205,13 @@ const mutations = {
     }
   },
 
-  [types.CHANGE_PREV_BETTING](state, {index, unit}) {
+  [types.CHANGE_PREV_BETTING](state, { index, unit }) {
     const previewItem = state.previewList[index]
     previewItem.unit = unit
 
     Object.assign(previewItem, $_setUnit(unit, previewItem))
 
-    $_calculateByPrefab(previewItem);
+    $_calculateByPrefab(previewItem)
   },
 
   [types.EMPTY_BUY_BETTING](state) {
@@ -405,7 +405,7 @@ const $_calculateByPrefab = (state) => {
 }
 
 
-const $_setUnit = (unit, {maxMultiple}) => {
+const $_setUnit = (unit, { maxMultiple }) => {
   let formatUnit = ''
   switch (unit) {
     case 10000:
@@ -429,7 +429,7 @@ const $_setUnit = (unit, {maxMultiple}) => {
 
   return {
     formatUnit,
-    formatMaxMultiple
+    formatMaxMultiple,
   }
 }
 
