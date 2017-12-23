@@ -196,16 +196,16 @@ gulp.task('image.min', () => {
     .pipe(gulp.dest('./src/'))
 })
 
-gulp.task('image.merchants', () => {
-  del('./minImages')
-  gulp.src('./src/apps/packages/merchants/**/*.{png,jpg,gif,ico}')
-    .pipe(cache(imagemin({
-      progressive: true,
-      svgoPlugins: [{ removeViewBox: false }],
-      use: [pngquant()],
-    })))
-    .pipe(gulp.dest('./src/apps/packages/merchants/'))
-})
+// gulp.task('image.merchants', () => {
+//   del('./minImages')
+//   gulp.src('./src/apps/packages/merchants/**/*.{png,jpg,gif,ico}')
+//     .pipe(cache(imagemin({
+//       progressive: true,
+//       svgoPlugins: [{ removeViewBox: false }],
+//       use: [pngquant()],
+//     })))
+//     .pipe(gulp.dest('./src/apps/packages/merchants/'))
+// })
 
 gulp.task('build.sprite', (callback) => {
   const spriteData =
@@ -222,13 +222,17 @@ gulp.task('build.sprite', (callback) => {
       }))
 
   const imgStream = spriteData.img
-    .pipe(imagemin({
-      progressive: true,
-      svgoPlugins: [{ removeViewBox: false }],
-      use: [pngquant({
-        quality: '70-80',
-      })],
-    }))
+    .pipe(imagemin([
+      imagemin.gifsicle({interlaced: true}),
+      imagemin.jpegtran({progressive: true}),
+      imagemin.optipng({optimizationLevel: 5}),
+      imagemin.svgo({
+        plugins: [
+          {removeViewBox: true},
+          {cleanupIDs: false}
+        ]
+      })
+    ]))
     .pipe(gulp.dest('./src/base/images'))
   spriteData.css.pipe(gulp.dest('./src/base/styles'))
   // 老虎机雪碧图相关scss文件生成后需要修改变量名及方法名，因此其他常规sprites文件夹下的图片合成雪碧图时，先注释以下内容，
