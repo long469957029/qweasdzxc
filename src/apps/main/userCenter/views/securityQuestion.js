@@ -28,48 +28,61 @@ const SecurityQuestionView = Base.ItemView.extend({
   },
 
   onRender() {
-    const self = this
-    // 获取展示不同找回密码方式页面的区域
-    let set
-    // 1 根据用户的密保问题设置状态，选择显示不同的页面
-    Global.sync.ajax({
-      url: '/acct/usersecurity/getsecurity.json',
-    })
-      .done((res) => {
-        if (res && res.result === 0) {
-          // 0表示密保问题不存在
-          set = 0
-        } else if (res && res.result === 1) {
-          // 1表示密保问题存在
-          set = 1
-        }
-
-        if (set === 0) {
-          // 1未设置密保问题
-          // 1.1展示添加密保问题页面
-          self.$el.html(self.addSQTpl())
-          // self.$addSecurityQuestionContainer = self.$('.js-uc-addSecurityQuestion')
-          // // 1.2初始化该页面的整体框架
-          // self._initSteps(self.$addSecurityQuestionContainer, (event, currentIndex, newIndex) => {
-          //   return newIndex !== 3
-          // })
-          // 1.3 初始化设置密保问题页面
-          self._initAddSQPage1('add')
-        } else if (set === 1) {
-          // 2设置了密保问题
-          self.$el.html(self.updateSQTpl())
-          self.$updateSecurityQuestionContainer = self.$('.js-uc-updateSecurityQuestion')
-          // 2.2初始化该页面的整体框架
-          self._initSteps(self.$updateSecurityQuestionContainer, (event, currentIndex, newIndex) => {
-            return newIndex !== 3
-          })
-          // 2.3 初始化修改密保问题页面
-          self._initUpdateSQPage1()
-        } else {
-          // 3密保问题设置情况获取失败
-          self.$el.html('<span>密保问题管理页面初始化失败</span>')
-        }
+    // const self = this
+    if (this.options.hasSecurityQuestion) {
+      this.$el.html(this.updateSQTpl())
+      this.$updateSecurityQuestionContainer = this.$('.js-uc-updateSecurityQuestion')
+      // 2.2初始化该页面的整体框架
+      this._initSteps(this.$updateSecurityQuestionContainer, (event, currentIndex, newIndex) => {
+        return newIndex !== 3
       })
+      // 2.3 初始化修改密保问题页面
+      this._initUpdateSQPage1()
+    } else {
+      this.$el.html(this.addSQTpl())
+      this._initAddSQPage1('add')
+    }
+    // 获取展示不同找回密码方式页面的区域
+    // let set
+    // // 1 根据用户的密保问题设置状态，选择显示不同的页面
+    // Global.sync.ajax({
+    //   url: '/acct/usersecurity/getsecurity.json',
+    // })
+    //   .done((res) => {
+    //     if (res && res.result === 0) {
+    //       // 0表示密保问题不存在
+    //       set = 0
+    //     } else if (res && res.result === 1) {
+    //       // 1表示密保问题存在
+    //       set = 1
+    //     }
+    //
+    //     if (set === 0) {
+    //       // 1未设置密保问题
+    //       // 1.1展示添加密保问题页面
+    //       self.$el.html(self.addSQTpl())
+    //       // self.$addSecurityQuestionContainer = self.$('.js-uc-addSecurityQuestion')
+    //       // // 1.2初始化该页面的整体框架
+    //       // self._initSteps(self.$addSecurityQuestionContainer, (event, currentIndex, newIndex) => {
+    //       //   return newIndex !== 3
+    //       // })
+    //       // 1.3 初始化设置密保问题页面
+    //       self._initAddSQPage1('add')
+    //     } else if (set === 1) {
+    //       // 2设置了密保问题
+    //       self.$el.html(self.updateSQTpl())
+    //       self.$updateSecurityQuestionContainer = self.$('.js-uc-updateSecurityQuestion')
+    //       // 2.2初始化该页面的整体框架
+    //       self._initSteps(self.$updateSecurityQuestionContainer, (event, currentIndex, newIndex) => {
+    //         return newIndex !== 3
+    //       })
+    //       // 2.3 初始化修改密保问题页面
+    //       self._initUpdateSQPage1()
+    //     } else {
+    //       // 3密保问题设置情况获取失败
+    //       self.$el.html('<span>密保问题管理页面初始化失败</span>')
+    //     }
+    //   })
   },
 
   // PubFun 初始化指定分步操作模型
