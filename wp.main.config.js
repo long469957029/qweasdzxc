@@ -194,6 +194,9 @@ module.exports = {
       bootstrap: 'vendor/scripts/bootstrap',
       modernizr: 'vendor/scripts/modernizr',
       vue: 'vue/dist/vue.js',
+      // vue: 'vue/dist/vue.esm.js',
+
+      staticGrid: 'com/static-grid/index.vue',
     },
   },
   providePlugin: {
@@ -208,7 +211,7 @@ module.exports = {
     slimScroll: 'jquery-slimscroll',
 
     types: 'mutation-types',
-    staticGrid: ['com/static-grid/index.vue', 'default'],
+    staticGrid: ['staticGrid', 'default'],
   },
   // noParse: /lodash|underscore.string|underscore|backbone|es5|^jquery$|moment|echarts|base\/scripts|html/
 
