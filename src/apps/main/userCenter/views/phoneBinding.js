@@ -126,7 +126,7 @@ const PhoneBindingView = Base.ItemView.extend({
             Global.m.oauth.check()
             if (res.root.success === 0) {
               if (type === 'add') {
-                Global.ui.notification.show('恭喜您，验证成功！')
+                Global.ui.notification.show('恭喜您，手机绑定成功！')
                 self.trigger('render:true')
               } else {
                 const num = $target.data('num')
