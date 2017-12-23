@@ -1,6 +1,3 @@
-
-
-require('./jquery-1.10.2')
 require('./index.scss')
 
 const BetView = Base.ItemView.extend({
@@ -124,7 +121,7 @@ const BetView = Base.ItemView.extend({
         let data
         let msg
         if (res && res.result === 0) {
-          data = res.root 
+          data = res.root
           // 0：未达标  1： 失败  2:成功
           if (data.result == '2') {
             $('.js-info1').show()
@@ -151,14 +148,14 @@ const BetView = Base.ItemView.extend({
         if (res && res.result === 0) {
           const data = res.root
           if (data.status == '0') {
-     		 $('.js-info2').show()	
+     		 $('.js-info2').show()
      		  $('.js-main').hide()
           } else if (data.status == '2') {
-        	  $('.js-info3').show()	
+        	  $('.js-info3').show()
      		  $('.js-main').hide()
           } else {
         	  $('.js-betInfo').html(`您当前已投注${data.bet / 10000}元，可领取${data.bonus / 10000}元奖励！`)
-            $('.js-info0').show() 
+            $('.js-info0').show()
             $('.js-main').hide()
           }
         } else {

@@ -8,24 +8,26 @@
 
         <thead>
         <tr>
-          <th :width="col.width" v-for="col in colModel" v-html="Vue.compile(col.label).render"></th>
+          <th :width="col.width" v-for="col in colModel" v-html="col.label"></th>
         </tr>
         </thead>
       </table>
     </div>
 
-
-    <div class="js-wt-body-main relative" ref="bodyDiv">
+    <div class="relative">
       <table class="no-margin" :class="[tableClass, {'no-b-bottom': hasBorder}]">
         <colgroup>
           <col :width="col.width" v-for="col in colModel">
         </colgroup>
-        <tbody class="js-wt-tbody"></tbody>
+        <tbody>
+          <tr v-for="row in showRows" v-html="row" ref="bodyRows"></tr>
+        </tbody>
+
       </table>
 
-      <div v-html="loading" v-show="showLoading"></div>
+      <div v-html="loading" v-show="_.isEmpty(showRows) && showLoading"></div>
 
-      <div class="empty-container text-center" v-show="showEmpty">
+      <div class="empty-container text-center" v-show="_.isEmpty(showRows) && showEmpty">
         <div class="empty-container-main">
           <div class="grid-empty sfa-grid-empty"></div>
           {{emptyTip}}
@@ -63,7 +65,7 @@
         type: String,
         default: '暂无数据'
       },
-      row: {
+      rows: {
         type: Array,
         default: function() {
           return []
@@ -96,11 +98,22 @@
         showHeader: true,
         showEmpty: false,
         abort: true,
-        data: {},
+        showRows: [],
         dataProp: 'root',
         hasBorder: _.isUndefined(this.hasBorder) ? this.tableClass.indexOf('table-bordered') > -1 : this.hasBorder,
         loading: Global.ui.loader.get(),
-        Vue
+      }
+    },
+
+    watch: {
+      rows: {
+        handler: function(data) {
+          let showRows = _.map(data, function(item, index, data) {
+            return this.formatRowData(item, index, data)
+          }, this)
+
+          this.showRows = showRows
+        }
       }
     },
 
@@ -167,41 +180,6 @@
           })
       },
 
-      formatRow(rows) {
-        const html = []
-        let formatRows = []
-
-        if (_.isArray(rows)) {
-          formatRows = _.map(rows, function(row, index, data) {
-            return this.formatRowData(row, index, data)
-          }, this)
-
-          if (formatRows.length) {
-            _(formatRows).each((info, index) => {
-              html.push('<tr class="js-gl-static-tr"')
-              _.each(rows[index], (value, key) => {
-                html.push(` data-${_(key).toDataStyle()}="${_(value).escape()}"`)
-              })
-              html.push('>')
-              _(info).each((cell) => {
-                html.push(cell)
-              })
-
-              html.push('</tr>')
-            })
-          }
-        } else {
-          html.push(`<tr class="js-gl-static-tr ${rows.trClass}">`)
-          _(rows.columnEls).each((cell) => {
-            html.push(`<td>${cell}</td>`)
-          })
-          html.push('</tr>')
-        }
-
-
-        return html.join('')
-      },
-
       formatRowData(row, index, data) {
         // 合并行
         _(this.colModel).each((colInfo) => {
@@ -254,14 +232,13 @@
           formatRow.push(cell.join(''))
 
           return formatRow
-        }, [])
+        }, []).join('')
       },
 
       // common APIs
 
-      getRowData($el) {
-        const $row = $($el).closest('tr')
-        return $row.data()
+      getRows() {
+        return this.$refs.bodyRows
       },
 
       getHeight() {
@@ -273,21 +250,6 @@
         this.$footerBody.empty()
 
         return this
-      },
-
-      addRows(rows, options) {
-        options = options || {}
-        const $rows = $(this.formatRow(rows))
-
-        this.hideLoading()
-        this.hideEmpty()
-
-        if (_.isUndefined(options.prepend)) {
-          this.$tbody.append($rows)
-        } else {
-          this.$tbody.prepend($rows)
-        }
-        return $rows
       },
 
       addFooterRows(rows, options) {
@@ -303,27 +265,6 @@
         } else {
           this.$footerBody.prepend($rows)
         }
-        return $rows
-      },
-
-      delRow(index) {
-        this.$tbody.find('.js-gl-static-tr').eq(index).remove()
-      },
-
-      renderRow(row) {
-        let $rows = $()
-
-        if (row.length) {
-          this.hideLoading()
-          this.hideEmpty()
-
-          $rows = $(this.formatRow(row))
-          this.$tbody.html($rows)
-        } else {
-          this.$tbody.empty()
-          this.renderEmpty()
-        }
-
         return $rows
       },
 

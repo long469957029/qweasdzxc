@@ -104,27 +104,8 @@ const mutations = {
   },
   [types.SET_UNIT] (state, unit) {
     state.unit = Number(unit)
-    let formatUnit = ''
-    switch (state.unit) {
-      case 10000:
-        formatUnit = '元'
-        break
-      case 1000:
-        formatUnit = '角'
-        break
-      case 100:
-        formatUnit = '分'
-        break
-      case 10:
-        formatUnit = '厘'
-        break
-      default:
-        break
-    }
-    state.formatUnit = formatUnit
 
-    state.formatMaxMultiple = _(state.maxMultiple).chain().mul(10000).div(state.unit)
-      .value()
+    Object.assign(state, $_setUnit(unit, state))
 
     $_calculateByPrefab(state)
   },
@@ -216,8 +197,21 @@ const mutations = {
   },
 
 
-  [types.EMPTY_PREV_BETTING](state) {
-    state.previewList = []
+  [types.EMPTY_PREV_BETTING](state, {index}) {
+    if (index) {
+      state.previewList.splice(index, 1)
+    } else {
+      state.previewList = []
+    }
+  },
+
+  [types.CHANGE_PREV_BETTING](state, {index, unit}) {
+    const previewItem = state.previewList[index]
+    previewItem.unit = unit
+
+    Object.assign(previewItem, $_setUnit(unit, previewItem))
+
+    $_calculateByPrefab(previewItem);
   },
 
   [types.EMPTY_BUY_BETTING](state) {
@@ -265,11 +259,12 @@ const mutations = {
         formatUnit: state.formatUnit,
         betBonus: state.betBonus,
         fBetBonus: state.fBetBonus,
-        formatUnit: state.formatUnit,
+        fPrefabMoney: state.fPrefabMoney,
         betMethod: state.betMethod,
         userRebate: state.userRebate,
         rebateMoney: state.rebateMoney,
-        maxMultiple: state.formatMaxMultiple,
+        maxMultiple: state.maxMultiple,
+        formatMaxMultiple: state.formatMaxMultiple,
         maxBonus: state.maxBonus,
         formatMaxBonus: state.formatMaxBonus,
       }
@@ -403,6 +398,39 @@ const $_calculateByPrefab = (state) => {
   state.rebateMoney = rebateMoney
   state.fPrefabMoney = _(prefabMoney).convert2yuan()
   state.fRebateMoney = rebateMoney.convert2yuan
+
+  state.fBetBonus = _(state.betBonus).chain().div(10000).mul(state.unit)
+    .convert2yuan()
+    .value()
+}
+
+
+const $_setUnit = (unit, {maxMultiple}) => {
+  let formatUnit = ''
+  switch (unit) {
+    case 10000:
+      formatUnit = '元'
+      break
+    case 1000:
+      formatUnit = '角'
+      break
+    case 100:
+      formatUnit = '分'
+      break
+    case 10:
+      formatUnit = '厘'
+      break
+    default:
+      break
+  }
+
+  const formatMaxMultiple = _(maxMultiple).chain().mul(10000).div(unit)
+    .value()
+
+  return {
+    formatUnit,
+    formatMaxMultiple
+  }
 }
 
 export default {

@@ -26,6 +26,8 @@ $.widget('gl.numRange', {
     this.$rangeMain = this.element.find('.js-num-range-main')
     this.$rangeMain.addClass(`num-range-${this.options.size}`)
     this._bindEvents()
+
+    this.numChange(Number(this.$number.val()) || 0)
   },
 
   _bindEvents() {
@@ -68,6 +70,10 @@ $.widget('gl.numRange', {
       min = max
     }
 
+    if (this.options.min === min && this.options.max === max) {
+      return false
+    }
+
     this.options.min = min
     this.options.max = max
 
@@ -96,7 +102,7 @@ $.widget('gl.numRange', {
       }, 50)
     }, 300)
 
-    $(document).on('mouseup', () => {
+    $(document).off('mouseup.' + this.uuid).one('mouseup.' + this.uuid, () => {
       clearTimeout(timeout)
       clearInterval(timer)
       self.options.onChange(self.$number.val())
