@@ -8,7 +8,7 @@
 
         <thead>
         <tr>
-          <th :width="col.width" v-for="col in colModel">{{col.label}}</th>
+          <th :width="col.width" v-for="col in colModel" v-html="Vue.compile(col.label).render"></th>
         </tr>
         </thead>
       </table>
@@ -73,29 +73,41 @@
         type: Boolean,
         default: true
       },
+      height: {
+        type: Number,
+        default: 0
+      },
+      showLoading: {
+        type: Boolean,
+        default: false
+      },
+      colModel: {
+        type: Array,
+        default: function() {
+          return []
+        }
+      },
     },
 
     data: function () {
       return {
-        height: 0,
-        colModel: [],
         url: '',
         startOnLoading: true,
         showHeader: true,
-        showLoading: false,
         showEmpty: false,
         abort: true,
         data: {},
         dataProp: 'root',
         hasBorder: _.isUndefined(this.hasBorder) ? this.tableClass.indexOf('table-bordered') > -1 : this.hasBorder,
         loading: Global.ui.loader.get(),
+        Vue
       }
     },
 
     mounted: function() {
       if (this.height > 0) {
         $(this.$refs.bodyDiv).slimScroll({
-          height: this.options.height,
+          height: this.height,
         })
       }
 
@@ -252,7 +264,7 @@
         return $row.data()
       },
 
-      height() {
+      getHeight() {
         return this.element.find('table').height()
       },
 
@@ -324,7 +336,7 @@
         //     }))
         //   }
           // this.renderRow()
-        }
+        // }
       },
 
       renderEmpty() {

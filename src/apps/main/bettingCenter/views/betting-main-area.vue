@@ -64,7 +64,7 @@
 
         <div class="m-bottom-xs m-left-md">
           <div class="clearfix bc-margin-xs">
-            <static-grid :tableClass="'bc-lottery-preview border-table-all'"></static-grid>
+            <static-grid :table-class="lotteryGridOps.tableClass" :col-model="lotteryGridOps.colModel" :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" @lotteryClear="lotteryClear"></static-grid>
             <div class="overflow-hidden font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
                 <span>
                   <span>预期盈利</span>
@@ -106,9 +106,6 @@
   import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
   import ticketConfig from 'skeleton/misc/ticketConfig'
 
-  //vue组件
-  // import 'com/static-grid/index.vue'
-
   //backbone旧组件
   import HisAnalysisView from './bettingCenter-historical-analysis'
 
@@ -139,7 +136,27 @@
         unit: 10000,
         playRule: {},
         //提交中，禁用按钮
-        pushing: false
+        pushing: false,
+
+        lotteryGridOps: {
+          tableClass: 'bc-lottery-preview table table-dashed',
+          colModel: [
+            {
+              label: '玩法', name: 'title', key: true, width: '15%',
+            },
+            {
+              label: '投注内容', name: 'betNum', key: true, width: '17%',
+            },
+            { label: '注数', name: 'note', width: '10%' },
+            { label: '倍数', name: 'multiple', width: '12.5%' },
+            { label: '模式', name: 'mode', width: '12.5%' },
+            { label: '投注金额', name: 'bettingMoney', width: '12.5%' },
+            { label: '预期盈利', name: 'bonus', width: '12.5%' },
+            { label: `<div class="bc-lottery-clear m-left-sm cursor-pointer" @click="alert(1)">清除</div>`, name: 'operate', width: '8%' },
+          ],
+          height: 110,
+          emptyTip: '暂未添加选号',
+        }
       }
     },
     computed: mapState({
@@ -193,7 +210,7 @@
       },
       'bettingChoice.previewList': {
         handler: function(previewList) {
-          const rows = _(previewList).map(function(previewInfo, index) {
+          this.FPreviewList = _(previewList).map(function(previewInfo, index) {
             const title = `${previewInfo.levelName}_${previewInfo.playName}`
             let betNum = ''
             if (previewInfo.formatBettingNumber.length > 20) {
@@ -223,51 +240,51 @@
             }
           }, this)
 
-          const $rows = lotteryPreview.renderRow(rows)
+          const $rows = lotteryPreview.renderRow(this.FPreviewList)
 
-          $rows.each((index, row) => {
-            const $row = $(row)
-            const $detail = $row.find('.js-bc-betting-preview-detail')
-            const $multipleAdd = $row.find(`.js-bc-betting-multiple-add-${index}`)
-            let betNumber = previewList[index].bettingNumber
-            // const is11X5 = (this.ticketInfo.title.indexOf('11选5') !== -1)
-            // betNumber = is11X5 ? betNumber : betNumber.replace(/ /g, '')
-
-            if (_.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id, 10)) > -1) {
-              // 六合彩、无限六合彩
-              // 特码-两面，特码-色波，正码-两面1，正码-两面2，正码-两面3，正码-两面4，正码-两面5，正码-两面6，生肖-特肖，生肖-一肖，头尾-头尾，总和-总和
-              const tm_zm_sx_tw_zh_playIdArr = betRulesConfig.getMark6SpecialInfo().tm_zm_sx_tw_zh_playIdArr
-              if (_.indexOf(tm_zm_sx_tw_zh_playIdArr, this.bettingChoice.playId) > -1) {
-                betNumber = previewList[index].formatBettingNumber
-              }
-            }
-            $multipleAdd.numRange({
-              defaultValue: previewList[index].multiple,
-              size: 'md',
-              max: previewList[index].maxMultiple,
-              onChange: (num) => {
-                this.$store.commit(types.SET_PREVIEW_MULTIPLE, {num, index})
-              },
-              onOverMax: (maxNum) => {
-                //奖金限额一致
-                Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
-                  ${_(this.bettingChoice.limitMoney).convert2yuan()}</span>元，已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
-              },
-            })
-
-            if ($detail.length) {
-              $detail.popover({
-                title: '详细号码',
-                trigger: 'click',
-                html: true,
-                container: 'body',
-                content: `<div class="js-pf-popover">${betNumber}</div>`,
-                placement: 'right',
-              })
-            }
-          })
-
-          $(this.$refs.lotteryPreview).scrollTop(0)
+          // $rows.each((index, row) => {
+          //   const $row = $(row)
+          //   const $detail = $row.find('.js-bc-betting-preview-detail')
+          //   const $multipleAdd = $row.find(`.js-bc-betting-multiple-add-${index}`)
+          //   let betNumber = previewList[index].bettingNumber
+          //   // const is11X5 = (this.ticketInfo.title.indexOf('11选5') !== -1)
+          //   // betNumber = is11X5 ? betNumber : betNumber.replace(/ /g, '')
+          //
+          //   if (_.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id, 10)) > -1) {
+          //     // 六合彩、无限六合彩
+          //     // 特码-两面，特码-色波，正码-两面1，正码-两面2，正码-两面3，正码-两面4，正码-两面5，正码-两面6，生肖-特肖，生肖-一肖，头尾-头尾，总和-总和
+          //     const tm_zm_sx_tw_zh_playIdArr = betRulesConfig.getMark6SpecialInfo().tm_zm_sx_tw_zh_playIdArr
+          //     if (_.indexOf(tm_zm_sx_tw_zh_playIdArr, this.bettingChoice.playId) > -1) {
+          //       betNumber = previewList[index].formatBettingNumber
+          //     }
+          //   }
+          //   $multipleAdd.numRange({
+          //     defaultValue: previewList[index].multiple,
+          //     size: 'md',
+          //     max: previewList[index].maxMultiple,
+          //     onChange: (num) => {
+          //       this.$store.commit(types.SET_PREVIEW_MULTIPLE, {num, index})
+          //     },
+          //     onOverMax: (maxNum) => {
+          //       //奖金限额一致
+          //       Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
+          //         ${_(this.bettingChoice.limitMoney).convert2yuan()}</span>元，已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
+          //     },
+          //   })
+          //
+          //   if ($detail.length) {
+          //     $detail.popover({
+          //       title: '详细号码',
+          //       trigger: 'click',
+          //       html: true,
+          //       container: 'body',
+          //       content: `<div class="js-pf-popover">${betNumber}</div>`,
+          //       placement: 'right',
+          //     })
+          //   }
+          // })
+          //
+          // $(this.$refs.lotteryPreview).scrollTop(0)
         }
       }
     },
@@ -348,6 +365,10 @@
 
             this.$_emptySelect();
           })
+      },
+
+      lotteryClear() {
+        debugger
       },
 
       $_emptySelect() {
