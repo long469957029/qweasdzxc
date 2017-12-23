@@ -197,7 +197,8 @@ module.exports = {
     },
   },
   providePlugin: {
-    Vue: 'vue',
+    Vue: ['vue', 'default'],
+    mapState: ['vuex', 'mapState'],
     jQuery: 'jquery',
     $: 'jquery',
     'window.jQuery': 'jquery',
@@ -205,6 +206,9 @@ module.exports = {
     _: 'underscore',
     R: 'rambda',
     slimScroll: 'jquery-slimscroll',
+
+    types: 'mutation-types',
+    staticGrid: ['com/static-grid/index.vue', 'default'],
   },
   // noParse: /lodash|underscore.string|underscore|backbone|es5|^jquery$|moment|echarts|base\/scripts|html/
 

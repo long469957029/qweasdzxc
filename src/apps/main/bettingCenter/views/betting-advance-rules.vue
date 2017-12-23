@@ -13,7 +13,6 @@
 
 <script>
   import { mapState } from 'vuex'
-  import * as types from 'mutation-types'
 
   export default {
     name: "betting-advance-rules",

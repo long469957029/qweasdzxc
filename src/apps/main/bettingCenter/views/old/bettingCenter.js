@@ -22,7 +22,7 @@ const audio = {
 
 const BettingCenterView = Base.ItemView.extend({
 
-  template: require('bettingCenter/templates/bettingCenter_old1.html'),
+  template: require('bettingCenter/templates/bettingCenter.html'),
 
   rulesTpl: _.template(require('bettingCenter/templates/bettingCenter-rules.html')),
   confirmTpl: _.template(require('bettingCenter/templates/bettingCenter-confirm.html')),
@@ -522,8 +522,10 @@ const BettingCenterView = Base.ItemView.extend({
     } else if (this.$el.closest('html').length !== 0 && planInfo.sale && planInfo.lastPlanId !== planInfo.planId) {
       if (!planInfo.pending) {
         Global.ui.notification.show(
-          `<span class="text-danger">${planInfo.lastPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${planInfo.planId}</span>期<br/>投注时请注意期号！`,
-          { id: 'ticketNotice', hasFooter: false, displayTime: 800 },
+          `<span class="text-prominent">${planInfo.lastPlanId}</span>期已截止<br/>当前期为<span class="text-prominent">${planInfo.planId}</span>期<br/>投注时请注意期号！`,
+          {
+            id: 'ticketNotice', hasFooter: false, displayTime: 800, title: '温馨提示',
+          },
         )
         // setTimeout(function(){
         //   $('.modal-backdrop').remove();
