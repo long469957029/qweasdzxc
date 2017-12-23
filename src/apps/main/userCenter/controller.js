@@ -1,5 +1,7 @@
 'use scrict'
 
+import MyMessageViewInfo from 'userCenter/views/myMessage'
+
 const RouterController = require('skeleton/controllers/router')
 
 const BettingRecordView = require('userCenter/views/bettingRecords')
@@ -13,7 +15,7 @@ const CardManageView = require('userCenter/views/cardManage')
 const CardBindingView = require('userCenter/views/cardBinding')
 const PriceDetailsView = require('userCenter/views/priceDetails')
 const AccountSafeViewInfo = require('userCenter/views/accountSafe')
-const MyMessageViewInfo = require('userCenter/views/myMessage')
+
 
 // const ucMenuConfig = Global.ui.menu.get('uc')
 // const gcMenuConfig = Global.ui.menu.get('gc')

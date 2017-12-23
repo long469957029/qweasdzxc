@@ -922,6 +922,34 @@
 
 //账户安全  end
 
+//我的消息
+.system-message-main{
+  width: 920px;
+  margin: 0 auto;
+  .system-message-list{
+    width: 918px;
+    min-height: 77px;
+    .mseeage-btn{
+      width: 33px;
+      height: 33px;
+      border-radius: 50%;
+      font-size:20px;
+      background-color: $new-main-deep-color;
+      color: $def-white-color;
+      transition: background-color,color 1s;
+      display: inline-block;
+      cursor: pointer;
+      text-align: center;
+      &.active{
+        background-color: $def-white-color;
+        color: $new-main-deep-color;
+      }
+    }
+  }
+}
+
+//我的消息 end
+
 @keyframes flipInY{
 
   from {
