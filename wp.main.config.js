@@ -194,10 +194,14 @@ module.exports = {
       bootstrap: 'vendor/scripts/bootstrap',
       modernizr: 'vendor/scripts/modernizr',
       vue: 'vue/dist/vue.js',
+      // vue: 'vue/dist/vue.esm.js',
+
+      staticGrid: 'com/static-grid/index.vue',
     },
   },
   providePlugin: {
-    Vue: 'vue',
+    Vue: ['vue', 'default'],
+    mapState: ['vuex', 'mapState'],
     jQuery: 'jquery',
     $: 'jquery',
     'window.jQuery': 'jquery',
@@ -205,6 +209,9 @@ module.exports = {
     _: 'underscore',
     R: 'rambda',
     slimScroll: 'jquery-slimscroll',
+
+    types: 'mutation-types',
+    staticGrid: ['staticGrid', 'default'],
   },
   // noParse: /lodash|underscore.string|underscore|backbone|es5|^jquery$|moment|echarts|base\/scripts|html/
 

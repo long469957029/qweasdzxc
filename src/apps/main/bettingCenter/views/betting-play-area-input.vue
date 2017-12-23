@@ -29,7 +29,6 @@
 </template>
 
 <script>
-  import * as types from 'mutation-types'
   import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
   import BettingPlayAreaPosition from "./betting-play-area-position"
 
@@ -48,9 +47,9 @@
         splitReg: /[\r\n,\;:\|\s]+/,
         selectOptionals: [],
         coefficient: 1,
-
         numbers: '',
-        splitNumbers: []
+        splitNumbers: [],
+        type: 'input'
       }
     },
 
@@ -134,23 +133,28 @@
         return results
       },
 
-      getBetting() {
-        const repeat = this.checkRepeat(this.split())
-        const validate = this.validate(repeat.passNumbers)
+      addBetting(options) {
+
+        const repeat = this.$_checkRepeat(this.$_split())
+        const validate = this.$_validate(repeat.passNumbers)
 
 
         this.$store.commit(types.SET_STATISTICS, validate.statistics)
 
         repeat.repeatNumbers = repeat.repeatNumbers.concat(validate.repeatNumbers)
 
-        return {
-          passNumbers: _(validate.passNumbers).map((passNumber) => {
-            return passNumber.split(',')
-          }),
-          selectOptionals: this.options.selectOptionals,
-          repeatNumbers: repeat.repeatNumbers,
-          errorNumbers: validate.errorNumbers,
-        }
+        this.$store.commit(types.ADD_PREV_BET, {
+          bettingInfo: {
+            lotteryList: _(validate.passNumbers).map((passNumber) => {
+              return passNumber.split(',')
+            }),
+            format: this.type,
+            selectOptionals: this.selectOptionals,
+            repeatNumbers: repeat.repeatNumbers,
+            errorNumbers: validate.errorNumbers,
+          },
+          options
+        })
       },
 
       $_statisticsLottery() {

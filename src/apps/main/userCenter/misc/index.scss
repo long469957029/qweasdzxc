@@ -891,6 +891,9 @@
       font-size: 14px;
       cursor: pointer;
     }
+    .error-text{
+      padding-left: 120px;
+    }
   }
   .input1{
     width: 286px;
@@ -910,6 +913,10 @@
   }
   .btn{
     @include btnDef;
+  }
+  .input-disable{
+    background-color: $third-line-color;
+    color: $def-black-color;
   }
 }
 

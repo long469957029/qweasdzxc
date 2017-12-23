@@ -12,7 +12,6 @@
 </template>
 
 <script>
-  import * as types from 'mutation-types'
 
   export default {
     name: "betting-rules",

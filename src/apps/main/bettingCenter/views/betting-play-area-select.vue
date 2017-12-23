@@ -111,7 +111,6 @@
 
 <script>
   import { mapState } from 'vuex'
-  import * as types from 'mutation-types'
   import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
   import BettingPlayAreaPosition from "./betting-play-area-position";
 
@@ -129,10 +128,11 @@
     data: function() {
       return {
         selectOptionals: [],
-        rowsResult: [],
+        lotteryList: [],
         formattedRuleList: [],
         totalPage: 1,
-        coefficient: 1
+        coefficient: 1,
+        type: 'select'
       }
     },
 
@@ -333,25 +333,25 @@
             this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return index >= Math.floor((row.items.length) / 2)
-            }).value(), row)
+            }), row)
             break
           case 'small':
             this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return index < Math.floor((row.items.length) / 2)
-            }).value(), row)
+            }), row)
             break
           case 'odd':
             this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return num.num % 2
-            }).value(), row)
+            }), row)
             break
           case 'even':
             this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
               num.selected = false
               return !(num.num % 2)
-            }).value(), row)
+            }), row)
             break
           case 'clear':
             this.$_selectNumbers(row.fItems, row, false)
@@ -364,9 +364,31 @@
       },
 
       clearAllSelected() {
-        _.each(this.formattedRuleList, formattedRule => _.each(formattedRule.row.fItem, num => {
+        _.each(this.formattedRuleList, formattedRule => _.each(formattedRule.row.fItems, num => {
           num.selected = false
         }))
+      },
+
+      //自定义事件
+      addBetting(options) {
+        this.$store.commit(types.ADD_PREV_BET, {
+          bettingInfo: {
+            lotteryList: this.lotteryList,
+            selectOptionals: this.selectOptionals,
+            format: this.type,
+            formatToNum: this.formatToNum || false, // PK10大小单双文字数字转换标示
+            formatToNumInfo: this.formatToNumInfo || false, // 六合彩文字转换数值
+          },
+          options
+        })
+      },
+
+      empty() {
+        this.lotteryList = []
+        // this.$el.find('.js-bc-select-item,.js-bc-select-op').removeClass('active')
+
+        this.clearAllSelected();
+        // this.$store.commit(types.SET_STATISTICS, 0)
       },
 
       $_calculateCoefficient(optionals) {
@@ -388,7 +410,7 @@
       $_statisticsLottery() {
         let count = 0
 
-        this.rowsResult = _(this.playRule.list).map(function(item) {
+        this.lotteryList = _(this.playRule.list).map(function(item) {
           let selected = []
 
           if (item.isShow) {
@@ -404,12 +426,12 @@
           if (this.playRule.algorithmProps && this.playRule.algorithmProps.coefficient) {
             count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(
               this.playRule,
-              _(this.rowsResult).filter((rowResult) => {
-                return !_.isEmpty(rowResult)
+              _(this.lotteryList).filter((list) => {
+                return !_.isEmpty(list)
               }),
             ) || 0))
           } else {
-            count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(this.playRule, this.rowsResult) || 0))
+            count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(this.playRule, this.lotteryList) || 0))
           }
         }
 

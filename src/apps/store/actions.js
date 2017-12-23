@@ -1,4 +1,3 @@
-import * as types from './mutation-types'
 
 export default ({ commit }, product) => {
 // export const addToCart = ({ commit }, product) => {

@@ -1,4 +1,7 @@
-import * as types from '../mutation-types'
+import ticketConfig from 'skeleton/misc/ticketConfig'
+import betting from '../../api/betting'
+
+const mark6TicketIdArr = ticketConfig.getMark6TicketIdArr()
 
 const initState = () => {
   return {
@@ -26,7 +29,9 @@ const initState = () => {
     rebateMoney: 0,
     fPrefabMoney: 0,
     fRebateMoney: 0,
-    // ticketId:
+    maxMultiple: 100,
+    formatMaxMultiple: 100,
+    limitMoney: 0,
   }
 }
 
@@ -36,11 +41,48 @@ const getters = {
 
 // actions
 const actions = {
+  pushBetting ({ state, commit }, planId) {
+    const bet = _(state.buyList).reduce((list, item) => {
+      list.push({
+        betNum: item.bettingNumber,
+        playId: item.playId,
+        betMultiple: item.multiple,
+        moneyMethod: item.unit,
+        // 0 高奖金 1 有返点
+        betMethod: item.betMethod,
+      })
+
+      return list
+    }, [])
+
+    return new Promise((resolve) => {
+      betting.pushBetting(
+        { planId, bet, usePack: state.usePack },
+        ({ data }) => {
+          resolve(data)
+          return commit(types.PUSH_BETTING_SUCCESS, data)
+        },
+        () => { return commit(types.PUSH_BETTING_FAILURE) },
+      )
+    })
+  },
 }
 
 // this.on('change:multiple change:statistics change:userRebate change:betMethod', this.$_calculateByPrefab)
 // mutations
 const mutations = {
+  [types.PUSH_BETTING_SUCCESS] ({ commit }, res) {
+    if (res && res.result === 0) {
+      commit(types.EMPTY_BUY_BETTING)
+    }
+  },
+  [types.PUSH_BETTING_FAILURE] ({ commit }, res) {
+  },
+
+  [types.SET_LIMIT_MONEY] (state, { limitMoney }) {
+    state.limitMoney = limitMoney
+  },
+
   [types.SET_LEVEL] (state, { levelId, levelName }) {
     // 变更所选基本玩法
     state.levelId = levelId
@@ -81,6 +123,9 @@ const mutations = {
     }
     state.formatUnit = formatUnit
 
+    state.formatMaxMultiple = _(state.maxMultiple).chain().mul(10000).div(state.unit)
+      .value()
+
     $_calculateByPrefab(state)
   },
   [types.SET_STATISTICS] (state, statistics) {
@@ -99,6 +144,10 @@ const mutations = {
 
     state.fBetBonus = _(betBonus).chain().div(10000).mul(state.unit)
       .convert2yuan()
+      .value()
+
+    state.maxMultiple = playInfo.betMultiLimitMax
+    state.formatMaxMultiple = _(state.maxMultiple).chain().mul(10000).div(state.unit)
       .value()
   },
   // indexs 被选中号码的索引
@@ -138,6 +187,201 @@ const mutations = {
     state.fRebateMoney = 0
     state.statistics = 0
   },
+
+  [types.SET_PREVIEW_MULTIPLE](state, { num, index }) {
+    const previewItem = state.previewList[index]
+    previewItem.multiple = Number(num)
+    $_calculateByPrefab(previewItem)
+  },
+
+  [types.ADD_PREV_BET](state, { bettingInfo, options }) {
+    if (state.statistics) {
+      if (!_.isNull(state.playInfo.maxBetNums) && state.statistics > state.playInfo.maxBetNums) {
+        this.commit(types.ADD_BETS, {
+          bettingList: [bettingInfo],
+          options: _(options || {}).extend({ statistics: state.statistics }, { buy: true }),
+        })
+        state.addPrevBetResult = { MaxBetNums: state.playInfo.maxBetNums }
+      }
+
+      this.commit(types.EMPTY_BUY_BETTING)
+
+      this.commit(types.ADD_BETS, {
+        bettingList: [bettingInfo],
+        options: _(options || {}).extend({ statistics: state.statistics }),
+      })
+    } else {
+      state.addPrevBetResult = false
+    }
+  },
+
+
+  [types.EMPTY_PREV_BETTING](state) {
+    state.previewList = []
+  },
+
+  [types.EMPTY_BUY_BETTING](state) {
+    state.buyList = []
+  },
+
+  [types.ADD_BETS](state, { bettingList, options }) {
+    const items = []
+    const sameBets = []
+
+    options = _(options || {}).defaults({
+    })
+
+    _(bettingList).each((bettingInfo) => {
+      let sameBet
+      let statistics
+
+      if (bettingInfo.statistics) {
+        statistics = bettingInfo.statistics
+      } else {
+        statistics = options.statistics
+      }
+
+      let item = {
+        levelName: state.levelName,
+        playId: state.playId,
+        playName: state.playName,
+        bettingNumber: formatBettingNumber(bettingInfo.lotteryList, {
+          selectOptionals: bettingInfo.selectOptionals,
+          formatToNum: bettingInfo.formatToNum,
+          playId: state.playId,
+          ticketId: state.ticketId,
+          formatToNumInfo: bettingInfo.formatToNumInfo || false,
+        }),
+        // 显示用
+        formatBettingNumber: formatBettingNumber(bettingInfo.lotteryList, {
+          type: 'display',
+          format: bettingInfo.format,
+        }),
+        type: bettingInfo.type,
+        formatBonusMode: state.formatBonusMode,
+        multiple: state.multiple,
+        unit: state.unit,
+        statistics,
+        formatUnit: state.formatUnit,
+        betBonus: state.betBonus,
+        fBetBonus: state.fBetBonus,
+        formatUnit: state.formatUnit,
+        betMethod: state.betMethod,
+        userRebate: state.userRebate,
+        rebateMoney: state.rebateMoney,
+        maxMultiple: state.formatMaxMultiple,
+        maxBonus: state.maxBonus,
+        formatMaxBonus: state.formatMaxBonus,
+      }
+
+      // 判断是否有相同的投注,几个方面比较playId,unit,betMethod,bettingNumber
+      if (!options.buy) {
+        sameBet = _(state.previewList).findWhere({
+          playId: item.playId,
+          unit: item.unit,
+          betMethod: item.betMethod,
+          bettingNumber: item.bettingNumber,
+        })
+
+        if (sameBet) {
+          sameBet.multiple = _(sameBet.multiple).add(item.multiple)
+          // if (sameBet.multiple > sameBet.maxMultiple) {
+          //  sameBet.multiple = sameBet.maxMultiple;
+          // }
+          item = sameBet
+        }
+      }
+
+      // 计算prefabMoney 和 rebateMoney
+
+      item.prefabMoney = _(2).chain()
+        .mul(item.multiple).mul(item.statistics)
+        .mul(item.unit)
+        .value()
+
+      if (sameBet) {
+        sameBets.push(item)
+      } else {
+        items.splice(0, 0, item)
+      }
+    })
+
+    if (!options.buy) {
+      state.previewList = items.concat(state.previewList)
+    } else {
+      state.buyList = items.concat(state.buyList)
+    }
+
+    state.addPrevBetResult = sameBets
+  },
+}
+
+const formatBettingNumber = (bettingNumber, options) => {
+  let number = ''
+  options = _(options || {}).defaults({
+    type: 'data',
+  })
+
+  if (!_.isEmpty(options.selectOptionals)) {
+    number += `${options.selectOptionals.join(',')}|`
+  }
+
+  if (bettingNumber.length === 1) {
+    number += bettingNumber[0].join(',')
+  } else {
+    number += _(bettingNumber).map((row) => {
+      if (_.isEmpty(row)) {
+        row = ['-']
+      }
+
+      // 如果有值，则用该符号隔开number
+      if (options.format) {
+        return row.join(options.format.symbol)
+      }
+      // 同行是否用空格隔开
+      return row.join(options.type === 'display' ? '' : ' ')
+    }).join(',')
+  }
+
+  if (options.formatToNum) {
+    number = _formatToNum(number, options)
+  }
+
+  return number
+}
+
+// 将球上的文字转换成对应的数值
+const _formatToNum = (betNum, options) => {
+  let newNum = betNum
+  if (_.indexOf(mark6TicketIdArr, parseInt(options.ticketId, 10)) > -1) {
+    if (options.formatToNumInfo) {
+      const newNumArr = []
+      const replaceArr = options.formatToNumInfo
+      const selectArr = newNum.split(',')
+      _(selectArr).each((text) => {
+        _(replaceArr).each((item) => {
+          if (text === item.name) {
+            newNumArr.push(item.value)
+          }
+        })
+      })
+      newNum = newNumArr.join()
+    }
+  } else {
+    while (newNum.indexOf('大') !== -1 || newNum.indexOf('小') !== -1 || newNum.indexOf('单') !== -1 || newNum.indexOf('双') !== -1
+    || newNum.indexOf('龙') !== -1 || newNum.indexOf('虎') !== -1 || newNum.indexOf('和') !== -1 || newNum.indexOf('三同号通选') !== -1 || newNum.indexOf('三连号通选') !== -1) {
+      newNum = newNum.replace('大', 1)
+      newNum = newNum.replace('小', 2)
+      newNum = newNum.replace('单', 3)
+      newNum = newNum.replace('双', 4)
+      newNum = newNum.replace('龙', 0)
+      newNum = newNum.replace('虎', 1)
+      newNum = newNum.replace('和', 2)
+      newNum = newNum.replace('三同号通选', 0)
+      newNum = newNum.replace('三连号通选', 0)
+    }
+  }
+  return newNum
 }
 
 

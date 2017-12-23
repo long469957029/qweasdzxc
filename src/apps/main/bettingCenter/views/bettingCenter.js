@@ -1,5 +1,4 @@
 import Vue from 'vue'
-
 import ticketConfig from 'skeleton/misc/ticketConfig'
 
 import store from '../../../store/index'
