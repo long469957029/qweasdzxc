@@ -94,6 +94,8 @@ const PhoneBindingView = Base.ItemView.extend({
           $target.html('<span class="js-uc-pm-mobile-countdown">30</span>秒后重发')
           $target.data('status', 1)
           self.sendCodeCountdown($target, $('.js-uc-pm-mobile-countdown'))
+          self.$bindError.html('')
+          self.$changeError.html('')
         } else {
           $target.html('重新发送')
           self.getErrorEl({ text: res.msg === 'fail' ? '验证码发送失败' : res.msg, el: type === 'add' ? self.$bindError : self.$changeError })

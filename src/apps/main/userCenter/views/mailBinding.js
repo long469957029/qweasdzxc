@@ -8,9 +8,9 @@ const MailBindingView = Base.ItemView.extend({
     'click .js-email-bind-btn': 'bindBtnHandler',
     'click .js-uc-email-reSend': 'sendCodeHandler',
   },
-  sendValidataCodeXhr (data) {
+  sendValidataCodeXhr (url, data) {
     return Global.sync.ajax({
-      url: '/acct/smtpCode/send.json',
+      url,
       data,
     })
   },
@@ -23,6 +23,7 @@ const MailBindingView = Base.ItemView.extend({
   serializeData() {
     return {
       hasBindingEmail: this.options.hasBindingEmail,
+      email: this.options.email,
     }
   },
 
@@ -76,6 +77,7 @@ const MailBindingView = Base.ItemView.extend({
     const type = $target.data('type')
     const data = {}
     if (status === 0) {
+      let url = ''
       if (type === 'add') {
         const parsley = this.$email.parsley()
         if (parsley.validate() && parsley.isValid()) {
@@ -84,12 +86,17 @@ const MailBindingView = Base.ItemView.extend({
         } else {
           return false
         }
+        url = '/acct/smtpCode/send.json'
+      } else {
+        url = '/acct/smtpCode/sendByModify.json'
       }
-      this.sendValidataCodeXhr(data).done((res) => {
+      this.sendValidataCodeXhr(url, data).done((res) => {
         if (res && res.result === 0) {
           $target.html('<span class="js-uc-pm-mobile-countdown">30</span>秒后重发')
           $target.data('status', 1)
           self.sendCodeCountdown($target, $('.js-uc-pm-mobile-countdown'))
+          self.$bindError.html('')
+          self.$changeError.html('')
         } else {
           $target.html('重新发送')
           self.getErrorEl({
@@ -105,7 +112,7 @@ const MailBindingView = Base.ItemView.extend({
     const self = this
     const $target = $(e.currentTarget)
     const type = $target.data('type')
-    const bindStaus = type === 'add' ? this.$bindForm.parsley() : this.$lastPhoneForm.parsley()
+    const bindStaus = type === 'add' ? this.$bindForm.parsley() : this.$lastEmailForm.parsley()
     if (bindStaus.validate() && bindStaus.isValid()) {
       const data = {}
       let url = ''
@@ -125,7 +132,7 @@ const MailBindingView = Base.ItemView.extend({
             Global.m.oauth.check()
             if (res.root.success === 0) {
               if (type === 'add') {
-                Global.ui.notification.show('恭喜您，验证成功！')
+                Global.ui.notification.show('恭喜您，邮箱绑定成功！')
                 self.trigger('render:true')
               } else {
                 const num = $target.data('num')

@@ -96,7 +96,7 @@ const AccountSafeView = Base.ItemView.extend({
             self.$phonePwd.html(new PhoneBind({ hasBindingMobile: data.hasBindingMobile, mobile: data.mobile }).on('render:true', () => {
               self.onRender()
             }).render().el)
-            self.$mailPwd.html(new EmailBind({ hasBindingEmail: data.hasBindingEmail }).on('render:true', () => {
+            self.$mailPwd.html(new EmailBind({ hasBindingEmail: data.hasBindingEmail, email: data.email }).on('render:true', () => {
               self.onRender()
             }).render().el)
           }
