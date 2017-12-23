@@ -36,6 +36,8 @@ const AccountSafeView = Base.ItemView.extend({
     this.$safeInfoDate = this.$('.js-safe-info-date')
     this.$safeInfoIp = this.$('.js-safe-info-ip')
     this.$safeInfoAddress = this.$('.js-safe-info-address')
+    this.$settingPhoneNum = this.$('.js-setting-phone-num')
+    this.$settingMailNum = this.$('.js-setting-mail-num')
     this.$loginPwd.html(new LoginPassWord().on('render:true', () => {
       self.onRender()
     }).render().el)
@@ -63,21 +65,27 @@ const AccountSafeView = Base.ItemView.extend({
               self.$('.js-setting-icon[data-type="fund"]').addClass('active')
               self.$('.js-setting-btn[data-type="fund"]').html('修改')
               self.$('.js-setting-info-title[data-type="fund"]').html('修改资金密码')
+              self.$('.js-important-tip[data-type="fund"]').addClass('hidden')
             }
             if (data.hasSecurityQuestion) {
               self.$('.js-setting-icon[data-type="question"]').addClass('active')
               self.$('.js-setting-btn[data-type="question"]').html('修改')
               self.$('.js-setting-info-title[data-type="question"]').html('变更密保问题')
+              self.$('.js-important-tip[data-type="question"]').addClass('hidden')
             }
             if (data.hasBindingMobile) {
               self.$('.js-setting-icon[data-type="phone"]').addClass('active')
               self.$('.js-setting-btn[data-type="phone"]').html('修改')
               self.$('.js-setting-info-title[data-type="phone"]').html('变更手机')
+              self.$('.js-important-tip[data-type="phone"]').addClass('hidden')
+              self.$settingPhoneNum.html(data.mobile)
             }
             if (data.hasBindingEmail) {
               self.$('.js-setting-icon[data-type="mail"]').addClass('active')
               self.$('.js-setting-btn[data-type="mail"]').html('修改')
               self.$('.js-setting-info-title[data-type="mail"]').html('变更邮箱')
+              self.$('.js-important-tip[data-type="mail"]').addClass('hidden')
+              self.$settingMailNum.html(data.email)
             }
             self.$fundPwd.html(new FundPassWord({ hasFundPassword: data.hasFundPassword }).on('render:true', () => {
               self.onRender()
@@ -85,7 +93,7 @@ const AccountSafeView = Base.ItemView.extend({
             self.$questionPwd.html(new QuestionPwd({ hasSecurityQuestion: data.hasSecurityQuestion }).on('render:true', () => {
               self.onRender()
             }).render().el)
-            self.$phonePwd.html(new PhoneBind({ hasBindingMobile: data.hasBindingMobile }).on('render:true', () => {
+            self.$phonePwd.html(new PhoneBind({ hasBindingMobile: data.hasBindingMobile, mobile: data.mobile }).on('render:true', () => {
               self.onRender()
             }).render().el)
             self.$mailPwd.html(new EmailBind({ hasBindingEmail: data.hasBindingEmail }).on('render:true', () => {

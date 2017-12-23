@@ -97,7 +97,21 @@ gulp.task('server.webpack', () => {
   //   },
   // ]
 
-  let proxy = {
+  let proxy = {}
+
+  if (argv.mockup) {
+    _(mockupConfig.routers).each((json, pathInfo) => {
+      proxy[pathInfo] = {
+        target: 'http://localhost:7070/',
+        path: json
+      }
+      // return {
+      //   path: pathInfo,
+      // }
+    })
+  }
+
+  Object.assign(proxy, {
     '*.json': {
       target: serverIP,
       changeOrigin: true,
@@ -109,16 +123,9 @@ gulp.task('server.webpack', () => {
       target: serverIP,
       changeOrigin: true,
     },
-  };
-
-  if (argv.mockup) {
-    proxy = _(mockupConfig.routers).map((val, pathInfo) => {
-      return {
-        path: pathInfo,
-        target: 'http://localhost:7070/',
-      }
-    }).concat(proxy)
-  }
+  })
+  console.info(proxy)
+  // process.exit()
 
   new WebpackDevServer(webpack(devConfig), {
     publicPath: devConfig.output.publicPath,
