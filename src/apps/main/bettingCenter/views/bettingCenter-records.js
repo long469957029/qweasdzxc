@@ -1,6 +1,4 @@
-
-
-const ticketConfig = require('skeleton/misc/ticketConfig')
+import ticketConfig from 'skeleton/misc/ticketConfig'
 
 const BettingRecordsView = Base.ItemView.extend({
 
@@ -409,10 +407,6 @@ const BettingRecordsView = Base.ItemView.extend({
     this.options.type = $target.data('type')
     this.update()
   },
-  // 调整最近开奖记录区的长度
-  // resizeRecords ($parent, resizeHeight) {
-  //   $parent.find('.slimScrollDiv,.js-wt-body-main').css({ height: resizeHeight, 'min-height': this.options.height })
-  // },
 })
 
-module.exports = BettingRecordsView
+export default BettingRecordsView

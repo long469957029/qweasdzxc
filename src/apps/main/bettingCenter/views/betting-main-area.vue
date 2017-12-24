@@ -68,36 +68,60 @@
             <div class="overflow-hidden font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
                 <span>
                   <span>预期盈利</span>
-                  <span class="js-bc-total-rebateMoney text-prominent font-bold">0</span>
+                  <span class="text-prominent font-bold">{{bettingChoice.totalInfo.fTotalBetBonus}}</span>
                   <span>元，</span>
                 </span>
               <span>
                   <span>总投注 【</span>
-                  <span class="js-bc-total-lottery text-pleasant font-bold">0</span>
+                  <span class="text-pleasant font-bold">{{bettingChoice.totalInfo.totalLottery}}</span>
                   <span>】 注， </span>
                 </span>
               <span>
                   <span>总金额</span>
-                  <span class="js-bc-total-money text-prominent m-left-xs m-right-xs font-bold">0</span>
+                  <span class="text-prominent m-left-xs m-right-xs font-bold">{{bettingChoice.totalInfo.fTotalMoney}}</span>
                   <span>元</span>
                 </span>
               <button class="js-bc-chase bc-chase btn-link inline-block cursor-pointer m-left-md relative" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                 <span class="sfa sfa-checkmark vertical-middle"></span>
                 我要追号
-                <span class="ba-chase-tip">追号能提高中奖率</span>
+                <span class="ba-chase-tip" @click="bettingChase">追号能提高中奖率</span>
               </button>
             </div>
             <div class="m-top-md p-top-sm text-center m-bottom-md">
-              <button class="js-bc-btn-lottery-confirm btn btn-orange bc-jb-btn"
+              <button class="btn btn-orange bc-jb-btn" @click="lotteryConfirm"
                       data-loading-text="提交中" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending"> 确认投注
               </button>
             </div>
           </div>
         </div>
       </div>
-      <div ref="bcSideArea" class="bc-side-area pull-right"></div>
+      <div class="bc-side-area pull-right" ref="bcSideArea"></div>
     </div>
-    <div class="bc-bottom-area js-bc-records"></div>
+    <div class="bc-bottom-area" ref="recordsContainer"></div>
+
+
+    <!-- 追号 -->
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="chaseModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">
+              <span class="portlet-icon sfa sfa-sub-title-user vertical-sub"></span> 追号
+            </h4>
+          </div>
+          <div class="modal-body basic-inverse p-top-xs no-p-left no-p-right no-p-bottom">
+            <betting-chase :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney" :ticket-info="ticketInfo"
+                           :planId="bettingInfo.planId" :preview-list="bettingChoice.previewList"
+                           :total-lottery="bettingChoice.totalLottery"
+            ></betting-chase>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -106,32 +130,40 @@
   import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
   import ticketConfig from 'skeleton/misc/ticketConfig'
 
+
+  import BettingRules from './betting-rules'
+  import BettingAdvanceRules from './betting-advance-rules'
+  import BettingPlayAreaSelect from './betting-play-area-select'
+  import BettingPlayAreaInput from './betting-play-area-input'
+  import BettingChase from './betting-chase'
+
+
   //backbone旧组件
   import HisAnalysisView from './bettingCenter-historical-analysis'
-
-  import bettingRules from './betting-rules'
-  import bettingAdvanceRules from './betting-advance-rules'
-  import bettingPlayAreaSelect from './betting-play-area-select'
-  import bettingPlayAreaInput from './betting-play-area-input'
+  import BettingRecordsView from './bettingCenter-records'
+  import confirmTpl from '../templates/bettingCenter-confirm.html'
 
   let recordsOpenView
+  let bettingRecordsView
 
   export default {
     name: "betting-main-area",
     props: {
       ticketInfo: Object,
       mark6TicketIdArr: Array,
+      ticketId: Number,
     },
     components: {
-      staticGrid,
-      bettingRules,
-      bettingAdvanceRules,
-      bettingPlayAreaSelect,
-      bettingPlayAreaInput,
+      StaticGrid,
+      BettingRules,
+      BettingAdvanceRules,
+      BettingPlayAreaSelect,
+      BettingPlayAreaInput,
+      BettingChase,
     },
     data() {
       return {
-        wrapperClass: _.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id)) > -1 ? 'mark6' : '',
+        wrapperClass: _.indexOf(this.mark6TicketIdArr, parseInt(this.ticketId)) > -1 ? 'mark6' : '',
         loading: Global.ui.loader.get(),
         unit: 10000,
         playRule: {},
@@ -192,11 +224,26 @@
             content: `<div><span class="font-bold">玩法说明：</span>${playInfo.playDes}</div><div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
             placement: 'bottom',
           })
+
+
+          //提示框变化, 暂时这么写
+          $('.js-bc-confirm-planId').text(newVal)
         },
+      },
+      'bettingInfo.planId': {
+        handler: function(newPlanId, oldPlanId) {
+          if (oldPlanId !== '------------' && !this.bettingInfo.pending) {
+            Global.ui.notification.show(
+              `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
+              { id: 'ticketNotice', hasFooter: false, displayTime: 800 },
+            )
+          }
+        }
       },
       'bettingInfo.lastOpenId': {
         handler: function() {
           recordsOpenView.update()
+          bettingRecordsView.update()
         }
       },
       unit: {
@@ -247,7 +294,7 @@
               const $detail = $row.find('.js-bc-betting-preview-detail')
               const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
               let betNumber = previewList[index].bettingNumber
-              if (_.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id, 10)) > -1) {
+              if (_.indexOf(this.mark6TicketIdArr, parseInt(this.ticketId, 10)) > -1) {
                 // 六合彩、无限六合彩
                 // 特码-两面，特码-色波，正码-两面1，正码-两面2，正码-两面3，正码-两面4，正码-两面5，正码-两面6，生肖-特肖，生肖-一肖，头尾-头尾，总和-总和
                 const tm_zm_sx_tw_zh_playIdArr = betRulesConfig.getMark6SpecialInfo().tm_zm_sx_tw_zh_playIdArr
@@ -288,6 +335,8 @@
 
             // $(this.$refs.lotteryPreview).scrollTop(0)
           })
+
+          this.$store.commit(types.CALCULATE_TOTAL)
         },
         deep: true
       }
@@ -325,7 +374,7 @@
         }
 
         // 腾讯分分彩，金额限制1000元
-        if (this.ticketInfo.info.id === 31 && _(this.bettingChoice.buyInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
+        if (this.ticketId === 31 && _(this.bettingChoice.buyInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
           Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
           this.$store.commit(types.EMPTY_BUY_BETTING)
           return false
@@ -345,14 +394,17 @@
 
         this.pushing = true
 
-        this.$store.dispatch('pushBetting', planId)
-          // .catch(() => {
-          //   this.pushing = false
-          // })
+        this.$store.dispatch('pushBetting', {
+          planId,
+          type: 'buyList'
+        })
+          .catch(() => {
+            this.pushing = false
+          })
           .then((res) => {
             this.pushing = false
             if (res && res.result === 0) {
-              // this.bettingRecordsView.update()
+              bettingRecordsView.update()
 
               Global.m.oauth.check()
 
@@ -369,6 +421,121 @@
 
             this.$_emptySelect();
           })
+      },
+
+      lotteryConfirm() {
+        let planId = this.bettingInfo.planId
+
+        const inputCount = _(this.bettingChoice.previewList).reduce((_inputCount, previewInfo) => {
+          if (previewInfo.type === 'input') {
+            _inputCount += previewInfo.statistics
+          }
+          return _inputCount
+        }, 0)
+
+        if (inputCount > 100000) {
+          Global.ui.notification.show('非常抱歉，目前平台单式投注只支持最多10万注单。')
+          return false
+        }
+
+        if (_.isEmpty(this.bettingChoice.previewList)) {
+          Global.ui.notification.show('请至少选择一注投注号码！')
+          return false
+        }
+
+
+        // 腾讯分分彩，金额限制1000元
+        if (this.ticketId === 31 && this.bettingChoice.totalInfo.fTotalMoney > ticketConfig.getComplete(31).info.betAmountLimit) {
+          Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
+          return false
+        }
+
+        if (Global.memoryCache.get('acctInfo').foundsLock) {
+          Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
+            'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
+          return false
+        }
+
+        $(document).confirm({
+          title: '确认投注',
+          content: _(confirmTpl).template()({
+            ticketInfo: this.ticketInfo,
+            ticketName: this.ticketInfo.info.zhName,
+            planId: this.bettingInfo.playId,
+            totalInfo: this.bettingChoice.totalInfo,
+            previewList: this.bettingChoice.previewList,
+          }),
+          size: 'bc-betDetail-confirm-dialog',
+          agreeCallback: () => {
+            this.pushing = true
+
+            bettingRecordsView.update()
+
+            this.$store.dispatch('pushBetting', {
+              planId,
+              type: 'previewList'
+            })
+              .catch(() => {
+                this.pushing = false
+              })
+              .then((res) => {
+                this.pushing = false
+
+                if (res && res.result === 0) {
+                  // this.bettingRecordsView.update()
+                  this.$store.commit(types.EMPTY_PREV_BETTING)
+
+                  Global.m.oauth.check()
+
+                  Global.ui.notification.show('投注成功！', {
+                    type: 'success',
+                    hasFooter: false,
+                    displayTime: 800,
+                  })
+                } else if (res.root && res.root.errorCode === 101) {
+                  Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
+                } else {
+                  Global.ui.notification.show(res.msg || '')
+                }
+
+                this.$_emptySelect();
+              })
+          },
+        })
+      },
+
+      bettingChase() {
+        if (_.isEmpty(this.bettingChoice.previewList)) {
+          Global.ui.notification.show('请至少选择一注投注号码！')
+          return
+        }
+
+        // 腾讯分分彩，金额限制1000元
+        if (this.ticketId === 31 && this.bettingChoice.totalInfo.fTotalMoney > ticketConfig.getComplete(31).info.betAmountLimit) {
+          Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
+          return false
+        }
+
+        if (Global.memoryCache.get('acctInfo').foundsLock) {
+          Global.ui.notification.show('资金已锁定，请先<a id="js-open-fc-unlock" href="javascript:void(0);" ' +
+            'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
+          return false
+        }
+
+
+        $(this.$refs.chaseModal).modal({
+          backdrop: 'static',
+        })
+          .on('hidden.modal', function() {
+            // chaseView.destroy()
+          })
+
+
+        // chaseView.on('submit:complete', () => {
+        //   self.model.emptyPrevBetting()
+        //   self.bettingRecordsView.update()
+        //   $dialog.modal('hide')
+        // })
       },
 
       lotteryClear() {
@@ -484,8 +651,14 @@
 
       recordsOpenView = new HisAnalysisView({
         el: this.$refs.bcSideArea,
-        ticketId: this.ticketInfo.info.id,
+        ticketId: this.ticketId,
       }).render()
+
+      bettingRecordsView = new BettingRecordsView({
+        el: this.$refs.recordsContainer,
+        ticketId: this.ticketId,
+      }).render()
+
     }
   }
 </script>

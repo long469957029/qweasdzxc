@@ -21,7 +21,7 @@ const initState = () => {
     // totalTime: 60000,
     // 是否处于销售状态
     sale: true,
-    ticketId: '',
+    ticketId: 0,
     init: true,
     // 加拿大3.5分彩特有参数，pending:true的话，是暂停销售
     pending: false,

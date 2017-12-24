@@ -29,39 +29,6 @@ const BettingChoiceModel = Model.extend({
     // ticketId:
   },
 
-  saveBettingXhr(planId) {
-    const self = this
-
-    const params = this.pick('playId', 'multiple', 'userRebate', 'previewList')
-    const previewList = _(params.previewList).reduce((list, item) => {
-      list.push({
-        betNum: item.bettingNumber,
-        playId: item.playId,
-        betMultiple: item.multiple,
-        moneyMethod: item.unit,
-        // 0 高奖金 1 有返点
-        betMethod: item.betMethod,
-      })
-
-      return list
-    }, [])
-
-    return Global.sync.ajax({
-      url: '/ticket/bet/bet.json',
-      tradition: true,
-      data: {
-        planId,
-        bet: previewList,
-        usePack: this.get('usePack'),
-      },
-    })
-      .done((res) => {
-        if (res && res.result === 0) {
-          self.emptyPrevBetting()
-        }
-      })
-  },
-
   buyBettingXhr(planId) {
     const self = this
 

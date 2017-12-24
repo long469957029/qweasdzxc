@@ -22,7 +22,13 @@ const initState = () => {
     userRebate: 0,
     previewList: [],
     buyList: [],
-    totalInfo: {},
+    totalInfo: {
+      totalLottery: 0,
+      totalMoney: 0,
+      totalBetBonus: 0,
+      fTotalMoney: 0,
+      fTotalBetBonus: 0,
+    },
     buyInfo: {},
     usePack: 0,
     prefabMoney: 0,
@@ -41,8 +47,12 @@ const getters = {
 
 // actions
 const actions = {
-  pushBetting ({ state, commit }, planId) {
-    const bet = _(state.buyList).reduce((list, item) => {
+  pushBetting ({ state, commit }, {
+    planId,
+    type = 'previewList',
+  }) {
+    const bettingList = state[type]
+    const bet = _(bettingList).reduce((list, item) => {
       list.push({
         betNum: item.bettingNumber,
         playId: item.playId,
@@ -191,18 +201,38 @@ const mutations = {
         bettingList: [bettingInfo],
         options: _(options || {}).extend({ statistics: state.statistics }),
       })
+
+      this.commit(types.SET_CHECKOUT_CHOICE)
     } else {
       state.addPrevBetResult = false
     }
   },
 
 
-  [types.EMPTY_PREV_BETTING](state, { index }) {
+  [types.EMPTY_PREV_BETTING](state, { index } = {}) {
     if (index) {
       state.previewList.splice(index, 1)
     } else {
       state.previewList = []
     }
+  },
+
+  [types.CALCULATE_TOTAL](state) {
+    const totalInfo = _(state.previewList).reduce((info, item) => {
+      info.totalLottery = _(info.totalLottery).add(item.statistics)
+      info.totalMoney = _(info.totalMoney).add(item.prefabMoney)
+      info.totalBetBonus = _(info.totalBetBonus).add(item.betBonus)
+      return info
+    }, {
+      totalLottery: 0,
+      totalMoney: 0,
+      totalBetBonus: 0,
+    })
+
+    totalInfo.fTotalMoney = _(totalInfo.totalMoney).convert2yuan()
+    totalInfo.fTotalBetBonus = _(totalInfo.totalBetBonus).convert2yuan()
+
+    state.totalInfo = totalInfo
   },
 
   [types.CHANGE_PREV_BETTING](state, { index, unit }) {
