@@ -115,7 +115,7 @@
           <div class="modal-body basic-inverse p-top-xs no-p-left no-p-right no-p-bottom">
             <betting-chase :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney" :ticket-info="ticketInfo"
                            :planId="bettingInfo.planId" :preview-list="bettingChoice.previewList"
-                           :total-lottery="bettingChoice.totalLottery"
+                           :total-lottery="bettingChoice.totalLottery" ref="bettingChase"
             ></betting-chase>
           </div>
         </div>
@@ -523,6 +523,8 @@
         }
 
 
+        this.$refs.bettingChase.init()
+
         $(this.$refs.chaseModal).modal({
           backdrop: 'static',
         })
@@ -585,13 +587,13 @@
       },
 
       $_addInputLottery(opt) {
-        this.$refs.areaInput.addBetting(opt)
+        const bettingInfo = this.$refs.areaInput.addBetting(opt)
 
         const result = this.bettingChoice.addPrevBetResult
         if (result) {
           if (!_.isEmpty(result)) {
             if (result.MaxBetNums && !_.isNull(result.MaxBetNums)) {
-              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.MaxBetNums} 注，请重新选择  `)
+              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.MaxBetNums} 注，请重新选择`)
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
             }

@@ -385,10 +385,8 @@
 
       empty() {
         this.lotteryList = []
-        // this.$el.find('.js-bc-select-item,.js-bc-select-op').removeClass('active')
 
         this.clearAllSelected();
-        // this.$store.commit(types.SET_STATISTICS, 0)
       },
 
       $_calculateCoefficient(optionals) {

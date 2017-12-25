@@ -143,18 +143,22 @@
 
         repeat.repeatNumbers = repeat.repeatNumbers.concat(validate.repeatNumbers)
 
+        let bettingInfo = {
+          lotteryList: _(validate.passNumbers).map((passNumber) => {
+            return passNumber.split(',')
+          }),
+          format: this.type,
+          selectOptionals: this.selectOptionals,
+          repeatNumbers: repeat.repeatNumbers,
+          errorNumbers: validate.errorNumbers,
+        }
+
         this.$store.commit(types.ADD_PREV_BET, {
-          bettingInfo: {
-            lotteryList: _(validate.passNumbers).map((passNumber) => {
-              return passNumber.split(',')
-            }),
-            format: this.type,
-            selectOptionals: this.selectOptionals,
-            repeatNumbers: repeat.repeatNumbers,
-            errorNumbers: validate.errorNumbers,
-          },
+          bettingInfo,
           options
         })
+
+        return bettingInfo
       },
 
       $_statisticsLottery() {

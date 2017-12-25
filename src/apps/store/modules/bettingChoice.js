@@ -81,12 +81,12 @@ const actions = {
 // this.on('change:multiple change:statistics change:userRebate change:betMethod', this.$_calculateByPrefab)
 // mutations
 const mutations = {
-  [types.PUSH_BETTING_SUCCESS] ({ commit }, res) {
+  [types.PUSH_BETTING_SUCCESS] (state, res) {
     if (res && res.result === 0) {
-      commit(types.EMPTY_BUY_BETTING)
+      this.commit(types.EMPTY_BUY_BETTING)
     }
   },
-  [types.PUSH_BETTING_FAILURE] ({ commit }, res) {
+  [types.PUSH_BETTING_FAILURE] (commit, res) {
   },
 
   [types.SET_LIMIT_MONEY] (state, { limitMoney }) {

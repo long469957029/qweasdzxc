@@ -1,16 +1,9 @@
 
-
-const FilterHelper = require('skeleton/misc/filterHelper')
-
 const ChaseModel = require('bettingCenter/models/bettingChase-normal')
 
 const ticketConfig = require('skeleton/misc/ticketConfig')
 
 const BettingCenterChaseNormalView = Base.ItemView.extend({
-
-  template: require('bettingCenter/templates/bettingCenter-chase-normal.html'),
-
-  footerTemplate: require('bettingCenter/templates/bettingCenter-chase-footer.html'),
 
   confirmTpl: _.template(require('bettingCenter/templates/bettingCenter-confirm.html')),
 
@@ -21,36 +14,10 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
   },
 
   initialize() {
-    this.template += this.footerTemplate
-
     this.model = new ChaseModel()
   },
 
   onRender() {
-    const self = this
-    _(this.options).extend(_(this._parentView.options).pick(
-      'limitMoney',
-      'previewList',
-      'singleType',
-      'maxMultiple',
-      'planId',
-      'ticketInfo',
-      'ticketId',
-      'basicBettingMoney',
-      'totalLottery',
-    ))
-
-    this.model.set({
-      basicBettingMoney: this.options.basicBettingMoney,
-      maxMultiple: this.options.maxMultiple,
-      usePack: this._parentView.options.usePack,
-    })
-
-    this.listenTo(this._parentView, 'change:planId', function(planId) {
-      this.model.kickFirstPlan(planId)
-      // this.getPlans();
-    })
-
     this.listenTo(this.model, 'sync change:plans', this.renderBaseInfo)
     this.listenTo(this.model, 'change:plans', function(model, val) {
       const length = val.length
@@ -67,7 +34,6 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
     this.$filterTable = this.$('.js-bc-chase-normal-table')
     this.$planId = this.$('.js-bc-chase-normal-planId')
     this.$chasePlans = this.$('.js-bc-chase-chasePlans')
-    this.$leftPlans = this.$('.js-bc-chase-left-plans')
     this.$chaseContainer = this.$('.js-bc-chase-normal-container')
     this.$startMultiple = this.$('.js-bc-start-multiple')
     this.$gaps = this.$('.js-bc-gaps')
@@ -79,10 +45,6 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
 
     this.filterHelper = new FilterHelper('', {
       form: this.$filterTable,
-    })
-
-    this.$chasePlans.spinner({
-      min: 1,
     })
 
     function overMax(e, data) {
@@ -121,16 +83,6 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
     this.getPlans()
   },
 
-  getPlans() {
-    this.model.fetch({
-      parse: true,
-      abort: false,
-      data: {
-        ticketId: this.options.ticketId,
-      },
-    })
-  },
-
   renderBaseInfo() {
     const currentPlanId = this.$planId.val()
     let isInDate = false
@@ -149,7 +101,6 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
       this.$planId.val(currentPlanId)
     }
 
-    this.$leftPlans.html(plans.length)
     this.$chasePlans.spinner('option', {
       max: plans.length,
     })
@@ -182,9 +133,9 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
           formatter(val, index) {
             if (index === 0 && val === self.options.planId) {
               return `${val}（当前期）`
-            } 
+            }
             return val
-          }, 
+          },
         },
         {
           label: '倍数',
@@ -193,7 +144,7 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
           formatter(val) {
             return `${'<input type="text" class="js-bc-single-plan-multiple js-gl-monitor input-xs" ' +
             'data-monitor-type="number" data-monitor-range="[1, '}${self.options.maxMultiple}]" value="${val}" /> 倍`
-          }, 
+          },
         },
         {
           label: '当期投入',
@@ -201,7 +152,7 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
           width: '20%',
           formatter(val) {
             return _(val).convert2yuan()
-          }, 
+          },
         },
         {
           label: '累计投入',
@@ -209,7 +160,7 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
           width: '20%',
           formatter(val) {
             return _(val).convert2yuan()
-          }, 
+          },
         },
       ],
       startOnLoading: false,
