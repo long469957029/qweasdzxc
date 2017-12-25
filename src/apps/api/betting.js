@@ -1,5 +1,5 @@
 export default {
-  //取得当期彩票信息
+  // 取得当期彩票信息
   getTicketInfo (ticketId, then, fail) {
     return Global.sync.axios({
       url: '/ticket/ticketmod/ticketinfo.json',
@@ -8,7 +8,7 @@ export default {
       .then(then)
       .catch(fail)
   },
-  //取得彩票相关规则
+  // 取得彩票相关规则
   getTicketRules(ticketId, then, fail) {
     return Global.sync.axios({
       url: '/ticket/ticketmod/ticketplaylist.json',
@@ -19,7 +19,7 @@ export default {
       .then(then)
       .catch(fail)
   },
-  //提交投注
+  // 提交投注
   pushBetting({ planId, bet, usePack }, then, fail) {
     return Global.sync.axios({
       url: '/ticket/bet/bet.json',
@@ -34,7 +34,7 @@ export default {
       .catch(fail)
   },
 
-  //取得追号期数
+  // 取得追号期数
   getPlans({ ticketId }, then, fail) {
     return Global.sync.axios({
       url: '/ticket/chase/chaseinfo.json',

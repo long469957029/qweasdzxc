@@ -3,7 +3,7 @@ import betting from '../../api/betting'
 
 const initState = () => {
   return {
-    plans: []
+    plans: [],
   }
 }
 
@@ -14,7 +14,7 @@ const getters = {
 // actions
 const actions = {
   [types.GET_CHASE_PLANS] ({ commit }, {
-    ticketId
+    ticketId,
   }) {
     return new Promise((resolve) => {
       betting.getPlans(
