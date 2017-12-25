@@ -14,7 +14,7 @@
       </table>
     </div>
 
-    <div class="relative">
+    <div class="relative" ref="body">
       <table class="no-margin" :class="[tableClass, {'no-b-bottom': hasBorder}]">
         <colgroup>
           <col :width="col.width" v-for="col in colModel">
@@ -119,7 +119,7 @@
 
     mounted: function() {
       if (this.height > 0) {
-        $(this.$refs.bodyDiv).slimScroll({
+        $(this.$refs.body).slimScroll({
           height: this.height,
         })
       }

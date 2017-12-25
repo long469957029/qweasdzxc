@@ -210,7 +210,7 @@ const mutations = {
     } else {
       this.commit(types.ADD_BETS, {
         bettingList: [bettingInfo],
-        options
+        options,
       })
       state.addPrevBetResult = {}
     }
@@ -218,7 +218,7 @@ const mutations = {
 
 
   [types.EMPTY_PREV_BETTING](state, { index } = {}) {
-    if (index) {
+    if (_.isNumber(index)) {
       state.previewList.splice(index, 1)
     } else {
       state.previewList = []
@@ -256,7 +256,7 @@ const mutations = {
     state.buyList = []
   },
 
-  [types.ADD_BETS](state, { bettingList, options = {}}) {
+  [types.ADD_BETS](state, { bettingList, options = {} }) {
     const items = []
     const sameBets = []
 
