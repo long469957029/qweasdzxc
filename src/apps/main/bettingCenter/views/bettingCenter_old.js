@@ -223,22 +223,6 @@ const BettingCenterView = Base.ItemView.extend({
 
   // event handlers
 
-  lotteryAutoAddHandler(e) {
-    const $target = $(e.currentTarget)
-
-    if (!this.model.get('multiple')) {
-      Global.ui.notification.show('倍数为0，不能投注')
-      return false
-    }
-
-    const lotteryResults = this.currentPlayAreaView.create(Number($target.data('times')))
-    const result = this.model.addAutoBets(lotteryResults)
-
-    if (!_.isEmpty(result)) {
-      Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
-    }
-  },
-
   // 获取六合彩生肖对应的号码
   getMark6SxNumber(data) {
     let options = this.options

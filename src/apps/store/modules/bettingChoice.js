@@ -186,25 +186,33 @@ const mutations = {
   },
 
   [types.ADD_PREV_BET](state, { bettingInfo, options }) {
-    if (state.statistics) {
-      if (!_.isNull(state.playInfo.maxBetNums) && state.statistics > state.playInfo.maxBetNums) {
-        this.commit(types.ADD_BETS, {
-          bettingList: [bettingInfo],
-          options: _(options || {}).extend({ statistics: state.statistics }, { buy: true }),
-        })
-        state.addPrevBetResult = { MaxBetNums: state.playInfo.maxBetNums }
+    if (options.type !== 'auto') {
+      if (state.statistics) {
+        this.commit(types.EMPTY_BUY_BETTING)
+
+        if (!_.isNull(state.playInfo.maxBetNums) && state.statistics > state.playInfo.maxBetNums) {
+          this.commit(types.ADD_BETS, {
+            bettingList: [bettingInfo],
+            options: _(options || {}).extend({ statistics: state.statistics }, options),
+          })
+          state.addPrevBetResult = { MaxBetNums: state.playInfo.maxBetNums }
+        } else {
+          this.commit(types.ADD_BETS, {
+            bettingList: [bettingInfo],
+            options: _(options || {}).extend({ statistics: state.statistics }),
+          })
+        }
+
+        this.commit(types.SET_CHECKOUT_CHOICE)
+      } else {
+        state.addPrevBetResult = false
       }
-
-      this.commit(types.EMPTY_BUY_BETTING)
-
+    } else {
       this.commit(types.ADD_BETS, {
         bettingList: [bettingInfo],
-        options: _(options || {}).extend({ statistics: state.statistics }),
+        options
       })
-
-      this.commit(types.SET_CHECKOUT_CHOICE)
-    } else {
-      state.addPrevBetResult = false
+      state.addPrevBetResult = {}
     }
   },
 
@@ -248,7 +256,7 @@ const mutations = {
     state.buyList = []
   },
 
-  [types.ADD_BETS](state, { bettingList, options }) {
+  [types.ADD_BETS](state, { bettingList, options = {}}) {
     const items = []
     const sameBets = []
 
@@ -297,6 +305,10 @@ const mutations = {
         formatMaxMultiple: state.formatMaxMultiple,
         maxBonus: state.maxBonus,
         formatMaxBonus: state.formatMaxBonus,
+      }
+
+      if (options.type === 'auto') {
+        $_calculateByPrefab(item)
       }
 
       // 判断是否有相同的投注,几个方面比较playId,unit,betMethod,bettingNumber
@@ -410,26 +422,26 @@ const _formatToNum = (betNum, options) => {
 }
 
 
-const $_calculateByPrefab = (state) => {
+const $_calculateByPrefab = (data) => {
   let prefabMoney = 0
-  const rebateMoney = 0
+  // const rebateMoney = 0
 
-  if (state.statistics && state.multiple) {
-    prefabMoney = _(state.statistics).chain().mul(state.multiple).mul(2)
-      .mul(state.unit)
+  if (data.statistics && data.multiple) {
+    prefabMoney = _(data.statistics).chain().mul(data.multiple).mul(2)
+      .mul(data.unit)
       .value()
 
-    state.prefabMoney = prefabMoney
-    state.rebateMoney = state.betMethod === 1 ? _(prefabMoney).chain().mul(state.userRebate).div(1000)
-      .value() : 0
+    data.prefabMoney = prefabMoney
+    // data.rebateMoney = data.betMethod === 1 ? _(prefabMoney).chain().mul(data.userRebate).div(1000)
+    //   .value() : 0
   }
 
-  state.prefabMoney = prefabMoney
-  state.rebateMoney = rebateMoney
-  state.fPrefabMoney = _(prefabMoney).convert2yuan()
-  state.fRebateMoney = rebateMoney.convert2yuan
+  // data.rebateMoney = rebateMoney
+  // data.fRebateMoney = rebateMoney.convert2yuan
 
-  state.fBetBonus = _(state.betBonus).chain().div(10000).mul(state.unit)
+  data.prefabMoney = prefabMoney
+  data.fPrefabMoney = _(prefabMoney).convert2yuan()
+  data.fBetBonus = _(data.betBonus).chain().div(10000).mul(data.unit)
     .convert2yuan()
     .value()
 }

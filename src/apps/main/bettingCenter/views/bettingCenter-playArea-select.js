@@ -145,19 +145,6 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
     this.trigger('statistic', 0)
   },
 
-  create(createTimes) {
-    let results = []
-    if (this.options.coefficient) {
-      results = _(createTimes).times(this.options.create, this.options)
-      _(results).each(function(result) {
-        result.statistics = Math.round(_(this.options.coefficient).mul(result.statistics))
-        result.selectOptionals = this.options.selectOptionals
-      }, this)
-    }
-
-    return results
-  },
-
   // event handlers
 
   selectNumberHandler(e) {

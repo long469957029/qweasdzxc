@@ -3,14 +3,12 @@
     <!--选择位置-->
     <betting-play-area-position :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
 
-    <!--机选-->
     <div class="js-bc-playArea-missOption bc-missOptional-main">
-      <div class="js-bc-missOption bc-missOption-btn active" data-type="lastMissNum">当前遗漏</div>
-      <div class="js-bc-missOption bc-missOption-btn" data-type="maxMissNum">最大遗漏</div>
-      <div class="js-bc-lottery-auto bc-missOption-btn" data-times="1">机选一注</div>
+      <slot name="lastMissNum"></slot>
+      <slot name="maxMissNum"></slot>
+      <slot name="autoAdd"></slot>
       <div class="bc-missOption-btn" @click="clearAllSelected">清除选号</div>
     </div>
-
     <!--选区-->
     <div class="bc-page-content active" v-for="n in totalPage" v-show="n === 1">
       <div class="js-bc-playArea-items bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList" v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
@@ -205,7 +203,7 @@
       },
 
       selectNumber(num, items) {
-        //六合
+        //TODO 六合
         if (_.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id, 10)) > -1) {
           const $itemsToolbars = $target.closest('.js-bc-playArea-items')
           this._mark6SelectNumber($target, $itemsToolbars)
@@ -324,6 +322,19 @@
         }
       },
 
+      create(createTimes) {
+        let results = []
+        if (this.coefficient) {
+          results = _(createTimes).times(this.playRule.create, this.playRule)
+          _(results).each(function(result) {
+            result.statistics = Math.round(_(this.coefficient).mul(result.statistics))
+            result.selectOptionals = this.selectOptionals
+          }, this)
+        }
+
+        return results
+      },
+
       selectOperate(op, row) {
         switch (op) {
           case 'all':
@@ -370,17 +381,37 @@
       },
 
       //自定义事件
-      addBetting(options) {
-        this.$store.commit(types.ADD_PREV_BET, {
-          bettingInfo: {
-            lotteryList: this.lotteryList,
-            selectOptionals: this.selectOptionals,
-            format: this.type,
-            formatToNum: this.formatToNum || false, // PK10大小单双文字数字转换标示
-            formatToNumInfo: this.formatToNumInfo || false, // 六合彩文字转换数值
-          },
-          options
-        })
+      addBetting({type = 'normal', results = []} = {}) {
+        if (type === 'auto') {
+          _.each(results, (result) => {
+            this.$store.commit(types.ADD_PREV_BET, {
+              bettingInfo: {
+                lotteryList: result.lotteryList,
+                selectOptionals: result.selectOptionals,
+                statistics: result.statistics,
+                format: this.type,
+                formatToNum: this.formatToNum || false, // PK10大小单双文字数字转换标示
+                formatToNumInfo: this.formatToNumInfo || false, // 六合彩文字转换数值
+              },
+              options: {
+                type
+              }
+          })
+          })
+        } else {
+          this.$store.commit(types.ADD_PREV_BET, {
+            bettingInfo: {
+              lotteryList: this.lotteryList,
+              selectOptionals: this.selectOptionals,
+              format: this.type,
+              formatToNum: this.formatToNum || false, // PK10大小单双文字数字转换标示
+              formatToNumInfo: this.formatToNumInfo || false, // 六合彩文字转换数值
+            },
+            options: {
+              type
+            }
+          })
+        }
       },
 
       empty() {

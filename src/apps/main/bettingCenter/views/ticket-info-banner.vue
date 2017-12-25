@@ -79,7 +79,7 @@
 
 <script>
   import { mapState } from 'vuex'
-  import Countdown from 'com/countdown'
+  import AnimateCountdown from 'com/countdown/animate-countdown'
 
   let timer
   let goToNextTimer
@@ -195,7 +195,7 @@
       $_renderCountdown() {
         let times = 1
 
-        return new Countdown({
+        return new AnimateCountdown({
           el: this.$refs.countdown,
         }).render().on('change:leftTime', (e) => {
           times -= 1

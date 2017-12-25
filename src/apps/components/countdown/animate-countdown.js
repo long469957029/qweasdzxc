@@ -1,10 +1,10 @@
-import './index.scss'
+
 
 const Countdown = Base.PrefabView.extend({
 
-  template: require('./index.html'),
+  template: require('./animate-countdown.html'),
 
-  className: 'countdown',
+  className: 'animate-countdown',
 
   options: {
     labels: ['hours', 'minutes', 'seconds'],
@@ -16,10 +16,10 @@ const Countdown = Base.PrefabView.extend({
     this.tpl = _(this.template).template()
     this.options.color = this.options.color ? (`${this.options.color}-`) : ''
     this.options.size = this.options.size ? (`-${this.options.size}`) : ''
+    this.$el.addClass(this.className)
   },
 
   render(leftTime) {
-    //  leftTime = 91310000; // 测试数据
     leftTime = (leftTime + _.now()) || _.now()
     if (_.isUndefined(this.$el.data('countdownInstance'))) {
       this._initCountdown(leftTime)
@@ -70,7 +70,7 @@ const Countdown = Base.PrefabView.extend({
     _(self.options.labels).each((label, i) => {
       self.$el.append(self.tpl({
         curr: _(initData[label].split('')).map((item) => {
-          return self.options.color + item
+          return item
         }),
         label,
         isLast: self.options.labels.length - 1 === i,
@@ -100,13 +100,36 @@ const Countdown = Base.PrefabView.extend({
         // Apply the new values to each node that changed
         _(diff(data.curr, data.next)).each((label) => {
           const selector = '.%s'.replace(/%s/, label)
-          const $node = self.$el.find(selector)
-          const nums = data.next[label].split('')
+          const $node1 = self.$el.find(`${selector}-1`)
+          const $node2 = self.$el.find(`${selector}-2`)
+          const nextNums = data.next[label].split('')
+          const curtNums = data.curr[label].split('')
 
-          $node.html([
-            `<span class="sfa sfa-cd-${self.options.color}${nums[0]} countdown-item${self.options.size}"></span>`,
-            `<span class="sfa sfa-cd-${self.options.color}${nums[1]} countdown-item${self.options.size}"></span>`,
-          ].join(''))
+
+          if (nextNums[0] !== curtNums[0]) {
+            $node1.removeClass('flip')
+            $node1.html([
+              `<span class="count curr top">${curtNums[0]}</span>`,
+              `<span class="count next top">${nextNums[0]}</span>`,
+              `<span class="count next bottom">${nextNums[0]}</span>`,
+              `<span class="count curr bottom">${curtNums[0]}</span>`,
+            ].join(''))
+          }
+
+          if (nextNums[1] !== curtNums[1]) {
+            $node2.removeClass('flip')
+            $node2.html([
+              `<span class="count curr top">${curtNums[1]}</span>`,
+              `<span class="count next top">${nextNums[1]}</span>`,
+              `<span class="count next bottom">${nextNums[1]}</span>`,
+              `<span class="count curr bottom">${curtNums[1]}</span>`,
+            ].join(''))
+          }
+
+          _.delay(() => {
+            $node1.addClass('flip')
+            $node2.addClass('flip')
+          }, 50)
         })
 
         self.trigger('change:leftTime', event)

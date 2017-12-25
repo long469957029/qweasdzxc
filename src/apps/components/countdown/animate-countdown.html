@@ -1,0 +1,15 @@
+<div class="countdown <%= label %>-1">
+  <span class="count curr top"><%=curr[0] %></span>
+  <span class="count next top"><%=curr[0] %></span>
+  <span class="count next bottom"><%=curr[0] %></span>
+  <span class="count curr bottom"><%=curr[0] %></span>
+</div>
+<div class="countdown <%= label %>-2">
+  <span class="count curr top"><%=curr[1] %></span>
+  <span class="count next top"><%=curr[1] %></span>
+  <span class="count next bottom"><%=curr[1] %></span>
+  <span class="count curr bottom"><%=curr[1] %></span>
+</div>
+<% if (!isLast) { %>
+<span class="countdown-<%=color%>colon">:</span>
+<% } %>

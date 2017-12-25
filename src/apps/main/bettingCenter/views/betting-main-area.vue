@@ -18,7 +18,11 @@
         <div class="bc-line"></div>
         <div class="m-LR-smd">
           <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
-            <betting-play-area-select :play-rule="playRule" :mark6-ticket-id-arr="mark6TicketIdArr" :ticket-info="ticketInfo" ref="areaSelect" v-if="!_.isEmpty(playRule) && playRule.type === 'select'"></betting-play-area-select>
+            <betting-play-area-select :play-rule="playRule" :mark6-ticket-id-arr="mark6TicketIdArr" :ticket-info="ticketInfo" ref="areaSelect" v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
+                <div slot="lastMissNum" class="js-bc-missOption bc-missOption-btn active">当前遗漏</div>
+                <div slot="maxMissNum" class="js-bc-missOption bc-missOption-btn">最大遗漏</div>
+                <div slot="autoAdd" class="bc-missOption-btn" data-times="1" @click="autoAdd(1)">机选一注</div>
+            </betting-play-area-select>
             <betting-play-area-input :play-rule="playRule" ref="areaInput" v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
             <div class="height-100" v-html="loading" v-else></div>
           </div>
@@ -343,6 +347,20 @@
     },
 
     methods: {
+      autoAdd(times) {
+        if (!this.bettingChoice.multiple) {
+          Global.ui.notification.show('倍数为0，不能投注')
+          return false
+        }
+
+        const lotteryResults = this.$refs.areaSelect.create(times)
+
+        this.$_addSelectLottery({
+          type: 'auto',
+          results: lotteryResults
+        })
+      },
+
       lotteryBuy() {
         if (!this.bettingChoice.multiple) {
           Global.ui.notification.show('倍数为0，不能投注')
