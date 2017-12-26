@@ -18,27 +18,68 @@ define((require, exports, module) => {
       even: false,
       clear: false,
     },
+    clear: {
+      clear2: true,
+    },
+  }
+
+  const TopOp = {
+    all: {
+      currMissing: true,
+      maxMissing: true,
+      auto: true,
+      clear: true,
+    },
+    none: {
+      currMissing: false,
+      maxMissing: false,
+      auto: false,
+      clear: false,
+    },
   }
 
   const betRules = []
 
-  function addRule(ids, rule) {
-    rule.optionals = rule.optionals || {}
-    rule.type = rule.type || 'select'// 投注方式：输入还是选择
-    rule.limits = rule.limits || []// 球上的样式和数据
-    rule.algorithm = rule.algorithm || _.noop// 注数的算法
-
-    _(rule.list).each((item, index) => { // list标示需要显示的行的数组
+  function addRule(ids, {
+    optionals = {},
+    list = [],
+    // 投注方式：输入还是选择
+    type = 'select',
+    // 球上的样式和数据
+    limits = [],
+    // 注数的算法
+    algorithm = _.noop,
+    algorithmProps = {},
+    create = _.noop,
+    style = {
+      numType: 'circle',
+      position: 'default',
+      row: 1,
+      operate: 'inline',
+    },
+    topOp = 'all',
+  }) {
+    _(list).each((item, index) => { // list标示需要显示的行的数组
       item.id = index// 标记选号的第几行
 
-      if (rule.optionals[index]) {
-        rule.optionals[index].id = index
+      if (optionals[index]) {
+        optionals[index].id = index
       }
     })
 
     betRules.push({
       playId: Number(`${ids[0]}${ids[1]}`),
-      rule,
+      rule: {
+        list,
+        optionals,
+        type,
+        limits,
+        algorithm,
+        algorithmProps,
+        style,
+        create,
+        topOp: TopOp[topOp],
+      },
     })
   }
 
@@ -50,9 +91,6 @@ define((require, exports, module) => {
       doublenum: false,
       htmlNeedInfo: {},
     })
-    if (_(options[0]).isArray()) {
-
-    }
 
     return _(titles).map((title) => {
       if (_.isObject(title)) {
@@ -60,9 +98,10 @@ define((require, exports, module) => {
           isShow: title.title !== null,
           title: title.title,
           items: title.items || options.items,
+          showItems: title.showItems || options.showTimes || options.items,
           op: op[title.operate || options.operate],
           limits: title.limits || options.limits,
-          doublenum: title.doublenum || options.doublenum,
+          doubleNum: title.doubleNum || options.doubleNum,
           htmlNeedInfo: options.htmlNeedInfo,
         }
       }
@@ -70,9 +109,10 @@ define((require, exports, module) => {
         isShow: title !== null,
         title,
         items: options.items,
+        showItems: options.showItems || options.items,
         op: op[options.operate],
         limits: options.limits,
-        doublenum: options.doublenum,
+        doubleNum: options.doubleNum,
         htmlNeedInfo: options.htmlNeedInfo,
       }
     })

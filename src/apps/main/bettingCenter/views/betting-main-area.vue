@@ -16,9 +16,9 @@
 
           <div class="pull-right bc-advance-mode-main">
             <div :class="advanceShowMode === 'single' ? 'advance-bonus-single' : 'advance-bonus'">
-              单注奖金：<span class="text-prominent">{{bettingChoice.fBetBonus}}</span>元
+              单注奖金：<span class="text-prominent font-sm">{{bettingChoice.fBetBonus}}</span>元
             </div>
-            <a class="advance-play-des font-md" ref="playExample" v-show="advanceShowMode === 'classic'">
+            <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic'">
               <span class="sfa sfa-bc-light vertical-middle"></span>
               玩法说明
             </a>
@@ -134,7 +134,6 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -727,14 +726,14 @@
   .advance-play-des{
     width: 86px;
     height: 23px;
-    display: block;
+    display: inline-block;
     border: 1px solid #f0f0f0;
     border-radius: 15px;
     line-height: 23px;
-    margin-right: 15px;
     color: #8094A6;
-    float: right;
     text-align: center;
+    margin: 5px 40px 0 0;
+    float: right;
   }
 
   .bc-advance-mode-single {
@@ -742,14 +741,13 @@
     color: $prominent-secondary-btn-color;
     margin: 20px 0 0 20px;
     .advance-play-des{
-      margin-left: 20px;
-
+      margin: 0 0 0 20px;
     }
   }
 
   .advance-bonus{
     margin-right: 40px;
-    margin-top: 20px;
+    margin-top: 15px;
     float: right;
   }
   .advance-bonus-single{
@@ -774,6 +772,9 @@
     .tab-toolbar {
       .tab-group {
         margin-left: 100px;
+        .tab {
+          font-size: 14px;
+        }
       }
     }
     .bc-advance-mode-main{

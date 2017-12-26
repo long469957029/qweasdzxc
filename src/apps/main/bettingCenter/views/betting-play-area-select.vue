@@ -3,31 +3,32 @@
     <!--选择位置-->
     <betting-play-area-position :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
 
-    <div class="js-bc-playArea-missOption bc-missOptional-main">
-      <slot name="lastMissNum"></slot>
-      <slot name="maxMissNum"></slot>
-      <slot name="autoAdd"></slot>
-      <div class="bc-missOption-btn" @click="clearAllSelected">清除选号</div>
+    <div class="bc-missOptional-main" v-if="_.find(playRule.topOp, op => op)">
+      <slot name="lastMissNum" v-if="playRule.topOp.currMissing"></slot>
+      <slot name="maxMissNum" v-if="playRule.topOp.maxMissing"></slot>
+      <slot name="autoAdd" v-if="playRule.topOp.auto"></slot>
+      <div class="bc-missOption-btn" @click="clearAllSelected" v-if="playRule.topOp.clear">清除选号</div>
     </div>
     <!--选区-->
-    <div class="bc-page-content active" v-for="n in totalPage" v-show="n === 1">
-      <div class="js-bc-playArea-items bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList" v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
-        <div class="js-be-playArea-items-toolbar tab-toolbar tab-circle pull-left">
+    <div class="bc-page-content active" :class="`bc-page-content-${playRule.style.position}`" v-for="n in totalPage" v-show="n === 1">
+      <div class="bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList" v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
 
-          <div class="js-bc-select-item-title tab-title" v-show="fRule.row.title">
+        <div class="tab-toolbar" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
+
+          <div class="js-bc-select-item-title tab-title" v-if="fRule.row.title">
             <div>{{fRule.row.title == '无' ? '' : fRule.row.title}}</div>
           </div>
-          <div class="js-bc-select-item-title tab-title" v-show="!fRule.row.title">
+          <div class="js-bc-select-item-title tab-title" v-if="!fRule.row.title">
             <div>号码</div>
           </div>
 
           <!--六合 待重构-->
-          <div class="tab-group <%= htmlNeedInfo.listClassName %>" v-show="!_.isEmpty(fRule.row.htmlNeedInfo)">
+          <div class="tab-group <%= htmlNeedInfo.listClassName %>" v-if="!_.isEmpty(fRule.row.htmlNeedInfo)">
             <div :class="fRule.row.htmlNeedInfo.levelClassName">
               <div :class="fRule.row.htmlNeedInfo.playClassName">
                 <div v-for="items in fRule.row.fItems">
                   <span class="bc-select-item cbutton cbutton--effect-novak tab" :class="fRule.limit" v-for="item in items" @click="selectNumber(item, fRule.row)">
-                    <span :class="[fRule.row.htmlNeedInfo.numberClassName, item.color]">{{item.num}}</span>
+                    <span :class="[fRule.row.htmlNeedInfo.numberClassName, item.color]">{{item.showNum}}</span>
                     <span>X</span>
                     <span class="mark6-odds"></span>
                   </span>
@@ -37,28 +38,32 @@
           </div>
 
           <!--其他玩法-->
-          <div class="tab-group" v-show="_.isEmpty(fRule.row.htmlNeedInfo)">
-            <div v-for="n in fRule.row.totalPage">
+          <div class="tab-group no-margin text-center inline-block" v-show="_.isEmpty(fRule.row.htmlNeedInfo)">
+            <div v-for="n in fRule.row.totalPage"  class="clearfix inline-block">
               <span class="bc-select-item cbutton cbutton--effect-novak tab" @click="selectNumber(item, fRule.row)"
-                    v-for="item in fRule.row.fItems" v-if="!fRule.row.page || (index < n * fRule.row.page && index >= (n - 1) * fRule.row.page)"
-                  :class="[fRule.limit, {treble2: fRule.row.doublenum, active: item.selected}]">{{item.num}}
+                    v-for="(item, index) in fRule.row.fItems" v-if="!fRule.row.page || (index < n * fRule.row.page && index >= (n - 1) * fRule.row.page)"
+                  :class="[fRule.limit, {active: item.selected, clearfix: playRule.style.row !== 1 && Math.ceil(fRule.row.fItem / index) === playRule.style.row}]">
+                <span v-if="!fRule.row.doubleNum">{{item.showNum}}</span>
+                <span v-else>{{item.showNum[0]}}<i class="num-split"></i>{{item.showNum[1]}}</span>
               </span>
+              <span v-if="fRule.row.op.clear2" class="operate-clear cursor-pointer" @click="selectOperate('clear', fRule.row)">清空</span>
             </div>
           </div>
+
         </div>
 
-        <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select m-left-lg vertical-middle pull-right" v-show="fRule.row.hasOp">
+        <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select vertical-middle clearfix" :class="playRule.style.operate === 'block' ? 'm-center' : 'm-left-lg pull-right'" v-if="fRule.row.hasOp">
           <div class="tab-group m-left-md">
-            <span class="tab" @click="selectOperate('all', fRule.row)" v-show="fRule.row.op.all">全</span>
-            <span class="tab" @click="selectOperate('big', fRule.row)" v-show="fRule.row.op.big">大</span>
-            <span class="tab" @click="selectOperate('small', fRule.row)" v-show="fRule.row.op.small">小</span>
-            <span class="tab" @click="selectOperate('odd', fRule.row)" v-show="fRule.row.op.odd">奇</span>
-            <span class="tab" @click="selectOperate('even', fRule.row)" v-show="fRule.row.op.even">偶</span>
-            <span class="tab" @click="selectOperate('clear', fRule.row)" v-show="fRule.row.op.clear">清</span>
+            <span class="tab" @click="selectOperate('all', fRule.row)" v-if="fRule.row.op.all">全</span>
+            <span class="tab" @click="selectOperate('big', fRule.row)" v-if="fRule.row.op.big">大</span>
+            <span class="tab" @click="selectOperate('small', fRule.row)" v-if="fRule.row.op.small">小</span>
+            <span class="tab" @click="selectOperate('odd', fRule.row)" v-if="fRule.row.op.odd">奇</span>
+            <span class="tab" @click="selectOperate('even', fRule.row)" v-if="fRule.row.op.even">偶</span>
+            <span class="tab" @click="selectOperate('clear', fRule.row)" v-if="fRule.row.op.clear">清</span>
           </div>
         </div>
 
-        <div class="tab-toolbar tab-border tab-toolbar-sm mark6-quick-select" v-show="!_.isEmpty(fRule.row.htmlNeedInfo) && fRule.row.htmlNeedInfo.groupSelect">
+        <div class="tab-toolbar tab-border tab-toolbar-sm mark6-quick-select" v-if="!_.isEmpty(fRule.row.htmlNeedInfo) && fRule.row.htmlNeedInfo.groupSelect">
           <div class="tab-group">
             <div>
               <span class="js-bc-select-op tab" data-op="shu" data-opid="0">鼠</span>
@@ -153,10 +158,11 @@
       computedRuleList: function() {
         return _(this.playRule.list).map((RuleItem) => {
           let fItems
-          RuleItem.hasOp = _(RuleItem.op).some()
-          fItems = _(RuleItem.items).map(item => {
+          RuleItem.hasOp = _([RuleItem.op.all, RuleItem.op.big, RuleItem.op.small, RuleItem.op.odd, RuleItem.op.even, RuleItem.op.clear]).some()
+          fItems = _(RuleItem.items).map((item, index) => {
             return {
               num: item,
+              showNum: RuleItem.showItems[index],
               selected: false
             }
           });
@@ -473,8 +479,8 @@
         const cx = _.findWhere(row.limits, {name: 'conflict-x'});
         if (!num.selected && !_.isEmpty(cx)) {
           if (!cx.data.num || cx.data.num === 1) {
-            _.chain(row.fItems).flatten().each((item) => {
-              if (num !== item) {
+            _.each(row.fItems, (item) => {
+              if (num.num !== item.num) {
                 item.selected = false
               }
             })
@@ -494,9 +500,8 @@
         if (!num.selected && !_.isEmpty(cy)) {
           _.each(this.formattedRuleList, rule =>  {
             if (row !== rule.row) {
-              _.chain(rule.row.fItems).flatten().each(item => {
-                const num = _.isNumber(item.num) ? item.num : _.isNumber(item.num.number) ? item.num.number : item.num.name
-                if (num === num.num || num.num * 11 === num || num.num % 10 == num) {
+              _.each(rule.row.fItems, item => {
+                if (num.num === item.num) {
                   item.selected= false;
                 }
               })
@@ -532,6 +537,65 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import
+  "~base/styles/variable";
 
+  .bc-page-content {
+    min-height: 290px;
+    width: 100%;
+    display: none;
+    &.active {
+      display: block;
+    }
+    &.bc-page-content-center {
+      &.active {
+        display: table;
+      }
+      .bc-playArea-items {
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
+  }
+  .bc-playArea-items{
+    margin: 20px auto 20px auto;
+  }
+
+  .tab-default {
+    display: inline-block;
+  }
+
+  .bc-page-content-center {
+    text-align: center
+  }
+  .bc-page-content-center-2 {
+    padding-top: 55px;
+    min-height: 210px;
+    .tab-center-2 {
+      width: 700px;
+      margin: 0 auto
+    }
+  }
+
+  .num-split {
+    width: 0;
+    border-right: 1px dashed $def-gray-color;
+    margin: 0 8px;
+    height: 35px;
+    display: inline-block;
+    position: relative;
+    top: 6px;
+  }
+
+  .operate-clear {
+    margin-left: 15px;
+    font-size: 14px;
+    display: inline-block;
+    position: relative;
+    bottom: 4px;
+    :hover {
+      color: $new-main-deep-color;
+    }
+  }
 </style>
