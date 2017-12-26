@@ -45,6 +45,11 @@ const FeedBackView = Base.ItemView.extend({
       .done((res) => {
         if (res.result === 0) {
           self.formartFeedList(res.root)
+          if (_.isUndefined(self.pagination)) {
+            self.initPage(res.root.rowCount)
+          } else {
+            self.pagination.update(res.root.rowCount, data.pageIndex)
+          }
         } else {
           Global.ui.notification.show(res.msg === 'fail' ? '获取反馈信息列表失败！' : res.msg)
         }
@@ -113,7 +118,6 @@ const FeedBackView = Base.ItemView.extend({
   },
 
   formartFeedList(data) {
-    console.log(data)
     if (data) {
       let list = ''
       if (data.rowCount > 0) {
@@ -134,22 +138,23 @@ const FeedBackView = Base.ItemView.extend({
                   </div>`
         })
         this.$feedList.html(list)
-        this.initPage(data.rowCount)
       }
     }
   },
   initPage(count) {
     if (count) {
+      const self = this
       this.$feedPage.pagination({
         pageSize: 5,
-        onPaginationChange: this.changePage,
         totalSize: count,
+        onPaginationChange: (num) => {
+          self.getFeedList({ pageIndex: num })
+        },
       })
+      this.pagination = this.$feedPage.pagination('instance')
     }
   },
-  changePage(num) {
-    this.getFeedList({ pageIndex: num })
-  },
+
   setError(data) {
     const errorTpl = `<span class="text-hot"><span class="sfa sfa-error-icon vertical-sub m-right-sm"></span>${data}</span>`
     this.$feedError.html(errorTpl)

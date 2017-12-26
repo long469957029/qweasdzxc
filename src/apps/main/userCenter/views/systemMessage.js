@@ -13,7 +13,7 @@ const SystemMessageView = Base.ItemView.extend({
 
   getNoticeListXhr(data) {
     _(data).extend({
-      version: 1,
+      version: 2,
       pageSize: 10,
     })
     return Global.sync.ajax({
@@ -34,6 +34,7 @@ const SystemMessageView = Base.ItemView.extend({
     this.$page = this.$('.js-system-message-page')
     this.getNoticeList({ pageIndex: 0 })
   },
+
   getNoticeList(data) {
     const self = this
     this.getNoticeListXhr(data)
@@ -43,26 +44,31 @@ const SystemMessageView = Base.ItemView.extend({
       .done((res) => {
         if (res.result === 0) {
           self.formateNoticeList(res.root.noticeList)
-          self.initPage(res.root.rowCount)
+          if (_.isUndefined(self.pagination)) {
+            self.initPage(res.root.rowCount)
+          } else {
+            self.pagination.update(res.root.rowCount, data.pageIndex)
+          }
         }
       })
       .fail((res) => {
         Global.ui.notification.show(res.msg === 'fail' ? '获取系统消息失败！' : res.msg)
       })
   },
+
   formateNoticeList(data) {
     if (data) {
       const list = _(data).map((item) => {
-        return `<div class="system-message-list clearfix">
+        return `<div class="system-message-list js-system-message-list clearfix">
                   <div class="pull-left m-top-md m-left-md">
-                    <div class="message-title ${item.new ? 'new' : ''} ${!item.isRead ? 'unRead' : ''} unRead font-sm">${item.title}</div>
+                    <div class="message-title ${item.new ? 'new' : ''} ${Number(item.isRead) === 0 ? 'unRead' : ''} font-sm">${item.title}</div>
                     <div class="message-sub-title text-auxiliary">积分商城每日好券限量放送，每天不同时间段您到可以在商城中兑换到不同的优惠券惊喜</div>
                   </div>
                   <div class="pull-right m-right-md p-top-md">
                     <div class="message-date text-auxiliary font-sm inline-block m-right-md vertical-middle">[${_(item.time).toTime()}]</div>
-                    <a class="message-btn vertical-middle js-message-btn" data-noticeId="${item.noticeId}" data-read="${item.isRead ? '1' : '0'}" data-detail="0"></a>
+                    <a class="message-btn vertical-middle js-message-btn" data-noticeid="${item.noticeId}" data-read="${item.isRead}" data-detail="0"></a>
                   </div>
-                  <div class="message-info clearfix js-message-info js-message-info-${item.noticeId}"></div>
+                  <div class="message-info message-info-open clearfix js-message-info hidden js-message-info-${item.noticeId}"></div>
                 </div>`
       })
       this.$systemMessageMain.html(list.join(''))
@@ -70,16 +76,18 @@ const SystemMessageView = Base.ItemView.extend({
   },
   initPage(count) {
     if (count) {
+      const self = this
       this.$page.pagination({
         pageSize: 10,
-        onPaginationChange: this.changePage,
         totalSize: count,
+        onPaginationChange: (num) => {
+          self.getNoticeList({ pageIndex: num })
+        },
       })
+      this.pagination = this.$page.pagination('instance')
     }
   },
-  changePage(num) {
-    this.getNoticeList({ pageIndex: num })
-  },
+
   _setRead(idList) {
     // const self = this
     const model = Global.data.get('newsModel')
@@ -94,24 +102,27 @@ const SystemMessageView = Base.ItemView.extend({
   messageBtnHandler(e) {
     const self = this
     const $target = $(e.currentTarget)
-    const id = $target.data('noticeId')
-    const isRead = $target.data('read')
-    const hasGetDetail = $target.data('detail')
-    $target.toggleClass('active')
+    const id = Number($target.attr('data-noticeid'))
+    const isRead = Number($target.attr('data-read'))
+    const hasGetDetail = Number($target.attr('data-detail'))
     this.$('.js-message-info').addClass('hidden')
+    $target.toggleClass('active').parents('.js-system-message-list').siblings().removeClass('active')
+      .find('.js-message-btn')
+      .removeClass('active')
     if ($target.hasClass('active')) {
-      if (hasGetDetail) {
-        this.$(`.js-message-info-${id}`).removeClass('hidden')
+      if (hasGetDetail === 1) {
+        this.$(`.js-message-info-${id}`).removeClass('hidden').parents('.js-system-message-list').addClass('active')
       } else {
         // 获取详情  设置已读
         this.getNewDetailXhr({ noticeId: id })
           .done((res) => {
             if (res.result === 0) {
-              self.$(`.js-message-info-${id}`).html(res.root.context)
-              $target.attr('detail', 1)
+              self.$(`.js-message-info-${id}`).html(res.root.context).removeClass('hidden').parents('.js-system-message-list')
+                .addClass('active')
+              $target.attr('data-detail', 1)
               if (!isRead) {
                 if (self._setRead(id)) {
-                  $target.attr('read', 1)
+                  $target.attr('data-read', 1)
                 }
               }
             } else {
