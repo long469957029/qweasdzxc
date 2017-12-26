@@ -1,4 +1,3 @@
-import './index.scss'
 
 const TabView = Base.LayoutView.extend({
 
@@ -40,8 +39,6 @@ const TabView = Base.LayoutView.extend({
       tabs: this.tabs,
       triggerTab: this.triggerTab,
       append: this.append,
-      title: this.options.title,
-      titleDes: this.options.titleDes,
     })
 
     if (this.startOnLoading) {

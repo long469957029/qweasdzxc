@@ -569,11 +569,11 @@ $tables: (
 
 $portlets: (
   default: (
-    header-bg: $main-deep-color,
-    header-color: $font-color,
+    header-bg: $def-white-color,
+    header-color: $def-black-color,
     border-color: $main-deep-color,
-    body-bg: $new-light-color,
-    body-color: $new-black-color
+    body-bg: $def-white-color,
+    body-color: $def-white-color
   ),
   similar: (
     header-bg: $main-light-color,

@@ -13,18 +13,15 @@ const GameRecordView = require('fundCenter/gameRecord/index')
 const BetDetailView = require('fundCenter/gameRecord/betDetail')
 const ChaseDetailView = require('fundCenter/gameRecord/chaseDetail')
 
-const menuConfig = Global.ui.menu.get(['fc', 'uc'])
+const menuConfig = Global.ui.menu.get('uc')
 require('./misc/index.scss')
 
-const sidebar = Global.ui.menu.get(['fc', 'uc'])
+const sidebar = Global.ui.menu.get('uc')
 
 const FundCenterController = RouterController.extend({
 
   fundManage() {
     this.changeMainReginView(new FundManageView(), {
-      main: {
-        title: '资金管理',
-      },
       sidebar,
       activeMenu: 'fc/fm',
     })
@@ -33,6 +30,7 @@ const FundCenterController = RouterController.extend({
     this.changeMainReginView(new RechargeView(), {
       main: {
         title: '在线充值',
+        titleDes: '',
       },
       sidebar,
       // activeMenu: 'fc/fm'
@@ -62,7 +60,8 @@ const FundCenterController = RouterController.extend({
   accountDetails() {
     this.changeMainReginView(new AccountDetailsView({ triggerTab: 'jsFcMdCenter' }), {
       main: {
-        title: '账户明细',
+        title: '帐变明细',
+        titleDes: '帐变明细只保留30天数据。',
       },
       sidebar,
     })
@@ -89,6 +88,7 @@ const FundCenterController = RouterController.extend({
     this.changeMainReginView(new FundRecordsView(), {
       main: {
         title: '充提记录',
+        titleDes: '充提记录只保留30天数据。',
       },
       sidebar,
     })
@@ -96,8 +96,8 @@ const FundCenterController = RouterController.extend({
   ticketRecordDetail() {
     this.changeMainReginView(new GameRecordView({ triggerTab: 'jsGcGrTr' }), {
       main: {
-        icon: menuConfig.icon,
-        title: '游戏记录',
+        title: '投注记录',
+        titleDes: '投注记录只保留30天记录。',
       },
       sidebar: menuConfig,
     })

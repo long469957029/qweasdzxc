@@ -1,5 +1,7 @@
 <div class="sidebar">
-
+  <% if(showTeamEntry){ %>
+  <a href="#<%=(!isTeam ? 'ac/to' : 'fc/fm')%>" class="team-entry"><%=(!isTeam ? '团队中心' : '个人中心')%> &raquo;</a>
+  <%}%>
   <% if(showUserInfo){ %>
   <div class="sidebar-user-info clearfix">
     <div class="user-info-photo">
@@ -18,11 +20,11 @@
         <div class="safe-progress-bar"></div>
       </div>
       <span class="js-user-info-safe-level">低</span>
-      <a href="" class="js-user-info-safe-up text-inverse m-left-sm">提升&gt;</a>
+      <a href="#uc/pl" class="js-user-info-safe-up text-inverse m-left-sm">提升&gt;</a>
     </div>
   </div>
   <% }else{ %>
-  <div class="sidebar-title sfa-sidebar-<%=menus.icon %>-banner">
+  <div class="sidebar-title">
     <div class="sidebar-title-inner">
       <span class="sfa sfa-sidebar-dot"></span>
       <span class="sfa sfa-sidebar-<%=menus.icon %> block m-center"></span>
@@ -30,13 +32,13 @@
     </div>
   </div>
   <% } %>
-  <% _(menus).each((item) => { %>
+  <% _(menus.sub).each((item) => { %>
   <div class="sidebar-sub-title">
     <span class="sfa sfa-sidebar-<%=item.icon%> vertical-middle"></span>
     <%=item.name%>
   </div>
   <ul class="sidebar-list">
-    <% _(item.sub).each(function(menu) { %>
+    <% _(item.list).each(function(menu) { %>
     <% if (!menu.needAuth || menu.auth) { %>
     <li role="presentation" class="<% if (menu.isActive) { %>active<% } %>">
       <a class="router" href="#<%=menu.router %>">

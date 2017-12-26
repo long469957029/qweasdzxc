@@ -85,8 +85,6 @@ const TeamBettingRecordView = TabView.extend({
           options: { channelId: channelId.sport },
         },
       ],
-      title: '投注记录',
-      titleDes: '投注记录只保留30天记录。',
     })
   },
 })
