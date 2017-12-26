@@ -44,7 +44,7 @@ const MyMessageView = TabView.extend({
     } else {
       this.$unReadNotice.removeClass('hidden')
     }
-    this.$unReadNotice.text(`（<span class="text-$prominent-color">${unReadNotice}</span>）`)
+    this.$unReadNotice.html(`<span class="text-prominent">（${unReadNotice}）</span>`)
 
     if (unReadFeed === 0) {
       this.$unReadFeed.addClass('hidden')
@@ -52,7 +52,7 @@ const MyMessageView = TabView.extend({
       this.$unReadFeed.removeClass('hidden')
     }
 
-    this.$unReadFeed.text(`（<span class="text-$prominent-color">${unReadFeed}</span>）`)
+    this.$unReadFeed.html(`<span class="text-prominent">（${unReadFeed}）</span>`)
   },
 })
 
