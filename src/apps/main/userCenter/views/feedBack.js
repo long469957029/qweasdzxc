@@ -1,4 +1,3 @@
-
 const FeedBackView = Base.ItemView.extend({
 
   template: require('userCenter/templates/feedBack.html'),
