@@ -29,6 +29,13 @@
   border-radius: 20px;
   font-size: $font-sm;
 }
+@mixin selectDef{
+  width: 300px;
+  height: 40px;
+}
+@mixin boxShadowDef{
+  box-shadow: 0px 0px 8px rgba(0,0,0,.3);
+}
 //begin 1投追记录页查询栏样式
 .search-condition-table {
   margin-top: 5px;
@@ -410,7 +417,7 @@
       display: block;
       width: 40px;
       height: 40px;
-      background: url('./btn-card-add.png') no-repeat;
+      background: url('./images/btn-card-add.png') no-repeat;
       margin: 0 auto;
       margin-bottom: 15px;
     }
@@ -419,7 +426,7 @@
       color: $new-main-deep-color;
       box-shadow: 0px 0px 5px $def-gray-color;
       .add-icon{
-        background: url('./btn-card-add-hover.png') no-repeat;
+        background: url('./images/btn-card-add-hover.png') no-repeat;
         animation: flipInY 1s;
       }
     }
@@ -433,7 +440,7 @@
     .card-del{
       width: 14px;
       height: 14px;
-      background: url("./delete.png") no-repeat;
+      background: url("./images/delete.png") no-repeat;
       position: absolute;
       top: 10px;
       right: 10px;
@@ -442,7 +449,7 @@
     .card-lock{
       width: 19px;
       height: 23px ;
-      background: url("./lock.png") no-repeat;
+      background: url("./images/lock.png") no-repeat;
       position: absolute;
       top: 7px;
       right: 8px;
@@ -544,6 +551,9 @@
 .uc-cbCardBinding-container{
   width: 520px;
   margin: 0 auto;
+  &.uc-cbCardBinding-dialog{
+    width: 480px;
+  }
   .uc-cb-fundPwd{
     width: 286px;
     height: 28px !important;
@@ -563,8 +573,7 @@
     }
   }
   .select1 {
-    width: 298px;
-    height: 38px;
+    @include selectDef;
   }
   .select2 {
     width: auto;
@@ -711,7 +720,7 @@
     .safe-info-icon{
       width: 63px;
       height: 75px;
-      background: url('./safe-icon.png') no-repeat;
+      background: url('./images/safe-icon.png') no-repeat;
       margin: 30px 15px;
     }
     .safe-info-level{
@@ -758,6 +767,25 @@
       &:hover{
         border-color: $new-main-deep-color;
         box-shadow: 0px 0px 3px rgba(0,0,0,.3);
+        .setting-icon{
+          animation: flipInY 1s;
+        }
+      }
+      &.active{
+        border-color: $new-main-deep-color;
+        box-shadow: 0px 0px 3px rgba(0,0,0,.3);
+        .setting-btn{
+          background: $new-main-deep-color;
+          color: $def-white-color;
+          border-color: $def-white-color;
+        }
+      }
+      .setting-info-top{
+        height: 98px;
+        width: 100%;
+      }
+      .setting-info-bottom{
+        width: 100%;
       }
     }
     .setting-icon-bg{
@@ -773,19 +801,19 @@
         width: 100%;
         height: 100%;
         &.pwd-icon{
-          background: url("./pwd-icon.png") no-repeat center;
+          background: url("./images/pwd-icon.png") no-repeat center;
         }
         &.lock-icon{
-          background: url("./lock-icon.png") no-repeat center;
+          background: url("./images/lock-icon.png") no-repeat center;
         }
         &.wechat-icon{
-          background: url("./wechat-icon.png") no-repeat center;
+          background: url("./images/wechat-icon.png") no-repeat center;
         }
         &.phone-icon{
-          background: url("./phone-icon.png") no-repeat center;
+          background: url("./images/phone-icon.png") no-repeat center;
         }
         &.mail-icon{
-          background: url("./mail-icon.png") no-repeat center;
+          background: url("./images/mail-icon.png") no-repeat center;
         }
       }
     }
@@ -815,10 +843,249 @@
         border-color: $def-white-color;
       }
     }
+    .info-bottom-title{
+      width: 96%;
+      margin: 0 auto;
+      border-top: 1px solid $third-line-color;
+      padding: 20px 15px;
+      .title{
+        font-size: $font-sm;
+        color: $new-inverse-color;
+        padding-left: 10px;
+        position: relative;
+        &:before{
+          content: '';
+          width: 4px;
+          height: 20px;
+          background-color: $new-main-deep-color;
+          display: block;
+          position: absolute;
+          left: 0;
+        }
+      }
+      .close{
+        font-size:30px;
+      }
+    }
+  }
+  .uc-change-pwd-view{
+    width: 56%;
+    margin: 0 auto;
+    padding-top: 20px;
+  }
+  .uc-step-container{
+    .content{
+      height: 450px;
+    }
+  }
+  .uc-bind-main{
+    .uc-conde-reSend{
+      width: 91px;
+      height: 38px;
+      margin-left: 6px;
+      text-align: center;
+      color: $new-inverse-color;
+      background-color: #f9f9f9;
+      border: 1px solid $def-gray-color;
+      border-radius: 3px;
+      display: inline-block;
+      vertical-align: top;
+      line-height: 38px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .error-text{
+      padding-left: 120px;
+    }
+  }
+  .input1{
+    width: 286px;
+    height: 30px;
+  }
+  .input2{
+    width: 185px;
+    height: 30px;
+  }
+  .select1{
+    @include selectDef;
+  }
+  .control-label{
+    font-size:$font-sm;
+    color: $def-black-color;
+    padding-top: 10px;
+  }
+  .btn{
+    @include btnDef;
+  }
+  .input-disable{
+    background-color: $third-line-color;
+    color: $def-black-color;
   }
 }
 
 //账户安全  end
+
+//我的消息
+.system-message-main{
+  width: 920px;
+  margin: 0 auto;
+  .system-message-list{
+    width: 918px;
+    min-height: 77px;
+    .message-btn{
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-size:20px;
+      background: $new-main-deep-color url("./images/message-add-btn.png") center no-repeat;
+      color: $def-white-color;
+      transition: box-shadow .5s;
+      box-shadow: none;
+      display: inline-block;
+      cursor: pointer;
+      text-align: center;
+      &.active{
+        background: $def-white-color url("./images/message-div-btn.png") center no-repeat;
+        @include boxShadowDef;
+      }
+      &:hover{
+        @include boxShadowDef;
+      }
+    }
+    .message-info{
+      background-color: #f8f8f8;
+    }
+    &.active{
+      @include boxShadowDef;
+    }
+    .message-title{
+      position: relative;
+      color: $font-auxiliary-color;
+      &.new{
+        &:before{
+          content: '';
+          width: 8px;
+          height: 8px;
+          background-color: $prominent-color;
+          position: absolute;
+          left: -15px;
+          top: 6px;
+          border-radius: 50%;
+        }
+      }
+      &.unRead{
+        color: $def-black-color;
+      }
+    }
+  }
+}
+
+.feed-back-main{
+  width: 920px;
+  margin: 0 auto;
+  padding-top: 10px;
+  .feed-form-type{
+    width: 298px;
+    height: 38px;
+    vertical-align: top;
+    background-color: $def-white-color;
+  }
+  .feed-form-title{
+    width: 594px;
+    height: 28px;
+    background-color: $def-white-color;
+    vertical-align: top;
+  }
+  .feed-form-container{
+    width: 906px;
+    resize: vertical;
+    height: 166px;
+    background-color: $def-white-color;
+    max-height: 300px;
+    border-color: $third-line-color;
+    border-radius: $globalInputRadius;
+    padding: 6px;
+  }
+  .btn-from{
+    width: 200px;
+    height: 40px;
+  }
+  .feed-list{
+    width: 100%;
+    margin-top: 50px;
+    .list-title{
+      font-size: 16px;
+      color: $font-auxiliary-color;
+      padding-left: 50px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid $sec-line-color;
+      position: relative;
+      line-height: 30px;
+      &:before{
+        content: '';
+        width: 32px;
+        height: 29px;
+        background: url("./images/send-plant.png") no-repeat;
+        display: block;
+        position: absolute;
+        top:0;
+        left: 10px;
+      }
+    }
+    .list-info{
+       padding-top: 18px;
+       padding-bottom: 18px;
+      .title{
+        position: relative;
+        &:before{
+          content: '';
+          width: 5px;
+          height: 5px;
+          background-color: #dbdbdb;
+          border-radius: 50%;
+          display: block;
+          position: absolute;
+          left: 5px;
+          top: 7px;
+        }
+      }
+      .info-reply{
+        background-color: #fafafa;
+        margin-top: 15px;
+        padding: 15px;
+        &.new{
+          background-color: #fefaf2;
+          .title-info{
+            &:before{
+              background: url("./images/message-color.png") no-repeat;
+            }
+          }
+        }
+      }
+      .reply-title{
+        .title-info{
+          position: relative;
+          &:before{
+            content: '';
+            width: 22px;
+            height: 22px;
+            background: url("./images/message-bg.png") no-repeat;
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: 10px;
+          }
+        }
+      }
+    }
+    .no-feed-list{
+      width: 100px;
+      margin: 0 auto;
+      padding-top: 100px;
+    }
+  }
+}
+//我的消息 end
 
 @keyframes flipInY{
 

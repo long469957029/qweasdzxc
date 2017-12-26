@@ -1,0 +1,110 @@
+<div class="js-uc-stepContainer js-uc-updateSecurityQuestion uc-step-container ">
+  <!-- Step1 验证密保信息 -->
+  <h3>验证密保问题</h3>
+  <form action="javascript:void(0);" class="js-uc-step-from js-uc-verifySQForm form-horizontal ">
+    <div class="control-group">
+      <label class="control-label">问题一： </label>
+      <div class="controls">
+        <select id="jsASQuestion1" class="js-uc-question select1 required">
+          <option value="">请选择密保问题</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label"> 答案：</label>
+      <div class="controls">
+        <input id="jsASAsw1" type="text" class='js-uc-answerQuestion input1 required' placeholder="请输入密保问题"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">问题二： </label>
+      <div class="controls">
+        <select id="jsASQuestion2" class="js-uc-question select1 required">
+          <option value="">请选择密保问题</option>
+        </select></div>
+    </div>
+    <div class="control-group">
+      <label class="control-label"> 答案：</label>
+      <div class="controls">
+        <input type="text" id="jsASAsw2" class='js-uc-answerQuestion input1 required'  placeholder="请输入密保问题"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">问题三： </label>
+      <div class="controls">
+        <select id="jsASQuestion3" class="js-uc-question select1 required">
+          <option value="">请选择密保问题</option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label"> 答案：</label>
+      <div class="controls">
+        <input type="text" id="jsASAsw3" class='js-uc-answerQuestion input1 required' placeholder="请输入密保问题"/>
+      </div>
+    </div>
+    <div class="text-center m-bottom-md p-top-md">
+      <button type="button" class="js-uc-answerQuestion-submit btn" data-loading-text="验证中">提交</button>
+    </div>
+  </form>
+
+  <!-- Step2 录入新的密保问题 -->
+  <h3>输入新密保问题</h3>
+  <form action="javascript:void(0);" class="js-uc-step-from js-uc-inputSQForm form-horizontal">
+    <div class="uc-securityQuestion-step1-div">
+      <div class="control-group">
+        <label class="control-label">问题一：</label>
+        <div class="controls">
+          <select class="js-uc-questionSelect select1 required">
+            <option value="">请选择密保问题</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">答案：</label>
+        <div class="controls">
+          <input type="text" class="js-uc-answer input1 required" placeholder="请设置您的答案">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">问题二：</label>
+        <div class="controls">
+          <select class="js-uc-questionSelect select1 required">
+            <option value="">请选择密保问题</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">答案：</label>
+        <div class="controls">
+          <input type="text" class="js-uc-answer input1 required" placeholder="请设置您的答案">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">问题三：</label>
+        <div class="controls">
+          <select class="js-uc-questionSelect select1 required">
+            <option value="">请选择密保问题</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">答案：</label>
+        <div class="controls">
+          <input type="text" class="js-uc-answer input1 required" placeholder="请设置您的答案">
+        </div>
+      </div>
+    </div>
+    <div class="text-center m-bottom-md p-top-md">
+      <button type="button" class="js-uc-inputSecurityQuestion-submit btn">提交</button>
+    </div>
+  </form>
+  <!-- Step3 完成 -->
+  <h3>设置成功</h3>
+  <form class="js-uc-step-from  form-horizontal">
+    <div class="text-center m-top-md">
+      <span class="sfa sfa-checkmark-blue m-right-sm vertical-middle"></span>
+      <span class="text-black font-md">恭喜您！密保设置成功！</span>
+    </div>
+  </form>
+</div>

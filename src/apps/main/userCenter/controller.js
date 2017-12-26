@@ -1,5 +1,7 @@
 'use scrict'
 
+import MyMessageViewInfo from 'userCenter/views/myMessage'
+
 const RouterController = require('skeleton/controllers/router')
 
 const BettingRecordView = require('userCenter/views/bettingRecords')
@@ -116,6 +118,14 @@ const UserCenterController = RouterController.extend({
     this.changeMainReginView(new AccountSafeViewInfo(), {
       main: {
         title: '账户安全',
+      },
+      sidebar,
+    })
+  },
+  myMessage() {
+    this.changeMainReginView(new MyMessageViewInfo(), {
+      main: {
+        title: '我的消息',
       },
       sidebar,
     })

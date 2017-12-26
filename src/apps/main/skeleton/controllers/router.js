@@ -5,7 +5,7 @@ import './index.scss'
 
 const SideMenuMainView = Base.LayoutView.extend({
   className: 'clearfix',
-  template: '<div class="admin-container"><div class="js-gl-sidebar pull-left col-md-2"></div>' +
+  template: '<div class="admin-container clearfix"><div class="js-gl-sidebar pull-left col-md-2"></div>' +
   '<div class="js-gl-main pull-left col-md-10"></div></div>',
 })
 
