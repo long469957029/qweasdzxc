@@ -9,6 +9,7 @@ const FeedBackView = Base.ItemView.extend({
 
   events: {
     'click .js-feed-form-btn': 'checkFormHandler',
+    'click .js-open-more': 'openMoreHandler',
   },
   getFeedXhr(data) {
     _(data).extend({
@@ -133,7 +134,9 @@ const FeedBackView = Base.ItemView.extend({
                       <div class="title-info pull-left text-black p-left-lg">平台回复</div>
                       <div class="time pull-right text-auxiliary">${_(item.lastUpdateDate).toTime()}</div>
                     </div>
-                    <div class="reply-contant text-auxiliary p-left-lg">${item.reply}</div>
+                    <div class="reply-contant text-auxiliary p-left-lg">${item.reply.length > 133 ? `<div>
+                         ${item.reply.substring(0, 133)}...<a class="text-hot cursor-pointer js-open-more" data-id="${item.rid}">【展开更多】</a>
+                       </div><div class="js-more-info-${item.rid} hidden">${item.reply}</div>` : item.reply}</div>
                   </div>` : ''}
                   </div>`
         })
@@ -165,6 +168,12 @@ const FeedBackView = Base.ItemView.extend({
       return false
     }
     return true
+  },
+  openMoreHandler(e) {
+    const $target = $(e.currentTarget)
+    const id = $target.data('id')
+    $target.addClass('hidden')
+    this.$(`.js-more-info-${id}`).removeClass('hidden')
   },
 })
 
