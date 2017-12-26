@@ -124,6 +124,8 @@ gulp.task('server.webpack', () => {
     publicPath: devConfig.output.publicPath,
     hot: true,
     historyApiFallback: true,
+    inline:true,
+    progress:false,
     proxy,
     watchOptions: {
       aggregateTimeout: 300,

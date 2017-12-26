@@ -1,20 +1,28 @@
 export default {
   // 取得当期彩票信息
-  getTicketInfo (ticketId, then, fail) {
+  getTicketInfo ({ ticketId, type = 0, version = 1 }, then, fail) {
     return Global.sync.axios({
       url: '/ticket/ticketmod/ticketinfo.json',
-      data: { ticketId },
+      data: {
+        ticketId,
+        type,
+        version,
+      },
     })
       .then(then)
       .catch(fail)
   },
   // 取得彩票相关规则
-  getTicketRules(ticketId, then, fail) {
+  getTicketRules ({ ticketId, type = 1, version = 1 }, then, fail) {
     return Global.sync.axios({
       url: '/ticket/ticketmod/ticketplaylist.json',
       localCache: true,
       cacheName: `ticketList.${ticketId}`,
-      data: { ticketId },
+      data: {
+        ticketId,
+        type,
+        version,
+      },
     })
       .then(then)
       .catch(fail)

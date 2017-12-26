@@ -1,15 +1,24 @@
 <template>
   <div :class="'width-100 bc-play-main ' + wrapperClass">
     <betting-rules :initial-rules="playLevels"></betting-rules>
+
     <div class="bc-play-container clearfix">
       <div class="bc-play-left basic-inverse pull-left">
         <div class="bc-play-select-area clearfix">
-          <betting-advance-rules></betting-advance-rules>
+          <betting-advance-rules v-show="advanceShowMode === 'classic'" @modeChange="modeChange"></betting-advance-rules>
+
+          <div class="bc-advance-mode-single" v-show="advanceShowMode === 'single'">玩法说明：{{playInfo.playDes}}
+            <a class="advance-play-des" ref="winningExample">
+              <span class="sfa sfa-bc-light vertical-middle"></span>
+              中奖示例
+            </a>
+          </div>
+
           <div class="pull-right bc-advance-mode-main">
-            <div class="advance-bouns">
-              单注奖金：<span class="font-md text-prominent">{{bettingChoice.fBetBonus}}</span>元
+            <div :class="advanceShowMode === 'single' ? 'advance-bonus-single' : 'advance-bonus'">
+              单注奖金：<span class="text-prominent">{{bettingChoice.fBetBonus}}</span>元
             </div>
-            <a class="advance-play-des" ref="playExample">
+            <a class="advance-play-des font-md" ref="playExample" v-show="advanceShowMode === 'classic'">
               <span class="sfa sfa-bc-light vertical-middle"></span>
               玩法说明
             </a>
@@ -45,9 +54,9 @@
 
             <div class="inline-block m-left-smd">
               <span>共</span>
-              <span class="text-pleasant font-sm font-bold">{{bettingChoice.statistics}}</span>
+              <span class="text-pleasant font-sm">{{bettingChoice.statistics}}</span>
               <span>注，金额</span>
-              <span class="text-prominent font-sm font-bold">{{bettingChoice.fPrefabMoney}}</span>
+              <span class="text-prominent font-sm">{{bettingChoice.fPrefabMoney}}</span>
               <span>元</span>
             </div>
             <select name="" class="m-left-smd bc-vouchers-select">
@@ -72,17 +81,17 @@
             <div class="overflow-hidden font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
                 <span>
                   <span>预期盈利</span>
-                  <span class="text-prominent font-bold">{{bettingChoice.totalInfo.fTotalBetBonus}}</span>
+                  <span class="text-prominent">{{bettingChoice.totalInfo.fTotalBetBonus}}</span>
                   <span>元，</span>
                 </span>
               <span>
                   <span>总投注 【</span>
-                  <span class="text-pleasant font-bold">{{bettingChoice.totalInfo.totalLottery}}</span>
+                  <span class="text-pleasant">{{bettingChoice.totalInfo.totalLottery}}</span>
                   <span>】 注， </span>
                 </span>
               <span>
                   <span>总金额</span>
-                  <span class="text-prominent m-left-xs m-right-xs font-bold">{{bettingChoice.totalInfo.fTotalMoney}}</span>
+                  <span class="text-prominent m-left-xs m-right-xs">{{bettingChoice.totalInfo.fTotalMoney}}</span>
                   <span>元</span>
                 </span>
               <button class="js-bc-chase bc-chase btn-link inline-block cursor-pointer m-left-md relative" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
@@ -171,6 +180,7 @@
         loading: Global.ui.loader.get(),
         unit: 10000,
         playRule: {},
+        playInfo: {},
         //提交中，禁用按钮
         pushing: false,
 
@@ -193,7 +203,9 @@
           height: 110,
           emptyTip: '暂未添加选号',
         },
-        fPreviewList: []
+        fPreviewList: [],
+
+        advanceShowMode: 'classic', //classic | single
       }
     },
     computed: mapState({
@@ -213,7 +225,9 @@
 
           this.$store.commit(types.SET_CHECKOUT_CHOICE)
 
-          const playInfo = this.$store.getters.playInfo(newVal, this.bettingChoice.groupId);
+          this.playInfo = this.$store.getters.playInfo(newVal, this.bettingChoice.groupId);
+
+          const playInfo = this.playInfo
 
           this.$store.commit(types.SET_PLAY_INFO, playInfo)
 
@@ -221,11 +235,23 @@
           if ($(this.$refs.playExample).data('popover')) {
             $(this.$refs.playExample).popover('destroy')
           }
+          if ($(this.$refs.winningExample).data('popover')) {
+            $(this.$refs.winningExample).popover('destroy')
+          }
+
           $(this.$refs.playExample).popover({
             trigger: 'hover',
             container: this.$el,
             html: true,
             content: `<div><span class="font-bold">玩法说明：</span>${playInfo.playDes}</div><div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
+            placement: 'bottom',
+          })
+
+          $(this.$refs.winningExample).popover({
+            trigger: 'hover',
+            container: this.$el,
+            html: true,
+            content: `<div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
             placement: 'bottom',
           })
 
@@ -347,6 +373,11 @@
     },
 
     methods: {
+
+      modeChange(mode) {
+        this.advanceShowMode = mode
+      },
+
       autoAdd(times) {
         if (!this.bettingChoice.multiple) {
           Global.ui.notification.show('倍数为0，不能投注')
@@ -368,9 +399,9 @@
         }
 
         if (this.playRule.type === 'select') {
-          this.$_addSelectLottery({ buy: true })
+          this.$_addSelectLottery({ type: 'buy' })
         } else {
-          this.$_addInputLottery({ buy: true })
+          this.$_addInputLottery({ type: 'buy' })
         }
 
         //do save
@@ -683,10 +714,72 @@
   }
 </script>
 
-<style scoped>
-.bc-chase {
-  text-decoration: none;
-  font-size: 12px;
-  color: #666666;
-}
+<style lang="scss" scoped>
+  @import
+  "~base/styles/variable";
+
+  .bc-chase {
+    text-decoration: none;
+    font-size: 12px;
+    color: #666666;
+  }
+
+  .advance-play-des{
+    width: 86px;
+    height: 23px;
+    display: block;
+    border: 1px solid #f0f0f0;
+    border-radius: 15px;
+    line-height: 23px;
+    margin-right: 15px;
+    color: #8094A6;
+    float: right;
+    text-align: center;
+  }
+
+  .bc-advance-mode-single {
+    float: left;
+    color: $prominent-secondary-btn-color;
+    margin: 20px 0 0 20px;
+    .advance-play-des{
+      margin-left: 20px;
+
+    }
+  }
+
+  .advance-bonus{
+    margin-right: 40px;
+    margin-top: 20px;
+    float: right;
+  }
+  .advance-bonus-single{
+    margin-right: 40px;
+    margin-top: 20px;
+    float: right;
+  }
+
+  .bc-play-select-area {
+    min-height: 70px;
+
+    .bc-advance-rules {
+      color: #666666;
+      width: 80%;
+      .tab-toolbar {
+        &:last-of-type {
+          margin-bottom: 3px;
+        }
+      }
+    }
+
+    .tab-toolbar {
+      .tab-group {
+        margin-left: 100px;
+      }
+    }
+    .bc-advance-mode-main{
+      width: 20%;
+      font-size: $font-xs;
+      color: $inverse-color;
+    }
+  }
 </style>

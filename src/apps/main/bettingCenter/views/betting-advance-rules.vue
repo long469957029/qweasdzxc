@@ -12,8 +12,6 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-
   export default {
     name: "betting-advance-rules",
 
@@ -34,6 +32,7 @@
 
           ruleSelect(this, rules.playList[0], rules, 0)
           // this.$set(this.rulesList, 0, rules)
+          this.$emit('modeChange', _.chain(this.rulesList).pluck('playList').flatten().value().length === 1 ? 'single' : 'classic')
         }
       }
     },
@@ -56,6 +55,7 @@
       return
     }
 
+    //目前默认选中第一个玩法
     rulesList.forEach(function(rules) {
       rules.playList.forEach(function(rule) {
         rule.selected = false

@@ -59,9 +59,13 @@ const BettingCenterView = Base.ItemView.extend({
     })
 
     // 取得当前彩票信息
-    this.bettingCenter.$store.dispatch('getTicketInfo', this.options.ticketId)
+    this.bettingCenter.$store.dispatch('getTicketInfo', {
+      ticketId: this.options.ticketId,
+    })
     // 取得当前彩票规则
-    this.bettingCenter.$store.dispatch('getTicketRules', this.options.ticketId)
+    this.bettingCenter.$store.dispatch('getTicketRules', {
+      ticketId: this.options.ticketId,
+    })
   },
   onDestroy() {
     this.bettingCenter.$destroy()

@@ -312,7 +312,7 @@ const mutations = {
       }
 
       // 判断是否有相同的投注,几个方面比较playId,unit,betMethod,bettingNumber
-      if (!options.buy) {
+      if (options.type !== 'buy') {
         sameBet = _(state.previewList).findWhere({
           playId: item.playId,
           unit: item.unit,
@@ -343,7 +343,7 @@ const mutations = {
       }
     })
 
-    if (!options.buy) {
+    if (options.type !== 'buy') {
       state.previewList = items.concat(state.previewList)
     } else {
       state.buyList = items.concat(state.buyList)

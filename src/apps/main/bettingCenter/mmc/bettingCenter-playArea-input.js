@@ -4,9 +4,9 @@ const betRulesAlgorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
 const BettingCenterPlayAreaInputView = Base.ItemView.extend({
 
-  template: require('bettingCenter/templates/bettingCenter-playArea-input.html'),
+  template: require('./bettingCenter-playArea-input.html'),
 
-  positionTpl: _.template(require('bettingCenter/templates/bettingCenter-playArea-position.html')),
+  positionTpl: _.template(require('./bettingCenter-playArea-position.html')),
 
   events: {
     'change .js-bc-playArea-position-item': 'positionChooseHandler',

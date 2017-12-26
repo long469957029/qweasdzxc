@@ -21,7 +21,7 @@
             <div>号码</div>
           </div>
 
-          <!--六合-->
+          <!--六合 待重构-->
           <div class="tab-group <%= htmlNeedInfo.listClassName %>" v-show="!_.isEmpty(fRule.row.htmlNeedInfo)">
             <div :class="fRule.row.htmlNeedInfo.levelClassName">
               <div :class="fRule.row.htmlNeedInfo.playClassName">
@@ -36,6 +36,7 @@
             </div>
           </div>
 
+          <!--其他玩法-->
           <div class="tab-group" v-show="_.isEmpty(fRule.row.htmlNeedInfo)">
             <div v-for="n in fRule.row.totalPage">
               <span class="bc-select-item cbutton cbutton--effect-novak tab" @click="selectNumber(item, fRule.row)"
