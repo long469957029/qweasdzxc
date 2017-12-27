@@ -13,7 +13,7 @@ const ReportManageView = SearchGrid.extend({
   events: {
     'change .js-ac-pl-channelId-type': 'channelTypeChangeHandler',
   },
-  channelTypeChangeHandler(e) {
+  channelTypeChangeHandler() {
     const game = this.$('select[name="channelIdType"]').val()
     const channelId = game.substr(0, 1)
     const type = game.substr(1, 1)
@@ -84,6 +84,10 @@ const ReportManageView = SearchGrid.extend({
       ajaxOps: {
         url: '/info/gamereport/gametypeprofit.json',
       },
+      reqData: {
+        channelId: this.options.channelId,
+        type: this.options.type,
+      },
       subOps: {
         url: '/info/gamereport/gametypeprofitdetail.json',
         data: ['userId'],
@@ -138,7 +142,7 @@ const ReportManageView = SearchGrid.extend({
     })
 
     if (!_(gridData.parents).isEmpty()) {
-      this._breadList = _(gridData.parents).map((parent, index) => {
+      this._breadList = _(gridData.parents).map((parent) => {
         return {
           data: {
             userId: parent.userId,

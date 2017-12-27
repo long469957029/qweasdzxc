@@ -27,7 +27,7 @@
   .ac-llm-btn {
     margin-right: 4px;
   }
-  
+
   .table tbody tr td:last-child{
      text-align: left;
   }
@@ -93,7 +93,7 @@
         opacity: 1;
       }
     }
-  } 
+  }
 }
 
 .ac-expend-btn {
@@ -480,4 +480,14 @@
 
 .router.btn-link{
   padding: 4px 8px;
+}
+.ac-team-main{
+  .checkbox-label{
+    margin-top: 2px;
+  }
+  table{
+    th{
+      font-size: $font-xs;
+    }
+  }
 }

@@ -101,6 +101,7 @@ const ReportManageView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD',
       },
+      showIcon: true,
     }).render()
 
     new TicketSelectGroup({
@@ -132,7 +133,7 @@ const ReportManageView = SearchGrid.extend({
     })
 
     if (!_(gridData.parents).isEmpty()) {
-      this._breadList = _(gridData.parents).map((parent, index) => {
+      this._breadList = _(gridData.parents).map((parent) => {
         return {
           data: {
             userId: parent.userId,

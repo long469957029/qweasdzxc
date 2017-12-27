@@ -17,6 +17,7 @@
     left: 0;
     margin-bottom: 0;
     border: 1px solid;
+    border-radius: $globalInputRadius;
     &:after {
       opacity: 0;
       content: '';

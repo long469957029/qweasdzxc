@@ -1,31 +1,18 @@
 <div class="search-condition-table">
-  <div class="control-group row2">
-    <label class="m-left-sm">平台:</label>
-    <select name="channelIdType" class="js-ac-pl-channelId-type select1">
-      <!--<option value="">全部</option>-->
-      <option value="11">AG真人</option>
-      <option value="14">AG捕鱼</option>
-      <option value="21">EBET真人</option>
-      <option value="31">BBIN真人</option>
-      <option value="43">PT老虎机</option>
-      <option value="53">MG老虎机</option>
-      <option value="64">GG捕鱼</option>
-      <!--<option value="72">188体育</option>-->
-    </select>
-    <input type="hidden" name="channelId" class="js-ac-br-channelId" value="1">
-    <input type="hidden" name="type" class="js-ac-br-type"  value="1">
+  <div class="control-group m-TB-md row2">
     <label class="m-left-sm">用户名:</label>
     <input type="text" name="username" class="js-rm-userName input-sm" data-parsley-username=""/>
-    <!--<label class="inline-block hidden"><div class="custom-checkbox">-->
-    <!--&lt;!&ndash;<input type="checkbox" id="ac-pl-ga-subUser" name="subUser" value="1" class="js-subUser inbox-check" checked>&ndash;&gt;-->
-    <!--<label class="checkbox-label" for="ac-pl-ga-subUser"></label>-->
-    <!--</div></label>-->
-    <label class="m-left-sm">日期:</label>
+    <label>
+      <span class="custom-checkbox checkbox-inverse">
+        <input type="checkbox" id="js-no-data-game" class="js-no-data">
+        <label class="checkbox-label" for="js-no-data-game"></label>
+      </span>
+      略过无数据用户
+    </label>
+    <label class="m-left-md">查询日期:</label>
     <span class="js-ac-timeSel input-date-sm"></span>
-    <input type="text" class="hidden" name="subUser" placeholder="" value="1">
-    <input type="text" class="hidden" name="noCleanDate" value="true">
-    <button type="submit" class="js-ac-queryBtn btn ac-rm-btn ">搜索</button>
-    <button type="reset" class="btn btn-link btn-link-inverse">清空条件</button>
+    <button type="submit" class="js-ac-queryBtn btn ac-rm-btn ">查询</button>
+    <button type="reset" class="btn btn-link btn-link-inverse"><span class="sfa sfa-btn-icon-reset vertical-middle m-right-xs"></span>重置</button>
   </div>
 
 </div>

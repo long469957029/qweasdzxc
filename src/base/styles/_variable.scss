@@ -150,7 +150,7 @@ $bg-colors: (
   success: (bg: $bg-success, color: $bg-success-font-color),
   warning: (bg: $bg-warning, color: $bg-warning-font-color),
   danger: (bg: $bg-danger, color: $bg-danger-font-color),
-  bread: (bg: #f3d5d3, color: $new-black-color)
+  bread: (bg: #fdf6e9, color: $new-inverse-color)
 );
 
 
@@ -219,12 +219,12 @@ $inputs: (
   inverse: (
     color: $inverse-color,
     bg-color: transparent,
-    border-color: $inverse-border-color
+    border-color: $def-gray-color
   ),
   black: (
     color: $new-black-color,
     bg-color: transparent,
-    border-color: $new-inverse-color
+    border-color: $def-gray-color
   )
 );
 
@@ -243,10 +243,10 @@ $select: (
     bg-color: $def-white-color
   ),
   black: (
-    border-color: $new-inverse-color,
-    color: $new-black-color,
+    border-color: $def-gray-color,
+    color: $font-auxiliary-color,
     background: url(~base/images/select-caret-black.png) no-repeat scroll 97% center transparent,
-    bg-color: #f9f9f9
+    bg-color: $def-white-color
   ),
 );
 
@@ -297,7 +297,14 @@ $basics: (
     disabled: map_get($disabled, inverse),
     bg-color: $new-light-color,
     color: $new-inverse-color
-  )
+  ),
+  black: (
+    select: map_get($select, black),
+    input: map_get($inputs, black),
+    disabled: map_get($disabled, black),
+    bg-color: $def-white-color,
+    color: $def-black-color
+  ),
 );
 
 //checkbox
@@ -306,13 +313,13 @@ $checkboxes: (
     bg-color: $font-color,
     active-bg-color: $main-color,
     hook-color: $font-color,
-    border-color: #929092
+    border-color: #01a1aa
   ),
   inverse: (
     bg-color: $font-color,
     active-bg-color: $main-color,
     hook-color: $font-color,
-    border-color: #929092
+    border-color: #01a1aa
   ),
   deep: (
     bg-color: $main-light-color,

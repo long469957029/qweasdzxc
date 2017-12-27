@@ -165,6 +165,7 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlTr' }), {
       main: {
         title: '团队盈亏',
+        titleDes: '团队盈亏记录只保留近35天数据',
       },
       sidebar,
     })
@@ -173,6 +174,7 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlGr' }), {
       main: {
         title: '团队盈亏',
+        titleDes: '团队盈亏记录只保留近35天数据',
       },
       sidebar,
     })

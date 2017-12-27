@@ -377,11 +377,6 @@ const TeamOverviewView = Base.ItemView.extend({
         if (res && res.result === 0) {
           const ydata = res.root || []
           if (!_.isEmpty(ydata)) {
-            // _(ydata).each((item) => {
-            //   option.series[Number(item.id) - 1].data = _(item.data).map((info) => {
-            //     return _(info).convert2yuan()
-            //   })
-            // })
             _(option.series).each((item, index) => {
               option.series[index].data = _(_(ydata).findWhere({ id: item.id }).data).map((info) => {
                 return _(info).convert2yuan()
