@@ -116,7 +116,8 @@ const ReportManageView = SearchGrid.extend({
     new TicketSelectGroup({
       el: this.$('.js-ac-ticket-select'),
     })
-
+    this.$('.js-no-data').attr('id', `js-no-data-game-${this.options.channelId}${this.options.type}`)
+    this.$('.js-checkbox-label').attr('for', `js-no-data-game-${this.options.channelId}${this.options.type}`)
     // 初始化彩种
     SearchGrid.prototype.onRender.apply(this, arguments)
   },
@@ -176,8 +177,8 @@ const ReportManageView = SearchGrid.extend({
     if (this.hasSub() && rowInfo.username === this.getCurtSub().label || !rowInfo.hasSubUser) {
       row.push(rowInfo.username)
     } else {
-      row.push(`<a class="js-pf-sub btn-link" data-label="${rowInfo.username 
-      }" data-user-id="${rowInfo.userId}" href="javascript:void(0)">${ 
+      row.push(`<a class="js-pf-sub btn-link" data-label="${rowInfo.username
+      }" data-user-id="${rowInfo.userId}" href="javascript:void(0)">${
         rowInfo.username}</a>`)
     }
     row.push(_(rowInfo.recharge).convert2yuan({ fixed: 2, clear: false }))
