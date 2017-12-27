@@ -10,7 +10,7 @@ const TeamBettingRecordView = TabView.extend({
 
   events: {},
 
-  className: 'as-passwordManage',
+  className: 'ac-team-main basic-black',
 
   initialize() {
     _(this.options).extend({

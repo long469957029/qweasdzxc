@@ -11,20 +11,13 @@ const ReportManageView = SearchGrid.extend({
   template: require('./gameProfitAndLoss.html'),
 
   events: {
-    'change .js-ac-pl-channelId-type': 'channelTypeChangeHandler',
-  },
-  channelTypeChangeHandler() {
-    const game = this.$('select[name="channelIdType"]').val()
-    const channelId = game.substr(0, 1)
-    const type = game.substr(1, 1)
-    this.$('.js-ac-br-channelId').val(channelId)
-    this.$('.js-ac-br-type').val(type)
   },
 
   initialize () {
     _(this.options).extend({
       height: 380,
       title: '报表查询',
+      tableClass: 'table table-similar table-bordered table-center',
       columns: [
         {
           name: '用户名',

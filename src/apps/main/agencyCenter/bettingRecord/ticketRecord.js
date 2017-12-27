@@ -24,6 +24,7 @@ const teamBettingRecordView = SearchGrid.extend({
       footerClass: 'border-cool-top',
       height: 271,
       title: '团队投注记录',
+      tableClass: 'table table-similar table-bordered table-center',
       columns: [
         {
           name: '投注时间',
@@ -74,12 +75,14 @@ const teamBettingRecordView = SearchGrid.extend({
     })
   },
 
-  onRender(e) {
+  onRender() {
     // 初始化时间选择
     new Timeset({
       el: this.$('.js-pf-timeset'),
       startDefaultDate: _(moment().startOf('day')).toTime(),
       endDefaultDate: _(moment().endOf('day')).toTime(),
+      showIcon: true,
+      size: 'input-ml',
     }).render()
 
     this.$('select[name=betStatus]').html(_(betStatusConfig.get()).map((betStatus) => {
@@ -109,9 +112,9 @@ const teamBettingRecordView = SearchGrid.extend({
       initPagination: true,
     })
       .hideLoading()
-    _(gridData.betList).map((items, index) => {
+    _(gridData.betList).each((items, index) => {
       if ((items.betNum).length >= 16) {
-        if (index == 0 || index == 1) {
+        if (index === 0 || index === 1) {
           $('.js-uc-betDetail-betNum').eq(num).popover({
             title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
             trigger: 'click',
@@ -128,7 +131,7 @@ const teamBettingRecordView = SearchGrid.extend({
             placement: 'top',
           })
         }
-        num++
+        num += 1
       }
     })
 
@@ -148,12 +151,12 @@ const teamBettingRecordView = SearchGrid.extend({
     })
       .hideLoading()
   },
-  offbBetDetailHandler (e) {
+  offbBetDetailHandler () {
     $('.js-uc-betDetail-betNum').popover('hide')
   },
   formatRowData(rowInfo) {
     const row = []
-    row.push(`${'<a class="router btn-link" href="' + 'gc/tr/detail/'}${rowInfo.ticketTradeNo}">${_(rowInfo.betTime).toTime()}</a>`)
+    row.push(`${'<a class="router btn-link" href="gc/tr/detail/'}${rowInfo.ticketTradeNo}">${_(rowInfo.betTime).toTime()}</a>`)
     row.push(rowInfo.userName)
     row.push(rowInfo.ticketName)
     row.push(rowInfo.playName)

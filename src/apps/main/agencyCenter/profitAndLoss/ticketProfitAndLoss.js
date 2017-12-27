@@ -16,6 +16,7 @@ const ReportManageView = SearchGrid.extend({
     _(this.options).extend({
       height: 380,
       title: '报表查询',
+      tableClass: 'table table-similar table-bordered table-center',
       columns: [
         {
           name: '用户名',
