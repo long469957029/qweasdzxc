@@ -1,4 +1,4 @@
-<div class="ac-to-search-bar">
+<div class="ac-to-search-bar basic-inverse">
   <form class="js-ac-search-form form-inline row" action="javascript:void(0)">
     <span class="js-ac-btnGroup ac-to-btnGroup inline-block m-right-sm"></span>
     <span class="p-left-md"> 查询日期：</span><span class="js-ac-timeset inline-block"></span>
@@ -6,49 +6,182 @@
 </div>
 <div class="dot-divider-md"></div>
 <div class="ac-to-panel-bar">
-  <ul>
-    <li>
-      <div class="ac-to-li-title">团队人数</div>
-      <div class="ac-to-li-value  js-ac-to-co">-</div>
-    </li>
-    <li >
-      <div class="ac-to-li-title">团队余额</div>
-      <div class="ac-to-li-value  js-ac-to-ba">-</div>
-    </li>
-    <li >
-      <div class="ac-to-li-title">新增人数/活跃人数</div>
-      <div class="ac-to-li-value  js-ac-to-nu">-</div>
-    </li>
-    <li >
-      <div class="ac-to-li-title">充值</div>
-      <div class="ac-to-li-value  js-ac-to-re">-</div>
-    </li>
-    <li >
-      <div  class="ac-to-li-title">提现</div>
-      <div class="ac-to-li-value  js-ac-to-wi">-</div>
-    </li>
-    <li >
-      <div class="ac-to-li-title">投注</div>
-      <div class="ac-to-li-value  js-ac-to-be">-</div>
-    </li>
-    <li >
-      <div class="ac-to-li-title">派奖</div>
-      <div class="ac-to-li-value  js-ac-to-bo">-</div>
-    </li>
-    <li >
-      <div class="ac-to-li-title">返点&返水</div>
-      <div class="ac-to-li-value  js-ac-to-reb">-</div>
-    </li>
-    <li >
-      <div class="ac-to-li-title">活动</div>
-      <div class="ac-to-li-value  js-ac-to-ac">-</div>
-    </li>
-    <li >
-      <div class="ac-to-li-title">盈亏</div>
-      <div class="ac-to-li-value  js-ac-to-pr">-</div>
-    </li>
-  </ul>
-  <div class="ac-to-chart-title"><span class="sfa sfa-ac-to-stick"></span>最近15天数据动态</div>
+  <div class="m-top-lg">
+    <div class="p-left-lg font-md">人数统计</div>
+    <div class="m-top-md info-list">
+      <div class="info-contant clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-all-num vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">团队总人数</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-co">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-online-num vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">在线人数</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-online">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-active-num vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">活跃人数</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-active">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-new-num vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">新增人数</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-new">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-nologin-num vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">三十天未登录</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-noActive">100</span>元
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="m-top-lg">
+    <div class="p-left-lg font-md">盈亏统计</div>
+    <div class="m-top-md info-list">
+      <div class="info-contant clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-balance vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">余额</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-balance">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-rechage vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">充值</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-re">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-withdraw vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">提现</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-wi">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-bet vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">投注</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-be">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-award vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">派奖</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-bo">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant m-top-md clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-rebate vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">返点</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-reb">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant m-top-md clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-water vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">返水</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-water">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant m-top-md clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-commission vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">佣金</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-commission">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant m-top-md clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-activity vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">活动</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-ac">100</span>元
+          </div>
+        </div>
+      </div>
+      <div class="info-contant m-top-md clearfix">
+        <div class="sfa-icon">
+          <span class="sfa sfa-team-profit vertical-top"></span>
+        </div>
+        <div class="info-detail">
+          <div class="text-center font-sm">盈亏</div>
+          <div class="text-center text-prominent m-top-xs font-sm">
+            <span class="js-ac-to-pr">100</span>元
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ac-to-chart-title">最近15天数据动态</div>
   <div class="js-ac-to-chart ac-to-chart"></div>
 
 </div>
