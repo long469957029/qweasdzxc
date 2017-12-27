@@ -15,6 +15,7 @@
     "_": false,
     "lo": false,
     "R": false,
+    "types": false,
     "require": false,
     "exports": false,
     "module": false,

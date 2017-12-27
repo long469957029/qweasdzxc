@@ -1,6 +1,5 @@
-'use scrict'
+import factory from 'bettingCenter/misc/betRulesFactory'
 
-const factory = require('bettingCenter/misc/betRulesFactory')
 const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
 const six = ['1', '2', '3', '4', '5', '6']
@@ -59,7 +58,7 @@ function _create(ticketId) {
   //= =============================
   // 三同号通选
 
-  factory.addRule([ticketId, '180101'], {
+  factory.addRule([ticketId, '240151'], {
     algorithm: algorithm.addAll,
     list: factory.createList(['无'], {
       items: ['0'],
@@ -78,7 +77,7 @@ function _create(ticketId) {
   //= =============================
   // 三同号单选
 
-  factory.addRule([ticketId, '180102'], {
+  factory.addRule([ticketId, '250151'], {
     algorithm: algorithm.addAll,
     list: factory.createList(['无'], {
       items: trebleDanxuan,
@@ -143,7 +142,7 @@ function _create(ticketId) {
 
   //= =============================
   // 三连号通选
-  factory.addRule([ticketId, '200101'], {
+  factory.addRule([ticketId, '260151'], {
     algorithm: algorithm.addAll,
     list: factory.createList(['无'], {
       items: ['0'],
@@ -169,7 +168,7 @@ function _create(ticketId) {
   //= ============================
   // 二同号复选
 
-  factory.addRule([ticketId, '210101'], {
+  factory.addRule([ticketId, '270151'], {
     algorithm: algorithm.addAll,
     list: factory.createList(['无'], {
       items: doubleFuxuan,
@@ -183,7 +182,8 @@ function _create(ticketId) {
     },
   })
 
-  factory.addRule([ticketId, '210102'], {
+  // 二同号单选
+  factory.addRule([ticketId, '280151'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 1,

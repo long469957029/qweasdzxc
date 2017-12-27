@@ -1,4 +1,5 @@
-const factory = require('bettingCenter/misc/betRulesFactory')
+import factory from 'bettingCenter/misc/betRulesFactory'
+
 const ticketConfig = require('skeleton/misc/ticketConfig')
 
 const SscFactory = require('bettingCenter/misc/betRulesFactory-ssc')

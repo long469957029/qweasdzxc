@@ -1,6 +1,5 @@
+import factory from 'bettingCenter/misc/betRulesFactory'
 
-
-const factory = require('bettingCenter/misc/betRulesFactory')
 const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
 const danshuang = ['大', '小', '单', '双']
@@ -664,16 +663,16 @@ function _create(ticketId) {
 
   addTwoRules([
     {
-      ids: [ticketId, '060101'],
+      ids: [ticketId, '560151'],
       list: ['万位', '千位', null, null, null],
     },
-    { ids: [ticketId, '060102'] },
-    { ids: [ticketId, '060103'] },
-    { ids: [ticketId, '060104'] },
-    { ids: [ticketId, '060201'] },
-    { ids: [ticketId, '060202'] },
-    { ids: [ticketId, '060203'] },
-    { ids: [ticketId, '060204'] },
+    { ids: [ticketId, '560152'] },
+    { ids: [ticketId, '560153'] },
+    { ids: [ticketId, '560154'] },
+    { ids: [ticketId, '560251'] },
+    { ids: [ticketId, '560252'] },
+    { ids: [ticketId, '560253'] },
+    { ids: [ticketId, '560254'] },
   ])
 
   //= =================================================
@@ -681,16 +680,16 @@ function _create(ticketId) {
 
   addTwoRules([
     {
-      ids: [ticketId, '060105'],
+      ids: [ticketId, '570151'],
       list: [null, null, null, '十位', '个位'],
     },
-    { ids: [ticketId, '060106'] },
-    { ids: [ticketId, '060107'] },
-    { ids: [ticketId, '060108'] },
-    { ids: [ticketId, '060205'] },
-    { ids: [ticketId, '060206'] },
-    { ids: [ticketId, '060207'] },
-    { ids: [ticketId, '060208'] },
+    { ids: [ticketId, '570152'] },
+    { ids: [ticketId, '570153'] },
+    { ids: [ticketId, '570154'] },
+    { ids: [ticketId, '570251'] },
+    { ids: [ticketId, '570252'] },
+    { ids: [ticketId, '570253'] },
+    { ids: [ticketId, '570254'] },
   ])
 
   //= =================================================
@@ -708,7 +707,7 @@ function _create(ticketId) {
   // 任选二
 
   // 复式
-  factory.addRule([ticketId, '090101'], {
+  factory.addRule([ticketId, '590151'], {
     algorithm: algorithm.optionalDouble,
     algorithmProps: {
       coefficient: 2,
@@ -721,7 +720,7 @@ function _create(ticketId) {
   })
 
   // 单式
-  factory.addRule([ticketId, '090102'], {
+  factory.addRule([ticketId, '590152'], {
     type: 'input',
     validate: algorithm.getValidateFunc(2),
     optionals: algorithm.getOptionals(2),
@@ -733,7 +732,7 @@ function _create(ticketId) {
   })
 
   // 和值
-  factory.addRule([ticketId, '090103'], {
+  factory.addRule([ticketId, '590153'], {
     algorithm: algorithm.statistics,
     algorithmProps: {
       selectCount: 2,
@@ -749,7 +748,7 @@ function _create(ticketId) {
   })
 
   // 组选复式
-  factory.addRule([ticketId, '090201'], {
+  factory.addRule([ticketId, '590154'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -763,7 +762,7 @@ function _create(ticketId) {
   })
 
   // 组选单式
-  factory.addRule([ticketId, '090202'], {
+  factory.addRule([ticketId, '590155'], {
     type: 'input',
     validate: algorithm.getValidateFunc(2, {
       acceptRepeat: 0,
@@ -777,7 +776,7 @@ function _create(ticketId) {
   })
 
   // 组选和值
-  factory.addRule([ticketId, '090203'], {
+  factory.addRule([ticketId, '590156'], {
     algorithm: algorithm.fromConfig,
     algorithmProps: {
       config: [null, 1, 1, 2, 2, 3, 3, 4, 4, 5, 4, 4, 3, 3, 2, 2, 1, 1],
@@ -796,7 +795,7 @@ function _create(ticketId) {
   // 任选三
 
   // 复式
-  factory.addRule([ticketId, '100101'], {
+  factory.addRule([ticketId, '590251'], {
     algorithm: algorithm.optionalDouble,
     algorithmProps: {
       coefficient: 3,
@@ -809,7 +808,7 @@ function _create(ticketId) {
   })
 
   // 单式
-  factory.addRule([ticketId, '100102'], {
+  factory.addRule([ticketId, '590252'], {
     type: 'input',
     validate: algorithm.getValidateFunc(3),
     optionals: algorithm.getOptionals(3),
@@ -821,7 +820,7 @@ function _create(ticketId) {
   })
 
   // 直选和值
-  factory.addRule([ticketId, '100103'], {
+  factory.addRule([ticketId, '590253'], {
     algorithm: algorithm.statistics,
     algorithmProps: {
       selectCount: 3,
@@ -837,7 +836,7 @@ function _create(ticketId) {
   })
 
   // 组三
-  factory.addRule([ticketId, '100201'], {
+  factory.addRule([ticketId, '590254'], {
     algorithm: algorithm.factorial,
     algorithmProps: {
       mainRow: 0,
@@ -850,7 +849,7 @@ function _create(ticketId) {
     }),
   })
   // 组六
-  factory.addRule([ticketId, '100203'], {
+  factory.addRule([ticketId, '590255'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -864,7 +863,7 @@ function _create(ticketId) {
   })
 
   // 组选和值
-  factory.addRule([ticketId, '100206'], {
+  factory.addRule([ticketId, '590256'], {
     algorithm: algorithm.fromConfig,
     algorithmProps: {
       config: [null, 1, 2, 2, 4, 5, 6, 8, 10, 11, 13, 14, 14, 15, 15, 14, 14, 13, 11, 10, 8, 6, 5, 4, 2, 2, 1],
@@ -880,7 +879,7 @@ function _create(ticketId) {
   })
 
   // 混合组选
-  factory.addRule([ticketId, '100205'], {
+  factory.addRule([ticketId, '590257'], {
     type: 'input',
     validate: algorithm.getValidateFunc(3, {
       acceptRepeat: 1,
@@ -899,7 +898,7 @@ function _create(ticketId) {
   // 任选四
 
   // 复式
-  factory.addRule([ticketId, '110101'], {
+  factory.addRule([ticketId, '590351'], {
     algorithm: algorithm.optionalDouble,
     algorithmProps: {
       coefficient: 4,
@@ -912,7 +911,7 @@ function _create(ticketId) {
   })
 
   // 单式
-  factory.addRule([ticketId, '110102'], {
+  factory.addRule([ticketId, '590352'], {
     type: 'input',
     validate: algorithm.getValidateFunc(4),
     optionals: algorithm.getOptionals(4),
@@ -924,7 +923,7 @@ function _create(ticketId) {
   })
 
   // 组选24
-  factory.addRule([ticketId, '110201'], {
+  factory.addRule([ticketId, '590353'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -938,7 +937,7 @@ function _create(ticketId) {
   })
 
   // 组选12
-  factory.addRule([ticketId, '110202'], {
+  factory.addRule([ticketId, '590354'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 1,
@@ -952,7 +951,7 @@ function _create(ticketId) {
   })
 
   // 组选6
-  factory.addRule([ticketId, '110203'], {
+  factory.addRule([ticketId, '590355'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -966,7 +965,7 @@ function _create(ticketId) {
   })
 
   // 组选4
-  factory.addRule([ticketId, '110204'], {
+  factory.addRule([ticketId, '590356'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -982,7 +981,7 @@ function _create(ticketId) {
   //= =================================================
   // 趣味
   // 后二大小单双
-  factory.addRule([ticketId, '160201'], {
+  factory.addRule([ticketId, '670151'], {
     algorithm: algorithm.mulAll,
     list: factory.createList(['十位', '个位'], {
       items: danshuang,
@@ -997,7 +996,7 @@ function _create(ticketId) {
   })
 
   // 后三大小单双
-  factory.addRule([ticketId, '160202'], {
+  factory.addRule([ticketId, '670152'], {
     algorithm: algorithm.mulAll,
     list: factory.createList(['百位', '十位', '个位'], {
       items: danshuang,
@@ -1012,7 +1011,7 @@ function _create(ticketId) {
   })
 
   // 前二大小单双
-  factory.addRule([ticketId, '160203'], {
+  factory.addRule([ticketId, '670153'], {
     algorithm: algorithm.mulAll,
     list: factory.createList(['万位', '千位'], {
       items: danshuang,
@@ -1026,7 +1025,7 @@ function _create(ticketId) {
     }),
   })
   // 前三大小单双
-  factory.addRule([ticketId, '160204'], {
+  factory.addRule([ticketId, '670154'], {
     algorithm: algorithm.mulAll,
     list: factory.createList(['万位', '千位', '百位'], {
       items: danshuang,
@@ -1042,7 +1041,7 @@ function _create(ticketId) {
 
 
   // 一帆风顺
-  factory.addRule([ticketId, '160301'], {
+  factory.addRule([ticketId, '680151'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
@@ -1055,7 +1054,7 @@ function _create(ticketId) {
   })
 
   // 好事成双
-  factory.addRule([ticketId, '160302'], {
+  factory.addRule([ticketId, '680152'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
@@ -1068,7 +1067,7 @@ function _create(ticketId) {
   })
 
   // 三星报喜
-  factory.addRule([ticketId, '160303'], {
+  factory.addRule([ticketId, '680153'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
@@ -1081,7 +1080,7 @@ function _create(ticketId) {
   })
 
   // 四季发财
-  factory.addRule([ticketId, '160304'], {
+  factory.addRule([ticketId, '680154'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.group,
@@ -1094,7 +1093,7 @@ function _create(ticketId) {
   })
 
   // 龙虎和
-  factory.addRule([ticketId, '160101'], {
+  factory.addRule([ticketId, '660151'], {
     formType: 'DRAGON',
     keyPosition: ['万位', '千位', null, null, null],
     algorithm: algorithm.addAll,
@@ -1110,7 +1109,7 @@ function _create(ticketId) {
     }),
   })
 
-  factory.addRule([ticketId, '160102'], {
+  factory.addRule([ticketId, '660152'], {
     formType: 'DRAGON',
     keyPosition: ['万位', null, '百位', null, null],
     algorithm: algorithm.addAll,
@@ -1126,7 +1125,7 @@ function _create(ticketId) {
     }),
   })
 
-  factory.addRule([ticketId, '160103'], {
+  factory.addRule([ticketId, '660153'], {
     formType: 'DRAGON',
     keyPosition: ['万位', null, null, '十位', null],
     algorithm: algorithm.addAll,
@@ -1142,7 +1141,7 @@ function _create(ticketId) {
     }),
   })
 
-  factory.addRule([ticketId, '160104'], {
+  factory.addRule([ticketId, '660154'], {
     formType: 'DRAGON',
     keyPosition: ['万位', null, null, null, '个位'],
     algorithm: algorithm.addAll,
@@ -1158,7 +1157,7 @@ function _create(ticketId) {
     }),
   })
 
-  factory.addRule([ticketId, '160105'], {
+  factory.addRule([ticketId, '660155'], {
     formType: 'DRAGON',
     keyPosition: [null, '千位', '百位', null, null],
     algorithm: algorithm.addAll,
@@ -1174,7 +1173,7 @@ function _create(ticketId) {
     }),
   })
 
-  factory.addRule([ticketId, '160106'], {
+  factory.addRule([ticketId, '660156'], {
     formType: 'DRAGON',
     keyPosition: [null, '千位', null, '十位', null],
     algorithm: algorithm.addAll,
@@ -1190,7 +1189,7 @@ function _create(ticketId) {
     }),
   })
 
-  factory.addRule([ticketId, '160107'], {
+  factory.addRule([ticketId, '660157'], {
     formType: 'DRAGON',
     keyPosition: [null, '千位', null, null, '个位'],
     algorithm: algorithm.addAll,
@@ -1206,7 +1205,7 @@ function _create(ticketId) {
     }),
   })
 
-  factory.addRule([ticketId, '160108'], {
+  factory.addRule([ticketId, '660158'], {
     formType: 'DRAGON',
     keyPosition: [null, null, '百位', '十位', null],
     algorithm: algorithm.addAll,
@@ -1222,7 +1221,7 @@ function _create(ticketId) {
     }),
   })
 
-  factory.addRule([ticketId, '160109'], {
+  factory.addRule([ticketId, '660159'], {
     formType: 'DRAGON',
     keyPosition: [null, null, '百位', null, '个位'],
     algorithm: algorithm.addAll,
@@ -1238,7 +1237,7 @@ function _create(ticketId) {
     }),
   })
 
-  factory.addRule([ticketId, '160110'], {
+  factory.addRule([ticketId, '660160'], {
     formType: 'DRAGON',
     keyPosition: [null, null, null, '百位', '个位'],
     algorithm: algorithm.addAll,

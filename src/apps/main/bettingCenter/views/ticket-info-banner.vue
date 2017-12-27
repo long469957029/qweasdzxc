@@ -234,7 +234,7 @@
         clearInterval(nextTimer)
 
         timer = _.delay(() => {
-          this.$store.dispatch('getTicketInfo', this.bettingInfo.ticketId)
+          this.$store.dispatch('getTicketInfo', {ticketId: this.bettingInfo.ticketId})
 
           if (this.musicStatus) {
             const lastOpenIdNumCache = Global.cookieCache.get(`lastOpenId${this.bettingInfo.ticketId}`)
@@ -277,7 +277,7 @@
 
           // 取得下一期的信息延迟一秒再做
           nextTimer = _.delay(() => {
-            this.$store.dispatch('getTicketInfo', this.bettingInfo.ticketId)
+            this.$store.dispatch('getTicketInfo', {ticketId: this.bettingInfo.ticketId})
           }, _(leftSecond + 1).mul(1000))
         }
 
