@@ -160,7 +160,6 @@ function addHandicapRule(ids, {
   bettingArea = ['top', 'bottom'],
   topOp = 'all',
 }) {
-
   betRules.push({
     playId: Number(`${ids[0]}${ids[1]}`),
     rule: {
@@ -182,5 +181,5 @@ export default {
   addRule,
   createList,
   addHandicapRule,
-  createHandicapList
+  createHandicapList,
 }

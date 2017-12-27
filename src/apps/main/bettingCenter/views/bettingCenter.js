@@ -38,7 +38,7 @@ const BettingCenterView = Base.ItemView.extend({
         BettingQuickNav,
         TicketInfoBanner,
         BettingMainArea,
-        BettingMainAreaHandicap
+        BettingMainAreaHandicap,
       },
       store,
       data: {

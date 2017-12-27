@@ -1,5 +1,5 @@
 import factory from 'bettingCenter/misc/betRulesFactory'
-import {chunk} from 'lodash'
+import { chunk } from 'lodash'
 
 const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
@@ -10,24 +10,24 @@ const greenList = ['05', '06', '11', '16', '17', '21', '22', '27', '28', '32', '
 let fortyNine = _.range(1, 50)
 
 fortyNine = _.map(fortyNine, (num) => {
-  num = num < 10 ? '0' + num : '' + num
+  num = num < 10 ? `0${num}` : `${num}`
   if (_.indexOf(redList, num) > -1) {
     return {
-      num: num,
-      showNum: num,
-      style: 'red circle'
+      num,
+      title: num,
+      style: 'red circle',
     }
   } else if (_.indexOf(blueList, num) > -1) {
     return {
-      num: num,
-      showNum: num,
-      style: 'blue circle'
+      num,
+      title: num,
+      style: 'blue circle',
     }
   } else if (_.indexOf(greenList, num) > -1) {
     return {
-      num: num,
-      showNum: num,
-      style: 'green circle'
+      num,
+      title: num,
+      style: 'green circle',
     }
   }
 })
@@ -43,7 +43,7 @@ const shuangMian = [
       title: '特小',
       num: '101',
       showOdds: true,
-    }
+    },
   ],
   [
     {
@@ -55,7 +55,7 @@ const shuangMian = [
       title: '特双',
       num: '105',
       showOdds: true,
-    }
+    },
   ],
   [
     {
@@ -67,7 +67,7 @@ const shuangMian = [
       title: '和小',
       num: '103',
       showOdds: true,
-    }
+    },
   ],
   [
     {
@@ -79,7 +79,7 @@ const shuangMian = [
       title: '和双',
       num: '107',
       showOdds: true,
-    }
+    },
   ],
   [
     {
@@ -91,8 +91,8 @@ const shuangMian = [
       title: '尾小',
       num: '111',
       showOdds: true,
-    }
-  ]
+    },
+  ],
 ]
 
 const teMaWeiShu = [
@@ -106,7 +106,7 @@ const teMaWeiShu = [
       title: '尾5',
       num: '210',
       showOdds: true,
-    }
+    },
   ],
   [
     {
@@ -118,7 +118,7 @@ const teMaWeiShu = [
       title: '尾6',
       num: '211',
       showOdds: true,
-    }
+    },
   ],
   [
     {
@@ -130,7 +130,7 @@ const teMaWeiShu = [
       title: '尾7',
       num: '212',
       showOdds: true,
-    }
+    },
   ],
   [
     {
@@ -142,7 +142,7 @@ const teMaWeiShu = [
       title: '尾8',
       num: '213',
       showOdds: true,
-    }
+    },
   ],
   [
     {
@@ -154,166 +154,166 @@ const teMaWeiShu = [
       title: '尾9',
       num: '214',
       showOdds: true,
-    }
-  ]
+    },
+  ],
 ]
 
 const teXiao = [
   [
     {
       title: '鼠',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['10', '22', '34', '46'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['10', '22', '34', '46'], numInfo.num) }),
       showOdds: true,
-      num: '0'
+      num: '0',
     },
     {
       title: '牛',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['09', '21', '33', '45'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['09', '21', '33', '45'], numInfo.num) }),
       showOdds: true,
-      num: '1'
+      num: '1',
     },
     {
       title: '虎',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['08', '20', '32', '44'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['08', '20', '32', '44'], numInfo.num) }),
       showOdds: true,
-      num: '2'
+      num: '2',
     },
     {
       title: '兔',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['07', '19', '31', '43'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['07', '19', '31', '43'], numInfo.num) }),
       showOdds: true,
-      num: '3'
+      num: '3',
     },
     {
       title: '龙',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['06', '18', '30', '42'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['06', '18', '30', '42'], numInfo.num) }),
       showOdds: true,
-      num: '4'
+      num: '4',
     },
     {
       title: '蛇',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['05', '17', '29', '41'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['05', '17', '29', '41'], numInfo.num) }),
       showOdds: true,
-      num: '5'
+      num: '5',
     },
   ],
   [
     {
       title: '马',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['04', '16', '28', '40'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['04', '16', '28', '40'], numInfo.num) }),
       showOdds: true,
-      num: '6'
+      num: '6',
     },
     {
       title: '牛',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['03', '15', '27', '39'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['03', '15', '27', '39'], numInfo.num) }),
       showOdds: true,
-      num: '7'
+      num: '7',
     },
     {
       title: '猴',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['02', '14', '26', '38'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['02', '14', '26', '38'], numInfo.num) }),
       showOdds: true,
-      num: '8'
+      num: '8',
     },
     {
       title: '鸡',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['01', '13', '25', '37', '49'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['01', '13', '25', '37', '49'], numInfo.num) }),
       showOdds: true,
-      num: '9'
+      num: '9',
     },
     {
       title: '狗',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['12', '24', '36', '48'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['12', '24', '36', '48'], numInfo.num) }),
       showOdds: true,
-      num: '10'
+      num: '10',
     },
     {
       title: '猪',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['11', '23', '35', '47'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['11', '23', '35', '47'], numInfo.num) }),
       showOdds: true,
-      num: '11'
+      num: '11',
     },
-  ]
+  ],
 ]
 
 const yiXiao = [
   [
     {
       title: '鼠',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['10', '22', '34', '46'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['10', '22', '34', '46'], numInfo.num) }),
       showOdds: true,
-      num: '100'
+      num: '100',
     },
     {
       title: '牛',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['09', '21', '33', '45'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['09', '21', '33', '45'], numInfo.num) }),
       showOdds: true,
-      num: '101'
+      num: '101',
     },
     {
       title: '虎',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['08', '20', '32', '44'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['08', '20', '32', '44'], numInfo.num) }),
       showOdds: true,
-      num: '102'
+      num: '102',
     },
     {
       title: '兔',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['07', '19', '31', '43'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['07', '19', '31', '43'], numInfo.num) }),
       showOdds: true,
-      num: '103'
+      num: '103',
     },
     {
       title: '龙',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['06', '18', '30', '42'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['06', '18', '30', '42'], numInfo.num) }),
       showOdds: true,
-      num: '104'
+      num: '104',
     },
     {
       title: '蛇',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['05', '17', '29', '41'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['05', '17', '29', '41'], numInfo.num) }),
       showOdds: true,
-      num: '105'
+      num: '105',
     },
   ],
   [
     {
       title: '马',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['04', '16', '28', '40'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['04', '16', '28', '40'], numInfo.num) }),
       showOdds: true,
-      num: '106'
+      num: '106',
     },
     {
       title: '牛',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['03', '15', '27', '39'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['03', '15', '27', '39'], numInfo.num) }),
       showOdds: true,
-      num: '107'
+      num: '107',
     },
     {
       title: '猴',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['02', '14', '26', '38'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['02', '14', '26', '38'], numInfo.num) }),
       showOdds: true,
-      num: '108'
+      num: '108',
     },
     {
       title: '鸡',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['01', '13', '25', '37', '49'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['01', '13', '25', '37', '49'], numInfo.num) }),
       showOdds: true,
-      num: '109'
+      num: '109',
     },
     {
       title: '狗',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['12', '24', '36', '48'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['12', '24', '36', '48'], numInfo.num) }),
       showOdds: true,
-      num: '110'
+      num: '110',
     },
     {
       title: '猪',
-      row: _.filter(fortyNine, (numInfo) => _.indexOf(['11', '23', '35', '47'], numInfo.num)),
+      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['11', '23', '35', '47'], numInfo.num) }),
       showOdds: true,
-      num: '111'
+      num: '111',
     },
-  ]
+  ],
 ]
 
 const zongHe = [
@@ -322,57 +322,57 @@ const zongHe = [
       title: '大',
       num: '0',
       showOdds: true,
-      showMoneyInput: false
+      showMoneyInput: false,
     },
     {
       title: '小',
       num: '1',
       showOdds: true,
-      showMoneyInput: false
-    }
+      showMoneyInput: false,
+    },
   ],
   [
     {
       title: '单',
       num: '2',
       showOdds: true,
-      showMoneyInput: false
+      showMoneyInput: false,
     },
     {
       title: '双',
       num: '3',
       showOdds: true,
-      showMoneyInput: false
-    }
+      showMoneyInput: false,
+    },
   ],
   [
     {
       title: '大单',
       num: '4',
       showOdds: true,
-      showMoneyInput: false
+      showMoneyInput: false,
     },
     {
       title: '大双',
       num: '5',
       showOdds: true,
-      showMoneyInput: false
-    }
+      showMoneyInput: false,
+    },
   ],
   [
     {
       title: '小单',
       num: '6',
       showOdds: true,
-      showMoneyInput: false
+      showMoneyInput: false,
     },
     {
       title: '小双',
       num: '7',
       showOdds: true,
-      showMoneyInput: false
-    }
-  ]
+      showMoneyInput: false,
+    },
+  ],
 ]
 
 function _create(ticketId) {
@@ -401,7 +401,7 @@ function _create(ticketId) {
     bettingArea: ['top', 'bottom'],
   })
 
-  //生肖
+  // 生肖
   factory.addHandicapRule([ticketId, '220101'], {
     list: factory.createHandicapList([
       {
@@ -420,9 +420,9 @@ function _create(ticketId) {
     bettingArea: ['top', 'bottom'],
   })
 
-  //不中
+  // 不中
 
-  //五不中
+  // 五不中
   factory.addRule([ticketId, '230101'], {
     algorithm: algorithm.group,
     algorithmProps: {
@@ -430,18 +430,17 @@ function _create(ticketId) {
       cTimes: 5,
     },
     list: factory.createHandicapList([
-        {
-          title: '五不中',
-          items: fortyNine,
-          showOdds: true,
-          operate: 'none',
-        },
-      ]
-    ),
+      {
+        title: '五不中',
+        items: fortyNine,
+        showOdds: true,
+        operate: 'none',
+      },
+    ]),
     bettingArea: ['bottom'],
   })
 
-  //六不中
+  // 六不中
   factory.addRule([ticketId, '230102'], {
     algorithm: algorithm.group,
     algorithmProps: {
@@ -449,18 +448,17 @@ function _create(ticketId) {
       cTimes: 6,
     },
     list: factory.createHandicapList([
-        {
-          title: '六不中',
-          items: fortyNine,
-          showOdds: true,
-          operate: 'none',
-        },
-      ]
-    ),
+      {
+        title: '六不中',
+        items: fortyNine,
+        showOdds: true,
+        operate: 'none',
+      },
+    ]),
     bettingArea: ['bottom'],
   })
 
-  //七不中
+  // 七不中
   factory.addRule([ticketId, '230103'], {
     algorithm: algorithm.group,
     algorithmProps: {
@@ -468,18 +466,17 @@ function _create(ticketId) {
       cTimes: 7,
     },
     list: factory.createHandicapList([
-        {
-          title: '七不中',
-          items: fortyNine,
-          showOdds: true,
-          operate: 'none',
-        },
-      ]
-    ),
+      {
+        title: '七不中',
+        items: fortyNine,
+        showOdds: true,
+        operate: 'none',
+      },
+    ]),
     bettingArea: ['bottom'],
   })
 
-  //八不中
+  // 八不中
   factory.addRule([ticketId, '230104'], {
     algorithm: algorithm.group,
     algorithmProps: {
@@ -487,18 +484,17 @@ function _create(ticketId) {
       cTimes: 8,
     },
     list: factory.createHandicapList([
-        {
-          title: '八不中',
-          items: fortyNine,
-          showOdds: true,
-          operate: 'none',
-        },
-      ]
-    ),
+      {
+        title: '八不中',
+        items: fortyNine,
+        showOdds: true,
+        operate: 'none',
+      },
+    ]),
     bettingArea: ['bottom'],
   })
 
-  //九不中
+  // 九不中
   factory.addRule([ticketId, '230105'], {
     algorithm: algorithm.group,
     algorithmProps: {
@@ -506,18 +502,17 @@ function _create(ticketId) {
       cTimes: 9,
     },
     list: factory.createHandicapList([
-        {
-          title: '九不中',
-          items: fortyNine,
-          showOdds: true,
-          operate: 'none',
-        },
-      ]
-    ),
+      {
+        title: '九不中',
+        items: fortyNine,
+        showOdds: true,
+        operate: 'none',
+      },
+    ]),
     bettingArea: ['bottom'],
   })
 
-  //十不中
+  // 十不中
   factory.addRule([ticketId, '230106'], {
     algorithm: algorithm.group,
     algorithmProps: {
@@ -525,14 +520,13 @@ function _create(ticketId) {
       cTimes: 10,
     },
     list: factory.createHandicapList([
-        {
-          title: '十不中',
-          items: fortyNine,
-          showOdds: true,
-          operate: 'none',
-        },
-      ]
-    ),
+      {
+        title: '十不中',
+        items: fortyNine,
+        showOdds: true,
+        operate: 'none',
+      },
+    ]),
     bettingArea: ['bottom'],
   })
 
@@ -546,7 +540,7 @@ function _create(ticketId) {
         showOdds: false,
         operate: 'none',
       },
-    ])
+    ]),
   })
 }
 

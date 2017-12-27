@@ -1,19 +1,22 @@
 <template>
   <div>
     <div class="bc-page-content active" v-for="n in totalPage" v-show="n === 1">
-      <div class="bc-playArea-items clearfix" v-for="(fRule) in formattedRuleList">
-
-        <div class="tab-toolbar">
-
-          <div class="tab-group <%= htmlNeedInfo.listClassName %>">
-            <div v-for="items in fRule.row.fItems">
-                  <span class="bc-select-item cbutton cbutton--effect-novak tab" :class="fRule.limit" v-for="item in items" @click="selectNumber(item, fRule.row)">
-                    <span class="">{{item.showNum}}</span>
-                    <span>X</span>
-                    <span class="mark6-odds"></span>
-                  </span>
+      <div class="handicap-grid" v-for="rule in formattedRuleList">
+        <div class="title">
+          <div class="main">{{rule.title}}</div>
+          <div class="side"></div>
+        </div>
+        <div class="body">
+          <div class="main">
+            <div class="main-row" v-for="row in rule.items">
+              <span class="main-item" v-for="item in row">
+                <span :class="item.style">{{item.title}}</span>
+              </span>
             </div>
           </div>
+          <div class="side"></div>
+        </div>
+      </div>
           <!--<div class="tab-toolbar tab-border tab-toolbar-sm mark6-quick-select">-->
             <!--<div class="tab-group">-->
               <!--<div>-->
@@ -409,4 +412,58 @@
 <style lang="scss" scoped>
   @import
   "~base/styles/variable";
+
+  .handicap-grid {
+    margin-bottom: 18px;
+    .title {
+      background: $sec-line-color;
+      text-align: center;
+      line-height: 38px;
+      font-size: 14px;
+      border: 1px solid $def-gray-color;
+    }
+    .body {
+      .main {
+        display: flex;
+        border: 1px solid $def-gray-color;
+        border-top: none;
+        border-left: none;
+      }
+      .main-row {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        position: relative;
+        top: 1px;
+      }
+      .main-item {
+        padding: 9px 10px;
+        min-width: 100px;
+        display: inline-block;
+        border: 1px solid $def-gray-color;
+        margin-right: -1px;
+        border-top: none;
+        font-size: 14px;
+      }
+      .red {
+        background-color: $red;
+      }
+      .green {
+        background-color: $green;
+      }
+      .blue {
+        background-color: $blue;
+      }
+      .circle {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        border-radius: 50%;
+        text-align: center;
+        color: $def-white-color;
+        font-size: 12px;
+      }
+    }
+  }
 </style>

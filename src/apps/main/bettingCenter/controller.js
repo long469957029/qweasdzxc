@@ -16,12 +16,12 @@ const BettingCenterController = RouterController.extend({
     if (Number(ticketId) === 19) {
       this.changeMainReginView(new MMCBettingCenterView({
         ticketId: Number(ticketId),
-        type
+        type,
       }))
     } else {
       this.changeMainReginView(new BettingCenterView({
         ticketId: Number(ticketId),
-        type
+        type,
       }))
     }
   },
