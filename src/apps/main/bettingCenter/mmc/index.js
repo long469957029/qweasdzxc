@@ -18,7 +18,7 @@ const BettingCenterView = Base.ItemView.extend({
 
   template: require('bettingCenter/mmc/index.html'),
 
-  playLevelTpl: _.template(require('bettingCenter/templates/bettingCenter-level-mmc.html')),
+  playLevelTpl: _.template(require('./bettingCenter-level-mmc.html')),
   rulesTpl: _.template(require('./bettingCenter-rules.html')),
 
   events: {

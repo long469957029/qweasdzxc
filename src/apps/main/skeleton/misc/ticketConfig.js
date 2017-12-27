@@ -312,6 +312,10 @@ module.exports = {
     return quickConfig
   },
 
+  getMark6List() {
+    return mark6Config
+  },
+
   getHappyList() {
     return happyConfig.list
   },
@@ -366,10 +370,6 @@ module.exports = {
         ],
       },
     }
-  },
-  getMark6List() {
-    // 彩种id被移除出六合彩系列，导致页面无法获取玩法，
-    return mark6Config.concat(this.getById(35))
   },
   getById(id) {
     return _(allConfig).find((item) => {

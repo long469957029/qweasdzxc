@@ -12,25 +12,19 @@ const MMCBettingCenterView = require('bettingCenter/mmc')
 
 const BettingCenterController = RouterController.extend({
 
-  bettingCenter(ticketId) {
+  bettingCenter(ticketId, type = 0) {
     if (Number(ticketId) === 19) {
       this.changeMainReginView(new MMCBettingCenterView({
         ticketId: Number(ticketId),
+        type
       }))
     } else {
       this.changeMainReginView(new BettingCenterView({
         ticketId: Number(ticketId),
+        type
       }))
-      this.resizeFooter()
     }
   },
-
-  // bettingCenter: function(ticketId) {
-  //  this.changeMainReginView(new BettingCenterView({
-  //    ticketId: Number(ticketId)
-  //  }));
-  //
-  // },
 
   bettingDetail(ticketId, tradeNo) {
     this.changeMainReginView(new BettingDetailView({
@@ -43,15 +37,6 @@ const BettingCenterController = RouterController.extend({
       sidebar: Global.ui.menu.get('uc'),
       parentRouter: `bc/${ticketId}`,
     })
-  },
-  // 刷新页面时，六合彩选号区内容过长，footer调整
-  resizeFooter () {
-    // const playArea = $('.js-bc-play-area')[0]
-    // if (playArea.scrollHeight > 290) {
-    //   $('#footer').addClass('mark6-footer')
-    // } else {
-    //   $('#footer').removeClass('mark6-footer')
-    // }
   },
 })
 

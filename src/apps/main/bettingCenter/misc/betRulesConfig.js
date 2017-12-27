@@ -9,7 +9,9 @@ const P5P3Factory = require('bettingCenter/misc/betRulesFactory-p5p3')
 
 const BjPKFactory = require('bettingCenter/misc/betRulesFactory-bjpk')
 const Quick3Factory = require('bettingCenter/misc/betRulesFactory-quick3')
-const Mark6Factory = require('bettingCenter/misc/betRulesFactory-mark6')
+
+//盘口
+const Mark6Factory = require('bettingCenter/misc/betRulesFactory-handicap-mark6')
 
 const sscList = ticketConfig.getSccList()
 _(sscList).each((ssc) => {

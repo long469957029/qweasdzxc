@@ -125,8 +125,62 @@ function createList(titles, options) {
   })
 }
 
+function createHandicapList(titles, options) {
+  options = _(options || {}).defaults({
+    operate: 'all',
+  })
+
+  return _(titles).map((title) => {
+    if (_.isObject(title)) {
+      return {
+        title: title.title,
+        items: title.items || options.items,
+        showOdds: title.showOdds,
+        op: op[title.operate || options.operate],
+      }
+    }
+    return {
+      title,
+      items: options.items,
+      op: op[options.operate],
+    }
+  })
+}
+
+function addHandicapRule(ids, {
+  list = [],
+  // 投注方式：输入还是选择
+  type = 'handicap',
+  // 注数的算法
+  algorithm = _.noop,
+  algorithmProps = {},
+  format,
+  showOdds = true,
+  formatToNum = false,
+  bettingArea = ['top', 'bottom'],
+  topOp = 'all',
+}) {
+
+  betRules.push({
+    playId: Number(`${ids[0]}${ids[1]}`),
+    rule: {
+      list,
+      type,
+      format,
+      showOdds,
+      formatToNum,
+      algorithm,
+      algorithmProps,
+      bettingArea,
+      topOp: TopOp[topOp],
+    },
+  })
+}
+
 export default {
   betRules,
   addRule,
   createList,
+  addHandicapRule,
+  createHandicapList
 }
