@@ -120,7 +120,6 @@ const TeamOverviewView = Base.ItemView.extend({
         self.$Profit.html(_(res.root.profit).convert2yuan())
         self.$Water.html(_(res.root.gameRebate).convert2yuan())
         self.$Commission.html(_(res.root.commission).convert2yuan())
-        self.$Balance.html(_(res.root.profit).convert2yuan())
       }
     })
   },
@@ -207,7 +206,7 @@ const TeamOverviewView = Base.ItemView.extend({
         '#83c3c7',
       ],
       legend: {
-        data: ['充值', '提现', '投注', '派奖', '返点', '返水', '佣金', '活动', '盈亏', '啦啦'],
+        data: ['充值', '提现', '投注', '派奖', '返点', '返水', '佣金', '活动', '盈亏'],
         right: 90,
         selected: {
           充值: true,
@@ -245,6 +244,7 @@ const TeamOverviewView = Base.ItemView.extend({
       ],
       series: [
         {
+          id: 1,
           name: '充值',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -258,6 +258,7 @@ const TeamOverviewView = Base.ItemView.extend({
           },
         },
         {
+          id: 2,
           name: '提现',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -271,6 +272,7 @@ const TeamOverviewView = Base.ItemView.extend({
           },
         },
         {
+          id: 3,
           name: '投注',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -284,6 +286,7 @@ const TeamOverviewView = Base.ItemView.extend({
           },
         },
         {
+          id: 4,
           name: '派奖',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -297,6 +300,7 @@ const TeamOverviewView = Base.ItemView.extend({
           },
         },
         {
+          id: 5,
           name: '返点',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -310,6 +314,7 @@ const TeamOverviewView = Base.ItemView.extend({
           },
         },
         {
+          id: 9,
           name: '返水',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -323,6 +328,7 @@ const TeamOverviewView = Base.ItemView.extend({
           },
         },
         {
+          id: 8,
           name: '佣金',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -336,6 +342,7 @@ const TeamOverviewView = Base.ItemView.extend({
           },
         },
         {
+          id: 6,
           name: '活动',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -349,20 +356,8 @@ const TeamOverviewView = Base.ItemView.extend({
           },
         },
         {
+          id: 7,
           name: '盈亏',
-          type: 'line',
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          smooth: true,
-          symbol: 'emptyCircle',
-          symbolSize: '10',
-          itemStyle: {
-            normal: {
-              borderWidth: '3',
-            },
-          },
-        },
-        {
-          name: '啦啦',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           smooth: true,
@@ -382,8 +377,13 @@ const TeamOverviewView = Base.ItemView.extend({
         if (res && res.result === 0) {
           const ydata = res.root || []
           if (!_.isEmpty(ydata)) {
-            _(ydata).each((item) => {
-              option.series[Number(item.id) - 1].data = _(item.data).map((info) => {
+            // _(ydata).each((item) => {
+            //   option.series[Number(item.id) - 1].data = _(item.data).map((info) => {
+            //     return _(info).convert2yuan()
+            //   })
+            // })
+            _(option.series).each((item, index) => {
+              option.series[index].data = _(_(ydata).findWhere({ id: item.id }).data).map((info) => {
                 return _(info).convert2yuan()
               })
             })
