@@ -273,9 +273,9 @@ const SearchGrid = Base.PrefabView.extend({
   // events handler
 
   searchHandler() {
-    // const filter = this.filterHelper.serializeObject({
-    //   reset: true,
-    // })
+    this.filterHelper.serializeObject({
+      reset: true,
+    })
 
     this._breadList = []
 
