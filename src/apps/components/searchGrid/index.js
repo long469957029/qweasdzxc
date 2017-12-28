@@ -82,7 +82,6 @@ const SearchGrid = Base.PrefabView.extend({
 
   _initGrid($grid) {
     const self = this
-    console.log(this.options)
     $grid.grid(_(this.options).chain().pick(
       'tableClass',
       // 'footerClass',
