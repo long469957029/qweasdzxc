@@ -3,26 +3,19 @@
     <betting-rules :initial-rules="playLevels"></betting-rules>
 
     <div class="bc-play-container clearfix">
-      <div class="bc-play-left basic-inverse pull-left">
-        <betting-advance-rules></betting-advance-rules>
+      <div class="bc-play-left pull-left">
+        <betting-advance-rules :type="'single-hidden'"></betting-advance-rules>
         <div class="m-LR-smd">
           <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
-            <betting-play-area-handicap :play-rule="playRule" :ticket-info="ticketInfo" ref="area"></betting-play-area-handicap>
-          </div>
-        </div>
-
-        <div class="m-LR-smd m-top-md m-bottom-md">
-          <div class="form-inline m-TB-xs">
-            <div class="pull-right m-right-sm">
-              <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
+            <betting-play-area-handicap :play-rule="playRule" :ticket-info="ticketInfo" ref="area">
+              <button slot="betting-button" class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                       :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
-                <span class="sfa sfa-btn-icon-bolt vertical-middle"></span>
                 投注
               </button>
-              <button class="btn btn-cool bc-md-btn m-bottom-xs" @click="lotteryAdd" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
-                <span class="sfa sfa-btn-icon-add vertical-middle"></span> 重置
+              <button slot="betting-button" class="btn btn-cool m-bottom-xs" @click="lotteryAdd" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+                重置
               </button>
-            </div>
+            </betting-play-area-handicap>
           </div>
         </div>
       </div>

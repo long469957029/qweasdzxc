@@ -9,28 +9,30 @@ const greenList = ['05', '06', '11', '16', '17', '21', '22', '27', '28', '32', '
 
 let fortyNine = _.range(1, 50)
 
-fortyNine = _.map(fortyNine, (num) => {
-  num = num < 10 ? `0${num}` : `${num}`
-  if (_.indexOf(redList, num) > -1) {
-    return {
-      num,
-      title: num,
-      style: 'red circle',
+const getFortyNine = () => {
+  return _.map(fortyNine, (num) => {
+    num = num < 10 ? `0${num}` : `${num}`
+    if (_.indexOf(redList, num) > -1) {
+      return {
+        num,
+        title: num,
+        style: 'red circle',
+      }
+    } else if (_.indexOf(blueList, num) > -1) {
+      return {
+        num,
+        title: num,
+        style: 'blue circle',
+      }
+    } else if (_.indexOf(greenList, num) > -1) {
+      return {
+        num,
+        title: num,
+        style: 'green circle',
+      }
     }
-  } else if (_.indexOf(blueList, num) > -1) {
-    return {
-      num,
-      title: num,
-      style: 'blue circle',
-    }
-  } else if (_.indexOf(greenList, num) > -1) {
-    return {
-      num,
-      title: num,
-      style: 'green circle',
-    }
-  }
-})
+  })
+}
 
 const shuangMian = [
   [
@@ -162,37 +164,37 @@ const teXiao = [
   [
     {
       title: '鼠',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['10', '22', '34', '46'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['10', '22', '34', '46'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '0',
     },
     {
       title: '牛',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['09', '21', '33', '45'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['09', '21', '33', '45'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '1',
     },
     {
       title: '虎',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['08', '20', '32', '44'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['08', '20', '32', '44'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '2',
     },
     {
       title: '兔',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['07', '19', '31', '43'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['07', '19', '31', '43'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '3',
     },
     {
       title: '龙',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['06', '18', '30', '42'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['06', '18', '30', '42'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '4',
     },
     {
       title: '蛇',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['05', '17', '29', '41'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['05', '17', '29', '41'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '5',
     },
@@ -200,37 +202,37 @@ const teXiao = [
   [
     {
       title: '马',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['04', '16', '28', '40'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['04', '16', '28', '40'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '6',
     },
     {
       title: '牛',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['03', '15', '27', '39'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['03', '15', '27', '39'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '7',
     },
     {
       title: '猴',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['02', '14', '26', '38'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['02', '14', '26', '38'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '8',
     },
     {
       title: '鸡',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['01', '13', '25', '37', '49'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['01', '13', '25', '37', '49'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '9',
     },
     {
       title: '狗',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['12', '24', '36', '48'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['12', '24', '36', '48'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '10',
     },
     {
       title: '猪',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['11', '23', '35', '47'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['11', '23', '35', '47'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '11',
     },
@@ -241,37 +243,37 @@ const yiXiao = [
   [
     {
       title: '鼠',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['10', '22', '34', '46'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['10', '22', '34', '46'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '100',
     },
     {
       title: '牛',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['09', '21', '33', '45'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['09', '21', '33', '45'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '101',
     },
     {
       title: '虎',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['08', '20', '32', '44'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['08', '20', '32', '44'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '102',
     },
     {
       title: '兔',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['07', '19', '31', '43'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['07', '19', '31', '43'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '103',
     },
     {
       title: '龙',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['06', '18', '30', '42'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['06', '18', '30', '42'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '104',
     },
     {
       title: '蛇',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['05', '17', '29', '41'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['05', '17', '29', '41'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '105',
     },
@@ -279,37 +281,37 @@ const yiXiao = [
   [
     {
       title: '马',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['04', '16', '28', '40'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['04', '16', '28', '40'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '106',
     },
     {
       title: '牛',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['03', '15', '27', '39'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['03', '15', '27', '39'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '107',
     },
     {
       title: '猴',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['02', '14', '26', '38'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['02', '14', '26', '38'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '108',
     },
     {
       title: '鸡',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['01', '13', '25', '37', '49'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['01', '13', '25', '37', '49'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '109',
     },
     {
       title: '狗',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['12', '24', '36', '48'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['12', '24', '36', '48'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '110',
     },
     {
       title: '猪',
-      row: _.filter(fortyNine, (numInfo) => { return _.indexOf(['11', '23', '35', '47'], numInfo.num) !== -1 }),
+      row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['11', '23', '35', '47'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '111',
     },
@@ -373,7 +375,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '特码',
-        items: chunk(fortyNine, 10),
+        items: chunk(getFortyNine(), 10),
         showOdds: false,
         showItemOdds: true,
         showMoneyInput: true,
@@ -432,7 +434,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '五不中',
-        items: chunk(fortyNine, 5),
+        items: chunk(getFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
@@ -451,7 +453,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '六不中',
-        items: chunk(fortyNine, 5),
+        items: chunk(getFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
@@ -470,7 +472,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '七不中',
-        items: chunk(fortyNine, 5),
+        items: chunk(getFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
@@ -489,7 +491,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '八不中',
-        items: chunk(fortyNine, 5),
+        items: chunk(getFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
@@ -508,7 +510,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '九不中',
-        items: chunk(fortyNine, 5),
+        items: chunk(getFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
@@ -527,7 +529,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '十不中',
-        items: chunk(fortyNine, 5),
+        items: chunk(getFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',

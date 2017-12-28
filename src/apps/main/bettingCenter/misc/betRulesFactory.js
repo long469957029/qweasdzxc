@@ -131,20 +131,16 @@ function createHandicapList(titles, options) {
   })
 
   return _(titles).map((title) => {
-    if (_.isObject(title)) {
-      return {
-        title: title.title,
-        items: title.items || options.items,
-        showItemOdds: title.showItemOdds,
-        showMoneyInput: title.showMoneyInput,
-        op: op[title.operate || options.operate],
-        betMoney: 0
-      }
-    }
+    _.chain(title.items).flatten().each(item => {
+      item.selected = false
+    })
     return {
-      title,
-      items: options.items,
-      op: op[options.operate],
+      title: title.title,
+      items: title.items,
+      showItemOdds: title.showItemOdds,
+      showMoneyInput: title.showMoneyInput,
+      op: op[title.operate || options.operate],
+      betMoney: 0
     }
   })
 }

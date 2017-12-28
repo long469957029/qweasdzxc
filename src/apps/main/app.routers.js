@@ -1,5 +1,3 @@
-
-
 const dashboardRouter = require('dashboard/router')
 const userCenterRouter = require('userCenter/router')
 const vipCenterRouter = require('vipCenter/router')

@@ -1,6 +1,14 @@
 <template>
   <div>
-    <betting-chips-setting></betting-chips-setting>
+    <div class="total-panel" v-if="_.indexOf(playRule.bettingArea, 'top') !== -1">
+      <betting-chips-setting class="inline-block"></betting-chips-setting>
+
+      <div class="betting-panel inline-block">
+        金额
+        <input type="text" class="total-betting-input" v-model="betMoney" >
+        <slot name="betting-button"></slot>
+      </div>
+    </div>
 
     <div class="handicap-grid" v-for="rule in formattedRuleList">
       <div class="title">
@@ -22,16 +30,17 @@
               </div>
               <div class="main-item-right">
                 <span class="item odds" v-if="rule.showItemOdds">48.18</span>
-                <input type="text" class="money-input" v-if="rule.showMoneyInput" v-model="item.betMoney" />
+                <input type="text" class="money-input" v-if="rule.showMoneyInput" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney(item, $event)" />
               </div>
             </div>
-            <div class="main-item" v-else :class="{active: item.selected}" @click="select(item)">
+
+            <div class="main-item" v-else :class="{selected: item.selected}" @click="select(item)">
               <div :class="rule.showItemOdds ? 'main-item-left' : 'main-item-center'">
                 <span class="item" :class="item.style">{{item.title}}</span>
                 <span class="item odds" v-if="rule.showItemOdds">48.18</span>
               </div>
               <div class="main-item-right" v-if="rule.showMoneyInput">
-                <input type="text" class="money-input" v-model="item.betMoney" />
+                <input type="text" class="money-input" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney(item, $event)" />
               </div>
             </div>
 
@@ -74,6 +83,15 @@
     <!--</div>-->
     <!--</div>-->
     <!--</div>-->
+    <div class="total-panel" v-if="_.indexOf(playRule.bettingArea, 'bottom') !== -1">
+      <betting-chips-setting class="inline-block"></betting-chips-setting>
+
+      <div class="betting-panel inline-block">
+        金额
+        <input type="text" class="total-betting-input" v-model="betMoney" >
+        <slot name="betting-button"></slot>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -98,7 +116,8 @@
         lotteryList: [],
         formattedRuleList: [],
         coefficient: 1,
-        type: 'handicap'
+        type: 'handicap',
+        betMoney: null
       }
     },
 
@@ -112,13 +131,18 @@
     },
 
     methods: {
-      positionChange(optionals) {
-        this.$_calculateCoefficient(optionals)
-        this.$_statisticsLottery()
-      },
 
       select(item) {
         item.selected = !item.selected
+        item.betMoney = item.selected ? this.betMoney : null
+      },
+
+      inputBetMoney(item, $event) {
+        if (!_.isNumber(item.betMoney) || item.betMoney === 0) {
+          item.betMoney = null
+        } else {
+          item.selected = true
+        }
       },
 
       selectNumber(num, items) {
@@ -129,155 +153,6 @@
         } else {
           this.$_selectNumber(num, items)
         }
-      },
-
-      selectOprate6() {
-        const self = this
-        const $target = $(e.currentTarget)
-        const $playArea = $target.closest('.js-bc-playArea-items')
-        const $itemsToolbars = $playArea.find('.js-be-playArea-items-toolbar')
-        const op = $target.data('op')
-        const $items = $itemsToolbars.find('.js-bc-select-item')
-
-        if ($target.hasClass('active')) {
-          $target.removeClass('active')
-          $items.removeClass('active')
-        } else {
-          const selectEle = []
-          const opid = $target.data('opid')
-          const selectNum = this.options.list[0].htmlNeedInfo.groupSelectData[parseInt(opid, 10)]
-          let thisColorArr = ''
-          let arrStr = 'redArr'
-          let weiNum = ''
-          let touNum
-          switch (op) {
-            case 'shu': case 'niu': case 'hu': case 'tu': case '_long': case 'she':
-            case 'ma': case 'yang': case 'hou': case 'ji': case 'gou': case 'zhu':
-            $items.each((index, ele) => {
-              const $this = $(ele)
-              _(selectNum.nums).each((num) => {
-                if (parseInt(num, 10) === parseInt($this.data('num'), 10)) {
-                  selectEle.push($this)
-                }
-              })
-            })
-            $items.removeClass('active')
-            this.$_selectNumbers($(selectEle), $itemsToolbars)
-            break
-            case 'mark6-big':
-              self.$_selectNumbers($items.removeClass('active').filter(':gt(23)'), $itemsToolbars)
-              break
-            case 'mark6-small':
-              self.$_selectNumbers($items.removeClass('active').filter(':lt(24)'), $itemsToolbars)
-              break
-            case 'red': case 'blue': case 'green':
-            if (op === 'blue') { arrStr = 'blueArr' } else if (op === 'green') { arrStr = 'greenArr' }
-            thisColorArr = this.options.list[0].htmlNeedInfo.colorArr[arrStr]
-            // let selectEle = []
-            $items.each((index, ele) => {
-              const $this = $(ele)
-              _(thisColorArr).each((num) => {
-                if (parseInt(num, 10) === parseInt($this.data('num'), 10)) {
-                  selectEle.push($this)
-                }
-              })
-            })
-            $items.removeClass('active')
-            this.$_selectNumbers($(selectEle), $itemsToolbars)
-            break
-            case 'wei0': case 'wei1': case 'wei2': case 'wei3': case 'wei4':
-            case 'wei5': case 'wei6': case 'wei7': case 'wei8': case 'wei9':
-            weiNum = op.substring(op.length - 1)
-            // let selectEle = []
-            $items.each((index, ele) => {
-              const $this = $(ele)
-              const currentNum = $this.data('num').toString()
-              if (currentNum.substring(currentNum.length - 1) === weiNum) {
-                selectEle.push($this)
-              }
-            })
-            $items.removeClass('active')
-            this.$_selectNumbers($(selectEle), $itemsToolbars)
-            break
-            case 'tou0': case 'tou1': case 'tou2': case 'tou3': case 'tou4':
-            touNum = op.substring(op.length - 1)
-            // let selectEle = []
-            $items.each((index, ele) => {
-              const $this = $(ele)
-              const currentNum = $this.data('num').toString()
-              if (currentNum.substring(0, 1) === touNum) {
-                selectEle.push($this)
-              }
-            })
-            $items.removeClass('active')
-            this.$_selectNumbers($(selectEle), $itemsToolbars)
-            break
-            case 'odd':
-              if ($items.eq(0).data('num') % 2) {
-                this.$_selectNumbers($items.removeClass('active').filter(':even'), $itemsToolbars)
-                // $items.removeClass('active').filter(':even').trigger('click');
-              } else {
-                this.$_selectNumbers($items.removeClass('active').filter(':odd'), $itemsToolbars)
-                // $items.removeClass('active').filter(':odd').trigger('click');
-              }
-              break
-            case 'even':
-              if ($items.eq(0).data('num') % 2) {
-                this.$_selectNumbers($items.removeClass('active').filter(':odd'), $itemsToolbars)
-                // $items.removeClass('active').filter(':odd').trigger('click');
-              } else {
-                this.$_selectNumbers($items.removeClass('active').filter(':even'), $itemsToolbars)
-                // $items.removeClass('active').filter(':even').trigger('click');
-              }
-              break
-            case 'clear':
-              $items.removeClass('active')
-              $playArea.find('.js-bc-select-op').removeClass('active')
-              break
-            default:
-              break
-          }
-          $target.addClass('active')
-        }
-      },
-
-      selectOperate(op, row) {
-        switch (op) {
-          case 'all':
-            this.$_selectNumbers(row.fItems, row)
-            break
-          case 'big':
-            this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
-              num.selected = false
-              return index >= Math.floor((row.items.length) / 2)
-            }), row)
-            break
-          case 'small':
-            this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
-              num.selected = false
-              return index < Math.floor((row.items.length) / 2)
-            }), row)
-            break
-          case 'odd':
-            this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
-              num.selected = false
-              return num.num % 2
-            }), row)
-            break
-          case 'even':
-            this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
-              num.selected = false
-              return !(num.num % 2)
-            }), row)
-            break
-          case 'clear':
-            this.$_selectNumbers(row.fItems, row, false)
-            break
-          default:
-            break
-        }
-
-        this.$_statisticsLottery()
       },
 
       clearAllSelected() {
@@ -325,21 +200,6 @@
         this.clearAllSelected();
       },
 
-      $_calculateCoefficient(optionals) {
-        let coefficient = 1
-
-        const selectedList = list.filter(optional => optional.checked);
-        const length = selectedList.length
-        if (!_.isEmpty(optionals)) {
-          coefficient = betRulesAlgorithm.optional(
-            optionals.coefficient,
-            length,
-          )
-        }
-
-        this.selectOptionals = _(selectedList).pluck('id')
-        this.coefficient = coefficient
-      },
 
       $_statisticsLottery() {
         let count = 0
@@ -372,71 +232,16 @@
         this.$store.commit(types.SET_STATISTICS, count)
       },
 
-      $_selectNumber(num, row, toSelected) {
-        // 横向不允许冲突/超过最大选择数
-        const cx = _.findWhere(row.limits, {name: 'conflict-x'});
-        if (!num.selected && !_.isEmpty(cx)) {
-          if (!cx.data.num || cx.data.num === 1) {
-            _.each(row.fItems, (item) => {
-              if (num.num !== item.num) {
-                item.selected = false
-              }
-            })
-            // $target.siblings().removeClass('active')
-          } else {
-            const selecteds = _.chain(row.fItems).flatten().findWhere({selected: true}).value();
-            // const $actives = _(row.fItems).$parent.find('.js-bc-select-item.active')
-            if (selecteds.length >= cx.data.num) {
-              selecteds[0].selected = false
-            }
-          }
-        }
-
-        const cy = _.findWhere(row.limits, {name: 'conflict-y'});
-
-        // 纵向不允许冲突
-        if (!num.selected && !_.isEmpty(cy)) {
-          _.each(this.formattedRuleList, rule =>  {
-            if (row !== rule.row) {
-              _.each(rule.row.fItems, item => {
-                if (num.num === item.num) {
-                  item.selected= false;
-                }
-              })
-            }
-          })
-        }
-
-        num.selected = _.isUndefined(toSelected) ? !num.selected : toSelected
-
-        // 当是任选并且没有任选位置时，每次改变重新计算系数
-        if (!_.isEmpty(this.playRule.optionals) && !this.playRule.optionals.list) {
-          this.$_calculateCoefficient(this.playRule.optionals)
-        }
-
-        this.$_statisticsLottery()
-
-        const indexs = []
-        _(row.fItems).each((item, index) => {
-          if (item.selected) {
-            indexs.push(index)
-          }
-        })
-
-        this.$store.commit(types.UPDATE_BONUS, indexs)
-      },
-
       $_selectNumbers(nums, row, toSelected = true) {
         _.chain(nums).flatten().each((num) => {
-          this.$_selectNumber(num, row, toSelected)
         })
       },
     },
   }
 </script>
 
-<style scoped>
-  @import "base/styles/variable";
+<style lang="scss" scoped>
+  @import "~base/styles/variable";
 
   .handicap-grid {
     margin-bottom: 18px;
@@ -472,6 +277,10 @@
         border-top: none;
         font-size: 14px;
         cursor: pointer;
+
+        &.selected {
+          background-color: #fceed6;
+        }
         .main-item-left {
           width: 60%;
           padding-left: 10%;
@@ -511,10 +320,6 @@
       }
     }
 
-    .selected {
-      background-color: #fceed6;
-    }
-
     .money-input {
       width: 55%;
       border-color: $def-gray-color
@@ -523,5 +328,24 @@
     .odds {
       color: $prominent-color;
     }
+  }
+  .total-panel {
+    margin: 10px;
+  }
+  .betting-panel {
+    vertical-align: top;
+    font-size: 14px;
+  }
+
+  .total-betting-input {
+    width: 82px;
+    padding: 7px;
+    vertical-align: top;
+    margin-right: 10px;
+    border-color: $def-gray-color;
+  }
+  .btn {
+    padding: 7px 22px;
+    margin-right: 10px;
   }
 </style>
