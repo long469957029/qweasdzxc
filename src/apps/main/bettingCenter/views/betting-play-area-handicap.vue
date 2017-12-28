@@ -1,68 +1,92 @@
 <template>
   <div>
-    <div class="bc-page-content active" v-for="n in totalPage" v-show="n === 1">
-      <div class="handicap-grid" v-for="rule in formattedRuleList">
-        <div class="title">
-          <div class="main">{{rule.title}}</div>
-          <div class="side"></div>
-        </div>
-        <div class="body">
-          <div class="main">
-            <div class="main-row" v-for="row in rule.items">
-              <span class="main-item" v-for="item in row">
-                <span :class="item.style">{{item.title}}</span>
-              </span>
-            </div>
-          </div>
-          <div class="side"></div>
-        </div>
+    <betting-chips-setting></betting-chips-setting>
+
+    <div class="handicap-grid" v-for="rule in formattedRuleList">
+      <div class="title">
+        <div class="main">{{rule.title}}</div>
+        <div class="side"></div>
       </div>
-          <!--<div class="tab-toolbar tab-border tab-toolbar-sm mark6-quick-select">-->
-            <!--<div class="tab-group">-->
-              <!--<div>-->
-                <!--<span class="js-bc-select-op tab" data-op="shu" data-opid="0">鼠</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="niu" data-opid="1">牛</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="hu" data-opid="2">虎</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="tu" data-opid="3">兔</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="_long" data-opid="4">龙</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="she" data-opid="5">蛇</span>-->
-              <!--</div>-->
-              <!--<div>-->
-                <!--<span class="js-bc-select-op tab" data-op="ma" data-opid="6">马</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="yang" data-opid="7">羊</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="hou" data-opid="8">猴</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="ji" data-opid="9">鸡</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="gou" data-opid="10">狗</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="zhu" data-opid="11">猪</span>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="tab-group m-left-md sebo">-->
-              <!--<div>-->
-                <!--<span class="js-bc-select-op tab" data-op="mark6-big">大</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="mark6-small">小</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="odd">单</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="even">双</span>-->
-              <!--</div>-->
-              <!--<div>-->
-                <!--<span class="js-bc-select-op tab" data-op="red">红波</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="blue">蓝波</span>-->
-                <!--<span class="js-bc-select-op tab" data-op="green">绿波</span>-->
-                <!--<span class="js-bc-select-op tab all-clear" data-op="clear">重置</span>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
+      <div class="body">
+        <div class="main">
+          <div class="main-row" v-for="rowItem in rule.items">
+
+            <!--根据是否存在子项进行区别渲染-->
+            <div class="main-item" v-for="item in rowItem" v-if="item.row" :class="{selected: item.selected}" @click="select(item)">
+              <div class="main-item-left">
+                <span class="item" :class="item.style">{{item.title}}</span>
+
+                <span class="item" v-if="item.row" v-for="num in item.row">
+                    <span :class="num.style">{{num.title}}</span>
+                  </span>
+              </div>
+              <div class="main-item-right">
+                <span class="item odds" v-if="rule.showItemOdds">48.18</span>
+                <input type="text" class="money-input" v-if="rule.showMoneyInput" v-model="item.betMoney" />
+              </div>
+            </div>
+            <div class="main-item" v-else :class="{active: item.selected}" @click="select(item)">
+              <div :class="rule.showItemOdds ? 'main-item-left' : 'main-item-center'">
+                <span class="item" :class="item.style">{{item.title}}</span>
+                <span class="item odds" v-if="rule.showItemOdds">48.18</span>
+              </div>
+              <div class="main-item-right" v-if="rule.showMoneyInput">
+                <input type="text" class="money-input" v-model="item.betMoney" />
+              </div>
+            </div>
+
+          </div>
         </div>
+        <div class="side"></div>
       </div>
     </div>
+    <!--<div class="tab-toolbar tab-border tab-toolbar-sm mark6-quick-select">-->
+    <!--<div class="tab-group">-->
+    <!--<div>-->
+    <!--<span class="js-bc-select-op tab" data-op="shu" data-opid="0">鼠</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="niu" data-opid="1">牛</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="hu" data-opid="2">虎</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="tu" data-opid="3">兔</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="_long" data-opid="4">龙</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="she" data-opid="5">蛇</span>-->
+    <!--</div>-->
+    <!--<div>-->
+    <!--<span class="js-bc-select-op tab" data-op="ma" data-opid="6">马</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="yang" data-opid="7">羊</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="hou" data-opid="8">猴</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="ji" data-opid="9">鸡</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="gou" data-opid="10">狗</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="zhu" data-opid="11">猪</span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="tab-group m-left-md sebo">-->
+    <!--<div>-->
+    <!--<span class="js-bc-select-op tab" data-op="mark6-big">大</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="mark6-small">小</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="odd">单</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="even">双</span>-->
+    <!--</div>-->
+    <!--<div>-->
+    <!--<span class="js-bc-select-op tab" data-op="red">红波</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="blue">蓝波</span>-->
+    <!--<span class="js-bc-select-op tab" data-op="green">绿波</span>-->
+    <!--<span class="js-bc-select-op tab all-clear" data-op="clear">重置</span>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import BettingChipsSetting from './betting-chips-setting'
   import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
 
   export default {
     name: "betting-play-area-handicap",
+
+    components: {
+      BettingChipsSetting
+    },
 
     props: {
       playRule: Object,
@@ -71,10 +95,8 @@
 
     data: function() {
       return {
-        selectOptionals: [],
         lotteryList: [],
         formattedRuleList: [],
-        totalPage: 1,
         coefficient: 1,
         type: 'handicap'
       }
@@ -93,6 +115,10 @@
       positionChange(optionals) {
         this.$_calculateCoefficient(optionals)
         this.$_statisticsLottery()
+      },
+
+      select(item) {
+        item.selected = !item.selected
       },
 
       selectNumber(num, items) {
@@ -409,9 +435,8 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+<style scoped>
+  @import "base/styles/variable";
 
   .handicap-grid {
     margin-bottom: 18px;
@@ -423,6 +448,8 @@
       border: 1px solid $def-gray-color;
     }
     .body {
+      position: relative;
+      top: -1px;
       .main {
         display: flex;
         border: 1px solid $def-gray-color;
@@ -437,13 +464,31 @@
         top: 1px;
       }
       .main-item {
-        padding: 9px 10px;
-        min-width: 100px;
-        display: inline-block;
+        padding: 9px 0;
+        min-width: 60px;
+        display: flex;
         border: 1px solid $def-gray-color;
         margin-right: -1px;
         border-top: none;
         font-size: 14px;
+        cursor: pointer;
+        .main-item-left {
+          width: 60%;
+          padding-left: 10%;
+          box-sizing: border-box;
+          line-height: 25px;
+        }
+        .main-item-right {
+          width: 40%;
+          box-sizing: border-box;
+        }
+        .main-item-center {
+          text-align: center;
+          flex-grow: 1;
+        }
+        .item {
+          margin: 0 5px;
+        }
       }
       .red {
         background-color: $red;
@@ -464,6 +509,19 @@
         color: $def-white-color;
         font-size: 12px;
       }
+    }
+
+    .selected {
+      background-color: #fceed6;
+    }
+
+    .money-input {
+      width: 55%;
+      border-color: $def-gray-color
+    }
+
+    .odds {
+      color: $prominent-color;
     }
   }
 </style>

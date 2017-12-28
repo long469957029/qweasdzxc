@@ -135,8 +135,10 @@ function createHandicapList(titles, options) {
       return {
         title: title.title,
         items: title.items || options.items,
-        showOdds: title.showOdds,
+        showItemOdds: title.showItemOdds,
+        showMoneyInput: title.showMoneyInput,
         op: op[title.operate || options.operate],
+        betMoney: 0
       }
     }
     return {
@@ -157,6 +159,8 @@ function addHandicapRule(ids, {
   format,
   showOdds = true,
   formatToNum = false,
+  showMoneyInput = true,
+  showItemOdds = true,
   bettingArea = ['top', 'bottom'],
   topOp = 'all',
 }) {
@@ -170,6 +174,8 @@ function addHandicapRule(ids, {
       formatToNum,
       algorithm,
       algorithmProps,
+      showMoneyInput,
+      showItemOdds,
       bettingArea,
       topOp: TopOp[topOp],
     },

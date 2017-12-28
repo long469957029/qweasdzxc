@@ -1,6 +1,11 @@
 module.exports = {
   // parser: 'sugarss',
   plugins: {
+    'precss': {
+      'postcss-partial-import': {
+        'path': ['apps/base/styles']
+      }
+    },
     'postcss-cssnext': {
       browsers: [
         'last 3 versions',
