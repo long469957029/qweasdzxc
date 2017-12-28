@@ -7,6 +7,11 @@ import ToolbarView from 'skeleton/bases/toolbar'
 import RechargeView from 'com/fundOperate'
 
 import './index.css'
+
+const BetDetailView = require('fundCenter/gameRecord/betDetail')
+const ChaseDetailView = require('fundCenter/gameRecord/chaseDetail')
+
+
 // import WithDrawView from 'com/fundOperate/withdraw'
 // import TransferView from 'com/fundOperate/transfer'
 
@@ -226,6 +231,94 @@ const _bindFundOperatorDialogHandler = () => {
     })
   })
 }
+
+// 查看用户投注记录
+const _bindBetDetailHandler = () => {
+  $(document).off('click.betDetailDialog').on('click.betDetailDialog', '.js-gl-bet-detail-dialog', (e) => {
+    const $target = $(e.currentTarget)
+    const tradeNo = $target.data('id')
+    const $dialog = Global.ui.dialog.show({
+      size: 'modal-bet',
+      bStyle: 'width: 535px;height:620px;',
+      body: '<div class="fc-gr-bet-detail"></div>',
+      closeBtn: false,
+    })
+    const $selectContainer = $dialog.find('.fc-gr-bet-detail')
+    const editBetDetailView = new BetDetailView({ tradeno: tradeNo })
+    $selectContainer.html(editBetDetailView.render().el)
+
+    $dialog.on('hidden.modal', () => {
+      $(this).remove()
+      editBetDetailView.destroy()
+    })
+    $dialog.off('click.cancelBet')
+      .on('click.cancelBet', '.js-gr-submitBtn', (ev) => {
+        const $currContainer = $dialog.find('.fc-gr-bet-detail-form')
+        const clpValidate = $currContainer.parsley().validate()
+        if (clpValidate) {
+          const $target2 = $(ev.currentTarget)
+          $target2.button('loading')
+          return Global.sync.ajax({
+            url: '/ticket/bet/cancel.json',
+            data: {
+              betId: $dialog.find('.js-gr-ticketBetId').val(),
+            },
+          }).done((res) => {
+            if (res && res.result === 0) {
+              Global.ui.notification.show('操作成功。')
+              $dialog.modal('hide')
+            } else {
+              Global.ui.notification.show('操作失败。')
+            }
+          })
+        }
+      })
+  })
+}
+// 查看用户追号记录
+const _bindChaseDetailHandler = () => {
+  $(document).off('click.chaseDetailDialog').on('click.chaseDetailDialog', '.js-gl-chase-detail-dialog', (e) => {
+    const $target = $(e.currentTarget)
+    const cId = $target.data('id')
+    const tradeno = $target.data('no')
+    const $dialog = Global.ui.dialog.show({
+      size: 'modal-chase',
+      bStyle: 'width: 848px;height:570px;',
+      body: '<div class="fc-gr-chase-detail"></div>',
+      closeBtn: false,
+    })
+    const $selectContainer = $dialog.find('.fc-gr-chase-detail')
+    const editChaseDetailView = new ChaseDetailView({ chaseFormId: cId, tradeNo: tradeno })
+    $selectContainer.html(editChaseDetailView.render().el)
+
+    $dialog.on('hidden.modal', function () {
+      $(this).remove()
+      editChaseDetailView.destroy()
+    })
+    // $dialog.off('click.cancelBet')
+    //   .on('click.cancelBet', '.js-gr-submitBtn', (ev) => {
+    //     const $currContainer = $dialog.find('.fc-gr-bet-detail-form')
+    //     const clpValidate = $currContainer.parsley().validate()
+    //     if (clpValidate) {
+    //       const $target2 = $(ev.currentTarget)
+    //       $target2.button('loading')
+    //       return Global.sync.ajax({
+    //         url: '/ticket/bet/cancel.json',
+    //         data: {
+    //           betId: $dialog.find('.js-gr-ticketBetId').val(),
+    //         },
+    //       }).done((res) => {
+    //         if (res && res.result === 0) {
+    //           Global.ui.notification.show('操作成功。')
+    //           $dialog.modal('hide')
+    //         } else {
+    //           Global.ui.notification.show('操作失败。')
+    //         }
+    //       })
+    //     }
+    //   })
+  })
+}
 App.addInitializer(() => {
   App.headerRegion.show(new HeaderView())
   App.navbarRegin.show(new NavbarView({
@@ -248,6 +341,8 @@ App.addInitializer(() => {
   _bindClickFeedbackHandler()
   _bindClickModalFadeHandler()
   _bindFundOperatorDialogHandler() // 全局绑定资金操作(充值 提现 转帐)弹窗
+  _bindBetDetailHandler() // 全局投注详情弹窗
+  _bindChaseDetailHandler()
 })
 
 

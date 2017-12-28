@@ -5,14 +5,14 @@ const Timeset = require('com/timeset')
 const TicketSelectGroup = require('com/ticketSelectGroup')
 
 const betStatusConfig = require('fundCenter/misc/v2/betStatusConfig')
-const ChaseDetailView = require('fundCenter/gameRecord/chaseDetail')
+// const ChaseDetailView = require('fundCenter/gameRecord/chaseDetail')
 
 const TrackRecordsView = SearchGrid.extend({
 
   template: require('fundCenter/gameRecord/trackRecords.html'),
 
   events: {
-    'click .js-show-chaseRecord-btn': 'showChaseRecordHandler',
+    // 'click .js-show-chaseRecord-btn': 'showChaseRecordHandler',
   },
 
   initialize () {
@@ -120,7 +120,7 @@ const TrackRecordsView = SearchGrid.extend({
   formatRowData(rowInfo) {
     const row = []
     // 追号时间
-    row.push(`<button class="js-show-chaseRecord-btn btn btn-link" data-no='${rowInfo.ticketTradeNo}' data-id='${rowInfo.ticketChaseId}'>${_(rowInfo.chaseTime).toTime()}</button>`)
+    row.push(`<button class="js-gl-chase-detail-dialog btn btn-link" data-no='${rowInfo.ticketTradeNo}' data-id='${rowInfo.ticketChaseId}'>${_(rowInfo.chaseTime).toTime()}</button>`)
     // 彩种<
     row.push(rowInfo.ticketName)
     // 玩法
@@ -162,47 +162,6 @@ const TrackRecordsView = SearchGrid.extend({
     }
     row.push(rowInfo.formatChaseStatus)
     return row
-  },
-  // 查看用户追号记录
-  showChaseRecordHandler (e) {
-    const $target = $(e.currentTarget)
-    const cId = $target.data('id')
-    const tradeno = $target.data('no')
-    const $dialog = Global.ui.dialog.show({
-      size: 'modal-chase',
-      bStyle: 'width: 848px;height:570px;',
-      body: '<div class="fc-gr-chase-detail"></div>',
-    })
-    const $selectContainer = $dialog.find('.fc-gr-chase-detail')
-    const editBetDetailView = new ChaseDetailView({ chaseFormId: cId, tradeNo: tradeno })
-    $selectContainer.html(editBetDetailView.render().el)
-
-    // $dialog.on('hidden.bs.modal', function () {
-    //   $(this).remove()
-    //   editBetDetailView.destroy()
-    // })
-    // $dialog.off('click.cancelBet')
-    //   .on('click.cancelBet', '.js-gr-submitBtn', (ev) => {
-    //     const $currContainer = $dialog.find('.fc-gr-bet-detail-form')
-    //     const clpValidate = $currContainer.parsley().validate()
-    //     if (clpValidate) {
-    //       const $target2 = $(ev.currentTarget)
-    //       $target2.button('loading')
-    //       return Global.sync.ajax({
-    //         url: '/ticket/bet/cancel.json',
-    //         data: {
-    //           betId: $dialog.find('.js-gr-ticketBetId').val(),
-    //         },
-    //       }).done((res) => {
-    //         if (res && res.result === 0) {
-    //           Global.ui.notification.show('操作成功。')
-    //           $dialog.modal('hide')
-    //         } else {
-    //           Global.ui.notification.show('操作失败。')
-    //         }
-    //       })
-    //     }
-    //   })
   },
 })
 

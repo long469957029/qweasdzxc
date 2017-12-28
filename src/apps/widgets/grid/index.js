@@ -25,7 +25,7 @@ $.widget('gl.grid', {
 
     // pagination
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 15,
     maxPaginationNum: 6,
     totalSize: 0,
     onPaginationChange: _.noop,

@@ -3,7 +3,7 @@ const SearchGrid = require('com/searchGrid')
 const Timeset = require('com/timeset')
 
 const TicketSelectGroup = require('com/ticketSelectGroup')
-const BetDetailView = require('fundCenter/gameRecord/betDetail')
+// const BetDetailView = require('fundCenter/gameRecord/betDetail')
 const betStatusConfig = require('fundCenter/misc/v2/betStatusConfig')
 
 require('./index.scss')
@@ -13,7 +13,7 @@ const BettingRecordsView = SearchGrid.extend({
   template: require('fundCenter/gameRecord/bettingRecords.html'),
 
   events: {
-    'click .js-show-betRecord-btn': 'showBetRecordHandler',
+
   },
 
   initialize () {
@@ -153,9 +153,9 @@ const BettingRecordsView = SearchGrid.extend({
     // 投注时间
     if (rowInfo.chaseId) {
       row.push('<div class="fc-td-record-status" ' +
-        `style="top:${rowTop}px">追</div><button class="js-show-betRecord-btn btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
+        `style="top:${rowTop}px">追</div><button class="js-gl-bet-detail-dialog btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
     } else {
-      row.push(`<button class="js-show-betRecord-btn btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
+      row.push(`<button class="js-gl-bet-detail-dialog btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
     }
     // 彩种
     row.push(rowInfo.ticketName)
@@ -204,47 +204,6 @@ const BettingRecordsView = SearchGrid.extend({
     return row
   },
 
-  // 查看用户投注记录
-  showBetRecordHandler (e) {
-    const $target = $(e.currentTarget)
-    const tradeNo = $target.data('id')
-    const $dialog = Global.ui.dialog.show({
-      size: 'modal-bet',
-      bStyle: 'width: 535px;height:620px;',
-      body: '<div class="fc-gr-bet-detail"></div>',
-      closeBtn: false,
-    })
-    const $selectContainer = $dialog.find('.fc-gr-bet-detail')
-    const editBetDetailView = new BetDetailView({ tradeno: tradeNo })
-    $selectContainer.html(editBetDetailView.render().el)
-
-    // $dialog.on('hidden.bs.modal', function () {
-    //   $(this).remove()
-    //   editBetDetailView.destroy()
-    // })
-    $dialog.off('click.cancelBet')
-      .on('click.cancelBet', '.js-gr-submitBtn', (ev) => {
-        const $currContainer = $dialog.find('.fc-gr-bet-detail-form')
-        const clpValidate = $currContainer.parsley().validate()
-        if (clpValidate) {
-          const $target2 = $(ev.currentTarget)
-          $target2.button('loading')
-          return Global.sync.ajax({
-            url: '/ticket/bet/cancel.json',
-            data: {
-              betId: $dialog.find('.js-gr-ticketBetId').val(),
-            },
-          }).done((res) => {
-            if (res && res.result === 0) {
-              Global.ui.notification.show('操作成功。')
-              $dialog.modal('hide')
-            } else {
-              Global.ui.notification.show('操作失败。')
-            }
-          })
-        }
-      })
-  },
 })
 
 module.exports = BettingRecordsView
