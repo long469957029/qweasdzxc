@@ -14,6 +14,7 @@ const numberColor = {
 const sscConfig = {
   id: 'ssc',
   title: '时时彩',
+  ticketName: '经典模式',
   icon: 'ssc',
   titleIcon: 'ssc_nav_icon',
   list: [
@@ -94,6 +95,7 @@ const sscConfig = {
 const oneFiveConfig = {
   id: 'num',
   title: '11选5',
+  ticketName: '十一选五',
   icon: 'num',
   titleIcon: 'ele_nav_icon',
   list: [
@@ -204,6 +206,7 @@ const quickConfig = [
 const happyConfig = {
   id: 'happy',
   title: '快乐彩',
+  ticketName: '快乐彩',
   icon: 'happy',
   titleIcon: 'hap_nav_icon',
   list: bjPKConfig.concat(quickConfig),
@@ -236,6 +239,7 @@ const mark6Config = [
 const lowConfig = {
   id: 'low',
   title: '低频彩',
+  ticketName: '低频彩',
   icon: 'low',
   titleIcon: 'low_nav_icon',
   list: threeDConfig.concat(p5p3Config).concat(mark6Config),

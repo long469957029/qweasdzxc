@@ -1,14 +1,14 @@
 
+import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
 
 const BettingChoiceModel = require('bettingCenter/models/bettingChoice-mmc')
 const BettingRulesCollection = require('bettingCenter/collections/bettingRules')
 
 const PlayAreaSelectView = require('bettingCenter/views/bettingCenter-playArea-select')
-const PlayAreaInputView = require('bettingCenter/views/bettingCenter-playArea-input')
 const BettingRecordsView = require('bettingCenter/views/bettingCenter-records')
 
 const ticketConfig = require('skeleton/misc/ticketConfig')
-const betRulesConfig = require('bettingCenter/misc/betRulesConfig')
+const PlayAreaInputView = require('./bettingCenter-playArea-input')
 
 require('./easing')
 require('./index.scss')
@@ -19,7 +19,7 @@ const BettingCenterView = Base.ItemView.extend({
   template: require('bettingCenter/mmc/index.html'),
 
   playLevelTpl: _.template(require('bettingCenter/templates/bettingCenter-level-mmc.html')),
-  rulesTpl: _.template(require('bettingCenter/templates/bettingCenter-rules.html')),
+  rulesTpl: _.template(require('./bettingCenter-rules.html')),
 
   events: {
     'click .js-bc-basic-rule': 'baseRuleChangeHandler',
@@ -97,19 +97,19 @@ const BettingCenterView = Base.ItemView.extend({
 
     // 修改背景
     const strHash = document.location.hash
-    if (strHash.slice(0, 6) == '#bc/19') {
+    if (strHash.slice(0, 6) === '#bc/19') {
       $('body').addClass('mmc-Body')
     }
 
     window.onhashchange = function () {
       const strHash = document.location.hash
-      if (strHash.slice(0, 6) == '#bc/19') {
+      if (strHash.slice(0, 6) === '#bc/19') {
         $('body').addClass('mmc-Body')
       } else {
         $('body').removeClass('mmc-Body')
       }
 
-      if (strHash.slice(0, 3) != '#bc') {
+      if (strHash.slice(0, 3) !== '#bc') {
         $('.js-leftAd').addClass('hide')
       } else {
         $('.js-leftAd').removeClass('hide')
@@ -123,7 +123,7 @@ const BettingCenterView = Base.ItemView.extend({
   },
 
   onRender() {
-    const self = this 
+    const self = this
     $('#footer').css('display', 'none')
     this.rulesCollection.fetch({
       abort: false,
@@ -203,7 +203,7 @@ const BettingCenterView = Base.ItemView.extend({
       colModel: [
         // {label: '玩法/投注内容  ', name: 'title', key: true, width: '43%'},
         {
-          label: '玩法/投注内容  ', name: 'title', key: true, width: '55%', 
+          label: '玩法/投注内容  ', name: 'title', key: true, width: '55%',
         },
         // {label: '奖金模式', name: 'bonusMode', width: '20%'},
         { label: '注数/倍数/模式', name: 'mode', width: '45%' },
@@ -221,7 +221,7 @@ const BettingCenterView = Base.ItemView.extend({
       tableClass: 'table table-dashed',
       colModel: [
         {
-          label: '玩法/投注内容  ', name: 'title', key: true, width: '48%', 
+          label: '玩法/投注内容  ', name: 'title', key: true, width: '48%',
         },
         { label: '奖金模式', name: 'bonusMode', width: '12%' },
         { label: '注数', name: 'statistics', width: '12%' },
@@ -238,10 +238,10 @@ const BettingCenterView = Base.ItemView.extend({
       tableClass: 'table table-dashed',
       colModel: [
         {
-          label: '批次', name: 'title', key: true, width: '40%', 
+          label: '批次', name: 'title', key: true, width: '40%',
         },
         {
-          label: '开奖结果  ', name: 'result', key: true, width: '45%', 
+          label: '开奖结果  ', name: 'result', key: true, width: '45%',
         },
         { label: '状态', name: 'status', width: '15%' },
       ],
@@ -287,13 +287,13 @@ const BettingCenterView = Base.ItemView.extend({
           _(numArr).each((item, index) => {
             if (item != '-') {
               const numList = item.split(' ')
-              _(numList).each((list, listIndx) => {
+              _(numList).each((list) => {
                 self.$(`.js-bc-playArea-items-${index}`).find(`span[data-num=${list}]`).trigger('click')
               })
             }
           })
         } else {
-          _(numArr).each((item, index) => {
+          _(numArr).each((item) => {
             self.$('.js-bc-playArea-items-0').find(`span[data-num=${item}]`).trigger('click')
           })
         }
@@ -448,7 +448,7 @@ const BettingCenterView = Base.ItemView.extend({
     this.$playBetMode.html(betMethod)
   },
 
-  renderPlayArea(groupId, playId) {
+  renderPlayArea() {
     const playRule = betRulesConfig.get(this.model.pick('playId'))
 
     if (this.currentPlayAreaView) {
@@ -465,6 +465,8 @@ const BettingCenterView = Base.ItemView.extend({
         break
       case 'input':
         this.currentPlayAreaView = new PlayAreaInputView(playRule)
+        break
+      default:
         break
     }
 
@@ -718,7 +720,7 @@ const BettingCenterView = Base.ItemView.extend({
     this.model.set('unit', $target.data('rate'))
   },
 
-  lotteryAddHandler(e) {
+  lotteryAddHandler() {
     const status = this.$btnConfirm.data('status')
 
     if (status !== '1' && status !== 1) {
@@ -766,7 +768,7 @@ const BettingCenterView = Base.ItemView.extend({
     this.model.delPrevBetting($row.index())
   },
 
-  startlotteryHandler(e) {
+  startlotteryHandler() {
     const status = this.$btnConfirm.data('status')// 按钮状态：当前事件仅处理“1-马上开奖，3-再玩一次”这两个状态，“2-停止”由另一事件处理。
     if (status === '2' || status === 2) {
       return false
@@ -775,7 +777,7 @@ const BettingCenterView = Base.ItemView.extend({
   },
 
   // 波动拉杆,或者点击按钮
-  lotteryConfirmHandler(e) {
+  lotteryConfirmHandler() {
     const self = this
     const status = this.$btnConfirm.data('status')// 按钮状态：当前事件仅处理“1-马上开奖，3-再玩一次”这两个状态，“2-停止”由另一事件处理。
     if (status === '2' || status === 2) {

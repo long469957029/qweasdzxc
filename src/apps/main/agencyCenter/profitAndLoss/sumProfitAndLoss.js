@@ -16,6 +16,7 @@ const ReportManageView = SearchGrid.extend({
     _(this.options).extend({
       height: 380,
       title: '报表查询',
+      tableClass: 'table table-similar table-bordered table-center',
       columns: [
         {
           name: '用户名',
@@ -26,37 +27,33 @@ const ReportManageView = SearchGrid.extend({
           width: '8%',
         },
         {
-          name: 'AG真人',
+          name: 'AG',
           width: '8%',
         },
         {
-          name: 'EBET真人',
+          name: 'EBET',
           width: '8%',
         },
         {
-          name: 'BBIN真人',
+          name: 'BBIN',
           width: '8%',
         },
         {
-          name: 'PT老虎机',
+          name: 'PT',
           width: '8%',
         },
         {
-          name: 'MG老虎机',
+          name: 'MG',
           width: '8%',
         },
         {
-          name: 'AG捕鱼',
+          name: 'AG',
           width: '8%',
         },
         {
-          name: 'GG捕鱼',
+          name: 'GG',
           width: '8%',
         },
-        // {
-        //   name: '188体育',
-        //   width: '8%'
-        // },
         {
           name: '总盈亏',
           width: '8%',
@@ -92,6 +89,7 @@ const ReportManageView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD',
       },
+      showIcon: true,
     }).render()
 
     new TicketSelectGroup({
@@ -123,7 +121,7 @@ const ReportManageView = SearchGrid.extend({
     })
 
     if (!_(gridData.parents).isEmpty()) {
-      this._breadList = _(gridData.parents).map((parent, index) => {
+      this._breadList = _(gridData.parents).map((parent) => {
         return {
           data: {
             userId: parent.userId,

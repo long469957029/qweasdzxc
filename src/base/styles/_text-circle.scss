@@ -1,11 +1,11 @@
 .text-circle {
   display: inline-block;
-  font-weight: bold;
+  font-weight: normal;
   text-align: center;
   line-height: 35px;
   font-size: 20px;
   margin-right: 10px;
-  font-family: dinra;
+  font-family: din, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
   &:last-of-type {
     margin-right: 0;
   }

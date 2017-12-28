@@ -7,6 +7,23 @@ $boder-def-color:#e6e6e6;
   background-color: #f8f8f8;
   color: $inverse-color;
   //border-left: 1px solid gray;
+  position: relative;
+  .team-entry{
+    position: absolute;
+    width: 116px;
+    height: 30px;
+    background-color: $new-main-deep-color;
+    color: $def-white-color;
+    font-size:$font-sm;
+    line-height: 30px;
+    top:0;
+    left: 50%;
+    margin-left: -58px;
+    text-align: center;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    cursor: pointer;
+  }
   .sidebar-user-info{
     width: 100%;
     height: 245px;
@@ -39,7 +56,9 @@ $boder-def-color:#e6e6e6;
   .sidebar-title {
     text-align: center;
     font-size: 16px;
-    height: 130px;
+    //height: 130px;
+    padding: 15px 0px;
+    border-bottom: 1px solid $third-line-color;
   }
   .sidebar-title-inner {
     padding-top: 22px;

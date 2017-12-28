@@ -23,7 +23,7 @@
         <% if (columnDefinition.name) { %>
         <th data-id="<%=columnDefinition.id %>">
           <% if(columnDefinition.sortable) { %>
-          <a href="javascript:void(0);" class="btn-sm no-padding text-white sortable-grid-col-header">
+          <a href="javascript:void(0);" class="btn-sm no-padding text-black sortable-grid-col-header">
             <%=columnDefinition.name %>
             <i class="fa <%=columnDefinition.sortable.defaultDir ? ('fa-sort-' + columnDefinition.sortable.defaultDir) : 'fa-sort' %>"></i>
           </a>

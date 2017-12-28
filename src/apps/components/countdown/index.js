@@ -1,4 +1,4 @@
-
+import './index.scss'
 
 const Countdown = Base.PrefabView.extend({
 
@@ -19,7 +19,7 @@ const Countdown = Base.PrefabView.extend({
   },
 
   render(leftTime) {
-  //  leftTime = 91310000; // 测试数据
+    //  leftTime = 91310000; // 测试数据
     leftTime = (leftTime + _.now()) || _.now()
     if (_.isUndefined(this.$el.data('countdownInstance'))) {
       this._initCountdown(leftTime)

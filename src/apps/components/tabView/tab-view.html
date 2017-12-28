@@ -1,9 +1,4 @@
-<%if(title!==undefined){%>
-<div class="tab-header">
-  <div class="inline-block tab-header-title"><%=title%></div>
-  <div class="inline-block tab-header-des"><%=titleDes%></div>
-</div>
-<%}%>
+
 <ul id="<%=_.unique() %>" class="js-view-tabs view-tabs nav <%=tabClass %>">
   <% _(tabs).each(function(tab, index) { %>
   <li class="<% if ((!triggerTab && index) === 0 || (tab.name === triggerTab)) { %>active<% } %> ">

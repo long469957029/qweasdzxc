@@ -29,8 +29,8 @@ const argv = require('minimist')(process.argv.slice(2))
 const devFactory = require('./webpack.dev.factory')
 const productionFactory = require('./webpack.production.factory')
 
-const mainConfig = require('./webpack.main.config')
-const externalConfig = require('./webpack.external.config')
+const mainConfig = require('./wp.main.config')
+const externalConfig = require('./wp.external.config')
 const Fontmin = require('fontmin')
 const zip = require('gulp-zip')
 const svgo = require('imagemin-svgo')
@@ -80,36 +80,59 @@ gulp.task('server.webpack', () => {
     appConfig: packageConfig,
   })
 
-  let proxy = [
-    {
-      path: '*.json',
-      target: serverIP,
-      changeOrigin: true,
-    },
-    {
-      path: 'mock/*.json',
-      target: 'http://localhost:7070/',
-    },
-    {
-      path: '*',
-      target: serverIP,
-      changeOrigin: true,
-    },
-  ]
+  // let proxy = [
+  //   {
+  //     path: '*.json',
+  //     target: serverIP,
+  //     changeOrigin: true,
+  //   },
+  //   {
+  //     path: 'mock/*.json',
+  //     target: 'http://localhost:7070/',
+  //   },
+  //   {
+  //     path: '*',
+  //     target: serverIP,
+  //     changeOrigin: true,
+  //   },
+  // ]
+
+  let proxy = {}
 
   if (argv.mockup) {
-    proxy = _(mockupConfig.routers).map((val, pathInfo) => {
-      return {
-        path: pathInfo,
+    _(mockupConfig.routers).each((json, pathInfo) => {
+      proxy[pathInfo] = {
         target: 'http://localhost:7070/',
+        path: json
       }
-    }).concat(proxy)
+      // return {
+      //   path: pathInfo,
+      // }
+    })
   }
+
+  Object.assign(proxy, {
+    '*.json': {
+      target: serverIP,
+      changeOrigin: true,
+    },
+    'mock/*.json': {
+      target: 'http://localhost:7070/',
+    },
+    '*': {
+      target: serverIP,
+      changeOrigin: true,
+    },
+  })
+  console.info(proxy)
+  // process.exit()
 
   new WebpackDevServer(webpack(devConfig), {
     publicPath: devConfig.output.publicPath,
     hot: true,
     historyApiFallback: true,
+    inline:true,
+    progress:false,
     proxy,
     watchOptions: {
       aggregateTimeout: 300,
@@ -119,12 +142,12 @@ gulp.task('server.webpack', () => {
     stats: {
       colors: true,
     },
-  }).listen(devConfig.port, 'localhost', (err) => {
+  }).listen(devConfig.devServer.port, 'localhost', (err) => {
     if (err) {
       console.log(err)
     }
 
-    console.log(`Listening at localhost:${devConfig.port}`)
+    console.log(`Listening at localhost:${devConfig.devServer.port}`)
   })
 })
 
@@ -182,16 +205,16 @@ gulp.task('image.min', () => {
     .pipe(gulp.dest('./src/'))
 })
 
-gulp.task('image.merchants', () => {
-  del('./minImages')
-  gulp.src('./src/apps/packages/merchants/**/*.{png,jpg,gif,ico}')
-    .pipe(cache(imagemin({
-      progressive: true,
-      svgoPlugins: [{ removeViewBox: false }],
-      use: [pngquant()],
-    })))
-    .pipe(gulp.dest('./src/apps/packages/merchants/'))
-})
+// gulp.task('image.merchants', () => {
+//   del('./minImages')
+//   gulp.src('./src/apps/packages/merchants/**/*.{png,jpg,gif,ico}')
+//     .pipe(cache(imagemin({
+//       progressive: true,
+//       svgoPlugins: [{ removeViewBox: false }],
+//       use: [pngquant()],
+//     })))
+//     .pipe(gulp.dest('./src/apps/packages/merchants/'))
+// })
 
 gulp.task('build.sprite', (callback) => {
   const spriteData =
@@ -208,13 +231,17 @@ gulp.task('build.sprite', (callback) => {
       }))
 
   const imgStream = spriteData.img
-    .pipe(imagemin({
-      progressive: true,
-      svgoPlugins: [{ removeViewBox: false }],
-      use: [pngquant({
-        quality: '70-80',
-      })],
-    }))
+    .pipe(imagemin([
+      imagemin.gifsicle({interlaced: true}),
+      imagemin.jpegtran({progressive: true}),
+      imagemin.optipng({optimizationLevel: 5}),
+      imagemin.svgo({
+        plugins: [
+          {removeViewBox: true},
+          {cleanupIDs: false}
+        ]
+      })
+    ]))
     .pipe(gulp.dest('./src/base/images'))
   spriteData.css.pipe(gulp.dest('./src/base/styles'))
   // 老虎机雪碧图相关scss文件生成后需要修改变量名及方法名，因此其他常规sprites文件夹下的图片合成雪碧图时，先注释以下内容，

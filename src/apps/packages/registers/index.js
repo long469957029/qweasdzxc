@@ -4,7 +4,6 @@ require('packages/misc/common-init.js')
 const logo = require('skeleton/bases/footer/footerLogo.png')
 const calendar = require('skeleton/bases/footer/footerCalendar.png')
 const qrcode = require('packages/newDownload/qrCode/iso-download.png')
-require('./jquery-ui.min.js')
 
 // var footer = require('skeleton/base/footer');
 
@@ -190,7 +189,7 @@ $.widget('gl.registers', {
         btnContent: '重新注册',
         event() {
           self._create()
-        }, 
+        },
       })
     }).done((res) => {
       if (res.result === 0) {
@@ -211,7 +210,7 @@ $.widget('gl.registers', {
             btnContent: '确定',
             event() {
               self._create()
-            }, 
+            },
           })
         } else {
           Global.ui.notification.show(msg, {

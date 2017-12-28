@@ -212,6 +212,7 @@ const BettingRecordsView = SearchGrid.extend({
       size: 'modal-bet',
       bStyle: 'width: 535px;height:620px;',
       body: '<div class="fc-gr-bet-detail"></div>',
+      closeBtn: false,
     })
     const $selectContainer = $dialog.find('.fc-gr-bet-detail')
     const editBetDetailView = new BetDetailView({ tradeno: tradeNo })

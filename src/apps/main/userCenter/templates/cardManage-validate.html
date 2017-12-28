@@ -1,16 +1,26 @@
-<form class="uc-cbCardBinding-container js-uc-last-form form-horizontal">
-  <div class="control-group">
-    <div class="control-label font-sm">开户人姓名：</div>
-    <div class="controls">
-      <input type="text" class="js-uc-cmAccountName input1" required/>
+<form class="uc-cbCardBinding-container uc-cbCardBinding-dialog js-uc-last-form form-horizontal">
+  <div class="uc-cbCardBinding-header">
+    <span>安全提示</span>
+    <a class="close btn-close" data-dismiss="modal">&times;</a>
+  </div>
+  <div class="text-center text-inverse m-TB-md">请提供最近一次绑定的卡号信息！</div>
+  <div class="p-left-md">
+    <div class="control-group">
+      <div class="control-label font-sm">开户人姓名：</div>
+      <div class="controls">
+        <input type="text" class="js-uc-cmAccountName input2" required/>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="control-label font-sm">开户人卡号：</div>
+      <div class="controls">
+        <input type="text" class="js-uc-cmCardNo input2" required/>
+      </div>
     </div>
   </div>
-  <div class="control-group">
-    <div class="control-label font-sm">开户人卡号：</div>
-    <div class="controls">
-      <input type="text" class="js-uc-cmCardNo input1" required/>
-    </div>
+  <div class="js-uc-cmValCardInfoNotice text-center m-bottom-sm"></div>
+  <div class="text-center">
+    <button class="btn btn-cool btn-validate js-btn-validate">确定</button>
   </div>
-  <div class="js-uc-cmValCardInfoNotice"></div>
 </form>
 

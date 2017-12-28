@@ -37,15 +37,17 @@ const TeamAccountDetailView = require('agencyCenter/teamAccountDetail')
 
 const TeamOverviewView = require('agencyCenter/teamOverview')
 
+const sidebar = Global.ui.menu.get('ac')
 
 const AgencyCenterController = RouterController.extend({
 
   lowLevelManage() {
     this.changeMainReginView(new LowLevelManageView(), {
       main: {
-        title: '团队管理',
+        title: '下级管理',
+        titleDes: '',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -126,7 +128,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '开户管理',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -134,8 +136,9 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrTr' }), {
       main: {
         title: '团队投注',
+        titleDes: '团队投注记录只保留近30天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -144,7 +147,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '报表查询',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -152,8 +155,9 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlSr' }), {
       main: {
         title: '团队盈亏',
+        titleDes: '团队盈亏记录只保留近35天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -161,16 +165,18 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlTr' }), {
       main: {
         title: '团队盈亏',
+        titleDes: '团队盈亏记录只保留近35天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
   gameProfitAndLoss() {
     this.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlGr' }), {
       main: {
         title: '团队盈亏',
+        titleDes: '团队盈亏记录只保留近35天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -179,7 +185,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '团队动态',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -254,7 +260,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红管理',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -263,7 +269,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '红包查询',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -272,7 +278,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '返点查询',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
   dividendReport() {
@@ -280,7 +286,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红查询',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
   directAgentGrant() {
@@ -288,7 +294,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红管理',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
       activeMenu: 'ac/dm',
     })
   },
@@ -297,7 +303,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红管理',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
       activeMenu: 'ac/dm',
     })
   },
@@ -306,7 +312,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红管理',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
       activeMenu: 'ac/dm',
     })
   },
@@ -315,7 +321,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红管理',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
       activeMenu: 'ac/dm',
     })
   },
@@ -325,7 +331,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: `${username}的分红协议`,
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
       parentRouter: 'ac/dm',
     })
   },
@@ -333,16 +339,18 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrGr' }), {
       main: {
         title: '团队投注',
+        titleDes: '团队投注记录只保留近30天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
   teamAccountDetail() {
     this.changeMainReginView(new TeamAccountDetailView(), {
       main: {
         title: '团队账变',
+        titleDes: '团队账变记录只保留近30天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -350,8 +358,9 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new TeamOverviewView(), {
       main: {
         title: '团队总览',
+        titleDes: '团队总览记录只保留近30天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 

@@ -4,8 +4,6 @@ const Model = require('skeleton/model')
 
 const BettingChaseModel = Model.extend({
 
-  url: '/ticket/chase/chaseinfo.json',
-
   defaults: {
     plans: [],
     chasePlans: 5,
@@ -69,13 +67,6 @@ const BettingChaseModel = Model.extend({
 
   initialize() {
     this.on('change:filters', this.updateChasePlans)
-  },
-
-  kickFirstPlan(planId) {
-    const plans = this.get('plans')
-    if ((`${plans[0].ticketPlanId}`) === (`${planId}`)) {
-      this.set('plans', _(plans).rest())
-    }
   },
 
   updateChasePlans() {

@@ -31,8 +31,6 @@ const FundRecordsView = TabView.extend({
           view: TransferView,
         },
       ],
-      title: '充提记录',
-      titleDes: '充提记录只保留30天数据。',
     })
   },
 })

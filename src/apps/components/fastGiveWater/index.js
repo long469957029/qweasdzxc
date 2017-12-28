@@ -1,6 +1,3 @@
-
-
-require('./jquery-1.10.2')
 require('./index.scss')
 
 const ticketConfig = require('skeleton/misc/ticketConfig')
@@ -83,16 +80,16 @@ const FastGiveWaterView = Base.ItemView.extend({
       self.timerHandler(beginTime, endTime)
     }
   },
-  
+
   timerHandler(beginTime, endTime) {
     if (beginTime < 0) {
       beginTime = 0
     }
-    
+
     if (endTime < 0) {
       endTime = 0
     }
-    
+
     const self = this
     const $hour = this.$('.hour')
     const $minute = this.$('.minute')
@@ -252,7 +249,7 @@ const FastGiveWaterView = Base.ItemView.extend({
       .done((res) => {
         let data
         if (res && res.result === 0) {
-          data = res.root 
+          data = res.root
           if ((data.receiveMoney / 10000) <= 0) {
             let msg = ''
             if (data.rebateStatus == 1) {
@@ -327,7 +324,7 @@ const FastGiveWaterView = Base.ItemView.extend({
 
   openPrizeWindow() {
     const self = this
-    self.getPrizeConfigInfoXhr().done((res) => { 
+    self.getPrizeConfigInfoXhr().done((res) => {
       const self1 = self
       if (res && res.result === 0) {
         const data = self.data = res.root

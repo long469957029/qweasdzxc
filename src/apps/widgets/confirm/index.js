@@ -47,7 +47,7 @@ $.widget('gl.confirm', {
         size: 'modal-sm',
         modalClass: 'modal-notification',
         id: this.uuid,
-        subTitle: body.join(''),
+        body: body.join(''),
       }
     }
 

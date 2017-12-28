@@ -29,39 +29,6 @@ const BettingChoiceModel = Model.extend({
     // ticketId:
   },
 
-  saveBettingXhr(planId) {
-    const self = this
-
-    const params = this.pick('playId', 'multiple', 'userRebate', 'previewList')
-    const previewList = _(params.previewList).reduce((list, item) => {
-      list.push({
-        betNum: item.bettingNumber,
-        playId: item.playId,
-        betMultiple: item.multiple,
-        moneyMethod: item.unit,
-        // 0 高奖金 1 有返点
-        betMethod: item.betMethod,
-      })
-
-      return list
-    }, [])
-
-    return Global.sync.ajax({
-      url: '/ticket/bet/bet.json',
-      tradition: true,
-      data: {
-        planId,
-        bet: previewList,
-        usePack: this.get('usePack'),
-      },
-    })
-      .done((res) => {
-        if (res && res.result === 0) {
-          self.emptyPrevBetting()
-        }
-      })
-  },
-
   buyBettingXhr(planId) {
     const self = this
 
@@ -96,34 +63,11 @@ const BettingChoiceModel = Model.extend({
   },
 
   initialize() {
-    this.on('change:multiple change:statistics change:userRebate change:betMethod', this.calculateByPrefab)
     this.on('change:maxBonus change:multiple change:unit', this.calculateMaxBonus)
     this.on('change:maxMultiple change:unit', function() {
       const info = this.pick('maxMultiple', 'unit')
       this.set('formatMaxMultiple', _(info.maxMultiple).chain().mul(10000).div(info.unit)
         .value())
-    })
-
-    this.on('change:unit', function(model, unit) {
-      let unitText = ''
-      switch (unit) {
-        case 10000:
-          unitText = '元'
-          break
-        case 1000:
-          unitText = '角'
-          break
-        case 100:
-          unitText = '分'
-          break
-        case 10:
-          unitText = '厘'
-          break
-        default:
-          break
-      }
-      this.set('formatUnit', unitText)
-      this.calculateByPrefab()
     })
 
     this.on('change:previewList', this.calculateTotal)
@@ -275,135 +219,6 @@ const BettingChoiceModel = Model.extend({
       }
     }
     return newNum
-  },
-
-  _addBets(bettingList, options) {
-    const selectInfo = this.pick(
-      'levelName',
-      'playId',
-      'multiple',
-      'playName',
-      'bonusMode',
-      'formatBonusMode',
-      'unit',
-      'formatUnit',
-      'betMethod',
-      'maxBonus',
-      'userRebate',
-      'formatMaxMultiple',
-      'maxMultiple',
-      'rebateMoney',
-      'formatMaxBonus',
-      'ticketId',
-    )
-
-    let previewList = this.get('previewList')
-    let buyList = this.get('buyList')
-    const items = []
-    const sameBets = []
-
-    options = _(options || {}).defaults({
-    })
-
-    _(bettingList).each(function(bettingInfo) {
-      let sameBet
-      let statistics
-
-      if (bettingInfo.statistics) {
-        statistics = bettingInfo.statistics
-      } else {
-        statistics = options.statistics
-      }
-
-      let item = {
-        levelName: selectInfo.levelName,
-        playId: selectInfo.playId,
-        playName: selectInfo.playName,
-        bettingNumber: this.formatBettingNumber(bettingInfo.lotteryList, {
-          selectOptionals: bettingInfo.selectOptionals,
-          formatToNum: bettingInfo.formatToNum,
-          playId: selectInfo.playId,
-          ticketId: selectInfo.ticketId,
-          formatToNumInfo: bettingInfo.formatToNumInfo || false,
-        }),
-        // 显示用
-        formatBettingNumber: this.formatBettingNumber(bettingInfo.lotteryList, {
-          type: 'display',
-          format: bettingInfo.format,
-        }),
-        type: bettingInfo.type,
-        formatBonusMode: selectInfo.formatBonusMode,
-        multiple: selectInfo.multiple,
-        unit: selectInfo.unit,
-        statistics,
-        formatUnit: selectInfo.formatUnit,
-        betMethod: selectInfo.betMethod,
-        userRebate: selectInfo.userRebate,
-        rebateMoney: selectInfo.rebateMoney,
-        maxMultiple: selectInfo.formatMaxMultiple,
-        maxBonus: selectInfo.maxBonus,
-        formatMaxBonus: selectInfo.formatMaxBonus,
-      }
-
-      // if (!_.isUndefined(options.statistics)) {
-      //  //手选
-      //  item.rebateMoney = options.rebateMoney;
-      // } else {
-      //  //机选
-      //  item.rebateMoney = _(prefabMoney).chain().mul(selectInfo.userRebate).div(100).value();
-      // }
-
-      // 判断是否有相同的投注,几个方面比较playId,unit,betMethod,bettingNumber
-      if (!options.buy) {
-        sameBet = _(previewList).findWhere({
-          playId: item.playId,
-          unit: item.unit,
-          betMethod: item.betMethod,
-          bettingNumber: item.bettingNumber,
-        })
-
-        if (sameBet) {
-          sameBet.multiple = _(sameBet.multiple).add(item.multiple)
-          // if (sameBet.multiple > sameBet.maxMultiple) {
-          //  sameBet.multiple = sameBet.maxMultiple;
-          // }
-          item = sameBet
-        }
-      }
-
-      // 计算prefabMoney 和 rebateMoney
-
-      item.prefabMoney = _(2).chain()
-        .mul(item.multiple).mul(item.statistics)
-        .mul(item.unit)
-        .value()
-
-      // rebateMoney: info.betMethod === 1 ? _(prefabMoney).chain().mul(info.userRebate).div(1000).value() : 0
-      // item.rebateMoney = _(item.prefabMoney).chain()
-      //  .mul(selectInfo.userRebate).div(100).value();
-
-      if (sameBet) {
-        sameBets.push(item)
-      } else {
-        items.splice(0, 0, item)
-      }
-    }, this)
-
-    if (!options.buy) {
-      previewList = items.concat(previewList)
-
-      this.set('previewList', previewList)
-
-      this.trigger('change:previewList', this)
-    } else {
-      buyList = items.concat(buyList)
-
-      this.set('buyList', buyList)
-
-      this.trigger('change:buyList', this)
-    }
-
-    return sameBets
   },
 
   addAutoBets(bettingList) {

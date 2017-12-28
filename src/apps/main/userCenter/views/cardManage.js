@@ -106,8 +106,8 @@ const CardManageView = Base.ItemView.extend({
     // if (pwdToken && !(_(pwdToken).isEmpty())) {
     //   this.propConfirmModel(cardId, pwdToken)
     // } else {
-    const type = 'delBankCard'
-    this.popValidateCardInfoModal(type, cardId)
+    // const type = 'delBankCard'
+    this.popValidateCardInfoModal(cardId)
     // }
   },
 
@@ -238,24 +238,21 @@ const CardManageView = Base.ItemView.extend({
     this.$addCardMain.html(this.cardBindView.render().el)
   },
 
-  popValidateCardInfoModal(type, cardId) {
+  popValidateCardInfoModal(cardId) {
     const self = this
 
     const $dialog = Global.ui.dialog.show({
-      title: '安全提示',
-      subTitle: '请提供最近一次绑定的卡号信息！',
       anySize: '480',
       body: this.validateTpl(),
-      footer: `<button class="js-uc-cmValidateCardInfo btn btn-cool width-sm btn-lg" type="button" data-type="${type}">确定</button>`,
+      bodyClass: 'no-padding',
+      closeBtn: false,
     })
     $dialog.on('hidden.modal', function () {
       $(this).remove()
     })
 
     $dialog.off('click.validateCardInfo')
-      .on('click.validateCardInfo', '.js-uc-cmValidateCardInfo', (ev) => {
-        const $valTarget = $(ev.currentTarget)
-        const valType = $valTarget.data('type')
+      .on('click.validateCardInfo', '.js-btn-validate', () => {
         const $form = $dialog.find('.js-uc-last-form')
         const formStatus = $form.parsley().validate()
         if (formStatus) {
@@ -269,15 +266,7 @@ const CardManageView = Base.ItemView.extend({
                 $dialog.modal('hide')
                 const token = res.root
                 self.$('.js-uc-pwdToken').val(token)
-                // 如果类型是绑定银行卡
-                if (valType === 'addBankCard') {
-                  Global.appRouter.navigate(_('#uc/cm/bind').addHrefArgs({
-                    _t: _.now(),
-                    pwdToken: token,
-                  }), { trigger: true, replace: false })
-                } else if (valType === 'delBankCard') {
-                  self.propConfirmModel(cardId, token)
-                }
+                self.propConfirmModel(cardId, token)
               } else if (_(res.root).isNull()) {
                 $dialog.find('.js-uc-cmValCardInfoNotice').html(self._getErrorEl(`验证失败,${res.msg}`))
               } else if (res.root != null && _(res.root).isNumber()) {
@@ -330,13 +319,7 @@ const CardManageView = Base.ItemView.extend({
       })
   },
   _getErrorEl (text) {
-    return `${'<div class="alert alert-danger alert-dismissible" role="alert">' +
-        '<button type="button" class="close" data-dismiss="alert">' +
-        '<span aria-hidden="true">×</span>' +
-        '</button>' +
-        '<i class="fa fa-times-circle m-right-xs"></i>' +
-        '<strong>提示！</strong> '}${text 
-    }</div>`
+    return `<span class="text-hot"><i class="sfa sfa-error-icon m-right-xs vertical-sub"></i>${text}</span>`
   },
   addCloseHandler() {
     this.$addCardContainer.addClass('hidden')

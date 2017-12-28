@@ -154,7 +154,7 @@
 }
 
 .hide {
-  display: none !important;
+  display: none;
 }
 
 .pre {
@@ -347,9 +347,9 @@
 
 .timer-calendar-input {
   position: relative;
-  border: 1px solid #878585;
+  border: 1px solid $def-gray-color;
   display: inline-block;
-  height: 23px;
+  height: 24px;
   top: 10px;
   input {
     position: absolute;
@@ -358,6 +358,7 @@
     border: none !important;
     width: 80%;
     height: 100%;
+    font-size: 12px;
   }
   .timer-calendar {
     position: absolute;

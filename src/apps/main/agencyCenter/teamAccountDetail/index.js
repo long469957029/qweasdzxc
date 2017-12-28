@@ -10,6 +10,8 @@ const MoneyDetailView = SearchGrid.extend({
 
   template: require('agencyCenter/teamAccountDetail/index.html'),
 
+  className: 'ac-team-main basic-black',
+
   events: {},
 
   initialize() {
@@ -17,9 +19,9 @@ const MoneyDetailView = SearchGrid.extend({
       betDetailPrevUrl: '#gc/tr/detail/',
       chaseDetailPrevUrl: '#gc/cr/detail/',
     })
-    
+
     _(this.options).extend({
-      height: '370',
+      height: '615',
       columns: [
         {
           name: '交易流水号',
@@ -50,12 +52,14 @@ const MoneyDetailView = SearchGrid.extend({
           width: '15%',
         },
       ],
-      tip: '<div class="tip-hot"><span>提示</span> 团队账变只保留30天数据。</div>',
       gridOps: {
         emptyTip: '没有账户明细',
       },
       ajaxOps: {
         url: '/fund/balance/history.json',
+      },
+      reqData: {
+        pageSize: 15,
       },
     })
   },
@@ -74,6 +78,7 @@ const MoneyDetailView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD',
       },
+      showIcon: true,
     }).render()
 
     this.$('select[name=tradeType]').html(_(tradingStatusConfig.get()).map((status) => {
@@ -125,7 +130,7 @@ const MoneyDetailView = SearchGrid.extend({
     // row.push(tradingStatusConfig.toZh(info.tradeType));
     row.push(info.tradeType)
     if (info.amount >= 0) {
-      row.push(`<span class="text-bold-pleasant">+${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-bold-prominent">+${_(info.amount).convert2yuan()}</span>`)
     } else {
       row.push(`<span class="">${_(info.amount).convert2yuan()}</span>`)
     }

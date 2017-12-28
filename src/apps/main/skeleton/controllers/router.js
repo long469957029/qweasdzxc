@@ -5,7 +5,7 @@ import './index.scss'
 
 const SideMenuMainView = Base.LayoutView.extend({
   className: 'clearfix',
-  template: '<div class="admin-container"><div class="js-gl-sidebar pull-left col-md-2"></div>' +
+  template: '<div class="admin-container clearfix"><div class="js-gl-sidebar pull-left col-md-2"></div>' +
   '<div class="js-gl-main pull-left col-md-10"></div></div>',
 })
 
@@ -89,6 +89,7 @@ const RouterController = Base.Controller.extend({
         className: 'clearfix',
         template: require('skeleton/templates/main.html'),
         serializeData() {
+          _(config.main).extend({ titleDes: config.main.titleDes || null })
           return config.main
         },
       })

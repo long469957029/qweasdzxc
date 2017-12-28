@@ -82,6 +82,7 @@ const SearchGrid = Base.PrefabView.extend({
 
   _initGrid($grid) {
     const self = this
+    console.log(this.options)
     $grid.grid(_(this.options).chain().pick(
       'tableClass',
       // 'footerClass',
@@ -164,12 +165,12 @@ const SearchGrid = Base.PrefabView.extend({
           let data
 
           if (res && res.result === 0) {
-            data = _(self.options.dataProp.split('.')).reduce((res, prop) => {
-              return res[prop]
+            data = _(self.options.dataProp.split('.')).reduce((_res, prop) => {
+              return _res[prop]
             }, res)
 
-            list = _(self.options.listProp.split('.')).reduce((res, prop) => {
-              return res[prop]
+            list = _(self.options.listProp.split('.')).reduce((_res, prop) => {
+              return _res[prop]
             }, res)
 
             if (!data) {
@@ -272,10 +273,10 @@ const SearchGrid = Base.PrefabView.extend({
 
   // events handler
 
-  searchHandler(e) {
-    const filter = this.filterHelper.serializeObject({
-      reset: true,
-    })
+  searchHandler() {
+    // const filter = this.filterHelper.serializeObject({
+    //   reset: true,
+    // })
 
     this._breadList = []
 
