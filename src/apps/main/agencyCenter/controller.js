@@ -5,10 +5,10 @@ const RouterController = require('skeleton/controllers/router')
 const LowLevelManageView = require('agencyCenter/views/lowLevelManage')
 const LowLevelRebateView = require('agencyCenter/views/lowLevelManage-rebate')
 
-const LowLevelBettingRecordsView = require('userCenter/views/bettingRecords')
+const LowLevelBettingRecordsView = require('fundCenter/gameRecord/bettingRecords')
 const LowLevelBettingDetailView = require('agencyCenter/views/lowLevelManage-bettingDetail')
 
-const LowLevelTrackRecordsView = require('userCenter/views/trackRecords')
+const LowLevelTrackRecordsView = require('fundCenter/gameRecord/trackRecords')
 const LowLevelTrackDetailView = require('agencyCenter/views/lowLevelManage-trackDetail')
 
 const LowLevelAccountDetailView = require('agencyCenter/views/lowLevelManage-accountDetail')

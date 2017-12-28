@@ -1,10 +1,10 @@
 
 
-const BettingDetailView = require('userCenter/views/bettingDetail')
+const BettingDetailView = require('fundCenter/gameRecord/betDetail')
 
 const LowLevelBettingDetailView = BettingDetailView.extend({
 
-  initialize(options) {
+  initialize() {
     BettingDetailView.prototype.initialize.apply(this, arguments)
 
     this.options.detailPrevUrl = `#ac/track/${this.options.userId}/detail/`

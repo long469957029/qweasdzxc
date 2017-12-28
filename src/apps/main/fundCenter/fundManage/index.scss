@@ -311,9 +311,9 @@
         display: block;
         margin-top: 30px;
         margin-left: 11px;
-        background: url('../misc/v2/icon-change.png') no-repeat 97% center;
+        background: url("~base/images/v2/icon-change.png");
         &.active, &:hover {
-          background: url('../misc/v2/icon-change-Deep.png') no-repeat 97% center;
+          background: url('~base/images/v2/icon-change-Deep.png');
         }
       }
     }

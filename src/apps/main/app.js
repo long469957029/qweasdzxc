@@ -4,7 +4,7 @@ import NoticeView from 'skeleton/bases/notice'
 import FooterView from 'skeleton/bases/footer'
 import ToolbarView from 'skeleton/bases/toolbar'
 
-import RechargeView from 'com/fundOperate/recharge'
+import RechargeView from 'com/fundOperate'
 
 import './index.css'
 // import WithDrawView from 'com/fundOperate/withdraw'
@@ -118,12 +118,15 @@ const support = {
   animations: window.Modernizr.cssanimations,
 }
 const animEndEventNames = {
-  WebkitAnimation: 'webkitAnimationEnd', OAnimation: 'oAnimationEnd', msAnimation: 'MSAnimationEnd', animation: 'animationend',
+  WebkitAnimation: 'webkitAnimationEnd',
+  OAnimation: 'oAnimationEnd',
+  msAnimation: 'MSAnimationEnd',
+  animation: 'animationend',
 }
 const animEndEventName = animEndEventNames[window.Modernizr.prefixed('animation')]
 
 function onEndAnimation($el, callback) {
-  const onEndCallbackFn = function(ev) {
+  const onEndCallbackFn = function (ev) {
     if (support.animations) {
       if (ev.target !== this) {
         return
@@ -154,7 +157,6 @@ function _bindServiceHandler() {
     newwin.moveTo(100, 50)
   })
 }
-
 function _bindClosePopoverHandler() {
   $(document).off('click.popover').on('click.popover', '.popover', (e) => {
     const $target = $(e.target)
@@ -191,7 +193,7 @@ function _bindClickModalFadeHandler() {
   })
 }
 const _bindFundOperatorDialogHandler = () => {
-  $(document).off('click.fundDialog').on('click.fundDialog', '.js-gl-fund-dialog', () => {
+  $(document).off('click.fundDialog').on('click.fundDialog', '.js-fc-re', () => {
     const acctInfo = Global.memoryCache.get('acctInfo')
     if (!acctInfo || acctInfo.userStatus === 100) {
       Global.ui.notification.show('用户已被冻结，无法进行充值操作')
@@ -204,6 +206,7 @@ const _bindFundOperatorDialogHandler = () => {
       id: _.now(),
       title: '',
       size: 'fund-operate',
+      bStyle: 'width: 740px;height:680px;border:0;"',
       bodyClass: 'js-fund-operate fund-operate',
       body: '<div class="js-fund-operate-container"></div>',
     })
@@ -212,6 +215,14 @@ const _bindFundOperatorDialogHandler = () => {
 
     $fundOperateDialog.on('hidden.modal', () => {
       $(this).remove()
+    })
+    $fundOperateDialog.on('click.modal', '.js-rc-close-dialog', () => {
+      Global.router.goTo('#aa')
+      $fundOperateDialog.modal('hide')
+    })
+    $fundOperateDialog.on('click.modal', '.js-rc-recharge-to-record', () => {
+      Global.router.goTo('#fc/rd')
+      $fundOperateDialog.modal('hide')
     })
   })
 }

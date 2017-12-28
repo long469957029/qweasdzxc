@@ -2,12 +2,6 @@
 
 const RouterController = require('skeleton/controllers/router')
 
-const BettingRecordView = require('userCenter/views/bettingRecords')
-const BettingDetailView = require('userCenter/views/bettingDetail')
-
-const TrackRecordView = require('userCenter/views/trackRecords')
-const TrackDetailView = require('userCenter/views/trackDetail')
-
 const PersonalManageView = require('userCenter/views/personalManage')
 const CardManageView = require('userCenter/views/cardManage')
 const CardBindingView = require('userCenter/views/cardBinding')
@@ -19,60 +13,6 @@ const PriceDetailsView = require('userCenter/views/priceDetails')
 const sidebar = Global.ui.menu.get(['fc', 'uc'])
 
 const UserCenterController = RouterController.extend({
-
-  bettingRecords() {
-    this.changeMainReginView(new BettingRecordView(), {
-      main: {
-        // icon: gcMenuConfig.icon,
-        title: '投注记录',
-      },
-      sidebar,
-    })
-  },
-
-  bettingDetail(tradeNo) {
-    this.changeSubReginView(new BettingDetailView({
-      tradeNo,
-    }), {
-      main: {
-        title: '投注详情',
-      },
-      parentRouter: 'gc/tr',
-      destroyDiff: false,
-    })
-  },
-
-  trackRecords() {
-    this.changeMainReginView(new TrackRecordView(), {
-      main: {
-        // icon: gcMenuConfig.icon,
-        title: '追号记录',
-      },
-      sidebar,
-    })
-  },
-  // 追号详情
-  trackDetail(tradeNo, chaseFormId) {
-    this.changeSubReginView(new TrackDetailView({
-      tradeNo,
-      chaseFormId,
-    }), {
-      main: {
-        title: '追号详情',
-      },
-      parentRouter: 'gc/tr',
-      destroyDiff: false,
-    })
-  },
-  // 追号详情跳投注记录
-  trackBetDetail(chaseFormId, tradeNo) {
-    this.changeSubReginView(new BettingDetailView({
-      tradeNo,
-    }), {
-      parentRouter: 'gc/tr',
-    })
-  },
-
   personalManage() {
     this.changeMainReginView(new PersonalManageView(), {
       main: {

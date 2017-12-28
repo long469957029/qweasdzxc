@@ -1,7 +1,7 @@
 /**
  * Created by ABCD on 2015/10/23.
  */
-const BettingDetailView = require('userCenter/views/bettingDetail')
+const BettingDetailView = require('fundCenter/gameRecord/betDetail')
 
 const BettingCenterBettingDetailView = BettingDetailView.extend({
 

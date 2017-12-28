@@ -1,0 +1,895 @@
+@charset "UTF-8";
+
+@import "~base/styles/imports";
+
+.fund-operate {
+  padding: 0 !important;
+  .fc-rw {
+    height: 680px;
+    background: $prominent-dialog-body;
+    .nav-tabs {
+      height: 54px;
+      padding: 0 231px;
+      background: $new-main-deep-color;
+      li {
+        a {
+          margin-top: 17px;
+          padding: 0px 13px;
+          border-radius: 5px;
+          color: $def-white-color;
+          line-height: 37px !important;
+          height: 42px;
+          span {
+            font-size: 18px;
+          }
+        }
+        &.active > a {
+          color: $new-main-deep-color;
+          border-bottom: 0;
+          background: $prominent-dialog-body;
+        }
+      }
+    }
+  }
+  .fc-rc-container {
+    width: 100%;
+    height: 625px;
+    position: relative;
+    overflow: hidden;
+    .fc-rc-maskCon {
+      width: 5000px;
+      .fc-rc-view {
+        margin-top: 30px;
+        width: 740px;
+        height: 595px;
+        float: left;
+        .fc-rc-recharge-leftBar {
+          .fc-rc-leftBar-payType-select {
+            position: absolute;
+            top: 48px;
+            z-index: 10;
+            .fc-rc-payment-select {
+              overflow: hidden;
+              width: 320px;
+              height: 50px;
+              background: #ffffff;
+              border: 1px solid #cccccc;
+              line-height: 50px;
+              border-radius: 5px;
+              display: inline-block;
+              position: relative;
+              text-align: left;
+              cursor: pointer;
+              transition: height 0.5s;
+              padding: 0 20px;
+              .fc-rc-payType-selected {
+                height: 50px;
+              }
+              .rc-icon {
+                display: inline-block;
+                vertical-align: middle;
+                background-size: 100% 100%;
+                margin-bottom: 3px;
+              }
+              .rc-name {
+                display: inline-block;
+                margin-left: 20px;
+                color: #333333;
+                font-size: 14px;
+              }
+              .rc-desc {
+                display: inline-block;
+                color: #999999;
+                position: absolute;
+                left: 230px;
+              }
+              .select-down {
+                width: 18px;
+                height: 10px;
+                display: block;
+                position: absolute;
+                top: 20px;
+                left: 315px;
+                background: url("~base/images/v2/icon-select-down.png") no-repeat;
+                &.up {
+                  transform: rotate(180deg);
+                }
+              }
+              &.side-down {
+                border: 1px solid $new-main-deep-color;
+                height: 320px;
+                overflow: auto;
+              }
+            }
+            .fc-rc-payType-item {
+              border-top: 1px solid #e6e6e6;
+            }
+            .fc-rc-payList {
+              width: 360px;
+              height: 55px;
+              box-sizing: border-box;
+              float: left;
+              margin-left: 15px;
+              margin-top: 11px;
+              line-height: 28px;
+              cursor: pointer;
+              &.active, &:hover {
+                border: 2px solid #17c0c8;
+              }
+            }
+
+          }
+          .fc-rc-leftBar-subType-area {
+            position: absolute;
+            top: 125px;
+            height: 95px;
+            z-index: 8;
+            .fc-rc-bank-select {
+              margin-top: 3px;
+              width: 360px;
+              height: 50px;
+              background: #ffffff;
+              border: 1px solid #cccccc;
+              line-height: 50px;
+              border-radius: 5px;
+              //display: inline-block;
+              position: relative;
+              text-align: left;
+              cursor: pointer;
+              transition: height 0.5s;
+              overflow: hidden;
+              .rc-icon {
+                display: inline-block;
+                vertical-align: middle;
+                background-size: 100% 100%;
+                margin-left: 20px;
+                margin-bottom: 3px;
+              }
+              .rc-name {
+                display: inline-block;
+                margin-left: 20px;
+                color: #333333;
+                font-size: 14px;
+              }
+              .rc-desc {
+                display: inline-block;
+                color: #999999;
+                position: absolute;
+                left: 230px;
+              }
+              .select-down {
+                width: 18px;
+                height: 10px;
+                display: block;
+                position: absolute;
+                top: 20px;
+                left: 315px;
+                background: url("~base/images/v2/icon-select-down.png") no-repeat;
+                &.up {
+                  transform: rotate(180deg);
+                }
+              }
+              &.side-down {
+                border: 1px solid $new-main-deep-color;
+                height: 320px;
+                overflow: auto;
+              }
+              .fc-rc-bank-item {
+                border-top: 1px solid #e6e6e6;
+              }
+              .fc-rc-bankList {
+                width: 360px;
+                height: 55px;
+                box-sizing: border-box;
+                float: left;
+                margin-left: 15px;
+                margin-top: 11px;
+                line-height: 28px;
+                cursor: pointer;
+                &.active, &:hover {
+                  border: 2px solid #17c0c8;
+                }
+              }
+            }
+            .fc-rc-leftBar-aliPay-select {
+              margin-top: -5px;
+              .js-rc-aliPay-Title {
+                font-size: 14px;
+                color: #333333;
+                z-index: 9;
+                position: absolute;
+                top: 11px;
+                left: 20px;
+              }
+              .js-rc-aliPay-name {
+                padding-left: 160px;
+                width: 200px;
+                font-size: 16px;
+                color: #333333;
+              }
+            }
+          }
+          .fc-rc-leftBar-bottom-area {
+            position: absolute;
+            top: 205px;
+            .no-subType {
+              top: 125px !important;
+            }
+            .fc-rc-leftBar-payMoney-Input {
+              .js-rc-money-Title {
+                font-size: 14px;
+                color: #333333;
+                z-index: 7;
+                position: absolute;
+                top: 18px;
+                left: 20px;
+              }
+              .js-rc-money-input {
+                padding-left: 160px;
+                width: 150px;
+                padding-right: 50px;
+                font-size: 16px;
+                color: #333333;
+              }
+              .js-rc-money-yuan {
+                top: 18px;
+                position: absolute;
+                right: 20px;
+                z-index: 7;
+                font-size: 14px;
+                color: #999999;
+              }
+            }
+            .fc-rc-leftBar-quickPay-select {
+              width: 360px;
+              height: 170px;
+              li {
+                line-height: 85px;
+                list-style: none;
+                font-size: 16px;
+                border-bottom: 2px solid $def-gray-color;
+                color: #666666;
+                width: 85px;
+                margin: 0 16px;
+                display: inline-block;
+                text-align: center;
+                height: 65px;
+                &.active, &:hover {
+                  border-bottom: 2px solid $new-main-deep-color;
+                  color: $new-main-deep-color;
+                }
+              }
+            }
+            .fc-rc-leftBar-payMoney-fee {
+              li {
+                list-style: none;
+                display: inline-block;
+                margin-right: 50px;
+                margin-left: 15px;
+              }
+            }
+
+            .fc-rc-leftBar-submit {
+              margin-top: 25px;
+              .btn-fc-submit {
+                width: 360px;
+                height: 55px;
+                background-color: $new-main-deep-color;
+                color: $new-main-body-color;
+                font-size: 18px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.fc-rc-input {
+  height: 50px;
+  width: 360px;
+  border-radius: 4px;
+  border: 1px solid;
+  border-color: $def-gray-color !important;
+  &.active, &:hover, &:focus, &:active {
+    border: 1px solid;
+    border-color: $new-main-deep-color !important;
+  }
+}
+
+.fc-re-quickpay {
+  width: 22px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-quickPay.png');
+}
+
+.fc-re-union {
+  width: 27px;
+  height: 18px;
+  background-image: url('~base/images/v2/bank-UnionPay.png');
+}
+
+.fc-re-wechat {
+  width: 22px;
+  height: 22px;
+  background-image: url('~base/images/v2/bank-wxPay.png');
+}
+
+.fc-re-alipay {
+  width: 22px;
+  height: 22px;
+  background-image: url('~base/images/v2/bank-aliPay-pay.png');
+}
+
+.fc-re-aliTransfer {
+  width: 22px;
+  height: 23px;
+  background-image: url('~base/images/v2/bank-aliPay-transfer.png');
+}
+
+.fc-re-card {
+  width: 22px;
+  height: 23px;
+  background-image: url('~base/images/v2/bank-creditCard.png');
+}
+
+.fc-re-banktransfer {
+  width: 25px;
+  height: 16px;
+  background-image: url('~base/images/v2/bank-creditCard.png');
+}
+
+.fc-re-scancode {
+  width: 22px;
+  height: 23px;
+  background-image: url('~base/images/v2/bank-saoPay.png');
+}
+
+.fc-re-qqscancode {
+  width: 22px;
+  height: 22px;
+  background-image: url('~base/images/v2/bank-qqPay.png');
+
+}
+
+.fc-re-scancode {
+  background-image: url('~base/images/v2/bank-UnionPay.png');
+}
+
+.fc-re-jdPay {
+  width: 22px;
+  height: 23px;
+  background-image: url('~base/images/v2/bank-JD.png');
+}
+
+.fc-rc-recharge-confirmView {
+  margin: 15px 45px;
+  text-align: center;
+  .fc-rc-confirmView-title {
+    cursor: pointer;
+    text-align: left;
+    .title-left {
+      font-size: 14px;
+      color: $def-gray-color;
+      &.active, &:hover {
+        color: $new-main-deep-color;
+      }
+    }
+    .title-right {
+      font-size: 14px;
+      color: $font-auxiliary-color;
+      &.active, &:hover {
+        color: $new-main-deep-color;
+      }
+    }
+  }
+  .fc-rc-confirmView-confirm-img {
+    background-image: url('~base/images/v2/icon-comfirm-bg.png');
+    margin-top: 20px;
+    width: 75px;
+    height: 75px;
+    margin-left: 287px;
+  }
+  .fc-rc-confirmView-confirm-Tips {
+    font-size: 18px;
+    color: #666666;
+    margin-top: 20px;
+  }
+  .fc-rc-confirmView-confirm-info {
+    height: 140px;
+    font-size: 16px;
+    margin-top: 40px;
+    color: #666666;
+    text-align: left;
+    .confirm-info-name {
+      margin-top: 20px;
+      margin-right: 20px;
+      width: 80px;
+      margin-left: 242px;
+    }
+    .rc-confirm-info-bankName {
+      margin-top: 20px;
+    }
+    .rc-confirm-info-amount {
+      margin-top: 20px;
+    }
+  }
+  .fc-rc-recharge-submit {
+    width: 360px;
+    height: 50px;
+    background-color: $new-main-deep-color;
+    color: $def-white-color;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  .fc-rc-confirmView-confirm-transferPage {
+    font-size: 14px;
+    margin-top: 20px;
+    padding: 0 110px;
+    line-height: 25px;
+    .rc-recharge-to-record {
+      cursor: pointer;
+      &.active, &:hover {
+        color: $prominent-color;
+      }
+    }
+  }
+}
+
+.fc-rc-aliAndBankTransfer-View {
+  .fc-rc-recharge-leftBar {
+
+    .fc-rc-aliAndBankTransfer-Title {
+      margin-top: 17px;
+      width: 360px;
+      margin-bottom: 22px;
+      .title-left {
+        font-size: 16px;
+        color: $def-black-color;
+        position: absolute;
+        top: 51px;
+      }
+      .title-right {
+        margin-left: 10px;
+        width: 343px;
+        text-align: left;
+        font-size: 16px;
+        color: $def-black-color;
+      }
+    }
+    .rc-aliAndBankTransfer-info {
+      border-top: 1px solid #e6e6e6;
+      li {
+        list-style: none;
+        padding: 16px 10px;
+        border-bottom: 1px solid #e6e6e6;
+      }
+      .info-name {
+        color: $def-black-color;
+        font-size: 14px;
+        width: 105px;
+        text-align: left;
+      }
+      .info-value {
+        color: $new-inverse-color;
+        font-size: 14px;
+      }
+      .info-copy {
+        border: $def-gray-color;
+        width: 40px;
+        height: 17px;
+        background-color: $def-gray-color;
+        color: $def-white-color;
+        float: right;
+        &.active, &:hover {
+          background-color: $new-main-deep-color;
+          color: $def-white-color;
+        }
+      }
+      .btn-fc-submit {
+
+        margin-top: 25px;
+        .btn-fc-submit {
+          width: 360px;
+          height: 55px;
+          background-color: $new-main-deep-color;
+          color: $new-main-body-color;
+          font-size: 18px;
+        }
+      }
+    }
+    .rc-aliAndBankTransfer-tips {
+      margin-top: 15px;
+      .title-left {
+        font-size: 12px;
+
+        color: $prominent-color;
+        .title-left-control {
+          float: left;
+          height: 32px;
+        }
+      }
+      .title-right {
+        width: 339px;
+        text-align: left;
+        font-size: 12px;
+        color: $prominent-color;
+      }
+    }
+    .btn-fc-recharge-submit {
+      margin-top: 15px;
+      width: 360px;
+      height: 50px;
+      background-color: $new-main-deep-color;
+      color: $def-white-color;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .fc-rc-aliAndBankView-title {
+      margin-top: 30px;
+      cursor: pointer;
+      .title-left {
+        font-size: 14px;
+        color: $def-gray-color;
+        &.active, &:hover {
+          color: $new-main-deep-color;
+        }
+      }
+      .title-right {
+        font-size: 14px;
+        color: $font-auxiliary-color;
+        &.active, &:hover {
+          color: $new-main-deep-color;
+        }
+      }
+    }
+  }
+
+}
+
+.fc-rc-recharge-leftBar {
+  padding: 0px 35px;
+  width: 350px;
+  float: left;
+}
+
+.fc-rc-recharge-rightBar {
+  border-left: 1px solid #e6e6e6;
+  height: 570px;
+  padding: 0 39px;
+  width: 230px;
+  float: right;
+  .fc-rc-rightBar-tips {
+    margin-top: 18px;
+    height: 150px;
+    border-bottom: 1px solid #e6e6e6;
+    .fc-rc-rightBar-tips-img {
+      background-image: url("~base/images/v2/icon-tips.png") !important;
+      width: 18px;
+      height: 18px;
+      float: left;
+      display: block;
+    }
+    .fc-rc-rightBar-tips-title {
+      color: $def-black-color;
+
+    }
+    .fc-rc-rightBar-tips-content {
+      color: $font-auxiliary-color;
+      display: block;
+      padding: 5px 0;
+    }
+  }
+  .fc-rc-rightBar-activity {
+    height: 335px;
+    margin-top: 15px;
+    cursor: pointer;
+    .fc-rc-rightBar-ac-img {
+      background-image: url("~base/images/v2/icon-activity.png") !important;
+      width: 18px;
+      height: 13px;
+      display: block;
+      padding-bottom: 5px;
+      float: left;
+    }
+    .fc-rc-rightBar-ac {
+      width: 230px;
+      height: 130px;
+      margin: 18px 0 10px 0;
+      border: 1px solid #cccccc;
+    }
+    .fc-rc-rightBar-ac-link {
+      color: $font-auxiliary-color;
+    }
+  }
+}
+
+.fc-tr-container {
+  width: 100%;
+  height: 625px;
+  position: relative;
+  overflow: hidden;
+  .fc-rc-maskCon {
+    width: 5000px;
+    .fc-tr-view {
+      margin-top: 30px;
+      width: 740px;
+      height: 595px;
+      float: left;
+      .fc-rc-recharge-leftBar {
+        .fc-tr-change {
+          height: 75px;
+          width: 23px;
+          float: right;
+          margin-top: 44px;
+          border-top: 1px solid #cccccc;
+          border-right: 1px solid #cccccc;
+          border-bottom: 1px solid #cccccc;
+          margin-right: -32px;
+          float: right;
+          .fc-tr-change-img {
+            width: 19px;
+            height: 19px;
+            display: block;
+            margin-top: 28px;
+            margin-left: 14px;
+            background: url("~base/images/v2/icon-change.png");
+            &.active, &:hover {
+              background: url('~base/images/v2/icon-change-Deep.png');
+            }
+          }
+        }
+        .fc-tr-out-select {
+          position: absolute;
+          z-index: 9;
+          top: 48px;
+          .tr-out-package-title {
+            font-size: 14px;
+            color: #333333;
+            float: left;
+          }
+
+          .fc-tr-out-select-panel {
+            overflow: hidden;
+            width: 320px;
+            height: 50px;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            line-height: 50px;
+            border-radius: 5px;
+            display: inline-block;
+            position: relative;
+            text-align: left;
+            cursor: pointer;
+            transition: height 0.5s;
+            padding: 0 20px;
+            .fc-tr-out-selected {
+              height: 50px !important;
+            }
+            .fc-tr-out-item {
+              border-top: 1px solid #e6e6e6;
+            }
+            .rc-icon {
+              display: inline-block;
+              vertical-align: middle;
+              background-size: 100% 100%;
+              margin-bottom: 3px;
+            }
+            .rc-name {
+              display: inline-block;
+              margin-left: 125px;
+              color: #333333;
+              font-size: 14px;
+            }
+            .rc-desc {
+              display: inline-block;
+              color: #999999;
+              position: absolute;
+              left: 255px;
+            }
+            .select-down {
+              width: 18px;
+              height: 10px;
+              display: block;
+              position: absolute;
+              top: 20px;
+              left: 315px;
+              background: url("~base/images/v2/icon-select-down.png") no-repeat;
+              &.up {
+                transform: rotate(180deg);
+              }
+            }
+            &.side-down {
+              border: 1px solid $new-main-deep-color;
+              height: 320px;
+              overflow: auto;
+            }
+          }
+
+        }
+
+        .fc-tr-in-select {
+          position: absolute;
+          z-index: 7;
+          top: 123px;
+          .tr-in-package-title {
+            font-size: 14px;
+            color: #333333;
+          }
+          .fc-tr-select {
+            overflow: hidden;
+            width: 320px;
+            height: 50px;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            line-height: 50px;
+            border-radius: 5px;
+            display: inline-block;
+            position: relative;
+            text-align: left;
+            cursor: pointer;
+            transition: height 0.5s;
+            padding: 0 20px;
+            .fc-tr-in-selected {
+              height: 50px !important;
+            }
+            .rc-icon {
+              display: inline-block;
+              vertical-align: middle;
+              background-size: 100% 100%;
+              margin-bottom: 3px;
+            }
+            .rc-name {
+              display: inline-block;
+              margin-left: 125px;
+              color: #333333;
+              font-size: 14px;
+            }
+            .rc-desc {
+              display: inline-block;
+              color: #999999;
+              position: absolute;
+              left: 255px;
+            }
+            .select-down {
+              width: 18px;
+              height: 10px;
+              display: block;
+              position: absolute;
+              top: 20px;
+              left: 315px;
+              background: url("~base/images/v2/icon-select-down.png") no-repeat;
+              &.up {
+                transform: rotate(180deg);
+              }
+            }
+            &.side-down {
+              border: 1px solid $new-main-deep-color;
+              height: 320px;
+              overflow: auto;
+            }
+          }
+
+          .fc-tr-in-item {
+            border-top: 1px solid #e6e6e6;
+          }
+        }
+        .fc-rc-leftBar-bottom-area {
+          position: absolute;
+          top: 205px;
+          .no-subType {
+            top: 125px !important;
+          }
+          .fc-tr-transfer-amount-Input {
+            .js-tr-amount-title {
+              font-size: 14px;
+              color: #333333;
+              z-index: 6;
+              position: absolute;
+              top: 18px;
+              left: 20px;
+            }
+            .js-tr-amount-input {
+              padding-left: 160px;
+              width: 150px;
+              padding-right: 50px;
+              font-size: 16px;
+              color: #333333;
+            }
+            .js-tr-amount-yuan {
+              top: 18px;
+              position: absolute;
+              right: 20px;
+              z-index: 6;
+              font-size: 14px;
+              color: #999999;
+            }
+          }
+          .fc-tr-quickPay-select {
+            width: 360px;
+            height: 170px;
+            li {
+              line-height: 85px;
+              list-style: none;
+              font-size: 16px;
+              border-bottom: 2px solid $def-gray-color;
+              color: #666666;
+              width: 85px;
+              margin: 0 16px;
+              display: inline-block;
+              text-align: center;
+              height: 65px;
+              &.active, &:hover {
+                border-bottom: 2px solid $new-main-deep-color;
+                color: $new-main-deep-color;
+              }
+            }
+          }
+          .fc-rc-leftBar-submit {
+            margin-top: 25px;
+          }
+        }
+        .fc-tr-amount-tips{
+          position: absolute;
+          top: 195px;
+          margin-left: 20px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+.fc-rc-recharge-confirmView {
+  margin: 15px 45px;
+  text-align: center;
+  .fc-rc-confirmView-title {
+    cursor: pointer;
+    text-align: left;
+    .title-left {
+      font-size: 14px;
+      color: $def-gray-color;
+      &.active, &:hover {
+        color: $new-main-deep-color;
+      }
+    }
+    .title-right {
+      font-size: 14px;
+      color: $font-auxiliary-color;
+      &.active, &:hover {
+        color: $new-main-deep-color;
+      }
+    }
+  }
+  .fc-rc-confirmView-confirm-img {
+    background-image: url('~base/images/v2/icon-comfirm-bg.png');
+    margin-top: 20px;
+    width: 75px;
+    height: 75px;
+    margin-left: 287px;
+  }
+  .fc-rc-confirmView-confirm-Tips {
+    font-size: 18px;
+    color: #666666;
+    margin-top: 20px;
+  }
+  .fc-rc-confirmView-confirm-transferPage {
+    font-size: 14px;
+    margin-top: 20px;
+    padding: 0 110px;
+    line-height: 25px;
+    .rc-recharge-to-record {
+      cursor: pointer;
+      &.active, &:hover {
+        color: $prominent-color;
+      }
+    }
+  }
+}
+.btn-fc-submit {
+  width: 360px;
+  height: 55px;
+  background-color: $new-main-deep-color;
+  color: $new-main-body-color;
+  font-size: 18px;
+}
