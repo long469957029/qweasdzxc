@@ -110,7 +110,7 @@ const MoneyDetailView = SearchGrid.extend({
     if (info.remark === '投注扣款' || info.remark === '中奖' || info.remark.indexOf('投注所得') !== -1 || info.remark === '用户撤单' || info.remark === '系统撤单') {
       row.push(`<a class="btn-link js-gl-bet-detail-dialog" data-id="${info.tradeNo}">${info.tradeNo}</a>`)
     } else if (info.remark === '追号扣款' || info.remark.indexOf('撤销追号') !== -1) { //
-      row.push(`<a class="btn-link js-gl-chase-detail-dialog" data-no="${info.tradeNo}" data-id="${info.tradeNo}">${info.tradeNo}</a>`)
+      row.push(`<a class="btn-link js-gl-chase-detail-dialog" data-no="${info.tradeNo}">${info.tradeNo}</a>`)
     } else {
       row.push(info.tradeNo)
     }

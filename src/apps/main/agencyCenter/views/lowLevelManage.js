@@ -1,5 +1,3 @@
-
-
 const SearchGrid = require('com/searchGrid')
 
 const Timeset = require('com/timeset')
@@ -8,11 +6,12 @@ const LowLevelManageView = SearchGrid.extend({
 
   template: require('agencyCenter/templates/lowLevelManage.html'),
 
-  className: 'lowLevelManage-view',
+  className: 'lowLevelManage-view basic-black border-top',
 
   events: {
     'click .js-ac-expend-btn': 'expendHandler',
     'click .js-ac-llm-cp': 'checkPayPwdSet',
+    'change .js-select-type': 'selectChangeHandler',
   },
 
   initialize() {
@@ -42,7 +41,7 @@ const LowLevelManageView = SearchGrid.extend({
           width: '16%',
         },
         {
-          name: '<i class="js-ac-uDays sfa sfa-help-tip cursor-pointer vertical-middle"></i> 不活跃天数',
+          name: '不活跃天数',
           width: '12%',
         },
         {
@@ -61,7 +60,7 @@ const LowLevelManageView = SearchGrid.extend({
       },
     })
 
-    this.on('router:back', function() {
+    this.on('router:back', function () {
       this._getGridXhr()
     })
   },
@@ -84,19 +83,21 @@ const LowLevelManageView = SearchGrid.extend({
 
     SearchGrid.prototype.onRender.apply(this, arguments)
 
-    this.$('.js-ac-uDays').popover({
-      trigger: 'hover',
-      html: true,
-      content: '<strong>不活跃天数定义</strong> <br />连续多少天内无任何账变，即为不活跃的天数',
-      placement: 'bottom',
-    })
-
+    // this.$('.js-ac-uDays').popover({
+    //   trigger: 'hover',
+    //   html: true,
+    //   content: '<strong>不活跃天数定义</strong> <br />连续多少天内无任何账变，即为不活跃的天数',
+    //   placement: 'bottom',
+    // })
+    this.$personalBalance = this.$('.js-personal-balance')
+    this.$regDate = this.$('.js-reg-date')
+    this.$unActiveDay = this.$('.js-unActive-day')
 
     Global.newbieActivity.checkAgent()
   },
 
   renderGrid(gridData) {
-    const rowsData = _(gridData.subAcctList).map(function(bet, index, betList) {
+    const rowsData = _(gridData.subAcctList).map(function (bet, index, betList) {
       return {
         columnEls: this.formatRowData(bet, index, betList),
         dataAttr: bet,
@@ -104,7 +105,7 @@ const LowLevelManageView = SearchGrid.extend({
     }, this)
 
     if (!_(gridData.parents).isEmpty()) {
-      this._breadList = _(gridData.parents).map((parent, index) => {
+      this._breadList = _(gridData.parents).map((parent) => {
         return {
           data: {
             userParentId: parent.userId,
@@ -140,8 +141,7 @@ const LowLevelManageView = SearchGrid.extend({
     const row = []
 
     if (rowInfo.userSubAcctNum) {
-      row.push(`<a class="js-pf-sub btn-link text-cool" data-label="${rowInfo.userName 
-      }" data-user-parent-id="${rowInfo.userId}" href="javascript:void(0)">${ 
+      row.push(`<a class="js-pf-sub btn-link text-cool" data-label="${rowInfo.userName}" data-user-parent-id="${rowInfo.userId}" href="javascript:void(0)">${
         rowInfo.userName}(${rowInfo.userSubAcctNum})</a> `)
     } else {
       row.push(`<span class="text-cool">${rowInfo.userName}</span>`)
@@ -161,14 +161,14 @@ const LowLevelManageView = SearchGrid.extend({
   _formatOperation(rowInfo) {
     let html = []
     const cell = []
-   
+
     const acctInfo = Global.memoryCache.get('acctInfo')
-    
+
     cell.push(`<a href="${_.getUrl(`/detail/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link text-cool">详情</a>`)
 
     if (rowInfo.direct && !this.isSub()) {
       if (!acctInfo.merchant) {
-    	  cell.push(`<a href="${_.getUrl(`/rebate/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">升点</a>`)
+        cell.push(`<a href="${_.getUrl(`/rebate/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">升点</a>`)
       }
       cell.push(`<a href="${_.getUrl(`/message/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">发消息</a>`)
     }
@@ -219,7 +219,8 @@ const LowLevelManageView = SearchGrid.extend({
     const rowInfo = this.grid.getRowData($target)
 
     if (Global.memoryCache.get('acctInfo').foundsLock) {
-      Global.ui.notification.show('资金已锁定，请先' + '<a href="javascript:void(0);" onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>' + '。')
+      Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" onclick="document.querySelector(\'.js-gl-hd-lock\').click();" ' +
+        'class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
       return false
     }
 
@@ -228,7 +229,10 @@ const LowLevelManageView = SearchGrid.extend({
         if (res && res.result === 0) {
           // 设置了则弹出验证框
           // $(document).verifyFundPwd({parentView:self});
-          Global.appRouter.navigate(`#ac/llm/transfer/${rowInfo.userId}?name=${rowInfo.userName}`, { trigger: true, replace: false })
+          Global.appRouter.navigate(`#ac/llm/transfer/${rowInfo.userId}?name=${rowInfo.userName}`, {
+            trigger: true,
+            replace: false,
+          })
         } else if (res && res.result === 1) {
           // 未设置则弹出链接到资金密码设置页面的提示框
           $(document).securityTip({
@@ -242,6 +246,23 @@ const LowLevelManageView = SearchGrid.extend({
           // self.$el.removeClass('hidden');
         }
       })
+  },
+  selectChangeHandler(e) {
+    const $target = $(e.currentTarget)
+    const val = $target.val()
+    if (val === 0) {
+      this.$personalBalance.removeClass('hidden')
+      this.$regDate.addClass('hidden')
+      this.$unActiveDay.addClass('hidden')
+    } else if (val === 1) {
+      this.$personalBalance.addClass('hidden')
+      this.$regDate.removeClass('hidden')
+      this.$unActiveDay.addClass('hidden')
+    } else {
+      this.$personalBalance.addClass('hidden')
+      this.$regDate.addClass('hidden')
+      this.$unActiveDay.removeClass('hidden')
+    }
   },
 })
 

@@ -10,7 +10,7 @@ const MoneyDetailView = SearchGrid.extend({
 
   template: require('agencyCenter/teamAccountDetail/index.html'),
 
-  className: 'ac-team-main basic-black',
+  className: 'ac-team-main basic-black  border-top',
 
   events: {},
 
@@ -119,9 +119,9 @@ const MoneyDetailView = SearchGrid.extend({
     const row = []
     // Number(info.tradeType) === 107 || info.tradeType === '投注'
     if (info.remark === '投注扣款' || info.remark === '中奖' || info.remark.indexOf('投注所得') !== -1 || info.remark === '用户撤单' || info.remark === '系统撤单') {
-      row.push(`<a href="${this.options.betDetailPrevUrl}${info.tradeNo}${_.getUrlParamStr()}" class="router btn-link">${info.tradeNo}</a>`)
+      row.push(`<a class="btn-link js-gl-bet-detail-dialog" data-id="${info.tradeNo}">${info.tradeNo}</a>`)
     } else if (info.remark === '追号扣款' || info.remark.indexOf('撤销追号') !== -1) { //
-      row.push(`<a href="${this.options.chaseDetailPrevUrl}${info.tradeNo}${_.getUrlParamStr()}" class="router btn-link">${info.tradeNo}</a>`)
+      row.push(`<a class="btn-link js-gl-chase-detail-dialog" data-no="${info.tradeNo}">${info.tradeNo}</a>`)
     } else {
       row.push(info.tradeNo)
     }
