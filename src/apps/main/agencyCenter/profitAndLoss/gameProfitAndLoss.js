@@ -104,6 +104,7 @@ const ReportManageView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD',
       },
+      showIcon: true,
     }).render()
 
     new TicketSelectGroup({

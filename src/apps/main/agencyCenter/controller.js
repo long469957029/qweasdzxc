@@ -339,6 +339,7 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrGr' }), {
       main: {
         title: '团队投注',
+        titleDes: '团队投注记录只保留近30天数据',
       },
       sidebar,
     })

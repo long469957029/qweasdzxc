@@ -22,7 +22,7 @@ const teamBettingRecordView = SearchGrid.extend({
   initialize() {
     _(this.options).extend({
       footerClass: 'border-cool-top',
-      height: 271,
+      height: 615,
       title: '团队投注记录',
       tableClass: 'table table-similar table-bordered table-center',
       columns: [
@@ -69,9 +69,9 @@ const teamBettingRecordView = SearchGrid.extend({
       ajaxOps: {
         url: '/ticket/bethistory/userTeamBetHistory.json',
       },
-      // subOps: {
-      //   data: ['userParentId']
-      // }
+      reqData: {
+        pageSize: 15,
+      },
     })
   },
 
@@ -186,7 +186,7 @@ const teamBettingRecordView = SearchGrid.extend({
     } else if (rowInfo.prizeTotalMoney === 0) {
       status = '未中奖'
     } else {
-      status = `<span class="text-bold-pleasant">${_(rowInfo.prizeTotalMoney).convert2yuan()}</span>`
+      status = `<span class="text-bold-prominent">${_(rowInfo.prizeTotalMoney).convert2yuan()}</span>`
     }
     row.push(status)
 

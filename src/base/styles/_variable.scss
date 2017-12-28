@@ -144,7 +144,7 @@ $bg-colors: (
   primary: (bg: $main-light-color, color: $new-light-color),
   black: (bg: $new-light-color, color: $new-black-color),
   cool: (bg: $new-main-deep-color, color: $new-light-color),
-  footer: (bg: #f3d5d3, color: $new-black-color),
+  footer: (bg: $new-main-body-color, color: $new-black-color),
   mute: (bg: $bg-mute, color: $bg-mute-font-color),
   info: (bg: $bg-info, color: $bg-info-font-color),
   success: (bg: $bg-success, color: $bg-success-font-color),

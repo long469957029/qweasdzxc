@@ -89,6 +89,7 @@ const RouterController = Base.Controller.extend({
         className: 'clearfix',
         template: require('skeleton/templates/main.html'),
         serializeData() {
+          _(config.main).extend({ titleDes: config.main.titleDes || null })
           return config.main
         },
       })
