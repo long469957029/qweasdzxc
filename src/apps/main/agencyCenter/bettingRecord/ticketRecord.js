@@ -156,7 +156,7 @@ const teamBettingRecordView = SearchGrid.extend({
   },
   formatRowData(rowInfo) {
     const row = []
-    row.push(`${'<a class="router btn-link" href="gc/tr/detail/'}${rowInfo.ticketTradeNo}">${_(rowInfo.betTime).toTime()}</a>`)
+    row.push(`<a class="btn-link js-gl-bet-detail-dialog" data-id="${rowInfo.ticketTradeNo}">${_(rowInfo.betTime).toTime()}</a>`)
     row.push(rowInfo.userName)
     row.push(rowInfo.ticketName)
     row.push(rowInfo.playName)
