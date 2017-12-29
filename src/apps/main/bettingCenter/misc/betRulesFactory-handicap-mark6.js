@@ -7,7 +7,7 @@ const redList = ['01', '02', '07', '08', '12', '13', '18', '19', '23', '24', '29
 const blueList = ['03', '04', '09', '10', '14', '15', '20', '25', '26', '31', '36', '37', '41', '42', '47', '48']
 const greenList = ['05', '06', '11', '16', '17', '21', '22', '27', '28', '32', '33', '38', '39', '43', '44', '49']
 
-let fortyNine = _.range(1, 50)
+const fortyNine = _.range(1, 50)
 
 const getFortyNine = () => {
   return _.map(fortyNine, (num) => {
@@ -425,7 +425,7 @@ function _create(ticketId) {
   // 不中
 
   // 五不中
-  factory.addRule([ticketId, '230101'], {
+  factory.addHandicapRule([ticketId, '230101'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -444,7 +444,7 @@ function _create(ticketId) {
   })
 
   // 六不中
-  factory.addRule([ticketId, '230102'], {
+  factory.addHandicapRule([ticketId, '230102'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -463,7 +463,7 @@ function _create(ticketId) {
   })
 
   // 七不中
-  factory.addRule([ticketId, '230103'], {
+  factory.addHandicapRule([ticketId, '230103'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -482,7 +482,7 @@ function _create(ticketId) {
   })
 
   // 八不中
-  factory.addRule([ticketId, '230104'], {
+  factory.addHandicapRule([ticketId, '230104'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -501,7 +501,7 @@ function _create(ticketId) {
   })
 
   // 九不中
-  factory.addRule([ticketId, '230105'], {
+  factory.addHandicapRule([ticketId, '230105'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -520,7 +520,7 @@ function _create(ticketId) {
   })
 
   // 十不中
-  factory.addRule([ticketId, '230106'], {
+  factory.addHandicapRule([ticketId, '230106'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -539,8 +539,7 @@ function _create(ticketId) {
   })
 
   // 总和
-  factory.addRule([ticketId, '240101'], {
-    algorithm: algorithm.addAll,
+  factory.addHandicapRule([ticketId, '240101'], {
     list: factory.createHandicapList([
       {
         title: '总和',
@@ -550,6 +549,7 @@ function _create(ticketId) {
         operate: 'none',
       },
     ]),
+    bettingArea: ['top', 'bottom'],
   })
 }
 

@@ -1,12 +1,19 @@
 <template>
   <div>
     <div class="total-panel" v-if="_.indexOf(playRule.bettingArea, 'top') !== -1">
-      <betting-chips-setting class="inline-block"></betting-chips-setting>
+
+      <betting-chips-setting class="inline-block" @addBetMoney="addBetMoney" :chips="chips"></betting-chips-setting>
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model="betMoney" >
-        <slot name="betting-button"></slot>
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" >
+        <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
+                :disabled="!canBet || pushing || !sale || pending">
+          投注
+        </button>
+        <button class="btn btn-cool m-bottom-xs" @click="clearAll" :disabled="pushing || !sale || pending">
+          重置
+        </button>
       </div>
     </div>
 
@@ -30,7 +37,7 @@
               </div>
               <div class="main-item-right">
                 <span class="item odds" v-if="rule.showItemOdds">48.18</span>
-                <input type="text" class="money-input" v-if="rule.showMoneyInput" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney(item, $event)" />
+                <input type="text" class="money-input" v-if="rule.showMoneyInput" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney($event, item)" />
               </div>
             </div>
 
@@ -40,7 +47,7 @@
                 <span class="item odds" v-if="rule.showItemOdds">48.18</span>
               </div>
               <div class="main-item-right" v-if="rule.showMoneyInput">
-                <input type="text" class="money-input" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney(item, $event)" />
+                <input type="text" class="money-input" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney($event, item)" />
               </div>
             </div>
 
@@ -83,13 +90,21 @@
     <!--</div>-->
     <!--</div>-->
     <!--</div>-->
+
     <div class="total-panel" v-if="_.indexOf(playRule.bettingArea, 'bottom') !== -1">
-      <betting-chips-setting class="inline-block"></betting-chips-setting>
+
+      <betting-chips-setting class="inline-block" @addBetMoney="addBetMoney" :chips="chips"></betting-chips-setting>
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model="betMoney" >
-        <slot name="betting-button"></slot>
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" >
+        <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
+                :disabled="!canBet || pushing || !sale || pending">
+          投注
+        </button>
+        <button class="btn btn-cool m-bottom-xs" @click="clearAll" :disabled="pushing || !sale || pending">
+          重置
+        </button>
       </div>
     </div>
   </div>
@@ -109,15 +124,19 @@
     props: {
       playRule: Object,
       ticketInfo: Object,
+      pushing: Boolean,
+      sale: Boolean,
+      pending: Boolean,
     },
 
     data: function() {
       return {
+        chips: [5, 10, 200, 5000, 10000],
         lotteryList: [],
         formattedRuleList: [],
-        coefficient: 1,
         type: 'handicap',
-        betMoney: null
+        betMoney: null,
+        canBet: false
       }
     },
 
@@ -128,6 +147,32 @@
         },
         immediate: true
       },
+      'betMoney': {
+        handler() {
+          _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
+            if (item.selected && !item.betMoney) {
+              item.betMoney = this.betMoney
+            }
+          })
+        }
+      },
+      'formattedRuleList': {
+        handler(newVal, oldVal) {
+          let prevCanBet = this.canBet
+          this.lotteryList = []
+          this.canBet = false
+          _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
+            if (item.selected && item.betMoney) {
+              this.canBet = true
+              this.lotteryList.push({
+                bet: [`${item.num}*${item.betMoney}`],
+                item: item
+              })
+            }
+          })
+        },
+        deep: true
+      }
     },
 
     methods: {
@@ -137,69 +182,54 @@
         item.betMoney = item.selected ? this.betMoney : null
       },
 
-      inputBetMoney(item, $event) {
+      inputBetMoney($event, item) {
         if (!_.isNumber(item.betMoney) || item.betMoney === 0) {
           item.betMoney = null
         } else {
           item.selected = true
         }
+
+        this.$_clearNotBetSelect()
       },
 
-      selectNumber(num, items) {
-        //TODO 六合
-        if (_.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id, 10)) > -1) {
-          const $itemsToolbars = $target.closest('.js-bc-playArea-items')
-          this._mark6SelectNumber($target, $itemsToolbars)
-        } else {
-          this.$_selectNumber(num, items)
+      addBetMoney(addMoney) {
+        this.betMoney += addMoney
+      },
+
+      inputTotalBetMoney() {
+        if (!_.isNumber(this.betMoney) || this.betMoney === 0) {
+          this.betMoney = null
         }
       },
 
-      clearAllSelected() {
-        _.each(this.formattedRuleList, formattedRule => _.each(formattedRule.row.fItems, num => {
-          num.selected = false
-        }))
+      clearAll() {
+        _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
+          item.selected = false
+          item.betMoney = null
+        })
+        this.betMoney = null
       },
 
-      //自定义事件
-      addBetting({type = 'normal', results = []} = {}) {
-        if (type === 'auto') {
-          _.each(results, (result) => {
-            this.$store.commit(types.ADD_PREV_BET, {
-              bettingInfo: {
-                lotteryList: result.lotteryList,
-                selectOptionals: result.selectOptionals,
-                statistics: result.statistics,
-                format: this.type,
-                formatToNum: this.formatToNum || false, // PK10大小单双文字数字转换标示
-              },
-              options: {
-                type
-              }
-          })
-          })
-        } else {
-          this.$store.commit(types.ADD_PREV_BET, {
-            bettingInfo: {
-              lotteryList: this.lotteryList,
-              selectOptionals: this.selectOptionals,
-              format: this.type,
-              formatToNum: this.formatToNum || false, // PK10大小单双文字数字转换标示
-              formatToNumInfo: this.formatToNumInfo || false, // 六合彩文字转换数值
-            },
-            options: {
-              type
-            }
-          })
-        }
+      $_clearNotBetSelect() {
+        _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
+          if (!item.betMoney) {
+            item.selected = false
+          }
+        })
       },
 
-      empty() {
-        this.lotteryList = []
+      //父组件调用
+      lotteryBuy() {
+        this.$store.commit(types.ADD_HANDICAP_BET, {
+          bettingInfo: {
+            lotteryList: _.pluck(this.lotteryList, 'bet'),
+            format: this.type,
+          }
+        })
 
-        this.clearAllSelected();
+
+        this.$emit('lotteryBuy')
       },
-
 
       $_statisticsLottery() {
         let count = 0
@@ -214,27 +244,9 @@
           return selected
         }, this)
 
-        // 如果系数不存在，根本无需计算
-        if (this.coefficient) {
-          // 任选玩法需要去掉没有选值的行，便于复选计算
-          if (this.playRule.algorithmProps && this.playRule.algorithmProps.coefficient) {
-            count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(
-              this.playRule,
-              _(this.lotteryList).filter((list) => {
-                return !_.isEmpty(list)
-              }),
-            ) || 0))
-          } else {
-            count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(this.playRule, this.lotteryList) || 0))
-          }
-        }
+        count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(this.playRule, this.lotteryList) || 0))
 
         this.$store.commit(types.SET_STATISTICS, count)
-      },
-
-      $_selectNumbers(nums, row, toSelected = true) {
-        _.chain(nums).flatten().each((num) => {
-        })
       },
     },
   }

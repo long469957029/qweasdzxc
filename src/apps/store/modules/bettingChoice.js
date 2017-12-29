@@ -86,7 +86,7 @@ const mutations = {
       this.commit(types.EMPTY_BUY_BETTING)
     }
   },
-  [types.PUSH_BETTING_FAILURE] (commit, res) {
+  [types.PUSH_BETTING_FAILURE] () {
   },
 
   [types.SET_LIMIT_MONEY] (state, { limitMoney }) {
@@ -195,7 +195,7 @@ const mutations = {
             bettingList: [bettingInfo],
             options: _(options || {}).extend({ statistics: state.statistics }, options),
           })
-          state.addPrevBetResult = { MaxBetNums: state.playInfo.maxBetNums }
+          state.addPrevBetResult = { maxBetNums: state.playInfo.maxBetNums }
         } else {
           this.commit(types.ADD_BETS, {
             bettingList: [bettingInfo],
@@ -214,6 +214,23 @@ const mutations = {
       })
       state.addPrevBetResult = {}
     }
+  },
+
+  [types.ADD_HANDICAP_BET](state, { bettingInfo, options }) {
+    this.commit(types.EMPTY_BUY_BETTING)
+
+    this.commit(types.ADD_BETS, {
+      bettingList: [bettingInfo],
+      options: _(options || {}).extend({ statistics: state.statistics }, {
+        type: 'buy',
+      }),
+    })
+
+    if (!_.isNull(state.playInfo.maxBetNums) && state.statistics > state.playInfo.maxBetNums) {
+      state.addPrevBetResult = { maxBetNums: state.playInfo.maxBetNums }
+    }
+
+    this.commit(types.SET_CHECKOUT_CHOICE)
   },
 
 

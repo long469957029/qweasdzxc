@@ -611,8 +611,8 @@
         //提交成功
         if (result) {
           if (!_.isEmpty(result)) {
-            if (result.MaxBetNums && !_.isNull(result.MaxBetNums)) {
-              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.MaxBetNums} 注，请重新选择  `)
+            if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
+              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择  `)
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
               this.$refs.areaSelect.empty()
@@ -631,8 +631,8 @@
         const result = this.bettingChoice.addPrevBetResult
         if (result) {
           if (!_.isEmpty(result)) {
-            if (result.MaxBetNums && !_.isNull(result.MaxBetNums)) {
-              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.MaxBetNums} 注，请重新选择`)
+            if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
+              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择`)
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
             }
