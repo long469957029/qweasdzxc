@@ -167,22 +167,15 @@
 }
 
 .ac-lowLevel-rebate-view {
-
-  .ac-llm-rebate-div {
-    height: 255px;
+  .ac-lowLevel-title{
+    width: 100%;
+    height: 49px;
+    background-color: $sec-line-color;
+    line-height: 49px;
+    text-align: center;
+    font-size: $font-md;
+    color: $def-black-color;
   }
-  .ac-lowLevel-quota-container {
-    margin: 10px 28px 10px 20px;
-    padding: 5px 14px 5px 14px;
-  }
-
-  .ac-lowLevel-rebate-table {
-    position: absolute;
-    top: 288px;
-    width: 729px;
-    padding: 41px 100px 0 100px;
-  }
-
   .ac-lowLevel-rebate-btn {
     position: absolute;
     top: 485px;
@@ -190,6 +183,9 @@
     margin-top: 40px;
     width: 166px;
     height: 32px;
+  }
+  .close{
+    font-size:30px;
   }
 
 }

@@ -1,6 +1,7 @@
 const SearchGrid = require('com/searchGrid')
 
 // const Timeset = require('com/timeset')
+const LowLevelRebateView = require('agencyCenter/views/lowLevelManage-rebate')
 
 const LowLevelManageView = SearchGrid.extend({
 
@@ -12,6 +13,7 @@ const LowLevelManageView = SearchGrid.extend({
     'click .js-ac-expend-btn': 'expendHandler',
     'click .js-ac-llm-cp': 'checkPayPwdSet',
     'change .js-select-type': 'selectChangeHandler',
+    'click .js-ac-point-up': 'pointUpHandler',
   },
 
   initialize() {
@@ -151,7 +153,7 @@ const LowLevelManageView = SearchGrid.extend({
     if (rowInfo.direct && !this.isSub()) {
       cell.push(`<a href="${_.getUrl(`/message/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">站内信</a>`)
       if (!acctInfo.merchant) {
-        cell.push(`<a href="${_.getUrl(`/rebate/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">升点</a>`)
+        cell.push(`<a class="btn btn-link js-ac-point-up" data-userid="${rowInfo.userId}" data-username="${rowInfo.userName}">升点</a>`)
       }
       cell.push('<a href="javascript:void(0);"  class="js-ac-llm-cp btn btn-link ">转账</a>')
     }
@@ -245,6 +247,28 @@ const LowLevelManageView = SearchGrid.extend({
       this.$teamBalance.removeClass('hidden')
       this.$personalInput.val('')
     }
+  },
+  pointUpHandler(e) {
+    const $target = $(e.currentTarget)
+    const userId = $target.data('userid')
+    const userName = $target.data('username')
+    const $dialog = Global.ui.dialog.show({
+      closeBtn: false,
+      anySize: 480,
+      bodyClass: 'no-padding',
+      body: '<div class="js-ac-point-up-dialog"></div>',
+    })
+    const $dialogContant = $dialog.find('.js-ac-point-up-dialog')
+    const rebataView = new LowLevelRebateView({
+      userId,
+      userName,
+    })
+    $dialogContant.html(rebataView.render().el)
+
+    $dialog.on('hidden.modal', function() {
+      $(this).remove()
+      rebataView.destroy()
+    })
   },
 })
 

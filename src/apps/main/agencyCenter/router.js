@@ -6,7 +6,7 @@ const FundCenterController = require('agencyCenter/controller')
 exports.install = function() {
   window.Global.appRouter.processAppRoutes(new FundCenterController(), {
     'ac/llm': 'lowLevelManage', // 下级管理
-    'ac/llm/rebate/:userId': 'rebateManage', // 升点(返点)管理
+    // 'ac/llm/rebate/:userId': 'rebateManage', // 升点(返点)管理
 
     'ac/llm/detail/:userId': 'lowLevelDetail', // 下级管理详情
 
@@ -27,11 +27,11 @@ exports.install = function() {
     'ac/gpl': 'gameProfitAndLoss', // 盈亏报表--game
 
 
-    'ac/betting/:userId': 'bettingRecords', // 投注
-    'ac/track/:userId': 'trackRecords', // 追号
-    'ac/account/:userId': 'accountDetail', // 账变
-    'ac/betting/:userId/detail/:betId': 'bettingDetail', // 投注详情
-    'ac/track/:userId/detail/:tradeNo': 'trackDetail', // 追号详情
+    // 'ac/betting/:userId': 'bettingRecords', // 投注
+    // 'ac/track/:userId': 'trackRecords', // 追号
+    // 'ac/account/:userId': 'accountDetail', // 账变
+    // 'ac/betting/:userId/detail/:betId': 'bettingDetail', // 投注详情
+    // 'ac/track/:userId/detail/:tradeNo': 'trackDetail', // 追号详情
 
 
     'ac/rp': 'redPacket', // 红包查询
