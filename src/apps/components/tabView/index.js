@@ -10,6 +10,7 @@ const TabView = Base.LayoutView.extend({
       tabClass: 'nav-tabs nav-tabs-border',
       loadingHeight: 490,
       tabs: [],
+      onTriggerTab: _.noop,
     })
 
     const template = this._tabTemplate
@@ -130,6 +131,10 @@ const TabView = Base.LayoutView.extend({
       }
 
       init = false
+
+      if (self.options.onTriggerTab) {
+        self.options.onTriggerTab()
+      }
     })
 
     if (this.options.triggerTab) {

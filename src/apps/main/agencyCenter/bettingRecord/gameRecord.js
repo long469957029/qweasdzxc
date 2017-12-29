@@ -16,16 +16,7 @@ const gameRecordView = SearchGrid.extend({
   template: require('agencyCenter/bettingRecord/gameRecord.html'),
 
   events: {
-    // 'click .js-ac-queryBtn': 'queryBtnClickHandler',
-    'change .js-ac-br-channelId-type': 'channelTypeChangeHandler',
-  },
 
-  channelTypeChangeHandler(e) {
-    const game = this.$('select[name="channelIdType"]').val()
-    const channelId = game.substr(0, 1)
-    const type = game.substr(1, 1)
-    this.$('.js-ac-br-channelId').val(channelId)
-    this.$('.js-ac-br-type').val(type)
   },
 
   // queryBtnClickHandler: function(){
@@ -104,15 +95,13 @@ const gameRecordView = SearchGrid.extend({
         url: '/ticket/game/history.json',
         abort: false,
       },
-      // reqData:{
-      //   channelId: this.options.channelId,
-      //   type: this.options.type,
-      //   startTime: this.options.startTime,
-      //   endTime: this.options.endTime,
-      // },
+      reqData: {
+        pageSize: 15,
+        channelId: this.options.channelId,
+        type: this.options.type,
+      },
       listProp: 'root.dataList',
-      tip: '<div class="tip-hot"><span>注意</span> 投注记录只保留最近30天。</div>',
-      height: 290,
+      height: 615,
     })
   },
 
@@ -130,13 +119,15 @@ const gameRecordView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD',
       },
+      showIcon: true,
     }).render()
+    this.$('.js-subUser').attr('id', `js-ac-br-gr-subUser-${this.options.channelId}${this.options.type}`)
+    this.$('.js-checkbox-label').attr('for', `js-ac-br-gr-subUser-${this.options.channelId}${this.options.type}`)
 
     SearchGrid.prototype.onRender.apply(this, arguments)
   },
 
   renderGrid(gridData) {
-    const num = 0
     const rowsData = _(gridData.dataList).map(function(bet, index, betList) {
       return {
         columnEls: this.formatRowData(bet, index, betList),

@@ -4,12 +4,6 @@ import MyMessageViewInfo from 'userCenter/views/myMessage'
 
 const RouterController = require('skeleton/controllers/router')
 
-const BettingRecordView = require('userCenter/views/bettingRecords')
-// const BettingDetailView = require('userCenter/views/bettingDetail')
-
-const TrackRecordView = require('userCenter/views/trackRecords')
-// const TrackDetailView = require('userCenter/views/trackDetail')
-
 const PersonalManageView = require('userCenter/views/personalManage')
 const CardManageView = require('userCenter/views/cardManage')
 // const CardBindingView = require('userCenter/views/cardBinding')
@@ -75,7 +69,6 @@ const UserCenterController = RouterController.extend({
   //     parentRouter: 'gc/tr',
   //   })
   // },
-
   personalManage() {
     this.changeMainReginView(new PersonalManageView(), {
       main: {

@@ -61,7 +61,11 @@ const TeamOverviewView = Base.ItemView.extend({
 
   onRender() {
     const self = this
-    this.$NewUser = this.$('.js-ac-to-nu')
+    this.$Count = this.$('.js-ac-to-co')
+    this.$NewUser = this.$('.js-ac-to-new')
+    this.$Online = this.$('.js-ac-to-online')
+    this.$Active = this.$('.js-ac-to-active')
+    this.$NoActive = this.$('.js-ac-to-noActive')
     this.$Recharge = this.$('.js-ac-to-re')
     this.$Withdraw = this.$('.js-ac-to-wi')
     this.$Bet = this.$('.js-ac-to-be')
@@ -69,6 +73,9 @@ const TeamOverviewView = Base.ItemView.extend({
     this.$Rebate = this.$('.js-ac-to-reb')
     this.$Activity = this.$('.js-ac-to-ac')
     this.$Profit = this.$('.js-ac-to-pr')
+    this.$Water = this.$('.js-ac-to-water')
+    this.$Commission = this.$('.js-ac-to-commission')
+    this.$Balance = this.$('.js-ac-to-balance')
     self._onRender()
     // 按需加载
     require.ensure(['com/chart'], (require) => {
@@ -82,32 +89,37 @@ const TeamOverviewView = Base.ItemView.extend({
   renderBalance() {
     const self = this
     this.getBalanceXhr().done((res) => {
-      if (res.result == 0) {
-        self.$('.js-ac-to-co').html(res.root.count)
-        self.$('.js-ac-to-ba').html(_(res.root.balance).convert2yuan())
+      if (res.result === 0) {
+        self.$Count.html(res.root.count)
+        self.$Balance.html(_(res.root.balance).convert2yuan())
       }
     })
   },
   renderOtherData(reqData) {
     const self = this
     this.getNewUserActiveUserXhr(reqData).done((res) => {
-      if (res.result == 0) {
-        self.$NewUser.html(`${res.root.newSub}/${res.root.active}`)
+      if (res.result === 0) {
+        self.$NewUser.html(res.root.newSub)
+        self.$Active.html(res.root.active)
+        self.$Online.html(res.root.onlineCount)
+        self.$NoActive.html(res.root.noActive)
       }
     })
     this.getRechargeWithdrawlXhr(reqData).done((res) => {
-      if (res.result == 0) {
+      if (res.result === 0) {
         self.$Recharge.html(_(res.root.recharge).convert2yuan())
         self.$Withdraw.html(_(res.root.withdraw).convert2yuan())
       }
     })
     this.getProfitXhr(reqData).done((res) => {
-      if (res.result == 0) {
+      if (res.result === 0) {
         self.$Bet.html(_(res.root.bet).convert2yuan())
         self.$Bonus.html(_(res.root.prize).convert2yuan())
         self.$Rebate.html(_(res.root.rebate).convert2yuan())
         self.$Activity.html(_(res.root.activity).convert2yuan())
         self.$Profit.html(_(res.root.profit).convert2yuan())
+        self.$Water.html(_(res.root.gameRebate).convert2yuan())
+        self.$Commission.html(_(res.root.commission).convert2yuan())
       }
     })
   },
@@ -120,7 +132,7 @@ const TeamOverviewView = Base.ItemView.extend({
 
     this.timeset = new Timeset({
       el: this.$timeset,
-      size: 'input-sm',
+      size: 'input-md',
       startTimeHolder: '起始日期',
       endTimeHolder: '结束日期',
       startOps: {
@@ -129,6 +141,7 @@ const TeamOverviewView = Base.ItemView.extend({
       endOps: {
         format: 'YYYY-MM-DD',
       },
+      showIcon: true,
     }).render()
 
     this.timeset.$startDate.on('dp.change', () => {
@@ -170,7 +183,7 @@ const TeamOverviewView = Base.ItemView.extend({
     this.chart.showLoading()
     const xdate = []
     const past = moment().add('day', -15)
-    _(_(1).range(16)).each((i) => {
+    _(_(1).range(16)).each(() => {
       xdate.push(past.add('day', 1).format('MM-DD'))
     })
     const option = {
@@ -181,19 +194,42 @@ const TeamOverviewView = Base.ItemView.extend({
       tooltip: {
         trigger: 'axis',
       },
+      color: [
+        '#e6c1ae',
+        '#bacce7',
+        '#eddeba',
+        '#aeeed1',
+        '#c8c3e6',
+        '#a1e4f2',
+        '#a4d2c8',
+        '#e09ab7',
+        '#83c3c7',
+      ],
       legend: {
-        data: ['充值', '提现', '投注', '中奖', '返点', '活动', '盈亏'],
+        data: ['充值', '提现', '投注', '派奖', '返点', '返水', '佣金', '活动', '盈亏'],
+        right: 90,
         selected: {
           充值: true,
           提现: true,
           投注: true,
-          中奖: false,
+          派奖: false,
           返点: false,
           活动: false,
           盈亏: false,
+          啦啦: false,
         },
       },
       calculable: true,
+      axes: [
+        {
+          type: 'all',
+          axisLineColor: '#d7d7d7',
+          axisTickColor: '#d7d7d7',
+          splitLineColor: [
+            '#e6e6e6',
+          ],
+        },
+      ],
       xAxis: [
         {
           type: 'category',
@@ -208,39 +244,130 @@ const TeamOverviewView = Base.ItemView.extend({
       ],
       series: [
         {
+          id: 1,
           name: '充值',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          smooth: true,
+          symbol: 'emptyCircle',
+          symbolSize: '10',
+          itemStyle: {
+            normal: {
+              borderWidth: '3',
+            },
+          },
         },
         {
+          id: 2,
           name: '提现',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          smooth: true,
+          symbol: 'emptyCircle',
+          symbolSize: '10',
+          itemStyle: {
+            normal: {
+              borderWidth: '3',
+            },
+          },
         },
         {
+          id: 3,
           name: '投注',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          smooth: true,
+          symbol: 'emptyCircle',
+          symbolSize: '10',
+          itemStyle: {
+            normal: {
+              borderWidth: '3',
+            },
+          },
         },
         {
-          name: '中奖',
+          id: 4,
+          name: '派奖',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          smooth: true,
+          symbol: 'emptyCircle',
+          symbolSize: '10',
+          itemStyle: {
+            normal: {
+              borderWidth: '3',
+            },
+          },
         },
         {
+          id: 5,
           name: '返点',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          smooth: true,
+          symbol: 'emptyCircle',
+          symbolSize: '10',
+          itemStyle: {
+            normal: {
+              borderWidth: '3',
+            },
+          },
         },
         {
+          id: 9,
+          name: '返水',
+          type: 'line',
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          smooth: true,
+          symbol: 'emptyCircle',
+          symbolSize: '10',
+          itemStyle: {
+            normal: {
+              borderWidth: '3',
+            },
+          },
+        },
+        {
+          id: 8,
+          name: '佣金',
+          type: 'line',
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          smooth: true,
+          symbol: 'emptyCircle',
+          symbolSize: '10',
+          itemStyle: {
+            normal: {
+              borderWidth: '3',
+            },
+          },
+        },
+        {
+          id: 6,
           name: '活动',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          smooth: true,
+          symbol: 'emptyCircle',
+          symbolSize: '10',
+          itemStyle: {
+            normal: {
+              borderWidth: '3',
+            },
+          },
         },
         {
+          id: 7,
           name: '盈亏',
           type: 'line',
           data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          smooth: true,
+          symbol: 'emptyCircle',
+          symbolSize: '10',
+          itemStyle: {
+            normal: {
+              borderWidth: '3',
+            },
+          },
         },
       ],
     }
@@ -250,9 +377,9 @@ const TeamOverviewView = Base.ItemView.extend({
         if (res && res.result === 0) {
           const ydata = res.root || []
           if (!_.isEmpty(ydata)) {
-            _(ydata).each((item, index) => {
-              option.series[Number(item.id) - 1].data = _(item.data).map((item, index) => {
-                return _(item).convert2yuan()
+            _(option.series).each((item, index) => {
+              option.series[index].data = _(_(ydata).findWhere({ id: item.id }).data).map((info) => {
+                return _(info).convert2yuan()
               })
             })
           }

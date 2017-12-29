@@ -77,7 +77,9 @@
     width: 120px;
     margin-right: 3px;
   }
-
+  .select3 {
+    width: 80px;
+  }
   .input2 {
     width: 104px;
   }
@@ -86,10 +88,10 @@
   }
 
   button {
-    width: 72px;
+    width: 55px;
     padding-left: 0;
     padding-right: 0;
-    margin-left: 11px;
+    margin-left: 5px;
   }
 
   //下级管理页面
@@ -98,10 +100,11 @@
   }
 
   .ac-rm-btn {
-    width: 72px;
+    width: 59px;
     padding-left: 0;
     padding-right: 0;
-    margin-left: 6px;
+    margin-left: 15px;
+    border-radius: $globalInputRadius;
   }
 }
 

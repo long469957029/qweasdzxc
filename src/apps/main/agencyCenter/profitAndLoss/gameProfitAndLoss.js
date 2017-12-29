@@ -11,20 +11,13 @@ const ReportManageView = SearchGrid.extend({
   template: require('./gameProfitAndLoss.html'),
 
   events: {
-    'change .js-ac-pl-channelId-type': 'channelTypeChangeHandler',
-  },
-  channelTypeChangeHandler(e) {
-    const game = this.$('select[name="channelIdType"]').val()
-    const channelId = game.substr(0, 1)
-    const type = game.substr(1, 1)
-    this.$('.js-ac-br-channelId').val(channelId)
-    this.$('.js-ac-br-type').val(type)
   },
 
   initialize () {
     _(this.options).extend({
       height: 380,
       title: '报表查询',
+      tableClass: 'table table-similar table-bordered table-center',
       columns: [
         {
           name: '用户名',
@@ -84,6 +77,10 @@ const ReportManageView = SearchGrid.extend({
       ajaxOps: {
         url: '/info/gamereport/gametypeprofit.json',
       },
+      reqData: {
+        channelId: this.options.channelId,
+        type: this.options.type,
+      },
       subOps: {
         url: '/info/gamereport/gametypeprofitdetail.json',
         data: ['userId'],
@@ -107,12 +104,14 @@ const ReportManageView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD',
       },
+      showIcon: true,
     }).render()
 
     new TicketSelectGroup({
       el: this.$('.js-ac-ticket-select'),
     })
-
+    this.$('.js-no-data').attr('id', `js-no-data-game-${this.options.channelId}${this.options.type}`)
+    this.$('.js-checkbox-label').attr('for', `js-no-data-game-${this.options.channelId}${this.options.type}`)
     // 初始化彩种
     SearchGrid.prototype.onRender.apply(this, arguments)
   },
@@ -138,7 +137,7 @@ const ReportManageView = SearchGrid.extend({
     })
 
     if (!_(gridData.parents).isEmpty()) {
-      this._breadList = _(gridData.parents).map((parent, index) => {
+      this._breadList = _(gridData.parents).map((parent) => {
         return {
           data: {
             userId: parent.userId,
@@ -172,8 +171,8 @@ const ReportManageView = SearchGrid.extend({
     if (this.hasSub() && rowInfo.username === this.getCurtSub().label || !rowInfo.hasSubUser) {
       row.push(rowInfo.username)
     } else {
-      row.push(`<a class="js-pf-sub btn-link" data-label="${rowInfo.username 
-      }" data-user-id="${rowInfo.userId}" href="javascript:void(0)">${ 
+      row.push(`<a class="js-pf-sub btn-link" data-label="${rowInfo.username
+      }" data-user-id="${rowInfo.userId}" href="javascript:void(0)">${
         rowInfo.username}</a>`)
     }
     row.push(_(rowInfo.recharge).convert2yuan({ fixed: 2, clear: false }))

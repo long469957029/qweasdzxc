@@ -56,7 +56,9 @@ $boder-def-color:#e6e6e6;
   .sidebar-title {
     text-align: center;
     font-size: 16px;
-    height: 130px;
+    //height: 130px;
+    padding: 15px 0px;
+    border-bottom: 1px solid $third-line-color;
   }
   .sidebar-title-inner {
     padding-top: 22px;

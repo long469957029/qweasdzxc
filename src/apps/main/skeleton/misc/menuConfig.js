@@ -104,12 +104,12 @@ const menuConfig = [
     name: '团队中心',
     agency: true, // 代理账号专用
     first: 'ac/to',
-    icon: 'agency',
+    icon: 'team-icon',
     notNav: true,
     sub: [
       {
         name: '团队报表',
-        icon: 'fund',
+        icon: 'report',
         list: [
           {
             id: 400,
@@ -139,7 +139,7 @@ const menuConfig = [
       },
       {
         name: '团队管理',
-        icon: 'fund',
+        icon: 'team',
         list: [
           {
             id: 401,
@@ -163,7 +163,7 @@ const menuConfig = [
       },
       {
         name: '分红管理',
-        icon: 'fund',
+        icon: 'divid',
         list: [
           {
             id: 407,
