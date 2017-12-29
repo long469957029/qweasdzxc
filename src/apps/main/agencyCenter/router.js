@@ -15,7 +15,7 @@ exports.install = function() {
     'ac/oam': 'openAccountManage', // 开户
 
     'ac/tbr': 'teamBettingRecord', // 团队投注记录-ticket
-    'ac/gbr': 'gameBettingRecord', // 团队投注记录-game
+    // 'ac/gbr': 'gameBettingRecord', // 团队投注记录-game
 
     'ac/oam/pd/:ticket': 'openAccountManagePrice',
     'ac/rm': 'reportManage', // 报表查询
@@ -36,8 +36,8 @@ exports.install = function() {
 
     'ac/rp': 'redPacket', // 红包查询
 
-    'ac/reb': 'rebateReport', 	// 返点查询
-    'ac/div': 'dividendReport', 	// 分红查询
+    'ac/reb': 'rebateReport', // 返点查询
+    'ac/div': 'dividendReport', // 分红查询
 
     'ac/dm': 'dividendManage', // 分红管理
     'ac/ld': 'directAgentGrant', // 下级分红发放

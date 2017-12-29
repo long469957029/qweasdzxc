@@ -133,7 +133,10 @@ const AgencyCenterController = RouterController.extend({
   },
 
   teamBettingRecord() {
-    this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrTr' }), {
+    this.changeMainReginView(new teamBettingRecordView({
+      triggerTab: 'jsAcBrTr',
+      userName: _.getUrlParam('name'),
+    }), {
       main: {
         title: '团队投注',
         titleDes: '团队投注记录只保留近30天数据',
@@ -335,17 +338,19 @@ const AgencyCenterController = RouterController.extend({
       parentRouter: 'ac/dm',
     })
   },
-  gameBettingRecord() {
-    this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrGr' }), {
-      main: {
-        title: '团队投注',
-        titleDes: '团队投注记录只保留近30天数据',
-      },
-      sidebar,
-    })
-  },
+  // gameBettingRecord() {
+  //   this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrGr' }), {
+  //     main: {
+  //       title: '团队投注',
+  //       titleDes: '团队投注记录只保留近30天数据',
+  //     },
+  //     sidebar,
+  //   })
+  // },
   teamAccountDetail() {
-    this.changeMainReginView(new TeamAccountDetailView(), {
+    this.changeMainReginView(new TeamAccountDetailView({
+      userName: _.getUrlParam('name') || '',
+    }), {
       main: {
         title: '团队账变',
         titleDes: '团队账变记录只保留近30天数据',

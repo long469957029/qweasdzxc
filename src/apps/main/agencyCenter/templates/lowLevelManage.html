@@ -9,23 +9,20 @@
     <div class="inline-block m-right-sm">
       <select class="js-select-type select1">
         <option value="1">个人余额</option>
-        <option value="2">注册日期</option>
-        <option value="3">不活跃天数</option>
+        <option value="2">团队余额</option>
       </select>
-      <!--<label class="control-label">个人余额:</label>-->
     </div>
     <div class="inline-block js-personal-balance">
-      <input type="text" name="balanceStart" class="input3" data-parsley-type="integer"
+      <input type="text" name="balanceStart" class="input3 js-personal-input" data-parsley-type="integer"
              data-parsley-range="[0,1000000000]"> 至
-      <input type="text" name="balanceEnd" class="input3" data-parsley-type="integer"
+      <input type="text" name="balanceEnd" class="input3 js-personal-input" data-parsley-type="integer"
              data-parsley-range="[0,1000000000]">
     </div>
-    <div class="inline-block js-reg-date hidden">
-      <span class="js-pf-timeset input-date"></span>
-    </div>
-    <div class="inline-block js-unActive-day hidden">
-      <input type="text" name="unActiveDays" class="input3" data-parsley-type="integer"
-             data-parsley-range="[0,10000]">
+    <div class="inline-block js-team-balance hidden">
+      <input type="text" name="subBalanceStart" class="input3 js-team-input" data-parsley-type="integer"
+             data-parsley-range="[0,1000000000]"> 至
+      <input type="text" name="subBalanceEnd" class="input3  js-team-input" data-parsley-type="integer"
+             data-parsley-range="[0,1000000000]">
     </div>
     <button type="submit" class="btn ac-llm-btn m-left-md">查询</button>
     <button type="reset" class="btn btn-link btn-link-inverse"><span class="sfa sfa-btn-icon-reset vertical-middle m-right-xs"></span>重置</button>

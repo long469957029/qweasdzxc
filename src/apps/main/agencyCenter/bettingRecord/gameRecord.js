@@ -121,6 +121,7 @@ const gameRecordView = SearchGrid.extend({
       },
       showIcon: true,
     }).render()
+    this.$('input[name="username"]').val(this.options.userName)
     this.$('.js-subUser').attr('id', `js-ac-br-gr-subUser-${this.options.channelId}${this.options.type}`)
     this.$('.js-checkbox-label').attr('for', `js-ac-br-gr-subUser-${this.options.channelId}${this.options.type}`)
 

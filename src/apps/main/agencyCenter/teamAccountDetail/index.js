@@ -81,6 +81,7 @@ const MoneyDetailView = SearchGrid.extend({
       showIcon: true,
     }).render()
 
+    this.$('input[name="username"]').val(this.options.userName)
     this.$('select[name=tradeType]').html(_(tradingStatusConfig.get()).map((status) => {
       return `<option value="${status.id}">${status.searchName}</option>`
     }).join(''))

@@ -1,6 +1,6 @@
 const SearchGrid = require('com/searchGrid')
 
-const Timeset = require('com/timeset')
+// const Timeset = require('com/timeset')
 
 const LowLevelManageView = SearchGrid.extend({
 
@@ -25,8 +25,12 @@ const LowLevelManageView = SearchGrid.extend({
           width: '12%',
         },
         {
+          name: '类型',
+          width: '10%',
+        },
+        {
           name: '返点',
-          width: '12%',
+          width: '10%',
         },
         {
           name: '个人余额',
@@ -42,7 +46,7 @@ const LowLevelManageView = SearchGrid.extend({
         },
         {
           name: '不活跃天数',
-          width: '12%',
+          width: '10%',
         },
         {
           name: '操作',
@@ -66,33 +70,11 @@ const LowLevelManageView = SearchGrid.extend({
   },
 
   onRender() {
-    // 初始化时间选择
-    new Timeset({
-      el: this.$('.js-pf-timeset'),
-      startTime: 'regTimeStart',
-      endTime: 'regTimeEnd',
-      startTimeHolder: '起始日期',
-      endTimeHolder: '结束日期',
-      startOps: {
-        format: 'YYYY-MM-DD',
-      },
-      endOps: {
-        format: 'YYYY-MM-DD',
-      },
-    }).render()
-
     SearchGrid.prototype.onRender.apply(this, arguments)
-
-    // this.$('.js-ac-uDays').popover({
-    //   trigger: 'hover',
-    //   html: true,
-    //   content: '<strong>不活跃天数定义</strong> <br />连续多少天内无任何账变，即为不活跃的天数',
-    //   placement: 'bottom',
-    // })
     this.$personalBalance = this.$('.js-personal-balance')
-    this.$regDate = this.$('.js-reg-date')
-    this.$unActiveDay = this.$('.js-unActive-day')
-
+    this.$teamBalance = this.$('.js-team-balance')
+    this.$personalInput = this.$('.js-personal-input')
+    this.$teamInput = this.$('.js-team-input')
     Global.newbieActivity.checkAgent()
   },
 
@@ -122,19 +104,19 @@ const LowLevelManageView = SearchGrid.extend({
     })
       .hideLoading()
 
-    this.grid.addFooterRows({
-      trClass: 'tr-footer',
-      columnEls: [
-        '<strong>总计</strong>',
-        '',
-        _(gridData.balanceTotal).convert2yuan(),
-        _(gridData.subBalanceTotal).convert2yuan(),
-        '',
-        '',
-        '',
-      ],
-    })
-      .hideLoading()
+    // this.grid.addFooterRows({
+    //   trClass: 'tr-footer',
+    //   columnEls: [
+    //     '<strong>总计</strong>',
+    //     '',
+    //     _(gridData.balanceTotal).convert2yuan(),
+    //     _(gridData.subBalanceTotal).convert2yuan(),
+    //     '',
+    //     '',
+    //     '',
+    //   ],
+    // })
+    //   .hideLoading()
   },
 
   formatRowData(rowInfo) {
@@ -146,7 +128,7 @@ const LowLevelManageView = SearchGrid.extend({
     } else {
       row.push(`<span class="text-cool">${rowInfo.userName}</span>`)
     }
-
+    row.push(rowInfo.userType === 0 ? '代理' : '会员')
     row.push(`${_(rowInfo.rebate).formatDiv(10, { fixed: 1 })}%`)
 
     row.push(`<span class="text-bold-pleasant">${_(rowInfo.balance).convert2yuan()}</span>`)
@@ -164,28 +146,32 @@ const LowLevelManageView = SearchGrid.extend({
 
     const acctInfo = Global.memoryCache.get('acctInfo')
 
-    cell.push(`<a href="${_.getUrl(`/detail/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link text-cool">详情</a>`)
+    // cell.push(`<a href="${_.getUrl(`/detail/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link text-cool">详情</a>`)
 
     if (rowInfo.direct && !this.isSub()) {
+      cell.push(`<a href="${_.getUrl(`/message/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">站内信</a>`)
       if (!acctInfo.merchant) {
         cell.push(`<a href="${_.getUrl(`/rebate/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">升点</a>`)
       }
-      cell.push(`<a href="${_.getUrl(`/message/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">发消息</a>`)
+      cell.push('<a href="javascript:void(0);"  class="js-ac-llm-cp btn btn-link ">转账</a>')
     }
 
-    cell.push('<a href="javascript:void(0);"  class="js-ac-llm-cp btn btn-link ">转账</a>')
-    cell.push(`<a href="${_.addHrefArgs(`#ac/betting/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
-    cell.push(`<a href="${_.addHrefArgs(`#ac/track/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">追号</a>`)
-    cell.push(`<a href="${_.addHrefArgs(`#ac/account/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">账变</a>`)
+    cell.push(`<a href="${_.addHrefArgs('#ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
+    // cell.push(`<a href="${_.addHrefArgs(`#ac/track/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">追号</a>`)
+    cell.push(`<a href="${_.addHrefArgs('#ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a>`)
 
-    html.push('<div class="relative">')
-    html = html.concat(cell.splice(0, 3))
-    html.push('<i class="js-ac-expend-btn ac-expend-btn fa fa-angle-double-up fa-rotate-180 fa-2x"></i>')
-    html.push('</div>')
+    if (cell.length > 2) {
+      html.push('<div class="relative">')
+      html = html.concat(cell.splice(0, 3))
+      html.push('<i class="js-ac-expend-btn ac-expend-btn fa fa-angle-up fa-rotate-180 fa-2x"></i>')
 
-    html.push('<div class="js-ac-expend ac-expend no-height">')
-    html = html.concat(cell)
-    html.push('</div>')
+      html.push('<div class="js-ac-expend ac-expend hidden">')
+      html = html.concat(cell.splice(cell.length - 2, cell.length))
+      html.push('</div></div>')
+    } else {
+      html.push(cell)
+    }
+
 
     return html.join('')
   },
@@ -197,13 +183,13 @@ const LowLevelManageView = SearchGrid.extend({
     const $currentTr = $target.closest('tr')
     const $currentExpend = $target.closest('td').find('.js-ac-expend')
     if ($target.hasClass('fa-rotate-180')) {
-      $currentExpend.css('height', 25)
+      $currentExpend.removeClass('hidden')
     } else {
-      $currentExpend.css('height', '')
+      $currentExpend.addClass('hidden')
     }
     $target.toggleClass('fa-rotate-180')
 
-    $currentTr.siblings().find('.js-ac-expend').css('height', '').end()
+    $currentTr.siblings().find('.js-ac-expend').addClass('hidden').end()
       .find('.js-ac-expend-btn')
       .addClass('fa-rotate-180')
   },
@@ -249,19 +235,15 @@ const LowLevelManageView = SearchGrid.extend({
   },
   selectChangeHandler(e) {
     const $target = $(e.currentTarget)
-    const val = $target.val()
-    if (val === 0) {
+    const val = Number($target.val())
+    if (val === 1) {
       this.$personalBalance.removeClass('hidden')
-      this.$regDate.addClass('hidden')
-      this.$unActiveDay.addClass('hidden')
-    } else if (val === 1) {
+      this.$teamBalance.addClass('hidden')
+      this.$teamInput.val('')
+    } else if (val === 2) {
       this.$personalBalance.addClass('hidden')
-      this.$regDate.removeClass('hidden')
-      this.$unActiveDay.addClass('hidden')
-    } else {
-      this.$personalBalance.addClass('hidden')
-      this.$regDate.addClass('hidden')
-      this.$unActiveDay.removeClass('hidden')
+      this.$teamBalance.removeClass('hidden')
+      this.$personalInput.val('')
     }
   },
 })
