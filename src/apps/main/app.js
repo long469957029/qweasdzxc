@@ -220,6 +220,7 @@ const _bindFundOperatorDialogHandler = () => {
 
     $fundOperateDialog.on('hidden.modal', () => {
       $(this).remove()
+      rechargeView.destroy()
     })
     $fundOperateDialog.on('click.modal', '.js-rc-close-dialog', () => {
       Global.router.goTo('#aa')
@@ -227,6 +228,14 @@ const _bindFundOperatorDialogHandler = () => {
     })
     $fundOperateDialog.on('click.modal', '.js-rc-recharge-to-record', () => {
       Global.router.goTo('#fc/rd')
+      $fundOperateDialog.modal('hide')
+    })
+    $fundOperateDialog.on('click.modal', '.js-wd-goTo-fundPwd', () => {
+      Global.router.goTo('#uc/pl')
+      $fundOperateDialog.modal('hide')
+    })
+    $fundOperateDialog.on('click.modal', '.js-wd-goTo-bankCard', () => {
+      Global.router.goTo('#uc/cm')
       $fundOperateDialog.modal('hide')
     })
   })

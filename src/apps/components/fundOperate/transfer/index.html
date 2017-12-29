@@ -1,63 +1,66 @@
 <div class="fc-tr-container">
-  <div class="jc-fc-rc-maskCon fc-rc-maskCon">
-    <div id="view1" class="jc-fc-rc-view fc-tr-view">
-      <form class="js-fc-tr-form" action="javascript:void(0);">
-      <div class="inline-block fc-rc-recharge-leftBar">
-        <div class="inline-block fc-tr-change">
-          <span class="inline-block js-fc-tr-change fc-tr-change-img"></span>
-        </div>
-        <div class="fc-tr-out-select js-tr-select">
-          <div class="js-tr-out-select fc-tr-out-select-panel">
-            <div class="js-tr-out-selected fc-tr-out-selected">
-            </div>
-            <div class="js-tr-out-items fc-tr-out-items">
-            </div>
-          </div>
-        </div>
-        <div class="fc-tr-in-select js-tr-select">
-          <div class="js-tr-in-select  fc-tr-select">
-            <div class="js-tr-in-selected fc-tr-in-selected">
-            </div>
-            <div class="js-tr-in-items fc-tr-in-items">
-            </div>
-          </div>
-        </div>
-        <div class="fc-tr-amount-tips hidden">
-          可转余额：<span class="js-tr-balance text-account-cut">-</span>
-          <input type="hidden" class="js-tr-tradeNum">
-        </div>
-        <div class="fc-rc-leftBar-bottom-area">
-          <div class="fc-tr-transfer-amount-Input">
-            <span class="js-tr-amount-title rc-icon">转账金额</span>
-            <input class="js-tr-amount-input fc-rc-input fc-tr-amount-input">
-            <span class="js-tr-amount-yuan rc-icon">元</span>
-          </div>
-          <div class="js-tr-quickPay-select fc-tr-quickPay-select">
-          </div>
-          <div class="fc-rc-leftBar-submit">
-            <button type="button" class="js-rc-next-step btn btn-fc-submit">确定</button>
-          </div>
-        </div>
-      </div>
-      <div class="inline-block fc-rc-recharge-rightBar">
-        <div class="fc-rc-rightBar-tips">
-          <span class="inline-block fc-rc-rightBar-tips-img m-right-sm"></span>
-          <span class="inline-block fc-rc-rightBar-tips-title">温馨提示：</span>
-          <span class="js-rc-tips-content fc-rc-rightBar-tips-content">平台钱包只能和中心钱包进行转账操作，各平台钱包间不能直接互转</span>
-        </div>
-        <div class="jc-rc-rightBar-activity fc-rc-rightBar-activity">
-          <span class="inline-block fc-rc-rightBar-ac-img m-right-sm"></span>
-          <span class="inline-block fc-rc-rightBar-ac-title">优惠活动：</span>
-          <div class="jc-rc-activity"></div>
+  <form class="js-fc-tr-form" action="javascript:void(0);">
 
+    <div class="jc-fc-rc-maskCon fc-rc-maskCon">
+      <div id="view1" class="jc-fc-rc-view fc-tr-view">
+        <div class="inline-block fc-rc-recharge-leftBar">
+          <div class="inline-block fc-tr-change">
+            <span class="inline-block js-fc-tr-change fc-tr-change-img"></span>
+          </div>
+          <div class="fc-tr-out-select js-tr-select">
+            <div class="js-tr-out-select fc-tr-out-select-panel">
+              <div class="js-tr-out-selected fc-tr-out-selected">
+              </div>
+              <div class="js-tr-out-items fc-tr-out-items">
+              </div>
+            </div>
+          </div>
+          <div class="fc-tr-in-select js-tr-select">
+            <div class="js-tr-in-select  fc-tr-select">
+              <div class="js-tr-in-selected fc-tr-in-selected">
+              </div>
+              <div class="js-tr-in-items fc-tr-in-items">
+              </div>
+            </div>
+          </div>
+          <div class="fc-tr-amount-tips hidden">
+            可转余额：<span class="js-tr-balance text-account-cut">-</span>
+            <input type="hidden" class="js-tr-tradeNum">
+          </div>
+          <div class="fc-rc-leftBar-bottom-area">
+            <div class="fc-tr-transfer-amount-Input">
+              <span class="js-tr-amount-title rc-icon">转账金额</span>
+              <input class="js-tr-amount-input fc-rc-input fc-tr-amount-input" required data-parsley-type="integer"
+                     data-parsley-max-message="您申请的金额超出可提现金额" autocomplete="off">
+              <span class="js-tr-amount-yuan rc-icon">元</span>
+            </div>
+            <div class="js-tr-quickPay-select fc-tr-quickPay-select">
+            </div>
+            <div class="fc-rc-leftBar-submit">
+              <button type="button" class="js-rc-next-step btn btn-fc-submit">确定</button>
+            </div>
+          </div>
+        </div>
+        <div class="inline-block fc-rc-recharge-rightBar">
+          <div class="fc-rc-rightBar-tips">
+            <span class="inline-block fc-rc-rightBar-tips-img m-right-sm"></span>
+            <span class="inline-block fc-rc-rightBar-tips-title">温馨提示：</span>
+            <span class="js-rc-tips-content fc-rc-rightBar-tips-content">平台钱包只能和中心钱包进行转账操作，各平台钱包间不能直接互转</span>
+          </div>
+          <div class="jc-rc-rightBar-activity fc-rc-rightBar-activity">
+            <span class="inline-block fc-rc-rightBar-ac-img m-right-sm"></span>
+            <span class="inline-block fc-rc-rightBar-ac-title">优惠活动：</span>
+            <div class="jc-rc-activity"></div>
+
+          </div>
         </div>
       </div>
-      </form>
-    </div>
-    <div id="view2" class="jc-fc-rc-view fc-tr-view">
-      <div class="jc-tr-confirm-view fc-tr-confirm-view ">
+      <div id="view2" class="jc-fc-rc-view fc-tr-view">
+        <div class="jc-tr-confirm-view fc-tr-confirm-view ">
+        </div>
       </div>
     </div>
-  </div>
+  </form>
+
 </div>
 
