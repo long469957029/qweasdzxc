@@ -830,7 +830,7 @@
             margin-top: 25px;
           }
         }
-        .fc-tr-amount-tips{
+        .fc-tr-amount-tips {
           position: absolute;
           top: 195px;
           margin-left: 20px;
@@ -840,6 +840,7 @@
     }
   }
 }
+
 .fc-rc-recharge-confirmView {
   margin: 15px 45px;
   text-align: center;
@@ -886,10 +887,273 @@
     }
   }
 }
+
 .btn-fc-submit {
   width: 360px;
   height: 55px;
   background-color: $new-main-deep-color;
   color: $new-main-body-color;
   font-size: 18px;
+}
+
+.fc-wd-container {
+  width: 100%;
+  height: 625px;
+  position: relative;
+  overflow: hidden;
+  .fc-wd-maskCon {
+    width: 5000px;
+    .fc-wd-view {
+      margin-top: 30px;
+      width: 740px;
+      height: 595px;
+      float: left;
+      .fc-wd-set-img {
+        background: url("~base/images/v2/icon-recharge-warning.png");
+        width: 80px;
+        height: 80px;
+        margin: 103px 330px 35px 330px;
+      }
+      .fc-wd-set-tips {
+        font-size: 16px;
+        color: $def-black-color;
+        margin: 0 185px;
+        line-height: 20px;
+        text-align: center;
+      }
+      .fc-wd-set-goTo {
+        margin-top: 55px;
+        text-align: center;
+        .btn-wd-submit {
+          height: 45px;
+          width: 240px;
+          color: $def-white-color;
+          background-color: $new-main-deep-color;
+          border-radius: 4px;
+        }
+      }
+    }
+    .fc-wd-operate-view {
+      .fc-rc-recharge-leftBar {
+        .fc-wd-bank-select-container {
+          position: absolute;
+          z-index: 9;
+          top: 48px;
+          .fc-bank-select-select {
+            overflow: hidden;
+            width: 320px;
+            height: 50px;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            line-height: 50px;
+            border-radius: 5px;
+            display: inline-block;
+            position: relative;
+            text-align: left;
+            cursor: pointer;
+            transition: height 0.5s;
+            padding: 0 20px;
+            .js-wd-bank-selected {
+              height: 50px !important;
+            }
+            .js-wd-bank-items {
+              border-top: 1px solid #e6e6e6;
+            }
+            .rc-icon {
+              display: inline-block;
+              vertical-align: middle;
+              background-size: 100% 100%;
+              margin-bottom: 3px;
+            }
+            .rc-name {
+              display: inline-block;
+              margin-left: 20px;
+              color: #333333;
+              font-size: 14px;
+            }
+            .rc-desc {
+              display: inline-block;
+              color: #999999;
+              position: absolute;
+              left: 255px;
+            }
+            .select-down {
+              width: 18px;
+              height: 10px;
+              display: block;
+              position: absolute;
+              top: 20px;
+              left: 315px;
+              background: url("~base/images/v2/icon-select-down.png") no-repeat;
+              &.up {
+                transform: rotate(180deg);
+              }
+            }
+            &.side-down {
+              border: 1px solid $new-main-deep-color;
+              height: 320px;
+              overflow: auto;
+            }
+          }
+
+          }
+        .fc-wd-bank-tips {
+          position: absolute;
+          top: 123px;
+          width: 330px;
+          padding: 0 15px;
+          font-size: 14px;
+          .fc-wd-bank-tips-balance{
+            margin-right: 175px;
+          }
+          .fc-wd-bank-tips-addCard{
+            color: $new-main-deep-color;
+            position: absolute;
+            right: 15px;
+            .fc-wd-bank-tips-addCard{
+              margin-right:44px;
+            }
+          }
+        }
+        .fc-rc-leftBar-bottom-area {
+          position: absolute;
+          top: 163px;
+          .no-subType {
+            top: 123px !important;
+          }
+          .fc-wd-amount-Input {
+            .fc-wd-amount-input {
+              padding-left: 160px;
+              width: 150px;
+              padding-right: 50px;
+              font-size: 16px;
+              color: #333333;
+            }
+          }
+          .fc-wd-fundPwd-Input {
+            margin-top: 20px;
+            .rc-fundPwd-title{
+              font-size: 14px;
+              color: #333333;
+              z-index: 6;
+              position: absolute;
+              top: 90px;
+              left: 20px;
+            }
+            .fc-wd-fundPwd-input {
+              padding-left: 160px;
+              width: 150px;
+              padding-right: 50px;
+              font-size: 16px;
+              color: #333333;
+              height: 44px;
+              background: #ffffff;
+            }
+          }
+          .js-wd-fee{
+            margin-top:45px;
+            padding: 0 15px;
+            li{
+              list-style: none;
+              width: 128px;
+              font-size: 14px;
+              display: inline-block;
+            }
+          }
+          .rc-title {
+            font-size: 14px;
+            color: #333333;
+            z-index: 6;
+            position: absolute;
+            top: 18px;
+            left: 20px;
+          }
+          .fc-wd-input {
+            padding-left: 160px;
+            width: 150px;
+            padding-right: 50px;
+            font-size: 16px;
+            color: #333333;
+          }
+          .rc-icon {
+            top: 18px;
+            position: absolute;
+            right: 20px;
+            z-index: 6;
+            font-size: 14px;
+            color: #999999;
+          }
+          .fc-wd-submit {
+            margin-top: 25px;
+          }
+          .fc-wd-freezeMoney{
+            margin-top: 25px;
+            text-align: center;
+            .tips-img{
+              background-image: url('~base/images/v2/icon-tips-red.png');
+              width: 18px;
+              height: 18px;
+              display: inline-block;
+              float: left;
+              margin-left: 47px;
+            }
+            .tips-text{
+              color: $prominent-red-color;
+              display: inline-block;
+              font-size: 14px;
+              margin-top: -1px;
+              float: left;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.fc-wd-confirmView {
+  margin: 15px 45px;
+  text-align: center;
+  .fc-wd-confirmView-title {
+    cursor: pointer;
+    text-align: left;
+    .title-left {
+      font-size: 14px;
+      color: $def-gray-color;
+      &.active, &:hover {
+        color: $new-main-deep-color;
+      }
+    }
+    .title-right {
+      font-size: 14px;
+      color: $font-auxiliary-color;
+      &.active, &:hover {
+        color: $new-main-deep-color;
+      }
+    }
+  }
+  .fc-wd-confirmView-confirm-img {
+    background-image: url('~base/images/v2/icon-comfirm-bg.png');
+    margin-top: 110px;
+    width: 75px;
+    height: 75px;
+    margin-left: 287px;
+  }
+  .fc-wd-confirmView-confirm-Tips {
+    font-size: 18px;
+    color: #666666;
+    margin-top: 20px;
+  }
+  .fc-wd-confirmView-confirm-transferPage {
+    font-size: 14px;
+    margin-top: 20px;
+    padding: 0 110px;
+    line-height: 25px;
+    .rc-recharge-to-record {
+      cursor: pointer;
+      &.active, &:hover {
+        color: $prominent-color;
+      }
+    }
+  }
 }
