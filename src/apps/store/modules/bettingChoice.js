@@ -216,14 +216,11 @@ const mutations = {
     }
   },
 
-  [types.ADD_HANDICAP_BET](state, { bettingInfo, options }) {
+  [types.ADD_HANDICAP_BET](state, { bettingInfo }) {
     this.commit(types.EMPTY_BUY_BETTING)
 
-    this.commit(types.ADD_BETS, {
+    this.commit(types.ADD_HANDICAP_BETS, {
       bettingList: [bettingInfo],
-      options: _(options || {}).extend({ statistics: state.statistics }, {
-        type: 'buy',
-      }),
     })
 
     if (!_.isNull(state.playInfo.maxBetNums) && state.statistics > state.playInfo.maxBetNums) {
@@ -367,6 +364,60 @@ const mutations = {
     }
 
     state.addPrevBetResult = sameBets
+  },
+
+  [types.ADD_HANDICAP_BETS](state, { bettingList, options = {} }) {
+    const items = []
+
+    _(bettingList).each((bettingInfo) => {
+      let statistics
+
+      if (bettingInfo.statistics) {
+        statistics = bettingInfo.statistics
+      } else {
+        statistics = 1
+      }
+
+      const bettingNumber = bettingInfo.format(bettingInfo.lotteryList)
+
+      const item = {
+        levelName: state.levelName,
+        playId: state.playId,
+        playName: state.playName,
+        bettingNumber,
+        // 显示用
+        formatBettingNumber: bettingNumber,
+        type: bettingInfo.type,
+        formatBonusMode: state.formatBonusMode,
+        multiple: state.multiple,
+        unit: state.unit,
+        statistics,
+        formatUnit: state.formatUnit,
+        betBonus: state.betBonus,
+        fBetBonus: state.fBetBonus,
+        fPrefabMoney: state.fPrefabMoney,
+        betMethod: state.betMethod,
+        userRebate: state.userRebate,
+        rebateMoney: state.rebateMoney,
+        maxMultiple: state.maxMultiple,
+        formatMaxMultiple: state.formatMaxMultiple,
+        maxBonus: state.maxBonus,
+        formatMaxBonus: state.formatMaxBonus,
+      }
+
+      items.splice(0, 0, item)
+
+      // 计算prefabMoney 和 rebateMoney
+
+      item.prefabMoney = _.chain(bettingInfo.lotteryList).reduce((total, item) => { return total + item.betMoney }, 0)
+        .mul(item.statistics)
+        .mul(item.unit)
+        .value()
+    })
+
+    state.buyList = items.concat(state.buyList)
+
+    state.addPrevBetResult = []
   },
 }
 

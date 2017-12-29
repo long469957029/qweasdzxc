@@ -1,3 +1,4 @@
+import betFormat from './betFormat'
 import factory from 'bettingCenter/misc/betRulesFactory'
 import { chunk } from 'lodash'
 
@@ -32,6 +33,13 @@ const getFortyNine = () => {
       }
     }
   })
+}
+
+const getSpecialFortyNine = () => {
+  return _.chain(getFortyNine()).groupBy((item) => { return item.num[item.num.length - 1] })
+    .values().sortBy((itemList) => { return itemList[0].num })
+    .flatten()
+    .value()
 }
 
 const shuangMian = [
@@ -434,13 +442,16 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '五不中',
-        items: chunk(getFortyNine(), 5),
+        items: chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
       },
     ]),
+    showItemOdds: false,
+    showMoneyInput: false,
     bettingArea: ['bottom'],
+    format: betFormat.multiFirst,
   })
 
   // 六不中
@@ -453,13 +464,16 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '六不中',
-        items: chunk(getFortyNine(), 5),
+        items: chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
       },
     ]),
+    showItemOdds: false,
+    showMoneyInput: false,
     bettingArea: ['bottom'],
+    format: betFormat.multiFirst,
   })
 
   // 七不中
@@ -472,13 +486,16 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '七不中',
-        items: chunk(getFortyNine(), 5),
+        items: chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
       },
     ]),
+    showItemOdds: false,
+    showMoneyInput: false,
     bettingArea: ['bottom'],
+    format: betFormat.multiFirst,
   })
 
   // 八不中
@@ -491,13 +508,16 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '八不中',
-        items: chunk(getFortyNine(), 5),
+        items: chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
       },
     ]),
+    showItemOdds: false,
+    showMoneyInput: false,
     bettingArea: ['bottom'],
+    format: betFormat.multiFirst,
   })
 
   // 九不中
@@ -510,13 +530,16 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '九不中',
-        items: chunk(getFortyNine(), 5),
+        items: chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
       },
     ]),
+    showItemOdds: false,
+    showMoneyInput: false,
     bettingArea: ['bottom'],
+    format: betFormat.multiFirst,
   })
 
   // 十不中
@@ -529,13 +552,16 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '十不中',
-        items: chunk(getFortyNine(), 5),
+        items: chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
       },
     ]),
+    showItemOdds: false,
+    showMoneyInput: false,
     bettingArea: ['bottom'],
+    format: betFormat.multiFirst,
   })
 
   // 总和

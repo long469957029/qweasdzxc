@@ -164,10 +164,7 @@
           _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
             if (item.selected && item.betMoney) {
               this.canBet = true
-              this.lotteryList.push({
-                bet: [`${item.num}*${item.betMoney}`],
-                item: item
-              })
+              this.lotteryList.push(item)
             }
           })
         },
@@ -199,6 +196,11 @@
       inputTotalBetMoney() {
         if (!_.isNumber(this.betMoney) || this.betMoney === 0) {
           this.betMoney = null
+          if (!this.playRule.showMoneyInput) {
+            _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
+              item.betMoney = null
+            })
+          }
         }
       },
 
@@ -222,8 +224,8 @@
       lotteryBuy() {
         this.$store.commit(types.ADD_HANDICAP_BET, {
           bettingInfo: {
-            lotteryList: _.pluck(this.lotteryList, 'bet'),
-            format: this.type,
+            lotteryList: this.lotteryList,
+            format: this.playRule.format
           }
         })
 
@@ -258,6 +260,7 @@
   .handicap-grid {
     margin-bottom: 18px;
     .title {
+      display: flex;
       background: $sec-line-color;
       text-align: center;
       line-height: 38px;

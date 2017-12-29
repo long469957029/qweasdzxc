@@ -1,3 +1,5 @@
+import betFormat from './betFormat'
+
 const zero2nine = _.range(10)
 
 const op = {
@@ -153,7 +155,7 @@ function addHandicapRule(ids, {
   // 注数的算法
   algorithm = _.noop,
   algorithmProps = {},
-  format,
+  format = betFormat.star,
   showOdds = true,
   showMoneyInput = true,
   showItemOdds = true,
