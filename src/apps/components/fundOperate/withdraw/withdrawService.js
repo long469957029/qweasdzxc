@@ -4,16 +4,18 @@
 const bankConfig = require('userCenter/misc/bankConfigForFund')
 
 module.exports = {
-  getBankData(bankList, selectedCardId) {
+  getBankData(cardList, selectedCardId) {
     const selected = []
     const bankItems = []
     let selectedData = []
-    if (selectedCardId >= 0) {
-      selectedData = _(bankList).findWhere({
-        bankId: selectedCardId,
+    if (selectedCardId === undefined) {
+      selectedData = _(cardList).findWhere({
+        cardId: cardList[0].cardId,
       })
     } else {
-      selectedData = bankList[0]
+      selectedData = _(cardList).findWhere({
+        cardId: selectedCardId,
+      })
     }
     const name = selectedData.bankName
     const bankId = selectedData.bankId
@@ -23,15 +25,17 @@ module.exports = {
     selected.push(`<div class="js-wd-bank-selectedItem" data-bankid="${bankId}" data-cardid="${cardId}">`)
     selected.push(`<span class="js-wd-bank-icon rc-icon ${logo}"></span>`)
     selected.push(`<span class="js-wd-bank-name rc-name">${name}（${cardNo}）</span>`)
-    if (bankList.length >= 2) {
-      selected.push('<span class="js-wd-bank-desc rc-desc">其他提款银行</span>')
+    if (cardList.length >= 2) {
+      selected.push('<span class="js-wd-bank-desc rc-desc">其他银行</span>')
       selected.push('<span class="select-down js-select-bank-down"></span></div>')
     }
+
     // 取未选中的支付方式信息并赋值
-    const unSelectedData = _(bankList).without(selectedData)
+    const unSelectedData = _(cardList).without(selectedData)
     _(unSelectedData).each((item) => {
       const itemList = []
-      itemList.push(`<span class="js-wd-bank-icon rc-icon ${bankConfig.get(bankId).className}"></span>`)
+      const itemBankId = item.bankId
+      itemList.push(`<span class="js-wd-bank-icon rc-icon ${bankConfig.get(itemBankId).className}"></span>`)
       itemList.push(`<span class="js-wd-bank-name rc-name">${item.bankName}（${item.cardNo}）</span>`)
       bankItems.push(`<div class="js-wd-bank-item fc-wd-bank-item" data-bankid="${item.bankId}" data-cardid="${item.cardId}">${itemList.join('')}</div>`)
     })
@@ -75,17 +79,20 @@ module.exports = {
         maxFee = _(item.maxMoneyLimit).formatDiv(10000)
       }
     })
-    firstHtml.push(`<div>1.单笔最低提现金额<span class="text-account-cut>"${minFee}</div>元，最高提现限额<span class="text-account-cut>"${maxFee}</span>元，`)
-    firstHtml.push(`今日还可以提现${data.remainTimes}次。`)
+    firstHtml.push(`<span>1.单笔最低提现金额<span class="text-account-cut">${minFee}</span>元，最高提现限额<span class="text-account-cut">${maxFee}</span>元，`)
+    firstHtml.push(`今日还可以提现<span class="text-account-cut">${data.remainTimes}</span>次。`)
     if (data.feeType === 'percent') {
-      firstHtml.push(`超过次数按 <span class="text-pleasant">${_(data.fee).formatDiv(100)}%</span>收取手续费。</div>`)
+      firstHtml.push(`超过次数按 <span class="text-account-cut">${_(data.fee).formatDiv(100)}%</span>收取手续费。</div>`)
     }
     if (data.feeType === 'fix') {
-      firstHtml.push(`超过次数按每笔<span class="text-pleasant">${_(data.fee).formatDiv(10000)}元</span>收取手续费</div>`)
+      firstHtml.push(`超过次数按每笔<span class="text-account-cut">${_(data.fee).formatDiv(10000)}元</span>收取手续费</div>`)
     }
     html.push(firstHtml.join(''))
     html.push('<div>2.新绑定的提款银行卡需要3小时后才能发起提款</div>')
-    return html.join('')
+    return {
+      tipsHtml: html.join(''),
+      minInput: minFee,
+    }
   },
 }
 

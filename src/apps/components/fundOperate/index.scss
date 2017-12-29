@@ -996,22 +996,21 @@
             }
           }
 
-          }
+        }
         .fc-wd-bank-tips {
           position: absolute;
           top: 123px;
           width: 330px;
           padding: 0 15px;
           font-size: 14px;
-          .fc-wd-bank-tips-balance{
-            margin-right: 175px;
+          .fc-wd-bank-tips-balance {
           }
-          .fc-wd-bank-tips-addCard{
+          .fc-wd-bank-tips-addCard {
             color: $new-main-deep-color;
             position: absolute;
             right: 15px;
-            .fc-wd-bank-tips-addCard{
-              margin-right:44px;
+            .fc-wd-bank-tips-addCard {
+              margin-right: 44px;
             }
           }
         }
@@ -1032,12 +1031,12 @@
           }
           .fc-wd-fundPwd-Input {
             margin-top: 20px;
-            .rc-fundPwd-title{
+            .rc-fundPwd-title {
               font-size: 14px;
               color: #333333;
               z-index: 6;
               position: absolute;
-              top: 90px;
+              margin-top: 16px;
               left: 20px;
             }
             .fc-wd-fundPwd-input {
@@ -1050,10 +1049,10 @@
               background: #ffffff;
             }
           }
-          .js-wd-fee{
-            margin-top:45px;
+          .js-wd-fee {
+            margin-top: 45px;
             padding: 0 15px;
-            li{
+            li {
               list-style: none;
               width: 128px;
               font-size: 14px;
@@ -1086,25 +1085,7 @@
           .fc-wd-submit {
             margin-top: 25px;
           }
-          .fc-wd-freezeMoney{
-            margin-top: 25px;
-            text-align: center;
-            .tips-img{
-              background-image: url('~base/images/v2/icon-tips-red.png');
-              width: 18px;
-              height: 18px;
-              display: inline-block;
-              float: left;
-              margin-left: 47px;
-            }
-            .tips-text{
-              color: $prominent-red-color;
-              display: inline-block;
-              font-size: 14px;
-              margin-top: -1px;
-              float: left;
-            }
-          }
+
         }
       }
     }
@@ -1157,3 +1138,19 @@
     }
   }
 }
+
+.fc-wd-error-container {
+  margin-top: 25px;
+  .parsley-error-line {
+    margin-left: 62px;
+    .parsley-error-text {
+      margin-left:3px;
+      color: #e84c4c;
+      font-size: 14px;
+      position: absolute;
+      margin-top: -3px;
+    }
+  }
+}
+
+

@@ -56,6 +56,11 @@ const TransferView = Base.ItemView.extend({
     // if (!this.cur) {
     //   this.cur = 0
     // }
+    this.platformParsley = this.$('.js-fc-tr-form').parsley({
+      errorsWrapper: '<div class="tooltip parsley-errors-list"><span class="sfa sfa-error-icon vertical-sub pull-left"></div>',
+      errorTemplate: '<div class="tooltip-inner">',
+      trigger: 'change',
+    })
   },
   // 初始化转账面板数据
   initTransferData() {
@@ -216,7 +221,7 @@ const TransferView = Base.ItemView.extend({
       this.$('.js-tr-in-items').html(toData.toItems)
       // 重新初始化转入钱包框
       if (fromId === 0) {
-        const fromData = transferService.getFromData()
+        const fromData = transferService.getFromData(1)
         this.$('.js-tr-out-selected').html(fromData.fromSelected)
         this.$('.js-tr-out-items').html(fromData.fromItems)
       } else {
@@ -246,12 +251,13 @@ const TransferView = Base.ItemView.extend({
     }
     const transferConfirmView = new TransferConfirmView()
     this.$('.jc-tr-confirm-view').html(transferConfirmView.render().el)
-    // this.submitPlatformTransferHandler()
+    this.submitPlatformTransferHandler()
   },
   preStepHandler() {
     if (this.cur > 0) {
       this.slide(this.conInnerConWidth, this.cur - 1)
     }
+    this.render()
   },
   slide(conInnerConWidth, index) {
     this.$('.jc-fc-rc-maskCon').animate({ marginLeft: `${-index * conInnerConWidth}px` })
@@ -259,18 +265,29 @@ const TransferView = Base.ItemView.extend({
   },
   // 切换转入转出位置
   changeInOutStatusHandler(e) {
+    if (this.getInOutDataFlag) {
+      return
+    }
+    this.getInOutDataFlag = true
+    setTimeout(() => {
+      this.getInOutDataFlag = false
+    }, 1000)
     const $target = $(e.currentTarget)
-    const fromChannel = this.$('.js-tr-out-selected').data('id')
-    const toChannel = this.$('.js-tr-in-selected').data('id')
+    const fromChannel = this.$('.js-tr-out-selectedItem').data('id')
+    const toChannel = this.$('.js-tr-in-selectedItem').data('id')
     // 重新初始化转出钱包框
-    const fromData = transferService.getFromData(fromChannel)
+    const fromData = transferService.getFromData(toChannel)
     this.$('.js-tr-out-selected').html(fromData.fromSelected)
     this.$('.js-tr-out-items').html(fromData.fromItems)
     // 重新初始化转入钱包框
-    const toData = transferService.getToData(toChannel)
+    const toData = transferService.getToData(fromChannel)
     this.$('.js-tr-in-selected').html(toData.toSelected)
     this.$('.js-tr-in-items').html(toData.toItems)
-
+    this.getPlatformInfoXhr({ channelId: Number(toChannel) || Number(fromChannel) || '1' }).done((res) => {
+      if (res.result === 0) {
+        this.renderPlatformTransferTypeLimit()
+      }
+    })
     // 定义翻转动画
     const defaults = {
       speed: 200, // 翻转速度
@@ -311,11 +328,6 @@ const TransferView = Base.ItemView.extend({
       Global.ui.notification.show('可转账次数不足。')
       return false
     }
-    this.platformParsley = this.$('.js-fc-tr-form').parsley({
-      errorsWrapper: '<div class="tooltip bottom parsley-errors-list tooltip-error"><div class="tooltip-arrow"></div></div>',
-      errorTemplate: '<div class="tooltip-inner">',
-      trigger: 'blur',
-    })
     if (!this.platformParsley.validate()) {
       return false
     }

@@ -18,11 +18,16 @@ const RechargeView = Base.ItemView.extend({
     'click .js-fc-rc-payType-item': 'changeTypeHandler',
     'click .js-fc-rc-bank-item': 'changeBankHandler',
     'click .jc-rc-info-copy': 'copySuccessHandler',
+    'click .js-fc-rc-recharge-submit': 'confirmHandler',
+    'click .js-fc-re-gotoAliPay': 'gotoAliPayHandler',
   },
   getRechargeBaseInfoXhr() {
     return Global.sync.ajax({
       url: '/fund/recharge/rechargetype.json',
     })
+  },
+  gotoAliPayHandler () {
+    window.open('https://www.alipay.com')
   },
   initialize() {
   },
@@ -52,6 +57,11 @@ const RechargeView = Base.ItemView.extend({
     if (!this.cur) {
       this.cur = 0
     }
+    this.platformParsley = this.$('.js-fc-tr-form').parsley({
+      errorsWrapper: '<div class="tooltip parsley-errors-list"><span class="sfa sfa-error-icon vertical-sub pull-left"></div>',
+      errorTemplate: '<div class="tooltip-inner">',
+      trigger: 'change',
+    })
   },
   // 获取上次采用的支付方式,初始化面板
   initPaymentData(type, data) {
@@ -115,63 +125,18 @@ const RechargeView = Base.ItemView.extend({
     // 7 返回温馨提示
     this.$('.js-rc-tips-content').html(rechargeService.get(type, feeData.min, feeData.max, feeData.limit, feeData.maxLimit))
   },
-  // // 提交充值请求
-  // confirmHandler() {
-  //   if (this.nopaydetail(true)) {
-  //     return
-  //   }
-  //   const $form = this.$('.js-fc-re-form')
-  //   const clpValidate = $form.parsley().validate()
-  //   let paymentInfo
-  //   if (clpValidate) {
-  //     $form.submit()
-  //     const amount = this.$('.js-fc-re-amount').val()
-  //     $('.js-fc-re-modal').closest('.modal').modal('hide')
-  //
-  //     paymentInfo = quickPayConfig.get(this.paymentInfo.paymentType)
-  //
-  //     const $dialog = Global.ui.dialog.show({
-  //       body: `${'<div class=" fc-re-resultShow text-center">' +
-  //       '<div class="text-center fc-re-result-title">温馨提示<span class="js-unPaymentOrder-close sfa sfa-dialog-close unPaymentOrder-close" data-dismiss="modal"></span></div>' +
-  //       '<div  class="m-top-lg text-center font-md m-bottom-md"><span>支付方式：</span>'}${paymentInfo.zhName}</div>` +
-  //       `<div class="m-bottom-md font-md text-center fc-result-money"><span>充值金额：</span><span class="text-hot">${amount}元</span></div>` +
-  //       '<div class="text-center m-top-lg">' +
-  //       '<div class="text-center"><button type="button" class="js-fc-re-succ fc-re-result-btn fc-re-succ m-right-md">继续充值</button></div>' +
-  //       '<div class="m-top-lg text-center">' +
-  //       '<div class="js-gl-service inline-block fc-re-fail m-right-lg cursor-pointer"><span class="sfa sfa-kefu vertical-middle m-right-sm"></span>联系客服</div>' +
-  //       '<div class="js-fc-re-look-result inline-block m-left-lg fc-re-look-result cursor-pointer"><span class="sfa sfa-recharge vertical-middle m-right-sm"></span>查看充值结果</div>' +
-  //       '</div>' +
-  //       '</div></div>',
-  //       bodyClass: 'no-border no-padding no-bg',
-  //       anySize: '565',
-  //       anyPosition: '60',
-  //       footer: '',
-  //     })
-  //
-  //     $dialog.on('hidden.modal', function () {
-  //       $(this).remove()
-  //     })
-  //
-  //     $dialog.off('click.rechargeSucc')
-  //       .on('click.rechargeSucc', '.js-fc-re-succ', () => {
-  //         // 提交充值完成通知，
-  //         $dialog.modal('hide')
-  //         Global.router.goTo('#fc/re')
-  //       })
-  //
-  //     $dialog.off('click.rechargeFail')
-  //       .on('click.rechargeFail', '.js-gl-service', () => {
-  //         $dialog.modal('hide')
-  //         // window.open('#hc?page=quick-top-up');
-  //       })
-  //     $dialog.off('click.lookResult')
-  //       .on('click.lookResult', '.js-fc-re-look-result', () => {
-  //         // 提交充值完成通知，
-  //         $dialog.modal('hide')
-  //         Global.router.goTo('#fc/rr')
-  //       })
-  //   }
-  // },
+  // 提交充值请求
+  confirmHandler() {
+    const $form = this.$('.jc-rc-recharge-form')
+    this.$('input[name="paymentId"]').val(this.$('.js-fc-rc-payType-selectedItem').data('id'))
+    this.$('input[name="paymentType"]').val(this.$('.js-fc-rc-payType-selectedItem').data('type'))
+    this.$('input[name="bankId"]').val(this.$('.js-fc-rc-payType-selectedItem').data('type'))
+    const clpValidate = $form.parsley().validate()
+    // let paymentInfo
+    if (clpValidate) {
+      $form.submit()
+    }
+  },
   // 点击充值确定按钮下一步操作判断
   nextStepHandler() {
     if (this.cur < this.conSize - 1) {
@@ -198,7 +163,6 @@ const RechargeView = Base.ItemView.extend({
         type: paymentId, pname: paymentName, bname: bankName, amount: payAmount,
       })
       this.$('.jc-rc-confirm-view').html(rechargeConfirmView.render().el)
-      this.confirmHandler()
     }
   },
   preStepHandler() {

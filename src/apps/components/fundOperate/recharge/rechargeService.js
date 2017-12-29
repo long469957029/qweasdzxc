@@ -129,7 +129,7 @@ module.exports = {
     })
     const logo = quickPayConfig.get(selectedData.paymentType).className
     const name = quickPayConfig.get(selectedData.paymentType).zhName
-    selected.push(`<div class="js-fc-rc-payType-selectedItem" data-type="${type}" data-name="${name}">`)
+    selected.push(`<div class="js-fc-rc-payType-selectedItem" data-type="${type}" data-name="${name}" >`)
     selected.push(`<span class="js-rc-type-icon rc-icon ${logo}"></span>`)
     selected.push(`<span class="js-rc-type-name rc-name">${name}</span>`)
     selected.push('<span class="js-rc-type-desc rc-desc">其他支付方式</span>')
