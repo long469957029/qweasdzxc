@@ -11,7 +11,7 @@ const AccountDetailsView = TabView.extend({
 
   events: {},
 
-  className: 'fc-ad-detail',
+  className: 'fc-ad-detail basic-black',
 
   initialize() {
     _(this.options).extend({
