@@ -223,7 +223,6 @@ App.addInitializer(() => {
 
   App.toolbarRegin.show(new ToolbarView())
 
-  App.headerRegion.show(new HeaderView())
   App.noticeRegin.show(new NoticeView())
   Global.newbieActivity.checkLogin()
 

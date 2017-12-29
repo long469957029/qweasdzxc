@@ -46,7 +46,7 @@ $inverse-border-color: #878585 !default;
 
 $table-border-color: #b1b1b1 !default;
 
-$background-color: white;
+$background-color: #f5f5f5;
 
 //
 $brand-primary: #eae8e6 !default;
@@ -697,8 +697,8 @@ $wrapper-margin-right: 70px !default;
 $modal-fade-opacity: 0.3 !default;
 
 //header
-$header-color: #555757;
-$header-height: 37px !default;
+$header-color: $prominent-light-bg-color;
+$header-height: 40px !default;
 
 //card
 $cards-width: 217px !default;
