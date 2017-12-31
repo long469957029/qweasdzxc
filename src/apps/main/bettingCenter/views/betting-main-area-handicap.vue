@@ -79,30 +79,6 @@
 
           this.$store.commit(types.SET_PLAY_INFO, playInfo)
 
-          // 中奖举例
-          if ($(this.$refs.playExample).data('popover')) {
-            $(this.$refs.playExample).popover('destroy')
-          }
-          if ($(this.$refs.winningExample).data('popover')) {
-            $(this.$refs.winningExample).popover('destroy')
-          }
-
-          $(this.$refs.playExample).popover({
-            trigger: 'hover',
-            container: this.$el,
-            html: true,
-            content: `<div><span class="font-bold">玩法说明：</span>${playInfo.playDes}</div><div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
-            placement: 'bottom',
-          })
-
-          $(this.$refs.winningExample).popover({
-            trigger: 'hover',
-            container: this.$el,
-            html: true,
-            content: `<div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
-            placement: 'bottom',
-          })
-
 
           //提示框变化, 暂时这么写
           $('.js-bc-confirm-planId').text(newVal)
@@ -123,90 +99,6 @@
           recordsOpenView.update()
         }
       },
-      'bettingChoice.previewList': {
-        handler: function(previewList) {
-          this.fPreviewList = _(previewList).map(function(previewInfo, index) {
-            const title = `${previewInfo.levelName}_${previewInfo.playName}`
-            let betNum = ''
-            if (previewInfo.formatBettingNumber.length > 20) {
-              betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link">${
-                previewInfo.formatBettingNumber.slice(0, 20)}...</a>`
-            } else {
-              betNum = previewInfo.formatBettingNumber
-            }
-            const multipleDiv = `<div class="js-bc-preview-multiple-${index} p-top-xs"></div>`
-            const modeSelect = `<select name="" class="js-bc-preview-unit select-default bc-unit-select-add">
-              <option value="10000" ${previewInfo.unit === 10000 ? 'selected' : ''}>元</option>
-              <option value="1000" ${previewInfo.unit === 1000 ? 'selected' : ''}>角</option>
-              <option value="100" ${previewInfo.unit === 100 ? 'selected' : ''}>分</option>
-              <option value="10" ${previewInfo.unit === 10 ? 'selected' : ''}>厘</option>
-            </select>`
-
-            return {
-              title,
-              betNum,
-              note: `${previewInfo.statistics}注`,
-              multiple: multipleDiv,
-              // multiple: previewInfo.multiple,
-              mode: modeSelect,
-              bettingMoney: `${previewInfo.fPrefabMoney}元`,
-              bonus: `${previewInfo.fBetBonus}元`,
-              operate: `<div class="js-lottery-delete lottery-preview-del icon-block m-right-md pull-right" data-index="${index}"></div>`,
-            }
-          }, this)
-
-          this.$nextTick(() => {
-            this.$refs.lotteryGrid.getRows().forEach((row, index) => {
-              const $row = $(row)
-              const $detail = $row.find('.js-bc-betting-preview-detail')
-              const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
-              let betNumber = previewList[index].bettingNumber
-              if (_.indexOf(this.mark6TicketIdArr, parseInt(this.ticketId, 10)) > -1) {
-                // 六合彩、无限六合彩
-                // 特码-两面，特码-色波，正码-两面1，正码-两面2，正码-两面3，正码-两面4，正码-两面5，正码-两面6，生肖-特肖，生肖-一肖，头尾-头尾，总和-总和
-                const tm_zm_sx_tw_zh_playIdArr = betRulesConfig.getMark6SpecialInfo().tm_zm_sx_tw_zh_playIdArr
-                if (_.indexOf(tm_zm_sx_tw_zh_playIdArr, this.bettingChoice.playId) > -1) {
-                  betNumber = previewList[index].formatBettingNumber
-                }
-              }
-
-              if ($multipleAdd.numRange('instance')) {
-                $multipleAdd.numRange('setRange', 1, previewList[index].formatMaxMultiple)
-              } else {
-                $multipleAdd.numRange({
-                  defaultValue: previewList[index].multiple,
-                  size: 'md',
-                  max: previewList[index].formatMaxMultiple,
-                  onChange: (num) => {
-                    this.$store.commit(types.SET_PREVIEW_MULTIPLE, {num, index})
-                  },
-                  onOverMax: (maxNum) => {
-                    //奖金限额一致
-                    Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
-                  ${_(this.bettingChoice.limitMoney).convert2yuan()}</span>元，已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
-                  },
-                })
-              }
-
-              if ($detail.length) {
-                $detail.popover({
-                  title: '详细号码',
-                  trigger: 'click',
-                  html: true,
-                  container: 'body',
-                  content: `<div class="js-pf-popover">${betNumber}</div>`,
-                  placement: 'right',
-                })
-              }
-            });
-
-            // $(this.$refs.lotteryPreview).scrollTop(0)
-          })
-
-          this.$store.commit(types.CALCULATE_TOTAL)
-        },
-        deep: true
-      }
     },
 
     methods: {
@@ -224,8 +116,6 @@
             if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
               Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择  `)
             }
-          } else {
-            this.$refs.area.clearAll()
           }
         } else {
           Global.ui.notification.show('号码选择不完整，请重新选择！')
@@ -283,17 +173,6 @@
               })
           },
         })
-      },
-
-      lotteryConfirm() {
-        let planId = this.bettingInfo.planId
-
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
-          Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
-            'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
-          return false
-        }
-
       },
 
       lotteryClear() {

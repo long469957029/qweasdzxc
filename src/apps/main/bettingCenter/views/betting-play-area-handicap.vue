@@ -158,7 +158,7 @@
       },
       'formattedRuleList': {
         handler(newVal, oldVal) {
-          let prevCanBet = this.canBet
+          // let prevCanBet = this.canBet
           this.lotteryList = []
           this.canBet = false
           _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
@@ -167,6 +167,10 @@
               this.lotteryList.push(item)
             }
           })
+
+          if (this.playRule.algorithm !== _.noop) {
+            this.$_statisticsLottery()
+          }
         },
         deep: true
       }
@@ -236,18 +240,9 @@
       $_statisticsLottery() {
         let count = 0
 
-        this.lotteryList = _(this.playRule.list).map(function(item) {
-          let selected = []
+        count = Math.round(this.playRule.algorithm.call(this.playRule, [this.lotteryList]) || 0)
 
-          if (item.isShow) {
-            selected = _.chain(this.formattedRuleList[item.id].row.fItems).where({selected: true}).pluck('num').value()
-          }
-
-          return selected
-        }, this)
-
-        count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(this.playRule, this.lotteryList) || 0))
-
+        this.canBet = !!count
         this.$store.commit(types.SET_STATISTICS, count)
       },
     },
