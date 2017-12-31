@@ -12,6 +12,7 @@ const Quick3Factory = require('bettingCenter/misc/betRulesFactory-quick3')
 
 // 盘口
 const Mark6Factory = require('bettingCenter/misc/betRulesFactory-handicap-mark6')
+const HandicapSccFactory = require('bettingCenter/misc/betRulesFactory-handicap-ssc')
 
 const sscList = ticketConfig.getSccList()
 _(sscList).each((ssc) => {
@@ -46,6 +47,11 @@ _(quick3List).each((quick) => {
 const mark6List = ticketConfig.getMark6List()
 _(mark6List).each((six) => {
   Mark6Factory.install(six.id)
+})
+
+const handicapSscList = ticketConfig.getHandicapSscList()
+_(handicapSscList).each((six) => {
+  HandicapSccFactory.install(six.id)
 })
 
 const _betRules = _(factory.betRules)

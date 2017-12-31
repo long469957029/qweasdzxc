@@ -22,6 +22,9 @@ const op = {
   clear: {
     clear2: true,
   },
+  handicap: {
+    full: true,
+  },
 }
 
 const TopOp = {
@@ -129,7 +132,7 @@ function createList(titles, options) {
 
 function createHandicapList(titles, options) {
   options = _(options || {}).defaults({
-    operate: 'all',
+    operate: 'none',
   })
 
   return _(titles).map((title) => {

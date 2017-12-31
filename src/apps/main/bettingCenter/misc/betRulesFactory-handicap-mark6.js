@@ -387,7 +387,7 @@ function _create(ticketId) {
         showOdds: false,
         showItemOdds: true,
         showMoneyInput: true,
-        operate: 'none',
+        operate: 'handicap',
       },
       {
         title: '双面',

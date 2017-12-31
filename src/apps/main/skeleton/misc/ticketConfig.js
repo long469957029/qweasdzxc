@@ -236,6 +236,19 @@ const mark6Config = [
   } */
 ]
 
+const handicapSscConfig = [
+  {
+    id: 1,
+    mark: 'ssc',
+    zhName: '重庆时时彩',
+    quickShowName: '重庆时时彩',
+    defaultSelectPlay: defaultSelectDPC,
+    hasMargin: true,
+    badge: 'new',
+    numberColor,
+  },
+]
+
 const lowConfig = {
   id: 'low',
   title: '低频彩',
@@ -314,6 +327,10 @@ module.exports = {
 
   getMark6List() {
     return mark6Config
+  },
+
+  getHandicapSscList() {
+    return handicapSscConfig
   },
 
   getHappyList() {
