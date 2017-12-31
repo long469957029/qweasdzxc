@@ -1,4 +1,4 @@
-<div class="fc-wd-container">
+<div class="fc-wd-container" xmlns="http://www.w3.org/1999/html">
   <div class="jc-wd-maskCon fc-wd-maskCon">
     <div id="view1" class="jc-wd-view fc-wd-view">
       <div class="fc-wd-set-view hidden">
@@ -10,63 +10,65 @@
         </div>
       </div>
       <div class="fc-wd-operate-view">
-        <div class="inline-block fc-rc-recharge-leftBar">
-          <div class="fc-wd-bank-select-container js-wd-select">
-            <div class="js-wd-bank-select fc-bank-select-select">
-              <div class="js-wd-bank-selected fc-wd-bank-selected">
+        <form class="js-fc-withdrawal-confirm-form " action="javascript:void(0);">
+          <div class="inline-block fc-rc-recharge-leftBar">
+            <div class="fc-wd-bank-select-container js-wd-select">
+              <div class="js-wd-bank-select fc-bank-select-select">
+                <div class="js-wd-bank-selected fc-wd-bank-selected">
+                </div>
+                <div class="js-wd-bank-items fc-wd-bank-items">
+                </div>
               </div>
-              <div class="js-wd-bank-items fc-wd-bank-items">
+            </div>
+            <div class="fc-wd-bank-tips">
+              <div class="fc-wd-bank-tips-balance inline-block">
+                可提款金额：<span class="js-tr-balance text-account-cut">-</span>
+              </div>
+              <div class="js-wd-goTo-bankCard fc-wd-bank-tips-addCard  inline-block">
+                <span class="fc-wd-bank-tips-addCard ">+</span>添加新卡
+              </div>
+              <input type="hidden" class="js-tr-tradeNum">
+            </div>
+            <div class="fc-rc-leftBar-bottom-area">
+              <div class="fc-wd-amount-Input">
+                <span class="js-wd-amount-title rc-title">提款金额</span>
+                <input class="js-wd-amount-input fc-rc-input fc-wd-amount-input" required data-parsley-type="integer"  data-parsley-max-message="您申请的金额超出可提现金额" autocomplete="off">
+                <span class="js-tr-amount-yuan rc-icon">元</span>
+              </div>
+              <div class="fc-wd-fundPwd-Input">
+                <span class="js-wd-fundPwd-title rc-fundPwd-title">资金密码</span>
+                <input class="js-wd-fundPwd-input  fc-wd-fundPwd-input" type="password" data-parsley-length="[6, 20]"  autocomplete="off" required>
+              </div>
+              <div class="js-wd-fee fc-wd-fee hidden">
+                <li>
+                  <span class="inline-block fee-name">手续费：</span>
+                  <span class="inline-block js-wd-feeLimit  text-account-cut">0</span>
+                </li>
+                <li>
+                  <span class="inline-block fee-name">到账金额：</span>
+                  <span class="inline-block js-wd-feeAmount fee-value text-account-cut">0</span>
+                </li>
+              </div>
+              <div class="fc-wd-submit">
+                <button type="button" class="js-rc-next-step btn btn-fc-submit">确定</button>
+              </div>
+              <div class="js-fc-wd-error-container fc-wd-error-container">
               </div>
             </div>
           </div>
-          <div class="fc-wd-bank-tips">
-            <div class="fc-wd-bank-tips-balance inline-block">
-              可提款金额：<span class="js-tr-balance text-account-cut">-</span>
+          <div class="inline-block fc-rc-recharge-rightBar">
+            <div class="fc-rc-rightBar-tips">
+              <span class="inline-block fc-rc-rightBar-tips-img m-right-sm"></span>
+              <span class="inline-block fc-rc-rightBar-tips-title">温馨提示：</span>
+              <span class="js-wd-tips-content fc-rc-rightBar-tips-content"></span>
             </div>
-            <div class="js-wd-goTo-bankCard fc-wd-bank-tips-addCard  inline-block">
-              <span class="fc-wd-bank-tips-addCard ">+</span>添加新卡
-            </div>
-            <input type="hidden" class="js-tr-tradeNum">
-          </div>
-          <div class="fc-rc-leftBar-bottom-area">
-            <div class="fc-wd-amount-Input">
-              <span class="js-wd-amount-title rc-title">提款金额</span>
-              <input class="js-wd-amount-input fc-rc-input fc-wd-amount-input">
-              <span class="js-tr-amount-yuan rc-icon">元</span>
-            </div>
-            <div class="fc-wd-fundPwd-Input">
-              <span class="js-wd-fundPwd-title rc-fundPwd-title">资金密码</span>
-              <input class="js-wd-fundPwd-input  fc-wd-fundPwd-input" type="password">
-            </div>
-            <div class="js-wd-fee fc-wd-fee">
-              <li>
-                <span class="inline-block fee-name">手续费：</span>
-                <span class="inline-block js-wd-feeLimit  text-account-cut">0</span>
-              </li>
-              <li>
-                <span class="inline-block fee-name">到账金额：</span>
-                <span class="inline-block js-wd-feeAmount fee-value text-account-cut">0</span>
-              </li>
-            </div>
-            <div class="fc-wd-submit">
-              <button type="button" class="js-rc-next-step btn btn-fc-submit">确定</button>
-            </div>
-            <div class="js-fc-wd-freezeMoney fc-wd-freezeMoney">
+            <div class="jc-rc-rightBar-activity fc-rc-rightBar-activity">
+              <span class="inline-block fc-rc-rightBar-ac-img m-right-sm"></span>
+              <span class="inline-block fc-rc-rightBar-ac-title">优惠活动：</span>
+              <div class="jc-rc-activity"></div>
             </div>
           </div>
-        </div>
-        <div class="inline-block fc-rc-recharge-rightBar">
-          <div class="fc-rc-rightBar-tips">
-            <span class="inline-block fc-rc-rightBar-tips-img m-right-sm"></span>
-            <span class="inline-block fc-rc-rightBar-tips-title">温馨提示：</span>
-            <span class="js-wd-tips-content fc-rc-rightBar-tips-content"></span>
-          </div>
-          <div class="jc-rc-rightBar-activity fc-rc-rightBar-activity">
-            <span class="inline-block fc-rc-rightBar-ac-img m-right-sm"></span>
-            <span class="inline-block fc-rc-rightBar-ac-title">优惠活动：</span>
-            <div class="jc-rc-activity"></div>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
     <div id="view2" class="jc-wd-view fc-wd-view">

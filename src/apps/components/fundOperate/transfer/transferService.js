@@ -9,7 +9,7 @@ module.exports = {
     const selected = []
     const fromItems = []
     const walletData = walletConf.getAll()
-    if (fromId >= 0) {
+    if (fromId !== undefined) {
       selectedId = fromId
     } else {
       selectedId = 0
@@ -43,7 +43,7 @@ module.exports = {
     const selected = []
     const toItems = []
     const walletData = walletConf.getAll()
-    if (toId >= 0) {
+    if (toId !== undefined) {
       selectedId = toId
     } else {
       selectedId = 1
