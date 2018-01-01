@@ -1,6 +1,5 @@
+import factory from 'bettingCenter/misc/betRulesFactory'
 
-
-const factory = require('bettingCenter/misc/betRulesFactory')
 const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
 const redArr = [1, 2, 7, 8, 12, 13, 18, 19, 23, 24, 29, 30, 34, 35, 40, 45, 46]

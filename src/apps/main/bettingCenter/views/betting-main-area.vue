@@ -1,5 +1,5 @@
 <template>
-  <div :class="'width-100 bc-play-main ' + wrapperClass">
+  <div class="width-100 bc-play-main">
     <betting-rules :initial-rules="playLevels"></betting-rules>
 
     <div class="bc-play-container clearfix">
@@ -16,9 +16,9 @@
 
           <div class="pull-right bc-advance-mode-main">
             <div :class="advanceShowMode === 'single' ? 'advance-bonus-single' : 'advance-bonus'">
-              单注奖金：<span class="text-prominent">{{bettingChoice.fBetBonus}}</span>元
+              单注奖金：<span class="text-prominent font-sm">{{bettingChoice.fBetBonus}}</span>元
             </div>
-            <a class="advance-play-des font-md" ref="playExample" v-show="advanceShowMode === 'classic'">
+            <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic'">
               <span class="sfa sfa-bc-light vertical-middle"></span>
               玩法说明
             </a>
@@ -135,7 +135,6 @@
       </div>
     </div>
   </div>
-  </div>
 </template>
 
 <script>
@@ -176,7 +175,6 @@
     },
     data() {
       return {
-        wrapperClass: _.indexOf(this.mark6TicketIdArr, parseInt(this.ticketId)) > -1 ? 'mark6' : '',
         loading: Global.ui.loader.get(),
         unit: 10000,
         playRule: {},
@@ -324,14 +322,6 @@
               const $detail = $row.find('.js-bc-betting-preview-detail')
               const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
               let betNumber = previewList[index].bettingNumber
-              if (_.indexOf(this.mark6TicketIdArr, parseInt(this.ticketId, 10)) > -1) {
-                // 六合彩、无限六合彩
-                // 特码-两面，特码-色波，正码-两面1，正码-两面2，正码-两面3，正码-两面4，正码-两面5，正码-两面6，生肖-特肖，生肖-一肖，头尾-头尾，总和-总和
-                const tm_zm_sx_tw_zh_playIdArr = betRulesConfig.getMark6SpecialInfo().tm_zm_sx_tw_zh_playIdArr
-                if (_.indexOf(tm_zm_sx_tw_zh_playIdArr, this.bettingChoice.playId) > -1) {
-                  betNumber = previewList[index].formatBettingNumber
-                }
-              }
 
               if ($multipleAdd.numRange('instance')) {
                 $multipleAdd.numRange('setRange', 1, previewList[index].formatMaxMultiple)
@@ -621,8 +611,8 @@
         //提交成功
         if (result) {
           if (!_.isEmpty(result)) {
-            if (result.MaxBetNums && !_.isNull(result.MaxBetNums)) {
-              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.MaxBetNums} 注，请重新选择  `)
+            if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
+              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择  `)
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
               this.$refs.areaSelect.empty()
@@ -641,8 +631,8 @@
         const result = this.bettingChoice.addPrevBetResult
         if (result) {
           if (!_.isEmpty(result)) {
-            if (result.MaxBetNums && !_.isNull(result.MaxBetNums)) {
-              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.MaxBetNums} 注，请重新选择`)
+            if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
+              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择`)
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
             }
@@ -727,14 +717,14 @@
   .advance-play-des{
     width: 86px;
     height: 23px;
-    display: block;
+    display: inline-block;
     border: 1px solid #f0f0f0;
     border-radius: 15px;
     line-height: 23px;
-    margin-right: 15px;
     color: #8094A6;
-    float: right;
     text-align: center;
+    margin: 5px 40px 0 0;
+    float: right;
   }
 
   .bc-advance-mode-single {
@@ -742,14 +732,13 @@
     color: $prominent-secondary-btn-color;
     margin: 20px 0 0 20px;
     .advance-play-des{
-      margin-left: 20px;
-
+      margin: 0 0 0 20px;
     }
   }
 
   .advance-bonus{
     margin-right: 40px;
-    margin-top: 20px;
+    margin-top: 15px;
     float: right;
   }
   .advance-bonus-single{
@@ -774,6 +763,9 @@
     .tab-toolbar {
       .tab-group {
         margin-left: 100px;
+        .tab {
+          font-size: 14px;
+        }
       }
     }
     .bc-advance-mode-main{

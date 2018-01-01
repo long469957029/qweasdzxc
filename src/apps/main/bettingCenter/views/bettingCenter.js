@@ -5,9 +5,10 @@ import store from '../../../store/index'
 import bettingCenterTpl from '../templates/bettingCenter.html'
 
 // vue components
-import bettingQuickNav from './betting-quick-nav'
-import ticketInfoBanner from './ticket-info-banner'
-import bettingMainArea from './betting-main-area'
+import BettingQuickNav from './betting-quick-nav'
+import TicketInfoBanner from './ticket-info-banner'
+import BettingMainArea from './betting-main-area'
+import BettingMainAreaHandicap from './betting-main-area-handicap'
 
 
 import over from '../misc/over.wav'
@@ -20,10 +21,6 @@ const BettingCenterView = Base.ItemView.extend({
 
   template: bettingCenterTpl,
 
-  initialize () {
-    this.mark6TicketIdArr = ticketConfig.getMark6TicketIdArr()
-  },
-
   onShow() {
     this.options.ticketInfo = ticketConfig.getComplete(this.options.ticketId)
     const ticketInfo = this.options.ticketInfo
@@ -31,8 +28,6 @@ const BettingCenterView = Base.ItemView.extend({
     let ticketParameter = ''
     if (ticketInfo.info.id === 29) {
       ticketParameter = 'quick3'
-    } else if (_.indexOf(this.mark6TicketIdArr, ticketInfo.info.id) > -1) {
-      ticketParameter = 'mark6'
     } else {
       ticketParameter = ticketInfo.id
     }
@@ -40,18 +35,18 @@ const BettingCenterView = Base.ItemView.extend({
     this.bettingCenter = new Vue({
       el: '#js-bc-main',
       components: {
-        bettingQuickNav,
-        ticketInfoBanner,
-        bettingMainArea,
+        BettingQuickNav,
+        TicketInfoBanner,
+        BettingMainArea,
+        BettingMainAreaHandicap,
       },
       store,
       data: {
         ticketId: Number(this.options.ticketId),
         ticketInfo: this.options.ticketInfo,
-        mark6TicketIdArr: this.mark6TicketIdArr,
         audio,
         ticketList: ticketConfig.getCompleteAll(),
-
+        bettingType: this.options.type,
         ticketParameter,
       },
       methods: {
@@ -61,10 +56,12 @@ const BettingCenterView = Base.ItemView.extend({
     // 取得当前彩票信息
     this.bettingCenter.$store.dispatch('getTicketInfo', {
       ticketId: this.options.ticketId,
+      type: this.options.type,
     })
     // 取得当前彩票规则
     this.bettingCenter.$store.dispatch('getTicketRules', {
       ticketId: this.options.ticketId,
+      type: this.options.type,
     })
   },
   onDestroy() {

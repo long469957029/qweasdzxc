@@ -34,10 +34,13 @@ const getters = {
 
 // actions
 const actions = {
-  getTicketInfo ({ commit }, ticketId) {
+  getTicketInfo ({ commit }, { ticketId, type }) {
     // commit(types.CHECKOUT_TICKET_INFO)
     return betting.getTicketInfo(
-      ticketId,
+      {
+        ticketId,
+        type,
+      },
       ({ data }) => { return commit(types.GET_TICKET_INFO_SUCCESS, data) },
       () => { return commit(types.GET_TICKET_INFO_FAILURE) },
     )

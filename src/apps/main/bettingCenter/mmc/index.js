@@ -1,11 +1,11 @@
 
 import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
+import BettingRecordsView from 'bettingCenter/views/bettingCenter-records'
 
 const BettingChoiceModel = require('bettingCenter/models/bettingChoice-mmc')
 const BettingRulesCollection = require('bettingCenter/collections/bettingRules')
 
 const PlayAreaSelectView = require('bettingCenter/views/bettingCenter-playArea-select')
-const BettingRecordsView = require('bettingCenter/views/bettingCenter-records')
 
 const ticketConfig = require('skeleton/misc/ticketConfig')
 const PlayAreaInputView = require('./bettingCenter-playArea-input')
@@ -18,7 +18,7 @@ const BettingCenterView = Base.ItemView.extend({
 
   template: require('bettingCenter/mmc/index.html'),
 
-  playLevelTpl: _.template(require('bettingCenter/templates/bettingCenter-level-mmc.html')),
+  playLevelTpl: _.template(require('./bettingCenter-level-mmc.html')),
   rulesTpl: _.template(require('./bettingCenter-rules.html')),
 
   events: {

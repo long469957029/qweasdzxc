@@ -1,6 +1,5 @@
+import factory from 'bettingCenter/misc/betRulesFactory'
 
-
-const factory = require('bettingCenter/misc/betRulesFactory')
 const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
 function _create(ticketId) {

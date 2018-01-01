@@ -8,13 +8,13 @@
       <div class="clearfix">
         <div class="bc-plan-title text-right m-right-sm pull-left" v-if="!bettingInfo.pending">
           第
-          <span :class="{'font-bold': bettingInfo.sale}">{{bettingInfo.planId}}</span>
+          <span>{{bettingInfo.planId}}</span>
           期
           <div>
             <span :class="['sfa m-right-xs vertical-sub cursor-pointer', musicStatus ? 'sfa-bc-muisc' : 'sfa-bc-muisc1']" title="开奖声音" @click="openMusic"></span>投注截止
           </div>
         </div>
-        <div class="bc-plan-title text-right font-bold m-right-sm pull-left" v-else>
+        <div class="bc-plan-title text-right m-right-sm pull-left" v-else>
           距离维护结束
           <div>时间还剩</div>
         </div>
@@ -24,7 +24,7 @@
     <div class="bc-plan-main pull-left m-left-md">
       <div class="bc-plan-inner relative clearfix">
         <div class="bc-plan-title pull-left">
-          第 <span class="font-bold">{{bettingInfo.pending ? Number(bettingInfo.lastOpenId) + 1 : bettingInfo.lastOpenId}}</span> 期
+          第 <span>{{bettingInfo.pending ? Number(bettingInfo.lastOpenId) + 1 : bettingInfo.lastOpenId}}</span> 期
           <div>开奖号码</div>
         </div>
 
@@ -234,7 +234,10 @@
         clearInterval(nextTimer)
 
         timer = _.delay(() => {
-          this.$store.dispatch('getTicketInfo', this.bettingInfo.ticketId)
+          this.$store.dispatch('getTicketInfo', {
+            ticketId: this.bettingInfo.ticketId,
+            type: this.bettingType
+          })
 
           if (this.musicStatus) {
             const lastOpenIdNumCache = Global.cookieCache.get(`lastOpenId${this.bettingInfo.ticketId}`)
@@ -277,7 +280,10 @@
 
           // 取得下一期的信息延迟一秒再做
           nextTimer = _.delay(() => {
-            this.$store.dispatch('getTicketInfo', this.bettingInfo.ticketId)
+            this.$store.dispatch('getTicketInfo', {
+              ticketId: this.bettingInfo.ticketId,
+              type: this.bettingType
+            })
           }, _(leftSecond + 1).mul(1000))
         }
 

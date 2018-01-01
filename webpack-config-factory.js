@@ -144,7 +144,8 @@ module.exports = function(options) {
             loaders: {
               js: 'babel-loader'
             },
-            presets: ['@babel/preset-env']
+            presets: ['@babel/preset-env'],
+            postcss: [require('postcss-cssnext')()]
           }
         },
         include: [path.join(__dirname, 'src')]
@@ -164,12 +165,6 @@ module.exports = function(options) {
   };
 
   if (options.debug) {
-    module.rules.push({
-      test:   /\.scss$/,
-      use: ['style-loader', 'css-loader?sourceMap', 'postcss-loader?pack=rem', 'sass-loader'],
-      include: [path.join(__dirname, 'src/apps/packages/merchants')]
-    });
-
     module.rules.push({
       test:   /\.scss$/,
       use: ['style-loader', 'css-loader?sourceMap', 'postcss-loader', 'sass-loader'],

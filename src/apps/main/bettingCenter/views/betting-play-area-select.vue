@@ -3,106 +3,49 @@
     <!--选择位置-->
     <betting-play-area-position :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
 
-    <div class="js-bc-playArea-missOption bc-missOptional-main">
-      <slot name="lastMissNum"></slot>
-      <slot name="maxMissNum"></slot>
-      <slot name="autoAdd"></slot>
-      <div class="bc-missOption-btn" @click="clearAllSelected">清除选号</div>
+    <div class="bc-missOptional-main" v-if="_.find(playRule.topOp, op => op)">
+      <slot name="lastMissNum" v-if="playRule.topOp.currMissing"></slot>
+      <slot name="maxMissNum" v-if="playRule.topOp.maxMissing"></slot>
+      <slot name="autoAdd" v-if="playRule.topOp.auto"></slot>
+      <div class="bc-missOption-btn" @click="clearAllSelected" v-if="playRule.topOp.clear">清除选号</div>
     </div>
     <!--选区-->
-    <div class="bc-page-content active" v-for="n in totalPage" v-show="n === 1">
-      <div class="js-bc-playArea-items bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList" v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
-        <div class="js-be-playArea-items-toolbar tab-toolbar tab-circle pull-left">
+    <div class="bc-page-content active" :class="`bc-page-content-${playRule.style.position}`" v-for="n in totalPage" v-show="n === 1">
+      <div class="bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList" v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
 
-          <div class="js-bc-select-item-title tab-title" v-show="fRule.row.title">
+        <div class="tab-toolbar" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
+
+          <div class="js-bc-select-item-title tab-title" v-if="fRule.row.title">
             <div>{{fRule.row.title == '无' ? '' : fRule.row.title}}</div>
           </div>
-          <div class="js-bc-select-item-title tab-title" v-show="!fRule.row.title">
+          <div class="js-bc-select-item-title tab-title" v-if="!fRule.row.title">
             <div>号码</div>
           </div>
 
-          <!--六合 待重构-->
-          <div class="tab-group <%= htmlNeedInfo.listClassName %>" v-show="!_.isEmpty(fRule.row.htmlNeedInfo)">
-            <div :class="fRule.row.htmlNeedInfo.levelClassName">
-              <div :class="fRule.row.htmlNeedInfo.playClassName">
-                <div v-for="items in fRule.row.fItems">
-                  <span class="bc-select-item cbutton cbutton--effect-novak tab" :class="fRule.limit" v-for="item in items" @click="selectNumber(item, fRule.row)">
-                    <span :class="[fRule.row.htmlNeedInfo.numberClassName, item.color]">{{item.num}}</span>
-                    <span>X</span>
-                    <span class="mark6-odds"></span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!--其他玩法-->
-          <div class="tab-group" v-show="_.isEmpty(fRule.row.htmlNeedInfo)">
-            <div v-for="n in fRule.row.totalPage">
+          <div class="tab-group no-margin text-center inline-block">
+            <div v-for="n in fRule.row.totalPage"  class="clearfix inline-block">
               <span class="bc-select-item cbutton cbutton--effect-novak tab" @click="selectNumber(item, fRule.row)"
-                    v-for="item in fRule.row.fItems" v-if="!fRule.row.page || (index < n * fRule.row.page && index >= (n - 1) * fRule.row.page)"
-                  :class="[fRule.limit, {treble2: fRule.row.doublenum, active: item.selected}]">{{item.num}}
+                    v-for="(item, index) in fRule.row.fItems" v-if="!fRule.row.page || (index < n * fRule.row.page && index >= (n - 1) * fRule.row.page)"
+                  :class="[fRule.limit, {active: item.selected, clearfix: playRule.style.row !== 1 && Math.ceil(fRule.row.fItem / index) === playRule.style.row}]">
+                <span v-if="!fRule.row.doubleNum">{{item.showNum}}</span>
+                <span v-else>{{item.showNum[0]}}<i class="num-split"></i>{{item.showNum[1]}}</span>
               </span>
+              <span v-if="fRule.row.op.clear2" class="operate-clear cursor-pointer" @click="selectOperate('clear', fRule.row)">清空</span>
             </div>
           </div>
+
         </div>
 
-        <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select m-left-lg vertical-middle pull-right" v-show="fRule.row.hasOp">
+        <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select vertical-middle clearfix" :class="playRule.style.operate === 'block' ? 'm-center' : 'm-left-lg pull-right'" v-if="fRule.row.hasOp">
           <div class="tab-group m-left-md">
-            <span class="tab" @click="selectOperate('all', fRule.row)" v-show="fRule.row.op.all">全</span>
-            <span class="tab" @click="selectOperate('big', fRule.row)" v-show="fRule.row.op.big">大</span>
-            <span class="tab" @click="selectOperate('small', fRule.row)" v-show="fRule.row.op.small">小</span>
-            <span class="tab" @click="selectOperate('odd', fRule.row)" v-show="fRule.row.op.odd">奇</span>
-            <span class="tab" @click="selectOperate('even', fRule.row)" v-show="fRule.row.op.even">偶</span>
-            <span class="tab" @click="selectOperate('clear', fRule.row)" v-show="fRule.row.op.clear">清</span>
+            <span class="tab" @click="selectOperate('all', fRule.row)" v-if="fRule.row.op.all">全</span>
+            <span class="tab" @click="selectOperate('big', fRule.row)" v-if="fRule.row.op.big">大</span>
+            <span class="tab" @click="selectOperate('small', fRule.row)" v-if="fRule.row.op.small">小</span>
+            <span class="tab" @click="selectOperate('odd', fRule.row)" v-if="fRule.row.op.odd">奇</span>
+            <span class="tab" @click="selectOperate('even', fRule.row)" v-if="fRule.row.op.even">偶</span>
+            <span class="tab" @click="selectOperate('clear', fRule.row)" v-if="fRule.row.op.clear">清</span>
           </div>
         </div>
-
-        <div class="tab-toolbar tab-border tab-toolbar-sm mark6-quick-select" v-show="!_.isEmpty(fRule.row.htmlNeedInfo) && fRule.row.htmlNeedInfo.groupSelect">
-          <div class="tab-group">
-            <div>
-              <span class="js-bc-select-op tab" data-op="shu" data-opid="0">鼠</span>
-              <span class="js-bc-select-op tab" data-op="niu" data-opid="1">牛</span>
-              <span class="js-bc-select-op tab" data-op="hu" data-opid="2">虎</span>
-              <span class="js-bc-select-op tab" data-op="tu" data-opid="3">兔</span>
-              <span class="js-bc-select-op tab" data-op="_long" data-opid="4">龙</span>
-              <span class="js-bc-select-op tab" data-op="she" data-opid="5">蛇</span>
-            </div>
-            <div>
-              <span class="js-bc-select-op tab" data-op="ma" data-opid="6">马</span>
-              <span class="js-bc-select-op tab" data-op="yang" data-opid="7">羊</span>
-              <span class="js-bc-select-op tab" data-op="hou" data-opid="8">猴</span>
-              <span class="js-bc-select-op tab" data-op="ji" data-opid="9">鸡</span>
-              <span class="js-bc-select-op tab" data-op="gou" data-opid="10">狗</span>
-              <span class="js-bc-select-op tab" data-op="zhu" data-opid="11">猪</span>
-            </div>
-          </div>
-          <div class="tab-group m-left-md sebo">
-            <div>
-              <span class="js-bc-select-op tab" data-op="mark6-big">大</span>
-              <span class="js-bc-select-op tab" data-op="mark6-small">小</span>
-              <span class="js-bc-select-op tab" data-op="odd">单</span>
-              <span class="js-bc-select-op tab" data-op="even">双</span>
-            </div>
-            <div>
-              <span class="js-bc-select-op tab" data-op="red">红波</span>
-              <span class="js-bc-select-op tab" data-op="blue">蓝波</span>
-              <span class="js-bc-select-op tab" data-op="green">绿波</span>
-              <span class="js-bc-select-op tab all-clear" data-op="clear">重置</span>
-            </div>
-          </div>
-          <div class="tab-group m-left-md">
-            <div>
-              <label>尾：</label>
-              <span class="js-bc-select-op tab" data-op="wei<%=i%>" v-for="n in 10">{{n - 1}}</span>
-            </div>
-            <div>
-              <label>头：</label>
-              <span class="js-bc-select-op tab" data-op="tou<%=i%>" v-for="n in 5">{{n - 1}}</span>
-            </div>
-          </div>
-        </div>
-        <span class="js-bc-select-op tab all-clear" data-op="clear" v-show="!_.isEmpty(fRule.row.htmlNeedInfo) && !fRule.row.htmlNeedInfo.groupSelect">重置</span>
       </div>
     </div>
   </div>
@@ -153,37 +96,20 @@
       computedRuleList: function() {
         return _(this.playRule.list).map((RuleItem) => {
           let fItems
-          RuleItem.hasOp = _(RuleItem.op).some()
-          fItems = _(RuleItem.items).map(item => {
+          RuleItem.hasOp = _([RuleItem.op.all, RuleItem.op.big, RuleItem.op.small, RuleItem.op.odd, RuleItem.op.even, RuleItem.op.clear]).some()
+          fItems = _(RuleItem.items).map((item, index) => {
             return {
               num: item,
+              showNum: RuleItem.showItems[index],
               selected: false
             }
           });
-          if (!_.isEmpty(RuleItem.htmlNeedInfo)) {
-            if (_.indexOf(["mark6-tm-tm","mark6-zm-zm"],RuleItem.htmlNeedInfo.playClassName) > -1) {
-              RuleItem.page = 10
-            } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("tm-lm")>-1) {
-            } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("tm-sebo")>-1) {
-              RuleItem.page = 9
-            } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("zm-lm")>-1){
-            } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("sx-sx")>-1) {
-              RuleItem.page = 6
-            } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("tw-tw")>-1) {
-              RuleItem.page = 10
-            } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("zh-zh")>-1) {
-            } else if (RuleItem.htmlNeedInfo.playClassName.indexOf("bz-bz")>-1) {
-              RuleItem.page = 10
-            }
 
+          if (RuleItem.items.length === 16) {
+            RuleItem.page = 8
             RuleItem.totalPage = Math.ceil(RuleItem.items.length / RuleItem.page)
           } else {
-            if (RuleItem.items.length === 16) {
-              RuleItem.page = 8
-              RuleItem.totalPage = Math.ceil(RuleItem.items.length / RuleItem.page)
-            } else {
             RuleItem.totalPage = 1
-            }
           }
 
           this.$set(RuleItem, 'fItems', fItems)
@@ -204,123 +130,7 @@
       },
 
       selectNumber(num, items) {
-        //TODO 六合
-        if (_.indexOf(this.mark6TicketIdArr, parseInt(this.ticketInfo.info.id, 10)) > -1) {
-          const $itemsToolbars = $target.closest('.js-bc-playArea-items')
-          this._mark6SelectNumber($target, $itemsToolbars)
-        } else {
-          this.$_selectNumber(num, items)
-        }
-      },
-
-      selectOprate6() {
-        const self = this
-        const $target = $(e.currentTarget)
-        const $playArea = $target.closest('.js-bc-playArea-items')
-        const $itemsToolbars = $playArea.find('.js-be-playArea-items-toolbar')
-        const op = $target.data('op')
-        const $items = $itemsToolbars.find('.js-bc-select-item')
-
-        if ($target.hasClass('active')) {
-          $target.removeClass('active')
-          $items.removeClass('active')
-        } else {
-          const selectEle = []
-          const opid = $target.data('opid')
-          const selectNum = this.options.list[0].htmlNeedInfo.groupSelectData[parseInt(opid, 10)]
-          let thisColorArr = ''
-          let arrStr = 'redArr'
-          let weiNum = ''
-          let touNum
-          switch (op) {
-            case 'shu': case 'niu': case 'hu': case 'tu': case '_long': case 'she':
-            case 'ma': case 'yang': case 'hou': case 'ji': case 'gou': case 'zhu':
-            $items.each((index, ele) => {
-              const $this = $(ele)
-              _(selectNum.nums).each((num) => {
-                if (parseInt(num, 10) === parseInt($this.data('num'), 10)) {
-                  selectEle.push($this)
-                }
-              })
-            })
-            $items.removeClass('active')
-            this.$_selectNumbers($(selectEle), $itemsToolbars)
-            break
-            case 'mark6-big':
-              self.$_selectNumbers($items.removeClass('active').filter(':gt(23)'), $itemsToolbars)
-              break
-            case 'mark6-small':
-              self.$_selectNumbers($items.removeClass('active').filter(':lt(24)'), $itemsToolbars)
-              break
-            case 'red': case 'blue': case 'green':
-            if (op === 'blue') { arrStr = 'blueArr' } else if (op === 'green') { arrStr = 'greenArr' }
-            thisColorArr = this.options.list[0].htmlNeedInfo.colorArr[arrStr]
-            // let selectEle = []
-            $items.each((index, ele) => {
-              const $this = $(ele)
-              _(thisColorArr).each((num) => {
-                if (parseInt(num, 10) === parseInt($this.data('num'), 10)) {
-                  selectEle.push($this)
-                }
-              })
-            })
-            $items.removeClass('active')
-            this.$_selectNumbers($(selectEle), $itemsToolbars)
-            break
-            case 'wei0': case 'wei1': case 'wei2': case 'wei3': case 'wei4':
-            case 'wei5': case 'wei6': case 'wei7': case 'wei8': case 'wei9':
-            weiNum = op.substring(op.length - 1)
-            // let selectEle = []
-            $items.each((index, ele) => {
-              const $this = $(ele)
-              const currentNum = $this.data('num').toString()
-              if (currentNum.substring(currentNum.length - 1) === weiNum) {
-                selectEle.push($this)
-              }
-            })
-            $items.removeClass('active')
-            this.$_selectNumbers($(selectEle), $itemsToolbars)
-            break
-            case 'tou0': case 'tou1': case 'tou2': case 'tou3': case 'tou4':
-            touNum = op.substring(op.length - 1)
-            // let selectEle = []
-            $items.each((index, ele) => {
-              const $this = $(ele)
-              const currentNum = $this.data('num').toString()
-              if (currentNum.substring(0, 1) === touNum) {
-                selectEle.push($this)
-              }
-            })
-            $items.removeClass('active')
-            this.$_selectNumbers($(selectEle), $itemsToolbars)
-            break
-            case 'odd':
-              if ($items.eq(0).data('num') % 2) {
-                this.$_selectNumbers($items.removeClass('active').filter(':even'), $itemsToolbars)
-                // $items.removeClass('active').filter(':even').trigger('click');
-              } else {
-                this.$_selectNumbers($items.removeClass('active').filter(':odd'), $itemsToolbars)
-                // $items.removeClass('active').filter(':odd').trigger('click');
-              }
-              break
-            case 'even':
-              if ($items.eq(0).data('num') % 2) {
-                this.$_selectNumbers($items.removeClass('active').filter(':odd'), $itemsToolbars)
-                // $items.removeClass('active').filter(':odd').trigger('click');
-              } else {
-                this.$_selectNumbers($items.removeClass('active').filter(':even'), $itemsToolbars)
-                // $items.removeClass('active').filter(':even').trigger('click');
-              }
-              break
-            case 'clear':
-              $items.removeClass('active')
-              $playArea.find('.js-bc-select-op').removeClass('active')
-              break
-            default:
-              break
-          }
-          $target.addClass('active')
-        }
+        this.$_selectNumber(num, items)
       },
 
       create(createTimes) {
@@ -392,7 +202,6 @@
                 statistics: result.statistics,
                 format: this.type,
                 formatToNum: this.formatToNum || false, // PK10大小单双文字数字转换标示
-                formatToNumInfo: this.formatToNumInfo || false, // 六合彩文字转换数值
               },
               options: {
                 type
@@ -406,7 +215,6 @@
               selectOptionals: this.selectOptionals,
               format: this.type,
               formatToNum: this.formatToNum || false, // PK10大小单双文字数字转换标示
-              formatToNumInfo: this.formatToNumInfo || false, // 六合彩文字转换数值
             },
             options: {
               type
@@ -473,8 +281,8 @@
         const cx = _.findWhere(row.limits, {name: 'conflict-x'});
         if (!num.selected && !_.isEmpty(cx)) {
           if (!cx.data.num || cx.data.num === 1) {
-            _.chain(row.fItems).flatten().each((item) => {
-              if (num !== item) {
+            _.each(row.fItems, (item) => {
+              if (num.num !== item.num) {
                 item.selected = false
               }
             })
@@ -494,9 +302,8 @@
         if (!num.selected && !_.isEmpty(cy)) {
           _.each(this.formattedRuleList, rule =>  {
             if (row !== rule.row) {
-              _.chain(rule.row.fItems).flatten().each(item => {
-                const num = _.isNumber(item.num) ? item.num : _.isNumber(item.num.number) ? item.num.number : item.num.name
-                if (num === num.num || num.num * 11 === num || num.num % 10 == num) {
+              _.each(rule.row.fItems, item => {
+                if (num.num === item.num) {
                   item.selected= false;
                 }
               })
@@ -532,6 +339,65 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import
+  "~base/styles/variable";
 
+  .bc-page-content {
+    min-height: 290px;
+    width: 100%;
+    display: none;
+    &.active {
+      display: block;
+    }
+    &.bc-page-content-center {
+      &.active {
+        display: table;
+      }
+      .bc-playArea-items {
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
+  }
+  .bc-playArea-items{
+    margin: 20px auto 20px auto;
+  }
+
+  .tab-default {
+    display: inline-block;
+  }
+
+  .bc-page-content-center {
+    text-align: center
+  }
+  .bc-page-content-center-2 {
+    padding-top: 55px;
+    min-height: 210px;
+    .tab-center-2 {
+      width: 700px;
+      margin: 0 auto
+    }
+  }
+
+  .num-split {
+    width: 0;
+    border-right: 1px dashed $def-gray-color;
+    margin: 0 8px;
+    height: 35px;
+    display: inline-block;
+    position: relative;
+    top: 6px;
+  }
+
+  .operate-clear {
+    margin-left: 15px;
+    font-size: 14px;
+    display: inline-block;
+    position: relative;
+    bottom: 4px;
+    :hover {
+      color: $new-main-deep-color;
+    }
+  }
 </style>

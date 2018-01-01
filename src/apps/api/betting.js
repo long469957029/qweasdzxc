@@ -13,7 +13,7 @@ export default {
       .catch(fail)
   },
   // 取得彩票相关规则
-  getTicketRules ({ ticketId, type = 1, version = 1 }, then, fail) {
+  getTicketRules ({ ticketId, type = 0, version = 1 }, then, fail) {
     return Global.sync.axios({
       url: '/ticket/ticketmod/ticketplaylist.json',
       localCache: true,

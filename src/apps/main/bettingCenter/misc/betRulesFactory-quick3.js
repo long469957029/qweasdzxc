@@ -1,10 +1,8 @@
-'use scrict'
+import factory from 'bettingCenter/misc/betRulesFactory'
 
-const factory = require('bettingCenter/misc/betRulesFactory')
 const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
 const six = ['1', '2', '3', '4', '5', '6']
-const treeToeig = ['3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18']
 
 const trebleSameTongxuan = ['三同号通选']
 const trebleDanxuan = ['111', '222', '333', '444', '555', '666']
@@ -12,10 +10,6 @@ const trebleDanxuan = ['111', '222', '333', '444', '555', '666']
 const trebleSerialTongxuan = ['三连号通选']
 
 const doubleFuxuan = ['11', '22', '33', '44', '55', '66']
-const doubleFuxuanSpecial = ['1', '2', '3', '4', '5', '6']
-
-const splitReg = /[\r\n,;:\|]+/
-
 
 function createDanTuo(num) {
   return [
@@ -41,62 +35,41 @@ function createDanTuo(num) {
   ]
 }
 
-function createIstheSameNum(num) {
-  return [
-    {
-      title: '二同号',
-      items: doubleFuxuanSpecial,
-      operate: 'none',
-      // limits: [
-      //   {
-      //     name: 'conflict-x',
-      //     data: {
-      //       num: num
-      //     }
-      //   },
-      //   {name: 'conflict-y'}
-      // ],
-      // doublenum:true
-    }, {
-      title: '不同号',
-      items: six,
-      operate: 'none',
-      // limits: [{name: 'conflict-y'}],
-      // doublenum:true
-    },
-  ]
-}
-
 function _create(ticketId) {
   //= =================================================
   // 和值
 
   factory.addRule([ticketId, '170101'], {
     algorithm: algorithm.addAll,
-    list: factory.createList([''], {
+    list: factory.createList(['无'], {
       items: _.range(3, 19),
       // operate: 'none'
     }),
+    topOp: 'none',
+    style: {
+      numType: 'square',
+      position: 'center',
+      row: 2,
+      operate: 'block',
+    },
   })
 
 
   //= =============================
   // 三同号通选
 
-  factory.addRule([ticketId, '180101'], {
+  factory.addRule([ticketId, '240151'], {
     algorithm: algorithm.addAll,
     list: factory.createList(['无'], {
-      items: trebleSameTongxuan,
-      operate: 'none',
-      limits: [
-        {
-          name: 'treble1', // 球上的样式
-          // data: {//需要绑定到球上的数据
-          //   num: 0
-          // }
-        },
-      ],
+      items: ['0'],
+      showItems: trebleSameTongxuan,
+      operate: 'clear',
     }),
+    topOp: 'none',
+    style: {
+      numType: 'square',
+      position: 'center',
+    },
     formatToNum: true,
   })
 
@@ -104,13 +77,18 @@ function _create(ticketId) {
   //= =============================
   // 三同号单选
 
-  factory.addRule([ticketId, '180102'], {
+  factory.addRule([ticketId, '250151'], {
     algorithm: algorithm.addAll,
-    list: factory.createList([''], {
+    list: factory.createList(['无'], {
       items: trebleDanxuan,
-      operate: 'none',
       doublenum: true,
+      operate: 'clear',
     }),
+    topOp: 'none',
+    style: {
+      numType: 'square',
+      position: 'center',
+    },
   })
 
 
@@ -124,10 +102,15 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 3,
     },
-    list: factory.createList([''], {
+    list: factory.createList(['无'], {
       items: six,
-      operate: 'none',
+      operate: 'clear',
     }),
+    topOp: 'none',
+    style: {
+      numType: 'square',
+      position: 'center',
+    },
   })
 
   // 胆拖
@@ -159,11 +142,12 @@ function _create(ticketId) {
 
   //= =============================
   // 三连号通选
-  factory.addRule([ticketId, '200101'], {
+  factory.addRule([ticketId, '260151'], {
     algorithm: algorithm.addAll,
     list: factory.createList(['无'], {
-      items: trebleSerialTongxuan,
-      operate: 'none',
+      items: ['0'],
+      showItems: trebleSerialTongxuan,
+      operate: 'clear',
       limits: [
         {
           name: 'treble1', // 球上的样式
@@ -173,55 +157,63 @@ function _create(ticketId) {
         },
       ],
     }),
+    topOp: 'none',
+    style: {
+      numType: 'square',
+      position: 'center',
+    },
     formatToNum: true,
   })
 
   //= ============================
   // 二同号复选
 
-  factory.addRule([ticketId, '210101'], {
+  factory.addRule([ticketId, '270151'], {
     algorithm: algorithm.addAll,
-    list: factory.createList([''], {
+    list: factory.createList(['无'], {
       items: doubleFuxuan,
-      operate: 'none',
       doublenum: true,
+      operate: 'clear',
     }),
+    topOp: 'none',
+    style: {
+      numType: 'square',
+      position: 'center',
+    },
   })
 
-  //= =========================
   // 二同号单选
-  // factory.addRule([ticketId, '070101'], {
-  //   algorithm:  algorithm.banker,
-  //   algorithmProps: {
-  //         num: 2
-  //       },
-  //   list: factory.createList([{
-  //     title: '同号',
-  //     items: doubleFuxuan,
-  //     doublenum: true
-  //   }, {
-  //     title: '不同号',
-  //     items: six,
-  //     doublenum: true
-  //   }]),
-  //   algorithmProps: {
-  //     num: 2
-  //   },
-  //   format: {symbol: ' '},
-  //   create: algorithm.getCreateFunc(3, {
-  //     range: six,
-  //     innerSort: true
-  //   })
-  // });
-
-  factory.addRule([ticketId, '210102'], {
+  factory.addRule([ticketId, '280151'], {
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 1,
       cTimes: 1,
     },
     // format: {symbol: ' '},
-    list: factory.createList(createIstheSameNum(1)),
+    list: factory.createList([
+      {
+        title: '二同号',
+        items: six,
+        showItems: doubleFuxuan,
+        operate: 'clear',
+        limits: [
+          { name: 'conflict-y' },
+        ],
+        doubleNum: true,
+      },
+      {
+        title: '不同号',
+        items: six,
+        showItems: six,
+        operate: 'clear',
+        limits: [{ name: 'conflict-y' }],
+      },
+    ]),
+    topOp: 'none',
+    style: {
+      numType: 'square square-big',
+      position: 'center-2',
+    },
     create: algorithm.getCreateFunc(3, {
       range: six,
       innerSort: true,
@@ -238,34 +230,44 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 2,
     },
-    list: factory.createList([''], {
+    list: factory.createList(['无'], {
       items: six,
-      operate: 'none',
+      operate: 'clear',
     }),
+    topOp: 'none',
+    style: {
+      numType: 'square',
+      position: 'center',
+    },
   })
 
   // 胆拖
-  factory.addRule([ticketId, '220102'], {
-    algorithm: algorithm.banker,
-    algorithmProps: {
-      num: 3,
-    },
-    format: { symbol: ' ' },
-    list: factory.createList(createDanTuo(2)),
-    create: algorithm.getCreateFunc(3, {
-      range: six,
-      innerSort: true,
-    }),
-  })
+  // factory.addRule([ticketId, '220102'], {
+  //   algorithm: algorithm.banker,
+  //   algorithmProps: {
+  //     num: 3,
+  //   },
+  //   format: { symbol: ' ' },
+  //   list: factory.createList(createDanTuo(2)),
+  //   create: algorithm.getCreateFunc(3, {
+  //     range: six,
+  //     innerSort: true,
+  //   }),
+  // })
 
   // ==========================
   // 猜就中一个号码
   factory.addRule([ticketId, '230101'], {
     algorithm: algorithm.addAll,
-    list: factory.createList([''], {
+    list: factory.createList(['无'], {
       items: six,
-      operate: 'none',
+      operate: 'clear',
     }),
+    topOp: 'none',
+    style: {
+      numType: 'square',
+      position: 'center',
+    },
   })
 }
 
