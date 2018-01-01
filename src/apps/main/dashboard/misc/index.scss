@@ -90,6 +90,11 @@ body, [class*="col-"], .carousel-table-content {
   * {
     box-sizing: border-box;
   }
+  .db-carousel-indicators{
+    left:11%;
+    width: 10%;
+    margin-left: 0;
+  }
 }
 
 .dashboard-row {
@@ -103,6 +108,7 @@ body, [class*="col-"], .carousel-table-content {
     width: 600px;
   }
   .content-item-1x {
+    background: url('./db-slot-bg.png') no-repeat center;
     width: 296px;
   }
 
@@ -124,7 +130,7 @@ body, [class*="col-"], .carousel-table-content {
   .db-ah-lp{
     display: inline-block;
     background: url('./db-ah-lp.png') no-repeat center;
-    width: 296px;
+    width: 295px;
     height: 197px;
   }
   .db-slot-ad{
@@ -158,6 +164,30 @@ body, [class*="col-"], .carousel-table-content {
     background: url('./db-slot-4-bg.png') no-repeat center;
     width: 295px;
     height: 216px;
+  }
+  .db-ah-play-btn{
+    position: relative;
+    width: 120px;
+    height:38px;
+    margin-top: 140px ;
+    margin-left: 27px;
+    border: 1px solid #fff;
+    border-radius: 19px;
+    line-height: 34px;
+    text-align: center;
+    background: transparent;
+  }
+  .db-ah-play-btn-blue{
+    color: #4f84da;
+    border: 1px solid #4f84da;
+  }
+  .db-ah-play-btn-green{
+    color: #14b1bb;
+    border: 1px solid #14b1bb;
+  }
+  .db-ah-play-btn-purple{
+    color: #9f6ec5;
+    border: 1px solid #9f6ec5;
   }
 }
 .db-bulletin-container{
@@ -235,7 +265,7 @@ body, [class*="col-"], .carousel-table-content {
     height: 49px;
     margin: 0 10px;
     .db-mall-title {
-      //background: url();
+      background: url('./db-mall-title.png') no-repeat center;
       width: 268px;
       height: 49px;
       border-bottom: 1px solid $def-line-color;
@@ -247,7 +277,7 @@ body, [class*="col-"], .carousel-table-content {
     padding: 28px 10px;
     border-bottom: 1px solid $font-light;
 
-    &:nth-child(5) {
+    &:nth-child(3) {
       border-bottom: none;
     }
 
@@ -286,7 +316,7 @@ body, [class*="col-"], .carousel-table-content {
     width: 214px;
     height: 326px;
     float: left;
-    //background: url('');
+    background: url('./db-ticket-ad.png') no-repeat center;
 
   }
   .db-ticket-game {

@@ -15,6 +15,7 @@ const DashboardView = Base.ItemView.extend({
   events: {
     'click .js-db-prev': 'prevPageHandler',
     'click .js-db-next': 'nextPageHandler',
+    'click .js-db-ticket-game-type-item': 'ticketPlayTypeClickHandler',
   },
 
   serializeData() {
@@ -64,6 +65,20 @@ const DashboardView = Base.ItemView.extend({
       url: '/acct/usernotice/getdashboardadvertise.json',
     })
   },
+  getXhr() {
+    return Global.sync.ajax({
+      url: '/info/activitylist/geturgentbulletinlist.json',
+    })
+  },
+  /**
+   * 获取商城新品
+   */
+  getHotListXhr () {
+    return Global.sync.ajax({
+      url: '/mall/coupon/newItemList.json',
+    })
+  },
+
 
   onRender() {
     const self = this
@@ -76,6 +91,7 @@ const DashboardView = Base.ItemView.extend({
     self.$imgList = self.$('.js-db-mb-item')
     self.$bulletinMarquee = self.$('.js-bulletin-marquee > marquee')
     self.$entryContainer = self.$('.js-dashboard-entry')
+    self.$navMallSubList = self.$('.js-db-mall-content')
     // self.$ticketMain = self.$('.js-db-ticketList')
     // self.$dynamicList = self.$('.js-db-dynamic-list')
 
@@ -89,16 +105,17 @@ const DashboardView = Base.ItemView.extend({
       self.renderAcctInfoView()
     })
 
-    self.renderEntry()
+    // self.renderEntry()
     self.renderMainBannerAD()
     self.renderbulletin()
+    this.formateMallEntryList()
   },
 
-  renderEntry() {
-    const self = this
-
-    self.$entryContainer.html(self.entryTpl())
-  },
+  // renderEntry() {
+  //   const self = this
+  //
+  //   self.$entryContainer.html(self.entryTpl())
+  // },
 
   renderMainBannerAD() {
     const self = this
@@ -106,7 +123,7 @@ const DashboardView = Base.ItemView.extend({
     this.getBannerADXhr().done((res) => {
       if (res.result === 0) {
         self.generateBannerAD(res.root)
-      }else{
+      } else {
         self.generateBannerAD()
       }
     }).fail(() => {
@@ -116,36 +133,111 @@ const DashboardView = Base.ItemView.extend({
 
   renderbulletin() {
     const self = this
-    const newsList = [
-      '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
-      '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
-      '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
-    ]
+    this.handleGetXhr()
+    window.setInterval(() => {
+      self.handleGetXhr()
+    }, 30000)
+  },
+
+  handleGetXhr() {
+    const self = this
+    this.getXhr()
+      .done((res) => {
+        if (res && res.result === 0) {
+          self.updateNotice(res.root || [])
+        }
+      })
+  },
+  updateNotice (newsList) {
+    const self = this
+    if (!newsList || newsList.length === 0) {
+      newsList = [
+        '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
+        '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
+        '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
+      ]
+    }
     const html = _.map(newsList, (news) => {
       return `${'<li>' +
         '<span>'}${news}</span>` +
         '</li>'
     }).join('')
     self.$bulletinMarquee.html(html)
+    this.$('.js-db-bulletin-cur').html(1)
+    this.$('.js-db-bulletin-total').html(newsList.length)
   },
 
   generateBannerAD(data) {
     const liList = []
-
     if (_(data).isEmpty()) {
       data = bannerConfig
     }
-
     _(data).each((item, index) => {
       liList.push(`<li data-target="#jsDbCarousel" data-slide-to="${index}${index === 0 ? '" class="active"' : '"'}></li>`)
     })
-
     this.$imgList.html(this.bannerTpl({
       data,
     }))
     this.$('#jsDbCarousel').carousel({
       interval: 5000,
     })
+  },
+  formateMallEntryList () {
+    const self = this
+    this.getHotListXhr()
+      .done((res) => {
+        if (res.result === 0) {
+          if (res.root) {
+            self.showMallList = true
+            const list = _(res.root.records).map((item) => {
+              const {
+                limitLevelType,
+                levelLimit,
+                limitRange,
+                name,
+                // requireIntegral,
+                couponDesc,
+                couponType,
+              } = item
+              let infoExclusive = ''
+              if (!_.isNull(levelLimit)
+                && limitRange !== 0
+                && limitRange !== 1
+                && limitRange !== 2) {
+                if (limitLevelType === 0) {
+                  infoExclusive = `<span class="info-exclusive">Lv.${levelLimit}用户专享</span>`
+                } else {
+                  infoExclusive = `<span class="info-exclusive">Lv.${levelLimit}用户以上</span>`
+                }
+              }
+              if (limitRange === 0) {
+                infoExclusive = '<span class="info-exclusive">新用户专享</span>'
+              } else if (limitRange === 1) {
+                infoExclusive = '<span class="info-exclusive">老用户专享</span>'
+              } else if (limitRange === 2) {
+                infoExclusive = '<span class="info-exclusive">总代专享</span>'
+              }
+              const type = couponType === 0 ? 1 : 0
+              // const icon = couponType === 0 ? 'gift' : 'cou'
+              return `<div class="dashboard-mall-content">
+                <div class="title">${name}${infoExclusive}</div>
+              <div class="desc" title="${couponDesc}">${couponDesc}</div>
+              <a href="#ma?type=${type}" class="btn btn-mall-exchange" target="_blank">立即兑换</a>
+              <div class="image"></div>
+              </div>`
+            })
+            self.$navMallSubList.html(list.join(''))
+          }
+        }
+      })
+  },
+  ticketPlayTypeClickHandler (e) {
+    const $target = $(e.currentTarget)
+    $target.toggleClass('active', true)
+    $target.siblings().toggleClass('active', false)
+    const type = $target.data('type')
+    const $ticketContainer = this.$('.js-db-ticket-game-type-container')
+    $ticketContainer.eq(type).toggleClass('hidden', false)
   },
 
   // renderDynamicList: function(data) {
