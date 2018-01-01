@@ -191,16 +191,6 @@ const quickConfig = [
     hasMargin: true,
     badge: 'new',
   },
-  {
-    id: 35,
-    mark: '5mark6',
-    zhName: '无限六合彩',
-    quickShowName: '无限六合彩',
-    defaultSelectPlay: defaultSelectDPC,
-    hasMargin: true,
-    badge: 'new',
-    numberColor,
-  },
 ]
 
 const happyConfig = {
@@ -213,7 +203,7 @@ const happyConfig = {
   // list: bjPKConfig
 }
 
-const mark6Config = [
+const handicapMark6Config = [
   {
     id: 34,
     mark: 'mark6',
@@ -223,17 +213,7 @@ const mark6Config = [
     hasMargin: true,
     badge: 'new',
     numberColor,
-  }, /* ,
-  {
-    id: 35,
-    mark: '5mark6',
-    zhName: "无限六合彩",
-    quickShowName: "无限六合彩",
-    defaultSelectPlay: defaultSelectDPC,
-    hasMargin: true,
-    badge: 'new',
-    numberColor: numberColor
-  } */
+  },
 ]
 
 const handicapSscConfig = [
@@ -249,13 +229,26 @@ const handicapSscConfig = [
   },
 ]
 
+const handicapPk10Config = [
+  {
+    id: 1,
+    mark: 'ssc',
+    zhName: '北京PK10',
+    quickShowName: '北京PK10',
+    defaultSelectPlay: defaultSelectDPC,
+    hasMargin: true,
+    badge: 'new',
+    numberColor,
+  },
+]
+
 const lowConfig = {
   id: 'low',
   title: '低频彩',
   ticketName: '低频彩',
   icon: 'low',
   titleIcon: 'low_nav_icon',
-  list: threeDConfig.concat(p5p3Config).concat(mark6Config),
+  list: threeDConfig.concat(p5p3Config).concat(handicapMark6Config),
 }
 
 // var allConfig = sscConfig.list.concat(oneFiveConfig.list, threeDConfig.list, threeDConfig, p5p3Config, happyConfig.list, quickConfig.list);
@@ -326,11 +319,15 @@ module.exports = {
   },
 
   getMark6List() {
-    return mark6Config
+    return handicapMark6Config
   },
 
   getHandicapSscList() {
     return handicapSscConfig
+  },
+
+  getHandicapPk10List() {
+    return handicapPk10Config
   },
 
   getHappyList() {
@@ -377,13 +374,14 @@ module.exports = {
         list: [
           sscConfig.list,
           oneFiveConfig.list,
-          threeDConfig.concat(p5p3Config, mark6Config),
+          threeDConfig.concat(p5p3Config).concat(happyConfig.list),
         ],
       },
       handicap: {
+        //重庆时时彩  无限秒秒彩  无限分分彩  北京PK10  香港六合彩
         list: [
-          _.filter(sscConfig.list, (item) => { return item.id !== 27 }), // 除了东京1.5的所有时时彩彩种
-          bjPKConfig.concat(this.getById(34), this.getById(35)), // ['北京PK10', '香港六合彩', '无限六合彩'],
+          _.filter(sscConfig.list, (item) => { return item.id === 1 || item.id === 10 || item.id === 19 }),
+          bjPKConfig.concat(this.getById(34)),
         ],
       },
     }
@@ -396,7 +394,7 @@ module.exports = {
   // 获取六合彩系类彩种id
   getMark6TicketIdArr() {
     const mark6TicketIdArr = []
-    _(mark6Config.concat(this.getById(35))).each((item) => {
+    _(handicapMark6Config).each((item) => {
       mark6TicketIdArr.push(item.id)
     })
     return mark6TicketIdArr

@@ -19,8 +19,14 @@
 
     <div class="handicap-grid" v-for="rule in formattedRuleList">
       <div class="title">
-        <div class="main">{{rule.title}}</div>
-        <div class="side">快捷组选</div>
+        <div class="main" v-if="_.isArray(rule.title)">
+          <div class="main-title" v-for="title in rule.title">{{title}}</div>
+        </div>
+        <div class="main" v-else>
+          <div class="main-title">{{rule.title}}</div>
+        </div>
+
+        <div class="side" v-if="rule.op.full">快捷组选</div>
       </div>
       <div class="body">
         <div class="main">
@@ -28,25 +34,25 @@
 
             <!--根据是否存在子项进行区别渲染-->
             <div class="main-item" v-for="item in rowItem" v-if="item.row" :class="{selected: item.selected}" @click="select(item)">
-              <div class="main-item-left">
+              <div class="main-item-left" v-if="!_.isEmpty(item)">
                 <span class="item" :class="item.style">{{item.title}}</span>
 
                 <span class="item" v-if="item.row" v-for="num in item.row">
                     <span :class="num.style">{{num.title}}</span>
                   </span>
               </div>
-              <div class="main-item-right">
+              <div class="main-item-right" v-if="!_.isEmpty(item)">
                 <span class="item odds" v-if="rule.showItemOdds">48.18</span>
                 <input type="text" class="money-input" v-if="rule.showMoneyInput" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney($event, item)" />
               </div>
             </div>
 
             <div class="main-item" v-else :class="{selected: item.selected}" @click="select(item)">
-              <div :class="rule.showItemOdds ? 'main-item-left' : 'main-item-center'">
+              <div :class="rule.showItemOdds ? 'main-item-left' : 'main-item-center'" v-if="!_.isEmpty(item)">
                 <span class="item" :class="item.style">{{item.title}}</span>
                 <span class="item odds" v-if="rule.showItemOdds">48.18</span>
               </div>
-              <div class="main-item-right" v-if="rule.showMoneyInput">
+              <div class="main-item-right" v-if="!_.isEmpty(item) && rule.showMoneyInput">
                 <input type="text" class="money-input" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney($event, item)" />
               </div>
             </div>
@@ -279,7 +285,16 @@
     }
 
     .main {
+      display: flex;
       flex-grow: 5;
+      .main-title {
+        flex-grow: 1;
+        border-right: 1px solid #e6e6e6;
+
+        &:last-child {
+          border-right: none;
+        }
+      }
     }
 
     .side {
@@ -305,10 +320,13 @@
         flex-grow: 1;
         position: relative;
         top: 1px;
+        width: 0;
       }
       .main-item {
         padding: 9px 0;
         min-width: 60px;
+        line-height: 25px;
+        height: 25px;
         display: flex;
         border: 1px solid $def-gray-color;
         margin-right: -1px;
@@ -321,7 +339,8 @@
         }
         .main-item-left {
           width: 60%;
-          padding-left: 5%;
+          padding-right: 10%;
+          text-align: right;
           box-sizing: border-box;
           line-height: 25px;
         }

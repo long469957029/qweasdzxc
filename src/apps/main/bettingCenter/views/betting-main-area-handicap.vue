@@ -79,9 +79,7 @@
 
           this.$store.commit(types.SET_PLAY_INFO, playInfo)
 
-
-          //提示框变化, 暂时这么写
-          $('.js-bc-confirm-planId').text(newVal)
+          this.clearAll()
         },
       },
       'bettingInfo.planId': {
@@ -91,6 +89,9 @@
               `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
               { id: 'ticketNotice', hasFooter: false, displayTime: 800 },
             )
+
+            //提示框变化, 暂时这么写
+            $('.js-bc-confirm-planId').text(newVal)
           }
         }
       },
@@ -172,16 +173,6 @@
                 this.$_emptySelect();
               })
           },
-        })
-      },
-
-      lotteryClear() {
-        this.$store.commit(types.EMPTY_PREV_BETTING)
-      },
-
-      lotteryDelete(index) {
-        this.$store.commit(types.EMPTY_PREV_BETTING, {
-          index
         })
       },
     },

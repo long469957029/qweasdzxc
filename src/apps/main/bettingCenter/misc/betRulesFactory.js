@@ -137,8 +137,10 @@ function createHandicapList(titles, options) {
 
   return _(titles).map((title) => {
     _.chain(title.items).flatten().each((item) => {
-      item.selected = false
-      item.betMoney = null
+      if (!_.isEmpty(item)) {
+        item.selected = false
+        item.betMoney = null
+      }
     })
     return {
       title: title.title,
