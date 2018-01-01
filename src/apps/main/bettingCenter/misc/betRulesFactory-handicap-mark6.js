@@ -1,6 +1,6 @@
-import betFormat from './betFormat'
 import factory from 'bettingCenter/misc/betRulesFactory'
 import { chunk } from 'lodash'
+import betFormat from './betFormat'
 
 const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
@@ -215,7 +215,7 @@ const teXiao = [
       num: '6',
     },
     {
-      title: '牛',
+      title: '羊',
       row: _.filter(getFortyNine(), (numInfo) => { return _.indexOf(['03', '15', '27', '39'], numInfo.num) !== -1 }),
       showOdds: true,
       num: '7',

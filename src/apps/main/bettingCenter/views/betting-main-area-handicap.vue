@@ -169,8 +169,6 @@
                 } else {
                   Global.ui.notification.show(res.msg || '')
                 }
-
-                this.$_emptySelect();
               })
           },
         })
