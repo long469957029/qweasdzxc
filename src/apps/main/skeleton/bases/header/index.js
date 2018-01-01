@@ -1,5 +1,3 @@
-
-
 require('./index.scss')
 
 // var NewsBarView = require('../newsBar');
@@ -15,6 +13,7 @@ const HeaderView = Base.ItemView.extend({
 
   events: {
     // 'click .js-gl-hd-notice-container': 'toggleNoticeHandler',
+    'click .js-header-announcement': 'checkAnnouncementHandler',
     'click .js-gl-h-ticket-main': 'clickEmptyTicketMainHandler',
     'click .js-gl-hd-refresh': 'refreshHandler',
     'mouseover .js-gl-h-ticket-div': 'inTicketSelectHandler',
@@ -117,14 +116,30 @@ const HeaderView = Base.ItemView.extend({
   levelName (level) {
     let levelName = ''
     switch (parseInt(level)) {
-      case 0: levelName = '骑士'; break
-      case 1: levelName = '男爵'; break
-      case 2: levelName = '子爵'; break
-      case 3: levelName = '伯爵'; break
-      case 4: levelName = '侯爵'; break
-      case 5: levelName = '公爵'; break
-      case 6: levelName = '大公'; break
-      default: levelName = '未知'; break
+      case 0:
+        levelName = '骑士';
+        break
+      case 1:
+        levelName = '男爵';
+        break
+      case 2:
+        levelName = '子爵';
+        break
+      case 3:
+        levelName = '伯爵';
+        break
+      case 4:
+        levelName = '侯爵';
+        break
+      case 5:
+        levelName = '公爵';
+        break
+      case 6:
+        levelName = '大公';
+        break
+      default:
+        levelName = '未知';
+        break
     }
     return levelName
   },
@@ -222,7 +237,7 @@ const HeaderView = Base.ItemView.extend({
       return false
     }
 
-    Global.appRouter.navigate('#fc/wd', { trigger: true, replace: false })
+    Global.appRouter.navigate('#fc/wd', {trigger: true, replace: false})
   },
 
   // inTicketSelectHandler: function(e){
@@ -253,7 +268,8 @@ const HeaderView = Base.ItemView.extend({
   // 资金锁定
   lockHandler() {
     const self = this
-    this.getInfoXhr().always(() => { /* self.loadingFinish(); */ }).done((res) => {
+    this.getInfoXhr().always(() => { /* self.loadingFinish(); */
+    }).done((res) => {
       const data = res && res.root || {}
       if (res && res.result === 0) {
         if (!data.hasMoneyPwd) {
@@ -279,7 +295,8 @@ const HeaderView = Base.ItemView.extend({
   // 资金解锁
   unlockHandler() {
     const self = this
-    this.getInfoXhr().always(() => { /* self.loadingFinish(); */ }).done((res) => {
+    this.getInfoXhr().always(() => { /* self.loadingFinish(); */
+    }).done((res) => {
       const data = res && res.root || {}
       if (res && res.result === 0) {
         if (!data.hasSecurity) {
@@ -322,7 +339,7 @@ const HeaderView = Base.ItemView.extend({
       if (clpValidate) {
         const password = $('.js-lock-password').val()
 
-        self.fundslockXhr({ fundsPassword: password }).done((res) => {
+        self.fundslockXhr({fundsPassword: password}).done((res) => {
           if (res.result == 0) {
             self.$('.js-gl-hd-lock').removeClass('sfa-h-unlocked').addClass('sfa-h-locked').data('status', '1')
             Global.ui.notification.show(res.msg)
@@ -371,7 +388,7 @@ const HeaderView = Base.ItemView.extend({
         const question = $('.js-unlock-question').val()
         const securityId = $('.js-questionId-input').val()
 
-        self.fundsunlockXhr({ fundsPassword: password, securityId, securityAsw: question }).done((res) => {
+        self.fundsunlockXhr({fundsPassword: password, securityId, securityAsw: question}).done((res) => {
           if (res.result == 0) {
             Global.ui.notification.show(res.msg)
             self.$dialogWd.modal('hide')
@@ -384,6 +401,9 @@ const HeaderView = Base.ItemView.extend({
         })
       }
     })
+  },
+  checkAnnouncementHandler: function () {
+    Global.m.router.goTo('#nc/px')
   },
 
 })

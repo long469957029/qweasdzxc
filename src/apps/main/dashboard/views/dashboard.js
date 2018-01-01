@@ -67,8 +67,10 @@ const DashboardView = Base.ItemView.extend({
 
   onRender() {
     const self = this
-    self.$('#jsDbCarousel').carousel({
-      interval: 5000,
+
+    this.$('.js-db-game-entry-carousel').carousel({
+      interval: 10000,
+      pause: 'hover',
     })
 
     self.$imgList = self.$('.js-db-mb-item')
@@ -104,6 +106,8 @@ const DashboardView = Base.ItemView.extend({
     this.getBannerADXhr().done((res) => {
       if (res.result === 0) {
         self.generateBannerAD(res.root)
+      }else{
+        self.generateBannerAD()
       }
     }).fail(() => {
       self.generateBannerAD()
@@ -139,6 +143,9 @@ const DashboardView = Base.ItemView.extend({
     this.$imgList.html(this.bannerTpl({
       data,
     }))
+    this.$('#jsDbCarousel').carousel({
+      interval: 5000,
+    })
   },
 
   // renderDynamicList: function(data) {

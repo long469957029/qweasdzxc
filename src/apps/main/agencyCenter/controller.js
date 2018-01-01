@@ -5,7 +5,7 @@ const RouterController = require('skeleton/controllers/router')
 const LowLevelManageView = require('agencyCenter/views/lowLevelManage')
 // const LowLevelRebateView = require('agencyCenter/views/lowLevelManage-rebate')
 
-const LowLevelBettingRecordsView = require('userCenter/views/bettingRecords')
+// const LowLevelBettingRecordsView = require('userCenter/views/bettingRecords')
 // const LowLevelBettingDetailView = require('agencyCenter/views/lowLevelManage-bettingDetail')
 
 // const LowLevelTrackRecordsView = require('userCenter/views/trackRecords')
@@ -225,16 +225,16 @@ const AgencyCenterController = RouterController.extend({
     })
   },
 
-  bettingRecords4Report(userId) {
-    this.changeSubReginView(new LowLevelBettingRecordsView({
-      userId,
-    }), {
-      main: {
-        title: `查看${_.getUrlParam('name')}的投注记录`,
-      },
-      parentRouter: 'ac/rm',
-    })
-  },
+  // bettingRecords4Report(userId) {
+  //   this.changeSubReginView(new LowLevelBettingRecordsView({
+  //     userId,
+  //   }), {
+  //     main: {
+  //       title: `查看${_.getUrlParam('name')}的投注记录`,
+  //     },
+  //     parentRouter: 'ac/rm',
+  //   })
+  // },
 
   accountDetail4Report(userId) {
     this.changeSubReginView(new LowLevelAccountDetailView({

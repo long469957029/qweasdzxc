@@ -97,22 +97,67 @@ body, [class*="col-"], .carousel-table-content {
 }
 
 .dashboard-row-inner {
-  @include row();
-  margin-left: 0;
-  margin-right: 0;
-
-  &:nth-child(0) {
-    border-bottom: 9px solid #fff;
-  }
-
+  font-size: 0;
+  display: inline-block;
   .content-item-2x {
     width: 600px;
   }
   .content-item-1x {
     width: 296px;
-    &:nth-child(0) {
-      border-right: 9px solid #fff;
-    }
+  }
+
+  .db-ah-ad{
+    background: url('./db-ah-ad.png') no-repeat center;
+  }
+  .db-ah-bjl{
+    background: url('./db-ah-bjl.png') no-repeat center;
+    height: 236px;
+    margin-bottom: 9px;
+  }
+  .db-ah-sb{
+    display: inline-block;
+    background: url('./db-ah-sb.png') no-repeat center;
+    margin-right: 9px ;
+    width: 296px;
+    height: 197px;
+  }
+  .db-ah-lp{
+    display: inline-block;
+    background: url('./db-ah-lp.png') no-repeat center;
+    width: 296px;
+    height: 197px;
+  }
+  .db-slot-ad{
+    background: url('./db-slot-ad.png') no-repeat center;
+  }
+  .db-slot-1-bg{
+    display: inline-block;
+    background: url('./db-slot-1-bg.png') no-repeat center;
+    margin-right: 9px;
+    margin-bottom: 9px;
+    width: 296px;
+    height: 216px;
+
+  }
+  .db-slot-2-bg{
+    display: inline-block;
+    background: url('./db-slot-2-bg.png') no-repeat center;
+    width: 295px;
+    height: 216px;
+    margin-bottom: 9px;
+  }
+  .db-slot-3-bg{
+    display: inline-block;
+    background: url('./db-slot-3-bg.png') no-repeat center;
+    margin-right: 9px;
+    width: 296px;
+    height: 216px;
+  }
+  .db-slot-4-bg{
+    display: inline-block;
+    background: url('./db-slot-4-bg.png') no-repeat center;
+    width: 295px;
+    height: 216px;
   }
 }
 .db-bulletin-container{
@@ -137,6 +182,7 @@ body, [class*="col-"], .carousel-table-content {
     height: 50px;
     line-height: 50px;
     text-align: right;
+    background: url('db-notice.png') no-repeat center;
   }
 
   .bulletin-content {
@@ -161,25 +207,26 @@ body, [class*="col-"], .carousel-table-content {
 .dashboard-carousel-table {
   height: 460px;
   border: 9px solid #fff;
-  .carousel-table-ad {
+  font-size: 0;
+  .db-game-ad {
+    width: 273px;
     height: 442px;
+    float: left
   }
 
   .carousel-table-content {
+    width: 609px;
     height: 442px;
     border-left: 9px solid #fff;
+    float: left
   }
 
-  .content-item {
-    height: 220px;
-  }
 }
 
 .dashboard-mall {
   width: 288px;
   height: 458px;
   margin-left: 12px;
-  border-top: 2px solid transparent;
   background: #fff;
 
   .dashboard-mall-header {
@@ -352,7 +399,7 @@ body, [class*="col-"], .carousel-table-content {
 }
 .db-activity-content {
   height: 328px;
-  //background: url('');
+  background: url('./db-new-activity.png');
 }
 .db-shadow{
   box-shadow: 0 1px 15px -2px #ccc;
