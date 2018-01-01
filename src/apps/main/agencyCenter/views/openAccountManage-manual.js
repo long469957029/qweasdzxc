@@ -43,34 +43,6 @@ const OpenAccountManageView = Base.ItemView.extend({
     this.$acUserType = this.$('.js-ac-userType')
     this.$acManualRebateInfo = this.$('.js-ac-manual-rebate-info')
 
-    // this.$acRepeatPassword = this.$('.js-ac-repeatPassword');
-
-    // this.getSubAcctXhr().always(function(){
-    //   self.loadingFinish();
-    // })
-    //   .done(function(res) {
-    //     var data = res.root.seriesList;
-    //
-    //     if (res && res.result === 0) {
-    //
-    // 	  self._getTable( _(data.ticketSeriesList).map(function(ticketSeries) {
-    //           return {
-    //             sericeName: ticketSeries.sericeName,
-    //             maxBonus: _(ticketSeries.maxBonus).convert2yuan(),
-    //             subAcctRebate: data.subRebateRange.subAcctRebate,
-    //             maxRebate: data.subRebateRange.rebateMax,
-    //             minRebate: data.subRebateRange.rebateMin
-    //           };
-    //         }));
-    //       self._parentView.renderLimit(self.$limit,res.root.quotaList);
-    //
-    //       var acctInfo = Global.memoryCache.get('acctInfo');
-    //       if(acctInfo.merchant) {
-    //     	  self.$('.js-ac-rebate-set-container').hide();
-    //       }
-    //     }
-    //   });
-
     this.getSubAcctXhr().always(() => {
       self.loadingFinish()
     })
@@ -95,7 +67,7 @@ const OpenAccountManageView = Base.ItemView.extend({
 
           self.$acBonusRangePrompt.html(subRebateRangePrompt)
 
-          self._parentView.renderLimit(self.$limit, res.root.quotaList)
+          self._parentView.renderLimit(res.root.quotaList)
 
           const acctInfo = Global.memoryCache.get('acctInfo')
           if (acctInfo.merchant) {
@@ -107,43 +79,6 @@ const OpenAccountManageView = Base.ItemView.extend({
       })
   },
 
-  // _getTable: function(tableInfo) {
-  //   var self = this;
-  //   this.$('.js-ac-rebate-set-container').staticGrid({
-  //     tableClass: 'table table-bordered table-center',
-  //     colModel: [
-  //       {label: '彩种系列', name: 'sericeName', width: '30%',formatter: function(val,index,info){
-  //         var ticket = '';
-  //         if(val==='时时彩'){
-  //           ticket = 'constant';
-  //         }else if(val==='十一选五'){
-  //           val = '11选5';
-  //           ticket = 'elev';
-  //         }else if(val==='低频彩'){
-  //           ticket = 'low';
-  //         }else if(val==='快乐彩') {
-  //           ticket = 'happy';
-  //         }
-  //
-  //         // else if(val==='秒秒彩') {
-  //         //   ticket = 'mmc';
-  //         // }
-  //
-  //         return '<a class="js-ac-ticket-link btn-link text-pleasant" data-ticket="'+ticket+'">'+val+'</a>';
-  //       }},
-  //       {label: '最高奖金', name: 'maxBonus', width: '30%',formatter: function(val,index,info){
-  //         return '<span class="js-ac-openAccount-maxBonus" data-maxBonus="'+val+'" data-name="'+info.sericeName+'">' +
-  //           self.calculateMaxBonus(info.sericeName,_(info.subAcctRebate).formatDiv(10),val)+'</span>';
-  //       }},
-  //       {label: '下级返点', name: 'subAcctRebate',width:'40%', merge: true, formatter: function(val, index, info) {
-  //         return '<input type="text" class="js-ac-manual-rebate " value="' + _(val).formatDiv(10,{fixed:1}) + '" data-parsley-oneDecimal data-parsley-range="['+_(info.minRebate).formatDiv(10,{fixed:1})+','+_(info.maxRebate).formatDiv(10,{fixed:1})+']" > %<div class="text-center">可配置范围(' +
-  //           info.minRebate +  '～' + _(info.maxRebate>130?130:info.maxRebate).formatDiv(10,{fixed:1}) + ')</div>';
-  //       }}
-  //     ],
-  //     row: tableInfo
-  //   });
-  // },
-
   // TODO 手工开户提交
   submitOpenAccountInfoHandler (e) {
     const self = this
@@ -153,7 +88,7 @@ const OpenAccountManageView = Base.ItemView.extend({
 
     const rebateValidate = this.$acOpenAccountManualForm.parsley().validate()
 
-    if (this.checkUserName() && this.checkUserPassword() &&　rebateValidate) {
+    if (this.checkUserName() && this.checkUserPassword() && rebateValidate) {
       $target.button('loading')
       const acctInfo = Global.memoryCache.get('acctInfo')
       if (acctInfo.merchant) {
@@ -165,7 +100,7 @@ const OpenAccountManageView = Base.ItemView.extend({
         loginPwd: this.$acPassword.val(),
         rebate: _(this.$acmanualRebate.val()).formatMul(10),
       }
-      
+
       const userType = this.$acUserType.find('button.active').data('type')
       Global.sync.ajax({
         url: '/acct/subaccount/savesubacct.json',
@@ -241,11 +176,11 @@ const OpenAccountManageView = Base.ItemView.extend({
     }
   },
   inputRebateHandler(e) {
-    const self = this
+    // const self = this
     const $target = $(e.currentTarget)
-    const range = eval($target.data('parsley-range'))
+    const range = JSON.parse($target.data('parsley-range'))
     const rebate = Number($target.val())
-    if (rebate !== '' && _(rebate).isFinite() && range.length == 2) {
+    if (rebate !== '' && _(rebate).isFinite() && range.length === 2) {
       if (rebate < range[0]) {
         $target.val(range[0])
       } else if (rebate > range[1]) {
@@ -272,7 +207,8 @@ const OpenAccountManageView = Base.ItemView.extend({
       '<div class="control-group m-left-sm p-left-lg m-top-md  m-bottom-md"><label class="text-left">账号:&nbsp;&nbsp;&nbsp;&nbsp;  '}${data.userName}</label></div>` +
       `<div class="control-group m-left-sm p-left-lg m-top-md  m-bottom-md"><label class="text-left">密码:&nbsp;&nbsp;&nbsp;&nbsp;  ${data.loginPwd}</label></div>` +
       `<div class="control-group m-left-sm p-left-lg m-top-md  m-bottom-md"><label class="text-left">返点:&nbsp;&nbsp;&nbsp;&nbsp;  ${_(data.rebate).formatDiv(10, { fixed: 1 })}</label></div></div>` +
-      '<div class="m-top-lg m-bottom-lg"><button type="button" class="js-ac-ocm-copy ac-ocm-copy btn btn-sun" data-dismiss="modal"><span class="sfa ac-ocm-copy-coin m-right-sm"></span>复制并关闭</button></div></form>',
+      '<div class="m-top-lg m-bottom-lg"><button type="button" class="js-ac-ocm-copy ac-ocm-copy btn btn-sun" data-dismiss="modal">' +
+      '<span class="sfa ac-ocm-copy-coin m-right-sm"></span>复制并关闭</button></div></form>',
       bodyClass: 'p-top-xs p-left-lg p-right-lg text-center',
     })
 
@@ -282,13 +218,13 @@ const OpenAccountManageView = Base.ItemView.extend({
 
     //
     $dialog.find('.js-ac-ocm-copy').textCopy({
-      text: `账号：${data.userName 
-      }\n密码：${data.loginPwd 
+      text: `账号：${data.userName
+      }\n密码：${data.loginPwd
       }\n返点：${_(data.rebate).formatDiv(10, { fixed: 1 })}`,
       notShowToolTip: true,
     })
   },
-  
+
   // calculateMaxBonus: function(ticketName,rebate,maxBonus){
   //
   //   var baseNum = 20;
@@ -370,9 +306,9 @@ const OpenAccountManageView = Base.ItemView.extend({
   },
 
   changeEleClass ($ele, status) {
-    if (status == 'success') {
+    if (status === 'success') {
       $ele.addClass('parsley-success').removeClass('parsley-error')
-    } else if (status == 'error') {
+    } else if (status === 'error') {
       $ele.addClass('parsley-error').removeClass('parsley-success')
     }
   },
