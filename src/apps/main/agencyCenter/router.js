@@ -19,7 +19,7 @@ exports.install = function() {
 
     'ac/oam/pd/:ticket': 'openAccountManagePrice',
     'ac/rm': 'reportManage', // 报表查询
-    // 'ac/rm/betting/:userId': 'bettingRecords4Report', // 账变
+    'ac/rm/betting/:userId': 'bettingRecords4Report', // 账变
     'ac/td': 'teamDynamic',
 
     'ac/spl': 'profitAndLoss', // 盈亏报表--total

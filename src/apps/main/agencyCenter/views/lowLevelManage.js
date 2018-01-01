@@ -249,7 +249,6 @@ const LowLevelManageView = SearchGrid.extend({
     }
   },
   pointUpHandler(e) {
-    const self = this
     const $target = $(e.currentTarget)
     const userId = $target.data('userid')
     const userName = $target.data('username')
@@ -263,9 +262,6 @@ const LowLevelManageView = SearchGrid.extend({
     const rebataView = new LowLevelRebateView({
       userId,
       userName,
-    }).on('change:success', () => {
-      $dialog.modal('hide')
-      self._getGridXhr()
     })
     $dialogContant.html(rebataView.render().el)
 

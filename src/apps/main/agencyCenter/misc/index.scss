@@ -176,24 +176,13 @@
     font-size: $font-md;
     color: $def-black-color;
   }
-  .lowLevel-input{
-    width: 246px;
-    height: 30px;
-    text-align: center;
-    color: $def-black-color;
-  }
-  .lowLevel-percent-sign{
-    position: relative;
-    top: 1px;
-    right: 25px;
-  }
   .ac-lowLevel-rebate-btn {
-    width: 108px;
-    height: 36px;
-  }
-  .lowLevel-error{
-    padding-left: 100px;
-    padding-top: 5px;
+    position: absolute;
+    top: 485px;
+    left: 360px;
+    margin-top: 40px;
+    width: 166px;
+    height: 32px;
   }
   .close{
     font-size:30px;
