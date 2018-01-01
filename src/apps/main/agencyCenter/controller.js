@@ -3,13 +3,13 @@
 const RouterController = require('skeleton/controllers/router')
 
 const LowLevelManageView = require('agencyCenter/views/lowLevelManage')
-const LowLevelRebateView = require('agencyCenter/views/lowLevelManage-rebate')
+// const LowLevelRebateView = require('agencyCenter/views/lowLevelManage-rebate')
 
-const LowLevelBettingRecordsView = require('fundCenter/gameRecord/bettingRecords')
-const LowLevelBettingDetailView = require('agencyCenter/views/lowLevelManage-bettingDetail')
+const LowLevelBettingRecordsView = require('userCenter/views/bettingRecords')
+// const LowLevelBettingDetailView = require('agencyCenter/views/lowLevelManage-bettingDetail')
 
-const LowLevelTrackRecordsView = require('fundCenter/gameRecord/trackRecords')
-const LowLevelTrackDetailView = require('agencyCenter/views/lowLevelManage-trackDetail')
+// const LowLevelTrackRecordsView = require('userCenter/views/trackRecords')
+// const LowLevelTrackDetailView = require('agencyCenter/views/lowLevelManage-trackDetail')
 
 const LowLevelAccountDetailView = require('agencyCenter/views/lowLevelManage-accountDetail')
 const LowLevelSendMessageView = require('agencyCenter/views/lowLevelManage-sendMessage')
@@ -51,16 +51,16 @@ const AgencyCenterController = RouterController.extend({
     })
   },
 
-  rebateManage(userId) {
-    this.changeSubReginView(new LowLevelRebateView({
-      userId,
-    }), {
-      main: {
-        title: `编辑${_.getUrlParam('name')}的返点`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // rebateManage(userId) {
+  //   this.changeSubReginView(new LowLevelRebateView({
+  //     userId,
+  //   }), {
+  //     main: {
+  //       title: `编辑${_.getUrlParam('name')}的返点`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
   lowLevelDetail(userId) {
     this.changeSubReginView(new LowLevelDetailView({
@@ -73,55 +73,55 @@ const AgencyCenterController = RouterController.extend({
     })
   },
 
-  bettingRecords(userId) {
-    this.changeSubReginView(new LowLevelBettingRecordsView({
-      reqData: {
-        userId,
-      },
-    }), {
-      main: {
-        title: `查看${_.getUrlParam('name')}的投注记录`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // bettingRecords(userId) {
+  //   this.changeSubReginView(new LowLevelBettingRecordsView({
+  //     reqData: {
+  //       userId,
+  //     },
+  //   }), {
+  //     main: {
+  //       title: `查看${_.getUrlParam('name')}的投注记录`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
-  bettingDetail(userId, betId) {
-    this.changeSubReginView(new LowLevelBettingDetailView({
-      userId,
-      tradeNo: betId,
-    }), {
-      main: {
-        title: `查看${_.getUrlParam('name')}的投注详情`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // bettingDetail(userId, betId) {
+  //   this.changeSubReginView(new LowLevelBettingDetailView({
+  //     userId,
+  //     tradeNo: betId,
+  //   }), {
+  //     main: {
+  //       title: `查看${_.getUrlParam('name')}的投注详情`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
-  trackRecords(userId) {
-    this.changeSubReginView(new LowLevelTrackRecordsView({
-      reqData: {
-        userId,
-      },
-    }), {
-      main: {
-        title: `查看${_.getUrlParam('name')}的追号记录`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // trackRecords(userId) {
+  //   this.changeSubReginView(new LowLevelTrackRecordsView({
+  //     reqData: {
+  //       userId,
+  //     },
+  //   }), {
+  //     main: {
+  //       title: `查看${_.getUrlParam('name')}的追号记录`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
-  trackDetail(userId, tradeNo) {
-    this.changeSubReginView(new LowLevelTrackDetailView({
-      userId,
-      tradeNo,
-    }), {
-      main: {
-        title: `查看${_.getUrlParam('name')}的追号详情`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // trackDetail(userId, tradeNo) {
+  //   this.changeSubReginView(new LowLevelTrackDetailView({
+  //     userId,
+  //     tradeNo,
+  //   }), {
+  //     main: {
+  //       title: `查看${_.getUrlParam('name')}的追号详情`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
   openAccountManage() {
     this.changeMainReginView(new OpenAccountManageView(), {
@@ -133,7 +133,10 @@ const AgencyCenterController = RouterController.extend({
   },
 
   teamBettingRecord() {
-    this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrTr' }), {
+    this.changeMainReginView(new teamBettingRecordView({
+      triggerTab: 'jsAcBrTr',
+      userName: _.getUrlParam('name'),
+    }), {
       main: {
         title: '团队投注',
         titleDes: '团队投注记录只保留近30天数据',
@@ -189,16 +192,16 @@ const AgencyCenterController = RouterController.extend({
     })
   },
 
-  accountDetail(userId) {
-    this.changeSubReginView(new LowLevelAccountDetailView({
-      userId,
-    }), {
-      main: {
-        title: `查看${_.getUrlParam('name')}的账变记录`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // accountDetail(userId) {
+  //   this.changeSubReginView(new LowLevelAccountDetailView({
+  //     userId,
+  //   }), {
+  //     main: {
+  //       title: `查看${_.getUrlParam('name')}的账变记录`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
   sendMessage(userId) {
     this.changeSubReginView(new LowLevelSendMessageView({
@@ -335,17 +338,19 @@ const AgencyCenterController = RouterController.extend({
       parentRouter: 'ac/dm',
     })
   },
-  gameBettingRecord() {
-    this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrGr' }), {
-      main: {
-        title: '团队投注',
-        titleDes: '团队投注记录只保留近30天数据',
-      },
-      sidebar,
-    })
-  },
+  // gameBettingRecord() {
+  //   this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrGr' }), {
+  //     main: {
+  //       title: '团队投注',
+  //       titleDes: '团队投注记录只保留近30天数据',
+  //     },
+  //     sidebar,
+  //   })
+  // },
   teamAccountDetail() {
-    this.changeMainReginView(new TeamAccountDetailView(), {
+    this.changeMainReginView(new TeamAccountDetailView({
+      userName: _.getUrlParam('name') || '',
+    }), {
       main: {
         title: '团队账变',
         titleDes: '团队账变记录只保留近30天数据',

@@ -84,6 +84,7 @@ const teamBettingRecordView = SearchGrid.extend({
       showIcon: true,
       size: 'input-ml',
     }).render()
+    this.$('input[name="userName"]').val(this.options.userName)
 
     this.$('select[name=betStatus]').html(_(betStatusConfig.get()).map((betStatus) => {
       return `<option value="${betStatus.id}">${betStatus.zhName}</option>`

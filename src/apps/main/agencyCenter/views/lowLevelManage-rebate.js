@@ -17,31 +17,31 @@ const LowLevelRebateView = Base.ItemView.extend({
     const self = this
     // TODO 获取当前登陆用户的返点信息及配额信息（用于初始化最大返点值），
     // TODO 获取被编辑用户的级别、返点值（用于判断其返点编辑规则，判断是否可编辑，或者可查看,初始化最小返点值）
-
-    const userName = _.getUrlParam('name')
-    this.$limit = this.$('.js-ac-lowLevel-quota-container')
-
-    this.$_parentEl.find('.js-ac-rebateUserName').html(userName)
-    this.getSubAcctXhr()
-      .always(() => {
-        self.loadingFinish()
-      })
-      .done((res) => {
-        const data = res.root.seriesList
-        if (res && res.result === 0) {
-          // 从data中取出该值
-          self.renderLimit(self.$limit, res.root.quotaList)
-          self._getTable(_(data.ticketSeriesList).map((ticketSeries) => {
-            return {
-              sericeName: ticketSeries.sericeName,
-              maxBonus: _(ticketSeries.maxBonus).convert2yuan(),
-              subAcctRebate: data.subRebateRange.subAcctRebate,
-              maxRebate: data.subRebateRange.rebateMax,
-              minRebate: data.subRebateRange.rebateMin,
-            }
-          }))
-        }
-      })
+    self.loadingFinish()
+    // const userName = _.getUrlParam('name')
+    // this.$limit = this.$('.js-ac-lowLevel-quota-container')
+    //
+    // this.$_parentEl.find('.js-ac-rebateUserName').html(userName)
+    // this.getSubAcctXhr()
+    //   .always(() => {
+    //     self.loadingFinish()
+    //   })
+    //   .done((res) => {
+    //     const data = res.root.seriesList
+    //     if (res && res.result === 0) {
+    //       // 从data中取出该值
+    //       self.renderLimit(self.$limit, res.root.quotaList)
+    //       self._getTable(_(data.ticketSeriesList).map((ticketSeries) => {
+    //         return {
+    //           sericeName: ticketSeries.sericeName,
+    //           maxBonus: _(ticketSeries.maxBonus).convert2yuan(),
+    //           subAcctRebate: data.subRebateRange.subAcctRebate,
+    //           maxRebate: data.subRebateRange.rebateMax,
+    //           minRebate: data.subRebateRange.rebateMin,
+    //         }
+    //       }))
+    //     }
+    //   })
   },
   getSubAcctXhr() {
     return Global.sync.ajax({
@@ -65,7 +65,7 @@ const LowLevelRebateView = Base.ItemView.extend({
           formatter(val, index, info) {
             return `<span class="js-ac-openAccount-maxBonus" data-maxBonus="${val}" data-name="${info.sericeName}">${
               self.calculateMaxBonus(info.sericeName, _(info.subAcctRebate).formatDiv(10), val)}</span>`
-          }, 
+          },
         },
         {
           label: '下级返点',
@@ -73,10 +73,11 @@ const LowLevelRebateView = Base.ItemView.extend({
           merge: true,
           formatter(val, index, info) {
           // val对应该行数据中与name同名的对应变量的值，此处具体为info.subAcctRebate的值，info表示此行的值
-            return `<input type="text" class="js-ac-subRebate" value="${_(val).formatDiv(10)}" data-parsley-oneDecimal data-parsley-range="[${_(val).formatDiv(10)},${_(info.maxRebate).formatDiv(10, { fixed: 1 })}]"> %<div class="text-center">可配置范围(${ 
-              _(val).formatDiv(10)}～${_(info.maxRebate > 130 ? 130 : info.maxRebate).formatDiv(10, { fixed: 1 })})</div>`
+            return `<input type="text" class="js-ac-subRebate" value="${_(val).formatDiv(10)}" data-parsley-oneDecimal 
+                    data-parsley-range="[${_(val).formatDiv(10)},${_(info.maxRebate).formatDiv(10, { fixed: 1 })}]"> %
+                    <div class="text-center">可配置范围(${_(val).formatDiv(10)}～${_(info.maxRebate > 130 ? 130 : info.maxRebate).formatDiv(10, { fixed: 1 })})</div>`
           },
-          width: 229, 
+          width: 229,
         },
       ],
       row: tableInfo,
@@ -84,9 +85,9 @@ const LowLevelRebateView = Base.ItemView.extend({
   },
   checkValueRangeHandler(e) {
     const $target = $(e.currentTarget)
-    const range = eval($target.data('parsley-range'))
+    const range = JSON.parse($target.data('parsley-range'))
     const rebate = Number($target.val())
-    if (rebate !== '' && _(rebate).isFinite() && range.length == 2) {
+    if (rebate !== '' && _(rebate).isFinite() && range.length === 2) {
       if (rebate < range[0]) {
         $target.val(range[0])
       } else if (rebate > range[1]) {
@@ -123,9 +124,9 @@ const LowLevelRebateView = Base.ItemView.extend({
   inputRebateHandler(e) {
     const self = this
     const $target = $(e.currentTarget)
-    const range = eval($target.data('parsley-range'))
+    const range = JSON.parse($target.data('parsley-range'))
     let rebate = Number($target.val())
-    if (rebate !== '' && _(rebate).isFinite() && range.length == 2) {
+    if (rebate !== '' && _(rebate).isFinite() && range.length === 2) {
       if (rebate < range[0]) {
         $target.val(range[0])
       } else if (rebate > range[1]) {
@@ -136,7 +137,7 @@ const LowLevelRebateView = Base.ItemView.extend({
     }
     rebate = Number($target.val())
     const $maxBonus = $target.parent().parent().parent().find('.js-ac-openAccount-maxBonus')
-    _($maxBonus).each((item, index) => {
+    _($maxBonus).each((item) => {
       const $item = $(item)
       const maxBonus = $item.data('maxbonus')
       const ticketName = $item.data('name')
