@@ -127,6 +127,7 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new OpenAccountManageView(), {
       main: {
         title: '开户管理',
+        titleDes: '<div class="js-ac-open-limit"></div>',
       },
       sidebar,
     })
