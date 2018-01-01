@@ -253,6 +253,9 @@
             placement: 'bottom',
           })
 
+          // this.$refs.areaSelect.empty()
+          // this.$refs.areaInput.empty()
+
 
           //提示框变化, 暂时这么写
           $('.js-bc-confirm-planId').text(newVal)

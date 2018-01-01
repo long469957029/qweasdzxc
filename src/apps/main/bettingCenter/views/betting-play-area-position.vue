@@ -1,7 +1,7 @@
 <template>
-  <div class="form-inline tab-toolbar">
+  <div class="form-inline">
     <div class="bc-optional-main">
-      <label class="m-right-mlg" v-for="(optional, index) in optionals.list">
+      <label class="m-right-mlg" v-for="(optional, index) in fOptionals.list">
         <span class="custom-checkbox checkbox-pleasant">
           <input type="checkbox" :id="'position-' + index" class="js-bc-playArea-position-item" name="optional" @change="change"
                  :value="optional.id" v-model="optional.checked">
@@ -20,14 +20,25 @@
       optionals: Object
     },
 
+    computed: mapState({
+      fOptionals: function() {
+        return this.optionals
+      }
+    }),
+
     methods: {
       change() {
-        this.$emit('positionChange', this.optionals);
+        this.$emit('positionChange', this.fOptionals);
       }
+    },
+    mounted: function() {
+      this.$emit('positionChange', this.fOptionals);
     }
   }
 </script>
 
 <style scoped>
-
+  .bc-optional-main {
+    margin: 15px 0;
+  }
 </style>

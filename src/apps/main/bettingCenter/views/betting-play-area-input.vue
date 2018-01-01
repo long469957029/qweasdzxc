@@ -1,6 +1,6 @@
 <template>
   <div>
-    <betting-play-area-position :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
+    <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
 
     <div class="clearfix m-bottom-sm">
       <div class="js-bc-numbers-container bc-textarea-main pull-left border-inverse-all" @click="focusInput">
@@ -59,7 +59,7 @@
           const contents = _(newval).trim()
           this.splitNumbers = contents.split(this.splitReg)
         }
-      }
+      },
     },
 
     mounted: function() {

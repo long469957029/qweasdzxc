@@ -185,7 +185,7 @@ const mutations = {
     $_calculateByPrefab(previewItem)
   },
 
-  [types.ADD_PREV_BET](state, { bettingInfo, options }) {
+  [types.ADD_PREV_BET](state, { bettingInfo, options = {} }) {
     if (options.type !== 'auto') {
       if (state.statistics) {
         this.commit(types.EMPTY_BUY_BETTING)

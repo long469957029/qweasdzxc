@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--选择位置-->
-    <betting-play-area-position :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
+    <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
 
     <div class="bc-missOptional-main" v-if="_.find(playRule.topOp, op => op)">
       <slot name="lastMissNum" v-if="playRule.topOp.currMissing"></slot>
@@ -89,7 +89,7 @@
         handler(newVal) {
           this.totalPage = Math.ceil(this.formattedRuleList.length / newVal)
         }
-      }
+      },
     },
 
     computed: mapState({
@@ -232,7 +232,7 @@
       $_calculateCoefficient(optionals) {
         let coefficient = 1
 
-        const selectedList = list.filter(optional => optional.checked);
+        const selectedList = optionals.list.filter(optional => optional.checked);
         const length = selectedList.length
         if (!_.isEmpty(optionals)) {
           coefficient = betRulesAlgorithm.optional(

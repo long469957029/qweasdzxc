@@ -57,6 +57,7 @@ function addRule(ids, {
   algorithm = _.noop,
   algorithmProps = {},
   format,
+  validate,
   formatToNum = false,
   create = _.noop,
   style = {
@@ -84,6 +85,7 @@ function addRule(ids, {
       optionals,
       format,
       formatToNum,
+      validate,
       type,
       limits,
       algorithm,
