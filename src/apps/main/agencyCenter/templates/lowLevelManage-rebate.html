@@ -3,12 +3,13 @@
   <a class="close btn-close" data-dismiss="modal">&times;</a>
 </div>
 <div class="ac-lowLevel-contant">
-  <div class="m-top-lg m-bottom-md text-center font-md">用户<span class="text-cool m-left-xs m-right-xs">kimkim</span>的返点</div>
+  <div class="m-top-lg m-bottom-md text-center font-md">用户<span class="text-cool m-left-xs m-right-xs"><%=userName%></span>的返点</div>
   <div class="text-center">
-    <input type="text" class="js-ac-subRebate" value="" data-parsley-oneDecimal data-parsley-range="">
+    <input type="text" class="js-ac-subRebate lowLevel-input" value="" data-parsley-oneDecimal data-parsley-range="">
+    <i class="fa fa-percent lowLevel-percent-sign" aria-hidden="true"></i>
   </div>
-  <div class="js-lowLevel-error"></div>
+  <div class="js-lowLevel-error lowLevel-error"></div>
   <div class="m-top-lg m-bottom-md text-center">
-    <button class="btn ">确定</button>
+    <button type="button" class="btn ac-lowLevel-rebate-btn js-ac-submitRebateInfo" data-loading-text="保存中">确定</button>
   </div>
 </div>
