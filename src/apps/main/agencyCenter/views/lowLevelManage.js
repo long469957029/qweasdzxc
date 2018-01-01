@@ -1,18 +1,19 @@
-
-
 const SearchGrid = require('com/searchGrid')
 
-const Timeset = require('com/timeset')
+// const Timeset = require('com/timeset')
+const LowLevelRebateView = require('agencyCenter/views/lowLevelManage-rebate')
 
 const LowLevelManageView = SearchGrid.extend({
 
   template: require('agencyCenter/templates/lowLevelManage.html'),
 
-  className: 'lowLevelManage-view',
+  className: 'lowLevelManage-view basic-black border-top',
 
   events: {
     'click .js-ac-expend-btn': 'expendHandler',
     'click .js-ac-llm-cp': 'checkPayPwdSet',
+    'change .js-select-type': 'selectChangeHandler',
+    'click .js-ac-point-up': 'pointUpHandler',
   },
 
   initialize() {
@@ -26,8 +27,12 @@ const LowLevelManageView = SearchGrid.extend({
           width: '12%',
         },
         {
+          name: '类型',
+          width: '10%',
+        },
+        {
           name: '返点',
-          width: '12%',
+          width: '10%',
         },
         {
           name: '个人余额',
@@ -42,8 +47,8 @@ const LowLevelManageView = SearchGrid.extend({
           width: '16%',
         },
         {
-          name: '<i class="js-ac-uDays sfa sfa-help-tip cursor-pointer vertical-middle"></i> 不活跃天数',
-          width: '12%',
+          name: '不活跃天数',
+          width: '10%',
         },
         {
           name: '操作',
@@ -61,42 +66,22 @@ const LowLevelManageView = SearchGrid.extend({
       },
     })
 
-    this.on('router:back', function() {
+    this.on('router:back', function () {
       this._getGridXhr()
     })
   },
 
   onRender() {
-    // 初始化时间选择
-    new Timeset({
-      el: this.$('.js-pf-timeset'),
-      startTime: 'regTimeStart',
-      endTime: 'regTimeEnd',
-      startTimeHolder: '起始日期',
-      endTimeHolder: '结束日期',
-      startOps: {
-        format: 'YYYY-MM-DD',
-      },
-      endOps: {
-        format: 'YYYY-MM-DD',
-      },
-    }).render()
-
     SearchGrid.prototype.onRender.apply(this, arguments)
-
-    this.$('.js-ac-uDays').popover({
-      trigger: 'hover',
-      html: true,
-      content: '<strong>不活跃天数定义</strong> <br />连续多少天内无任何账变，即为不活跃的天数',
-      placement: 'bottom',
-    })
-
-
+    this.$personalBalance = this.$('.js-personal-balance')
+    this.$teamBalance = this.$('.js-team-balance')
+    this.$personalInput = this.$('.js-personal-input')
+    this.$teamInput = this.$('.js-team-input')
     Global.newbieActivity.checkAgent()
   },
 
   renderGrid(gridData) {
-    const rowsData = _(gridData.subAcctList).map(function(bet, index, betList) {
+    const rowsData = _(gridData.subAcctList).map(function (bet, index, betList) {
       return {
         columnEls: this.formatRowData(bet, index, betList),
         dataAttr: bet,
@@ -104,7 +89,7 @@ const LowLevelManageView = SearchGrid.extend({
     }, this)
 
     if (!_(gridData.parents).isEmpty()) {
-      this._breadList = _(gridData.parents).map((parent, index) => {
+      this._breadList = _(gridData.parents).map((parent) => {
         return {
           data: {
             userParentId: parent.userId,
@@ -121,32 +106,31 @@ const LowLevelManageView = SearchGrid.extend({
     })
       .hideLoading()
 
-    this.grid.addFooterRows({
-      trClass: 'tr-footer',
-      columnEls: [
-        '<strong>总计</strong>',
-        '',
-        _(gridData.balanceTotal).convert2yuan(),
-        _(gridData.subBalanceTotal).convert2yuan(),
-        '',
-        '',
-        '',
-      ],
-    })
-      .hideLoading()
+    // this.grid.addFooterRows({
+    //   trClass: 'tr-footer',
+    //   columnEls: [
+    //     '<strong>总计</strong>',
+    //     '',
+    //     _(gridData.balanceTotal).convert2yuan(),
+    //     _(gridData.subBalanceTotal).convert2yuan(),
+    //     '',
+    //     '',
+    //     '',
+    //   ],
+    // })
+    //   .hideLoading()
   },
 
   formatRowData(rowInfo) {
     const row = []
 
     if (rowInfo.userSubAcctNum) {
-      row.push(`<a class="js-pf-sub btn-link text-cool" data-label="${rowInfo.userName 
-      }" data-user-parent-id="${rowInfo.userId}" href="javascript:void(0)">${ 
+      row.push(`<a class="js-pf-sub btn-link text-cool" data-label="${rowInfo.userName}" data-user-parent-id="${rowInfo.userId}" href="javascript:void(0)">${
         rowInfo.userName}(${rowInfo.userSubAcctNum})</a> `)
     } else {
       row.push(`<span class="text-cool">${rowInfo.userName}</span>`)
     }
-
+    row.push(rowInfo.userType === 0 ? '代理' : '会员')
     row.push(`${_(rowInfo.rebate).formatDiv(10, { fixed: 1 })}%`)
 
     row.push(`<span class="text-bold-pleasant">${_(rowInfo.balance).convert2yuan()}</span>`)
@@ -161,31 +145,35 @@ const LowLevelManageView = SearchGrid.extend({
   _formatOperation(rowInfo) {
     let html = []
     const cell = []
-   
+
     const acctInfo = Global.memoryCache.get('acctInfo')
-    
-    cell.push(`<a href="${_.getUrl(`/detail/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link text-cool">详情</a>`)
+
+    // cell.push(`<a href="${_.getUrl(`/detail/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link text-cool">详情</a>`)
 
     if (rowInfo.direct && !this.isSub()) {
+      cell.push(`<a href="${_.getUrl(`/message/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">站内信</a>`)
       if (!acctInfo.merchant) {
-    	  cell.push(`<a href="${_.getUrl(`/rebate/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">升点</a>`)
+        cell.push(`<a class="btn btn-link js-ac-point-up" data-userid="${rowInfo.userId}" data-username="${rowInfo.userName}">升点</a>`)
       }
-      cell.push(`<a href="${_.getUrl(`/message/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">发消息</a>`)
+      cell.push('<a href="javascript:void(0);"  class="js-ac-llm-cp btn btn-link ">转账</a>')
     }
 
-    cell.push('<a href="javascript:void(0);"  class="js-ac-llm-cp btn btn-link ">转账</a>')
-    cell.push(`<a href="${_.addHrefArgs(`#ac/betting/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
-    cell.push(`<a href="${_.addHrefArgs(`#ac/track/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">追号</a>`)
-    cell.push(`<a href="${_.addHrefArgs(`#ac/account/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">账变</a>`)
+    cell.push(`<a href="${_.addHrefArgs('#ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
+    // cell.push(`<a href="${_.addHrefArgs(`#ac/track/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">追号</a>`)
+    cell.push(`<a href="${_.addHrefArgs('#ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a>`)
 
-    html.push('<div class="relative">')
-    html = html.concat(cell.splice(0, 3))
-    html.push('<i class="js-ac-expend-btn ac-expend-btn fa fa-angle-double-up fa-rotate-180 fa-2x"></i>')
-    html.push('</div>')
+    if (cell.length > 2) {
+      html.push('<div class="relative">')
+      html = html.concat(cell.splice(0, 3))
+      html.push('<i class="js-ac-expend-btn ac-expend-btn fa fa-angle-up fa-rotate-180 fa-2x"></i>')
 
-    html.push('<div class="js-ac-expend ac-expend no-height">')
-    html = html.concat(cell)
-    html.push('</div>')
+      html.push('<div class="js-ac-expend ac-expend hidden">')
+      html = html.concat(cell.splice(cell.length - 2, cell.length))
+      html.push('</div></div>')
+    } else {
+      html.push(cell)
+    }
+
 
     return html.join('')
   },
@@ -197,13 +185,13 @@ const LowLevelManageView = SearchGrid.extend({
     const $currentTr = $target.closest('tr')
     const $currentExpend = $target.closest('td').find('.js-ac-expend')
     if ($target.hasClass('fa-rotate-180')) {
-      $currentExpend.css('height', 25)
+      $currentExpend.removeClass('hidden')
     } else {
-      $currentExpend.css('height', '')
+      $currentExpend.addClass('hidden')
     }
     $target.toggleClass('fa-rotate-180')
 
-    $currentTr.siblings().find('.js-ac-expend').css('height', '').end()
+    $currentTr.siblings().find('.js-ac-expend').addClass('hidden').end()
       .find('.js-ac-expend-btn')
       .addClass('fa-rotate-180')
   },
@@ -219,7 +207,8 @@ const LowLevelManageView = SearchGrid.extend({
     const rowInfo = this.grid.getRowData($target)
 
     if (Global.memoryCache.get('acctInfo').foundsLock) {
-      Global.ui.notification.show('资金已锁定，请先' + '<a href="javascript:void(0);" onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>' + '。')
+      Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" onclick="document.querySelector(\'.js-gl-hd-lock\').click();" ' +
+        'class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
       return false
     }
 
@@ -228,7 +217,10 @@ const LowLevelManageView = SearchGrid.extend({
         if (res && res.result === 0) {
           // 设置了则弹出验证框
           // $(document).verifyFundPwd({parentView:self});
-          Global.appRouter.navigate(`#ac/llm/transfer/${rowInfo.userId}?name=${rowInfo.userName}`, { trigger: true, replace: false })
+          Global.appRouter.navigate(`#ac/llm/transfer/${rowInfo.userId}?name=${rowInfo.userName}`, {
+            trigger: true,
+            replace: false,
+          })
         } else if (res && res.result === 1) {
           // 未设置则弹出链接到资金密码设置页面的提示框
           $(document).securityTip({
@@ -242,6 +234,41 @@ const LowLevelManageView = SearchGrid.extend({
           // self.$el.removeClass('hidden');
         }
       })
+  },
+  selectChangeHandler(e) {
+    const $target = $(e.currentTarget)
+    const val = Number($target.val())
+    if (val === 1) {
+      this.$personalBalance.removeClass('hidden')
+      this.$teamBalance.addClass('hidden')
+      this.$teamInput.val('')
+    } else if (val === 2) {
+      this.$personalBalance.addClass('hidden')
+      this.$teamBalance.removeClass('hidden')
+      this.$personalInput.val('')
+    }
+  },
+  pointUpHandler(e) {
+    const $target = $(e.currentTarget)
+    const userId = $target.data('userid')
+    const userName = $target.data('username')
+    const $dialog = Global.ui.dialog.show({
+      closeBtn: false,
+      anySize: 480,
+      bodyClass: 'no-padding',
+      body: '<div class="js-ac-point-up-dialog"></div>',
+    })
+    const $dialogContant = $dialog.find('.js-ac-point-up-dialog')
+    const rebataView = new LowLevelRebateView({
+      userId,
+      userName,
+    })
+    $dialogContant.html(rebataView.render().el)
+
+    $dialog.on('hidden.modal', function() {
+      $(this).remove()
+      rebataView.destroy()
+    })
   },
 })
 

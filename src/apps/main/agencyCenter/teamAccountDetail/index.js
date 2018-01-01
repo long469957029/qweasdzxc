@@ -10,6 +10,8 @@ const MoneyDetailView = SearchGrid.extend({
 
   template: require('agencyCenter/teamAccountDetail/index.html'),
 
+  className: 'ac-team-main basic-black  border-top',
+
   events: {},
 
   initialize() {
@@ -17,9 +19,9 @@ const MoneyDetailView = SearchGrid.extend({
       betDetailPrevUrl: '#gc/tr/detail/',
       chaseDetailPrevUrl: '#gc/cr/detail/',
     })
-    
+
     _(this.options).extend({
-      height: '370',
+      height: '615',
       columns: [
         {
           name: '交易流水号',
@@ -50,12 +52,14 @@ const MoneyDetailView = SearchGrid.extend({
           width: '15%',
         },
       ],
-      tip: '<div class="tip-hot"><span>提示</span> 团队账变只保留30天数据。</div>',
       gridOps: {
         emptyTip: '没有账户明细',
       },
       ajaxOps: {
         url: '/fund/balance/history.json',
+      },
+      reqData: {
+        pageSize: 15,
       },
     })
   },
@@ -74,8 +78,10 @@ const MoneyDetailView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD',
       },
+      showIcon: true,
     }).render()
 
+    this.$('input[name="username"]').val(this.options.userName)
     this.$('select[name=tradeType]').html(_(tradingStatusConfig.get()).map((status) => {
       return `<option value="${status.id}">${status.searchName}</option>`
     }).join(''))
@@ -114,9 +120,9 @@ const MoneyDetailView = SearchGrid.extend({
     const row = []
     // Number(info.tradeType) === 107 || info.tradeType === '投注'
     if (info.remark === '投注扣款' || info.remark === '中奖' || info.remark.indexOf('投注所得') !== -1 || info.remark === '用户撤单' || info.remark === '系统撤单') {
-      row.push(`<a href="${this.options.betDetailPrevUrl}${info.tradeNo}${_.getUrlParamStr()}" class="router btn-link">${info.tradeNo}</a>`)
+      row.push(`<a class="btn-link js-gl-bet-detail-dialog" data-id="${info.tradeNo}">${info.tradeNo}</a>`)
     } else if (info.remark === '追号扣款' || info.remark.indexOf('撤销追号') !== -1) { //
-      row.push(`<a href="${this.options.chaseDetailPrevUrl}${info.tradeNo}${_.getUrlParamStr()}" class="router btn-link">${info.tradeNo}</a>`)
+      row.push(`<a class="btn-link js-gl-chase-detail-dialog" data-no="${info.tradeNo}">${info.tradeNo}</a>`)
     } else {
       row.push(info.tradeNo)
     }
@@ -125,7 +131,7 @@ const MoneyDetailView = SearchGrid.extend({
     // row.push(tradingStatusConfig.toZh(info.tradeType));
     row.push(info.tradeType)
     if (info.amount >= 0) {
-      row.push(`<span class="text-bold-pleasant">+${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-bold-prominent">+${_(info.amount).convert2yuan()}</span>`)
     } else {
       row.push(`<span class="">${_(info.amount).convert2yuan()}</span>`)
     }

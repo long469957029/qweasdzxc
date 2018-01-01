@@ -30,8 +30,12 @@ const BtnGroup = Base.PrefabView.extend({
           value: -1,
         },
         {
-          title: '过去7天',
+          title: '最近7天',
           value: -7,
+        },
+        {
+          title: '最近30天',
+          value: -30,
         },
       ],
       onBtnClick: _.noop,

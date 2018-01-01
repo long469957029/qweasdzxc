@@ -104,7 +104,7 @@
   border-radius: $globalBtnRadius;
   overflow: hidden;
   position: relative;
-  background-color: $def-white-color;
+  //background-color: $def-white-color;
   min-height: 200px;
 }
 
@@ -163,6 +163,7 @@
   padding: 15px;
   overflow-y: auto;
   overflow-x: hidden;
+  background-color: $def-white-color;
 }
 
 .modal-form {

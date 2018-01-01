@@ -5,7 +5,7 @@
 .lowLevelManage-view {
 
   .ac-user-name-div {
-    width: 265px;
+    width: 230px;
     display: inline-block;
   }
 
@@ -27,9 +27,13 @@
   .ac-llm-btn {
     margin-right: 4px;
   }
-  
-  .table tbody tr td:last-child{
-     text-align: left;
+  .table {
+    th {
+      font-size: $font-xs;
+    }
+  }
+  .table tbody tr td:last-child {
+    text-align: left;
   }
 }
 
@@ -39,7 +43,7 @@
   }
 }
 
-.ac-comment-des{
+.ac-comment-des {
   width: 55px;
   background-color: #16a4aa;
 }
@@ -93,22 +97,67 @@
         opacity: 1;
       }
     }
-  } 
+  }
 }
 
 .ac-expend-btn {
   float: right;
   position: absolute;
-  top: 0;
+  top: 3px;
   right: 11px;
   vertical-align: bottom;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 1;
+  transition: transform 0.5s ease;
 }
 
 .ac-expend {
-  transition: height 0.5s ease;
+  //transition: height 0.5s ease;
+  position: absolute;
+  width: 83px;
+  height: 69px;
+  border: 1px solid $def-gray-color;
+  border-radius: 5px;
+  background-color: $def-white-color;
+  z-index: 2;
+  right: 0px;
+  &:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-bottom-color: $def-gray-color;
+    position: relative;
+    display: block;
+    top: -10px;
+    right: -59px;
+  }
+  &:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border: 4px solid transparent;
+    border-bottom-color: $def-white-color;
+    position: relative;
+    display: block;
+    top: -90px;
+    right: -60px;
+  }
+  a {
+    display: block;
+    width: 90%;
+    height: 34px;
+    text-align: center;
+    line-height: 34px;
+    padding: 0px !important;
+    margin: 0 auto;
+    position: relative;
+    top:-11px;
+    &:first-child {
+      border-bottom: 1px solid $def-gray-color;
+      border-radius: 0px;
+    }
+  }
 }
 
 .ac-lowLevel-detail-view {
@@ -118,22 +167,15 @@
 }
 
 .ac-lowLevel-rebate-view {
-
-  .ac-llm-rebate-div {
-    height: 255px;
+  .ac-lowLevel-title{
+    width: 100%;
+    height: 49px;
+    background-color: $sec-line-color;
+    line-height: 49px;
+    text-align: center;
+    font-size: $font-md;
+    color: $def-black-color;
   }
-  .ac-lowLevel-quota-container {
-    margin: 10px 28px 10px 20px;
-    padding: 5px 14px 5px 14px;
-  }
-
-  .ac-lowLevel-rebate-table {
-    position: absolute;
-    top: 288px;
-    width: 729px;
-    padding: 41px 100px 0 100px;
-  }
-
   .ac-lowLevel-rebate-btn {
     position: absolute;
     top: 485px;
@@ -141,6 +183,9 @@
     margin-top: 40px;
     width: 166px;
     height: 32px;
+  }
+  .close{
+    font-size:30px;
   }
 
 }
@@ -162,72 +207,72 @@
     padding: 5px 14px;
     margin: 0 14px 20px 7px;
 
-    .control-group.input-div{
+    .control-group.input-div {
       margin-bottom: 32px;
     }
-    .tooltip.bottom{
+    .tooltip.bottom {
       margin-top: 1px;
     }
-    .tooltip-inner{
+    .tooltip-inner {
       max-width: none;
     }
   }
   .ac-openAccountManual-form {
     margin-top: 20px;
-    .look-bonus{
+    .look-bonus {
       text-decoration: underline;
       cursor: pointer;
       padding-left: 5px;
     }
-    .btn-group{
+    .btn-group {
       button:first-child {
-        border-top-left-radius:5px;
-        border-bottom-left-radius:5px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
       }
       button:last-child {
-        border-top-right-radius:5px;
-        border-bottom-right-radius:5px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
       }
-      button{
+      button {
         background-color: #ffffff;
         color: #16a4aa;
         font-size: 13px;
         width: 88px;
       }
-      button.active{
+      button.active {
         box-shadow: none;
         background-color: #16a4aa;
         color: #ffffff;
       }
     }
-    .ac-manual-rebate-info{
+    .ac-manual-rebate-info {
       display: inline-block;
     }
   }
 
-  .ac-openAccountAuto-form{
+  .ac-openAccountAuto-form {
     margin-top: 20px;
-    .look-bonus{
+    .look-bonus {
       text-decoration: underline;
       cursor: pointer;
       padding-left: 5px;
     }
-    .btn-group{
+    .btn-group {
       button:first-child {
-        border-top-left-radius:5px;
-        border-bottom-left-radius:5px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
       }
       button:last-child {
-        border-top-right-radius:5px;
-        border-bottom-right-radius:5px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
       }
-      button{
+      button {
         background-color: #ffffff;
         color: #16a4aa;
         font-size: 13px;
         width: 88px;
       }
-      button.active{
+      button.active {
         box-shadow: none;
         background-color: #16a4aa;
         color: #ffffff;
@@ -278,7 +323,7 @@
   .ac-auto-container {
     position: relative;
 
-    .ac-span-link{
+    .ac-span-link {
       width: 170px;
       text-overflow: ellipsis;
       display: inline-block;
@@ -286,10 +331,10 @@
       overflow: hidden;
       vertical-align: middle;
     }
-    .ac-auto-remark{
+    .ac-auto-remark {
       width: 90px;
     }
-    .ac-span-remark{
+    .ac-span-remark {
       width: 104px;
       display: inline-block;
       text-overflow: ellipsis;
@@ -297,10 +342,10 @@
       overflow: hidden;
       vertical-align: middle;
     }
-    .qr-code-div{
+    .qr-code-div {
       position: relative;
     }
-    .qr-code-div-all{
+    .qr-code-div-all {
       position: absolute;
       top: 50px;
       left: 380px;
@@ -309,7 +354,7 @@
       border: 16px solid #ccc;
       display: none;
     }
-    .qr-code-div-all-closeBtn{
+    .qr-code-div-all-closeBtn {
       background: url("downloadClose.png") no-repeat;
       width: 12px;
       height: 12px;
@@ -321,8 +366,8 @@
       cursor: pointer;
     }
 
-    .ac-btn-qr-code{
-      &.selected{
+    .ac-btn-qr-code {
+      &.selected {
         background-color: #e8675d;
         border: 1px solid #e8675d;
       }
@@ -330,7 +375,7 @@
 
     .ac-auto-remark-updateBtn,
     .ac-auto-remark-saveBtn,
-    .ac-link-del{
+    .ac-link-del {
       background: url("updateBtn.png") no-repeat;
       width: 20px;
       height: 20px;
@@ -340,11 +385,11 @@
       vertical-align: middle;
     }
 
-    .ac-auto-remark-saveBtn{
+    .ac-auto-remark-saveBtn {
       background: url("saveBtn.png") no-repeat;
     }
 
-    .ac-link-del{
+    .ac-link-del {
       background: url("delBtn.png") no-repeat;
       margin-left: 0;
     }
@@ -384,10 +429,10 @@
   .ac-auto-link-remark-div {
     display: inline-block;
   }
-  .ac-link-bar{
+  .ac-link-bar {
     position: relative;
   }
-  .qr-code{
+  .qr-code {
     position: absolute;
     top: 0px;
     right: -55px;
@@ -465,19 +510,31 @@
   margin: 0 3px;
 }
 
-.ac-registerEara{
+.ac-registerEara {
   border: 1px solid #606060;
   padding: 5px;
   cursor: text;
   width: 400px;
   height: 200px;
 }
-.ac-btn-scale{
+
+.ac-btn-scale {
   width: 100px;
   height: 30px;
 
 }
 
-.router.btn-link{
+.router.btn-link {
   padding: 4px 8px;
+}
+
+.ac-team-main {
+  .checkbox-label {
+    margin-top: 2px;
+  }
+  table {
+    th {
+      font-size: $font-xs;
+    }
+  }
 }

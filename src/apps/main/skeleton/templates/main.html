@@ -1,1 +1,17 @@
-<div class="js-rt-main no-padding"></div>
+<div class="portlet">
+  <% if(title){ %>
+  <div class="portlet-header">
+    <div class="inline-block portlet-header-title"><%=title%></div>
+    <%if(titleDes){%>
+    <div class="portlet-line inline-block"></div>
+    <div class="inline-block portlet-header-des"><%=titleDes%></div>
+    <%}%>
+    <span class="portlet-option">
+      <% if (obj.subReturn) { %>
+      <button class="btn btn-cool sub-return" type="button">返回</button>
+      <% } %>
+    </span>
+  </div>
+  <%}%>
+  <div class="js-rt-main no-padding"></div>
+</div>

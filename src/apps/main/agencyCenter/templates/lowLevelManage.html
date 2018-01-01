@@ -1,58 +1,31 @@
 <div class="search-condition-table">
-  <div class="control-group row1">
+  <div class="control-group m-TB-md row1">
 
     <div class="ac-user-name-div">
       <label class="control-label">用户名:</label>
       <input type="text" name="userName" class="input3" data-parsley-username>
     </div>
 
-    <!--<div class="ac-range-label invisible ">-->
-      <!--<label class="control-label">查询范围:</label>-->
-      <!--<select name="subAcctRange" class="input-md" disabled>-->
-        <!--<option value="0">直属下级</option>-->
-        <!--<option value="1">全部下级</option>-->
-      <!--</select>-->
-    <!--</div>-->
-    <div class="ac-balance-label">
-      <label class="control-label">个人余额:</label>
-      <input type="text" name="balanceStart" class="input3" data-parsley-type="integer"
+    <div class="inline-block m-right-sm">
+      <select class="js-select-type select1">
+        <option value="1">个人余额</option>
+        <option value="2">团队余额</option>
+      </select>
+    </div>
+    <div class="inline-block js-personal-balance">
+      <input type="text" name="balanceStart" class="input3 js-personal-input" data-parsley-type="integer"
              data-parsley-range="[0,1000000000]"> 至
-      <input type="text" name="balanceEnd" class="input3" data-parsley-type="integer"
+      <input type="text" name="balanceEnd" class="input3 js-personal-input" data-parsley-type="integer"
              data-parsley-range="[0,1000000000]">
     </div>
-
-    <div class="ac-page-size-label">
-      <label class="control-label">每页展示:</label>
-      <select class="select1" name="pageSize">
-        <option value="10">10条</option>
-        <option value="20">20条</option>
-        <option value="50">50条</option>
-        <option value="100">100条</option>
-        <option value="500">500条</option>
-      </select>
-      <!--<button type="reset" class="btn btn-link ">清空条件</button>-->
+    <div class="inline-block js-team-balance hidden">
+      <input type="text" name="subBalanceStart" class="input3 js-team-input" data-parsley-type="integer"
+             data-parsley-range="[0,1000000000]"> 至
+      <input type="text" name="subBalanceEnd" class="input3  js-team-input" data-parsley-type="integer"
+             data-parsley-range="[0,1000000000]">
     </div>
-    <!--<div class="pull-right">-->
-    <!--<button type="submit" class="btn">搜索</button>-->
-    <!--</div>-->
+    <button type="submit" class="btn ac-llm-btn m-left-md">查询</button>
+    <button type="reset" class="btn btn-link btn-link-inverse"><span class="sfa sfa-btn-icon-reset vertical-middle m-right-xs"></span>重置</button>
   </div>
 
-  <div class="control-group row2">
-    <div class="ac-register-ime-label">
-      <label class="control-label">注册日期:</label>
-      <span class="js-pf-timeset input-date"></span>
-    </div>
-    <div class="ac-unActive-day-label">
-      <label class="control-label ac-llm-unActive-day-label">不活跃天数≥:</label>
-      <input type="text" name="unActiveDays" class="input3" data-parsley-type="integer"
-             data-parsley-range="[0,10000]">
-    </div>
-
-    <div class="pull-right ">
-      <button type="submit" class="btn ac-llm-btn">搜索</button>
-    </div>
-    <div class="pull-right">
-    <button type="reset" class="btn btn-cool hidden">重置</button>
-    </div>
-  </div>
 </div>

@@ -77,7 +77,9 @@
     width: 120px;
     margin-right: 3px;
   }
-
+  .select3 {
+    width: 80px;
+  }
   .input2 {
     width: 104px;
   }
@@ -86,10 +88,10 @@
   }
 
   button {
-    width: 72px;
+    width: 55px;
     padding-left: 0;
     padding-right: 0;
-    margin-left: 11px;
+    margin-left: 5px;
   }
 
   //下级管理页面
@@ -98,10 +100,11 @@
   }
 
   .ac-rm-btn {
-    width: 72px;
+    width: 59px;
     padding-left: 0;
     padding-right: 0;
-    margin-left: 6px;
+    margin-left: 15px;
+    border-radius: $globalInputRadius;
   }
 }
 
@@ -932,6 +935,7 @@
   .system-message-list{
     width: 918px;
     min-height: 77px;
+    border-bottom: 1px solid $def-gray-color;
     .message-btn{
       width: 30px;
       height: 30px;
@@ -954,9 +958,17 @@
     }
     .message-info{
       background-color: #f8f8f8;
+      color: $new-inverse-color;
+      padding: 0px 20px;
+      height: 0;
+      overflow: hidden;
     }
     &.active{
       @include boxShadowDef;
+      border: none;
+      .message-info{
+        animation: msgHieght .3s linear forwards;
+      }
     }
     .message-title{
       position: relative;
@@ -1076,6 +1088,10 @@
             left: 10px;
           }
         }
+        .reply-contant{
+          width: 100%;
+          height: 40px;
+        }
       }
     }
     .no-feed-list{
@@ -1114,5 +1130,19 @@
   to {
     -webkit-transform: perspective(400px);
     transform: perspective(400px);
+  }
+}
+@keyframes msgHieght {
+  0%{
+    opacity: 0;
+    height: 0;
+  }
+  90%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+    height: auto;
+    padding: 20px;
   }
 }

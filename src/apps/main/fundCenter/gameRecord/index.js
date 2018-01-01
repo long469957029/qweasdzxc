@@ -12,7 +12,7 @@ const TeamBettingRecordView = TabView.extend({
 
   events: {},
 
-  className: 'fc-gr-detail',
+  className: 'fc-gr-detail basic-black',
 
   initialize() {
     _(this.options).extend({
@@ -28,7 +28,7 @@ const TeamBettingRecordView = TabView.extend({
           label: '彩票追号',
           name: 'jsGcGrCr',
           id: 'jsGcGrr',
-          router: 'gc/cr',
+          router: 'fc/cr',
           view: ChaseRecordView,
         },
         // {
@@ -85,8 +85,6 @@ const TeamBettingRecordView = TabView.extend({
           options: { channelId: channelId.sport },
         },
       ],
-      title: '投注记录',
-      titleDes: '投注记录只保留30天记录。',
     })
   },
 })

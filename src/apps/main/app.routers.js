@@ -1,7 +1,7 @@
 const dashboardRouter = require('dashboard/router')
 const userCenterRouter = require('userCenter/router')
 const vipCenterRouter = require('vipCenter/router')
-const accountCenterRouter = require('accountCenter/router')
+// const accountCenterRouter = require('accountCenter/router')
 const activeCenterRouter = require('activeCenter/router')
 const realCenterRouter = require('realCenter/router')
 const slotCenterRouter = require('slotCenter/router')
@@ -19,7 +19,7 @@ const mallCenterRouter = require('mallCenter/router')
 exports.install = function() {
   const acctInfo = Global.memoryCache.get('acctInfo')
   dashboardRouter.install()
-  accountCenterRouter.install()
+  // accountCenterRouter.install()
   activeCenterRouter.install()
   // 0是代理，1是玩家，玩家不显示代理中心
   if (acctInfo.userType !== 1) {

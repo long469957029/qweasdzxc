@@ -1,4 +1,3 @@
-import './index.scss'
 
 const TabView = Base.LayoutView.extend({
 
@@ -11,6 +10,7 @@ const TabView = Base.LayoutView.extend({
       tabClass: 'nav-tabs nav-tabs-border',
       loadingHeight: 490,
       tabs: [],
+      onTriggerTab: _.noop,
     })
 
     const template = this._tabTemplate
@@ -40,8 +40,6 @@ const TabView = Base.LayoutView.extend({
       tabs: this.tabs,
       triggerTab: this.triggerTab,
       append: this.append,
-      title: this.options.title,
-      titleDes: this.options.titleDes,
     })
 
     if (this.startOnLoading) {
@@ -133,6 +131,10 @@ const TabView = Base.LayoutView.extend({
       }
 
       init = false
+
+      if (self.options.onTriggerTab) {
+        self.options.onTriggerTab()
+      }
     })
 
     if (this.options.triggerTab) {

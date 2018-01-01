@@ -3,13 +3,13 @@
 const RouterController = require('skeleton/controllers/router')
 
 const LowLevelManageView = require('agencyCenter/views/lowLevelManage')
-const LowLevelRebateView = require('agencyCenter/views/lowLevelManage-rebate')
+// const LowLevelRebateView = require('agencyCenter/views/lowLevelManage-rebate')
 
-const LowLevelBettingRecordsView = require('userCenter/views/bettingRecords')
-const LowLevelBettingDetailView = require('agencyCenter/views/lowLevelManage-bettingDetail')
+const LowLevelBettingRecordsView = require('fundCenter/gameRecord/bettingRecords')
+// const LowLevelBettingDetailView = require('agencyCenter/views/lowLevelManage-bettingDetail')
 
-const LowLevelTrackRecordsView = require('userCenter/views/trackRecords')
-const LowLevelTrackDetailView = require('agencyCenter/views/lowLevelManage-trackDetail')
+// const LowLevelTrackRecordsView = require('userCenter/views/trackRecords')
+// const LowLevelTrackDetailView = require('agencyCenter/views/lowLevelManage-trackDetail')
 
 const LowLevelAccountDetailView = require('agencyCenter/views/lowLevelManage-accountDetail')
 const LowLevelSendMessageView = require('agencyCenter/views/lowLevelManage-sendMessage')
@@ -37,28 +37,30 @@ const TeamAccountDetailView = require('agencyCenter/teamAccountDetail')
 
 const TeamOverviewView = require('agencyCenter/teamOverview')
 
+const sidebar = Global.ui.menu.get('ac')
 
 const AgencyCenterController = RouterController.extend({
 
   lowLevelManage() {
     this.changeMainReginView(new LowLevelManageView(), {
       main: {
-        title: '团队管理',
+        title: '下级管理',
+        titleDes: '',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
-  rebateManage(userId) {
-    this.changeSubReginView(new LowLevelRebateView({
-      userId,
-    }), {
-      main: {
-        title: `编辑${_.getUrlParam('name')}的返点`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // rebateManage(userId) {
+  //   this.changeSubReginView(new LowLevelRebateView({
+  //     userId,
+  //   }), {
+  //     main: {
+  //       title: `编辑${_.getUrlParam('name')}的返点`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
   lowLevelDetail(userId) {
     this.changeSubReginView(new LowLevelDetailView({
@@ -71,71 +73,76 @@ const AgencyCenterController = RouterController.extend({
     })
   },
 
-  bettingRecords(userId) {
-    this.changeSubReginView(new LowLevelBettingRecordsView({
-      reqData: {
-        userId,
-      },
-    }), {
-      main: {
-        title: `查看${_.getUrlParam('name')}的投注记录`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // bettingRecords(userId) {
+  //   this.changeSubReginView(new LowLevelBettingRecordsView({
+  //     reqData: {
+  //       userId,
+  //     },
+  //   }), {
+  //     main: {
+  //       title: `查看${_.getUrlParam('name')}的投注记录`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
-  bettingDetail(userId, betId) {
-    this.changeSubReginView(new LowLevelBettingDetailView({
-      userId,
-      tradeNo: betId,
-    }), {
-      main: {
-        title: `查看${_.getUrlParam('name')}的投注详情`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // bettingDetail(userId, betId) {
+  //   this.changeSubReginView(new LowLevelBettingDetailView({
+  //     userId,
+  //     tradeNo: betId,
+  //   }), {
+  //     main: {
+  //       title: `查看${_.getUrlParam('name')}的投注详情`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
-  trackRecords(userId) {
-    this.changeSubReginView(new LowLevelTrackRecordsView({
-      reqData: {
-        userId,
-      },
-    }), {
-      main: {
-        title: `查看${_.getUrlParam('name')}的追号记录`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // trackRecords(userId) {
+  //   this.changeSubReginView(new LowLevelTrackRecordsView({
+  //     reqData: {
+  //       userId,
+  //     },
+  //   }), {
+  //     main: {
+  //       title: `查看${_.getUrlParam('name')}的追号记录`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
-  trackDetail(userId, tradeNo) {
-    this.changeSubReginView(new LowLevelTrackDetailView({
-      userId,
-      tradeNo,
-    }), {
-      main: {
-        title: `查看${_.getUrlParam('name')}的追号详情`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // trackDetail(userId, tradeNo) {
+  //   this.changeSubReginView(new LowLevelTrackDetailView({
+  //     userId,
+  //     tradeNo,
+  //   }), {
+  //     main: {
+  //       title: `查看${_.getUrlParam('name')}的追号详情`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
   openAccountManage() {
     this.changeMainReginView(new OpenAccountManageView(), {
       main: {
         title: '开户管理',
+        titleDes: '<div class="js-ac-open-limit"></div>',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
   teamBettingRecord() {
-    this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrTr' }), {
+    this.changeMainReginView(new teamBettingRecordView({
+      triggerTab: 'jsAcBrTr',
+      userName: _.getUrlParam('name'),
+    }), {
       main: {
         title: '团队投注',
+        titleDes: '团队投注记录只保留近30天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -144,7 +151,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '报表查询',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -152,8 +159,9 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlSr' }), {
       main: {
         title: '团队盈亏',
+        titleDes: '团队盈亏记录只保留近35天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -161,16 +169,18 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlTr' }), {
       main: {
         title: '团队盈亏',
+        titleDes: '团队盈亏记录只保留近35天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
   gameProfitAndLoss() {
     this.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlGr' }), {
       main: {
         title: '团队盈亏',
+        titleDes: '团队盈亏记录只保留近35天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -179,20 +189,20 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '团队动态',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
-  accountDetail(userId) {
-    this.changeSubReginView(new LowLevelAccountDetailView({
-      userId,
-    }), {
-      main: {
-        title: `查看${_.getUrlParam('name')}的账变记录`,
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // accountDetail(userId) {
+  //   this.changeSubReginView(new LowLevelAccountDetailView({
+  //     userId,
+  //   }), {
+  //     main: {
+  //       title: `查看${_.getUrlParam('name')}的账变记录`,
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
   sendMessage(userId) {
     this.changeSubReginView(new LowLevelSendMessageView({
@@ -254,7 +264,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红管理',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -263,7 +273,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '红包查询',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -272,7 +282,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '返点查询',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
   dividendReport() {
@@ -280,7 +290,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红查询',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
   directAgentGrant() {
@@ -288,7 +298,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红管理',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
       activeMenu: 'ac/dm',
     })
   },
@@ -297,7 +307,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红管理',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
       activeMenu: 'ac/dm',
     })
   },
@@ -306,7 +316,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红管理',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
       activeMenu: 'ac/dm',
     })
   },
@@ -315,7 +325,7 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: '分红管理',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
       activeMenu: 'ac/dm',
     })
   },
@@ -325,24 +335,28 @@ const AgencyCenterController = RouterController.extend({
       main: {
         title: `${username}的分红协议`,
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
       parentRouter: 'ac/dm',
     })
   },
-  gameBettingRecord() {
-    this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrGr' }), {
-      main: {
-        title: '团队投注',
-      },
-      sidebar: Global.ui.menu.get('ac'),
-    })
-  },
+  // gameBettingRecord() {
+  //   this.changeMainReginView(new teamBettingRecordView({ triggerTab: 'jsAcBrGr' }), {
+  //     main: {
+  //       title: '团队投注',
+  //       titleDes: '团队投注记录只保留近30天数据',
+  //     },
+  //     sidebar,
+  //   })
+  // },
   teamAccountDetail() {
-    this.changeMainReginView(new TeamAccountDetailView(), {
+    this.changeMainReginView(new TeamAccountDetailView({
+      userName: _.getUrlParam('name') || '',
+    }), {
       main: {
         title: '团队账变',
+        titleDes: '团队账变记录只保留近30天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 
@@ -350,8 +364,9 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new TeamOverviewView(), {
       main: {
         title: '团队总览',
+        titleDes: '团队总览记录只保留近30天数据',
       },
-      sidebar: Global.ui.menu.get('ac'),
+      sidebar,
     })
   },
 

@@ -1,9 +1,6 @@
-
-
 import '../misc/index.scss'
 
 const bannerConfig = require('../misc/bannerConfig')
-// const ticketConfig = require('skeleton/misc/ticketConfig')
 
 const DashboardView = Base.ItemView.extend({
 
@@ -48,7 +45,7 @@ const DashboardView = Base.ItemView.extend({
           "pageIndex": 0
         }
       }
-    */
+   */
   getDynamicXhr(data) {
     return Global.sync.ajax({
       url: '/info/activitylist/getbulletinlist.json',
@@ -103,10 +100,13 @@ const DashboardView = Base.ItemView.extend({
 
   renderMainBannerAD() {
     const self = this
+
     this.getBannerADXhr().done((res) => {
       if (res.result === 0) {
         self.generateBannerAD(res.root)
       }
+    }).fail(() => {
+      self.generateBannerAD()
     })
   },
 
@@ -228,6 +228,22 @@ const DashboardView = Base.ItemView.extend({
   //     }
   //   }
   // },
+
+  // $(function(){
+  //   $('#marquee').bxSlider({
+  //     mode:'vertical', //默认的是水平
+  //     displaySlideQty:1,//显示li的个数
+  //     moveSlideQty: 1,//移动li的个数
+  //     captions: true,//自动控制
+  //     auto: true,
+  //     controls: false//隐藏左右按钮
+  //   });
+  // });
+
+  // .bx-prev{ width:12px; height:26px; background:#f00;text-indent: -999999px;z-index: 999;  position: absolute; float:left; left:455px; top:110px;}
+  // .bx-next{ width:12px; height:26px;  background:#f00; text-indent: -999999px;z-index: 999;  position: absolute; top:110px;left:-15px;}
+
+
 })
 
 module.exports = DashboardView
