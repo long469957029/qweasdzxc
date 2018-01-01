@@ -2,7 +2,7 @@
  * Created by steven on 2017/12/22.
  */
 const quickPayConfig = require('com/fundOperate/quickPayConfig')
-const bankConfig = require('userCenter/misc/bankConfigForFund')
+const bankConfig = require('com/fundOperate/bankConfig')
 
 module.exports = {
   // 获取当前充值使用类型数据
@@ -129,7 +129,7 @@ module.exports = {
     })
     const logo = quickPayConfig.get(selectedData.paymentType).className
     const name = quickPayConfig.get(selectedData.paymentType).zhName
-    selected.push(`<div class="js-fc-rc-payType-selectedItem" data-type="${type}" data-name="${name}" >`)
+    selected.push(`<div class="js-fc-rc-payType-selectedItem" data-type="${selectedData.paymentType}" data-name="${name}"  data-id="${selectedData.paymentId}">`)
     selected.push(`<span class="js-rc-type-icon rc-icon ${logo}"></span>`)
     selected.push(`<span class="js-rc-type-name rc-name">${name}</span>`)
     selected.push('<span class="js-rc-type-desc rc-desc">其他支付方式</span>')
@@ -177,6 +177,7 @@ module.exports = {
       } else {
         defaultID = typeData.bankList[0].bankId
       }
+
       unSelectedData = _(typeData.bankList).without(_(typeData.bankList).findWhere({
         bankId: defaultID,
       }))
@@ -190,11 +191,13 @@ module.exports = {
         id: defaultID,
       }))
     }
-
+    const selectedData = _(typeData.bankList).findWhere({
+      bankId: defaultID,
+    })
     // 取银行列表中第一行数据作为默认显示的银行
     const logo = bankConfig.get(defaultID).className
     const name = bankConfig.get(defaultID).zhName
-    selected.push(`<div class="js-fc-rc-bank-selectedItem" data-type="${type}" data-name="${name}">`)
+    selected.push(`<div class="js-fc-rc-bank-selectedItem" data-type="${type}" data-name="${name}" data-id="${defaultID}" data-code="${selectedData.bankCode}">`)
     selected.push(`<span class="js-rc-type-icon rc-icon ${logo}"></span>`)
     selected.push(`<span class="js-rc-type-name rc-name">${name}</span>`)
     selected.push('<span class="js-rc-type-desc rc-desc">其他支付银行</span>')

@@ -1,6 +1,5 @@
 import '../index.scss'
 
-// const PaymentSubTypeView = require('./paymentSubType')
 const rechargeService = require('./rechargeService')
 const RechargeConfirmView = require('./rechargeConfirm')
 const AliAndBankTransfer = require('./aliAndBankTransfer')
@@ -43,11 +42,6 @@ const RechargeView = Base.ItemView.extend({
           // self.initPaymentType(res.root.paymentList)
           this.paymentList = res.root.paymentList
         }
-        // if (res.root.hasNoPay) {
-        //   self.nopaydetail()
-        // } else {
-        //   self.$unPaymentBgDiv.addClass('hidden')
-        // }
       })
     // 生成充值页广告
     this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
@@ -57,7 +51,7 @@ const RechargeView = Base.ItemView.extend({
     if (!this.cur) {
       this.cur = 0
     }
-    this.platformParsley = this.$('.js-fc-tr-form').parsley({
+    this.parsley = this.$('.jc-rc-recharge-form').parsley({
       errorsWrapper: '<div class="tooltip parsley-errors-list"><span class="sfa sfa-error-icon vertical-sub pull-left"></div>',
       errorTemplate: '<div class="tooltip-inner">',
       trigger: 'change',
@@ -77,6 +71,7 @@ const RechargeView = Base.ItemView.extend({
     const feeData = rechargeService.doFeeData(lastPayInfo)
 
     // 3.初始化支付方式子类型
+    const nameRequired = this.$('.js-rc-aliPay-name').attr('required') // 当不是支付宝转账时，名称输入框设置为非必填项
     // 判断方式选择不同支付方式div显示状态
     if (type === 1 || type === 4 || type === 5 || type === 11) { // 银联支付一/二/三，显示银行列表
       const bankData = rechargeService.getBankList(type, data)
@@ -95,6 +90,9 @@ const RechargeView = Base.ItemView.extend({
       if (this.$('.js-fc-re-bankList-select').is(':hidden')) {
         this.$('.js-fc-re-bankList-select').removeClass('hidden')
       }
+      if (nameRequired !== undefined && nameRequired === 'required') {
+        this.$('.js-rc-aliPay-name').attr('required', false)
+      }
     } else if (type === 6) { // 支付宝转账 ，显示存款人姓名
       if (this.$('.jc-rc-leftBar-subType-area').is(':hidden')) {
         this.$('.jc-rc-leftBar-subType-area').removeClass('hidden')
@@ -106,11 +104,17 @@ const RechargeView = Base.ItemView.extend({
       if (this.$('.jc-rc-leftBar-aliPay-select').is(':hidden')) {
         this.$('.jc-rc-leftBar-aliPay-select').removeClass('hidden')
       }
+      if (nameRequired === undefined || nameRequired === false) {
+        this.$('.js-rc-aliPay-name').prop('required', true)
+      }
     } else { // 快捷支付/支付宝/微信/QQ扫码/银联扫码/京东扫码/信用卡支付，不包含显示内容
       if (!this.$('.jc-rc-leftBar-subType-area').is(':hidden')) {
         this.$('.jc-rc-leftBar-subType-area').addClass('hidden')
       }
       this.$('.jc-rc-leftBar-bottom-area').css('top', '125px')
+      if (nameRequired !== undefined && nameRequired === 'required') {
+        this.$('.js-rc-aliPay-name').attr('required', false)
+      }
     }
     // 4 获取充值初始化金额
     const amountList = rechargeService.getQuickAmountHtml(lastPayInfo, type)
@@ -124,51 +128,77 @@ const RechargeView = Base.ItemView.extend({
     this.$('.js-payMoney-feeAccount-value').html(feeList.amountValue)
     // 7 返回温馨提示
     this.$('.js-rc-tips-content').html(rechargeService.get(type, feeData.min, feeData.max, feeData.limit, feeData.maxLimit))
+    // 8 输入框归位
+    const nameTop = this.$('.fc-rc-leftBar-bottom-area').css('top')
+    if (nameTop > 205) {
+      this.$('.jc-rc-leftBar-bottom-area').css('top', '205px')
+      this.$('.js-rc-aliPay-name-text').removeClass('hidden')
+    }
   },
   // 提交充值请求
   confirmHandler() {
     const $form = this.$('.jc-rc-recharge-form')
     this.$('input[name="paymentId"]').val(this.$('.js-fc-rc-payType-selectedItem').data('id'))
     this.$('input[name="paymentType"]').val(this.$('.js-fc-rc-payType-selectedItem').data('type'))
-    this.$('input[name="bankId"]').val(this.$('.js-fc-rc-payType-selectedItem').data('type'))
-    const clpValidate = $form.parsley().validate()
-    // let paymentInfo
-    if (clpValidate) {
+    this.$('input[name="bankId"]').val(this.$('.js-fc-rc-bank-selectedItem').data('id'))
+    this.$('input[name="bankCode"]').val(this.$('.js-fc-rc-bank-selectedItem').data('code'))
+    this.$('input[name="token"]').val(Global.cookieCache.get('token'))
+
+    // const clpValidate = $form.parsley().validate()
+    // // let paymentInfo
+    // if (clpValidate) {
+    //
+    // }
+    if (this.parsley.validate()) {
       $form.submit()
+    } else {
+      return false
     }
   },
   // 点击充值确定按钮下一步操作判断
   nextStepHandler() {
-    if (this.cur < this.conSize - 1) {
-      this.slide(this.conInnerConWidth, this.cur + 1)
-    }
     const paymentId = this.$('.js-fc-rc-payType-selectedItem').data('type')
-    const paymentName = this.$('.js-fc-rc-payType-selectedItem').data('name')
-    const payAmount = this.$('.js-rc-money-input').val()
-    if (paymentId === 11) {
-      const bId = this.$('.js-fc-rc-bank-selectedItem').data('id')
-      const aliAndBankTransferView = new AliAndBankTransfer({
-        type: paymentId, bankId: bId, amount: payAmount, ac: this.options.ac, tips: this.paymentList,
-      })
-      this.$('.jc-rc-confirm-view').html(aliAndBankTransferView.render().el)
-    } else if (paymentId === 6) {
-      const rechargeName = this.$('.js-rc-aliPay-name').val()
-      const aliAndBankTransferView = new AliAndBankTransfer({
-        type: paymentId, name: rechargeName, amount: payAmount, ac: this.options.ac, tips: this.paymentList,
-      })
-      this.$('.jc-rc-confirm-view').html(aliAndBankTransferView.render().el)
+    if (paymentId === 6) {
+      const name = this.$('.js-rc-aliPay-name').val()
+      if (name === undefined || name === null || name === '') {
+        this.$('.jc-rc-leftBar-bottom-area').css('top', '225px')
+        this.$('.js-rc-aliPay-name-text').addClass('hidden')
+      }
+    }
+    if (this.parsley.validate()) {
+      if (this.cur < this.conSize - 1) {
+        this.slide(this.conInnerConWidth, this.cur + 1)
+      }
+      const paymentName = this.$('.js-fc-rc-payType-selectedItem').data('name')
+      const payAmount = this.$('.js-rc-money-input').val()
+      if (paymentId === 11) {
+        const bId = this.$('.js-fc-rc-bank-selectedItem').data('id')
+        const aliAndBankTransferView = new AliAndBankTransfer({
+          type: paymentId, bankId: bId, amount: payAmount, ac: this.options.ac, tips: this.paymentList,
+        })
+        this.$('.jc-rc-confirm-view').html(aliAndBankTransferView.render().el)
+      } else if (paymentId === 6) {
+        const rechargeName = this.$('.js-rc-aliPay-name').val()
+        const aliAndBankTransferView = new AliAndBankTransfer({
+          type: paymentId, name: rechargeName, amount: payAmount, ac: this.options.ac, tips: this.paymentList,
+        })
+        this.$('.jc-rc-confirm-view').html(aliAndBankTransferView.render().el)
+      } else {
+        const bankName = this.$('.js-fc-rc-bank-selectedItem').data('name')
+        const rechargeConfirmView = new RechargeConfirmView({
+          type: paymentId, pname: paymentName, bname: bankName, amount: payAmount,
+        })
+        this.$('.jc-rc-confirm-view').html(rechargeConfirmView.render().el)
+      }
     } else {
-      const bankName = this.$('.js-fc-rc-bank-selectedItem').data('name')
-      const rechargeConfirmView = new RechargeConfirmView({
-        type: paymentId, pname: paymentName, bname: bankName, amount: payAmount,
-      })
-      this.$('.jc-rc-confirm-view').html(rechargeConfirmView.render().el)
+      return false
     }
   },
   preStepHandler() {
     if (this.cur > 0) {
       this.slide(this.conInnerConWidth, this.cur - 1)
     }
+    this.render()
   },
   slide(conInnerConWidth, index) {
     this.$('.jc-fc-rc-maskCon').animate({ marginLeft: `${-index * conInnerConWidth}px` })

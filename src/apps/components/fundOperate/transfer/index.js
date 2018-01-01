@@ -8,7 +8,7 @@ const TransferView = Base.ItemView.extend({
   template: require('./index.html'),
 
   events: {
-    'click .js-rc-next-step': 'nextStepHandler',
+    'click .js-rc-next-step': 'submitPlatformTransferHandler',
     'click .js-fc-rc-pre': 'preStepHandler',
     'click .js-tr-select-out-down': 'selectOutDownHandler',
     'click .js-tr-select-in-down': 'selectInDownHandler',
@@ -244,20 +244,35 @@ const TransferView = Base.ItemView.extend({
       }
     })
   },
-  // 点击充值确定按钮下一步操作判断
-  nextStepHandler() {
-    if (this.cur < this.conSize - 1) {
-      this.slide(this.conInnerConWidth, this.cur + 1)
-    }
-    const transferConfirmView = new TransferConfirmView()
-    this.$('.jc-tr-confirm-view').html(transferConfirmView.render().el)
-    this.submitPlatformTransferHandler()
-  },
+  // // 点击充值确定按钮下一步操作判断
+  // nextStepHandler() {
+  //   if (this.cur < this.conSize - 1) {
+  //     this.slide(this.conInnerConWidth, this.cur + 1)
+  //   }
+  //   const transferConfirmView = new TransferConfirmView()
+  //   this.$('.jc-tr-confirm-view').html(transferConfirmView.render().el)
+  //   this.submitPlatformTransferHandler()
+  //   setInterval(this.redirect())
+  // },
   preStepHandler() {
     if (this.cur > 0) {
       this.slide(this.conInnerConWidth, this.cur - 1)
     }
     this.render()
+  },
+  redirect() {
+    const self = this
+    let time = 3
+    clearInterval(this.countdown)
+    this.countdown = setInterval(() => {
+      time -= 1
+      this.$('.js-tr-leftSecond').text(time)
+      if (time < 0) {
+        self.countDownSecond = time
+        clearInterval(self.countdown)
+        this.preStepHandler()
+      }
+    }, 1000)
   },
   slide(conInnerConWidth, index) {
     this.$('.jc-fc-rc-maskCon').animate({ marginLeft: `${-index * conInnerConWidth}px` })
@@ -323,9 +338,9 @@ const TransferView = Base.ItemView.extend({
     })
   },
   submitPlatformTransferHandler() {
-    const self = this
-    if (this.$('.js-tr-tradeNum').val() === '' || Number(this.$('.js-tr-tradeNum').val()) === '0') {
-      Global.ui.notification.show('可转账次数不足。')
+    if (this.$('.js-tr-tradeNum').val() === '' || Number(this.$('.js-tr-tradeNum').val()) === 0) {
+      this.$('.js-fc-tr-error-container').html('<div class="parsley-error-line"><span class="sfa sfa-error-icon vertical-sub pull-left"></span>' +
+        '<span class="parsley-error-text">可转账次数不足。</span><div>')
       return false
     }
     if (!this.platformParsley.validate()) {
@@ -338,24 +353,17 @@ const TransferView = Base.ItemView.extend({
       fromChannelId: this.$('.js-tr-out-selectedItem').data('id'),
       toChannelId: this.$('.js-tr-in-selectedItem').data('id'),
     })
-      .always(() => {
-        // self.$btnSubmit.button('reset')
-      })
       .done((res) => {
         if (res && res.result === 0) {
-          Global.ui.notification.show('转账成功。', {
-            type: 'success',
-          })
-          self.render()
-        } else if (_(res.root).isNumber()) {
-          if (res.root > 0) {
-            Global.ui.notification.show(`验证失败，您还有${res.root}次输入机会`)
+          if (this.cur < this.conSize - 1) {
+            this.slide(this.conInnerConWidth, this.cur + 1)
           }
-          if (res.root === 0) {
-            Global.ui.notification.show('验证失败，请一个小时后再尝试！')
-          }
+          const transferConfirmView = new TransferConfirmView()
+          this.$('.jc-tr-confirm-view').html(transferConfirmView.render().el)
+          setInterval(this.redirect())
         } else {
-          Global.ui.notification.show(`验证失败，${res.msg}`)
+          this.$('.js-fc-tr-error-container').html('<div class="parsley-error-line"><span class="sfa sfa-error-icon vertical-sub pull-left"></span>' +
+            `<span class="parsley-error-text">${res.msg}</span><div>`)
         }
       })
   },
