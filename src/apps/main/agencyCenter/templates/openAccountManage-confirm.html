@@ -1,0 +1,12 @@
+<div class="open-confirm-main">
+  <div class="confim-title">
+    <span>红包开户确认</span>
+    <a class="close btn-close"></a>
+  </div>
+  <div class="confirm-contant">
+    <div class="contant-title text-center">您正在是使用红包开户</div>
+    <% if(type === 1){ %>
+    <div class="contant-container">红包金额<span class="text-prominent"><%=data.redpackAmount%></span>元，确认后该金额将从账户扣除</div>
+    <% }%>
+  </div>
+</div>
