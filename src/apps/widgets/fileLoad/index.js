@@ -14,7 +14,7 @@ $.widget('gl.fileLoad', {
 
   options: {
     title: '读取文件',
-    btnClass: 'btn-cool',
+    btnClass: 'btn-white btn-linear bc-input-btn',
     paramName: 'txtFile',
     accept: '*/*',
     url: '/info/txt/dotxt.json',

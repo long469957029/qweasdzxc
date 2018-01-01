@@ -102,6 +102,10 @@
       },
     },
 
+    beforeCreate() {
+      this.$store.commit(types.CHECKOUT_TICKET_INFO)
+    },
+
     methods: {
 
       clearAll() {

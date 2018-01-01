@@ -23,13 +23,13 @@
   }
   &:hover {
     text-decoration: none;
-    background-position: 0 -15px;
+    //background-position: 0 -15px;
     //transition: background-position 0.1s linear;
   }
 
   &:focus {
     text-decoration: none;
-    background-position: 0 -15px;
+    //background-position: 0 -15px;
     transition: background-position 0.1s linear;
   }
   &.active, &:active {

@@ -302,7 +302,9 @@
     watch: {
       'bettingInfo.leftSecond': {
         handler(newVal, oldVal) {
-          this.$_updateCountdown()
+          if (newVal) {
+            this.$_updateCountdown()
+          }
         }
       }
     }

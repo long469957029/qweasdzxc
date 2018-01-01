@@ -463,12 +463,6 @@
     }
   }
 }
-.bc-textarea-main {
-  width: 680px;
-  height: 170px;
-  padding: 10px;
-}
-
 .db-ticket-bread-item {
   &.active {
     a {
@@ -527,14 +521,15 @@
   width: 35px;
 }
 
-.bc-lg-btn {
-  font-size: $font-sm;
-  width: 94px;
-  padding: 10px 10px;
-}
-
 .bc-margin-xs {
   margin-bottom: 3px;
+}
+
+.bc-input-btn {
+  width: 120px;
+  height: 38px;
+  font-size: 14px;
+  line-height: 24px;
 }
 
 .bc-togglePage-btn {

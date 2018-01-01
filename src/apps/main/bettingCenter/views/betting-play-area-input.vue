@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="play-area-input">
     <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
 
     <div class="clearfix m-bottom-sm">
-      <div class="js-bc-numbers-container bc-textarea-main pull-left border-inverse-all" @click="focusInput">
+      <div class="js-bc-numbers-container bc-textarea-main pull-left" @click="focusInput">
         <div class="height-100 width-100 cursor-text" ref="fileTip">
           <p style="font-size:12px;line-height:170%;">
             说明：<br>
@@ -15,13 +15,13 @@
         <textarea class="height-100 width-100 no-resize no-padding no-margin no-border hidden" ref="numbersArea" @blur="blurInput" @keyup="betChange" v-model="numbers"></textarea>
       </div>
 
-      <div class="pull-left m-LR-sm text-center">
+      <div class="input-operate-area pull-left">
+        <div class="m-bottom-md">
+          <button type="button" class="btn btn-white btn-linear bc-input-btn" @click="delRepeat">删除重复号</button>
+        </div>
         <div class="m-bottom-md" ref="fileLoad"></div>
         <div class="m-bottom-md">
-          <button type="button" class="btn btn-cool bc-lg-btn" @click="delRepeat">删除重复号</button>
-        </div>
-        <div class="m-bottom-md">
-          <button type="button" class="btn btn-cool bc-lg-btn" @click="empty">清空号码</button>
+          <button type="button" class="btn btn-white btn-linear bc-input-btn" @click="empty">清空号码</button>
         </div>
       </div>
     </div>
@@ -65,7 +65,6 @@
     mounted: function() {
       $(this.$refs.fileLoad).fileLoad({
         title: '导入文件',
-        btnClass: 'btn-cool bc-lg-btn',
         accept: '.txt',
         done: (res) => {
           if (res && res.result === 0) {
@@ -215,6 +214,19 @@
   }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  .play-area-input {
+    padding: 0 15px;
+  }
+  .bc-textarea-main {
+    width: 680px;
+    height: 170px;
+    padding: 10px;
+    border-radius: 5px;
+    border: solid 1px #d7d7d7;
+  }
+  .input-operate-area {
+    margin-left: 30px;
+    margin-top: 20px;
+  }
 </style>
