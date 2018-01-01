@@ -1,4 +1,5 @@
-const factory = require('bettingCenter/misc/betRulesFactory')
+import factory from 'bettingCenter/misc/betRulesFactory'
+
 const ticketConfig = require('skeleton/misc/ticketConfig')
 
 const SscFactory = require('bettingCenter/misc/betRulesFactory-ssc')
@@ -8,7 +9,11 @@ const P5P3Factory = require('bettingCenter/misc/betRulesFactory-p5p3')
 
 const BjPKFactory = require('bettingCenter/misc/betRulesFactory-bjpk')
 const Quick3Factory = require('bettingCenter/misc/betRulesFactory-quick3')
-const Mark6Factory = require('bettingCenter/misc/betRulesFactory-mark6')
+
+// 盘口
+const Mark6Factory = require('bettingCenter/misc/betRulesFactory-handicap-mark6')
+const HandicapSccFactory = require('bettingCenter/misc/betRulesFactory-handicap-ssc')
+const HandicapPk10Factory = require('bettingCenter/misc/betRulesFactory-handicap-pk10')
 
 const sscList = ticketConfig.getSccList()
 _(sscList).each((ssc) => {
@@ -43,6 +48,16 @@ _(quick3List).each((quick) => {
 const mark6List = ticketConfig.getMark6List()
 _(mark6List).each((six) => {
   Mark6Factory.install(six.id)
+})
+
+const handicapSscList = ticketConfig.getHandicapSscList()
+_(handicapSscList).each((six) => {
+  HandicapSccFactory.install(six.id)
+})
+
+const handicapPk10List = ticketConfig.getHandicapPk10List()
+_(handicapPk10List).each((six) => {
+  HandicapPk10Factory.install(six.id)
 })
 
 const _betRules = _(factory.betRules)

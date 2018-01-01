@@ -36,7 +36,7 @@ $tab-toolbar-circle-colors: (
     margin-left: $tab-toolbar-title-width + 20;
 
     .tab {
-      font-size: 12px;
+      font-size: 14px;
       cursor: pointer;
       display: inline-block;
       text-align: center;
@@ -57,7 +57,8 @@ $tab-toolbar-circle-colors: (
         font-size: $font-sm;
         line-height: 30px;
         height: 34px;
-        width: 65px;
+        min-width: 45px;
+        padding: 0 10px;
         &.active {
           color: #16a4aa;
           background-color: $def-white-color;
@@ -108,7 +109,7 @@ $tab-toolbar-circle-colors: (
     .tab-title {
       font-size: 14px;
       color: $def-black-color;
-      line-height: 34px;
+      line-height: 40px;
       //text-align: center;
       //background-position: 0px -419px;
       width: auto;
@@ -158,6 +159,56 @@ $tab-toolbar-circle-colors: (
 
       &.treble2 {
         width: 80px;
+      }
+    }
+  }
+
+  &.tab-square {
+    .tab-title {
+      font-size: 14px;
+      color: $def-black-color;
+      line-height: 50px;
+      width: auto;
+      height: 40px;
+      margin-left: 5px;
+
+      > div {
+        margin-right: 10px;
+        min-width: 60px;
+        text-align: right;
+      }
+    }
+    .tab {
+      margin-right: 17px;
+      margin-bottom: 38px;
+      padding: 0;
+      font-size: 26px;
+      line-height: 48px;
+      height: 48px;
+      min-width: 28px;
+      padding: 0 10px;
+      border-radius: 8px;
+      border: 1px solid $def-gray-color;
+      color: $new-inverse-color;
+      background-color: $sec-line-color;
+
+      &:hover {
+        color: $main-deep-color;
+        background-color: $sec-line-color;
+        border: 1px solid $color-pleasant;
+      }
+
+      &.active {
+        color: $def-white-color;
+        background-color: $main-deep-color;
+        border: 1px solid $main-deep-color;
+        box-shadow: 0px 2px 3px #108f97 inset;
+      }
+    }
+    &.square-big {
+      .tab {
+        min-width: 58px;
+        padding: 0 10px;
       }
     }
   }

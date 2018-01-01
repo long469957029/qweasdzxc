@@ -142,12 +142,12 @@
                 display: inline-block;
                 vertical-align: middle;
                 background-size: 100% 100%;
-                margin-left: 20px;
+                margin-left: 10px;
                 margin-bottom: 3px;
               }
               .rc-name {
                 display: inline-block;
-                margin-left: 20px;
+                margin-left: 10px;
                 color: #333333;
                 font-size: 14px;
               }
@@ -224,14 +224,14 @@
                 top: 18px;
                 left: 20px;
               }
-              .js-rc-money-input {
+              .fc-rc-amount-input {
                 padding-left: 160px;
                 width: 150px;
                 padding-right: 50px;
                 font-size: 16px;
                 color: #333333;
               }
-              .js-rc-money-yuan {
+              .fc-rc-money-yuan {
                 top: 18px;
                 position: absolute;
                 right: 20px;
@@ -295,9 +295,11 @@
   &.active, &:hover, &:focus, &:active {
     border: 1px solid;
     border-color: $new-main-deep-color !important;
+    outline-width: 0;
   }
 }
 
+// 快捷支付logo配置
 .fc-re-quickpay {
   width: 22px;
   height: 27px;
@@ -350,7 +352,6 @@
   width: 22px;
   height: 22px;
   background-image: url('~base/images/v2/bank-qqPay.png');
-
 }
 
 .fc-re-scancode {
@@ -361,6 +362,97 @@
   width: 22px;
   height: 23px;
   background-image: url('~base/images/v2/bank-JD.png');
+}
+
+// 银行logo配置
+.fc-re-zhaoshang {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-zhaoshang.png');
+}
+
+.fc-re-gongshang {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-gongshang.png');
+}
+
+.fc-re-jianshe {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-jianshe.png');
+}
+
+.fc-re-nongye {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-nongye.png');
+}
+
+.fc-re-zhongguo {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-zhongguo.png');
+}
+
+.fc-re-jiaotongo {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-jiaotong.png');
+}
+
+.fc-re-guangfa {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-guangfa.png');
+}
+
+.fc-re-guangda {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-guangda.png');
+}
+
+.fc-re-pufa {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-pufa.png');
+}
+
+.fc-re-minsheng {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-mingsheng.png');
+}
+
+.fc-re-pingan {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-pingan.png');
+}
+
+.fc-re-xingye {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-xingye.png');
+}
+
+.fc-re-zhongxin {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-zhongxin.png');
+}
+
+.fc-re-youzheng {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-youzheng.png');
+}
+
+.fc-re-huaxia {
+  width: 46px;
+  height: 27px;
+  background-image: url('~base/images/v2/bank-huaxia.png');
 }
 
 .fc-rc-recharge-confirmView {
@@ -839,6 +931,57 @@
       }
     }
   }
+  .fc-tr-confirmView {
+    margin: 15px 45px;
+    text-align: center;
+    .fc-tr-confirmView-title {
+      margin-top: 60px;
+      padding: 0 180px;
+      font-size: 14px;
+      .text-back-title1 {
+        color: $font-auxiliary-color;
+      }
+      .js-tr-leftNum {
+        color: $new-inverse-color;
+        margin-left: 3px;
+        margin-right: 3px;
+      }
+      .text-back-title2 {
+        color: $font-auxiliary-color;
+        margin-right: 3px;
+      }
+      .title-back {
+        color: $new-main-deep-color;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+    .fc-tr-confirmView-img {
+      background-image: url('~base/images/v2/icon-comfirm-bg.png');
+      margin-top: 160px;
+      width: 75px;
+      height: 75px;
+      margin-left: 287px;
+    }
+    .fc-tr-confirmView-Tips {
+      font-size: 18px;
+      color: #666666;
+      margin-top: 20px;
+    }
+    .fc-tr-confirmView-goTo {
+      font-size: 14px;
+      margin-top: 20px;
+      padding: 0 110px;
+      line-height: 25px;
+      .fc-tr-confirmView-goTo-text {
+        cursor: pointer;
+        text-decoration: underline;
+        &.active,&:hover{
+          color: $prominent-hover-color;
+        }
+      }
+    }
+  }
 }
 
 .fc-rc-recharge-confirmView {
@@ -856,15 +999,12 @@
     }
     .title-right {
       font-size: 14px;
-      color: $font-auxiliary-color;
-      &.active, &:hover {
-        color: $new-main-deep-color;
-      }
+      color: $new-main-deep-color;
     }
   }
   .fc-rc-confirmView-confirm-img {
     background-image: url('~base/images/v2/icon-comfirm-bg.png');
-    margin-top: 20px;
+    margin-top: 150px;
     width: 75px;
     height: 75px;
     margin-left: 287px;
@@ -1004,6 +1144,7 @@
           padding: 0 15px;
           font-size: 14px;
           .fc-wd-bank-tips-balance {
+            cursor: pointer;
           }
           .fc-wd-bank-tips-addCard {
             color: $new-main-deep-color;
@@ -1047,6 +1188,11 @@
               color: #333333;
               height: 44px;
               background: #ffffff;
+              &.active, &:hover, &:focus, &:active {
+                border: 1px solid;
+                border-color: $new-main-deep-color !important;
+                outline-width: 0;
+              }
             }
           }
           .js-wd-fee {
@@ -1144,7 +1290,21 @@
   .parsley-error-line {
     margin-left: 62px;
     .parsley-error-text {
-      margin-left:3px;
+      margin-left: 3px;
+      color: #e84c4c;
+      font-size: 14px;
+      position: absolute;
+      margin-top: -3px;
+    }
+  }
+}
+
+.fc-tr-error-container {
+  margin-top: 25px;
+  .parsley-error-line {
+    margin-left: 62px;
+    .parsley-error-text {
+      margin-left: 3px;
       color: #e84c4c;
       font-size: 14px;
       position: absolute;

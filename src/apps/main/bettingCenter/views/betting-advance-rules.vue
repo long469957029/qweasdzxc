@@ -1,6 +1,6 @@
 <template>
   <div class="bc-advance-rules p-top-smd pull-left">
-    <div class="tab-toolbar tab-pill tab-pill-main" v-for="(rules, index) in rulesList">
+    <div class="tab-toolbar tab-pill tab-pill-main" v-for="(rules, index) in rulesList" v-show="show">
       <div class="tab-title" v-if="rules.title">{{rules.title}}</div>
       <div :class="['tab-group',  !rules.title ? 'no-margin' : '']">
       <span class="tab" :class="{active: rule.selected}" v-for="rule in rules.playList" @click="ruleChange(rule, rules, index)">
@@ -15,10 +15,18 @@
   export default {
     name: "betting-advance-rules",
 
-    data: function() {
+    props: {
+      type: {
+        type: String,
+        default: 'normal'
+      },
 
+    },
+
+    data: function() {
       return {
-        rulesList: []
+        rulesList: [],
+        show: true,
       }
     },
 
@@ -27,6 +35,7 @@
         handler(newVal, oldVal) {
           this.rulesList = this.$store.getters.playGroups(newVal)
 
+          this.show = this.type !== 'single-hidden' || _.chain(this.rulesList).pluck('playList').flatten().value().length !== 1
 
           const rules = this.rulesList[0]
 

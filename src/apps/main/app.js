@@ -198,7 +198,7 @@ function _bindClickModalFadeHandler() {
   })
 }
 const _bindFundOperatorDialogHandler = () => {
-  $(document).off('click.fundDialog').on('click.fundDialog', '.js-fc-re', () => {
+  $(document).off('click.fundDialog').on('click.fundDialog', '.js-header-recharge', () => {
     const acctInfo = Global.memoryCache.get('acctInfo')
     if (!acctInfo || acctInfo.userStatus === 100) {
       Global.ui.notification.show('用户已被冻结，无法进行充值操作')

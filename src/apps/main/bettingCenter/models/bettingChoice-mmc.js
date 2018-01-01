@@ -167,7 +167,7 @@ const BettingChoiceModelMMC = Model.extend({
         // 如果有值，则用该符号隔开number
         if (options.format) {
           return row.join(options.format.symbol)
-        } 
+        }
         // 同行是否用空格隔开
         return row.join(options.type === 'display' ? '' : ' ')
       }).join(',')
@@ -300,10 +300,10 @@ const BettingChoiceModelMMC = Model.extend({
       // return this._addBets([bettingInfo], _(options || {}).extend(selectInfo));
       if (!_.isNull(this.get('maxBetNums')) && selectInfo.statistics > this.get('maxBetNums')) {
         // this._addBets([bettingInfo], _(options || {}).extend(selectInfo,{buy:true}));
-        return { MaxBetNums: this.get('maxBetNums') }
+        return { maxBetNums: this.get('maxBetNums') }
       }
       return this._addBets([bettingInfo], _(options || {}).extend(selectInfo))
-    } 
+    }
     return false
   },
 

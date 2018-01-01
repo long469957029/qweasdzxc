@@ -1,5 +1,6 @@
 <div id="js-bc-main" class="bc-main">
   <betting-quick-nav :ticket-list="ticketList"></betting-quick-nav>
-  <ticket-info-banner :ticket-info="ticketInfo" :ticket-parameter="ticketParameter" :mark6-ticket-id-arr="mark6TicketIdArr" :audio="audio"></ticket-info-banner>
-  <betting-main-area :ticket-info="ticketInfo" :mark6-ticket-id-arr="mark6TicketIdArr" :ticket-id="ticketId"></betting-main-area>
+  <ticket-info-banner :ticket-info="ticketInfo" :ticket-parameter="ticketParameter" :audio="audio" :betting-type="bettingType"></ticket-info-banner>
+  <betting-main-area-handicap :ticket-info="ticketInfo" :ticket-id="ticketId" v-if="bettingType === '2'"></betting-main-area-handicap>
+  <betting-main-area :ticket-info="ticketInfo" :ticket-id="ticketId" v-else></betting-main-area>
 </div>

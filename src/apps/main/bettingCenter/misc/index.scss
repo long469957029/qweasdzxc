@@ -9,9 +9,6 @@
   color: $def-black-color;
   border-radius: 5px;
 }
-@mixin fontFamily{
-  font-family: "Microsoft Yahei",微软雅黑;
-}
 .bc-main{
   max-width: 1200px;
   margin: 0 auto;
@@ -260,9 +257,6 @@
         }
       }
     }
-    .bc-playArea-items{
-      margin: 28px 10px 26px 0px;
-    }
     .bc-quick-select{
       width: 221px;
       height: 39px;
@@ -299,7 +293,6 @@
     width: 120px;
     padding: 5px 10px;
     font-weight: 600;
-    @include fontFamily;
     transform: translateY(-5px);
     border-bottom: 3px solid rgba(0,0,0,0.4);
   }
@@ -308,7 +301,6 @@
     width: 180px;
     height: 48px;
     border-bottom: 3px solid rgba(0,0,0,0.4);
-    @include fontFamily;
     font-weight: 600;
   }
   .ba-chase-tip{
@@ -547,13 +539,6 @@
 
 .bc-margin-xs {
   margin-bottom: 3px;
-}
-
-.bc-page-content {
-  display: none;
-}
-.bc-page-content.active {
-  display: block;
 }
 
 .bc-togglePage-btn {

@@ -231,7 +231,7 @@ const BettingChoiceModel = Model.extend({
     if (selectInfo.statistics) {
       if (!_.isNull(this.get('maxBetNums')) && selectInfo.statistics > this.get('maxBetNums')) {
         this._addBets([bettingInfo], _(options || {}).extend(selectInfo, { buy: true }))
-        return { MaxBetNums: this.get('maxBetNums') }
+        return { maxBetNums: this.get('maxBetNums') }
       }
       this.emptyBuyBetting()
       return this._addBets([bettingInfo], _(options || {}).extend(selectInfo))
