@@ -10,4 +10,17 @@ export default {
       return item.num
     }).join(',')}`
   },
+
+  //显示用format
+  handicapNormal(itemList) {
+    return _.map(itemList, (item) => {
+      return `${item.title} ${item.betMoney}元`
+    }).join(',')
+  },
+
+  handicapSpecial(itemList) {
+    return _.map(itemList, (item) => {
+      return `${item.title}`
+    }).join(',')
+  }
 }

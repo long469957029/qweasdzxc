@@ -223,11 +223,13 @@ const mutations = {
       bettingList: [bettingInfo],
     })
 
+    this.commit(types.CALCULATE_TOTAL, state.buyList)
+
     if (!_.isNull(state.playInfo.maxBetNums) && state.statistics > state.playInfo.maxBetNums) {
       state.addPrevBetResult = { maxBetNums: state.playInfo.maxBetNums }
     }
 
-    this.commit(types.SET_CHECKOUT_CHOICE)
+    // this.commit(types.SET_CHECKOUT_CHOICE)
   },
 
 
@@ -239,8 +241,8 @@ const mutations = {
     }
   },
 
-  [types.CALCULATE_TOTAL](state) {
-    const totalInfo = _(state.previewList).reduce((info, item) => {
+  [types.CALCULATE_TOTAL](state, list = state.previewList) {
+    const totalInfo = _(list).reduce((info, item) => {
       info.totalLottery = _(info.totalLottery).add(item.statistics)
       info.totalMoney = _(info.totalMoney).add(item.prefabMoney)
       info.totalBetBonus = _(info.totalBetBonus).add(item.betBonus)
@@ -372,21 +374,19 @@ const mutations = {
     _(bettingList).each((bettingInfo) => {
       let statistics
 
-      if (bettingInfo.statistics) {
-        statistics = bettingInfo.statistics
+      if (state.statistics && state.statistics !== 0) {
+        statistics = state.statistics
       } else {
         statistics = 1
       }
-
-      const bettingNumber = bettingInfo.format(bettingInfo.lotteryList)
 
       const item = {
         levelName: state.levelName,
         playId: state.playId,
         playName: state.playName,
-        bettingNumber,
+        bettingNumber: bettingInfo.format(bettingInfo.lotteryList),
         // 显示用
-        formatBettingNumber: bettingNumber,
+        formatBettingNumber: bettingInfo.showFormat(bettingInfo.lotteryList),
         type: bettingInfo.type,
         formatBonusMode: state.formatBonusMode,
         multiple: state.multiple,

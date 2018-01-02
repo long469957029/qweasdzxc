@@ -400,7 +400,8 @@
         this.$store.commit(types.ADD_HANDICAP_BET, {
           bettingInfo: {
             lotteryList: this.lotteryList,
-            format: this.playRule.format
+            format: this.playRule.format,
+            showFormat: this.playRule.showFormat,
           }
         })
 
@@ -440,6 +441,7 @@
       .main-title {
         flex-grow: 1;
         border-right: 1px solid #e6e6e6;
+        width: 0;
 
         &:last-child {
           border-right: none;

@@ -15,14 +15,14 @@
 
         <div class="tab-toolbar" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
 
-          <div class="js-bc-select-item-title tab-title" v-if="fRule.row.title">
-            <div>{{fRule.row.title == '无' ? '' : fRule.row.title}}</div>
+          <div class="js-bc-select-item-title tab-title" v-if="fRule.row.title && fRule.row.title !== '无'">
+            <div>{{fRule.row.title}}</div>
           </div>
-          <div class="js-bc-select-item-title tab-title" v-if="!fRule.row.title">
+          <div class="js-bc-select-item-title tab-title" v-else-if="!fRule.row.title">
             <div>号码</div>
           </div>
 
-          <div class="tab-group no-margin text-center inline-block">
+          <div class="tab-group no-margin inline-block">
             <div v-for="n in fRule.row.totalPage"  class="clearfix inline-block">
               <span class="bc-select-item cbutton cbutton--effect-novak tab" @click="selectNumber(item, fRule.row)"
                     v-for="(item, index) in fRule.row.fItems" v-if="!fRule.row.page || (index < n * fRule.row.page && index >= (n - 1) * fRule.row.page)"
@@ -399,5 +399,26 @@
     :hover {
       color: $new-main-deep-color;
     }
+  }
+  .tab-longhu {
+    .tab {
+      width: 100px;
+      height: 48px;
+      background: linear-gradient(0deg, #e6e6e6 0%, #f2f2f2 46%, #fdfdfd 100%), linear-gradient( #f0f0f0, #f0f0f0);
+      box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.08);
+      border-radius: 10px;
+      border: solid 1px #cccccc;
+      line-height: 48px;
+      font-size: 24px;
+      margin-right: 24px;
+      &.active {
+        color: #ffffff;
+        background: #14b1bb;
+      }
+    }
+  }
+
+  .tab-group {
+    max-width: 700px;
   }
 </style>

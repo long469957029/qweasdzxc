@@ -5,10 +5,6 @@
 '~uiCom/tab-toolbar/index.scss',
 '~uiCom/pulse/index.scss';
 
-@mixin select-def {
-  color: $def-black-color;
-  border-radius: 5px;
-}
 .bc-main{
   max-width: 1200px;
   margin: 0 auto;
@@ -265,13 +261,6 @@
       background-color: $sec-line-color;
     }
   }
-  .bc-unit-select{
-    width: 70px;
-    height: 30px;
-    padding-left: 12px;
-    margin-left: 5px;
-    @include select-def;
-  }
   .bc-unit-select-add{
     width: 58px;
     height: 22px;
@@ -280,11 +269,7 @@
     border-radius: 3px;
     color: $def-black-color;
   }
-  .bc-vouchers-select{
-    width: 106px;
-    height: 30px;
-    @include select-def;
-  }
+
   .bc-multi-range {
     height: 30px;
   }
@@ -302,28 +287,6 @@
     height: 48px;
     border-bottom: 3px solid rgba(0,0,0,0.4);
     font-weight: 600;
-  }
-  .ba-chase-tip{
-    position: absolute;
-    width: 120px;
-    height: 21px;
-    color:  $def-white-color;
-    background-color: $main-deep-color;
-    text-align: center;
-    font-size:$font-xs;
-    top:-2px;
-    left: 80px;
-    border-radius: 3px;
-    &:before{
-      content: ' ';
-      position: absolute;
-      width: 0px;
-      height: 0px;
-      border: 5px transparent solid;
-      border-right-color: $main-deep-color;
-      left: -10px;
-      top: 5px;
-    }
   }
   .bc-bottom-area{
     width: 100%;
@@ -478,31 +441,6 @@
 .control-inline {
   display: inline-block;
   margin-right: 50px;
-}
-
-.bc-confirm-list {
-
-  li {
-    text-indent: -10px;
-    padding-left: 10px;
-  }
-
-  li:before {
-    content: '•';
-    color: $main-color;
-    font-size: 20px;
-    padding-right: 5px;
-    position: relative;
-    top: 2px;
-  }
-}
-
-.bc-betDetail-text{
-  word-wrap: break-word;
-  white-space: pre;
-  padding-left: 35px !important;
-  padding-top: 23px;
-  padding-bottom: 15px;
 }
 
 .bc-profit-normalAmount {

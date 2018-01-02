@@ -1097,10 +1097,14 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: ['万位', '千位', null, null, null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['龙虎'], {
+    list: factory.createList(['无'], {
       items: longhu,
       operate: 'none',
     }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1113,10 +1117,14 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: ['万位', null, '百位', null, null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['龙虎'], {
+    list: factory.createList(['无'], {
       items: longhu,
       operate: 'none',
     }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1129,10 +1137,14 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: ['万位', null, null, '十位', null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['龙虎'], {
+    list: factory.createList(['无'], {
       items: longhu,
       operate: 'none',
     }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1145,10 +1157,14 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: ['万位', null, null, null, '个位'],
     algorithm: algorithm.addAll,
-    list: factory.createList(['龙虎'], {
+    list: factory.createList(['无'], {
       items: longhu,
       operate: 'none',
     }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1161,10 +1177,14 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, '千位', '百位', null, null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['龙虎'], {
+    list: factory.createList(['无'], {
       items: longhu,
       operate: 'none',
     }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1177,10 +1197,14 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, '千位', null, '十位', null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['龙虎'], {
+    list: factory.createList(['无'], {
       items: longhu,
       operate: 'none',
     }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1193,10 +1217,14 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, '千位', null, null, '个位'],
     algorithm: algorithm.addAll,
-    list: factory.createList(['龙虎'], {
+    list: factory.createList(['无'], {
       items: longhu,
       operate: 'none',
     }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1209,10 +1237,14 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, null, '百位', '十位', null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['龙虎'], {
+    list: factory.createList(['无'], {
       items: longhu,
       operate: 'none',
     }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1225,10 +1257,14 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, null, '百位', null, '个位'],
     algorithm: algorithm.addAll,
-    list: factory.createList(['龙虎'], {
+    list: factory.createList(['无'], {
       items: longhu,
       operate: 'none',
     }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1241,10 +1277,14 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, null, null, '百位', '个位'],
     algorithm: algorithm.addAll,
-    list: factory.createList(['龙虎'], {
+    list: factory.createList(['无'], {
       items: longhu,
       operate: 'none',
     }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
