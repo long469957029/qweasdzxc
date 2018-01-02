@@ -283,7 +283,6 @@
       display: inline-block;
     }
   }
-
   .ac-openAccountAuto-form {
     margin-top: 20px;
     .look-bonus {
@@ -572,4 +571,38 @@
       font-size: $font-xs;
     }
   }
+}
+
+.open-confirm-main{
+  border-radius: 5px;
+  .confim-title{
+    width: 480px;
+    height: 50px;
+    color: $def-black-color;
+    text-align: center;
+    line-height: 50px;
+    position: relative;
+    background-color: $sec-line-color;
+    font-size: $font-md;
+    .close{
+      color: #d8d8d8;
+      font-size:30px;
+    }
+  }
+  .contant-info{
+    width: 275px;
+    height: 70px;
+    margin: 0 auto;
+    margin-top: 22px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+  }
+  .open-confirm-btn{
+    width: 108px;
+    height: 36px;
+  }
+}
+.copy-contant{
+  width: 300px;
+  margin: 0 auto;
 }

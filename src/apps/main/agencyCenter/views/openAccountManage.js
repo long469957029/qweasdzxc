@@ -54,7 +54,6 @@ const OnlineRechargeView = TabView.extend({
     const html = []
     let flag = false
     const $limitList = $('.js-ac-open-limit')
-    console.log($limitList[0])
     if (!_(limitList).isEmpty()) {
       _(limitList).each((limit) => {
         if (limit.quotaLimit > 0) {

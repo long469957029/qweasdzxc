@@ -60,7 +60,9 @@ const OpenAccountManageView = Base.ItemView.extend({
         if (res && res.result === 0) {
           const subRebateRange = data.subRebateRange
           self.$acmanualRebate.val(_(subRebateRange.subAcctRebate).formatDiv(10, { fixed: 1 }))
-          self.$acmanualRebate.attr('data-parsley-range', `[${_(subRebateRange.rebateMin).formatDiv(10, { fixed: 1 })},${_(subRebateRange.rebateMax).formatDiv(10, { fixed: 1 })}]`)
+          // self.$acmanualRebate.attr('data-parsley-range', `[${_(subRebateRange.rebateMin).formatDiv(10, { fixed: 1 })},${_(subRebateRange.rebateMax).formatDiv(10, { fixed: 1 })}]`)
+          self.rebateMin = _(subRebateRange.rebateMin).formatDiv(10, { fixed: 1 })
+          self.rebateMax = _(subRebateRange.rebateMax).formatDiv(10, { fixed: 1 })
           const subRebateRangePrompt = `${subRebateRange.rebateMin}～${_(subRebateRange.rebateMax > 130 ? 130 : subRebateRange.rebateMax).formatDiv(10, { fixed: 1 })}`
 
           self.$acBonusRangePrompt.html(subRebateRangePrompt)
@@ -103,7 +105,7 @@ const OpenAccountManageView = Base.ItemView.extend({
         if (this.checkRedPackHandler()) {
           _(data).extend({
             redpackOpenType: 1,
-            redpackAmount: this.$acRedPackMoney.val(),
+            redpackAmount: this.$acRedPack.val(),
           })
           this.saveConfirmDialog(globalData, data)
         }
@@ -113,17 +115,23 @@ const OpenAccountManageView = Base.ItemView.extend({
     }
   },
   saveConfirmDialog(globalData, data) {
+    const self = this
     const $dialog = Global.ui.dialog.show({
       closeBtn: false,
       body: '<div class="js-confirm-dialog"></div>',
       anySize: '480',
+      bodyClass: 'no-padding',
     })
     const $confirmDialog = $dialog.find('.js-confirm-dialog')
     $confirmDialog.html(this.confirmTpl({
       data,
-      type: 1, // 1代表手动开户  2代表链接开户
+      type: 1, // 1代表手动开户  2代表链接开户  3代表手动开户成功
+      title: '红包开户确认',
     }))
-
+    $dialog.off('click.save').on('click.save', '.js-confrim-btn', () => {
+      $dialog.modal('hide')
+      self.saveHandler(globalData, data)
+    })
     $dialog.on('hidden.modal', function() {
       $(this).remove()
     })
@@ -181,16 +189,7 @@ const OpenAccountManageView = Base.ItemView.extend({
     }
     return isValidate
   },
-  // ticketPriceViewHandler: function(e){
-  //    var $target = $(e.currentTarget);
-  //   var ticket = $target.data('ticket');
-  //   var rebate = Number(this.$('.js-ac-manual-rebate').val());
-  //   if(_(rebate).isNumber()&& _(rebate).isFinite()){
-  //     Global.appRouter.navigate('#ac/oam/pd/'+ticket+'?rebate='+rebate,{trigger: true, replace: false});
-  //   }else{
-  //     Global.ui.notification.show('请输入有效的返点值。');
-  //   }
-  // },
+
   lookBonusViewHandler (e) {
     const $target = $(e.currentTarget)
     const ticket = $target.data('ticket')
@@ -202,18 +201,20 @@ const OpenAccountManageView = Base.ItemView.extend({
     }
   },
   inputRebateHandler(e) {
-    // const self = this
     const $target = $(e.currentTarget)
-    const range = JSON.parse($target.data('parsley-range'))
     const rebate = Number($target.val())
-    if (rebate !== '' && _(rebate).isFinite() && range.length === 2) {
-      if (rebate < range[0]) {
-        $target.val(range[0])
-      } else if (rebate > range[1]) {
-        $target.val(range[1])
+    if (rebate !== '' && _(rebate).isFinite()) {
+      if (rebate < this.rebateMin) {
+        $target.val(this.rebateMin)
+        this.changeEleClass(this.$acmanualRebate, 'error')
+        this.$acManualRebateInfo.html(this.getErrorTooltip(`返点可配置范围${this.rebateMin}~${this.rebateMax}`))
+      } else if (rebate > this.rebateMax) {
+        $target.val(this.rebateMax)
+        this.changeEleClass(this.$acmanualRebate, 'error')
+        this.$acManualRebateInfo.html(this.getErrorTooltip(`返点可配置范围${this.rebateMin}~${this.rebateMax}`))
       }
     } else {
-      $target.val(range[0])
+      $target.val(this.rebateMin)
     }
   },
   checkRedPackHandler() {
@@ -236,16 +237,21 @@ const OpenAccountManageView = Base.ItemView.extend({
   },
   showCopyDailog(data) {
     const $dialog = Global.ui.dialog.show({
-      title: '开户成功',
-      size: 'modal-md',
-      body: `${'<form><div class="p-left-lg m-bottom-lg m-top-lg">' +
-      '<div class="control-group m-left-sm p-left-lg m-top-md  m-bottom-md"><label class="text-left">账号:&nbsp;&nbsp;&nbsp;&nbsp;  '}${data.userName}</label></div>` +
-      `<div class="control-group m-left-sm p-left-lg m-top-md  m-bottom-md"><label class="text-left">密码:&nbsp;&nbsp;&nbsp;&nbsp;  ${data.loginPwd}</label></div>` +
-      `<div class="control-group m-left-sm p-left-lg m-top-md  m-bottom-md"><label class="text-left">返点:&nbsp;&nbsp;&nbsp;&nbsp;  ${_(data.rebate).formatDiv(10, { fixed: 1 })}</label></div></div>` +
-      '<div class="m-top-lg m-bottom-lg"><button type="button" class="js-ac-ocm-copy ac-ocm-copy btn btn-sun" data-dismiss="modal">' +
-      '<span class="sfa ac-ocm-copy-coin m-right-sm"></span>复制并关闭</button></div></form>',
-      bodyClass: 'p-top-xs p-left-lg p-right-lg text-center',
+      closeBtn: false,
+      body: '<div class="js-copy-dialog"></div>',
+      anySize: '480',
+      bodyClass: 'no-padding',
     })
+    const copyContant = $dialog.find('.js-copy-dialog')
+    copyContant.html(this.confirmTpl({
+      title: '开户成功',
+      container: `${'<form><div class="copy-contant m-bottom-lg m-top-lg">' +
+      '<div class="p-left-lg m-top-md  m-bottom-md"><label class="text-left">账号:&nbsp;&nbsp;&nbsp;&nbsp;  '}${data.userName}</label></div>` +
+      `<div class="p-left-lg m-top-md  m-bottom-md"><label class="text-left">密码:&nbsp;&nbsp;&nbsp;&nbsp;  ${data.loginPwd}</label></div>` +
+      `<div class="p-left-lg m-top-md  m-bottom-md"><label class="text-left">返点:&nbsp;&nbsp;&nbsp;&nbsp;  ${_(data.rebate).formatDiv(10, { fixed: 1 })}</label></div></div>` +
+      '<div class="m-top-lg m-bottom-lg text-center"><button type="button" class="js-ac-ocm-copy ac-ocm-copy btn btn-sun" data-dismiss="modal">复制并关闭</button></div></form>',
+      type: 3,
+    }))
 
     $dialog.on('hidden.modal', function () {
       $(this).remove()
