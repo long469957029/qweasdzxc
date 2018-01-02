@@ -202,9 +202,14 @@ const OpenAccountManageView = Base.ItemView.extend({
   },
   inputRebateHandler(e) {
     const $target = $(e.currentTarget)
-    const rebate = Number($target.val())
+    const rebate = $target.val()
     if (rebate !== '' && _(rebate).isFinite()) {
-      if (rebate < this.rebateMin) {
+      const myReg = /^(0|[1-9][0-9]*)(.\d{1})?$/
+      const reg = myReg.test(rebate)
+      if (!reg) {
+        this.changeEleClass(this.$acmanualRebate, 'error')
+        this.$acManualRebateInfo.html(this.getErrorTooltip('值最多能精确到小数点后一位'))
+      } else if (rebate < this.rebateMin) {
         $target.val(this.rebateMin)
         this.changeEleClass(this.$acmanualRebate, 'error')
         this.$acManualRebateInfo.html(this.getErrorTooltip(`返点可配置范围${this.rebateMin}~${this.rebateMax}`))
@@ -212,6 +217,10 @@ const OpenAccountManageView = Base.ItemView.extend({
         $target.val(this.rebateMax)
         this.changeEleClass(this.$acmanualRebate, 'error')
         this.$acManualRebateInfo.html(this.getErrorTooltip(`返点可配置范围${this.rebateMin}~${this.rebateMax}`))
+      } else {
+        this.changeEleClass(this.$acmanualRebate, 'success')
+        this.$acManualRebateInfo.html('<span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>' +
+          `返点可配置范围${this.rebateMin}~${this.rebateMax}`)
       }
     } else {
       $target.val(this.rebateMin)

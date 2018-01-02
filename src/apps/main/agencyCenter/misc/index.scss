@@ -232,12 +232,6 @@
     .tooltip-inner {
       max-width: none;
     }
-    .input1{
-      width: 258px;
-      height: 25px;
-      background-color: #f9f9f9;
-      font-size:$font-sm;
-    }
     .manual-rebate-sign{
       color: #aaaaaa;
       position: relative;
@@ -253,62 +247,89 @@
       cursor: pointer;
       padding-left: 5px;
     }
-    .btn-group {
-      button {
-        background-color: $prominent-dialog-body;
-        color: $new-inverse-color;
-        font-size: 14px;
-        width: 130px;
-        height: 33px;
-        margin-right: 12px;
-        border-color: $prominent-dialog-body;
-      }
-      button.active {
-        box-shadow: none;
-        border-color: $new-main-deep-color;
-        color: $new-main-deep-color;
-        position: relative;
-        &:after{
-          content: '';
-          width: 21px;
-          height: 19px;
-          background: url("./icon-check.png") no-repeat;
-          position: absolute;
-          right: 0px;
-          bottom: 0px;
-        }
-      }
-    }
     .ac-manual-rebate-info {
       display: inline-block;
     }
   }
+  .input1{
+    width: 258px;
+    height: 25px;
+    background-color: #f9f9f9;
+    font-size:$font-sm;
+  }
+  .btn-group {
+    button {
+      background-color: $prominent-dialog-body;
+      color: $new-inverse-color;
+      font-size: 14px;
+      width: 130px;
+      height: 33px;
+      margin-right: 12px;
+      border-color: $prominent-dialog-body;
+    }
+    button.active {
+      box-shadow: none;
+      border-color: $new-main-deep-color;
+      color: $new-main-deep-color;
+      position: relative;
+      background-color: $prominent-dialog-body;
+      &:after{
+        content: '';
+        width: 21px;
+        height: 19px;
+        background: url("./icon-check.png") no-repeat;
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+      }
+    }
+  }
   .ac-openAccountAuto-form {
-    margin-top: 20px;
+    width: 550px;
+    margin: 0 auto;
+    padding-top: 75px;
     .look-bonus {
       text-decoration: underline;
       cursor: pointer;
       padding-left: 5px;
     }
-    .btn-group {
-      button:first-child {
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-      button:last-child {
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-      }
-      button {
-        background-color: #ffffff;
-        color: #16a4aa;
-        font-size: 13px;
-        width: 88px;
-      }
-      button.active {
-        box-shadow: none;
-        background-color: #16a4aa;
-        color: #ffffff;
+    .ac-red-pack-text{
+      width: 243px;
+      background-color: #fdf6e9;
+      border-radius: 5px;
+      padding: 15px;
+      color: $def-gray-color;
+      margin-left: 120px;
+      margin-bottom: 10px;
+    }
+    .ac-red-type{
+      border: 1px solid $def-gray-color;
+      border-radius: $globalBtnRadius;
+      margin-left: 72px;
+      button{
+        width: 52px;
+        height: 23px;
+        background-color: $def-white-color;
+        color: $def-black-color;
+        border: none;
+        border-radius: 0;
+        margin: 0;
+        &:after{
+          display: none;
+        }
+        &:first-child{
+          border-right: 1px solid $def-gray-color;
+          border-bottom-left-radius: $globalBtnRadius;
+          border-top-left-radius: $globalBtnRadius;
+        }
+        &:last-child{
+          border-bottom-right-radius: $globalBtnRadius;
+          border-top-right-radius: $globalBtnRadius;
+        }
+        &.active{
+          background-color: $new-main-deep-color;
+          color: $def-white-color;
+        }
       }
     }
   }
