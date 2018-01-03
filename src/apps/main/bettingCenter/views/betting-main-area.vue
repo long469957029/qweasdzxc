@@ -115,25 +115,10 @@
 
 
     <!-- 追号 -->
-    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="chaseModal">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title">
-              <span class="portlet-icon sfa sfa-sub-title-user vertical-sub"></span> 追号
-            </h4>
-          </div>
-          <div class="modal-body basic-inverse p-top-xs no-p-left no-p-right no-p-bottom">
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="chaseModal" v-if="showChaseModal">
             <betting-chase :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney" :ticket-info="ticketInfo"
                            :planId="bettingInfo.planId" :preview-list="bettingChoice.previewList"
-                           :total-lottery="bettingChoice.totalLottery" ref="bettingChase"
-            ></betting-chase>
-          </div>
-        </div>
-      </div>
+                           :total-lottery="bettingChoice.totalLottery" ref="bettingChase"></betting-chase>
     </div>
 
     <!-- 确认投注 -->
@@ -211,6 +196,8 @@
         fPreviewList: [],
 
         advanceShowMode: 'classic', //classic | single
+
+        showChaseModal: false,
       }
     },
     computed: mapState({
@@ -569,14 +556,18 @@
         }
 
 
-        this.$refs.bettingChase.init()
+        this.showChaseModal = true
 
-        $(this.$refs.chaseModal).modal({
-          backdrop: 'static',
-        })
-          .on('hidden.modal', function() {
-            // chaseView.destroy()
+        this.$nextTick(() => {
+          this.$refs.bettingChase.init()
+
+          $(this.$refs.chaseModal).modal({
+            backdrop: 'static',
           })
+            .on('hidden.modal', () => {
+              this.showChaseModal = false
+            })
+        })
       },
 
       lotteryClear() {
@@ -811,8 +802,8 @@
     &:before{
       content: ' ';
       position: absolute;
-      width: 0px;
-      height: 0px;
+      width: 0;
+      height: 0;
       border: 5px transparent solid;
       border-right-color: $main-deep-color;
       left: -10px;

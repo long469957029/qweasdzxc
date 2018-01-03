@@ -142,6 +142,7 @@
     }
     .bc-last-plan-results{
       .text-circle{
+        font-family: din, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
         position: relative;
         &:after{
           content: '';
@@ -149,7 +150,7 @@
           height: 4px;
           border-radius: 50%;
           background: rgba(0, 0, 0, 0.15);
-          box-shadow: 0px 0px 20px rgba(0,0,0,1);
+          box-shadow: 0 0 20px rgba(0,0,0,1);
           position: absolute;
           bottom: -10px;
           left: 11px;
@@ -213,8 +214,12 @@
     }
   }
   .bc-side-area{
+    position: relative;
     width: 278px;
     min-height: 845px;
+    left: -1px;
+    border-left: 1px solid $def-line-color;
+    box-sizing: border-box;
   }
   .bc-basic-rules {
     .tab-toolbar {
@@ -432,10 +437,6 @@
       color: #02eefd;
     }
   }
-}
-
-.bc-chase-create {
-  margin-top: -14px;
 }
 
 .control-inline {
