@@ -1,64 +1,78 @@
-<div class="sidebar-title">资金管理</div>
+<div class="sidebar-title">
+  <div class="sidebar-title-img-container inline-block"><span class="js-sidebar-close sidebar-title-img"></span></div>
+  <div class="sidebar-title-container inline-block"><span class="img-fund"></span><span
+    class="sidebar-title-container-text">资金管理</span></div>
+</div>
 <div class="sidebar-fund-container">
   <div class="fund-amount">
-    <div class="amount-title">钱包总额：</div>
-    <div class="amount-rest">45,827,467.18</div>
-    <div class="btn fund-recharge-btn">充值</div>
+    <div class="fund-amount-recharge">
+      <div class="amount-title">钱包总额：</div>
+      <div class="jc-sidebar-amount-total amount-rest">0</div>
+      <div class="js-header-recharge btn fund-recharge-btn">充值</div>
+    </div>
   </div>
   <div class="fund-amount">
-    <div class="amount-title">可提金额</div>
-    <div class="amount-rest">5,827.00</div>
-    <div class="btn fund-withdraw-btn">提现</div>
+    <div class="fund-amount-withdraw">
+      <div class=" amount-title">可提金额</div>
+      <div class="jc-sidebar-amount-enable amount-rest">0</div>
+      <div class="js-header-recharge btn fund-withdraw-btn">提现</div>
+    </div>
   </div>
 
   <div class="fund-pocket">
-    <div class="pocket-title">中心钱包</div>
-    <div class="pocket-rest">5,827.00</div>
-    <select class="fund-transfer-select">
-      <option value="" disabled selected>请选择转出帐户</option>
-    </select>
-    <select class="fund-transfer-select">
-      <option value="" disabled selected>请选择转入帐户</option>
-    </select>
-    <input type="text" class="fund-transfer-amount" placeholder="请输入转入金额">
-    <div class="btn fund-transfer-btn">转帐</div>
-  </div>
-
-  <div class="fund-operation-record">
-    <div class="record-title">最近操作记录</div>
-    <a src="/" class="operation-record-link">更多></a>
-    <div class="clearfix"></div>
-  </div>
-  <div class="operation-record-item">
-    <div class="record-action">提现</div>
-    <div class="record-date">2017-9-10 14:20:47</div>
-    <div class="clearfix"></div>
-    <div class="record-amount">100.00</div>
-    <div class="record-progress">
-      <div class="progress" data-progress="1">已申请</div>
-      <div class="progress" data-progress="2">处理成功</div>
-      <div class="progress" data-progress="3">已出款</div>
+    <div class="pocket-title-container">
+      <div class="pocket-title">钱包中心</div>
+      <div class="jc-sidebar-center pocket-rest">0</div>
     </div>
-    <div class="clearfix"></div>
-  </div>
-  <div class="operation-record-item">
-    <div class="record-action">提现</div>
-    <div class="record-date">2017-9-10 14:20:47</div>
-    <div class="clearfix"></div>
-    <div class="record-amount">100.00</div>
-    <div class="record-progress">
-      <div class="result">转帐成功</div>
+    <div class="pocket-title-container">
+      <div class="pocket-title">AG钱包</div>
+      <div class="jc-sidebar-ag pocket-rest">0</div>
     </div>
-    <div class="clearfix"></div>
-  </div>
-  <div class="operation-record-item">
-    <div class="record-action">提现</div>
-    <div class="record-date">2017-9-10 14:20:47</div>
-    <div class="clearfix"></div>
-    <div class="record-amount">100.00</div>
-    <div class="record-progress">
-      <div class="result">转帐失败</div>
+    <div class="pocket-title-container">
+      <div class="pocket-title">EBET钱包</div>
+      <div class="jc-sidebar-ebet pocket-rest">0</div>
     </div>
-    <div class="clearfix"></div>
+    <div class="pocket-title-container">
+      <div class="pocket-title">BBIN钱包</div>
+      <div class="jc-sidebar-bbin pocket-rest">0</div>
+    </div>
+    <div class="pocket-title-container">
+      <div class="pocket-title">GG钱包</div>
+      <div class="jc-sidebar-gg pocket-rest">0</div>
+    </div>
+    <div class="pocket-title-container">
+      <div class="pocket-title">PT钱包</div>
+      <div class="jc-sidebar-pt pocket-rest">0</div>
+    </div>
+    <div class="pocket-title-container">
+      <div class="pocket-title">MG钱包</div>
+      <div class="jc-sidebar-mg pocket-rest">0</div>
+    </div>
+    <div class="pocket-title-container">
+      <div class="pocket-title">188钱包</div>
+      <div class="jc-sidebar-188 pocket-rest">0</div>
+    </div>
+    <div class="pocket-transfer-container">
+      <div class="js-header-recharge btn fund-transfer-btn">转帐</div>
+    </div>
+  </div>
+  <div class="fund-operation-record-container">
+    <div class="fund-operation-record">
+      <div class="record-title">最近操作记录</div>
+      <a href="#fc/rd" class="js-sidebar-close router operation-record-link">更多记录</a>
+      <div class="clearfix"></div>
+    </div>
+    <div class="js-sideBar-record-items operation-record-items">
+      <div class="js-sideBar-record-empty operation-record-empty hidden">
+        <div class="items-empty-img"></div>
+      </div>
+    </div>
+  </div>
+  <div class="recent-logout-container">
+    <div class="logout-img-empty"></div>
+    <div class="record-recent-logout">
+      <span class="logout-img"></span>
+      <span class="logout-text">退出登录</span>
+    </div>
   </div>
 </div>

@@ -252,39 +252,32 @@
       font-size: 14px;
       margin-left: 30px;
       color: #666666;
-      .fc-tf-div {
-        margin-bottom: 15px;
+      position: absolute;
+      .fc-tf-div-amount {
+        position: absolute;
+        top: 181px;
         .fc-tf-div-name {
           display: block;
           margin-bottom: 5px;
         }
-        .fc-tf-select {
-          height: 33px;
-          width: 245px;
-          font-size: 12px;
-          appearance: none;
-          -moz-appearance: none;
-          -webkit-appearance: none;
-          background: url('../misc/v2/icon-select-down.png') no-repeat 97% center;
-          text-align-last: center;
-          text-align: center;
-          border-radius: 4px;
-          border-color: #cccccc!important;
-          &.active, &:hover {
-            border-color: #cccccc!important;
-          }
-        }
-        .fc-tf-input {
+        .fc-fm-input {
           height: 28px;
-          width: 245px;
+          width: 208px;
           border-radius: 4px;
-          border:1px solid;
-          border-color: #cccccc!important;
-          &.active, &:hover {
-            border:1px solid;
-            border-color: #14b1bb!important;
+          border: 1px solid;
+          padding: 0 20px;
+          border-color: #cccccc !important;
+          &.active, &:hover, &:focus, &:active {
+            border: 1px solid;
+            border-color: #14b1bb !important;
+            outline-width: 0;
           }
         }
+
+      }
+      .fc-tf-div-submit{
+        position: absolute;
+        top: 248px;
         .js-fc-fm-re-btn {
           width: 175px;
           height: 35px;
@@ -294,9 +287,133 @@
           background-color: #14b1bb;
         }
       }
+      .fc-fm-error-container{
+        position: absolute;
+        top: 308px;
+        margin-left: 40px;
+        .sfa-error-icon{
+          margin-top:2px;
+        }
+        .parsley-error-text{
+          margin-left:3px;
+        }
+      }
+      .fc-fm-out-select {
+        z-index: 4;
+        position: absolute;
+        top:30px;
+        .fc-fm-div-name {
+          display: block;
+          margin-bottom: 5px;
+        }
+        .fc-fm-out-select-panel {
+          z-index:5;
+          overflow: hidden;
+          width: 208px;
+          height: 33px;
+          background: #ffffff;
+          border: 1px solid #cccccc;
+          line-height: 33px;
+          border-radius: 5px;
+          display: inline-block;
+          position: relative;
+          text-align: left;
+          cursor: pointer;
+          transition: height 0.5s;
+          padding: 0 20px;
+          .fc-fm-out-selected {
+            height: 33px !important;
+          }
+          .fc-fm-out-item {
+            border-top: 1px solid #e6e6e6;
+          }
+          .rc-name {
+            display: inline-block;
+            margin-left: 75px;
+            color: #333333;
+            font-size: 14px;
+          }
+          .select-down {
+            width: 18px;
+            height: 10px;
+            display: block;
+            position: absolute;
+            top: 13px;
+            left: 205px;
+            background: url("~base/images/v2/icon-select-down.png") no-repeat;
+            &.up {
+              transform: rotate(180deg);
+            }
+          }
+          &.side-down {
+            border: 1px solid $new-main-deep-color;
+            height: 203px;
+            overflow: auto;
+          }
+        }
 
+      }
+      .fc-fm-in-select {
+        position: absolute;
+        top: 109px;
+        z-index:2;
+        .fc-fm-div-name {
+          display: block;
+          margin-bottom: 5px;
+        }
+        .fc-fm-in-select-panel {
+          z-index:3;
+          overflow: hidden;
+          width: 208px;
+          height: 33px;
+          background: #ffffff;
+          border: 1px solid #cccccc;
+          line-height: 33px;
+          border-radius: 5px;
+          display: inline-block;
+          position: relative;
+          text-align: left;
+          cursor: pointer;
+          transition: height 0.5s;
+          padding: 0 20px;
+          .fc-fm-in-selected {
+            height: 33px !important;
+          }
+          .fc-fm-in-item {
+            border-top: 1px solid #e6e6e6;
+          }
+          .rc-name {
+            display: inline-block;
+            margin-left: 75px;
+            color: #333333;
+            font-size: 14px;
+          }
+          .select-down {
+            width: 18px;
+            height: 10px;
+            display: block;
+            position: absolute;
+            top: 13px;
+            left: 205px;
+            background: url("~base/images/v2/icon-select-down.png") no-repeat;
+            &.up {
+              transform: rotate(180deg);
+            }
+          }
+          &.side-down {
+            border: 1px solid $new-main-deep-color;
+            height: 203px;
+            overflow: auto;
+          }
+        }
+
+      }
+      .parsley-errors-list.filled{
+        margin-top:10px;
+        margin-left:5px;
+      }
     }
-    .fc-tf-change{
+    .fc-tf-change {
       height: 80px;
       width: 20px;
       float: right;
@@ -305,9 +422,9 @@
       border-right: 1px solid #cccccc;
       border-bottom: 1px solid #cccccc;
       margin-right: 63px;
-      .fc-tf-change-img{
+      .fc-tf-change-img {
         width: 19px;
-        height:19px;
+        height: 19px;
         display: block;
         margin-top: 30px;
         margin-left: 11px;
@@ -428,9 +545,9 @@
           }
         }
       }
-      &.active{
+      &.active {
         .img-recharge {
-            background: url("../misc/v2/icon-recharge-green.png") no-repeat;
+          background: url("../misc/v2/icon-recharge-green.png") no-repeat;
         }
         .img-withdraw {
           background: url("../misc/v2/icon-withdraw-green.png") no-repeat;
@@ -455,9 +572,9 @@
         }
         .fc-fm-info-item-num {
           .fc-fm-info-item-num-value {
-              color: #f09932;
-          }
             color: #f09932;
+          }
+          color: #f09932;
         }
       }
     }

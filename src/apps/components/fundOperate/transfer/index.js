@@ -176,7 +176,7 @@ const TransferView = Base.ItemView.extend({
     this.$('.js-tr-out-select').removeClass('side-down').scrollTop(0)
     this.$('.js-tr-select-out-down').removeClass('up')
     const selectId = $target.data('id')
-    const toId = $('.js-tr-in-selectedItem').data('id')
+    const toId = this.$('.js-tr-in-selectedItem').data('id')
     if (selectId === 0) {
       // 重新初始化转出钱包框
       const fromData = transferService.getFromData(0)
@@ -213,7 +213,7 @@ const TransferView = Base.ItemView.extend({
     this.$('.js-tr-in-select').removeClass('side-down').scrollTop(0)
     this.$('.js-tr-select-in-down').removeClass('up')
     const selectId = $target.data('id')
-    const fromId = $('.js-tr-out-selectedItem').data('id')
+    const fromId = this.$('.js-tr-out-selectedItem').data('id')
     if (selectId === 0) {
       // 重新初始化转出钱包框
       const toData = transferService.getToData(0)
