@@ -36,7 +36,7 @@ const FundOperateView = TabView.extend({
           name: 'jsFcRecharge',
           id: 'js-recharge',
           view: RechargeView,
-          options: { ac: this.activityList },
+          options: { ac: this.activityList, cur: cursize },
         },
         {
           label: '转帐',
@@ -50,7 +50,7 @@ const FundOperateView = TabView.extend({
           name: 'jsFcWithdraw',
           id: 'js-withdraw',
           view: WithdrawView,
-          options: { ac: this.activityList },
+          options: { ac: this.activityList, cur: cursize },
         },
       ],
     })

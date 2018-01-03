@@ -3,13 +3,12 @@
 @import '../../../../misc/variable';
 @import '../../../../misc/mixin';
 
-
-
 .sidebar-coupon-container {
   @include border-box();
 }
 
 .mall-coupon-container.sidebar-coupon {
+  background-color: white;
   .coupon-outer {
     padding: 0 20px;
     height: 172px;
@@ -18,5 +17,48 @@
     transform: scale(0.7);
     margin-left: -45px;
     margin-bottom: -35px;
+  }
+  .mall-coupon-container-empty {
+    text-align: center;
+    .myCoupon-record-empty-img {
+      margin-top: 120px;
+      width: 99px;
+      height: 99px;
+      display: inline-block;
+      background: url("~base/images/v2/icon-coupon-empty.png");
+    }
+  }
+  .recent-more {
+    display: block;
+    font-size: 14px;
+    color: $new-inverse-color;
+    text-decoration: underline;
+    height: 60px;
+    line-height: 60px;
+  }
+}
+
+.sidebar-coupon-systemContainer {
+  margin-top:10px;
+  background-color: white;
+  .sidebar-coupon-title {
+    padding: 17px 10px;
+    font-size: 16px;
+    color: $def-black-color;
+    border-bottom: 1px solid $def-gray-color;
+  }
+
+  .coupon-system-record-empty {
+    text-align: center;
+    .system-record-empty-img {
+      margin-top: 140px;
+      width: 99px;
+      height: 99px;
+      display: inline-block;
+      background: url("~base/images/v2/icon-coupon-empty.png");
+    }
+  }
+  .sidebar-systemCoupon-container {
+    min-height: 330px;
   }
 }

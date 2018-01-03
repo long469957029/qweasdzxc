@@ -84,183 +84,179 @@
       <!--</li>-->
     </div>
     <div class="inline-block fc-fm-mb-qu-right">
-      <div class="fc-tf-div">
-        <span class="fc-tf-div-name">转出钱包：</span>
-        <select class="js-fc-tf-from fc-tf-select" data-type="from" id="js-fc-tf-from" required
-                data-parsley-notEqualTo="#js-fc-tfp-to" data-parsley-shouldhavecenter="#js-fc-tfp-to">
-          <option value="0" selected>中心钱包</option>
-          <option value="6">GG钱包</option>
-          <option value="1">AG钱包</option>
-          <option value="4">PT钱包</option>
-          <option value="2">EBET钱包</option>
-          <option value="5">MG钱包</option>
-          <option value="3">BBIN钱包</option>
-          <option value="7">188体育钱包</option>
-        </select>
-      </div>
-      <div class="fc-tf-div">
-        <span class="fc-tf-div-name">转入钱包：</span>
-        <select class="js-fc-tf-to fc-tf-select" data-type="to" id="js-fc-tf-to" required
-                data-parsley-notEqualTo="#js-fc-tfp-from" data-parsley-shouldhavecenter="#js-fc-tfp-from">
-          <option value="0">中心钱包</option>
-          <option value="6">GG钱包</option>
-          <option value="1" selected>AG钱包</option>
-          <option value="4">PT钱包</option>
-          <option value="2">EBET钱包</option>
-          <option value="5">MG钱包</option>
-          <option value="3">BBIN钱包</option>
-          <option value="7">188体育钱包</option>
-        </select>
-      </div>
-      <div class="fc-tf-div">
-        <span class="fc-tf-div-name">金额：</span>
-        <input class="js-fc-out-money fc-tf-input">
-      </div>
+      <form class="js-fc-fm-form" action="javascript:void(0);">
+        <div class="fc-fm-out-select js-fm-select">
+          <span class="fc-fm-div-name">转出钱包：</span>
+          <div class="js-fm-out-select fc-fm-out-select-panel">
+            <div class="js-fm-out-selected fc-fm-out-selected">
+            </div>
+            <div class="js-fm-out-items fc-tr-out-items">
+            </div>
+          </div>
+        </div>
+        <div class="fc-fm-in-select js-fm-select">
+          <span class="fc-fm-div-name">转入钱包：</span>
+          <div class="js-fm-in-select  fc-fm-in-select-panel">
+            <div class="js-fm-in-selected fc-fm-in-selected">
+            </div>
+            <div class="js-fm-in-items fc-fm-in-items">
+            </div>
+          </div>
+        </div>
+        <div class="fc-tf-div-amount">
+          <span class="fc-fm-div-name">金额：</span>
+          <input class="js-fm-out-money fc-fm-input" required data-parsley-type="integer"
+                 data-parsley-max-message="您申请的金额超出可提现金额" autocomplete="off">
+        </div>
+        <input type="hidden" class="js-fm-tradeNum">
 
-    <div class="js-fc-tf-button fc-tf-div">
-      <button class="btn js-fc-fm-re-btn fc-fm-tf-btn">确定</button>
-    </div>
-</div>
-<div class="inline-block fc-tf-change">
-  <span class="inline-block js-fc-tf-change fc-tf-change-img"></span>
-</div>
-
-</ul>
-<ul>
-  <div class="fc-tf-personal-info-select">
-    <span class="fc-tf-info-select-name inline-block">个人数据总览</span>
-    <div class="inline-block fm-to-search-bar">
-      <form class="js-fm-search-form form-inline row" action="javascript:void(0)">
-        <span class="js-fm-btnGroup fm-to-btnGroup inline-block m-right-sm"></span>
-        <span class=""> 日期：</span><span class="js-fm-timeset inline-block"></span>
-        <button class="btn js-fc-fm-info-btn fc-fm-info-btn">查询</button>
+        <div class="js-fc-tf-button fc-tf-div-submit">
+          <button class="btn js-fc-fm-re-btn fc-fm-tf-btn">确定</button>
+        </div>
+        <div class="js-fc-fm-error-container fc-fm-error-container">
+        </div>
       </form>
     </div>
-  </div>
+    <div class="inline-block fc-tf-change">
+      <span class="inline-block js-fc-fm-change fc-tf-change-img"></span>
+    </div>
 
-  <div class="fc-tf-personal-info-panel">
-    <li class="fc-fm-info-item">
-      <div class="inline-block fc-fm-info-item-img">
-        <span class="fc-fm-info-item-img-area img-recharge"></span>
+  </ul>
+  <ul>
+    <div class="fc-tf-personal-info-select">
+      <span class="fc-tf-info-select-name inline-block">个人数据总览</span>
+      <div class="inline-block fm-to-search-bar">
+        <form class="js-fm-search-form form-inline row" action="javascript:void(0)">
+          <span class="js-fm-btnGroup fm-to-btnGroup inline-block m-right-sm"></span>
+          <span class=""> 日期：</span><span class="js-fm-timeset inline-block"></span>
+          <button class="btn js-fc-fm-info-btn fc-fm-info-btn">查询</button>
+        </form>
       </div>
-      <div class="inline-block fc-fm-info-item-info">
-        <div class="fc-fm-info-item-name">
-          充值
+    </div>
+
+    <div class="fc-tf-personal-info-panel">
+      <li class="fc-fm-info-item">
+        <div class="inline-block fc-fm-info-item-img">
+          <span class="fc-fm-info-item-img-area img-recharge"></span>
         </div>
-        <div class="fc-fm-info-item-num">
+        <div class="inline-block fc-fm-info-item-info">
+          <div class="fc-fm-info-item-name">
+            充值
+          </div>
+          <div class="fc-fm-info-item-num">
           <span class="js-fc-to-re fc-fm-info-item-num-value">
             0.00</span>
-          元
+            元
+          </div>
         </div>
-      </div>
-    </li>
-    <li class="fc-fm-info-item">
-      <div class="inline-block fc-fm-info-item-img">
-        <span class="fc-fm-info-item-img-area img-withdraw"></span>
-      </div>
-      <div class="inline-block fc-fm-info-item-info">
-        <div class="fc-fm-info-item-name">
-          提现
+      </li>
+      <li class="fc-fm-info-item">
+        <div class="inline-block fc-fm-info-item-img">
+          <span class="fc-fm-info-item-img-area img-withdraw"></span>
         </div>
-        <div class="fc-fm-info-item-num">
+        <div class="inline-block fc-fm-info-item-info">
+          <div class="fc-fm-info-item-name">
+            提现
+          </div>
+          <div class="fc-fm-info-item-num">
           <span class="js-fc-to-wi fc-fm-info-item-num-value">
             0.00</span>
-          元
+            元
+          </div>
         </div>
-      </div>
-    </li>
-    <li class="fc-fm-info-item">
-      <div class="inline-block fc-fm-info-item-img">
-        <span class="fc-fm-info-item-img-area img-bet"></span>
-      </div>
-      <div class="inline-block fc-fm-info-item-info">
-        <div class="fc-fm-info-item-name">
-          投注
+      </li>
+      <li class="fc-fm-info-item">
+        <div class="inline-block fc-fm-info-item-img">
+          <span class="fc-fm-info-item-img-area img-bet"></span>
         </div>
-        <div class="fc-fm-info-item-num">
+        <div class="inline-block fc-fm-info-item-info">
+          <div class="fc-fm-info-item-name">
+            投注
+          </div>
+          <div class="fc-fm-info-item-num">
           <span class="js-fc-to-be fc-fm-info-item-num-value">
             0.00</span>
-          元
+            元
+          </div>
         </div>
-      </div>
-    </li>
-    <li class="fc-fm-info-item">
-      <div class="inline-block fc-fm-info-item-img">
-        <span class="fc-fm-info-item-img-area img-award"></span>
-      </div>
-      <div class="inline-block fc-fm-info-item-info">
-        <div class=" fc-fm-info-item-name">
-          派奖
+      </li>
+      <li class="fc-fm-info-item">
+        <div class="inline-block fc-fm-info-item-img">
+          <span class="fc-fm-info-item-img-area img-award"></span>
         </div>
-        <div class="fc-fm-info-item-num">
+        <div class="inline-block fc-fm-info-item-info">
+          <div class=" fc-fm-info-item-name">
+            派奖
+          </div>
+          <div class="fc-fm-info-item-num">
           <span class="js-fc-to-bo fc-fm-info-item-num-value">
             0.00</span>
-          元
+            元
+          </div>
         </div>
-      </div>
-    </li>
-    <li class="fc-fm-info-item">
-      <div class="inline-block fc-fm-info-item-img">
-        <span class="fc-fm-info-item-img-area img-rebate"></span>
-      </div>
-      <div class="inline-block fc-fm-info-item-info">
-        <div class="fc-fm-info-item-name">
-          返点
+      </li>
+      <li class="fc-fm-info-item">
+        <div class="inline-block fc-fm-info-item-img">
+          <span class="fc-fm-info-item-img-area img-rebate"></span>
         </div>
-        <div class="fc-fm-info-item-num">
+        <div class="inline-block fc-fm-info-item-info">
+          <div class="fc-fm-info-item-name">
+            返点
+          </div>
+          <div class="fc-fm-info-item-num">
           <span class="js-fc-to-reb fc-fm-info-item-num-value">
             0.00</span>
-          元
+            元
+          </div>
         </div>
-      </div>
-    </li>
-    <li class="fc-fm-info-item">
-      <div class="inline-block fc-fm-info-item-img">
-        <span class="fc-fm-info-item-img-area img-back"></span>
-      </div>
-      <div class="inline-block fc-fm-info-item-info">
-        <div class="fc-fm-info-item-name">
-          返水
+      </li>
+      <li class="fc-fm-info-item">
+        <div class="inline-block fc-fm-info-item-img">
+          <span class="fc-fm-info-item-img-area img-back"></span>
         </div>
-        <div class="fc-fm-info-item-num">
+        <div class="inline-block fc-fm-info-item-info">
+          <div class="fc-fm-info-item-name">
+            返水
+          </div>
+          <div class="fc-fm-info-item-num">
           <span class="js-fc-to-ba fc-fm-info-item-num-value">
             0.00</span>
-          元
+            元
+          </div>
         </div>
-      </div>
-    </li>
-    <li class="fc-fm-info-item">
-      <div class="inline-block fc-fm-info-item-img">
-        <span class="fc-fm-info-item-img-area img-activity"></span>
-      </div>
-      <div class="inline-block fc-fm-info-item-info">
-        <div class="fc-fm-info-item-name">
-          活动
+      </li>
+      <li class="fc-fm-info-item">
+        <div class="inline-block fc-fm-info-item-img">
+          <span class="fc-fm-info-item-img-area img-activity"></span>
         </div>
-        <div class="fc-fm-info-item-num">
+        <div class="inline-block fc-fm-info-item-info">
+          <div class="fc-fm-info-item-name">
+            活动
+          </div>
+          <div class="fc-fm-info-item-num">
           <span class="js-fc-to-ac fc-fm-info-item-num-value">
             0.00</span>
-          元
+            元
+          </div>
         </div>
-      </div>
-    </li>
-    <li class="fc-fm-info-item">
-      <div class="inline-block fc-fm-info-item-img">
-        <span class="fc-fm-info-item-img-area img-profit"></span>
-      </div>
-      <div class="inline-block fc-fm-info-item-info">
-        <div class="fc-fm-info-item-name">
-          总盈亏
+      </li>
+      <li class="fc-fm-info-item">
+        <div class="inline-block fc-fm-info-item-img">
+          <span class="fc-fm-info-item-img-area img-profit"></span>
         </div>
-        <div class="fc-fm-info-item-num">
+        <div class="inline-block fc-fm-info-item-info">
+          <div class="fc-fm-info-item-name">
+            总盈亏
+          </div>
+          <div class="fc-fm-info-item-num">
           <span class="js-fc-to-pr fc-fm-info-item-num-value">
             0.00</span>
-          元
+            元
+          </div>
         </div>
-      </div>
-    </li>
-  </div>
-</ul>
+      </li>
+    </div>
+  </ul>
 
 </div>
 

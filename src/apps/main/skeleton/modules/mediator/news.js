@@ -43,16 +43,17 @@ const NewsMediatorModule = Base.Module.extend({
         const letterRes = letterResData[0]
         const noticeRes = noticeResData[0]
 
-        self.model.set({
-          // letterList: letterRes.root.letterList,
-          unReadLetter: letterRes.root.unReadLetter,
-          // noticeList: noticeRes.root.noticeList,
-          unReadNotice: noticeRes.root.unReadNotice,
-        }, {
-          parse: true,
-        })
-
-        Global.m.publish('news:updating', self.model)
+        if(letterRes.root &&  noticeRes.root){
+          self.model.set({
+            // letterList: letterRes.root.letterList,
+            unReadLetter: letterRes.root.unReadLetter,
+            // noticeList: noticeRes.root.noticeList,
+            unReadNotice: noticeRes.root.unReadNotice,
+          }, {
+            parse: true,
+          })
+          Global.m.publish('news:updating', self.model)
+        }
       })
   },
 

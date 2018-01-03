@@ -1,11 +1,23 @@
-<a class="feedback-close-btn" data-dismiss="modal">×</a>
-<div class="feedback-title">意见反馈</div>
+<form class="js-sideBar-feedback-form">
+<div class="feedback-title"><span class="feedback-title-img"></span><span class="feedback-title-text">意见反馈</span></div>
 <div class="feedback-content">
-  <select class="feedback-select">
-    <option value="" disabled selected>选择意见类型</option>
+  <div class="inline-block feedback-select-container">
+  <select class="js-feedback-type feedback-select" required>
+    <option value="" disabled selected>请择意见类型</option>
+    <option value="1">意见和建议</option>
+    <option value="2">游戏BUG</option>
+    <option value="3">活动收集</option>
+    <option value="4">其他问题</option>
   </select>
-  <input type="text" class="feedback-input" placeholder="请输入标题">
-  <textarea class="feedback-textarea" name="suggest" id="suggest" cols="30" rows="10" placeholder="请输入建议内容"></textarea>
+  </div>
+  <div class="inline-block feedback-input-container">
+  <input type="text" class="js-feedback-title feedback-input" placeholder="请输入标题" data-parsley-length="[10, 50]"  autocomplete="off" required>
+  </div>
+  <div>
+  <textarea class="js-feedback-content feedback-textarea" name="suggest" id="suggest" cols="30" rows="10" placeholder="请输入建议内容" data-parsley-length="[20, 2000]"  autocomplete="off" required
+            ></textarea>
+  </div>
 </div>
 
-<div class="btn feedback-btn ripple-btn">确认发送</div>
+<div class="btn feedback-btn ripple-btn js-feedback-submit">确认发送</div>
+</form>

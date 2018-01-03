@@ -80,8 +80,10 @@ const ToolbarView = Base.ItemView.extend({
   },
   feedbackDialogHandler() {
     const $feedbackDialog = Global.ui.dialog.show({
-      anySize: '610',
-      anyPosition: '210',
+      title: '',
+      size: 'feedback-panel',
+      bStyle: 'width: 540px;height:470;border:0;"',
+      bodyClass: 'js-sideBar-feedback feedback-panel',
       body: '<div class="feedback-dialog-container"></div>',
     })
     const $dialogContainer = $feedbackDialog.find('.feedback-dialog-container')
