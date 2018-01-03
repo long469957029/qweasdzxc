@@ -117,28 +117,28 @@ const HeaderView = Base.ItemView.extend({
     let levelName = ''
     switch (parseInt(level)) {
       case 0:
-        levelName = '骑士';
+        levelName = '骑士'
         break
       case 1:
-        levelName = '男爵';
+        levelName = '男爵'
         break
       case 2:
-        levelName = '子爵';
+        levelName = '子爵'
         break
       case 3:
-        levelName = '伯爵';
+        levelName = '伯爵'
         break
       case 4:
-        levelName = '侯爵';
+        levelName = '侯爵'
         break
       case 5:
-        levelName = '公爵';
+        levelName = '公爵'
         break
       case 6:
-        levelName = '大公';
+        levelName = '大公'
         break
       default:
-        levelName = '未知';
+        levelName = '未知'
         break
     }
     return levelName
@@ -237,7 +237,7 @@ const HeaderView = Base.ItemView.extend({
       return false
     }
 
-    Global.appRouter.navigate('#fc/wd', {trigger: true, replace: false})
+    Global.appRouter.navigate('#fc/wd', { trigger: true, replace: false })
   },
 
   // inTicketSelectHandler: function(e){
@@ -339,7 +339,7 @@ const HeaderView = Base.ItemView.extend({
       if (clpValidate) {
         const password = $('.js-lock-password').val()
 
-        self.fundslockXhr({fundsPassword: password}).done((res) => {
+        self.fundslockXhr({ fundsPassword: password }).done((res) => {
           if (res.result == 0) {
             self.$('.js-gl-hd-lock').removeClass('sfa-h-unlocked').addClass('sfa-h-locked').data('status', '1')
             Global.ui.notification.show(res.msg)
@@ -388,7 +388,7 @@ const HeaderView = Base.ItemView.extend({
         const question = $('.js-unlock-question').val()
         const securityId = $('.js-questionId-input').val()
 
-        self.fundsunlockXhr({fundsPassword: password, securityId, securityAsw: question}).done((res) => {
+        self.fundsunlockXhr({ fundsPassword: password, securityId, securityAsw: question }).done((res) => {
           if (res.result == 0) {
             Global.ui.notification.show(res.msg)
             self.$dialogWd.modal('hide')
@@ -402,7 +402,7 @@ const HeaderView = Base.ItemView.extend({
       }
     })
   },
-  checkAnnouncementHandler: function () {
+  checkAnnouncementHandler () {
     Global.m.router.goTo('#nc/px')
   },
 

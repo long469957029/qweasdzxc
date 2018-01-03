@@ -208,7 +208,6 @@ const NavsView = Base.ItemView.extend({
     this.$navMallSubList = this.$('.js-nav-mall-sub-list')
 
     this.$underLine = this.$('.js-navbar-slide-underline')
-
   },
   // generateGameMenu: function(gameList){
   //   var self = this;
