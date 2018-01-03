@@ -55,9 +55,8 @@ const OpenAccountManageView = Base.ItemView.extend({
       self.loadingFinish()
     })
       .done((res) => {
-        const data = res.root.seriesList
-
         if (res && res.result === 0) {
+          const data = res.root.seriesList
           const subRebateRange = data.subRebateRange
           self.$acmanualRebate.val(_(subRebateRange.subAcctRebate).formatDiv(10, { fixed: 1 }))
           // self.$acmanualRebate.attr('data-parsley-range', `[${_(subRebateRange.rebateMin).formatDiv(10, { fixed: 1 })},${_(subRebateRange.rebateMax).formatDiv(10, { fixed: 1 })}]`)

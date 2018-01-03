@@ -377,7 +377,32 @@
 
   .ac-auto-container {
     position: relative;
-
+    width: 946px;
+    margin: 0 auto;
+    padding-top: 25px;
+    .tooltip{
+      position: absolute;
+      .tooltip-inner{
+        background: rgba(0,0,0,0.8);
+        color: $def-white-color;
+      }
+    }
+    .btn{
+      width: 60px;
+      height: 27px;
+      border-radius: $globalInputRadius;
+      background: linear-gradient(to bottom,$def-white-color,$sec-line-color);
+      color: $new-inverse-color;
+      font-size: $font-xs;
+      border-color: $def-gray-color;
+    }
+    .input-link{
+      width: 200px;
+      margin-right: 10px;
+      font-size: 12px;
+      height: 18px;
+      box-shadow: inset 0px 1px 1px rgba(0,0,0,.3);
+    }
     .ac-span-link {
       width: 170px;
       text-overflow: ellipsis;
@@ -387,7 +412,10 @@
       vertical-align: middle;
     }
     .ac-auto-remark {
-      width: 90px;
+      width: 135px;
+      height: 18px;
+      font-size: 12px;
+      box-shadow: inset 0px 1px 1px rgba(0,0,0,.3);
     }
     .ac-span-remark {
       width: 104px;
@@ -396,6 +424,15 @@
       white-space: nowrap;
       overflow: hidden;
       vertical-align: middle;
+    }
+    .ac-btn-red-detail{
+      width: 32px;
+      height: 32px;
+      display: inline-block;
+      background: url('./red-btn-bg.png') no-repeat;
+      vertical-align: middle;
+      margin-left: 10px;
+      cursor: pointer;
     }
     .qr-code-div {
       position: relative;
@@ -406,25 +443,24 @@
       left: 380px;
       width: 150px;
       height: 150px;
-      border: 16px solid #ccc;
+      border: 16px solid $def-white-color;
+      box-shadow: 0px 0px 3px rgba(0,0,0,.5);
+      background-color: $def-white-color;
       display: none;
     }
     .qr-code-div-all-closeBtn {
       background: url("downloadClose.png") no-repeat;
-      width: 12px;
-      height: 12px;
+      width: 23px;
+      height: 23px;
       position: absolute;
-      top: -14px;
-      right: -14px;
-      background-position-x: -2px;
-      background-position-y: -2px;
+      top: -26px;
+      right: -26px;
       cursor: pointer;
     }
 
     .ac-btn-qr-code {
       &.selected {
-        background-color: #e8675d;
-        border: 1px solid #e8675d;
+        border: 1px solid $new-main-deep-color;
       }
     }
 
@@ -442,6 +478,8 @@
 
     .ac-auto-remark-saveBtn {
       background: url("saveBtn.png") no-repeat;
+      position: relative;
+      right: 40px;
     }
 
     .ac-link-del {
@@ -627,4 +665,47 @@
 .copy-contant{
   width: 300px;
   margin: 0 auto;
+}
+.red-pack-container{
+  width: 378px;
+  height: 413px;
+  background: url("./red-pack-detail-bg.png") no-repeat;
+  position: relative;
+  font-size: $font-sm;
+  color: $def-black-color;
+  .red-close{
+    width: 17px;
+    height: 16px;
+    background: url("./red-pack-detail-close.png") no-repeat;
+    position: absolute;
+    top: 42px;
+    right: 30px;
+    cursor: pointer;
+  }
+  .red-btn{
+    display: block;
+    width: 245px;
+    height: 45px;
+    background-color: #f0c862;
+    color: #92411f;
+    font-size:$font-sm;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 50px;
+    margin: 105px 0 0 80px;
+    cursor: pointer;
+  }
+  .num-text{
+    color: #e54d4b;
+  }
+  .red-detail-main{
+    width: 294px;
+    margin: 0 auto;
+    transform: translateX(11px);
+    padding-top: 40px;
+  }
+  .red-pack-title{
+    margin-top: 120px;
+    text-align: center;
+  }
 }
