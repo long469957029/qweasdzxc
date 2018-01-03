@@ -1,4 +1,4 @@
-const TransferView = require('fundCenter/transfer')
+const TransferView = require('./userTransfer')
 
 const LowLevelMoneyTransferView = TransferView.extend({
 

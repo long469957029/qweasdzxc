@@ -1,5 +1,5 @@
 
-
+const TransferView = require('agencyCenter/views/userTransfer')
 const RouterController = require('skeleton/controllers/router')
 
 const LowLevelManageView = require('agencyCenter/views/lowLevelManage')
@@ -369,7 +369,16 @@ const AgencyCenterController = RouterController.extend({
       sidebar,
     })
   },
-
+  transfer() {
+    this.changeMainReginView(new TransferView(), {
+      main: {
+        title: '平台转账',
+        titleDes: '<div class="js-ac-user-transfer"></div>',
+      },
+      sidebar,
+      // activeMenu: 'fc/fm'
+    })
+  },
 
 })
 

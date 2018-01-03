@@ -1,10 +1,9 @@
 
-
 const LowMultiSelect = require('com/lowMultiSelect')
 
 const MoneyTransferView = Base.ItemView.extend({
 
-  template: require('fundCenter/transfer/userTransfer.html'),
+  template: require('agencyCenter/templates/userTransfer.html'),
 
   className: 'fc-moneyTransfer-view',
 
@@ -137,23 +136,23 @@ const MoneyTransferView = Base.ItemView.extend({
       valMin = 1
       desMin = '（单笔最低转账金额无限制'
     } else {
-      desMin = `（最低转账金额<span class="js-fc-tf-minLimit text-pleasant">${valMin}</span>元`
+      desMin = `（最低转账金额<span class="js-fc-tf-minLimit text-prominent">${valMin}</span>元`
     }
     if (valMax === 0) {
       valMax = 5000000
       desMax = ',最高转账金额无限制'
     } else {
-      desMax = `,最高转账金额<span class="js-fc-tf-maxLimit text-pleasant">${valMax}</span>元`
+      desMax = `,最高转账金额<span class="js-fc-tf-maxLimit text-prominent">${valMax}</span>元`
     }
     if (data.confNum === 0) {
       valTradeNum = -1
       desTradeNum = ',转账次数无限制）'
     } else {
-      desTradeNum = `,今日还可以转账<span class="text-pleasant">${valTradeNum}次</span>）`
+      desTradeNum = `,今日还可以转账<span class="text-prominent">${valTradeNum}次</span>）`
     }
 
     this.$('.js-fc-tf-amount').attr('data-parsley-range', `[${valMin},${valMax}]`)
-    this.$('.js-fc-mt-valDesc').html(desMin + desMax + desTradeNum)
+    $('.js-ac-user-transfer').html(desMin + desMax + desTradeNum)
     this.$('.js-fc-mt-tradeNum').val(valTradeNum)
     if (valTradeNum === 0) {
       this.$('.js-fc-btn-submit').prop('disabled', true)
