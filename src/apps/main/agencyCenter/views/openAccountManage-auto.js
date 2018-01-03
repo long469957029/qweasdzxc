@@ -1,30 +1,21 @@
-
 const OpenAccountManageView = Base.ItemView.extend({
 
   template: require('agencyCenter/templates/openAccountManage-auto.html'),
+  confirmTpl: _(require('agencyCenter/templates/openAccountManage-confirm.html')).template(),
   startOnLoading: true,
 
   events: {
     'click .js-ac-add-link': 'addLinkHandler',
     'blur .js-ac-auto-rebate': 'inputRebateHandler',
     'blur .js-ac-auto-remarkInput': 'remarkHandler',
+    'blur .js-ac-auto-red-money': 'redMoneyHandler',
+    'blur .js-ac-auto-red-money-all': 'redMoneyHandler',
+    'blur .js-ac-auto-red-num': 'redNumHandler',
     'click .js-look-bonus': 'lookBonusViewHandler',
     'click .js-ac-auto-checkbox': 'checkboxHandler',
     'click .js-ac-redType>button': 'redTypeHandler',
   },
 
-  createSubAcctXhr(data) {
-    return Global.sync.ajax({
-      url: '/acct/subaccount/createsubacctlink.json',
-      data,
-    })
-  },
-  createSubRedPackAcctXhr(data) {
-    return Global.sync.ajax({
-      url: '/acct/subaccount/createsubacctlink.json',
-      data,
-    })
-  },
   getSubAcctLinkXhr() {
     return Global.sync.ajax({
       url: '/acct/subaccount/getsubacctlink.json',
@@ -49,9 +40,10 @@ const OpenAccountManageView = Base.ItemView.extend({
     this.$acRedMoney = this.$('.js-ac-auto-red-money')
     this.$acRedPackTip = this.$('.js-ac-red-pack-tip')
     this.$acRedMoneyAll = this.$('.js-ac-auto-red-money-all')
-    this.$aRedAllTip = this.$('.js-ac-red-pack-all-tip')
+    this.$acRedAllTip = this.$('.js-ac-red-pack-all-tip')
     this.$acRedNum = this.$('.js-ac-auto-red-num')
     this.$acRedNumTip = this.$('.js-ac-red-pack-num-tip')
+    this.$acAddLink = this.$('.js-ac-add-link')
     this.getSubAcctLinkXhr()
       .always(() => {
         self.loadingFinish()
@@ -70,15 +62,11 @@ const OpenAccountManageView = Base.ItemView.extend({
   },
   // event handlers
   // 新增链接
-  addLinkHandler(e) {
+  addLinkHandler() {
     const rebateValidate = this.$acOpenAccountAutoForm.parsley().validate()
     if (!rebateValidate) {
       return
     }
-    const self = this
-    const $target = $(e.currentTarget)
-
-    $target.button('loading')
 
     const userType = this.$acUserType.find('button.active').data('type')
     const data = {
@@ -86,52 +74,75 @@ const OpenAccountManageView = Base.ItemView.extend({
       rebate: _(this.$acAutoReBate.val()).formatMul(10),
       remark: this.$acAutoRemarkInput.val(),
     }
-    let url = this.createSubAcctXhr()
+
     if (this.$acAutoCheckbox.is(':checked')) {
       const redpackType = this.$acRedType.find('button.active').data('type')
-      const redpackAmount = redpackType === 2 ? this.$acRedMoney.val() : this.$acRedMoneyAll.val()
-      _(data).extend({
-        redpackOpenType: 1,
-        redpackAmount,
-        redpackType,
-        redpackNum: this.$acRedNum.val(),
-      })
-      url = this.createSubRedPackAcctXhr()
+      const $input = redpackType === 2 ? this.$acRedMoney : this.$acRedMoneyAll
+      if (this.redMoneyHandler() && this.redNumHandler()) {
+        const redpackAmount = $input.val()
+        _(data).extend({
+          redpackOpenType: 1,
+          redpackAmount,
+          redpackType,
+          redpackNum: this.$acRedNum.val(),
+        })
+        this.saveConfirmDialog(data)
+      }
+    } else {
+      this.saveHandler(1, data)
     }
-
-    // $.when(this._parentView.subSubAcctXhr, this.createSubAcctXhr(data))
-    //   .always(() => {
-    //     $target.button('reset')
-    //   })
-    //   .done((infoResList, createResList) => {
-    //     const infoRes = infoResList[0]
-    //     const createRes = createResList[0]
-    //     if (infoRes.result === 0 && createRes.result === 0) {
-    //       const rebateVal = _(createRes.root.rebate).formatDiv(10, { fixed: 1 })
-    //       const row = {
-    //         columnEls: [
-    //           self.$autoContainer.find('tbody tr').length + 1,
-    //           `<span class="js-ac-span-link ac-span-link m-right-xs" title="${_(`/register.html?linkId=${createRes.root.linkId}`).toLink()}">${_(`/register.html?linkId=${createRes.root.linkId}`).toLink()}</span>` +
-    //           '<button type="button" class="js-ac-btn-link-copy btn btn-cool m-right-xs ac-btn-link-copy">复制</button>' +
-    //           `<button userLinkUrl="${createRes.root.linkId}" type="button" class="js-ac-btn-qr-code btn btn-cool ac-btn-qr-code">二维码</button>`,
-    //           userType == 1 ? '玩家' : '代理',
-    //           `<span class="js-ac-auto-subAcctRebate" data-subacctrebate="${createRes.root.rebate}">${rebateVal}</span>`,
-    //           '0',
-    //           '0',
-    //           // _.isEmpty(createRes.root.remark) ?
-    //           //   '<input type="text" class="js-ac-auto-remark ac-auto-remark" data-parsley-maxlength="20" /><span class="js-ac-auto-remark-saveBtn ac-auto-remark-saveBtn"></span>' :
-    //           `<span class="js-ac-span-remark ac-span-remark" title="${createRes.root.remark}">${createRes.root.remark}</span><span class="js-ac-auto-remark-updateBtn ac-auto-remark-updateBtn"></span>`,
-    //           `<span data-userlinkid="${createRes.root.userLinkId}" class="js-ac-link-del ac-link-del"></span>`,
-    //         ],
-    //       }
-    //
-    //       self.$autoContainer.staticGrid('addRows', row)
-    //       const $tbodyLastTr = self.$autoContainer.find('tbody tr:last')
-    //       self.copyLinkHandler($tbodyLastTr)
-    //     }
-    //   })
   },
 
+  saveHandler(urlType, data) {
+    const self = this
+    let url = ''
+    if (urlType === 1) {
+      url = '/acct/subaccount/createsubacctlink.json'
+    } else {
+      url = '/acct/subaccount/createSubRedpackAcctlink.json'
+    }
+    this.$acAddLink.button('loading')
+    Global.sync.ajax({
+      url,
+      data,
+    }).always(() => {
+      self.$acAddLink.button('reset')
+    })
+      .done((res) => {
+        if (res.result === 0) {
+          Global.ui.notification.show('开户链接已生成！', { type: 'success' })
+          self.render()
+        } else {
+          Global.ui.notification.show(res.msg === 'fail' ? '链接生成失败' : res.msg)
+        }
+      })
+      .fail((res) => {
+        Global.ui.notification.show(res.msg === 'fail' ? '链接生成失败' : res.msg)
+      })
+  },
+
+  saveConfirmDialog(data) {
+    const self = this
+    const $dialog = Global.ui.dialog.show({
+      closeBtn: false,
+      body: '<div class="js-confirm-dialog"></div>',
+      anySize: '480',
+      bodyClass: 'no-padding',
+    })
+    const $confirmDialog = $dialog.find('.js-confirm-dialog')
+    $confirmDialog.html(this.confirmTpl({
+      data,
+      type: 2, // 1代表手动开户  2代表链接开户  3代表手动开户成功
+      title: '红包开户确认',
+    }))
+    $dialog.off('click.save').on('click.save', '.js-confrim-btn', () => {
+      $dialog.modal('hide')
+      self.saveHandler(2, data)
+    })
+    $dialog.on('hidden.modal', function () {
+      $(this).remove()
+    })
+  },
   inputRebateHandler(e) {
     const $target = $(e.currentTarget)
     const rebate = $target.val()
@@ -169,6 +180,40 @@ const OpenAccountManageView = Base.ItemView.extend({
       this.$acRemarkTip.html('<span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>' +
         '备注不可超过20个字符')
     }
+  },
+  redMoneyHandler() {
+    const type = this.$acRedType.find('button.active').data('type')
+    const $input = type === 2 ? this.$acRedMoney : this.$acRedMoneyAll
+    const $tip = type === 2 ? this.$acRedPackTip : this.$acRedAllTip
+    const text = type === 2 ? '金额' : '总额'
+    const redText = type === 2 ? '单个红包金额' : '红包总金额'
+    const money = $input.val()
+    let isValidate = false
+    if (money === '') {
+      this.changeEleClass($input, 'error')
+      $tip.html(this.getErrorTooltip(`请输入${redText}`))
+    } else if (Number(money) < 1) {
+      this.changeEleClass($input, 'error')
+      $tip.html(this.getErrorTooltip(`红包${text}不得低于1元`))
+    } else {
+      this.changeEleClass($input, 'success')
+      $tip.html(`<span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>红包${text}不得低于1元`)
+      isValidate = true
+    }
+    return isValidate
+  },
+  redNumHandler() {
+    const val = this.$acRedNum.val()
+    let isValidate = false
+    if (val === '') {
+      this.changeEleClass(this.$acRedNum, 'error')
+      this.$acRedNumTip.html(this.getErrorTooltip('请设置红包个数'))
+    } else {
+      this.changeEleClass(this.$acRedNum, 'success')
+      this.$acRedNumTip.empty()
+      isValidate = true
+    }
+    return isValidate
   },
   getErrorTooltip (errorText) {
     const errorHtml =
@@ -209,7 +254,7 @@ const OpenAccountManageView = Base.ItemView.extend({
   redTypeHandler(e) {
     const $target = $(e.currentTarget)
     const type = Number($target.data('type'))
-    if (type === 0) {
+    if (type === 2) {
       this.$acRedFixed.removeClass('hidden')
       this.$acRedRandom.addClass('hidden')
     } else {
