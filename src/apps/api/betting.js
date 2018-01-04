@@ -53,4 +53,20 @@ export default {
       .then(then)
       .catch(fail)
   },
+
+  pushChase({plan, play, suspend, usePack, amount}, then, fail) {
+    return Global.sync.axios({
+      url: '/ticket/chase/chase.json',
+      tradition: true,
+      data: {
+        plan,
+        play,
+        suspend,
+        usePack,
+        amount,
+      },
+    })
+      .then(then)
+      .catch(fail)
+  },
 }

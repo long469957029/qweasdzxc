@@ -268,23 +268,16 @@
   }
   .bc-unit-select-add{
     width: 58px;
-    height: 22px;
+    height: 20px;
     padding-left: 8px;
-    margin-left: 5px;
     border-radius: 3px;
     color: $def-black-color;
+    margin: 2px 0;
+    font-size: 12px;
   }
 
   .bc-multi-range {
     height: 30px;
-  }
-  .bc-md-btn {
-    font-size: $font-sm;
-    width: 120px;
-    padding: 5px 10px;
-    font-weight: 600;
-    transform: translateY(-5px);
-    border-bottom: 3px solid rgba(0,0,0,0.4);
   }
   .bc-jb-btn{
     font-size: $font-md;
@@ -316,7 +309,7 @@
         &:before{
           content: '';
           width: 100%;
-          height: 4px;
+          height: 3px;
           position: absolute;
           background-color: $main-deep-color;
           top: 0;
@@ -394,29 +387,18 @@
   margin-bottom: 10px;
 }
 
-.bc-plan-id {
-  color: $font-passion;
-  font-weight: bold;
-}
-
-.bc-bet-mode {
-  width: 120px;
-}
-
-.bc-main-text {
-  color: $font-passion;
-}
-
 .bc-lottery-preview {
   width: 878px;
   margin-right: 10px;
-  height: 190px;
   border-radius: $globalBtnRadius;
-  table {
-    td {
-     //padding: 9px;
-    }
+  border: 1px solid $def-gray-color;
+
+  .table th, .table td {
+    padding: 6px 3px;
+    font-size: 12px;
   }
+
+
   .bc-lottery-clear{
     width: 47px;
     height: 22px;
@@ -540,12 +522,6 @@
   height: 30px;
   background-size: 100%;
 }
-//.num2{
-//  left: 399px;
-//}
-//.num3{
-//  left: 551px;
-//}
 
 .bc-hgcaculate-examplerow{
   text-align: left;
@@ -571,404 +547,6 @@
   border-top: 0;
   padding: 5px 0;
   margin-bottom: 4px;
-}
-
-.bc-main-area.mark6{
-  background-color: #fff;
-  .bg-default,
-  .tab-toolbar.tab-pill.tab-pill-deep .tab.active,
-  .basic-inverse,
-  .table tbody td {
-    background-color: #fff;
-  }
-}
-
-.tab-toolbar.tab-circle .tab-group.mark6 {
-
-  margin-left: 0;
-  display: inline-block;
-
-  > div > div {
-    width: 880px;
-    display: inline-block;
-  }
-
-  .mark6-bz-bz {
-    margin-bottom: 8px;
-  }
-
-  .mark6-sx-sx > div:first-child {
-    width: 50%;
-  }
-
-  .mark6-sx-sx > div:last-child {
-    width: 50%;
-    display: inline-block;
-  }
-
-  .mark6-tm-tm,
-  .mark6-tm-sebo,
-  .mark6-zm-zm,
-  .mark6-bz-bz{
-    span {
-      display: block;
-    }
-    > div {
-      float: left;
-    }
-  }
-
-  .mark6-tw-tw{
-    >div{
-      display: inline-block;
-      float: left;
-    }
-    > div:last-child {
-      .mark6-tw-tw-select .number-info {
-        height: 61px;
-        width: 208px;
-        margin-top: 0px;
-        >div{
-          display: inline-block;
-          float: left;
-        }
-        > div:last-child {
-          margin-top:6px;
-        }
-      }
-      .mark6-tw-tw-select>span{
-        margin-top: 16px;
-      }
-    }
-  }
-
-  .mark6-bz-bz .mark6-bz-odds {
-    position: absolute;
-    top:0;
-    left: 0;
-    margin-top: -65px;
-    margin-left: 750px;
-    label{
-      display: inline-block;
-    }
-  }
-
-  .mark6-tm-tm-select,
-  .mark6-tm-lm-select,
-  .mark6-tm-sebo-select,
-  .mark6-zm-zm-select,
-  .mark6-zm-lm-select,
-  .mark6-sx-sx-select,
-  .mark6-tw-tw-select,
-  .mark6-zh-zh-select,
-  .mark6-bz-bz-select {
-    width: 174px;
-    left: 0;
-    margin: 0px;
-    border: 1px solid #eee;
-    border-radius: 0;
-    height: 30px;
-    text-align: left;
-    margin-right: -1px;
-    margin-bottom: -1px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    &.active {
-      color: #000;
-      background-color: #ffe1df;
-      background-image: url("~base/images/sprites/assets/number-select.png");
-      background-position: 136px center;
-      background-repeat: no-repeat;
-    }
-    span {
-      display: inline-block;
-      height: 28px;
-      line-height: 28px;
-      font-size: 13px;
-      float: left;
-
-    }
-    span:last-child {
-      margin-left: 6px;
-    }
-  }
-
-  .mark6-tm-lm-select,
-  .mark6-sx-sx-select,
-  .mark6-tw-tw-select,
-  .mark6-zh-zh-select {
-    width: 217px;
-    height: auto;
-    display: inline-block;
-    float: left;
-    margin: 0px;
-    margin-right: -1px;
-    margin-bottom: -1px;
-    padding-top: 7px;
-    padding-bottom: 8px;
-    &.active {
-      background-position-x: 180px;
-    }
-    span {
-      line-height: 28px;
-      height: 28px;
-      float: left;
-      text-align: center;
-    }
-  }
-
-  .mark6-tm-sebo-select{
-    width: 290px;
-    &.active {
-      background-position-x: 240px;
-    }
-  }
-
-  .mark6-zm-zm-select{
-    width:174px;
-    &.active {
-      background-position-x: 136px;
-    }
-  }
-
-  .mark6-zm-lm-select{
-    float: left;
-    &.active {
-      background-position-x: 143px;
-    }
-  }
-
-  .mark6-sx-sx-select {
-    width: 436px;
-    padding: 8px 0px 8px 0px;
-    height: auto;
-    span {
-      vertical-align: initial;
-      display: inline-block;
-      float: left;
-      height: 28px;
-      line-height: 28px;
-      &:last-child {
-        margin: 0px;
-        margin-left: 7px;
-      }
-    }
-    &.active {
-      background-position-x: 364px;
-    }
-  }
-
-  .mark6-tw-tw-select{
-    width:436px;
-    >span{
-      width: auto;
-    }
-    &.active {
-      background-position-x: 380px;
-    }
-  }
-
-  .mark6-bz-bz-select{
-    >span:last-child {
-      margin-left: 74px;
-    }
-  }
-
-  .mark6-tm-tm-select .mark6-tm-tm-select-number,
-  .mark6-tm-lm-select .mark6-tm-lm-select-number,
-  .mark6-tm-sebo-select .mark6-tm-sebo-select-number,
-  .mark6-zm-zm-select .mark6-zm-zm-select-number,
-  .mark6-zm-lm-select .mark6-zm-lm-select-number,
-  .mark6-sx-sx-select .mark6-sx-sx-select-number,
-  .mark6-tw-tw-select .mark6-tw-tw-select-number,
-  .mark6-zh-zh-select .mark6-zh-zh-select-number,
-  .mark6-bz-bz-select .mark6-bz-bz-select-number {
-    width: 28px;
-    border-radius: 14px;
-    color: #fff;
-    margin-right: 9px;
-    text-align: center;
-    margin-left: 15px;
-    box-shadow: 1px 1px 2px 0px #888888;
-    &.red {
-      background-color: #FF5E44;
-    }
-    &.blue {
-      background-color: #7092FF;
-    }
-    &.green {
-      background-color: #9DCE28;
-    }
-  }
-
-  .mark6-tm-lm-select .mark6-tm-lm-select-number,
-  .mark6-tm-sebo-select .mark6-tm-sebo-select-number,
-  .mark6-zm-lm-select .mark6-zm-lm-select-number,
-  .mark6-tw-tw-select .mark6-tw-tw-select-number,
-  .mark6-zh-zh-select .mark6-zh-zh-select-number {
-    background-color: #e4e4e4;
-    width: 60px;
-    display: inline-block;
-    float: left;
-    line-height: 28px;
-    height: 28px;
-    color: #000;
-  }
-
-  .mark6-tm-sebo-select .mark6-tm-sebo-select-number {
-    color: #fff;
-    margin-left: 55px;
-  }
-
-  .mark6-zm-lm-select .mark6-zm-lm-select-number {
-    &.red, &.blue, &.green {
-      color: #fff;
-    }
-  }
-
-  .mark6-sx-sx-select .mark6-sx-sx-select-number {
-    width: 60px;
-    height: 28px;
-    margin-right: 10px;
-    margin-left: 40px;
-    background-color: #E4E4E4;
-    color: #000;
-    font-weight: bold;
-  }
-
-  .mark6-tw-tw-select .mark6-tw-tw-select-number {
-    margin-right: 15px;
-  }
-
-  .mark6-sx-sx-select .number-info,
-  .mark6-tw-tw-select .number-info{
-    width: auto;
-    color: #fff;
-    margin-right: 10px;
-    .red {
-      background-color: #FF5E44;
-    }
-    .blue {
-      background-color: #7092FF;
-    }
-    .green {
-      background-color: #9DCE28;
-    }
-  }
-
-  .mark6-sx-sx-select .number-info span,
-  .mark6-tw-tw-select .number-info span{
-    margin-right: 8px;
-    width: 28px;
-    box-shadow: 1px 1px 2px 0px #888888;
-    border-radius: 14px;
-    &:last-child {
-      margin: 0px;
-    }
-  }
-}
-
-.tab-toolbar.mark6-quick-select {
-  margin-top: 7px;
-  .tab-group {
-    display: inline-block;
-    margin: 0;
-    label {
-      width: 50px;
-      display: inline;
-      margin: 0;
-      padding: 0;
-      color: #737172;
-    }
-    &.sebo span {
-      width: 36px;
-    }
-    .all-clear{
-      margin-bottom: -76px;
-      border: 0;
-      background-color: transparent;
-      color: #000;
-      &:hover{
-        background-color: transparent;
-        border: 0;
-        color: #000;
-      }
-    }
-  }
-
-  .tab {
-    float: none;
-    margin-right: 14px;
-    background-color: #e2e1e1;
-    border-color: #e2e1e1;
-    color: #000;
-    border-radius: 3px;
-    font-size: 13px;
-    &:hover {
-      border: 1px solid #fe6760;
-      background-color: #fe6760;
-      color: #fff;
-    }
-  }
-  .active{
-    border: 1px solid #fe6760;
-    background-color: #fe6760;
-    color: #fff;
-  }
-}
-
-.text-circle.circle-mark6 {
-  margin-right: 6px;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  font-size: 16px;
-  margin-top: 8px;
-  color: #fff;
-
-  &.red {
-    background-color: #FF5E44;
-  }
-  &.blue {
-    background-color: #7092FF;
-  }
-  &.green {
-    background-color: #9DCE28;
-  }
-  &.separate {
-    width: 2px;
-    background-color: #fff;
-    height: 28px;
-    line-height: 28px;
-    margin-left: 2px;
-    margin-right: 7px;
-  }
-  &:last-child {
-    margin-right: 0px;
-  }
-}
-
-.bc-records .table.table-deep tbody td span.mark6Num:last-child {
-  color: #FE6760;
-}
-
-.bc-main-area.mark6 {
-  .bc-play-example{
-    display: none;
-  }
-  .mark6-help{
-    display: inline-block !important;
-    background-color: #fff;
-    background-image: url("~base/images/sprites/assets/mark6-help.png");
-    background-repeat: no-repeat;
-    width: 18px;
-    height:18px;
-    text-decoration: none;
-  }
-}
-
-.footer.mark6-footer{
-  position: static;
 }
 
 .all-clear{

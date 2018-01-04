@@ -56,7 +56,7 @@
     box-sizing:border-box;
     display: inline-flex;
     border-radius: 50px;
-    height: 30px;
+    height: 26px;
     min-width: 200px;
     background: $sec-line-color;
     position: relative;
@@ -69,8 +69,8 @@
 
     .radio-group-ui, .radio {
       width: 55px;
-      height: 28px;
-      line-height: 28px;
+      height: 24px;
+      line-height: 24px;
       border-radius: 40px;
       cursor: pointer;
       text-align: center;

@@ -70,9 +70,38 @@ const actions = {
         { planId, bet, usePack: state.usePack },
         ({ data }) => {
           resolve(data)
-          return commit(types.PUSH_BETTING_SUCCESS, data)
+          return commit(types.PUSH_BETTING_SUCCESS, {res: data, type})
         },
         () => { return commit(types.PUSH_BETTING_FAILURE) },
+      )
+    })
+  },
+
+  pushChase ({ state, commit }, {
+    plan,
+    suspend,
+    amount
+  }) {
+    const bettingList = state.previewList
+    const play = _(bettingList).reduce((list, item) => {
+      list.push({
+        betNum: item.bettingNumber,
+        playId: item.playId,
+        betMultiple: item.multiple,
+        moneyMethod: item.unit,
+        betMethod: item.betMethod,
+      })
+      return list
+    }, [])
+
+    return new Promise((resolve) => {
+      betting.pushChase(
+        { plan, play, suspend, usePack: state.usePack, amount },
+        ({ data }) => {
+          resolve(data)
+          return commit(types.PUSH_CHASE_SUCCESS, data)
+        },
+        () => { return commit(types.PUSH_CHASE_FAILURE) },
       )
     })
   },
@@ -81,12 +110,28 @@ const actions = {
 // this.on('change:multiple change:statistics change:userRebate change:betMethod', this.$_calculateByPrefab)
 // mutations
 const mutations = {
-  [types.PUSH_BETTING_SUCCESS] (state, res) {
+  [types.RESET_BETTING_CHOICE] (state) {
+    Object.assign(state, initState())
+  },
+
+  [types.PUSH_BETTING_SUCCESS] (state, {res, type}) {
     if (res && res.result === 0) {
-      this.commit(types.EMPTY_BUY_BETTING)
+      if (type === 'previewList') {
+        this.commit(types.EMPTY_PREV_BETTING)
+      } else {
+        this.commit(types.EMPTY_BUY_BETTING)
+      }
     }
   },
   [types.PUSH_BETTING_FAILURE] () {
+  },
+
+  [types.PUSH_CHASE_SUCCESS] (state, res) {
+    if (res && res.result === 0) {
+      this.commit(types.EMPTY_PREV_BETTING)
+    }
+  },
+  [types.PUSH_CHASE_FAILURE] () {
   },
 
   [types.SET_LIMIT_MONEY] (state, { limitMoney }) {
@@ -107,6 +152,10 @@ const mutations = {
     state.groupName = groupName
     state.playId = playId
     state.playName = playName
+  },
+  [types.SET_MAX_BONUS] (state, maxBonus) {
+    state.maxBonus = maxBonus
+    $_calculateByPrefab(state)
   },
   [types.SET_MULTIPLE] (state, num) {
     state.multiple = Number(num)
@@ -245,7 +294,7 @@ const mutations = {
     const totalInfo = _(list).reduce((info, item) => {
       info.totalLottery = _(info.totalLottery).add(item.statistics)
       info.totalMoney = _(info.totalMoney).add(item.prefabMoney)
-      info.totalBetBonus = _(info.totalBetBonus).add(item.betBonus)
+      info.totalBetBonus = _(info.totalBetBonus).add(item.formatMaxBonus)
       return info
     }, {
       totalLottery: 0,
@@ -502,6 +551,14 @@ const $_calculateByPrefab = (data) => {
     data.prefabMoney = prefabMoney
     // data.rebateMoney = data.betMethod === 1 ? _(prefabMoney).chain().mul(data.userRebate).div(1000)
     //   .value() : 0
+  }
+
+
+  if (data.multiple) {
+    data.formatMaxBonus = _.chain(data.maxBonus)
+      .div(10000).mul(data.unit)
+      .mul(data.multiple)
+      .value()
   }
 
   // data.rebateMoney = rebateMoney

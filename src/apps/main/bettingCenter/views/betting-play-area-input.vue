@@ -2,7 +2,7 @@
   <div class="play-area-input">
     <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
 
-    <div class="clearfix m-bottom-sm">
+    <div class="clearfix m-TB-md">
       <div class="js-bc-numbers-container bc-textarea-main pull-left" @click="focusInput">
         <div class="height-100 width-100 cursor-text" ref="fileTip">
           <p style="font-size:12px;line-height:170%;">

@@ -118,7 +118,7 @@
     <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="chaseModal" v-if="showChaseModal">
             <betting-chase :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney" :ticket-info="ticketInfo"
                            :planId="bettingInfo.planId" :preview-list="bettingChoice.previewList"
-                           :total-lottery="bettingChoice.totalLottery" ref="bettingChase"></betting-chase>
+                           :total-lottery="bettingChoice.totalLottery" ref="bettingChase" @chaseComplete="chaseComplete"></betting-chase>
     </div>
 
     <!-- 确认投注 -->
@@ -145,7 +145,6 @@
   //backbone旧组件
   import HisAnalysisView from './bettingCenter-historical-analysis'
   import BettingRecordsView from './bettingCenter-records'
-  import confirmTpl from '../templates/bettingCenter-confirm.html'
 
   let recordsOpenView
   let bettingRecordsView
@@ -188,9 +187,9 @@
             { label: '模式', name: 'mode', width: '12.5%' },
             { label: '投注金额', name: 'bettingMoney', width: '12.5%' },
             { label: '预期盈利', name: 'bonus', width: '12.5%' },
-            { label: `<div class="js-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清除</div>`, name: 'operate', width: '8%' },
+            { label: `<div class="js-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清空</div>`, name: 'operate', width: '8%' },
           ],
-          height: 110,
+          height: 145,
           emptyTip: '暂未添加选号',
         },
         fPreviewList: [],
@@ -221,6 +220,7 @@
 
           const playInfo = this.playInfo
 
+          this.$store.commit(types.SET_MAX_BONUS, playInfo.betMethodMax)
           this.$store.commit(types.SET_PLAY_INFO, playInfo)
 
           // 中奖举例
@@ -502,7 +502,6 @@
       bettingConfirm() {
         this.pushing = true
 
-        bettingRecordsView.update()
 
         $(this.$refs.confirm).modal('hide')
 
@@ -517,7 +516,8 @@
             this.pushing = false
 
             if (res && res.result === 0) {
-              // this.bettingRecordsView.update()
+              bettingRecordsView.update()
+
               this.$store.commit(types.EMPTY_PREV_BETTING)
 
               Global.m.oauth.check()
@@ -568,6 +568,12 @@
               this.showChaseModal = false
             })
         })
+      },
+
+      chaseComplete() {
+        bettingRecordsView.update()
+
+        $(this.$refs.chaseModal).modal('hide')
       },
 
       lotteryClear() {
@@ -791,7 +797,8 @@
   .ba-chase-tip{
     position: absolute;
     width: 120px;
-    height: 21px;
+    height: 19px;
+    line-height: 19px;
     color:  $def-white-color;
     background-color: $main-deep-color;
     text-align: center;
@@ -807,8 +814,16 @@
       border: 5px transparent solid;
       border-right-color: $main-deep-color;
       left: -10px;
-      top: 5px;
+      top: 3px;
     }
   }
 
+  .bc-md-btn {
+    font-size: $font-sm;
+    width: 120px;
+    padding: 5px 10px;
+    font-weight: 600;
+    transform: translateY(-5px);
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+  }
 </style>

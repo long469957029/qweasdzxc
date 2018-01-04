@@ -113,7 +113,8 @@
           }, this)
 
           this.showRows = showRows
-        }
+        },
+        deep: true
       }
     },
 
