@@ -91,7 +91,7 @@
     .setting-icon {
       width: 26px;
       height: 27px;
-      background: url(../misc/chips-setting.png);
+      background: url(misc/chips-setting.png);
       display: inline-block;
     }
     .setting-title {

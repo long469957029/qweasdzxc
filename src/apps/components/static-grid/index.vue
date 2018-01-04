@@ -239,7 +239,7 @@
       // common APIs
 
       getRows() {
-        return this.$refs.bodyRows
+        return this.$refs.bodyRows || []
       },
 
       getHeight() {

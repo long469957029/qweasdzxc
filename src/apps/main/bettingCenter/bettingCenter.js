@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import ticketConfig from 'skeleton/misc/ticketConfig'
 
-import store from '../../../store/index'
-import bettingCenterTpl from '../templates/bettingCenter.html'
+import store from '../../store/index'
+import bettingCenterTpl from './bettingCenter.html'
 
 // vue components
 import BettingQuickNav from './betting-quick-nav'
@@ -11,9 +11,9 @@ import BettingMainArea from './betting-main-area'
 import BettingMainAreaHandicap from './betting-main-area-handicap'
 
 
-import over from '../misc/over.wav'
-import prize from '../misc/prize.wav'
-import openCode from '../misc/openCode.wav'
+import over from './misc/over.wav'
+import prize from './misc/prize.wav'
+import openCode from './misc/openCode.wav'
 
 const audio = { over, prize, openCode }
 

@@ -209,14 +209,17 @@
 
     watch: {
       'bettingChoice.playId': {
-        handler: function(newVal) {
-          this.playRule = betRulesConfig.get(newVal)
+        handler: function(playId) {
+          if (playId === -1) {
+            return
+          }
+          this.playRule = betRulesConfig.get(playId)
 
           recordsOpenView.updateByPlayRule(this.playRule)
 
           this.$store.commit(types.SET_CHECKOUT_CHOICE)
 
-          this.playInfo = this.$store.getters.playInfo(newVal, this.bettingChoice.groupId);
+          this.playInfo = this.$store.getters.playInfo(playId, this.bettingChoice.groupId);
 
           const playInfo = this.playInfo
 
@@ -246,13 +249,6 @@
             content: `<div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
             placement: 'bottom',
           })
-
-          // this.$refs.areaSelect.empty()
-          // this.$refs.areaInput.empty()
-
-
-          //提示框变化, 暂时这么写
-          $('.js-bc-confirm-planId').text(newVal)
         },
       },
       'bettingInfo.planId': {
@@ -813,7 +809,7 @@
       height: 0;
       border: 5px transparent solid;
       border-right-color: $main-deep-color;
-      left: -10px;
+      left: -9px;
       top: 3px;
     }
   }

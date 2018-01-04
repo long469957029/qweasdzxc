@@ -1,8 +1,10 @@
-import ticketConfig from 'skeleton/misc/ticketConfig'
+
+
+const ticketConfig = require('skeleton/misc/ticketConfig')
 
 const BettingRecordsView = Base.ItemView.extend({
 
-  template: require('bettingCenter/templates/bettingCenter-records.html'),
+  template: require('./bettingCenter-records.html'),
 
   events: {
     'click .js-bc-records-tab': 'toggleTabHandler',
@@ -407,6 +409,10 @@ const BettingRecordsView = Base.ItemView.extend({
     this.options.type = $target.data('type')
     this.update()
   },
+  // 调整最近开奖记录区的长度
+  // resizeRecords ($parent, resizeHeight) {
+  //   $parent.find('.slimScrollDiv,.js-wt-body-main').css({ height: resizeHeight, 'min-height': this.options.height })
+  // },
 })
 
-export default BettingRecordsView
+module.exports = BettingRecordsView

@@ -32,8 +32,11 @@
 
     watch: {
       levelId: {
-        handler(newVal, oldVal) {
-          this.rulesList = this.$store.getters.playGroups(newVal)
+        handler(levelId) {
+          if (levelId === -1) {
+            return
+          }
+          this.rulesList = this.$store.getters.playGroups(levelId)
 
           this.show = this.type !== 'single-hidden' || _.chain(this.rulesList).pluck('playList').flatten().value().length !== 1
 

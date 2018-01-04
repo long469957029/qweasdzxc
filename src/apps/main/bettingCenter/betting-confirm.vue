@@ -91,7 +91,7 @@
       border-bottom: 1px solid #d7d7d7;
     }
     .confirm-icon {
-      background: url(../misc/exclamation.png);
+      background: url(misc/exclamation.png);
       display: inline-block;
       width: 18px;
       height: 18px;

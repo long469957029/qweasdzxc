@@ -72,14 +72,17 @@
 
     watch: {
       'bettingChoice.playId': {
-        handler: function(newVal) {
-          this.playRule = betRulesConfig.get(newVal)
+        handler: function(playId) {
+          if (playId === -1) {
+            return
+          }
+          this.playRule = betRulesConfig.get(playId)
 
           recordsOpenView.updateByPlayRule(this.playRule)
 
           this.$store.commit(types.SET_CHECKOUT_CHOICE)
 
-          this.playInfo = this.$store.getters.playInfo(newVal, this.bettingChoice.groupId);
+          this.playInfo = this.$store.getters.playInfo(playId, this.bettingChoice.groupId);
 
           const playInfo = this.playInfo
 

@@ -4,7 +4,7 @@ const ticketConfig = require('skeleton/misc/ticketConfig')
 
 const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
-  template: require('bettingCenter/templates/bettingCenter-historical-analysis.html'),
+  template: require('./bettingCenter-historical-analysis.html'),
 
   height: 700,
 

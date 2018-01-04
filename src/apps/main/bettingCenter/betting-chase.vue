@@ -578,7 +578,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
       border-bottom: 1px solid #d7d7d7;
     }
     .setting-icon {
-      background: url(../misc/chips-setting.png);
+      background: url(misc/chips-setting.png);
       display: inline-block;
       width: 26px;
       height: 27px;

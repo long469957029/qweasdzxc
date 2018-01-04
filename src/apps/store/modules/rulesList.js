@@ -29,7 +29,7 @@ const getters = {
       const levelInfo = _(state.playLevels).findWhere({
         playLevelId: levelId,
       })
-      const groups = levelInfo.ticketPlayGroupInfo || []
+      const groups = levelInfo && levelInfo.ticketPlayGroupInfo || []
 
       state.currentLevel = groups
 
