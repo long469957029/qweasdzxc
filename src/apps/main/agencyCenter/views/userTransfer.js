@@ -88,7 +88,6 @@ const MoneyTransferView = Base.ItemView.extend({
         if (res && res.result === 0) {
           if (self.renderBasicInfo(self.data)) {
             self.initUserList()
-            self.initRequestParams()
             self.parsley = self.$form.parsley({
               errorsWrapper: '<div class="tooltip bottom parsley-errors-list tooltip-error"><span class="sfa sfa-error-icon vertical-sub pull-left"></div>',
               errorTemplate: '<div class="tooltip-inner">',
@@ -156,19 +155,23 @@ const MoneyTransferView = Base.ItemView.extend({
                 img: sub.img,
               }
             }))
+            self.initRequestParams()
           }
         }
       })
   },
 
   initRequestParams() {
-    let username
-    if (this.options.reqData) {
-      const userId = this.options.reqData.userId
-      if (!_(userId).isUndefined() && userId !== '') {
-        username = this.options.reqData.username
-        this.lowMultiSelect.selectUser(Number(userId), username)
+    const username = this.options.username
+    const userId = this.options.userId
+    if (!_(userId).isUndefined() && userId !== '' && !_(username).isUndefined() && !_(username).isNull()) {
+      const user = {
+        id: Number(userId),
+        name: username,
       }
+      this.selectedUsers.push(user)
+      this.$(`.js-wt-title[data-no=${Number(userId)}]`).addClass('active')
+      this.renderSelectedUsers()
     }
   },
 

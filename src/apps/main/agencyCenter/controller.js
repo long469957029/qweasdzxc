@@ -13,7 +13,7 @@ const LowLevelBettingRecordsView = require('fundCenter/gameRecord/bettingRecords
 
 const LowLevelAccountDetailView = require('agencyCenter/views/lowLevelManage-accountDetail')
 const LowLevelSendMessageView = require('agencyCenter/views/lowLevelManage-sendMessage')
-const LowLevelTransferView = require('agencyCenter/views/lowLevelManage-transfer')
+// const LowLevelTransferView = require('agencyCenter/views/lowLevelManage-transfer')
 
 const LowLevelDetailView = require('agencyCenter/views/lowLevelDetail')
 
@@ -215,16 +215,16 @@ const AgencyCenterController = RouterController.extend({
     })
   },
 
-  transfer(userId) {
-    this.changeSubReginView(new LowLevelTransferView({
-      userId,
-    }), {
-      main: {
-        title: '下级转账',
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // transfer(userId) {
+  //   this.changeSubReginView(new LowLevelTransferView({
+  //     userId,
+  //   }), {
+  //     main: {
+  //       title: '下级转账',
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
   bettingRecords4Report(userId) {
     this.changeSubReginView(new LowLevelBettingRecordsView({
@@ -369,8 +369,11 @@ const AgencyCenterController = RouterController.extend({
       sidebar,
     })
   },
-  transfer() {
-    this.changeMainReginView(new TransferView(), {
+  transfer(userId) {
+    this.changeMainReginView(new TransferView({
+      userId,
+      username: _.getUrlParam('name'),
+    }), {
       main: {
         title: '平台转账',
         titleDes: '<div class="js-ac-user-transfer"></div>',
