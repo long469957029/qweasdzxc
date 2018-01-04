@@ -14,6 +14,7 @@ const OpenAccountManageView = Base.ItemView.extend({
     'click .js-look-bonus': 'lookBonusViewHandler',
     'click .js-ac-auto-checkbox': 'checkboxHandler',
     'click .js-ac-redType>button': 'redTypeHandler',
+    'keyup .js-ac-auto-red-money,.js-ac-auto-red-money-all,.js-ac-auto-rebate,.js-ac-auto-red-num': 'keyUpHandler',
   },
 
   getSubAcctLinkXhr() {
@@ -189,9 +190,14 @@ const OpenAccountManageView = Base.ItemView.extend({
     const redText = type === 2 ? '单个红包金额' : '红包总金额'
     const money = $input.val()
     let isValidate = false
+    const myReg = /^(0|[1-9][0-9]*)(.\d{1,2})?$/
+    const reg = myReg.test(money)
     if (money === '') {
       this.changeEleClass($input, 'error')
       $tip.html(this.getErrorTooltip(`请输入${redText}`))
+    } else if (!reg) {
+      this.changeEleClass($input, 'error')
+      $tip.html(this.getErrorTooltip('值最多能精确到小数点后两位'))
     } else if (Number(money) < 1) {
       this.changeEleClass($input, 'error')
       $tip.html(this.getErrorTooltip(`红包${text}不得低于1元`))
@@ -260,6 +266,21 @@ const OpenAccountManageView = Base.ItemView.extend({
     } else {
       this.$acRedFixed.addClass('hidden')
       this.$acRedRandom.removeClass('hidden')
+    }
+  },
+  keyUpHandler(e) {
+    const $target = $(e.currentTarget)
+    const val = $target.val()
+    const num = $target.data('num')
+    let myReg
+    if (Number(num) === 1) {
+      myReg = /^\+?[1-9][0-9]*$/
+    } else {
+      myReg = /^\d+(\.\d*)?$/
+    }
+    const reg = myReg.test(val)
+    if (!reg) {
+      $target.val('')
     }
   },
 })
