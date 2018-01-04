@@ -1,4 +1,4 @@
-<form class="js-fc-transfer-form form-horizontal hidden" action="javascript:void(0);">
+<form class="js-ac-transfer-form form-horizontal hidden" action="javascript:void(0);">
   <div class="ac-user-select pull-left">
     <div class="clearfix">
       <div class="user-title pull-left">选择转账人</div>
@@ -7,7 +7,7 @@
         <button type="button" class="btn js-user-select-all" data-type="clear">全清</button>
       </div>
     </div>
-    <div class="js-fc-lowLevelSelect ac-lowLevelSelect">
+    <div class="js-ac-lowLevelSelect ac-lowLevelSelect">
       <div class="ac-lowLevelSelect-header clearfix">
         <div class="ac-low-multi-search">
           <i class="fa fa-search fa-lg" aria-hidden="true"></i>
@@ -29,10 +29,10 @@
       <ul class="js-selected-container choose-list-container hidden"></ul>
       <ul class="js-selected-short-container choose-list-container"></ul>
     </div>
-    <div class="fc-group">
+    <div class="ac-group">
       <div class="text-black font-md">可用余额：</div>
       <div class="m-top-sm">
-        <span class=" font-lg"><span class="js-fc-avail-money text-bold-prominent">-</span> 元</span>
+        <span class=" font-lg"><span class="js-ac-avail-money text-bold-prominent">-</span> 元</span>
       </div>
       <div class="text-inverse m-top-smd font-md">转帐类型：</div>
       <div class="m-top-sm">
@@ -42,17 +42,16 @@
       </div>
       <div class="text-inverse m-top-smd font-md">金额（元）：</div>
       <div class="m-top-sm">
-          <input type="text" class="js-fc-tf-amount input1" autocomplete="off" name="amount"
-                 data-parsley-type="integer" data-parsley-max-message="您申请的金额超出可转账金额" required/>
-        <input type="hidden" class="js-fc-mt-tradeNum">
+        <input type="text" class="js-ac-tf-amount input1" autocomplete="off" name="amount"/>
+        <input type="hidden" class="js-ac-mt-tradeNum">
       </div>
       <div class="text-inverse  m-top-smd font-md">资金密码：</div>
       <div class="m-top-sm">
-        <input type="password" class="js-fc-tf-payPwd input1 fc-mt-password" required/>
+        <input type="password" class="js-ac-tf-payPwd input1 ac-mt-password"/>
       </div>
-
+      <div class="js-error-text"></div>
       <div class="m-top-lg control-confirm">
-        <button type="submit" class="js-fc-btn-submit btn" data-loading-text="提交中">确定转账</button>
+        <button type="submit" class="js-ac-btn-submit btn" data-loading-text="提交中">确定转账</button>
       </div>
     </div>
   </div>
