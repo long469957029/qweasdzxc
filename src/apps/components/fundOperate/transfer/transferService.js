@@ -88,5 +88,69 @@ module.exports = {
       amount: initAmount,
     }
   },
+  getFundFromData(fromId) {
+    let selectedId = ''
+    const selected = []
+    const fromItems = []
+    const walletData = walletConf.getAll()
+    if (fromId !== undefined) {
+      selectedId = fromId
+    } else {
+      selectedId = 0
+    }
+    // 获取已选择面板数据
+    const selectedData = _(walletData).findWhere({
+      id: selectedId,
+    })
+    const name = walletConf.get(selectedId).zhName
+    selected.push(`<div class="js-fm-out-selectedItem" data-id="${selectedId}" data-name="${name}">`)
+    selected.push(`<span class="js-fm-out-name rc-name">${name}</span>`)
+    selected.push('<span class="select-down js-fm-select-out-down"></span></div>')
+
+    // 取未选中的支付方式信息并赋值
+    const unSelectedData = _(walletData).without(selectedData)
+    _(unSelectedData).each((item) => {
+      const itemList = []
+      const itemName = walletConf.get(item.id).zhName
+      itemList.push(`<span class="js-fm-out-name rc-name">${itemName}</span>`)
+      fromItems.push(`<div class="js-fm-out-item fc-fm-out-item" data-id="${item.id}">${itemList.join('')}</div>`)
+    })
+    return {
+      fromSelected: selected.join(''),
+      fromItems: fromItems.join(''),
+    }
+  },
+  getFundToData(toId) {
+    let selectedId = ''
+    const selected = []
+    const toItems = []
+    const walletData = walletConf.getAll()
+    if (toId !== undefined) {
+      selectedId = toId
+    } else {
+      selectedId = 1
+    }
+    // 获取已选择面板数据
+    const selectedData = _(walletData).findWhere({
+      id: selectedId,
+    })
+    const name = walletConf.get(selectedId).zhName
+    selected.push(`<div class="js-fm-in-selectedItem" data-id="${selectedId}" data-name="${name}">`)
+    selected.push(`<span class="js-fm-in-name rc-name text-center">${name}</span>`)
+    selected.push('<span class="select-down js-fm-select-in-down"></span></div>')
+
+    // 取未选中的支付方式信息并赋值
+    const unSelectedData = _(walletData).without(selectedData)
+    _(unSelectedData).each((item) => {
+      const itemList = []
+      const itemName = walletConf.get(item.id).zhName
+      itemList.push(`<span class="js-fm-in-name rc-name">${itemName}</span>`)
+      toItems.push(`<div class="js-fm-in-item fc-fm-in-item" data-id="${item.id}">${itemList.join('')}</div>`)
+    })
+    return {
+      toSelected: selected.join(''),
+      toItems: toItems.join(''),
+    }
+  },
 }
 

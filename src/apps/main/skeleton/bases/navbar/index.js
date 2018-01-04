@@ -195,11 +195,7 @@ const NavsView = Base.ItemView.extend({
       handicapTicketList: beginTicketList.handicap, // 彩票投注 盘口模式
     }
   },
-  getHotListXhr () {
-    return Global.sync.ajax({
-      url: '/mall/coupon/newItemList.json',
-    })
-  },
+
   onRender () {
     this.$navMain = this.$('.js-db-nav-main')
 
@@ -212,66 +208,6 @@ const NavsView = Base.ItemView.extend({
     this.$navMallSubList = this.$('.js-nav-mall-sub-list')
 
     this.$underLine = this.$('.js-navbar-slide-underline')
-
-    this.formateMallEntryList()
-  },
-  formateMallEntryList () {
-    const self = this
-    this.getHotListXhr()
-      .done((res) => {
-        if (res.result === 0) {
-          if (res.root) {
-            self.showMallList = true
-            const list = _(res.root.records).map((item) => {
-              const {
-                limitLevelType,
-                levelLimit,
-                limitRange,
-                name,
-                requireIntegral,
-                couponDesc,
-                couponType,
-              } = item
-              let infoExclusive = ''
-              if (!_.isNull(levelLimit)
-                && limitRange !== 0
-                && limitRange !== 1
-                && limitRange !== 2) {
-                if (limitLevelType === 0) {
-                  infoExclusive = `<span class="info-exclusive">Lv.${levelLimit}用户专享</span>`
-                } else {
-                  infoExclusive = `<span class="info-exclusive">Lv.${levelLimit}用户以上</span>`
-                }
-              }
-              if (limitRange === 0) {
-                infoExclusive = '<span class="info-exclusive">新用户专享</span>'
-              } else if (limitRange === 1) {
-                infoExclusive = '<span class="info-exclusive">老用户专享</span>'
-              } else if (limitRange === 2) {
-                infoExclusive = '<span class="info-exclusive">总代专享</span>'
-              }
-              const type = couponType === 0 ? 1 : 0
-              const icon = couponType === 0 ? 'gift' : 'cou'
-              return `${'<li>' +
-                '<span class="mall-icon mall-entry-'}${icon}"></span>` +
-                '<div class="mall-info">' +
-                '<div class="clearfix info-text">' +
-                `<span class="pull-left font-sm m-top-xs">${name}${infoExclusive}</span>` +
-                `<span class="pull-right info-integral font-sm">${_(requireIntegral).convert2yuan()}积分</span>` +
-                '</div>' +
-                '<div class="clearfix info-text ">' +
-                `<span class="pull-left font-xs info-text-desc" title="${couponDesc}">${couponDesc}</span>` +
-                '<span class="pull-right">' +
-                `<a href="#ma?type=${type}" class="info-btn font-xs" target="_blank">立即去抢</a>` +
-                '</span>' +
-                '</div>' +
-                '</div>' +
-                '</li>'
-            })
-            self.$navMallSubList.html(list.join(''))
-          }
-        }
-      })
   },
   // generateGameMenu: function(gameList){
   //   var self = this;

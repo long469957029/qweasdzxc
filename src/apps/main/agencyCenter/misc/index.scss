@@ -176,13 +176,24 @@
     font-size: $font-md;
     color: $def-black-color;
   }
+  .lowLevel-input{
+    width: 246px;
+    height: 30px;
+    text-align: center;
+    color: $def-black-color;
+  }
+  .lowLevel-percent-sign{
+    position: relative;
+    top: 1px;
+    right: 25px;
+  }
   .ac-lowLevel-rebate-btn {
-    position: absolute;
-    top: 485px;
-    left: 360px;
-    margin-top: 40px;
-    width: 166px;
-    height: 32px;
+    width: 108px;
+    height: 36px;
+  }
+  .lowLevel-error{
+    padding-left: 100px;
+    padding-top: 5px;
   }
   .close{
     font-size:30px;
@@ -202,7 +213,12 @@
       }
     }
   }
-
+  .control-group{
+    margin-bottom: 10px;
+  }
+  .filled{
+    margin: 0px;
+  }
   .ac-openAccount-rebate-notice {
     padding: 5px 14px;
     margin: 0 14px 20px 7px;
@@ -216,66 +232,104 @@
     .tooltip-inner {
       max-width: none;
     }
+    .manual-rebate-sign{
+      color: #aaaaaa;
+      position: relative;
+      right: 25px;
+    }
   }
   .ac-openAccountManual-form {
-    margin-top: 20px;
+    width: 550px;
+    margin: 0 auto;
+    padding-top: 75px;
     .look-bonus {
       text-decoration: underline;
       cursor: pointer;
       padding-left: 5px;
-    }
-    .btn-group {
-      button:first-child {
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-      button:last-child {
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-      }
-      button {
-        background-color: #ffffff;
-        color: #16a4aa;
-        font-size: 13px;
-        width: 88px;
-      }
-      button.active {
-        box-shadow: none;
-        background-color: #16a4aa;
-        color: #ffffff;
-      }
     }
     .ac-manual-rebate-info {
       display: inline-block;
     }
   }
-
+  .input1{
+    width: 258px;
+    height: 25px;
+    background-color: #f9f9f9;
+    font-size:$font-sm;
+  }
+  .btn-group {
+    button {
+      background-color: $prominent-dialog-body;
+      color: $new-inverse-color;
+      font-size: 14px;
+      width: 130px;
+      height: 33px;
+      margin-right: 12px;
+      border-color: $prominent-dialog-body;
+    }
+    button.active {
+      box-shadow: none;
+      border-color: $new-main-deep-color;
+      color: $new-main-deep-color;
+      position: relative;
+      background-color: $prominent-dialog-body;
+      &:after{
+        content: '';
+        width: 21px;
+        height: 19px;
+        background: url("./icon-check.png") no-repeat;
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+      }
+    }
+  }
   .ac-openAccountAuto-form {
-    margin-top: 20px;
+    width: 550px;
+    margin: 0 auto;
+    padding-top: 75px;
     .look-bonus {
       text-decoration: underline;
       cursor: pointer;
       padding-left: 5px;
     }
-    .btn-group {
-      button:first-child {
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-      button:last-child {
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-      }
-      button {
-        background-color: #ffffff;
-        color: #16a4aa;
-        font-size: 13px;
-        width: 88px;
-      }
-      button.active {
-        box-shadow: none;
-        background-color: #16a4aa;
-        color: #ffffff;
+    .ac-red-pack-text{
+      width: 243px;
+      background-color: #fdf6e9;
+      border-radius: 5px;
+      padding: 15px;
+      color: $def-gray-color;
+      margin-left: 120px;
+      margin-bottom: 10px;
+    }
+    .ac-red-type{
+      border: 1px solid $def-gray-color;
+      border-radius: $globalBtnRadius;
+      margin-left: 72px;
+      button{
+        width: 52px;
+        height: 23px;
+        background-color: $def-white-color;
+        color: $def-black-color;
+        border: none;
+        border-radius: 0;
+        margin: 0;
+        &:after{
+          display: none;
+        }
+        &:first-child{
+          border-right: 1px solid $def-gray-color;
+          border-bottom-left-radius: $globalBtnRadius;
+          border-top-left-radius: $globalBtnRadius;
+        }
+        &:last-child{
+          border-bottom-right-radius: $globalBtnRadius;
+          border-top-right-radius: $globalBtnRadius;
+        }
+        &.active{
+          background-color: $new-main-deep-color;
+          color: $def-white-color;
+        }
       }
     }
   }
@@ -300,10 +354,11 @@
     margin-right: 60px;
   }
   .ac-submit-btn-div {
-    padding: 0px 0 25px 0px;
+    padding: 20px 0 25px 0px;
     .btn {
-      width: 166px;
-      height: 32px;
+      width: 270px;
+      height: 40px;
+      border-radius: 20px;
     }
   }
   .ac-register {
@@ -322,7 +377,32 @@
 
   .ac-auto-container {
     position: relative;
-
+    width: 946px;
+    margin: 0 auto;
+    padding-top: 25px;
+    .tooltip{
+      position: absolute;
+      .tooltip-inner{
+        background: rgba(0,0,0,0.8);
+        color: $def-white-color;
+      }
+    }
+    .btn{
+      width: 60px;
+      height: 27px;
+      border-radius: $globalInputRadius;
+      background: linear-gradient(to bottom,$def-white-color,$sec-line-color);
+      color: $new-inverse-color;
+      font-size: $font-xs;
+      border-color: $def-gray-color;
+    }
+    .input-link{
+      width: 200px;
+      margin-right: 10px;
+      font-size: 12px;
+      height: 18px;
+      box-shadow: inset 0px 1px 1px rgba(0,0,0,.3);
+    }
     .ac-span-link {
       width: 170px;
       text-overflow: ellipsis;
@@ -332,7 +412,10 @@
       vertical-align: middle;
     }
     .ac-auto-remark {
-      width: 90px;
+      width: 135px;
+      height: 18px;
+      font-size: 12px;
+      box-shadow: inset 0px 1px 1px rgba(0,0,0,.3);
     }
     .ac-span-remark {
       width: 104px;
@@ -341,6 +424,15 @@
       white-space: nowrap;
       overflow: hidden;
       vertical-align: middle;
+    }
+    .ac-btn-red-detail{
+      width: 32px;
+      height: 32px;
+      display: inline-block;
+      background: url('./red-btn-bg.png') no-repeat;
+      vertical-align: middle;
+      margin-left: 10px;
+      cursor: pointer;
     }
     .qr-code-div {
       position: relative;
@@ -351,25 +443,24 @@
       left: 380px;
       width: 150px;
       height: 150px;
-      border: 16px solid #ccc;
+      border: 16px solid $def-white-color;
+      box-shadow: 0px 0px 3px rgba(0,0,0,.5);
+      background-color: $def-white-color;
       display: none;
     }
     .qr-code-div-all-closeBtn {
       background: url("downloadClose.png") no-repeat;
-      width: 12px;
-      height: 12px;
+      width: 23px;
+      height: 23px;
       position: absolute;
-      top: -14px;
-      right: -14px;
-      background-position-x: -2px;
-      background-position-y: -2px;
+      top: -26px;
+      right: -26px;
       cursor: pointer;
     }
 
     .ac-btn-qr-code {
       &.selected {
-        background-color: #e8675d;
-        border: 1px solid #e8675d;
+        border: 1px solid $new-main-deep-color;
       }
     }
 
@@ -387,6 +478,8 @@
 
     .ac-auto-remark-saveBtn {
       background: url("saveBtn.png") no-repeat;
+      position: relative;
+      right: 40px;
     }
 
     .ac-link-del {
@@ -536,5 +629,83 @@
     th {
       font-size: $font-xs;
     }
+  }
+}
+
+.open-confirm-main{
+  border-radius: 5px;
+  .confim-title{
+    width: 480px;
+    height: 50px;
+    color: $def-black-color;
+    text-align: center;
+    line-height: 50px;
+    position: relative;
+    background-color: $sec-line-color;
+    font-size: $font-md;
+    .close{
+      color: #d8d8d8;
+      font-size:30px;
+    }
+  }
+  .contant-info{
+    width: 275px;
+    height: 70px;
+    margin: 0 auto;
+    margin-top: 22px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding-top: 15px;
+  }
+  .open-confirm-btn{
+    width: 108px;
+    height: 36px;
+  }
+}
+.copy-contant{
+  width: 300px;
+  margin: 0 auto;
+}
+.red-pack-container{
+  width: 378px;
+  height: 413px;
+  background: url("./red-pack-detail-bg.png") no-repeat;
+  position: relative;
+  font-size: $font-sm;
+  color: $def-black-color;
+  .red-close{
+    width: 17px;
+    height: 16px;
+    background: url("./red-pack-detail-close.png") no-repeat;
+    position: absolute;
+    top: 42px;
+    right: 30px;
+    cursor: pointer;
+  }
+  .red-btn{
+    display: block;
+    width: 245px;
+    height: 45px;
+    background-color: #f0c862;
+    color: #92411f;
+    font-size:$font-sm;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 50px;
+    margin: 105px 0 0 80px;
+    cursor: pointer;
+  }
+  .num-text{
+    color: #e54d4b;
+  }
+  .red-detail-main{
+    width: 294px;
+    margin: 0 auto;
+    transform: translateX(11px);
+    padding-top: 40px;
+  }
+  .red-pack-title{
+    margin-top: 120px;
+    text-align: center;
   }
 }

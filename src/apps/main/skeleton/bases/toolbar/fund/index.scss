@@ -3,7 +3,6 @@
 @import '../../../../misc/variable';
 @import '../../../../misc/mixin';
 
-
 @mixin float-item($font-size, $color, $width, $height, $margin) {
   font-size: $font-size;
   color: $color;
@@ -20,48 +19,73 @@
 
 .fund-amount {
   position: relative;
-  padding: 10px 20px;
+  padding: 20px 10px 0 10px;
+  height: 76px;
+  background-color: white;
   .amount-title {
-    color: $font-gray;
+    color: $def-black-color;
     font-size: 14px;
-    margin-bottom: 10px;
   }
 
   .amount-rest {
     @include inline-block();
-    font-size: 16px;
-    color: $font-dark;
+    font-size: 14px;
+    color: $prominent-color;
     height: 35px;
     line-height: 35px;
 
   }
 
   .fund-recharge-btn {
-    @include button(75px, 35px, $font-dark ,white , 16px);
-    border-radius: 5px;
+    margin-top: -2px;
+    @include button(65px, 27px, $new-main-deep-color, white, 14px);
+    border-radius: 3px;
     float: right;
   }
 
   .fund-withdraw-btn {
-    @include button(75px, 35px, $font-dark ,white , 16px);
-    border-radius: 5px;
+    margin-top: -2px;
+    @include button(65px, 27px, $new-main-deep-color, white, 14px);
+    border-radius: 3px;
     float: right;
   }
 }
 
+.fund-amount-recharge {
+  padding: 0 10px;
+  border-bottom: 1px dashed #cccccc;
+}
+
+.fund-amount-withdraw {
+  padding: 0 10px;
+}
+
 .fund-pocket {
-  margin: 20px;
-  border-top: 1px solid $font-light;
+  margin-top: 10px;
+  padding: 2px 10px 25px 10px;
+  background-color: white;
+  .pocket-title-container {
+    height: 48px;
+    line-height: 48px;
+    border-bottom: 1px dashed #cccccc;
+    padding: 0 10px;
+    .pocket-title, .pocket-rest {
+      @include float-item(14px, $prominent-color, 50%, 35px, 10px);
+    }
 
-  .pocket-title, .pocket-rest {
-    @include float-item(14px, $font-dark, 50%, 35px, 10px);
-  }
-
-  .pocket-title {
-    text-align: left;
+    .pocket-title {
+      margin-bottom: 0 !important;
+      height: 48px !important;
+      line-height: 48px !important;
+      color: $new-inverse-color !important;
+      text-align: left;
+    }
   }
 
   .pocket-rest {
+    margin-bottom: 0 !important;
+    height: 48px !important;
+    line-height: 48px !important;
     text-align: right;
   }
 
@@ -83,83 +107,187 @@
     font-size: 14px;
     color: $font-gray;
   }
-
-  .fund-transfer-btn {
-    @include button(100px, 35px, $font-dark ,white , 16px);
-    display: block;
-    margin: 15px auto;
-    border-radius: 5px;
+  .pocket-transfer-container {
+    border-top: 2px solid $def-line-color;
+    margin-top: -2px;
+    .fund-transfer-btn {
+      @include button(100px, 30px, $new-main-deep-color, white, 14px);
+      display: block;
+      margin: 25px 25px 0 100px;
+      border-radius: 5px;
+    }
   }
 }
 
-.fund-operation-record {
-  border-top: 1px solid $font-dark;
-  padding: 10px 20px;
+.fund-operation-record-container {
+  padding: 0 10px;
+  margin-top: 10px;
+  background-color: white;
+  .fund-operation-record {
+    padding: 0 10px;
+    border-bottom: 1px solid $def-line-color;
+    height: 50px;
+    line-height: 50px;
+    .record-title, .operation-record-link {
+      cursor: pointer;
+      @include float-item(14px, $new-inverse-color, 50%, 35px, 20px);
+    }
 
-  .record-title, .operation-record-link {
-    @include float-item(14px, $font-dark, 50%, 35px, 20px);
-  }
+    .record-title {
+      margin-bottom: 0 !important;
+      height: 48px !important;
+      line-height: 48px !important;
+      text-align: left;
+    }
 
-  .record-title {
-    text-align: left;
-  }
-
-  .operation-record-link {
-    text-align: right;
-    text-decoration: underline;
+    .operation-record-link {
+      margin-bottom: 0 !important;
+      height: 48px !important;
+      line-height: 48px !important;
+      text-align: right;
+      text-decoration: underline;
+    }
   }
 }
 
-.operation-record-item {
-  border-bottom: 1px dashed $font-light;
-  padding: 10px 20px;
+.operation-record-items {
+  min-height: 340px;
 
-  .record-action, .record-date {
-    @include float-item(14px, $font-dark, 50%, 35px, 0px);
-  }
+  .operation-record-item {
+    background-color: white;
+    border-bottom: 1px dashed $def-line-color;
+    padding: 10px 10px;
 
-  .record-action {
-    text-align: left;
-  }
+    .record-action, .record-date {
+      @include float-item(14px, $new-inverse-color, 50%, 35px, 0px);
+    }
 
-  .record-date {
-    text-align: right;
-  }
+    .record-action {
+      text-align: left;
+    }
 
-  .record-date {
-    font-size: 12px;
-  }
+    .record-date {
+      text-align: right;
+    }
 
-  .record-amount, .record-progress {
-    @include float-item(14px, $font-dark, 37%, 35px, 0px);
-  }
-
-  .record-amount {
-    text-align: left;
-  }
-
-  .record-progress {
-    text-align: right;
-    width: 63%;
-
-    .progress {
-      float: left;
-      margin: 5px;
-      background: white;
-      height: 20px;
-      line-height: 20px;
+    .record-date {
       font-size: 12px;
-      text-align: center;
-      margin-top: 7px;
-      color: $font-gray;
-      border: 1px solid $font-gray;
-      padding: 0 3px;
-      border-radius: 3px;
+    }
 
-      &.active {
-        color: $font-dark;
-        border: 1px solid $font-dark;
+    .record-amount, .record-progress {
+      @include float-item(14px, $prominent-color, 37%, 35px, 0px);
+    }
+
+    .record-amount {
+      text-align: left;
+    }
+
+    .record-progress {
+      text-align: right;
+      width: 59%;
+      margin-left: 10px;
+      .progress {
+        float: left;
+        margin: 5px;
+        background: white;
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        text-align: center;
+        margin-top: 7px;
+        color: $font-gray;
+        border: 1px solid $font-gray;
+        padding: 0 3px;
+        border-radius: 3px;
+
+        &.active {
+          color: $font-dark;
+          border: 1px solid $font-dark;
+        }
       }
+      .success-img {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin: 6px;
+        background: url("~base/images/v2/icon-leftBar-success.png") no-repeat;
+      }
+      .fault-img {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin: 6px;
+        background: url("~base/images/v2/icon-leftBar-fault.png") no-repeat;
+      }
+      .process-img {
+        width: 20px;
+        height: 20px;
+        margin: 6px;
+        display: inline-block;
+        background: url("~base/images/v2/icon-leftBar-process.png") no-repeat;
+      }
+      .success-text {
+        display: inline-block;
+        float: right;
+        color: $new-main-deep-color;
+        margin-left: 3px;
+      }
+      .fault-text {
+        float: right;
+        color: $new-inverse-color;
+        margin-left: 3px;
+      }
+      .process-text {
+        float: right;
+        color: $new-inverse-color;
+        margin-left: 3px;
+        margin-right: 15px;
+      }
+    }
+    .fc-rc-status-container {
+      float: left;
+      padding-top: 1px;
+      font-size: 0;
+      .fc-rc-status {
+        font-size: 14px;
+        color: #666666;
+        .fc-rc-status-button {
+          width: 50px;
+          height: 20px;
+          padding: 0 2px;
+          border: 1px solid #666666;
+        }
+        .fc-rc-status-button-unPass {
+          width: 50px;
+          height: 20px;
+          padding: 0px 2px;
+          background: #14b1bb;
+          color: #ffffff;
+          border: 1px solid #14b1bb;
+        }
+        .fc-rc-status-line-unPass {
+          color: #14b1bb;
+        }
+        .fc-rc-status-line {
+          width: 5px;
+        }
+        &.active {
+          color: #14b1bb;
+          .fc-rc-status-button {
+            border: 1px solid #14b1bb;
+          }
+        }
+      }
+    }
+  }
+  .operation-record-empty{
+    text-align: center;
+    .items-empty-img{
+      width: 99px;
+      margin-top: 140px;
+      height: 99px;
+      display: inline-block;
+      background: url("~base/images/v2/icon-record-empty.png");
     }
   }
 }

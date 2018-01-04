@@ -1,62 +1,89 @@
 <div class="ac-openAccount-rebate-notice">
-  <div class="js-ac-quota-container alert hidden as-fund-pwd-head">
-    <div class="text-bold-dark">温馨提示：</div>
-    您目前拥有<span class="js-ac-open-limit"></span>，有配额限制请使用手动开户。
-  </div>
   <form class="js-ac-openAccountAuto-form ac-openAccountAuto-form form-horizontal">
     <div class=" control-group">
-      <label class="control-label text-bold-dark">开户类型：</label>
-
+      <label class="control-label text-black">开户类型：</label>
       <div class="controls">
-        <div class="btn-group js-ac-userType" data-toggle="buttons-radio">
-          <button type="button" class="btn btn-cool active" data-type="0">代理</button>
-          <button type="button" class="btn btn-cool" data-type="1">玩家</button>
+        <div class="btn-group js-ac-userType m-bottom-sm" data-toggle="buttons-radio">
+          <button type="button" class="btn active" data-type="0">代理</button>
+          <button type="button" class="btn" data-type="1">玩家</button>
         </div>
       </div>
     </div>
-
     <div class="control-group">
-      <label class="control-label text-bold-dark">设置返点：</label>
-
+      <label class="control-label text-black">设置返点：</label>
       <div class="controls">
-          <input type="text" class="js-ac-auto-rebate" value="" data-parsley-oneDecimal data-parsley-range="" />
-          <span class="text-inverse">% (范围：<span class="js-ac-bonus-range-Prompt"></span>)</span>
-          <a class="js-look-bonus text-pleasant look-bonus" data-ticket="constant">查看对应奖金</a>
+        <input type="text" class="js-ac-auto-rebate input1" value="" data-parsley-oneDecimal/>
+        <i class="fa fa-percent manual-rebate-sign" aria-hidden="true"></i>
+        <a class="js-look-bonus text-prominent look-bonus" data-ticket="constant">查看对应奖金</a>
+        <div class="js-ac-manual-rebate-info text-inverse m-top-sm">
+          <span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>
+          返点可配置范围：<span class="js-ac-bonus-range-Prompt"></span>
+        </div>
       </div>
     </div>
-
     <div class="control-group">
-      <label class="control-label text-bold-dark">备注：</label>
-
+      <label class="control-label text-black">备注：</label>
       <div class="controls">
-        <input type="text" class="js-ac-auto-remarkInput" value="" data-parsley-maxlength="20">
-        <span class="help-inline text-inverse">备注不超过20个字</span>
+        <input type="text" class="js-ac-auto-remarkInput input1" value="" data-parsley-maxlength="20">
+        <div class="text-inverse m-top-sm js-ac-remark-tip">
+          <span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>
+          备注不可超过20个字符
+        </div>
       </div>
     </div>
-
+    <div class="ac-red-pack-text">提高注册率，邀请好友更便捷，发个红包给TA尝尝甜头，试试红包开户吧~~</div>
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls clearfix">
+        <div class="pull-left">
+          <div class="custom-checkbox">
+            <input type="checkbox" id="ac-auto-checkbox" class="inbox-check js-ac-auto-checkbox" value="">
+            <label class="checkbox-label" for="ac-auto-checkbox"></label>
+          </div>
+          <span class="text-black">使用红包开户</span>
+        </div>
+        <div class="pull-left ac-red-type js-ac-red-type hidden">
+          <div class="btn-group js-ac-redType" data-toggle="buttons-radio">
+            <button type="button" class="btn active" data-type="2">固定</button>
+            <button type="button" class="btn" data-type="1">随机</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="js-ac-auto-red-info hidden">
+      <div class="control-group js-ac-red-fixed">
+        <label class="control-label text-black">单个红包金额：</label>
+        <div class="controls">
+          <input type="text" class="js-ac-auto-red-money input1" data-type="1" value="">
+          <div class="text-inverse m-top-sm js-ac-red-pack-tip">
+            <span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>
+            红包金额不得低于1元
+          </div>
+        </div>
+      </div>
+      <div class="control-group js-ac-red-random hidden">
+        <label class="control-label text-black">红包总额：</label>
+        <div class="controls">
+          <input type="text" class="js-ac-auto-red-money-all input1" data-type="2" value="">
+          <div class="text-inverse m-top-sm js-ac-red-pack-all-tip">
+            <span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>
+            红包总额不得低于1元
+          </div>
+        </div>
+      </div>
+      <div class="control-group js-ac-red-number">
+        <label class="control-label text-black">红包个数：</label>
+        <div class="controls">
+          <input type="text" class="js-ac-auto-red-num input1" value="">
+          <div class="text-inverse m-top-sm js-ac-red-pack-num-tip">
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="ac-submit-btn-div">
       <div class="controls">
-        <button type="button" class="js-ac-add-link btn" data-loading-text="创建中">新增链接</button>
+        <button type="button" class="js-ac-add-link btn" data-loading-text="创建中">生成链接</button>
       </div>
     </div>
   </form>
-  <!--<div class="ac-openAccount-link-main-div">-->
-    <!--<div class="m-bottom-sm">-->
-      <!--<button class="js-ac-add-link btn btn-link no-p-left text-cool" data-loading-text="创建中">-->
-        <!--<img src="../misc/newUser.png"> 新增链接-->
-      <!--</button>-->
-    <!--</div>-->
-    <!--<div class="js-ac-auto-container ac-auto-container form-inline"></div>-->
-  <!--</div>-->
-
-  <!--<table>-->
-    <!--<t-->
-
-
-  <!--</table>-->
-  <div>
-
-
-  </div>
-  <div class="js-ac-auto-container ac-auto-container"></div>
 </div>
