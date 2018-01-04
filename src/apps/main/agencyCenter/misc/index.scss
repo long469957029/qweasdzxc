@@ -709,3 +709,150 @@
     text-align: center;
   }
 }
+.fc-moneyTransfer-view{
+  border-top: 1px solid $third-line-color;
+  padding-top: 67px;
+  color: $new-inverse-color;
+  padding-left: 100px;
+  .ac-user-select{
+    width: 290px;
+  }
+  .user-select-btn{
+    .btn{
+      width: 58px;
+      background-color: $def-white-color;
+      border-color: $def-gray-color;
+      color: $new-inverse-color;
+      transition: background-color,color,border-color 1s;
+      &:hover,&:focus{
+        color: $def-white-color;
+        background-color: $new-main-deep-color;
+        border-color: $new-main-deep-color;
+      }
+    }
+  }
+  .user-title{
+    font-size:$font-md;
+    padding-left: 12px;
+    position: relative;
+    &:after{
+      content: '';
+      width: 4px;
+      height: 17px;
+      background-color: $new-main-deep-color;
+      display: block;
+      position: absolute;
+      top: 2px;
+      left: 0;
+    }
+  }
+  .ac-lowLevelSelect{
+    width: 288px;
+    height: 577px;
+    border: 1px solid $def-gray-color;
+    margin-top: 25px;
+    .ac-lowLevelSelect-header{
+      width: 100%;
+      height: 50px;
+      background-color: #f8f8f8;
+    }
+    .ac-low-multi-search{
+      width: 264px;
+      height: 30px;
+      border-radius: 20px;
+      background-color: $def-white-color;
+      margin: 10px 12px 0 12px;
+      i{
+        color: #d8d8d8;
+        margin-top: 7px;
+        margin-left: 20px;
+      }
+      .input-search-user{
+        width: 200px;
+        height: 22px;
+        border: none;
+      }
+    }
+  }
+  .user-tree{
+    width: 100%;
+    overflow: hidden;
+    .user-tree-title{
+      width: 100%;
+      height: 29px;
+      border-bottom: 2px solid $def-gray-color;
+      line-height: 29px;
+      font-size: $font-sm;
+      padding-left: 25px;
+      color: $font-auxiliary-color;
+    }
+    .user-tree-list{
+      width: 90%;
+      margin: 0 auto;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+  .ac-tf-line{
+    width: 0px;
+    height: 577px;
+    border: 1px dashed $def-gray-color;
+    float: left;
+    margin-left: 100px;
+    margin-top: 50px;
+  }
+  .ac-transfer-contant{
+    width: 400px;
+    margin-left: 100px;
+    .user-choose-list{
+      width: 400px;
+      margin-top: 29px;
+      .list-empty{
+        width: 241px;
+        height: 64px;
+        background-color: #f9f9f9;
+        color: $font-auxiliary-color;
+        font-size: $font-sm;
+        line-height: 64px;
+        padding-left: 20px;
+      }
+      .choose-list-container{
+        width: 400px;
+        li{
+          list-style: none;
+          //width: 68px;
+          //height: 24px;
+          padding: 3px 8px;
+          border: 1px solid $def-gray-color;
+          border-radius: $globalBtnRadius;
+          font-size: $font-sm;
+          display: inline-block;
+          color: $new-inverse-color;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+  .fc-group{
+    margin-top: 50px;
+    .transfer-type{
+      width: 258px;
+      height: 38px;
+      background: url(~base/images/v2/icon-select-down.png) no-repeat scroll 95% center transparent;
+      background-color: #f9f9f9;
+    }
+    .input1{
+      width: 246px;
+      height: 28px;
+      background-color: #f9f9f9;
+    }
+    .control-confirm{
+      .btn{
+        width: 190px;
+        height: 40px;
+        border-radius: 20px;
+        margin-left: 20px;
+      }
+    }
+  }
+}

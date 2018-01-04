@@ -1,5 +1,5 @@
 
-const LowMultiSelect = require('com/lowMultiSelect')
+// const LowMultiSelect = require('com/lowMultiSelect')
 
 const MoneyTransferView = Base.ItemView.extend({
 
@@ -12,6 +12,10 @@ const MoneyTransferView = Base.ItemView.extend({
   events: {
     'click .js-fc-btn-submit': 'submitHandler',
     'click .js-transfer-type': 'renderTransferTypeLimit',
+    'keyup .js-ac-input-search-user': 'searchHandler',
+    'click .js-ac-selected-user': 'cancelSelectHandler',
+    'click .js-user-select-all': 'selectAllHandler',
+    'click .js-ac-more': 'acMoreHandler',
   },
 
   // 获取转账信息
@@ -30,7 +34,29 @@ const MoneyTransferView = Base.ItemView.extend({
     })
   },
 
-  initialize () {
+  getSearchXhr(data) {
+    return Global.sync.ajax({
+      url: '/acct/subacctinfo/getSubAcctBameByNameLike.json',
+      data,
+    })
+  },
+
+  getLowLevelXhr() {
+    return Global.sync.ajax({
+      url: '/acct/subacctinfo/getuserrelation.json',
+      abort: false,
+    })
+  },
+
+  getLowLevelByIdXhr(data) {
+    return Global.sync.ajax({
+      url: '/acct/subacctinfo/getsubacctnamebyid.json',
+      data,
+    })
+  },
+
+  initialize() {
+    this.selectedUsers = []
   },
 
   onRender() {
@@ -47,6 +73,12 @@ const MoneyTransferView = Base.ItemView.extend({
     this.$lowLevelSelect = this.$('.js-fc-lowLevelSelect')
     this.$btnSubmit = this.$('.js-fc-btn-submit')
 
+    this.$selectedContainer = this.$('.js-selected-container')
+    this.$selectedShortContainer = this.$('.js-selected-short-container')
+    this.$searchContainer = this.$('.js-ac-search-container')
+    this.$selectContainer = this.$('.js-user-tree-list')
+    this.$chooseListEmpty = this.$('.js-choose-list-empty')
+
     this.getInfoXhr()
       .always(() => {
         self.loadingFinish()
@@ -55,17 +87,16 @@ const MoneyTransferView = Base.ItemView.extend({
         self.data = res.root || {}
         if (res && res.result === 0) {
           if (self.renderBasicInfo(self.data)) {
-            self.lowMultiSelect = new LowMultiSelect()
-            self.$lowLevelSelect.html(self.lowMultiSelect.render().el)
+            self.initUserList()
             self.initRequestParams()
             self.parsley = self.$form.parsley({
-              errorsWrapper: '<div class="tooltip bottom parsley-errors-list tooltip-error"><div class="tooltip-arrow"></div></div>',
+              errorsWrapper: '<div class="tooltip bottom parsley-errors-list tooltip-error"><span class="sfa sfa-error-icon vertical-sub pull-left"></div>',
               errorTemplate: '<div class="tooltip-inner">',
               trigger: 'change',
             })
             const optionsHtml = ['<option value="0">普通转账</option>']// 0普通转账, 1活动转账, 2分红转账
             // 开启活动转账
-            if (res.root.activeTransStatus == 0) {
+            if (res.root.activeTransStatus === 0) {
               optionsHtml.push('<option value="1">活动转账</option>')
             }
             // 开启分红转账
@@ -79,6 +110,57 @@ const MoneyTransferView = Base.ItemView.extend({
         }
       })
   },
+  initUserList() {
+    const self = this
+
+    this.treeView = this.$('.js-user-tree-list').treeView({
+      onClick(e, id, data) {
+        self.selectUserClick(e, id, data)
+        // self.selectUser(id, data.text)
+      },
+      onCollapsed(e, id, data, collapsed) {
+        if (!collapsed) {
+          self.renderLowLevel(e, id)
+        }
+      },
+      checkIcon: true,
+      showHeaderImg: true,
+    }).treeView('instance')
+    this.searchTreeView = this.$('.js-ac-search-container').treeView({
+      onClick(e, id, data) {
+        self.selectUserClick(e, id, data)
+      },
+      onCollapsed(e, id, data, collapsed) {
+        if (!collapsed) {
+          self.renderLowLevel(e, id)
+        }
+      },
+      checkIcon: true,
+      showHeaderImg: true,
+    }).treeView('instance')
+
+    this.getLowLevelXhr()
+      .done((res) => {
+        const data = res.root || {}
+        if (res && res.result === 0) {
+          if (res.root.sStatus === 0) {
+            self.$('.js-ac-input-search-user').removeClass('hidden')
+            // const list = _(data.subNameList).map((sub) => {
+            //   return `<li><a class="js-ac-user-info" ></a></li>`
+            // })
+            self.treeView.insertNode(_(data.subNameList).map((sub) => {
+              return {
+                text: sub.subAcctName,
+                value: sub.subAcctId,
+                subItem: false,
+                img: sub.img,
+              }
+            }))
+          }
+        }
+      })
+  },
+
   initRequestParams() {
     let username
     if (this.options.reqData) {
@@ -89,6 +171,98 @@ const MoneyTransferView = Base.ItemView.extend({
       }
     }
   },
+
+  selectUserClick(e, id, data) {
+    const $target = $(e.currentTarget)
+    $target.toggleClass('active')
+    if ($target.hasClass('active')) {
+      this.selectUser(id, data.text)
+    } else {
+      this.cancelSelectHandler(e)
+    }
+  },
+
+  selectUser(id, name) {
+    const user = {
+      id,
+      name,
+    }
+
+    const find = _(this.selectedUsers).findWhere(user)
+    if (!find) {
+      this.selectedUsers.push(user)
+
+      this.renderSelectedUsers()
+    }
+  },
+
+  renderSelectedUsers() {
+    if (_(this.selectedUsers).size() < 1) {
+      this.$chooseListEmpty.removeClass('hidden')
+      this.$selectedContainer.html('')
+    } else {
+      this.$chooseListEmpty.addClass('hidden')
+      const userArr = _(this.selectedUsers).chain().map((user) => {
+        return `<li class="cursor-pointer m-left-sm" >
+                  <span>${user.name}</span>
+                  <a class="js-ac-selected-user text-inverse font-lg" data-id="${user.id}">&times;</a>
+                  </li>`
+      })
+        .reverse()
+        .value()
+      let arr = userArr
+      if (userArr.length > 10) {
+        arr = userArr.slice(0, 10)
+        arr.push('<a class="btn btn-link font-sm m-left-sm js-ac-more" data-type="open">展开更多<i class="fa fa-chevron-down" aria-hidden="true"></i></a>')
+        userArr.push('<a class="btn btn-link font-sm m-left-sm m-top-sm js-ac-more" data-type="close">收起更多<i class="fa fa-chevron-down fa-rotate-180" aria-hidden="true"></i></a>')
+      }
+      this.$selectedShortContainer.html(arr.join(''))
+      this.$selectedContainer.html(userArr.join(''))
+    }
+  },
+
+  getAll() {
+    return this.selectedUsers
+  },
+
+  searchHandler(e) {
+    const self = this
+    const $target = $(e.currentTarget)
+
+    const val = _($target.val()).trim()
+
+    if (val) {
+      this.$searchContainer.removeClass('hidden')
+      this.$selectContainer.addClass('hidden')
+
+      this.getSearchXhr({
+        subAcctName: val,
+      })
+        .done((res) => {
+          const data = res.root || []
+          if (res && res.result === 0) {
+            if (_(data.subUsers).isEmpty()) {
+              self.$searchContainer.html('<div class="text-center">没有匹配用户</div>')
+            } else {
+              self.searchTreeView.insertNode(_(data.subUsers).map((sub) => {
+                return {
+                  text: sub.subAcctName,
+                  value: sub.subAcctId,
+                  subItem: false,
+                  img: sub.img,
+                }
+              }))
+            }
+          } else {
+            self.$searchContainer.html('<div class="text-center">没有匹配用户</div>')
+          }
+        })
+    } else {
+      this.$searchContainer.addClass('hidden')
+      this.$selectContainer.removeClass('hidden')
+    }
+  },
+
   renderBasicInfo() {
     const data = this.data
     if (data.pStatus === 1 && data.sStatus === 1) {
@@ -127,7 +301,7 @@ const MoneyTransferView = Base.ItemView.extend({
     let desMin = ''
     let desMax = ''
     let desTradeNum = ''
-    if (type == 2 && data.dividTransferCfg && data.dividTransferCfg.open) {
+    if (type === 2 && data.dividTransferCfg && data.dividTransferCfg.open) {
       valMin = _(data.dividTransferCfg.minMoneyLimit).convert2yuan()
       valMax = _(data.dividTransferCfg.maxMoneyLimit).convert2yuan()
       valTradeNum = data.dividTransferCfg.tradeNum
@@ -161,9 +335,9 @@ const MoneyTransferView = Base.ItemView.extend({
 
   // event handlers
 
-  submitHandler(e) {
+  submitHandler() {
     const self = this
-    const sub = _(this.lowMultiSelect.getAll()).pluck('id')
+    const sub = _(this.getAll()).pluck('id')
     if (this.$('.js-fc-mt-tradeNum').val() === '' || Number(this.$('.js-fc-mt-tradeNum').val()) === '0') {
       Global.ui.notification.show('可转账次数不足。')
       return false
@@ -216,6 +390,42 @@ const MoneyTransferView = Base.ItemView.extend({
           Global.ui.notification.show(`验证失败，${res.msg}`)
         }
       })
+  },
+  cancelSelectHandler(e) {
+    const $target = $(e.currentTarget)
+
+    this.selectedUsers = _(this.selectedUsers).without(_(this.selectedUsers).findWhere({
+      id: $target.data('id') || $target.data('no'),
+    }))
+    this.$(`.js-wt-title[data-no=${$target.data('id')}]`).removeClass('active')
+    this.renderSelectedUsers()
+  },
+  selectAllHandler(e) {
+    const self = this
+    const $target = $(e.currentTarget)
+    const type = $target.data('type')
+    this.selectedUsers = []
+    if (type === 'all') {
+      this.$('.js-wt-title').addClass('active')
+      _(this.$('.js-wt-title')).each((item) => {
+        self.selectUser($(item).data('no'), $(item).data('data').text)
+      })
+    } else {
+      this.$selectedContainer.empty()
+      this.$('.js-wt-title').removeClass('active')
+    }
+    this.renderSelectedUsers()
+  },
+  acMoreHandler(e) {
+    const $target = $(e.currentTarget)
+    const type = $target.data('type')
+    if (type === 'open') {
+      this.$selectedContainer.removeClass('hidden')
+      this.$selectedShortContainer.addClass('hidden')
+    } else {
+      this.$selectedContainer.addClass('hidden')
+      this.$selectedShortContainer.removeClass('hidden')
+    }
   },
 })
 
