@@ -38,6 +38,7 @@ const TeamAccountDetailView = require('agencyCenter/teamAccountDetail')
 const TeamOverviewView = require('agencyCenter/teamOverview')
 
 const LowLevelGrantView = require('agencyCenter/dividendManage/lowLevelGrant')
+const TabView = require('agencyCenter/dividendManage/index-tab')
 
 const sidebar = Global.ui.menu.get('ac')
 
@@ -315,21 +316,19 @@ const AgencyCenterController = RouterController.extend({
     })
   },
   signUserManage() {
-    this.changeMainReginView(new DividendMangeView({ triggerTab: 'jsAcDmUserManage' }), {
+    this.changeMainReginView(new TabView(), {
       main: {
-        title: '分红管理',
+        title: '签约用户',
       },
       sidebar,
-      activeMenu: 'ac/dm',
     })
   },
   signUser() {
-    this.changeMainReginView(new DividendMangeView({ triggerTab: 'jsAcDmSignUser' }), {
+    this.changeMainReginView(new TabView(), {
       main: {
-        title: '分红管理',
+        title: '签约用户',
       },
       sidebar,
-      activeMenu: 'ac/dm',
     })
   },
   agreementManagement() {
