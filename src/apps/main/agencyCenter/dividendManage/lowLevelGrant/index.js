@@ -21,6 +21,12 @@ const LowLevelView = Base.ItemView.extend({
       data,
     })
   },
+  dividRoleXhr(data) {
+    return Global.sync.ajax({
+      url: '/fund/divid/dividViewInfo.json',
+      data,
+    })
+  },
 
   initialize() {
   },
@@ -39,8 +45,8 @@ const LowLevelView = Base.ItemView.extend({
     this.$type = this.$('.js-ac-dm-lg-type-btn')
     this.$cycle = this.$('select[name=cycle]')
     this.$grid = this.$('.js-ac-dm-lg-grid')
-    $.when(self._parentView.DividRoleData).done((res1) => {
-      if (res1.result == 0) {
+    self.dividRoleXhr().done((res1) => {
+      if (res1.result === 0) {
         self.$type.filter('[data-type=0]').toggleClass('hidden', !res1.root.subDividTicket)
         self.$type.filter('[data-type=1]').toggleClass('hidden', !res1.root.subDividGame)
         if (res1.root.subDividTicket) {
@@ -62,14 +68,14 @@ const LowLevelView = Base.ItemView.extend({
     })
   },
 
-  getLowLevelDividendRecord(e) {
+  getLowLevelDividendRecord() {
     const type = this.$type.filter('.active').data('type')
     const cycle = this.$cycle.val()
     const month = this.$cycle.find('option:selected').data('month')
     const userName = this.$('input[name="username"]').val()
     const status = this.$('select[name="status"]').val()
 
-    if (type == 0) {
+    if (type === 0) {
       if (this.TicketGridView) {
         this.TicketGridView.destroy()
       }
@@ -77,7 +83,7 @@ const LowLevelView = Base.ItemView.extend({
         type, halfMonth: cycle, month, userName, status,
       })
       this.$grid.html(this.TicketGridView.render().el)
-    } else if (type == 1) {
+    } else if (type === 1) {
       if (this.GameGridView) {
         this.GameGridView.destroy()
       }
@@ -105,7 +111,7 @@ const LowLevelView = Base.ItemView.extend({
     const formatMonth = now.format('YYYY-MM')
     const lastFormatMonth = lastMonth.format('YYYY-MM')
     const cycle = []
-    if (type == 0) {
+    if (type === 0) {
       if (date > 15) {
         cycle.push(`<option value="1" data-month="${formatMonth}">${month}月下半月</option>`)
         cycle.push(`<option value="0" data-month="${formatMonth}">${month}月上半月</option>`)

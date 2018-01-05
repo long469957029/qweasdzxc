@@ -3,6 +3,12 @@
 @import
 "~base/styles/imports";
 
+.low-level-head{
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px solid $def-gray-color;
+  padding-left: 20px;
+}
 .ac-dm-lg-grid{
   .portlet .portlet-body{
     padding: 0;

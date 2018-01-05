@@ -3,7 +3,8 @@
 require('./index.scss')
 
 const AgreementView = require('./agreement')
-const TabView = require('./index-tab')
+// const TabView = require('./index-tab')
+const MyDividView = require('agencyCenter/dividendManage/myDivid')
 
 const dividendConfig = require('./dividendConfig')
 
@@ -29,7 +30,8 @@ const DividendManageView = Base.ItemView.extend({
       this.$el.html(new AgreementView().render().$el)
     } else if (acctInfo.dividendStatus === dividendConfig.getByName('APPLIED').id || acctInfo.merchant) {
       // 已开通，渲染 tab页
-      this.$el.html(new TabView({ merchant: acctInfo.merchant, triggerTab: this.options.triggerTab }).render().$el)
+      // this.$el.html(new TabView({ merchant: acctInfo.merchant, triggerTab: this.options.triggerTab }).render().$el)
+      this.$el.html(new MyDividView().render().$el)
     }
   },
 })

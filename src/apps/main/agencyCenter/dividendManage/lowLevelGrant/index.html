@@ -1,23 +1,25 @@
-<div class="form form-inline no-margin row">
+<div class="form form-inline no-margin basic-black ac-dm row">
   <div class="control-group">
-    <div class="inline-block  m-left-md m-right-md">
-      <button type="button" class="js-ac-dm-lg-type-btn ac-dm-nav-btn hidden active m-right-xs " data-type="0">彩票分红</button>
-      <button type="button" class="js-ac-dm-lg-type-btn ac-dm-nav-btn hidden  " data-type="1">其他游戏分红</button>
+    <div class="low-level-head">
+      <a type="button" class="js-ac-dm-lg-type-btn ac-dm-nav-btn hidden active m-right-xs " data-type="0">彩票分红</a>
+      <a type="button" class="js-ac-dm-lg-type-btn ac-dm-nav-btn hidden  " data-type="1">其他游戏分红</a>
     </div>
-    <input type="hidden" name="type" class="js-ac-dm-lg-type">
-    <label class="control-label">分红周期:</label>
+    <div class="m-TB-md m-left-sm p-left-md">
+      <input type="hidden" name="type" class="js-ac-dm-lg-type">
+      <label class="control-label">分红周期:</label>
 
-    <select name="cycle" class="input-md m-right-md">
-      <option value="-1">全部</option>
-    </select>
-    <label class="control-label">用户名:</label>
-    <input type="text" class="input-sm m-right-md" name="username">
+      <select name="cycle" class="input-md m-right-md">
+        <option value="-1">全部</option>
+      </select>
+      <label class="control-label">用户名:</label>
+      <input type="text" class="input-sm m-right-md" name="username">
 
-    <label class="control-label">状态:</label>
-    <select name="status" class="input-sm m-right-md">
-      <option value="-1">全部</option>
-    </select>
-    <button class="js-ac-dm-lg-search btn" type="button" >搜索</button>
+      <label class="control-label">状态:</label>
+      <select name="status" class="input-sm m-right-md">
+        <option value="-1">全部</option>
+      </select>
+      <button class="js-ac-dm-lg-search btn" type="button" >搜索</button>
+    </div>
   </div>
   <div class="js-ac-dm-lg-grid ac-dm-lg-grid"></div>
 </div>

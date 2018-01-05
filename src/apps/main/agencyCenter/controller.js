@@ -37,6 +37,8 @@ const TeamAccountDetailView = require('agencyCenter/teamAccountDetail')
 
 const TeamOverviewView = require('agencyCenter/teamOverview')
 
+const LowLevelGrantView = require('agencyCenter/dividendManage/lowLevelGrant')
+
 const sidebar = Global.ui.menu.get('ac')
 
 const AgencyCenterController = RouterController.extend({
@@ -262,7 +264,8 @@ const AgencyCenterController = RouterController.extend({
   dividendManage() {
     this.changeMainReginView(new DividendMangeView(), {
       main: {
-        title: '分红管理',
+        title: '我的分红',
+        titleDes: '彩票分红每月1号和16号结算，游戏分红每月1号结算',
       },
       sidebar,
     })
@@ -303,12 +306,12 @@ const AgencyCenterController = RouterController.extend({
     })
   },
   lowLevelGrant() {
-    this.changeMainReginView(new DividendMangeView({ triggerTab: 'jsAcDmLowLevelGrant' }), {
+    this.changeMainReginView(new LowLevelGrantView(), {
       main: {
-        title: '分红管理',
+        title: '下级分红',
+        titleDes: '彩票分红每月1号和16号结算，游戏分红每月1号结算，若未按时下发给下级平台会强制发放',
       },
       sidebar,
-      activeMenu: 'ac/dm',
     })
   },
   signUserManage() {

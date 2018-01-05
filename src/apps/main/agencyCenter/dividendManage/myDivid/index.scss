@@ -1,109 +1,199 @@
 @charset "UTF-8";
 
-@import
-"~base/styles/imports";
+@import "~base/styles/imports";
 
-.ac-dm-md-main{
-  margin-left: 29px;
-  .ac-dm-md-head{
-    height: 48px;
-    width: 808px;
-    padding-top:5px;
-    .ac-dm-md-label{
-      margin-left: 45px;
-      font-size: 13px;
-      color: #666;
-      line-height: 28px;
-    }
-    .ac-dm-md-cycle{
-      width: 122px;
-      height: 28px;
-    }
-    .ac-dm-md-status{
-      width: 72px;
-      height: 28px;
-      font-size: 14px;
-      line-height: 28px;
-      background: #a8a8a8;
+.ac-dm-md-main {
+  .ac-dm-md-tip {
+    width: 945px;
+    height: 39px;
+    margin: 10px 20px;
+    background-color: #fdf5ea;
+    color: $new-inverse-color;
+    font-size: $font-sm;
+    line-height: 39px;
+    .tip-btn {
+      width: 78px;
+      height: 24px;
+      border: 1px solid $def-gray-color;
       text-align: center;
-      color: #fff;
-      float: right;
-      outline: none;
-      &.active{
-        background: #e8675d;
-      }
+      border-radius: $globalBtnRadius;
+      background: linear-gradient(to bottom, $def-white-color, #f1f1f1);
+      margin-left: 15px;
+      display: inline-block;
+      color: $new-inverse-color;
+      line-height: 24px;
+      cursor: pointer;
     }
-
   }
+  .ac-dm-md-head {
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid $third-line-color;
+    padding-left: 20px;
+  }
+  .ac-dm-md-cycle {
+    width: 110px;
+    height: 24px;
+    margin: 0;
+  }
+  .ac-dm-md-status {
+    width: 78px;
+    height: 26px;
+    font-size: 14px;
+    line-height: 24px;
+    background: linear-gradient(to bottom,$def-white-color,#f1f1f1);
+    text-align: center;
+    color: $new-inverse-color;
+    float: right;
+    outline: none;
+    border: 1px solid $def-gray-color;
+    border-radius: $globalBtnRadius;
+    &.active {
+      background: $new-main-deep-color;
+      color: $def-white-color;
+      border-color: $new-main-deep-color;
+    }
+  }
+  .ac-dm-md-label {
+    margin-left: 45px;
+    font-size: 12px;
+    color: $def-black-color;
+    line-height: 28px;
+  }
+  .ac-dm-md-body {
 
-  .ac-dm-md-body{
-
-    .ac-dm-md-graph{
-      width: 808px;
-      height: 135px;
-      border: 1px solid #b6b6b5;
+    .ac-dm-md-graph {
+      width: 100%;
+      height: 200px;
+      //border: 1px solid #b6b6b5;
       font-size: 0;
       margin-bottom: 17px;
-
-      >div{
+      padding-top: 60px;
+      display: flex;
+      justify-content: center;
+      .ac-dm-md-graph-info {
         display: inline-block;
-        width: 201px;
-        height:135px;
-        border-right: 1px solid #b6b6b5;
+        width: 178px;
+        height: 178px;
+        margin-right: 35px;
+        border: 1px solid $new-main-deep-color;
+        border-radius: 50%;
         font-size: 16px;
-        color: #666;
+        color: #7f95a5;
         text-align: center;
         overflow: hidden;
-
+        background-color: $def-white-color;
+        transition: background-color,color 1s;
+        .ac-dm-md-graph-icon {
+          width: 38px;
+          height: 38px;
+          margin: 35px auto 20px;
+          background-size: cover;
+          transition: transform 1s;
+        }
+        .ac-dm-md-graph-betTotal {
+          background: url('./md-betTotal.png') no-repeat center;
+        }
+        .ac-dm-md-graph-profitTotal {
+          background: url('./md-profitTotal.png') no-repeat center;
+        }
+        .ac-dm-md-graph-activeUser {
+          background: url('./md-user.png') no-repeat center;
+        }
+        .ac-dm-md-graph-subDividTotal {
+          background: url('./md-subDividTotal.png') no-repeat center;
+        }
+        .ac-dm-md-graph-rebatTotalTotal {
+          background: url('./md-rebatTotalTotal.png') no-repeat center;
+        }
+        .ac-dm-md-graph-lastMonthNegativeProfitTotal {
+          background: url('./md-lastMonth.png') no-repeat center;
+        }
+        .ac-dm-md-graph-divid {
+          background: url('./md-divid.png') no-repeat center;
+        }
+        .ac-dm-md-graph-dividTotal {
+          background: url('./md-dividTotal.png') no-repeat center;
+        }
+        .ac-dm-md-graph-label {
+          font-size: 12px;
+        }
+        .ac-dm-md-graph-num{
+          font-family: 'din';
+        }
+        &:hover{
+          background-color: $new-main-deep-color;
+          color: $def-white-color;
+          .ac-dm-md-graph-icon{
+            transform: rotate(360deg);
+          }
+          .ac-dm-md-graph-betTotal {
+            background: url('./md-betTotal-hover.png') no-repeat center;
+          }
+          .ac-dm-md-graph-profitTotal {
+            background: url('./md-profitTotal-hover.png') no-repeat center;
+          }
+          .ac-dm-md-graph-activeUser {
+            background: url('./md-user-hover.png') no-repeat center;
+          }
+          .ac-dm-md-graph-subDividTotal {
+            background: url('./md-subDividTotal.png') no-repeat center;
+          }
+          .ac-dm-md-graph-rebatTotalTotal {
+            background: url('./md-rebatTotalTotal.png') no-repeat center;
+          }
+          .ac-dm-md-graph-lastMonthNegativeProfitTotal {
+            background: url('./md-lastMonth.png') no-repeat center;
+          }
+          .ac-dm-md-graph-divid {
+            background: url('./md-divid-hover.png') no-repeat center;
+          }
+          .ac-dm-md-graph-dividTotal {
+            background: url('./md-dividTotal-hover.png') no-repeat center;
+          }
+        }
+      }
+    }
+    .ac-dm-dm-grid-5 {
+      .ac-dm-md-graph {
+        .ac-dm-md-graph-info {
+          width: 148px;
+          height: 148px;
+          margin-right: 30px;
+          &:hover{
+            .ac-dm-md-graph-icon{
+              background-size: 100% 100%;
+            }
+          }
+        }
         .ac-dm-md-graph-icon{
-          width: 74px;
-          height: 74px;
-          margin: 12px auto 2px;
-        }
-        .ac-dm-md-graph-betTotal{
-          background: url(./md-betTotal.png);
-        }
-        .ac-dm-md-graph-profitTotal{
-          background: url(./md-profitTotal.png);
-        }
-        .ac-dm-md-graph-activeUser{
-          background: url(./md-user.png);
-        }
-        .ac-dm-md-graph-subDividTotal{
-          background: url(./md-subDividTotal.png);
-        }
-        .ac-dm-md-graph-rebatTotalTotal{
-          background: url(./md-rebatTotalTotal.png);
-        }
-        .ac-dm-md-graph-lastMonthNegativeProfitTotal{
-          background: url(./md-lastMonth.png);
-        }
-        .ac-dm-md-graph-divid{
-          background: url(./md-divid.png);
-        }
-        .ac-dm-md-graph-dividTotal{
-          background: url(./md-dividTotal.png);
-        }
-        .ac-dm-md-graph-label{
-          font-size: 14px;
-          color: #666;
-        }
-        &:last-child{
-          border-right: 0;
+          width: 30px;
+          height: 30px;
+          background-size: 100% 100%;
+          margin: 29px auto 15px;
         }
       }
     }
-    .ac-dm-dm-grid-5{
-      .ac-dm-md-graph{
-        >div{
-          width:160px;
-        }
+    .ac-dm-md-body-title{
+      font-size: $font-sm;
+      color: $def-black-color;
+      position: relative;
+      padding-left: 15px;
+      margin-left: 27px;
+      margin-bottom: 20px;
+      &:before{
+        content: '';
+        width: 4px;
+        height: 17px;
+        background-color: $new-main-deep-color;
+        position: absolute;
+        left: 0px;
+        top: 2px;
       }
-
     }
-    .ac-dm-md-settle-grid{
-      width: 808px;
-
+    .ac-dm-md-settle-grid {
+      width: 946px;
+      margin: 0 auto;
     }
   }
 }

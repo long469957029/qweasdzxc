@@ -101,9 +101,9 @@ const DashboardView = Base.ItemView.extend({
     // self.$prevPage = self.$('.js-db-prev')
     // self.$nextPage = self.$('.js-db-next')
 
-    self.subscribe('acct', 'acct:updating', () => {
-      self.renderAcctInfoView()
-    })
+    // self.subscribe('acct', 'acct:updating', () => {
+    //   self.renderAcctInfoView()
+    // })
 
     // self.renderEntry()
     self.renderMainBannerAD()
