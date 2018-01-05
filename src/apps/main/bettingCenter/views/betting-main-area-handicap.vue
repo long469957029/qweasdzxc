@@ -14,6 +14,11 @@
       </div>
       <div class="bc-side-area pull-right" ref="bcSideArea"></div>
     </div>
+
+    <!-- 确认投注 -->
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="confirm">
+      <betting-confirm :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice" :betting-list="bettingChoice.buyList" :type="`handicap`"  @bettingConfirm="bettingConfirm"></betting-confirm>
+    </div>
   </div>
 </template>
 
@@ -24,11 +29,11 @@
   import BettingRules from './betting-rules'
   import BettingAdvanceRules from './betting-advance-rules'
   import BettingPlayAreaHandicap from './betting-play-area-handicap'
+  import BettingConfirm from "./betting-confirm";
 
 
   //backbone旧组件
   import HisAnalysisView from './bettingCenter-historical-analysis'
-  import confirmTpl from '../templates/bettingCenter-confirm.html'
 
   let recordsOpenView
 
@@ -40,6 +45,7 @@
     },
     components: {
       BettingRules,
+      BettingConfirm,
       BettingAdvanceRules,
       BettingPlayAreaHandicap,
     },
@@ -102,6 +108,10 @@
       },
     },
 
+    beforeCreate() {
+      this.$store.commit(types.CHECKOUT_TICKET_INFO)
+    },
+
     methods: {
 
       clearAll() {
@@ -129,51 +139,56 @@
           return false
         }
 
-        $(document).confirm({
-          title: '确认投注',
-          content: _(confirmTpl).template()({
-            ticketInfo: this.ticketInfo,
-            ticketName: this.ticketInfo.info.zhName,
-            planId: this.bettingInfo.planId,
-            totalInfo: this.bettingChoice.totalInfo,
-            previewList: this.bettingChoice.buyList,
-          }),
-          size: 'bc-betDetail-confirm-dialog',
-          agreeCallback: () => {
-            this.pushing = true
-
-            this.$store.dispatch('pushBetting', {
-              planId: this.bettingInfo.planId,
-              type: 'buyList'
-            })
-              .catch(() => {
-                this.pushing = false
-              })
-              .then((res) => {
-                this.pushing = false
-
-                if (res && res.result === 0) {
-
-                  this.$refs.area.clearAll()
-                  this.$store.commit(types.EMPTY_PREV_BETTING)
-
-                  Global.m.oauth.check()
-
-                  Global.ui.notification.show('投注成功！', {
-                    type: 'success',
-                    hasFooter: false,
-                    displayTime: 800,
-                  })
-                } else if (res.root && res.root.errorCode === 101) {
-                  Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
-                } else {
-                  Global.ui.notification.show(res.msg || '')
-                }
-
-                this.$_emptySelect();
-              })
-          },
+        $(this.$refs.confirm).modal({
+          backdrop: 'static',
         })
+
+        // $(document).confirm({
+        //   title: '确认投注',
+        //   content: _(confirmTpl).template()({
+        //     ticketInfo: this.ticketInfo,
+        //     ticketName: this.ticketInfo.info.zhName,
+        //     planId: this.bettingInfo.planId,
+        //     totalInfo: this.bettingChoice.totalInfo,
+        //     previewList: this.bettingChoice.buyList,
+        //   }),
+        //   size: 'bc-betDetail-confirm-dialog',
+        //   agreeCallback: () => {
+      },
+
+      bettingConfirm() {
+        this.pushing = true
+
+        $(this.$refs.confirm).modal('hide')
+
+        this.$store.dispatch('pushBetting', {
+          planId: this.bettingInfo.planId,
+          type: 'buyList'
+        })
+          .catch(() => {
+            this.pushing = false
+          })
+          .then((res) => {
+            this.pushing = false
+
+            if (res && res.result === 0) {
+
+              this.$refs.area.clearAll()
+              this.$store.commit(types.EMPTY_PREV_BETTING)
+
+              Global.m.oauth.check()
+
+              Global.ui.notification.show('投注成功！', {
+                type: 'success',
+                hasFooter: false,
+                displayTime: 800,
+              })
+            } else if (res.root && res.root.errorCode === 101) {
+              Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
+            } else {
+              Global.ui.notification.show(res.msg || '')
+            }
+          })
       },
     },
 
@@ -187,73 +202,4 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
-
-  .bc-chase {
-    text-decoration: none;
-    font-size: 12px;
-    color: #666666;
-  }
-
-  .advance-play-des{
-    width: 86px;
-    height: 23px;
-    display: inline-block;
-    border: 1px solid #f0f0f0;
-    border-radius: 15px;
-    line-height: 23px;
-    color: #8094A6;
-    text-align: center;
-    margin: 5px 40px 0 0;
-    float: right;
-  }
-
-  .bc-advance-mode-single {
-    float: left;
-    color: $prominent-secondary-btn-color;
-    margin: 20px 0 0 20px;
-    .advance-play-des{
-      margin: 0 0 0 20px;
-    }
-  }
-
-  .advance-bonus{
-    margin-right: 40px;
-    margin-top: 15px;
-    float: right;
-  }
-  .advance-bonus-single{
-    margin-right: 40px;
-    margin-top: 20px;
-    float: right;
-  }
-
-  .bc-play-select-area {
-    min-height: 70px;
-
-    .bc-advance-rules {
-      color: #666666;
-      width: 80%;
-      .tab-toolbar {
-        &:last-of-type {
-          margin-bottom: 3px;
-        }
-      }
-    }
-
-    .tab-toolbar {
-      .tab-group {
-        margin-left: 100px;
-        .tab {
-          font-size: 14px;
-        }
-      }
-    }
-    .bc-advance-mode-main{
-      width: 20%;
-      font-size: $font-xs;
-      color: $inverse-color;
-    }
-  }
 </style>

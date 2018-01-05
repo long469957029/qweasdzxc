@@ -521,6 +521,35 @@ $btns: (
       bg-color: $main-deep-color
     )
   ),
+  white: (
+    color: #666666,
+    border-color: #cccccc,
+    bg-color: #ffffff,
+    linear-color: linear-gradient(180deg,
+      #ffffff 0%,
+      #f0f0f0 100%),
+    hover: (
+      color: #666666,
+      bg-color: #ffffff,
+      linear-color: linear-gradient(180deg,
+      #ffffff 0%,
+      #f0f0f0 100%)
+    ),
+    focus: (
+      color: #666666,
+      bg-color: #ffffff,
+      linear-color: linear-gradient(180deg,
+      #ffffff 0%,
+      #f0f0f0 100%)
+    ),
+    active: (
+      color: #666666,
+      bg-color: #ffffff,
+      linear-color: linear-gradient(180deg,
+      #ffffff 0%,
+      #f0f0f0 100%)
+    )
+  ),
 );
 
 //==========================================

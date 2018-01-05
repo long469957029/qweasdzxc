@@ -120,6 +120,7 @@ $tab-toolbar-circle-colors: (
 
       > div {
         margin-right: 10px;
+        min-width: 56px;
       }
 
       //&.active {
@@ -185,8 +186,8 @@ $tab-toolbar-circle-colors: (
       font-size: 26px;
       line-height: 48px;
       height: 48px;
-      min-width: 28px;
-      padding: 0 10px;
+      min-width: 32px;
+      padding: 0 8px;
       border-radius: 8px;
       border: 1px solid $def-gray-color;
       color: $new-inverse-color;

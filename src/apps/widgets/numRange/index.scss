@@ -8,7 +8,7 @@
 }
 .num-range {
   display: inline-block;
-  border: 1px solid $sec-gray-color;
+  border: 1px solid $def-gray-color;
   border-radius: 5px;
   &.num-range-lg{
     .num-range-left,.num-range-right{
@@ -34,11 +34,11 @@
   }
   > {
     .num-range-left {
-      font-size: 12px;
+      font-size: 14px;
       float: left;
       text-align: center;
       //padding: 1px 6px;
-      border-right: 1px solid $sec-gray-color;
+      border-right: 1px solid $def-gray-color;
       cursor: pointer;
       border-top-left-radius: 5px;
       border-bottom-left-radius: 5px;
@@ -65,11 +65,11 @@
       }
     }
     .num-range-right {
-      font-size: 12px;
+      font-size: 14px;
       float: left;
       //padding: 1px 6px;
       text-align: center;
-      border-left: 1px solid $sec-gray-color;
+      border-left: 1px solid $def-gray-color;
       cursor: pointer;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;

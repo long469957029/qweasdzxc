@@ -61,51 +61,51 @@
         </div>
         <div class="side" v-if="rule.op.full">
           <div class="side-row">
-            <div class="side-operate">大</div>
-            <div class="side-operate">小</div>
+            <div class="side-operate" @click="selectOperate('big', rule)">大</div>
+            <div class="side-operate" @click="selectOperate('small', rule)">小</div>
           </div>
           <div class="side-row">
-            <div class="side-operate">单</div>
-            <div class="side-operate">双</div>
+            <div class="side-operate" @click="selectOperate('odd', rule)">单</div>
+            <div class="side-operate" @click="selectOperate('even', rule)">双</div>
           </div>
           <div class="side-row">
-            <div class="side-operate">和大</div>
-            <div class="side-operate">和小</div>
+            <div class="side-operate"  @click="selectOperate('add_big', rule)">和大</div>
+            <div class="side-operate"  @click="selectOperate('add_small', rule)">和小</div>
           </div>
           <div class="side-row">
-            <div class="side-operate">和单</div>
-            <div class="side-operate">和双</div>
+            <div class="side-operate" @click="selectOperate('add_odd', rule)">和单</div>
+            <div class="side-operate" @click="selectOperate('add_even', rule)">和双</div>
           </div>
           <div class="side-row">
-            <div class="side-operate">
+            <div class="side-operate" @click="selectOperate('red', rule)">
               <span class="side-icon item red circle"></span>
             </div>
-            <div class="side-operate">
+            <div class="side-operate" @click="selectOperate('blue', rule)">
               <span class="side-icon item blue circle"></span>
             </div>
-            <div class="side-operate">
+            <div class="side-operate" @click="selectOperate('green', rule)">
               <span class="side-icon item green circle"></span>
             </div>
           </div>
           <div class="side-row">
-            <div class="side-operate">鼠</div>
-            <div class="side-operate">牛</div>
-            <div class="side-operate">虎</div>
+            <div class="side-operate" @click="selectOperate('mouse', rule)">鼠</div>
+            <div class="side-operate" @click="selectOperate('cow', rule)">牛</div>
+            <div class="side-operate" @click="selectOperate('tiger', rule)">虎</div>
           </div>
           <div class="side-row">
-            <div class="side-operate">兔</div>
-            <div class="side-operate">龙</div>
-            <div class="side-operate">蛇</div>
+            <div class="side-operate" @click="selectOperate('rabbit', rule)">兔</div>
+            <div class="side-operate" @click="selectOperate('dragon', rule)">龙</div>
+            <div class="side-operate" @click="selectOperate('snack', rule)">蛇</div>
           </div>
           <div class="side-row">
-            <div class="side-operate">马</div>
-            <div class="side-operate">羊</div>
-            <div class="side-operate">猴</div>
+            <div class="side-operate" @click="selectOperate('horse', rule)">马</div>
+            <div class="side-operate" @click="selectOperate('sheep', rule)">羊</div>
+            <div class="side-operate" @click="selectOperate('monkey', rule)">猴</div>
           </div>
           <div class="side-row">
-            <div class="side-operate">鸡</div>
-            <div class="side-operate">狗</div>
-            <div class="side-operate">猪</div>
+            <div class="side-operate" @click="selectOperate('chicken', rule)">鸡</div>
+            <div class="side-operate" @click="selectOperate('dog', rule)">狗</div>
+            <div class="side-operate" @click="selectOperate('pig', rule)">猪</div>
           </div>
           <div class="side-row"></div>
         </div>
@@ -245,12 +245,163 @@
         })
       },
 
+      selectOperate(op, row) {
+        const fItems = _.flatten(row.items)
+        switch (op) {
+          case 'big':
+            _.filter(fItems, (num, index) => {
+              num.betMoney = null
+              num.selected = index >= Math.floor((fItems.length) / 2)
+            })
+            break
+          case 'small':
+            _.filter(fItems, (num, index) => {
+              num.betMoney = null
+              num.selected = index < Math.floor((fItems.length) / 2)
+            })
+            break
+          case 'odd':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = num.num % 2
+            })
+            break
+          case 'even':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = !(num.num % 2)
+            })
+            break
+          case 'add_big':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['07', '08', '09', '16', '17', '18', '19', '25', '26', '27', '28', '29', '34', '35',
+                '36', '37', '38', '39', '43', '44', '45', '46', '47', '48'], num.num) > -1
+            })
+            break
+          case 'add_small':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['01', '02', '03', '04', '05', '06', '10', '11', '12', '13', '14', '15', '20', '21',
+                '22', '23', '24', '30', '31', '32', '33', '40', '41', '42'], num.num) > -1
+            })
+            break
+          case 'add_odd':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['01', '03', '05', '07', '09', '10', '12', '14', '16', '18', '21', '23', '25', '27',
+                '29', '30', '32', '34', '36', '38', '41', '43', '45', '47'], num.num) > -1
+            })
+            break
+          case 'add_even':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['02', '04', '06', '08', '11', '13', '15', '17', '19', '20', '22', '24', '26', '28',
+                '31', '33', '35', '37', '39', '40', '42', '44', '46', '48'], num.num) > -1
+            })
+            break
+          case 'red':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = num.style.indexOf('red') > -1
+            })
+            break
+          case 'blue':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = num.style.indexOf('blue') > -1
+            })
+            break
+          case 'green':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = num.style.indexOf('green') > -1
+            })
+            break
+          case 'mouse':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['10', '22', '34', '46'], num.num) > -1
+            })
+            break
+          case 'cow':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['09', '21', '33', '45'], num.num) > -1
+            })
+            break
+          case 'tiger':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['08', '20', '32', '44'], num.num) > -1
+            })
+            break
+          case 'rabbit':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['07', '19', '31', '43'], num.num) > -1
+            })
+            break
+          case 'dragon':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['06', '18', '30', '42'], num.num) > -1
+            })
+            break
+          case 'snack':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['05', '17', '29', '41'], num.num) > -1
+            })
+            break
+          case 'horse':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['04', '16', '28', '40'], num.num) > -1
+            })
+            break
+          case 'sheep':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['03', '15', '27', '39'], num.num) > -1
+            })
+            break
+          case 'monkey':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['02', '14', '26', '38'], num.num) > -1
+            })
+            break
+          case 'chicken':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['01', '13', '25', '37', '49'], num.num) > -1
+            })
+            break
+          case 'dog':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['12', '24', '36', '48'], num.num) > -1
+            })
+            break
+          case 'pig':
+            _.filter(fItems, (num) => {
+              num.betMoney = null
+              num.selected = _.indexOf(['11', '23', '35', '47'], num.num) > -1
+            })
+            break
+          default:
+            break
+        }
+      },
+
       //父组件调用
       lotteryBuy() {
         this.$store.commit(types.ADD_HANDICAP_BET, {
           bettingInfo: {
             lotteryList: this.lotteryList,
-            format: this.playRule.format
+            format: this.playRule.format,
+            showFormat: this.playRule.showFormat,
           }
         })
 
@@ -290,6 +441,7 @@
       .main-title {
         flex-grow: 1;
         border-right: 1px solid #e6e6e6;
+        width: 0;
 
         &:last-child {
           border-right: none;
@@ -339,8 +491,8 @@
         }
         .main-item-left {
           width: 60%;
-          padding-right: 10%;
-          text-align: right;
+          padding-left: 10%;
+          text-align: left;
           box-sizing: border-box;
           line-height: 25px;
         }
@@ -353,7 +505,7 @@
           flex-grow: 1;
         }
         .item {
-          margin: 0 3px;
+          margin: 0 5px 0 0;
         }
       }
       .red {
@@ -401,7 +553,7 @@
 
       .side-icon {
         position: relative;
-        top: 6px;
+        top: 8px;
       }
     }
 

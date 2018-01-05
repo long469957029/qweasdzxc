@@ -7,7 +7,8 @@
         <div class="bc-play-select-area clearfix">
           <betting-advance-rules v-show="advanceShowMode === 'classic'" @modeChange="modeChange"></betting-advance-rules>
 
-          <div class="bc-advance-mode-single" v-show="advanceShowMode === 'single'">玩法说明：{{playInfo.playDes}}
+          <div class="bc-advance-mode-single" v-show="advanceShowMode === 'single'">
+            <div class="bc-play-des">玩法说明：{{playInfo.playDes}}</div>
             <a class="advance-play-des" ref="winningExample">
               <span class="sfa sfa-bc-light vertical-middle"></span>
               中奖示例
@@ -27,7 +28,7 @@
         <div class="bc-line"></div>
         <div class="m-LR-smd">
           <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
-            <betting-play-area-select :play-rule="playRule" :mark6-ticket-id-arr="mark6TicketIdArr" :ticket-info="ticketInfo" ref="areaSelect" v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
+            <betting-play-area-select :play-rule="playRule" :ticket-info="ticketInfo" ref="areaSelect" v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
                 <div slot="lastMissNum" class="js-bc-missOption bc-missOption-btn active">当前遗漏</div>
                 <div slot="maxMissNum" class="js-bc-missOption bc-missOption-btn">最大遗漏</div>
                 <div slot="autoAdd" class="bc-missOption-btn" data-times="1" @click="autoAdd(1)">机选一注</div>
@@ -94,10 +95,10 @@
                   <span class="text-prominent m-left-xs m-right-xs">{{bettingChoice.totalInfo.fTotalMoney}}</span>
                   <span>元</span>
                 </span>
-              <button class="js-bc-chase bc-chase btn-link inline-block cursor-pointer m-left-md relative" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+              <button class="bc-chase btn-link inline-block cursor-pointer m-left-md relative" @click="bettingChase" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                 <span class="sfa sfa-checkmark vertical-middle"></span>
                 我要追号
-                <span class="ba-chase-tip" @click="bettingChase">追号能提高中奖率</span>
+                <span class="ba-chase-tip">追号能提高中奖率</span>
               </button>
             </div>
             <div class="m-top-md p-top-sm text-center m-bottom-md">
@@ -114,25 +115,15 @@
 
 
     <!-- 追号 -->
-    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="chaseModal">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title">
-              <span class="portlet-icon sfa sfa-sub-title-user vertical-sub"></span> 追号
-            </h4>
-          </div>
-          <div class="modal-body basic-inverse p-top-xs no-p-left no-p-right no-p-bottom">
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="chaseModal" v-if="showChaseModal">
             <betting-chase :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney" :ticket-info="ticketInfo"
                            :planId="bettingInfo.planId" :preview-list="bettingChoice.previewList"
-                           :total-lottery="bettingChoice.totalLottery" ref="bettingChase"
-            ></betting-chase>
-          </div>
-        </div>
-      </div>
+                           :total-lottery="bettingChoice.totalLottery" ref="bettingChase" @chaseComplete="chaseComplete"></betting-chase>
+    </div>
+
+    <!-- 确认投注 -->
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="confirm">
+      <betting-confirm :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice" :betting-list="bettingChoice.previewList" :type="`normal`" @bettingConfirm="bettingConfirm"></betting-confirm>
     </div>
   </div>
 </template>
@@ -148,12 +139,12 @@
   import BettingPlayAreaSelect from './betting-play-area-select'
   import BettingPlayAreaInput from './betting-play-area-input'
   import BettingChase from './betting-chase'
+  import BettingConfirm from "./betting-confirm";
 
 
   //backbone旧组件
   import HisAnalysisView from './bettingCenter-historical-analysis'
   import BettingRecordsView from './bettingCenter-records'
-  import confirmTpl from '../templates/bettingCenter-confirm.html'
 
   let recordsOpenView
   let bettingRecordsView
@@ -162,10 +153,10 @@
     name: "betting-main-area",
     props: {
       ticketInfo: Object,
-      mark6TicketIdArr: Array,
       ticketId: Number,
     },
     components: {
+      BettingConfirm,
       StaticGrid,
       BettingRules,
       BettingAdvanceRules,
@@ -196,14 +187,16 @@
             { label: '模式', name: 'mode', width: '12.5%' },
             { label: '投注金额', name: 'bettingMoney', width: '12.5%' },
             { label: '预期盈利', name: 'bonus', width: '12.5%' },
-            { label: `<div class="js-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清除</div>`, name: 'operate', width: '8%' },
+            { label: `<div class="js-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清空</div>`, name: 'operate', width: '8%' },
           ],
-          height: 110,
+          height: 145,
           emptyTip: '暂未添加选号',
         },
         fPreviewList: [],
 
         advanceShowMode: 'classic', //classic | single
+
+        showChaseModal: false,
       }
     },
     computed: mapState({
@@ -227,6 +220,7 @@
 
           const playInfo = this.playInfo
 
+          this.$store.commit(types.SET_MAX_BONUS, playInfo.betMethodMax)
           this.$store.commit(types.SET_PLAY_INFO, playInfo)
 
           // 中奖举例
@@ -252,6 +246,9 @@
             content: `<div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
             placement: 'bottom',
           })
+
+          // this.$refs.areaSelect.empty()
+          // this.$refs.areaInput.empty()
 
 
           //提示框变化, 暂时这么写
@@ -362,6 +359,10 @@
       }
     },
 
+    beforeCreate() {
+      this.$store.commit(types.CHECKOUT_TICKET_INFO)
+    },
+
     methods: {
 
       modeChange(mode) {
@@ -463,8 +464,6 @@
       },
 
       lotteryConfirm() {
-        let planId = this.bettingInfo.planId
-
         const inputCount = _(this.bettingChoice.previewList).reduce((_inputCount, previewInfo) => {
           if (previewInfo.type === 'input') {
             _inputCount += previewInfo.statistics
@@ -495,52 +494,47 @@
           return false
         }
 
-        $(document).confirm({
-          title: '确认投注',
-          content: _(confirmTpl).template()({
-            ticketInfo: this.ticketInfo,
-            ticketName: this.ticketInfo.info.zhName,
-            planId: this.bettingInfo.playId,
-            totalInfo: this.bettingChoice.totalInfo,
-            previewList: this.bettingChoice.previewList,
-          }),
-          size: 'bc-betDetail-confirm-dialog',
-          agreeCallback: () => {
-            this.pushing = true
-
-            bettingRecordsView.update()
-
-            this.$store.dispatch('pushBetting', {
-              planId,
-              type: 'previewList'
-            })
-              .catch(() => {
-                this.pushing = false
-              })
-              .then((res) => {
-                this.pushing = false
-
-                if (res && res.result === 0) {
-                  // this.bettingRecordsView.update()
-                  this.$store.commit(types.EMPTY_PREV_BETTING)
-
-                  Global.m.oauth.check()
-
-                  Global.ui.notification.show('投注成功！', {
-                    type: 'success',
-                    hasFooter: false,
-                    displayTime: 800,
-                  })
-                } else if (res.root && res.root.errorCode === 101) {
-                  Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
-                } else {
-                  Global.ui.notification.show(res.msg || '')
-                }
-
-                this.$_emptySelect();
-              })
-          },
+        $(this.$refs.confirm).modal({
+          backdrop: 'static',
         })
+      },
+
+      bettingConfirm() {
+        this.pushing = true
+
+
+        $(this.$refs.confirm).modal('hide')
+
+        this.$store.dispatch('pushBetting', {
+          planId: this.bettingInfo.planId,
+          type: 'previewList'
+        })
+          .catch(() => {
+            this.pushing = false
+          })
+          .then((res) => {
+            this.pushing = false
+
+            if (res && res.result === 0) {
+              bettingRecordsView.update()
+
+              this.$store.commit(types.EMPTY_PREV_BETTING)
+
+              Global.m.oauth.check()
+
+              Global.ui.notification.show('投注成功！', {
+                type: 'success',
+                hasFooter: false,
+                displayTime: 800,
+              })
+            } else if (res.root && res.root.errorCode === 101) {
+              Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
+            } else {
+              Global.ui.notification.show(res.msg || '')
+            }
+
+            this.$_emptySelect();
+          })
       },
 
       bettingChase() {
@@ -562,21 +556,24 @@
         }
 
 
-        this.$refs.bettingChase.init()
+        this.showChaseModal = true
 
-        $(this.$refs.chaseModal).modal({
-          backdrop: 'static',
-        })
-          .on('hidden.modal', function() {
-            // chaseView.destroy()
+        this.$nextTick(() => {
+          this.$refs.bettingChase.init()
+
+          $(this.$refs.chaseModal).modal({
+            backdrop: 'static',
           })
+            .on('hidden.modal', () => {
+              this.showChaseModal = false
+            })
+        })
+      },
 
+      chaseComplete() {
+        bettingRecordsView.update()
 
-        // chaseView.on('submit:complete', () => {
-        //   self.model.emptyPrevBetting()
-        //   self.bettingRecordsView.update()
-        //   $dialog.modal('hide')
-        // })
+        $(this.$refs.chaseModal).modal('hide')
       },
 
       lotteryClear() {
@@ -699,7 +696,6 @@
         el: this.$refs.recordsContainer,
         ticketId: this.ticketId,
       }).render()
-
     }
   }
 </script>
@@ -725,6 +721,8 @@
     text-align: center;
     margin: 5px 40px 0 0;
     float: right;
+    position: relative;
+    top: -2px;
   }
 
   .bc-advance-mode-single {
@@ -735,11 +733,14 @@
       margin: 0 0 0 20px;
     }
   }
+  .bc-play-des {
+    display: inline-block;
+    max-width: 600px;
+  }
 
   .advance-bonus{
     margin-right: 40px;
     margin-top: 15px;
-    float: right;
   }
   .advance-bonus-single{
     margin-right: 40px;
@@ -769,9 +770,60 @@
       }
     }
     .bc-advance-mode-main{
-      width: 20%;
       font-size: $font-xs;
       color: $inverse-color;
     }
+  }
+
+  @mixin select-def {
+    color: $new-inverse-color;
+    border-radius: 5px;
+  }
+
+  .bc-unit-select{
+    width: 70px;
+    height: 30px;
+    padding-left: 12px;
+    margin-left: 5px;
+    @include select-def;
+  }
+  .bc-vouchers-select{
+    width: 106px;
+    height: 30px;
+    font-size: 12px;
+    @include select-def;
+  }
+
+  .ba-chase-tip{
+    position: absolute;
+    width: 120px;
+    height: 19px;
+    line-height: 19px;
+    color:  $def-white-color;
+    background-color: $main-deep-color;
+    text-align: center;
+    font-size:$font-xs;
+    top: 0;
+    left: 80px;
+    border-radius: 3px;
+    &:before{
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 5px transparent solid;
+      border-right-color: $main-deep-color;
+      left: -10px;
+      top: 3px;
+    }
+  }
+
+  .bc-md-btn {
+    font-size: $font-sm;
+    width: 120px;
+    padding: 5px 10px;
+    font-weight: 600;
+    transform: translateY(-5px);
+    border-bottom: 1px solid rgba(0,0,0,0.4);
   }
 </style>

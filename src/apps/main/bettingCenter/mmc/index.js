@@ -5,7 +5,7 @@ import BettingRecordsView from 'bettingCenter/views/bettingCenter-records'
 const BettingChoiceModel = require('bettingCenter/models/bettingChoice-mmc')
 const BettingRulesCollection = require('bettingCenter/collections/bettingRules')
 
-const PlayAreaSelectView = require('bettingCenter/views/bettingCenter-playArea-select')
+const PlayAreaSelectView = require('./bettingCenter-playArea-select')
 
 const ticketConfig = require('skeleton/misc/ticketConfig')
 const PlayAreaInputView = require('./bettingCenter-playArea-input')
