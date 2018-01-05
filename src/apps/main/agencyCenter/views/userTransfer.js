@@ -206,6 +206,7 @@ const MoneyTransferView = Base.ItemView.extend({
     if (_(this.selectedUsers).size() < 1) {
       this.$chooseListEmpty.removeClass('hidden')
       this.$selectedContainer.html('')
+      this.$selectedShortContainer.html('')
     } else {
       this.$chooseListEmpty.addClass('hidden')
       const userArr = _(this.selectedUsers).chain().map((user) => {
