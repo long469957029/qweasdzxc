@@ -24,6 +24,24 @@
       line-height: 24px;
       cursor: pointer;
     }
+    .countdown-item-bg{
+      width: 24px;
+      height: 30px;
+      background-color: $prominent-color;
+      border-radius: 3px;
+      color: $def-white-color;
+      font-size: 20px;
+      text-align: center;
+      margin-right: 2px;
+      margin-left: 2px;
+      display: inline-block;
+      line-height: 30px;
+    }
+    .countdown-red-colon{
+      color: $new-inverse-color;
+      font-size: $font-sm;
+      vertical-align: unset;
+    }
   }
   .ac-dm-md-head {
     height: 40px;

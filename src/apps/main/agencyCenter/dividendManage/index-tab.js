@@ -34,6 +34,12 @@ const DividendManageTabView = TabView.extend({
       tabs,
     })
   },
+
+  setUserManageData(data) {
+    if (data) {
+      $('.js-ac-sign-user-tip').html(`您的剩余可签名额<span class="text-prominent">${data.leftQuota}</span>个，已签约用户<span class="text-prominent">${data.usedQuota}</span>个`)
+    }
+  },
 })
 
 module.exports = DividendManageTabView

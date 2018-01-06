@@ -14,20 +14,28 @@ const ReportManageView = SearchGrid.extend({
     'click .js-ac-dm-um-del': 'delSignRecordHandler',
     'click .js-ac-dm-um-break': 'breakSignHandler',
     'click .js-ac-dm-um-log': 'showLogHandler',
+    'click .js-popover-close': 'closePopoverHandler',
   },
+
+  _getQuotaXhr(data) {
+    return Global.sync.ajax({
+      url: '/fund/divid/quota.json',
+      data,
+    })
+  },
+
   delSignRecordHandler(e) {
-    var self = this
+    const self = this
     const $target = $(e.currentTarget)
     const agreeId = $target.data('agreeid')
     const userId = $target.data('userid')
     const username = $target.data('username')
-    var self = this
     $(document).confirm({
       content: `<div class="m-TB-lg">确定删除与${username}的签约记录？</div>`,
       type: 'exit',
       agreeCallback() {
         self.delSignRecordXhr({ userId }).done((res) => {
-          if (res.result == 0) {
+          if (res.result === 0) {
             Global.ui.notification.show('删除成功！。')
           } else {
             Global.ui.notification.show('删除失败！')
@@ -48,7 +56,7 @@ const ReportManageView = SearchGrid.extend({
       agreeCallback() {
         // Global.ui.confirm()
         self.breakOffXhr({ userId }).done((res) => {
-          if (res.result == 0) {
+          if (res.result === 0) {
             Global.ui.notification.show('解约成功！')
           } else {
             Global.ui.notification.show('解约成功！')
@@ -77,7 +85,7 @@ const ReportManageView = SearchGrid.extend({
   },
   initialize () {
     _(this.options).extend({
-      height: 355,
+      height: 450,
       title: '签约用户管理',
       columns: [
         {
@@ -116,6 +124,13 @@ const ReportManageView = SearchGrid.extend({
   },
 
   onRender () {
+    const self = this
+    this._getQuotaXhr()
+      .done((res) => {
+        if (res.result === 0) {
+          self._parentView.setUserManageData(res.root)
+        }
+      })
     SearchGrid.prototype.onRender.apply(this, arguments)
   },
 
@@ -133,7 +148,7 @@ const ReportManageView = SearchGrid.extend({
     })
 
     if (!_(gridData.parents).isEmpty()) {
-      this._breadList = _(gridData.parents).map((parent, index) => {
+      this._breadList = _(gridData.parents).map((parent) => {
         return {
           data: {
             userId: parent.userId,
@@ -143,7 +158,19 @@ const ReportManageView = SearchGrid.extend({
       })
       this.renderBread()
     }
-
+    this.$('.js-ac-dm-um-log').popover({
+      trigger: 'click',
+      container: this.$el,
+      html: true,
+      content: `${'<div class="ac-log-main">' +
+      '<div class="ac-log-header">' +
+      '<span>最近记录</span>' +
+      '<a class="close js-popover-close btn-close">&times;</a>' +
+      '</div>' +
+      '<div class="js-ac-log-container ac-log-container">'}${Global.ui.loader.get()}</div>` +
+      '</div>',
+      placement: 'left',
+    })
     this.grid.hideLoading()
   },
 
@@ -186,6 +213,8 @@ const ReportManageView = SearchGrid.extend({
       case 3: status = '已解约'
         operationsIndex = 2
         break
+      default:
+        break
     }
     if (rowInfo.readOnly) { // 版本更新前一天操作的部分数据无法准确获取准确状态，可能会传此属性为true,
       operationsIndex = 0
@@ -194,23 +223,25 @@ const ReportManageView = SearchGrid.extend({
     // 1:发起签约, 2:下级同意签约, 3:上级修改协议, 5:下级同意修改,
     //   6:下级拒绝修改, 7:修改确认过期, 8:申请解约, 9:解约未通过,
     //   10:签约过期, 11:下级拒绝签约, 12:解约通过
-    const statusDetail = ''
+    let statusDetail = ''
     switch (rowInfo.statusDetail) {
-      case 0: status = ''; break
-      case 1: status = '发起签约'; break
-      case 2: status = '下级同意签约'; break
-      case 3: status = '上级修改协议'; break
+      case 0: statusDetail = ''; break
+      case 1: statusDetail = '发起签约'; break
+      case 2: statusDetail = '下级同意签约'; break
+      case 3: statusDetail = '上级修改协议'; break
 
-      case 5: status = '下级同意修改'; break
-      case 6: status = '下级拒绝修改'; break
-      case 7: status = '修改确认过期'; break
-      case 8: status = '申请解约'; break
-      case 9: status = '解约未通过'; break
-      case 10: status = '签约过期'; break
-      case 11: status = '下级拒绝签约'; break
-      case 12: status = '解约通过'; break
+      case 5: statusDetail = '下级同意修改'; break
+      case 6: statusDetail = '下级拒绝修改'; break
+      case 7: statusDetail = '修改确认过期'; break
+      case 8: statusDetail = '申请解约'; break
+      case 9: statusDetail = '解约未通过'; break
+      case 10: statusDetail = '签约过期'; break
+      case 11: statusDetail = '下级拒绝签约'; break
+      case 12: statusDetail = '解约通过'; break
+      default: break
     }
-    row.push(`<span class="m-right-sm">${statusDetail}</span><a class="js-ac-dm-um-log btn btn-link" data-agreeId="${rowInfo.agreeId}" data-userId="${rowInfo.userId}" data-username="${rowInfo.username}">日志</a>`)
+    row.push(`<span class="m-right-sm">${statusDetail}</span>
+      <a class="js-ac-dm-um-log ac-dm-um-log" data-agreeId="${rowInfo.agreeId}" data-userId="${rowInfo.userId}" data-username="${rowInfo.username}"></a>`)
     row.push(operation[operationsIndex].join(''))
     return row
   },
@@ -272,8 +303,8 @@ const ReportManageView = SearchGrid.extend({
       $(this).remove()
     })
 
-    $dialog.on('submit', '.js-ac-break-off', (e) => {
-      const $target = $(e.currentTarget)
+    $dialog.on('submit', '.js-ac-break-off', () => {
+      // const $target = $(e.currentTarget)
 
       $btnConfirm.button('loading')
 
@@ -295,46 +326,37 @@ const ReportManageView = SearchGrid.extend({
         })
     })
   },
-  reSignHandler(e) {
-    
-  },
-  delSignRecord(e) {
-
-  },
+  // reSignHandler(e) {
+  //
+  // },
+  // delSignRecord(e) {
+  //
+  // },
   showLogHandler (e) {
     const self = this
     const $target = $(e.currentTarget)
-    const agreeId = $target.data('agreeid')
+    // const agreeId = $target.data('agreeid')
     const userId = $target.data('userid')
-    const username = $target.data('username')
+    // const username = $target.data('username')
     this.getLogXhr({ userId })
       .done((res) => {
         if (res.result === 0) {
           self.showLogDialog(res.root)
         } else {
-          Global.ui.nocificatioin.show('查询日志失败')
+          Global.ui.notification.show('查询日志失败')
         }
       })
       .fail(() => {
-        Global.ui.nocificatioin.show('查询日志失败')
+        Global.ui.notification.show('查询日志失败')
       })
   },
   showLogDialog (data) {
-    const self = this
-    const $logDailog = Global.ui.dialog.show({
-      title: '最近记录',
-      body: '<div class="js-um-log-body"></div>',
-    })
-    const $logBody = $logDailog.find('.js-um-log-body')
-    $logDailog.on('hidden.modal', function() {
-      $(this).remove()
-    })
     if (this.TicketGrid) {
       this.TicketGrid.destroy()
     }
-    this.TicketGrid = $logBody.staticGrid({
+    this.TicketGrid = this.$('.js-ac-log-container').staticGrid({
       startOnLoading: false,
-      height: 200,
+      height: 128,
       showHeader: false,
       tableClass: 'table table-bordered table-center',
       hasBorder: false,
@@ -345,7 +367,7 @@ const ReportManageView = SearchGrid.extend({
           width: '50%',
           formatter(val) {
             return val
-          }, 
+          },
         },
         {
           label: '',
@@ -359,6 +381,9 @@ const ReportManageView = SearchGrid.extend({
       emptyTip: false,
       row: data,
     }).staticGrid('instance')
+  },
+  closePopoverHandler() {
+    this.$('.js-ac-dm-um-log').popover('hide')
   },
 })
 

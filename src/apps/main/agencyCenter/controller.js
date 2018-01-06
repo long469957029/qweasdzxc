@@ -285,6 +285,7 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new RebateReportView(), {
       main: {
         title: '返点查询',
+        titleDes: '每天派发前一天的返点金额，返点金额 = 我的下级团队当日的有效投注总额 * 我的返点比例',
       },
       sidebar,
     })
@@ -319,6 +320,7 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new TabView(), {
       main: {
         title: '签约用户',
+        titleDes: '<div class="js-ac-sign-user-tip"></div>',
       },
       sidebar,
     })
@@ -327,6 +329,7 @@ const AgencyCenterController = RouterController.extend({
     this.changeMainReginView(new TabView(), {
       main: {
         title: '签约用户',
+        titleDes: '<div class="js-ac-sign-user-tip"></div>',
       },
       sidebar,
     })

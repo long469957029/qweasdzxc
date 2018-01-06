@@ -167,5 +167,13 @@
     word-wrap: break-word;
     line-height: 30px;
   }
-
+  .search-btn{
+    width: 59px;
+    height: 25px;
+    background-color: $new-main-deep-color;
+    border-radius: 3px;
+  }
+  .select-status{
+    width: 80px;
+  }
 }

@@ -14,7 +14,7 @@ const RebateReportView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
-      height: 335,
+      height: 600,
       title: '报表查询',
       columns: [
         {
@@ -23,20 +23,20 @@ const RebateReportView = SearchGrid.extend({
         },
         {
           name: '下级团队当日有效投注总额',
-          width: '25%', 
+          width: '25%',
         },
         {
           name: '我的返点比例',
-          width: '20%', 
+          width: '20%',
         },
         {
           name: '返点金额',
-          width: '15%', 
+          width: '15%',
         },
         {
           name: '派发时间',
-          width: '20%', 
-        },  
+          width: '20%',
+        },
       ],
       gridOps: {
         emptyTip: '没有返点记录',
@@ -44,14 +44,16 @@ const RebateReportView = SearchGrid.extend({
       ajaxOps: {
         url: '/fund/merchantBonus/bonusinfo.json',
       },
+      reqData: {
+        pageSize: 15,
+      },
       //      ,subOps: {
       //        url: '/fund/fundreport/profitdetail.json',
       //        data: ['userId']
       //      }
-     
+
       //      , listProp: 'root.dataList'
-    	  
-      tip: '<div class="tip-hot"><span>提示</span> 每天派发前一天的返点金额，返点金额 = 我的下级团队当日的有效投注总额 * 我的返点比例。</div>',
+
     })
   },
 
@@ -71,8 +73,9 @@ const RebateReportView = SearchGrid.extend({
       endOps: {
         format: 'YYYY-MM-DD',
       },
+      showIcon: true,
     }).render()
-    
+
     new Timeset({
       el: this.$('.js-ac-timeSend'),
       startTime: 'fromTime',
@@ -82,13 +85,13 @@ const RebateReportView = SearchGrid.extend({
       endTimeHolder: '结束日期',
       //        endDefaultDate: _(moment()).toDate(),
       startOps: {
-        format: 'YYYY-MM-DD HH:mm:ss',	
+        format: 'YYYY-MM-DD HH:mm:ss',
       },
       endOps: {
-        format: 'YYYY-MM-DD HH:mm:ss', 
+        format: 'YYYY-MM-DD HH:mm:ss',
       },
     }).render()
-    
+
     // 初始化彩种
     SearchGrid.prototype.onRender.apply(this, arguments)
   },
@@ -117,7 +120,7 @@ const RebateReportView = SearchGrid.extend({
     //      });
     //      this.renderBread();
     //    }
-    
+
     this.grid.addFooterRows({
       trClass: 'tr-footer',
       columnEls: [
@@ -139,11 +142,11 @@ const RebateReportView = SearchGrid.extend({
     row.push(rowInfo.rebate / 100)
     row.push(rowInfo.bonus / 10000)
     row.push(_(rowInfo.createTime).toTime())
-   
+
     return row
   },
-  
-   
+
+
 })
 
 module.exports = RebateReportView

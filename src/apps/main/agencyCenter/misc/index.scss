@@ -856,3 +856,75 @@
     }
   }
 }
+.ac-dm-um-log{
+  width: 15px;
+  height: 17px;
+  background: url('log-btn.png') no-repeat;
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: text-bottom;
+  position: relative;
+  &:hover,&:focus{
+    background: url("log-btn-hover.png") no-repeat;
+  }
+}
+.ac-log-main{
+  .ac-log-header{
+    font-size: $font-sm;
+    color: $def-black-color;
+    position: relative;
+    padding-left: 25px;
+    padding-top: 10px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    &:before{
+      content: '';
+      width: 15px;
+      height: 17px;
+      background: url("log-btn.png") no-repeat;
+      display: block;
+      position: absolute;
+      top: 10px;
+      left: 0px;
+    }
+    .close{
+      font-size: 30px;
+      position: absolute;
+      top: 10px;
+      right: 0px;
+    }
+  }
+  .ac-log-container{
+    width: 338px;
+    height: 128px;
+    margin: 0 auto;
+    table{
+      border: 1px solid $def-gray-color;
+      overflow: auto;
+      td{
+        border: 1px solid $def-gray-color;
+        background-color: #f8f8f8;
+        padding: 5px 3px;
+        font-size: $font-xs;
+      }
+    }
+  }
+}
+.ac-dm-page{
+  .popover{
+    box-shadow: none;
+    border: 1px solid $def-gray-color;
+    border-radius: 5px;
+    max-width: 380px;
+    width: 380px;
+    .arrow{
+      right: -11px;
+      &:after{
+        border-left-color: $def-white-color;
+      }
+    }
+  }
+  .popover-content{
+    background-color: $def-white-color;
+  }
+}

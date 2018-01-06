@@ -65,9 +65,10 @@ const AgreementView = Base.ItemView.extend({
       el: this.$countdown,
       color: 'red',
       size: 'sm',
+      needBg: true,
     })
       .render(data.leftSeconds * 1000)
-      .on('finish.countdown', (e) => {
+      .on('finish.countdown', () => {
         Global.ui.notification.show('您未在协议有效期内签署，当前协议已失效。', {
           event() {
             Global.m.oauth.check()

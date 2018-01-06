@@ -100,7 +100,7 @@ const SignUserView = Base.ItemView.extend({
       case '1': // 修改
         this._getSubAgreementXhr({ agreeId })
           .done((res) => {
-            if (res.result == 0) {
+            if (res.result === 0) {
               self.options.edit = true
               // if(res.root.dividBetCfgList && res.root.dividBetCfgList.length > 0) {
               self.$ticketIndent.removeClass('hidden')
@@ -122,7 +122,7 @@ const SignUserView = Base.ItemView.extend({
       case '2': // 查看
         this._getSubAgreementXhr({ agreeId })
           .done((res) => {
-            if (res.result == 0) {
+            if (res.result === 0) {
               if (res.root.dividBetCfgList && res.root.dividBetCfgList.length > 0) {
                 self.$ticketIndent.removeClass('hidden')
                 self._getTicketTable(res.root.dividBetCfgList)
@@ -140,7 +140,7 @@ const SignUserView = Base.ItemView.extend({
         break
       case '3': // 查看自己
         this._getMyAgreementXhr().done((res) => {
-          if (res.result == 0) {
+          if (res.result === 0) {
             if (res.root.dividBetCfgList && res.root.dividBetCfgList.length > 0) {
               self.$ticketIndent.removeClass('hidden')
               self._getTicketTable(res.root.dividBetCfgList)
@@ -186,9 +186,8 @@ const SignUserView = Base.ItemView.extend({
   _initQuota() {
     const self = this
     this._getQuotaXhr().done((res) => {
-      if (res.result == 0) {
-        self.$('.js-ac-dm-su-left').html(res.root.leftQuota)
-        self.$('.js-ac-dm-su-used').html(res.root.usedQuota)
+      if (res.result === 0) {
+        self._parentView.setUserManageData(res.root)
       }
     })
   },
@@ -241,16 +240,17 @@ const SignUserView = Base.ItemView.extend({
       }
     })
   },
-  addTicketRowHandler(e) {
+  addTicketRowHandler() {
     const rowData = this._generateTicketRowData({})
     this.TicketGrid.addRows([rowData])
   },
   _generateTicketRowData(item) {
     return {
-      no: this.TicketRowIndex++,
-      betTotal: `≥<div class="inline-block"><input  type="text" class="js-ac-dm-su-ticket-betTotal input-sm" value="${
+      no: this.TicketRowIndex += 1,
+      betTotal: `≥<div class="inline-block"><input  type="text" class="js-ac-dm-su-ticket-betTotal ac-dm-su-input" value="${
         _(item.betTotal || '').convert2yuan()}"   required data-parsley-twoDecimal  ></div>元/日`,
-      divid: `<div class="inline-block"><input  type="text" class="js-ac-dm-su-ticket-divid input-sm" value="${_(item.divid).formatDiv(100) || ''}"   required data-parsley-twoDecimal data-parsley-range="[0,100]" ></div>% <div class="js-ac-dm-su-ticket-subtraction ac-dm-su-subtraction   "><span class="sfa sfa-ac-dm-su-sub"></span></div>`,
+      divid: `<div class="inline-block"><input  type="text" class="js-ac-dm-su-ticket-divid ac-dm-su-input" value="${_(item.divid).formatDiv(100) || ''}"   
+        required data-parsley-twoDecimal data-parsley-range="[0,100]" ></div>% <div class="js-ac-dm-su-ticket-subtraction ac-dm-su-subtraction   "><span class="sfa sfa-ac-dm-su-sub"></span></div>`,
     }
   },
   subTicketRowHandler(e) {
@@ -259,7 +259,7 @@ const SignUserView = Base.ItemView.extend({
       Global.ui.notification.show('请从一条开始删除!')
       return
     }
-    this.TicketRowIndex--
+    this.TicketRowIndex -= 1
     $tr.remove()
   },
 
@@ -287,7 +287,7 @@ const SignUserView = Base.ItemView.extend({
     const self = this
     this.GameRowIndex = 1
     if (this.options.edit) {
-      return _(rebateList).map((item, index) => {
+      return _(rebateList).map((item) => {
         return self._generateGameRowData(item)
         // return self.addGameRowHandler(item);
       })
@@ -301,16 +301,18 @@ const SignUserView = Base.ItemView.extend({
       }
     })
   },
-  addGameRowHandler(e) {
+  addGameRowHandler() {
     const rowData = this._generateGameRowData({})
     this.GameGrid.addRows([rowData])
   },
   _generateGameRowData(item) {
     return {
       no: this.GameRowIndex++,
-      profitTotal: `≥<div class="inline-block"><input type="text" class="js-ac-dm-su-game-profitTotal input-sm" value="${_(item.profitTotal || '').convert2yuan()}" required data-parsley-twoDecimal  ></div>元/月`,
-      activeUser: `≥<div class="inline-block"><input type="text" class="js-ac-dm-su-game-activeUser input-sm" value="${item.activeUser || ''}" required data-parsley-type="integer" ></div>人/月`,
-      divid: `<div class="inline-block"><input  type="text" class="js-ac-dm-su-game-divid input-sm" value="${_(item.divid || '').formatDiv(100)}"  required data-parsley-twoDecimal data-parsley-range="[0,100]" ></div>%<div class="js-ac-dm-su-game-subtraction ac-dm-su-subtraction "><span class="sfa sfa-ac-dm-su-sub"></span></div>`,
+      profitTotal: `≥<div class="inline-block"><input type="text" class="js-ac-dm-su-game-profitTotal ac-dm-su-input" value="${_(item.profitTotal || '').convert2yuan()}" 
+        required data-parsley-twoDecimal  ></div>元/月`,
+      activeUser: `≥<div class="inline-block"><input type="text" class="js-ac-dm-su-game-activeUser ac-dm-su-input" value="${item.activeUser || ''}" required data-parsley-type="integer" ></div>人/月`,
+      divid: `<div class="inline-block"><input  type="text" class="js-ac-dm-su-game-divid ac-dm-su-input" value="${_(item.divid || '').formatDiv(100)}"  
+        required data-parsley-twoDecimal data-parsley-range="[0,100]" ></div>%<div class="js-ac-dm-su-game-subtraction ac-dm-su-subtraction "><span class="sfa sfa-ac-dm-su-sub"></span></div>`,
     }
   },
   subGameRowHandler(e) {
@@ -319,7 +321,7 @@ const SignUserView = Base.ItemView.extend({
       Global.ui.notification.show('请从一条开始删除!')
       return
     }
-    this.GameRowIndex--
+    this.GameRowIndex -= 1
     $tr.remove()
   },
 
@@ -329,19 +331,19 @@ const SignUserView = Base.ItemView.extend({
     this.$btnNext.removeClass('disable')
   },
 
-  confirmHandler(e) {
+  confirmHandler() {
     const self = this
     const $btnConfirm = this.$('.js-ac-dm-su-agree')
     const $form = this.$('.js-ac-dm-su-form')
 
     const username = this.$userName.val()
-    if (username == '' || username === undefined || username == null) {
+    if (username === '' || username === undefined || username == null) {
       Global.ui.notification.show('请先输入需要签约的下级用户名!')
       return
     }
     const dividBetCfgList = this._getTicketCfgList()
     const otherGameDividCfgList = this._getGameCfgList()
-    if (_(dividBetCfgList).size() == 0 && _(otherGameDividCfgList).size() == 0) {
+    if (_(dividBetCfgList).size() === 0 && _(otherGameDividCfgList).size() === 0) {
       Global.ui.notification.show('请先添加签约内容!')
       return
     }
@@ -389,7 +391,7 @@ const SignUserView = Base.ItemView.extend({
       }
     })
   },
-  cancelHandler(e) {
+  cancelHandler() {
     this.render()
   },
 
