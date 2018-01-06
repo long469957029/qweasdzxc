@@ -50,17 +50,17 @@
       openingBalls: {
         handler(newOpeningBalls, oldOpeningBalls) {
           if (!_.isEqual(newOpeningBalls, oldOpeningBalls) && !_.compact(this.rollingStatus).length) {
-            this.rolling(init)
+            this.rolling()
           }
         }
       }
     },
 
     methods: {
-      rolling(init) {
+      rolling() {
         for(let i = 0; i < this.counts; ++i) {
-          if (init) {
-              this.$refs.balls[i].style = `${-this.totalHeight + -this.perHeight * this.openingBalls[i]}px`
+          if (this.init) {
+              this.$refs.balls[i].style.top = `${-this.totalHeight + -this.perHeight * this.openingBalls[i]}px`
           } else {
             _.delay(() => {
               this.rollingStatus[i] = true
@@ -82,6 +82,8 @@
             }, 500 * i + 5000)
           }
         }
+
+        this.init = false
       },
 
         _rolling(ball, init) {
