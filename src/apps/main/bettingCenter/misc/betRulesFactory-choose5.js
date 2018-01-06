@@ -2,7 +2,7 @@ import factory from 'bettingCenter/misc/betRulesFactory'
 
 const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
-const eleven = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11']
+const eleven = bettingTypes.CHOOSE15.range
 
 const splitReg = /[\r\n,;:\|]+/
 

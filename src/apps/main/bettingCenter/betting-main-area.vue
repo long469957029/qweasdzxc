@@ -756,7 +756,7 @@
 
     .bc-advance-rules {
       color: #666666;
-      width: 80%;
+      max-width: 80%;
       .tab-toolbar {
         &:last-of-type {
           margin-bottom: 3px;

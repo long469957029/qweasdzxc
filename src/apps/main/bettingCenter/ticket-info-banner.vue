@@ -28,16 +28,9 @@
           <div>开奖号码</div>
         </div>
 
-        <!--<opening-balls :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :openingBalls="bettingInfo.lastOpenNum"-->
-                       <!--v-if="bettingInfo.sale && !bettingInfo.pending" v-html="formatLastOpenNum" @mouseover="calculateStatus = true" @mouseout="calculateStatus = false"-->
-        <!--&gt;</opening-balls>-->
-        <div class="bc-last-plan-results pull-left" v-if="bettingInfo.sale && !bettingInfo.pending" v-html="formatLastOpenNum" @mouseover="calculateStatus = true" @mouseout="calculateStatus = false">
-          <span class="text-circle">-</span>
-          <span class="text-circle">-</span>
-          <span class="text-circle">-</span>
-          <span class="text-circle">-</span>
-          <span class="text-circle">-</span>
-        </div>
+        <opening-balls :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :openingBalls="bettingInfo.lastOpenNum" :default-opening="bettingInfo.defaultOpening"
+                       v-if="ticketInfo.info.openingType === 'balls' && bettingInfo.sale && !bettingInfo.pending" @mouseover="calculateStatus = true" @mouseout="calculateStatus = false"
+        ></opening-balls>
         <div class="bc-last-plan-results pull-left" v-if="!bettingInfo.sale">
           <span class="text-circle">暂</span>
           <span class="text-circle">停</span>

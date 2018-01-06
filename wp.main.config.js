@@ -212,6 +212,7 @@ module.exports = {
     _: 'underscore',
     R: 'rambda',
     slimScroll: 'jquery-slimscroll',
+    Velocity: 'velocity-animate',
 
     types: 'mutation-types',
     StaticGrid: ['StaticGrid', 'default'],

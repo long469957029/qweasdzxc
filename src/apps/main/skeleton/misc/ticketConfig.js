@@ -1,6 +1,3 @@
-const defaultSelectSSC = '4'
-const defaultSelect115 = '4,0,4'
-const defaultSelectDPC = '0'
 const defaultSelectQW = '趣味'
 
 const numberColor = {
@@ -77,49 +74,43 @@ const oneFiveConfig = {
   icon: 'num',
   titleIcon: 'ele_nav_icon',
   list: [
-    {
+    Object.assign({
       id: 14,
       mark: 'ffc',
       zhName: '11选5分分彩',
-      defaultSelectPlay: defaultSelect115,
       badge: '',
-    },
-    {
+    }, bettingTypes.CHOOSE15),
+    Object.assign({
       id: 5,
       mark: 'sd',
       zhName: '山东11选5',
-      defaultSelectPlay: defaultSelect115,
-    },
-    {
+    }, bettingTypes.CHOOSE15),
+    Object.assign({
       id: 4,
       mark: 'gd',
       zhName: '广东11选5',
-      defaultSelectPlay: defaultSelect115,
-    },
-    {
+    }, bettingTypes.CHOOSE15),
+    Object.assign({
       id: 11,
       mark: 'jx',
       zhName: '江西11选5',
-      defaultSelectPlay: defaultSelect115,
-    },
+    }, bettingTypes.CHOOSE15),
   ],
 }
 const threeDConfig = [
-  {
+  Object.assign({
     id: 16,
     mark: '3d-ffc',
     zhName: '3D分分彩',
     hasMargin: true,
-    defaultSelectPlay: defaultSelectDPC,
     badge: 'hot',
-  },
-  {
+  }, bettingTypes.CHOOSE15),
+  Object.assign({
     id: 6,
     mark: '3d',
     zhName: '3D',
     hasMargin: true,
-    defaultSelectPlay: defaultSelectDPC,
-  },
+  }, bettingTypes.CHOOSE15),
   // {
   //  id: 17,
   //  mark: '3d-wfc',
@@ -131,24 +122,22 @@ const threeDConfig = [
   // },
 ]
 const p5p3Config = [
-  {
+  Object.assign({
     id: 7,
     mark: 'p5p3',
     zhName: 'P3/P5',
-    defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
-  },
+  }, bettingTypes.P5P3),
 ]
 
 const bjPKConfig = [
-  {
+  Object.assign({
     id: 18,
     mark: 'pk10',
     zhName: '北京赛车/PK10',
-    defaultSelectPlay: defaultSelectSSC,
     hasMargin: true,
     badge: 'hot',
-  },
+  }, bettingTypes.PK10),
 ]
 
 const quickConfig = {
@@ -161,7 +150,6 @@ const quickConfig = {
       id: 29,
       mark: 'jsk3',
       zhName: '江苏快三',
-      defaultSelectPlay: defaultSelectSSC,
       hasMargin: true,
       badge: 'new',
     }
@@ -182,7 +170,6 @@ const handicapMark6Config = [
     id: 34,
     mark: 'mark6',
     zhName: '香港六合彩',
-    defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
     badge: 'new',
     numberColor,
@@ -194,7 +181,6 @@ const handicapSscConfig = [
     id: 1,
     mark: 'ssc',
     zhName: '重庆时时彩',
-    defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
     badge: 'new',
     numberColor,
@@ -206,7 +192,6 @@ const handicapPk10Config = [
     id: 1,
     mark: 'ssc',
     zhName: '北京PK10',
-    defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
     badge: 'new',
     numberColor,
