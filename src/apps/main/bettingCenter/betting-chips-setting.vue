@@ -170,7 +170,7 @@
       left: 5px;
       z-index: 10;
       display: none;
-      width: 435px;
+      width: 445px;
       padding: 15px 15px 5px;
       text-align: left;
       white-space: normal;

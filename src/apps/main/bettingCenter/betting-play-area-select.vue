@@ -4,55 +4,93 @@
     <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
 
     <div class="bc-missOptional-main" v-if="_.find(playRule.topOp, op => op)">
-      <slot name="lastMissNum" v-if="playRule.topOp.currMissing"></slot>
-      <slot name="maxMissNum" v-if="playRule.topOp.maxMissing"></slot>
-      <slot name="autoAdd" v-if="playRule.topOp.auto"></slot>
-      <div class="bc-missOption-btn" @click="clearAllSelected" v-if="playRule.topOp.clear">清除选号</div>
+      <transition-group
+        name="custom-classes-transition"
+        enter-active-class="animated fadeInLeftBig"
+        leave-active-class="animated fadeOutLeftBig absolute"
+      >
+        <div class="inline-block transition" :key="'analysis'" v-if="playRule.analysis">
+          <div class="bc-missOption-btn" @click="toggleCurrentMiss" :class="{active: showMiss}">当前遗漏</div><div class="bc-missOption-btn" @click="toggleColdHot" :class="{active: showCold}">30期冷热</div>
+        </div>
+        <slot name="autoAdd" v-if="playRule.topOp.auto"></slot>
+        <div class="bc-missOption-btn" :key="'clear'" @click="clearAllSelected" v-if="playRule.topOp.clear">清除选号</div>
+      </transition-group>
     </div>
     <!--选区-->
-    <div class="bc-page-content active" :class="`bc-page-content-${playRule.style.position}`" v-for="n in totalPage" v-show="n === 1">
-      <div class="bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList" v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
+    <transition
+      name="custom-classes-transition"
+      enter-active-class="fadeIn animated"
+    >
+      <div v-if="show">
+        <div class="bc-page-content active" :class="`bc-page-content-${playRule.style.position}`" v-for="n in totalPage" v-show="n === 1">
+          <div class="bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList" v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
 
-        <div class="tab-toolbar" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
+            <div class="tab-toolbar" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
 
-          <div class="js-bc-select-item-title tab-title" v-if="fRule.row.title && fRule.row.title !== '无'">
-            <div>{{fRule.row.title}}</div>
-          </div>
-          <div class="js-bc-select-item-title tab-title" v-else-if="!fRule.row.title">
-            <div>号码</div>
-          </div>
+              <div class="js-bc-select-item-title tab-title" v-if="fRule.row.title && fRule.row.title !== '无'">
+                <div>{{fRule.row.title}}</div>
+                <transition
+                  name="custom-classes-transition"
+                  enter-active-class="animated fadeIn"
+                  leave-active-class="animated fadeOut"
+                >
+                  <div class="miss-title" v-if="showMiss && playRule.analysis">遗漏</div>
+                  <div class="miss-title" v-if="showCold && playRule.analysis">冷热</div>
+                </transition>
+              </div>
+              <div class="js-bc-select-item-title tab-title" v-else-if="!fRule.row.title">
+                <div>号码</div>
+                <transition
+                  name="custom-classes-transition"
+                  enter-active-class="animated fadeIn"
+                  leave-active-class="animated fadeOut"
+                >
+                  <div class="miss-title" v-if="showMiss && playRule.analysis">遗漏</div>
+                  <div class="miss-title" v-if="showCold && playRule.analysis">冷热</div>
+                </transition>
+              </div>
 
-          <div class="tab-group no-margin inline-block">
-            <div v-for="n in fRule.row.totalPage"  class="clearfix inline-block">
-              <span class="bc-select-item cbutton cbutton--effect-novak tab" @click="selectNumber(item, fRule.row)"
-                    v-for="(item, index) in fRule.row.fItems" v-if="!fRule.row.page || (index < n * fRule.row.page && index >= (n - 1) * fRule.row.page)"
-                  :class="[fRule.limit, {active: item.selected, clearfix: playRule.style.row !== 1 && Math.ceil(fRule.row.fItem / index) === playRule.style.row}]">
-                <span v-if="!fRule.row.doubleNum">{{item.showNum}}</span>
-                <span v-else>{{item.showNum[0]}}<i class="num-split"></i>{{item.showNum[1]}}</span>
-              </span>
-              <span v-if="fRule.row.op.clear2" class="operate-clear cursor-pointer" @click="selectOperate('clear', fRule.row)">清空</span>
+              <div class="tab-group no-margin inline-block">
+                <div v-for="n in fRule.row.totalPage"  class="clearfix inline-block">
+                  <div class="bc-select-item" v-for="(item, itemIndex) in fRule.row.fItems" v-if="!fRule.row.page || (itemIndex < n * fRule.row.page && itemIndex >= (n - 1) * fRule.row.page)">
+                  <span class="cbutton cbutton--effect-novak tab" @click="selectNumber(item, fRule.row)"
+                        :class="[fRule.limit, {active: item.selected, clearfix: playRule.style.row !== 1 && Math.ceil(fRule.row.fItem / itemIndex) === playRule.style.row}]">
+                    <span v-if="!fRule.row.doubleNum">{{item.showNum}}</span>
+                    <span v-else>{{item.showNum[0]}}<i class="num-split"></i>{{item.showNum[1]}}</span>
+                  </span>
+                    <transition
+                      name="custom-classes-transition"
+                      enter-active-class="animated rotateIn"
+                      leave-active-class="animated rotateOut"
+                    >
+                    <div class="miss-item" :class="currentMiss[index][itemIndex].style" v-if="showMiss && playRule.analysis">{{currentMiss[index][itemIndex].num}}</div>
+                    <div class="miss-item" :class="coldHot[index][itemIndex].style" v-if="showCold && playRule.analysis">{{coldHot[index][itemIndex].num}}</div>
+                    </transition>
+                  </div>
+                  <span v-if="fRule.row.op.clear2" class="operate-clear cursor-pointer" @click="selectOperate('clear', fRule.row)">清空</span>
+                </div>
+              </div>
+
             </div>
-          </div>
 
-        </div>
-
-        <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select vertical-middle clearfix" :class="playRule.style.operate === 'block' ? 'm-center' : 'm-left-lg pull-right'" v-if="fRule.row.hasOp">
-          <div class="tab-group m-left-md">
-            <span class="tab" @click="selectOperate('all', fRule.row)" v-if="fRule.row.op.all">全</span>
-            <span class="tab" @click="selectOperate('big', fRule.row)" v-if="fRule.row.op.big">大</span>
-            <span class="tab" @click="selectOperate('small', fRule.row)" v-if="fRule.row.op.small">小</span>
-            <span class="tab" @click="selectOperate('odd', fRule.row)" v-if="fRule.row.op.odd">奇</span>
-            <span class="tab" @click="selectOperate('even', fRule.row)" v-if="fRule.row.op.even">偶</span>
-            <span class="tab" @click="selectOperate('clear', fRule.row)" v-if="fRule.row.op.clear">清</span>
+            <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select vertical-middle clearfix" :class="playRule.style.operate === 'block' ? 'm-center' : 'm-left-lg pull-right'" v-if="fRule.row.hasOp">
+              <div class="tab-group m-left-md">
+                <span class="tab" @click="selectOperate('all', fRule.row)" v-if="fRule.row.op.all">全</span>
+                <span class="tab" @click="selectOperate('big', fRule.row)" v-if="fRule.row.op.big">大</span>
+                <span class="tab" @click="selectOperate('small', fRule.row)" v-if="fRule.row.op.small">小</span>
+                <span class="tab" @click="selectOperate('odd', fRule.row)" v-if="fRule.row.op.odd">奇</span>
+                <span class="tab" @click="selectOperate('even', fRule.row)" v-if="fRule.row.op.even">偶</span>
+                <span class="tab" @click="selectOperate('clear', fRule.row)" v-if="fRule.row.op.clear">清</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
   import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
   import BettingPlayAreaPosition from "./betting-play-area-position";
 
@@ -64,7 +102,6 @@
     props: {
       playRule: Object,
       ticketInfo: Object,
-      mark6TicketIdArr: Array,
     },
 
     data: function() {
@@ -74,14 +111,21 @@
         formattedRuleList: [],
         totalPage: 1,
         coefficient: 1,
-        type: 'select'
+        type: 'select',
+        show: false,
+        showMiss: false,
+        showCold: false,
       }
     },
 
     watch: {
       computedRuleList: {
-        handler(newVal, oldVal) {
-          this.formattedRuleList = newVal
+        handler(newVal) {
+          this.show = false
+          this.$nextTick(() => {
+            this.show = true
+            this.formattedRuleList = newVal
+          })
         },
         immediate: true
       },
@@ -117,13 +161,30 @@
           return {
             limit: _(RuleItem.limits).pluck('name').join(' '),
             row: RuleItem,
-            htmlNeedInfo: RuleItem.htmlNeedInfo,
           }
         })
-      }
+      },
+      coldHot: state => state.bettingAnalysis.coldHot,
+      currentMiss: state => state.bettingAnalysis.currentMiss,
     }),
 
     methods: {
+      toggleCurrentMiss() {
+        this.showCold = false
+
+        this.$nextTick(() => {
+          this.showMiss = !this.showMiss
+        })
+      },
+
+      toggleColdHot() {
+        this.showMiss = false
+
+        this.$nextTick(() => {
+          this.showCold = !this.showCold
+        })
+      },
+
       positionChange(optionals) {
         this.$_calculateCoefficient(optionals)
         this.$_statisticsLottery()
@@ -357,27 +418,48 @@
       .bc-playArea-items {
         display: table-cell;
         vertical-align: middle;
+        text-align: center;
       }
     }
   }
   .bc-playArea-items{
     margin: 20px auto 20px auto;
+    min-height: 70px;
+  }
+
+  .bc-select-item {
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+
+  .miss-title {
+    height: 20px;
+    line-height: 20px;
+    color: $font-auxiliary-color;
+  }
+  .miss-item {
+    font-size: 12px;
+    text-align: center;
+    color: $font-auxiliary-color;
+    &.max {
+      color: $prominent-color;
+    }
+    &.min {
+      color: $new-main-deep-color;
+    }
+  }
+
+  .bc-quick-select{
+    width: 221px;
+    height: 39px;
+    border-top: 1px solid $def-gray-color;
+    border-radius: 20px;
+    background-color: $sec-line-color;
+    margin-bottom: 0;
   }
 
   .tab-default {
     display: inline-block;
-  }
-
-  .bc-page-content-center {
-    text-align: center
-  }
-  .bc-page-content-center-2 {
-    padding-top: 55px;
-    min-height: 210px;
-    .tab-center-2 {
-      width: 700px;
-      margin: 0 auto
-    }
   }
 
   .num-split {

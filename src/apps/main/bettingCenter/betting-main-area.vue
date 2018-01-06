@@ -17,7 +17,7 @@
 
           <div class="pull-right bc-advance-mode-main">
             <div :class="advanceShowMode === 'single' ? 'advance-bonus-single' : 'advance-bonus'">
-              单注奖金：<span class="text-prominent font-sm">{{bettingChoice.fBetBonus}}</span>元
+              单注奖金：<animated-integer class="text-prominent font-sm" :value="bettingChoice.fBetBonus"></animated-integer>元
             </div>
             <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic'">
               <span class="sfa sfa-bc-light vertical-middle"></span>
@@ -27,15 +27,18 @@
         </div>
         <div class="bc-line"></div>
         <div class="m-LR-smd">
-          <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
-            <betting-play-area-select :play-rule="playRule" :ticket-info="ticketInfo" ref="areaSelect" v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
-                <div slot="lastMissNum" class="js-bc-missOption bc-missOption-btn active">当前遗漏</div>
-                <div slot="maxMissNum" class="js-bc-missOption bc-missOption-btn">最大遗漏</div>
-                <div slot="autoAdd" class="bc-missOption-btn" data-times="1" @click="autoAdd(1)">机选一注</div>
-            </betting-play-area-select>
-            <betting-play-area-input :play-rule="playRule" ref="areaInput" v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
-            <div class="height-100" v-html="loading" v-else></div>
-          </div>
+            <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
+              <transition name="fade" mode="out-in"
+                          enter-active-class="animated-quick fadeIn"
+                          leave-active-class="animated-quick fadeOut"
+              >
+                <betting-play-area-select :play-rule="playRule" :ticket-info="ticketInfo" ref="areaSelect" v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
+                  <div slot="autoAdd" class="bc-missOption-btn" :key="'autoBet'" data-times="1" @click="autoAdd(1)">机选一注</div>
+                </betting-play-area-select>
+                <betting-play-area-input :play-rule="playRule" ref="areaInput" v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
+                <div class="height-100" v-html="loading" v-else></div>
+              </transition>
+            </div>
         </div>
 
         <div class="div-line"></div>
@@ -55,9 +58,9 @@
 
             <div class="inline-block m-left-smd">
               <span>共</span>
-              <span class="text-pleasant font-sm">{{bettingChoice.statistics}}</span>
+              <animated-integer class="text-pleasant font-sm" :value="bettingChoice.statistics"></animated-integer>
               <span>注，金额</span>
-              <span class="text-prominent font-sm">{{bettingChoice.fPrefabMoney}}</span>
+              <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
               <span>元</span>
             </div>
             <select name="" class="m-left-smd bc-vouchers-select">
@@ -82,7 +85,7 @@
             <div class="overflow-hidden font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
                 <span>
                   <span>预期盈利</span>
-                  <span class="text-prominent">{{bettingChoice.totalInfo.fTotalBetBonus}}</span>
+                  <animated-integer class="text-prominent" :value="bettingChoice.totalInfo.fTotalBetBonus"></animated-integer>
                   <span>元，</span>
                 </span>
               <span>
@@ -92,7 +95,7 @@
                 </span>
               <span>
                   <span>总金额</span>
-                  <span class="text-prominent m-left-xs m-right-xs">{{bettingChoice.totalInfo.fTotalMoney}}</span>
+                  <animated-integer class="text-prominent m-left-xs m-right-xs" :value="bettingChoice.totalInfo.fTotalMoney"></animated-integer>
                   <span>元</span>
                 </span>
               <button class="bc-chase btn-link inline-block cursor-pointer m-left-md relative" @click="bettingChase" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
@@ -158,6 +161,7 @@
     components: {
       BettingConfirm,
       StaticGrid,
+      AnimatedInteger,
       BettingRules,
       BettingAdvanceRules,
       BettingPlayAreaSelect,
@@ -238,7 +242,7 @@
             trigger: 'hover',
             container: this.$el,
             html: true,
-            content: `<div><span class="font-bold">玩法说明：</span>${playInfo.playDes}</div><div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
+            content: `<div class="bc-popover-exp font-sm"><span class="font-bold">玩法说明：</span>${playInfo.playDes}</div><div class="font-sm"><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
             placement: 'bottom',
           })
 
@@ -246,9 +250,12 @@
             trigger: 'hover',
             container: this.$el,
             html: true,
-            content: `<div><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
+            content: `<div class="font-sm"><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
             placement: 'bottom',
           })
+
+          this.$store.dispatch('getColdHot', { ticketId: this.ticketInfo.info.id})
+          this.$store.dispatch('getCurrentMiss', { ticketId: this.ticketInfo.info.id})
         },
       },
       'bettingInfo.planId': {
@@ -799,7 +806,7 @@
     background-color: $main-deep-color;
     text-align: center;
     font-size:$font-xs;
-    top: 0;
+    top: 3px;
     left: 80px;
     border-radius: 3px;
     &:before{

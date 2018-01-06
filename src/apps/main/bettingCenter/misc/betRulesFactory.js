@@ -30,13 +30,13 @@ const op = {
 const TopOp = {
   all: {
     currMissing: true,
-    maxMissing: true,
+    coldHot: true,
     auto: true,
     clear: true,
   },
   none: {
     currMissing: false,
-    maxMissing: false,
+    coldHot: false,
     auto: false,
     clear: false,
   },
@@ -56,6 +56,7 @@ function addRule(ids, {
   // 注数的算法
   algorithm = _.noop,
   algorithmProps = {},
+  analysis = true,
   format,
   validate,
   formatToNum = false,
@@ -88,6 +89,7 @@ function addRule(ids, {
       validate,
       type,
       limits,
+      analysis,
       algorithm,
       algorithmProps,
       style,
@@ -103,7 +105,6 @@ function createList(titles, options) {
     operate: 'all',
     limits: [],
     doublenum: false,
-    htmlNeedInfo: {},
   })
 
   return _(titles).map((title) => {
@@ -116,7 +117,6 @@ function createList(titles, options) {
         op: op[title.operate || options.operate],
         limits: title.limits || options.limits,
         doubleNum: title.doubleNum || options.doubleNum,
-        htmlNeedInfo: options.htmlNeedInfo,
       }
     }
     return {
@@ -127,7 +127,6 @@ function createList(titles, options) {
       op: op[options.operate],
       limits: options.limits,
       doubleNum: options.doubleNum,
-      htmlNeedInfo: options.htmlNeedInfo,
     }
   })
 }

@@ -197,6 +197,7 @@ module.exports = {
       // vue: 'vue/dist/vue.esm.js',
 
       StaticGrid: 'com/static-grid/index.vue',
+      AnimatedInteger: 'com/animated-integer/index.vue',
     },
   },
   providePlugin: {
@@ -212,6 +213,7 @@ module.exports = {
 
     types: 'mutation-types',
     StaticGrid: ['StaticGrid', 'default'],
+    AnimatedInteger: ['AnimatedInteger', 'default'],
   },
   // noParse: /lodash|underscore.string|underscore|backbone|es5|^jquery$|moment|echarts|base\/scripts|html/
 

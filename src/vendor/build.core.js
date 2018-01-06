@@ -1,6 +1,5 @@
 
-
-require('./styles/animate.css')
+require('animate.css')
 require('./scripts/modernizr')
 require('./styles/normalize-3.0.2.css')
 require('./styles/jquery.fullPage.css')

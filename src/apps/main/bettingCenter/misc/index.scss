@@ -203,6 +203,7 @@
   }
 }
 .bc-play-main{
+  user-select: none;
   .bc-play-left{
     width: 921px;
     color: $inverse-color;
@@ -237,35 +238,33 @@
     &.loaded {
       height: auto;
     }
-    .bc-missOptional-main{
-      width: 100%;
-      margin: 15px 5px;
-      .bc-missOption-btn{
-        width: 74px;
-        height: 26px;
-        border: 1px solid $def-gray-color;
-        color: $inverse-color;
-        border-radius: 3px;
-        font-size: $font-xs;
-        text-align: center;
-        line-height: 24px;
-        display: inline-block;
-        cursor: pointer;
-        &.active{
-          color: $def-white-color;
-          background-color: $main-deep-color;
-          border-color: $main-deep-color;
-        }
+  }
+
+  .bc-missOptional-main{
+    width: 100%;
+    margin: 15px 5px;
+    .bc-missOption-btn{
+      width: 74px;
+      height: 26px;
+      border: 1px solid $def-gray-color;
+      color: $inverse-color;
+      border-radius: 5px;
+      font-size: $font-xs;
+      text-align: center;
+      line-height: 24px;
+      display: inline-block;
+      cursor: pointer;
+      margin-right: 5px;
+      transition: all .3s ease-out;
+      &.active{
+        color: $def-white-color;
+        background-color: $main-deep-color;
+        border-color: $main-deep-color;
       }
     }
-    .bc-quick-select{
-      width: 221px;
-      height: 39px;
-      border-top: 1px solid $def-gray-color;
-      border-radius: 20px;
-      background-color: $sec-line-color;
-    }
   }
+
+
   .bc-unit-select-add{
     width: 58px;
     height: 20px;
@@ -376,16 +375,6 @@
   }
 }
 
-
-.bc-play-tip {
-  margin-top: 5px;
-  margin-bottom: 10px;
-  color: #7f8081;
-}
-
-.bc-select-item {
-  margin-bottom: 10px;
-}
 
 .bc-lottery-preview {
   width: 878px;
@@ -571,6 +560,12 @@
     border: 0;
     color: #000;
   }
+}
+
+.bc-popover-exp {
+  border-bottom: 1px dashed $def-gray-color;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 //** animate **

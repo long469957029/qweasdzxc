@@ -43,6 +43,12 @@ const initState = () => {
 
 // getters
 const getters = {
+  playId: state => {
+    return state.playId
+  },
+  groupId: state => {
+    return state.groupId
+  }
 }
 
 // actions

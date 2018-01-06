@@ -39,6 +39,7 @@ function _create(ticketId) {
       items: _.range(28),
       operate: 'none',
     }),
+    analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: _.range(28),
     }),
@@ -83,6 +84,7 @@ function _create(ticketId) {
       items: _.range(1, 27),
       operate: 'none',
     }),
+    analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: _.range(1, 27),
     }),
@@ -98,6 +100,7 @@ function _create(ticketId) {
       minRepeat: 1,
       innerSort: true,
     }),
+    analysis: false,
     create: algorithm.getCreateFunc(3, {
       outerSort: true,
       slice: [2],
