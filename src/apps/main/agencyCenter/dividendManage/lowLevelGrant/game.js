@@ -87,7 +87,7 @@ const GameDividView = SearchGrid.extend({
       // tip: '<span class="m-right-sm vertical-middle"><span class="js-pf-select-all cursor-pointer">全选</span> | ' +
       // '<span class="js-pf-inverse cursor-pointer">反选</span></span>' +
       // '<div class="btn-group"><button class="js-ac-multi-grant btn btn-sm">发放</button></div>',
-      height: 290,
+      height: 600,
     })
   },
 
@@ -98,10 +98,6 @@ const GameDividView = SearchGrid.extend({
     this.$('input[name=userName]').val(this.options.userName)
     this.$('input[name=status]').val(this.options.status)
 
-    this.$('.js-pf-breadcrumb').before('<div class="alert">' +
-      '<span class="text-bold-dark">温馨提示：</span>' +
-      '提示：下级分红每月1号结算，只保留上一次的记录，未按时下发分红给下级平台会强制发放。' +
-      '</div>')
     SearchGrid.prototype.onRender.apply(this, arguments)
     return this
   },

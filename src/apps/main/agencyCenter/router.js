@@ -49,7 +49,7 @@ exports.install = function() {
 
     'ac/tad': 'teamAccountDetail', // 账变
     'ac/to': 'teamOverview', // 账变
-
+    'ac/tr': 'transfer', // 资金管理-转账
 
   })
 }

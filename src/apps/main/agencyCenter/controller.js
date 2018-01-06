@@ -1,5 +1,5 @@
 
-
+const TransferView = require('agencyCenter/views/userTransfer')
 const RouterController = require('skeleton/controllers/router')
 
 const LowLevelManageView = require('agencyCenter/views/lowLevelManage')
@@ -13,7 +13,7 @@ const LowLevelBettingRecordsView = require('fundCenter/gameRecord/bettingRecords
 
 const LowLevelAccountDetailView = require('agencyCenter/views/lowLevelManage-accountDetail')
 const LowLevelSendMessageView = require('agencyCenter/views/lowLevelManage-sendMessage')
-const LowLevelTransferView = require('agencyCenter/views/lowLevelManage-transfer')
+// const LowLevelTransferView = require('agencyCenter/views/lowLevelManage-transfer')
 
 const LowLevelDetailView = require('agencyCenter/views/lowLevelDetail')
 
@@ -36,6 +36,9 @@ const teamBettingRecordView = require('agencyCenter/bettingRecord')
 const TeamAccountDetailView = require('agencyCenter/teamAccountDetail')
 
 const TeamOverviewView = require('agencyCenter/teamOverview')
+
+const LowLevelGrantView = require('agencyCenter/dividendManage/lowLevelGrant')
+const TabView = require('agencyCenter/dividendManage/index-tab')
 
 const sidebar = Global.ui.menu.get('ac')
 
@@ -215,16 +218,16 @@ const AgencyCenterController = RouterController.extend({
     })
   },
 
-  transfer(userId) {
-    this.changeSubReginView(new LowLevelTransferView({
-      userId,
-    }), {
-      main: {
-        title: '下级转账',
-      },
-      parentRouter: 'ac/llm',
-    })
-  },
+  // transfer(userId) {
+  //   this.changeSubReginView(new LowLevelTransferView({
+  //     userId,
+  //   }), {
+  //     main: {
+  //       title: '下级转账',
+  //     },
+  //     parentRouter: 'ac/llm',
+  //   })
+  // },
 
   bettingRecords4Report(userId) {
     this.changeSubReginView(new LowLevelBettingRecordsView({
@@ -262,7 +265,8 @@ const AgencyCenterController = RouterController.extend({
   dividendManage() {
     this.changeMainReginView(new DividendMangeView(), {
       main: {
-        title: '分红管理',
+        title: '我的分红',
+        titleDes: '彩票分红每月1号和16号结算，游戏分红每月1号结算',
       },
       sidebar,
     })
@@ -303,30 +307,28 @@ const AgencyCenterController = RouterController.extend({
     })
   },
   lowLevelGrant() {
-    this.changeMainReginView(new DividendMangeView({ triggerTab: 'jsAcDmLowLevelGrant' }), {
+    this.changeMainReginView(new LowLevelGrantView(), {
       main: {
-        title: '分红管理',
+        title: '下级分红',
+        titleDes: '彩票分红每月1号和16号结算，游戏分红每月1号结算，若未按时下发给下级平台会强制发放',
       },
       sidebar,
-      activeMenu: 'ac/dm',
     })
   },
   signUserManage() {
-    this.changeMainReginView(new DividendMangeView({ triggerTab: 'jsAcDmUserManage' }), {
+    this.changeMainReginView(new TabView(), {
       main: {
-        title: '分红管理',
+        title: '签约用户',
       },
       sidebar,
-      activeMenu: 'ac/dm',
     })
   },
   signUser() {
-    this.changeMainReginView(new DividendMangeView({ triggerTab: 'jsAcDmSignUser' }), {
+    this.changeMainReginView(new TabView(), {
       main: {
-        title: '分红管理',
+        title: '签约用户',
       },
       sidebar,
-      activeMenu: 'ac/dm',
     })
   },
   agreementManagement() {
@@ -369,7 +371,19 @@ const AgencyCenterController = RouterController.extend({
       sidebar,
     })
   },
-
+  transfer(userId) {
+    this.changeMainReginView(new TransferView({
+      userId,
+      username: _.getUrlParam('name'),
+    }), {
+      main: {
+        title: '平台转账',
+        titleDes: '<div class="js-ac-user-transfer"></div>',
+      },
+      sidebar,
+      // activeMenu: 'fc/fm'
+    })
+  },
 
 })
 

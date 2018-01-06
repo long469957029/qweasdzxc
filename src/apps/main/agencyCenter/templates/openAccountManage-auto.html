@@ -12,7 +12,7 @@
     <div class="control-group">
       <label class="control-label text-black">设置返点：</label>
       <div class="controls">
-        <input type="text" class="js-ac-auto-rebate input1" value="" data-parsley-oneDecimal/>
+        <input type="text" class="js-ac-auto-rebate input1" value="" data-parsley-oneDecimal data-num="0"/>
         <i class="fa fa-percent manual-rebate-sign" aria-hidden="true"></i>
         <a class="js-look-bonus text-prominent look-bonus" data-ticket="constant">查看对应奖金</a>
         <div class="js-ac-manual-rebate-info text-inverse m-top-sm">
@@ -54,7 +54,7 @@
       <div class="control-group js-ac-red-fixed">
         <label class="control-label text-black">单个红包金额：</label>
         <div class="controls">
-          <input type="text" class="js-ac-auto-red-money input1" data-type="1" value="">
+          <input type="text" class="js-ac-auto-red-money input1" data-type="1" value="" data-num="0">
           <div class="text-inverse m-top-sm js-ac-red-pack-tip">
             <span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>
             红包金额不得低于1元
@@ -64,7 +64,7 @@
       <div class="control-group js-ac-red-random hidden">
         <label class="control-label text-black">红包总额：</label>
         <div class="controls">
-          <input type="text" class="js-ac-auto-red-money-all input1" data-type="2" value="">
+          <input type="text" class="js-ac-auto-red-money-all input1" data-type="2" value="" data-num="0">
           <div class="text-inverse m-top-sm js-ac-red-pack-all-tip">
             <span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>
             红包总额不得低于1元
@@ -74,7 +74,7 @@
       <div class="control-group js-ac-red-number">
         <label class="control-label text-black">红包个数：</label>
         <div class="controls">
-          <input type="text" class="js-ac-auto-red-num input1" value="">
+          <input type="text" class="js-ac-auto-red-num input1" value="" data-num="1">
           <div class="text-inverse m-top-sm js-ac-red-pack-num-tip">
           </div>
         </div>

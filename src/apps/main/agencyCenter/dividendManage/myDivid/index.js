@@ -14,9 +14,12 @@ const MyDividView = Base.ItemView.extend({
     'click .js-ac-dm-md-type-btn': 'typeSelectHandler',
     'change .js-ac-dm-md-cycle': 'cycleChangeHandler',
     'click .js-ac-dm-md-status': 'getHandler',
+    'click .js-ac-dm-my-config': 'checkAgreement',
   },
 
-
+  checkAgreement() {
+    Global.router.goTo('#ac/am?operationStatus=3&username=我')
+  },
   serializeData() {
     return this.options
   },
@@ -25,6 +28,13 @@ const MyDividView = Base.ItemView.extend({
       url: '/fund/divid/myDividInfo.json',
       data,
       abort: false,
+    })
+  },
+
+  dividRoleXhr(data) {
+    return Global.sync.ajax({
+      url: '/fund/divid/dividViewInfo.json',
+      data,
     })
   },
 
@@ -38,10 +48,10 @@ const MyDividView = Base.ItemView.extend({
 
 
     this.getMyDividDataXhr({ type: 0 }).done((res) => {
-      if (res.result == 0) {
+      if (res.result === 0) {
         self.ticketData = res.root
-        $.when(self._parentView.DividRoleData).done((res1) => {
-          if (res1.result == 0) {
+        self.dividRoleXhr().done((res1) => {
+          if (res1.result === 0) {
             if (res1.root.myDividTicket) {
               self.$type.filter('[data-type=0]').removeClass('hidden')
             }
@@ -64,7 +74,7 @@ const MyDividView = Base.ItemView.extend({
   getMyDividData (type) {
     const self = this
     this.getMyDividDataXhr({ type: 1 }).done((res) => {
-      if (res.result == 0) {
+      if (res.result === 0) {
         self.gameData = res.root
       }
     })
@@ -78,7 +88,7 @@ const MyDividView = Base.ItemView.extend({
     $target.siblings().removeClass('active')
     this.initPageByType(type, 0)
   },
-  cycleChangeHandler(e) {
+  cycleChangeHandler() {
     const cycle = this.$cycle.val()
     const type = this.$('.js-ac-dm-md-type-btn.active').data('type')
     this.initPageByType(type, cycle)
@@ -87,15 +97,15 @@ const MyDividView = Base.ItemView.extend({
     const acctInfo = Global.memoryCache.get('acctInfo')
     const html = []
     let pageData = {}
-    if (type == 0) {
+    if (type === 0) {
       pageData = this.ticketData.dividList[cycle] || {}
       _(this.ticketData.dividList).each((item, index) => {
-        html.push(`<option value="${index}"${index == cycle ? 'selected' : ''} >${item.cycle}</option>`)
+        html.push(`<option value="${index}"${index === cycle ? 'selected' : ''} >${item.cycle}</option>`)
       })
-    } else if (type == 1) {
+    } else if (type === 1) {
       pageData = this.gameData.dividList[cycle] || {}
       _(this.gameData.dividList).each((item, index) => {
-        html.push(`<option value="${index}"${index == cycle ? 'selected' : ''} >${item.cycle}</option>`)
+        html.push(`<option value="${index}"${index === cycle ? 'selected' : ''} >${item.cycle}</option>`)
       })
     }
     const tplData = {
@@ -118,10 +128,11 @@ const MyDividView = Base.ItemView.extend({
 
     // 渲染选项
     this.$cycle.html(html.join(''))
-    this.$status.addClass((pageData.status == 0 && (acctInfo.merchant || acctInfo.userGroupLevel == 0)) ? 'active cursor-pointer' : '')
-      .html((acctInfo.merchant || acctInfo.userGroupLevel == 0) ? _(levelConfig.getByName('TOP').status).getConfigById(pageData.status) : grantConfig.getZh(pageData.status) || '统计中').data('dividid', pageData.dividId)
+    this.$status.addClass((pageData.status === 0 && (acctInfo.merchant || acctInfo.userGroupLevel === 0)) ? 'active cursor-pointer' : '')
+      .html((acctInfo.merchant || acctInfo.userGroupLevel === 0) ? _(levelConfig.getByName('TOP').status).getConfigById(pageData.status)
+        : grantConfig.getZh(pageData.status) || '统计中').data('dividid', pageData.dividId)
     // 渲染图表
-    this.$graph.toggleClass('ac-dm-dm-grid-5', !(!acctInfo.merchant && type == 0))
+    this.$graph.toggleClass('ac-dm-dm-grid-5', !(!acctInfo.merchant && type === 0))
     this.$graph.html(this.graphTpl(tplData))
     // 渲染表格
     if (this.grid) {
@@ -134,12 +145,12 @@ const MyDividView = Base.ItemView.extend({
       height: 208,
       colModel: [
         {
-          label: '结算日期', name: 'day', merge: false, width: 230, 
+          label: '结算日期', name: 'day', merge: false, width: 230,
         },
         {
-          label: '团队投注总额', name: 'betTotal', merge: false, width: 230,
+          label: '团队投注', name: 'betTotal', merge: false, width: 230,
         },
-        { label: '团队盈亏总额', name: 'profitTotal', width: 230 },
+        { label: '团队盈亏', name: 'profitTotal', width: 230 },
       ],
       row: this.formatGridData(pageData.dividDetailList),
     }).staticGrid('instance')
@@ -148,7 +159,7 @@ const MyDividView = Base.ItemView.extend({
     this.grid.addFooterRows({
       trClass: 'tr-footer',
       columnEls: [
-        '<strong>总计</strong>',
+        '<strong>所有页总计</strong>',
         _(pageData.betTotal || '').convert2yuan(),
         _(pageData.profitTotal || '').convert2yuan(),
       ],
@@ -156,7 +167,7 @@ const MyDividView = Base.ItemView.extend({
     this.grid.hideLoading()
   },
   formatGridData(list) {
-    return _(list).map((item, index) => {
+    return _(list).map((item) => {
       return {
         day: item.day,
         betTotal: _(item.betTotal).convert2yuan(),
@@ -176,7 +187,7 @@ const MyDividView = Base.ItemView.extend({
     let url
     if (acctInfo.merchant) {
       url = '/fund/merchantBonus/get.json'
-    } else if (acctInfo.userGroupLevel == 0) {
+    } else if (acctInfo.userGroupLevel === 0) {
       url = '/fund/divid/get.json'
     }
     Global.sync.ajax({

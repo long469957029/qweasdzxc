@@ -61,7 +61,7 @@ const OpenAccountManageLinkView = Base.ItemView.extend({
             const data = res.root
             self.$autoContainer.staticGrid({
               startOnLoading: false,
-              height: 210,
+              height: 624,
               tableClass: 'table table-bordered table-center',
               colModel: [
                 {

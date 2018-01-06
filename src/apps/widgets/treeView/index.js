@@ -99,7 +99,7 @@ $.widget('gl.treeView', {
   },
 
 
-  _getTreeViewLiOpenTag(hasSubTree, isLast, text, value, data) {
+  _getTreeViewLiOpenTag(hasSubTree, isLast, text, value, data, img) {
     const openable = (hasSubTree ? 'openable ' : '')
 
     const type = (hasSubTree ? 'group' : 'item')
@@ -122,10 +122,17 @@ $.widget('gl.treeView', {
         `<label for="${id}"></label>` +
         '</div>'
     }
-
+    let checkIcon = ''
+    let headerImg = ''
+    if (this.options.checkIcon) {
+      checkIcon = '<div class="check-icon"></div>'
+    }
+    if (this.options.showHeaderImg) {
+      headerImg = `<div class="header-img"><image src="${img}" /></div>`
+    }
     const liOpenTagHtml = `<li class="${openable}${isLastLink}">` +
-      `<a href="javascript:void 0;" data-data='${JSON.stringify(data) || '{}'}' data-no="${value}">${ 
-        checkboxHtml}${icon}<span class="js-wt-title">${text}</span>` +
+      `<a href="javascript:void 0;" class="js-wt-title clearfix" data-data='${JSON.stringify(data) || '{}'}' data-no="${value}">${ 
+        checkboxHtml}${icon}${headerImg}<span class="tree-text">${text}</span>${checkIcon}` +
       '</a>'
 
     return liOpenTagHtml
@@ -138,15 +145,15 @@ $.widget('gl.treeView', {
 
     const it = this
 
-    function _doRecursion(list) {
+    function _doRecursion(_list) {
       let html = ''
 
-      _.each(list, (item, index) => {
+      _.each(_list, (item, index) => {
         const hasSubTree = !!item.subItem
 
         const isLast = (1 + index === list.length)
 
-        html += it._getTreeViewLiOpenTag(hasSubTree, isLast, item.text, item.value, item.data)
+        html += it._getTreeViewLiOpenTag(hasSubTree, isLast, item.text, item.value, item.data, item.img)
 
         if (hasSubTree) {
           html += '<ul class="subtree">'
@@ -169,8 +176,8 @@ $.widget('gl.treeView', {
     let html = '<ul>'
 
     html += this._getTreeViewNodeHtml(data)
-
-    return html += '</ul>' // close root ul
+    html += '</ul>'
+    return html // close root ul
   },
 
   // event handlers
@@ -178,9 +185,9 @@ $.widget('gl.treeView', {
   nodeCheckHandler(e) {
     const $target = $(e.currentTarget)
 
-    const $a = $target.parent('a')
+    // const $a = $target.parent('a')
 
-    this.options.onClick.call(this, e, $a.data('no'), $a.data('data'))
+    this.options.onClick.call(this, e, $target.data('no'), $target.data('data'))
 
     // return false;
   },

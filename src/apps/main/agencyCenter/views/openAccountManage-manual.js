@@ -12,6 +12,7 @@ const OpenAccountManageView = Base.ItemView.extend({
     'blur .js-ac-manual-rebate': 'inputRebateHandler',
     'blur .js-ac-password': 'checkUserPassword',
     'blur .js-ac-red-pack': 'checkRedPackHandler',
+    'keyup .js-ac-red-pack,.js-ac-manual-rebate': 'keyUpHandler',
     'click .js-look-bonus': 'lookBonusViewHandler',
     'click .js-ac-manual-checkbox': 'checkboxHandler',
   },
@@ -228,10 +229,14 @@ const OpenAccountManageView = Base.ItemView.extend({
   checkRedPackHandler() {
     const acRedPack = this.$acRedPack.val()
     let isValidate = false
-
+    const myReg = /^(0|[1-9][0-9]*)(.\d{1,2})?$/
+    const reg = myReg.test(acRedPack)
     if (acRedPack === '') {
       this.changeEleClass(this.$acRedPack, 'error')
       this.$acRedPackTip.html(this.getErrorTooltip('请输入红包金额'))
+    } else if (!reg) {
+      this.changeEleClass(this.$acRedPack, 'error')
+      this.$acRedPackTip.html(this.getErrorTooltip('值最多能精确到小数点后两位'))
     } else if (Number(acRedPack) < 1) {
       this.changeEleClass(this.$acRedPack, 'error')
       this.$acRedPackTip.html(this.getErrorTooltip('红包金额不得低于1元'))
@@ -334,7 +339,15 @@ const OpenAccountManageView = Base.ItemView.extend({
       this.$acRedPackMoney.addClass('hidden')
     }
   },
-
+  keyUpHandler(e) {
+    const $target = $(e.currentTarget)
+    const val = $target.val()
+    const myReg = /^\d+(\.\d*)?$/
+    const reg = myReg.test(val)
+    if (!reg) {
+      $target.val('')
+    }
+  },
 })
 
 module.exports = OpenAccountManageView

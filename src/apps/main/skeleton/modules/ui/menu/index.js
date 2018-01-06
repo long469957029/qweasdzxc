@@ -22,15 +22,26 @@ const SidemenuModule = Base.Module.extend({
     $('.js-header-router-role[href="#ac/dm"]').toggleClass('hidden', !dividendStatus && !acctInfo.merchant)// header菜单显示权限处理
     $('.js-header-router-role[href="#ac/rp"]').toggleClass('hidden', !acctInfo.redEnvelope)// header菜单显示权限处理
     $('.js-header-router-role[href="#ac/reb"]').toggleClass('hidden', !acctInfo.merchant)// header菜单显示权限处理
-    _(this.get('ac').sub).findWhere({
+    _(_(this.get('ac').sub).chain().pluck('list').flatten()
+      .value()).findWhere({
       id: 407, // 直属分红
     }).auth = dividendStatus || acctInfo.merchant
+    _(_(this.get('ac').sub).chain().pluck('list').flatten()
+      .value()).findWhere({
+      id: 501, // 直属分红
+    }).auth = dividendStatus || acctInfo.merchant
+    _(_(this.get('ac').sub).chain().pluck('list').flatten()
+      .value()).findWhere({
+      id: 502, // 直属分红
+    }).auth = dividendStatus || acctInfo.merchant
 
-    _(this.get('ac').sub).findWhere({
+    _(_(this.get('ac').sub).chain().pluck('list').flatten()
+      .value()).findWhere({
       id: 408, // 红包
     }).auth = acctInfo.redEnvelope// f
 
-    _(this.get('ac').sub).findWhere({
+    _(_(this.get('ac').sub).chain().pluck('list').flatten()
+      .value()).findWhere({
       id: 409, // 返点
     }).auth = acctInfo.merchant// t
   },
