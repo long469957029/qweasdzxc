@@ -4,7 +4,7 @@ const FilterHelper = require('skeleton/misc/filterHelper')
 
 const ChaseModel = require('bettingCenter/models/bettingChase-normal')
 
-const ticketConfig = require('skeleton/misc/ticketConfig')
+
 
 const BettingCenterChaseNormalView = Base.ItemView.extend({
 
@@ -182,9 +182,9 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
           formatter(val, index) {
             if (index === 0 && val === self.options.planId) {
               return `${val}（当前期）`
-            } 
+            }
             return val
-          }, 
+          },
         },
         {
           label: '倍数',
@@ -193,7 +193,7 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
           formatter(val) {
             return `${'<input type="text" class="js-bc-single-plan-multiple js-gl-monitor input-xs" ' +
             'data-monitor-type="number" data-monitor-range="[1, '}${self.options.maxMultiple}]" value="${val}" /> 倍`
-          }, 
+          },
         },
         {
           label: '当期投入',
@@ -201,7 +201,7 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
           width: '20%',
           formatter(val) {
             return _(val).convert2yuan()
-          }, 
+          },
         },
         {
           label: '累计投入',
@@ -209,7 +209,7 @@ const BettingCenterChaseNormalView = Base.ItemView.extend({
           width: '20%',
           formatter(val) {
             return _(val).convert2yuan()
-          }, 
+          },
         },
       ],
       startOnLoading: false,

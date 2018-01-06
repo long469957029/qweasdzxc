@@ -1,8 +1,6 @@
 import ticketConfig from 'skeleton/misc/ticketConfig'
 import betting from '../../api/betting'
 
-const mark6TicketIdArr = ticketConfig.getMark6TicketIdArr()
-
 const initState = () => {
   return {
     levelId: -1,
@@ -513,33 +511,18 @@ const formatBettingNumber = (bettingNumber, options) => {
 // 将球上的文字转换成对应的数值
 const _formatToNum = (betNum, options) => {
   let newNum = betNum
-  if (_.indexOf(mark6TicketIdArr, parseInt(options.ticketId, 10)) > -1) {
-    if (options.formatToNumInfo) {
-      const newNumArr = []
-      const replaceArr = options.formatToNumInfo
-      const selectArr = newNum.split(',')
-      _(selectArr).each((text) => {
-        _(replaceArr).each((item) => {
-          if (text === item.name) {
-            newNumArr.push(item.value)
-          }
-        })
-      })
-      newNum = newNumArr.join()
-    }
-  } else {
-    while (newNum.indexOf('大') !== -1 || newNum.indexOf('小') !== -1 || newNum.indexOf('单') !== -1 || newNum.indexOf('双') !== -1
-    || newNum.indexOf('龙') !== -1 || newNum.indexOf('虎') !== -1 || newNum.indexOf('和') !== -1 || newNum.indexOf('三同号通选') !== -1 || newNum.indexOf('三连号通选') !== -1) {
-      newNum = newNum.replace('大', 1)
-      newNum = newNum.replace('小', 2)
-      newNum = newNum.replace('单', 3)
-      newNum = newNum.replace('双', 4)
-      newNum = newNum.replace('龙', 0)
-      newNum = newNum.replace('虎', 1)
-      newNum = newNum.replace('和', 2)
-      newNum = newNum.replace('三同号通选', 0)
-      newNum = newNum.replace('三连号通选', 0)
-    }
+
+  while (newNum.indexOf('大') !== -1 || newNum.indexOf('小') !== -1 || newNum.indexOf('单') !== -1 || newNum.indexOf('双') !== -1
+  || newNum.indexOf('龙') !== -1 || newNum.indexOf('虎') !== -1 || newNum.indexOf('和') !== -1 || newNum.indexOf('三同号通选') !== -1 || newNum.indexOf('三连号通选') !== -1) {
+    newNum = newNum.replace('大', 1)
+    newNum = newNum.replace('小', 2)
+    newNum = newNum.replace('单', 3)
+    newNum = newNum.replace('双', 4)
+    newNum = newNum.replace('龙', 0)
+    newNum = newNum.replace('虎', 1)
+    newNum = newNum.replace('和', 2)
+    newNum = newNum.replace('三同号通选', 0)
+    newNum = newNum.replace('三连号通选', 0)
   }
   return newNum
 }

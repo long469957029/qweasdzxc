@@ -198,6 +198,8 @@ module.exports = {
 
       StaticGrid: 'com/static-grid/index.vue',
       AnimatedInteger: 'com/animated-integer/index.vue',
+      ticketConfig: 'apps/main/skeleton/misc/ticketConfig',
+      bettingTypes: 'apps/main/skeleton/misc/betting-types',
     },
   },
   providePlugin: {
@@ -214,6 +216,8 @@ module.exports = {
     types: 'mutation-types',
     StaticGrid: ['StaticGrid', 'default'],
     AnimatedInteger: ['AnimatedInteger', 'default'],
+    ticketConfig: ['ticketConfig', 'default'],
+    bettingTypes: 'bettingTypes',
   },
   // noParse: /lodash|underscore.string|underscore|backbone|es5|^jquery$|moment|echarts|base\/scripts|html/
 

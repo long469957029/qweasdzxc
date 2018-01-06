@@ -485,6 +485,7 @@
         border-top: none;
         font-size: 14px;
         cursor: pointer;
+        transition: all .3s ease-in;
 
         &.selected {
           background-color: #fceed6;

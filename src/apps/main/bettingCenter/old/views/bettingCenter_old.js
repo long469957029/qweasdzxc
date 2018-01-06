@@ -1,6 +1,6 @@
 
 const BettingChaseView = require('bettingCenter/views/bettingCenter-chase')
-const ticketConfig = require('skeleton/misc/ticketConfig')
+
 const betRulesConfig = require('bettingCenter/misc/betRulesConfig')
 
 const BettingCenterView = Base.ItemView.extend({

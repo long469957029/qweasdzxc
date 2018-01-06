@@ -28,31 +28,34 @@
           <div>开奖号码</div>
         </div>
 
-        <div class="bc-last-plan-results pull-left" v-show="bettingInfo.sale && !bettingInfo.pending" v-html="formatLastOpenNum" @mouseover="calculateToggle(true)" @mouseout="calculateToggle(false)">
+        <!--<opening-balls :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :openingBalls="bettingInfo.lastOpenNum"-->
+                       <!--v-if="bettingInfo.sale && !bettingInfo.pending" v-html="formatLastOpenNum" @mouseover="calculateStatus = true" @mouseout="calculateStatus = false"-->
+        <!--&gt;</opening-balls>-->
+        <div class="bc-last-plan-results pull-left" v-if="bettingInfo.sale && !bettingInfo.pending" v-html="formatLastOpenNum" @mouseover="calculateStatus = true" @mouseout="calculateStatus = false">
           <span class="text-circle">-</span>
           <span class="text-circle">-</span>
           <span class="text-circle">-</span>
           <span class="text-circle">-</span>
           <span class="text-circle">-</span>
         </div>
-        <div class="bc-hgcalculate-example " v-show="ticketInfo.info.showNumberDetail&& calculateStatus">
-          <div class="bc-hgcaculate-examplerow">万位:<span v-html="calculateInfo ? calculateInfo.wan : ''"></span></div>
-          <div class="bc-hgcaculate-examplerow">千位:<span v-html="calculateInfo ? calculateInfo.qian : ''"></span></div>
-          <div class="bc-hgcaculate-examplerow">百位:<span v-html="calculateInfo ? calculateInfo.bai : ''"></span></div>
-          <div class="bc-hgcaculate-examplerow">十位:<span v-html="calculateInfo ? calculateInfo.shi : ''"></span></div>
-          <div class="bc-hgcaculate-examplerow">个位:<span v-html="calculateInfo ? calculateInfo.ge : ''"></span></div>
-        </div>
-        <div class="pull-left" v-show="!bettingInfo.sale">
+        <div class="bc-last-plan-results pull-left" v-if="!bettingInfo.sale">
           <span class="text-circle">暂</span>
           <span class="text-circle">停</span>
           <span class="text-circle">销</span>
           <span class="text-circle">售</span>
         </div>
-        <div class="pull-left" v-show="bettingInfo.sale && bettingInfo.pending">
+        <div class="bc-last-plan-results pull-left" v-if="bettingInfo.sale && bettingInfo.pending">
           <span class="text-circle">等</span>
           <span class="text-circle">待</span>
           <span class="text-circle">开</span>
           <span class="text-circle">奖</span>
+        </div>
+        <div class="bc-hgcalculate-example " v-if="ticketInfo.info.showNumberDetail&& calculateStatus">
+          <div class="bc-hgcaculate-examplerow">万位:<span v-html="calculateInfo ? calculateInfo.wan : ''"></span></div>
+          <div class="bc-hgcaculate-examplerow">千位:<span v-html="calculateInfo ? calculateInfo.qian : ''"></span></div>
+          <div class="bc-hgcaculate-examplerow">百位:<span v-html="calculateInfo ? calculateInfo.bai : ''"></span></div>
+          <div class="bc-hgcaculate-examplerow">十位:<span v-html="calculateInfo ? calculateInfo.shi : ''"></span></div>
+          <div class="bc-hgcaculate-examplerow">个位:<span v-html="calculateInfo ? calculateInfo.ge : ''"></span></div>
         </div>
       </div>
     </div>
@@ -66,7 +69,7 @@
         <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
         号码走势
       </a>
-      <a :href="'#hc?page=' + ticketParameter" class="router entry-list-des">
+      <a :href="`#hc?page=${ticketInfo.id}`" class="router entry-list-des">
         <span class="sfa sfa-bc-icon-des vertical-middle"></span>
         游戏说明
       </a>
@@ -78,8 +81,12 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import openingBalls from 'com/opening-balls/index.vue'
   import AnimateCountdown from 'com/countdown/animate-countdown'
+
+  import over from './misc/over.wav'
+  import prize from './misc/prize.wav'
+  import openCode from './misc/openCode.wav'
 
   let timer
   let goToNextTimer
@@ -87,27 +94,35 @@
 
   export default {
     name: "ticket-info-banner",
+
+    components: {
+      openingBalls,
+    },
+
     props: {
       ticketInfo: Object,
       ticketParameter: String,
-      mark6TicketIdArr: Array,
-      audio: Object
     },
     data() {
       return {
         musicStatus: !!Global.cookieCache.get('music-status'),
         //上期号码计算浮动框显示状态
         calculateStatus: false,
-        // calculateInfo: {
-        //   ge: '',
-        //   shi: '',
-        //   bai: '',
-        //   qian: '',
-        //   wan: ''
-        // },
-        countdown: {}
+        countdown: {},
+        audio: { over, prize, openCode }
       }
     },
+
+    watch: {
+      'bettingInfo.leftSecond': {
+        handler(newVal, oldVal) {
+          if (newVal) {
+            this.$_updateCountdown()
+          }
+        }
+      }
+    },
+
     computed: mapState({
       bettingInfo: 'bettingInfo',
       //上期开奖号码
@@ -116,26 +131,27 @@
         return _(state.bettingInfo.lastOpenNum).map((num, key) => {
           if (state.bettingInfo.ticketId === 18) {
             return `<span class="text-circle circle-sm">${num}</span>`
-          } else if (_.indexOf(state.mark6TicketIdArr, parseInt(state.bettingInfo.ticketId, 10)) > -1) {
-            const numberColor = state.ticketInfo.info.numberColor
-            let colorClass = 'green'
-            if (_.indexOf(numberColor.redArr, parseInt(num, 10)) > -1) {
-              colorClass = 'red'
-            } else if (_.indexOf(numberColor.blueArr, parseInt(num, 10)) > -1) {
-              colorClass = 'blue'
-            }
-            const spanDiv = `<span class="text-circle circle-mark6 ${colorClass}">${num}</span>`
-            const separateDiv = '<span class="text-circle circle-mark6 separate">&nbsp;</span>'
-            if (key === 5) {
-              return spanDiv + separateDiv
-            }
-            return spanDiv
+          // } else if (_.indexOf(state.mark6TicketIdArr, parseInt(state.bettingInfo.ticketId, 10)) > -1) {
+          //   const numberColor = state.ticketInfo.info.numberColor
+          //   let colorClass = 'green'
+          //   if (_.indexOf(numberColor.redArr, parseInt(num, 10)) > -1) {
+          //     colorClass = 'red'
+          //   } else if (_.indexOf(numberColor.blueArr, parseInt(num, 10)) > -1) {
+          //     colorClass = 'blue'
+          //   }
+          //   const spanDiv = `<span class="text-circle circle-mark6 ${colorClass}">${num}</span>`
+          //   const separateDiv = '<span class="text-circle circle-mark6 separate">&nbsp;</span>'
+          //   if (key === 5) {
+          //     return spanDiv + separateDiv
+          //   }
+          //   return spanDiv
           }
           return `<span class="text-circle">${num}</span>`
         }).join(' ')
       },
 
       calculateInfo(state) {
+        //新加坡2分彩 彩种显示用
         if (this.ticketInfo && this.ticketInfo.info.showNumberDetail) {
           let calculateInfo = {
             ge: '',
@@ -187,9 +203,6 @@
       openMusic() {
         this.musicStatus = !this.musicStatus;
         Global.cookieCache.set('music-status', this.musicStatus)
-      },
-      calculateToggle(status) {
-        this.calculateStatus = status;
       },
 
       $_renderCountdown() {
@@ -298,20 +311,50 @@
     mounted() {
       this.countdown = this.$_renderCountdown()
     },
-
-    watch: {
-      'bettingInfo.leftSecond': {
-        handler(newVal, oldVal) {
-          if (newVal) {
-            this.$_updateCountdown()
-          }
-        }
-      }
-    }
   }
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import
+  "~base/styles/variable";
 
+  .bc-plan-main {
+    margin-top: 40px;
+    .bc-plan-title {
+      margin-right: 20px;
+      font-weight: bold;
+      text-align: right;
+      margin-bottom: 25px;
+    }
+    .bc-last-plan-results{
+      .text-circle{
+        font-family: din, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
+        position: relative;
+        &:after{
+          content: '';
+          width: 18px;
+          height: 4px;
+          border-radius: 50%;
+          background: rgba(0, 0, 0, 0.15);
+          box-shadow: 0 0 20px rgba(0,0,0,1);
+          position: absolute;
+          bottom: -10px;
+          left: 11px;
+          transform: rotateX(65deg);
+        }
+      }
+    }
+    .bc-hgcalculate-example{
+      margin: 3px;
+      position: absolute;
+      left: 150px;
+      top: 50px;
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #666;
+      z-index: 1;
+
+    }
+  }
 </style>

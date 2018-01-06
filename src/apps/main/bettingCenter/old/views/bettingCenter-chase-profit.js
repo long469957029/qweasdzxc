@@ -4,7 +4,7 @@ const FilterHelper = require('skeleton/misc/filterHelper')
 
 const ChaseModel = require('bettingCenter/models/bettingChase-profit')
 
-const ticketConfig = require('skeleton/misc/ticketConfig')
+
 
 const BettingCenterChaseProfitView = Base.ItemView.extend({
 
@@ -186,7 +186,7 @@ const BettingCenterChaseProfitView = Base.ItemView.extend({
           formatter(val, index) {
             if (index === 0 && val === self.options.planId) {
               return `${val}（当前期）`
-            } 
+            }
             return val
           },
         },
@@ -197,7 +197,7 @@ const BettingCenterChaseProfitView = Base.ItemView.extend({
           formatter(val) {
             return `${'<input type="text" class="js-bc-single-plan-multiple js-gl-monitor input-xs" ' +
             'data-monitor-type="number" data-monitor-range="[1, '}${self.options.maxMultiple}]" value="${val}" /> 倍`
-          }, 
+          },
         },
         {
           label: '当期投入',
@@ -205,7 +205,7 @@ const BettingCenterChaseProfitView = Base.ItemView.extend({
           width: '10%',
           formatter(val) {
             return _(val).convert2yuan()
-          }, 
+          },
         },
         {
           label: '累计投入',
@@ -213,7 +213,7 @@ const BettingCenterChaseProfitView = Base.ItemView.extend({
           width: '10%',
           formatter(val) {
             return _(val).convert2yuan()
-          }, 
+          },
         },
         {
           label: '当期奖金',
@@ -221,7 +221,7 @@ const BettingCenterChaseProfitView = Base.ItemView.extend({
           width: '10%',
           formatter(val) {
             return _(val).convert2yuan()
-          }, 
+          },
         },
         {
           label: '预期盈利',
@@ -229,7 +229,7 @@ const BettingCenterChaseProfitView = Base.ItemView.extend({
           width: '10%',
           formatter(val) {
             return _(val).convert2yuan()
-          }, 
+          },
         },
         // {label: '合计利润', name: 'statisticsMoney', width: '10%', formatter: function(val) {
         //  return _(val).convert2yuan();

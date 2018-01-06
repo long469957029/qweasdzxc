@@ -8,7 +8,7 @@ const PlayAreaSelectView = require('bettingCenter/views/bettingCenter-playArea-s
 const PlayAreaInputView = require('bettingCenter/views/bettingCenter-playArea-input')
 const BettingRecordsView = require('bettingCenter/views/bettingCenter-records')
 const BettingChaseView = require('bettingCenter/views/bettingCenter-chase')
-const ticketConfig = require('skeleton/misc/ticketConfig')
+
 const betRulesConfig = require('bettingCenter/misc/betRulesConfig')
 const HisAnalysisView = require('bettingCenter/views/bettingCenter-historical-analysis')
 

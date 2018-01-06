@@ -10,27 +10,12 @@ import TicketInfoBanner from './ticket-info-banner'
 import BettingMainArea from './betting-main-area'
 import BettingMainAreaHandicap from './betting-main-area-handicap'
 
-
-import over from './misc/over.wav'
-import prize from './misc/prize.wav'
-import openCode from './misc/openCode.wav'
-
-const audio = { over, prize, openCode }
-
 const BettingCenterView = Base.ItemView.extend({
 
   template: bettingCenterTpl,
 
   onShow() {
     this.options.ticketInfo = ticketConfig.getComplete(this.options.ticketId)
-    const ticketInfo = this.options.ticketInfo
-
-    let ticketParameter = ''
-    if (ticketInfo.info.id === 29) {
-      ticketParameter = 'quick3'
-    } else {
-      ticketParameter = ticketInfo.id
-    }
 
     this.bettingCenter = new Vue({
       el: '#js-bc-main',
@@ -44,10 +29,8 @@ const BettingCenterView = Base.ItemView.extend({
       data: {
         ticketId: Number(this.options.ticketId),
         ticketInfo: this.options.ticketInfo,
-        audio,
         ticketList: ticketConfig.getCompleteAll(),
         bettingType: this.options.type,
-        ticketParameter,
       },
       methods: {
       },

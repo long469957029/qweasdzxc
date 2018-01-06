@@ -4,7 +4,6 @@ require('./index.scss')
 const LockView = require('fundCenter/fundManage/lock')// 资金锁定
 const UnlockView = require('fundCenter/fundManage/unlock')// 资金解锁
 
-const ticketConfig = require('skeleton/misc/ticketConfig')
 const dividendConfig = require('agencyCenter/dividendManage/dividendConfig')
 
 const HeaderView = Base.ItemView.extend({

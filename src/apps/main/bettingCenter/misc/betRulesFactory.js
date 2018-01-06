@@ -1,7 +1,5 @@
 import betFormat from './betFormat'
 
-const zero2nine = _.range(10)
-
 const op = {
   all: {
     all: true,
@@ -101,7 +99,7 @@ function addRule(ids, {
 
 function createList(titles, options) {
   options = _(options || {}).defaults({
-    items: zero2nine,
+    items: bettingTypes.SSC.range,
     operate: 'all',
     limits: [],
     doublenum: false,

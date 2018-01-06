@@ -1,6 +1,6 @@
 
 
-const ticketConfig = require('skeleton/misc/ticketConfig')
+
 
 const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
