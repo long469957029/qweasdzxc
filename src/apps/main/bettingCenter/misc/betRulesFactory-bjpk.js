@@ -199,6 +199,7 @@ function _create(ticketId) {
     }),
     format: { symbol: ' ' },
     formatToNum: true,
+    analysis: false,
     create: algorithm.getCreateFunc(2, {
       range: danshuang,
       matching: true,
@@ -210,6 +211,7 @@ function _create(ticketId) {
     algorithm: algorithm.addAll,
     formType: 'SUM',
     keyPosition: ['冠军', '亚军'],
+    analysis: false,
     list: factory.createList([''], {
       items: _.range(3, 20),
       operate: 'none',
@@ -221,6 +223,7 @@ function _create(ticketId) {
     algorithm: algorithm.addAll,
     formType: 'SUM',
     keyPosition: ['冠军', '亚军', '季军'],
+    analysis: false,
     list: factory.createList([''], {
       items: _.range(6, 28),
       operate: 'none',

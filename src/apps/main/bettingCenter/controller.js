@@ -1,4 +1,4 @@
-import BettingCenterView from './views/bettingCenter'
+import BettingCenterView from './bettingCenter'
 
 import './misc/index.scss'
 
@@ -6,9 +6,9 @@ const RouterController = require('skeleton/controllers/router')
 
 // const BettingCenterView = require('bettingCenter/views/bettingCenter_old1')
 
-const BettingDetailView = require('bettingCenter/views/bettingCenter-detail')
+const BettingDetailView = require('./bettingCenter-detail')
 
-const MMCBettingCenterView = require('bettingCenter/mmc')
+const MMCBettingCenterView = require('./mmc')
 
 const BettingCenterController = RouterController.extend({
 

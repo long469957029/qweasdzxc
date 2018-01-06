@@ -260,8 +260,20 @@
   visibility: hidden;
 }
 
+.absolute {
+  position: absolute;
+}
+
 .affix {
   position: fixed;
+}
+
+.transition {
+  transition: all .3s ease-out;
+}
+.animated-quick {
+  animation-duration: 0.3s;
+  animation-fill-mode: both
 }
 
 .list-unstyled {

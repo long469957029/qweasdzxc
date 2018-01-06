@@ -6,25 +6,25 @@
   $contentBgColor: map_get($props, content-bg-color);
 
   &.top .arrow {
-    border-top-color: #999;
+    border-top-color: $def-gray-color;
     &:after {
       border-top-color: $contentBgColor;
     }
   }
   &.right .arrow {
-    border-right-color: #dfdfdf;
+    border-right-color: $def-gray-color;
     &:after {
       border-right-color: $contentBgColor;
     }
   }
   &.bottom .arrow {
-    border-bottom-color: #999;
+    border-bottom-color: $def-gray-color;
     &:after {
       border-bottom-color: $contentBgColor;
     }
   }
   &.left .arrow {
-    border-left-color: #999;
+    border-left-color: $def-gray-color;
     &:after {
       border-left-color: $contentBgColor;
     }

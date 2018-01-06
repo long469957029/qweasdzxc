@@ -2,8 +2,6 @@
 
 require('./index.scss')
 
-const ticketConfig = require('skeleton/misc/ticketConfig')
-
 const NavsView = Base.ItemView.extend({
 
   template: require('./index.html'),

@@ -4,12 +4,14 @@
   left: 0;
   z-index: 1010;
   display: none;
-  max-width: 276px;
+  max-width: 320px;
   padding: 1px;
   text-align: left;
   white-space: normal;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  //box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   background-clip: padding-box;
+  border: 1px solid $def-gray-color;
+  border-radius: 5px;
   &.top {
     margin-top: -10px;
   }
@@ -43,7 +45,7 @@
     border-width: 11px;
   }
   &.top .arrow {
-    bottom: -10px;
+    bottom: -11px;
     left: 50%;
     margin-left: -11px;
     border-top-color: #999;
@@ -57,7 +59,7 @@
   }
   &.right .arrow {
     top: 50%;
-    left: -10px;
+    left: -11px;
     margin-top: -11px;
     border-right-color: #999;
     border-right-color: rgba(0, 0, 0, 0.15);
@@ -69,7 +71,7 @@
     }
   }
   &.bottom .arrow {
-    top: -10px;
+    top: -11px;
     left: 50%;
     margin-left: -11px;
     border-bottom-color: #999;

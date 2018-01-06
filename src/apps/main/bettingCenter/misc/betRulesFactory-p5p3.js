@@ -38,6 +38,7 @@ function _create(ticketId) {
     algorithmProps: {
       selectCount: 3,
     },
+    analysis: false,
     list: factory.createList([''], {
       items: _.range(28),
       operate: 'none',
@@ -85,6 +86,7 @@ function _create(ticketId) {
     algorithmProps: {
       config: [null, 1, 2, 2, 4, 5, 6, 8, 10, 11, 13, 14, 14, 15, 15, 14, 14, 13, 11, 10, 8, 6, 5, 4, 2, 2, 1],
     },
+    analysis: false,
     list: factory.createList([''], {
       items: _.range(1, 27),
       operate: 'none',
@@ -105,6 +107,7 @@ function _create(ticketId) {
       minRepeat: 1,
       innerSort: true,
     }),
+    analysis: false,
     create: algorithm.getCreateFunc(3, {
       outerSort: true,
       slice: [2],

@@ -310,6 +310,7 @@ function _create(ticketId) {
       algorithmProps: {
         selectCount: 3,
       },
+      analysis: false,
       list: factory.createList([''], {
         items: _.range(28),
         operate: 'none',
@@ -327,6 +328,7 @@ function _create(ticketId) {
       algorithmProps: {
         config: [10, 54, 96, 126, 144, 150, 144, 126, 96, 54],
       },
+      analysis: false,
       list: factory.createList(['']),
       create: algorithm.getCreateFunc(1),
     })
@@ -372,6 +374,7 @@ function _create(ticketId) {
         items: _.range(1, 27),
         operate: 'none',
       }),
+      analysis: false,
       create: algorithm.getCreateFunc(1, {
         range: _.range(1, 27),
       }),
@@ -410,6 +413,7 @@ function _create(ticketId) {
         minRepeat: 1,
         innerSort: true,
       }),
+      analysis: false,
       create: algorithm.getCreateFunc(3, {
         outerSort: true,
         slice: [2],
@@ -571,6 +575,7 @@ function _create(ticketId) {
       algorithmProps: {
         selectCount: 2,
       },
+      analysis: false,
       list: factory.createList([''], {
         items: _.range(19),
         operate: 'none',
@@ -587,6 +592,7 @@ function _create(ticketId) {
       algorithmProps: {
         config: [10, 18, 16, 14, 12, 10, 8, 6, 4, 2],
       },
+      analysis: false,
       list: factory.createList(['']),
       create: algorithm.getCreateFunc(1),
     })
@@ -631,6 +637,7 @@ function _create(ticketId) {
         items: _.range(1, 18),
         operate: 'none',
       }),
+      analysis: false,
       create: algorithm.getCreateFunc(1, {
         range: _.range(1, 18),
       }),
@@ -742,6 +749,7 @@ function _create(ticketId) {
       items: _.range(19),
       operate: 'none',
     }),
+    analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: _.range(19),
     }),
@@ -786,6 +794,7 @@ function _create(ticketId) {
       items: _.range(1, 18),
       operate: 'none',
     }),
+    analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: _.range(1, 18),
     }),
@@ -830,6 +839,7 @@ function _create(ticketId) {
       items: _.range(28),
       operate: 'none',
     }),
+    analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: _.range(28),
     }),
@@ -873,6 +883,7 @@ function _create(ticketId) {
       items: _.range(1, 27),
       operate: 'none',
     }),
+    analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: _.range(1, 27),
     }),
@@ -887,6 +898,7 @@ function _create(ticketId) {
       minRepeat: 1,
       innerSort: true,
     }),
+    analysis: false,
     optionals: algorithm.getOptionals(3),
     create: algorithm.getCreateFunc(3, {
       outerSort: true,
@@ -989,6 +1001,7 @@ function _create(ticketId) {
     }),
     format: { symbol: ' ' },
     formatToNum: true,
+    analysis: false,
     create: algorithm.getCreateFunc(2, {
       range: danshuang,
       matching: true,
@@ -1004,6 +1017,7 @@ function _create(ticketId) {
     }),
     format: { symbol: ' ' },
     formatToNum: true,
+    analysis: false,
     create: algorithm.getCreateFunc(3, {
       range: danshuang,
       matching: true,
@@ -1019,6 +1033,7 @@ function _create(ticketId) {
     }),
     format: { symbol: ' ' },
     formatToNum: true,
+    analysis: false,
     create: algorithm.getCreateFunc(2, {
       range: danshuang,
       matching: true,
@@ -1033,6 +1048,7 @@ function _create(ticketId) {
     }),
     format: { symbol: ' ' },
     formatToNum: true,
+    analysis: false,
     create: algorithm.getCreateFunc(3, {
       range: danshuang,
       matching: true,
@@ -1107,6 +1123,7 @@ function _create(ticketId) {
     },
     format: { symbol: ' ' },
     formatToNum: true,
+    analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,
@@ -1127,6 +1144,7 @@ function _create(ticketId) {
     },
     format: { symbol: ' ' },
     formatToNum: true,
+    analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,
@@ -1147,6 +1165,7 @@ function _create(ticketId) {
     },
     format: { symbol: ' ' },
     formatToNum: true,
+    analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,
@@ -1167,6 +1186,7 @@ function _create(ticketId) {
     },
     format: { symbol: ' ' },
     formatToNum: true,
+    analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,
@@ -1185,6 +1205,7 @@ function _create(ticketId) {
       numType: 'longhu',
       position: 'center',
     },
+    analysis: false,
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1205,6 +1226,7 @@ function _create(ticketId) {
       numType: 'longhu',
       position: 'center',
     },
+    analysis: false,
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1225,6 +1247,7 @@ function _create(ticketId) {
       numType: 'longhu',
       position: 'center',
     },
+    analysis: false,
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1245,6 +1268,7 @@ function _create(ticketId) {
       numType: 'longhu',
       position: 'center',
     },
+    analysis: false,
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1265,6 +1289,7 @@ function _create(ticketId) {
       numType: 'longhu',
       position: 'center',
     },
+    analysis: false,
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
@@ -1285,6 +1310,7 @@ function _create(ticketId) {
       numType: 'longhu',
       position: 'center',
     },
+    analysis: false,
     format: { symbol: ' ' },
     formatToNum: true,
     create: algorithm.getCreateFunc(1, {
