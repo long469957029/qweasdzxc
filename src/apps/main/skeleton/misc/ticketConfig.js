@@ -146,13 +146,13 @@ const quickConfig = {
   ticketName: '快三',
   titleIcon: 'hap_nav_icon',
   list: [
-    {
+    Object.assign({
       id: 29,
       mark: 'jsk3',
       zhName: '江苏快三',
       hasMargin: true,
       badge: 'new',
-    }
+    }, bettingTypes.QUICK3),
   ],
 }
 

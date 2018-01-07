@@ -23,7 +23,7 @@
       },
       range: {
         type: Array,
-        default: _.range(10),
+        default: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
         required: true
       },
       defaultOpening: {
@@ -60,19 +60,20 @@
       rolling() {
         for(let i = 0; i < this.counts; ++i) {
           if (this.init) {
-              this.$refs.balls[i].style.top = `${-this.totalHeight + -this.perHeight * this.openingBalls[i]}px`
+            this.$refs.balls[i].style.top = `${this.$_getDes(i)}px`
           } else {
             _.delay(() => {
               this.rollingStatus[i] = true
-              this._rolling(this.$refs.balls[i], true)
+              this._rolling(this.$refs.balls[i], i, true)
             }, 500 * i)
 
             _.delay(() => {
               Velocity(this.$refs.balls[i], 'stop')
-              this.$refs.balls[i].style.top = '0px'
+              // this.$refs.balls[i].style.top = '0px'
 
               Velocity(this.$refs.balls[i], {
-                top: -this.totalHeight + -this.perHeight * this.openingBalls[i],
+                top: [0, this.$_getDes(this.$refs.balls[i])],
+              }, {
                 duration: 2000,
                 easing: 'ease-out',
                 complete: () => {
@@ -86,18 +87,22 @@
         this.init = false
       },
 
-        _rolling(ball, init) {
-          Velocity(ball, {
-            top: [0, -this.totalHeight]
-          }, {
-            duration: init ? 2000 : 'normal',
-            easing: init ? 'ease-in' : 'linear',
-            complete: () => {
-              if (this.rollingStatus) {
-                this._rolling(ball)
-              }
+      $_getDes(i) {
+        return -this.totalHeight + -this.perHeight * _.indexOf(this.range, this.openingBalls[i])
+      },
+
+      _rolling(ball, i, init = false) {
+        Velocity(ball, {
+          top: [0, -this.totalHeight]
+        }, {
+          duration: init ? 2000 : 'normal',
+          easing: init ? 'ease-in' : 'linear',
+          complete: () => {
+            if (this.rollingStatus[i]) {
+              this._rolling(ball, i)
             }
-          })
+          }
+        })
       }
     },
 

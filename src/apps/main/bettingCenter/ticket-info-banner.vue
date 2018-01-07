@@ -28,9 +28,12 @@
           <div>开奖号码</div>
         </div>
 
-        <opening-balls :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :openingBalls="bettingInfo.lastOpenNum" :default-opening="bettingInfo.defaultOpening"
+        <opening-balls :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :openingBalls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.info.defaultOpening"
                        v-if="ticketInfo.info.openingType === 'balls' && bettingInfo.sale && !bettingInfo.pending" @mouseover="calculateStatus = true" @mouseout="calculateStatus = false"
         ></opening-balls>
+        <opening-dices :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :openingBalls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.info.defaultOpening"
+                       v-else-if="ticketInfo.info.openingType === 'dices' && bettingInfo.sale && !bettingInfo.pending"
+        ></opening-dices>
         <div class="bc-last-plan-results pull-left" v-if="!bettingInfo.sale">
           <span class="text-circle">暂</span>
           <span class="text-circle">停</span>
@@ -74,7 +77,8 @@
 </template>
 
 <script>
-  import openingBalls from 'com/opening-balls/index.vue'
+  import openingBalls from 'com/opening-balls'
+  import openingDices from 'com/opening-dices'
   import AnimateCountdown from 'com/countdown/animate-countdown'
 
   import over from './misc/over.wav'
@@ -90,6 +94,7 @@
 
     components: {
       openingBalls,
+      openingDices,
     },
 
     props: {
