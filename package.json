@@ -2,13 +2,11 @@
   "name": "global-pc",
   "version": "0.1.0",
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.35",
     "@tweenjs/tween.js": "^17.1.1",
     "animate.css": "^3.5.2",
     "backbone": "~1.2.3",
     "bxslider": "^4.2.13",
     "csshake": "^1.5.2",
-    "es5-shim": "~4.1.13",
     "fontmin": "^0.9.6",
     "gsap": "^1.20.2",
     "gulp": "^3.9.0",
@@ -40,7 +38,8 @@
     "gitDir": "../"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.0.0-beta.35",
+    "@babel/core": "^7.0.0-beta.36",
+    "@babel/preset-env": "^7.0.0-beta.36",
     "@babel/preset-es2015": "^7.0.0-beta.36",
     "assets-webpack-plugin": "^3.5.1",
     "axios": "^0.17.1",
