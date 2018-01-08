@@ -100,7 +100,7 @@
 .modal-dialog {
   width: 380px;
   margin: 30px auto;
-  border: 1px solid $def-gray-color;
+  //border: 1px solid $def-gray-color;
   border-radius: $globalBtnRadius;
   overflow: hidden;
   position: relative;
@@ -111,16 +111,6 @@
 .modal-bet {
   border: 0;
   width: 525px!important;
-  .modal-body {
-    width: 100%;
-    border-radius: 9px;
-    padding: 0;
-    background: transparent;
-  }
-}
-.modal-chase {
-  border: 0;
-  width: 850px!important;
   .modal-body {
     width: 100%;
     border-radius: 9px;

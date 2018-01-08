@@ -1,32 +1,20 @@
-require('../../../../base/scripts/jquery.qrcode.min')
-
 const OpenAccountManageView = Base.ItemView.extend({
 
   template: require('agencyCenter/templates/openAccountManage-auto.html'),
+  confirmTpl: _(require('agencyCenter/templates/openAccountManage-confirm.html')).template(),
   startOnLoading: true,
-  linkBarTpl: _(require('agencyCenter/templates/openAccountManage-auto-linkBar.html')).template(),
 
   events: {
     'click .js-ac-add-link': 'addLinkHandler',
-    'click .js-ac-auto-btn-edit': 'editAutoHandler',
     'blur .js-ac-auto-rebate': 'inputRebateHandler',
-    'click .js-ac-auto-remark-saveBtn': 'saveAutoHandler',
-    'click .js-ac-op-auto-register': 'registerpopHander',
+    'blur .js-ac-auto-remarkInput': 'remarkHandler',
+    'blur .js-ac-auto-red-money': 'redMoneyHandler',
+    'blur .js-ac-auto-red-money-all': 'redMoneyHandler',
+    'blur .js-ac-auto-red-num': 'redNumHandler',
     'click .js-look-bonus': 'lookBonusViewHandler',
-    'click .js-ac-btn-qr-code': 'showQrcodeHander',
-    'click .js-qr-code-div-all-closeBtn': 'hideQrcode',
-    'click .js-ac-auto-remark-updateBtn': 'remarkChangeInputHander',
-    'click .js-ac-link-del': 'delSubAcctHander',
-
-    // 'mouseover .js-qr-code' : 'hoverQrcode',
-    // 'mouseout .js-qr-code' : 'hoverhideQrcode'
-  },
-
-  createSubAcctXhr(data) {
-    return Global.sync.ajax({
-      url: '/acct/subaccount/createsubacctlink.json',
-      data,
-    })
+    'click .js-ac-auto-checkbox': 'checkboxHandler',
+    'click .js-ac-redType>button': 'redTypeHandler',
+    'keyup .js-ac-auto-red-money,.js-ac-auto-red-money-all,.js-ac-auto-rebate,.js-ac-auto-red-num': 'keyUpHandler',
   },
 
   getSubAcctLinkXhr() {
@@ -35,140 +23,51 @@ const OpenAccountManageView = Base.ItemView.extend({
     })
   },
 
-  delSubAcctLinkXhr(data) {
-    return Global.sync.ajax({
-      url: '/acct/subaccount/delsubacctlink.json',
-      data,
-    })
-  },
-
   onRender() {
     const self = this
-
-    this.$limit = this.$('.js-ac-quota-container')
-    this.$autoContainer = this.$('.js-ac-auto-container')
     this.$acOpenAccountAutoForm = this.$('.js-ac-openAccountAuto-form')
     this.$acUserType = this.$('.js-ac-userType')
     this.$acAutoReBate = this.$('.js-ac-auto-rebate')
+    this.$acManualRebateInfo = this.$('.js-ac-manual-rebate-info')
     this.$acBonusRangePrompt = this.$('.js-ac-bonus-range-Prompt')
     this.$acAutoRemarkInput = this.$('.js-ac-auto-remarkInput')
-
-    this.subAcctLinkXhr = this.getSubAcctLinkXhr()
-
-    this.subAcctLinkXhr.always(() => {
-      self.loadingFinish()
-    })
+    this.$acRemarkTip = this.$('.js-ac-remark-tip')
+    this.$acRedTypeTab = this.$('.js-ac-red-type')
+    this.$acAutoRedInfo = this.$('.js-ac-auto-red-info')
+    this.$acRedFixed = this.$('.js-ac-red-fixed')
+    this.$acRedRandom = this.$('.js-ac-red-random')
+    this.$acAutoCheckbox = this.$('.js-ac-auto-checkbox')
+    this.$acRedType = this.$('.js-ac-redType')
+    this.$acRedMoney = this.$('.js-ac-auto-red-money')
+    this.$acRedPackTip = this.$('.js-ac-red-pack-tip')
+    this.$acRedMoneyAll = this.$('.js-ac-auto-red-money-all')
+    this.$acRedAllTip = this.$('.js-ac-red-pack-all-tip')
+    this.$acRedNum = this.$('.js-ac-auto-red-num')
+    this.$acRedNumTip = this.$('.js-ac-red-pack-num-tip')
+    this.$acAddLink = this.$('.js-ac-add-link')
+    this.getSubAcctLinkXhr()
+      .always(() => {
+        self.loadingFinish()
+      })
       .done((res) => {
-        const data = res.root
         if (res && res.result === 0) {
+          const data = res.root
           self.$acAutoReBate.val(_(0).formatDiv(10, { fixed: 1 }))
-          self.$acAutoReBate.attr('data-parsley-range', `[${_(0).formatDiv(10, { fixed: 1 })},${_(data.maxRebateBeUse).formatDiv(10, { fixed: 1 })}]`)
-          const subRebateRangePrompt = `${'0' + '～'}${_(data.maxRebateBeUse > 130 ? 130 : data.maxRebateBeUse).formatDiv(10, { fixed: 1 })}`
+          self.rebateMin = _(0).formatDiv(10, { fixed: 1 })
+          self.rebateMax = _(data.maxRebateBeUse).formatDiv(10, { fixed: 1 })
+          const subRebateRangePrompt = `${'0.0～'}${_(data.maxRebateBeUse > 130 ? 130 : data.maxRebateBeUse).formatDiv(10, { fixed: 1 })}`
           self.$acBonusRangePrompt.html(subRebateRangePrompt)
-
-          self.$autoContainer.staticGrid({
-            startOnLoading: false,
-            height: 210,
-            tableClass: 'table table-bordered table-center',
-            colModel: [
-              {
-                label: '序号',
-                name: '',
-                width: '5%',
-                formatter(val, index, info) {
-                  return `<span>${index + 1}</span>`
-                }, 
-              },
-              {
-                label: '注册链接',
-                name: 'userLinkUrl',
-                width: '30%',
-                formatter(val, index, info) {
-                  let html = `<span class="js-ac-span-link ac-span-link m-right-xs" title="${_(`/register.html?linkId=${val}`).toLink()}">${_(`/register.html?linkId=${val}`).toLink()}</span>`
-                  html += '<button type="button" class="js-ac-btn-link-copy btn btn-cool m-right-xs ac-btn-link-copy">复制</button>'
-                  html += `<button userLinkUrl="${val}" type="button" class="js-ac-btn-qr-code btn btn-cool ac-btn-qr-code">二维码</button>`
-                  return html
-                }, 
-              },
-              {
-                label: '开户类型',
-                name: 'userType',
-                width: '7%',
-                formatter(val, index, info) {
-                  return val == 1 ? '玩家' : '代理'
-                }, 
-              },
-              {
-                label: '返点',
-                name: 'subAcctRebate',
-                width: '7%',
-                formatter(val, index, info) {
-                  return `<span class="js-ac-auto-subAcctRebate" data-subacctrebate="${val}">${_(val).formatDiv(10, { fixed: 1 })}</span>`
-                }, 
-              },
-              {
-                label: '访问数',
-                name: 'viewNum',
-                width: '7%',
-                formatter(val, index, info) {
-                  return val
-                },
-              },
-              {
-                label: '注册数',
-                name: 'regUserNum',
-                width: '7%',
-                formatter(val, index, info) {
-                  return val
-                }, 
-              },
-              {
-                label: '备注',
-                name: 'userLinkDes',
-                width: '15%',
-                formatter(val, index, info) {
-                // if(val){
-                  return `<span class="js-ac-span-remark ac-span-remark" title="${val}">${val}</span><span class="js-ac-auto-remark-updateBtn ac-auto-remark-updateBtn"></span>`
-                // }else {
-                //   return '<input type="text" class="js-ac-auto-remark ac-auto-remark" data-parsley-maxlength="20" /><span class="js-ac-auto-remark-saveBtn ac-auto-remark-saveBtn"></span>';
-                // }
-                }, 
-              },
-              {
-                label: '操作',
-                name: '',
-                width: '5%',
-                formatter(val, index, info) {
-                  return `<span data-userlinkid="${info.userLinkId}" class="js-ac-link-del ac-link-del"></span>`
-                }, 
-              },
-            ],
-            row: data.linkList,
-          })
-
-          self._parentView.renderLimit(self.$limit, res.root.quotaList)
-
-          self.$autoContainer.find('tbody tr').each((index, item) => {
-            self.copyLinkHandler($(item))
-          })
-
-          self.$autoContainer.append('<div class="js-qr-code-div-all qr-code-div-all"><div class="js-qr-code-div-all-closeBtn qr-code-div-all-closeBtn"></div></div>')
+          self._parentView.renderLimit(res.root.quotaList)
         }
       })
   },
-
   // event handlers
   // 新增链接
-  addLinkHandler(e) {
+  addLinkHandler() {
     const rebateValidate = this.$acOpenAccountAutoForm.parsley().validate()
     if (!rebateValidate) {
       return
     }
-
-    const self = this
-    const $target = $(e.currentTarget)
-
-    $target.button('loading')
 
     const userType = this.$acUserType.find('button.active').data('type')
     const data = {
@@ -177,100 +76,158 @@ const OpenAccountManageView = Base.ItemView.extend({
       remark: this.$acAutoRemarkInput.val(),
     }
 
-    $.when(this._parentView.subSubAcctXhr, this.createSubAcctXhr(data))
-      .always(() => {
-        $target.button('reset')
-      })
-      .done((infoResList, createResList) => {
-        const infoRes = infoResList[0]
-        const createRes = createResList[0]
-        if (infoRes.result === 0 && createRes.result === 0) {
-          const rebateVal = _(createRes.root.rebate).formatDiv(10, { fixed: 1 })
-          const row = {
-            columnEls: [
-              self.$autoContainer.find('tbody tr').length + 1,
-              `<span class="js-ac-span-link ac-span-link m-right-xs" title="${_(`/register.html?linkId=${createRes.root.linkId}`).toLink()}">${_(`/register.html?linkId=${createRes.root.linkId}`).toLink()}</span>` +
-              '<button type="button" class="js-ac-btn-link-copy btn btn-cool m-right-xs ac-btn-link-copy">复制</button>' +
-              `<button userLinkUrl="${createRes.root.linkId}" type="button" class="js-ac-btn-qr-code btn btn-cool ac-btn-qr-code">二维码</button>`,
-              userType == 1 ? '玩家' : '代理',
-              `<span class="js-ac-auto-subAcctRebate" data-subacctrebate="${createRes.root.rebate}">${rebateVal}</span>`,
-              '0',
-              '0',
-              // _.isEmpty(createRes.root.remark) ?
-              //   '<input type="text" class="js-ac-auto-remark ac-auto-remark" data-parsley-maxlength="20" /><span class="js-ac-auto-remark-saveBtn ac-auto-remark-saveBtn"></span>' :
-              `<span class="js-ac-span-remark ac-span-remark" title="${createRes.root.remark}">${createRes.root.remark}</span><span class="js-ac-auto-remark-updateBtn ac-auto-remark-updateBtn"></span>`,
-              `<span data-userlinkid="${createRes.root.userLinkId}" class="js-ac-link-del ac-link-del"></span>`,
-            ],
-          }
-
-          self.$autoContainer.staticGrid('addRows', row)
-          const $tbodyLastTr = self.$autoContainer.find('tbody tr:last')
-          self.copyLinkHandler($tbodyLastTr)
-        }
-      })
-  },
-
-  editAutoHandler(e) {
-    const $target = $(e.currentTarget)
-    const $editContainer = $target.closest('.js-ac-link-bar').find('.js-ac-link-edit-container')
-    $editContainer.toggleClass('hidden')
-  },
-
-  saveAutoHandler(e) {
-    const $target = $(e.currentTarget)
-    const $tr = $target.closest('tr')
-    const $remark = $tr.find('.js-ac-auto-remark')
-    const $subAcctRebate = $tr.find('.js-ac-auto-subAcctRebate')
-
-    $remark.parsley().validate()
-    if (!$remark.parsley().isValid()) {
-      return false
-    }
-    const userlinkurl = $tr.find('.js-ac-btn-qr-code').attr('userlinkurl')
-    Global.sync.ajax({
-      url: '/acct/subaccount/savesubacctlink.json',
-      data: {
-        'link[0].linkId': userlinkurl,
-        'link[0].linkUrl': userlinkurl,
-        'link[0].linkDes': $remark.val(),
-        'link[0].subAcctRebate': $subAcctRebate.data('subacctrebate'),
-      },
-    }).always(() => {
-      $target.button('reset')
-    })
-      .done((res) => {
-        if (res && res.result === 0) {
-          const $td = $target.closest('td')
-          $td.html(`<span class="js-ac-span-remark ac-span-remark">${$remark.val()}</span><span class="js-ac-auto-remark-updateBtn ac-auto-remark-updateBtn"></span>`)
-        } else {
-          Global.ui.notification.show(res.msg)
-        }
-      })
-  },
-
-  remarkChangeInputHander (e) {
-    const $target = $(e.currentTarget)
-    const $td = $target.closest('td')
-    const $remark = $td.find('.js-ac-span-remark')
-    $td.html(`<input type="text" value="${$remark.html()}" class="js-ac-auto-remark ac-auto-remark" data-parsley-maxlength="20" />` +
-      '<span class="js-ac-auto-remark-saveBtn ac-auto-remark-saveBtn"></span>')
-  },
-
-  inputRebateHandler(e) {
-    const self = this
-    const $target = $(e.currentTarget)
-    const range = $target.data('parsleyRange')
-    const rebate = Number($target.val())
-
-    if (rebate !== '' && _(rebate).isFinite() && range.length == 2) {
-      if (rebate < range[0]) {
-        $target.val(range[0])
-      } else if (rebate > range[1]) {
-        $target.val(range[1])
+    if (this.$acAutoCheckbox.is(':checked')) {
+      const redpackType = this.$acRedType.find('button.active').data('type')
+      const $input = redpackType === 2 ? this.$acRedMoney : this.$acRedMoneyAll
+      if (this.redMoneyHandler() && this.redNumHandler()) {
+        const redpackAmount = $input.val()
+        _(data).extend({
+          redpackOpenType: 1,
+          redpackAmount,
+          redpackType,
+          redpackNum: this.$acRedNum.val(),
+        })
+        this.saveConfirmDialog(data)
       }
     } else {
-      $target.val(range[0])
+      this.saveHandler(1, data)
     }
+  },
+
+  saveHandler(urlType, data) {
+    const self = this
+    let url = ''
+    if (urlType === 1) {
+      url = '/acct/subaccount/createsubacctlink.json'
+    } else {
+      url = '/acct/subaccount/createSubRedpackAcctlink.json'
+    }
+    this.$acAddLink.button('loading')
+    Global.sync.ajax({
+      url,
+      data,
+    }).always(() => {
+      self.$acAddLink.button('reset')
+    })
+      .done((res) => {
+        if (res.result === 0) {
+          Global.ui.notification.show('开户链接已生成！', { type: 'success' })
+          self.render()
+        } else {
+          Global.ui.notification.show(res.msg === 'fail' ? '链接生成失败' : res.msg)
+        }
+      })
+      .fail((res) => {
+        Global.ui.notification.show(res.msg === 'fail' ? '链接生成失败' : res.msg)
+      })
+  },
+
+  saveConfirmDialog(data) {
+    const self = this
+    const $dialog = Global.ui.dialog.show({
+      closeBtn: false,
+      body: '<div class="js-confirm-dialog"></div>',
+      anySize: '480',
+      bodyClass: 'no-padding',
+    })
+    const $confirmDialog = $dialog.find('.js-confirm-dialog')
+    $confirmDialog.html(this.confirmTpl({
+      data,
+      type: 2, // 1代表手动开户  2代表链接开户  3代表手动开户成功
+      title: '红包开户确认',
+    }))
+    $dialog.off('click.save').on('click.save', '.js-confrim-btn', () => {
+      $dialog.modal('hide')
+      self.saveHandler(2, data)
+    })
+    $dialog.on('hidden.modal', function () {
+      $(this).remove()
+    })
+  },
+  inputRebateHandler(e) {
+    const $target = $(e.currentTarget)
+    const rebate = $target.val()
+    if (rebate !== '' && _(rebate).isFinite()) {
+      const myReg = /^(0|[1-9][0-9]*)(.\d{1})?$/
+      const reg = myReg.test(rebate)
+      if (!reg) {
+        this.changeEleClass(this.$acAutoReBate, 'error')
+        this.$acManualRebateInfo.html(this.getErrorTooltip('值最多能精确到小数点后一位'))
+      } else if (rebate < this.rebateMin) {
+        $target.val(this.rebateMin)
+        this.changeEleClass(this.$acAutoReBate, 'error')
+        this.$acManualRebateInfo.html(this.getErrorTooltip(`返点可配置范围${this.rebateMin}~${this.rebateMax}`))
+      } else if (rebate > this.rebateMax) {
+        $target.val(this.rebateMax)
+        this.changeEleClass(this.$acAutoReBate, 'error')
+        this.$acManualRebateInfo.html(this.getErrorTooltip(`返点可配置范围${this.rebateMin}~${this.rebateMax}`))
+      } else {
+        this.changeEleClass(this.$acAutoReBate, 'success')
+        this.$acManualRebateInfo.html('<span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>' +
+          `返点可配置范围${this.rebateMin}~${this.rebateMax}`)
+      }
+    } else {
+      $target.val(this.rebateMin)
+    }
+  },
+  remarkHandler(e) {
+    const $target = $(e.currentTarget)
+    const remark = $target.val()
+    if (remark.replace(/[\u4e00-\u9fa5]/g, '**').length > 40) {
+      this.changeEleClass(this.$acAutoRemarkInput, 'error')
+      this.$acRemarkTip.html(this.getErrorTooltip('备注不可超过20个字符'))
+    } else {
+      this.changeEleClass(this.$acAutoRemarkInput, 'success')
+      this.$acRemarkTip.html('<span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>' +
+        '备注不可超过20个字符')
+    }
+  },
+  redMoneyHandler() {
+    const type = this.$acRedType.find('button.active').data('type')
+    const $input = type === 2 ? this.$acRedMoney : this.$acRedMoneyAll
+    const $tip = type === 2 ? this.$acRedPackTip : this.$acRedAllTip
+    const text = type === 2 ? '金额' : '总额'
+    const redText = type === 2 ? '单个红包金额' : '红包总金额'
+    const money = $input.val()
+    let isValidate = false
+    const myReg = /^(0|[1-9][0-9]*)(.\d{1,2})?$/
+    const reg = myReg.test(money)
+    if (money === '') {
+      this.changeEleClass($input, 'error')
+      $tip.html(this.getErrorTooltip(`请输入${redText}`))
+    } else if (!reg) {
+      this.changeEleClass($input, 'error')
+      $tip.html(this.getErrorTooltip('值最多能精确到小数点后两位'))
+    } else if (Number(money) < 1) {
+      this.changeEleClass($input, 'error')
+      $tip.html(this.getErrorTooltip(`红包${text}不得低于1元`))
+    } else {
+      this.changeEleClass($input, 'success')
+      $tip.html(`<span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>红包${text}不得低于1元`)
+      isValidate = true
+    }
+    return isValidate
+  },
+  redNumHandler() {
+    const val = this.$acRedNum.val()
+    let isValidate = false
+    if (val === '') {
+      this.changeEleClass(this.$acRedNum, 'error')
+      this.$acRedNumTip.html(this.getErrorTooltip('请设置红包个数'))
+    } else {
+      this.changeEleClass(this.$acRedNum, 'success')
+      this.$acRedNumTip.empty()
+      isValidate = true
+    }
+    return isValidate
+  },
+  getErrorTooltip (errorText) {
+    const errorHtml =
+      `${'<div class="tooltip parsley-errors-list tooltip-error filled">' +
+      '<span class="sfa sfa-error-icon vertical-sub pull-left"></span>' +
+      '<div class="tooltip-inner">'}${errorText}</div>` +
+      '</div>'
+    return errorHtml
   },
 
   lookBonusViewHandler (e) {
@@ -283,58 +240,48 @@ const OpenAccountManageView = Base.ItemView.extend({
       Global.ui.notification.show('请输入有效的返点值。')
     }
   },
-
-  toLink (arg) {
-    const href = window.location.href
-    const index = href.indexOf('/index.html')
-    if (index > -1) {
-      return href.substring(0, index) + arg
-    } 
-    return href.substring(0, href.indexOf('/#')) + arg
-  },
-
-  showQrcodeHander (e) {
-    const $target = $(e.currentTarget)
-    if (!$target.hasClass('selected')) {
-      this.$('.js-ac-btn-qr-code').removeClass('selected')
-      $target.addClass('selected')
-      const linkId = $target.attr('userlinkurl')
-      const $qrCodeDivAll = this.$('.js-qr-code-div-all')
-      $qrCodeDivAll.find('canvas').remove()
-      $qrCodeDivAll.qrcode({ size: 150, text: this.toLink(`/register.html?linkId=${linkId}`) || "size doesn't matter" })
-      $qrCodeDivAll.show()
+  changeEleClass ($ele, status) {
+    if (status === 'success') {
+      $ele.addClass('parsley-success').removeClass('parsley-error')
+    } else if (status === 'error') {
+      $ele.addClass('parsley-error').removeClass('parsley-success')
     }
   },
-
-  hideQrcode (e) {
-    this.$('.js-ac-btn-qr-code').removeClass('selected')
-    this.$('.js-qr-code-div-all').hide()
-  },
-
-  copyLinkHandler ($parent) {
-    $parent.find('.js-ac-btn-link-copy').textCopy({
-      textEl: $parent.find('.js-ac-span-link'),
-      toolTipDirection: 'left',
-    })
-  },
-
-  delSubAcctHander (e) {
-    const self = this
+  checkboxHandler(e) {
     const $target = $(e.currentTarget)
-    const $tr = $target.closest('tr')
-    const userlinkid = $target.data('userlinkid')
-
-    this.delSubAcctLinkXhr({ linkId: userlinkid }).done((res) => {
-      if (res && res.result === 0) {
-        self.$autoContainer.staticGrid('delRow', $tr.index())
-
-        if (self.$autoContainer.find('.js-gl-static-tr').length == 0) {
-          self.$autoContainer.staticGrid('renderEmpty')
-        }
-      } else {
-        Global.ui.notification.show(res.msg)
-      }
-    })
+    if ($target.is(':checked')) {
+      this.$acRedTypeTab.removeClass('hidden')
+      this.$acAutoRedInfo.removeClass('hidden')
+    } else {
+      this.$acRedTypeTab.addClass('hidden')
+      this.$acAutoRedInfo.addClass('hidden')
+    }
+  },
+  redTypeHandler(e) {
+    const $target = $(e.currentTarget)
+    const type = Number($target.data('type'))
+    if (type === 2) {
+      this.$acRedFixed.removeClass('hidden')
+      this.$acRedRandom.addClass('hidden')
+    } else {
+      this.$acRedFixed.addClass('hidden')
+      this.$acRedRandom.removeClass('hidden')
+    }
+  },
+  keyUpHandler(e) {
+    const $target = $(e.currentTarget)
+    const val = $target.val()
+    const num = $target.data('num')
+    let myReg
+    if (Number(num) === 1) {
+      myReg = /^\+?[1-9][0-9]*$/
+    } else {
+      myReg = /^\d+(\.\d*)?$/
+    }
+    const reg = myReg.test(val)
+    if (!reg) {
+      $target.val('')
+    }
   },
 })
 

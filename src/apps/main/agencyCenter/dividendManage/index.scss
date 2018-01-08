@@ -5,7 +5,7 @@
 
 
 .ac-dm{
-  margin: 10px 5px;
+  //margin: 10px 5px;
   //我的分红配置 样式
   .ac-dm-my-config{
     position: absolute;
@@ -18,17 +18,27 @@
   }
   //公共导航按钮样式，彩票分红，其他游戏分红
   .ac-dm-nav-btn{
-    width: 96px;
-    height: 28px;
-    border-radius: 13px;
+    width: 90px;
+    height: 40px;
     text-align: center;
-    line-height: 28px;
-    font-size: 13px;
-    background: #9b9b9b;
-    color: #fff;
+    line-height: 40px;
+    font-size: 14px;
+    color: $new-inverse-color;
     outline: none;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
     &.active{
-      background: #16a4aa;
+      color: $new-main-deep-color;
+      &:after{
+        content: '';
+        width: 80px;
+        height: 3px;
+        background-color: $new-main-deep-color;
+        position: absolute;
+        bottom: -2px;
+        left: 5px;
+      }
     }
   }
 
@@ -157,5 +167,13 @@
     word-wrap: break-word;
     line-height: 30px;
   }
-
+  .search-btn{
+    width: 59px;
+    height: 25px;
+    background-color: $new-main-deep-color;
+    border-radius: 3px;
+  }
+  .select-status{
+    width: 80px;
+  }
 }

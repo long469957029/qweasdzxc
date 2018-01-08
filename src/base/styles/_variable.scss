@@ -360,7 +360,7 @@ $popovers: (
     title-color: $font-default,
     title-bg-color: $main-deep-color,
     content-color: $inverse-color,
-    content-bg-color: $font-default
+    content-bg-color: #ffffff
   )
 );
 
@@ -519,6 +519,35 @@ $btns: (
       //color: #ffffff,
       linear-color: linear-gradient(to bottom, #00d8ff, #00bbff),
       bg-color: $main-deep-color
+    )
+  ),
+  white: (
+    color: #666666,
+    border-color: #cccccc,
+    bg-color: #ffffff,
+    linear-color: linear-gradient(180deg,
+      #ffffff 0%,
+      #f0f0f0 100%),
+    hover: (
+      color: #666666,
+      bg-color: #ffffff,
+      linear-color: linear-gradient(180deg,
+      #ffffff 0%,
+      #f0f0f0 100%)
+    ),
+    focus: (
+      color: #666666,
+      bg-color: #ffffff,
+      linear-color: linear-gradient(180deg,
+      #ffffff 0%,
+      #f0f0f0 100%)
+    ),
+    active: (
+      color: #666666,
+      bg-color: #ffffff,
+      linear-color: linear-gradient(180deg,
+      #ffffff 0%,
+      #f0f0f0 100%)
     )
   ),
 );

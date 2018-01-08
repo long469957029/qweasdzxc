@@ -43,7 +43,7 @@ const NewsMediatorModule = Base.Module.extend({
         const letterRes = letterResData[0]
         const noticeRes = noticeResData[0]
 
-        if(letterRes.root &&  noticeRes.root){
+        if (letterRes.root && noticeRes.root) {
           self.model.set({
             // letterList: letterRes.root.letterList,
             unReadLetter: letterRes.root.unReadLetter,

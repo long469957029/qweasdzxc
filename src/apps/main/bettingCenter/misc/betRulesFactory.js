@@ -1,7 +1,5 @@
 import betFormat from './betFormat'
 
-const zero2nine = _.range(10)
-
 const op = {
   all: {
     all: true,
@@ -30,13 +28,13 @@ const op = {
 const TopOp = {
   all: {
     currMissing: true,
-    maxMissing: true,
+    coldHot: true,
     auto: true,
     clear: true,
   },
   none: {
     currMissing: false,
-    maxMissing: false,
+    coldHot: false,
     auto: false,
     clear: false,
   },
@@ -56,7 +54,9 @@ function addRule(ids, {
   // 注数的算法
   algorithm = _.noop,
   algorithmProps = {},
+  analysis = true,
   format,
+  validate,
   formatToNum = false,
   create = _.noop,
   style = {
@@ -84,8 +84,10 @@ function addRule(ids, {
       optionals,
       format,
       formatToNum,
+      validate,
       type,
       limits,
+      analysis,
       algorithm,
       algorithmProps,
       style,
@@ -97,11 +99,10 @@ function addRule(ids, {
 
 function createList(titles, options) {
   options = _(options || {}).defaults({
-    items: zero2nine,
+    items: bettingTypes.SSC.range,
     operate: 'all',
     limits: [],
     doublenum: false,
-    htmlNeedInfo: {},
   })
 
   return _(titles).map((title) => {
@@ -114,7 +115,6 @@ function createList(titles, options) {
         op: op[title.operate || options.operate],
         limits: title.limits || options.limits,
         doubleNum: title.doubleNum || options.doubleNum,
-        htmlNeedInfo: options.htmlNeedInfo,
       }
     }
     return {
@@ -125,7 +125,6 @@ function createList(titles, options) {
       op: op[options.operate],
       limits: options.limits,
       doubleNum: options.doubleNum,
-      htmlNeedInfo: options.htmlNeedInfo,
     }
   })
 }
@@ -161,6 +160,7 @@ function addHandicapRule(ids, {
   algorithm = _.noop,
   algorithmProps = {},
   format = betFormat.star,
+  showFormat = betFormat.handicapNormal,
   showOdds = true,
   showMoneyInput = true,
   showItemOdds = true,
@@ -173,6 +173,7 @@ function addHandicapRule(ids, {
       list,
       type,
       format,
+      showFormat,
       showOdds,
       algorithm,
       algorithmProps,

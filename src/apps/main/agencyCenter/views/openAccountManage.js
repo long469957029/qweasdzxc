@@ -2,6 +2,7 @@ const TabView = require('com/tabView')
 
 const OpenAccountManageManualView = require('agencyCenter/views/openAccountManage-manual')
 const OpenAccountManageAutoView = require('agencyCenter/views/openAccountManage-auto')
+const OpenAcconurLinlManageView = require('agencyCenter/views/openLevelManage-link')
 
 const OnlineRechargeView = TabView.extend({
 
@@ -32,6 +33,12 @@ const OnlineRechargeView = TabView.extend({
             id: 'jsAcAutoAccount',
             view: OpenAccountManageAutoView,
           },
+          {
+            label: '链接管理',
+            name: 'link',
+            id: 'jsAcLinkManage',
+            view: OpenAcconurLinlManageView,
+          },
         ],
       })
     } else {
@@ -54,7 +61,6 @@ const OnlineRechargeView = TabView.extend({
     const html = []
     let flag = false
     const $limitList = $('.js-ac-open-limit')
-    console.log($limitList[0])
     if (!_(limitList).isEmpty()) {
       _(limitList).each((limit) => {
         if (limit.quotaLimit > 0) {

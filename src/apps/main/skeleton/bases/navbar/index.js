@@ -2,8 +2,6 @@
 
 require('./index.scss')
 
-const ticketConfig = require('skeleton/misc/ticketConfig')
-
 const NavsView = Base.ItemView.extend({
 
   template: require('./index.html'),
@@ -208,7 +206,6 @@ const NavsView = Base.ItemView.extend({
     this.$navMallSubList = this.$('.js-nav-mall-sub-list')
 
     this.$underLine = this.$('.js-navbar-slide-underline')
-
   },
   // generateGameMenu: function(gameList){
   //   var self = this;

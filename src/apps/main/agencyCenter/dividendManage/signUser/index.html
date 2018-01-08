@@ -1,22 +1,24 @@
 <form class="js-ac-dm-su-form ac-dm-su-form form-horizontal" action="javascript:void(0);">
-  <div class="js-ac-dm-su-notice ac-dm-su-notice ac-dm-su-indent">
-    <div class="alert">
-      <span class="text-bold-dark">温馨提示：</span>
-      您还剩余可签约名额<span class="js-ac-dm-su-left"></span>个，已签约用户<span class="js-ac-dm-su-used"></span>个
-    </div>
-  </div>
-  <div class="dot-divider dot-divider-md"></div>
+  <!--<div class="js-ac-dm-su-notice ac-dm-su-notice ac-dm-su-indent">-->
+  <!--<div class="alert">-->
+  <!--<span class="text-bold-dark">温馨提示：</span>-->
+  <!--您还剩余可签约名额<span class="js-ac-dm-su-left"></span>个，已签约用户<span class="js-ac-dm-su-used"></span>个-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<div class="dot-divider dot-divider-md"></div>-->
   <div class="js-ac-dm-su-username-div ac-dm-su-username-div ac-dm-su-indent">
-    <label class=" ac-dm-su-un-label">待签约下级：</label>
-    <div class="inline-block">
-      <input type="text" class="input-sm" name="username"
-      <%= (obj.userData?'readonly':'') %>
-      value="<%=obj.userData && obj.userData.username %>"
-      data-parsley-username
-      data-parsley-remote
-      data-parsley-remote-validator="accheckusername"
-      data-parsley-remote-options='{"type": "POST"}'
-      required />
+    <label class=" ac-dm-su-un-label font-xs">选择待签约下级：</label>
+    <div class="pull-left">
+      <div>
+        <input type="text" class="ac-dm-su-input" name="username"
+        <%= (obj.userData?'readonly':'') %>
+        value="<%=obj.userData && obj.userData.username %>"
+        data-parsley-username
+        data-parsley-remote
+        data-parsley-remote-validator="accheckusername"
+        data-parsley-remote-options='{"type": "POST"}'
+        required />
+      </div>
     </div>
   </div>
 
@@ -33,7 +35,7 @@
   <div class="ac-dm-su-indent js-ac-dm-su-game-indent hidden">
     <div class="ac-dm-su-grid-head">
       <div class="ac-dm-su-title inline-block">其他游戏分红标准</div>
-      <div class="js-ac-dm-su-game-add ac-dm-su-grid-add inline-block" >
+      <div class="js-ac-dm-su-game-add ac-dm-su-grid-add inline-block">
         <span class="sfa sfa-ac-dm-su-add"></span><span class="inline-block">增加分红标准段</span>
       </div>
     </div>
@@ -41,18 +43,18 @@
   </div>
 
   <div class="ac-dm-su-indent">
-    <div clas="ac-dm-su-grid-head">
+    <div class="ac-dm-su-grid-head">
       <div class="ac-dm-su-title">其他协议内容</div>
     </div>
     <div class="ac-dm-su-other-agree">
-      <textarea maxlength="100" class="js-ac-dm-su-agreement" placeholder="限50字" data-parsley-zhmaxlength="50"><%=obj.userData&&obj.userData.agreement%></textarea>
+      <textarea maxlength="400" class="js-ac-dm-su-agreement" placeholder="限200字" data-parsley-zhmaxlength="200"><%=obj.userData&&obj.userData.agreement%></textarea>
     </div>
   </div>
 
   <div class="control-group ac-dm-su-agreement-detail portlet ac-dm-su-indent">
     <div class="portlet-header">
     <span class="portlet-title">
-      无限娱乐分红协议
+      【无限娱乐分红协议】
     </span>
     </div>
     <div class="portlet-body">
@@ -89,7 +91,7 @@
         </span>
         同意此以上分红协议条款
       </label>
-      <button class="js-ac-dm-su-agree btn btn-primary m-left-sm m-right-sm disable" disabled>同意</button>
+      <button class="js-ac-dm-su-agree btn m-left-sm m-right-sm disable" disabled>同意</button>
       <button class="js-ac-dm-su-cancel btn m-left-sm m-right-sm">取消</button>
     </div>
   </div>

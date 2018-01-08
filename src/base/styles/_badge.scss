@@ -3,10 +3,11 @@
   padding: 4px 5px;
   font-size: 12px;
   line-height: 14px;
-  color: $new-light-color;
+  color: #ffffff;
   white-space: nowrap;
   vertical-align: baseline;
-  background-color: #626666;
+  background-color: $new-main-deep-color;
+  border-radius: 5px;
   &:empty {
     display: none;
   }

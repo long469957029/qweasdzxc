@@ -16,6 +16,8 @@
     "lo": false,
     "R": false,
     "types": false,
+    "bettingTypes": false,
+    "ticketConfig": false,
     "require": false,
     "exports": false,
     "module": false,

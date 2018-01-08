@@ -6,7 +6,6 @@ import FundManageView from 'fundCenter/fundManage'
 import RebateRecordsView from 'fundCenter/rebateRecord'
 import RechargeView from 'fundCenter/recharge'
 import WithdrawView from 'fundCenter/withdraw'
-import TransferView from 'fundCenter/transfer'
 
 const GameRecordView = require('fundCenter/gameRecord/index')
 
@@ -41,16 +40,6 @@ const FundCenterController = RouterController.extend({
     this.changeMainReginView(new WithdrawView(), {
       main: {
         title: '在线提现',
-      },
-      sidebar,
-      // activeMenu: 'fc/fm'
-    })
-  },
-
-  transfer() {
-    this.changeMainReginView(new TransferView(), {
-      main: {
-        title: '平台转账',
       },
       sidebar,
       // activeMenu: 'fc/fm'

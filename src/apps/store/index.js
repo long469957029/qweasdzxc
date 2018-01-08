@@ -6,6 +6,7 @@ import bettingInfo from './modules/bettingInfo'
 import rulesList from './modules/rulesList'
 import bettingChoice from './modules/bettingChoice'
 import bettingChase from './modules/bettingChase'
+import bettingAnalysis from './modules/bettingAnalysis'
 
 Vue.use(Vuex)
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     rulesList,
     bettingChoice,
     bettingChase,
+    bettingAnalysis,
   },
   strict: debug,
 })

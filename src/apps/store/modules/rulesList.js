@@ -29,7 +29,7 @@ const getters = {
       const levelInfo = _(state.playLevels).findWhere({
         playLevelId: levelId,
       })
-      const groups = levelInfo.ticketPlayGroupInfo || []
+      const groups = levelInfo && levelInfo.ticketPlayGroupInfo || []
 
       state.currentLevel = groups
 
@@ -75,7 +75,7 @@ const getters = {
 const actions = {
   getTicketRules ({ commit }, ticketId) {
     commit(types.CHECKOUT_TICKET_RULES)
-    betting.getTicketRules(
+    return betting.getTicketRules(
       ticketId,
       ({ data }) => { return commit(types.GET_TICKET_RULES_SUCCESS, data) },
       () => { return commit(types.GET_TICKET_RULES_FAILURE) },

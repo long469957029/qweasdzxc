@@ -251,6 +251,7 @@ const _bindBetDetailHandler = () => {
       bStyle: 'width: 535px;height:620px;',
       body: '<div class="fc-gr-bet-detail"></div>',
       closeBtn: false,
+      bodyClass: 'no-padding',
     })
     const $selectContainer = $dialog.find('.fc-gr-bet-detail')
     const editBetDetailView = new BetDetailView({ tradeno: tradeNo })
@@ -295,6 +296,7 @@ const _bindChaseDetailHandler = () => {
       bStyle: 'width: 848px;height:570px;',
       body: '<div class="fc-gr-chase-detail"></div>',
       closeBtn: false,
+      bodyClass: 'no-padding',
     })
     const $selectContainer = $dialog.find('.fc-gr-chase-detail')
     const editChaseDetailView = new ChaseDetailView({ chaseFormId: cId, tradeNo: tradeno })

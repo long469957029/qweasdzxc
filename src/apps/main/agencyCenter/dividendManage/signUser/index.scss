@@ -3,29 +3,58 @@
 @import
 "~base/styles/imports";
 .ac-dm-su-form{
-  height: 512px;
-  overflow-y: auto;
+  //height: 512px;
+  //overflow-y: auto;
+  color: $new-inverse-color;
+  padding-top: 31px;
 
   .ac-dm-su-indent{
-    margin: 0 20px;
+    margin: 10px 20px;
+    //table{
+    //  tr{
+    //    border-bottom: 1px solid $def-gray-color;
+    //  }
+    //}
   }
 
   .ac-dm-su-username-div{
     .ac-dm-su-un-label{
-      display: inline-block;
+      float: left;
       height: 23px;
       line-height: 23px;
     }
+    .filled{
+      margin: 0px;
+    }
+  }
+  .ac-dm-su-input{
+    width: 136px;
+    height: 18px;
+    box-shadow: inset 0px 1px 2px rgba(0,0,0,.3);
   }
 
   .ac-dm-su-grid-head{
     height: 43px;
     line-height: 43px;
     vertical-align: middle;
-
+    .ac-dm-su-title{
+      font-size: $font-sm;
+      color: $def-black-color;
+      padding-left: 15px;
+      position: relative;
+      &:before{
+        content: '';
+        width: 4px;
+        height: 17px;
+        background-color: $new-main-deep-color;
+        position: absolute;
+        top: 14px;
+        left: 0px;
+      }
+    }
     .ac-dm-su-grid-add{
       float: right;
-      font-size: 15px;
+      font-size: 14px;
       color: #16a4aa;
       height: 43px;
       line-height: 43px;
@@ -38,7 +67,7 @@
         vertical-align: middle;
         line-height: 43px;
         height: 43px;
-        margin-rigth: 10px;
+        margin-rigth: 15px;
         cursor: pointer;
       }
     }
@@ -49,7 +78,9 @@
 
   .ac-dm-su-grid{
     tr{
-
+      td{
+        border-bottom: 1px solid $def-gray-color;
+      }
       .ac-dm-su-subtraction{
         position: absolute;
         right: 0;
@@ -59,6 +90,7 @@
         height: 27px;
         vertical-align: middle;
         line-height: 27px;
+        cursor: pointer;
       }
       &:last-child{
         .ac-dm-su-subtraction{
@@ -80,22 +112,28 @@
   .ac-dm-su-other-agree{
     margin:  10px 0;
     textarea{
-      width: 832px;
-      height: 35px;
+      width: 928px;
+      height: 55px;
+      border-radius: 5px;
+      border-color: $def-gray-color;
+      resize: none;
+      padding: 15px;
     }
   }
 
 
   //协议内容部分
   .ac-dm-su-agreement-detail {
-    border: 1px solid $table-border-color;
+    border: 1px solid $def-gray-color;
     margin-bottom: 12px;
+    border-radius: 5px;
     .portlet-header {
-      padding: 5px 10px;
+      text-align: center;
       line-height: 20px;
       .portlet-title {
         line-height: 20px;
-        font-size: 13px;
+        font-size: 14px;
+        color: $def-black-color;
       }
 
     }
@@ -110,9 +148,20 @@
       }
     }
   }
-
-  .ac-dm-su-confirm-dev{
-    text-align: center;
+}
+.ac-dm-su-confirm-dev{
+  text-align: center;
+  margin-top: 30px;
+  .btn{
+    width: 90px;
+    height: 30px;
+    background: linear-gradient(to bottom,$def-white-color,#f1f1f1);
+    border-color: $def-gray-color;
+    color: $new-inverse-color;
+    &:hover,&focus{
+      color: $def-white-color;
+      background: $new-main-deep-color;
+      border-color: $new-main-deep-color;
+    }
   }
-
 }

@@ -113,7 +113,8 @@
           }, this)
 
           this.showRows = showRows
-        }
+        },
+        deep: true
       }
     },
 
@@ -238,7 +239,7 @@
       // common APIs
 
       getRows() {
-        return this.$refs.bodyRows
+        return this.$refs.bodyRows || []
       },
 
       getHeight() {

@@ -1,6 +1,5 @@
 import factory from 'bettingCenter/misc/betRulesFactory'
 
-const ticketConfig = require('skeleton/misc/ticketConfig')
 
 const SscFactory = require('bettingCenter/misc/betRulesFactory-ssc')
 const ChooseFactory = require('bettingCenter/misc/betRulesFactory-choose5')
@@ -68,8 +67,5 @@ export default {
       playId: ids,
     })
     return play && play.rule || {}
-  },
-  getMark6SpecialInfo () {
-    return Mark6Factory.getMark6SpecialInfo()
   },
 }

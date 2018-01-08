@@ -1,0 +1,58 @@
+<form class="js-ac-transfer-form form-horizontal hidden" action="javascript:void(0);">
+  <div class="ac-user-select pull-left">
+    <div class="clearfix">
+      <div class="user-title pull-left">选择转账人</div>
+      <div class="user-select-btn pull-right">
+        <button type="button" class="btn js-user-select-all m-right-sm" data-type="all">全选</button>
+        <button type="button" class="btn js-user-select-all" data-type="clear">全清</button>
+      </div>
+    </div>
+    <div class="js-ac-lowLevelSelect ac-lowLevelSelect">
+      <div class="ac-lowLevelSelect-header clearfix">
+        <div class="ac-low-multi-search">
+          <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+          <input type="text" class="js-ac-input-search-user input-search-user hidden" placeholder=""/>
+        </div>
+      </div>
+      <div class="user-tree js-ac-select-container clearfix">
+        <div class="user-tree-title">我的下级</div>
+        <div class="user-tree-list js-user-tree-list"></div>
+        <div class="user-tree-list js-ac-search-container hidden"></div>
+      </div>
+    </div>
+  </div>
+  <div class="ac-tf-line"></div>
+  <div class="ac-transfer-contant pull-left">
+    <div class="user-title">转账给</div>
+    <div class="user-choose-list">
+      <div class="list-empty js-choose-list-empty">&laquo;&nbsp;&nbsp;请从左侧用户列表选择转账人</div>
+      <ul class="js-selected-container choose-list-container hidden"></ul>
+      <ul class="js-selected-short-container choose-list-container"></ul>
+    </div>
+    <div class="ac-group">
+      <div class="text-black font-md">可用余额：</div>
+      <div class="m-top-sm">
+        <span class=" font-lg"><span class="js-ac-avail-money text-bold-prominent">-</span> 元</span>
+      </div>
+      <div class="text-inverse m-top-smd font-md">转帐类型：</div>
+      <div class="m-top-sm">
+        <select class="js-transfer-type transfer-type" name="" id="">
+          <option value="0">普通转账</option>
+        </select>
+      </div>
+      <div class="text-inverse m-top-smd font-md">金额（元）：</div>
+      <div class="m-top-sm">
+        <input type="text" class="js-ac-tf-amount input1" autocomplete="off" name="amount"/>
+        <input type="hidden" class="js-ac-mt-tradeNum">
+      </div>
+      <div class="text-inverse  m-top-smd font-md">资金密码：</div>
+      <div class="m-top-sm">
+        <input type="password" class="js-ac-tf-payPwd input1 ac-mt-password"/>
+      </div>
+      <div class="js-error-text"></div>
+      <div class="m-top-lg control-confirm">
+        <button type="submit" class="js-ac-btn-submit btn" data-loading-text="提交中">确定转账</button>
+      </div>
+    </div>
+  </div>
+</form>

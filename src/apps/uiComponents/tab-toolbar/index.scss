@@ -44,9 +44,9 @@ $tab-toolbar-circle-colors: (
       height: $tab-toolbar-height;
       line-height: $tab-toolbar-height;
 
-      &:last-child {
-        margin-right: 0;
-      }
+      //&:last-child {
+      //  margin-right: 0;
+      //}
     }
   }
 
@@ -91,6 +91,8 @@ $tab-toolbar-circle-colors: (
           min-width: 54px;
           height: $tab-toolbar-height;
           line-height: $tab-toolbar-height;
+          border-radius: 50px;
+          transition: all .3s ease-out;
           @include tab-toolbar-color(default, $tab-toolbar-circle-colors);
 
           &:last-child {
@@ -120,6 +122,7 @@ $tab-toolbar-circle-colors: (
 
       > div {
         margin-right: 10px;
+        min-width: 56px;
       }
 
       //&.active {
@@ -128,7 +131,7 @@ $tab-toolbar-circle-colors: (
       //}
     }
     .tab {
-      margin-right: 10px;
+      margin: 0 5px;
       padding: 0;
       font-size: 20px;
       line-height: 38px;
@@ -150,15 +153,6 @@ $tab-toolbar-circle-colors: (
         background-color: $main-deep-color;
         border: 1px solid $main-deep-color;
         box-shadow: 0px 2px 3px #108f97 inset;
-      }
-
-      &.treble1 {
-        width: 160px;
-        left: -100px;
-      }
-
-      &.treble2 {
-        width: 80px;
       }
     }
   }
@@ -185,8 +179,8 @@ $tab-toolbar-circle-colors: (
       font-size: 26px;
       line-height: 48px;
       height: 48px;
-      min-width: 28px;
-      padding: 0 10px;
+      min-width: 32px;
+      padding: 0 8px;
       border-radius: 8px;
       border: 1px solid $def-gray-color;
       color: $new-inverse-color;
@@ -203,6 +197,9 @@ $tab-toolbar-circle-colors: (
         background-color: $main-deep-color;
         border: 1px solid $main-deep-color;
         box-shadow: 0px 2px 3px #108f97 inset;
+      }
+      &:last-child {
+        margin-right: 17px;
       }
     }
     &.square-big {

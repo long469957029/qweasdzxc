@@ -4,6 +4,7 @@ import betting from '../../api/betting'
 const initState = () => {
   return {
     plans: [],
+    init: false,
   }
 }
 
@@ -41,9 +42,17 @@ const mutations = {
           ticketOpentime: _(planInfo.ticketOpentime).toTime(),
         })
       })
+
+      state.init = true
     }
   },
   [types.GET_CHASE_PLANS_FAILURE] ({ commit }, res) {
+  },
+  [types.KICK_CHASE_PLANS] (state) {
+    state.plans.splice(0, 1)
+  },
+  [types.EMPTY_CHASE_PLANS] (state) {
+    Object.assign(state, initState())
   },
 }
 

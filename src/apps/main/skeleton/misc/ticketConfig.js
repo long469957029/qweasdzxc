@@ -1,5 +1,3 @@
-
-
 const defaultSelectSSC = '4'
 const defaultSelect115 = '4,0,4'
 const defaultSelectDPC = '0'
@@ -14,88 +12,68 @@ const numberColor = {
 const sscConfig = {
   id: 'ssc',
   title: '时时彩',
-  ticketName: '经典模式',
   icon: 'ssc',
   titleIcon: 'ssc_nav_icon',
   list: [
-    {
+    Object.assign({
       id: 27,
       mark: 'dj',
       zhName: '东京1.5分彩',
-      quickShowName: "东京<br/><span style='font-size: 10px;'>1.5分彩</span>",
-      defaultSelectPlay: defaultSelectSSC,
       badge: '',
       showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
-    },
-    {
+    }, bettingTypes.SSC),
+    Object.assign({
       id: 25,
       mark: 'xjp',
       zhName: '新加坡2分彩',
-      quickShowName: '新加坡<br/>2分彩',
-      defaultSelectPlay: defaultSelectSSC,
       badge: '',
       showNumberDetail: true,
-    },
-    {
+    }, bettingTypes.SSC),
+    Object.assign({
       id: 13,
       mark: 'sfc',
       zhName: '无限三分彩',
-      quickShowName: '无限<br />三分彩',
       hasMargin: true,
-      defaultSelectPlay: defaultSelectSSC,
       badge: '',
-    },
-    {
+    }, bettingTypes.SSC),
+    Object.assign({
       id: 32,
       mark: 'qq30s',
       zhName: 'QQ30秒',
-      quickShowName: 'QQ30秒',
-      defaultSelectPlay: defaultSelectQW,
       badge: 'hot',
       showNumberDetail: false,
-    },
-    {
+    }, bettingTypes.SSC),
+    Object.assign({
       id: 19,
       mark: 'wx',
       zhName: '无限秒秒彩',
-      quickShowName: '无限<br/>秒秒彩',
-      defaultSelectPlay: defaultSelectSSC,
       badge: '',
-    },
-
-    {
+    }, bettingTypes.SSC),
+    Object.assign({
       id: 10,
       mark: 'ffc',
       zhName: '无限分分彩',
-      quickShowName: '无限<br />分分彩',
-      hasMargin: true,
-      defaultSelectPlay: defaultSelectSSC,
       badge: 'fire',
-    },
-    {
+    }, bettingTypes.SSC),
+    Object.assign({
       id: 1,
       mark: 'cq',
       zhName: '重庆时时彩',
-      quickShowName: '重庆<br/>时时彩',
-      defaultSelectPlay: defaultSelectSSC,
       badge: 'hot',
-    },
-    {
+    }, bettingTypes.SSC),
+    Object.assign({
       id: 21,
       mark: 'hg',
       zhName: '韩国乐透1.5',
-      quickShowName: "韩国<br/><span style='font-size: 10px;'>1.5分彩</span>",
-      defaultSelectPlay: defaultSelectSSC,
       badge: '',
       showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
-    },
+    }, bettingTypes.SSC),
   ],
 }
 
 const oneFiveConfig = {
   id: 'num',
   title: '11选5',
-  ticketName: '十一选五',
   icon: 'num',
   titleIcon: 'ele_nav_icon',
   list: [
@@ -103,7 +81,6 @@ const oneFiveConfig = {
       id: 14,
       mark: 'ffc',
       zhName: '11选5分分彩',
-      quickShowName: '11选5<br/>分分彩',
       defaultSelectPlay: defaultSelect115,
       badge: '',
     },
@@ -111,21 +88,18 @@ const oneFiveConfig = {
       id: 5,
       mark: 'sd',
       zhName: '山东11选5',
-      quickShowName: '山东<br/>11选5',
       defaultSelectPlay: defaultSelect115,
     },
     {
       id: 4,
       mark: 'gd',
       zhName: '广东11选5',
-      quickShowName: '广东<br/>11选5',
       defaultSelectPlay: defaultSelect115,
     },
     {
       id: 11,
       mark: 'jx',
       zhName: '江西11选5',
-      quickShowName: '江西<br/>11选5',
       defaultSelectPlay: defaultSelect115,
     },
   ],
@@ -135,7 +109,6 @@ const threeDConfig = [
     id: 16,
     mark: '3d-ffc',
     zhName: '3D分分彩',
-    quickShowName: '3D<br>分分彩',
     hasMargin: true,
     defaultSelectPlay: defaultSelectDPC,
     badge: 'hot',
@@ -144,7 +117,6 @@ const threeDConfig = [
     id: 6,
     mark: '3d',
     zhName: '3D',
-    quickShowName: '3D',
     hasMargin: true,
     defaultSelectPlay: defaultSelectDPC,
   },
@@ -163,7 +135,6 @@ const p5p3Config = [
     id: 7,
     mark: 'p5p3',
     zhName: 'P3/P5',
-    quickShowName: 'P3/P5',
     defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
   },
@@ -174,24 +145,28 @@ const bjPKConfig = [
     id: 18,
     mark: 'pk10',
     zhName: '北京赛车/PK10',
-    quickShowName: '北京<br/>/PK10',
     defaultSelectPlay: defaultSelectSSC,
     hasMargin: true,
     badge: 'hot',
   },
 ]
 
-const quickConfig = [
-  {
-    id: 29,
-    mark: 'jsk3',
-    zhName: '江苏快三',
-    quickShowName: '江苏<br/>快三',
-    defaultSelectPlay: defaultSelectSSC,
-    hasMargin: true,
-    badge: 'new',
-  },
-]
+const quickConfig = {
+  id: 'quick3',
+  title: '快三',
+  ticketName: '快三',
+  titleIcon: 'hap_nav_icon',
+  list: [
+    {
+      id: 29,
+      mark: 'jsk3',
+      zhName: '江苏快三',
+      defaultSelectPlay: defaultSelectSSC,
+      hasMargin: true,
+      badge: 'new',
+    },
+  ],
+}
 
 const happyConfig = {
   id: 'happy',
@@ -199,8 +174,7 @@ const happyConfig = {
   ticketName: '快乐彩',
   icon: 'happy',
   titleIcon: 'hap_nav_icon',
-  list: bjPKConfig.concat(quickConfig),
-  // list: bjPKConfig
+  list: bjPKConfig,
 }
 
 const handicapMark6Config = [
@@ -208,7 +182,6 @@ const handicapMark6Config = [
     id: 34,
     mark: 'mark6',
     zhName: '香港六合彩',
-    quickShowName: '香港六合彩',
     defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
     badge: 'new',
@@ -221,7 +194,6 @@ const handicapSscConfig = [
     id: 1,
     mark: 'ssc',
     zhName: '重庆时时彩',
-    quickShowName: '重庆时时彩',
     defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
     badge: 'new',
@@ -234,7 +206,6 @@ const handicapPk10Config = [
     id: 1,
     mark: 'ssc',
     zhName: '北京PK10',
-    quickShowName: '北京PK10',
     defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
     badge: 'new',
@@ -251,10 +222,9 @@ const lowConfig = {
   list: threeDConfig.concat(p5p3Config).concat(handicapMark6Config),
 }
 
-// var allConfig = sscConfig.list.concat(oneFiveConfig.list, threeDConfig.list, threeDConfig, p5p3Config, happyConfig.list, quickConfig.list);
-const allConfig = sscConfig.list.concat(oneFiveConfig.list, lowConfig.list, happyConfig.list)// quickConfig
+const allConfig = sscConfig.list.concat(oneFiveConfig.list, lowConfig.list, happyConfig.list, quickConfig.list)
 
-const completeAllConfig = [sscConfig, oneFiveConfig, lowConfig, happyConfig]
+const completeAllConfig = [sscConfig, oneFiveConfig, lowConfig, happyConfig, quickConfig]
 
 // //--begin 彩种导航特殊配置
 // var hotTicketIdList = [19,32,10,1,21];
@@ -285,7 +255,7 @@ const completeAllConfig = [sscConfig, oneFiveConfig, lowConfig, happyConfig]
 // var newCompleteAllConfig = [ sscCopy, oneFiveConfig, lowCopy, happyConfig];
 // --end
 
-module.exports = {
+export default {
   getSccList() {
     return sscConfig.list
   },
@@ -315,7 +285,7 @@ module.exports = {
   },
 
   getQuickList() {
-    return quickConfig
+    return quickConfig.list
   },
 
   getMark6List() {
@@ -374,11 +344,11 @@ module.exports = {
         list: [
           sscConfig.list,
           oneFiveConfig.list,
-          threeDConfig.concat(p5p3Config).concat(happyConfig.list),
+          threeDConfig.concat(p5p3Config).concat(happyConfig.list).concat(quickConfig.list),
         ],
       },
       handicap: {
-        //重庆时时彩  无限秒秒彩  无限分分彩  北京PK10  香港六合彩
+        // 重庆时时彩  无限秒秒彩  无限分分彩  北京PK10  香港六合彩
         list: [
           _.filter(sscConfig.list, (item) => { return item.id === 1 || item.id === 10 || item.id === 19 }),
           bjPKConfig.concat(this.getById(34)),
@@ -390,13 +360,5 @@ module.exports = {
     return _(allConfig).find((item) => {
       return item.id === id
     })
-  },
-  // 获取六合彩系类彩种id
-  getMark6TicketIdArr() {
-    const mark6TicketIdArr = []
-    _(handicapMark6Config).each((item) => {
-      mark6TicketIdArr.push(item.id)
-    })
-    return mark6TicketIdArr
   },
 }
