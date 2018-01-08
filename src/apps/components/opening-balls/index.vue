@@ -93,7 +93,7 @@
 
       _rolling(ball, i, init = false) {
         Velocity(ball, {
-          top: ball.offsetTop + -this.totalHeight
+          top: [ball.offsetTop, ball.offsetTop + -this.totalHeight]
         }, {
           duration: init ? 2000 : 'normal',
           easing: init ? 'ease-in' : 'linear',
