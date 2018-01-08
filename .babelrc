@@ -1,0 +1,16 @@
+{
+  "presets": [
+    ["@babel/preset-env"]
+  ],
+  "env": {
+    "production": {
+      "presets": ["@babel/preset-es2015"]
+    }
+  },
+  "ignore": [
+    "createjs-2015.11.26.min.js",
+    "**/*.min.js",
+    "**/jQuery*.js",
+    "**/jquery*.js"
+  ]
+}

@@ -166,14 +166,14 @@ const happyConfig = {
 }
 
 const handicapMark6Config = [
-  {
+  Object.assign({
     id: 34,
     mark: 'mark6',
     zhName: '香港六合彩',
     hasMargin: true,
     badge: 'new',
     numberColor,
-  },
+  }, bettingTypes.MARK6),
 ]
 
 const handicapSscConfig = [

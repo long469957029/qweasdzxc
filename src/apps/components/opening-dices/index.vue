@@ -163,14 +163,14 @@
   $des: 24px;
 
   .opening-dices {
-    display: flex;
+    display: inline-block;
 
     .dice {
       width: $size;
       height: $size;
       margin-right: 15px;
-      -webkit-perspective: 400px;
-      perspective: 400px;
+      display: inline-block;
+      /*perspective: 400px;*/
     }
 
     .cube {

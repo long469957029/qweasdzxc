@@ -10,6 +10,7 @@ const del = require('del')
 const imagemin = require('gulp-imagemin')
 const pngquant = require('imagemin-pngquant')
 const cache = require('gulp-cache')
+const pump = require('pump')
 
 const _ = require('underscore')
 
@@ -168,7 +169,7 @@ gulp.task('release', (cb) => {
   runSequence(
     'release.clean',
     'release.build',
-    ['release.js', 'release.css', 'release.assets', 'release.html', 'release.compatible'],
+    ['release.js', 'release.css', 'release.assets', 'release.html'],
     'zip',
     cb
   )
@@ -325,21 +326,11 @@ gulp.task('release.build', (callback) => {
 })
 
 // 压缩转移js
-gulp.task('release.js', () => {
-  // function createErrorHandler(name) {
-  //   return function (err) {
-  //     console.error('Error from ' + name + ' in compress task', err.toString());
-  //   };
-  // }
-  return gulp.src([`./dist/${projectPath}/*.js`])
-    .pipe(uglify())
-    .pipe(gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath)))
-  // pump([
-  //   gulp.src(['./dist/' + projectPath + '/*.js']),
-  //   uglify(),
-  //   gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath)),
-  //   cb
-  // ]);
+gulp.task('release.js', (cb) => {
+  return pump([
+    gulp.src([`./dist/${projectPath}/*.js`]),
+    gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath))
+  ], cb)
 })
 
 // 压缩转移css
@@ -356,17 +347,6 @@ gulp.task('release.assets', () => {
   return gulp.src([`./dist/${projectPath}/*.+(jpg|png|gif|eot|woff|svg|tff|eot|woff2|swf|ico|mp3|wav)`])
     .pipe(gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath)))
   // .pipe(gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath + '/' + packageConfig.output.publicPath)));
-})
-
-// 压缩转移兼容性文件
-gulp.task('release.compatible', () => {
-  return gulp.src([
-    './bower_components/es5-shim/es5-sham.min.js',
-    './bower_components/es5-shim/es5-shim.min.js',
-    './bower_components/json2/json2.js',
-  ])
-    .pipe(uglify({ mangle: false }))
-    .pipe(gulp.dest(`./www/${packageConfig.output.path}/compatible`))
 })
 
 // 压缩转移css

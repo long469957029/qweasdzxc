@@ -1,5 +1,6 @@
 <template>
   <div class="bc-main-area bg-deep clearfix">
+    <div class="stop-selling" v-if="!bettingInfo.sale"></div>
     <div class="bc-area-ticket-info pull-left">
       <div class="sfa sfa-bc-ssc-cq"></div>
       <div class="ticket-info">10:00-20:00/共130期</div>
@@ -28,25 +29,22 @@
           <div>开奖号码</div>
         </div>
 
-        <opening-balls :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :openingBalls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.info.defaultOpening"
-                       v-if="ticketInfo.info.openingType === 'balls' && bettingInfo.sale && !bettingInfo.pending" @mouseover="calculateStatus = true" @mouseout="calculateStatus = false"
+        <opening-balls :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.info.defaultOpening"
+                       v-if="ticketInfo.info.openingType === 'balls'" @mouseover="calculateStatus = true" @mouseout="calculateStatus = false"
         ></opening-balls>
-        <opening-dices :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :openingBalls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.info.defaultOpening"
-                       v-else-if="ticketInfo.info.openingType === 'dices' && bettingInfo.sale && !bettingInfo.pending"
-        ></opening-dices>
-        <div class="bc-last-plan-results pull-left" v-if="!bettingInfo.sale">
-          <span class="text-circle">暂</span>
-          <span class="text-circle">停</span>
-          <span class="text-circle">销</span>
-          <span class="text-circle">售</span>
-        </div>
-        <div class="bc-last-plan-results pull-left" v-if="bettingInfo.sale && bettingInfo.pending">
-          <span class="text-circle">等</span>
-          <span class="text-circle">待</span>
-          <span class="text-circle">开</span>
-          <span class="text-circle">奖</span>
-        </div>
-        <div class="bc-hgcalculate-example " v-if="ticketInfo.info.showNumberDetail&& calculateStatus">
+        <opening-dices-panel class="inline-block" v-else-if="ticketInfo.info.openingType === 'dices'"
+                             :opening-num="bettingInfo.lastOpenNum" :ticket-info="ticketInfo"
+        ></opening-dices-panel>
+        <opening-mark6-balls :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.info.defaultOpening"
+          v-else-if="ticketInfo.info.openingType === 'mark-balls'"
+        ></opening-mark6-balls>
+        <!--<div class="bc-last-plan-results pull-left" v-if="bettingInfo.sale && bettingInfo.pending">-->
+          <!--<span class="text-circle">等</span>-->
+          <!--<span class="text-circle">待</span>-->
+          <!--<span class="text-circle">开</span>-->
+          <!--<span class="text-circle">奖</span>-->
+        <!--</div>-->
+        <div class="bc-hgcalculate-example" v-if="ticketInfo.info.showNumberDetail&& calculateStatus">
           <div class="bc-hgcaculate-examplerow">万位:<span v-html="calculateInfo ? calculateInfo.wan : ''"></span></div>
           <div class="bc-hgcaculate-examplerow">千位:<span v-html="calculateInfo ? calculateInfo.qian : ''"></span></div>
           <div class="bc-hgcaculate-examplerow">百位:<span v-html="calculateInfo ? calculateInfo.bai : ''"></span></div>
@@ -77,9 +75,11 @@
 </template>
 
 <script>
-  import openingBalls from 'com/opening-balls'
-  import openingDices from 'com/opening-dices'
+  import OpeningBalls from 'com/opening-balls'
   import AnimateCountdown from 'com/countdown/animate-countdown'
+  import OpeningMark6Balls from 'com/opening-mark6-balls'
+  import OpeningDicesPanel from './opening-dices-panel'
+
 
   import over from './misc/over.wav'
   import prize from './misc/prize.wav'
@@ -93,13 +93,13 @@
     name: "ticket-info-banner",
 
     components: {
-      openingBalls,
-      openingDices,
+      OpeningBalls,
+      OpeningDicesPanel,
+      OpeningMark6Balls,
     },
 
     props: {
       ticketInfo: Object,
-      ticketParameter: String,
     },
     data() {
       return {
@@ -113,12 +113,12 @@
 
     watch: {
       'bettingInfo.leftSecond': {
-        handler(newVal, oldVal) {
+        handler(newVal) {
           if (newVal) {
             this.$_updateCountdown()
           }
         }
-      }
+      },
     },
 
     computed: mapState({
@@ -306,7 +306,7 @@
     }
     .bc-last-plan-results{
       .text-circle{
-        font-family: din, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
+        font-family: Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
         position: relative;
         &:after{
           content: '';
@@ -332,6 +332,32 @@
       border: 1px solid #666;
       z-index: 1;
 
+    }
+  }
+
+  .stop-selling {
+    width: 208px;
+    height: 295px;
+    display: block;
+    background: url(./misc/stop-selling.png);
+    position: absolute;
+    top: -70px;
+    right: 25px;
+    z-index: 1;
+
+    animation: rotate 5s infinite;
+  }
+
+  @keyframes rotate
+  {
+    0% {
+      transform: rotateY(0);
+    }
+    50% {
+      transform: rotateY(0);
+    }
+    100% {
+      transform: rotateY(720deg);
     }
   }
 </style>
