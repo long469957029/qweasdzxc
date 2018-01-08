@@ -20,7 +20,11 @@ const SidemenuModule = Base.Module.extend({
     // dividendStatus 分红状态
     const dividendStatus = acctInfo.dividendStatus !== dividendConfig.getByName('UN_APPLIED').id
     $('.js-ac-dm-tip').toggleClass('hidden', acctInfo.dividendStatus !== 1 && acctInfo.dividendStatus !== 3)
-    $('.js-ac-divid-menu').toggleClass('hidden', !dividendStatus)
+
+    _(this.get('ac').sub).findWhere({
+      id: 'divid',
+    }).auth = dividendStatus
+
     _(_(this.get('ac').sub).chain().pluck('list').flatten()
       .value()).findWhere({
       id: 407, // 直属分红

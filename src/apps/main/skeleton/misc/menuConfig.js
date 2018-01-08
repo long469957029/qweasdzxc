@@ -164,7 +164,8 @@ const menuConfig = [
       {
         name: '分红管理',
         icon: 'divid',
-        jsName: 'js-ac-divid-menu',
+        id: 'divid',
+        needAuth: true,
         list: [
           {
             id: 407,
