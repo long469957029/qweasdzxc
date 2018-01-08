@@ -69,10 +69,10 @@
 
             _.delay(() => {
               Velocity(this.$refs.balls[i], 'stop')
-              // this.$refs.balls[i].style.top = '0px'
+              this.$refs.balls[i].style.top = '0px'
 
               Velocity(this.$refs.balls[i], {
-                top: [0, this.$_getDes(this.$refs.balls[i])],
+                top: this.$_getDes(this.$refs.balls[i]),
               }, {
                 duration: 2000,
                 easing: 'ease-out',
@@ -93,7 +93,7 @@
 
       _rolling(ball, i, init = false) {
         Velocity(ball, {
-          top: [0, -this.totalHeight]
+          top: ball.offsetTop + -this.totalHeight
         }, {
           duration: init ? 2000 : 'normal',
           easing: init ? 'ease-in' : 'linear',
