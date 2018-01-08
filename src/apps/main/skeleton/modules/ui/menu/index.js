@@ -28,12 +28,12 @@ const SidemenuModule = Base.Module.extend({
     }).auth = dividendStatus || acctInfo.merchant
     _(_(this.get('ac').sub).chain().pluck('list').flatten()
       .value()).findWhere({
-      id: 501, // 直属分红
-    }).auth = dividendStatus || acctInfo.merchant
+      id: 501, // 直属分红 - 下级分红
+    }).auth = dividendStatus || !acctInfo.merchant
     _(_(this.get('ac').sub).chain().pluck('list').flatten()
       .value()).findWhere({
       id: 502, // 直属分红
-    }).auth = dividendStatus || acctInfo.merchant
+    }).auth = dividendStatus || !acctInfo.merchant
 
     _(_(this.get('ac').sub).chain().pluck('list').flatten()
       .value()).findWhere({

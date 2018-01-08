@@ -503,7 +503,7 @@ function _create(ticketId) {
     showMoneyInput: false,
     bettingArea: ['bottom'],
     format: betFormat.multiFirst,
-    showFormat: betFormat.handicapSpecial
+    showFormat: betFormat.handicapSpecial,
   })
 
   // 六不中
@@ -526,7 +526,7 @@ function _create(ticketId) {
     showMoneyInput: false,
     bettingArea: ['bottom'],
     format: betFormat.multiFirst,
-    showFormat: betFormat.handicapSpecial
+    showFormat: betFormat.handicapSpecial,
   })
 
   // 七不中
@@ -549,7 +549,7 @@ function _create(ticketId) {
     showMoneyInput: false,
     bettingArea: ['bottom'],
     format: betFormat.multiFirst,
-    showFormat: betFormat.handicapSpecial
+    showFormat: betFormat.handicapSpecial,
   })
 
   // 八不中
@@ -572,7 +572,7 @@ function _create(ticketId) {
     showMoneyInput: false,
     bettingArea: ['bottom'],
     format: betFormat.multiFirst,
-    showFormat: betFormat.handicapSpecial
+    showFormat: betFormat.handicapSpecial,
   })
 
   // 九不中
@@ -595,7 +595,7 @@ function _create(ticketId) {
     showMoneyInput: false,
     bettingArea: ['bottom'],
     format: betFormat.multiFirst,
-    showFormat: betFormat.handicapSpecial
+    showFormat: betFormat.handicapSpecial,
   })
 
   // 十不中
@@ -618,7 +618,7 @@ function _create(ticketId) {
     showMoneyInput: false,
     bettingArea: ['bottom'],
     format: betFormat.multiFirst,
-    showFormat: betFormat.handicapSpecial
+    showFormat: betFormat.handicapSpecial,
   })
 
   // 总和

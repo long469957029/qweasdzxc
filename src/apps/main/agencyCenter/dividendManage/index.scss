@@ -167,5 +167,26 @@
     word-wrap: break-word;
     line-height: 30px;
   }
-
+  .search-btn{
+    width: 59px;
+    height: 25px;
+    background-color: $new-main-deep-color;
+    border-radius: 3px;
+  }
+  .select-status{
+    width: 80px;
+  }
+}
+.ac-dm-tip{
+  display: block;
+  position: absolute;
+  top: 11px;
+  right: 22px;
+  width: 40px;
+  height: 18px;
+  background: $prominent-color;
+  font-size: 12px;
+  line-height: 18px;
+  border-radius: 3px;
+  color: $def-white-color;
 }

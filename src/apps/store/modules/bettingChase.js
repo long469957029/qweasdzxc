@@ -4,7 +4,7 @@ import betting from '../../api/betting'
 const initState = () => {
   return {
     plans: [],
-    init: false
+    init: false,
   }
 }
 

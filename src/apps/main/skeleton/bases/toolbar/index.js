@@ -15,6 +15,7 @@ const ToolbarView = Base.ItemView.extend({
     'click .js-sidebar-close': 'closeSidebarHandler', // 收起侧边栏
     'click .js-toolbar-scroll-to-top': 'scrollHandler', // 回滚到顶部
     'click .js-toolbar-feedback-dialog': 'feedbackDialogHandler', // 意见反馈弹窗
+    'click .js-toolbar-im-dialog': 'imDialogHandler', // 站内信弹窗
   },
 
   initialize() {
@@ -67,16 +68,31 @@ const ToolbarView = Base.ItemView.extend({
       case 3: // 我的优惠券
         self.$sidebar.html(new CouponView({}).render().el)
         break
-      case 4: // 站内消息
-        self.$sidebar.html(new MessageView({}).render().el)
-        break
-      case 5: // 意见反馈
-        // self.$sidebar.html(new FeedbackView({}).render().el)
-        break
+      // case 4: // 站内消息
+      //         // self.$sidebar.html(new MessageView({}).render().el)
+      //   break
+      // case 5: // 意见反馈
+      //         // self.$sidebar.html(new FeedbackView({}).render().el)
+      //   break
 
       default:
         break
     }
+  },
+  imDialogHandler() {
+    const $imDialog = Global.ui.dialog.show({
+      size: 'im-dialog-panel',
+      // bStyle: 'width: 832;height:600;border:0;"',
+      bodyClass: 'js-sideBar-im im-panel',
+      body: '<div class="im-dialog-container"></div>',
+    })
+    const $dialogContainer = $imDialog.find('.im-dialog-container')
+
+    $dialogContainer.html(new MessageView().render().el)
+
+    $imDialog.on('hidden.modal', function () {
+      $(this).remove()
+    })
   },
   feedbackDialogHandler() {
     const $feedbackDialog = Global.ui.dialog.show({
@@ -90,7 +106,7 @@ const ToolbarView = Base.ItemView.extend({
 
     $dialogContainer.html(new FeedbackView().render().el)
 
-    $feedbackDialog.on('hidden.modal', function() {
+    $feedbackDialog.on('hidden.modal', function () {
       $(this).remove()
     })
   },

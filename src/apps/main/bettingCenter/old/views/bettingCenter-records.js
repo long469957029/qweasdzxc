@@ -1,7 +1,5 @@
 
 
-
-
 const BettingRecordsView = Base.ItemView.extend({
 
   template: require('bettingCenter/templates/bettingCenter-records.html'),

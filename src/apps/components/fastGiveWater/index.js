@@ -1,5 +1,7 @@
 require('./index.scss')
 
+const ticketConfig = require('skeleton/misc/ticketConfig')
+
 /** 限时返水活动组件 */
 const FastGiveWaterView = Base.ItemView.extend({
 

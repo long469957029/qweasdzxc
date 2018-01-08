@@ -36,8 +36,7 @@
     "dev.external": "gulp external",
     "analysis": "webpack --profile --json > stats.json --config=webpack.production.config.js",
     "deploy": "NODE_ENV=production gulp release -p --config",
-    "lint": "./node_modules/eslint/bin/eslint.js src/ --fix",
-    "precommit": "lint-staged"
+    "lint": "./node_modules/eslint/bin/eslint.js src/ --fix"
   },
   "lint-staged": {
     "linters": {

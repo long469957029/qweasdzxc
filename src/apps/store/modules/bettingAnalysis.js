@@ -28,7 +28,6 @@ const getPlaySeriesId = (ticketId) => {
 // actions
 const actions = {
   getColdHot ({ commit }, { ticketId }) {
-
     betting.getColdHot(
       {
         ticketId,
@@ -50,14 +49,14 @@ const actions = {
 }
 
 const formatNum = (list) => {
-  return _.chain(list).map(row => {
+  return _.chain(list).map((row) => {
     const max = _.max(row)
     const min = _.min(row)
 
-    return _.map(row, num => {
-      let item = {
+    return _.map(row, (num) => {
+      const item = {
         num,
-        style: ''
+        style: '',
       }
       if (num === max) {
         item.style = 'max'
