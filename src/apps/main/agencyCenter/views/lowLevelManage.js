@@ -19,7 +19,7 @@ const LowLevelManageView = SearchGrid.extend({
   initialize() {
     _(this.options).extend({
       footerClass: 'border-cool-top',
-      height: 340,
+      height: 480,
       title: '下级管理',
       columns: [
         {
@@ -64,6 +64,9 @@ const LowLevelManageView = SearchGrid.extend({
       subOps: {
         data: ['userParentId'],
       },
+      reqData: {
+        pageSize: 12,
+      },
     })
 
     this.on('router:back', function () {
@@ -72,6 +75,7 @@ const LowLevelManageView = SearchGrid.extend({
   },
 
   onRender() {
+    this.acctInfo = Global.memoryCache.get('acctInfo')
     SearchGrid.prototype.onRender.apply(this, arguments)
     this.$personalBalance = this.$('.js-personal-balance')
     this.$teamBalance = this.$('.js-team-balance')
@@ -123,20 +127,21 @@ const LowLevelManageView = SearchGrid.extend({
 
   formatRowData(rowInfo) {
     const row = []
-
+    const textClass = rowInfo.userId === this.acctInfo.userId ? 'text-bold-pleasant' : ''
+    const freeze = (rowInfo.userStatus === 100 || rowInfo.userStatus === 101) ? '<span class="sfa sfa-freeze vertical-middle"></span>' : ''
     if (rowInfo.userSubAcctNum) {
-      row.push(`<a class="js-pf-sub btn-link text-cool" data-label="${rowInfo.userName}" data-user-parent-id="${rowInfo.userId}" href="javascript:void(0)">${
+      row.push(`${freeze}<a class="js-pf-sub btn-link ${textClass}" data-label="${rowInfo.userName}" data-user-parent-id="${rowInfo.userId}" href="javascript:void(0)">${
         rowInfo.userName}(${rowInfo.userSubAcctNum})</a> `)
     } else {
-      row.push(`<span class="text-cool">${rowInfo.userName}</span>`)
+      row.push(`${freeze}<span class="${textClass}">${rowInfo.userName}</span>`)
     }
-    row.push(rowInfo.userType === 0 ? '代理' : '会员')
-    row.push(`${_(rowInfo.rebate).formatDiv(10, { fixed: 1 })}%`)
+    row.push(`<span class="${textClass}">${rowInfo.userType === 0 ? '代理' : '会员'}</span>`)
+    row.push(`<span class="${textClass}">${_(rowInfo.rebate).formatDiv(10, { fixed: 1 })}%</span>`)
 
-    row.push(`<span class="text-bold-pleasant">${_(rowInfo.balance).convert2yuan()}</span>`)
-    row.push(`<span class="text-bold-pleasant">${_(rowInfo.subBalance).convert2yuan()}</span>`)
-    row.push(_(rowInfo.regTime).toTime())
-    row.push(rowInfo.uDays)
+    row.push(`<span class="${textClass}">${_(rowInfo.balance).convert2yuan()}</span>`)
+    row.push(`<span class="${textClass}">${_(rowInfo.subBalance).convert2yuan()}</span>`)
+    row.push(`<span class="${textClass}">${_(rowInfo.regTime).toTime()}</span>`)
+    row.push(`<span class="${textClass}">${rowInfo.uDays}</span>`)
     row.push(this._formatOperation(rowInfo))
 
     return row
@@ -217,7 +222,7 @@ const LowLevelManageView = SearchGrid.extend({
         if (res && res.result === 0) {
           // 设置了则弹出验证框
           // $(document).verifyFundPwd({parentView:self});
-          Global.appRouter.navigate(`#ac/llm/transfer/${rowInfo.userId}?name=${rowInfo.userName}`, {
+          Global.appRouter.navigate(`#ac/tr/${rowInfo.userId}?name=${rowInfo.userName}`, {
             trigger: true,
             replace: false,
           })

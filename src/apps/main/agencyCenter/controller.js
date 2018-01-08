@@ -384,7 +384,7 @@ const AgencyCenterController = RouterController.extend({
         titleDes: '<div class="js-ac-user-transfer"></div>',
       },
       sidebar,
-      // activeMenu: 'fc/fm'
+      activeMenu: 'ac/tr',
     })
   },
 

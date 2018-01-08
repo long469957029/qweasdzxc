@@ -1,5 +1,3 @@
-
-
 const SearchGrid = require('com/searchGrid')
 
 const TicketSelectGroup = require('com/ticketSelectGroup')
@@ -14,7 +12,7 @@ const ReportManageView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
-      height: 380,
+      height: 600,
       title: '报表查询',
       tableClass: 'table table-similar table-bordered table-center',
       columns: [
@@ -65,6 +63,11 @@ const ReportManageView = SearchGrid.extend({
       },
       ajaxOps: {
         url: '/info/gamereport/teamprofit.json',
+        // url: '/info/gamereport/teamprofitdetail.json',
+      },
+      reqData: {
+        // userId: Global.memoryCache.get('acctInfo').userId,
+        pageSize: 15,
       },
       subOps: {
         url: '/info/gamereport/teamprofitdetail.json',
@@ -108,7 +111,7 @@ const ReportManageView = SearchGrid.extend({
       dataList = [gridData]
     }
 
-    const rowsData = _(dataList).map(function(fundTrace, index, betList) {
+    const rowsData = _(dataList).map(function (fundTrace, index, betList) {
       return {
         columnEls: this.formatRowData(fundTrace, index, betList),
         dataAttr: fundTrace,
@@ -132,22 +135,23 @@ const ReportManageView = SearchGrid.extend({
       this.renderBread()
     }
     //
-    // this.grid.addFooterRows({
-    //  trClass: 'tr-footer',
-    //  columnEls: [
-    //    '<strong>总计</strong>',
-    //    _(gridData.rechargeTotal).convert2yuan({fixed:2}),
-    //    _(gridData.withdrawTotal).convert2yuan({fixed:2}),
-    //    _(gridData.betTotal).fixedConvert2yuan(),
-    //    _(gridData.prizeTotal).convert2yuan(),
-    //    _(gridData.bonusTotal).convert2yuan(),
-    //    _(gridData.activityTotal).convert2yuan(),
-    //    _(gridData.profitAndLossTotal).convert2yuan(),
-    //    ''
-    //  ]
-    // })
-    //  .hideLoading();
-    this.grid.hideLoading()
+    this.grid.addFooterRows({
+      trClass: 'tr-footer',
+      columnEls: [
+        '<strong>总计</strong>',
+        _(gridData.ticketTotal).convert2yuan({ fixed: 2 }),
+        _(gridData.agTotal).convert2yuan({ fixed: 2 }),
+        _(gridData.ebetTotal).convert2yuan({ fixed: 2 }),
+        _(gridData.bbinTotal).convert2yuan({ fixed: 2 }),
+        _(gridData.ptTotal).convert2yuan({ fixed: 2 }),
+        _(gridData.mgTotal).convert2yuan({ fixed: 2 }),
+        _(gridData.agFishTotal).convert2yuan({ fixed: 2 }),
+        _(gridData.ggFishTotal).convert2yuan({ fixed: 2 }),
+        _(gridData.profitTotal).convert2yuan({ fixed: 2 }),
+      ],
+    })
+      .hideLoading()
+    // this.grid.hideLoading()
   },
 
   formatRowData(rowInfo) {
@@ -155,9 +159,8 @@ const ReportManageView = SearchGrid.extend({
     if (this.hasSub() && rowInfo.username === this.getCurtSub().label || !rowInfo.hasSubUser) {
       row.push(rowInfo.username)
     } else {
-      row.push(`<a class="js-pf-sub btn-link" data-label="${rowInfo.username 
-      }" data-user-id="${rowInfo.userId}" href="javascript:void(0)">${ 
-        rowInfo.username}</a>`)
+      row.push(`<a class="js-pf-sub btn-link" data-label="${rowInfo.username}" 
+        data-user-id="${rowInfo.userId}" href="javascript:void(0)">${rowInfo.username}</a>`)
     }
     row.push(_(rowInfo.ticket).convert2yuan({ fixed: 2, clear: false }))
     row.push(_(rowInfo.ag).convert2yuan({ fixed: 2, clear: false }))
