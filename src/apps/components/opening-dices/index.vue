@@ -91,7 +91,8 @@
     watch: {
       openingBalls: {
         handler(newOpeningBalls, oldOpeningBalls) {
-          if (!_.isEqual(newOpeningBalls, oldOpeningBalls) && !_.compact(this.rollingStatus).length) {
+          if (!_.isEmpty(newOpeningBalls) && !_.isEqual(newOpeningBalls, oldOpeningBalls) && !_.compact(this.rollingStatus).length) {
+          // if (!_.compact(this.rollingStatus).length) {
             this.rolling()
           }
         }
@@ -116,7 +117,7 @@
 
               Velocity(this.$refs.dices[i], {
                 rotateX: pos.x,
-                rotateY: pos.Y,
+                rotateY: pos.y,
               }, {
                 duration: 1000,
                 easing: 'ease-out',
@@ -167,7 +168,7 @@
     .dice {
       width: $size;
       height: $size;
-      margin-right: 10px;
+      margin-right: 15px;
       -webkit-perspective: 400px;
       perspective: 400px;
     }

@@ -123,30 +123,6 @@
 
     computed: mapState({
       bettingInfo: 'bettingInfo',
-      //上期开奖号码
-      //TODO 还需重构,把html逻辑分离出去
-      formatLastOpenNum(state) {
-        return _(state.bettingInfo.lastOpenNum).map((num, key) => {
-          if (state.bettingInfo.ticketId === 18) {
-            return `<span class="text-circle circle-sm">${num}</span>`
-          // } else if (_.indexOf(state.mark6TicketIdArr, parseInt(state.bettingInfo.ticketId, 10)) > -1) {
-          //   const numberColor = state.ticketInfo.info.numberColor
-          //   let colorClass = 'green'
-          //   if (_.indexOf(numberColor.redArr, parseInt(num, 10)) > -1) {
-          //     colorClass = 'red'
-          //   } else if (_.indexOf(numberColor.blueArr, parseInt(num, 10)) > -1) {
-          //     colorClass = 'blue'
-          //   }
-          //   const spanDiv = `<span class="text-circle circle-mark6 ${colorClass}">${num}</span>`
-          //   const separateDiv = '<span class="text-circle circle-mark6 separate">&nbsp;</span>'
-          //   if (key === 5) {
-          //     return spanDiv + separateDiv
-          //   }
-          //   return spanDiv
-          }
-          return `<span class="text-circle">${num}</span>`
-        }).join(' ')
-      },
 
       calculateInfo(state) {
         //新加坡2分彩 彩种显示用
@@ -323,7 +299,10 @@
       margin-right: 20px;
       font-weight: bold;
       text-align: right;
+      display: inline-block;
       margin-bottom: 25px;
+      position: relative;
+      vertical-align: top;
     }
     .bc-last-plan-results{
       .text-circle{

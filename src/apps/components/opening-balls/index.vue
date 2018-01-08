@@ -29,7 +29,7 @@
       defaultOpening: {
         type: Array,
         default: function() {
-          return[0, 0, 0, 0, 0]
+          return['0', '0', '0', '0', '0']
         },
         required: true
       },
@@ -49,7 +49,7 @@
     watch: {
       openingBalls: {
         handler(newOpeningBalls, oldOpeningBalls) {
-          if (!_.isEqual(newOpeningBalls, oldOpeningBalls) && !_.compact(this.rollingStatus).length) {
+          if (!_.isEmpty(newOpeningBalls) && !_.isEqual(newOpeningBalls, oldOpeningBalls) && !_.compact(this.rollingStatus).length) {
             this.rolling()
           }
         }
@@ -118,10 +118,12 @@
   "~base/styles/variable";
 
   .opening-balls{
-    display: flex;
+    max-width: 390px;
+    display: inline-block;
 
     .ball-item-wrapper {
       position: relative;
+      display: inline-block;
       &:after{
         content: '';
         width: 18px;
@@ -130,7 +132,7 @@
         background: rgba(0, 0, 0, 0.15);
         box-shadow: 0 0 20px rgba(0,0,0,1);
         position: absolute;
-        bottom: -10px;
+        top: 45px;
         left: 11px;
         transform: rotateX(65deg);
       }
@@ -144,6 +146,7 @@
       font-family: din, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
       position: relative;
       overflow: hidden;
+      margin-bottom: 15px;
     }
     .text-circle-num {
       height: 40px;
