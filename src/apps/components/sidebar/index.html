@@ -32,7 +32,7 @@
   </div>
   <% } %>
   <% _(menus.sub).each((item) => { %>
-  <div class="sidebar-sub-title">
+  <div class="sidebar-sub-title <%=item.jsName%>">
     <span class="sfa sfa-sidebar-<%=item.icon%> vertical-middle"></span>
     <%=item.name%>
   </div>
@@ -41,7 +41,7 @@
     <% if (!menu.needAuth || menu.auth) { %>
     <li role="presentation" class="<% if (menu.isActive) { %>active<% } %>">
       <a class="router" href="#<%=menu.router %>">
-        <%=menu.name %>
+        <%=menu.name %><% if(menu.id === 407 && dividendStatus === 1) { %> <span class="js-ac-dm-tip ac-dm-tip">待签约</span> <%}%>
       </a>
     </li>
     <% } %>

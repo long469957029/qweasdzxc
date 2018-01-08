@@ -7,7 +7,7 @@ module.exports = {
     base: './src/base/build.base.js',
     // trend: './src/apps/packages/trend/index.js',
     // resetPassword: './src/apps/packages/resetPassword/resetPassword.js',
-    // updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
+    updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
     // merchants: './src/apps/packages/merchants/index.js',
     // 404: './src/apps/packages/404/index.js',
     // mmc: './src/apps/packages/mmc/index.js',

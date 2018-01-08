@@ -19,10 +19,8 @@ const SidemenuModule = Base.Module.extend({
   updateMenuAuth(acctInfo) {
     // dividendStatus 分红状态
     const dividendStatus = acctInfo.dividendStatus !== dividendConfig.getByName('UN_APPLIED').id
-    // $('.js-header-router-role[href="#ac/dm"]').toggleClass('hidden', !dividendStatus && !acctInfo.merchant)// header菜单显示权限处理
-    // $('.js-header-router-role[href="#ac/rp"]').toggleClass('hidden', !acctInfo.redEnvelope)// header菜单显示权限处理
-    // $('.js-header-router-role[href="#ac/reb"]').toggleClass('hidden', !acctInfo.merchant)// header菜单显示权限处理
-    $('.js-dm-tip').toggleClass('hidden', acctInfo.dividendStatus === 1)
+    $('.js-ac-dm-tip').toggleClass('hidden', acctInfo.dividendStatus !== 1 && acctInfo.dividendStatus !== 3)
+    $('.js-ac-divid-menu').toggleClass('hidden', !dividendStatus)
     _(_(this.get('ac').sub).chain().pluck('list').flatten()
       .value()).findWhere({
       id: 407, // 直属分红
@@ -30,11 +28,11 @@ const SidemenuModule = Base.Module.extend({
     _(_(this.get('ac').sub).chain().pluck('list').flatten()
       .value()).findWhere({
       id: 501, // 直属分红 - 下级分红
-    }).auth = dividendStatus || !acctInfo.merchant
+    }).auth = acctInfo.dividendStatus > 1
     _(_(this.get('ac').sub).chain().pluck('list').flatten()
       .value()).findWhere({
       id: 502, // 直属分红
-    }).auth = dividendStatus || !acctInfo.merchant
+    }).auth = acctInfo.dividendStatus > 1
 
     _(_(this.get('ac').sub).chain().pluck('list').flatten()
       .value()).findWhere({
