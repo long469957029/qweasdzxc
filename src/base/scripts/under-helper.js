@@ -2,6 +2,8 @@
 
 const core = require('mathjs/core')
 
+import { repeat, fill, chunk } from 'lodash'
+
 const math = core.create()
 
 math.import(require('mathjs/lib/function/arithmetic/add'))
@@ -13,6 +15,8 @@ math.import(require('mathjs/lib/function/arithmetic/floor'))
 const gameConfig = require('skeleton/misc/gameConfig')
 
 _.mixin({
+  repeat,
+  fill,
   // 首字母大写
   ucFirst(string) {
     return string.replace(/\b\w+\b/g, (word) => {
@@ -124,7 +128,7 @@ _.mixin({
     const index = href.indexOf('/index.html')
     if (index > -1) {
       return href.substring(0, index) + arg
-    } 
+    }
     return href.substring(0, href.indexOf('/#')) + arg
   },
 
@@ -172,7 +176,7 @@ _.mixin({
     const pos = sArg1.indexOf('.')
     if (pos > -1) {
       return Number(sArg1.substring(0, pos + index + 1))
-    } 
+    }
     return arg1
   },
 
@@ -231,7 +235,7 @@ _.mixin({
 
     if (!match) {
       return ''
-    } 
+    }
     return `?${match[1]}`
   },
 
@@ -251,7 +255,7 @@ _.mixin({
 
     if (name) {
       return params[name]
-    } 
+    }
     return params
   },
 
@@ -259,7 +263,7 @@ _.mixin({
   getConfig(config, index) {
     if (_(index).isUndefined()) {
       return config
-    } 
+    }
     return (_(config).findWhere({
       index,
     }) || {})
@@ -278,9 +282,9 @@ _.mixin({
   //   return window.Object.prototype.hasOwnProperty
   // },
   deepCopy(source) {
-    let copy, 
-      i, 
-      len, 
+    let copy,
+      i,
+      len,
       prop
     if (typeof source !== 'object' || source == null || typeof source.nodeType === 'number') {
       copy = source

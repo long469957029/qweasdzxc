@@ -64,8 +64,12 @@ module.exports = function(options) {
     }),
     new webpack.ProvidePlugin(appConfig.providePlugin),
     new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /zh-cn/),
-    new BundleAnalyzerPlugin(),
+
   ];
+
+  if (process.env.NODE_ENV === 'analyse') {
+    plugins.push(new BundleAnalyzerPlugin())
+  }
 
   if (options.debug) {
     //plugins.push(new CommonsChunkPlugin('vendor.js', appConfig.commonChunks));
