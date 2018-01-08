@@ -118,7 +118,7 @@
   "~base/styles/variable";
 
   .opening-balls{
-    max-width: 390px;
+    max-width: 295px;
     display: inline-block;
 
     .ball-item-wrapper {
@@ -136,6 +136,11 @@
         left: 11px;
         transform: rotateX(65deg);
       }
+      &:nth-of-type(n + 6) {
+        .text-circle {
+          margin-bottom: 0;
+        }
+      }
     }
 
     .ball-item {
@@ -146,7 +151,7 @@
       font-family: din, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
       position: relative;
       overflow: hidden;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
     .text-circle-num {
       height: 40px;

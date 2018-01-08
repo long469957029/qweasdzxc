@@ -109,5 +109,8 @@
 </script>
 
 <style scoped>
+  .bc-basic-rules {
+    height: 40px;
+  }
 
 </style>
