@@ -84,7 +84,7 @@
     "gulp-rename": "^1.1.0",
     "gulp-spritesmith": "0.0.2",
     "gulp-template": "^1.1.1",
-    "gulp-uglify": "^0.2.1",
+    "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.6",
     "gulp-zip": "^3.2.0",
     "gulp.spritesmith": "^4.1.1",

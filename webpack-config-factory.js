@@ -12,11 +12,12 @@ module.exports = function(options) {
 
   //==============entry================
   var entry = _(appConfig.entry).reduce(function(entries, entry, entryName) {
-    entry = [
-      'webpack-dev-server/client?http://localhost:' + appConfig.port,
-      'webpack/hot/only-dev-server'
-    ].concat(entry);
-
+    if (options.debug) {
+      entry = [
+        'webpack-dev-server/client?http://localhost:' + appConfig.port,
+        'webpack/hot/only-dev-server'
+      ].concat(entry);
+    }
     entries[entryName] = entry;
 
     return entries;
