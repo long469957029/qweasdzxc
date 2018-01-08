@@ -98,7 +98,7 @@ const ReportManageView = SearchGrid.extend({
     new TicketSelectGroup({
       el: this.$('.js-ac-ticket-select'),
     })
-
+    this.$checkBox = this.$('#js-no-data-sum')
     // 初始化彩种
     SearchGrid.prototype.onRender.apply(this, arguments)
   },
@@ -122,7 +122,15 @@ const ReportManageView = SearchGrid.extend({
       pageIndex: this.filterHelper.get('pageIndex'),
       initPagination: false,
     })
-
+    let noHaveData = 0
+    _(rowsData).each((item, index) => {
+      if (_.isUndefined(rowsData[index].columnEls)) {
+        noHaveData += 1
+      }
+    })
+    if (noHaveData === rowsData.length) {
+      this.$('.js-wt-empty-container').removeClass('hidden')
+    }
     if (!_(gridData.parents).isEmpty()) {
       this._breadList = _(gridData.parents).map((parent) => {
         return {
@@ -156,6 +164,12 @@ const ReportManageView = SearchGrid.extend({
 
   formatRowData(rowInfo) {
     const row = []
+    if (this.$checkBox.is(':checked')) {
+      if (rowInfo.ticket === 0 && rowInfo.ag === 0 && rowInfo.ebet === 0 && rowInfo.bbin === 0 && rowInfo.pt === 0
+        && rowInfo.mg === 0 && rowInfo.agFish === 0 && rowInfo.ggFish === 0 && rowInfo.profit === 0) {
+        return
+      }
+    }
     if (this.hasSub() && rowInfo.username === this.getCurtSub().label || !rowInfo.hasSubUser) {
       row.push(rowInfo.username)
     } else {
