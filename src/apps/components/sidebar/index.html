@@ -7,7 +7,7 @@
     <div class="user-info-photo">
       <img src=""  />
     </div>
-    <div class="user-info-name text-inverse text-center m-top-smd font-sm">您好，<span class="js-user-name">iris123</span></div>
+    <div class="user-info-name text-inverse text-center m-top-smd font-sm">您好，<span class="js-user-name"><%=userName%></span></div>
     <div class="m-top-sm text-center">
       <span class="sfa sfa-icon-lock m-right-xs"></span>
       <span class="sfa sfa-icon-light-bulb m-right-xs"></span>
@@ -32,9 +32,11 @@
   </div>
   <% } %>
   <% _(menus.sub).each((item) => { %>
-  <div class="sidebar-sub-title <%=item.jsName%>">
+  <div class="sidebar-sub-title">
+    <% if (!item.needAuth || item.auth) { %>
     <span class="sfa sfa-sidebar-<%=item.icon%> vertical-middle"></span>
     <%=item.name%>
+    <% } %>
   </div>
   <ul class="sidebar-list">
     <% _(item.list).each(function(menu) { %>

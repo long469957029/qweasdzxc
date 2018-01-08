@@ -16,6 +16,11 @@ const config = [
     zhName: '已开通',
     name: 'APPLIED',
   },
+  {
+    id: 3,
+    zhName: '已开通',
+    name: 'REVISE',
+  },
 ]
 
 module.exports = {
