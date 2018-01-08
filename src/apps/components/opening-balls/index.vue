@@ -69,10 +69,10 @@
 
             _.delay(() => {
               Velocity(this.$refs.balls[i], 'stop')
-              this.$refs.balls[i].style.top = '0px'
+              this.$refs.balls[i].style.top = `${-this.totalHeight}px`
 
               Velocity(this.$refs.balls[i], {
-                top: this.$_getDes(this.$refs.balls[i]),
+                top: this.$_getDes(i),
               }, {
                 duration: 2000,
                 easing: 'ease-out',
@@ -88,7 +88,7 @@
       },
 
       $_getDes(i) {
-        return -this.totalHeight + -this.perHeight * _.indexOf(this.range, this.openingBalls[i])
+        return -this.perHeight * _.indexOf(this.range, this.openingBalls[i])
       },
 
       _rolling(ball, i, init = false) {
