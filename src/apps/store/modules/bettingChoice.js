@@ -41,12 +41,12 @@ const initState = () => {
 
 // getters
 const getters = {
-  playId: state => {
+  playId: (state) => {
     return state.playId
   },
-  groupId: state => {
+  groupId: (state) => {
     return state.groupId
-  }
+  },
 }
 
 // actions
@@ -74,7 +74,7 @@ const actions = {
         { planId, bet, usePack: state.usePack },
         ({ data }) => {
           resolve(data)
-          return commit(types.PUSH_BETTING_SUCCESS, {res: data, type})
+          return commit(types.PUSH_BETTING_SUCCESS, { res: data, type })
         },
         () => { return commit(types.PUSH_BETTING_FAILURE) },
       )
@@ -84,7 +84,7 @@ const actions = {
   pushChase ({ state, commit }, {
     plan,
     suspend,
-    amount
+    amount,
   }) {
     const bettingList = state.previewList
     const play = _(bettingList).reduce((list, item) => {
@@ -100,7 +100,9 @@ const actions = {
 
     return new Promise((resolve) => {
       betting.pushChase(
-        { plan, play, suspend, usePack: state.usePack, amount },
+        {
+          plan, play, suspend, usePack: state.usePack, amount, 
+        },
         ({ data }) => {
           resolve(data)
           return commit(types.PUSH_CHASE_SUCCESS, data)
@@ -118,7 +120,7 @@ const mutations = {
     Object.assign(state, initState())
   },
 
-  [types.PUSH_BETTING_SUCCESS] (state, {res, type}) {
+  [types.PUSH_BETTING_SUCCESS] (state, { res, type }) {
     if (res && res.result === 0) {
       if (type === 'previewList') {
         this.commit(types.EMPTY_PREV_BETTING)

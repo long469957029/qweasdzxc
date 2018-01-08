@@ -1,7 +1,5 @@
 
 
-
-
 const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
   template: require('./bettingCenter-historical-analysis.html'),

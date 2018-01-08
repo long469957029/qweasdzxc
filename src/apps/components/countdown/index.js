@@ -10,8 +10,6 @@ const Countdown = Base.PrefabView.extend({
     labels: ['hours', 'minutes', 'seconds'],
     format: '%H:%M:%S',
     prevClass: 'js-pf',
-    type: 'label',
-    needBg: false,
   },
 
   initialize() {
@@ -69,19 +67,18 @@ const Countdown = Base.PrefabView.extend({
 
     // Build the layout
     const initData = strfobj(currDate)
-    if (this.options.type === 'label') {
-      _(self.options.labels).each((label, i) => {
-        self.$el.append(self.tpl({
-          curr: _(initData[label].split('')).map((item) => {
-            return self.options.color + item
-          }),
-          label,
-          isLast: self.options.labels.length - 1 === i,
-          color: self.options.color,
-          size: self.options.size,
-        }))
-      })
-    }
+    _(self.options.labels).each((label, i) => {
+      self.$el.append(self.tpl({
+        curr: _(initData[label].split('')).map((item) => {
+          return self.options.color + item
+        }),
+        label,
+        isLast: self.options.labels.length - 1 === i,
+        color: self.options.color,
+        size: self.options.size,
+      }))
+    })
+
     // Starts the countdown
     this.$el.countdown(leftTime, (event) => {
       // 将天数化为小时数
@@ -89,40 +86,29 @@ const Countdown = Base.PrefabView.extend({
       totalHours = totalHours < 10 ? (`0${totalHours}`) : totalHours
       const newDate = event.strftime(`${totalHours}:%M:%S`)
       //  var newDate = event.strftime(self.options.format);
-      if (this.options.type === 'label') {
-        let data
+      let data
 
-        if (newDate !== nextDate) {
-          currDate = nextDate
-          nextDate = newDate
-          // Setup the data
-          data = {
-            curr: strfobj(currDate),
-            next: strfobj(nextDate),
-          }
-
-          // Apply the new values to each node that changed
-          _(diff(data.curr, data.next)).each((label) => {
-            const selector = '.%s'.replace(/%s/, label)
-            const $node = self.$el.find(selector)
-            const nums = data.next[label].split('')
-            if (self.options.needBg) {
-              $node.html([
-                `<span class="countdown-item-bg">${nums[0]}</span>`,
-                `<span class="countdown-item-bg">${nums[1]}</span>`,
-              ].join(''))
-            } else {
-              $node.html([
-                `<span class ="sfa sfa-cd-${self.options.color}${nums[0]} countdown-item${self.options.size}"></span>`,
-                `<span class ="sfa sfa-cd-${self.options.color}${nums[1]} countdown-item${self.options.size}"></span>`,
-              ].join(''))
-            }
-          })
-
-          self.trigger('change:leftTime', event)
+      if (newDate !== nextDate) {
+        currDate = nextDate
+        nextDate = newDate
+        // Setup the data
+        data = {
+          curr: strfobj(currDate),
+          next: strfobj(nextDate),
         }
-      } else {
-        self.$el.text(newDate)
+
+        // Apply the new values to each node that changed
+        _(diff(data.curr, data.next)).each((label) => {
+          const selector = '.%s'.replace(/%s/, label)
+          const $node = self.$el.find(selector)
+          const nums = data.next[label].split('')
+
+          $node.html([
+            `<span class="sfa sfa-cd-${self.options.color}${nums[0]} countdown-item${self.options.size}"></span>`,
+            `<span class="sfa sfa-cd-${self.options.color}${nums[1]} countdown-item${self.options.size}"></span>`,
+          ].join(''))
+        })
+
         self.trigger('change:leftTime', event)
       }
     })

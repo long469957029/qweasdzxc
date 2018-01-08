@@ -36,7 +36,7 @@ const BettingCenterView = Base.ItemView.extend({
       },
     })
 
-    //暂时在这重置bettingChoice
+    // 暂时在这重置bettingChoice
     store.commit(types.RESET_BETTING_CHOICE)
 
     // 取得当前彩票信息

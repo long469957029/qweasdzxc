@@ -11,7 +11,7 @@ export default {
     }).join(',')}`
   },
 
-  //显示用format
+  // 显示用format
   handicapNormal(itemList) {
     return _.map(itemList, (item) => {
       return `${item.title} ${item.betMoney}元`
@@ -22,5 +22,5 @@ export default {
     return _.map(itemList, (item) => {
       return `${item.title}`
     }).join(',')
-  }
+  },
 }

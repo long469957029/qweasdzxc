@@ -1,7 +1,6 @@
 import factory from 'bettingCenter/misc/betRulesFactory'
 
 
-
 const SscFactory = require('bettingCenter/misc/betRulesFactory-ssc')
 const ChooseFactory = require('bettingCenter/misc/betRulesFactory-choose5')
 const ThreeDFactory = require('bettingCenter/misc/betRulesFactory-3d')

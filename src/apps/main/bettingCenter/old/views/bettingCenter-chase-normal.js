@@ -5,7 +5,6 @@ const FilterHelper = require('skeleton/misc/filterHelper')
 const ChaseModel = require('bettingCenter/models/bettingChase-normal')
 
 
-
 const BettingCenterChaseNormalView = Base.ItemView.extend({
 
   template: require('bettingCenter/templates/bettingCenter-chase-normal.html'),

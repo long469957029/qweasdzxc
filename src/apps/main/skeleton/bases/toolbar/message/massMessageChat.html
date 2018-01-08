@@ -1,0 +1,94 @@
+<div class="chat-massMessageChat">
+  <div class="chat-massMessageChat-panel">
+  <div class="chat-title">
+    <span class="chat-title-lg">群发消息</span>
+    <button class="btn js-select-panel-hidden btn-chat-hidden pull-right">隐藏联系人</button>
+    <button class="btn js-select-panel-show btn-chat-hidden pull-right hidden">查看联系人</button>
+  </div>
+  <div class="chat-select-container">
+    <div class="chat-person-panel chat-select-panel inline-block">
+      <div class="chat-person-panel-title">
+        <span class="panel-title-text">选择发送人</span>
+        <button class="btn btn-panel-title pull-right">全选</button>
+      </div>
+      <div class="search-panel">
+        <span class="sfa sfa-icon-search-sm search-panel-img"></span>
+        <input class="search-panel-input" placeholder="搜索">
+      </div>
+      <div class="select-container">
+        <div class="select-superior">我的上级</div>
+        <div class="select-sub">
+          <span class="select-sub-img"><i class="fa fa-caret-right" aria-hidden="true"></i></span>
+          <span class="select-sub-text">我的下级</span>
+        </div>
+        <div class="select-sub-container">
+          <div class="select-sub-items">
+            <div class="select-sub-item">乔丹<i class="fa fa-check pull-right select-sub-item-isSelect"
+                                              aria-hidden="true"></i></div>
+            <div class="select-sub-item">浪花三兄弟</div>
+            <div class="select-sub-item">三旬老汉</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-select-img  inline-block"><span class="sfa sfa-icon-sub-right chat-select-img-area"></span></div>
+    <div class="chat-person-panel chat-selected-panel inline-block">
+      <div class="chat-person-panel-title">
+        <span class="chat-person-panel-title">已添加</span>
+        <button class="btn btn-panel-title pull-right">全清</button>
+      </div>
+      <div class="selected-sub-container">
+        <div class="selected-sub-items">
+          <div class="selected-sub-item">乔丹<i
+            class="js-selected-sub-item-cancel fa fa-times pull-right selected-sub-item-cancel" aria-hidden="true"></i>
+          </div>
+          <div class="selected-sub-item">浪花三兄弟</div>
+          <div class="selected-sub-item">三旬老汉</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chat-message-content">
+    <div class="chat-more-content">
+      载入更多信息
+    </div>
+    <div class="chat-day-time">
+      2017年3月21日
+    </div>
+    <div class="chat-content-container">
+      <div class="chat-item">
+        <div class="sfa sfa-avatar-online chat-item-avatar inline-block"></div>
+        <div class="inline-block chat-item-detail">
+          <div class="chat-item-name">乔丹</div>
+          <div class="chat-item-message">今天打球去？</div>
+        </div>
+        <div class="inline-block chat-item-time pull-right">10:56 AM</div>
+      </div>
+      <div class="chat-item">
+        <div class="sfa sfa-avatar-online chat-item-avatar inline-block"></div>
+        <div class="inline-block chat-item-detail">
+          <div class="chat-item-name">加内特</div>
+          <div class="chat-item-message">打你MB打你MB打你MB打你MB打你MB打你MB打你MB打你MB打你MB打你MB打你MB打你MB打你MB打你MB打你MB打你MB</div>
+        </div>
+        <div class="inline-block chat-item-time pull-right">10:58 AM</div>
+      </div>
+      <div class="chat-item">
+        <div class="sfa sfa-avatar-online chat-item-avatar inline-block"></div>
+        <div class="inline-block chat-item-detail">
+          <div class="chat-item-name">乔丹</div>
+          <div class="chat-item-message">打你妹</div>
+        </div>
+        <div class="inline-block chat-item-time pull-right">10:56 AM</div>
+      </div>
+    </div>
+  </div>
+  <div class="chat-message-footer">
+    <div class="chat-footer-input ">
+      <div class="js-content-editable content-editable" contenteditable="true"></div>
+      <textarea v-model="deliveryLocation" class="js-chat-input chat-input" placeholder="请输入要发送的信息"></textarea>
+    </div>
+    <div class="sfa sfa-icon-smile-gray chat-footer-smile inline-block"></div>
+    <div class="sfa sfa-icon-send-gray js-chat-footer-send chat-footer-send inline-block"></div>
+  </div>
+</div>
+</div>

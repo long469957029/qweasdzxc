@@ -1,7 +1,7 @@
 
 
 require('./index.scss')
-
+const ticketConfig = require('skeleton/misc/ticketConfig')
 
 // 提前加载图片
 const img_arr = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image(), new Image()]

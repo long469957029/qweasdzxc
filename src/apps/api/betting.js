@@ -54,8 +54,10 @@ export default {
       .catch(fail)
   },
 
-  //提交追号
-  pushChase({plan, play, suspend, usePack, amount}, then, fail) {
+  // 提交追号
+  pushChase({
+    plan, play, suspend, usePack, amount, 
+  }, then, fail) {
     return Global.sync.axios({
       url: '/ticket/chase/chase.json',
       tradition: true,
@@ -71,9 +73,9 @@ export default {
       .catch(fail)
   },
 
-  //jsonp 考虑以后直接只用CORS
-  //取得30期冷热
-  getColdHot({ticketId, playSeriesId}, then) {
+  // jsonp 考虑以后直接只用CORS
+  // 取得30期冷热
+  getColdHot({ ticketId, playSeriesId }, then) {
     return Global.sync.ajax({
       url: 'http://trend.ybf01.com/trends/data/coldHotData.json',
       data: {
@@ -81,13 +83,13 @@ export default {
         playSeriesId,
         token: 'a8d60d17-2957-450a-9421-0749c2621704',
       },
-      dataType: 'jsonp'
+      dataType: 'jsonp',
     })
       .done(then)
   },
 
-  //当前遗漏
-  getCurrentMiss({ticketId, playSeriesId}, then) {
+  // 当前遗漏
+  getCurrentMiss({ ticketId, playSeriesId }, then) {
     return Global.sync.ajax({
       url: 'http://trend.ybf01.com/trends/data/currentMiss.json',
       data: {
@@ -95,19 +97,9 @@ export default {
         playSeriesId,
         token: 'a8d60d17-2957-450a-9421-0749c2621704',
       },
-      dataType: 'jsonp'
+      dataType: 'jsonp',
     })
       .done(then)
   },
 }
-
-
-
-
-
-
-
-
-
-
 
