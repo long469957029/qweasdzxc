@@ -1,14 +1,6 @@
 {
   "name": "global-pc",
   "version": "0.1.0",
-  "babel": {
-    "ignore": [
-      "createjs-2015.11.26.min.js",
-      "**/*.min.js",
-      "**/jQuery*.js",
-      "**/jquery*.js"
-    ]
-  },
   "dependencies": {
     "@babel/core": "^7.0.0-beta.35",
     "@tweenjs/tween.js": "^17.1.1",
@@ -35,7 +27,7 @@
     "dev.main": "gulp server",
     "dev.external": "gulp external",
     "analysis": "webpack --profile --json > stats.json --config=webpack.production.config.js",
-    "deploy": "NODE_ENV=production gulp release -p --config",
+    "deploy": "NODE_ENV=production gulp release",
     "lint": "./node_modules/eslint/bin/eslint.js src/ --fix"
   },
   "lint-staged": {
@@ -49,13 +41,12 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.0.0-beta.35",
+    "@babel/preset-es2015": "^7.0.0-beta.36",
     "assets-webpack-plugin": "^3.5.1",
     "axios": "^0.17.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^8.0.0-beta.0",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-stage-0": "^6.3.13",
     "connect": "~2.18.0",
     "connect-route": "^0.1.5",
     "cookie": "^0.2.3",
@@ -106,6 +97,7 @@
     "postcss-filter-gradient": "^1.0.0",
     "postcss-loader": "^2.0.9",
     "postcss-unrgba": "^1.1.1",
+    "pump": "^2.0.0",
     "qs": "^6.5.1",
     "raw-loader": "^0.5.1",
     "run-sequence": "^0.3.6",
@@ -124,6 +116,7 @@
     "vue-loader": "^13.5.0",
     "vue-template-compiler": "^2.5.11",
     "webpack": "^3.10.0",
+    "webpack-bundle-analyzer": "^2.9.1",
     "webpack-dev-server": "^2.9.7"
   },
   "engines": {
