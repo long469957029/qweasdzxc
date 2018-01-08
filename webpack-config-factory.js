@@ -162,7 +162,7 @@ module.exports = function(options) {
           options: {
           }
         },
-        include: options.debug ? [path.join(__dirname, 'src')] : [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules')],
+        include: options.debug ? [path.join(__dirname, 'src')] : [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules', 'rambda')],
         exclude: /jquery|jqmeter|turn.html4/,
       },
     ]
