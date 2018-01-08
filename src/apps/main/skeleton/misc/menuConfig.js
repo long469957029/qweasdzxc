@@ -168,7 +168,7 @@ const menuConfig = [
           {
             id: 407,
             router: 'ac/dm',
-            name: '我的分红',
+            name: '我的分红<span class="hidden js-ac-dm-tip ac-dm-tip">待签约</span>',
             needAuth: true,
             quickShowName: '我的<br/>分红',
           },

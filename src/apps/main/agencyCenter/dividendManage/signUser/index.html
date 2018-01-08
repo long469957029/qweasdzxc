@@ -8,17 +8,15 @@
   <!--<div class="dot-divider dot-divider-md"></div>-->
   <div class="js-ac-dm-su-username-div ac-dm-su-username-div ac-dm-su-indent">
     <label class=" ac-dm-su-un-label font-xs">选择待签约下级：</label>
-    <div class="pull-left">
-      <div>
-        <input type="text" class="ac-dm-su-input" name="username"
-        <%= (obj.userData?'readonly':'') %>
-        value="<%=obj.userData && obj.userData.username %>"
-        data-parsley-username
-        data-parsley-remote
-        data-parsley-remote-validator="accheckusername"
-        data-parsley-remote-options='{"type": "POST"}'
-        required />
-      </div>
+    <div>
+      <input type="text" class="ac-dm-su-input" name="username"
+      <%= (obj.userData?'readonly':'') %>
+      value="<%=obj.userData && obj.userData.username %>"
+      data-parsley-username
+      data-parsley-remote
+      data-parsley-remote-validator="accheckusername"
+      data-parsley-remote-options='{"type": "POST"}'
+      required />
     </div>
   </div>
 
