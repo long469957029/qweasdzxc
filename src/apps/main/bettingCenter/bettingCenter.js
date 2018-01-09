@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import ticketConfig from 'skeleton/misc/ticketConfig'
 
 import store from '../../store/index'
@@ -10,6 +11,7 @@ import TicketInfoBanner from './ticket-info-banner'
 import BettingMainArea from './betting-main-area'
 import BettingMainAreaHandicap from './betting-main-area-handicap'
 
+Vue.use(VueRouter)
 Object.defineProperty(Vue.prototype, '_', { value: _ })
 
 const BettingCenterView = Base.ItemView.extend({

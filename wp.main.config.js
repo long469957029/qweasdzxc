@@ -210,7 +210,7 @@ module.exports = {
     'window.jQuery': 'jquery',
     bootstrap: 'bootstrap',
     _: 'underscore',
-    R: 'rambda',
+    R: 'ramda',
     slimScroll: 'jquery-slimscroll',
     Velocity: 'velocity-animate',
 
