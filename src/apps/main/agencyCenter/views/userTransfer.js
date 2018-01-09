@@ -427,6 +427,8 @@ const MoneyTransferView = Base.ItemView.extend({
           if (res && res.result === 0) {
             Global.ui.notification.show('转账成功。', {
               type: 'success',
+              hasFooter: false,
+              displayTime: 1000,
             })
             self.render()
           } else if (_(res.root).isNumber()) {

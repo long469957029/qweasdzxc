@@ -15,6 +15,7 @@ const SearchGrid = Base.PrefabView.extend({
     remoteEveryTime: true,
     divider: true,
     tip: '',
+    cover: true,
   },
 
   constructor() {
@@ -152,7 +153,7 @@ const SearchGrid = Base.PrefabView.extend({
     if (options.type === 'research' || this.options.remoteEveryTime) {
       Global.sync.ajax({
         url: this._currentUrl,
-        data: _(filters).extend(this.options.reqData),
+        data: this.options.cover ? _(filters).extend(this.options.reqData) : _.chain(filters).pick(_.identity).defaults(this.options.reqData).value(),
       })
         .fail((def, type) => {
           if (type !== 'abort') {

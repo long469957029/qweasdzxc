@@ -89,6 +89,7 @@ const ReportManageView = SearchGrid.extend({
         url: '/info/gamereport/teamprofitdetail.json',
         data: ['userId'],
       },
+      cover: false,
     })
   },
 
