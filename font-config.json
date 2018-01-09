@@ -1,6 +1,6 @@
 [
   {
-    "font": "din.ttf",
+    "font": "tahoma_0.ttf",
     "dest": "./src/base/fonts",
     "target": "din",
     "text": "1234567890.,",

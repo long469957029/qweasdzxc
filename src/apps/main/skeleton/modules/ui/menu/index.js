@@ -23,7 +23,7 @@ const SidemenuModule = Base.Module.extend({
 
     _(this.get('ac').sub).findWhere({
       id: 'divid',
-    }).auth = dividendStatus
+    }).auth = dividendStatus || acctInfo.merchant
 
     _(_(this.get('ac').sub).chain().pluck('list').flatten()
       .value()).findWhere({
