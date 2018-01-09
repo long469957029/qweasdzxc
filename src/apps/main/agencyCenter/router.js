@@ -11,7 +11,7 @@ exports.install = function() {
     'ac/llm/detail/:userId': 'lowLevelDetail', // 下级管理详情
 
     'ac/llm/message/:userId': 'sendMessage', // 发消息
-    'ac/llm/transfer/:userId': 'transfer', // 转账
+    'ac/tr/:userId': 'transfer', // 转账
     'ac/oam': 'openAccountManage', // 开户
 
     'ac/tbr': 'teamBettingRecord', // 团队投注记录-ticket

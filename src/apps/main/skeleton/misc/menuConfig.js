@@ -164,11 +164,13 @@ const menuConfig = [
       {
         name: '分红管理',
         icon: 'divid',
+        id: 'divid',
+        needAuth: true,
         list: [
           {
             id: 407,
             router: 'ac/dm',
-            name: '我的分红<span class="hidden js-ac-dm-tip ac-dm-tip">待签约</span>',
+            name: '我的分红',
             needAuth: true,
             quickShowName: '我的<br/>分红',
           },

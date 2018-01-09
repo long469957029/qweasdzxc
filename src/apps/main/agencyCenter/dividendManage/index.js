@@ -25,7 +25,7 @@ const DividendManageView = Base.ItemView.extend({
   },
   _render() {
     const acctInfo = Global.memoryCache.get('acctInfo')
-    if (acctInfo.dividendStatus === dividendConfig.getByName('APPLYING').id) {
+    if (acctInfo.dividendStatus === dividendConfig.getByName('APPLYING').id || acctInfo.dividendStatus === dividendConfig.getByName('REVISE').id) {
       // 申请中，渲染 签约页面
       this.$el.html(new AgreementView().render().$el)
     } else if (acctInfo.dividendStatus === dividendConfig.getByName('APPLIED').id || acctInfo.merchant) {

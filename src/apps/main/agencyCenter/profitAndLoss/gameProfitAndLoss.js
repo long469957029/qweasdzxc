@@ -106,7 +106,7 @@ const ReportManageView = SearchGrid.extend({
       },
       showIcon: true,
     }).render()
-
+    this.$checkBox = this.$('#js-no-data-game')
     new TicketSelectGroup({
       el: this.$('.js-ac-ticket-select'),
     })
@@ -135,7 +135,15 @@ const ReportManageView = SearchGrid.extend({
       pageIndex: this.filterHelper.get('pageIndex'),
       initPagination: false,
     })
-
+    let noHaveData = 0
+    _(rowsData).each((item, index) => {
+      if (_.isUndefined(rowsData[index].columnEls)) {
+        noHaveData += 1
+      }
+    })
+    if (noHaveData === rowsData.length) {
+      this.$('.js-wt-empty-container').removeClass('hidden')
+    }
     if (!_(gridData.parents).isEmpty()) {
       this._breadList = _(gridData.parents).map((parent) => {
         return {
@@ -168,6 +176,12 @@ const ReportManageView = SearchGrid.extend({
 
   formatRowData(rowInfo) {
     const row = []
+    if (this.$checkBox.is(':checked')) {
+      if (rowInfo.recharge === 0 && rowInfo.withdraw === 0 && rowInfo.bet === 0 && rowInfo.prize === 0
+        && rowInfo.rebate === 0 && rowInfo.activity === 0 && rowInfo.profit === 0) {
+        return
+      }
+    }
     if (this.hasSub() && rowInfo.username === this.getCurtSub().label || !rowInfo.hasSubUser) {
       row.push(rowInfo.username)
     } else {
