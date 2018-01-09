@@ -10,6 +10,8 @@ const AgreementView = Base.ItemView.extend({
 
   agreementContentTpl: _(require('./../agreement-content.html')).template(),
 
+  agreeConfirmTpl: _(require('./agreeConfirm.html')).template(),
+
   startOnLoading: true,
 
   events: {
@@ -83,41 +85,106 @@ const AgreementView = Base.ItemView.extend({
     const $target = $(e.currentTarget)
     const status = $target.data('status')
 
-    this.$btnApprove.button('loading')
-
-    this.approveXhr({
-      status,
+    const $dialog = Global.ui.dialog.show({
+      closeBtn: false,
+      body: '<div class="js-ac-agree-main"></div>',
+      bodyClass: 'no-border no-padding no-bg',
+      anySize: '480',
     })
-      .always(() => {
-        self.$btnApprove.button('reset')
-      })
-      .done((res) => {
-        if (res && res.result === 0) {
-          Global.m.oauth.check()
-            .done((res) => {
-              if (res && res.result === 0) {
-                if (status === 1) {
-                  Global.ui.notification.show('签署分红协议成功。', {
-                    event() {
-                      Global.m.oauth.check()
-                      Global.router.goTo('ac/dm')
-                    },
-                  })
-                } else {
-                  Global.ui.notification.show('拒绝分红协议成功。', {
-                    event() {
-                      Global.m.oauth.check()
-                      Global.router.goTo('')
-                    },
-                  })
-                }
-              }
-            })
-        } else {
-          Global.ui.notification.show(res.msg || '')
+    $dialog.find('.js-ac-agree-main').html(this.agreeConfirmTpl({
+      title: status === 1 ? '签约确认' : '拒绝签约',
+      type: status,
+      time: _(moment().startOf('day').add(1, 'days')).toTime(),
+    }))
+
+    $dialog.on('hidden.modal', function() {
+      $(this).remove()
+    })
+    const data = {
+      status,
+    }
+    $dialog.off('click.confirm').on('click.confirm', '.js-ac-agree-btn', () => {
+      if (status === 2) {
+        const remark = _($dialog.find('.js-agreement-textarea').val()).trim()
+        if (remark === '') {
+          $dialog.find('.js-ac-agree-error').html(`<div class="tooltip parsley-errors-list tooltip-error">
+      <span class="sfa sfa-error-icon vertical-sub pull-left"></span>
+      <div class="tooltip-inner">请输入拒绝签约的理由</div>
+      </div>`)
+          return false
         }
-      })
+        _(data).extend({
+          remark,
+        })
+      }
+      this.approveXhr(data)
+        .always(() => {
+        })
+        .done((res) => {
+          if (res && res.result === 0) {
+            $dialog.modal('hide')
+            Global.m.oauth.check()
+              .done((_res) => {
+                if (_res && _res.result === 0) {
+                  if (status === 1) {
+                    Global.ui.notification.show('签署分红协议成功。', {
+                      event() {
+                        Global.m.oauth.check()
+                        Global.router.goTo('ac/dm')
+                      },
+                    })
+                  } else {
+                    Global.ui.notification.show('拒绝分红协议成功。', {
+                      event() {
+                        Global.m.oauth.check()
+                        Global.router.goTo('')
+                      },
+                    })
+                  }
+                }
+              })
+          } else {
+            Global.ui.notification.show(res.msg || '')
+          }
+        })
+    })
+
+    // this.$btnApprove.button('loading')
+    //
+    // this.approveXhr({
+    //   status,
+    // })
+    //   .always(() => {
+    //     self.$btnApprove.button('reset')
+    //   })
+    //   .done((res) => {
+    //     if (res && res.result === 0) {
+    //       Global.m.oauth.check()
+    //         .done((res) => {
+    //           if (res && res.result === 0) {
+    //             if (status === 1) {
+    //               Global.ui.notification.show('签署分红协议成功。', {
+    //                 event() {
+    //                   Global.m.oauth.check()
+    //                   Global.router.goTo('ac/dm')
+    //                 },
+    //               })
+    //             } else {
+    //               Global.ui.notification.show('拒绝分红协议成功。', {
+    //                 event() {
+    //                   Global.m.oauth.check()
+    //                   Global.router.goTo('')
+    //                 },
+    //               })
+    //             }
+    //           }
+    //         })
+    //     } else {
+    //       Global.ui.notification.show(res.msg || '')
+    //     }
+    //   })
   },
+
 })
 
 module.exports = AgreementView

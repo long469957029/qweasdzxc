@@ -1,9 +1,24 @@
 <div class="ac-agree-confirm">
   <div class="agree-confirm-title">
-    <span></span>
-    <a class="close">&times;</a>
+    <span><%=title%></span>
+    <a class="close btn-close" data-dismiss="modal">&times;</a>
   </div>
-  <div class="agree-container">
-
+  <div class="agree-container clearfix">
+    <% if(type === 1) {%>
+    <div class="text-center font-sm m-top-lg p-top-md">已清楚分红协议内容？</div>
+    <div class="text-center m-bottom-lg font-sm">确定签约后该协议将于<span class="text-prominent"><%=time%></span>正式生效！</div>
+    <%} else {%>
+    <div class="agree-refuse-contant m-top-lg">
+      <div class="font-sm font-sm">请填写拒绝签约的理由</div>
+      <div class="m-top-sm">
+        <textarea class="agreement-textarea js-agreement-textarea"></textarea>
+      </div>
+    </div>
+    <%}%>
+    <div class="p-left-lg m-bottom-lg js-ac-agree-error"></div>
+    <div class="text-center m-top-lg m-bottom-lg">
+      <button class="btn btn-cool ac-agree-btn js-ac-agree-btn">确认</button>
+      <button class="btn btn-link" data-dismiss="modal">取消</button>
+    </div>
   </div>
 </div>

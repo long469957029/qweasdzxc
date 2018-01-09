@@ -343,10 +343,10 @@ const MoneyTransferView = Base.ItemView.extend({
   },
   getErrorTool (errorText) {
     const errorHtml =
-      `${'<div class="tooltip parsley-errors-list tooltip-error filled">' +
-      '<span class="sfa sfa-error-icon vertical-sub pull-left"></span>' +
-      '<div class="tooltip-inner">'}${errorText}</div>` +
-      '</div>'
+      `<div class="tooltip parsley-errors-list tooltip-error filled">
+      <span class="sfa sfa-error-icon vertical-sub pull-left"></span>
+      <div class="tooltip-inner">${errorText}</div>
+      </div>`
     this.$errorText.html(errorHtml)
   },
   changeEleClass ($ele, status) {
