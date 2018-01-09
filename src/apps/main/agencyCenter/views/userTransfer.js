@@ -1,5 +1,6 @@
 
 // const LowMultiSelect = require('com/lowMultiSelect')
+const avatarCfg = require('../../userCenter/misc/avatarConfig')
 
 const MoneyTransferView = Base.ItemView.extend({
 
@@ -155,7 +156,7 @@ const MoneyTransferView = Base.ItemView.extend({
                 text: sub.subAcctName,
                 value: sub.subAcctId,
                 subItem: false,
-                img: sub.img,
+                img: avatarCfg.get(_.isNull(sub.headIconId) ? _.random(1,21) : sub.headIconId).logo,
               }
             }))
             self.initRequestParams()
@@ -256,7 +257,7 @@ const MoneyTransferView = Base.ItemView.extend({
                   text: sub.subAcctName,
                   value: sub.subAcctId,
                   subItem: false,
-                  img: sub.img,
+                  img: avatarCfg.get(sub.headIconId).logo,
                 }
               }))
             }
