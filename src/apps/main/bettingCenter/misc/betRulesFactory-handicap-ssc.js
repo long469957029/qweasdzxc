@@ -1,6 +1,5 @@
 import betFormat from './betFormat'
 import factory from 'bettingCenter/misc/betRulesFactory'
-import { chunk } from 'lodash'
 
 const fortyNine = _.range(1, 50)
 
@@ -410,7 +409,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: ['第一球 - 万', '第二球 - 千', '第三球 - 百', '第四球 - 十', '第五球 - 个'],
-        items: chunk(getFortyNine(), 10),
+        items: _.chunk(getFortyNine(), 10),
         showItemOdds: true,
         showMoneyInput: true,
         operate: 'none',

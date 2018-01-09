@@ -17,6 +17,7 @@ const gameConfig = require('skeleton/misc/gameConfig')
 _.mixin({
   repeat,
   fill,
+  chunk,
   // 首字母大写
   ucFirst(string) {
     return string.replace(/\b\w+\b/g, (word) => {

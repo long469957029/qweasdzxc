@@ -1,7 +1,6 @@
 
 
 window.Backbone = require('backbone')
-window.Vue = require('vue')
 window.Base = require('./scripts/base')
 
 require('./scripts/under-helper')
@@ -43,5 +42,3 @@ require('./scripts/bootstrap')
 window.moment = require('moment')
 
 window.moment.locale('zh-cn')
-
-Object.defineProperty(window.Vue.prototype, '_', { value: _ })

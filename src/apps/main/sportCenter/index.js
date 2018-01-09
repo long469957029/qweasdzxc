@@ -11,9 +11,9 @@ const SportCenterView = Base.ItemView.extend({
   events: {},
 
   onRender() {
-    console.log(_.range(10))
-    console.log(lo.range(10))
-    console.log(R.range(1, 10))
+    // console.log(_.range(10))
+    // console.log(lo.range(10))
+    // console.log(R.range(1, 10))
   },
 
 })

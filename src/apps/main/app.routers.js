@@ -1,3 +1,4 @@
+
 const dashboardRouter = require('dashboard/router')
 const userCenterRouter = require('userCenter/router')
 const vipCenterRouter = require('vipCenter/router')
@@ -9,7 +10,6 @@ const fishCenterRouter = require('fishCenter/router')
 const sportCenterRouter = require('sportCenter/router')
 const agencyCenterRouter = require('agencyCenter/router')
 const fundCenterRouter = require('fundCenter/router')
-const bettingCenterRouter = require('bettingCenter/router')
 const newsCenterRouter = require('newsCenter/router')
 const dynamicCenterRouter = require('dynamicCenter/router')
 const helpCenterRouter = require('helpCenter/router')
@@ -36,7 +36,10 @@ exports.install = function() {
   fundCenterRouter.install()
   userCenterRouter.install()
   vipCenterRouter.install()
-  bettingCenterRouter.install()
+  // require.ensure([], function(require) {
+    const bettingCenterRouter = require('bettingCenter/router').default
+    bettingCenterRouter()
+  // })
   newsCenterRouter.install()
   dynamicCenterRouter.install()
   helpCenterRouter.install()

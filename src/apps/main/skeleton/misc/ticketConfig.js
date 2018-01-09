@@ -1,11 +1,3 @@
-const defaultSelectQW = '趣味'
-
-const numberColor = {
-  redArr: [1, 2, 7, 8, 12, 13, 18, 19, 23, 24, 29, 30, 34, 35, 40, 45, 46],
-  blueArr: [3, 4, 9, 10, 14, 15, 20, 25, 26, 31, 36, 37, 41, 42, 47, 48],
-  greenArr: [5, 6, 11, 16, 17, 21, 22, 27, 28, 32, 33, 38, 39, 43, 44, 49],
-}
-
 const sscConfig = {
   id: 'ssc',
   title: '时时彩',
@@ -172,7 +164,6 @@ const handicapMark6Config = [
     zhName: '香港六合彩',
     hasMargin: true,
     badge: 'new',
-    numberColor,
   }, bettingTypes.MARK6),
 ]
 
@@ -183,7 +174,6 @@ const handicapSscConfig = [
     zhName: '重庆时时彩',
     hasMargin: true,
     badge: 'new',
-    numberColor,
   },
 ]
 
@@ -194,7 +184,6 @@ const handicapPk10Config = [
     zhName: '北京PK10',
     hasMargin: true,
     badge: 'new',
-    numberColor,
   },
 ]
 

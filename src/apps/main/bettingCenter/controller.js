@@ -4,13 +4,11 @@ import './misc/index.scss'
 
 const RouterController = require('skeleton/controllers/router')
 
-// const BettingCenterView = require('bettingCenter/views/bettingCenter_old1')
-
 const BettingDetailView = require('./bettingCenter-detail')
 
 const MMCBettingCenterView = require('./mmc')
 
-const BettingCenterController = RouterController.extend({
+export default RouterController.extend({
 
   bettingCenter(ticketId, type = 0) {
     if (Number(ticketId) === 19) {
@@ -39,5 +37,3 @@ const BettingCenterController = RouterController.extend({
     })
   },
 })
-
-module.exports = BettingCenterController

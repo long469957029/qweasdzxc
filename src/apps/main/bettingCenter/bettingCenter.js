@@ -10,6 +10,8 @@ import TicketInfoBanner from './ticket-info-banner'
 import BettingMainArea from './betting-main-area'
 import BettingMainAreaHandicap from './betting-main-area-handicap'
 
+Object.defineProperty(Vue.prototype, '_', { value: _ })
+
 const BettingCenterView = Base.ItemView.extend({
 
   template: bettingCenterTpl,

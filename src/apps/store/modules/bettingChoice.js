@@ -47,6 +47,9 @@ const getters = {
   groupId: (state) => {
     return state.groupId
   },
+  // playInfo: (state) => {
+  //   return state.playInfo
+  // },
 }
 
 // actions
@@ -101,7 +104,7 @@ const actions = {
     return new Promise((resolve) => {
       betting.pushChase(
         {
-          plan, play, suspend, usePack: state.usePack, amount, 
+          plan, play, suspend, usePack: state.usePack, amount,
         },
         ({ data }) => {
           resolve(data)

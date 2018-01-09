@@ -24,8 +24,8 @@
   "scripts": {
     "dev.main": "gulp server",
     "dev.external": "gulp external",
-    "analysis": "webpack --profile --json > stats.json --config=webpack.production.config.js",
-    "deploy": "NODE_ENV=production gulp release",
+    "analysis": "cross-env NODE_ENV=analyse gulp server",
+    "deploy": "cross-env NODE_ENV=production gulp release",
     "lint": "./node_modules/eslint/bin/eslint.js src/ --fix"
   },
   "lint-staged": {
@@ -49,6 +49,7 @@
     "connect": "~2.18.0",
     "connect-route": "^0.1.5",
     "cookie": "^0.2.3",
+    "cross-env": "^5.1.3",
     "css-loader": "^0.28.8",
     "del": "^2.0.2",
     "echarts": "^3.6.2",

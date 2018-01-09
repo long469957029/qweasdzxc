@@ -1,5 +1,4 @@
 import factory from 'bettingCenter/misc/betRulesFactory'
-import { chunk } from 'lodash'
 import betFormat from './betFormat'
 
 const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
@@ -352,7 +351,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '特码',
-        items: chunk(bettingTypes.MARK6.getNum(), 10),
+        items: _.chunk(bettingTypes.MARK6.getNum(), 10),
         showOdds: false,
         showItemOdds: true,
         showMoneyInput: true,
@@ -411,7 +410,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '五不中',
-        items: chunk(getSpecialFortyNine(), 5),
+        items: _.chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
@@ -434,7 +433,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '六不中',
-        items: chunk(getSpecialFortyNine(), 5),
+        items: _.chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
@@ -457,7 +456,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '七不中',
-        items: chunk(getSpecialFortyNine(), 5),
+        items: _.chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
@@ -480,7 +479,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '八不中',
-        items: chunk(getSpecialFortyNine(), 5),
+        items: _.chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
@@ -503,7 +502,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '九不中',
-        items: chunk(getSpecialFortyNine(), 5),
+        items: _.chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
@@ -526,7 +525,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '十不中',
-        items: chunk(getSpecialFortyNine(), 5),
+        items: _.chunk(getSpecialFortyNine(), 5),
         showItemOdds: false,
         showMoneyInput: false,
         operate: 'none',
