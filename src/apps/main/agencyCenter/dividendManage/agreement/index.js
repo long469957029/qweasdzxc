@@ -65,7 +65,7 @@ const AgreementView = Base.ItemView.extend({
       el: this.$countdown,
       color: 'red',
       size: 'sm',
-      type: 'text',
+      needBg: true,
     })
       .render(data.leftSeconds * 1000)
       .on('finish.countdown', () => {
