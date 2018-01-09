@@ -179,7 +179,7 @@ const handicapSscConfig = [
 
 const handicapPk10Config = [
   {
-    id: 1,
+    id: 18,
     mark: 'ssc',
     zhName: '北京PK10',
     hasMargin: true,

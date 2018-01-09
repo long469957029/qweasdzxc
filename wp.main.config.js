@@ -200,6 +200,8 @@ module.exports = {
       AnimatedInteger: 'com/animated-integer/index.vue',
       ticketConfig: 'apps/main/skeleton/misc/ticketConfig',
       bettingTypes: 'apps/main/skeleton/misc/betting-types',
+
+      RouterController: 'apps/main/skeleton/controllers/router',
     },
   },
   providePlugin: {
@@ -213,6 +215,7 @@ module.exports = {
     R: 'ramda',
     slimScroll: 'jquery-slimscroll',
     Velocity: 'velocity-animate',
+    RouterController: ['RouterController', 'default'],
 
     types: 'mutation-types',
     StaticGrid: ['StaticGrid', 'default'],

@@ -1,9 +1,10 @@
+const RealCenterView = require('realCenter/index')
 
-
-const RealCenterController = require('realCenter/controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new RealCenterController(), {
-    rc: 'realCenter',
-  })
-}
+export default [
+  {
+    path: '/rc',
+    component: function() {
+      RouterController.changeMainReginView(new RealCenterView())
+    }
+  },
+]

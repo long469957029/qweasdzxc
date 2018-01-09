@@ -14,6 +14,7 @@ const initState = () => {
     fBetBonus: 0,
     betMethod: 0,
     maxBonus: 195000,
+    formatMaxBonus: 0,
     unit: 10000,
     formatUnit: '元',
     statistics: 0,

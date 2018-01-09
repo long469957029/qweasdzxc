@@ -1,9 +1,14 @@
+const ActiveCenterView = require('activeCenter/activeCenter')
 
-
-const ActiveCenterController = require('activeCenter/controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new ActiveCenterController(), {
-    aa: 'activeCenter',
-  })
-}
+export default [
+  {
+    path: '/aa',
+    component: function() {
+      RouterController.changeMainReginView(new ActiveCenterView(), {
+        main: {
+          title: '活动中心',
+        },
+      })
+    }
+  },
+]

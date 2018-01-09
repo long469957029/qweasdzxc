@@ -1,10 +1,10 @@
 import betFormat from './betFormat'
 import factory from 'bettingCenter/misc/betRulesFactory'
 
-const fortyNine = _.range(1, 50)
+const fifty = _.range(1, 51)
 
-const getFortyNine = () => {
-  return _.map(fortyNine, (num, index) => {
+const getFifty = () => {
+  return _.map(fifty, (num, index) => {
     const fMum = `${(num !== 0 && num % 10 === 0 ? 10 : (num % 10)) + (100 * Math.ceil((index + 1) / 10))}`
     return {
       num: fMum,
@@ -409,7 +409,7 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: ['第一球 - 万', '第二球 - 千', '第三球 - 百', '第四球 - 十', '第五球 - 个'],
-        items: _.chunk(getFortyNine(), 10),
+        items: _.chunk(getFifty(), 10),
         showItemOdds: true,
         showMoneyInput: true,
         operate: 'none',
@@ -427,7 +427,59 @@ function _create(ticketId) {
         showItemOdds: true,
         showMoneyInput: true,
         operate: 'none',
-      }
+      },
+      {
+        title: '总和/龙虎',
+        items: [
+          [
+            {
+              num: '1001',
+              title: '总和大',
+              showOdds: true,
+            },
+            {
+              num: '1097',
+              title: '龙',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1002',
+              title: '总和小',
+              showOdds: true,
+            },
+            {
+              num: '1098',
+              title: '虎',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1003',
+              title: '总和大',
+              showOdds: true,
+            },
+            {
+              num: '1099',
+              title: '和',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1004',
+              title: '总和双',
+              showOdds: true,
+            },
+          ],
+        ],
+        showOdds: true,
+        showItemOdds: true,
+        showMoneyInput: true,
+        operate: 'none',
+      },
       ]),
     bettingArea: ['top', 'bottom'],
   })
@@ -441,7 +493,59 @@ function _create(ticketId) {
         showItemOdds: true,
         showMoneyInput: true,
         operate: 'none',
-      }
+      },
+      {
+        title: '总和/龙虎',
+        items: [
+          [
+            {
+              num: '1001',
+              title: '总和大',
+              showOdds: true,
+            },
+            {
+              num: '1097',
+              title: '龙',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1002',
+              title: '总和小',
+              showOdds: true,
+            },
+            {
+              num: '1098',
+              title: '虎',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1003',
+              title: '总和大',
+              showOdds: true,
+            },
+            {
+              num: '1099',
+              title: '和',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1004',
+              title: '总和双',
+              showOdds: true,
+            },
+          ],
+        ],
+        showOdds: true,
+        showItemOdds: true,
+        showMoneyInput: true,
+        operate: 'none',
+      },
     ]),
     bettingArea: ['top', 'bottom'],
   })
@@ -455,7 +559,59 @@ function _create(ticketId) {
         showItemOdds: true,
         showMoneyInput: true,
         operate: 'none',
-      }
+      },
+      {
+        title: '总和/龙虎',
+        items: [
+          [
+            {
+              num: '1001',
+              title: '总和大',
+              showOdds: true,
+            },
+            {
+              num: '1097',
+              title: '龙',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1002',
+              title: '总和小',
+              showOdds: true,
+            },
+            {
+              num: '1098',
+              title: '虎',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1003',
+              title: '总和大',
+              showOdds: true,
+            },
+            {
+              num: '1099',
+              title: '和',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1004',
+              title: '总和双',
+              showOdds: true,
+            },
+          ],
+        ],
+        showOdds: true,
+        showItemOdds: true,
+        showMoneyInput: true,
+        operate: 'none',
+      },
     ]),
     bettingArea: ['top', 'bottom'],
   })
@@ -469,7 +625,59 @@ function _create(ticketId) {
         showItemOdds: true,
         showMoneyInput: true,
         operate: 'none',
-      }
+      },
+      {
+        title: '总和/龙虎',
+        items: [
+          [
+            {
+              num: '1001',
+              title: '总和大',
+              showOdds: true,
+            },
+            {
+              num: '1097',
+              title: '龙',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1002',
+              title: '总和小',
+              showOdds: true,
+            },
+            {
+              num: '1098',
+              title: '虎',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1003',
+              title: '总和大',
+              showOdds: true,
+            },
+            {
+              num: '1099',
+              title: '和',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1004',
+              title: '总和双',
+              showOdds: true,
+            },
+          ],
+        ],
+        showOdds: true,
+        showItemOdds: true,
+        showMoneyInput: true,
+        operate: 'none',
+      },
     ]),
     bettingArea: ['top', 'bottom'],
   })
@@ -483,7 +691,59 @@ function _create(ticketId) {
         showItemOdds: true,
         showMoneyInput: true,
         operate: 'none',
-      }
+      },
+      {
+        title: '总和/龙虎',
+        items: [
+          [
+            {
+              num: '1001',
+              title: '总和大',
+              showOdds: true,
+            },
+            {
+              num: '1097',
+              title: '龙',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1002',
+              title: '总和小',
+              showOdds: true,
+            },
+            {
+              num: '1098',
+              title: '虎',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1003',
+              title: '总和大',
+              showOdds: true,
+            },
+            {
+              num: '1099',
+              title: '和',
+              showOdds: true,
+            },
+          ],
+          [
+            {
+              num: '1004',
+              title: '总和双',
+              showOdds: true,
+            },
+          ],
+        ],
+        showOdds: true,
+        showItemOdds: true,
+        showMoneyInput: true,
+        operate: 'none',
+      },
     ]),
     bettingArea: ['top', 'bottom'],
   })

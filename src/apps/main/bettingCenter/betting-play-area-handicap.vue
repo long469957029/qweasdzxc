@@ -144,6 +144,7 @@
 
     props: {
       playRule: Object,
+      playInfo: Array,
       ticketInfo: Object,
       pushing: Boolean,
       sale: Boolean,
@@ -209,9 +210,9 @@
       }
     },
 
-    computed: mapState({
-      playInfo: state => state.bettingChoice.playInfo
-    }),
+    // computed: mapState({
+    //   playInfo: state => state.bettingChoice.playInfo
+    // }),
 
     methods: {
 

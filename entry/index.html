@@ -36,7 +36,7 @@
   <div class="wm-loader-section section-right"></div>
 </div>
 
-<div class="js-wrapper">
+<div id="main-vue" class="js-wrapper">
   <div class="main-top">
     <div id="header" class="top-nav"></div>
     <div id="notice" class="notice-container"></div>
@@ -45,6 +45,9 @@
   <div class="global-main wrapper m-center">
     <div class="wrapper-main">
       <div id="main" class="main-container clearfix"></div>
+      <div class="main-container clearfix">
+        <router-view></router-view>
+      </div>
     </div>
     <div class="main-right">
       <div id="winner"></div>
@@ -76,4 +79,4 @@
 <!--<script src="compatible/es5-shim.min.js" type="text/javascript"></script>-->
 <!--<script src="compatible/es5-sham.min.js" type="text/javascript"></script>-->
 <!--<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1262787394'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1262787394%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>-->
-</body>
+</bodyi>

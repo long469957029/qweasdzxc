@@ -1,16 +1,12 @@
 import SidebarView from 'com/sidebar'
 
-import './index.scss'
-
-
 const SideMenuMainView = Base.LayoutView.extend({
   className: 'clearfix',
   template: '<div class="admin-container clearfix"><div class="js-gl-sidebar pull-left col-md-2"></div>' +
   '<div class="js-gl-main pull-left col-md-10"></div></div>',
 })
 
-const RouterController = Base.Controller.extend({
-
+export default {
   changeMainReginView(mainView, config) {
     config = config || {}
 
@@ -149,7 +145,6 @@ const RouterController = Base.Controller.extend({
       b.addEventListener('click', createRipple)
     })
   },
-})
+}
 
-module.exports = RouterController
 

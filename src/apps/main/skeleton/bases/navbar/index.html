@@ -80,7 +80,7 @@
                             <% _(list).each(function(ticket, index) { %>
                               <li>
                                 <span class="navbar-ticket-chavon"></span>
-                                <a href="#bc/<%= ticket.id %>"><%= ticket.zhName %></a>
+                                <a href="#/bc/<%= ticket.id %>"><%= ticket.zhName %></a>
                                 <% if (ticket.badge) { %>
                                   <span class="navbar-ticket-icon-<%= ticket.badge %>"></span>
                                 <% } %>
@@ -97,7 +97,7 @@
                               <% _(list).each(function(ticket, index) { %>
                                 <li>
                                   <span class="navbar-ticket-chavon"></span>
-                                  <a href="#bc/<%= ticket.id %>/2"><%= ticket.zhName %></a>
+                                  <a href="#/bc/<%= ticket.id %>/2"><%= ticket.zhName %></a>
                                   <% if (ticket.badge) { %>
                                     <span class="navbar-ticket-icon-<%= ticket.badge %>"></span>
                                   <% } %>

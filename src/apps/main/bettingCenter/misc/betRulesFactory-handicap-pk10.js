@@ -426,7 +426,7 @@ function _create(ticketId) {
   })
 
   //冠亚和
-  factory.addHandicapRule([ticketId, '220101'], {
+  factory.addHandicapRule([ticketId, '260101'], {
     list: factory.createHandicapList([
       {
         title: '冠、亚军和',
@@ -577,7 +577,7 @@ function _create(ticketId) {
   })
 
   //1-10名
-  factory.addHandicapRule([ticketId, '310101'], {
+  factory.addHandicapRule([ticketId, '230101'], {
     list: factory.createHandicapList([
       {
         title: ['冠军', '亚军', '季军', '第四名', '第五名'],

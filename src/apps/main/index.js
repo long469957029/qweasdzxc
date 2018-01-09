@@ -1,6 +1,10 @@
 const App = require('./app')
 const modules = require('skeleton/modules')
 
+import Vue from 'vue'
+import store from '../store/index'
+Object.defineProperty(Vue.prototype, '_', { value: _ })
+
 require('widgets')
 
 window.Global = App
@@ -17,7 +21,17 @@ const appRouters = require('./app.routers')
 // 因应二号改版 验证机制不同 可以新增一个新的 userType 作为游客
 Global.memoryCache.set('acctInfo', { userType: 1 })
 
-appRouters.install()
+const router = appRouters.install()
+
+window.app = new Vue({
+  store,
+  router,
+}).$mount('#main-vue')
+
+window.$route = app.$route
+
+
+
 // Global.m.oauth.start()
 Global.m.news.start()
 Global.ui.menu.start()

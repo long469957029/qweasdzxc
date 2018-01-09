@@ -1,6 +1,0 @@
-<div id="js-bc-main" class="bc-main">
-  <betting-quick-nav :ticket-list="ticketList"></betting-quick-nav>
-  <ticket-info-banner :ticket-info="ticketInfo" :betting-type="bettingType"></ticket-info-banner>
-  <betting-main-area-handicap :ticket-info="ticketInfo" :ticket-id="ticketId" v-if="bettingType === '2'"></betting-main-area-handicap>
-  <betting-main-area :ticket-info="ticketInfo" :ticket-id="ticketId" v-else></betting-main-area>
-</div>

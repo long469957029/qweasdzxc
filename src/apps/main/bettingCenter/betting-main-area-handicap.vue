@@ -7,7 +7,7 @@
         <betting-advance-rules :type="'single-hidden'"></betting-advance-rules>
         <div class="m-LR-smd">
           <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
-            <betting-play-area-handicap :play-rule="playRule" :ticket-info="ticketInfo" :pushing="pushing" :sale="bettingInfo.sale" :pending="bettingInfo.pending"
+            <betting-play-area-handicap :play-info="playInfo" :play-rule="playRule" :ticket-info="ticketInfo" :pushing="pushing" :sale="bettingInfo.sale" :pending="bettingInfo.pending"
                                         ref="area" @lotteryBuy="lotteryBuy"></betting-play-area-handicap>
           </div>
         </div>
@@ -86,6 +86,7 @@
 
           const playInfo = this.playInfo
 
+          this.$store.commit(types.SET_MAX_BONUS, playInfo.betMethodMax)
           this.$store.commit(types.SET_PLAY_INFO, playInfo)
 
           this.clearAll()
