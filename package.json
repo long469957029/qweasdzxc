@@ -2,6 +2,7 @@
   "name": "global-pc",
   "version": "0.1.0",
   "dependencies": {
+    "@babel/polyfill": "^7.0.0-beta.37",
     "@tweenjs/tween.js": "^17.1.1",
     "animate.css": "^3.5.2",
     "backbone": "~1.2.3",
@@ -15,17 +16,17 @@
     "jquery-ui": "^1.12.1",
     "mathjs": "~2.4.1",
     "moment": "~2.10.6",
-    "rambda": "^1.0.0",
     "underscore": "~1.8.3",
     "underscore.string": "~3.2.2",
     "vue": "^2.5.10",
+    "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "scripts": {
     "dev.main": "gulp server",
     "dev.external": "gulp external",
     "analysis": "cross-env NODE_ENV=analyse gulp server",
-    "deploy": "cross-env NODE_ENV=production gulp release",
+    "release": "cross-env NODE_ENV=production gulp release",
     "lint": "./node_modules/eslint/bin/eslint.js src/ --fix"
   },
   "lint-staged": {
@@ -99,6 +100,7 @@
     "postcss-unrgba": "^1.1.1",
     "pump": "^2.0.0",
     "qs": "^6.5.1",
+    "ramda": "^0.25.0",
     "raw-loader": "^0.5.1",
     "run-sequence": "^0.3.6",
     "sass-loader": "^6.0.6",
