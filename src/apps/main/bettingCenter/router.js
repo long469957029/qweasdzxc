@@ -1,8 +1,8 @@
 import './misc/index.scss'
-
-const BettingDetailView = require('./bettingCenter-detail')
 import BettingCenter from './betting-center'
 import MMCBettingCenterView from './mmc'
+
+const BettingDetailView = require('./bettingCenter-detail')
 
 export default [
   {
@@ -11,7 +11,7 @@ export default [
       RouterController.changeMainReginView(new MMCBettingCenterView({
         ticketId: 19,
       }))
-    }
+    },
   },
   {
     path: '/bc/:ticketId',
@@ -32,7 +32,7 @@ export default [
           subReturn: true,
         },
         sidebar: Global.ui.menu.get('uc'),
-        parentRouter: `bc/${app.$route.params.ticketId}`,
+        parentRouter: `bc/${$route.params.ticketId}`,
       })
     }
   },
@@ -47,7 +47,7 @@ export default [
           subReturn: true,
         },
         sidebar: Global.ui.menu.get('uc'),
-        parentRouter: `bc/${app.$route.params.ticketId}`,
+        parentRouter: `bc/${$route.params.ticketId}`,
       })
     }
   },

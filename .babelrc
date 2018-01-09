@@ -7,9 +7,11 @@
       "useBuiltIns": "usage"
     }]
   ],
+  "plugins": ["@babel/plugin-syntax-dynamic-import"],
   "env": {
     "production": {
-      "presets": ["@babel/preset-es2015"]
+      "presets": ["@babel/preset-es2015"],
+      "plugins": ["@babel/plugin-syntax-dynamic-import"],
     }
   },
   "ignore": [

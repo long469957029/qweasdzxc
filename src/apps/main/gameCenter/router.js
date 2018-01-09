@@ -1,14 +1,24 @@
+const SlotCenterView = require('gameCenter/slot/slotTab')
 
-
-const GameCenterController = require('gameCenter/controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new GameCenterController(), {
-    // "gc/rer": 'realBetRecord',
-    // 'gc/slr': 'slotBetRecord',
-    // 'gc/spr': 'sportBetRecord',
-    // 'gc/fir': 'fisherBetRecord',
-    'gc/sc': 'slotCenter',
-    'gc/scmg': 'slotCenterMG',
-  })
-}
+export default [
+  {
+    path: '/gc/sc',
+    component: function() {
+      RouterController.changeMainReginView(new SlotCenterView({ triggerTab: 'jsPTSlot' }), {
+        main: {
+          title: '老虎机',
+        },
+      })
+    },
+  },
+  {
+    path: '/gc/scmg',
+    component: function() {
+      RouterController.changeMainReginView(new SlotCenterView({ triggerTab: 'jsMGSlot' }), {
+        main: {
+          title: '老虎机',
+        },
+      })
+    },
+  },
+]

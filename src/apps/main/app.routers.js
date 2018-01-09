@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-Vue.use(VueRouter)
 
 import dashboardRouter from 'dashboard/router'
 import bettingCenterRouter from 'bettingCenter/router'
@@ -9,46 +8,22 @@ import vipCenterRouter from 'vipCenter/router'
 import activeCenterRouter from 'activeCenter/router'
 import realCenterRouter from 'realCenter/router'
 import slotCenterRouter from 'slotCenter/router'
+import fishCenterRouter from 'fishCenter/router'
+import sportCenterRouter from 'sportCenter/router'
+import agencyCenterRouter from 'agencyCenter/router'
+import newsCenterRouter from 'newsCenter/router'
+import dynamicCenterRouter from 'dynamicCenter/router'
+import fundCenterRouter from 'fundCenter/router'
+import helpCenterRouter from 'helpCenter/router'
+import gameCenterRouter from 'gameCenter/router'
+import mallCenterRouter from 'mallCenter/router'
 
-// const fishCenterRouter = require('fishCenter/router')
-// const sportCenterRouter = require('sportCenter/router')
-// const agencyCenterRouter = require('agencyCenter/router')
-// const fundCenterRouter = require('fundCenter/router')
-// const newsCenterRouter = require('newsCenter/router')
-// const dynamicCenterRouter = require('dynamicCenter/router')
-// const helpCenterRouter = require('helpCenter/router')
-// const gameCenterRouter = require('gameCenter/router')
-// const mallCenterRouter = require('mallCenter/router')
+Vue.use(VueRouter)
+
 
 export const install = () => {
 
   const acctInfo = Global.memoryCache.get('acctInfo')
-  // dashboardRouter.install()
-  // // accountCenterRouter.install()
-  // activeCenterRouter.install()
-  // // 0是代理，1是玩家，玩家不显示代理中心
-  // if (acctInfo.userType !== 1) {
-  //   agencyCenterRouter.install()
-  // }
-  // // 真人视讯大厅
-  // realCenterRouter.install()
-  // // 电子游戏大厅
-  // slotCenterRouter.install()
-  // // 捕鱼游戏大厅
-  // fishCenterRouter.install()
-  // // 体育游戏大厅
-  // sportCenterRouter.install()
-  // fundCenterRouter.install()
-  // userCenterRouter.install()
-  // vipCenterRouter.install()
-  // // require.ensure([], function(require) {
-  // // })
-  // newsCenterRouter.install()
-  // dynamicCenterRouter.install()
-  // helpCenterRouter.install()
-  // gameCenterRouter.install()
-  // mallCenterRouter.install()
-
   return new VueRouter({
     // mode: 'history',
     routes: [
@@ -56,10 +31,19 @@ export const install = () => {
       ...userCenterRouter,
       ...vipCenterRouter,
       ...activeCenterRouter,
+      ...acctInfo.userType !== 1 ? agencyCenterRouter : [],
       ...realCenterRouter,
       ...slotCenterRouter,
+      ...fundCenterRouter,
+      ...gameCenterRouter,
+      ...sportCenterRouter,
+      ...newsCenterRouter,
+      ...dynamicCenterRouter,
+      ...fishCenterRouter,
+      ...helpCenterRouter,
+      ...mallCenterRouter,
       ...dashboardRouter,
-    ]
+    ],
     // routes: [
     //   {
     //     path: '/user/:id', component: User,

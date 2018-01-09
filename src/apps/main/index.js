@@ -24,9 +24,11 @@ Global.memoryCache.set('acctInfo', { userType: 1 })
 const router = appRouters.install()
 
 window.app = new Vue({
+  el: '#main-vue',
   store,
   router,
-}).$mount('#main-vue')
+})
+// }).$mount('#main-vue')
 
 window.$route = app.$route
 

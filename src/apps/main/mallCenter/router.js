@@ -1,10 +1,22 @@
+const MallCenterView = require('mallCenter/index/index')
 
+const instructionView = require('mallCenter/instruction/index')
 
-const MallCenterController = require('mallCenter/controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new MallCenterController(), {
-    ma: 'mallCenter',
-    mad: 'instruction', // 积分等级说明
-  })
-}
+export default [
+  {
+    path: '/ma',
+    component: function() {
+      RouterController.changeMainReginView(new MallCenterView(), {
+        hideHeaderRight: true,
+      })
+    },
+  },
+  {
+    path: '/mad',
+    component: function() {
+      RouterController.changeMainReginView(new instructionView(), {
+        hideHeaderRight: true,
+      })
+    },
+  },
+]

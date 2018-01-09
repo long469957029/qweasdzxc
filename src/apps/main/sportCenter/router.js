@@ -1,9 +1,10 @@
+const SportCenterView = require('sportCenter/index')
 
-
-const SportCenterController = require('sportCenter/controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new SportCenterController(), {
-    sp: 'sportCenter',
-  })
-}
+export default [
+  {
+    path: '/sp',
+    component: function() {
+      RouterController.changeMainReginView(new SportCenterView())
+    },
+  },
+]
