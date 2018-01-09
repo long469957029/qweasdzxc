@@ -12,7 +12,7 @@ const SidebarView = Base.ItemView.extend({
 
   serializeData() {
     let sidebar = ''
-    // const acctInfo = Global.memoryCache.get('acctInfo')
+    const acctInfo = Global.memoryCache.get('acctInfo')
     // console.log(acctInfo)
     // const userName = acctInfo.userName
     if (_(this.options.sidebar).isArray()) {
@@ -23,10 +23,13 @@ const SidebarView = Base.ItemView.extend({
     return {
       menus: sidebar,
       showUserInfo: sidebar.router === 'uc', // _(sidebar).findIndex({ router: 'uc' }) > -1,
-      showTeamEntry: true,
+      showTeamEntry: acctInfo.userType === 0,
       isTeam: sidebar.router === 'ac',
+      dividendStatus: acctInfo.dividendStatus,
+      userName: acctInfo.username,
     }
   },
+
   formatSidebar(sidebar) {
     const self = this
     sidebar = _(sidebar).clone()
