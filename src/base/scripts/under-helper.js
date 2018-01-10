@@ -1,5 +1,3 @@
-
-
 const core = require('mathjs/core')
 
 const math = core.create()
@@ -83,8 +81,7 @@ _.mixin({
 
     money = money || 0
 
-    options = _.extend({}, {
-    }, options)
+    options = _.extend({}, {}, options)
 
     if (!_.isUndefined(money)) {
       format = _(money).div(ratio)
@@ -124,7 +121,7 @@ _.mixin({
     const index = href.indexOf('/index.html')
     if (index > -1) {
       return href.substring(0, index) + arg
-    } 
+    }
     return href.substring(0, href.indexOf('/#')) + arg
   },
 
@@ -144,6 +141,10 @@ _.mixin({
 
   formatDate(timestamp, format) {
     return timestamp ? moment(timestamp).format(format || 'YYYY-MM-DD') : timestamp
+  },
+
+  formatAMPM(timestamp, format) {
+    return timestamp ? moment(timestamp).format(format || 'h:mm A') : timestamp
   },
 
   add(arg1, arg2) {
@@ -172,7 +173,7 @@ _.mixin({
     const pos = sArg1.indexOf('.')
     if (pos > -1) {
       return Number(sArg1.substring(0, pos + index + 1))
-    } 
+    }
     return arg1
   },
 
@@ -231,7 +232,7 @@ _.mixin({
 
     if (!match) {
       return ''
-    } 
+    }
     return `?${match[1]}`
   },
 
@@ -251,7 +252,7 @@ _.mixin({
 
     if (name) {
       return params[name]
-    } 
+    }
     return params
   },
 
@@ -259,7 +260,7 @@ _.mixin({
   getConfig(config, index) {
     if (_(index).isUndefined()) {
       return config
-    } 
+    }
     return (_(config).findWhere({
       index,
     }) || {})
@@ -267,8 +268,8 @@ _.mixin({
 
   getConfigById(config, id) {
     return (_(config).findWhere({
-      id,
-    }) || {}).zhName || id
+        id,
+      }) || {}).zhName || id
   },
 
   getCustomerServiceUrl() {
@@ -278,9 +279,9 @@ _.mixin({
   //   return window.Object.prototype.hasOwnProperty
   // },
   deepCopy(source) {
-    let copy, 
-      i, 
-      len, 
+    let copy,
+      i,
+      len,
       prop
     if (typeof source !== 'object' || source == null || typeof source.nodeType === 'number') {
       copy = source

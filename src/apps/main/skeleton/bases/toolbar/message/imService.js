@@ -5,38 +5,58 @@
 
 module.exports = {
   // 获取左边联系人系统管理员样式
-  getAdmin() {
+  getAdmin(active) {
     const html = []
-    html.push('<div class="js-contact-systemAdmin  person-item" data-name="系统管理员"><span class="sfa sfa-avata-admin"></span>' +
+    let status = ''
+    if (active.type === 'user' && active.id === 'admin') {
+      status = 'active'
+    }
+    html.push(`<div class="js-contact-systemAdmin  person-item ${status}" data-name="系统管理员" data-id="admin" ><span class="sfa sfa-avata-admin"></span>` +
       '<span class="js-contact-online-status"></span><span class="js-contact-admin contact-name">系统管理员</span></div>')
     return html.join('')
   },
   // 获取左边联系人我的上级样式
-  getSuperior(parentInfo) {
+  getSuperior(parentInfo, active) {
     const supersiorHtml = []
+    let status = ''
+    if (active.type === 'user' && active.id === parentInfo.userId) {
+      status = 'active'
+    }
     if (parentInfo.userId !== 0) {
       if (parentInfo.online) {
-        supersiorHtml.push(`<div class="js-contact-onePerson  person-item" data-id="${parentInfo.userId}" data-name="我的上级"><span class="sfa sfa-avatar-online"></span>` +
+        supersiorHtml.push(`<div class="js-contact-onePerson  person-item ${status}" data-id="${parentInfo.userId}" data-name="我的上级" ><span class="sfa sfa-avatar-online"></span>` +
           '<span class="text-circle contact-status"></span> <span class="contact-name">我的上级</span></div>')
       } else {
-        supersiorHtml.push(`<div class="js-contact-onePerson person-item" data-id="${parentInfo.userId}" data-name="我的上级">` +
+        supersiorHtml.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${parentInfo.userId}" data-name="我的上级">` +
           '<span class="sfa sfa-avatar-online avatar-gray"></span><span class="contact-name" >我的上级</span></div>')
       }
     }
     return supersiorHtml.join('')
   },
   // 获取左边联系人，搜索界面联系人样式
-  getItemsHtml(userList) {
+  getItemsHtml(userList, parentId, active) {
     const userHtml = []
     _(userList).each((user) => {
       const item = []
       const name = user.userName
       if (name === '系统管理员') {
-        item.push('<div class="js-contact-systemAdmin person-item" data-name="系统管理员">')
+        let status = ''
+        if (active.type === 'user' && active.id === 'admin') {
+          status = 'active'
+        }
+        item.push(`<div class="js-contact-systemAdmin person-item ${status}" data-name="系统管理员"> data-id="admin"`)
       } else if (name === '我的上级') {
-        item.push(`<div class="js-contact-onePerson person-item" data-id="${user.userId}" data-name="我的上级">`)
+        let status = ''
+        if (active.type === 'user' && active.id === parentId) {
+          status = 'active'
+        }
+        item.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${user.userId}" data-name="我的上级" >`)
       } else {
-        item.push(`<div class="js-contact-onePerson person-item" data-id="${user.userId}" data-name="${name}">`)
+        let status = ''
+        if (active.type === 'user' && active.id === user.userId) {
+          status = 'active'
+        }
+        item.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${user.userId}" data-name="${name}">`)
       }
       if (user.online) {
         item.push('<span class="sfa sfa-avatar-online"></span><span class="text-circle contact-status"></span> ')
@@ -84,16 +104,24 @@ module.exports = {
     return html
   },
   // 处理近期联系人显示
-  getRecentlyItemHtml(records, parents) {
+  getRecentlyItemHtml(records, parents, active) {
     const html = []
     let newMsgNum = 0
     _(records).each((item) => {
       if (item.userId !== undefined && item.userId !== null && item.userId !== '') {
         const itemHtml = []
         if (item.userId === parents) {
-          itemHtml.push(`<div class="js-contact-onePerson recently-item" data-id="${item.userId}" data-name="我的上级">`)
+          let status = ''
+          if (active.type === 'user' && active.id === parents) {
+            status = 'active'
+          }
+          itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="我的上级" >`)
         } else {
-          itemHtml.push(`<div class="js-contact-onePerson recently-item" data-id="${item.userId}" data-name="${item.userName}">`)
+          let status = ''
+          if (active.type === 'user' && active.id === item.userId) {
+            status = 'active'
+          }
+          itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="${item.userName}" >`)
         }
         if (item.online) {
           itemHtml.push('<span class="sfa sfa-avatar-online recently-item-img inline-block"></span>')
@@ -101,20 +129,26 @@ module.exports = {
         } else {
           itemHtml.push('<span class="sfa sfa-avatar-online recently-item-img inline-block avatar-gray"></span>')
         }
+        let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-close recently-message-close"></span>'
         if (item.newMsgNum > 0) {
+          cancel = ''
           itemHtml.push('<div class="recently-item-info inline-block">')
           itemHtml.push(`<div class="recently-name">${item.userName}</div>`)
           itemHtml.push(`<div class="recently-desc">${item.lastMessage}</div>`)
-          itemHtml.push(`</div><div class=" recently-item-info-num"><div class="recently-newMessage-num-text inline-block">${item.newMsgNum}</div></div></div>`)
+          itemHtml.push(`</div><div class=" recently-item-info-num"><div class="recently-newMessage-num-text inline-block">${item.newMsgNum}</div></div>${cancel}</div>`)
           newMsgNum += item.newMsgNum
         } else {
           itemHtml.push('<div class="recently-item-info inline-block no">')
-          itemHtml.push(`<div class="recently-name">${item.userName}</div></div></div>`)
+          itemHtml.push(`<div class="recently-name">${item.userName}</div></div>${cancel}</div>`)
         }
         html.push(itemHtml.join(''))
       } else if (item.groupId !== undefined && item.groupId !== null && item.groupId !== '') {
         const itemHtml = []
-        itemHtml.push('<div class="js-im-mass-message recently-item">')
+        let status = ''
+        if (active.type === 'group' && active.id === item.groupId) {
+          status = 'active'
+        }
+        itemHtml.push(`<div class="js-recently-mass-message recently-item ${status}" data-id='${item.groupId}'>`)
         itemHtml.push('<span class="sfa sfa-avata-persons inline-block"></span>')
         itemHtml.push('<div class="recently-item-info inline-block no">')
         itemHtml.push('<div class="recently-name">群消息</div>')
@@ -129,40 +163,237 @@ module.exports = {
     }
   },
   // 将聊天记录通过日期重新排序，生成以日期为key的聊天记录，并重新排序
-  getChatMessageByDate(dateList) {
-    return _.chain(dateList).sortBy((dateItem) => {
-      return dateItem.sendTime
-    }).groupBy((item) => { return _(item.sendTime).toDate() }).value()
+  getChatMessageByDate(dateList, type) {
+    if (type && type === 'mess') {
+      return _.chain(dateList).sortBy((dateItem) => {
+        return dateItem.createTime
+      }).groupBy((item) => {
+        return _(item.createTime).toDate()
+      }).value()
+    } else {
+      return _.chain(dateList).sortBy((dateItem) => {
+        return dateItem.sendTime
+      }).groupBy((item) => {
+        return _(item.sendTime).toDate()
+      }).value()
+    }
   },
   // 将重新排序的数据进行进行渲染
-  getChatMessageByDateHtml(dateList) {
-    const sortList = this.getChatMessageByDate(dateList)
+  getChatMessageByDateHtml(dateList, type, length) {
+    const sortList = this.getChatMessageByDate(dateList, type)
     const result = []
     // result.push('<div class="js-private-chat-container">')
-    if (dateList.length >= 30) {
-      result.push('<div class="chat-more-content">载入更多信息</div>')
+    let moreChatTitle = ''
+    if (dateList.length >= 30 && length === 30) {
+      moreChatTitle = '<div class="chat-more-content-text">载入更多信息</div>'
     }
-    _.each(sortList, (items, key) => {
+    result.push(`<div class="js-chat-more-content chat-more-content">${moreChatTitle}</div>`)
+    // let dateIndex = 0
+    _.each(sortList, (items, key, index) => {
       const dateHtml = []
-      if (dateList.length < 30) {
-        dateHtml.push(`<div class="chat-day-time lessRecord">${key}</div>`)
-      } else {
-        dateHtml.push(`<div class="chat-day-time">${key}</div>`)
+      let dateStatus = ''
+      if (index === 0 && length < 30) {
+        dateStatus = 'lessRecord'
       }
-      dateHtml.push('<div class="chat-content-container">')
+      dateHtml.push(`<div class="chat-day-time ${dateStatus}">${key}</div>`)
+      // dateHtml.push('<div class="chat-content-container">')
       // const items = val
       _(items).each((item) => {
         const itemHtml = []
-        const sendTime = _(item.sendTime).toTime('HH:mm')
-        itemHtml.push('<div class="chat-item"> <div class="sfa sfa-avatar-online chat-item-avatar inline-block"></div> <div class="inline-block chat-item-detail">')
+        let sendTime = ''
+        if (type && type === 'mess') {
+          sendTime = _(item.createTime).formatAMPM()
+        } else {
+          sendTime = _(item.sendTime).formatAMPM()
+        }
+
+        itemHtml.push(`<div class="chat-item" data-id='${item.rid}'> <div class="sfa sfa-avatar-online chat-item-avatar inline-block"></div> <div class="inline-block chat-item-detail">`)
         itemHtml.push(`<div class="chat-item-name">${item.userName}</div><div class="chat-item-message">${item.content}</div>`)
         itemHtml.push(`</div><div class="inline-block chat-item-time pull-right">${sendTime}</div></div>`)
         dateHtml.push(itemHtml.join(''))
+        // dateIndex += 1
       })
-      dateHtml.push('</div>')
+      // dateHtml.push('</div>')
       result.push(dateHtml.join(''))
     })
     // result.push('</div>')
     return result.join('')
+  },
+  insertChat(userPic, userName, content) {
+    const html = []
+    const sendTime = _(new Date()).formatAMPM()
+    // html.push('<div class="chat-content-container">')
+    html.push('<div class="chat-item"> <div class="sfa sfa-avatar-online chat-item-avatar inline-block"></div> <div class="inline-block chat-item-detail">')
+    html.push(`<div class="chat-item-name">${userName}</div><div class="chat-item-message">${content}</div>`)
+    html.push(`</div><div class="inline-block chat-item-time pull-right">${sendTime}</div>`)
+    return html.join('')
+  },
+  getMessContact(userlist) {
+    const html = []
+    const admin = _(userlist).findWhere({
+      userId: null,
+      userName: '系统管理员',
+    })
+    const sendList = _(userlist).without(admin)
+    const superior = _(sendList).findWhere({
+      userName: '我的上级',
+    })
+    if (superior !== null && superior !== undefined) {
+      html.push(`<div class="js-mess-select-contact select-superior" data-id='${superior.userId}' data-name="我的上级">我的上级</div>`)
+    }
+    const subList = _(sendList).without(superior)
+    if (subList.length > 0) {
+      html.push('<div class="select-sub"><span class="select-sub-img"><i class="fa fa-caret-right" aria-hidden="true"></i></span><span class="select-sub-text">我的下级</span></div>')
+      html.push('<div class="select-sub-container"><div class="select-sub-items">')
+      _(subList).each((item) => {
+        html.push(`<div class="js-mess-select-contact select-sub-item" data-id='${item.userId}' data-name='${item.userName}'>${item.userName}` +
+          '<i class="fa fa-check pull-right select-sub-item-isSelect" aria-hidden="true"></i></div>')
+      })
+      html.push('</div></div>')
+    }
+    return html.join('')
+  },
+  getMessSelectedHtml(userlist, groupId) {
+    const html = []
+    const admin = _(userlist).findWhere({
+      userId: null,
+      userName: '系统管理员',
+    })
+    const sendList = _(userlist).without(admin)
+    let cancel = ''
+    if (groupId === undefined) {
+      cancel = '<i class="js-selected-sub-item-cancel fa fa-times pull-right selected-sub-item-cancel" aria-hidden="true"></i>'
+    }
+    _(sendList).each((sub) => {
+      html.push(`<div class="js-selected-sub-item selected-sub-item" data-id='${sub.userId}'>${sub.userName}${cancel}</div>`)
+    })
+    return html.join('')
+  },
+  getSelectMessContact(userlist, selectedList) {
+    const html = []
+    const admin = _(userlist).findWhere({
+      userId: null,
+      userName: '系统管理员',
+    })
+    const sendList = _(userlist).without(admin)
+    const superior = _(sendList).findWhere({
+      userName: '我的上级',
+    })
+
+    if (superior !== null && superior !== undefined) {
+      let active = ''
+      _(selectedList).each((selected) => {
+        if (superior.userId === selected.userId) {
+          active = 'active'
+        }
+      })
+      html.push(`<div class="js-mess-select-contact select-superior ${active}" data-id='${superior.userId}' data-name="我的上级">我的上级</div>`)
+    }
+    const subList = _(sendList).without(superior)
+    if (subList.length > 0) {
+      html.push('<div class="select-sub"><span class="select-sub-img"><i class="fa fa-caret-right" aria-hidden="true"></i></span><span class="select-sub-text">我的下级</span></div>')
+      html.push('<div class="select-sub-container"><div class="select-sub-items">')
+      _(subList).each((item) => {
+        let active = ''
+        _(selectedList).each((selected) => {
+          if (item.userId === selected.userId) {
+            active = 'active'
+          }
+        })
+        html.push(`<div class="js-mess-select-contact select-sub-item ${active}" data-id='${item.userId}' data-name='${item.userName}'>${item.userName}` +
+          '<i class="fa fa-check pull-right select-sub-item-isSelect" aria-hidden="true"></i></div>')
+      })
+      html.push('</div></div>')
+    }
+    return html.join('')
+  },
+  // 刷新近期记录中已读的记录状态
+  refreshActiveRecentlyStatus(recentlyList, active) {
+    const resultData = []
+    let numData = 0
+    if (active.type === 'user') {
+      _(recentlyList).each((item) => {
+        if (active.id === item.userId) {
+          numData = item.newMsgNum
+          item.newMsgNum = 0
+        }
+        resultData.push(item)
+      })
+    } else if (active.type === 'group') {
+      _(recentlyList).each((item) => {
+        if (active.id === item.groupId) {
+          numData = item.newMsgNum
+          item.newMsgNum = 0
+        }
+        resultData.push(item)
+      })
+    }
+    return {
+      result: resultData,
+      num: numData,
+    }
+  },
+  delRecentlyFromList(recentlyList, active) {
+    let result = []
+    let delItem = []
+    if (active.type === 'user') {
+      delItem = _(recentlyList).findWhere({
+        userId: active.id,
+      })
+      result = _(recentlyList).without(delItem)
+    } else if (active.type === 'group') {
+      delItem = _(recentlyList).findWhere({
+        groupId: active.id,
+      })
+      result = _(recentlyList).without(delItem)
+    }
+    return result
+  },
+  insertChatList(realList, cacheList) {
+    let result = []
+    // const typeList = []
+    // 判断cache中的数据是不是有用户但后台还未保存输入的数据
+    let cacheIsUserType = false
+    _(cacheList).each((cache) => {
+      if (!Number.isInteger(cache.rid)) {
+        cacheIsUserType = true
+        return false
+      }
+    })
+    if (cacheIsUserType) {
+      result = realList
+      // _(cacheList).each((cache) => {
+      //   if (!Number.isInteger(cache.rid)) {
+      //     // typeList.push(cache)
+      //     result.unshift(cache)
+      //   }
+      // })
+      // _(cacheList).each((cache) => {
+      //   result.unshift(cache)
+      // })
+    } else {
+      result = result.concat(cacheList)
+      _(realList).each((item) => {
+        let has = false
+        _(cacheList).each((cache) => {
+          if (item.rid === cache.rid) {
+            has = true
+          }
+        })
+        if (!has) {
+          result.push(item)
+        }
+      })
+    }
+    return result
+  },
+  getChatLastRecordId(recordList) {
+    let id = ''
+    _(recordList).each((item, index) => {
+      if (index === recordList.length) {
+        id = item.rid
+      }
+    })
+    return id
   },
 }
