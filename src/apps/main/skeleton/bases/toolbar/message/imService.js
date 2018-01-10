@@ -179,15 +179,20 @@ module.exports = {
     }
   },
   // 将重新排序的数据进行进行渲染
-  getChatMessageByDateHtml(dateList, type, length) {
+  getChatMessageByDateHtml(dateList, type, length, pageIndex, rowCount) {
     const sortList = this.getChatMessageByDate(dateList, type)
     const result = []
     // result.push('<div class="js-private-chat-container">')
     let moreChatTitle = ''
-    if (dateList.length >= 30 && length === 30) {
+    const moreChatIndex = (pageIndex * 30) + length
+    if (moreChatIndex <= rowCount && length === 30) {
       moreChatTitle = '<div class="chat-more-content-text">载入更多信息</div>'
     }
-    result.push(`<div class="js-chat-more-content chat-more-content">${moreChatTitle}</div>`)
+    let moreChatType = 'js-chat-more-content'
+    if (type === 'mess') {
+      moreChatType = 'js-mess-more-content'
+    }
+    result.push(`<div class="${moreChatType} chat-more-content">${moreChatTitle}</div>`)
     // let dateIndex = 0
     _.each(sortList, (items, key, index) => {
       const dateHtml = []
@@ -390,7 +395,7 @@ module.exports = {
   getChatLastRecordId(recordList) {
     let id = ''
     _(recordList).each((item, index) => {
-      if (index === recordList.length) {
+      if (index === recordList.length - 1) {
         id = item.rid
       }
     })
