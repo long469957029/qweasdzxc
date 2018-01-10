@@ -25,13 +25,8 @@
   "scripts": {
     "dev.main": "gulp server",
     "dev.external": "gulp external",
-<<<<<<< HEAD
-    "analysis": "webpack --profile --json > stats.json --config=webpack.production.config.js",
-    "deploy": "NODE_ENV=production gulp release -p --config",
-=======
     "analysis": "cross-env NODE_ENV=analyse gulp server",
     "release": "cross-env NODE_ENV=production gulp release",
->>>>>>> 2790f6731341427daec7553bcfd6e748bdb28b51
     "lint": "./node_modules/eslint/bin/eslint.js src/ --fix"
   },
   "lint-staged": {
