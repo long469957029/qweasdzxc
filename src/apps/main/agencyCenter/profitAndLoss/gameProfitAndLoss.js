@@ -75,16 +75,19 @@ const ReportManageView = SearchGrid.extend({
         emptyTip: '没有资金变更记录',
       },
       ajaxOps: {
-        url: '/info/gamereport/gametypeprofit.json',
+        // url: '/info/gamereport/gametypeprofit.json',
+        url: '/info/gamereport/gametypeprofitdetail.json',
       },
       reqData: {
         channelId: this.options.channelId,
         type: this.options.type,
+        userId: Global.memoryCache.get('acctInfo').userId,
       },
       subOps: {
         url: '/info/gamereport/gametypeprofitdetail.json',
         data: ['userId'],
       },
+      cover: false,
     })
   },
 

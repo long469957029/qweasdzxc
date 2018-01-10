@@ -29,7 +29,7 @@ const SidebarView = Base.ItemView.extend({
       isTeam: sidebar.router === 'ac',
       dividendStatus: acctInfo.dividendStatus,
       userName: acctInfo.username,
-      img: avatarCfg.get(_.isNull(acctInfo.headIcon) ? _.random(1, 21) : acctInfo.headIcon).logo,
+      img: avatarCfg.get(_.isNull(acctInfo.headIcon) ? _.random(1, 21) : Number(acctInfo.headIcon)).logo,
     }
   },
 

@@ -15,7 +15,7 @@ const SearchGrid = Base.PrefabView.extend({
     remoteEveryTime: true,
     divider: true,
     tip: '',
-    cover: true,
+    cover: true, // 参数覆盖  团队
   },
 
   constructor() {
