@@ -1,6 +1,10 @@
 const App = require('./app')
 const modules = require('skeleton/modules')
 
+import Vue from 'vue'
+import store from '../store/index'
+Object.defineProperty(Vue.prototype, '_', { value: _ })
+
 require('widgets')
 
 window.Global = App
@@ -15,12 +19,49 @@ modules.install()
 const appRouters = require('./app.routers')
 
 // 因应二号改版 验证机制不同 可以新增一个新的 userType 作为游客
-// Global.memoryCache.set('acctInfo', { userType: 1 })
+Global.memoryCache.set('acctInfo', { userType: 1 })
 
-// appRouters.install()
+const router = appRouters.install()
+
+//每次路由变化是调用，切换显示区域
+router.beforeEach((to, from, next) => {
+  let isVue = false
+
+  _(['/bc']).each(function(router) {
+    if (to.path.indexOf(router) !== -1) {
+      isVue = true
+    }
+  })
+
+  if (to.path === '/bc/19') {
+    isVue = false
+  }
+
+  $('#main').toggle(!isVue)
+  $('#main-vue').toggle(isVue)
+
+  next()
+})
+
+const desHash = window.location.hash
+
+window.location.hash = '#/i'
+
+window.app = new Vue({
+  el: '#main-wrapper',
+  store,
+  router,
+})
+
+_.delay(() => {
+  window.location.hash = desHash === '#/i' ? '#/' : desHash
+}, 0)
+
+window.$route = app.$route
+
+
+
 // Global.m.oauth.start()
-// Global.m.news.start()
-// Global.ui.menu.start()
 // App.start()
 
 // 进行系统OAuth校验

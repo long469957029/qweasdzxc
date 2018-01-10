@@ -1,10 +1,21 @@
+const MallCenterView = () => import(/* webpackChunkName: "mall-center" */ './index/index')
+const InstructionView = () => import(/* webpackChunkName: "mall-center" */ './instruction/index')
 
-
-const MallCenterController = require('mallCenter/controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new MallCenterController(), {
-    ma: 'mallCenter',
-    mad: 'instruction', // 积分等级说明
-  })
-}
+export default [
+  {
+    path: '/ma',
+    component: function(resolve) {
+      RouterController.async(resolve, MallCenterView, {
+        hideHeaderRight: true,
+      })
+    },
+  },
+  {
+    path: '/mad',
+    component: function(resolve) {
+      RouterController.async(resolve, InstructionView, {
+        hideHeaderRight: true,
+      })
+    },
+  },
+]

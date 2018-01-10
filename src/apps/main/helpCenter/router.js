@@ -1,9 +1,10 @@
+const HelpCenterView = () => import(/* webpackChunkName: "help-center" */ './index')
 
-
-const HelpCenterController = require('./controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new HelpCenterController(), {
-    hc: 'helpCenter', // 概览
-  })
-}
+export default [
+  {
+    path: '/hc',
+    component: function(resolve) {
+      RouterController.async(resolve, HelpCenterView)
+    },
+  },
+]

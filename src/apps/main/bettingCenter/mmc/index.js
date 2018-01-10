@@ -7,7 +7,6 @@ const BettingRulesCollection = require('./bettingRules')
 
 const PlayAreaSelectView = require('./bettingCenter-playArea-select')
 
-const ticketConfig = require('skeleton/misc/ticketConfig')
 const PlayAreaInputView = require('./bettingCenter-playArea-input')
 
 require('./easing')
@@ -1495,4 +1494,4 @@ const BettingCenterView = Base.ItemView.extend({
 
 })
 
-module.exports = BettingCenterView
+export default BettingCenterView

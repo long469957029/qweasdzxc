@@ -2,6 +2,8 @@
 
 require('./index.scss')
 
+const avatarCfg = require('userCenter/misc/avatarConfig')
+
 const SidebarView = Base.ItemView.extend({
 
   template: require('./index.html'),
@@ -12,7 +14,7 @@ const SidebarView = Base.ItemView.extend({
 
   serializeData() {
     let sidebar = ''
-    // const acctInfo = Global.memoryCache.get('acctInfo')
+    const acctInfo = Global.memoryCache.get('acctInfo')
     // console.log(acctInfo)
     // const userName = acctInfo.userName
     if (_(this.options.sidebar).isArray()) {
@@ -23,10 +25,14 @@ const SidebarView = Base.ItemView.extend({
     return {
       menus: sidebar,
       showUserInfo: sidebar.router === 'uc', // _(sidebar).findIndex({ router: 'uc' }) > -1,
-      showTeamEntry: true,
+      showTeamEntry: acctInfo.userType === 0,
       isTeam: sidebar.router === 'ac',
+      dividendStatus: acctInfo.dividendStatus,
+      userName: acctInfo.username,
+      img: avatarCfg.get(_.isNull(acctInfo.headIcon) ? _.random(1, 21) : Number(acctInfo.headIcon)).logo,
     }
   },
+
   formatSidebar(sidebar) {
     const self = this
     sidebar = _(sidebar).clone()

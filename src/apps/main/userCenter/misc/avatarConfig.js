@@ -110,4 +110,5 @@ module.exports = {
       id,
     })
   },
+  avatars,
 }

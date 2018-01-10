@@ -2,21 +2,25 @@ var _ = require('underscore');
 var path = require('path');
 var webpack = require('webpack');
 
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 var AssetsPlugin = require('assets-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 module.exports = function(options) {
   var appConfig = options.appConfig;
 
   //==============entry================
   var entry = _(appConfig.entry).reduce(function(entries, entry, entryName) {
-    entry = [
-      'webpack-dev-server/client?http://localhost:' + appConfig.port,
-      'webpack/hot/only-dev-server'
-    ].concat(entry);
-
+    if (options.debug) {
+      entry = [
+        'webpack-dev-server/client?http://localhost:' + appConfig.port,
+        'webpack/hot/only-dev-server'
+      ].concat(entry);
+    }
     entries[entryName] = entry;
 
     return entries;
@@ -29,7 +33,8 @@ module.exports = function(options) {
 
   if (options.debug) {
 
-    output.publicPath = 'http://localhost:' + appConfig.port + appConfig.output.publicPath;
+    output.publicPath = appConfig.output.publicPath;
+    // output.publicPath = 'http://localhost:' + appConfig.port + appConfig.output.publicPath;
     output.filename = '[name].bundle.js';
     output.chunkFilename = '[name].bundle.js';
   } else {
@@ -60,7 +65,12 @@ module.exports = function(options) {
     }),
     new webpack.ProvidePlugin(appConfig.providePlugin),
     new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /zh-cn/),
+
   ];
+
+  if (process.env.NODE_ENV === 'analyse') {
+    plugins.push(new BundleAnalyzerPlugin())
+  }
 
   if (options.debug) {
     //plugins.push(new CommonsChunkPlugin('vendor.js', appConfig.commonChunks));
@@ -84,6 +94,7 @@ module.exports = function(options) {
     //plugins.push(new CommonsChunkPlugin('vendor.[hash].js', appConfig.commonChunks));
     plugins.push(new ExtractTextPlugin('[name].[hash].styles.css'));
     plugins.push(new AssetsPlugin());
+    plugins.push(new UglifyJsPlugin());
   }
 
   // 生成静态入口html，插件存在bug，无法根据chunks的顺序插入，而是按照了entry的id的顺序，不可控
@@ -144,7 +155,6 @@ module.exports = function(options) {
             loaders: {
               js: 'babel-loader'
             },
-            presets: ['@babel/preset-env'],
             postcss: [require('postcss-cssnext')()]
           }
         },
@@ -155,11 +165,12 @@ module.exports = function(options) {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
           }
         },
-        include: [path.join(__dirname, 'src')],
-        exclude: /node_modules|jquery|jqmeter|turn.html4/,
+        // include: options.debug ? [path.join(__dirname, 'src')] : [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules')],
+        // include: [path.join(__dirname, 'src')],
+        include: options.debug ? [path.join(__dirname, 'src')] : [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules', 'ramda')],
+        exclude: /jquery|jqmeter|turn.html4/,
       },
     ]
   };

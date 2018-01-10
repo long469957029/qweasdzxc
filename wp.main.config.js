@@ -7,7 +7,7 @@ module.exports = {
     base: './src/base/build.base.js',
     // trend: './src/apps/packages/trend/index.js',
     // resetPassword: './src/apps/packages/resetPassword/resetPassword.js',
-    // updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
+    updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
     // merchants: './src/apps/packages/merchants/index.js',
     // 404: './src/apps/packages/404/index.js',
     // mmc: './src/apps/packages/mmc/index.js',
@@ -200,6 +200,8 @@ module.exports = {
       AnimatedInteger: 'com/animated-integer/index.vue',
       ticketConfig: 'apps/main/skeleton/misc/ticketConfig',
       bettingTypes: 'apps/main/skeleton/misc/betting-types',
+
+      RouterController: 'apps/main/skeleton/controllers/router',
     },
   },
   providePlugin: {
@@ -210,8 +212,10 @@ module.exports = {
     'window.jQuery': 'jquery',
     bootstrap: 'bootstrap',
     _: 'underscore',
-    R: 'rambda',
+    R: 'ramda',
     slimScroll: 'jquery-slimscroll',
+    Velocity: 'velocity-animate',
+    RouterController: ['RouterController', 'default'],
 
     types: 'mutation-types',
     StaticGrid: ['StaticGrid', 'default'],

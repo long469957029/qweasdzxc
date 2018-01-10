@@ -1,14 +1,3 @@
-const defaultSelectSSC = '4'
-const defaultSelect115 = '4,0,4'
-const defaultSelectDPC = '0'
-const defaultSelectQW = '趣味'
-
-const numberColor = {
-  redArr: [1, 2, 7, 8, 12, 13, 18, 19, 23, 24, 29, 30, 34, 35, 40, 45, 46],
-  blueArr: [3, 4, 9, 10, 14, 15, 20, 25, 26, 31, 36, 37, 41, 42, 47, 48],
-  greenArr: [5, 6, 11, 16, 17, 21, 22, 27, 28, 32, 33, 38, 39, 43, 44, 49],
-}
-
 const sscConfig = {
   id: 'ssc',
   title: '时时彩',
@@ -77,49 +66,43 @@ const oneFiveConfig = {
   icon: 'num',
   titleIcon: 'ele_nav_icon',
   list: [
-    {
+    Object.assign({
       id: 14,
       mark: 'ffc',
       zhName: '11选5分分彩',
-      defaultSelectPlay: defaultSelect115,
       badge: '',
-    },
-    {
+    }, bettingTypes.CHOOSE15),
+    Object.assign({
       id: 5,
       mark: 'sd',
       zhName: '山东11选5',
-      defaultSelectPlay: defaultSelect115,
-    },
-    {
+    }, bettingTypes.CHOOSE15),
+    Object.assign({
       id: 4,
       mark: 'gd',
       zhName: '广东11选5',
-      defaultSelectPlay: defaultSelect115,
-    },
-    {
+    }, bettingTypes.CHOOSE15),
+    Object.assign({
       id: 11,
       mark: 'jx',
       zhName: '江西11选5',
-      defaultSelectPlay: defaultSelect115,
-    },
+    }, bettingTypes.CHOOSE15),
   ],
 }
 const threeDConfig = [
-  {
+  Object.assign({
     id: 16,
     mark: '3d-ffc',
     zhName: '3D分分彩',
     hasMargin: true,
-    defaultSelectPlay: defaultSelectDPC,
     badge: 'hot',
-  },
-  {
+  }, bettingTypes.CHOOSE15),
+  Object.assign({
     id: 6,
     mark: '3d',
     zhName: '3D',
     hasMargin: true,
-    defaultSelectPlay: defaultSelectDPC,
-  },
+  }, bettingTypes.CHOOSE15),
   // {
   //  id: 17,
   //  mark: '3d-wfc',
@@ -131,24 +114,22 @@ const threeDConfig = [
   // },
 ]
 const p5p3Config = [
-  {
+  Object.assign({
     id: 7,
     mark: 'p5p3',
     zhName: 'P3/P5',
-    defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
-  },
+  }, bettingTypes.P5P3),
 ]
 
 const bjPKConfig = [
-  {
+  Object.assign({
     id: 18,
     mark: 'pk10',
     zhName: '北京赛车/PK10',
-    defaultSelectPlay: defaultSelectSSC,
     hasMargin: true,
     badge: 'hot',
-  },
+  }, bettingTypes.PK10),
 ]
 
 const quickConfig = {
@@ -157,14 +138,13 @@ const quickConfig = {
   ticketName: '快三',
   titleIcon: 'hap_nav_icon',
   list: [
-    {
+    Object.assign({
       id: 29,
       mark: 'jsk3',
       zhName: '江苏快三',
-      defaultSelectPlay: defaultSelectSSC,
       hasMargin: true,
       badge: 'new',
-    },
+    }, bettingTypes.QUICK3),
   ],
 }
 
@@ -178,15 +158,13 @@ const happyConfig = {
 }
 
 const handicapMark6Config = [
-  {
+  Object.assign({
     id: 34,
     mark: 'mark6',
     zhName: '香港六合彩',
-    defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
     badge: 'new',
-    numberColor,
-  },
+  }, bettingTypes.MARK6),
 ]
 
 const handicapSscConfig = [
@@ -194,22 +172,18 @@ const handicapSscConfig = [
     id: 1,
     mark: 'ssc',
     zhName: '重庆时时彩',
-    defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
     badge: 'new',
-    numberColor,
   },
 ]
 
 const handicapPk10Config = [
   {
-    id: 1,
+    id: 18,
     mark: 'ssc',
     zhName: '北京PK10',
-    defaultSelectPlay: defaultSelectDPC,
     hasMargin: true,
     badge: 'new',
-    numberColor,
   },
 ]
 

@@ -177,3 +177,56 @@
     width: 80px;
   }
 }
+.ac-dm-tip{
+  display: block;
+  position: absolute;
+  top: 11px;
+  right: 22px;
+  width: 40px;
+  height: 18px;
+  background: $prominent-color;
+  font-size: 12px;
+  line-height: 18px;
+  border-radius: 3px;
+  color: $def-white-color;
+}
+.ac-agree-confirm{
+  width: 480px;
+  border-radius: $globalBtnRadius;
+  background-color: $def-white-color;
+  .agree-confirm-title{
+    width: 100%;
+    height: 50px;
+    background-color: $sec-line-color;
+    text-align: center;
+    line-height: 50px;
+    color: $def-black-color;
+    font-size: $font-md;
+    .close{
+      font-size: 30px;
+    }
+  }
+  .ac-agree-btn{
+    width: 108px;
+    height: 36px;
+  }
+  .agree-refuse-contant{
+    width: 410px;
+    margin: 0 auto;
+    .agreement-textarea{
+      width: 388px;
+      height: 65px;
+      border: 1px solid transparent;
+      background-color: #f8f8f8;
+      border-radius: $globalBtnRadius;
+      resize: none;
+      padding: 10px;
+      &:focus{
+        border-color: $new-main-deep-color;
+      }
+    }
+  }
+  .tooltip{
+    opacity: 1;
+  }
+}

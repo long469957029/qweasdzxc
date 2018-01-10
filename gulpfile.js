@@ -10,6 +10,7 @@ const del = require('del')
 const imagemin = require('gulp-imagemin')
 const pngquant = require('imagemin-pngquant')
 const cache = require('gulp-cache')
+const pump = require('pump')
 
 const _ = require('underscore')
 
@@ -112,20 +113,24 @@ gulp.task('server.webpack', () => {
   }
 
   Object.assign(proxy, {
-    '*.json': {
+    // context: ['*.json', '**.json', '**/**.json', '/**/**.json'],
+    // target: serverIP,
+    '**/*.json': {
       target: serverIP,
       changeOrigin: true,
     },
     'mock/*.json': {
       target: 'http://localhost:7070/',
     },
-    '*': {
-      target: serverIP,
-      changeOrigin: true,
-    },
+    // '*.jsonp': {
+    //   target: serverIP,
+    //   changeOrigin: true,
+    // },
+    // '*': {
+    //   target: `http:localhost${devConfig.devServer.port}`,
+    //   changeOrigin: true,
+    // },
   })
-  console.info(proxy)
-  // process.exit()
 
   new WebpackDevServer(webpack(devConfig), {
     publicPath: devConfig.output.publicPath,
@@ -168,7 +173,7 @@ gulp.task('release', (cb) => {
   runSequence(
     'release.clean',
     'release.build',
-    ['release.js', 'release.css', 'release.assets', 'release.html', 'release.compatible'],
+    ['release.js', 'release.css', 'release.assets', 'release.html'],
     'zip',
     cb
   )
@@ -325,21 +330,11 @@ gulp.task('release.build', (callback) => {
 })
 
 // 压缩转移js
-gulp.task('release.js', () => {
-  // function createErrorHandler(name) {
-  //   return function (err) {
-  //     console.error('Error from ' + name + ' in compress task', err.toString());
-  //   };
-  // }
-  return gulp.src([`./dist/${projectPath}/*.js`])
-    .pipe(uglify())
-    .pipe(gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath)))
-  // pump([
-  //   gulp.src(['./dist/' + projectPath + '/*.js']),
-  //   uglify(),
-  //   gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath)),
-  //   cb
-  // ]);
+gulp.task('release.js', (cb) => {
+  return pump([
+    gulp.src([`./dist/${projectPath}/*.js`]),
+    gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath))
+  ], cb)
 })
 
 // 压缩转移css
@@ -358,17 +353,6 @@ gulp.task('release.assets', () => {
   // .pipe(gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath + '/' + packageConfig.output.publicPath)));
 })
 
-// 压缩转移兼容性文件
-gulp.task('release.compatible', () => {
-  return gulp.src([
-    './bower_components/es5-shim/es5-sham.min.js',
-    './bower_components/es5-shim/es5-shim.min.js',
-    './bower_components/json2/json2.js',
-  ])
-    .pipe(uglify({ mangle: false }))
-    .pipe(gulp.dest(`./www/${packageConfig.output.path}/compatible`))
-})
-
 // 压缩转移css
 gulp.task('release.html', () => {
   return gulp.src([`./dist/${projectPath}/*.html`])
@@ -378,7 +362,7 @@ gulp.task('release.html', () => {
 // 打压缩包，默认打www/main程序包，gulp zip --package=external，打external文件夹下的压缩包，gulp zip --package=all，将mian和external两个文件夹下的所有文件一起打包
 gulp.task('zip', () => {
   return gulp.src(zipPath)
-    .pipe(zip('forehead_wx.zip'))
+    .pipe(zip('forehead_wx_v3.zip'))
     .pipe(gulp.dest('www'))
 })
 

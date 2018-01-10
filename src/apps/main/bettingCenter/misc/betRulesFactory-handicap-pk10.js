@@ -1,11 +1,9 @@
-import betFormat from './betFormat'
 import factory from 'bettingCenter/misc/betRulesFactory'
-import { chunk } from 'lodash'
 
-const fortyNine = _.range(1, 50)
-const oneHundred = _.range(51, 100)
+const fifty = _.range(1, 51)
+const oneHundred = _.range(51, 101)
 
-const getFortyNine = (numList) => {
+const getFifty = (numList) => {
   return _.map(numList, (num, index) => {
     const fMum = `${(num !== 0 && num % 10 === 0 ? 10 : (num % 10)) + (100 * Math.ceil((index + 1) / 10))}`
     return {
@@ -427,7 +425,7 @@ function _create(ticketId) {
   })
 
   //冠亚和
-  factory.addHandicapRule([ticketId, '220101'], {
+  factory.addHandicapRule([ticketId, '260101'], {
     list: factory.createHandicapList([
       {
         title: '冠、亚军和',
@@ -578,18 +576,18 @@ function _create(ticketId) {
   })
 
   //1-10名
-  factory.addHandicapRule([ticketId, '310101'], {
+  factory.addHandicapRule([ticketId, '230101'], {
     list: factory.createHandicapList([
       {
         title: ['冠军', '亚军', '季军', '第四名', '第五名'],
-        items: chunk(getFortyNine(fortyNine), 10),
+        items: _.chunk(getFifty(fifty), 10),
         showItemOdds: true,
         showMoneyInput: true,
         operate: 'none',
       },
       {
         title: ['第六名', '第七名', '第八名', '第九名', '第十名'],
-        items: chunk(getFortyNine(oneHundred), 10),
+        items: _.chunk(getFifty(oneHundred), 10),
         showItemOdds: true,
         showMoneyInput: true,
         operate: 'none',

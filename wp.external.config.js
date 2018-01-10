@@ -67,7 +67,6 @@ module.exports = {
     'window.jQuery': 'jquery',
     bootstrap: 'bootstrap',
     _: 'underscore',
-    lo: 'lodash',
     R: 'rambda',
     slimScroll: 'jquery-slimscroll',
   },

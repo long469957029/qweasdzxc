@@ -1,9 +1,10 @@
+const SlotCenterView = () => import(/* webpackChunkName: "outer-center" */ './index')
 
-
-const SlotCenterController = require('slotCenter/controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new SlotCenterController(), {
-    sc: 'slotCenter',
-  })
-}
+export default [
+  {
+    path: '/sc',
+    component: function(resolve) {
+      RouterController.async(resolve, SlotCenterView)
+    }
+  },
+]

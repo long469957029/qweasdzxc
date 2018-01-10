@@ -164,6 +164,8 @@ const menuConfig = [
       {
         name: '分红管理',
         icon: 'divid',
+        id: 'divid',
+        needAuth: true,
         list: [
           {
             id: 407,
@@ -294,15 +296,15 @@ const menuConfig = [
         channelName: 'PT老虎机',
         desc: '玩法丰富，实力超群',
         imgSrc: 'icon-slot-pt',
-        router: '#sc?channelId=4',
+        router: 'sc?channelId=4',
       },
       {
         channelId: channelId.mg,
         channelName: 'MG老虎机',
         desc: '欧美最流行老虎机',
-        // router: '#gc/scmg',
+        // router: '#/gc/scmg',
         imgSrc: 'icon-slot-mg',
-        router: '#sc?channelId=5',
+        router: 'sc?channelId=5',
       },
     ],
   },
@@ -352,7 +354,7 @@ const menuConfig = [
   },
 
   {
-    router: '#ma?type=0',
+    router: '#/ma?type=0',
     name: '积分商城',
     navItemType: navItemType.outerLink,
     className: 'js-nav-mall nav-right',

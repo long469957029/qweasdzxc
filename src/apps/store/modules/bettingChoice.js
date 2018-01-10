@@ -14,6 +14,7 @@ const initState = () => {
     fBetBonus: 0,
     betMethod: 0,
     maxBonus: 195000,
+    formatMaxBonus: 0,
     unit: 10000,
     formatUnit: '元',
     statistics: 0,
@@ -47,6 +48,9 @@ const getters = {
   groupId: (state) => {
     return state.groupId
   },
+  // playInfo: (state) => {
+  //   return state.playInfo
+  // },
 }
 
 // actions
@@ -101,7 +105,7 @@ const actions = {
     return new Promise((resolve) => {
       betting.pushChase(
         {
-          plan, play, suspend, usePack: state.usePack, amount, 
+          plan, play, suspend, usePack: state.usePack, amount,
         },
         ({ data }) => {
           resolve(data)

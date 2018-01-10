@@ -1,14 +1,86 @@
+require('./misc/index.scss')
+
+const PlatformNewsView = () => import(/* webpackChunkName: "news-center" */ './views/platformNews')
+const PlatformNewsDetailView = () => import(/* webpackChunkName: "news-center" */ './views/platformNewsDetail')
+const PlatformNewsSettingView = () => import(/* webpackChunkName: "news-center" */ './views/platformNewsSetting')
+const InsideLetterDetailView = () => import(/* webpackChunkName: "news-center" */ './views/insideLetterDetail')
+const InsideLetterSendView = () => import(/* webpackChunkName: "news-center" */ './views/insideLetterSend')
 
 
-const NewsCenterController = require('newsCenter/controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new NewsCenterController(), {
-    'nc/pn': 'platformNews', // 系统通知
-    'nc/pn/detail/:noticeId': 'platformNewsDetail', // 系统通知详情
-    'nc/pn/setting': 'platformNewsSetting', // 系统通知设置
-    'nc/il': 'insideLetter', // 站内信
-    'nc/il/detail/:titleId/:letterId': 'insideLetterDetail', // 站内信详情
-    'nc/il/send': 'insideLetterSend', // 发送站内信
-  })
-}
+export default [
+  {
+    path: '/nc/pn',
+    component: function() {
+      RouterController.changeMainReginView(new PlatformNewsView(), {
+        main: {
+          title: '消息中心',
+        },
+      })
+    },
+  },
+  {
+    path: '/nc/pn/detail/:noticeId',
+    component: function() {
+      RouterController.changeMainReginView(new PlatformNewsDetailView({
+        noticeId: $route.params.noticeId,
+      }), {
+        main: {
+          title: '消息中心',
+          subReturn: true,
+        },
+        parentRouter: 'nc/pn',
+      })
+    },
+  },
+  {
+    path: '/nc/pn/setting',
+    component: function() {
+      RouterController.changeMainReginView(new PlatformNewsSettingView(), {
+        main: {
+          title: '通知设置',
+          subReturn: true,
+        },
+        parentRouter: 'nc/pn',
+      })
+    },
+  },
+  {
+    path: '/nc/il',
+    component: function() {
+      RouterController.changeMainReginView(new PlatformNewsView({
+        triggerTab: 'insideLetter',
+      }), {
+        main: {
+          title: '消息中心',
+        },
+      })
+    },
+  },
+  {
+    path: '/nc/il/detail/:titleId/:letterId',
+    component: function() {
+      RouterController.changeMainReginView(new InsideLetterDetailView({
+        titleId: $route.params.titleId,
+        letterId: $route.params.letterId,
+      }), {
+        main: {
+          title: '消息中心',
+          subReturn: true,
+        },
+        parentRouter: 'nc/il',
+      })
+    },
+  },
+  {
+    path: '/nc/il/send',
+    component: function() {
+      RouterController.changeMainReginView(new InsideLetterSendView(), {
+        main: {
+          title: '发送站内信',
+          subReturn: true,
+        },
+        parentRouter: 'nc/il',
+      })
+    },
+  },
+]

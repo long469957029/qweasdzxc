@@ -7,7 +7,7 @@
         <betting-advance-rules :type="'single-hidden'"></betting-advance-rules>
         <div class="m-LR-smd">
           <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
-            <betting-play-area-handicap :play-rule="playRule" :ticket-info="ticketInfo" :pushing="pushing" :sale="bettingInfo.sale" :pending="bettingInfo.pending"
+            <betting-play-area-handicap :play-info="playInfo" :play-rule="playRule" :ticket-info="ticketInfo" :pushing="pushing" :sale="bettingInfo.sale" :pending="bettingInfo.pending"
                                         ref="area" @lotteryBuy="lotteryBuy"></betting-play-area-handicap>
           </div>
         </div>
@@ -86,6 +86,7 @@
 
           const playInfo = this.playInfo
 
+          this.$store.commit(types.SET_MAX_BONUS, playInfo.betMethodMax)
           this.$store.commit(types.SET_PLAY_INFO, playInfo)
 
           this.clearAll()
@@ -93,14 +94,11 @@
       },
       'bettingInfo.planId': {
         handler: function(newPlanId, oldPlanId) {
-          if (oldPlanId !== '------------' && !this.bettingInfo.pending) {
+          if (this.$el.offsetWidth && oldPlanId !== '------------' && !this.bettingInfo.pending) {
             Global.ui.notification.show(
               `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
               { id: 'ticketNotice', hasFooter: false, displayTime: 800 },
             )
-
-            //提示框变化, 暂时这么写
-            $('.js-bc-confirm-planId').text(newVal)
           }
         }
       },

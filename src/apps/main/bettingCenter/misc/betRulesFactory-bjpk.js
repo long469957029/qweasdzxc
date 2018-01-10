@@ -5,6 +5,7 @@ const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 const ten = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
 
 const danshuang = ['大', '小', '单', '双']
+const longhu = ['龙', '虎']
 
 const splitReg = /[\r\n,;:\|]+/
 
@@ -173,21 +174,55 @@ function _create(ticketId) {
   //= ============================
   // 定位胆
 
-  factory.addRule([ticketId, '060101'], {
-    // type: 'multiPage',
-    page: 5,
+  factory.addRule([ticketId, '060102'], {
     algorithm: algorithm.addAll,
-    list: factory.createList(['冠军', '亚军', '季军', '第四名', '第五名', '第六名', '第七名', '第八名', '第九名', '第十名'], {
+    list: factory.createList(['冠军', '亚军', '季军', '第四名', '第五名'], {
       items: ten,
     }),
     format: { symbol: ' ' },
-    create: algorithm.getCreateFunc(2, {
+    create: algorithm.getCreateFunc(1, {
       range: ten,
       matching: true,
     }),
   })
 
-  //= =========================
+  factory.addRule([ticketId, '060103'], {
+    algorithm: algorithm.addAll,
+    list: factory.createList(['第六名', '第七名', '第八名', '第九名', '第十名'], {
+      items: ten,
+    }),
+    format: { symbol: ' ' },
+    create: algorithm.getCreateFunc(1, {
+      range: ten,
+      matching: true,
+    }),
+  })
+
+  // =========================
+  // 龙虎
+  factory.addRule([ticketId, '660151'], {
+    formType: 'DRAGON',
+    keyPosition: ['万位', '千位', null, null, null],
+    algorithm: algorithm.addAll,
+    list: factory.createList(['无'], {
+      items: longhu,
+      operate: 'none',
+    }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
+    format: { symbol: ' ' },
+    formatToNum: true,
+    analysis: false,
+    create: algorithm.getCreateFunc(1, {
+      range: longhu,
+      matching: true,
+    }),
+  })
+
+
+  // =========================
   // 大小单双
 
   factory.addRule([ticketId, '070101'], {

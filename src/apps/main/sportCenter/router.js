@@ -1,9 +1,10 @@
+const SportCenterView = () => import(/* webpackChunkName: "outer-center" */ './index')
 
-
-const SportCenterController = require('sportCenter/controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new SportCenterController(), {
-    sp: 'sportCenter',
-  })
-}
+export default [
+  {
+    path: '/sp',
+    component: function(resolve) {
+      RouterController.async(resolve, SportCenterView)
+    },
+  },
+]

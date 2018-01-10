@@ -167,7 +167,7 @@ const SlotCenterView = Base.ItemView.extend({
       .done((res) => {
         if (res.result === 0 && res.root) {
           const { gameList } = res.root
-          const html = lo.chunk(gameList, 4).map((rowItems) => {
+          const html = _.chunk(gameList, 4).map((rowItems) => {
             const game = _.map(rowItems, (item) => {
               return self.gameTpl(item)
             }).join('')
@@ -218,7 +218,7 @@ const SlotCenterView = Base.ItemView.extend({
       .done((res) => {
         if (res.result === 0 && res.root) {
           const { gameList } = res.root
-          const html = lo.chunk(gameList, 4).map((rowItems) => {
+          const html = _.chunk(gameList, 4).map((rowItems) => {
             const game = _.map(rowItems, (item) => {
               return self.gameTpl(item)
             }).join('')
@@ -277,7 +277,7 @@ const SlotCenterView = Base.ItemView.extend({
       .done((res) => {
         if (res.result === 0 && res.root) {
           const { gameList } = res.root
-          const html = lo.chunk(gameList, 4).map((rowItems) => {
+          const html = _.chunk(gameList, 4).map((rowItems) => {
             const game = _.map(rowItems, (item) => {
               return self.gameTpl(item)
             }).join('')

@@ -1,9 +1,14 @@
+const ActiveCenterView = () => import(/* webpackChunkName: "active-center" */ './activeCenter')
 
-
-const ActiveCenterController = require('activeCenter/controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new ActiveCenterController(), {
-    aa: 'activeCenter',
-  })
-}
+export default [
+  {
+    path: '/aa',
+    component(resolve) {
+      RouterController.async(resolve, ActiveCenterView, {
+        main: {
+          title: '活动中心',
+        },
+      })
+    }
+  },
+]

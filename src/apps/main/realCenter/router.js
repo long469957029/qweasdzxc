@@ -1,9 +1,10 @@
+const RealCenterView = () => import(/* webpackChunkName: "outer-center" */ './index')
 
-
-const RealCenterController = require('realCenter/controller')
-
-exports.install = function() {
-  window.Global.appRouter.processAppRoutes(new RealCenterController(), {
-    rc: 'realCenter',
-  })
-}
+export default [
+  {
+    path: '/rc',
+    component: function(resolve) {
+      RouterController.async(resolve, RealCenterView)
+    }
+  },
+]

@@ -509,6 +509,15 @@
   background: url("~base/images/mall/mall-lv10.png") no-repeat;
 }
 
+.admin-container {
+  position: relative;
+  width: 1200px;
+  min-height: 1100px;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 5px rgba(0,0,0,0.4);
+}
+
 @include sprites($spritesheet-sprites);
 @include spritesMG($spritesheet-MG-sprites);
 @include spritesPT($spritesheet-PT-sprites);

@@ -1,5 +1,7 @@
 const core = require('mathjs/core')
 
+import { repeat, fill, chunk } from 'lodash'
+
 const math = core.create()
 
 math.import(require('mathjs/lib/function/arithmetic/add'))
@@ -11,6 +13,9 @@ math.import(require('mathjs/lib/function/arithmetic/floor'))
 const gameConfig = require('skeleton/misc/gameConfig')
 
 _.mixin({
+  repeat,
+  fill,
+  chunk,
   // 首字母大写
   ucFirst(string) {
     return string.replace(/\b\w+\b/g, (word) => {

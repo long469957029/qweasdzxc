@@ -1,0 +1,23 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": ["> 2%", "ie 11", "safari >= 7"]
+      },
+      "useBuiltIns": "usage"
+    }]
+  ],
+  "plugins": ["@babel/plugin-syntax-dynamic-import"],
+  "env": {
+    "production": {
+      "presets": ["@babel/preset-es2015"],
+      "plugins": ["@babel/plugin-syntax-dynamic-import"],
+    }
+  },
+  "ignore": [
+    "createjs-2015.11.26.min.js",
+    "**/*.min.js",
+    "**/jQuery*.js",
+    "**/jquery*.js"
+  ]
+}

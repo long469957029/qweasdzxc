@@ -1,4 +1,5 @@
 
+const avatarCfg = require('../misc/avatarConfig')
 
 const PersonalManageView = Base.ItemView.extend({
 
@@ -90,14 +91,15 @@ const PersonalManageView = Base.ItemView.extend({
           self.$receiver.val(_.isNull(res.root.receiverData) ? '' : res.root.receiverData.receiverName)
           self.$phone.val(_.isNull(res.root.receiverData) ? '' : res.root.receiverData.receivePhone)
           self.$addressDetail.val(_.isNull(res.root.receiverData) ? '' : res.root.receiverData.receiverDetailAddr)
-          self.getHeadIconXhr()
-            .done((_res) => {
-              if (_res && _res.result === 0) {
-                if (_res.root && _res.root.records) {
-                  self.formateHeadIconList(_res.root.records)
-                }
-              }
-            })
+          // self.getHeadIconXhr()
+          //   .done((_res) => {
+          //     if (_res && _res.result === 0) {
+          //       if (_res.root && _res.root.records) {
+          //         self.formateHeadIconList(_res.root.records)
+          //       }
+          //     }
+          //   })
+          self.formateHeadIconList(avatarCfg.avatars)
           self.getCityListXhr()
             .done((resp) => {
               if (resp && resp.result === 0) {
@@ -126,7 +128,7 @@ const PersonalManageView = Base.ItemView.extend({
     if (data) {
       this.$headIconList.empty()
       _(data).each((item) => {
-        this.$headIconList.append(`<li class="icon-info js-head-icon-info ${item.id === this.iconId ? 'active' : ''}" data-id="${item.id}"><img src="${item.url}" class="head-img"></li>`)
+        this.$headIconList.append(`<li class="icon-info js-head-icon-info ${item.id === this.iconId ? 'active' : ''}" data-id="${item.id}"><img src="${item.logo}" class="head-img"></li>`)
       })
     }
   },

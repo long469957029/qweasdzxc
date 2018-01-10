@@ -42,7 +42,7 @@
                   </span>
               </div>
               <div class="main-item-right" v-if="!_.isEmpty(item)">
-                <span class="item odds" v-if="rule.showItemOdds">48.18</span>
+                <span class="item odds" v-if="rule.showItemOdds">{{item.odds}}</span>
                 <input type="text" class="money-input" v-if="rule.showMoneyInput" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney($event, item)" />
               </div>
             </div>
@@ -50,7 +50,7 @@
             <div class="main-item" v-else :class="{selected: item.selected}" @click="select(item)">
               <div :class="rule.showItemOdds ? 'main-item-left' : 'main-item-center'" v-if="!_.isEmpty(item)">
                 <span class="item" :class="item.style">{{item.title}}</span>
-                <span class="item odds" v-if="rule.showItemOdds">48.18</span>
+                <span class="item odds" v-if="rule.showItemOdds">{{item.odds}}</span>
               </div>
               <div class="main-item-right" v-if="!_.isEmpty(item) && rule.showMoneyInput">
                 <input type="text" class="money-input" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney($event, item)" />
@@ -144,6 +144,7 @@
 
     props: {
       playRule: Object,
+      playInfo: Object,
       ticketInfo: Object,
       pushing: Boolean,
       sale: Boolean,
@@ -163,10 +164,22 @@
 
     watch: {
       'playRule.list': {
-        handler(newVal, oldVal) {
-          this.formattedRuleList = newVal
+        handler(list, oldVal) {
+          _.chain(list).pluck('items').each((itemGroup, index) => {
+            _.each(itemGroup, (itemList) => {
+              if (list[index].showItemOdds) {
+                _.each(itemList, (item) => {
+                  const betBonus = _.findWhere(this.playInfo.betBonus, {betType: Number(item.num)})
+                  if (betBonus) {
+                    item.odds = _.convert2yuan(betBonus.betMethodMin)
+                  }
+                })
+              }
+            })
+          })
+
+          this.formattedRuleList = list
         },
-        immediate: true
       },
       'betMoney': {
         handler() {
@@ -196,6 +209,10 @@
         deep: true
       }
     },
+
+    // computed: mapState({
+    //   playInfo: state => state.bettingChoice.playInfo
+    // }),
 
     methods: {
 
