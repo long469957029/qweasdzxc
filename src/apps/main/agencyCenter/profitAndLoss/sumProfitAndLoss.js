@@ -23,34 +23,50 @@ const ReportManageView = SearchGrid.extend({
         {
           name: '彩票',
           width: '8%',
+          sortable: true,
+          id: 1,
         },
         {
           name: 'AG',
           width: '8%',
+          sortable: true,
+          id: 2,
         },
         {
           name: 'EBET',
           width: '8%',
+          sortable: true,
+          id: 3,
         },
         {
           name: 'BBIN',
           width: '8%',
+          sortable: true,
+          id: 4,
         },
         {
           name: 'PT',
           width: '8%',
+          sortable: true,
+          id: 5,
         },
         {
           name: 'MG',
           width: '8%',
+          sortable: true,
+          id: 6,
         },
         {
           name: 'AG',
           width: '8%',
+          sortable: true,
+          id: 7,
         },
         {
           name: 'GG',
           width: '8%',
+          sortable: true,
+          id: 8,
         },
         {
           name: '总盈亏',
@@ -62,17 +78,18 @@ const ReportManageView = SearchGrid.extend({
         emptyTip: '没有资金变更记录',
       },
       ajaxOps: {
-        url: '/info/gamereport/teamprofit.json',
-        // url: '/info/gamereport/teamprofitdetail.json',
+        // url: '/info/gamereport/teamprofit.json',
+        url: '/info/gamereport/teamprofitdetail.json',
       },
       reqData: {
-        // userId: Global.memoryCache.get('acctInfo').userId,
+        userId: Global.memoryCache.get('acctInfo').userId,
         pageSize: 15,
       },
       subOps: {
         url: '/info/gamereport/teamprofitdetail.json',
         data: ['userId'],
       },
+      cover: false,
     })
   },
 

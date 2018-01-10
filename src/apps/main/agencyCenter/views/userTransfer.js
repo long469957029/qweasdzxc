@@ -1,5 +1,6 @@
 
 // const LowMultiSelect = require('com/lowMultiSelect')
+const avatarCfg = require('../../userCenter/misc/avatarConfig')
 
 const MoneyTransferView = Base.ItemView.extend({
 
@@ -155,7 +156,7 @@ const MoneyTransferView = Base.ItemView.extend({
                 text: sub.subAcctName,
                 value: sub.subAcctId,
                 subItem: false,
-                img: sub.img,
+                img: avatarCfg.get(_.isNull(sub.headIconId) ? _.random(1,21) : sub.headIconId).logo,
               }
             }))
             self.initRequestParams()
@@ -256,7 +257,7 @@ const MoneyTransferView = Base.ItemView.extend({
                   text: sub.subAcctName,
                   value: sub.subAcctId,
                   subItem: false,
-                  img: sub.img,
+                  img: avatarCfg.get(sub.headIconId).logo,
                 }
               }))
             }
@@ -343,10 +344,10 @@ const MoneyTransferView = Base.ItemView.extend({
   },
   getErrorTool (errorText) {
     const errorHtml =
-      `${'<div class="tooltip parsley-errors-list tooltip-error filled">' +
-      '<span class="sfa sfa-error-icon vertical-sub pull-left"></span>' +
-      '<div class="tooltip-inner">'}${errorText}</div>` +
-      '</div>'
+      `<div class="tooltip parsley-errors-list tooltip-error filled">
+      <span class="sfa sfa-error-icon vertical-sub pull-left"></span>
+      <div class="tooltip-inner">${errorText}</div>
+      </div>`
     this.$errorText.html(errorHtml)
   },
   changeEleClass ($ele, status) {
@@ -426,6 +427,8 @@ const MoneyTransferView = Base.ItemView.extend({
           if (res && res.result === 0) {
             Global.ui.notification.show('转账成功。', {
               type: 'success',
+              hasFooter: false,
+              displayTime: 1000,
             })
             self.render()
           } else if (_(res.root).isNumber()) {

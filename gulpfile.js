@@ -362,7 +362,7 @@ gulp.task('release.html', () => {
 // 打压缩包，默认打www/main程序包，gulp zip --package=external，打external文件夹下的压缩包，gulp zip --package=all，将mian和external两个文件夹下的所有文件一起打包
 gulp.task('zip', () => {
   return gulp.src(zipPath)
-    .pipe(zip('forehead_wx.zip'))
+    .pipe(zip('forehead_wx_v3.zip'))
     .pipe(gulp.dest('www'))
 })
 

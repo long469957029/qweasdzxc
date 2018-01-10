@@ -5,7 +5,7 @@
   <% if(showUserInfo){ %>
   <div class="sidebar-user-info clearfix">
     <div class="user-info-photo">
-      <img src=""  />
+      <img src="<%=img%>"  />
     </div>
     <div class="user-info-name text-inverse text-center m-top-smd font-sm">您好，<span class="js-user-name"><%=userName%></span></div>
     <div class="m-top-sm text-center">
@@ -43,7 +43,7 @@
     <% if (!menu.needAuth || menu.auth) { %>
     <li role="presentation" class="<% if (menu.isActive) { %>active<% } %>">
       <a class="router" href="#<%=menu.router %>">
-        <%=menu.name %><% if(menu.id === 407 && dividendStatus === 1) { %> <span class="js-ac-dm-tip ac-dm-tip">待签约</span> <%}%>
+        <%=menu.name %><% if(menu.id === 407 && (dividendStatus === 1 || dividendStatus === 3)) { %> <span class="js-ac-dm-tip ac-dm-tip">待签约</span> <%}%>
       </a>
     </li>
     <% } %>

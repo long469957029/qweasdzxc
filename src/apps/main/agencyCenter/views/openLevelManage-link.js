@@ -221,7 +221,14 @@ const OpenAccountManageLinkView = SearchGrid.extend({
       }
     })
   },
-  redPackDetailHandler() {
+  redPackDetailHandler(e) {
+    const $target = $(e.currentTarget)
+    const $tr = $target.closest('tr')
+    const redPackType = $tr.data('redpack-type')
+    const totalRedpackAmount = _($tr.data('total-redpack-amount')).convert2yuan()
+    const leftRedpackAmount = _($tr.data('left-redpack-amount')).convert2yuan()
+    const redpackNum = $tr.data('redpack-num')
+    const leftRedpackNum = $tr.data('left-redpack-num')
     const $dialog = Global.ui.dialog.show({
       anySize: '378',
       body: '<div class="js-red-detail-dialog"></div>',
@@ -229,7 +236,11 @@ const OpenAccountManageLinkView = SearchGrid.extend({
       closeBtn: false,
     })
     $dialog.find('.js-red-detail-dialog').html(this.redPackDetailTpl({
-
+      redPackType,
+      totalRedpackAmount,
+      leftRedpackAmount,
+      redpackNum,
+      leftRedpackNum,
     }))
     $dialog.on('hidden.modal', function() {
       $(this).remove()

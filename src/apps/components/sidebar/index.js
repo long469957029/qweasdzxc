@@ -2,6 +2,8 @@
 
 require('./index.scss')
 
+const avatarCfg = require('userCenter/misc/avatarConfig')
+
 const SidebarView = Base.ItemView.extend({
 
   template: require('./index.html'),
@@ -27,6 +29,7 @@ const SidebarView = Base.ItemView.extend({
       isTeam: sidebar.router === 'ac',
       dividendStatus: acctInfo.dividendStatus,
       userName: acctInfo.username,
+      img: avatarCfg.get(_.isNull(acctInfo.headIcon) ? _.random(1, 21) : Number(acctInfo.headIcon)).logo,
     }
   },
 
