@@ -375,7 +375,9 @@ gulp.task('font.min', (cb) => {
   )
 })
 
-gulp.task('font.minimal', () => {
+gulp.task('font.minimal', (cb) => {
+  const total = fontConfig.length
+  let finished = 0
   _(fontConfig).each((fontInfo) => {
     const fontmin = new Fontmin()
       .src(`./src/base/fonts/origins/${fontInfo.font}`)
@@ -383,7 +385,9 @@ gulp.task('font.minimal', () => {
         text: fontInfo.text,
         hinting: false,
       }))
-
+    if (fontInfo.font.indexOf('otf') > -1 ) {
+      fontmin.use(Fontmin.otf2ttf())
+    }
     if (_(fontInfo.targets).contains('eot')) {
       fontmin.use(Fontmin.ttf2eot())
     }
@@ -414,9 +418,13 @@ gulp.task('font.minimal', () => {
       if (err) {
         throw err
       }
+      finished += 1
       console.log(files[0])
 
       // 此处有bug
+      if (finished === total) {
+        cb()
+      }
       // cb()
       // => { contents: <Buffer 00 01 00 ...> }
     })

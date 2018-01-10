@@ -1,8 +1,8 @@
 [
   {
-    "font": "tahoma_0.ttf",
+    "font": "dokchamp.ttf",
     "dest": "./src/base/fonts",
-    "target": "din",
+    "target": "dokchamp",
     "text": "1234567890.,",
     "targets": [
       "woff",
