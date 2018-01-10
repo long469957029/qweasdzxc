@@ -53,6 +53,12 @@
             this.rolling()
           }
         }
+      },
+      '$route': {
+        handler() {
+          this.rollingStatus = R.repeat(false, this.counts)
+          this.init = true
+        }
       }
     },
 
@@ -148,7 +154,7 @@
     }
 
     .text-circle{
-      font-family: din, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
+      font-family: dokchamp, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
       position: relative;
       overflow: hidden;
       margin-bottom: 10px;

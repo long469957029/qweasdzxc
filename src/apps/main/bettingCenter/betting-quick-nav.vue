@@ -1,8 +1,8 @@
 <template>
   <div class="bc-main-quick">
     <div class="pull-left quick-list">
-      <a href="#bc/1" class="quick-list-info active">重庆时时彩<i class="sfa-badge-hot"></i></a>
-      <a href="#bc/10" class="quick-list-info">北京pk10<i class="sfa-badge-new"></i></a>
+      <router-link to="/bc/1" class="quick-list-info active">重庆时时彩<i class="sfa-badge-hot"></i></router-link>
+      <router-link to="/bc/10" class="quick-list-info">重庆时时彩<i class="sfa-badge-new"></i></router-link>
       <a class="quick-list-info">无限分分彩</a>
       <a class="quick-list-info">qq30秒</a>
       <a class="quick-list-info">新加坡2分彩</a>
@@ -11,8 +11,8 @@
       <a class="quick-list-info">无限秒秒彩</a>
     </div>
     <div class="quick-more pull-right">
-      <a :class="['sfa cursor-pointer bc-quick-more-btn', isShowMore ? 'sfa-bc-quick-close' : 'sfa-bc-quick-more']" @click="showTicketList"></a>
-      <div :class="['quick-ticket-list', isShowMore ? 'quick-ticket-list-animate' : '']">
+      <a class="sfa cursor-pointer bc-quick-more-btn" :class="[isShowMore ? 'sfa-bc-quick-close' : 'sfa-bc-quick-more']" @click="isShowMore = !isShowMore"></a>
+      <div class="quick-ticket-list" :class="{'quick-ticket-list-animate' : isShowMore}">
         <div class="quick-ticket-main clearfix">
           <div v-for="ticketInfo in ticketList">
             <div class="pull-left">
@@ -43,10 +43,16 @@
         default: false
       }
     },
+
+    computed: mapState({
+      fTickets: state => state.topTickets,
+    }),
+
     methods: {
-      showTicketList() {
-        this.isShowMore = !this.isShowMore
-      }
+    },
+
+    mounted() {
+      this.$store.dispatch(types.GET_TOP_TICKETS)
     }
   }
 </script>

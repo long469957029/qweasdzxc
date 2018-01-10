@@ -1,4 +1,4 @@
-import betting from '../../api/betting'
+import betting from '../../../api/betting'
 
 const initState = () => {
   return {

@@ -56,7 +56,7 @@ export default {
 
   // 提交追号
   pushChase({
-    plan, play, suspend, usePack, amount, 
+    plan, play, suspend, usePack, amount,
   }, then, fail) {
     return Global.sync.axios({
       url: '/ticket/chase/chase.json',
@@ -101,5 +101,26 @@ export default {
     })
       .done(then)
   },
+
+  //取得顶部彩种
+  getTopTickets(then, fail) {
+    return Global.sync.axios({
+      url: '/ticket/show/getTopTickets.json',
+    })
+      .then(then)
+      .catch(fail)
+      // /ticket/show/viewTicket.json
+  },
+
+  setTopCurrentTicket({ticketId}, then) {
+    return Global.sync.axios({
+      url: '/ticket/show/getTopTickets.json',
+      data: {
+        ticketId,
+        device: 0
+      }
+    })
+      .then(then)
+  }
 }
 

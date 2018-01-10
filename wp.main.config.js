@@ -5,7 +5,7 @@ module.exports = {
     register: './src/apps/packages/register/register.js',
     vendor: './src/vendor/build.core.js',
     base: './src/base/build.base.js',
-    // trend: './src/apps/packages/trend/index.js',
+    trend: './src/apps/packages/trend/index.js',
     // resetPassword: './src/apps/packages/resetPassword/resetPassword.js',
     updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
     // merchants: './src/apps/packages/merchants/index.js',
