@@ -13,8 +13,8 @@ export default {
       params = {}
     }
     viewPromise().then((view) => {
-      this.changeMainReginView(new view(params), config)
-      resolve()
+      this.changeMainReginView(view.default ? new view.default(params) :  new view(params), config)
+      // resolve()
     })
   },
 

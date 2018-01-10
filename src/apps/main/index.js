@@ -19,7 +19,7 @@ modules.install()
 const appRouters = require('./app.routers')
 
 // 因应二号改版 验证机制不同 可以新增一个新的 userType 作为游客
-Global.memoryCache.set('acctInfo', { userType: 1 })
+// Global.memoryCache.set('acctInfo', { userType: 1 })
 
 const router = appRouters.install()
 

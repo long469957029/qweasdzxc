@@ -163,9 +163,9 @@ const LowLevelManageView = SearchGrid.extend({
       cell.push('<a href="javascript:void(0);"  class="js-ac-llm-cp btn btn-link ">转账</a>')
     }
 
-    cell.push(`<a href="${_.addHrefArgs('#ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
+    cell.push(`<a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
     // cell.push(`<a href="${_.addHrefArgs(`#ac/track/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">追号</a>`)
-    cell.push(`<a href="${_.addHrefArgs('#ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a>`)
+    cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a>`)
 
     if (cell.length > 2) {
       html.push('<div class="relative">')
@@ -222,7 +222,7 @@ const LowLevelManageView = SearchGrid.extend({
         if (res && res.result === 0) {
           // 设置了则弹出验证框
           // $(document).verifyFundPwd({parentView:self});
-          Global.appRouter.navigate(`#ac/tr/${rowInfo.userId}?name=${rowInfo.userName}`, {
+          Global.appRouter.navigate(`#/ac/tr/${rowInfo.userId}?name=${rowInfo.userName}`, {
             trigger: true,
             replace: false,
           })

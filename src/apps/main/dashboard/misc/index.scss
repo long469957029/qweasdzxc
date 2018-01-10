@@ -5,7 +5,7 @@
 @import '../../misc/_mixin.scss';
 @import '../../misc/_variable.scss';
 
-body, [class*="col-"], .carousel-table-content {
+body, .carousel-table-content {
   background: rgba(248, 248, 248, 1) !important;
 }
 

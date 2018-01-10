@@ -4,7 +4,7 @@ const transferService = require('com/fundOperate/transfer/transferService')
 const Timeset = require('com/timeset')
 const BtnGroup = require('com/btnGroup')
 
-const FundManageView = Base.ItemView.extend({
+export default Base.ItemView.extend({
 
   className: '',
   template: require('fundCenter/fundManage/index.html'),
@@ -549,5 +549,3 @@ const FundManageView = Base.ItemView.extend({
       })
   },
 })
-
-module.exports = FundManageView

@@ -10,13 +10,13 @@ const SidebarView = Base.ItemView.extend({
 
   events: {},
 
-  initialize() {},
+  initialize() {
+    // this.subscribe('safe', 'safe:updating', this.render)
+  },
 
   serializeData() {
     let sidebar = ''
     const acctInfo = Global.memoryCache.get('acctInfo')
-    // console.log(acctInfo)
-    // const userName = acctInfo.userName
     if (_(this.options.sidebar).isArray()) {
       sidebar = _(this.options.sidebar).map(this.formatSidebar.bind(this))
     } else {
@@ -31,6 +31,31 @@ const SidebarView = Base.ItemView.extend({
       userName: acctInfo.username,
       img: avatarCfg.get(_.isNull(acctInfo.headIcon) ? _.random(1, 21) : Number(acctInfo.headIcon)).logo,
     }
+  },
+  onRender() {
+    const self = this
+    this.$iconLock = this.$('.js-sfa-icon-lock')
+    this.$iconLightBulb = this.$('.js-sfa-icon-light-bulb')
+    this.$iconMobile = this.$('.js-sfa-icon-mobile')
+    this.$iconMail = this.$('.js-sfa-icon-mail')
+    this.$safeLevel = this.$('.js-user-info-safe-level')
+    this.$progressBar = this.$('.js-safe-progress-bar')
+    this.subscribe('safe', 'safe:updating', () => { self._onRender() })
+  },
+  _onRender() {
+    const accountSafe = Global.memoryCache.get('accountSafe')
+    this.$iconLock.addClass(accountSafe && accountSafe.hasFundPassword ? 'sfa-icon-lock-over' : 'sfa-icon-lock')
+    this.$iconLightBulb.addClass(accountSafe && accountSafe.hasSecurityQuestion ? 'sfa-icon-light-bulb-over' : 'sfa-icon-light-bulb')
+    this.$iconMobile.addClass(accountSafe && accountSafe.hasBindingMobile ? 'sfa-icon-mobile-over' : ' sfa-icon-mobile')
+    this.$iconMail.addClass(accountSafe && accountSafe.hasBindingEmail ? 'sfa-icon-mail-over' : ' sfa-icon-mail')
+    if (accountSafe && accountSafe.securityLevel < 3) {
+      this.$safeLevel.html('低')
+    } else if (accountSafe && accountSafe.securityLevel < 5) {
+      this.$safeLevel.html('中')
+    } else {
+      this.$safeLevel.html('高')
+    }
+    this.$progressBar.css({ width: `${accountSafe ? _(_(accountSafe.securityLevel).div(5)).mul(100) : 0}%` })
   },
 
   formatSidebar(sidebar) {

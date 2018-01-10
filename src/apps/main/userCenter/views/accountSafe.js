@@ -47,6 +47,8 @@ const AccountSafeView = Base.ItemView.extend({
         if (res.result === 0) {
           if (res.root) {
             const data = res.root
+            Global.memoryCache.set('accountSafe', res.root)
+            Global.m.publish('safe:updating', res.root)
             if (data.securityLevel < 3) {
               self.$safeLevelText.html('低')
             } else if (data.securityLevel < 5) {
