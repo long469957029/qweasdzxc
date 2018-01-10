@@ -207,6 +207,7 @@ module.exports = {
   providePlugin: {
     Vue: ['vue', 'default'],
     mapState: ['vuex', 'mapState'],
+    mapGetters: ['vuex', 'mapGetters'],
     jQuery: 'jquery',
     $: 'jquery',
     'window.jQuery': 'jquery',

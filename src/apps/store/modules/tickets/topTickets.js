@@ -2,7 +2,7 @@ import betting from '../../../api/betting'
 
 const initState = () => {
   return {
-    ticketIds: []
+    ticketIds: [],
   }
 }
 
@@ -12,7 +12,7 @@ const getters = {
     return state.ticketIds.map(id => {
       return ticketConfig.getById(id)
     })
-  }
+  },
 }
 
 // actions
@@ -46,10 +46,10 @@ const actions = {
 
 // mutations
 const mutations = {
-  [types.CHECKOUT_TICKET_RULES] (state) {
-    // clear
-    Object.assign(state, initState())
-  },
+  // [types.CHECKOUT_TICKET_RULES] (state) {
+  //   // clear
+  //   Object.assign(state, initState())
+  // },
 
   [types.GET_TOP_TICKETS_SUCCESS] (state, res) {
     let data = []
@@ -71,6 +71,19 @@ const mutations = {
 
   [types.GET_TOP_TICKETS_FAILURE] (state) {
     state.checkoutStatus = 'failed'
+  },
+
+  [types.RESORT_TOP_TICKETS] (state, {currentId}) {
+    const curIndex = _.indexOf(state.ticketIds, currentId)
+    if (curIndex !== -1) {
+      state.ticketIds = _.sortBy(state.ticketIds, (ticket, index) => {
+        return index !== curIndex
+      })
+    } else {
+      state.ticketIds.pop()
+      state.ticketIds.unshift(currentId)
+      // ticketConfig.getById(id)
+    }
   },
 }
 

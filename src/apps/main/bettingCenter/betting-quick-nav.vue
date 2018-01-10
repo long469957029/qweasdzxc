@@ -1,15 +1,11 @@
 <template>
   <div class="bc-main-quick">
-    <div class="pull-left quick-list">
-      <router-link to="/bc/1" class="quick-list-info active">重庆时时彩<i class="sfa-badge-hot"></i></router-link>
-      <router-link to="/bc/10" class="quick-list-info">重庆时时彩<i class="sfa-badge-new"></i></router-link>
-      <a class="quick-list-info">无限分分彩</a>
-      <a class="quick-list-info">qq30秒</a>
-      <a class="quick-list-info">新加坡2分彩</a>
-      <a class="quick-list-info">韩国乐透1.5分彩</a>
-      <a class="quick-list-info">东京1.5分彩</a>
-      <a class="quick-list-info">无限秒秒彩</a>
-    </div>
+    <transition-group name="flip-list" tag="div" class="pull-left quick-list">
+      <router-link v-for="(ticket, i) in fTickets" :to="`/bc/${ticket.id}`" class="quick-list-info" :class="{active: i === 0}" :key="ticket.id">
+        {{ticket.zhName}}
+        <i :class="`sfa-badge-${ticket.badge}`" v-if="ticket.badge"></i>
+      </router-link>
+    </transition-group>
     <div class="quick-more pull-right">
       <a class="sfa cursor-pointer bc-quick-more-btn" :class="[isShowMore ? 'sfa-bc-quick-close' : 'sfa-bc-quick-more']" @click="isShowMore = !isShowMore"></a>
       <div class="quick-ticket-list" :class="{'quick-ticket-list-animate' : isShowMore}">
@@ -37,6 +33,7 @@
   export default {
     name: "betting-quick-nav",
     props: {
+      ticketId: Number,
       ticketList: Array,
       isShowMore: {
         type: Boolean,
@@ -44,11 +41,19 @@
       }
     },
 
-    computed: mapState({
-      fTickets: state => state.topTickets,
+    computed: mapGetters({
+      fTickets: 'fTickets',
     }),
 
     methods: {
+    },
+
+    watch: {
+      'ticketId'(currentId) {
+        this.$store.commit(types.RESORT_TOP_TICKETS, {
+          currentId
+        })
+      }
     },
 
     mounted() {
@@ -57,6 +62,116 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import
+  "~base/styles/variable";
+
+  .bc-main-quick {
+    width: 100%;
+    height: 70px;
+    background-color: #f3fbfc;
+    .quick-list{
+      width: 95%;
+      height: 70px;
+      a{
+        display: inline-block;
+        margin-left: 10px;
+        padding: 10px 20px;
+        border-radius: 20px;
+        color: $main-deep-color;
+        font-size:$font-md;
+        cursor: pointer;
+        margin-top: 15px;
+        &.active,&:hover{
+          background-color: $main-deep-color;
+          color: $def-white-color;
+        }
+        i{
+          position: absolute;
+        }
+      }
+    }
+    .quick-more{
+      width: 5%;
+      height: 70px;
+      position: relative;
+
+      .bc-quick-more-btn{
+        margin-top: 24.5px;
+      }
+      .quick-ticket-list{
+        position: absolute;
+        width: 1200px;
+        height: 180px;
+        right: -1200px;
+        z-index: 2;
+        background: $main-deep-color;
+        top: 70px;
+        color: $def-white-color;
+        &.quick-ticket-list-animate{
+          animation: bounceInRight 1s forwards;
+        }
+        .quick-ticket-main{
+          margin: 20px 80px 0;
+        }
+        .quick-ticket-type-name{
+          font-size:$font-md;
+          color: $def-white-color;
+          writing-mode:vertical-lr;
+          display: inline-block;
+          margin-top: 10px;
+        }
+        .ticket-ssc-list{
+          display: inline-block;
+          vertical-align: top;
+          &.quick-ticket-ssc{
+            width: 265px;
+          }
+          &.quick-ticket-choose5,&.quick-ticket-low,&.quick-ticket-happy{
+            width: 145px;
+          }
+        }
+        .ticket-info{
+          float: left;
+          margin-left: 20px;
+          padding: 5px 15px 5px 30px;
+          border-radius: 20px;
+          position: relative;
+          transition: 0.3s background linear;
+          min-width: 65px;
+          &:before{
+            content: ' ';
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            border-left-color: $def-white-color;
+            position: absolute;
+            top: 11px;
+            left: 10px;
+          }
+          &.active,&:hover{
+            background-color: #009297;
+          }
+          i{
+            position: absolute;
+            top: 5px;
+            right: 7px;
+          }
+        }
+        .quick-ticket-line{
+          float: left;
+          width: 1px;
+          height: 100px;
+          background-color: $def-white-color;
+          opacity: .5;
+          margin: 10px 30px;
+        }
+      }
+    }
+  }
+
+  .flip-list-move {
+    transition: transform 1s;
+  }
 
 </style>
