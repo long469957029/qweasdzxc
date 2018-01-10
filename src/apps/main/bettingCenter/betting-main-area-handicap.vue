@@ -94,14 +94,11 @@
       },
       'bettingInfo.planId': {
         handler: function(newPlanId, oldPlanId) {
-          if (oldPlanId !== '------------' && !this.bettingInfo.pending) {
+          if (this.$el.offsetWidth && oldPlanId !== '------------' && !this.bettingInfo.pending) {
             Global.ui.notification.show(
               `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
               { id: 'ticketNotice', hasFooter: false, displayTime: 800 },
             )
-
-            //提示框变化, 暂时这么写
-            $('.js-bc-confirm-planId').text(newVal)
           }
         }
       },

@@ -20,18 +20,18 @@
             <% } else if (menu.name === '积分商城') { %>
               <li class="<%= menu.className || '' %>" data-index="<%= index %>">
                 <span class="navbar-mall-icon"></span>
-                <a href="#<%=menu.first || menu.router %>" class="js-navbar-tab"><%= menu.name %></a>
+                <a href="#/<%=menu.first || menu.router %>" class="js-navbar-tab"><%= menu.name %></a>
               </li>
             <% } else { %>
               <li class="<%= menu.className || '' %>" data-index="<%= index %>">
                 <% if (menu.navItemType === 1) { %>
-                  <a href="#<%= menu.router %>" class="js-navbar-tab"><%= menu.name %><div class="navbar-down-icon"></div></a>
+                  <a href="#/<%= menu.router %>" class="js-navbar-tab"><%= menu.name %><div class="navbar-down-icon"></div></a>
                 <% } else if (menu.navItemType === 2) { %>
                   <a href="<%=menu.first || menu.router %>" target="_blank"><%= menu.name %></a>
                 <% } else if (menu.navItemType === 3) { %>
                   <a class="js-gl-service">在线客服</a>
                 <% } else if (menu.navItemType === 4) { %>
-                  <a href="#<%=menu.first || menu.router %>" class="js-navbar-tab"><%= menu.name %></a>
+                  <a href="#/<%=menu.first || menu.router %>" class="js-navbar-tab"><%= menu.name %></a>
                 <% } %>
                 <% if (menu.dropdownType === 1) { %>
                   <div class="js-nav-channel-container nav-channel-container">
@@ -41,7 +41,7 @@
                         <%_(menu.subGame).each(function(channel){%>
                           <li class="list-item">
                             <span class="sfa sfa-mall-sport-icon"></span>
-                            <a src="#<%= channel.gameLink %>" class="list-item-title"><%= channel.channelName %></a>
+                            <a src="#/<%= channel.gameLink %>" class="list-item-title"><%= channel.channelName %></a>
                            </li>
                           <%})%>
                       </div>
@@ -59,7 +59,7 @@
                             <div class="entry-item-content">
                               <div class="entry-item-title"><%= channel.channelName %></div>
                               <div class="entry-item-desc"><%= channel.desc %></div>
-                              <a href="#<%= channel.router %>" class="btn entry-item-btn">进入游戏</a>
+                              <a href="#/<%= channel.router %>" class="btn entry-item-btn">进入游戏</a>
                               <a class="js-nav-channel-btn nav-channel-link prominent-link" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="1">试玩版</a>
                               <a class="js-nav-channel-btn nav-channel-link" data-id="<%=channel.channelId%>" data-gameid="<%=channel.gameId%>" data-type="0">手机版</a>
                             </div>
@@ -80,7 +80,7 @@
                             <% _(list).each(function(ticket, index) { %>
                               <li>
                                 <span class="navbar-ticket-chavon"></span>
-                                <a href="#/bc/<%= ticket.id %>"><%= ticket.zhName %></a>
+                                <a href="#//bc/<%= ticket.id %>"><%= ticket.zhName %></a>
                                 <% if (ticket.badge) { %>
                                   <span class="navbar-ticket-icon-<%= ticket.badge %>"></span>
                                 <% } %>
@@ -97,7 +97,7 @@
                               <% _(list).each(function(ticket, index) { %>
                                 <li>
                                   <span class="navbar-ticket-chavon"></span>
-                                  <a href="#/bc/<%= ticket.id %>/2"><%= ticket.zhName %></a>
+                                  <a href="#//bc/<%= ticket.id %>/2"><%= ticket.zhName %></a>
                                   <% if (ticket.badge) { %>
                                     <span class="navbar-ticket-icon-<%= ticket.badge %>"></span>
                                   <% } %>
@@ -122,7 +122,7 @@
           <ul class="js-nav-mall-sub-list">
           </ul>
           <div class="mall-more">
-            <a href="#ma" target="_blank">查看更多&gt;&gt;</a>
+            <a href="#/ma" target="_blank">查看更多&gt;&gt;</a>
           </div>
         </div>
       </div>

@@ -113,7 +113,9 @@ gulp.task('server.webpack', () => {
   }
 
   Object.assign(proxy, {
-    '*.json': {
+    // context: ['*.json', '**.json', '**/**.json', '/**/**.json'],
+    // target: serverIP,
+    '**/*.json': {
       target: serverIP,
       changeOrigin: true,
     },
@@ -124,13 +126,11 @@ gulp.task('server.webpack', () => {
     //   target: serverIP,
     //   changeOrigin: true,
     // },
-    '*': {
-      target: serverIP,
-      changeOrigin: true,
-    },
+    // '*': {
+    //   target: `http:localhost${devConfig.devServer.port}`,
+    //   changeOrigin: true,
+    // },
   })
-  console.info(proxy)
-  // process.exit()
 
   new WebpackDevServer(webpack(devConfig), {
     publicPath: devConfig.output.publicPath,

@@ -18,7 +18,7 @@
             <div class="pull-left">
               <div class="quick-ticket-type-name">{{ticketInfo.ticketName}}</div>
               <div class="ticket-ssc-list quick-ticket-ssc clearfix">
-                <router-link to="'/bc/'${item.id}" v-for="item in ticketInfo.list" class="ticket-info">
+                <router-link :to="`/bc/${item.id}`" v-for="item in ticketInfo.list" class="ticket-info">
                   {{item.zhName}}
                   <i v-if="item.badge === 'hot'" class="sfa-badge-hot"></i>
                   <i v-else-if="item.badge === 'new'" class="sfa-badge-new"></i>

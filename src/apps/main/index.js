@@ -23,32 +23,57 @@ Global.memoryCache.set('acctInfo', { userType: 1 })
 
 const router = appRouters.install()
 
+//每次路由变化是调用，切换显示区域
+router.beforeEach((to, from, next) => {
+  let isVue = false
+
+  _(['/bc']).each(function(router) {
+    if (to.path.indexOf(router) !== -1) {
+      isVue = true
+    }
+  })
+
+  if (to.path === '/bc/19') {
+    isVue = false
+  }
+
+  $('#main').toggle(!isVue)
+  $('#main-vue').toggle(isVue)
+
+  next()
+})
+
+const desHash = window.location.hash
+
+window.location.hash = '#/i'
+
 window.app = new Vue({
-  el: '#main-vue',
+  el: '#main-wrapper',
   store,
   router,
 })
-// }).$mount('#main-vue')
+
+_.delay(() => {
+  window.location.hash = desHash
+}, 0)
 
 window.$route = app.$route
 
 
 
 // Global.m.oauth.start()
-Global.m.news.start()
-Global.ui.menu.start()
-App.start()
+// App.start()
 
 // 进行系统OAuth校验
-// Global.m.oauth.check().done((res) => {
-//   if (res && res.result === 0) {
+Global.m.oauth.check().done((res) => {
+  if (res && res.result === 0) {
 //     /** **************************************************************** */
 //     // 配置初始化路由（按功能模块）
 //     appRouters.install()
 //     /** **************************************************************** */
 //
 //     // 开启oauth监听
-//     Global.m.oauth.start()
+    Global.m.oauth.start()
 //
 //     // 开启消息监听
 //     Global.m.news.start()
@@ -66,6 +91,9 @@ App.start()
 //     // 开启踩彩财活动监听
 //     // Global.m.treadActivity.start();
 //
-//     App.start()
-//   }
-// })
+    Global.m.news.start()
+    Global.ui.menu.start()
+
+    App.start()
+  }
+})

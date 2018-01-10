@@ -260,7 +260,7 @@
       },
       'bettingInfo.planId': {
         handler: function(newPlanId, oldPlanId) {
-          if (oldPlanId !== '------------' && !this.bettingInfo.pending) {
+          if (this.$el.offsetWidth && oldPlanId !== '------------' && !this.bettingInfo.pending) {
             Global.ui.notification.show(
               `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
               { id: 'ticketNotice', hasFooter: false, displayTime: 800 },
@@ -457,7 +457,7 @@
                 displayTime: 800,
               })
             } else if (res.root && res.root.errorCode === 101) {
-              Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
+              Global.ui.notification.show('账号余额不足，请先<a href="#/fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
             } else {
               Global.ui.notification.show(res.msg || '')
             }
@@ -531,7 +531,7 @@
                 displayTime: 800,
               })
             } else if (res.root && res.root.errorCode === 101) {
-              Global.ui.notification.show('账号余额不足，请先<a href="#fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
+              Global.ui.notification.show('账号余额不足，请先<a href="#/fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
             } else {
               Global.ui.notification.show(res.msg || '')
             }

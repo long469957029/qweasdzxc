@@ -42,7 +42,7 @@
                   </span>
               </div>
               <div class="main-item-right" v-if="!_.isEmpty(item)">
-                <span class="item odds" v-if="rule.showItemOdds">48.18</span>
+                <span class="item odds" v-if="rule.showItemOdds">{{item.odds}}</span>
                 <input type="text" class="money-input" v-if="rule.showMoneyInput" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney($event, item)" />
               </div>
             </div>
@@ -144,7 +144,7 @@
 
     props: {
       playRule: Object,
-      playInfo: Array,
+      playInfo: Object,
       ticketInfo: Object,
       pushing: Boolean,
       sale: Boolean,

@@ -1,6 +1,9 @@
 const DashboardView = require('dashboard/views/dashboard')
 const NoticeDetailView = require('dynamicCenter/views/noticeDetail')
 
+const Init = {
+  template: `<div></div>`
+}
 // '': 'dashboard', // 概览
 //   ':anything': 'dashboard', // 概览
 //   'nb/detail/:noticeId': 'noticeDetail', // 公告详情
@@ -24,6 +27,10 @@ export default [
         parentRouter: '#',
       })
     }
+  },
+  {
+    path: '/i',
+    component: Init,
   },
   {
     path: '*',

@@ -33,7 +33,8 @@ module.exports = function(options) {
 
   if (options.debug) {
 
-    output.publicPath = 'http://localhost:' + appConfig.port + appConfig.output.publicPath;
+    output.publicPath = appConfig.output.publicPath;
+    // output.publicPath = 'http://localhost:' + appConfig.port + appConfig.output.publicPath;
     output.filename = '[name].bundle.js';
     output.chunkFilename = '[name].bundle.js';
   } else {
