@@ -1,15 +1,16 @@
 const menuConfig = Global.ui.menu.get('vip')
 
-const VipHomeView = require('vipCenter/vipHome')
-const VipLevelView = require('vipCenter/vipLevel')
-const VipPointView = require('vipCenter/vipPoint')
-const VipCashView = require('vipCenter/vipCash')
-const VipPrizeView = require('vipCenter/vipPrize')
-const VipCreditView = require('vipCenter/vipCredit')
-const VipAwardView = require('vipCenter/vipAward')
-const VipFestivalView = require('vipCenter/vipFestival')
-const VipCardView = require('vipCenter/vipCard')
-const VipReturnVisitView = require('vipCenter/vipReturnVisit')
+const VipHomeView = () => import(/* webpackChunkName: "vip-center" */ './vipHome')
+
+const VipLevelView = () => import(/* webpackChunkName: "vip-center" */ './vipLevel')
+const VipPointView = () => import(/* webpackChunkName: "vip-center" */ './vipPoint')
+const VipCashView = () => import(/* webpackChunkName: "vip-center" */ './vipCash')
+const VipPrizeView = () => import(/* webpackChunkName: "vip-center" */ './vipPrize')
+const VipCreditView = () => import(/* webpackChunkName: "vip-center" */ './vipCredit')
+const VipAwardView = () => import(/* webpackChunkName: "vip-center" */ './vipAward')
+const VipFestivalView = () => import(/* webpackChunkName: "vip-center" */ './vipFestival')
+const VipCardView = () => import(/* webpackChunkName: "vip-center" */ './vipCard')
+const VipReturnVisitView = () => import(/* webpackChunkName: "vip-center" */ './vipReturnVisit')
 
 
   // 'vip/home': 'vipHome',
@@ -26,8 +27,8 @@ const VipReturnVisitView = require('vipCenter/vipReturnVisit')
 export default [
   {
     path: '/vip/home',
-    component: function() {
-      RouterController.changeMainReginView(new VipHomeView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, VipHomeView, {
         main: {
           icon: menuConfig.icon,
           title: '我的爵位',
@@ -38,8 +39,8 @@ export default [
   },
   {
     path: '/vip/level',
-    component: function() {
-      RouterController.changeMainReginView(new VipLevelView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, VipLevelView, {
         main: {
           icon: menuConfig.icon,
           title: '爵士成长足迹',
@@ -50,8 +51,8 @@ export default [
   },
   {
     path: '/vip/point',
-    component: function() {
-      RouterController.changeMainReginView(new VipPointView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, VipPointView, {
         main: {
           icon: menuConfig.icon,
           title: '爵士贡献值',
@@ -62,8 +63,8 @@ export default [
   },
   {
     path: '/vip/cash',
-    component: function() {
-      RouterController.changeMainReginView(new VipCashView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, VipCashView, {
         main: {
           icon: menuConfig.icon,
           title: '爵士礼金',
@@ -74,8 +75,8 @@ export default [
   },
   {
     path: '/vip/prize',
-    component: function() {
-      RouterController.changeMainReginView(new VipPrizeView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, VipPrizeView, {
         main: {
           icon: menuConfig.icon,
           title: '周末加奖',
@@ -86,8 +87,8 @@ export default [
   },
   {
     path: '/vip/credit',
-    component: function() {
-      RouterController.changeMainReginView(new VipCreditView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, VipCreditView, {
         main: {
           icon: menuConfig.icon,
           title: '信誉基金',
@@ -98,8 +99,8 @@ export default [
   },
   {
     path: '/vip/award',
-    component: function() {
-      RouterController.changeMainReginView(new VipAwardView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, VipAwardView, {
         main: {
           icon: menuConfig.icon,
           title: '月度奖励',
@@ -110,8 +111,8 @@ export default [
   },
   {
     path: '/vip/festival',
-    component: function() {
-      RouterController.changeMainReginView(new VipFestivalView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, VipFestivalView, {
         main: {
           icon: menuConfig.icon,
           title: '节日奖励',
@@ -122,8 +123,8 @@ export default [
   },
   {
     path: '/vip/card',
-    component: function() {
-      RouterController.changeMainReginView(new VipCardView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, VipCardView, {
         main: {
           icon: menuConfig.icon,
           title: '我的特权卡',
@@ -134,8 +135,8 @@ export default [
   },
   {
     path: '/vip/rv',
-    component: function() {
-      RouterController.changeMainReginView(new VipReturnVisitView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, VipReturnVisitView, {
         main: {
           icon: menuConfig.icon,
           title: '电话回访',

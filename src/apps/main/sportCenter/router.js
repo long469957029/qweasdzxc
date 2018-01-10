@@ -1,10 +1,10 @@
-const SportCenterView = require('sportCenter/index')
+const SportCenterView = () => import(/* webpackChunkName: "outer-center" */ './index')
 
 export default [
   {
     path: '/sp',
-    component: function() {
-      RouterController.changeMainReginView(new SportCenterView())
+    component: function(resolve) {
+      RouterController.async(resolve, SportCenterView)
     },
   },
 ]

@@ -3,12 +3,12 @@ require('./misc/index.scss')
 
 const sidebar = Global.ui.menu.get('uc')
 
-import MyMessageViewInfo from 'userCenter/views/myMessage'
+const MyMessageViewInfo = () => import(/* webpackChunkName: "user-center" */ './views/myMessage')
 
-const PersonalManageView = require('userCenter/views/personalManage')
-const CardManageView = require('userCenter/views/cardManage')
-const PriceDetailsView = require('userCenter/views/priceDetails')
-const AccountSafeViewInfo = require('userCenter/views/accountSafe')
+const PersonalManageView = () => import(/* webpackChunkName: "user-center" */ './views/personalManage')
+const CardManageView = () => import(/* webpackChunkName: "user-center" */ './views/cardManage')
+const PriceDetailsView = () => import(/* webpackChunkName: "user-center" */ './views/priceDetails')
+const AccountSafeViewInfo = () => import(/* webpackChunkName: "user-center" */ './views/accountSafe')
 
 // 'uc/pm': 'personalManage',
 // 'uc/cm': 'cardManage', // 银行卡管理
@@ -19,8 +19,8 @@ const AccountSafeViewInfo = require('userCenter/views/accountSafe')
 export default [
   {
     path: '/uc/pm',
-    component: function() {
-      RouterController.changeMainReginView(new PersonalManageView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, PersonalManageView, {
         main: {
           // icon: ucMenuConfig.icon,
           title: '个人资料',
@@ -35,8 +35,8 @@ export default [
   },
   {
     path: '/uc/cm',
-    component: function() {
-      RouterController.changeMainReginView(new CardManageView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, CardManageView, {
         main: {
           // icon: ucMenuConfig.icon,
           title: '银行卡管理',
@@ -51,8 +51,8 @@ export default [
   },
   {
     path: '/uc/pd',
-    component: function() {
-      RouterController.changeMainReginView(new PriceDetailsView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, PriceDetailsView, {
         main: {
           // icon: ucMenuConfig.icon,
           title: '我的奖金组',
@@ -67,8 +67,8 @@ export default [
   },
   {
     path: '/uc/pl',
-    component: function() {
-      RouterController.changeMainReginView(new AccountSafeViewInfo(), {
+    component: function(resolve) {
+      RouterController.async(resolve, AccountSafeViewInfo, {
         main: {
           title: '账户安全',
           titleDes: '建议您启动全部安全设置，以保障资金及资金安全',
@@ -79,8 +79,8 @@ export default [
   },
   {
     path: '/uc/mg',
-    component: function() {
-      RouterController.changeMainReginView(new MyMessageViewInfo(), {
+    component: function(resolve) {
+      RouterController.async(resolve, MyMessageViewInfo, {
         sidebar,
       })
     }

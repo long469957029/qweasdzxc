@@ -1,10 +1,10 @@
-const RealCenterView = require('realCenter/index')
+const RealCenterView = () => import(/* webpackChunkName: "outer-center" */ './index')
 
 export default [
   {
     path: '/rc',
-    component: function() {
-      RouterController.changeMainReginView(new RealCenterView())
+    component: function(resolve) {
+      RouterController.async(resolve, RealCenterView)
     }
   },
 ]

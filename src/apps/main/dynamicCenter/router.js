@@ -1,5 +1,5 @@
-const NoticeBoardView = require('dynamicCenter/views/noticeBoard')
-const NoticeDetailView = require('dynamicCenter/views/noticeDetail')
+const NoticeBoardView = () => import(/* webpackChunkName: "dynamic-center" */ './views/noticeBoard')
+const NoticeDetailView = () => import(/* webpackChunkName: "dynamic-center" */ './views/noticeDetail')
 
 require('./misc/index.scss')
 
@@ -7,8 +7,8 @@ require('./misc/index.scss')
 export default [
   {
     path: '/nc/nb',
-    component: function() {
-      RouterController.changeMainReginView(new NoticeBoardView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, NoticeBoardView, {
         main: {
           title: '平台动态',
         },
@@ -17,10 +17,10 @@ export default [
   },
   {
     path: '/nc/nb/detail/:noticeId',
-    component: function() {
-      RouterController.changeMainReginView(new NoticeDetailView({
+    component: function(resolve) {
+      RouterController.async(resolve, NoticeDetailView, {
         noticeId: $route.params.noticeId,
-      }), {
+      }, {
         main: {
           title: '平台动态',
           subReturn: true,

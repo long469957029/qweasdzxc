@@ -7,6 +7,17 @@ const SideMenuMainView = Base.LayoutView.extend({
 })
 
 export default {
+  async(resolve, viewPromise, params, config) {
+    if (!config) {
+      config = params
+      params = {}
+    }
+    viewPromise().then((view) => {
+      this.changeMainReginView(new view(params), config)
+      resolve()
+    })
+  },
+
   changeMainReginView(mainView, config) {
     config = config || {}
 

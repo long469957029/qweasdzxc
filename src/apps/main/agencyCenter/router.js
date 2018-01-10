@@ -1,38 +1,38 @@
 require('./misc/index.scss')
 
-const TransferView = require('agencyCenter/views/userTransfer')
+const TransferView = () => import(/* webpackChunkName: "agency-center" */ './views/userTransfer')
 
-const LowLevelManageView = require('agencyCenter/views/lowLevelManage')
+const LowLevelManageView = () => import(/* webpackChunkName: "agency-center" */ './views/lowLevelManage')
 
-const LowLevelBettingRecordsView = require('fundCenter/gameRecord/bettingRecords')
+// const LowLevelBettingRecordsView = () => import(/* webpackChunkName: "agency-center" */ 'fundCenter/gameRecord/bettingRecords')
+// const LowLevelAccountDetailView = require('agencyCenter/views/lowLevelManage-accountDetail')
 
-const LowLevelAccountDetailView = require('agencyCenter/views/lowLevelManage-accountDetail')
 // const LowLevelSendMessageView = require('agencyCenter/views/lowLevelManage-sendMessage')
 
-const LowLevelDetailView = require('agencyCenter/views/lowLevelDetail')
+const LowLevelDetailView = () => import(/* webpackChunkName: "agency-center" */ './views/lowLevelDetail')
 
-const OpenAccountManageView = require('agencyCenter/views/openAccountManage')
-const OpenAccountManagePriceView = require('agencyCenter/views/openAccountManage-price')
+const OpenAccountManageView = () => import(/* webpackChunkName: "agency-center" */ './views/openAccountManage')
+const OpenAccountManagePriceView = () => import(/* webpackChunkName: "agency-center" */ './views/openAccountManage-price')
 
-const TeamDynamicView = require('agencyCenter/views/teamDynamic')
-const ReportManageView = require('agencyCenter/reportManage')
-const ProfitAndLossView = require('agencyCenter/profitAndLoss')
+// const TeamDynamicView = require('agencyCenter/views/teamDynamic')
+const ReportManageView = () => import(/* webpackChunkName: "agency-center" */ './reportManage')
+const ProfitAndLossView = () => import(/* webpackChunkName: "agency-center" */ './profitAndLoss')
 
-const DividendMangeView = require('./dividendManage')
-const SignUserView = require('./dividendManage/signUser')
+const DividendMangeView = () => import(/* webpackChunkName: "agency-center" */ './dividendManage')
+const SignUserView = () => import(/* webpackChunkName: "agency-center" */ './dividendManage/signUser')
 
-const RedPacketView = require('./redPacket')
+const RedPacketView = () => import(/* webpackChunkName: "agency-center" */ './redPacket')
 
-const RebateReportView = require('agencyCenter/rebateReport')
-const DividendReportView = require('agencyCenter/views/dividendReport')
+const RebateReportView = () => import(/* webpackChunkName: "agency-center" */ './rebateReport')
+const DividendReportView = () => import(/* webpackChunkName: "agency-center" */ './views/dividendReport')
 
-const teamBettingRecordView = require('agencyCenter/bettingRecord')
-const TeamAccountDetailView = require('agencyCenter/teamAccountDetail')
+const teamBettingRecordView = () => import(/* webpackChunkName: "agency-center" */ './bettingRecord')
+const TeamAccountDetailView = () => import(/* webpackChunkName: "agency-center" */ './teamAccountDetail')
 
-const TeamOverviewView = require('agencyCenter/teamOverview')
+const TeamOverviewView = () => import(/* webpackChunkName: "agency-center" */ './teamOverview')
 
-const LowLevelGrantView = require('agencyCenter/dividendManage/lowLevelGrant')
-const TabView = require('agencyCenter/dividendManage/index-tab')
+const LowLevelGrantView = () => import(/* webpackChunkName: "agency-center" */ './dividendManage/lowLevelGrant')
+const TabView = () => import(/* webpackChunkName: "agency-center" */ './dividendManage/index-tab')
 
 const sidebar = Global.ui.menu.get('ac')
 
@@ -85,8 +85,8 @@ const sidebar = Global.ui.menu.get('ac')
 export default [
   {
     path: '/ac/llm',
-    component: function() {
-      RouterController.changeMainReginView(new LowLevelManageView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, LowLevelManageView, {
         main: {
           title: '下级管理',
           titleDes: '',
@@ -97,11 +97,10 @@ export default [
   },
   {
     path: '/ac/llm/detail/:userId',
-    component: function() {
-
-      RouterController.changeSubReginView(new LowLevelDetailView({
+    component: function(resolve) {
+      RouterController.async(resolve, LowLevelDetailView, {
         userId: $route.params.userId,
-      }), {
+      }, {
         main: {
           title: `查看${_.getUrlParam('name')}的详情`,
         },
@@ -111,12 +110,11 @@ export default [
   },
   {
     path: '/ac/tr/:userId',
-    component: function() {
-
-      RouterController.changeMainReginView(new TransferView({
+    component: function(resolve) {
+      RouterController.async(resolve, TransferView, {
         userId: $route.params.userId,
         username: _.getUrlParam('name'),
-      }), {
+      }, {
         main: {
           title: '平台转账',
           titleDes: '<div class="js-ac-user-transfer"></div>',
@@ -128,8 +126,8 @@ export default [
   },
   {
     path: '/ac/oam',
-    component: function() {
-      RouterController.changeMainReginView(new OpenAccountManageView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, OpenAccountManageView, {
         main: {
           title: '开户管理',
           titleDes: '<div class="js-ac-open-limit"></div>',
@@ -140,11 +138,11 @@ export default [
   },
   {
     path: '/ac/tbr',
-    component: function() {
-      RouterController.changeMainReginView(new teamBettingRecordView({
+    component: function(resolve) {
+      RouterController.async(resolve, teamBettingRecordView, {
         triggerTab: 'jsAcBrTr',
         userName: _.getUrlParam('name'),
-      }), {
+      }, {
         main: {
           title: '团队投注',
           titleDes: '团队投注记录只保留近30天数据',
@@ -155,11 +153,11 @@ export default [
   },
   {
     path: '/ac/oam/pd/:ticket',
-    component: function() {
-      RouterController.changeSubReginView(new OpenAccountManagePriceView({
+    component: function(resolve) {
+      RouterController.async(resolve, OpenAccountManagePriceView, {
         triggerTab: $route.params.ticket,
         rebate: _.getUrlParam('rebate'),
-      }), {
+      }, {
         main: {
           title: '奖金详情',
         },
@@ -169,8 +167,8 @@ export default [
   },
   {
     path: '/ac/rm',
-    component: function() {
-      RouterController.changeMainReginView(new ReportManageView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, ReportManageView, {
         main: {
           title: '报表查询',
         },
@@ -180,8 +178,10 @@ export default [
   },
   {
     path: '/ac/td',
-    component: function() {
-      RouterController.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlSr' }), {
+    component: function(resolve) {
+      RouterController.async(resolve, ProfitAndLossView, {
+        triggerTab: 'jsAcPlSr'
+      }, {
         main: {
           title: '团队盈亏',
           titleDes: '团队盈亏记录只保留近35天数据',
@@ -192,8 +192,10 @@ export default [
   },
   {
     path: '/ac/spl',
-    component: function() {
-      RouterController.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlSr' }), {
+    component: function(resolve) {
+      RouterController.async(resolve, ProfitAndLossView, {
+        triggerTab: 'jsAcPlSr'
+      },{
         main: {
           title: '团队盈亏',
           titleDes: '团队盈亏记录只保留近35天数据',
@@ -204,8 +206,10 @@ export default [
   },
   {
     path: '/ac/pl',
-    component: function() {
-      RouterController.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlTr' }), {
+    component: function(resolve) {
+      RouterController.async(resolve, ProfitAndLossView, {
+        triggerTab: 'jsAcPlTr'
+      }, {
         main: {
           title: '团队盈亏',
           titleDes: '团队盈亏记录只保留近35天数据',
@@ -216,8 +220,10 @@ export default [
   },
   {
     path: '/ac/gpl',
-    component: function() {
-      RouterController.changeMainReginView(new ProfitAndLossView({ triggerTab: 'jsAcPlGr' }), {
+    component: function(resolve) {
+      RouterController.async(resolve, ProfitAndLossView, {
+        triggerTab: 'jsAcPlGr'
+      }, {
         main: {
           title: '团队盈亏',
           titleDes: '团队盈亏记录只保留近35天数据',
@@ -228,8 +234,8 @@ export default [
   },
   {
     path: '/ac/reb',
-    component: function() {
-      RouterController.changeMainReginView(new RebateReportView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, RebateReportView, {
         main: {
           title: '返点查询',
           titleDes: '每天派发前一天的返点金额，返点金额 = 我的下级团队当日的有效投注总额 * 我的返点比例',
@@ -240,8 +246,8 @@ export default [
   },
   {
     path: '/ac/rp',
-    component: function() {
-      RouterController.changeMainReginView(new RedPacketView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, RedPacketView, {
         main: {
           title: '红包查询',
         },
@@ -251,8 +257,8 @@ export default [
   },
   {
     path: '/ac/div',
-    component: function() {
-      RouterController.changeMainReginView(new DividendReportView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, DividendReportView, {
         main: {
           title: '分红查询',
         },
@@ -262,8 +268,8 @@ export default [
   },
   {
     path: '/ac/dm',
-    component: function() {
-      RouterController.changeMainReginView(new DividendMangeView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, DividendMangeView, {
         main: {
           title: '我的分红',
           titleDes: '彩票分红每月1号和16号结算，游戏分红每月1号结算',
@@ -274,8 +280,10 @@ export default [
   },
   {
     path: '/ac/ld',
-    component: function() {
-      RouterController.changeMainReginView(new DividendMangeView({ triggerTab: 'jsAcDmDirectAgent' }), {
+    component: function(resolve) {
+      RouterController.async(resolve, DividendMangeView, {
+        triggerTab: 'jsAcDmDirectAgent'
+      }, {
         main: {
           title: '分红管理',
         },
@@ -286,8 +294,8 @@ export default [
   },
   {
     path: '/ac/lg',
-    component: function() {
-      RouterController.changeMainReginView(new LowLevelGrantView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, LowLevelGrantView, {
         main: {
           title: '下级分红',
           titleDes: '彩票分红每月1号和16号结算，游戏分红每月1号结算，若未按时下发给下级平台会强制发放',
@@ -298,8 +306,8 @@ export default [
   },
   {
     path: '/ac/sum',
-    component: function() {
-      RouterController.changeMainReginView(new TabView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, TabView, {
         main: {
           title: '签约用户',
           titleDes: '<div class="js-ac-sign-user-tip"></div>',
@@ -310,8 +318,8 @@ export default [
   },
   {
     path: '/ac/su',
-    component: function() {
-      RouterController.changeMainReginView(new TabView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, TabView, {
         main: {
           title: '签约用户',
           titleDes: '<div class="js-ac-sign-user-tip"></div>',
@@ -322,9 +330,10 @@ export default [
   },
   {
     path: '/ac/am',
-    component: function() {
+    component: function(resolve) {
       const username = _.getUrlParam('username')
-      RouterController.changeSubReginView(new SignUserView(), {
+
+      RouterController.async(resolve, SignUserView, {
         main: {
           title: `${username}的分红协议`,
         },
@@ -335,10 +344,10 @@ export default [
   },
   {
     path: '/ac/tad',
-    component: function() {
-      RouterController.changeMainReginView(new TeamAccountDetailView({
+    component: function(resolve) {
+      RouterController.async(resolve, TeamAccountDetailView, {
         userName: _.getUrlParam('name') || '',
-      }), {
+      }, {
         main: {
           title: '团队账变',
           titleDes: '团队账变记录只保留近30天数据',
@@ -349,8 +358,8 @@ export default [
   },
   {
     path: '/ac/to',
-    component: function() {
-      RouterController.changeMainReginView(new TeamOverviewView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, TeamOverviewView, {
         main: {
           title: '团队总览',
           titleDes: '团队总览记录只保留近30天数据',
@@ -361,10 +370,10 @@ export default [
   },
   {
     path: '/ac/tr',
-    component: function() {
-      RouterController.changeMainReginView(new TransferView({
+    component: function(resolve) {
+      RouterController.async(resolve, TransferView, {
         username: _.getUrlParam('name'),
-      }), {
+      }, {
         main: {
           title: '平台转账',
           titleDes: '<div class="js-ac-user-transfer"></div>',

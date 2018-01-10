@@ -1,10 +1,12 @@
-const SlotCenterView = require('gameCenter/slot/slotTab')
+const SlotCenterView = () => import(/* webpackChunkName: "outer-center" */ './slot/slotTab')
 
 export default [
   {
     path: '/gc/sc',
-    component: function() {
-      RouterController.changeMainReginView(new SlotCenterView({ triggerTab: 'jsPTSlot' }), {
+    component: function(resolve) {
+      RouterController.async(resolve, SlotCenterView, {
+        triggerTab: 'jsPTSlot'
+      }, {
         main: {
           title: '老虎机',
         },
@@ -13,8 +15,10 @@ export default [
   },
   {
     path: '/gc/scmg',
-    component: function() {
-      RouterController.changeMainReginView(new SlotCenterView({ triggerTab: 'jsMGSlot' }), {
+    component: function(resolve) {
+      RouterController.async(resolve, SlotCenterView, {
+        triggerTab: 'jsMGSlot'
+      }, {
         main: {
           title: '老虎机',
         },

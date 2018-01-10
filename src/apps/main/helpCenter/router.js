@@ -1,10 +1,10 @@
-const HelpCenterView = require('helpCenter/index')
+const HelpCenterView = () => import(/* webpackChunkName: "help-center" */ './index')
 
 export default [
   {
     path: '/hc',
-    component: function() {
-      RouterController.changeMainReginView(new HelpCenterView())
+    component: function(resolve) {
+      RouterController.async(resolve, HelpCenterView)
     },
   },
 ]

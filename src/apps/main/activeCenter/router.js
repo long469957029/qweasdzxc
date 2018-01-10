@@ -1,10 +1,10 @@
-const ActiveCenterView = require('activeCenter/activeCenter')
+const ActiveCenterView = () => import(/* webpackChunkName: "active-center" */ './activeCenter')
 
 export default [
   {
     path: '/aa',
-    component: function() {
-      RouterController.changeMainReginView(new ActiveCenterView(), {
+    component(resolve) {
+      RouterController.async(resolve, ActiveCenterView, {
         main: {
           title: '活动中心',
         },

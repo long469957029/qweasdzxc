@@ -296,7 +296,7 @@ const menuConfig = [
         channelName: 'PT老虎机',
         desc: '玩法丰富，实力超群',
         imgSrc: 'icon-slot-pt',
-        router: '#/sc?channelId=4',
+        router: 'sc?channelId=4',
       },
       {
         channelId: channelId.mg,
@@ -304,7 +304,7 @@ const menuConfig = [
         desc: '欧美最流行老虎机',
         // router: '#/gc/scmg',
         imgSrc: 'icon-slot-mg',
-        router: '#/sc?channelId=5',
+        router: 'sc?channelId=5',
       },
     ],
   },

@@ -1,20 +1,19 @@
-const MallCenterView = require('mallCenter/index/index')
-
-const instructionView = require('mallCenter/instruction/index')
+const MallCenterView = () => import(/* webpackChunkName: "mall-center" */ './index/index')
+const InstructionView = () => import(/* webpackChunkName: "mall-center" */ './instruction/index')
 
 export default [
   {
     path: '/ma',
-    component: function() {
-      RouterController.changeMainReginView(new MallCenterView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, MallCenterView, {
         hideHeaderRight: true,
       })
     },
   },
   {
     path: '/mad',
-    component: function() {
-      RouterController.changeMainReginView(new instructionView(), {
+    component: function(resolve) {
+      RouterController.async(resolve, InstructionView, {
         hideHeaderRight: true,
       })
     },

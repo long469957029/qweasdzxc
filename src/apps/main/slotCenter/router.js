@@ -1,10 +1,10 @@
-const SlotCenterView = require('slotCenter/index')
+const SlotCenterView = () => import(/* webpackChunkName: "outer-center" */ './index')
 
 export default [
   {
     path: '/sc',
-    component: function() {
-      RouterController.changeMainReginView(new SlotCenterView())
+    component: function(resolve) {
+      RouterController.async(resolve, SlotCenterView)
     }
   },
 ]

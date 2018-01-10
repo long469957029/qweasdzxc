@@ -1,10 +1,10 @@
 require('./misc/index.scss')
 
-const PlatformNewsView = require('newsCenter/views/platformNews')
-const PlatformNewsDetailView = require('newsCenter/views/platformNewsDetail')
-const PlatformNewsSettingView = require('newsCenter/views/platformNewsSetting')
-const InsideLetterDetailView = require('newsCenter/views/insideLetterDetail')
-const InsideLetterSendView = require('newsCenter/views/insideLetterSend')
+const PlatformNewsView = () => import(/* webpackChunkName: "news-center" */ './views/platformNews')
+const PlatformNewsDetailView = () => import(/* webpackChunkName: "news-center" */ './views/platformNewsDetail')
+const PlatformNewsSettingView = () => import(/* webpackChunkName: "news-center" */ './views/platformNewsSetting')
+const InsideLetterDetailView = () => import(/* webpackChunkName: "news-center" */ './views/insideLetterDetail')
+const InsideLetterSendView = () => import(/* webpackChunkName: "news-center" */ './views/insideLetterSend')
 
 
 export default [

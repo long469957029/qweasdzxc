@@ -1,10 +1,10 @@
-const FishCenterView = require('fishCenter/index')
+const FishCenterView = () => import(/* webpackChunkName: "outer-center" */ './index')
 
 export default [
   {
     path: '/fc',
-    component: function() {
-      RouterController.changeMainReginView(new FishCenterView())
+    component: function(resolve) {
+      RouterController.async(resolve, FishCenterView)
     },
   },
 ]

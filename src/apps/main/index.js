@@ -54,7 +54,7 @@ window.app = new Vue({
 })
 
 _.delay(() => {
-  window.location.hash = desHash
+  window.location.hash = desHash === '#/i' ? '#/' : desHash
 }, 0)
 
 window.$route = app.$route
