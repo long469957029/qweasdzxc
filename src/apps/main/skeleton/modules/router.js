@@ -10,31 +10,31 @@ const RouterModule = Base.Module.extend({
     const self = this
 
     $(document).off('click.router').on('click.router', 'a.router', (e) => {
-      const $target = $(e.currentTarget)
-      const hasFind = Global.viewPool.getQuick($target.attr('href'))
+      // const $target = $(e.currentTarget)
+      // const hasFind = Global.viewPool.getQuick($target.attr('href'))
 
-      self._history.push(Backbone.history.getHash())
+      // self._history.push(Backbone.history.getHash())
 
       // 20170607-MMC页面隐藏了footer部分，根据实际情况判断是否展示
-      if (document.body.clientHeight >= 930) {
-        $('#footer').css('display', '')
-      }
+      // if (document.body.clientHeight >= 930) {
+      //   $('#footer').css('display', '')
+      // }
 
-      if (!hasFind) {
-        Global.appRouter.navigate(_($target.attr('href')).addHrefArgs({
-          _t: _.now(),
-        }), { trigger: true, replace: false })
-      }
+      // if (!hasFind) {
+      //   Global.appRouter.navigate(_($target.attr('href')).addHrefArgs({
+      //     _t: _.now(),
+      //   }), { trigger: true, replace: false })
+      // }
 
-      Global.appRouter.navigate($target.attr('href'), { trigger: false, replace: true })
+      // Global.appRouter.navigate($target.attr('href'), { trigger: false, replace: true })
 
-      if (hasFind) {
-        Global.ui.menu.selectMenuFromCurrentHash()
-      }
+      // if (hasFind) {
+      //   Global.ui.menu.selectMenuFromCurrentHash()
+      // }
 
-      e.preventDefault()
+      // e.preventDefault()
 
-      return false
+      // return false
     })
 
     $(document).off('click.sub-return').on('click.sub-return', 'a.sub-return,button.sub-return', (e) => {

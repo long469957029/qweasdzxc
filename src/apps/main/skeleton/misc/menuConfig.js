@@ -26,7 +26,7 @@ const menuConfig = [
   {
     router: 'uc',
     name: '玩家中心',
-    first: 'fc/fm',
+    first: '/fc/fm',
     icon: 'user',
     notNav: true,
     sub: [
@@ -36,26 +36,26 @@ const menuConfig = [
         list: [
           {
             id: 500,
-            router: 'fc/fm',
+            router: '/fc/fm',
             name: '资金总览',
             notShow: true,
             quickShowName: '资金<br/>总览',
           },
           {
             id: 504,
-            router: 'fc/ad',
+            router: '/fc/ad',
             name: '账变明细',
             quickShowName: '账变<br/>明细',
           },
           {
             id: 506,
-            router: 'fc/rd',
+            router: '/fc/rd',
             name: '充提记录',
             quickShowName: '充提<br/>记录',
           },
           {
             id: 306,
-            router: 'fc/td',
+            router: '/fc/td',
             name: '投注记录',
             quickShowName: '投注<br/>记录',
           },
@@ -67,31 +67,31 @@ const menuConfig = [
         list: [
           {
             id: 300,
-            router: 'uc/pm',
+            router: '/uc/pm',
             name: '个人资料',
             quickShowName: '个人<br/>资料',
           },
           {
             id: 301,
-            router: 'uc/cm',
+            router: '/uc/cm',
             name: '银行卡管理',
             quickShowName: '银行卡<br/>管理',
           },
           {
             id: 303,
-            router: 'uc/pl',
+            router: '/uc/pl',
             name: '帐户安全',
             quickShowName: '帐户<br/>安全',
           },
           {
             id: 302,
-            router: 'uc/pd',
+            router: '/uc/pd',
             name: '我的奖金',
             quickShowName: '我的<br/>奖金',
           },
           {
             id: 306,
-            router: 'uc/mg',
+            router: '/uc/mg',
             name: '我的消息',
             quickShowName: '我的<br/>消息',
           },
@@ -113,25 +113,25 @@ const menuConfig = [
         list: [
           {
             id: 400,
-            router: 'ac/to',
+            router: '/ac/to',
             name: '团队总览',
             quickShowName: '团队<br/>总览',
           },
           {
             id: 402,
-            router: 'ac/spl',
+            router: '/ac/spl',
             name: '团队盈亏',
             quickShowName: '团队<br/>盈亏',
           },
           {
             id: 403,
-            router: 'ac/tbr',
+            router: '/ac/tbr',
             name: '团队投注',
             quickShowName: '团队<br/>投注',
           },
           {
             id: 404,
-            router: 'ac/tad',
+            router: '/ac/tad',
             name: '团队账变',
             quickShowName: '团队<br/>账变',
           },
@@ -143,19 +143,19 @@ const menuConfig = [
         list: [
           {
             id: 401,
-            router: 'ac/llm',
+            router: '/ac/llm',
             name: '下级管理',
             quickShowName: '下级<br/>管理',
           },
           {
             id: 406,
-            router: 'ac/oam',
+            router: '/ac/oam',
             name: '开户管理',
             quickShowName: '开户<br/>管理',
           },
           {
             id: 500,
-            router: 'ac/tr',
+            router: '/ac/tr',
             name: '转账下级',
             quickShowName: '转账<br/>下级',
           },
@@ -169,35 +169,35 @@ const menuConfig = [
         list: [
           {
             id: 407,
-            router: 'ac/dm',
+            router: '/ac/dm',
             name: '我的分红',
             needAuth: true,
             quickShowName: '我的<br/>分红',
           },
           {
             id: 501,
-            router: 'ac/lg',
+            router: '/ac/lg',
             name: '下级分红',
             needAuth: true,
             quickShowName: '下级<br/>分红',
           },
           {
             id: 502,
-            router: 'ac/sum',
+            router: '/ac/sum',
             name: '签约用户',
             needAuth: true,
             quickShowName: '签约<br/>用户',
           },
           {
             id: 408,
-            router: 'ac/rp',
+            router: '/ac/rp',
             name: '红包查询',
             needAuth: true,
             quickShowName: '红包<br/>查询',
           },
           {
             id: 409,
-            router: 'ac/reb',
+            router: '/ac/reb',
             name: '返点查询',
             needAuth: true,
             quickShowName: '返点<br/>查询',
