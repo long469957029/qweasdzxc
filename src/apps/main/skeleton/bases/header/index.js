@@ -49,6 +49,11 @@ const HeaderView = Base.ItemView.extend({
       url: '/mall/integral/info.json',
     })
   },
+  getAccountSafeXhr() { // 获取用户是否设置资金密码密保问题等信息
+    return Global.sync.ajax({
+      url: '/acct/userinfo/accountCenter.json',
+    })
+  },
   initialize() {
     _.bindAll(this, 'renderUpdateUnread', 'renderUnread')
 
@@ -72,6 +77,8 @@ const HeaderView = Base.ItemView.extend({
     this.$('.js-gl-head-main-menu').dropMenu()
     this.$('.js-gl-head-money-menu').dropMenu()
 
+    this.getAccuntSafe() // 获取用户是否绑定手机 设置资金密码等
+
     this.subscribe('acct', 'acct:updating', () => {
       self.renderAcctInfo()
     })
@@ -80,6 +87,17 @@ const HeaderView = Base.ItemView.extend({
     this.$unReadNotice = this.$('.js-gl-hd-msg-num')
     this.subscribe('news', 'news:updating', this.renderUnread)
   },
+
+  getAccuntSafe() {
+    this.getAccountSafeXhr()
+      .done((res) => {
+        if (res.result === 0) {
+          Global.memoryCache.set('accountSafe', res.root)
+          Global.m.publish('safe:updating', res.root)
+        }
+      })
+  },
+
   renderUnread(model) {
     const unReadNotice = model.get('unReadNotice')
     if (unReadNotice === 0) {

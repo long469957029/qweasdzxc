@@ -20,6 +20,9 @@ const MediatorModule = Base.Module.extend({
       'redNum:updating': {
         redNum: true,
       },
+      'safe:updating': {
+        safe: true,
+      },
     })
 
     _(this).extend(Base.MediatorFacade)

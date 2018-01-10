@@ -10,13 +10,20 @@ const SidebarView = Base.ItemView.extend({
 
   events: {},
 
-  initialize() {},
+  initialize() {
+    this.subscribe('safe', 'safe:updating', this.render())
+  },
 
   serializeData() {
     let sidebar = ''
     const acctInfo = Global.memoryCache.get('acctInfo')
-    // console.log(acctInfo)
-    // const userName = acctInfo.userName
+    const accountSafe = Global.memoryCache.get('accountSafe')
+    // if (_.isUndefined(accountSafe)) {
+    //   accountSafe.hasFundPassword = false
+    //   accountSafe.hasSecurityQuestion = false
+    //   accountSafe.hasFundPassword = false
+    //   accountSafe.hasFundPassword = false
+    // }
     if (_(this.options.sidebar).isArray()) {
       sidebar = _(this.options.sidebar).map(this.formatSidebar.bind(this))
     } else {
@@ -30,8 +37,36 @@ const SidebarView = Base.ItemView.extend({
       dividendStatus: acctInfo.dividendStatus,
       userName: acctInfo.username,
       img: avatarCfg.get(_.isNull(acctInfo.headIcon) ? _.random(1, 21) : Number(acctInfo.headIcon)).logo,
+      accountSafe,
     }
   },
+  // onRender() {
+  //   // const self = this
+  //   // this.$iconLock = this.$('.js-sfa-icon-lock')
+  //   // this.$iconLightBulb = this.$('.js-sfa-icon-light-bulb')
+  //   // this.$iconMobile = this.$('.js-sfa-icon-mobile')
+  //   // this.$iconMail = this.$('.js-sfa-icon-mail')
+  //   // this.$safeLevel = this.$('.js-user-info-safe-level')
+  //   // this.$progressBar = this.$('.js-safe-progress-bar')
+  //   // this.getAccountSafeXhr()
+  //   //   .done((res) => {
+  //   //     if (res.result === 0) {
+  //   //       const data = res.root
+  //   //       self.$iconLock.addClass(data.hasFundPassword ? 'sfa-icon-lock-over' : 'sfa-icon-lock')
+  //   //       self.$iconLightBulb.addClass(data.hasSecurityQuestion ? 'sfa-icon-light-bulb-over' : 'sfa-icon-light-bulb')
+  //   //       self.$iconMobile.addClass(data.hasBindingMobile ? 'sfa-icon-mobile-over' : ' sfa-icon-mobile')
+  //   //       self.$iconMail.addClass(data.hasBindingEmail ? 'sfa-icon-mail-over' : ' sfa-icon-mail')
+  //   //       if (data.securityLevel < 3) {
+  //   //         self.$safeLevel.html('低')
+  //   //       } else if (data.securityLevel < 5) {
+  //   //         self.$safeLevel.html('中')
+  //   //       } else {
+  //   //         self.$safeLevel.html('高')
+  //   //       }
+  //   //       self.$progressBar.css({ width: `${_(_(data.securityLevel).div(5)).mul(100)}%` })
+  //   //     }
+  //   //   })
+  // },
 
   formatSidebar(sidebar) {
     const self = this
