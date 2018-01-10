@@ -87,11 +87,12 @@ const ToolbarView = Base.ItemView.extend({
       body: '<div class="im-dialog-container"></div>',
     })
     const $dialogContainer = $imDialog.find('.im-dialog-container')
-
-    $dialogContainer.html(new MessageView().render().el)
+    const messageView = new MessageView()
+    $dialogContainer.html(messageView.render().el)
 
     $imDialog.on('hidden.modal', function () {
       $(this).remove()
+      messageView.destroy()
     })
   },
   feedbackDialogHandler() {
@@ -112,7 +113,7 @@ const ToolbarView = Base.ItemView.extend({
   },
 
   scrollHandler() {
-    $('html').animate({ scrollTop: 0 }, 'slow')
+    $('html').animate({scrollTop: 0}, 'slow')
   },
 })
 

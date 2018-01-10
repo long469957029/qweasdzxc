@@ -1,5 +1,3 @@
-
-
 const core = require('mathjs/core')
 
 import { repeat, fill, chunk } from 'lodash'
@@ -88,8 +86,7 @@ _.mixin({
 
     money = money || 0
 
-    options = _.extend({}, {
-    }, options)
+    options = _.extend({}, {}, options)
 
     if (!_.isUndefined(money)) {
       format = _(money).div(ratio)
@@ -149,6 +146,10 @@ _.mixin({
 
   formatDate(timestamp, format) {
     return timestamp ? moment(timestamp).format(format || 'YYYY-MM-DD') : timestamp
+  },
+
+  formatAMPM(timestamp, format) {
+    return timestamp ? moment(timestamp).format(format || 'h:mm A') : timestamp
   },
 
   add(arg1, arg2) {
@@ -272,8 +273,8 @@ _.mixin({
 
   getConfigById(config, id) {
     return (_(config).findWhere({
-      id,
-    }) || {}).zhName || id
+        id,
+      }) || {}).zhName || id
   },
 
   getCustomerServiceUrl() {

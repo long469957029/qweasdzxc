@@ -383,8 +383,7 @@
 }
 
 .chat-title {
-  padding: 20px 0 20px 17px;
-  height: 15px;
+  padding: 18px 0 17px 17px;
   width: 97%;
   border-bottom: 1px solid #d7d7d7;
   .chat-title-lg {
@@ -522,7 +521,7 @@
         position: relative;
         .chat-select-img-area {
           position: absolute;
-          margin-left: -5px;
+          margin-left: -8px;
           margin-top: 67px;
         }
       }
@@ -553,7 +552,7 @@
           position: relative;
           .select-superior {
             cursor: pointer;
-            padding: 10px 0;
+            padding-top: 10px;
             color: $new-inverse-color;
             &.active, &:hover {
               color: $new-main-deep-color;
@@ -563,6 +562,7 @@
             cursor: pointer;
             line-height: 16px;
             color: $font-auxiliary-color;
+            padding-top: 10px;
             .select-sub-img {
               position: absolute;
               margin-left: -16px;
@@ -582,11 +582,17 @@
                   color: #999999;
                   font-size: 14px;
                   margin-top: 3px;
+                  display: none
                 }
                 &.active, &:hover {
                   color: $new-main-deep-color;
                   .select-sub-item-isSelect {
                     color: $new-main-deep-color;
+                  }
+                }
+                &.active {
+                  .select-sub-item-isSelect {
+                    display: block;
                   }
                 }
               }
@@ -658,9 +664,10 @@
       width: 100%;
       height: 100%;
       box-sizing: border-box;
-      padding: .1rem 0;
+      padding: .1px 0;
       //line-height: normal;
-      font-size: .27rem;
+      //font-size: .27rem;
+      font-size: 12px;
       color: #464545;
       text-align: left;
       background-color: transparent;
@@ -668,7 +675,8 @@
       max-height: 63px;
       &::-webkit-input-placeholder {
         text-align: left;
-        font-size: .27rem;
+        //font-size: .27rem;
+        font-size: 12px;
         color: #999;
       }
     }
@@ -678,7 +686,8 @@
       opacity: 0;
       display: block;
       width: 100%;
-      font-size: .27rem;
+      //font-size: .27rem;
+      font-size: 12px;
       line-height: 23px;
       color: #999;
       max-height: 63px;
@@ -706,41 +715,60 @@
 }
 
 .chat-message-content {
-  height: 462px;
+  //height: 462px;
   flex-grow: 1;
   width: 100%;
   border-bottom: 1px solid $def-line-color;
   text-align: center;
-  overflow: auto;
   max-height: 462px;
-  .chat-more-content {
-    padding: 5px 0;
-    color: $new-main-deep-color;
-  }
-  .chat-day-time {
-    border: 1px solid $def-gray-color;
-    border-radius: 20px;
-    color: $def-gray-color;
-    width: 109px;
-    height: 19px;
-    padding: 5px;
-    margin-left: 237px;
-    &.lessRecord {
-      margin-top: 28px;
-    }
-  }
-  .chat-content-container {
-    padding: 26px 23px 6px 25px;
+  position: relative;
+  .chat-message-content-panel {
+    position: absolute;
+    max-height: 100%;
+    width: 100%;
     text-align: left;
+    overflow: auto;
+    bottom: 0;
+    //overflow: auto;
+    .chat-more-content {
+      cursor: pointer;
+      text-align: center;
+      padding: 5px 0;
+      height: 20px;
+      color: $new-main-deep-color;
+    }
+    .chat-day-time {
+      text-align: center;
+      border: 1px solid $def-gray-color;
+      border-radius: 20px;
+      color: $def-gray-color;
+      width: 109px;
+      height: 19px;
+      padding: 5px;
+      margin-left: 230px;
+      margin-bottom: 26px;
+      &.lessRecord {
+        margin-top: 28px;
+      }
+    }
+    //.chat-content-container {
+    //  padding: 26px 23px 6px 25px;
+    //  text-align: left;
     .chat-item {
+      margin-left: 26px;
       margin-bottom: 28px;
       .chat-item-avatar {
+        margin-top: 7px;
         vertical-align: top;
+      }
+      .chat-item-time {
+        margin-right: 20px;
       }
       .chat-item-detail {
         margin-left: 15px;
         width: 400px;
         .chat-item-name {
+          margin-bottom: 5px;
           color: $new-main-deep-color;
         }
         .chat-item-message {
@@ -758,6 +786,7 @@
 
         }
       }
+      //}
     }
   }
 }
