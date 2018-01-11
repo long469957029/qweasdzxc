@@ -50,6 +50,9 @@
 
     watch: {
       'ticketId'(currentId) {
+        this.$store.dispatch(types.SET_TOP_CURRENT_TICKET, {
+          ticketId: currentId
+        })
         this.$store.commit(types.RESORT_TOP_TICKETS, {
           currentId
         })

@@ -29,7 +29,7 @@ const actions = {
     })
   },
 
-  [types.SET_TOP_CURRENT_TICKET] ({ commit }, {
+  [types.SET_TOP_CURRENT_TICKET] (state , {
     ticketId
   }) {
     return new Promise((resolve) => {
@@ -37,7 +37,6 @@ const actions = {
         { ticketId },
         ({ data }) => {
           resolve(data)
-          return commit(types.SET_TOP_CURRENT_TICKET_SUCCESS, data)
         },
       )
     })
@@ -52,15 +51,6 @@ const mutations = {
   // },
 
   [types.GET_TOP_TICKETS_SUCCESS] (state, res) {
-    let data = []
-
-    if (res && res.result === 0) {
-      data = res.root && res.root.ticketIds || []
-    }
-    state.ticketIds = data
-  },
-
-  [types.SET_TOP_CURRENT_TICKET_SUCCESS] (state, res) {
     let data = []
 
     if (res && res.result === 0) {

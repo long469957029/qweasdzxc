@@ -112,15 +112,14 @@ export default {
       // /ticket/show/viewTicket.json
   },
 
-  setTopCurrentTicket({ticketId}, then) {
+  setTopCurrentTicket({ticketId}) {
     return Global.sync.axios({
-      url: '/ticket/show/getTopTickets.json',
+      url: '/ticket/show/viewTicket.json',
       data: {
         ticketId,
         device: 0
       }
     })
-      .then(then)
   }
 }
 
