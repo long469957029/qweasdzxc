@@ -73,39 +73,35 @@
                   <div class="js-nav-channel-container nav-channel-container">
                     <ul>
                       <div class="nav-channel-banner <%= menu.bannerPicClass %>"></div>
-                      <div class="nav-channel-classic-container">
+                      <div class="nav-channel-main">
                         <div class="classic-title-classic"></div>
-                        <% _(classicTicketList.list).each(function(list, index){%>
-                          <div class="classic-section">
-                            <% _(list).each(function(ticket, index) { %>
-                              <li>
-                                <span class="navbar-ticket-chavon"></span>
-                                <a href="#/bc/<%= ticket.id %>"><%= ticket.zhName %></a>
-                                <% if (ticket.badge) { %>
-                                  <span class="navbar-ticket-icon-<%= ticket.badge %>"></span>
-                                <% } %>
-                              </li>
-                            <% }) %>
-                          </div>
-                        <%})%>
+                        <ul class="nav-channel-container classic-container">
+                          <% _(classicTicketList.list).each(function(ticket, index){%>
+                          <li>
+                            <span class="navbar-ticket-chavon"></span>
+                            <a href="#/bc/0/<%= ticket.id %>"><%= ticket.zhName %></a>
+                            <% if (ticket.badge) { %>
+                            <span class="navbar-ticket-icon-<%= ticket.badge %>"></span>
+                            <% } %>
+                          </li>
+                          <%})%>
+                        </ul>
                       </div>
 
-                      <div class="nav-channel-classic-container">
-                          <div class="classic-title-handicap"></div>
-                          <% _(handicapTicketList.list).each(function(list, index){%>
-                            <div class="classic-section">
-                              <% _(list).each(function(ticket, index) { %>
-                                <li>
-                                  <span class="navbar-ticket-chavon"></span>
-                                  <a href="#/bc/<%= ticket.id %>/2"><%= ticket.zhName %></a>
-                                  <% if (ticket.badge) { %>
-                                    <span class="navbar-ticket-icon-<%= ticket.badge %>"></span>
-                                  <% } %>
-                                </li>
-                              <% }) %>
-                            </div>
+                      <div class="nav-channel-main">
+                        <div class="classic-title-handicap"></div>
+                        <ul class="nav-channel-container">
+                          <% _(handicapTicketList.list).each(function(ticket, index){%>
+                          <li>
+                            <span class="navbar-ticket-chavon"></span>
+                            <a href="#/bc/2/<%= ticket.id %>"><%= ticket.zhName %></a>
+                            <% if (ticket.badge) { %>
+                            <span class="navbar-ticket-icon-<%= ticket.badge %>"></span>
+                            <% } %>
+                          </li>
                           <%})%>
-                        </div>
+                        </ul>
+                      </div>
                     </ul>
                   </div>
                 <% } %>

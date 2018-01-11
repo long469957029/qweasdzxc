@@ -188,14 +188,15 @@ module.exports = {
       helpCenter: 'apps/main/helpCenter',
       gameCenter: 'apps/main/gameCenter',
       mallCenter: 'apps/main/mallCenter',
-      'mutation-types': 'apps/store/mutation-types',
 
       snap: 'Snap.svg/dist/snap.svg',
       bootstrap: 'vendor/scripts/bootstrap',
       modernizr: 'vendor/scripts/modernizr',
-      vue: 'vue/dist/vue.js',
-      // vue: 'vue/dist/vue.esm.js',
+      // vue: 'vue/dist/vue.js',
+      vue: 'vue/dist/vue.esm.js',
 
+      'consts': 'apps/store/consts',
+      'mutation-types': 'apps/store/mutation-types',
       StaticGrid: 'com/static-grid/index.vue',
       AnimatedInteger: 'com/animated-integer/index.vue',
       ticketConfig: 'apps/main/skeleton/misc/ticketConfig',
@@ -205,7 +206,8 @@ module.exports = {
     },
   },
   providePlugin: {
-    Vue: ['vue', 'default'],
+    Vue: ['vue/dist/vue.esm.js', 'default'],
+    // Vue: ['vue', 'default'],
     mapState: ['vuex', 'mapState'],
     mapGetters: ['vuex', 'mapGetters'],
     jQuery: 'jquery',
@@ -218,6 +220,7 @@ module.exports = {
     Velocity: 'velocity-animate',
     RouterController: ['RouterController', 'default'],
 
+    consts: 'consts',
     types: 'mutation-types',
     StaticGrid: ['StaticGrid', 'default'],
     AnimatedInteger: ['AnimatedInteger', 'default'],

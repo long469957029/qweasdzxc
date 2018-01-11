@@ -293,6 +293,16 @@ function getCreateFunc(length, options) {
     let currentNum
     let repeatTimes
 
+    options.range = _.map(options.range, item => {
+      if (!_.isObject(item)) {
+        item = {
+          title: item,
+          num: item
+        }
+      }
+      return item
+    })
+
     for (; index < length; ++index) {
       currentNum = _.sample(options.range)
 

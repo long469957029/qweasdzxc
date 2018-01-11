@@ -5,6 +5,53 @@ const sscConfig = {
   titleIcon: 'ssc_nav_icon',
   list: [
     Object.assign({
+      id: 19,
+      mark: 'wx',
+      zhName: '无限秒秒彩',
+      badge: '',
+    }, bettingTypes.SSC),
+    Object.assign({
+      id: 32,
+      mark: 'qq30s',
+      zhName: 'QQ30秒',
+      badge: 'hot',
+      showNumberDetail: false,
+    }, bettingTypes.SSC),
+    Object.assign({
+      id: 10,
+      mark: 'ffc',
+      zhName: '无限分分彩',
+      badge: 'hot',
+      // badge: 'fire',
+    }, bettingTypes.SSC),
+    Object.assign({
+      id: 13,
+      mark: 'sfc',
+      zhName: '无限三分彩',
+      hasMargin: true,
+      badge: '',
+    }, bettingTypes.SSC),
+    Object.assign({
+      id: 1,
+      mark: 'cq',
+      zhName: '重庆时时彩',
+      badge: 'hot',
+    }, bettingTypes.SSC),
+    Object.assign({
+      id: 31,
+      mark: 'qqffc',
+      zhName: 'QQ分分彩',
+      badge: 'new',
+      showNumberDetail: false,
+    }, bettingTypes.SSC),
+    Object.assign({
+      id: 21,
+      mark: 'hg',
+      zhName: '韩国乐透1.5',
+      badge: '',
+      showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
+    }, bettingTypes.SSC),
+    Object.assign({
       id: 27,
       mark: 'dj',
       zhName: '东京1.5分彩',
@@ -19,50 +66,32 @@ const sscConfig = {
       showNumberDetail: true,
     }, bettingTypes.SSC),
     Object.assign({
-      id: 13,
-      mark: 'sfc',
-      zhName: '无限三分彩',
-      hasMargin: true,
+      id: 3,
+      mark: 'xj',
+      zhName: '新疆时时彩',
       badge: '',
+      showNumberDetail: true,
     }, bettingTypes.SSC),
     Object.assign({
-      id: 32,
-      mark: 'qq30s',
-      zhName: 'QQ30秒',
-      badge: 'hot',
-      showNumberDetail: false,
-    }, bettingTypes.SSC),
-    Object.assign({
-      id: 19,
-      mark: 'wx',
-      zhName: '无限秒秒彩',
+      id: 9,
+      mark: 'hlj',
+      zhName: '黑龙江时时彩',
       badge: '',
+      showNumberDetail: true,
     }, bettingTypes.SSC),
     Object.assign({
-      id: 10,
-      mark: 'ffc',
-      zhName: '无限分分彩',
-      badge: 'fire',
-    }, bettingTypes.SSC),
-    Object.assign({
-      id: 1,
-      mark: 'cq',
-      zhName: '重庆时时彩',
-      badge: 'hot',
-    }, bettingTypes.SSC),
-    Object.assign({
-      id: 21,
-      mark: 'hg',
-      zhName: '韩国乐透1.5',
+      id: 8,
+      mark: 'tj',
+      zhName: '天津时时彩',
       badge: '',
-      showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
+      showNumberDetail: true,
     }, bettingTypes.SSC),
   ],
 }
 
 const oneFiveConfig = {
   id: 'num',
-  title: '11选5',
+  title: '十一选五',
   icon: 'num',
   titleIcon: 'ele_nav_icon',
   list: [
@@ -95,7 +124,7 @@ const threeDConfig = [
     mark: '3d-ffc',
     zhName: '3D分分彩',
     hasMargin: true,
-    badge: 'hot',
+    badge: 'new',
   }, bettingTypes.CHOOSE15),
   Object.assign({
     id: 6,
@@ -127,35 +156,27 @@ const bjPKConfig = [
   Object.assign({
     id: 18,
     mark: 'pk10',
-    zhName: '北京赛车/PK10',
+    zhName: '北京PK10',
     hasMargin: true,
     badge: 'hot',
   }, bettingTypes.PK10),
 ]
 
-const quickConfig = {
-  id: 'quick3',
-  title: '快三',
-  ticketName: '快三',
-  titleIcon: 'hap_nav_icon',
-  list: [
-    Object.assign({
-      id: 29,
-      mark: 'jsk3',
-      zhName: '江苏快三',
-      hasMargin: true,
-      badge: 'new',
-    }, bettingTypes.QUICK3),
-  ],
-}
+const quickConfig = [
+  Object.assign({
+    id: 29,
+    mark: 'jsk3',
+    zhName: '江苏快三',
+    hasMargin: true,
+  })
+]
 
 const happyConfig = {
   id: 'happy',
   title: '快乐彩',
-  ticketName: '快乐彩',
   icon: 'happy',
   titleIcon: 'hap_nav_icon',
-  list: bjPKConfig,
+  list: bjPKConfig.concat(quickConfig),
 }
 
 const handicapMark6Config = [
@@ -191,23 +212,22 @@ const handicapPk10Config = [
 const lowConfig = {
   id: 'low',
   title: '低频彩',
-  ticketName: '低频彩',
   icon: 'low',
   titleIcon: 'low_nav_icon',
-  list: threeDConfig.concat(p5p3Config).concat(handicapMark6Config),
+  list: threeDConfig.concat(p5p3Config),
 }
 
 const allConfig = sscConfig.list.concat(
   oneFiveConfig.list,
   lowConfig.list,
   happyConfig.list,
-  quickConfig.list,
+  quickConfig,
   handicapMark6Config,
   handicapSscConfig,
   handicapPk10Config,
 )
 
-const completeAllConfig = [sscConfig, oneFiveConfig, lowConfig, happyConfig, quickConfig]
+const completeAllConfig = [sscConfig, oneFiveConfig, lowConfig, happyConfig]
 
 // //--begin 彩种导航特殊配置
 // var hotTicketIdList = [19,32,10,1,21];
@@ -268,7 +288,7 @@ export default {
   },
 
   getQuickList() {
-    return quickConfig.list
+    return quickConfig
   },
 
   getMark6List() {
@@ -325,16 +345,16 @@ export default {
     return {
       classic: {
         list: [
-          sscConfig.list,
-          oneFiveConfig.list,
-          threeDConfig.concat(p5p3Config).concat(happyConfig.list).concat(quickConfig.list),
+          ...sscConfig.list,
+          ...oneFiveConfig.list,
+          ...threeDConfig.concat(p5p3Config).concat(happyConfig.list),
         ],
       },
       handicap: {
         // 重庆时时彩  无限秒秒彩  无限分分彩  北京PK10  香港六合彩
         list: [
-          _.filter(sscConfig.list, (item) => { return item.id === 1 || item.id === 10 || item.id === 19 }),
-          bjPKConfig.concat(this.getById(34)),
+          ..._.filter(sscConfig.list, (item) => { return item.id === 1 || item.id === 10 || item.id === 19 }),
+          ...bjPKConfig.concat(this.getById(34)),
         ],
       },
     }

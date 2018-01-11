@@ -129,7 +129,7 @@
         height: 180px;
         background: $new-main-deep-color;
         border-radius: 5px;
-        z-index: 1;
+        z-index: 10;
         &:before {
           position: absolute;
           display: inline-block;

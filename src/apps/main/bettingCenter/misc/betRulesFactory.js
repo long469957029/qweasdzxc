@@ -106,12 +106,21 @@ function createList(titles, options) {
   })
 
   return _(titles).map((title) => {
+    const items = title ? _.map(title.items || options.items, item => {
+          if (!_.isObject(item)) {
+            item = {
+              title: item,
+              num: item
+            }
+          }
+          return item
+        }): null
+
     if (_.isObject(title)) {
       return {
         isShow: title.title !== null,
         title: title.title,
-        items: title.items || options.items,
-        showItems: title.showItems || options.showItems || options.items,
+        items,
         op: op[title.operate || options.operate],
         limits: title.limits || options.limits,
         doubleNum: title.doubleNum || options.doubleNum,
@@ -120,8 +129,7 @@ function createList(titles, options) {
     return {
       isShow: title !== null,
       title,
-      items: options.items,
-      showItems: options.showItems || options.items,
+      items,
       op: op[options.operate],
       limits: options.limits,
       doubleNum: options.doubleNum,

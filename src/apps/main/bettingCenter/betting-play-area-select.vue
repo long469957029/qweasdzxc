@@ -500,6 +500,6 @@
   }
 
   .tab-group {
-    max-width: 700px;
+    max-width: 695px;
   }
 </style>

@@ -103,20 +103,24 @@ export default {
   },
 
   //取得顶部彩种
-  getTopTickets(then, fail) {
+  getTopTickets({type = 0}, then, fail) {
     return Global.sync.axios({
       url: '/ticket/show/getTopTickets.json',
+      data: {
+        type,
+      }
     })
       .then(then)
       .catch(fail)
       // /ticket/show/viewTicket.json
   },
 
-  setTopCurrentTicket({ticketId}) {
+  setTopCurrentTicket({ticketId, type = 0}) {
     return Global.sync.axios({
       url: '/ticket/show/viewTicket.json',
       data: {
         ticketId,
+        type,
         device: 0
       }
     })
