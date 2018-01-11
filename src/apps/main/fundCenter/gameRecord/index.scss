@@ -30,7 +30,7 @@
 .fc-gr-bet-detail {
   width: 472px;
   height: 590px;
-  background-image: url("../misc/v2/dailog-betting-detail.png");
+  //background-image: url("../../../../base/images/fund/dailog-betting-detail.png");
   padding: 14px 27px;
   .fc-gr-bet-detail-title {
     text-align: center;
@@ -73,16 +73,6 @@
           border-radius: 100px / 19px;
         }
       }
-    }
-    .gr-betDetail-close {
-      background-image: url("../misc/v2/dailog-close.png");
-      width: 18px;
-      height: 18px;
-      float: right;
-      margin-top: 16px;
-      z-index: 99;
-      position: absolute;
-      margin-right: 10px;
     }
   }
   .fc-gr-bet-detail-container {
@@ -139,15 +129,8 @@
 .fc-cd-chase-detail-form {
   width: 760px;
   height: 540px;
-  background-image: url("../misc/v2/dailog-chase-detail.png");
+  //background-image: url("../../../../base/images/fund/dailog-chase-detail.png");
   padding: 14px 45px;
-  .cd-betDetail-close {
-    background-image: url("../misc/v2/dailog-close.png");
-    width: 18px;
-    height: 18px;
-    float: right;
-
-  }
   .fc-cd-chase-detail-title {
     height: 151px;
     padding: 15px 0px 5px 15px;

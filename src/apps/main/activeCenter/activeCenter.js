@@ -4,7 +4,7 @@ import './index.scss'
 
 const ActiveCenterView = Base.ItemView.extend({
 
-  template: require('activeCenter/activeCenter.html'),
+  template: require('activeCenter/activeCenter.vue'),
 
   itemTpl: _(require('activeCenter/activityItem.html')).template(),
 

@@ -37,41 +37,41 @@ const WithdrawView = Base.ItemView.extend({
   },
   onRender() {
     const self = this
-    this.getInfoXhr()
-      .always(() => {
-        self.loadingFinish()
-      })
-      .done((res) => {
-        const data = res && res.root || {}
-        if (res && res.result === 0) {
-          if (!(res.root.hasBankCard && res.root.hasMoneyPwd)) {
-            this.$('.jc-wd-set-tips-text').html(withdrawService.getPreWithdrawTips(res.root))
-            this.$('.js-fc-wd-set-view').removeClass('hidden')
-            this.$('.js-fc-wd-operate-view').addClass('hidden')
-            if (res.root.hasBankCard && !res.root.hasMoneyPwd) {
-              this.$('.js-wd-goTo-fundPwd').addClass('hidden')
+    if (this.options.bank && this.options.pwd) {
+      this.getInfoXhr()
+        .always(() => {
+          self.loadingFinish()
+        })
+        .done((res) => {
+          const data = res && res.root || {}
+          if (res && res.result === 0) {
+            this.$('.js-fc-wd-set-view').addClass('hidden')
+            this.$('.js-fc-wd-operate-view').removeClass('hidden')
+            // 生成充值页广告
+            this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
+            // 初始化内容滑动效果数据
+            this.conInnerConWidth = 740
+            this.conSize = this.$('.jc-wd-view').size()
+            if (!this.cur) {
+              this.cur = 0
             }
-          } else {
+            this.parsley = this.$('.js-fc-withdrawal-confirm-form').parsley({
+              errorsWrapper: '<div class="tooltip parsley-errors-list"><span class="sfa sfa-error-icon vertical-sub pull-left"></div>',
+              errorTemplate: '<div class="tooltip-inner">',
+              trigger: 'change',
+            })
             self.initWithdrawData(data)
             self.withdrawData = data
+          } else {
+            Global.ui.notification.show('服务器异常')
           }
-        } else {
-          Global.ui.notification.show('服务器异常')
-        }
-      })
-    // 生成充值页广告
-    this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
-    // 初始化内容滑动效果数据
-    this.conInnerConWidth = 740
-    this.conSize = this.$('.jc-wd-view').size()
-    if (!this.cur) {
-      this.cur = 0
+        })
+    } else {
+      this.$('.jc-wd-set-tips-text').html(withdrawService.getPreWithdrawTips(this.options.bank, this.options.pwd))
+      if (this.options.bank && !this.options.pwd) {
+        this.$('.js-wd-goTo-fundPwd').addClass('hidden')
+      }
     }
-    this.parsley = this.$('.js-fc-withdrawal-confirm-form').parsley({
-      errorsWrapper: '<div class="tooltip parsley-errors-list"><span class="sfa sfa-error-icon vertical-sub pull-left"></div>',
-      errorTemplate: '<div class="tooltip-inner">',
-      trigger: 'change',
-    })
   },
   initWithdrawData(data, bankId) {
     // 初始化银行卡列表

@@ -8,13 +8,17 @@ const rechargeService = require('./recharge/rechargeService')
 
 const FundOperateView = TabView.extend({
 
-  // className: 'ac-wr-view',
   className: 'fc-rw',
 
   getActivityInfo () {
     return Global.sync.ajax({
       async: false,
       url: '/info/activityCenter/fundList.json',
+    })
+  },
+  getInfoXhr() {
+    return Global.sync.ajax({
+      url: '/fund/withdraw/info.json',
     })
   },
   initialize() {
@@ -28,6 +32,14 @@ const FundOperateView = TabView.extend({
         rechargeService.getFunActivity(this.activityList)
       }
     })
+    this.getInfoXhr()
+      .done((res) => {
+        if (res.result === 0) {
+          this.bankCard = res.root.hasBankCard
+          this.moneyoneyPwd = res.root.hasMoneyPwd
+        }
+      })
+
     const cursize = 0
     _(this.options).extend({
       tabs: [
@@ -36,21 +48,21 @@ const FundOperateView = TabView.extend({
           name: 'jsFcRecharge',
           id: 'js-recharge',
           view: RechargeView,
-          options: { ac: this.activityList, cur: cursize },
+          options: {ac: this.activityList, cur: cursize},
         },
         {
           label: '转帐',
           name: 'jsFcTransfer',
           id: 'js-transfer',
           view: TransferView,
-          options: { ac: this.activityList, cur: cursize },
+          options: {ac: this.activityList, cur: cursize},
         },
         {
           label: '提现',
           name: 'jsFcWithdraw',
           id: 'js-withdraw',
           view: WithdrawView,
-          options: { ac: this.activityList, cur: cursize },
+          options: {ac: this.activityList, cur: cursize, bank: this.bankCard, pwd: this.moneyoneyPwd},
         },
       ],
     })

@@ -401,7 +401,7 @@
 }
 
 .chat-admin {
-  height: 551px;
+  height: 570px;
   width: 100%;
 
   .chat-content {
@@ -751,9 +751,6 @@
         margin-top: 28px;
       }
     }
-    //.chat-content-container {
-    //  padding: 26px 23px 6px 25px;
-    //  text-align: left;
     .chat-item {
       margin-left: 26px;
       margin-bottom: 28px;
@@ -786,7 +783,6 @@
 
         }
       }
-      //}
     }
   }
 }
@@ -797,4 +793,21 @@
   -ms-filter: grayscale(100%);
   -o-filter: grayscale(100%);
   filter: grayscale(100%);
+}
+
+.chat-admin-content {
+  height: 439px;
+  flex-grow: 1;
+  width: 100%;
+  border-bottom: 1px solid $def-line-color;
+  text-align: center;
+  position: relative;
+  .chat-admin-content-panel {
+    position: absolute;
+    max-height: 100%;
+    width: 100%;
+    text-align: left;
+    overflow: auto;
+    bottom: 0;
+  }
 }

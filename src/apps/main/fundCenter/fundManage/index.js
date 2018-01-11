@@ -20,6 +20,7 @@ export default Base.ItemView.extend({
     'click .js-fm-out-item': 'selectFromGameHandler',
     'click .js-fm-in-item': 'selectInGameHandler',
     'click .js-fc-fm-change': 'changeInOutStatusHandler',
+    'focus .js-fc-fm-change': 'focusInOutStatusHandler',
   },
   refreshHandler(e) {
     e.stopPropagation()
@@ -202,7 +203,7 @@ export default Base.ItemView.extend({
     })
     const $from = this.$('.js-fm-out-selectedItem').data('id')
     const $to = this.$('.js-fm-in-selectedItem').data('id')
-    this.getPlatformInfoXhr({ channelId: Number($to) || Number($from) || '1' }).always(() => {
+    this.getPlatformInfoXhr({channelId: Number($to) || Number($from) || '1'}).always(() => {
       this.loadingFinish()
     }).done((res) => {
       if (res.result === 0) {
@@ -260,11 +261,13 @@ export default Base.ItemView.extend({
     this.getRechargeWithdrawlXhr(reqData).done((res) => {
       if (res.result === 0) {
         if (res.root.recharge > 0) {
-          self.$Recharge.closest('li').addClass('active')
+          self.$Recharge.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-recharge-gray', false)
+          self.$Recharge.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-recharge-green', true)
           self.$Recharge.html(_(res.root.recharge).convert2yuan())
         }
         if (res.root.withdraw > 0) {
-          self.$Withdraw.closest('li').addClass('active')
+          self.$Withdraw.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-withdraw-gray', false)
+          self.$Withdraw.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-withdraw-green', true)
           self.$Withdraw.html(_(res.root.withdraw).convert2yuan())
         }
       }
@@ -272,27 +275,33 @@ export default Base.ItemView.extend({
     this.getProfitXhr(reqData).done((res) => {
       if (res.result === 0) {
         if (res.root.bet > 0) {
-          self.$Bet.closest('li').addClass('active')
+          self.$Bet.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-bet-gray', false)
+          self.$Bet.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-bet-green', true)
           self.$Bet.html(_(res.root.bet).convert2yuan())
         }
         if (res.root.prize > 0) {
-          self.$Bonus.closest('li').addClass('active')
+          self.$Bonus.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-award-gray', false)
+          self.$Bonus.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-award-green', true)
           self.$Bonus.html(_(res.root.prize).convert2yuan())
         }
         if (res.root.rebate > 0) {
-          self.$Rebate.closest('li').addClass('active')
+          self.$Rebate.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-rebate-gray', false)
+          self.$Rebate.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-rebate-green', true)
           self.$Rebate.html(_(res.root.rebate).convert2yuan())
         }
-        if (res.root.rebate > 0) {
-          self.$back.closest('li').addClass('active')
-          self.$back.html(_(res.root.rebate).convert2yuan())
+        if (res.root.gameRebate > 0) {
+          self.$back.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-back-gray', false)
+          self.$back.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-back-green', true)
+          self.$back.html(_(res.root.gameRebate).convert2yuan())
         }
         if (res.root.activity > 0) {
-          self.$Activity.closest('li').addClass('active')
+          self.$Activity.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-activity-gray', false)
+          self.$Activity.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-activity-green', true)
           self.$Activity.html(_(res.root.activity).convert2yuan())
         }
         if (res.root.profit > 0) {
-          self.$Profit.closest('li').addClass('active')
+          self.$Profit.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-profit-gray', false)
+          self.$Profit.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-profit-green', true)
           self.$Profit.html(_(res.root.profit).convert2yuan())
         }
       }
@@ -358,7 +367,7 @@ export default Base.ItemView.extend({
       this.$('.js-fm-in-selected').html(toData.toSelected)
       this.$('.js-fm-in-items').html(toData.toItems)
     }
-    this.getPlatformInfoXhr({ channelId: Number(toId) || Number(selectId) || '1' }).done((res) => {
+    this.getPlatformInfoXhr({channelId: Number(toId) || Number(selectId) || '1'}).done((res) => {
       if (res.result === 0) {
         this.renderPlatformTransferTypeLimit()
       }
@@ -395,7 +404,7 @@ export default Base.ItemView.extend({
       this.$('.js-fm-in-selected').html(toData.toSelected)
       this.$('.js-fm-in-items').html(toData.toItems)
     }
-    this.getPlatformInfoXhr({ channelId: Number(selectId) || Number(fromId) || '1' }).done((res) => {
+    this.getPlatformInfoXhr({channelId: Number(selectId) || Number(fromId) || '1'}).done((res) => {
       if (res.result === 0) {
         this.renderPlatformTransferTypeLimit()
       }
@@ -403,6 +412,8 @@ export default Base.ItemView.extend({
   },
 
   changeInOutStatusHandler(e) {
+    this.$('.js-fc-fm-change').toggleClass('sfa-icon-change-Deep', true)
+    this.$('.js-fc-fm-change').toggleClass('sfa-icon-change', false)
     if (this.getInOutDataFlag) {
       return
     }
@@ -421,7 +432,7 @@ export default Base.ItemView.extend({
     const toData = transferService.getFundToData(fromChannel)
     this.$('.js-fm-in-selected').html(toData.toSelected)
     this.$('.js-fm-in-items').html(toData.toItems)
-    this.getPlatformInfoXhr({ channelId: Number(toChannel) || Number(fromChannel) || '1' }).done((res) => {
+    this.getPlatformInfoXhr({channelId: Number(toChannel) || Number(fromChannel) || '1'}).done((res) => {
       if (res.result === 0) {
         this.renderPlatformTransferTypeLimit()
       }
@@ -446,7 +457,7 @@ export default Base.ItemView.extend({
       position: 'absolute',
       visibility: 'visible',
       top: parentTop,
-    }).animate({ top: prevItemTop }, option.speed, function () {
+    }).animate({top: prevItemTop}, option.speed, function () {
       $(this).remove()
       parent.insertBefore(prevItem).css('visibility', 'visible')
       // option.callback()
@@ -455,10 +466,14 @@ export default Base.ItemView.extend({
       position: 'absolute',
       visibility: 'visible',
       top: prevItemTop,
-    }).animate({ top: parentTop }, option.speed, function () {
+    }).animate({top: parentTop}, option.speed, function () {
       $(this).remove()
       prevItem.css('visibility', 'visible')
     })
+  },
+  focusInOutStatusHandler() {
+    this.$('.js-fc-fm-change').toggleClass('sfa-icon-change-Deep', true)
+    this.$('.js-fc-fm-change').toggleClass('sfa-icon-change', false)
   },
   // 修改面板规则及展示数据
   renderPlatformTransferTypeLimit() {

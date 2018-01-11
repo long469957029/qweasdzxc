@@ -117,9 +117,9 @@
         display: block;
         margin-top: 30px;
         margin-left: -40px;
-        background: url("../misc/v2/icon-bankCard-gray.png") no-repeat;
+        background: url("../../../../base/images/sprites/fund/icon-bankCard-gray.png") no-repeat;
         &.active, &:hover {
-          background: url("../misc/v2/icon-backCard-deepGray.png") no-repeat
+          background: url("../../../../base/images/sprites/fund/icon-backCard-deepGray.png") no-repeat
         }
       }
 
@@ -423,15 +423,8 @@
       border-bottom: 1px solid #cccccc;
       margin-right: 63px;
       .fc-tf-change-img {
-        width: 19px;
-        height: 19px;
-        display: block;
         margin-top: 30px;
         margin-left: 11px;
-        background: url("~base/images/v2/icon-change.png");
-        &.active, &:hover {
-          background: url('~base/images/v2/icon-change-Deep.png');
-        }
       }
     }
   }
@@ -499,30 +492,6 @@
           height: 40px;
           display: block;
         }
-        .img-recharge {
-          background: url("../misc/v2/icon-rechage-gray.png") no-repeat;
-        }
-        .img-withdraw {
-          background: url("../misc/v2/icon-withdraw-gray.png") no-repeat;
-        }
-        .img-bet {
-          background: url("../misc/v2/icon-bet-gray.png") no-repeat;
-        }
-        .img-award {
-          background: url("../misc/v2/icon-award-gray.png") no-repeat;
-        }
-        .img-rebate {
-          background: url("../misc/v2/icon-rebate-gray.png") no-repeat;
-        }
-        .img-back {
-          background: url("../misc/v2/icon-back-gray.png") no-repeat;
-        }
-        .img-activity {
-          background: url("../misc/v2/icon-activity-gray.png") no-repeat;
-        }
-        .img-profit {
-          background: url("../misc/v2/icon-profit-gray.png") no-repeat;
-        }
       }
       .fc-fm-info-item-info {
         margin: 24px 0px 24px 0px;
@@ -546,30 +515,6 @@
         }
       }
       &.active {
-        .img-recharge {
-          background: url("../misc/v2/icon-recharge-green.png") no-repeat;
-        }
-        .img-withdraw {
-          background: url("../misc/v2/icon-withdraw-green.png") no-repeat;
-        }
-        .img-bet {
-          background: url("../misc/v2/icon-bet-green.png") no-repeat;
-        }
-        .img-award {
-          background: url("../misc/v2/icon-award-green.png") no-repeat;
-        }
-        .img-rebate {
-          background: url("../misc/v2/icon-rebate-green.png") no-repeat;
-        }
-        .img-back {
-          background: url("../misc/v2/icon-back-green.png") no-repeat;
-        }
-        .img-activity {
-          background: url("../misc/v2/icon-activity-green.png") no-repeat;
-        }
-        .img-profit {
-          background: url("../misc/v2/icon-profit-green.png") no-repeat;
-        }
         .fc-fm-info-item-num {
           .fc-fm-info-item-num-value {
             color: #f09932;
