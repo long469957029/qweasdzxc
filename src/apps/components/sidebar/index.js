@@ -17,13 +17,6 @@ const SidebarView = Base.ItemView.extend({
   serializeData() {
     let sidebar = ''
     const acctInfo = Global.memoryCache.get('acctInfo')
-    // const accountSafe = Global.memoryCache.get('accountSafe')
-    // if (_.isUndefined(accountSafe)) {
-    //   accountSafe.hasFundPassword = false
-    //   accountSafe.hasSecurityQuestion = false
-    //   accountSafe.hasFundPassword = false
-    //   accountSafe.hasFundPassword = false
-    // }
     if (_(this.options.sidebar).isArray()) {
       sidebar = _(this.options.sidebar).map(this.formatSidebar.bind(this))
     } else {
@@ -37,7 +30,6 @@ const SidebarView = Base.ItemView.extend({
       dividendStatus: acctInfo.dividendStatus,
       userName: acctInfo.username,
       img: avatarCfg.get(_.isNull(acctInfo.headIcon) ? _.random(1, 21) : Number(acctInfo.headIcon)).logo,
-      // accountSafe,
     }
   },
   onRender() {

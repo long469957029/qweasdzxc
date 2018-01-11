@@ -2,6 +2,8 @@ import './index.scss'
 
 import couponConfig from './couponConfig'
 
+require('mallCenter/couponCenter/index.scss')
+
 const CouponView = Base.ItemView.extend({
 
   template: require('./index.html'),

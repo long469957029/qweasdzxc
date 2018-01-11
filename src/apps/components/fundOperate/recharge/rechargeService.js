@@ -45,7 +45,7 @@ module.exports = {
   },
   // 计算手续费，到账金额
   getFee(amount, feeChargeAmount, feeLimit, maxFeeLimit, type) {
-    let fare = Number(amount) > feeChargeAmount ? _(amount).chain().formatMul(feeLimit).formatDiv(100, { fixed: 4 })
+    let fare = Number(amount) > feeChargeAmount ? _(amount).chain().formatMul(feeLimit).formatDiv(100, {fixed: 4})
       .value() : 0
 
     if (fare >= maxFeeLimit) {
@@ -99,11 +99,11 @@ module.exports = {
   },
   // 处理手续费数据
   doFeeData(payInfo) {
-    let minAmount = _(payInfo.minMoneyLimit).convert2yuan({ fixed: 0 })
-    let maxAmount = _(payInfo.maxMoneyLimit).convert2yuan({ fixed: 0 })
-    const maxFeeLimit = _(payInfo.maxFeeLimit).convert2yuan({ fixed: 0 })
+    let minAmount = _(payInfo.minMoneyLimit).convert2yuan({fixed: 0})
+    let maxAmount = _(payInfo.maxMoneyLimit).convert2yuan({fixed: 0})
+    const maxFeeLimit = _(payInfo.maxFeeLimit).convert2yuan({fixed: 0})
     const feeLimit = parseFloat(payInfo.feeLimit) / 100
-    const feeChargeAmount = _(payInfo.feeChargeAmount).convert2yuan({ fixed: 0 })
+    const feeChargeAmount = _(payInfo.feeChargeAmount).convert2yuan({fixed: 0})
     if (minAmount === 0) {
       minAmount = 1
     }
@@ -122,7 +122,6 @@ module.exports = {
   getPaymentTypeList(type, data) {
     const selected = []
     const items = []
-
     // 取已选中的支付方式信息并赋值
     const selectedData = _(data).findWhere({
       paymentType: type,
