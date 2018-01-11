@@ -186,16 +186,16 @@ const ReportManageView = SearchGrid.extend({
     let status = ''
     const operation = [
       [
-        `<a class="btn btn-link router" href="#ac/am?operationStatus=2&agreeId=${rowInfo.agreeId}&username=${rowInfo.username}">查看</a>`,
+        `<a class="btn btn-link router" href="#/ac/sum/am?operationStatus=2&agreeId=${rowInfo.agreeId}&username=${rowInfo.username}">查看</a>`,
       ],
       [
-        `<a class="btn btn-link router" href="#ac/am?operationStatus=2&agreeId=${rowInfo.agreeId}&username=${rowInfo.username}">查看</a>`,
-        `<a class="btn btn-link router" href="#ac/am?operationStatus=1&agreeId=${rowInfo.agreeId}&username=${rowInfo.username}">修改</a>`,
+        `<a class="btn btn-link router" href="#/ac/sum/am?operationStatus=2&agreeId=${rowInfo.agreeId}&username=${rowInfo.username}">查看</a>`,
+        `<a class="btn btn-link router" href="#/ac/sum/am?operationStatus=1&agreeId=${rowInfo.agreeId}&username=${rowInfo.username}">修改</a>`,
         `<a class="btn btn-link js-ac-dm-um-break" href="javascript:void(0);" data-agreeId="${rowInfo.agreeId}" data-userId="${rowInfo.userId}" data-username="${rowInfo.username}">解约</a>`,
       ],
       [
-        `<a class="btn btn-link router" href="#ac/am?operationStatus=2&agreeId=${rowInfo.agreeId}&username=${rowInfo.username}">查看</a>`,
-        `<a class="btn btn-link router" href="#ac/am?operationStatus=1&agreeId=${rowInfo.agreeId}&username=${rowInfo.username}">重新签约</a>`,
+        `<a class="btn btn-link router" href="#/ac/sum/am?operationStatus=2&agreeId=${rowInfo.agreeId}&username=${rowInfo.username}">查看</a>`,
+        `<a class="btn btn-link router" href="#/ac/sum/am?operationStatus=1&agreeId=${rowInfo.agreeId}&username=${rowInfo.username}">重新签约</a>`,
         // '<a class="btn btn-link js-ac-dm-um-del " href="javascript:void(0);" data-agreeId="'+rowInfo.agreeId+'" data-userId="'+ rowInfo.userId +'" data-username="'+rowInfo.username+'">删除</a>'
       ],
     ]

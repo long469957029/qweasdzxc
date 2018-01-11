@@ -425,10 +425,13 @@ const MoneyTransferView = Base.ItemView.extend({
         })
         .done((res) => {
           if (res && res.result === 0) {
-            Global.ui.notification.show('转账成功。', {
+            Global.ui.notification.show('<div class="m-bottom-lg">转账成功!</div>', {
               type: 'success',
               hasFooter: false,
               displayTime: 1000,
+              size: 'modal-xs',
+              bodyClass: 'no-border no-padding',
+              closeBtn: false,
             })
             self.render()
           } else if (_(res.root).isNumber()) {

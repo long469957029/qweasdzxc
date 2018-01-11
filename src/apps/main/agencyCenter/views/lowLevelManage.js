@@ -229,11 +229,11 @@ const LowLevelManageView = SearchGrid.extend({
         } else if (res && res.result === 1) {
           // 未设置则弹出链接到资金密码设置页面的提示框
           $(document).securityTip({
-            content: '请补充完您的安全信息后再转账',
             showMoneyPwd: true,
             hasMoneyPwd: false,
             showBankCard: false,
             hasBankCard: false,
+            content: '资金密码未设置，请先设置资金密码后再转账',
           })
           // self.$('.js-uc-cm-fundPwdSetNotice').removeClass('hidden');
           // self.$el.removeClass('hidden');
