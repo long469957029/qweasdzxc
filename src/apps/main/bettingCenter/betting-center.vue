@@ -1,6 +1,6 @@
 <template>
   <div id="js-bc-main" class="bc-main">
-    <betting-quick-nav :ticket-list="ticketList"></betting-quick-nav>
+    <betting-quick-nav :ticket-list="ticketList" :ticket-id="ticketId"></betting-quick-nav>
     <ticket-info-banner :ticket-info="ticketInfo" :betting-type="bettingType"></ticket-info-banner>
     <betting-main-area-handicap :ticket-info="ticketInfo" :ticket-id="ticketId" v-if="bettingType === '2'"></betting-main-area-handicap>
     <betting-main-area :ticket-info="ticketInfo" :ticket-id="ticketId" v-else></betting-main-area>
@@ -23,9 +23,12 @@
       BettingMainAreaHandicap,
     },
 
+    props: {
+      ticketId: Number,
+    },
+
     data() {
       return {
-        ticketId: 0,
         bettingType: 1,
         ticketInfo: {},
         ticketList: ticketConfig.getCompleteAll(),
@@ -35,12 +38,13 @@
       '$route':{
         handler(to) {
 
-          this.ticketId = Number(to.params.ticketId)
+          this.ticketId = Number(this.ticketId)
           this.bettingType = to.params.type
           this.ticketInfo = ticketConfig.getComplete(this.ticketId)
 
           // 暂时在这重置bettingChoice
           this.$store.commit(types.RESET_BETTING_CHOICE)
+          this.$store.commit(types.CHECKOUT_TICKET_INFO)
 
           // 取得当前彩票信息
           this.$store.dispatch('getTicketInfo', {

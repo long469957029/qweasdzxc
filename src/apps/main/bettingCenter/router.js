@@ -15,11 +15,17 @@ export default [
   },
   {
     path: '/bc/:ticketId',
-    component: BettingCenter
+    component: BettingCenter,
+    props: (route) => ({
+      ticketId: Number(route.params.ticketId)
+    }),
   },
   {
     path: '/bc/:ticketId/:type',
-    component: BettingCenter
+    component: BettingCenter,
+    props: (route) => ({
+      ticketId: Number(route.params.ticketId)
+    }),
   },
   {
     path: '/bc/betting/detail/:betId',

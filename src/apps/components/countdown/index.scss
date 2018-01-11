@@ -20,7 +20,9 @@
 .countdown-colon {
   font-size: 30px;
   line-height: 30px;
-  font-weight: bold;
+  position: relative;
+  top: 5px;
+  //font-weight: bold;
 }
 
 .countdown-red-colon {
@@ -52,9 +54,9 @@
     background: #202020;
     color: #f8f8f8;
     display: block;
-    font-family: din, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
+    font-family: dokchamp, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
     font-size: 40px;
-    line-height: 45px;
+    line-height: 48px;
     overflow: hidden;
     position: absolute;
     text-align: center;

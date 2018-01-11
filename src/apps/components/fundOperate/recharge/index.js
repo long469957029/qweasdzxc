@@ -59,6 +59,9 @@ const RechargeView = Base.ItemView.extend({
   },
   // 获取上次采用的支付方式,初始化面板
   initPaymentData(type, data) {
+    if (type === null) {
+      type = 1
+    }
     // 1.初始化支付列表
     const paymentData = rechargeService.getPaymentTypeList(type, data)
     // 初始化已选中框
@@ -201,7 +204,7 @@ const RechargeView = Base.ItemView.extend({
     this.render()
   },
   slide(conInnerConWidth, index) {
-    this.$('.jc-fc-rc-maskCon').animate({ marginLeft: `${-index * conInnerConWidth}px` })
+    this.$('.jc-fc-rc-maskCon').animate({marginLeft: `${-index * conInnerConWidth}px`})
     this.cur = index
   },
   // 选择快捷金额事件

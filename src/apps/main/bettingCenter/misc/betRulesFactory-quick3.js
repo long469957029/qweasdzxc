@@ -4,10 +4,8 @@ const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
 const six = ['1', '2', '3', '4', '5', '6']
 
-const trebleSameTongxuan = ['三同号通选']
 const trebleDanxuan = ['111', '222', '333', '444', '555', '666']
 
-const trebleSerialTongxuan = ['三连号通选']
 
 const doubleFuxuan = ['11', '22', '33', '44', '55', '66']
 
@@ -61,8 +59,10 @@ function _create(ticketId) {
   factory.addRule([ticketId, '240151'], {
     algorithm: algorithm.addAll,
     list: factory.createList(['无'], {
-      items: ['0'],
-      showItems: trebleSameTongxuan,
+      items: [{
+        title: '三同号通选',
+        num: 0
+      }],
       operate: 'clear',
     }),
     topOp: 'none',
@@ -145,8 +145,10 @@ function _create(ticketId) {
   factory.addRule([ticketId, '260151'], {
     algorithm: algorithm.addAll,
     list: factory.createList(['无'], {
-      items: ['0'],
-      showItems: trebleSerialTongxuan,
+      items: [{
+        title: '三连号通选',
+        num: 0
+      }],
       operate: 'clear',
       limits: [
         {
@@ -193,8 +195,32 @@ function _create(ticketId) {
     list: factory.createList([
       {
         title: '二同号',
-        items: six,
-        showItems: doubleFuxuan,
+        items: [
+          {
+            title: '11',
+            num: '1'
+          },
+          {
+            title: '22',
+            num: '2'
+          },
+          {
+            title: '33',
+            num: '3'
+          },
+          {
+            title: '44',
+            num: '4'
+          },
+          {
+            title: '55',
+            num: '5'
+          },
+          {
+            title: '66',
+            num: '6'
+          },
+        ],
         operate: 'clear',
         limits: [
           { name: 'conflict-y' },
@@ -204,7 +230,6 @@ function _create(ticketId) {
       {
         title: '不同号',
         items: six,
-        showItems: six,
         operate: 'clear',
         limits: [{ name: 'conflict-y' }],
       },

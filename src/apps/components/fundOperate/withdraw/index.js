@@ -44,8 +44,17 @@ const WithdrawView = Base.ItemView.extend({
       .done((res) => {
         const data = res && res.root || {}
         if (res && res.result === 0) {
-          self.initWithdrawData(data)
-          self.withdrawData = data
+          if (!(res.root.hasBankCard && res.root.hasMoneyPwd)) {
+            this.$('.jc-wd-set-tips-text').html(withdrawService.getPreWithdrawTips(res.root))
+            this.$('.js-fc-wd-set-view').removeClass('hidden')
+            this.$('.js-fc-wd-operate-view').addClass('hidden')
+            if (res.root.hasBankCard && !res.root.hasMoneyPwd) {
+              this.$('.js-wd-goTo-fundPwd').addClass('hidden')
+            }
+          } else {
+            self.initWithdrawData(data)
+            self.withdrawData = data
+          }
         } else {
           Global.ui.notification.show('服务器异常')
         }
@@ -113,7 +122,7 @@ const WithdrawView = Base.ItemView.extend({
         '<span class="parsley-error-text">资金密码不能为空</span><div>')
       return false
     }
-    const data = { payPwd, type: '1' }
+    const data = {payPwd, type: '1'}
     self.verifyPayPwdXhr(data)
       .done((res) => {
         if (res.result === 0) {
@@ -190,7 +199,7 @@ const WithdrawView = Base.ItemView.extend({
     this.render()
   },
   slide(conInnerConWidth, index) {
-    this.$('.jc-wd-maskCon').animate({ marginLeft: `${-index * conInnerConWidth}px` })
+    this.$('.jc-wd-maskCon').animate({marginLeft: `${-index * conInnerConWidth}px`})
     this.cur = index
   },
   // 银行列表列表下拉事件

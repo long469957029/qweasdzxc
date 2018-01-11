@@ -41,7 +41,12 @@
     <div class="wrapper-main">
       <div id="main" class="main-container clearfix"></div>
       <div id="main-vue" class="main-container clearfix">
-        <router-view></router-view>
+        <transition mode="out-in"
+                    enter-active-class="animated-quick fadeIn"
+                    leave-active-class="animated-quick fadeOut"
+        >
+          <router-view></router-view>
+        </transition>
       </div>
     </div>
     <div class="main-right">

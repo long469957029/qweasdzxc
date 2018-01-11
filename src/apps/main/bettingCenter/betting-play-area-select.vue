@@ -55,8 +55,8 @@
                   <div class="bc-select-item" v-for="(item, itemIndex) in fRule.row.fItems" v-if="!fRule.row.page || (itemIndex < n * fRule.row.page && itemIndex >= (n - 1) * fRule.row.page)">
                   <span class="cbutton cbutton--effect-novak tab" @click="selectNumber(item, fRule.row)"
                         :class="[fRule.limit, {active: item.selected, clearfix: playRule.style.row !== 1 && Math.ceil(fRule.row.fItem / itemIndex) === playRule.style.row}]">
-                    <span v-if="!fRule.row.doubleNum">{{item.showNum}}</span>
-                    <span v-else>{{item.showNum[0]}}<i class="num-split"></i>{{item.showNum[1]}}</span>
+                    <span v-if="!fRule.row.doubleNum">{{item.title}}</span>
+                    <span v-else>{{item.title[0]}}<i class="num-split"></i>{{item.title[1]}}</span>
                   </span>
                     <transition
                       name="custom-classes-transition"
@@ -141,10 +141,11 @@
         return _(this.playRule.list).map((RuleItem) => {
           let fItems
           RuleItem.hasOp = _([RuleItem.op.all, RuleItem.op.big, RuleItem.op.small, RuleItem.op.odd, RuleItem.op.even, RuleItem.op.clear]).some()
-          fItems = _(RuleItem.items).map((item, index) => {
+          fItems = _(RuleItem.items).map((item) => {
             return {
-              num: item,
-              showNum: RuleItem.showItems[index],
+              title: _.isObject(item) ? item.title : item,
+              num: _.isObject(item) ? item.num : item,
+              // showNum: ,
               selected: false
             }
           });
@@ -262,7 +263,6 @@
                 selectOptionals: result.selectOptionals,
                 statistics: result.statistics,
                 format: this.type,
-                formatToNum: this.formatToNum || false, // PK10大小单双文字数字转换标示
               },
               options: {
                 type
@@ -275,7 +275,6 @@
               lotteryList: this.lotteryList,
               selectOptionals: this.selectOptionals,
               format: this.type,
-              formatToNum: this.formatToNum || false, // PK10大小单双文字数字转换标示
             },
             options: {
               type
@@ -313,7 +312,7 @@
           let selected = []
 
           if (item.isShow) {
-            selected = _.chain(this.formattedRuleList[item.id].row.fItems).where({selected: true}).pluck('num').value()
+            selected = _.chain(this.formattedRuleList[item.id].row.fItems).where({selected: true}).value()
           }
 
           return selected

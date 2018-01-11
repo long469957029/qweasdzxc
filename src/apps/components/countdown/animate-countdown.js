@@ -1,4 +1,4 @@
-
+import './index.scss'
 
 const Countdown = Base.PrefabView.extend({
 
