@@ -575,6 +575,7 @@ $icon-block: (
 
 //modal
 $modals: (
+  xs: 230px,
   sm: 380px,
   lg: 825px
 );
@@ -689,11 +690,11 @@ $text-circle-sizes: (
   ),
   md: (
     width: 40px,
-    font-size: $font-jb
+    font-size: 30px
   ),
   lg: (
     width: 55px,
-    font-size: $font-jb
+    font-size: 50px
   )
 );
 

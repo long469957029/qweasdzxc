@@ -329,16 +329,17 @@ export default [
     },
   },
   {
-    path: '/ac/am',
+    path: '/ac/sum/am',
     component: function(resolve) {
       const username = _.getUrlParam('username')
 
       RouterController.async(resolve, SignUserView, {
         main: {
           title: `${username}的分红协议`,
+          subReturn: true,
         },
         sidebar,
-        parentRouter: 'ac/dm',
+        parentRouter: 'ac/sum',
       })
     },
   },

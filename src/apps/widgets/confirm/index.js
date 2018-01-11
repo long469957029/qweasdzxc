@@ -22,7 +22,7 @@ $.widget('gl.confirm', {
 
     this.uuid = this.options.id || `confirm-${_.now()}`
     const body = []
-    let footer = `${'<div class="text-center control-confirm-special m-top-md">' +
+    let footer = this.options.footer ? this.options.footer : `${'<div class="text-center control-confirm-special m-top-md">' +
     '<button type="button" class="btn btn-left confirm-agree" data-loading-text="保存中">'}${this.options.btnLeftText}</button>` +
     `<button type="button" class="btn btn-link btn-right confirm-reject" data-dismiss="modal">${this.options.btnRightText}</button></div>`
 

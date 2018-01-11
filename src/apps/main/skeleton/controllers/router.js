@@ -13,7 +13,11 @@ export default {
       params = {}
     }
     viewPromise().then((view) => {
-      this.changeMainReginView(view.default ? new view.default(params) :  new view(params), config)
+      if (config.parentRouter) {
+        this.changeSubReginView(view.default ? new view.default(params) :  new view(params), config)
+      } else {
+        this.changeMainReginView(view.default ? new view.default(params) :  new view(params), config)
+      }
       // resolve()
     })
   },

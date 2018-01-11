@@ -1,5 +1,5 @@
 import ticketConfig from 'skeleton/misc/ticketConfig'
-import betting from '../../api/betting'
+import betting from '../../../api/betting'
 
 const initState = () => {
   return {
@@ -491,7 +491,8 @@ const formatBettingNumber = (bettingNumber, options) => {
   }
 
   if (bettingNumber.length === 1) {
-    number += bettingNumber[0].join(',')
+    // bettingNumber[0][options.type === 'display' ? 'title' : 'num']
+    number += _.pluck(bettingNumber[0], options.type === 'display' ? 'title' : 'num').join(',')
   } else {
     number += _(bettingNumber).map((row) => {
       if (_.isEmpty(row)) {
@@ -500,16 +501,16 @@ const formatBettingNumber = (bettingNumber, options) => {
 
       // 如果有值，则用该符号隔开number
       if (options.format) {
-        return row.join(options.format.symbol)
+        return _.pluck(row, options.type === 'display' ? 'title' : 'num').join(options.format.symbol)
       }
       // 同行是否用空格隔开
-      return row.join(options.type === 'display' ? '' : ' ')
+      return _.pluck(row, options.type === 'display' ? 'title' : 'num').join(options.type === 'display' ? '' : ' ')
     }).join(',')
   }
 
-  if (options.formatToNum) {
-    number = _formatToNum(number, options)
-  }
+  // if (options.formatToNum) {
+  //   number = _formatToNum(number, options)
+  // }
 
   return number
 }

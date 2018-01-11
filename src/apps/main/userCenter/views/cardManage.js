@@ -201,8 +201,8 @@ const CardManageView = Base.ItemView.extend({
   bingBankCardHandler() {
     const self = this
     const size = this.$('.js-uc-cmCardNum').val()
-    if (size && Number(size) === 0) {
-      if (this.hasBeenVerified) {
+    if (size !== '' && Number(size) === 0) {
+      if (!this.hasBeenVerified) {
         // 判断是否设置资金密码
         this.checkPayPwdXhr()
           .done((res) => {

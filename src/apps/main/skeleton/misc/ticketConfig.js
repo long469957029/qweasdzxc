@@ -113,6 +113,7 @@ const threeDConfig = [
   //  badge: 'hot'
   // },
 ]
+
 const p5p3Config = [
   Object.assign({
     id: 7,
@@ -196,7 +197,15 @@ const lowConfig = {
   list: threeDConfig.concat(p5p3Config).concat(handicapMark6Config),
 }
 
-const allConfig = sscConfig.list.concat(oneFiveConfig.list, lowConfig.list, happyConfig.list, quickConfig.list)
+const allConfig = sscConfig.list.concat(
+  oneFiveConfig.list,
+  lowConfig.list,
+  happyConfig.list,
+  quickConfig.list,
+  handicapMark6Config,
+  handicapSscConfig,
+  handicapPk10Config,
+)
 
 const completeAllConfig = [sscConfig, oneFiveConfig, lowConfig, happyConfig, quickConfig]
 

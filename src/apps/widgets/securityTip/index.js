@@ -1,7 +1,7 @@
 
 
-const bankCard = require('./bankCard.png')
-const fundPwd = require('./fundPwd.png')
+// const bankCard = require('./bankCard.png')
+// const fundPwd = require('./fundPwd.png')
 
 $.widget('gl.securityTip', {
 
@@ -23,24 +23,25 @@ $.widget('gl.securityTip', {
     const self = this
 
     const body = []
-    body.push(`<div class="text-center fc-security-notice-div ${this.options.customizeClass}">`)
-    body.push(`<div class="m-bottom-md font-md fc-security-notice-content">${this.options.content}</div>`)
+    body.push(`<div class="text-left ${this.options.customizeClass}">`)
     body.push('<div class="fc-security-notice-link">')
-
+    let footer = ''
     if (this.options.showMoneyPwd) {
-      body.push(`<div class="security-notice-type-div"><div class="security-notice-img"><img src="${fundPwd}"/></div>`)
+      body.push('<div class="security-notice-type-div">')
       let fundPasswordHmtl = '<span class="security-notice-span text-left">资金密码已设置完毕</span>'
       if (!this.options.hasMoneyPwd) {
-        fundPasswordHmtl = '<span class="security-notice-span text-left">资金密码未设置</span><a class="js-fc-aHref btn-link text-pleasant" href="#as/pf" >点击设置</a>'
+        fundPasswordHmtl = `<span class="security-notice-span text-left">${this.options.content ? this.options.content : '资金密码未设置，请先设置资金密码'}</span>`
+        footer = '<a class="js-fc-aHref btn btn-cool btn-lg m-TB-smd font-sm" href="#/uc/pl">点击设置</a>'
       }
       body.push(`${fundPasswordHmtl}</div>`)
     }
 
     if (this.options.showBankCard) {
-      body.push(`<div class="security-notice-type-div"><div class="security-notice-img"><img src="${bankCard}"/></div>`)
+      body.push('<div class="security-notice-type-div">')
       let bankCardHtml = '<span class="security-notice-span text-left">银行卡已绑定</span>'
       if (!this.options.hasBankCard) {
-        bankCardHtml = '<span class="security-notice-span text-left">银行卡未绑定</span><a class="js-fc-aHref  btn-link text-pleasant " href="#uc/cm" >点击绑定</a>'
+        bankCardHtml = `<span class="security-notice-span text-left">${this.options.content ? this.options.content : '您尚未绑定银行卡，请先绑定银行卡'}</span>`
+        footer = '<a class="js-fc-aHref btn btn-cool btn-lg m-TB-smd font-sm" href="#/uc/cm">点击设置</a>'
       }
       body.push(`${bankCardHtml}</div>`)
     }
@@ -49,7 +50,8 @@ $.widget('gl.securityTip', {
       body.push('<div class="security-notice-type-div">')
       let securityHtml = '<span class="security-notice-span text-left">安全问题已绑定</span>'
       if (!this.options.hasSecurity) {
-        securityHtml = '<span class="security-notice-span text-left">安全问题未设置</span><a class="js-fc-aHref  btn-link text-pleasant router" data-dismiss="modal" href="#as/sq" >点击绑定</a>'
+        securityHtml = `<span class="security-notice-span text-left">${this.options.content ? this.options.content : '您尚未设置安全问题，请先设置密保问题'}</span>`
+        footer = '<a class="js-fc-aHref btn btn-cool btn-lg m-TB-smd font-sm" href="#/uc/pl">点击设置</a>'
       }
       body.push(`${securityHtml}</div>`)
     }
@@ -62,17 +64,17 @@ $.widget('gl.securityTip', {
     if (this.options.body) {
       this.options.body.html(body.join(''))
     } else {
-      this.$dialog = Global.ui.dialog.show({
+      $(document).confirm({
         id: this.uuid,
-        title: this.options.title,
-        size: '',
-        body: body.join(''),
+        title: '温馨提示',
+        content: body.join(''),
+        footer,
+        // btnLeftText: '点击设置',
+        // btnRightText: '',
       })
-
-      this.$dialog.on('hidden.bs.modal', function (e) {
-        $(this).remove()
-        self.destroy()
-      })
+        .on('hidden.modal', function() {
+          self.destroy()
+        })
     }
 
     this._bindEvents()
@@ -84,10 +86,8 @@ $.widget('gl.securityTip', {
     })
   },
 
-  changeHrefHandler(e) {
-    if (this.$dialog) {
-      this.$dialog.modal('hide')
-    }
+  changeHrefHandler() {
+    Global.ui.dialog.hide(this.uuid)
   },
 
   show() {

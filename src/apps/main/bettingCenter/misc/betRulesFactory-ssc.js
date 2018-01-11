@@ -2,8 +2,38 @@ import factory from 'bettingCenter/misc/betRulesFactory'
 
 const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
-const danshuang = ['大', '小', '单', '双']
-const longhu = ['龙', '虎', '和']
+const danshuang = [
+  {
+    title: '大',
+    num: 1
+  },
+  {
+    title: '小',
+    num: 2
+  },
+  {
+    title: '单',
+    num: 3
+  },
+  {
+    title: '双',
+    num: 4
+  },
+]
+const longhu = [
+  {
+    title: '龙',
+    num: 0
+  },
+  {
+    title: '虎',
+    num: 1
+  },
+  {
+    title: '和',
+    num: 1
+  }
+]
 
 function _create(ticketId) {
   //= =================================================
@@ -1000,7 +1030,6 @@ function _create(ticketId) {
       operate: 'none',
     }),
     format: { symbol: ' ' },
-    formatToNum: true,
     analysis: false,
     create: algorithm.getCreateFunc(2, {
       range: danshuang,
@@ -1016,7 +1045,6 @@ function _create(ticketId) {
       operate: 'none',
     }),
     format: { symbol: ' ' },
-    formatToNum: true,
     analysis: false,
     create: algorithm.getCreateFunc(3, {
       range: danshuang,
@@ -1032,7 +1060,6 @@ function _create(ticketId) {
       operate: 'none',
     }),
     format: { symbol: ' ' },
-    formatToNum: true,
     analysis: false,
     create: algorithm.getCreateFunc(2, {
       range: danshuang,
@@ -1047,7 +1074,6 @@ function _create(ticketId) {
       operate: 'none',
     }),
     format: { symbol: ' ' },
-    formatToNum: true,
     analysis: false,
     create: algorithm.getCreateFunc(3, {
       range: danshuang,
@@ -1122,7 +1148,6 @@ function _create(ticketId) {
       position: 'center',
     },
     format: { symbol: ' ' },
-    formatToNum: true,
     analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
@@ -1143,7 +1168,6 @@ function _create(ticketId) {
       position: 'center',
     },
     format: { symbol: ' ' },
-    formatToNum: true,
     analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
@@ -1164,7 +1188,6 @@ function _create(ticketId) {
       position: 'center',
     },
     format: { symbol: ' ' },
-    formatToNum: true,
     analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
@@ -1185,7 +1208,6 @@ function _create(ticketId) {
       position: 'center',
     },
     format: { symbol: ' ' },
-    formatToNum: true,
     analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
@@ -1207,7 +1229,6 @@ function _create(ticketId) {
     },
     analysis: false,
     format: { symbol: ' ' },
-    formatToNum: true,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,
@@ -1228,7 +1249,6 @@ function _create(ticketId) {
     },
     analysis: false,
     format: { symbol: ' ' },
-    formatToNum: true,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,
@@ -1249,7 +1269,6 @@ function _create(ticketId) {
     },
     analysis: false,
     format: { symbol: ' ' },
-    formatToNum: true,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,
@@ -1270,7 +1289,6 @@ function _create(ticketId) {
     },
     analysis: false,
     format: { symbol: ' ' },
-    formatToNum: true,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,
@@ -1291,7 +1309,6 @@ function _create(ticketId) {
     },
     analysis: false,
     format: { symbol: ' ' },
-    formatToNum: true,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,
@@ -1312,7 +1329,6 @@ function _create(ticketId) {
     },
     analysis: false,
     format: { symbol: ' ' },
-    formatToNum: true,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,

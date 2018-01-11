@@ -4,8 +4,34 @@ const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
 const ten = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
 
-const danshuang = ['大', '小', '单', '双']
-const longhu = ['龙', '虎']
+const danshuang = [
+  {
+    title: '大',
+    num: 1
+  },
+  {
+    title: '小',
+    num: 2
+  },
+  {
+    title: '单',
+    num: 3
+  },
+  {
+    title: '双',
+    num: 4
+  },
+  ]
+const longhu = [
+  {
+    title: '龙',
+    num: 0
+  },
+  {
+    title: '虎',
+    num: 1
+  }
+]
 
 const splitReg = /[\r\n,;:\|]+/
 
@@ -200,9 +226,8 @@ function _create(ticketId) {
 
   // =========================
   // 龙虎
-  factory.addRule([ticketId, '660151'], {
+  factory.addRule([ticketId, '160101'], {
     formType: 'DRAGON',
-    keyPosition: ['万位', '千位', null, null, null],
     algorithm: algorithm.addAll,
     list: factory.createList(['无'], {
       items: longhu,
@@ -213,13 +238,92 @@ function _create(ticketId) {
       position: 'center',
     },
     format: { symbol: ' ' },
-    formatToNum: true,
     analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,
     }),
   })
+
+  factory.addRule([ticketId, '160102'], {
+    formType: 'DRAGON',
+    algorithm: algorithm.addAll,
+    list: factory.createList(['无'], {
+      items: longhu,
+      operate: 'none',
+    }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
+    format: { symbol: ' ' },
+    analysis: false,
+    create: algorithm.getCreateFunc(1, {
+      range: longhu,
+      matching: true,
+    }),
+  })
+
+
+  factory.addRule([ticketId, '160103'], {
+    formType: 'DRAGON',
+    algorithm: algorithm.addAll,
+    list: factory.createList(['无'], {
+      items: longhu,
+      operate: 'none',
+    }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
+    format: { symbol: ' ' },
+    analysis: false,
+    create: algorithm.getCreateFunc(1, {
+      range: longhu,
+      matching: true,
+    }),
+  })
+
+
+  factory.addRule([ticketId, '160104'], {
+    formType: 'DRAGON',
+    algorithm: algorithm.addAll,
+    list: factory.createList(['无'], {
+      items: longhu,
+      operate: 'none',
+    }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
+    format: { symbol: ' ' },
+    analysis: false,
+    create: algorithm.getCreateFunc(1, {
+      range: longhu,
+      matching: true,
+    }),
+  })
+
+
+  factory.addRule([ticketId, '160105'], {
+    formType: 'DRAGON',
+    algorithm: algorithm.addAll,
+    list: factory.createList(['无'], {
+      items: longhu,
+      operate: 'none',
+    }),
+    style: {
+      numType: 'longhu',
+      position: 'center',
+    },
+    format: { symbol: ' ' },
+    analysis: false,
+    create: algorithm.getCreateFunc(1, {
+      range: longhu,
+      matching: true,
+    }),
+  })
+
 
 
   // =========================

@@ -105,7 +105,7 @@
   overflow: hidden;
   position: relative;
   //background-color: $def-white-color;
-  min-height: 200px;
+  //min-height: 200px;
 }
 
 .modal-bet {
@@ -128,6 +128,7 @@
   //padding: 10px;
   //border-bottom: 1px solid $new-main-dark-color;
   padding: 37px 36px 0px 36px;
+  background-color: $def-white-color;
   &.margin-big{
     padding: 50px 45px 0px 45px;
   }
