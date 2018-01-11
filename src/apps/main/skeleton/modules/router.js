@@ -43,11 +43,12 @@ const RouterModule = Base.Module.extend({
   },
 
   goTo(hash) {
-    Global.appRouter.navigate(_(hash).addHrefArgs({
-      _t: _.now(),
-    }), { trigger: true, replace: false })
+    // Global.appRouter.navigate(_(hash).addHrefArgs({
+    //   _t: _.now(),
+    // }), { trigger: true, replace: false })
+    window.location.hash = `#/${hash}`
 
-    Global.appRouter.navigate(hash, { trigger: false, replace: true })
+    // Global.appRouter.navigate(hash, { trigger: false, replace: true })
   },
 
   back() {
@@ -76,10 +77,6 @@ const RouterModule = Base.Module.extend({
     } else {
       Global.appRouter.navigate('#', { trigger: true, replace: false })
     }
-  },
-
-  close() {
-
   },
 })
 
