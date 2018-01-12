@@ -160,6 +160,7 @@ export default [
       }, {
         main: {
           title: '奖金详情',
+          subReturn: true,
         },
         parentRouter: 'ac/oam',
       })
