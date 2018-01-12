@@ -1,6 +1,6 @@
 import HeaderView from 'skeleton/bases/header'
 import NavbarView from 'skeleton/bases/navbar'
-import NoticeView from 'skeleton/bases/notice'
+// import NoticeView from 'skeleton/bases/notice'
 import FooterView from 'skeleton/bases/footer'
 import ToolbarView from 'skeleton/bases/toolbar'
 
@@ -25,7 +25,7 @@ App.on('start', () => {
 App.addRegions({
   headerRegion: '#header',
   navbarRegin: '#navbar',
-  noticeRegin: '#notice',
+  // noticeRegin: '#notice',
   toolbarRegin: '#toolbar',
   mainRegin: '#main',
   newbieRegin: '#newbie',
@@ -254,7 +254,7 @@ App.addInitializer(() => {
 
   App.toolbarRegin.show(new ToolbarView())
 
-  App.noticeRegin.show(new NoticeView())
+  // App.noticeRegin.show(new NoticeView())
   Global.newbieActivity.checkLogin()
 
   App.footerRegin.show(new FooterView())
