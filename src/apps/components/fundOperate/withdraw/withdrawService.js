@@ -94,17 +94,17 @@ module.exports = {
       minInput: minFee,
     }
   },
-  getPreWithdrawTips(result) {
+  getPreWithdrawTips(hasBankCard, hasMoneyPwd) {
     const pwdTips = '设置资金密码'
     const cardTips = '绑定提现银行卡'
     let tips = ''
-    if (!result.hasMoneyPwd) {
+    if (!hasMoneyPwd) {
       tips = pwdTips
     }
-    if (!result.hasBankCard) {
+    if (!hasBankCard) {
       tips = cardTips
     }
-    if (!result.hasMoneyPwd && !result.hasBankCard) {
+    if (!hasMoneyPwd && !hasBankCard) {
       tips = pwdTips + '并' + cardTips
     }
     return tips

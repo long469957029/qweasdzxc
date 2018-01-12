@@ -16,6 +16,7 @@ const TransferView = Base.ItemView.extend({
     'click .js-tr-out-item': 'selectFromGameHandler',
     'click .js-tr-in-item': 'selectInGameHandler',
     'click .js-tr-select-quickSet': 'selectQuickSetHandler',
+    'focus .js-fc-tr-change': 'focusInOutStatusHandler',
   },
 
   initialize() {
@@ -67,7 +68,7 @@ const TransferView = Base.ItemView.extend({
     const self = this
     const $from = this.$('.js-tr-out-selectedItem').data('id')
     const $to = this.$('.js-tr-in-selectedItem').data('id')
-    this.getPlatformInfoXhr({ channelId: Number($to) || Number($from) || '1' }).always(() => {
+    this.getPlatformInfoXhr({channelId: Number($to) || Number($from) || '1'}).always(() => {
       this.loadingFinish()
     }).done((res) => {
       if (res.result === 0) {
@@ -201,7 +202,7 @@ const TransferView = Base.ItemView.extend({
       this.$('.js-tr-in-selected').html(toData.toSelected)
       this.$('.js-tr-in-items').html(toData.toItems)
     }
-    this.getPlatformInfoXhr({ channelId: Number(toId) || Number(selectId) || '1' }).done((res) => {
+    this.getPlatformInfoXhr({channelId: Number(toId) || Number(selectId) || '1'}).done((res) => {
       if (res.result === 0) {
         this.renderPlatformTransferTypeLimit()
       }
@@ -238,7 +239,7 @@ const TransferView = Base.ItemView.extend({
       this.$('.js-tr-in-selected').html(toData.toSelected)
       this.$('.js-tr-in-items').html(toData.toItems)
     }
-    this.getPlatformInfoXhr({ channelId: Number(selectId) || Number(fromId) || '1' }).done((res) => {
+    this.getPlatformInfoXhr({channelId: Number(selectId) || Number(fromId) || '1'}).done((res) => {
       if (res.result === 0) {
         this.renderPlatformTransferTypeLimit()
       }
@@ -275,11 +276,17 @@ const TransferView = Base.ItemView.extend({
     }, 1000)
   },
   slide(conInnerConWidth, index) {
-    this.$('.jc-fc-rc-maskCon').animate({ marginLeft: `${-index * conInnerConWidth}px` })
+    this.$('.jc-fc-rc-maskCon').animate({marginLeft: `${-index * conInnerConWidth}px`})
     this.cur = index
+  },
+  focusInOutStatusHandler() {
+    this.$('.js-fc-tr-change').toggleClass('sfa-icon-change', false)
+    this.$('.js-fc-tr-change').toggleClass('sfa-icon-change-Deep', true)
   },
   // 切换转入转出位置
   changeInOutStatusHandler(e) {
+    this.$('.js-fc-tr-change').toggleClass('sfa-icon-change', false)
+    this.$('.js-fc-tr-change').toggleClass('sfa-icon-change-Deep', true)
     if (this.getInOutDataFlag) {
       return
     }
@@ -298,7 +305,7 @@ const TransferView = Base.ItemView.extend({
     const toData = transferService.getToData(fromChannel)
     this.$('.js-tr-in-selected').html(toData.toSelected)
     this.$('.js-tr-in-items').html(toData.toItems)
-    this.getPlatformInfoXhr({ channelId: Number(toChannel) || Number(fromChannel) || '1' }).done((res) => {
+    this.getPlatformInfoXhr({channelId: Number(toChannel) || Number(fromChannel) || '1'}).done((res) => {
       if (res.result === 0) {
         this.renderPlatformTransferTypeLimit()
       }
@@ -323,7 +330,7 @@ const TransferView = Base.ItemView.extend({
       position: 'absolute',
       visibility: 'visible',
       top: parentTop,
-    }).animate({ top: prevItemTop }, option.speed, function () {
+    }).animate({top: prevItemTop}, option.speed, function () {
       $(this).remove()
       parent.insertBefore(prevItem).css('visibility', 'visible')
       // option.callback()
@@ -332,10 +339,12 @@ const TransferView = Base.ItemView.extend({
       position: 'absolute',
       visibility: 'visible',
       top: prevItemTop,
-    }).animate({ top: parentTop }, option.speed, function () {
+    }).animate({top: parentTop}, option.speed, function () {
       $(this).remove()
       prevItem.css('visibility', 'visible')
     })
+    this.$('.js-fc-tr-change').toggleClass('sfa-icon-change', true)
+    this.$('.js-fc-tr-change').toggleClass('sfa-icon-change-Deep', false)
   },
   submitPlatformTransferHandler() {
     if (this.$('.js-tr-tradeNum').val() === '' || Number(this.$('.js-tr-tradeNum').val()) === 0) {

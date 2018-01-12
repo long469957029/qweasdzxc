@@ -153,9 +153,15 @@ const MessageView = Base.ItemView.extend({
   getUserChatDetailXhl(id, type) {
     const self = this
     let data = []
-    data = {
-      userId: id,
-      pageSize: 30,
+    if (id === 'admin') {
+      data = {
+        pageSize: 30,
+      }
+    } else {
+      data = {
+        userId: id,
+        pageSize: 30,
+      }
     }
     this.getUserChatXhr(data)
       .done((res) => {
@@ -178,7 +184,11 @@ const MessageView = Base.ItemView.extend({
             chatUser: id,
             chatData: chatResult,
           }
-          self.$('.js-chat-message-content-panel').html(imService.getChatMessageByDateHtml(this.chatList.chatData, null, res.root.records.length, this.pageIndex, res.root.rowCount))
+          if (id === 'admin') {
+            self.$('.js-chat-admin-content').html(imService.getChatMessageByDateHtml(this.chatList.chatData, null, res.root.records.length, this.pageIndex, res.root.rowCount))
+          } else {
+            self.$('.js-chat-message-content-panel').html(imService.getChatMessageByDateHtml(this.chatList.chatData, null, res.root.records.length, this.pageIndex, res.root.rowCount))
+          }
           // 当点击联系人时将下拉框滚动至最下方
           if (type === 'scroll') {
             this.scrollbarBottomHandler()
@@ -256,7 +266,6 @@ const MessageView = Base.ItemView.extend({
           const afterHeight = $afterDiv[0].scrollHeight
           // 将下拉条滚动至原有加载文字所在处
           $div.scrollTop(afterHeight - beforeHeight)
-
         } else {
           Global.ui.notification.show('未知错误')
         }
@@ -349,6 +358,7 @@ const MessageView = Base.ItemView.extend({
     const gId = $target.data('id')
     this.clearContainerActiveHandle()
     $target.addClass('active')
+    // 初始化数据
     this.messContactSelectedList = []
     this.chatList = []
     this.chatLastRecordId = ''
@@ -480,6 +490,7 @@ const MessageView = Base.ItemView.extend({
   },
   // 点击群发消息查看更多
   showMoreMessHandler() {
+    // 初始化数据
     this.pageIndex += 1
     let data = []
     data = {
@@ -517,8 +528,6 @@ const MessageView = Base.ItemView.extend({
     }
     this.chatLastRecordId = imService.getChatLastRecordId(records)
   },
-
-  // 管理员面板操作
   // 删除近期联系人
   delRecentlyContactHandler(e) {
     let delId = ''
@@ -543,18 +552,25 @@ const MessageView = Base.ItemView.extend({
           Global.ui.notification.show('未知错误')
         }
       })
-    // const $nextActive = this.$('.js-recently-container').find('.js-contact-onePerson')[0]
-    // $nextActive.addClass('active')
   },
+  // 管理员面板操作
   // 显示管理员面板
   contactWithAdminHandler(e) {
     const $target = $(e.currentTarget)
     this.clearContainerActiveHandle()
     $target.addClass('active')
+    // 初始化数据
+    this.chatList = []
+    this.chatLastRecordId = ''
+    this.pageIndex = 0
+    this.activePerson = {
+      type: 'admin',
+      id: 'admin',
+    }
     this.$('.js-content-rightBar').html(this.adminTpl)
     this.checkMassMessageButtonStatus()
-    // 保存当前选择的聊天人
-    this.activePerson = $target.data('id')
+    // 查询管理员记录
+    this.getUserChatDetailXhl('admin', 'scroll')
     // 查询私聊轮询是否还在执行
     if (this.cartPolling) {
       clearInterval(this.cartPolling)
@@ -569,7 +585,7 @@ const MessageView = Base.ItemView.extend({
   // 轮询联系列表信息
   pollingContactInfoHandler() {
     this.contactPolling = setInterval(() => {
-      this.renderGetRecentlyInfoXhr()
+      this.renderGetContactInfoXhr()
     }, 5000)
     this.recentlyPolling = setInterval(() => {
       this.renderGetRecentlyInfoXhr()

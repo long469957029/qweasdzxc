@@ -476,13 +476,6 @@
       }
     }
   }
-  .fc-rc-confirmView-confirm-img {
-    background-image: url('~base/images/v2/icon-comfirm-bg.png');
-    margin-top: 20px;
-    width: 75px;
-    height: 75px;
-    margin-left: 287px;
-  }
   .fc-rc-confirmView-confirm-Tips {
     font-size: 18px;
     color: #666666;
@@ -657,11 +650,7 @@
     height: 150px;
     border-bottom: 1px solid #e6e6e6;
     .fc-rc-rightBar-tips-img {
-      background-image: url("~base/images/v2/icon-tips.png") !important;
-      width: 18px;
-      height: 18px;
       float: left;
-      display: block;
     }
     .fc-rc-rightBar-tips-title {
       color: $def-black-color;
@@ -678,10 +667,6 @@
     margin-top: 15px;
     cursor: pointer;
     .fc-rc-rightBar-ac-img {
-      background-image: url("~base/images/v2/icon-activity.png") !important;
-      width: 18px;
-      height: 13px;
-      display: block;
       padding-bottom: 5px;
       float: left;
     }
@@ -721,15 +706,8 @@
           margin-right: -32px;
           float: right;
           .fc-tr-change-img {
-            width: 19px;
-            height: 19px;
-            display: block;
             margin-top: 28px;
             margin-left: 14px;
-            background: url("~base/images/v2/icon-change.png");
-            &.active, &:hover {
-              background: url('~base/images/v2/icon-change-Deep.png');
-            }
           }
         }
         .fc-tr-out-select {
@@ -908,7 +886,7 @@
               border-bottom: 2px solid $def-gray-color;
               color: #666666;
               width: 85px;
-              margin: 0 16px;
+              margin: 0 15px;
               display: inline-block;
               text-align: center;
               height: 65px;
@@ -957,10 +935,7 @@
       }
     }
     .fc-tr-confirmView-img {
-      background-image: url('~base/images/v2/icon-comfirm-bg.png');
       margin-top: 160px;
-      width: 75px;
-      height: 75px;
       margin-left: 287px;
     }
     .fc-tr-confirmView-Tips {
@@ -1002,13 +977,6 @@
       color: $new-main-deep-color;
     }
   }
-  .fc-rc-confirmView-confirm-img {
-    background-image: url('~base/images/v2/icon-comfirm-bg.png');
-    margin-top: 150px;
-    width: 75px;
-    height: 75px;
-    margin-left: 287px;
-  }
   .fc-rc-confirmView-confirm-Tips {
     font-size: 18px;
     color: #666666;
@@ -1049,16 +1017,13 @@
       height: 595px;
       float: left;
       .fc-wd-set-img {
-        background: url("~base/images/v2/icon-recharge-warning.png");
-        width: 80px;
-        height: 80px;
         margin: 103px 330px 35px 330px;
       }
       .fc-wd-set-tips {
         font-size: 16px;
         color: $def-black-color;
         margin: 0 185px;
-        line-height: 20px;
+        line-height: 25px;
         text-align: center;
       }
       .wd-set-tips-text{
@@ -1197,6 +1162,7 @@
                 outline-width: 0;
               }
             }
+
           }
           .js-wd-fee {
             margin-top: 45px;
@@ -1263,10 +1229,7 @@
     }
   }
   .fc-wd-confirmView-confirm-img {
-    background-image: url('~base/images/v2/icon-comfirm-bg.png');
     margin-top: 110px;
-    width: 75px;
-    height: 75px;
     margin-left: 287px;
   }
   .fc-wd-confirmView-confirm-Tips {
@@ -1303,9 +1266,8 @@
 }
 
 .fc-wd-error-container {
-  margin-top: 25px;
+  margin-top: 10px;
   .parsley-error-line {
-    margin-left: 62px;
     .parsley-error-text {
       margin-left: 3px;
       color: #e84c4c;
@@ -1316,4 +1278,10 @@
   }
 }
 
-
+.fc-tr-error-container{
+  margin-top: 10px;
+  .sfa-error-icon{
+    margin-top: 3px;
+    margin-right: 6px;
+  }
+}

@@ -43,6 +43,7 @@ const RechargeView = Base.ItemView.extend({
           this.paymentList = res.root.paymentList
         }
       })
+
     // 生成充值页广告
     this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
     // 初始化内容滑动效果数据
