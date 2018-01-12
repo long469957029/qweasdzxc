@@ -366,20 +366,20 @@ $popovers: (
 
 $btns: (
   default: (
-    color: $font-color,
-    bg-color: $color-pleasant,
-    border-color: $color-pleasant,
+    color: #ffffff,
+    bg-color: $main-deep-color,
+    border-color: $main-deep-color,
     hover: (
-      color: $font-color,
-      bg-color: $color-pleasant
+      color: #ffffff,
+      bg-color: $new-main-deep-hover-color
     ),
     focus: (
-      color: $font-color,
-      bg-color: $color-pleasant
+      color: #ffffff,
+      bg-color: $new-main-deep-hover-color
     ),
     active: (
-      color: $font-color,
-      bg-color: $color-pleasant
+      color: #ffffff,
+      bg-color: $new-main-deep-hover-color
     )
   ),
   primary: (
@@ -582,10 +582,10 @@ $modals: (
 
 $tables: (
   default: (
-    th-bg-color: $sec-line-color,
+    th-bg-color: $new-main-body-color,
     th-color: $def-black-color,
     td-bg-color: $def-white-color,
-    td-bg-hover-color: $def-white-color,
+    td-bg-hover-color: $new-main-body-color,
     td-color: $inverse-color
   ),
   similar: (

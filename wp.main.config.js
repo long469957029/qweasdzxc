@@ -195,6 +195,7 @@ module.exports = {
       // vue: 'vue/dist/vue.js',
       vue: 'vue/dist/vue.esm.js',
 
+      api: 'apps/api',
       'consts': 'apps/store/consts',
       'mutation-types': 'apps/store/mutation-types',
       StaticGrid: 'com/static-grid/index.vue',

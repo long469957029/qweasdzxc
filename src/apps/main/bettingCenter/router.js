@@ -6,6 +6,14 @@ const BettingDetailView = require('./bettingCenter-detail')
 
 export default [
   {
+    path: '/bc/0/19',
+    component: function() {
+      RouterController.changeMainReginView(new MMCBettingCenterView({
+        ticketId: 19,
+      }))
+    },
+  },
+  {
     path: '/bc/19',
     component: function() {
       RouterController.changeMainReginView(new MMCBettingCenterView({

@@ -125,13 +125,13 @@ const threeDConfig = [
     zhName: '3D分分彩',
     hasMargin: true,
     badge: 'new',
-  }, bettingTypes.CHOOSE15),
+  }, bettingTypes.THREED),
   Object.assign({
     id: 6,
     mark: '3d',
     zhName: '3D',
     hasMargin: true,
-  }, bettingTypes.CHOOSE15),
+  }, bettingTypes.THREED),
   // {
   //  id: 17,
   //  mark: '3d-wfc',
@@ -168,7 +168,7 @@ const quickConfig = [
     mark: 'jsk3',
     zhName: '江苏快三',
     hasMargin: true,
-  })
+  }, bettingTypes.QUICK3)
 ]
 
 const happyConfig = {

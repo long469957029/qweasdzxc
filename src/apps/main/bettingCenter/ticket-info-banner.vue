@@ -54,11 +54,11 @@
       </div>
     </div>
     <div class="bc-entry-list pull-right m-right-md">
-      <a href="#bc/1" class="entry-list-open">
+      <router-link :to="`/analysis/${ticketInfo.info.id}`" target="_blank" class="entry-list-open">
         <!--跳转到历史分析-->
         <span class="sfa sfa-bc-icon-open-num vertical-middle"></span>
         开奖号码
-      </a>
+      </router-link>
       <a :href="'trend.html?ticketId=' + ticketInfo.info.id" target="_blank" class="entry-list-trend">
         <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
         号码走势

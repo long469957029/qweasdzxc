@@ -1,0 +1,411 @@
+<template>
+  <div class="analysis-center clearfix">
+    <div class="top-panel">
+      <span class="sfa sfa-tickets"></span>
+      <span class="ticket-select-title">开奖记录</span>
+      <select v-model="fTicketId" class="ticket-select inline-block">
+        <option v-for="ticket in ticketList" :value="ticket.ticketId">{{ticket.ticketName}}</option>
+      </select>
+
+      <div class="top-right">
+        <div class="btn-toolbar no-margin">
+          <div class="btn-group">
+            <button class="btn btn-lg font-xs m-right-xs" :class="{'btn-white': pageSize !== 100}" @click="selectByPageSize(100)">近100期</button>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-lg font-xs" :class="{'btn-white': date !== _.toDate(Date.now())}" @click="setToday">今天</button>
+          </div>
+        </div>
+        <span class="date-title inline-block">
+          按日期
+        </span>
+        <div class="date-panel timer-calendar-input timer-record-input">
+          <input type="text" ref="date" v-model="date" />
+          <span class="timer-calendar sfa-icon-time"></span>
+        </div>
+      </div>
+    </div>
+    <div class="main">
+      <table class="table table-border table-hover no-margin">
+        <colgroup>
+          <!--期数-->
+          <col width="168">
+          <!--开奖时间-->
+          <col width="168">
+          <!--号码-->
+          <col width="300">
+          <!--总和-->
+          <col width="300" v-if="analysis.total">
+          <!--龙虎-->
+          <col width="167" v-if="analysis.longHu">
+          <!--形态-->
+          <col width="167" v-if="analysis.form">
+        </colgroup>
+        <thead>
+        <tr>
+          <th>期数</th>
+          <th>开奖时间</th>
+          <th v-if="analysis.numCol.num !== 'dices'">
+            <button class="btn num-btn" :class="{'btn-white': showNumType !== 1}" @click="showNumType = 1">号码</button>
+            <button class="btn num-btn m-LR-sm" :class="{'btn-white': showNumType !== 2}" @click="showNumType = 2">大小</button>
+            <button class="btn num-btn" :class="{'btn-white': showNumType !== 3}" @click="showNumType = 3">单双</button>
+          </th>
+          <th v-else>
+            号码
+          </th>
+
+          <th v-if="analysis.total">总和<span class="sfa question"></span></th>
+          <th v-if="analysis.longHu">1~5龙虎<span class="sfa question"></span></th>
+          <th v-if="analysis.form">形态<span class="sfa question"></span></th>
+        </tr>
+        </thead>
+      </table>
+      <div ref="body">
+        <table class="table table-border no-margin">
+          <colgroup>
+            <col width="168">
+            <col width="168">
+            <col width="300">
+            <col width="100">
+            <col width="100">
+            <col width="100">
+            <col width="167">
+          </colgroup>
+          <tbody>
+          <tr v-for="opening in openedList">
+            <td>{{opening.ticketPlanId}}</td>
+            <td>{{_.toDate(opening.openDate)}}</td>
+            <td>
+              <template v-for="item in opening.showTicketOpenNum">
+                <span v-if="analysis.numCol.num === 'balls'" class="item blue circle m-right-xs" :class="item.style">{{item.title}}</span>
+                <dice v-else-if="analysis.numCol.num === 'dices'" class="m-right-xs" :class="item.style" :value="item.title"></dice>
+              </template>
+            </td>
+
+            <td v-if="analysis.total"><span :class="opening.fTotal.total.style">{{opening.fTotal.total.title}}</span></td>
+            <td v-if="analysis.total"><span :class="opening.fTotal.size.style">{{opening.fTotal.size.title}}</span></td>
+            <td v-if="analysis.total"><span :class="opening.fTotal.singleAndDouble.style">{{opening.fTotal.singleAndDouble.title}}</span></td>
+
+            <!--龙虎-->
+            <td v-if="analysis.longHu"><span :class="opening.fLongHu.style">{{opening.fLongHu.title}}</span></td>
+            <!--形态-->
+            <td v-if="analysis.form"><span :class="opening.fForm.style">{{opening.fForm.title}}</span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import Dice from 'com/dice'
+  import tickets from 'api/tickets'
+  import * as analysis from './misc/analysis'
+
+  export default {
+    name: "analysis-center",
+
+    components: {
+      Dice
+    },
+
+    props: {
+      ticketId: Number
+    },
+
+    data() {
+      return {
+        date: '',
+        pageSize: 100,
+        ticketList: [],
+        openedList: [],
+        showNumType: 1, //1 号码 2 大小 3 单双
+        analysis: {},
+        fTicketId: this.ticketId
+      }
+    },
+
+    watch: {
+      fTicketId: {
+        handler() {
+          this.analysis = analysis[ticketConfig.getById(this.fTicketId).type]
+          this.resetData()
+        },
+        immediate: true
+      },
+      pageSize() {
+        this.resetData()
+      },
+      date() {
+        this.resetData()
+      },
+      showNumType(type) {
+        this.$_formatNumByType(type)
+      }
+    },
+
+    methods: {
+      selectByPageSize(pageSize) {
+        this.date = ''
+        this.pageSize = pageSize
+      },
+
+      setToday() {
+        this.pageSize = ''
+        this.date = _.toDate(Date.now())
+      },
+
+      resetData() {
+        this.openedList = []
+        tickets.getTicketOpeningList({
+            ticketId: this.fTicketId,
+            pageSize: this.pageSize,
+            date: this.date
+          },
+          ({data}) => {
+            if (data && data.result === 0) {
+              const openedList = data.root.openedList || []
+              this.openedList = _.map(openedList, item => {
+                item.fTicketOpenNum = item.ticketOpenNum.split(',')
+                return item
+              })
+              this.formatData()
+            }
+          }
+        )
+      },
+      formatData() {
+        this.$_formatNumByType(this.showNumType)
+
+        if (this.analysis.total) {
+          _.each(this.openedList, item => {
+            item.total = this.analysis.total(item.fTicketOpenNum)
+            item.fTotal = {
+              total: {
+                title: item.total.total,
+                style: ''
+              },
+              size: {
+                title: item.total.size,
+                style: item.total.size === '大' ? 'text-yellow' : ''
+              },
+              singleAndDouble: {
+                title: item.total.singleAndDouble,
+                style: item.total.singleAndDouble === '单' ? 'text-yellow' : ''
+              },
+            }
+          })
+        }
+        if (this.analysis.longHu) {
+          _.each(this.openedList, item => {
+            item.longHu = this.analysis.longHu(item.fTicketOpenNum)
+            item.fLongHu = {
+                title: item.longHu,
+                style: item.longHu === '龙' ? 'text-yellow' : item.longHu === '和' ? 'text-blue' : ''
+            }
+          })
+        }
+        if (this.analysis.form) {
+          _.each(this.openedList, item => {
+            item.form = this.analysis.form(item.fTicketOpenNum)
+            item.fForm = {
+              title: item.form,
+              style: ''
+            }
+          })
+        }
+      },
+      $_formatNumByType(type) {
+        switch (type) {
+          case 2:
+            this.openedList = _.map(this.openedList, item => {
+              item.showTicketOpenNum = _.map(item.fTicketOpenNum, num => {
+                const numType = this.analysis.numCol.size(num)
+                return {
+                  title: numType,
+                  style: numType === '大' ? 'gray' : ''
+                }
+              })
+              return item
+            })
+            break;
+          case 3:
+            this.openedList = _.map(this.openedList, item => {
+              item.showTicketOpenNum = _.map(item.fTicketOpenNum, num => {
+                const numType = this.analysis.numCol.singleAndDouble(num)
+                return {
+                  title: numType,
+                  style: numType === '单' ? 'gray' : ''
+                }
+              })
+              return item
+            })
+            break;
+          case 1:
+          default:
+            this.openedList = _.map(this.openedList, item => {
+              item.showTicketOpenNum = _.map(item.fTicketOpenNum, num => {
+                return {
+                  title: num,
+                  style: ''
+                }
+              })
+              return item
+            })
+            break;
+        }
+      }
+    },
+
+    mounted() {
+      tickets.getTicketList(
+        ({ data }) => {
+          if (data && data.result === 0) {
+            this.ticketList = data.root
+          }
+        }
+      )
+
+      $(this.$refs.body).slimScroll({
+        height: 1000,
+      })
+
+      $(this.$refs.date).datetimepicker({
+        format: 'YYYY-MM-DD',
+        useCurrent: false,
+        minDate: _(moment().endOf('day').add('-6', 'days')).toDate(),
+        maxDate: _(moment().endOf('day')).toDate(),
+      }).on('dp.change', (e) => {
+        this.pageSize = ''
+        this.date = e.currentTarget.value
+      })
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+  @import "~base/styles/variable";
+
+  .analysis-center {
+    width: 1200px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-left: 1px solid $def-gray-color;
+    border-right: 1px solid $def-gray-color;
+  }
+
+  .sfa-tickets {
+    width: 21px;
+    height: 20px;
+    background: url(./misc/tickets.png);
+  }
+
+  .ticket-select-title {
+    font-size: 16px;
+    color: $def-black-color;
+    vertical-align: super;
+    margin: 0 20px 0 2px;
+  }
+
+  .ticket-select {
+    font-size: 14px;
+    height: 36px;
+    width: 130px;
+    background-color: #ffffff;
+  }
+
+  .top-panel {
+    width: 1100px;
+    height: 90px;
+
+    padding: 28px 40px 0;
+    margin: 20px auto;
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: solid 1px #e6e6e6;
+    box-sizing: border-box;
+  }
+  .main {
+    margin: 20px auto;
+    box-sizing: border-box;
+    width: 1100px;
+  }
+
+  .btn-toolbar {
+    top: -6px;
+    position: relative;
+    margin: 0;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+  .top-right {
+    color: $def-black-color;
+    float: right;
+  }
+  .date-panel {
+    color: #333;
+    display: inline-block;
+    height: 36px;
+    border-radius: 5px;
+    top: 0;
+  }
+  .date-title {
+    position: relative;
+    bottom: 13px;
+    margin: 0 10px 0 30px;
+  }
+  .sfa-icon-time {
+    margin-top: 9px;
+    margin-right: 10px;
+  }
+  .btn-group {
+    .btn {
+      width: 70px;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  .num-btn {
+    width: 62px;
+  }
+  .question {
+    width: 16px;
+    height: 17px;
+    background: url(./misc/question.png);
+    position: relative;
+    top: 3px;
+  }
+
+  .red {
+    background-color: $red;
+    color: $def-white-color;
+  }
+  .green {
+    background-color: $green;
+    color: $def-white-color;
+  }
+  .blue {
+    background-color: $blue;
+    color: $def-white-color;
+  }
+  .gray {
+    background-color: #f0f0f0;
+    color: $new-inverse-color;
+  }
+  .text-yellow {
+    color: #f09932;
+  }
+  .text-blue {
+    color: $new-main-deep-color;
+  }
+  .circle {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 12px;
+  }
+</style>
