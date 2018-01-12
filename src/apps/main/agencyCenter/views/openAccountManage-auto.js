@@ -235,7 +235,7 @@ const OpenAccountManageView = Base.ItemView.extend({
     const ticket = $target.data('ticket')
     const rebate = Number(this.$('.js-ac-auto-rebate').val())
     if (_(rebate).isNumber() && _(rebate).isFinite()) {
-      Global.appRouter.navigate(`#ac/oam/pd/${ticket}?rebate=${rebate}`, { trigger: true, replace: false })
+      Global.router.goTo(`ac/oam/pd/${ticket}?rebate=${rebate}`, { trigger: true, replace: false })
     } else {
       Global.ui.notification.show('请输入有效的返点值。')
     }

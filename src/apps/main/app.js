@@ -260,7 +260,7 @@ App.addInitializer(() => {
   App.footerRegin.show(new FooterView())
 
 
-  // Backbone.history.start()
+  Backbone.history.start()
 
   _bindServiceHandler()
   _bindClosePopoverHandler()
