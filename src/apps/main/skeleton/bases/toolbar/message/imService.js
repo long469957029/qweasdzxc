@@ -8,7 +8,7 @@ module.exports = {
   getAdmin(active) {
     const html = []
     let status = ''
-    if (active.type === 'user' && active.id === 'admin') {
+    if (active.type === 'admin' && active.id === 'admin') {
       status = 'active'
     }
     html.push(`<div class="js-contact-systemAdmin  person-item ${status}" data-name="系统管理员" data-id="admin" ><span class="sfa sfa-avata-admin"></span>` +
@@ -191,6 +191,8 @@ module.exports = {
     let moreChatType = 'js-chat-more-content'
     if (type === 'mess') {
       moreChatType = 'js-mess-more-content'
+    } else if (type === 'admin') {
+      moreChatType = 'js-admin-more-content'
     }
     result.push(`<div class="${moreChatType} chat-more-content">${moreChatTitle}</div>`)
     // let dateIndex = 0
@@ -200,7 +202,8 @@ module.exports = {
       if (index === 0 && length < 30) {
         dateStatus = 'lessRecord'
       }
-      dateHtml.push(`<div class="chat-day-time ${dateStatus}">${key}</div>`)
+      const date = _(key).toDate('YYYY年M月D日')
+      dateHtml.push(`<div class="chat-day-time ${dateStatus}">${date}</div>`)
       // dateHtml.push('<div class="chat-content-container">')
       // const items = val
       _(items).each((item) => {
@@ -211,9 +214,14 @@ module.exports = {
         } else {
           sendTime = _(item.sendTime).formatAMPM()
         }
-
-        itemHtml.push(`<div class="chat-item" data-id='${item.rid}'> <div class="sfa sfa-avatar-online chat-item-avatar inline-block"></div> <div class="inline-block chat-item-detail">`)
-        itemHtml.push(`<div class="chat-item-name">${item.userName}</div><div class="chat-item-message">${item.content}</div>`)
+        let userName = item.userName
+        let userAvatar = item.fromUserHeadIconId
+        if (item.userName === 'admin') {
+          userName = '系统管理员'
+          userAvatar = 'sfa-avata-admin'
+        }
+        itemHtml.push(`<div class="chat-item" data-id='${item.rid}'> <div class="sfa ${userAvatar} chat-item-avatar inline-block"></div> `)
+        itemHtml.push(`<div class="inline-block chat-item-detail"><div class="chat-item-name">${userName}</div><div class="chat-item-message">${item.content}</div>`)
         itemHtml.push(`</div><div class="inline-block chat-item-time pull-right">${sendTime}</div></div>`)
         dateHtml.push(itemHtml.join(''))
         // dateIndex += 1
