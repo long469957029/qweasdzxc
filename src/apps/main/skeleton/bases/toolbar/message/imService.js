@@ -1,7 +1,7 @@
 /**
  * Created by steven on 2018/1/5.
  */
-// const avatarConf = require('userCenter/misc/avatarConfig')
+const avatarConf = require('userCenter/misc/avatarConfig')
 
 module.exports = {
   // 获取左边联系人系统管理员样式
@@ -23,13 +23,16 @@ module.exports = {
       status = 'active'
     }
     if (parentInfo.userId !== 0) {
+      let onlineCircle = '<span class="text-circle contact-status"></span>'
+      let offLineStatus = 'avatar-gray'
       if (parentInfo.online) {
-        supersiorHtml.push(`<div class="js-contact-onePerson  person-item ${status}" data-id="${parentInfo.userId}" data-name="我的上级" ><span class="sfa sfa-avatar-online"></span>` +
-          '<span class="text-circle contact-status"></span> <span class="contact-name">我的上级</span></div>')
+        offLineStatus = ''
       } else {
-        supersiorHtml.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${parentInfo.userId}" data-name="我的上级">` +
-          '<span class="sfa sfa-avatar-online avatar-gray"></span><span class="contact-name" >我的上级</span></div>')
+        onlineCircle = ''
       }
+      const avatarPic = avatarConf.get(parentInfo.headIconId).logo
+      supersiorHtml.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${parentInfo.userId}" data-name="我的上级">` +
+        `<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
     }
     return supersiorHtml.join('')
   },
@@ -50,7 +53,16 @@ module.exports = {
         if (active.type === 'user' && active.id === parentId) {
           status = 'active'
         }
-        item.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${user.userId}" data-name="我的上级" >`)
+        let onlineCircle = '<span class="text-circle contact-status"></span>'
+        let offLineStatus = 'avatar-gray'
+        if (user.online) {
+          offLineStatus = ''
+        } else {
+          onlineCircle = ''
+        }
+        const avatarPic = avatarConf.get(user.headIconId).logo
+        item.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${user.userId}" data-name="我的上级">` +
+          `<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
       } else {
         let status = ''
         if (active.type === 'user' && active.id === user.userId) {
@@ -58,11 +70,15 @@ module.exports = {
         }
         item.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${user.userId}" data-name="${name}">`)
       }
+      let onlineCircle = '<span class="text-circle contact-status"></span>'
+      let offLineStatus = 'avatar-gray'
       if (user.online) {
-        item.push('<span class="sfa sfa-avatar-online"></span><span class="text-circle contact-status"></span> ')
+        offLineStatus = ''
       } else {
-        item.push('<span class="sfa sfa-avatar-online avatar-gray"></span>')
+        onlineCircle = ''
       }
+      const avatarPic = avatarConf.get(user.headIconId).logo
+      item.push(`<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}`)
       item.push(`<span class="contact-name">${name}</span></div>`)
       userHtml.push(item.join(''))
     })
@@ -115,31 +131,45 @@ module.exports = {
           if (active.type === 'user' && active.id === parents) {
             status = 'active'
           }
-          itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="我的上级" >`)
+          let onlineCircle = '<span class="text-circle contact-status"></span>'
+          let offLineStatus = 'avatar-gray'
+          if (item.online) {
+            offLineStatus = ''
+          } else {
+            onlineCircle = ''
+          }
+          const avatarPic = avatarConf.get(item.headIconId).logo
+          itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="我的上级">` +
+            `<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
         } else {
           let status = ''
           if (active.type === 'user' && active.id === item.userId) {
             status = 'active'
           }
           itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="${item.userName}" >`)
-        }
-        if (item.online) {
-          itemHtml.push('<span class="sfa sfa-avatar-online recently-item-img inline-block"></span>')
-          itemHtml.push('<span class="text-circle contact-status"></span>')
-        } else {
-          itemHtml.push('<span class="sfa sfa-avatar-online recently-item-img inline-block avatar-gray"></span>')
-        }
-        let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-close recently-message-close"></span>'
-        if (item.newMsgNum > 0) {
-          cancel = ''
-          itemHtml.push('<div class="recently-item-info inline-block">')
-          itemHtml.push(`<div class="recently-name">${item.userName}</div>`)
-          itemHtml.push(`<div class="recently-desc">${item.lastMessage}</div>`)
-          itemHtml.push(`</div><div class=" recently-item-info-num"><div class="recently-newMessage-num-text inline-block">${item.newMsgNum}</div></div>${cancel}</div>`)
-          newMsgNum += item.newMsgNum
-        } else {
-          itemHtml.push('<div class="recently-item-info inline-block no">')
-          itemHtml.push(`<div class="recently-name">${item.userName}</div></div>${cancel}</div>`)
+
+          let onlineCircle = '<span class="text-circle contact-status"></span>'
+          let offLineStatus = 'avatar-gray'
+          if (item.online) {
+            offLineStatus = ''
+          } else {
+            onlineCircle = ''
+          }
+          const avatarPic = avatarConf.get(item.headIconId).logo
+          itemHtml.push(`<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}`)
+
+          let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-close recently-message-close"></span>'
+          if (item.newMsgNum > 0) {
+            cancel = ''
+            itemHtml.push('<div class="recently-item-info inline-block">')
+            itemHtml.push(`<div class="recently-name">${item.userName}</div>`)
+            itemHtml.push(`<div class="recently-desc">${item.lastMessage}</div>`)
+            itemHtml.push(`</div><div class=" recently-item-info-num"><div class="recently-newMessage-num-text inline-block">${item.newMsgNum}</div></div>${cancel}</div>`)
+            newMsgNum += item.newMsgNum
+          } else {
+            itemHtml.push('<div class="recently-item-info inline-block no">')
+            itemHtml.push(`<div class="recently-name">${item.userName}</div></div>${cancel}</div>`)
+          }
         }
         html.push(itemHtml.join(''))
       } else if (item.groupId !== undefined && item.groupId !== null && item.groupId !== '') {
@@ -216,11 +246,14 @@ module.exports = {
         }
         let userName = item.userName
         let userAvatar = item.fromUserHeadIconId
+        let avatarPic = ''
         if (item.userName === 'admin') {
           userName = '系统管理员'
           userAvatar = 'sfa-avata-admin'
+        } else {
+          avatarPic = avatarConf.get(userAvatar).logo
         }
-        itemHtml.push(`<div class="chat-item" data-id='${item.rid}'> <div class="sfa ${userAvatar} chat-item-avatar inline-block"></div> `)
+        itemHtml.push(`<div class="chat-item" data-id='${item.rid}'> <div class="sfa ${userAvatar} chat-item-avatar inline-block"><img src='${avatarPic}'  /></div> `)
         itemHtml.push(`<div class="inline-block chat-item-detail"><div class="chat-item-name">${userName}</div><div class="chat-item-message">${item.content}</div>`)
         itemHtml.push(`</div><div class="inline-block chat-item-time pull-right">${sendTime}</div></div>`)
         dateHtml.push(itemHtml.join(''))
@@ -236,7 +269,7 @@ module.exports = {
     const html = []
     const sendTime = _(new Date()).formatAMPM()
     // html.push('<div class="chat-content-container">')
-    html.push('<div class="chat-item"> <div class="sfa sfa-avatar-online chat-item-avatar inline-block"></div> <div class="inline-block chat-item-detail">')
+    html.push('<div class="chat-item"> <div class="sfa chat-item-avatar inline-block"></div> <div class="inline-block chat-item-detail">')
     html.push(`<div class="chat-item-name">${userName}</div><div class="chat-item-message">${content}</div>`)
     html.push(`</div><div class="inline-block chat-item-time pull-right">${sendTime}</div>`)
     return html.join('')

@@ -66,6 +66,9 @@
       margin-left: 5px;
       display: inline-block;
     }
+    &:hover {
+      background: $new-main-deep-hover-color;
+    }
   }
 
   .header-has-logined {
@@ -77,13 +80,13 @@
     .header-menu {
       position: relative;
       display: inline-block;
-      width: 142px;
       height: 40px;
-      padding: 0 18px;
+      padding: 0 14px;
       border-left: 2px solid #41a6ad;
       vertical-align: top;
       font-size: 14px;
       cursor: pointer;
+      min-width: 120px;
       .header-headshot {
         display: inline-block;
         width: 32px;
@@ -94,13 +97,14 @@
       }
       .header-name {
         display: inline-block;
-        width: 82px;
         height: 40px;
         font-size: 14px;
         line-height: 40px;
-        text-align: left;
         vertical-align: middle;
         float: left;
+        min-width: 65px;
+        text-align: center;
+        padding: 0 8px 0 5px;
       }
       .sfa-angle {
         margin: 15px 0;
@@ -117,81 +121,99 @@
         position: absolute;
         left: 0;
         top: 0;
-        height: 44px;
+        height: 51px;
         width: 180px;
       }
       .header-menu-body {
         position: absolute;
         display: none;
-        top: 43px;
-        left: 0px;
-        width: 180px;
-        height: 180px;
+        top: 50px;
         background: $new-main-deep-color;
         border-radius: 5px;
         z-index: 10;
+        background: #ffffff;
+        color: #666666;
+        border: 1px solid $def-line-color;
+        width: 133px;
+        height: 193px;
+        left: 50%;
+        margin-left: -65px;
         &:before {
+          content: "";
           position: absolute;
-          display: inline-block;
-          top: -7px;
-          left: 90px;
-          content: ' ';
-          border: solid transparent;
-          border-bottom: 5px solid $new-main-deep-color;
+          width: 12px;
+          height: 12px;
+          background: white;
+          transform: translateX(-50%) translateY(-50%) rotate(45deg);
+          top: -1px;
+          border-top: 1px solid $def-gray-color;
+          border-left: 1px solid $def-gray-color;
+          right: 39%;
+          border-top-left-radius: 4px;
         }
         .header-menu-item {
           display: block;
-          height: 45px;
+          height: 49px;
 
           text-align: center;
           font-size: 14px;
-          color: #fff;
-          line-height: 45px;
+          color: $new-inverse-color;
+          line-height: 49px;
           //padding: 0 25px;
-          .header-menu-item-text{
+          .header-menu-item-text {
             display: block;
-            width: 100px;
-            height: 45px;
-            margin: 0 auto;
+            height: 49px;
+            margin: 0 7px;
             border-bottom: 1px solid $sec-line-color;
           }
+
           &:hover {
-            //color: $def-black-color;
-            background: $new-main-deep-hover-color;
+            color: $new-main-deep-color;
             border-radius: 5px;
           }
           &:nth-child(4) {
-            .header-menu-item-text{
+            .header-menu-item-text {
+              color: $font-auxiliary-color;
               border-bottom: 0;
+            }
+            .header-menu-item-img {
+              color: $font-auxiliary-color;
             }
           }
         }
       }
     }
-    .header-amount {
+    .header-amount-panel {
       display: inline-block;
-      width: 106px;
-      height: 40px;
-      font-size: 14px;
-      line-height: 40px;
-      text-align: right;
-      border-left: 2px solid #41a6ad;
-      vertical-align: top;
-    }
-    .header-recharge {
-      display: inline-block;
-      width: 56px;
-      height: 26px;
-      margin: 7px;
-      background: #d0e9ea;
-      border-radius: 13px;
-      font-size: 14px;
-      color: #14b1bb;
-      line-height: 26px;
-      text-align: center;
-      outline: none;
-      vertical-align: top;
-      cursor: pointer;
+      .header-amount {
+        display: inline-block;
+        //width: 106px;
+        height: 40px;
+        font-size: 14px;
+        line-height: 40px;
+        text-align: right;
+        border-left: 2px solid #41a6ad;
+        vertical-align: top;
+        padding: 0 4px 0 14px;
+      }
+      .header-recharge {
+        display: inline-block;
+        width: 56px;
+        height: 26px;
+        margin: 7px 14px;
+        background: #d0e9ea;
+        border-radius: 13px;
+        font-size: 14px;
+        color: #14b1bb;
+        line-height: 26px;
+        text-align: center;
+        outline: none;
+        vertical-align: top;
+        cursor: pointer;
+      }
+      &:hover {
+        background: $new-main-deep-hover-color;
+      }
     }
     .header-announcement {
       display: inline-block;
@@ -202,19 +224,121 @@
       cursor: pointer;
       vertical-align: top;
       font-size: 14px;
+      position: relative;
       .sfa-announcement {
         margin: -5px 6px 0 12px;
         vertical-align: middle;
       }
       .header-announcement-num {
-        margin: 6px;
-        width: 18px;
-        height: 18px;
-        line-height: 18px;
+        margin: 5px;
+        width: 21px;
+        height: 21px;
+        line-height: 21px;
         display: inline-block;
         background: #e29c49;
         border-radius: 9px;
         text-align: center;
+      }
+      .header-announcement-place {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 51px;
+        width: 100px;
+      }
+      .header-announcement-body {
+        position: absolute;
+        display: none;
+        top: 50px;
+        background: $new-main-deep-color;
+        border-radius: 5px;
+        z-index: 10;
+        background: #ffffff;
+        color: #666666;
+        border: 1px solid $def-line-color;
+        left: 50%;
+        margin-left: -183px;
+        //display: block;
+        width: 340px;
+        height: 370px;
+        &:before {
+          content: "";
+          position: absolute;
+          width: 12px;
+          height: 12px;
+          background: white;
+          transform: translateX(-50%) translateY(-50%) rotate(45deg);
+          top: -1px;
+          border-top: 1px solid $def-gray-color;
+          border-left: 1px solid $def-gray-color;
+          right: 43%;
+          border-top-left-radius: 4px;
+        }
+        .header-announcement-content {
+          height: 318px;
+          .content-item {
+            height: 80px;
+            padding: 25px 20px 0 25px;
+            .content-item-title-panel {
+              color: $font-auxiliary-color;
+              height: 14px;
+              line-height: 14px;
+              margin-bottom: 10px;
+              .content-item-img {
+                width: 6px;
+                height: 6px;
+                display: inline-block;
+                background: $font-auxiliary-color;
+                border-radius: 9px;
+                text-align: center;
+                margin-top: 5px;
+                margin-left: -10px;
+                position: absolute;
+              }
+              .content-item-title {
+                color: $new-inverse-color;
+                font-size: 14px;
+              }
+              .content-item-date {
+                font-size: 12px;
+              }
+            }
+            .content-item-text {
+              color: $font-auxiliary-color;
+              text-align: left;
+              line-height: 20px;
+              padding-bottom: 15px;
+              border-bottom: 1px dashed $def-line-color;
+            }
+            &:hover {
+              background-color: $sec-line-color;
+              .content-item-title-panel {
+                .content-item-img {
+                  background: $new-main-deep-color;
+                }
+                .content-item-title {
+                  color: $new-main-deep-color;
+                }
+              }
+            }
+          }
+        }
+        .header-announcement-showMore {
+          color: $font-auxiliary-color;
+          background: $sec-line-color;
+          font-size: 14px;
+          padding: 8px 141px;
+          margin-top: -4px;
+          &:hover {
+            color: $new-main-deep-color;
+          }
+        }
+      }
+      &:hover {
+        background: $new-main-deep-hover-color;
+        .header-announcement-body {
+          display: block;
+        }
       }
     }
   }
