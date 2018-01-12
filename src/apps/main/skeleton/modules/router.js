@@ -13,7 +13,7 @@ const RouterModule = Base.Module.extend({
       // const $target = $(e.currentTarget)
       // const hasFind = Global.viewPool.getQuick($target.attr('href'))
 
-      // self._history.push(Backbone.history.getHash())
+      self._history.push(Backbone.history.getHash())
 
       // 20170607-MMC页面隐藏了footer部分，根据实际情况判断是否展示
       // if (document.body.clientHeight >= 930) {
@@ -69,7 +69,7 @@ const RouterModule = Base.Module.extend({
       }
 
 
-      Global.appRouter.navigate(this._history.pop(), { trigger: false, replace: false })
+      Global.appRouter.navigate(this._history.pop(), { trigger: false, replace: true })
     } else if (superior.noParent && superior.parentRouter) {
       superior.view.destroy()
 
