@@ -33,6 +33,7 @@ const MessageView = Base.ItemView.extend({
     'click .js-recently-message-close': 'delRecentlyContactHandler',
     'click .js-recently-mass-message': 'clickRecentlyMessMassageHandler',
     'click .js-mess-more-content': 'showMoreMessHandler',
+    'click .js-admin-more-content': 'showMoreAdminHandler',
   },
   getChatTotalXhr (data) {
     return Global.sync.ajax({
@@ -155,7 +156,7 @@ const MessageView = Base.ItemView.extend({
     let data = []
     if (id === 'admin') {
       data = {
-        pageSize: 30,
+        pageSize: 2,
       }
     } else {
       data = {
@@ -185,14 +186,20 @@ const MessageView = Base.ItemView.extend({
             chatData: chatResult,
           }
           if (id === 'admin') {
-            self.$('.js-chat-admin-content').html(imService.getChatMessageByDateHtml(this.chatList.chatData, null, res.root.records.length, this.pageIndex, res.root.rowCount))
+            self.$('.js-chat-admin-content').html(imService.getChatMessageByDateHtml(this.chatList.chatData, 'admin', res.root.records.length, this.pageIndex, res.root.rowCount))
+            // 当点击联系人时将下拉框滚动至最下方
+            if (type === 'scroll') {
+              const $div = this.$('.js-chat-admin-content')
+              $div.scrollTop($div[0].scrollHeight)
+            }
           } else {
             self.$('.js-chat-message-content-panel').html(imService.getChatMessageByDateHtml(this.chatList.chatData, null, res.root.records.length, this.pageIndex, res.root.rowCount))
+            // 当点击联系人时将下拉框滚动至最下方
+            if (type === 'scroll') {
+              this.scrollbarBottomHandler()
+            }
           }
-          // 当点击联系人时将下拉框滚动至最下方
-          if (type === 'scroll') {
-            this.scrollbarBottomHandler()
-          }
+
         } else {
           Global.ui.notification.show('未知错误')
         }
@@ -237,22 +244,34 @@ const MessageView = Base.ItemView.extend({
     // this.activeParentContainer = $target.parentNode.data('id')
   },
   // 点击打开更多私聊记录
-  showMoreChatHandler() {
+  showMoreChatHandler(id) {
     this.pageIndex += 1
-    this.getUserChatDetailXhl()
-    const self = this
-    this.lastRecordsHeight = ''
+    // this.getUserChatDetailXhl()
     let data = []
-    data = {
-      userId: this.$('.js-contact-toUser').val(),
-      lastChatId: this.chatLastRecordId,
-      pageSize: 30,
+    if (id === 'admin') {
+      data = {
+        lastChatId: this.chatLastRecordId,
+        pageSize: 30,
+      }
+    } else {
+      data = {
+        userId: this.$('.js-contact-toUser').val(),
+        lastChatId: this.chatLastRecordId,
+        pageSize: 30,
+      }
     }
+
     this.getUserChatXhr(data)
       .done((res) => {
         if (res.result === 0) {
           // 获取点击前框高度
-          const $div = this.$('.js-chat-message-content-panel')
+          let selectDiv = this.$('.js-chat-message-content-panel')
+          let type = null
+          if (id === 'admin') {
+            selectDiv = this.$('.js-chat-admin-content')
+            type = 'admin'
+          }
+          const $div = selectDiv
           const beforeHeight = $div[0].scrollHeight
           // 处理私聊数据并生成html
           const list = this.chatList.chatData
@@ -260,9 +279,9 @@ const MessageView = Base.ItemView.extend({
           this.chatLastRecordId = res.root.records[recordLastIndex].rid
           // this.chatList.chatData = list.unshift(res.root.records)
           this.chatList.chatData = res.root.records.concat(list)
-          self.$('.js-chat-message-content-panel').html(imService.getChatMessageByDateHtml(this.chatList.chatData, null, res.root.records.length, this.pageIndex, res.root.rowCount))
+          selectDiv.html(imService.getChatMessageByDateHtml(this.chatList.chatData, type, res.root.records.length, this.pageIndex, res.root.rowCount))
           // 获取点击后框高度
-          const $afterDiv = this.$('.js-chat-message-content-panel')
+          const $afterDiv = selectDiv
           const afterHeight = $afterDiv[0].scrollHeight
           // 将下拉条滚动至原有加载文字所在处
           $div.scrollTop(afterHeight - beforeHeight)
@@ -576,6 +595,10 @@ const MessageView = Base.ItemView.extend({
       clearInterval(this.cartPolling)
     }
   },
+  // 点击查看更多管理员消息
+  showMoreAdminHandler() {
+    this.showMoreChatHandler('admin')
+  },
   checkMassMessageButtonStatus() {
     if (this.$('.js-im-mass-message').hasClass('active')) {
       this.$('.js-im-mass-message').removeClass('active')
@@ -649,16 +672,18 @@ const MessageView = Base.ItemView.extend({
   clearContainerActiveHandle() {
     this.$('.js-contact-container').find('.active').removeClass('active')
     this.$('.js-recently-container').find('.active').removeClass('active')
+    this.$('.js-content-leftBar-search').find('.active').removeClass('active')
   },
   // 输入搜索样式事件
   searchCheckHandler() {
     const name = this.$('.js-im-contact-search').val()
     // 处理搜索联系人列表
+    this.$('.js-content-rightBar').html('<div class="js-content-rightBar-empty content-rightBar-empty">请在左侧列表选择您要联系的上下级 </div>')
     const searchResult = imService.getSearchResult(this.userList, name)
     if (searchResult.length > 0 && name !== '') {
       this.$('.js-search-container-hasResult').removeClass('hidden')
       this.$('.js-search-container-noResult').addClass('hidden')
-      this.$('.js-search-container-hasResult').html(imService.getItemsHtml(searchResult))
+      this.$('.js-search-container-hasResult').html(imService.getItemsHtml(searchResult, this.parentId, this.activePerson))
     } else {
       if (this.$('.js-search-container-noResult').is(':hidden')) {
         this.$('.js-search-container-noResult').removeClass('hidden')
@@ -687,7 +712,9 @@ const MessageView = Base.ItemView.extend({
   // 取消搜索输入框内容
   cancelSearchInputHandle() {
     this.$('.js-im-contact-search').val('')
-    this.searchCheckHandler()
+    this.$('.js-search-container-noResult').toggleClass('hidden', true)
+    this.$('.js-content-leftBar-general').toggleClass('hidden', false)
+    this.$('.js-im-contact-search').toggleClass('active', false)
   },
   // 选择联系人面板，取消其他面板
   selectContactHandler() {
