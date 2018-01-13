@@ -106,15 +106,15 @@ function createList(titles, options) {
   })
 
   return _(titles).map((title) => {
-    const items = title ? _.map(title.items || options.items, item => {
-          if (!_.isObject(item)) {
-            item = {
-              title: item,
-              num: item
-            }
-          }
-          return item
-        }): null
+    const items = _.map(title && title.items || options.items, item => {
+      if (!_.isObject(item)) {
+        item = {
+          title: item,
+          num: item,
+        }
+      }
+      return item
+    })
 
     if (_.isObject(title)) {
       return {

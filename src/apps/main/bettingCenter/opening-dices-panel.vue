@@ -1,6 +1,6 @@
 <template>
   <div>
-    <opening-dices :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :opening-balls="openingNum" :default-opening="ticketInfo.info.defaultOpening"></opening-dices>
+    <opening-dices :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="openingNum" :default-opening="ticketInfo.defaultOpening"></opening-dices>
     <div class="dice-statistic">
       <div class="dice-total">和值 : <span class="font-md">{{totalNum}}</span></div>
       <div class="dice-form">

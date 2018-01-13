@@ -46,11 +46,19 @@
       size: 48px,
       dot-size: 9px,
       des: 24px,
+      one-size: 13px,
+      one-left: 27px,
+      one-top: 28px,
+      dot-pos: (17px, 30px, 43px, 18px, 30px, 40px)
     ),
     sm: (
-      size: 28px,
-      dot-size: 5px,
+      size: 30px,
+      dot-size: 6px,
       des: 14px,
+      one-size: 8px,
+      one-left: 20px,
+      one-top: 20px,
+      dot-pos: (13px, 21px, 29px, 16px, 22px, 27px)
     )
   );
 
@@ -58,6 +66,11 @@
     $size: map_get($prop, size);
     $dot-size: map_get($prop, dot-size);
     $des: map_get($prop, des);
+    $dot-pos: map_get($prop, dot-pos);
+    $one-size: map_get($prop, one-size);
+    $one-left: map_get($prop, one-left);
+    $one-top: map_get($prop, one-top);
+
 
     width: $size;
     height: $size;
@@ -98,6 +111,39 @@
     .dot {
       width: $dot-size;
       height: $dot-size;
+    }
+
+    .side_1 {
+      .dot_5 {
+        width: $one-size;
+        height: $one-size;
+        left: $one-left;
+        top: $one-top;
+      }
+    }
+
+    .dot_1, .dot_2, .dot_3 {
+      top: nth($dot-pos, 1);
+    }
+
+    .dot_4, .dot_5, .dot_6 {
+      top: nth($dot-pos, 2);
+    }
+
+    .dot_7, .dot_8, .dot_9 {
+      top: nth($dot-pos, 3);
+    }
+
+    .dot_1, .dot_4, .dot_7 {
+      left: nth($dot-pos, 4);
+    }
+
+    .dot_2, .dot_5, .dot_8 {
+      left: nth($dot-pos, 5);
+    }
+
+    .dot_3, .dot_6, .dot_9 {
+      left: nth($dot-pos, 6);
     }
   }
 
@@ -158,15 +204,11 @@
 
     .side_1 {
       .dot_5 {
-        width: 13px;
-        height: 13px;
         background-color: #ac3d46;
         box-shadow: 0px -1px 0px 0px
         #ffffff,
         inset 0px 1px 2px 0px
         rgba(0, 0, 0, 0.2);
-        left: 27px;
-        top: 28px;
       }
     }
 
@@ -177,30 +219,6 @@
       border-radius: 10px;
       background-color: #363b4b;
       box-shadow: 0px -1px 0px 0px;
-    }
-
-    .dot_1, .dot_2, .dot_3 {
-      top: 17px;
-    }
-
-    .dot_4, .dot_5, .dot_6 {
-      top: 30px;
-    }
-
-    .dot_7, .dot_8, .dot_9 {
-      top: 43px;
-    }
-
-    .dot_1, .dot_4, .dot_7 {
-      left: 18px;
-    }
-
-    .dot_2, .dot_5, .dot_8 {
-      left: 30px;
-    }
-
-    .dot_3, .dot_6, .dot_9 {
-      left: 40px;
     }
   }
 </style>

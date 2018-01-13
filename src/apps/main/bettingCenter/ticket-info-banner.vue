@@ -29,14 +29,14 @@
           <div>开奖号码</div>
         </div>
 
-        <opening-balls :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.info.defaultOpening"
-                       v-if="ticketInfo.info.openingType === 'balls'" @mouseover="calculateStatus = true" @mouseout="calculateStatus = false"
+        <opening-balls :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.defaultOpening"
+                       v-if="ticketInfo.openingType === 'balls'" @mouseover="calculateStatus = true" @mouseout="calculateStatus = false"
         ></opening-balls>
-        <opening-dices-panel class="inline-block" v-else-if="ticketInfo.info.openingType === 'dices'"
+        <opening-dices-panel class="inline-block" v-else-if="ticketInfo.openingType === 'dices'"
                              :opening-num="bettingInfo.lastOpenNum" :ticket-info="ticketInfo"
         ></opening-dices-panel>
-        <opening-mark6-balls :counts="ticketInfo.info.counts" :range="ticketInfo.info.range" :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.info.defaultOpening"
-          v-else-if="ticketInfo.info.openingType === 'mark-balls'"
+        <opening-mark6-balls :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.defaultOpening"
+          v-else-if="ticketInfo.openingType === 'mark-balls'"
         ></opening-mark6-balls>
         <!--<div class="bc-last-plan-results pull-left" v-if="bettingInfo.sale && bettingInfo.pending">-->
           <!--<span class="text-circle">等</span>-->
@@ -44,7 +44,7 @@
           <!--<span class="text-circle">开</span>-->
           <!--<span class="text-circle">奖</span>-->
         <!--</div>-->
-        <div class="bc-hgcalculate-example" v-if="ticketInfo.info.showNumberDetail&& calculateStatus">
+        <div class="bc-hgcalculate-example" v-if="ticketInfo.showNumberDetail&& calculateStatus">
           <div class="bc-hgcaculate-examplerow">万位:<span v-html="calculateInfo ? calculateInfo.wan : ''"></span></div>
           <div class="bc-hgcaculate-examplerow">千位:<span v-html="calculateInfo ? calculateInfo.qian : ''"></span></div>
           <div class="bc-hgcaculate-examplerow">百位:<span v-html="calculateInfo ? calculateInfo.bai : ''"></span></div>
@@ -54,16 +54,16 @@
       </div>
     </div>
     <div class="bc-entry-list pull-right m-right-md">
-      <router-link :to="`/analysis/${ticketInfo.info.id}`" target="_blank" class="entry-list-open">
+      <router-link :to="`/analysis/${ticketInfo.id}`" target="_blank" class="entry-list-open">
         <!--跳转到历史分析-->
         <span class="sfa sfa-bc-icon-open-num vertical-middle"></span>
         开奖号码
       </router-link>
-      <a :href="'trend.html?ticketId=' + ticketInfo.info.id" target="_blank" class="entry-list-trend">
+      <a :href="'trend.html?ticketId=' + ticketInfo.id" target="_blank" class="entry-list-trend">
         <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
         号码走势
       </a>
-      <a :href="`#hc?page=${ticketInfo.id}`" class="router entry-list-des">
+      <a :href="`#hc?page=${ticketInfo.type}`" class="router entry-list-des">
         <span class="sfa sfa-bc-icon-des vertical-middle"></span>
         游戏说明
       </a>
@@ -126,7 +126,7 @@
 
       calculateInfo(state) {
         //新加坡2分彩 彩种显示用
-        if (this.ticketInfo && this.ticketInfo.info.showNumberDetail) {
+        if (this.ticketInfo && this.ticketInfo.showNumberDetail) {
           let calculateInfo = {
             ge: '',
             shi: '',

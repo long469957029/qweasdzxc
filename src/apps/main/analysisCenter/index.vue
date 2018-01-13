@@ -34,6 +34,15 @@
           <col width="168">
           <!--号码-->
           <col width="300">
+          <template v-if="analysis.doubleHead">
+            <!--特码-->
+            <col width="70">
+            <col width="70">
+            <col width="70">
+            <col width="70">
+            <col width="70">
+            <col width="70">
+          </template>
           <!--总和-->
           <col width="300" v-if="analysis.total">
           <!--龙虎-->
@@ -43,20 +52,39 @@
         </colgroup>
         <thead>
         <tr>
-          <th>期数</th>
-          <th>开奖时间</th>
-          <th v-if="analysis.numCol.num !== 'dices'">
+          <th :rowspan="analysis.doubleHead ? 2 : 1">期数</th>
+          <th :rowspan="analysis.doubleHead ? 2 : 1">开奖时间</th>
+          <th v-if="analysis.numCol.num === 'balls'">
             <button class="btn num-btn" :class="{'btn-white': showNumType !== 1}" @click="showNumType = 1">号码</button>
             <button class="btn num-btn m-LR-sm" :class="{'btn-white': showNumType !== 2}" @click="showNumType = 2">大小</button>
             <button class="btn num-btn" :class="{'btn-white': showNumType !== 3}" @click="showNumType = 3">单双</button>
           </th>
-          <th v-else>
+          <th v-else-if="analysis.doubleHead">
+            {{analysis.doubleHead[0]}}
+          </th>
+          <th v-else="">
             号码
           </th>
 
-          <th v-if="analysis.total">总和<span class="sfa question"></span></th>
+          <th v-if="analysis.specialCode" :colspan="3">特码<span class="sfa question"></span></th>
+          <th v-if="analysis.total" :colspan="analysis.doubleHead ? 3 : 1">总和<span class="sfa question"></span></th>
           <th v-if="analysis.longHu">1~5龙虎<span class="sfa question"></span></th>
           <th v-if="analysis.form">形态<span class="sfa question"></span></th>
+        </tr>
+        <tr v-if="analysis.doubleHead">
+          <th>
+            {{analysis.doubleHead[1]}}
+          </th>
+          <template v-if="analysis.specialCode">
+            <th>大小</th>
+            <th>单双</th>
+            <th>尾数</th>
+          </template>
+          <template v-if="analysis.total">
+            <th>和值</th>
+            <th>大小</th>
+            <th>单双</th>
+          </template>
         </tr>
         </thead>
       </table>
@@ -66,10 +94,20 @@
             <col width="168">
             <col width="168">
             <col width="300">
-            <col width="100">
-            <col width="100">
-            <col width="100">
-            <col width="167">
+            <template v-if="analysis.doubleHead">
+              <col width="70">
+              <col width="70">
+              <col width="70">
+              <col width="70">
+              <col width="70">
+              <col width="70">
+            </template>
+            <template v-else>
+              <col width="100">
+              <col width="100">
+              <col width="100">
+              <col width="167">
+            </template>
           </colgroup>
           <tbody>
           <tr v-for="opening in openedList">
@@ -78,9 +116,17 @@
             <td>
               <template v-for="item in opening.showTicketOpenNum">
                 <span v-if="analysis.numCol.num === 'balls'" class="item blue circle m-right-xs" :class="item.style">{{item.title}}</span>
-                <dice v-else-if="analysis.numCol.num === 'dices'" class="m-right-xs" :class="item.style" :value="item.title"></dice>
+                <dice v-else-if="analysis.numCol.num === 'dices'" class="dice-sm m-right-xs" :class="item.style" :value="item.title"></dice>
+                <!--<span v-else-if="analysis.numCol.num === 'mark6'" class="item blue circle m-right-xs" :class="item.style">{{item.title}}</span>-->
               </template>
+              <opening-mark6-balls v-if="analysis.numCol.num === 'mark6'" class="opening-mark6-balls-sm no-shadow"
+                                   :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="opening.fTicketOpenNum" :default-opening="ticketInfo.defaultOpening"
+              ></opening-mark6-balls>
             </td>
+
+            <td v-if="analysis.specialCode"><span :class="opening.fSpecialCode.size.style">{{opening.fSpecialCode.size.title}}</span></td>
+            <td v-if="analysis.specialCode"><span :class="opening.fSpecialCode.singleAndDouble.style">{{opening.fSpecialCode.singleAndDouble.title}}</span></td>
+            <td v-if="analysis.specialCode"><span :class="opening.fSpecialCode.total.style">{{opening.fSpecialCode.total.title}}</span></td>
 
             <td v-if="analysis.total"><span :class="opening.fTotal.total.style">{{opening.fTotal.total.title}}</span></td>
             <td v-if="analysis.total"><span :class="opening.fTotal.size.style">{{opening.fTotal.size.title}}</span></td>
@@ -99,6 +145,7 @@
 </template>
 
 <script>
+  import OpeningMark6Balls from 'com/opening-mark6-balls'
   import Dice from 'com/dice'
   import tickets from 'api/tickets'
   import * as analysis from './misc/analysis'
@@ -107,7 +154,8 @@
     name: "analysis-center",
 
     components: {
-      Dice
+      Dice,
+      OpeningMark6Balls
     },
 
     props: {
@@ -118,6 +166,7 @@
       return {
         date: '',
         pageSize: 100,
+        ticketInfo: {},
         ticketList: [],
         openedList: [],
         showNumType: 1, //1 号码 2 大小 3 单双
@@ -129,7 +178,8 @@
     watch: {
       fTicketId: {
         handler() {
-          this.analysis = analysis[ticketConfig.getById(this.fTicketId).type]
+          this.ticketInfo = ticketConfig.getById(this.fTicketId)
+          this.analysis = analysis[this.ticketInfo.type]
           this.resetData()
         },
         immediate: true
@@ -197,6 +247,26 @@
             }
           })
         }
+        if (this.analysis.specialCode) {
+          _.each(this.openedList, item => {
+            item.specialCode = this.analysis.specialCode([_(item.fTicketOpenNum).last()])
+            item.fSpecialCode = {
+              total: {
+                title: item.specialCode.total,
+                style: ''
+              },
+              size: {
+                title: item.specialCode.size,
+                style: item.specialCode.size === '大' ? 'text-yellow' : ''
+              },
+              singleAndDouble: {
+                title: item.specialCode.singleAndDouble,
+                style: item.specialCode.singleAndDouble === '单' ? 'text-yellow' : ''
+              },
+            }
+          })
+        }
+
         if (this.analysis.longHu) {
           _.each(this.openedList, item => {
             item.longHu = this.analysis.longHu(item.fTicketOpenNum)

@@ -35,9 +35,20 @@ export const ssc = {
   numCol: {
     num: 'balls',
     size: _.partial(compareSize, 5),
-    singleAndDouble: checkSingleAndDouble
+    singleAndDouble: checkSingleAndDouble,
   },
   total: _.partial(total, 25),
+  longHu: _.partial(longHu, 0, 4),
+}
+
+export const choose15 = {
+  doubleHead: false,
+  numCol: {
+    num: 'balls',
+    size: _.partial(compareSize, 6),
+    singleAndDouble: checkSingleAndDouble,
+  },
+  total: _.partial(total, 30),
   longHu: _.partial(longHu, 0, 4),
 }
 
@@ -46,7 +57,7 @@ export const p5p3 = {
   numCol: {
     num: 'balls',
     size: _.partial(compareSize, 5),
-    singleAndDouble: checkSingleAndDouble
+    singleAndDouble: checkSingleAndDouble,
   },
   total: _.partial(total, 25),
   form: group,
@@ -57,7 +68,7 @@ export const threeD = {
   numCol: {
     num: 'balls',
     size: _.partial(compareSize, 5),
-    singleAndDouble: checkSingleAndDouble
+    singleAndDouble: checkSingleAndDouble,
   },
   total: _.partial(total, 15),
   form: group,
@@ -69,4 +80,13 @@ export const quick3 = {
     num: 'dices',
   },
   total: _.partial(total, 10),
+}
+
+export const mark6 = {
+  doubleHead: ['开奖号码', '正1 正2 正3 正4 正5 正6 特码'],
+  numCol: {
+    num: 'mark6',
+  },
+  specialCode: _.partial(total, 25),
+  total: _.partial(total, 175),
 }
