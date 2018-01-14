@@ -118,10 +118,10 @@
         </thead>
       </table>
       <transition
-                  enter-active-class="animated-quick fadeIn"
-                  leave-active-class="animated-quick fadeOut"
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut"
       >
-        <div ref="body" v-show="openedList">
+        <div ref="body" v-show="!loading">
           <table class="table table-border no-margin">
             <colgroup>
               <col width="168">
@@ -147,10 +147,10 @@
               <td>{{opening.ticketPlanId}}</td>
               <td>{{_.toDate(opening.openDate)}}</td>
               <td>
-                <template v-for="item in opening.showTicketOpenNum">
-                  <span v-if="analysis.numCol.num === 'balls'" class="item blue circle m-right-xs" :class="item.style">{{item.title}}</span>
-                  <dice v-else-if="analysis.numCol.num === 'dices'" class="dice-sm m-right-xs" :class="item.style" :value="item.title"></dice>
-                  <span v-else-if="analysis.numCol.num === 'square'" class="item blue square m-right-xs" :class="item.style">{{item.title}}</span>
+                <template v-for="(item, i) in opening.showTicketOpenNum">
+                  <span v-if="analysis.numCol.num === 'balls'" :key="i" class="item blue circle m-right-xs" :class="item.style">{{item.title}}</span>
+                  <dice v-else-if="analysis.numCol.num === 'dices'" :key="i" class="dice-sm m-right-xs" :class="item.style" :value="item.title"></dice>
+                  <span v-else-if="analysis.numCol.num === 'square'" :key="i" class="item blue square m-right-xs" :class="item.style">{{item.title}}</span>
                 </template>
                 <opening-mark6-balls v-if="analysis.numCol.num === 'mark6'" class="opening-mark6-balls-sm no-shadow"
                                      :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="opening.fTicketOpenNum" :default-opening="ticketInfo.defaultOpening"
@@ -238,7 +238,8 @@
         showNumType: 1, //1 号码 2 大小 3 单双
         analysis: {},
         fTicketId: this.ticketId,
-        longHuPos: 0 //pk10龙虎位置
+        longHuPos: 0, //pk10龙虎位置
+        loading: true
       }
     },
 
@@ -250,16 +251,11 @@
           this.styleConfig = STYLE_CONFIG[this.ticketInfo.type] || {}
           this.pageSize = this.analysis.periods[0].value
           this.date = ''
+          this.loading = true
 
           this.resetData()
         },
         immediate: true
-      },
-      pageSize() {
-        this.resetData()
-      },
-      date() {
-        this.resetData()
       },
       longHuPos() {
         this.$_formatPk10LongHu(this.longHuPos)
@@ -273,11 +269,13 @@
       selectByPageSize(pageSize) {
         this.date = ''
         this.pageSize = pageSize
+        this.resetData()
       },
 
       setToday() {
         this.pageSize = null
         this.date = _.toDate(Date.now())
+        this.resetData()
       },
 
       resetData() {
@@ -289,6 +287,7 @@
           },
           ({data}) => {
             if (data && data.result === 0) {
+              this.loading = false
               const openedList = data.root.openedList || []
               this.openedList = _.map(openedList, item => {
                 item.fTicketOpenNum = item.ticketOpenNum.split(',')
@@ -409,7 +408,7 @@
       $_formatNumByType(type) {
         switch (type) {
           case 2:
-            this.openedList = _.map(this.openedList, item => {
+            _.each(this.openedList, item => {
               item.showTicketOpenNum = _.map(item.fTicketOpenNum, num => {
                 const numType = this.analysis.numCol.size(num)
                 return {
@@ -421,7 +420,7 @@
             })
             break;
           case 3:
-            this.openedList = _.map(this.openedList, item => {
+            _.map(this.openedList, item => {
               item.showTicketOpenNum = _.map(item.fTicketOpenNum, num => {
                 const numType = this.analysis.numCol.singleAndDouble(num)
                 return {
@@ -434,7 +433,7 @@
             break;
           case 1:
           default:
-            this.openedList = _.map(this.openedList, item => {
+            _.map(this.openedList, item => {
               item.showTicketOpenNum = _.map(item.fTicketOpenNum, num => {
                 return {
                   title: num,
@@ -469,6 +468,7 @@
       }).on('dp.change', (e) => {
         this.pageSize = ''
         this.date = e.currentTarget.value
+        this.resetData()
       })
     }
   }
@@ -630,6 +630,7 @@
     border-radius: 5px;
     text-align: center;
     font-size: 12px;
+    transition: background-color 0.5s, color 0.5s;
   }
 
 
@@ -642,6 +643,7 @@
     border-radius: 50%;
     text-align: center;
     font-size: 12px;
+    transition: background-color 0.5s, color 0.5s;
   }
 
   .left {
