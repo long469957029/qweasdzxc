@@ -9,9 +9,18 @@
 
       <div class="top-right">
         <div class="btn-toolbar no-margin">
-          <div class="btn-group">
-            <button class="btn btn-lg font-xs m-right-xs" :class="{'btn-white': pageSize !== 100}" @click="selectByPageSize(100)">近100期</button>
-          </div>
+
+          <transition-group
+            enter-active-class="animated fadeInLeftBig"
+            leave-active-class="animated fadeOutRightBig absolute"
+          >
+            <div class="btn-group" v-for="period in analysis.periods" :key="period.value">
+              <button class="btn btn-lg font-xs m-right-xs" :class="{'btn-white': pageSize !== period.value}"
+                      @click="selectByPageSize(period.value)">
+                {{period.title}}
+              </button>
+            </div>
+          </transition-group>
           <div class="btn-group">
             <button class="btn btn-lg font-xs" :class="{'btn-white': date !== _.toDate(Date.now())}" @click="setToday">今天</button>
           </div>
@@ -54,7 +63,7 @@
         <tr>
           <th :rowspan="analysis.doubleHead ? 2 : 1">期数</th>
           <th :rowspan="analysis.doubleHead ? 2 : 1">开奖时间</th>
-          <th v-if="analysis.numCol.num === 'balls'">
+          <th v-if="analysis.numCol.num === 'balls' || analysis.numCol.num === 'square'">
             <button class="btn num-btn" :class="{'btn-white': showNumType !== 1}" @click="showNumType = 1">号码</button>
             <button class="btn num-btn m-LR-sm" :class="{'btn-white': showNumType !== 2}" @click="showNumType = 2">大小</button>
             <button class="btn num-btn" :class="{'btn-white': showNumType !== 3}" @click="showNumType = 3">单双</button>
@@ -66,15 +75,29 @@
             号码
           </th>
 
+          <th v-if="analysis.championAndRunnerUp" :colspan="3">冠亚和</th>
+
           <th v-if="analysis.specialCode" :colspan="3">特码<span class="sfa question"></span></th>
           <th v-if="analysis.total" :colspan="analysis.doubleHead ? 3 : 1">总和<span class="sfa question"></span></th>
           <th v-if="analysis.longHu">1~5龙虎<span class="sfa question"></span></th>
           <th v-if="analysis.form">形态<span class="sfa question"></span></th>
+
+          <th v-if="analysis.compareLongHu" :colspan="3">
+            <span class="left" @click="longHuPos = --longHuPos % analysis.compareLongHu.length < 0 ? analysis.compareLongHu.length - 1 : longHuPos"><</span>
+            <span v-for="(position, i) in analysis.compareLongHu" v-show="longHuPos === i">{{position.title}}</span>
+            <span class="right" @click="longHuPos = Math.abs(++longHuPos % analysis.compareLongHu.length)">></span>
+          </th>
         </tr>
         <tr v-if="analysis.doubleHead">
           <th>
             {{analysis.doubleHead[1]}}
           </th>
+          <template v-if="analysis.championAndRunnerUp">
+            <th>和数</th>
+            <th>大小</th>
+            <th>单双</th>
+          </template>
+
           <template v-if="analysis.specialCode">
             <th>大小</th>
             <th>单双</th>
@@ -85,61 +108,89 @@
             <th>大小</th>
             <th>单双</th>
           </template>
+          <!--pk10龙虎-->
+          <template v-if="analysis.compareLongHu">
+            <th>和数</th>
+            <th>大小</th>
+            <th>龙虎</th>
+          </template>
         </tr>
         </thead>
       </table>
-      <div ref="body">
-        <table class="table table-border no-margin">
-          <colgroup>
-            <col width="168">
-            <col width="168">
-            <col width="300">
-            <template v-if="analysis.doubleHead">
-              <col width="70">
-              <col width="70">
-              <col width="70">
-              <col width="70">
-              <col width="70">
-              <col width="70">
-            </template>
-            <template v-else>
-              <col width="100">
-              <col width="100">
-              <col width="100">
-              <col width="167">
-            </template>
-          </colgroup>
-          <tbody>
-          <tr v-for="opening in openedList">
-            <td>{{opening.ticketPlanId}}</td>
-            <td>{{_.toDate(opening.openDate)}}</td>
-            <td>
-              <template v-for="item in opening.showTicketOpenNum">
-                <span v-if="analysis.numCol.num === 'balls'" class="item blue circle m-right-xs" :class="item.style">{{item.title}}</span>
-                <dice v-else-if="analysis.numCol.num === 'dices'" class="dice-sm m-right-xs" :class="item.style" :value="item.title"></dice>
-                <!--<span v-else-if="analysis.numCol.num === 'mark6'" class="item blue circle m-right-xs" :class="item.style">{{item.title}}</span>-->
+      <transition
+                  enter-active-class="animated-quick fadeIn"
+                  leave-active-class="animated-quick fadeOut"
+      >
+        <div ref="body" v-show="openedList">
+          <table class="table table-border no-margin">
+            <colgroup>
+              <col width="168">
+              <col width="168">
+              <col width="300">
+              <template v-if="analysis.doubleHead">
+                <col width="70">
+                <col width="70">
+                <col width="70">
+                <col width="70">
+                <col width="70">
+                <col width="70">
               </template>
-              <opening-mark6-balls v-if="analysis.numCol.num === 'mark6'" class="opening-mark6-balls-sm no-shadow"
-                                   :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="opening.fTicketOpenNum" :default-opening="ticketInfo.defaultOpening"
-              ></opening-mark6-balls>
-            </td>
+              <template v-else>
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="167">
+              </template>
+            </colgroup>
+            <tbody>
+            <tr v-for="opening in openedList">
+              <td>{{opening.ticketPlanId}}</td>
+              <td>{{_.toDate(opening.openDate)}}</td>
+              <td>
+                <template v-for="item in opening.showTicketOpenNum">
+                  <span v-if="analysis.numCol.num === 'balls'" class="item blue circle m-right-xs" :class="item.style">{{item.title}}</span>
+                  <dice v-else-if="analysis.numCol.num === 'dices'" class="dice-sm m-right-xs" :class="item.style" :value="item.title"></dice>
+                  <span v-else-if="analysis.numCol.num === 'square'" class="item blue square m-right-xs" :class="item.style">{{item.title}}</span>
+                </template>
+                <opening-mark6-balls v-if="analysis.numCol.num === 'mark6'" class="opening-mark6-balls-sm no-shadow"
+                                     :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="opening.fTicketOpenNum" :default-opening="ticketInfo.defaultOpening"
+                ></opening-mark6-balls>
+              </td>
 
-            <td v-if="analysis.specialCode"><span :class="opening.fSpecialCode.size.style">{{opening.fSpecialCode.size.title}}</span></td>
-            <td v-if="analysis.specialCode"><span :class="opening.fSpecialCode.singleAndDouble.style">{{opening.fSpecialCode.singleAndDouble.title}}</span></td>
-            <td v-if="analysis.specialCode"><span :class="opening.fSpecialCode.total.style">{{opening.fSpecialCode.total.title}}</span></td>
+              <template v-if="analysis.championAndRunnerUp">
+                <td><span :class="opening.fChampionAndRunnerUp.total.style">{{opening.fChampionAndRunnerUp.total.title}}</span></td>
+                <td><span :class="opening.fChampionAndRunnerUp.singleAndDouble.style">{{opening.fChampionAndRunnerUp.singleAndDouble.title}}</span></td>
+                <td><span :class="opening.fChampionAndRunnerUp.size.style">{{opening.fChampionAndRunnerUp.size.title}}</span></td>
+              </template>
 
-            <td v-if="analysis.total"><span :class="opening.fTotal.total.style">{{opening.fTotal.total.title}}</span></td>
-            <td v-if="analysis.total"><span :class="opening.fTotal.size.style">{{opening.fTotal.size.title}}</span></td>
-            <td v-if="analysis.total"><span :class="opening.fTotal.singleAndDouble.style">{{opening.fTotal.singleAndDouble.title}}</span></td>
+              <template v-if="analysis.specialCode">
+                <td><span :class="opening.fSpecialCode.size.style">{{opening.fSpecialCode.size.title}}</span></td>
+                <td><span :class="opening.fSpecialCode.singleAndDouble.style">{{opening.fSpecialCode.singleAndDouble.title}}</span></td>
+                <td><span :class="opening.fSpecialCode.total.style">{{opening.fSpecialCode.total.title}}</span></td>
+              </template>
 
-            <!--龙虎-->
-            <td v-if="analysis.longHu"><span :class="opening.fLongHu.style">{{opening.fLongHu.title}}</span></td>
-            <!--形态-->
-            <td v-if="analysis.form"><span :class="opening.fForm.style">{{opening.fForm.title}}</span></td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+              <template v-if="analysis.total">
+                <td><span :class="opening.fTotal.total.style">{{opening.fTotal.total.title}}</span></td>
+                <td><span :class="opening.fTotal.size.style">{{opening.fTotal.size.title}}</span></td>
+                <td><span :class="opening.fTotal.singleAndDouble.style">{{opening.fTotal.singleAndDouble.title}}</span></td>
+              </template>
+
+              <!--龙虎-->
+              <td v-if="analysis.longHu"><span :class="opening.fLongHu.style">{{opening.fLongHu.title}}</span></td>
+              <!--形态-->
+              <td v-if="analysis.form"><span :class="opening.fForm.style">{{opening.fForm.title}}</span></td>
+
+              <!--pk10龙虎-->
+              <template v-if="analysis.compareLongHu">
+                <td><span :class="opening.fCompareLongHu.longHu.style">{{opening.fCompareLongHu.longHu.title}}</span></td>
+                <td><span :class="opening.fCompareLongHu.size.style">{{opening.fCompareLongHu.size.title}}</span></td>
+                <td><span :class="opening.fCompareLongHu.singleAndDouble.style">{{opening.fCompareLongHu.singleAndDouble.title}}</span></td>
+              </template>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -149,6 +200,21 @@
   import Dice from 'com/dice'
   import tickets from 'api/tickets'
   import * as analysis from './misc/analysis'
+
+  const STYLE_CONFIG = {
+    pk10: {
+      '01': 'yellow',
+      '02': 'deep-blue',
+      '03': 'dark',
+      '04': 'orange',
+      '05': 'light-blue',
+      '06': 'purple',
+      '07': 'light-gray',
+      '08': 'amber',
+      '09': 'dark-brown',
+      '10': 'green',
+    }
+  }
 
   export default {
     name: "analysis-center",
@@ -171,7 +237,8 @@
         openedList: [],
         showNumType: 1, //1 号码 2 大小 3 单双
         analysis: {},
-        fTicketId: this.ticketId
+        fTicketId: this.ticketId,
+        longHuPos: 0 //pk10龙虎位置
       }
     },
 
@@ -180,6 +247,10 @@
         handler() {
           this.ticketInfo = ticketConfig.getById(this.fTicketId)
           this.analysis = analysis[this.ticketInfo.type]
+          this.styleConfig = STYLE_CONFIG[this.ticketInfo.type] || {}
+          this.pageSize = this.analysis.periods[0].value
+          this.date = ''
+
           this.resetData()
         },
         immediate: true
@@ -189,6 +260,9 @@
       },
       date() {
         this.resetData()
+      },
+      longHuPos() {
+        this.$_formatPk10LongHu(this.longHuPos)
       },
       showNumType(type) {
         this.$_formatNumByType(type)
@@ -202,7 +276,7 @@
       },
 
       setToday() {
-        this.pageSize = ''
+        this.pageSize = null
         this.date = _.toDate(Date.now())
       },
 
@@ -247,6 +321,27 @@
             }
           })
         }
+
+        if (this.analysis.championAndRunnerUp) {
+          _.each(this.openedList, item => {
+            item.championAndRunnerUp = this.analysis.championAndRunnerUp(item.fTicketOpenNum)
+            item.fChampionAndRunnerUp = {
+              total: {
+                title: item.championAndRunnerUp.total,
+                style: ''
+              },
+              size: {
+                title: item.championAndRunnerUp.size,
+                style: item.championAndRunnerUp.size === '大' ? 'text-yellow' : ''
+              },
+              singleAndDouble: {
+                title: item.championAndRunnerUp.singleAndDouble,
+                style: item.championAndRunnerUp.singleAndDouble === '单' ? 'text-yellow' : ''
+              },
+            }
+          })
+        }
+
         if (this.analysis.specialCode) {
           _.each(this.openedList, item => {
             item.specialCode = this.analysis.specialCode([_(item.fTicketOpenNum).last()])
@@ -285,7 +380,32 @@
             }
           })
         }
+        if (this.analysis.compareLongHu) {
+          this.longHuPos = 0
+          this.$_formatPk10LongHu(this.longHuPos)
+        }
       },
+
+      $_formatPk10LongHu(pos) {
+        _.each(this.openedList, item => {
+          item.compareLongHu = this.analysis.compareLongHu[pos].algorithm(item.fTicketOpenNum)
+          item.fCompareLongHu = {
+            longHu: {
+              title: item.compareLongHu.longHu,
+              style: item.compareLongHu.longHu === '龙' ? 'text-yellow' : item.compareLongHu.longHu === '和' ? 'text-blue' : ''
+            },
+            size: {
+              title: item.compareLongHu.size,
+              style: item.compareLongHu.size === '大' ? 'text-yellow' : ''
+            },
+            singleAndDouble: {
+              title: item.compareLongHu.singleAndDouble,
+              style: item.compareLongHu.singleAndDouble === '单' ? 'text-yellow' : ''
+            },
+          }
+        })
+      },
+
       $_formatNumByType(type) {
         switch (type) {
           case 2:
@@ -318,7 +438,7 @@
               item.showTicketOpenNum = _.map(item.fTicketOpenNum, num => {
                 return {
                   title: num,
-                  style: ''
+                  style: this.styleConfig[num] || ''
                 }
               })
               return item
@@ -395,6 +515,7 @@
     border-radius: 5px;
     border: solid 1px #e6e6e6;
     box-sizing: border-box;
+    overflow: hidden;
   }
   .main {
     margin: 20px auto;
@@ -469,6 +590,50 @@
   .text-blue {
     color: $new-main-deep-color;
   }
+
+  .yellow {
+    background-color: #e7e047;
+  }
+  .deep-blue {
+    background-color: #4b91cd;
+  }
+  .dark {
+    background-color: #4f4f4f;
+  }
+  .orange {
+    background-color: #ed8036;
+  }
+  .light-blue {
+    background-color: #68dde4;
+  }
+  .purple {
+    background-color: #8d89bc;
+  }
+  .light-gray {
+    background-color: #8d89bc;
+  }
+  .amber {
+    background-color: #dd6c68;
+  }
+  .dark-brown {
+    background-color: #7e3b35;
+  }
+  .green {
+    background-color: #8cc783;
+  }
+
+  .square {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 12px;
+  }
+
+
+
   .circle {
     display: inline-block;
     width: 24px;
@@ -477,5 +642,15 @@
     border-radius: 50%;
     text-align: center;
     font-size: 12px;
+  }
+
+  .left {
+    float: left;
+    margin-left: 5px;
+  }
+
+  .right {
+    float: right;
+    margin-right: 5px;
   }
 </style>

@@ -13,9 +13,10 @@ export default {
       url: '/ticket/ticketmod/openHistoryDetail.json',
       data: {
         ticketId,
+        // pageSize: pageSize ? pageSize : 1000,
         pageSize,
-        date
-      }
+        date,
+      },
     })
       .then(then)
   },

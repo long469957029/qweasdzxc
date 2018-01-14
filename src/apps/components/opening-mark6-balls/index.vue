@@ -220,7 +220,7 @@
       display: inline-block;
       font-size: 24px;
       position: relative;
-      top: 5px;
+      /*top: 5px;*/
       vertical-align: top;
       margin: 0 5px;
     }
@@ -229,5 +229,4 @@
       /*text-indent: 8px;*/
     }
   }
-
 </style>

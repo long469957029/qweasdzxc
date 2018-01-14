@@ -1,3 +1,25 @@
+const periods = [
+  {
+    title: '近100期',
+    value: 100,
+  },
+]
+
+const lowPeriods = [
+  {
+    title: '近30期',
+    value: 30,
+  },
+  {
+    title: '近50期',
+    value: 50,
+  },
+  {
+    title: '近100期',
+    value: 100,
+  },
+]
+
 const compareSize = (half, num) => {
   return num / half >= 1 ? '大' : '小'
 }
@@ -20,6 +42,25 @@ const total = (half, nums) => {
   }
 }
 
+const twoPositionTotal = (half, num1Pos, num2Pos, nums) => {
+  return total(half, [nums[num1Pos], nums[num2Pos]])
+}
+
+const twoPositionLongHu = (half, num1Pos, num2Pos, nums) => {
+  const total = _.reduce([nums[num1Pos], nums[num2Pos]], (total, num) => {
+    return total + Number(num)
+  }, 0)
+  const cLongHu = longHu(num1Pos, num2Pos, nums)
+  const size = compareSize(half, total)
+  const singleAndDouble = checkSingleAndDouble(total)
+
+  return {
+    longHu: cLongHu,
+    size,
+    singleAndDouble,
+  }
+}
+
 const longHu = (num1Index, num2Index, nums) => {
   return nums[num1Index] > nums[num2Index] ?
     '龙' : nums[num1Index] === nums[num2Index] ? '和' : '虎'
@@ -31,6 +72,7 @@ const group = (nums) => {
 }
 
 export const ssc = {
+  periods,
   doubleHead: false,
   numCol: {
     num: 'balls',
@@ -42,6 +84,7 @@ export const ssc = {
 }
 
 export const choose15 = {
+  periods,
   doubleHead: false,
   numCol: {
     num: 'balls',
@@ -53,6 +96,7 @@ export const choose15 = {
 }
 
 export const p5p3 = {
+  periods: lowPeriods,
   doubleHead: false,
   numCol: {
     num: 'balls',
@@ -64,6 +108,7 @@ export const p5p3 = {
 }
 
 export const threeD = {
+  periods: lowPeriods,
   doubleHead: false,
   numCol: {
     num: 'balls',
@@ -75,6 +120,7 @@ export const threeD = {
 }
 
 export const quick3 = {
+  periods,
   doubleHead: false,
   numCol: {
     num: 'dices',
@@ -83,10 +129,44 @@ export const quick3 = {
 }
 
 export const mark6 = {
+  periods: lowPeriods,
   doubleHead: ['开奖号码', '正1 正2 正3 正4 正5 正6 特码'],
   numCol: {
     num: 'mark6',
   },
   specialCode: _.partial(total, 25),
   total: _.partial(total, 175),
+}
+
+export const pk10 = {
+  periods,
+  doubleHead: ['开奖号码', '冠  亚  季  四  五  六  七  八  九  十'],
+  numCol: {
+    num: 'square',
+    size: _.partial(compareSize, 5),
+    singleAndDouble: checkSingleAndDouble,
+  },
+  championAndRunnerUp: _.partial(twoPositionTotal, 12, 0, 1),
+  compareLongHu: [
+    {
+      title: '冠军',
+      algorithm: _.partial(twoPositionLongHu, 12, 0, 9),
+    },
+    {
+      title: '亚军',
+      algorithm: _.partial(twoPositionLongHu, 12, 1, 8),
+    },
+    {
+      title: '季军',
+      algorithm: _.partial(twoPositionLongHu, 12, 2, 7),
+    },
+    {
+      title: '第四名',
+      algorithm: _.partial(twoPositionLongHu, 12, 3, 6),
+    },
+    {
+      title: '第五名',
+      algorithm: _.partial(twoPositionLongHu, 12, 4, 5),
+    },
+  ],
 }
