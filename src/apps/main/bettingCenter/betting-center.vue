@@ -38,7 +38,8 @@
     watch: {
       '$route':{
         handler(to) {
-          this.ticketInfo = ticketConfig.getComplete(this.ticketId)
+          this.ticketInfo = ticketConfig.getById(this.ticketId)
+          // this.ticketInfo = ticketConfig.getComplete(this.ticketId)
 
           // 暂时在这重置bettingChoice
           this.$store.commit(types.RESET_BETTING_CHOICE)

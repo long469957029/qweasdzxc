@@ -8,7 +8,7 @@
     <div class="modal-body">
       <div class="overview clearfix">
         <div class="pull-left m-right-md">
-          {{ticketInfo.info.zhName}}
+          {{ticketInfo.zhName}}
         </div>
         <div class="pull-left">
           第 <span class="confirm-plan-id">{{bettingInfo.planId}}</span> 期

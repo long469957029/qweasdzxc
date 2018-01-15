@@ -143,18 +143,6 @@
         $(this.$refs.confirm).modal({
           backdrop: 'static',
         })
-
-        // $(document).confirm({
-        //   title: '确认投注',
-        //   content: _(confirmTpl).template()({
-        //     ticketInfo: this.ticketInfo,
-        //     ticketName: this.ticketInfo.info.zhName,
-        //     planId: this.bettingInfo.planId,
-        //     totalInfo: this.bettingChoice.totalInfo,
-        //     previewList: this.bettingChoice.buyList,
-        //   }),
-        //   size: 'bc-betDetail-confirm-dialog',
-        //   agreeCallback: () => {
       },
 
       bettingConfirm() {

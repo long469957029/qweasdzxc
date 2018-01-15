@@ -111,12 +111,12 @@ const HeaderView = Base.ItemView.extend({
   renderUserRoleMenu() {
     const acctInfo = Global.memoryCache.get('acctInfo')
     if (acctInfo.userType != 1) {
-      this.$('.js-header-agency-center').removeClass('hidden')
+      this.$('.js-header2-agency-center').removeClass('hidden')
     }
     const dividendStatus = acctInfo.dividendStatus !== dividendConfig.getByName('UN_APPLIED').id
-    this.$('.js-header-router-role[href="#ac/dm"]').toggleClass('hidden', !dividendStatus && !acctInfo.merchant)// header菜单显示权限处理
-    this.$('.js-header-router-role[href="#ac/rp"]').toggleClass('hidden', !acctInfo.redEnvelope)// header菜单显示权限处理
-    this.$('.js-header-router-role[href="#ac/reb"]').toggleClass('hidden', !acctInfo.merchant)// header菜单显示权限处理
+    this.$('.js-header2-router-role[href="#ac/dm"]').toggleClass('hidden', !dividendStatus && !acctInfo.merchant)// header菜单显示权限处理
+    this.$('.js-header2-router-role[href="#ac/rp"]').toggleClass('hidden', !acctInfo.redEnvelope)// header菜单显示权限处理
+    this.$('.js-header2-router-role[href="#ac/reb"]').toggleClass('hidden', !acctInfo.merchant)// header菜单显示权限处理
   },
 
   renderAcctInfo() {

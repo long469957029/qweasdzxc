@@ -4,7 +4,7 @@ require('./index.scss')
 require('./../misc/common-init.js')
 
 const Router = require('./router')
-const HeaderView = require('./header/index')
+// const HeaderView = require('./header/index')
 
 require('com/fullpage')
 
@@ -18,11 +18,11 @@ $('.js-wrapper').removeClass('hidden')
 // });
 
 window.Global.addRegions({
-  headerRegin: '#header',
+  // headerRegin: '#header2',
   mainRegin: '#main',
 })
 
-window.Global.headerRegin.show(new HeaderView())
+// window.Global.headerRegin.show(new HeaderView())
 
 new Router()
 

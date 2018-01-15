@@ -115,6 +115,7 @@ export default {
       // /ticket/show/viewTicket.json
   },
 
+  //设置当前顶部彩种
   setTopCurrentTicket({ticketId, type = 0}) {
     return Global.sync.axios({
       url: '/ticket/show/viewTicket.json',

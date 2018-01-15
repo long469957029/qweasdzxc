@@ -254,8 +254,8 @@
             placement: 'bottom',
           })
 
-          this.$store.dispatch('getColdHot', { ticketId: this.ticketInfo.info.id})
-          this.$store.dispatch('getCurrentMiss', { ticketId: this.ticketInfo.info.id})
+          this.$store.dispatch('getColdHot', { ticketId: this.ticketInfo.id})
+          this.$store.dispatch('getCurrentMiss', { ticketId: this.ticketInfo.id})
         },
       },
       'bettingInfo.planId': {

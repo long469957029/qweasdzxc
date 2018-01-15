@@ -4,6 +4,7 @@ export const SSC = {
   openingType: 'balls',
   defaultOpening: R.repeat('0', 5),
   defaultSelectPlay: '4',
+  type: 'ssc',
 }
 
 export const CHOOSE15 = {
@@ -12,14 +13,16 @@ export const CHOOSE15 = {
   openingType: 'balls',
   defaultOpening: R.repeat('0', 5),
   defaultSelectPlay: '4,0,4',
+  type: 'choose15',
 }
 
-export const DPC = {
+export const THREED = {
   range: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
   counts: 3,
   openingType: 'balls',
   defaultOpening: R.repeat('0', 3),
   defaultSelectPlay: '0',
+  type: 'threeD',
 }
 
 export const P5P3 = {
@@ -28,6 +31,7 @@ export const P5P3 = {
   openingType: 'balls',
   defaultOpening: R.repeat('0', 5),
   defaultSelectPlay: '0',
+  type: 'p5p3',
 }
 
 export const PK10 = {
@@ -36,6 +40,7 @@ export const PK10 = {
   openingType: 'balls',
   defaultOpening: R.repeat('01', 10),
   defaultSelectPlay: '4',
+  type: 'pk10',
 }
 
 export const QUICK3 = {
@@ -44,6 +49,7 @@ export const QUICK3 = {
   openingType: 'dices',
   defaultOpening: R.repeat('3', 3),
   defaultSelectPlay: '9',
+  type: 'quick3',
 }
 
 
@@ -140,5 +146,6 @@ export const MARK6 = {
   defaultOpening: R.repeat('01', 7),
   defaultSelectPlay: '0',
   getNum: getFortyNine,
-  sx: shengXiao
+  sx: shengXiao,
+  type: 'mark6',
 }
