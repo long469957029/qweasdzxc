@@ -1,4 +1,5 @@
 import '../misc/index.scss'
+import NoticeView from '../../skeleton/bases/notice'
 
 const bannerConfig = require('../misc/bannerConfig')
 
@@ -65,11 +66,11 @@ const DashboardView = Base.ItemView.extend({
       url: '/acct/usernotice/getdashboardadvertise.json',
     })
   },
-  getXhr() {
-    return Global.sync.ajax({
-      url: '/info/activitylist/geturgentbulletinlist.json',
-    })
-  },
+  // getXhr() {
+  //   return Global.sync.ajax({
+  //     url: '/info/activitylist/geturgentbulletinlist.json',
+  //   })
+  // },
   /**
    * 获取商城新品
    */
@@ -89,7 +90,7 @@ const DashboardView = Base.ItemView.extend({
     })
 
     self.$imgList = self.$('.js-db-mb-item')
-    self.$bulletinMarquee = self.$('.js-bulletin-marquee > marquee')
+    self.$bulletinMarquee = self.$('.js-bulletin-marquee')
     self.$entryContainer = self.$('.js-dashboard-entry')
     self.$navMallSubList = self.$('.js-db-mall-content')
     // self.$ticketMain = self.$('.js-db-ticketList')
@@ -104,10 +105,10 @@ const DashboardView = Base.ItemView.extend({
     // self.subscribe('acct', 'acct:updating', () => {
     //   self.renderAcctInfoView()
     // })
-
+    this.$bulletinMarquee.html(new NoticeView().render().el)
     // self.renderEntry()
     self.renderMainBannerAD()
-    self.renderbulletin()
+    // self.renderbulletin()
     this.formateMallEntryList()
   },
 
@@ -131,41 +132,41 @@ const DashboardView = Base.ItemView.extend({
     })
   },
 
-  renderbulletin() {
-    const self = this
-    this.handleGetXhr()
-    window.setInterval(() => {
-      self.handleGetXhr()
-    }, 30000)
-  },
-
-  handleGetXhr() {
-    const self = this
-    this.getXhr()
-      .done((res) => {
-        if (res && res.result === 0) {
-          self.updateNotice(res.root || [])
-        }
-      })
-  },
-  updateNotice (newsList) {
-    const self = this
-    if (!newsList || newsList.length === 0) {
-      newsList = [
-        '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
-        '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
-        '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
-      ]
-    }
-    const html = _.map(newsList, (news) => {
-      return `${'<li>' +
-        '<span>'}${news}</span>` +
-        '</li>'
-    }).join('')
-    self.$bulletinMarquee.html(html)
-    this.$('.js-db-bulletin-cur').html(1)
-    this.$('.js-db-bulletin-total').html(newsList.length)
-  },
+  // renderbulletin() {
+  //   const self = this
+  //   this.handleGetXhr()
+  //   window.setInterval(() => {
+  //     self.handleGetXhr()
+  //   }, 30000)
+  // },
+  //
+  // handleGetXhr() {
+  //   const self = this
+  //   this.getXhr()
+  //     .done((res) => {
+  //       if (res && res.result === 0) {
+  //         self.updateNotice(res.root || [])
+  //       }
+  //     })
+  // },
+  // updateNotice (newsList) {
+  //   const self = this
+  //   if (!newsList || newsList.length === 0) {
+  //     newsList = [
+  //       '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
+  //       '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
+  //       '[h5移动网页上线公告]我们使用先进的H5技术萌萌咑!',
+  //     ]
+  //   }
+  //   const html = _.map(newsList, (news) => {
+  //     return `${'<li>' +
+  //       '<span>'}${news}</span>` +
+  //       '</li>'
+  //   }).join('')
+  //   self.$bulletinMarquee.html(html)
+  //   this.$('.js-db-bulletin-cur').html(1)
+  //   this.$('.js-db-bulletin-total').html(newsList.length)
+  // },
 
   generateBannerAD(data) {
     const liList = []

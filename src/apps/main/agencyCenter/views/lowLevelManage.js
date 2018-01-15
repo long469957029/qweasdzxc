@@ -222,7 +222,7 @@ const LowLevelManageView = SearchGrid.extend({
         if (res && res.result === 0) {
           // 设置了则弹出验证框
           // $(document).verifyFundPwd({parentView:self});
-          Global.appRouter.navigate(`#/ac/tr/${rowInfo.userId}?name=${rowInfo.userName}`, {
+          Global.router.goTo(`ac/tr/${rowInfo.userId}?name=${rowInfo.userName}`, {
             trigger: true,
             replace: false,
           })

@@ -18,7 +18,7 @@ const MyDividView = Base.ItemView.extend({
   },
 
   checkAgreement() {
-    Global.router.goTo('#ac/am?operationStatus=3&username=我')
+    Global.router.goTo('ac/sum/am?operationStatus=3&username=我')
   },
   serializeData() {
     return this.options
