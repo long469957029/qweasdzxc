@@ -3,6 +3,7 @@ const modules = require('skeleton/modules')
 
 import Vue from 'vue'
 import store from '../store/index'
+import MainHeader from 'skeleton/bases/header/index'
 Object.defineProperty(Vue.prototype, '_', { value: _ })
 
 require('widgets')
@@ -49,6 +50,9 @@ window.location.hash = '#/i'
 
 window.app = new Vue({
   el: '#main-wrapper',
+  components: {
+    MainHeader,
+  },
   store,
   router,
 })

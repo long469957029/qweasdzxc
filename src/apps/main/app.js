@@ -1,4 +1,6 @@
-import HeaderView from 'skeleton/bases/header'
+// import HeaderView from 'skeleton/bases/header'
+
+
 import NavbarView from 'skeleton/bases/navbar'
 // import NoticeView from 'skeleton/bases/notice'
 import FooterView from 'skeleton/bases/footer'
@@ -23,7 +25,7 @@ App.on('start', () => {
 })
 
 App.addRegions({
-  headerRegion: '#header',
+  // headerRegion: '#header2',
   navbarRegin: '#navbar',
   // noticeRegin: '#notice',
   toolbarRegin: '#toolbar',
@@ -247,7 +249,7 @@ const _bindChaseDetailHandler = () => {
   })
 }
 App.addInitializer(() => {
-  App.headerRegion.show(new HeaderView())
+  // App.headerRegion.show(new HeaderView())
   App.navbarRegin.show(new NavbarView({
     navbar: Global.ui.menu.getNav(),
   }))
