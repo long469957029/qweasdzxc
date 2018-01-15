@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import store from '../store/index'
+"use strict";
 
 require('./index.scss');
 require('./../misc/common-init.js');
@@ -185,7 +184,7 @@ $.widget('gl.trend', {
 
     Draw.DrawLine.draw(Draw.Chart.ini.default_has_line);
   },
-
+  
   update: function(pageSize) {
     var self = this;
 

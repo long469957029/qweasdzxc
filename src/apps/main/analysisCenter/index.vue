@@ -83,9 +83,9 @@
           <th v-if="analysis.form">形态<span class="sfa question"></span></th>
 
           <th v-if="analysis.compareLongHu" :colspan="3">
-            <span class="left" @click="longHuPos = --longHuPos % analysis.compareLongHu.length < 0 ? analysis.compareLongHu.length - 1 : longHuPos"><</span>
+            <span class="left" @click="longHuPos = --longHuPos % analysis.compareLongHu.length < 0 ? analysis.compareLongHu.length - 1 : longHuPos"></span>
             <span v-for="(position, i) in analysis.compareLongHu" v-show="longHuPos === i">{{position.title}}</span>
-            <span class="right" @click="longHuPos = Math.abs(++longHuPos % analysis.compareLongHu.length)">></span>
+            <span class="right" @click="longHuPos = Math.abs(++longHuPos % analysis.compareLongHu.length)"></span>
           </th>
         </tr>
         <tr v-if="analysis.doubleHead">
@@ -515,7 +515,7 @@
     border-radius: 5px;
     border: solid 1px #e6e6e6;
     box-sizing: border-box;
-    overflow: hidden;
+    /*overflow: hidden;*/
   }
   .main {
     margin: 20px auto;
@@ -592,7 +592,7 @@
   }
 
   .yellow {
-    background-color: #e7e047;
+    background-color: #e8e048;
   }
   .deep-blue {
     background-color: #4b91cd;
@@ -601,25 +601,25 @@
     background-color: #4f4f4f;
   }
   .orange {
-    background-color: #ed8036;
+    background-color: #ee8036;
   }
   .light-blue {
-    background-color: #68dde4;
+    background-color: #68dfe3;
   }
   .purple {
-    background-color: #8d89bc;
+    background-color: #8d89bd;
   }
   .light-gray {
-    background-color: #8d89bc;
+    background-color: #c1c1c1;
   }
   .amber {
-    background-color: #dd6c68;
+    background-color: #dc6c68;
   }
   .dark-brown {
-    background-color: #7e3b35;
+    background-color: #7b3d33;
   }
   .green {
-    background-color: #8cc783;
+    background-color: #8cc782;
   }
 
   .square {
@@ -649,10 +649,17 @@
   .left {
     float: left;
     margin-left: 5px;
+    background: url(./misc/left.png);
+    width: 10px;
+    height: 18px;
   }
 
   .right {
     float: right;
     margin-right: 5px;
+    background: url(./misc/left.png);
+    width: 10px;
+    height: 18px;
+    transform: rotate(180deg);
   }
 </style>

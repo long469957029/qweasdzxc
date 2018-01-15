@@ -49,7 +49,7 @@
       one-size: 13px,
       one-left: 27px,
       one-top: 28px,
-      dot-pos: (17px, 30px, 43px, 18px, 30px, 40px)
+      dot-pos: (17px, 30px, 43px, 18px, 29px, 40px)
     ),
     sm: (
       size: 30px,
