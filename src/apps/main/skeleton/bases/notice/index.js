@@ -1,10 +1,9 @@
+import './index.scss'
+import tpl from './index.html'
 
+export default Base.ItemView.extend({
 
-require('./index.scss')
-
-const NoticeView = Base.ItemView.extend({
-
-  template: require('./index.html'),
+  template: tpl,
 
   className: 'hidden',
 
@@ -20,12 +19,13 @@ const NoticeView = Base.ItemView.extend({
   getXhr() {
     return Global.sync.ajax({
       url: '/info/activitylist/geturgentbulletinlist.json',
+      version: 2,
     })
   },
 
   initialize() {
     _(this.options || {}).extend({
-      spacing: 20,
+      spacing: 50,
       total: 0,
       index: 1,
     })
@@ -40,6 +40,8 @@ const NoticeView = Base.ItemView.extend({
 
     this.$content = this.$('.js-gl-notice-content')
     this.$pnDown = this.$('.js-wt-pn-down')
+    this.$bulletinTotal = this.$('.js-db-bulletin-total')
+    this.$bulletinCur = this.$('.js-db-bulletin-cur')
 
     this.handleGetXhr()
     window.setInterval(() => {
@@ -91,10 +93,11 @@ const NoticeView = Base.ItemView.extend({
     }
 
     this.options.total = this.noticeList.length
-
+    this.$bulletinTotal.html(this.options.total)
     showList = showList.concat(this.noticeList)
     showList = showList.concat(this.noticeList)
-
+    this.options.index = 1
+    this.$bulletinCur.html(this.options.index)
     this.$content.html(_(showList).map((notice) => {
       return `<li><a class="router" href="#nc/nb/detail/${notice.bulletionId}">${notice.title}</a></li>`
     }))
@@ -118,7 +121,12 @@ const NoticeView = Base.ItemView.extend({
     this.$content.animate({
       top: 0,
     }, 500, () => {
-      self.$content.prepend(self.$content.find('li').last()).css('top', -self.options.spacing)
+      self.$content.prepend(self.$content.find('li').last()).css('top', 0)
+      self.options.index -= 1
+      if (self.options.index < 1) {
+        self.options.index = self.options.total
+      }
+      self.$bulletinCur.html(self.options.index)
     })
 
     return false
@@ -132,9 +140,14 @@ const NoticeView = Base.ItemView.extend({
     }
 
     this.$content.animate({
-      top: -this.options.spacing * 2,
+      top: -this.options.spacing,
     }, 500, () => {
-      self.$content.append(self.$content.find('li').first()).css('top', -self.options.spacing)
+      self.$content.append(self.$content.find('li').first()).css('top', 0)
+      self.options.index += 1
+      if (self.options.index > self.options.total) {
+        self.options.index = 1
+      }
+      self.$bulletinCur.html(self.options.index)
     })
 
     return false
@@ -147,5 +160,3 @@ const NoticeView = Base.ItemView.extend({
   },
 
 })
-
-module.exports = NoticeView

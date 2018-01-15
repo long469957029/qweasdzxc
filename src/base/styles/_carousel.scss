@@ -18,6 +18,7 @@
           width: 100%;
           display: block;
           line-height: 1;
+          position: absolute;
         }
       }
     }
@@ -26,29 +27,33 @@
     }
     .active {
       left: 0;
+      img, a > img{
+        opacity: 1;
+        animation: imgZoomIn 1.5s ease-in-out;
+      }
     }
     .next, .prev {
       position: absolute;
       top: 0;
       width: 100%;
     }
-    .next {
-      left: 100%;
-    }
-    .prev {
-      left: -100%;
-    }
-    .next.left, .prev.right {
-      left: 0;
-    }
-    .active {
-      &.left {
-        left: -100%;
-      }
-      &.right {
-        left: 100%;
-      }
-    }
+    //.next {
+    //  left: 0;
+    //}
+    //.prev {
+    //  left: 0;
+    //}
+    //.next.left, .prev.right {
+    //  left: 0;
+    //}
+    //.active {
+    //  &.left {
+    //    left: 0;
+    //  }
+    //  &.right {
+    //    left: 0;
+    //  }
+    //}
   }
 }
 
@@ -134,5 +139,17 @@
   }
   p {
     margin-bottom: 0;
+  }
+}
+@keyframes imgZoomIn{
+
+  from {
+    -webkit-transform: scale3d(2, 2, 2);
+    transform: scale3d(2, 2, 2);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
   }
 }
