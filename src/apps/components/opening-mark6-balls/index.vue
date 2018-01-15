@@ -1,23 +1,25 @@
 <template>
-  <div class="opening-balls">
-    <div class="inline-block vertical-top"  v-for="i in counts" :key="i">
-      <div class="ball-item-wrapper">
-        <div class="ball-item">
-          <div class="ball-item-inner" ref="balls">
-            <div class="text-circle" :class="item.style" v-for="item in range">{{item.title}}</div>
-            <div class="text-circle" :class="item.style" v-for="item in range">{{item.title}}</div>
+  <div class="opening-mark6-balls">
+    <template v-for="i in counts">
+      <div class="inline-block vertical-top" :key="i">
+        <div class="ball-item-wrapper">
+          <div class="ball-item">
+            <div class="ball-item-inner" ref="balls">
+              <div class="text-circle" :class="item.style" v-for="item in range">{{item.title}}</div>
+              <div class="text-circle" :class="item.style" v-for="item in range">{{item.title}}</div>
+            </div>
           </div>
         </div>
+        <transition
+          name="custom-classes-transition"
+          enter-active-class="bounceInUp animated-quick"
+          leave-active-class="bounceOutUp animated-quick"
+        >
+          <div class="ball-sx" v-if="!rollingStatus[i - 1]">{{fOpeningBalls[i - 1] && fOpeningBalls[i - 1].sx}}</div>
+        </transition>
       </div>
       <div class="add" v-if="counts - i === 1">+</div>
-      <transition
-        name="custom-classes-transition"
-        enter-active-class="bounceInUp animated-quick"
-        leave-active-class="bounceOutUp animated-quick"
-      >
-        <div class="ball-sx" v-if="!rollingStatus[i - 1]">{{fOpeningBalls[i - 1] && fOpeningBalls[i - 1].sx}}</div>
-      </transition>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -62,16 +64,19 @@
                 sx: bettingTypes.MARK6.sx[ball]
               }
             })
-            this.rolling()
+            this.$nextTick(() => {
+              this.rolling()
+            })
           }
-        }
+        },
+        immediate: true
       }
     },
 
     methods: {
       rolling() {
         for(let i = 0; i < this.counts; ++i) {
-          if (!this.init) {
+          if (this.init) {
             this.$refs.balls[i].style.top = `${this.$_getDes(i)}px`
           } else {
             _.delay(() => {
@@ -131,9 +136,33 @@
   @import
   "~base/styles/variable";
 
-  .opening-balls{
+  .opening-mark6-balls{
     max-width: 395px;
     display: inline-block;
+
+    &.opening-mark6-balls-sm {
+      &.no-shadow {
+        .ball-item-wrapper {
+          &:after {
+            display: none;
+          }
+        }
+        .ball-item {
+          height: 24px;
+        }
+      }
+
+      .text-circle {
+        height: 24px;
+        width: 24px;
+        line-height: 24px;
+        font-size: 16px;
+      }
+      .ball-item {
+        margin-left: 2px;
+        margin-right: 2px;
+      }
+    }
 
     .ball-item-wrapper {
       position: relative;
@@ -157,7 +186,8 @@
       overflow: hidden;
       position: relative;
       width: 30px;
-      margin-right: 10px;
+      margin-left: 5px;
+      margin-right: 5px;
     }
     .ball-item-inner {
       position: relative;
@@ -167,7 +197,7 @@
       font-family: Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
       position: relative;
       overflow: hidden;
-      margin-bottom: 10px;
+      margin: 0 0 10px;
       height: 30px;
       width: 30px;
       font-size: 18px;
@@ -190,14 +220,13 @@
       display: inline-block;
       font-size: 24px;
       position: relative;
-      top: 5px;
+      /*top: 5px;*/
       vertical-align: top;
-      margin-right: 10px;
+      margin: 0 5px;
     }
     .ball-sx {
       font-size: 14px;
-      text-indent: 8px;
+      /*text-indent: 8px;*/
     }
   }
-
 </style>

@@ -28,7 +28,7 @@ const router = appRouters.install()
 router.beforeEach((to, from, next) => {
   let isVue = false
 
-  _(['/bc']).each(function(router) {
+  _(['/bc', '/analysis']).each(function(router) {
     if (to.path.indexOf(router) !== -1) {
       isVue = true
     }

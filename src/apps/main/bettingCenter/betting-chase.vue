@@ -497,10 +497,10 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
         // 腾讯分分彩，金额限制1000元
         if (this.ticketId === 31) {
           const chasePlan = _(this.selectedChaseList).find((item) => {
-            return _(item.betMoney).formatDiv(10000) > this.ticketInfo.info.betAmountLimit
+            return _(item.betMoney).formatDiv(10000) > this.ticketInfo.betAmountLimit
           })
           if (chasePlan) {
-            Global.ui.notification.show(`试运行期间，每期单笔投注不超过${this.ticketInfo.info.betAmountLimit}元。`)
+            Global.ui.notification.show(`试运行期间，每期单笔投注不超过${this.ticketInfo.betAmountLimit}元。`)
             return false
           }
         }

@@ -5,7 +5,6 @@
 
     <div class="bc-missOptional-main" v-if="_.find(playRule.topOp, op => op)">
       <transition-group
-        name="custom-classes-transition"
         enter-active-class="animated fadeInLeftBig"
         leave-active-class="animated fadeOutLeftBig absolute"
       >
@@ -30,7 +29,6 @@
               <div class="js-bc-select-item-title tab-title" v-if="fRule.row.title && fRule.row.title !== '无'">
                 <div>{{fRule.row.title}}</div>
                 <transition
-                  name="custom-classes-transition"
                   enter-active-class="animated fadeIn"
                   leave-active-class="animated fadeOut"
                 >

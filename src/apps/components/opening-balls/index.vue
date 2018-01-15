@@ -157,7 +157,7 @@
       font-family: dokchamp, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
       position: relative;
       overflow: hidden;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .text-circle-num {
       height: 40px;
