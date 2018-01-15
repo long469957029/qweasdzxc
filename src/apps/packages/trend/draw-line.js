@@ -7,10 +7,8 @@ const DrawLine = {
   check(a) {
     return /^(charball|cbg)/i.test(a.className)
   },
-  on_off: true,
-  bind(b, a) {
+  bind(b) {
     this.table = b
-    this.on_off = a
     return this
   },
   color(a) {
@@ -28,15 +26,6 @@ const DrawLine = {
         LG.color = b.color
         JoinLine.indent = b.indent
         this.LineGroup.push(new LG(this.table, b[0], b[1], b[2], b[3], this.check))
-      }
-    }
-    if (this.on_off) {
-      const f = this
-      const c = document.getElementById(this.on_off)
-      if (c) {
-        c.onclick = function() {
-          f.show(this.checked)
-        }
       }
     }
     return this
@@ -58,7 +47,7 @@ var JoinLine = function(a, b) {
   this.color = a || '#000000'
   this.size = b || 1
   this.lines = []
-  this.tmpDom = null 
+  this.tmpDom = null
   this.visible = true
   this.box = document.body
 }
@@ -166,9 +155,9 @@ JoinLine.prototype = {
     let p = g - f,
       n = o - m
     const k = Math.round(Math.sqrt(Math.pow(p, 2) + Math.pow(n, 2)))
-    let d, 
-      j, 
-      q, 
+    let d,
+      j,
+      q,
       h
     const l = Math.round((p * e) / k)
     const i = Math.round((n * e) / k)
@@ -252,7 +241,8 @@ fw.onReady = function(a) {
   Chart.on(window, 'load', a)
 }
 
-module.exports = {
+
+export default {
   Chart,
   DrawLine,
 }

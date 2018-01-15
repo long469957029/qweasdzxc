@@ -1,10 +1,10 @@
 "use strict";
 
 require('./index.scss');
-require('./../misc/common-init.js');
+require('../../misc/common-init.js');
 
 var ticketConfig = require('./config');
-var Draw = require('./draw-line');
+var Draw = require('../draw-line');
 
 var BtnGroup = require('com/btnGroup');
 
@@ -184,7 +184,7 @@ $.widget('gl.trend', {
 
     Draw.DrawLine.draw(Draw.Chart.ini.default_has_line);
   },
-  
+
   update: function(pageSize) {
     var self = this;
 

@@ -83,7 +83,7 @@
           <th v-if="analysis.form">形态<span class="sfa question"></span></th>
 
           <th v-if="analysis.compareLongHu" :colspan="3">
-            <span class="left" @click="longHuPos = --longHuPos % analysis.compareLongHu.length < 0 ? analysis.compareLongHu.length - 1 : longHuPos"></span>
+            <span class="left" @click="longHuPos = --longHuPos % analysis.compareLongHu.length < 0 ? analysis.compareLongHu.length - 1 : longHuPos"><</span>
             <span v-for="(position, i) in analysis.compareLongHu" v-show="longHuPos === i">{{position.title}}</span>
             <span class="right" @click="longHuPos = Math.abs(++longHuPos % analysis.compareLongHu.length)"></span>
           </th>
@@ -515,7 +515,7 @@
     border-radius: 5px;
     border: solid 1px #e6e6e6;
     box-sizing: border-box;
-    /*overflow: hidden;*/
+    overflow: hidden;
   }
   .main {
     margin: 20px auto;
@@ -660,6 +660,5 @@
     background: url(./misc/left.png);
     width: 10px;
     height: 18px;
-    transform: rotate(180deg);
   }
 </style>
