@@ -1,0 +1,173 @@
+<template>
+  <div class="slide-show" v-if="!bannerLoading" @mouseover="clearInv" @mouseout="runInv">
+    <div class="slide-img">
+      <a :href="slides[nowIndex].href">
+        <transition name="slide-trans">
+          <img v-if="isShow" :src="slides[nowIndex].src">
+        </transition>
+        <transition name="slide-trans-old">
+          <img v-if="!isShow" :src="slides[nowIndex].src">
+        </transition>
+      </a>
+    </div>
+    <!--<h2>{{ slides[nowIndex].title }}</h2>-->
+    <ul class="slide-pages" v-show="isPage">
+      <!--<li @click="goto(prevIndex)">&lt;</li>-->
+      <li v-for="(item, index) in slides"
+          @click="goto(index)"
+      >
+        <a :class="{on: index === nowIndex}"></a>
+      </li>
+      <!--<li @click="goto(nextIndex)">&gt;</li>-->
+    </ul>
+  </div>
+  <animateLoading v-else></animateLoading>
+</template>
+
+<script>
+  import animateLoading from 'com/loading-animate'
+  import dashboard from '../../api/dashboard'
+  export default {
+    props: {
+      inv: {
+        type: Number,
+        default: 5000
+      }
+    },
+    components: {
+      animateLoading
+    },
+    data () {
+      return {
+        slides:[
+          {
+            src: require('./misc/banner-1.png'),
+          },
+          {
+            src: require('./misc/banner-2.png'),
+          },
+          {
+            src: require('./misc/banner-3.png'),
+          }
+        ],
+        nowIndex: 0,
+        isShow: true,
+        isPage: false,
+        bannerLoading:true
+      }
+    },
+    computed: {
+      prevIndex () {
+        if (this.nowIndex === 0) {
+          return this.slides.length - 1
+        }
+        else {
+          return this.nowIndex - 1
+        }
+      },
+      nextIndex () {
+        if (this.nowIndex === this.slides.length - 1) {
+          return 0
+        }
+        else {
+          return this.nowIndex + 1
+        }
+      }
+    },
+    methods: {
+      goto (index) {
+        this.isShow = false
+        setTimeout(() => {
+          this.isShow = true
+          this.nowIndex = index
+        }, 10)
+      },
+      runInv () {
+        if (this.slides.length > 1) {
+          this.invId = setInterval(() => {
+            this.goto(this.nextIndex)
+          }, this.inv)
+        }
+      },
+      clearInv () {
+        clearInterval(this.invId)
+      }
+    },
+    mounted () {
+      dashboard.getBannerADXhr(
+        ({data}) => {
+          if (data && data.result === 0) {
+            this.slides = data.root || this.slides
+            this.bannerLoading = false
+            this.isPage = this.slides.length > 1
+          }
+        })
+      this.runInv();
+    }
+  }
+</script>
+
+<style scoped>
+  .slide-trans-enter-active {
+    transition: all .5s;
+  }
+
+  .slide-trans-enter {
+    transform: scale(2, 2);
+    opacity: 1;
+  }
+
+  .slide-trans-old-leave-active {
+    transition: all .5s;
+    opacity: 0;
+  }
+
+  .slide-show {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+  }
+
+  .slide-img {
+    width: 100%;
+  }
+
+  .slide-img img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+  }
+
+  .slide-pages {
+    position: absolute;
+    bottom: 20px;
+    margin-bottom: 5px;
+    padding: 5px 20px;
+    background: rgba(0, 0, 0, .4);
+    border-radius: 20px;
+  }
+
+  .slide-pages li {
+    display: inline-block;
+  }
+
+  .slide-pages li a {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .6);
+    margin-right: 15px;
+    margin-left: 15px;
+    cursor: pointer;
+  }
+
+  .slide-pages li a.on {
+    background: rgba(255, 255, 255, .6);
+  }
+</style>
