@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import store from '../store/index'
+// import store from '../store/index'
 
 require('./index.scss');
 require('./../misc/common-init.js');

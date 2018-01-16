@@ -4,7 +4,7 @@ const modules = require('skeleton/modules')
 import Vue from 'vue'
 import store from '../store/index'
 import MainHeader from 'skeleton/bases/header/index'
-Object.defineProperty(Vue.prototype, '_', { value: _ })
+Object.defineProperty(Vue.prototype, '_', {value: _})
 
 require('widgets')
 
@@ -28,7 +28,7 @@ const router = appRouters.install()
 router.beforeEach((to, from, next) => {
   let isVue = false
 
-  _(['/bc', '/analysis']).each(function(router) {
+  _(['/bc', '/analysis']).each(function (router) {
     if (to.path.indexOf(router) !== -1) {
       isVue = true
     }
@@ -63,7 +63,6 @@ _.delay(() => {
 
 window.router = router
 window.$route = app.$route
-
 
 
 // Global.m.oauth.start()

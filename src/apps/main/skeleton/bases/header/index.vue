@@ -1,22 +1,23 @@
 <template>
   <div class="top-nav">
-    <div class="header-main overflow-hidden">
+    <div class="header-main ">
       <div class="pull-left">
         <a class="header-left-link" href="#/">线路中心</a>
         <a class="header-left-link" href="#/">急速登录器</a>
         <a class="header-left-link" href="#/">防劫持教程</a>
       </div>
-      <div class="js-gl-service header-customer-entry  pull-right ">
+      <div class="js-gl-service header-customer-entry  pull-right overflow-hidden">
         <span class="sfa sfa-customer-service"></span><span class="header-customer-text">在线客服</span>
       </div>
-      <div class="js-header-not-login pull-right  ani mated fadeOutR ightBig ">
-        <a class="js-header-try header-try" href="javascript:void(0);">免费试玩</a>
-        <button type="button" class="js-header-login header-login ">登录</button>
+      <div class="header-not-login pull-right  anima ted fad eOutRightBig" v-show="loginPanel">
+        <a class="header-try header-try" href="javascript:void(0);">免费试玩</a>
+        <button type="button" class="js-header-login header-login " @click="showLogin">登录</button>
       </div>
-      <div class="js-header-has-logined header-has-logined  pull-right animate d fadeI nRightBig hidden">
+      <div class="js-header-has-logined header-has-logined  pull-right anima ted fadeIn RightBig "
+           v-show="userPanel">
         <div class="js-header-menu header-menu">
-          <span class="sfa sfa-head header-headshot "></span>
-          <span class="js-header-username header-name">kaka0609</span>
+          <span class="sfa header-headshot "><img :src="imgUrl"/></span>
+          <span class="js-header-username header-name">{{userUname}}</span>
           <i class="fa fa-angle-down "></i>
           <div class="header-menu-place"></div>
           <div class="js-header-menu-body header-menu-body">
@@ -29,7 +30,8 @@
           </div>
         </div>
         <div class="header-amount-panel">
-          <div class="js-header-amount header-amount">￥123456789.00</div>
+          ￥
+          <div class="js-header-amount header-amount">{{userAmount}}</div>
           <div class="js-header-recharge header-recharge">充值</div>
         </div>
         <div class="js-header-announcement header-announcement active">
@@ -74,38 +76,86 @@
         </div>
       </div>
     </div>
+    <!-- 登录 -->
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="loginModal"
+         v-show="showLoginModal">
+      <login ref="login" @dialogClose="closeDialog"></login>
+    </div>
   </div>
 </template>
 
 <script>
+  import Login from 'skeleton/bases/login/login'
+  import avatarConf from 'userCenter/misc/avatarConfig'
   export default{
-    name: 'main-header2',
+    name: 'main-header',
 
     data () {
-      return {}
+      return {
+        showLoginModal: false,
+        //提交中，禁用按钮
+        pushing: false,
+        // 默认显示登录
+        loginPanel: true,
+        // 默认隐藏用户界面
+        userPanel: false,
+        amount: 0.00,
+        username: '',
+        userAvatar: '',
+      }
     },
 
     props: {},
 
-    components: {},
-
-    mounted () {
-      this.$nextTick(() => {
-      })
+    components: {
+      Login,
     },
 
     watch: {},
 
-    computed: {},
+    computed: {
+      userUname() {
+        return this.$store.state.userInfo.uName
+      },
+      userAmount() {
+        return _(this.$store.state.userInfo.balance).formatDiv(10000, {fixed: 2})
+      },
+      imgUrl(){
+        const iconId = this.$store.state.userInfo.headIcon
+        const url = avatarConf.get(iconId).logo
+        return url
+      }
+    },
 
     filters: {},
 
-    methods: {}
+    methods: {
+      showLogin() {
+
+        this.pushing = true
+        this.showLoginModal = true
+
+        this.$nextTick(() => {
+//          this.$refs.showLogin.init()
+
+          $(this.$refs.loginModal).modal({
+            backdrop: 'static',
+          })
+            .on('hidden.modal', () => {
+              this.showLoginModal = false
+            })
+        })
+      },
+      closeDialog(){
+        this.loginPanel = false
+        this.userPanel = true
+        $(this.$refs.loginModal).modal('hide')
+      },
+    }
   }
 </script>
 
 <style lang="scss" scoped>
-  @charset "UTF-8";
   @import "~base/styles/imports";
 
   //top-nav entry/index.html中定义
@@ -116,7 +166,7 @@
     left: 0;
     right: 0;
     top: 0;
-    z-index: 6;
+    /*z-index: 6;*/
     position: relative;
     vertical-align: middle;
 
@@ -137,22 +187,38 @@
       float: left;
       font-size: 14px;
       color: rgba(255, 255, 255, 0.5);
-      line-height: 40px;
       vertical-align: middle;
-    }
-    .header-login {
+      margin: 6px 0px;
       width: 90px;
       height: 27px;
+      border-radius: 3px;
+      text-align: center;
+      line-height: 27px;
+      border: 0;
+      &.active, &:hover {
+        background: #237477;
+        color: #fff;
+      }
+    }
+    .header-login {
+      display: inline-block;
+      float: left;
+      width: 90px;
+      height: 27px;
+      line-height: 25px;
       margin: 6px 20px;
-      background: #237477;
       border: 0;
       border-radius: 3px;
       font-size: 14px;
       color: #fff;
-      line-height: 27px;
       text-align: center;
-      outline: none;
       vertical-align: middle;
+      color: rgba(255, 255, 255, 0.5);
+      background: transparent;
+      &.active, &:hover {
+        background: #237477;
+        color: #fff;
+      }
     }
 
     .header-customer-entry {
@@ -197,7 +263,7 @@
           display: inline-block;
           width: 32px;
           height: 32px;
-          margin: 4px 0;
+          /*margin: 4px 0;*/
           vertical-align: middle;
           float: left;
         }

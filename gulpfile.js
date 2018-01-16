@@ -147,6 +147,8 @@ gulp.task('server.webpack', () => {
     stats: {
       colors: true,
     },
+    // 取消框架域名检测
+    disableHostCheck: true
   }).listen(devConfig.devServer.port, 'localhost', (err) => {
     if (err) {
       console.log(err)

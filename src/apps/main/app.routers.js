@@ -24,7 +24,7 @@ Vue.use(VueRouter)
 
 export const install = () => {
 
-  const acctInfo = Global.memoryCache.get('acctInfo')
+  // const acctInfo = Global.memoryCache.get('acctInfo')
   return new VueRouter({
     // mode: 'history',
     routes: [
