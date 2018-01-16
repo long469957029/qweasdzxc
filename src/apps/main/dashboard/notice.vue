@@ -64,19 +64,7 @@
         dashboard.getNoticeXhr(
           ({data}) => {
             if (data && data.result === 0) {
-              this.noticeList = [...data.root, ...[{
-                  title: "测试一",
-                  bulletionId: 20855,
-                  time: 1514995200000,
-                  desc: null,
-                  isTop: 0
-                },{
-                  title: "测试二",
-                  bulletionId: 20855,
-                  time: 1514995200000,
-                  desc: null,
-                  isTop: 0
-                }]] || this.noticeList
+              this.noticeList = data.root || this.noticeList
               this.total = this.noticeList.length
               if (this.total > 1) {
                 this.clearInv()
@@ -89,9 +77,12 @@
     },
     mounted() {
       this.getNotice()
-      setInterval(() => {
+      this.getList = setInterval(() => {
         this.getNotice()
       },30000)
+    },
+    destroyed() {
+      clearInterval(this.getList)
     }
   }
 
@@ -126,6 +117,12 @@
       position: relative;
       color: #333333;
       display: block;
+      /*width: 930px;*/
+      /*overflow: -webkit-marquee;*/
+      /*-webkit-marquee-style: scroll;*/
+      /*-webkit-marquee-repetition: infinite;*/
+      /*-webkit-marquee-direction: up;*/
+      /*-webkit-marquee-speed:slow;*/
       &:before {
         content: '';
         width: 5px;
