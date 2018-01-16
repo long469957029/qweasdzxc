@@ -36,6 +36,13 @@ const DrawLine = {
       this.LineGroup[a].show(c)
     }
   },
+  remove() {
+    const b = this.LineGroup.length
+    for (let a = 0; a < b; a++) {
+      this.LineGroup[a].remove()
+    }
+  },
+
   add(a, d, b, c) {
     this.AttributeGroup.push([a, d, b, c])
     this.AttributeGroup[this.AttributeGroup.length - 1].color = LG.color
@@ -212,6 +219,9 @@ LG.prototype = {
   show(a) {
     this.line.show(a)
   },
+  remove() {
+    this.line.remove()
+  },
 }
 const Chart = {}
 Chart.on = function(c, b, a) {
@@ -227,11 +237,6 @@ Chart.init = function() {
   if (!Chart.ini.default_has_line) {
     return
   }
-  const a = document.getElementById('has_line')
-  if (!a) {
-    return
-  }
-  a.checked = 'checked'
   DrawLine.AttributeGroup = []
   DrawLine.LineGroup = []
 }

@@ -11,12 +11,12 @@ const trendPeriods = [
   },
   {
     title: '今日数据',
-    name: 'days',
+    name: 'date',
     value: 1,
   },
   {
     title: '近2天',
-    name: 'days',
+    name: 'date',
     value: 2,
   },
 ]

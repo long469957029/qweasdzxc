@@ -1,11 +1,12 @@
 module.exports = {
   entry: {
     // main: './src/apps/main/index.js',
-    // login: './src/apps/packages/login/login.js',
+    login: './src/apps/packages/login/login.js',
     // register: './src/apps/packages/register/register.js',
     vendor: './src/vendor/build.core.js',
     base: './src/base/build.base.js',
     trend: './src/apps/packages/trend/index.js',
+    // trendOld: './src/apps/packages/trend/old/index.js',
     // resetPassword: './src/apps/packages/resetPassword/resetPassword.js',
     updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
     // merchants: './src/apps/packages/merchants/index.js',

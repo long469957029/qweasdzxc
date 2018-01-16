@@ -89,7 +89,7 @@ export const PK10 = {
   defaultOpening: R.repeat('01', 10),
   defaultSelectPlay: '4',
   type: 'pk10',
-  position: ['冠军', '亚军', '季军', '第四名', '第五名', '第六名', '第七名', '第八名', '第九名', '第十名'],
+  positions: ['冠军', '亚军', '季军', '第四名', '第五名', '第六名', '第七名', '第八名', '第九名', '第十名'],
   trend: true,
   trendType: 'old',
 }

@@ -7,14 +7,14 @@ export default {
    * @param {Number} limit
    * @param {Number} day
    **/
-  getTrend({trendTypeId, ticketId, playSeriesId, day = null, limit = 30}, then) {
+  getTrend({trendTypeId, ticketId, playSeriesId, days = null, limit = 30}, then) {
     return Global.sync.ajax({
       url: 'http://trend.ybf01.com/trends/trend/sscTrend.json',
       data: {
         trendTypeId,
         ticketId,
         playSeriesId,
-        day,
+        days,
         limit
       },
       dataType: 'jsonp',
@@ -22,14 +22,14 @@ export default {
       .done(then)
   },
 
-  getTrendByOld({ticketId, pageSize, startDate, endDate}, then, fail) {
+  getTrendByOld({ticketId, limit = 30, days = null}, then, fail) {
     return Global.sync.axios({
-      url: '/ticket/ticketmod/trend.json',
+      url: '/ticket/ticketmod/trendDetail.json',
       data: {
         ticketId,
-        pageSize,
-        startDate,
-        endDate,
+        lastOpenNum: limit,
+        days,
+        isNumberDistributed: true
       },
     })
       .then(then)
