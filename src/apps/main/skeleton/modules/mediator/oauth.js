@@ -19,7 +19,7 @@ const NewsMediatorModule = Base.Module.extend({
     }, this.interval)
   },
 
-  check({logoutWhenUnLogin = false} = {}, xhrOps) {
+  check({logoutWhenUnLogin = false, checkStatusOnly = false} = {}, xhrOps) {
     const oauthXhr = Global.oauth.check(xhrOps)
       .done((res) => {
         const acctInfo = res.root || {}
@@ -36,7 +36,9 @@ const NewsMediatorModule = Base.Module.extend({
 
         window.Global.m.publish('acct:updating', acctInfo)
 
-        app.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+        if (!checkStatusOnly) {
+          window.store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+        }
 
         self.login = false
       })
