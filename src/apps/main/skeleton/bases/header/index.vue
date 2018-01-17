@@ -170,6 +170,7 @@
                 Global.cookieCache.clear('token')
                 Global.cookieCache.clear('loginState')
 //                window.location.href = 'index.html'
+                Global.router.goTo('')
                 app.$store.commit(types.USER_CLEAR)
               }
             }).always(() => {
@@ -511,7 +512,6 @@
                 border-bottom: 1px dashed $def-line-color;
               }
               &:hover {
-                background-color: $sec-line-color;
                 .content-item-title-panel {
                   .content-item-img {
                     background: $new-main-deep-color;
