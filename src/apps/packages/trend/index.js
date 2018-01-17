@@ -31,6 +31,5 @@ Global.m.oauth.checkLogin().done(() => {
     },
     el: '#main',
   })
-
 });
 

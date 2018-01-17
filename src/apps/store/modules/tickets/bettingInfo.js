@@ -42,7 +42,6 @@ const actions = {
         type,
       },
       ({ data }) => { return commit(types.GET_TICKET_INFO_SUCCESS, data) },
-      () => { return commit(types.GET_TICKET_INFO_FAILURE) },
     )
   },
 }
@@ -70,11 +69,6 @@ const mutations = {
 
       Object.assign(state, data)
     }
-  },
-
-  // 暂时没有处理失败的逻辑
-  [types.GET_TICKET_INFO_FAILURE] (state) {
-    state.checkoutStatus = 'failed'
   },
 }
 

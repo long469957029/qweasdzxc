@@ -8,6 +8,7 @@ import bettingChoice from './modules/tickets/bettingChoice'
 import bettingChase from './modules/tickets/bettingChase'
 import bettingAnalysis from './modules/tickets/bettingAnalysis'
 import topTickets from './modules/tickets/topTickets'
+import userInfo from './modules/acct/userInfo'
 
 Vue.use(Vuex)
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
     bettingChase,
     bettingAnalysis,
     topTickets,
+    userInfo,
   },
   strict: debug,
 })
