@@ -85,7 +85,7 @@
         </template>
         <template v-for="(miss, index) in item.fTotalMissList">
           <td v-if="miss.title !== 0" class="title-num" :class="{'title-num-last': ticketInfo.range.length === index + 1, 'missing-line': missingLine && miss.missingLine}">
-            {{miss.title}}
+            {{!missing ? '' : miss.title}}
           </td>
           <td class="title-num" v-else>
             <span class="circle-num" :class="miss.repeat ? 'purple' : 'green'">{{miss.num}}</span>
@@ -277,7 +277,8 @@
         } else {
           trend.getTrendByOld({
             ticketId: this.ticketId,
-            pageSize: this.pageSize,
+            days: this.currentSearch === 'date' ? this.date : '',
+            limit: this.currentSearch === 'pageSize' ? this.pageSize : ''
             // startDate,
             // endDate,
           }, ({data}) => {
@@ -508,6 +509,7 @@
 
       draw() {
         const $body = $('body');
+        $body.find('.trend-panel').css('width', $body.find("#trend-table").width());
 
         const colors = '#14b1bb';
 
@@ -529,7 +531,7 @@
     },
     mounted() {
       window.onresize = () => {
-        window.location.href = window.location.href
+        this.draw()
       }
     }
   }
