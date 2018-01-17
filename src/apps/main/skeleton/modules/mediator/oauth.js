@@ -36,7 +36,7 @@ const NewsMediatorModule = Base.Module.extend({
 
         window.Global.m.publish('acct:updating', acctInfo)
 
-        // this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+        app.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
 
         self.login = false
       })

@@ -257,7 +257,7 @@ App.addInitializer(() => {
   App.toolbarRegin.show(new ToolbarView())
 
   // App.noticeRegin.show(new NoticeView())
-  Global.newbieActivity.checkLogin()
+  // Global.newbieActivity.checkLogin()
 
   App.footerRegin.show(new FooterView())
 

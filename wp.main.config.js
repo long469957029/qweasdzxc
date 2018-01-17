@@ -1,7 +1,7 @@
 module.exports = {
   entry: {
-    // main: './src/apps/main/index.js',
-    login: './src/apps/packages/login/login.js',
+    main: './src/apps/main/index.js',
+    // login: './src/apps/packages/login/login.js',
     // register: './src/apps/packages/register/register.js',
     vendor: './src/vendor/build.core.js',
     base: './src/base/build.base.js',
@@ -38,11 +38,11 @@ module.exports = {
       template: './entry/index.html',
       chunks: ['common', 'vendor', 'base', 'main'],
     },
-    login: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'login'],
-    },
+    // login: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'login'],
+    // },
     register: {
       title: '无限娱乐',
       template: './entry/register.html',
@@ -209,7 +209,6 @@ module.exports = {
   },
   providePlugin: {
     Vue: ['vue/dist/vue.esm.js', 'default'],
-    // Vue: ['vue', 'default'],
     mapState: ['vuex', 'mapState'],
     mapGetters: ['vuex', 'mapGetters'],
     jQuery: 'jquery',

@@ -129,7 +129,7 @@
             // int BYSUPER = 106;// 总代开户
             Global.cookieCache.set('token', data.root.token)
             Global.cookieCache.set('loginState', true)
-            Global.m.oauth.check()
+            Global.m.oauth.start()
             const status = Number(data.root.userStatus)
 //            status = Number(status)
             if (status === 0 || status === 100 || status === 102) {
