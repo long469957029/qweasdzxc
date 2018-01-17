@@ -1,6 +1,6 @@
 <template>
   <div v-if="total > 0">
-    <div class="notice-content inline-block">
+    <div class="notice-content inline-block" @click="showNoticeDialog">
       <transition name="notice-trans">
         <a v-if="isShow">{{noticeList[nowIndex-1].title}}</a>
       </transition>
@@ -12,6 +12,9 @@
       <span class="js-wt-pn-up cursor-pointer" @click="goClick('prev')">&lt;</span>
       <span class="js-db-bulletin-cur">{{nowIndex}}</span>&nbsp;/ <span class="js-db-bulletin-total">{{total}}</span>
       <span class="js-wt-pn-down cursor-pointer" @click="goClick('next')">&gt;</span>
+    </div>
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" v-if="showNoticeModal">
+      <div class="notice"></div>
     </div>
   </div>
 </template>
@@ -73,6 +76,9 @@
             }
           }
         )
+      },
+      showNoticeDialog(){
+
       }
     },
     mounted() {

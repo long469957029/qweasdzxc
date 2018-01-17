@@ -1,224 +1,766 @@
 <template>
-  <!--  banner区 -->
-  <div class="dashboard-banner">
-    <!-- 广告轮播 -->
-    <div id="jsDbCarousel" class="carousel slide">
-      <!--<ol class="js-db-mb-na carousel-indicators carousel-outside"></ol>-->
-      <div class="js-db-mb-item db-mb-item carousel-inner">
-        <%=loading %>
-      </div>
-      <a class="left carousel-control" href="#jsDbCarousel" data-slide="prev">
-        <i class="fa fa-caret-left"></i>
-      </a>
-      <a class="right carousel-control" href="#jsDbCarousel" data-slide="next">
-        <i class="fa fa-caret-right"></i>
-      </a>
+  <div>
+    <!--  banner区 -->
+    <div class="dashboard-banner">
+      <slide-show></slide-show>
     </div>
-  </div>
-  <!-- 快报 news -->
-  <div class="db-bulletin-container">
-    <div class="dashboard-bulletin">
-      <div class="bulletin-logo"></div>
-      <div class="bulletin-content js-bulletin-marquee">
-        <marquee behavior="scroll" scrollamount="6" direction="left" width="1000">
-        </marquee>
-      </div>
-      <div class="js-db-bulletin-pager bulletin-pager">
-        <span class="js-db-bulletin-pre">&lt;</span><span class="js-db-bulletin-cur">1</span>&nbsp;/ <span class="js-db-bulletin-total">3</span><span class="js-db-bulletin-pre">&gt;</span>
+
+    <!-- 快报 news -->
+    <div class="db-bulletin-container">
+      <div class="dashboard-bulletin">
+        <div class="bulletin-logo"></div>
+        <div class="bulletin-content js-bulletin-marquee">
+          <notice></notice>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- 主内容区 -->
-  <div class="dashboard-container">
-    <div class="dashboard-row">
-      <!-- 讯息轮播区块 -->
-      <div id="js-db-game-carousel" class="col-md-9 js-db-game-entry-carousel db-shadow carousel slide">
-        <ol class="js-db-carousel-indicators carousel-indicators db-carousel-indicators">
-          <li data-target="#js-db-game-carousel" data-slide-to="0" class="active"></li>
-          <li data-target="#js-db-game-carousel" data-slide-to="1"></li>
-        </ol>
-        <div class="dashboard-carousel-table  carousel-inner">
-          <!-- 优惠讯息 真人-->
-          <div class="dashboard-row-inner item active">
-            <div class="db-game-ad db-ah-ad"></div>
-            <div class="carousel-table-content">
-              <div class="dashboard-row-inner">
-                <div class=" content-item-2x db-ah-bjl">
-                  <button class="db-ah-play-btn db-ah-play-btn-blue ">立即游戏</button>
+    <div class="dashboard-container">
+      <div class="dashboard-row">
+        <!-- 讯息轮播区块 -->
+        <div class="col-md-9 db-shadow carousel slide" @mouseover="clearGameInv"
+             @mouseout="runGameInv">
+          <ol class="db-carousel-indicators">
+            <li :class="{active: gameIndex === 1}" @click="gameGoTo(1)"></li>
+            <li :class="{active: gameIndex === 2}" @click="gameGoTo(2)"></li>
+          </ol>
+          <div class="dashboard-carousel-table  carousel-inner">
+            <!-- 优惠讯息 真人-->
+            <transition name="game-contant">
+              <div class="dashboard-row-contant clearfix" v-show="gameIndex === 1">
+                <router-link to="/rc" class="db-game-ad db-ah-ad"></router-link>
+                <div class="carousel-table-content">
+                  <div class="dashboard-row-inner">
+                    <div class=" content-item-2x db-ah-bjl clearfix">
+                      <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-blue">立即游戏</router-link>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="dashboard-row-inner">
+                    <div class="db-ah-sb clearfix">
+                      <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-green ">立即游戏</router-link>
+                    </div>
+                    <div class="db-ah-lp clearfix">
+                      <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-purple ">立即游戏</router-link>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
                 </div>
                 <div class="clearfix"></div>
               </div>
-              <div class="dashboard-row-inner">
-                <div class="content-item-1x db-ah-sb">
-                  <button class="db-ah-play-btn db-ah-play-btn-green ">立即游戏</button>
+            </transition>
+            <!-- 优惠讯息 老虎机-->
+            <transition name="game-contant">
+              <div class="dashboard-row-contant clearfix" v-show="gameIndex === 2">
+                <router-link to="/aa" class="db-game-ad db-slot-ad "></router-link>
+                <div class="carousel-table-content">
+                  <!--<div class="dashboard-row-inner">-->
+                  <div class="col-md-6" v-for="item in PTGameList" :key="item.gameId">
+                    <div class="content-item-1x">
+                      <span class="db-slot-icon new">NEW</span>
+                      <div class="db-slot-name">{{item.gameName}}</div>
+                      <img class="db-slot-img" :src="locUrl + item.imageUrl"/>
+                      <div class="db-slot-mask">
+                        <router-link to="/aa" class="db-slot-play-btn"></router-link>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="content-item-1x db-ah-lp">
-                  <button class="db-ah-play-btn db-ah-play-btn-purple ">立即游戏</button>
-                </div>
-                <div class="clearfix"></div>
               </div>
-            </div>
+            </transition>
             <div class="clearfix"></div>
           </div>
-          <!-- 优惠讯息 老虎机-->
-          <div class="dashboard-row-inner item ">
-            <div class="db-game-ad db-slot-ad "></div>
-            <div class="carousel-table-content">
-              <div class="dashboard-row-inner">
-                <div class="col-md-6">
-                  <div class=" content-item-1x db-slot-1-bg">
-                    <span class="sfa sfa-slot-blsmy db-slot-logo"></span>
-                    <div class="db-slot-name"></div>
-                    <div  class="db-slot-mask">
-                      <div class="db-slot-play-btn"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class=" content-item-1x db-slot-2-bg">
-                    <span class="sfa sfa-slot-blsmy db-slot-logo"></span>
-                    <div class="db-slot-name"></div>
-                    <div  class="db-slot-mask">
-                      <div class="db-slot-play-btn"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="clearfix"></div>
-              </div>
-              <div class="dashboard-row-inner">
-                <div class="col-md-6">
-                  <div class=" content-item-1x db-slot-3-bg">
-                    <span class="sfa sfa-slot-blsmy db-slot-logo"></span>
-                    <div class="db-slot-name"></div>
-                    <div  class="db-slot-mask">
-                      <div class="db-slot-play-btn"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class=" content-item-1x db-slot-4-bg">
-                    <span class="sfa sfa-slot-blsmy db-slot-logo"></span>
-                    <div class="db-slot-name"></div>
-                    <div  class="db-slot-mask">
-                      <div class="db-slot-play-btn"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="clearfix"></div>
-              </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
         </div>
-      </div>
-      <!-- 积分商城 -->
-      <div class="col-md-3">
-        <div class="dashboard-mall db-shadow">
-          <div class="db-block-border"></div>
-          <div class="dashboard-mall-header">
-            <div class="db-mall-title"></div>
-          </div>
-          <div class="js-db-mall-content">
-            <div class="dashboard-mall-content">
-              <div class="title">IPhone 6s plus 128GB</div>
-              <div class="desc">苹果粉最爱，您值得拥有！</div>
-              <a src="/" class="btn btn-mall-exchange">立即兑换</a>
-              <div class="image"></div>
+        <div class="col-md-3">
+          <div class="dashboard-mall db-shadow">
+            <div class="db-block-border"></div>
+            <div class="dashboard-mall-header">
+              <div class="db-mall-title"></div>
             </div>
-            <div class="dashboard-mall-content">
-              <div class="title">充值券 <span class="badge">新用户专享</span></div>
-              <div class="desc">充值满1000即返20元</div>
-              <a src="/" class="btn btn-mall-exchange">立即兑换</a>
-              <div class="image"></div>
-            </div>
-            <div class="dashboard-mall-content">
-              <div class="title">无限纷纷采 <span>返水券</span></div>
-              <div class="desc">按投注额2%比例返水</div>
-              <a src="/" class="btn btn-mall-exchange">立即兑换</a>
-              <div class="image"></div>
+            <div class="js-db-mall-content">
+              <div class="dashboard-mall-content" v-for="item in mallList">
+                <div class="title">
+                  {{item.name}}
+                  <span class="badge" v-if="!_.isNull(item.levelLimit)
+                && item.limitRange !== 0
+                && item.limitRange !== 1
+                && item.limitRange !== 2">{{item.limitLevelType === 0 ? `Lv.${tiem.levelLimit}用户专享` : `Lv.${item.levelLimit}用户以上`}}</span>
+                  <span v-else-if="!_.isNull(item.limitRange)">
+                  {{item.limitRange === 0 ? '新用户专享' : (item.limitRange === 1 ? '老用户专享' : '总代专享')}}
+                </span>
+                </div>
+                <div class="desc">{{item.couponDesc}}</div>
+                <a :href="`#/ma?type=${item.couponType === 0 ? 1 : 0}`" class="btn-mall-exchange" target="_blank">立即兑换</a>
+                <div class="image"></div>
+              </div>
             </div>
           </div>
         </div>
+        <div class="clearfix"></div>
       </div>
-      <div class="clearfix"></div>
-    </div>
-
-    <div class="dashboard-row">
-      <!-- 动态区块 -->
-      <div class="col-md-9">
-        <div class="db-ticket db-shadow">
-          <div class="db-block-border"></div>
-          <div class="db-ticket-ad"></div>
-          <div class="db-ticket-game">
-            <ul class="db-ticket-game-type">
-              <li class="js-db-ticket-game-type-item db-ticket-game-type-item active" data-type="1">盘口玩法</li>
-              <li class="js-db-ticket-game-type-item db-ticket-game-type-item" data-type="2">经典玩法</li>
-            </ul>
-            <a class="db-ticket-more">更多彩种 >></a>
-            <div class="js-db-ticket-game-type-container db-ticket-game-type-container" data-type="1">
-              <div class="db-ticket-item">
-                <div class="db-ticket-logo"></div>
-                <div class="db-ticket-name">重庆时时彩</div>
-                <div class="db-ticket-num">1234人参与投注</div>
-                <div class="db-ticket-progress-bg">
-                  <div class="db-ticket-progress" style="width:80%;"></div>
+      <div class="dashboard-row">
+        <!-- 动态区块 -->
+        <div class="col-md-9">
+          <div class="db-ticket db-shadow">
+            <div class="db-block-border"></div>
+            <div class="db-ticket-ad"></div>
+            <div class="db-ticket-game">
+              <ul class="db-ticket-game-type">
+                <li :class="[{active: ticketType === 1},'db-ticket-game-type-item']" @click="showTicket(1)">盘口玩法</li>
+                <li :class="[{active: ticketType === 2},'db-ticket-game-type-item']"  @click="showTicket(2)">经典玩法</li>
+              </ul>
+              <a class="db-ticket-more">更多彩种 >></a>
+              <div @mouseover="showArrow()" @mouseout="showArrow()">
+                <transition name="arrow-left">
+                  <a class="db-ticket-arrow left" @click="ticketSwitch('left')" v-show="ticketCount > 3 && showArrowBtn"></a>
+                </transition>
+                <transition name="arrow-right">
+                  <a class="db-ticket-arrow right" @click="ticketSwitch('right')" v-show="ticketCount > 3 && showArrowBtn"></a>
+                </transition>
+                <div class="db-ticket-game-type-container" v-show="ticketType === 1">
+                  <transition-group name="ticketGroup" tag="div">
+                    <div class="db-ticket-item" v-for="item in handicapTicketList" :key="item.ticketId">
+                      <div class="db-ticket-logo"></div>
+                      <div class="db-ticket-name">{{item.ticketName}}</div>
+                      <div class="db-ticket-num"><animated-integer :value="item.userBetCount"></animated-integer>人参与投注</div>
+                      <div class="db-ticket-progress-bg">
+                        <div class="db-ticket-progress" :style="{width: item.userBetCount > 4000 ? '100%' : (item.userBetCount > 1000 ? `${_(item.userBetCount).div(4000)}%` : '25%')}"></div>
+                      </div>
+                    </div>
+                  </transition-group>
                 </div>
-              </div>
-              <div class="db-ticket-item">
-                <div class="db-ticket-logo"></div>
-                <div class="db-ticket-name">北京赛车PK10</div>
-                <div class="db-ticket-num">1234人参与投注</div>
-                <div class="db-ticket-progress-bg">
-                  <div class="db-ticket-progress" style="width:80%;"></div>
-                </div>
-              </div>
-              <div class="db-ticket-item">
-                <div class="db-ticket-logo"></div>
-                <div class="db-ticket-name">香港六合彩</div>
-                <div class="db-ticket-num">1234人参与投注</div>
-                <div class="db-ticket-progress-bg">
-                  <div class="db-ticket-progress" style="width:80%;"></div>
-                </div>
-              </div>
-            </div>
-            <div class="js-db-ticket-game-type-container db-ticket-game-type-container hidden" data-type="2">
-              <div class="db-ticket-item">
-                <div class="db-ticket-logo"></div>
-                <div class="db-ticket-name">重庆时时彩</div>
-                <div class="db-ticket-num">1234人参与投注</div>
-                <div class="db-ticket-progress-bg">
-                  <div class="db-ticket-progress" style="width:80%;"></div>
-                </div>
-              </div>
-              <div class="db-ticket-item">
-                <div class="db-ticket-logo"></div>
-                <div class="db-ticket-name">北京赛车PK10</div>
-                <div class="db-ticket-num">1234人参与投注</div>
-                <div class="db-ticket-progress-bg">
-                  <div class="db-ticket-progress" style="width:80%;"></div>
-                </div>
-              </div>
-              <div class="db-ticket-item">
-                <div class="db-ticket-logo"></div>
-                <div class="db-ticket-name">香港六合彩</div>
-                <div class="db-ticket-num">1234人参与投注</div>
-                <div class="db-ticket-progress-bg">
-                  <div class="db-ticket-progress" style="width:80%;"></div>
+                <div class="db-ticket-game-type-container" v-show="ticketType === 2">
+                  <transition-group name="ticketGroup" tag="div">
+                    <div class="db-ticket-item" v-for="item in classicTicketLIst" :key="item.ticketId">
+                      <div class="db-ticket-logo"></div>
+                      <div class="db-ticket-name">{{item.ticketName}}</div>
+                      <div class="db-ticket-num"><animated-integer :value="item.userBetCount"></animated-integer>人参与投注</div>
+                      <div class="db-ticket-progress-bg">
+                        <div class="db-ticket-progress" :style="{width: item.userBetCount > 4000 ? '100%' : (item.userBetCount > 1000 ? `${_(item.userBetCount).div(4000)}%` : '25%')}"></div>
+                      </div>
+                    </div>
+                  </transition-group>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <!-- 新人大礼包 -->
-      <div class="col-md-3">
-        <div class="db-activity db-shadow">
-          <div class="db-block-border"></div>
-          <div class="db-activity-content"></div>
+        <!-- 新人大礼包 -->
+        <div class="col-md-3">
+          <div class="db-activity db-shadow">
+            <div class="db-block-border"></div>
+            <div class="db-activity-content"></div>
+          </div>
         </div>
+        <div class="clearfix"></div>
       </div>
-      <div class="clearfix"></div>
     </div>
   </div>
-
 </template>
+<script>
+  import dashboard from '../../api/dashboard'
+  import slideShow from './slideShow'
+  import notice from './notice'
+  export default {
+    name: "dashboard",
+    components: {
+      slideShow,
+      notice,
+    },
+    data () {
+      return {
+        gameIndex: 1,
+        gameInvTime: 5000,
+        gameCount: 2,
+        PTGameList: [],
+        mallList: [],
+        handicapTicketList:[],
+        classicTicketLIst:[],
+        ticketType:1,
+        ticketCount: 0,
+        ticketIndex: 1,
+        showArrowBtn:false,
+        locUrl: 'http://' + window.location.host
+      }
+    },
+    methods: {
+      gameGoTo(index){
+        this.gameIndex = index > this.gameCount ? 1 : index
+      },
+      runGameInv(){
+        this.gameInv = setInterval(() => {
+          this.gameGoTo(this.gameIndex + 1)
+        }, this.gameInvTime)
+      },
+      clearGameInv(){
+        clearInterval(this.gameInv)
+      },
+      showTicket(type){
+        this.ticketCount = type === 1 ? this.handicapTicketList.length : this.classicTicketLIst.length
+        this.ticketType = type
+      },
+      showArrow(){
+        this.showArrowBtn = !this.showArrowBtn
+      },
+      ticketSwitch(type){
+        const arr = this.ticketType === 1 ? this.handicapTicketList : this.classicTicketLIst
+        if (type === 'left') {
+          arr.unshift(arr.pop())
+        } else{
+          arr.push(arr.shift())
+        }
+        if(this.ticketType === 1){
+          this.handicapTicketList = arr
+        } else {
+          this.classicTicketLIst = arr
+        }
+      }
+    },
+    mounted() {
+      dashboard.getIndexGameXhr(
+        ({data}) => {
+          if(data && data.result === 0){
+            this.PTGameList = data.root.indexGames || this.PTGameList
+            this.runGameInv()
+          }
+        }
+      )
+      dashboard.getMallHotListXhr(
+        ({data}) => {
+          if(data && data.result === 0){
+            this.mallList = data.root.records || this.mallList
+          }
+        }
+      )
+      dashboard.getIndexTicketXhr(
+        ({data}) => {
+          if(data && data.result === 0){
+            this.handicapTicketList = data.root.handicapTickets || this.handicapTicketList
+            this.classicTicketLIst = data.root.classicTickets || this.classicTicketLIst
+            this.ticketCount = this.handicapTicketList.length
+          }
+        }
+      )
+    },
+    destroyed() {
+      this.clearGameInv()
+    }
+  }
+</script>
+<style lang="scss" scoped>
+  @import "~base/styles/variable";
+
+  @mixin transition-cfg {
+    transition: all .5s;
+  }
+  .game-contant-enter {
+    transform: scale(0, 0);
+  }
+  .game-contant-enter-active {
+    transition: all .5s .2s;
+  }
+  .game-contant-leave-active {
+    transform: translateX(-900px);
+    @include transition-cfg;
+  }
+  .arrow-left-enter, .arrow-left-leave-to{
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  .arrow-right-enter, .arrow-right-leave-to{
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  .arrow-left-enter-active, .arrow-right-enter-active, .arrow-left-leave-active, .arrow-right-leave-active{
+    @include transition-cfg;
+  }
+  .ticketGroup-enter,.ticketGroup-leave-to{
+    opacity: 0;
+  }
+  .ticketGroup-enter-active,.ticketGroup-leave-active{
+    @include transition-cfg;
+  }
+  .ticketGroup-move{
+    transition: transform .5s;
+  }
+
+  body, .carousel-table-content {
+    background: $def-white-color;
+  }
+
+  @mixin center-container {
+    position: relative;
+    box-sizing: border-box;
+    width: 1200px;
+    margin: 0 auto;
+  }
+
+  @mixin inline-block {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .dashboard-banner {
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .db-bulletin-container {
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #dcdcdc;
+    margin-bottom: 30px;
+  }
+
+  .dashboard-bulletin {
+    @include center-container;
+    height: 50px;
+    line-height: 50px;
+    color: #707070;
+    font-size: 14px;
+
+    > div {
+      @include inline-block;
+    }
+
+    .bulletin-logo {
+      width: 140px;
+      height: 50px;
+      line-height: 50px;
+      text-align: right;
+      background: url('./misc/db-notice.png') no-repeat center;
+    }
+
+    .bulletin-content {
+      width: 1055px;
+      height: 50px;
+    }
+  }
+
+  .dashboard-container {
+    @include center-container();
+    margin-bottom: 130px;
+    * {
+      box-sizing: border-box;
+    }
+    .db-carousel-indicators {
+      left: 11%;
+      /*width: 10%;*/
+      margin-left: 0;
+      padding: 8px;
+      background: rgba(0, 0, 0, .4);
+      border-radius: 20px;
+      position: absolute;
+      display: block;
+      z-index: 2;
+      bottom: 10px;
+      li {
+        display: inline-block;
+        margin-left: 7px;
+        margin-right: 7px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .5);
+        cursor: pointer;
+        &.active {
+          background: rgba(255, 255, 255, 1);
+        }
+      }
+    }
+  }
+
+  .dashboard-carousel-table {
+    height: 460px;
+    font-size: 0;
+    background: $def-white-color;
+    position: relative;
+    .db-game-ad {
+      width: 273px;
+      height: 442px;
+      float: left;
+      display: block;
+      &.db-ah-ad {
+        background: url('./misc/db-ah-ad.png') no-repeat center;
+      }
+      &.db-slot-ad {
+        background: url('./misc/db-slot-ad.png') no-repeat center;
+      }
+    }
+    .dashboard-row-contant{
+      font-size: 0;
+      /*display: inline-block;*/
+      margin: 9px;
+      position: absolute;
+    }
+
+    .carousel-table-content {
+      width: 609px;
+      height: 442px;
+      border-left: 9px solid #fff;
+      float: left;
+      .content-item-1x {
+        background: url('./misc/db-slot-bg.png') no-repeat center;
+        width: 295px;
+        height: 216px;
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        .db-slot-name{
+          padding: 10px 20px;
+          font-size: $font-md;
+          color: $def-white-color;
+          background-color: #414a5c;
+          border-top-left-radius: 20px;
+          border-top-right-radius: 20px;
+          position: absolute;
+          bottom: 0px;
+        }
+        .db-slot-img{
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        .db-slot-mask{
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,.4);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          opacity: 0;
+          transition: opacity .5s;
+          .db-slot-play-btn{
+            width: 80px;
+            height: 80px;
+            background: url("./misc/db-slot-btn.png") no-repeat;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform .5s;
+          }
+        }
+        .db-slot-icon{
+          position: absolute;
+          width: 45px;
+          height: 25px;
+          left:-3px;
+          top:-3px;
+          z-index: 2;
+          font-size: $font-xs;
+          color: $def-white-color;
+          padding-left: 5px;
+          line-height: 20px;
+          &.new{
+            background: url("./misc/db-slot-new.png") no-repeat;
+          }
+          &.hot{
+            background: url("./misc/db-slot-hot.png") no-repeat;
+          }
+        }
+        &:hover{
+          .db-slot-mask{
+            opacity: 1;
+          }
+          .db-slot-play-btn{
+            transform: rotate(360deg);
+          }
+        }
+      }
+    }
+
+  }
+
+  .dashboard-row {
+    margin-bottom: 30px;
+  }
+
+  .dashboard-row-inner {
+    font-size: 0;
+    display: inline-block;
+    .content-item-2x {
+      width: 600px;
+    }
+    .db-ah-bjl {
+      background: url('./misc/db-ah-bjl.png') no-repeat center;
+      height: 236px;
+      margin-bottom: 9px;
+    }
+    .db-ah-sb {
+      display: inline-block;
+      background: url('./misc/db-ah-sb.png') no-repeat center;
+      margin-right: 9px;
+      width: 296px;
+      height: 197px;
+    }
+    .db-ah-lp {
+      display: inline-block;
+      background: url('./misc/db-ah-lp.png') no-repeat center;
+      width: 295px;
+      height: 197px;
+    }
+    .db-ah-play-btn {
+      position: relative;
+      width: 120px;
+      height: 38px;
+      margin-top: 140px;
+      margin-left: 27px;
+      border: 1px solid #fff;
+      border-radius: 19px;
+      line-height: 34px;
+      text-align: center;
+      background: transparent;
+      display: block;
+      font-size: $font-md;
+      transition: color,background .5s;
+      &:hover{
+        color: $def-white-color;
+      }
+    }
+    .db-ah-play-btn-blue {
+      color: #4f84da;
+      border: 1px solid #4f84da;
+      &:hover{
+        background: #4f84da;
+      }
+    }
+    .db-ah-play-btn-green {
+      color: #14b1bb;
+      border: 1px solid #14b1bb;
+      &:hover{
+        background: #14b1bb;
+      }
+    }
+    .db-ah-play-btn-purple {
+      color: #9f6ec5;
+      border: 1px solid #9f6ec5;
+      &:hover{
+        background: #9f6ec5;
+      }
+    }
+  }
+
+  .dashboard-mall {
+    width: 288px;
+    height: 458px;
+    margin-left: 12px;
+    background: #fff;
+
+    .dashboard-mall-header {
+      text-align: center;
+      width: 268px;
+      height: 49px;
+      margin: 0 10px;
+      .db-mall-title {
+        background: url('./misc/db-mall-title.png') no-repeat center;
+        width: 268px;
+        height: 49px;
+        border-bottom: 1px solid $def-line-color;
+      }
+    }
+
+    .dashboard-mall-content {
+      margin: 0px 20px;
+      padding: 28px 10px;
+      border-bottom: 1px solid $sec-line-color;
+
+      &:nth-child(3) {
+        border-bottom: none;
+      }
+
+      .title {
+        font-size: 14px;
+        color: $font-dark;
+        line-height: 16px;
+      }
+
+      .desc {
+        font-size: 12px;
+        color: $new-inverse-color;
+        line-height: 30px;
+      }
+
+      .badge {
+        background: $font-auxiliary-color;
+      }
+
+      .btn-mall-exchange {
+        width: 100px;
+        height: 28px;
+        text-align: center;
+        display: block;
+        line-height: 26px;
+        margin-top: 17px;
+        color: $new-main-deep-color;
+        background: transparent;
+        border: 1px solid $new-main-deep-color;
+        border-radius: 20px / 20px;
+        transition: color,background .5s;
+        cursor: pointer;
+        &:hover{
+          color: $def-white-color;
+          background: $new-main-deep-color;
+        }
+      }
+    }
+  }
+  .db-ticket {
+    height: 330px;
+    background: #fff;
+
+    .db-ticket-ad {
+      width: 214px;
+      height: 326px;
+      float: left;
+      background: url('./misc/db-ticket-ad.png') no-repeat center;
+
+    }
+    .db-ticket-game {
+      float: left;
+      margin: 9px 0;
+      padding: 0 9px;
+      position: relative;
+      border-left:1px solid $sec-line-color;
+    }
+    .db-ticket-arrow{
+      position: absolute;
+      display: block;
+      width: 30px;
+      height: 30px;
+      top: 136px;
+      z-index: 2;
+      cursor: pointer;
+      &.left{
+        background: url("./misc/arrow-left.png") no-repeat;
+        left: 10px;
+      }
+      &.right{
+        background: url("./misc/arrow-right.png") no-repeat;
+        right: 10px;
+      }
+    }
+    .db-ticket-game-type {
+      width: 666px;
+      height: 34px;
+      padding: 0 12px;
+      border-bottom:1px solid $def-line-color;
+    }
+    .db-ticket-game-type-item {
+      height: 34px;
+      display: inline-block;
+      border-bottom: 1px solid transparent;
+      margin: 0 22px;
+      padding: 0 5px;
+      font-size: 16px;
+      line-height: 34px;
+      color: #000;
+      cursor: pointer;
+      &.active {
+        color: $new-main-deep-color;
+        border-bottom: 2px solid $new-main-deep-color;
+      }
+    }
+    .db-ticket-more {
+      position: absolute;
+      right: 20px;
+      top: 8px;
+      color: $new-inverse-color;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .db-ticket-game-type-container {
+      width: 665px;
+      height: 272px;
+      overflow: hidden;
+      position: relative;
+      >div{
+        display: flex;
+      }
+      /*.type-container{*/
+      /*display: flex;*/
+      /*position: absolute;*/
+      /*top:0px;*/
+      /*left: 0px;*/
+      /*}*/
+    }
+    .db-ticket-item{
+      display: inline-block;
+      /*float: left;*/
+      width: 222px;
+      position: relative;
+      &:after{
+        content: '';
+        width: 1px;
+        height: 114px;
+        position: absolute;
+        right:0;
+        top: 35px;
+        background-color: $sec-line-color;
+      }
+      &:last-child:after{
+        width:0;
+      }
+    }
+    .db-ticket-logo{
+      width: 222px;
+      height:188px;
+      cursor: pointer;
+    }
+    .db-ticket-name{
+      height:20px;
+      line-height: 20px;
+      font-size: 14px;
+      text-align: center;
+      color: $def-black-color;
+    }
+    .db-ticket-num{
+      height:22px;
+      font-size: 12px;
+      color: $font-auxiliary-color;
+      line-height: 22px;
+      text-align: center;
+    }
+    .db-ticket-progress-bg{
+      position: relative;
+      width: 161px;
+      height:7px;
+      margin: 7px 30px 27px ;
+      background: #ececec;
+      border: 1px solid #e2e2e2;
+      border-radius: 3px;
+    }
+    .db-ticket-progress{
+      position: absolute;
+      top: -1px;
+      width: 161px;
+      height:7px;
+      background: #14b1bb;
+      border: 1px solid #14b1bb;
+      border-radius: 3px;
+    }
+  }
+
+  .db-activity {
+    height: 330px;
+    margin-left: 12px;
+    background: #fff;
+  }
+  .db-block-border{
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(to right, #4fbab0, #598bee);
+  }
+  .db-activity-content {
+    height: 328px;
+    background: url('./misc/db-new-activity.png');
+  }
+
+  .db-shadow {
+    box-shadow: 0 1px 15px -2px #ccc;
+  }
+</style>
