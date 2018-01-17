@@ -20,8 +20,9 @@
     <div class="balls-main">
       <div class="balls-col" v-for="col in cols">
         <span class="ball-unit" v-for="row in rows">
-          <span class="ball gray" v-if="(!fComboList[col].overflow && fComboList[col].combo >= row) || (fComboList[col].overflow && row === rows)">
-            {{fComboList[col].result}}</span>
+          <span class="ball" :class="fComboList[col - 1][row - 1].style" v-if="fComboList[col - 1] && fComboList[col - 1][row - 1] && fComboList[col - 1][row - 1].title">
+            {{fComboList[col - 1][row - 1].title}}
+          </span>
         </span>
       </div>
     </div>
@@ -31,6 +32,17 @@
 <script>
   import analysisApi from 'api/analysis'
   import * as roadBalls from './misc/road-balls'
+
+  const ballStyle = {
+    '大': 'blue',
+    '小': 'gray',
+    '双': 'blue',
+    '单': 'gray',
+    '虎': 'blue',
+    '龙': 'gray',
+    '和': 'yellow',
+    '': ''
+  }
 
   export default {
     name: "road-balls-analysis",
@@ -59,6 +71,13 @@
       ticketInfo: {
         handler() {
           this.roadBalls = roadBalls[this.ticketInfo.type]
+          this.typeId = 10
+          this.advanceTypeId = 0
+          this.advanceTypes = []
+          this.currentAdvanceType = {}
+          this.roadInfo = {}
+          this.comboList = []
+
         },
         immediate: true
       },
@@ -84,32 +103,99 @@
       fComboList() {
         let fComboList = []
         let disparityList = []
+        let flattenComboList = []
+        let prevLH = ''
 
         for(let i = 0; this.comboList.length > i; ++i) {
+          //龙虎和的特殊判断,如果是和 合并到上一列
+          let comboCol
+          if (this.comboList[i].result === '和') {
+            comboCol = flattenComboList.pop()
+            prevLH = comboCol[comboCol.length - 1].title
+            comboCol = comboCol.concat(_.times(this.comboList[i].combo, () => {
+              return {
+                title: this.comboList[i].result,
+                style: ballStyle[this.comboList[i].result]
+              }
+            }))
+          } else if (prevLH === this.comboList[i].result) {
+            comboCol = flattenComboList.pop()
 
-          const comboInfo = this.comboList[i]
+            comboCol = comboCol.concat(_.times(this.comboList[i].combo, () => {
+              return {
+                title: this.comboList[i].result,
+                style: ballStyle[this.comboList[i].result]
+              }
+            }))
 
-          if (this.comboList[i].combo > this.rows) {
-            disparityList.push({
-              disparity: comboInfo.combo - this.rows,
-              title: comboInfo.result
+            prevLH = ''
+          } else {
+            comboCol = _.times(this.comboList[i].combo, () => {
+              return {
+                title: this.comboList[i].result,
+                style: ballStyle[this.comboList[i].result]
+              }
             })
-
-            fComboList.push(this.createComboCol(this.rows), comboInfo)
-
-            // _.times(disparity, () => {
-            //   fComboList.push({
-            //     result: comboInfo.result,
-            //     overflow: true
-            //   })
-            // })
+            prevLH = ''
           }
 
-          fComboList.push(this.createComboCol(comboInfo.combo), comboInfo)
+          flattenComboList.push(comboCol)
+        }
+
+        for(let i = 0; flattenComboList.length > i; ++i) {
+
+          let comboCol = flattenComboList[i]
+
+          let leftRow = this.rows - disparityList.length
+
+          if (comboCol.length > leftRow) {
+
+            _.each(disparityList, (disparity) => {
+              if (!_.isEmpty(disparity)) {
+                comboCol.push(disparity.pop())
+              } else {
+                comboCol.push({
+                  title: '',
+                  style: ''
+                })
+              }
+            })
+
+            if (_.flatten(disparityList).length === 0) {
+              disparityList = []
+            }
+
+            disparityList.push(_.last(comboCol, comboCol.length - leftRow))
+          } else {
+
+            comboCol = [...comboCol, ..._.times(leftRow - comboCol.length, () => {
+              return {
+                title: '',
+                style: ''
+              }
+            })]
+
+            _.each(disparityList, (disparity) => {
+              if (!_.isEmpty(disparity)) {
+                comboCol.push(disparity.pop())
+              } else {
+                comboCol.push({
+                  title: '',
+                  style: ''
+                })
+              }
+            })
+
+            if (_.flatten(disparityList).length === 0) {
+              disparityList = []
+            }
+          }
+
+          fComboList.push(comboCol)
         }
 
 
-        return fComboList
+        return _.last(fComboList, this.cols)
       }
     },
 
@@ -118,7 +204,8 @@
       createComboCol(combo, {result}) {
         return _.times(combo, () => {
           return {
-            title: result
+            title: result,
+            style: ballStyle[result]
           }
         })
       },
@@ -232,6 +319,10 @@
     &.gray {
       background-color: $im-line-color;
       color: $new-inverse-color;
+    }
+    &.yellow {
+      background-color: #fd9502;
+      color: #ffffff;
     }
     &.blue {
       background-color: $new-main-deep-color;

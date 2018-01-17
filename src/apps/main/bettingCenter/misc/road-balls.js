@@ -81,52 +81,52 @@ export const ssc = {
         {
           title: '万仟',
           id: 0,
-          variable: 'sumValues.sumBS',
+          variable: 'LLH.LLH',
         },
         {
           title: '万佰',
           id: 1,
-          variable: 'sumValues.sumBS',
+          variable: 'LLH.LLH',
         },
         {
           title: '万拾',
           id: 2,
-          variable: 'sumValues.sumBS',
+          variable: 'LLH.LLH',
         },
         {
           title: '万个',
           id: 3,
-          variable: 'sumValues.sumBS',
+          variable: 'LLH.LLH',
         },
         {
           title: '仟佰',
           id: 4,
-          variable: 'sumValues.sumBS',
+          variable: 'LLH.LLH',
         },
         {
           title: '仟拾',
           id: 99,
-          variable: 'sumValues.sumBS',
+          variable: 'LLH.LLH',
         },
         {
           title: '仟个',
           id: 99,
-          variable: 'sumValues.sumBS',
+          variable: 'LLH.LLH',
         },
         {
           title: '佰拾',
           id: 99,
-          variable: 'sumValues.sumBS',
+          variable: 'LLH.LLH',
         },
         {
           title: '佰个',
           id: 99,
-          variable: 'sumValues.sumBS',
+          variable: 'LLH.LLH',
         },
         {
           title: '拾个',
           id: 99,
-          variable: 'sumValues.sumBS',
+          variable: 'LLH.LLH',
         },
       ]
     },
