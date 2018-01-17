@@ -1,5 +1,6 @@
 import MainTrend from './main-trend'
 import CustomCheckbox from 'com/custom-checkbox'
+import store from '../../store/index'
 
 import SyncModule from 'skeleton/modules/sync'
 import OauthMediatorModule from 'skeleton/modules/mediator/oauth'
@@ -10,6 +11,7 @@ import NotificationModule from 'skeleton/modules/ui/notification'
 import DialogModule from 'skeleton/modules/ui/dialog'
 
 window.Global = new window.Base.Application()
+window.store = store
 
 window.Global.module('m', MediatorModule)
 window.Global.module('ui', UIModule)
@@ -29,6 +31,7 @@ Global.m.oauth.checkLogin().done(() => {
     components: {
       MainTrend
     },
+    store,
     el: '#main',
   })
 });

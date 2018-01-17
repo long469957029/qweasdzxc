@@ -63,6 +63,7 @@ _.delay(() => {
   window.location.hash = desHash === '#/i' ? '#/' : desHash
 }, 0)
 
+window.store = store
 window.router = router
 window.$route = app.$route
 
