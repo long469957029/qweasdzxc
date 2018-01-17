@@ -20,7 +20,7 @@ const ValidatorModule = require('skeleton/modules/validator')
 const OauthMediatorModule = require('skeleton/modules/mediator/oauth')
 const NewsMediatorModule = require('skeleton/modules/mediator/news')
 
-const VolcanicActivityModule = require('skeleton/modules/mediator/volcanicActivity')
+// const VolcanicActivityModule = require('skeleton/modules/mediator/volcanicActivity')
 
 // var TreadActivityModule = require('skeleton/modules/mediator/treadActivity');
 // var RainActivityModule = require('skeleton/modules/mediator/rainActivity');

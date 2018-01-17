@@ -10,7 +10,7 @@
     </div>
     <div class="trend-main">
       <div class="trend-select">
-        五星走势图
+        走势图
         <label class="m-left-sm">
           <custom-checkbox v-model="missing"></custom-checkbox>
           遗漏
@@ -93,7 +93,7 @@
         </template>
       </tr>
       </tbody>
-      <thead>
+      <thead class="bottom-head">
       <tr>
         <th>出现总次数</th>
         <th></th>
@@ -133,13 +133,23 @@
           </template>
         </template>
       </tr>
-      <tr>
+      <tr class="bottom-title">
         <th rowspan="2">
           期号
         </th>
         <th rowspan="2">
           开奖号码
         </th>
+        <template v-for="position in ticketInfo.positions">
+          <th class="title-num" v-for="(num, index) in ticketInfo.range" :class="{'title-num-last': ticketInfo.range.length === index + 1}">
+            {{num}}
+          </th>
+        </template>
+        <th class="title-num" v-for="(num, index) in ticketInfo.range" :class="{'title-num-last': ticketInfo.range.length === index + 1}">
+          {{num}}
+        </th>
+      </tr>
+      <tr class="bottom-title">
         <th v-for="position in ticketInfo.positions" :colspan="ticketInfo.range.length">
           {{position}}
         </th>
@@ -611,6 +621,9 @@
 
   .table {
     max-width: inherit;
+    th {
+      background-color: #f7f7f7;
+    }
     th, td {
       padding: 5px 0;
       white-space: nowrap;
@@ -659,6 +672,19 @@
   .main-des-content {
     font-size: 12px;
     color: $new-inverse-color;
+  }
+  .bottom-head {
+    tr {
+      th {
+        font-size: 12px;
+        color: $font-auxiliary-color;
+      }
+      &.bottom-title {
+        th {
+          color: $def-black-color;
+        }
+      }
+    }
   }
 
 </style>
