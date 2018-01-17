@@ -1,36 +1,23 @@
 <template>
-  <!--  banner区 -->
-  <div class="dashboard-banner">
-    <!-- 广告轮播 -->
-    <div id="jsDbCarousel" class="carousel slide">
-      <!--<ol class="js-db-mb-na carousel-indicators carousel-outside"></ol>-->
-      <div class="js-db-mb-item db-mb-item carousel-inner">
-        <%=loading %>
-      </div>
-      <a class="left carousel-control" href="#jsDbCarousel" data-slide="prev">
-        <i class="fa fa-caret-left"></i>
-      </a>
-      <a class="right carousel-control" href="#jsDbCarousel" data-slide="next">
-        <i class="fa fa-caret-right"></i>
-      </a>
+  <div>
+    <!--  banner区 -->
+    <div class="dashboard-banner">
+      <slide-show></slide-show>
     </div>
-  </div>
-  <!-- 快报 news -->
-  <div class="db-bulletin-container">
-    <div class="dashboard-bulletin">
-      <div class="bulletin-logo"></div>
-      <div class="bulletin-content js-bulletin-marquee">
-        <marquee behavior="scroll" scrollamount="6" direction="left" width="1000">
-        </marquee>
-      </div>
-      <div class="js-db-bulletin-pager bulletin-pager">
-        <span class="js-db-bulletin-pre">&lt;</span><span class="js-db-bulletin-cur">1</span>&nbsp;/ <span class="js-db-bulletin-total">3</span><span class="js-db-bulletin-pre">&gt;</span>
+
+    <!-- 快报 news -->
+    <div class="db-bulletin-container">
+      <div class="dashboard-bulletin">
+        <div class="bulletin-logo"></div>
+        <div class="bulletin-content js-bulletin-marquee">
+          <notice></notice>
+        </div>
       </div>
     </div>
     <div class="dashboard-container">
       <div class="dashboard-row">
         <!-- 讯息轮播区块 -->
-        <transition class="col-md-9 db-shadow carousel slide" @mouseover="clearGameInv"
+        <div class="col-md-9 db-shadow carousel slide" @mouseover="clearGameInv"
              @mouseout="runGameInv">
           <ol class="db-carousel-indicators">
             <li :class="{active: gameIndex === 1}" @click="gameGoTo(1)"></li>
@@ -46,6 +33,7 @@
                     <div class=" content-item-2x db-ah-bjl clearfix">
                       <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-blue">立即游戏</router-link>
                     </div>
+                    <div class="clearfix"></div>
                   </div>
                   <div class="dashboard-row-inner">
                     <div class="db-ah-sb clearfix">
@@ -54,6 +42,7 @@
                     <div class="db-ah-lp clearfix">
                       <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-purple ">立即游戏</router-link>
                     </div>
+                    <div class="clearfix"></div>
                   </div>
                 </div>
                 <div class="clearfix"></div>
@@ -65,39 +54,27 @@
                 <router-link to="/aa" class="db-game-ad db-slot-ad "></router-link>
                 <div class="carousel-table-content">
                   <!--<div class="dashboard-row-inner">-->
-                    <div class="col-md-6" v-for="item in PTGameList" :key="item.gameId">
-                      <div class="content-item-1x">
-                        <span class="db-slot-icon new">NEW</span>
-                        <div class="db-slot-name">{{item.gameName}}</div>
-                        <img class="db-slot-img" :src="locUrl + item.imageUrl"/>
-                        <div class="db-slot-mask">
-                          <router-link to="/aa" class="db-slot-play-btn"></router-link>
-                        </div>
+                  <div class="col-md-6" v-for="item in PTGameList" :key="item.gameId">
+                    <div class="content-item-1x">
+                      <span class="db-slot-icon new">NEW</span>
+                      <div class="db-slot-name">{{item.gameName}}</div>
+                      <img class="db-slot-img" :src="locUrl + item.imageUrl"/>
+                      <div class="db-slot-mask">
+                        <router-link to="/aa" class="db-slot-play-btn"></router-link>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="clearfix"></div>
               </div>
-        </transition>
-            </div>
+            </transition>
+            <div class="clearfix"></div>
           </div>
-          <div class="clearfix"></div>
         </div>
-      </div>
-      <!-- 积分商城 -->
-      <div class="col-md-3">
-        <div class="dashboard-mall db-shadow">
-          <div class="db-block-border"></div>
-          <div class="dashboard-mall-header">
-            <div class="db-mall-title"></div>
-          </div>
-          <div class="js-db-mall-content">
-            <div class="dashboard-mall-content">
-              <div class="title">IPhone 6s plus 128GB</div>
-              <div class="desc">苹果粉最爱，您值得拥有！</div>
-              <a src="/" class="btn btn-mall-exchange">立即兑换</a>
-              <div class="image"></div>
+        <div class="col-md-3">
+          <div class="dashboard-mall db-shadow">
+            <div class="db-block-border"></div>
+            <div class="dashboard-mall-header">
+              <div class="db-mall-title"></div>
             </div>
             <div class="js-db-mall-content">
               <div class="dashboard-mall-content" v-for="item in mallList">
@@ -118,6 +95,7 @@
             </div>
           </div>
         </div>
+        <div class="clearfix"></div>
       </div>
       <div class="dashboard-row">
         <!-- 动态区块 -->
@@ -166,15 +144,15 @@
             </div>
           </div>
         </div>
-      </div>
-      <!-- 新人大礼包 -->
-      <div class="col-md-3">
-        <div class="db-activity db-shadow">
-          <div class="db-block-border"></div>
-          <div class="db-activity-content"></div>
+        <!-- 新人大礼包 -->
+        <div class="col-md-3">
+          <div class="db-activity db-shadow">
+            <div class="db-block-border"></div>
+            <div class="db-activity-content"></div>
+          </div>
         </div>
+        <div class="clearfix"></div>
       </div>
-      <div class="clearfix"></div>
     </div>
   </div>
 </template>
@@ -704,10 +682,10 @@
         display: flex;
       }
       /*.type-container{*/
-        /*display: flex;*/
-        /*position: absolute;*/
-        /*top:0px;*/
-        /*left: 0px;*/
+      /*display: flex;*/
+      /*position: absolute;*/
+      /*top:0px;*/
+      /*left: 0px;*/
       /*}*/
     }
     .db-ticket-item{
