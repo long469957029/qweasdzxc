@@ -2,9 +2,14 @@ const App = require('./app')
 const modules = require('skeleton/modules')
 
 import Vue from 'vue'
+import AnimatedInteger from 'com/animated-integer'
 import store from '../store/index'
+
 import MainHeader from 'skeleton/bases/header/index'
+
 Object.defineProperty(Vue.prototype, '_', { value: _ })
+
+Vue.component('animated-integer', AnimatedInteger)
 
 require('widgets')
 

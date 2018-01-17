@@ -17,30 +17,30 @@
     <div class="dashboard-container">
       <div class="dashboard-row">
         <!-- 讯息轮播区块 -->
-        <div class="col-md-9 db-shadow carousel slide" >
+        <div class="col-md-9 db-shadow carousel slide" @mouseover="clearGameInv"
+             @mouseout="runGameInv">
           <ol class="db-carousel-indicators">
             <li :class="{active: gameIndex === 1}" @click="gameGoTo(1)"></li>
             <li :class="{active: gameIndex === 2}" @click="gameGoTo(2)"></li>
           </ol>
-          <div class="dashboard-carousel-table  carousel-inner" @mouseover="clearGameInv"
-               @mouseout="runGameInv">
+          <div class="dashboard-carousel-table  carousel-inner">
             <!-- 优惠讯息 真人-->
             <transition name="game-contant">
               <div class="dashboard-row-contant clearfix" v-show="gameIndex === 1">
-                <a href="#/rc" class="db-game-ad db-ah-ad"></a>
+                <router-link to="/rc" class="db-game-ad db-ah-ad"></router-link>
                 <div class="carousel-table-content">
                   <div class="dashboard-row-inner">
                     <div class=" content-item-2x db-ah-bjl clearfix">
-                      <a href="#/rc" class="db-ah-play-btn db-ah-play-btn-blue">立即游戏</a>
+                      <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-blue">立即游戏</router-link>
                     </div>
                     <div class="clearfix"></div>
                   </div>
                   <div class="dashboard-row-inner">
                     <div class="db-ah-sb clearfix">
-                      <a href="#/rc" class="db-ah-play-btn db-ah-play-btn-green ">立即游戏</a>
+                      <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-green ">立即游戏</router-link>
                     </div>
                     <div class="db-ah-lp clearfix">
-                      <a href="#/rc" class="db-ah-play-btn db-ah-play-btn-purple ">立即游戏</a>
+                      <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-purple ">立即游戏</router-link>
                     </div>
                     <div class="clearfix"></div>
                   </div>
@@ -51,7 +51,7 @@
             <!-- 优惠讯息 老虎机-->
             <transition name="game-contant">
               <div class="dashboard-row-contant clearfix" v-show="gameIndex === 2">
-                <a href="#/aa" class="db-game-ad db-slot-ad "></a>
+                <router-link to="/aa" class="db-game-ad db-slot-ad "></router-link>
                 <div class="carousel-table-content">
                   <!--<div class="dashboard-row-inner">-->
                     <div class="col-md-6" v-for="item in PTGameList" :key="item.gameId">
@@ -60,7 +60,7 @@
                         <div class="db-slot-name">{{item.gameName}}</div>
                         <img class="db-slot-img" :src="locUrl + item.imageUrl"/>
                         <div class="db-slot-mask">
-                          <a href="#/aa" class="db-slot-play-btn"></a>
+                          <router-link to="/aa" class="db-slot-play-btn"></router-link>
                         </div>
                       </div>
                     </div>
@@ -89,7 +89,7 @@
                 </span>
                 </div>
                 <div class="desc">{{item.couponDesc}}</div>
-                <a :src="item.couponType === 0 ? '#/ma?type=1' : '#/ma?type=0'" class="btn-mall-exchange">立即兑换</a>
+                <a :href="`#/ma?type=${item.couponType === 0 ? 1 : 0}`" class="btn-mall-exchange" target="_blank">立即兑换</a>
                 <div class="image"></div>
               </div>
             </div>
@@ -109,24 +109,36 @@
                 <li :class="[{active: ticketType === 2},'db-ticket-game-type-item']"  @click="showTicket(2)">经典玩法</li>
               </ul>
               <a class="db-ticket-more">更多彩种 >></a>
-              <div class="db-ticket-game-type-container" v-show="ticketType === 1">
-                <div class="db-ticket-item" v-for="item in handicapTicketList">
-                  <div class="db-ticket-logo"></div>
-                  <div class="db-ticket-name">{{item.ticketName}}</div>
-                  <div class="db-ticket-num">{{item.userBetCount}}人参与投注</div>
-                  <div class="db-ticket-progress-bg">
-                    <div class="db-ticket-progress" :style="{width: item.userBetCount > 1000 ? `${_(item.userBetCount).div(4000)}%` : '25%'}"></div>
-                  </div>
+              <div @mouseover="showArrow()" @mouseout="showArrow()">
+                <transition name="arrow-left">
+                  <a class="db-ticket-arrow left" @click="ticketSwitch('left')" v-show="ticketCount > 3 && showArrowBtn"></a>
+                </transition>
+                <transition name="arrow-right">
+                  <a class="db-ticket-arrow right" @click="ticketSwitch('right')" v-show="ticketCount > 3 && showArrowBtn"></a>
+                </transition>
+                <div class="db-ticket-game-type-container" v-show="ticketType === 1">
+                  <transition-group name="ticketGroup" tag="div">
+                    <div class="db-ticket-item" v-for="item in handicapTicketList" :key="item.ticketId">
+                      <div class="db-ticket-logo"></div>
+                      <div class="db-ticket-name">{{item.ticketName}}</div>
+                      <div class="db-ticket-num"><animated-integer :value="item.userBetCount"></animated-integer>人参与投注</div>
+                      <div class="db-ticket-progress-bg">
+                        <div class="db-ticket-progress" :style="{width: item.userBetCount > 4000 ? '100%' : (item.userBetCount > 1000 ? `${_(item.userBetCount).div(4000)}%` : '25%')}"></div>
+                      </div>
+                    </div>
+                  </transition-group>
                 </div>
-              </div>
-              <div class="db-ticket-game-type-container" v-show="ticketType === 2">
-                <div class="db-ticket-item" v-for="item in classicTicketLIst">
-                  <div class="db-ticket-logo"></div>
-                  <div class="db-ticket-name">{{item.ticketName}}</div>
-                  <div class="db-ticket-num">{{item.userBetCount}}人参与投注</div>
-                  <div class="db-ticket-progress-bg">
-                    <div class="db-ticket-progress" :style="{width: item.userBetCount > 1000 ? `${_(item.userBetCount).div(4000)}%` : '25%'}"></div>
-                  </div>
+                <div class="db-ticket-game-type-container" v-show="ticketType === 2">
+                  <transition-group name="ticketGroup" tag="div">
+                    <div class="db-ticket-item" v-for="item in classicTicketLIst" :key="item.ticketId">
+                      <div class="db-ticket-logo"></div>
+                      <div class="db-ticket-name">{{item.ticketName}}</div>
+                      <div class="db-ticket-num"><animated-integer :value="item.userBetCount"></animated-integer>人参与投注</div>
+                      <div class="db-ticket-progress-bg">
+                        <div class="db-ticket-progress" :style="{width: item.userBetCount > 4000 ? '100%' : (item.userBetCount > 1000 ? `${_(item.userBetCount).div(4000)}%` : '25%')}"></div>
+                      </div>
+                    </div>
+                  </transition-group>
                 </div>
               </div>
             </div>
@@ -152,7 +164,7 @@
     name: "dashboard",
     components: {
       slideShow,
-      notice
+      notice,
     },
     data () {
       return {
@@ -164,6 +176,9 @@
         handicapTicketList:[],
         classicTicketLIst:[],
         ticketType:1,
+        ticketCount: 0,
+        ticketIndex: 1,
+        showArrowBtn:false,
         locUrl: 'http://' + window.location.host
       }
     },
@@ -180,7 +195,24 @@
         clearInterval(this.gameInv)
       },
       showTicket(type){
+        this.ticketCount = type === 1 ? this.handicapTicketList.length : this.classicTicketLIst.length
         this.ticketType = type
+      },
+      showArrow(){
+        this.showArrowBtn = !this.showArrowBtn
+      },
+      ticketSwitch(type){
+        const arr = this.ticketType === 1 ? this.handicapTicketList : this.classicTicketLIst
+        if (type === 'left') {
+          arr.unshift(arr.pop())
+        } else{
+          arr.push(arr.shift())
+        }
+        if(this.ticketType === 1){
+          this.handicapTicketList = arr
+        } else {
+          this.classicTicketLIst = arr
+        }
       }
     },
     mounted() {
@@ -204,6 +236,7 @@
           if(data && data.result === 0){
             this.handicapTicketList = data.root.handicapTickets || this.handicapTicketList
             this.classicTicketLIst = data.root.classicTickets || this.classicTicketLIst
+            this.ticketCount = this.handicapTicketList.length
           }
         }
       )
@@ -216,16 +249,38 @@
 <style lang="scss" scoped>
   @import "~base/styles/variable";
 
+  @mixin transition-cfg {
+    transition: all .5s;
+  }
   .game-contant-enter {
     transform: scale(0, 0);
   }
-
   .game-contant-enter-active {
-    transition: all .5s .3s;
+    transition: all .5s .2s;
   }
   .game-contant-leave-active {
     transform: translateX(-900px);
-    transition: all .5s;
+    @include transition-cfg;
+  }
+  .arrow-left-enter, .arrow-left-leave-to{
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  .arrow-right-enter, .arrow-right-leave-to{
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  .arrow-left-enter-active, .arrow-right-enter-active, .arrow-left-leave-active, .arrow-right-leave-active{
+    @include transition-cfg;
+  }
+  .ticketGroup-enter,.ticketGroup-leave-to{
+    opacity: 0;
+  }
+  .ticketGroup-enter-active,.ticketGroup-leave-active{
+    @include transition-cfg;
+  }
+  .ticketGroup-move{
+    transition: transform .5s;
   }
 
   body, .carousel-table-content {
@@ -570,7 +625,24 @@
       margin: 9px 0;
       padding: 0 9px;
       position: relative;
-      border-left:1px solid $def-line-color;
+      border-left:1px solid $sec-line-color;
+    }
+    .db-ticket-arrow{
+      position: absolute;
+      display: block;
+      width: 30px;
+      height: 30px;
+      top: 136px;
+      z-index: 2;
+      cursor: pointer;
+      &.left{
+        background: url("./misc/arrow-left.png") no-repeat;
+        left: 10px;
+      }
+      &.right{
+        background: url("./misc/arrow-right.png") no-repeat;
+        right: 10px;
+      }
     }
     .db-ticket-game-type {
       width: 666px;
@@ -602,10 +674,19 @@
       cursor: pointer;
     }
     .db-ticket-game-type-container {
-      width: 666px;
+      width: 665px;
       height: 272px;
       overflow: hidden;
-      display: flex;
+      position: relative;
+      >div{
+        display: flex;
+      }
+      /*.type-container{*/
+        /*display: flex;*/
+        /*position: absolute;*/
+        /*top:0px;*/
+        /*left: 0px;*/
+      /*}*/
     }
     .db-ticket-item{
       display: inline-block;
@@ -656,7 +737,6 @@
     .db-ticket-progress{
       position: absolute;
       top: -1px;
-      left: -1px;
       width: 161px;
       height:7px;
       background: #14b1bb;
