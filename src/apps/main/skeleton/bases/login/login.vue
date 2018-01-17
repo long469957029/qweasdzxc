@@ -17,8 +17,9 @@
       <div class="login-input-item">
         <div class="login-password-img sfa sfa-icon-password">
         </div>
-        <input class="login-input" :class="{'parsley-error': passwordError,'parsley-success':pwdSuccess}"
-               @blur="verifyPwd()"
+        <input type="password" class="login-input"
+               :class="{'parsley-error': passwordError,'parsley-success':pwdSuccess}"
+               @blur="verifyPwd()" @keyup.enter="userLogin"
                placeholder="请输入您的密码" v-model="password"
                autocomplete="off" required></div>
       <div class="login-input-item" :class="{'hidden':showCodeItem}">
@@ -29,10 +30,11 @@
                placeholder="请输入验证码" v-model="code" maxlength="4" required
                autocomplete="off">
         <img class="js-login-valImg  var-code" :src="codeUrl">
-        <div class="login-verity-refresh pull-right inline-block" :class="{'toCircle':refreshButtonCircle}"
-             :click="clickRefreshValCode"><i class="fa fa-repeat"
-                                             aria-hidden="true"></i></div>
-        <input type="hidden" class="js-login-valResult" value="0">
+        <div class="login-verity-refresh pull-right inline-block" :class="{'toCircle':toCircle}"><i class="fa fa-repeat"
+                                                                                                    aria-hidden="true"
+                                                                                                    v-on:click="clickRefreshValCode"></i>
+        </div>
+        <input type="hidden" value="0">
       </div>
     </div>
     <div class="login-footer">
@@ -41,9 +43,9 @@
         <div class="tooltip-inner parsley-required">{{errorMsg}}</div>
 
       </div>
-      <button @click="userLogin()" class="submit btn-login-submit" data-loading-text="登录中" :disabled="pushing">登录
+      <button @click="userLogin" class="submit btn-login-submit" data-loading-text="登录中" :disabled="pushing">登录
       </button>
-      <span @click="forgotPwd()" class="btn-forgot-pwd btn-link">忘记密码?</span>
+      <span @click="forgotPwd" class="btn-forgot-pwd btn-link">忘记密码?</span>
     </div>
   </div>
 </template>
@@ -64,7 +66,7 @@
         codeError: false,
         codeSuccess: false,
         showCodeItem: true,
-        refreshButtonCircle: false,
+        toCircle: false,
         codeUrl: 'http://forehead.5x5x.com/acct/imgcode/code?_t=1515997888887',
         pushing: false,
         errorMsg: '',
@@ -80,12 +82,9 @@
     props: {},
 
     components: {},
-    watch: {
+    watch: {},
 
-    },
-
-    computed: {
-    },
+    computed: {},
 
     filters: {},
 
@@ -130,6 +129,7 @@
             // int BYSUPER = 106;// 总代开户
             Global.cookieCache.set('token', data.root.token)
             Global.cookieCache.set('loginState', true)
+            Global.m.oauth.check()
             const status = Number(data.root.userStatus)
 //            status = Number(status)
             if (status === 0 || status === 100 || status === 102) {
@@ -144,19 +144,13 @@
               this.$emit('dialogClose')
 //              window.location.href = 'index.html'
             }
-            this.$store.commit(types.USER_LOGIN_SUCCESS,data.root)
+            this.$store.commit(types.USER_LOGIN_SUCCESS, data.root)
           } else if (data.msg.indexOf('验证码') !== -1) {
-            if (this.showErrorMsg = false) {
-              this.codeError = true
-              this.showErrorMsg = true
-              this.codeSuccess = false
-              this.errorMsg = '请输入验证码！'
-            } else {
-              this.codeError = true
-              this.showErrorMsg = true
-              this.codeSuccess = false
-              this.errorMsg = '验证码输入有误！'
-            }
+            this.showCodeItem = false
+            this.codeError = true
+            this.showErrorMsg = true
+            this.codeSuccess = false
+            this.errorMsg = '请输入验证码！'
             this.refreshValCode()
           } else {
             this.showErrorMsg = true
@@ -291,7 +285,11 @@
       },
       // 点击刷新登录表单验证码
       clickRefreshValCode(){
-        this.refreshButtonCircle = true
+        if (this.toCircle) {
+          this.toCircle = false
+        }
+        this.toCircle = true
+        this.refreshValCode()
       },
       strBetweenIsNumber (str, star, end) {
         const strArr = str.split('').slice(star, end)

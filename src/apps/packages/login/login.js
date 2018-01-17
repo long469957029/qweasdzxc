@@ -187,7 +187,7 @@ $.widget('gl.login', {
             size: 177,
           })
           self.intervalCheckLoginState = setInterval(() => {
-            self.checkLoginStateXhr({ scanToken })
+            self.checkLoginStateXhr({scanToken})
               .done((res) => {
                 if (res.result === 0) {
                   if (res.root.token) {
@@ -328,6 +328,7 @@ $.widget('gl.login', {
 
           Global.cookieCache.set('token', data.root.token)
           Global.cookieCache.set('loginState', true)
+          Global.m.oauth.check()
           status = Number(data.root.userStatus)
           // 状态的值
           // int WOKRING = 0;// 正常
@@ -576,7 +577,7 @@ $.widget('gl.login', {
     if (validationStatus) {
       this._showValResult(0, this.$registerPasswordErr, '', this.$passwordValidate)
       return true
-    } 
+    }
     this._showValResult(1, this.$registerPasswordErr, msg, this.$passwordValidate)
     return false
   },
@@ -603,13 +604,13 @@ $.widget('gl.login', {
       self._showValResult(1, this.$registerUsernameErr, '用户名不能为空', self.$usernameValidate)
       return false
     }
-    
+
     const myReg = /^[A-Za-z][A-Za-z0-9]{3,15}$/
     if (!myReg.test(this.$registerUsername.val())) {
       self._showValResult(1, this.$registerUsernameErr, '仅支持4-16位字母和数字，不能以数字开头', self.$usernameValidate)
       return false
     }
-    
+
 
     this.checkNameExistXhr(data).fail((res) => {
       self._showValResult(1, self.$registerUsernameErr, res.msg, self.$usernameValidate)

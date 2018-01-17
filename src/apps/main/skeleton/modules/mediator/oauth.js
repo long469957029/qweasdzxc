@@ -1,5 +1,3 @@
-
-
 const NewsMediatorModule = Base.Module.extend({
 
   startWithParent: false,
@@ -40,6 +38,8 @@ const NewsMediatorModule = Base.Module.extend({
         Global.memoryCache.set('acctInfo', acctInfo)
 
         Global.m.publish('acct:updating', acctInfo)
+
+        this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
 
         self.login = false
       })

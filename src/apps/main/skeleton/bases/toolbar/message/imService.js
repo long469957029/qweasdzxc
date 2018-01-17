@@ -252,7 +252,7 @@ module.exports = {
           userName = '系统管理员'
           userAvatar = 'sfa-avata-admin'
         } else {
-          avatarPic = avatarConf.get(userAvatar).logo
+          avatarPic = avatarConf.get(_(userAvatar).toString()).logo
         }
         itemHtml.push(`<div class="chat-item" data-id='${item.rid}'> <div class="sfa ${userAvatar} chat-item-avatar inline-block"><img src='${avatarPic}'  /></div> `)
         itemHtml.push(`<div class="inline-block chat-item-detail"><div class="chat-item-name">${userName}</div><div class="chat-item-message">${item.content}</div>`)

@@ -1,5 +1,3 @@
-
-
 require('./index.scss')
 
 const NavsView = Base.ItemView.extend({
@@ -83,7 +81,7 @@ const NavsView = Base.ItemView.extend({
     let flag = false
 
     if (channelId === 7) { // 体育的点击节点在nav中
-      Global.ui.notification.show('暂未开放，敬请期待！<br/><br/>', { id: 'ticketNotice', hasFooter: false, displayTime: 1000 })
+      Global.ui.notification.show('暂未开放，敬请期待！<br/><br/>', {id: 'ticketNotice', hasFooter: false, displayTime: 1000})
       return false
     }
 
@@ -101,9 +99,9 @@ const NavsView = Base.ItemView.extend({
               }
               if (type === 3) { // 老虎机进入游戏选择页
                 if (channelId === 4) {
-                  Global.router.goTo('gc/sc', { trigger: false })
+                  Global.router.goTo('gc/sc', {trigger: false})
                 } else if (channelId === 5) {
-                  Global.router.goTo('gc/scmg', { trigger: false })
+                  Global.router.goTo('gc/scmg', {trigger: false})
                 }
               } else {
                 flag = true
@@ -112,7 +110,7 @@ const NavsView = Base.ItemView.extend({
             } else if (item.status === 1) {
               Global.ui.notification.show(
                 '当前游戏处于关闭状态，您可以尝试其他游戏！<br/><br/>',
-                { id: 'ticketNotice', hasFooter: false, displayTime: 1000 },
+                {id: 'ticketNotice', hasFooter: false, displayTime: 1000},
               )
             } else if (item.status === 2) {
               Global.ui.notification.show(`平台官方维护中，维护时间：${
@@ -143,14 +141,14 @@ const NavsView = Base.ItemView.extend({
     const beginTicketList = ticketConfig.getBeginlist()
     this.options.navbar = _(this.options.navbar).map((menu, index) => {
       // 0是代理，1是玩家，玩家不显示代理中心
-      if (self.acctInfo.userType === 1) {
-        if (menu.first && menu.first === 'ac/llm') {
-          agencyMenuIndex = index
-        }
-        if (menu.router === 'newDownload.html') {
-          menu.router = 'newDownload.html?t=player'
-        }
+      // if (self.acctInfo.userType === 1) {
+      if (menu.first && menu.first === 'ac/llm') {
+        agencyMenuIndex = index
       }
+      if (menu.router === 'newDownload.html') {
+        menu.router = 'newDownload.html?t=player'
+      }
+      // }
 
       if (window.location.hash && !menu.router) {
         menu.isActive = false
@@ -162,7 +160,8 @@ const NavsView = Base.ItemView.extend({
       if (menu.sub) {
         menu.sub = _(menu.sub).map((subMenu, subindex) => {
           // 0是代理，1是玩家，玩家不显示平台转账
-          if (self.acctInfo.userType === 1 && subMenu.router && subMenu.router === 'fc/pt') {
+          // if (self.acctInfo.userType === 1 && subMenu.router && subMenu.router === 'fc/pt') {
+          if (subMenu.router && subMenu.router === 'fc/pt') {
             platformTransferMenuIndex = subindex
           }
 
