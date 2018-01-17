@@ -9,11 +9,11 @@
       <div class="js-gl-service header-customer-entry  pull-right overflow-hidden">
         <span class="sfa sfa-customer-service"></span><span class="header-customer-text">在线客服</span>
       </div>
-      <div class="header-not-login pull-right  anima ted fad eOutRightBig" v-show="loginPanel">
+      <div class="header-not-login pull-right  anima ted fadeOutRig htBig" v-show="loginPanel">
         <a class="header-try header-try" href="javascript:void(0);">免费试玩</a>
         <button type="button" class="js-header-login header-login " @click="showLogin">登录</button>
       </div>
-      <div class="js-header-has-logined header-has-logined  pull-right anima ted fadeIn RightBig "
+      <div class="js-header-has-logined header-has-logined  pull-right animated fadeInRightBig"
            v-show="userPanel">
         <div class="js-header-menu header-menu">
           <span class="sfa header-headshot "><img :src="imgUrl"/></span>
@@ -24,9 +24,9 @@
             <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
             <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
             <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
-            <a href="javascript:void(0);" class="header-menu-item"><i
+            <div class="header-menu-item" v-on:click="logoutHandler"><i
               class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
-              <span class="header-menu-item-text inline-block">退出</span></a>
+              <span class="header-menu-item-text inline-block" >退出</span></div>
           </div>
         </div>
         <div class="header-amount-panel">
@@ -151,6 +151,26 @@
         this.userPanel = true
         $(this.$refs.loginModal).modal('hide')
       },
+      logoutHandler() {
+        Global.ui.loader.show()
+
+        $(document).confirm({
+          content: '<div class="m-TB-lg">确定要退出登录？</div>',
+          type: 'exit',
+          agreeCallback() {
+            Global.oauth.logout().done((data) => {
+              if (data && data.result === 0) {
+                Global.cookieCache.clear('token')
+                Global.cookieCache.clear('loginState')
+                window.location.href = 'index.html'
+              }
+            }).always(() => {
+              Global.ui.loader.hide()
+            })
+          },
+        })
+        return false
+      },
     }
   }
 </script>
@@ -166,7 +186,7 @@
     left: 0;
     right: 0;
     top: 0;
-    /*z-index: 6;*/
+    z-index: 1050;
     position: relative;
     vertical-align: middle;
 

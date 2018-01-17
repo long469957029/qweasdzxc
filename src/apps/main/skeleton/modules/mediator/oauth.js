@@ -1,4 +1,3 @@
-
 const NewsMediatorModule = Base.Module.extend({
 
   startWithParent: false,
@@ -37,7 +36,9 @@ const NewsMediatorModule = Base.Module.extend({
 
         window.Global.m.publish('acct:updating', acctInfo)
 
-        this.login = false
+        // this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+
+        self.login = false
       })
 
     // 因应二号改版偷跑 先忽略验证使用者
