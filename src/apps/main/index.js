@@ -8,11 +8,7 @@ import store from '../store/index'
 import MainHeader from 'skeleton/bases/header/index'
 import whiteList from './directAccess'
 
-<<<<<<< HEAD
-Object.defineProperty(Vue.prototype, '_', { value: _ })
-=======
 Object.defineProperty(Vue.prototype, '_', {value: _})
->>>>>>> e38fed3a8a08d392f948076285c4d29cd686ed9c
 
 Vue.component('animated-integer', AnimatedInteger)
 

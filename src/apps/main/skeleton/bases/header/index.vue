@@ -160,7 +160,6 @@
       },
       logoutHandler() {
         Global.ui.loader.show()
-
         $(document).confirm({
           content: '<div class="m-TB-lg">确定要退出登录？</div>',
           type: 'exit',
@@ -172,6 +171,7 @@
 //                window.location.href = 'index.html'
                 Global.router.goTo('')
                 app.$store.commit(types.USER_CLEAR)
+                window.Global.m.publish('acct:loginOut')
               }
             }).always(() => {
               Global.ui.loader.hide()

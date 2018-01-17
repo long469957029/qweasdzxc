@@ -26,13 +26,18 @@ const ToolbarView = Base.ItemView.extend({
 
   onRender() {
     const self = this
+    this.subscribe('acct', 'acct:updating', () => {
+      self.$('.js-toolbar-option-operation-container').toggleClass('hidden', false)
+    })
+    this.subscribe('acct', 'acct:loginOut', () => {
+      self.$('.js-toolbar-option-operation-container').toggleClass('hidden', true)
+    })
     self.$sidebar = self.$('.js-toolbar-sidebar')
     self.$closeMask = self.$('.js-sidebar-close')
   },
 
   closeSidebarHandler() {
     const self = this
-
     self.$sidebar.closest('.js-toolbar-container').find('.js-toolbar-option').each((index, dom) => {
       $(dom).removeClass('active')
     })

@@ -54,12 +54,7 @@ const initState = () => {
 // getters
 const getters = {
   getLoginStatus: (state) => {
-    // const userToken = Global.cookieCache.get('token')
-    // if (userToken !== '' && userToken !== null && userToken.length > 0) {
     return state.userId > 0
-    // } else {
-    //   return true
-    // }
   },
 }
 
