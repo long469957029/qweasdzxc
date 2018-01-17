@@ -30,7 +30,7 @@ module.exports = {
       } else {
         onlineCircle = ''
       }
-      const avatarPic = avatarConf.get(parentInfo.headIconId).logo
+      const avatarPic = avatarConf.get(_(parentInfo.headIconId).toString()).logo
       supersiorHtml.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${parentInfo.userId}" data-name="我的上级">` +
         `<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
     }
@@ -60,7 +60,7 @@ module.exports = {
         } else {
           onlineCircle = ''
         }
-        const avatarPic = avatarConf.get(user.headIconId).logo
+        const avatarPic = avatarConf.get(_(user.headIconId).toString()).logo
         item.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${user.userId}" data-name="我的上级">` +
           `<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
       } else {
@@ -77,7 +77,7 @@ module.exports = {
       } else {
         onlineCircle = ''
       }
-      const avatarPic = avatarConf.get(user.headIconId).logo
+      const avatarPic = avatarConf.get(_(user.headIconId).toString()).logo
       item.push(`<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}`)
       item.push(`<span class="contact-name">${name}</span></div>`)
       userHtml.push(item.join(''))
@@ -138,7 +138,8 @@ module.exports = {
           } else {
             onlineCircle = ''
           }
-          const avatarPic = avatarConf.get(item.headIconId).logo
+
+          const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
           itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="我的上级">` +
             `<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
         } else {
@@ -155,7 +156,7 @@ module.exports = {
           } else {
             onlineCircle = ''
           }
-          const avatarPic = avatarConf.get(item.headIconId).logo
+          const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
           itemHtml.push(`<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}`)
 
           let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-close recently-message-close"></span>'
@@ -251,7 +252,7 @@ module.exports = {
           userName = '系统管理员'
           userAvatar = 'sfa-avata-admin'
         } else {
-          avatarPic = avatarConf.get(userAvatar).logo
+          avatarPic = avatarConf.get(_(userAvatar).toString()).logo
         }
         itemHtml.push(`<div class="chat-item" data-id='${item.rid}'> <div class="sfa ${userAvatar} chat-item-avatar inline-block"><img src='${avatarPic}'  /></div> `)
         itemHtml.push(`<div class="inline-block chat-item-detail"><div class="chat-item-name">${userName}</div><div class="chat-item-message">${item.content}</div>`)

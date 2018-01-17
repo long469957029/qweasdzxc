@@ -118,7 +118,7 @@
 
 
     <!-- 追号 -->
-    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="chaseModal" v-if="showChaseModal">
+    <div class="modal hide `" tabindex="-1" role="dialog" aria-hidden="false" ref="chaseModal" v-if="showChaseModal">
             <betting-chase :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney" :ticket-info="ticketInfo"
                            :planId="bettingInfo.planId" :preview-list="bettingChoice.previewList"
                            :total-lottery="bettingChoice.totalLottery" ref="bettingChase" @chaseComplete="chaseComplete"></betting-chase>

@@ -7,7 +7,11 @@ import store from '../store/index'
 
 import MainHeader from 'skeleton/bases/header/index'
 
+<<<<<<< HEAD
 Object.defineProperty(Vue.prototype, '_', { value: _ })
+=======
+Object.defineProperty(Vue.prototype, '_', {value: _})
+>>>>>>> e38fed3a8a08d392f948076285c4d29cd686ed9c
 
 Vue.component('animated-integer', AnimatedInteger)
 
@@ -27,21 +31,18 @@ const appRouters = require('./app.routers')
 // 因应二号改版 验证机制不同 可以新增一个新的 userType 作为游客
 // Global.memoryCache.set('acctInfo', { userType: 1 })
 
+// 配置初始化路由（按功能模块）
 const router = appRouters.install()
 
-// 每次路由变化是调用，切换显示区域
+//每次路由变化是调用，切换显示区域
 router.beforeEach((to, from, next) => {
   let isVue = false
 
-  _(['/bc', '/i', '/analysis']).each(function(router) {
+  _(['/bc', '/analysis']).each(function (router) {
     if (to.path.indexOf(router) !== -1) {
       isVue = true
     }
   })
-
-  if (to.path === '/') {
-    isVue = true
-  }
 
   if (to.path === '/bc/19') {
     isVue = false
@@ -70,21 +71,19 @@ _.delay(() => {
   window.location.hash = desHash === '#/i' ? '#/' : desHash
 }, 0)
 
+window.store = store
 window.router = router
 window.$route = app.$route
 
 
-
-// Global.m.oauth.start()
-// App.start()
+App.start()
 
 // 进行系统OAuth校验
 Global.m.oauth.check().done((res) => {
   if (res && res.result === 0) {
-    /** **************************************************************** */
-    // 配置初始化路由（按功能模块）
-    appRouters.install()
-    /** **************************************************************** */
+    // /** **************************************************************** */
+    // // appRouters.install()
+    // /** **************************************************************** */
 
     // 开启oauth监听
     Global.m.oauth.start()
@@ -93,18 +92,6 @@ Global.m.oauth.check().done((res) => {
     Global.m.news.start()
 
     // 开启菜单权限监听
-    Global.ui.menu.start()
-
-    // 开启下雨活动监听
-    // Global.m.volcanicActivity.start();
-    // Global.m.rainActivity.start();
-
-    // 开启摇钱树活动监听
-    // Global.m.treeActivity.start();
-
-    // 开启踩彩财活动监听
-    // Global.m.treadActivity.start();
-
-    App.start()
+    // Global.ui.menu.start()
   }
 })

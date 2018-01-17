@@ -1,6 +1,6 @@
 const core = require('mathjs/core')
 
-import { repeat, fill, chunk } from 'lodash'
+import { repeat, fill, chunk, cloneDeep } from 'lodash'
 
 const math = core.create()
 
@@ -13,6 +13,7 @@ math.import(require('mathjs/lib/function/arithmetic/floor'))
 const gameConfig = require('skeleton/misc/gameConfig')
 
 _.mixin({
+  cloneDeep,
   repeat,
   fill,
   chunk,

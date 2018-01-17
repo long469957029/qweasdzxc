@@ -1,31 +1,31 @@
 
 
-const MediatorModule = require('skeleton/modules/mediator')
-const UIModule = require('skeleton/modules/ui')
-const DataModule = require('skeleton/modules/data')
-const RouterModule = require('skeleton/modules/router')
-const SettingModule = require('skeleton/modules/setting')
+import MediatorModule from 'skeleton/modules/mediator'
+import UIModule from 'skeleton/modules/ui'
+import DataModule from 'skeleton/modules/data'
+import RouterModule from 'skeleton/modules/router'
+import SettingModule from 'skeleton/modules/setting'
 
-const MenuModule = require('skeleton/modules/ui/menu')
-const SyncModule = require('skeleton/modules/sync')
-const OAuthModule = require('skeleton/modules/oauth')
-const LoaderModule = require('skeleton/modules/ui/loader')
-const NotificationModule = require('skeleton/modules/ui/notification')
-const DialogModule = require('skeleton/modules/ui/dialog')
-const PollingModule = require('skeleton/modules/polling')
-const ViewPollModule = require('skeleton/modules/viewPool')
-const InputMonitorModule = require('skeleton/modules/inputMonitor')
-const ValidatorModule = require('skeleton/modules/validator')
+import MenuModule from 'skeleton/modules/ui/menu'
+import SyncModule from 'skeleton/modules/sync'
+import OAuthModule from 'skeleton/modules/oauth'
+import LoaderModule from 'skeleton/modules/ui/loader'
+import NotificationModule from 'skeleton/modules/ui/notification'
+import DialogModule from 'skeleton/modules/ui/dialog'
+import PollingModule from 'skeleton/modules/polling'
+import ViewPollModule from 'skeleton/modules/viewPool'
+import InputMonitorModule from 'skeleton/modules/inputMonitor'
+import ValidatorModule from 'skeleton/modules/validator'
 
-const OauthMediatorModule = require('skeleton/modules/mediator/oauth')
-const NewsMediatorModule = require('skeleton/modules/mediator/news')
+import OauthMediatorModule from 'skeleton/modules/mediator/oauth'
+import NewsMediatorModule from 'skeleton/modules/mediator/news'
 
-const VolcanicActivityModule = require('skeleton/modules/mediator/volcanicActivity')
+// const VolcanicActivityModule from 'skeleton/modules/mediator/volcanicActivity'
 
-// var TreadActivityModule = require('skeleton/modules/mediator/treadActivity');
-// var RainActivityModule = require('skeleton/modules/mediator/rainActivity');
-const TreeActivityModule = require('skeleton/modules/mediator/treeActivity')
-const NewbieActivityModule = require('skeleton/modules/newbieActivity')
+// var TreadActivityModule from 'skeleton/modules/mediator/treadActivity'
+// var RainActivityModule from 'skeleton/modules/mediator/rainActivity'
+// import TreeActivityModule from 'skeleton/modules/mediator/treeActivity'
+// import NewbieActivityModule from 'skeleton/modules/newbieActivity'
 
 exports.install = function() {
   window.Global.module('viewPool', ViewPollModule)
@@ -50,6 +50,6 @@ exports.install = function() {
   // window.Global.module('m.rainActivity', RainActivityModule);
   // window.Global.module('m.volcanicActivity', VolcanicActivityModule);
   // window.Global.module('m.treadActivity', TreadActivityModule);
-  window.Global.module('m.treeActivity', TreeActivityModule)
-  window.Global.module('newbieActivity', NewbieActivityModule)
+  // window.Global.module('m.treeActivity', TreeActivityModule)
+  // window.Global.module('newbieActivity', NewbieActivityModule)
 }

@@ -296,4 +296,4 @@ const SyncModule = Base.Module.extend({
   },
 })
 
-module.exports = SyncModule
+export default SyncModule

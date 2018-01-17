@@ -119,10 +119,6 @@ gulp.task('server.webpack', () => {
       target: serverIP,
       changeOrigin: true,
     },
-    '/info/imgs': {
-      target: serverIP,
-      changeOrigin: true,
-    },
     'mock/*.json': {
       target: 'http://localhost:7070/',
     },
@@ -151,6 +147,8 @@ gulp.task('server.webpack', () => {
     stats: {
       colors: true,
     },
+    // 取消框架域名检测
+    disableHostCheck: true
   }).listen(devConfig.devServer.port, 'localhost', (err) => {
     if (err) {
       console.log(err)

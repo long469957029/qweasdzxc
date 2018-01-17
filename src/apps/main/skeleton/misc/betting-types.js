@@ -1,3 +1,37 @@
+// 四星:20002
+// 前三星:20003
+// 中三星:20004
+// 后三星:20005
+// 前二星:20006
+// 后二星:20007
+// 一星万位:20008
+// 一星千位:20009
+// 一星百位:20010
+// 一星十位:20011
+// 一星个位:20012
+//
+// 3D_三星 20016
+// 3D_前二星 20017
+// 3D_后二星 20018
+// 3D_百位 20020
+// 3D_十位 20021
+// 3D_个位 20022
+
+const sccPlaySeriesIdList = [
+  {
+    title: '五星',
+    id: 20001,
+  }
+]
+
+const threeDPlaySeriesIdList = [
+  {
+    title: '三星',
+    id: 20016,
+  }
+]
+
+
 export const SSC = {
   range: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
   counts: 5,
@@ -5,6 +39,10 @@ export const SSC = {
   defaultOpening: R.repeat('0', 5),
   defaultSelectPlay: '4',
   type: 'ssc',
+  positions: ['万位', '千位', '百位', '十位', '个位'],
+  trend: true,
+  trendType: 'new',
+  playSeriesIdList: sccPlaySeriesIdList
 }
 
 export const CHOOSE15 = {
@@ -14,6 +52,9 @@ export const CHOOSE15 = {
   defaultOpening: R.repeat('0', 5),
   defaultSelectPlay: '4,0,4',
   type: 'choose15',
+  positions: ['第一位', '第二位', '第三位', '第四位', '第五位'],
+  trend: true,
+  trendType: 'old',
 }
 
 export const THREED = {
@@ -23,6 +64,10 @@ export const THREED = {
   defaultOpening: R.repeat('0', 3),
   defaultSelectPlay: '0',
   type: 'threeD',
+  positions: ['百位', '十位', '个位'],
+  trend: true,
+  trendType: 'new',
+  playSeriesIdList: threeDPlaySeriesIdList
 }
 
 export const P5P3 = {
@@ -32,6 +77,9 @@ export const P5P3 = {
   defaultOpening: R.repeat('0', 5),
   defaultSelectPlay: '0',
   type: 'p5p3',
+  positions: ['万位', '千位', '百位', '十位', '个位'],
+  trend: true,
+  trendType: 'old',
 }
 
 export const PK10 = {
@@ -41,6 +89,9 @@ export const PK10 = {
   defaultOpening: R.repeat('01', 10),
   defaultSelectPlay: '4',
   type: 'pk10',
+  positions: ['冠军', '亚军', '季军', '第四名', '第五名', '第六名', '第七名', '第八名', '第九名', '第十名'],
+  trend: true,
+  trendType: 'old',
 }
 
 export const QUICK3 = {
@@ -50,6 +101,9 @@ export const QUICK3 = {
   defaultOpening: R.repeat('3', 3),
   defaultSelectPlay: '9',
   type: 'quick3',
+  positions: ['万位', '千位', '百位'],
+  trend: true,
+  trendType: 'old',
 }
 
 
@@ -148,4 +202,5 @@ export const MARK6 = {
   getNum: getFortyNine,
   sx: shengXiao,
   type: 'mark6',
+  trend: false,
 }

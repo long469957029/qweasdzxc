@@ -1,5 +1,3 @@
-
-
 const NotificationModule = Base.Module.extend({
 
   startWithParent: false,
@@ -107,4 +105,4 @@ const NotificationModule = Base.Module.extend({
   },
 })
 
-module.exports = NotificationModule
+export default NotificationModule

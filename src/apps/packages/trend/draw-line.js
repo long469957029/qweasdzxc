@@ -7,10 +7,8 @@ const DrawLine = {
   check(a) {
     return /^(charball|cbg)/i.test(a.className)
   },
-  on_off: true,
-  bind(b, a) {
+  bind(b) {
     this.table = b
-    this.on_off = a
     return this
   },
   color(a) {
@@ -30,15 +28,6 @@ const DrawLine = {
         this.LineGroup.push(new LG(this.table, b[0], b[1], b[2], b[3], this.check))
       }
     }
-    if (this.on_off) {
-      const f = this
-      const c = document.getElementById(this.on_off)
-      if (c) {
-        c.onclick = function() {
-          f.show(this.checked)
-        }
-      }
-    }
     return this
   },
   show(c) {
@@ -47,6 +36,13 @@ const DrawLine = {
       this.LineGroup[a].show(c)
     }
   },
+  remove() {
+    const b = this.LineGroup.length
+    for (let a = 0; a < b; a++) {
+      this.LineGroup[a].remove()
+    }
+  },
+
   add(a, d, b, c) {
     this.AttributeGroup.push([a, d, b, c])
     this.AttributeGroup[this.AttributeGroup.length - 1].color = LG.color
@@ -58,7 +54,7 @@ var JoinLine = function(a, b) {
   this.color = a || '#000000'
   this.size = b || 1
   this.lines = []
-  this.tmpDom = null 
+  this.tmpDom = null
   this.visible = true
   this.box = document.body
 }
@@ -166,9 +162,9 @@ JoinLine.prototype = {
     let p = g - f,
       n = o - m
     const k = Math.round(Math.sqrt(Math.pow(p, 2) + Math.pow(n, 2)))
-    let d, 
-      j, 
-      q, 
+    let d,
+      j,
+      q,
       h
     const l = Math.round((p * e) / k)
     const i = Math.round((n * e) / k)
@@ -223,6 +219,9 @@ LG.prototype = {
   show(a) {
     this.line.show(a)
   },
+  remove() {
+    this.line.remove()
+  },
 }
 const Chart = {}
 Chart.on = function(c, b, a) {
@@ -238,11 +237,6 @@ Chart.init = function() {
   if (!Chart.ini.default_has_line) {
     return
   }
-  const a = document.getElementById('has_line')
-  if (!a) {
-    return
-  }
-  a.checked = 'checked'
   DrawLine.AttributeGroup = []
   DrawLine.LineGroup = []
 }
@@ -252,7 +246,8 @@ fw.onReady = function(a) {
   Chart.on(window, 'load', a)
 }
 
-module.exports = {
+
+export default {
   Chart,
   DrawLine,
 }

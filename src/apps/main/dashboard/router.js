@@ -1,6 +1,4 @@
-
-import DashboardView from './dashboard.vue'
-
+const DashboardView = require('dashboard/views/dashboard')
 const NoticeDetailView = require('dynamicCenter/views/noticeDetail')
 
 const Init = {
@@ -12,10 +10,9 @@ const Init = {
 export default [
   {
     path: '/',
-    // component() {
-    //   RouterController.changeMainReginView(new DashboardView())
-    // }
-    component: DashboardView,
+    component() {
+      RouterController.changeMainReginView(new DashboardView())
+    }
   },
   {
     path: '/nb/detail/:noticeId',

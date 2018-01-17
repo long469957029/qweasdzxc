@@ -1,7 +1,7 @@
 module.exports = {
   // parser: 'sugarss',
   plugins: {
-    'postcss-cssnext': {
+    'postcss-cssnext': process.env.NODE_ENV === 'production' ? {
       browsers: [
         'last 3 versions',
         'ie >= 10',
@@ -15,10 +15,14 @@ module.exports = {
         'bb >= 10',
         'and_uc 9.9',
       ],
+    } : {
+      browsers: [
+        'last 3 versions',
+      ]
     },
-    'postcss-unrgba': {
+    'postcss-unrgba': process.env.NODE_ENV === 'production' ? {
       method: 'clone',
-    },
-    'postcss-filter-gradient': {},
+    } : false,
+    'postcss-filter-gradient': process.env.NODE_ENV === 'production' ? {} : false,
   },
 }

@@ -30,4 +30,4 @@ const MediatorModule = Base.Module.extend({
 
 })
 
-module.exports = MediatorModule
+export default MediatorModule

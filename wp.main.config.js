@@ -1,11 +1,12 @@
 module.exports = {
   entry: {
     main: './src/apps/main/index.js',
-    login: './src/apps/packages/login/login.js',
-    register: './src/apps/packages/register/register.js',
+    // login: './src/apps/packages/login/login.js',
+    // register: './src/apps/packages/register/register.js',
     vendor: './src/vendor/build.core.js',
     base: './src/base/build.base.js',
     trend: './src/apps/packages/trend/index.js',
+    // trendOld: './src/apps/packages/trend/old/index.js',
     // resetPassword: './src/apps/packages/resetPassword/resetPassword.js',
     updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
     // merchants: './src/apps/packages/merchants/index.js',
@@ -37,11 +38,11 @@ module.exports = {
       template: './entry/index.html',
       chunks: ['common', 'vendor', 'base', 'main'],
     },
-    login: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'login'],
-    },
+    // login: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'login'],
+    // },
     register: {
       title: '无限娱乐',
       template: './entry/register.html',
@@ -49,8 +50,8 @@ module.exports = {
     },
     trend: {
       title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'trend'],
+      template: './entry/package-vue.html',
+      chunks: ['common', 'base', 'trend'],
     },
     charge: {
       title: '充值结果',
@@ -208,7 +209,6 @@ module.exports = {
   },
   providePlugin: {
     Vue: ['vue/dist/vue.esm.js', 'default'],
-    // Vue: ['vue', 'default'],
     mapState: ['vuex', 'mapState'],
     mapGetters: ['vuex', 'mapGetters'],
     jQuery: 'jquery',

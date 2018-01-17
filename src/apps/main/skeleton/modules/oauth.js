@@ -17,4 +17,4 @@ const OAuthModule = Base.Module.extend({
   },
 })
 
-module.exports = OAuthModule
+export default OAuthModule

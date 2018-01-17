@@ -1,5 +1,3 @@
-
-
 const NewsMediatorModule = Base.Module.extend({
 
   startWithParent: false,
@@ -8,12 +6,10 @@ const NewsMediatorModule = Base.Module.extend({
 
   login: true,
 
-  onStart() {
-    const self = this
-
+  onStart({logoutWhenUnLogin = false} = {}, xhrOps) {
     _.delay(() => {
       Global.polling.start('oauth:request', () => {
-        self.check()
+        this.check({logoutWhenUnLogin}, xhrOps)
           .always(() => {
             Global.polling.next('oauth:request', {
               interval: self.interval,
@@ -23,9 +19,8 @@ const NewsMediatorModule = Base.Module.extend({
     }, this.interval)
   },
 
-  check(options) {
-    const self = this
-    const oauthXhr = Global.oauth.check(options)
+  check({logoutWhenUnLogin = false, checkStatusOnly = false} = {}, xhrOps) {
+    const oauthXhr = Global.oauth.check(xhrOps)
       .done((res) => {
         const acctInfo = res.root || {}
 
@@ -33,21 +28,31 @@ const NewsMediatorModule = Base.Module.extend({
         acctInfo.fLastLoginTime = _(acctInfo.lastLoginTime).toTime()
         acctInfo.fLoginTime = _(acctInfo.loginTime).toTime()
 
-        if (self.login && acctInfo.outTime && acctInfo.outTime !== 0) {
-          self.autoLogoutCountdown(acctInfo.outTime)
+        if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
+          this.autoLogoutCountdown(acctInfo.outTime)
         }
 
-        Global.memoryCache.set('acctInfo', acctInfo)
+        window.Global.memoryCache.set('acctInfo', acctInfo)
 
-        Global.m.publish('acct:updating', acctInfo)
+        window.Global.m.publish('acct:updating', acctInfo)
+
+        if (!checkStatusOnly) {
+          window.store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+        }
 
         self.login = false
       })
 
     // 因应二号改版偷跑 先忽略验证使用者
-    // this._checkUserIsEffective(oauthXhr);
+    if (logoutWhenUnLogin) {
+      this._checkUserIsEffective(oauthXhr);
+    }
 
     return oauthXhr
+  },
+
+  checkLogin() {
+    return this.check({logoutWhenUnLogin: true})
   },
 
   autoLogoutCountdown(time) {
@@ -73,16 +78,16 @@ const NewsMediatorModule = Base.Module.extend({
 
   _checkUserIsEffective (oauthXhr) {
     oauthXhr.done((res) => {
-      if (!res || (res.result !== 0 && res.root == undefined)) {
+      if (!res || (res.result !== 0 && res.root === undefined)) {
         Global.ui.notification.show(res.msg, {
           event () {
-            window.location.href = 'login.html'
+            window.location.href = 'index.html'
           },
         })
       } else if (!res || (res.result !== 0 && _([101, 103, 104, 105, 106]).indexOf(res.root.status) !== -1)) {
         Global.ui.notification.show('账号状态异常！', {
           event () {
-            window.location.href = 'login.html'
+            window.location.href = 'index.html'
           },
         })
       }
@@ -94,4 +99,4 @@ const NewsMediatorModule = Base.Module.extend({
   },
 })
 
-module.exports = NewsMediatorModule
+export default NewsMediatorModule
