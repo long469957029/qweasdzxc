@@ -192,7 +192,7 @@
 </template>
 
 <script>
-  import trend from 'api/trend'
+  import analysisApi from 'api/analysis'
   import Draw from './draw-line'
 
   export default {
@@ -262,7 +262,7 @@
       },
       getData() {
         if (this.ticketInfo.trendType === 'new') {
-          trend.getTrend({
+          analysisApi.getTrend({
             trendTypeId: 1,
             ticketId: this.ticketInfo.isOfficial ? this.ticketId : this.ticketId + 10000,
             playSeriesId: this.ticketInfo.playSeriesIdList[0].id,
@@ -275,7 +275,7 @@
             }
           })
         } else {
-          trend.getTrendByOld({
+          analysisApi.getTrendByOld({
             ticketId: this.ticketId,
             days: this.currentSearch === 'date' ? this.date : '',
             limit: this.currentSearch === 'pageSize' ? this.pageSize : ''
@@ -509,7 +509,7 @@
 
       draw() {
         const $body = $('body');
-        $body.find('.trend-panel').css('width', $body.find("#trend-table").width());
+        $body.find('.trend-panel, .trend-main, .trend-des').css('width', $body.find("#trend-table").width());
 
         const colors = '#14b1bb';
 

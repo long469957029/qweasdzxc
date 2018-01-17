@@ -38,7 +38,7 @@
     watch: {
       '$route':{
         handler(to) {
-          this.ticketInfo = ticketConfig.getById(this.ticketId)
+          this.ticketInfo = ticketConfig.getById(this.ticketId, this.ticketType)
           // this.ticketInfo = ticketConfig.getComplete(this.ticketId)
 
           // 暂时在这重置bettingChoice

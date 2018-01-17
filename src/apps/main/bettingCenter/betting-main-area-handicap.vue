@@ -11,6 +11,9 @@
                                         ref="area" @lotteryBuy="lotteryBuy"></betting-play-area-handicap>
           </div>
         </div>
+
+        <!-- 露珠 -->
+        <road-balls-analysis :ticket-info="ticketInfo" v-if="ticketInfo.roadBalls"></road-balls-analysis>
       </div>
       <div class="bc-side-area pull-right" ref="bcSideArea"></div>
     </div>
@@ -21,11 +24,9 @@
     </div>
   </div>
 </template>
-
 <script>
-  import { mapState } from 'vuex'
   import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
-
+  import RoadBallsAnalysis from './road-balls-analysis'
   import BettingRules from './betting-rules'
   import BettingAdvanceRules from './betting-advance-rules'
   import BettingPlayAreaHandicap from './betting-play-area-handicap'
@@ -48,6 +49,7 @@
       BettingConfirm,
       BettingAdvanceRules,
       BettingPlayAreaHandicap,
+      RoadBallsAnalysis,
     },
     data() {
       return {
