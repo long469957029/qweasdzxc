@@ -30,7 +30,7 @@
     <div class="dashboard-container">
       <div class="dashboard-row">
         <!-- 讯息轮播区块 -->
-        <div class="col-md-9 db-shadow carousel slide" @mouseover="clearGameInv"
+        <transition class="col-md-9 db-shadow carousel slide" @mouseover="clearGameInv"
              @mouseout="runGameInv">
           <ol class="db-carousel-indicators">
             <li :class="{active: gameIndex === 1}" @click="gameGoTo(1)"></li>
@@ -79,6 +79,7 @@
                 </div>
                 <div class="clearfix"></div>
               </div>
+        </transition>
             </div>
           </div>
           <div class="clearfix"></div>
