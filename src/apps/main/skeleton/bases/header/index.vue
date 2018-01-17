@@ -9,12 +9,16 @@
       <div class="js-gl-service header-customer-entry  pull-right overflow-hidden">
         <span class="sfa sfa-customer-service"></span><span class="header-customer-text">在线客服</span>
       </div>
-      <div class="header-not-login pull-right  anima ted fadeOutRig htBig" v-show="loginPanel">
+      <transition mode="out-in"
+        enter-active-class="animated-general fadeInRightBig"
+        leave-active-class="animated-general fadeOutRightBig"
+      >
+      <div class="header-not-login pull-right" v-if="!isLogin" key="login">
         <a class="header-try header-try" href="javascript:void(0);">免费试玩</a>
         <button type="button" class="js-header-login header-login " @click="showLogin">登录</button>
       </div>
-      <div class="js-header-has-logined header-has-logined  pull-right animated fadeInRightBig"
-           v-show="userPanel">
+      <div class="js-header-has-logined header-has-logined  pull-right" key="logined"
+           v-else>
         <div class="js-header-menu header-menu">
           <span class="sfa header-headshot "><img :src="imgUrl"/></span>
           <span class="js-header-username header-name">{{userUname}}</span>
@@ -26,9 +30,10 @@
             <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
             <div class="header-menu-item" v-on:click="logoutHandler"><i
               class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
-              <span class="header-menu-item-text inline-block" >退出</span></div>
+              <span class="header-menu-item-text inline-block">退出</span></div>
           </div>
         </div>
+
         <div class="header-amount-panel">
           ￥
           <div class="js-header-amount header-amount">{{userAmount}}</div>
@@ -75,6 +80,7 @@
           </div>
         </div>
       </div>
+      </transition>
     </div>
     <!-- 登录 -->
     <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="loginModal"
@@ -118,13 +124,14 @@
         return this.$store.state.userInfo.uName
       },
       userAmount() {
-        return _(this.$store.state.userInfo.balance).formatDiv(10000, {fixed: 2})
+        return this.$store.state.userInfo.balance
       },
       imgUrl(){
-        const iconId = this.$store.state.userInfo.headIcon
-        const url = avatarConf.get(iconId).logo
-        return url
-      }
+        return avatarConf.get(this.$store.state.userInfo.headIcon).logo
+      },
+      isLogin(){
+        return this.$store.getters.getLoginStatus
+      },
     },
 
     filters: {},
@@ -162,7 +169,8 @@
               if (data && data.result === 0) {
                 Global.cookieCache.clear('token')
                 Global.cookieCache.clear('loginState')
-                window.location.href = 'index.html'
+//                window.location.href = 'index.html'
+                app.$store.commit(types.USER_CLEAR)
               }
             }).always(() => {
               Global.ui.loader.hide()

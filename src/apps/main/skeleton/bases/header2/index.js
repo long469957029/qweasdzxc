@@ -202,18 +202,18 @@ const HeaderView = Base.ItemView.extend({
   //  });
   // },
 
-  refreshHandler(e) {
-    e.stopPropagation()
-    e.preventDefault()
-    const $target = $(e.currentTarget)
-
-    $target.addClass('fa-spin')
-
-    Global.m.oauth.check()
-      .always(() => {
-        $target.removeClass('fa-spin')
-      })
-  },
+  // refreshHandler(e) {
+  //   e.stopPropagation()
+  //   e.preventDefault()
+  //   const $target = $(e.currentTarget)
+  //
+  //   $target.addClass('fa-spin')
+  //
+  //   Global.m.oauth.check()
+  //     .always(() => {
+  //       $target.removeClass('fa-spin')
+  //     })
+  // },
 
   logoutHandler(e) {
     Global.ui.loader.show()

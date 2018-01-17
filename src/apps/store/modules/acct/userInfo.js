@@ -40,7 +40,7 @@ const initState = () => {
     // 用户等级
     userGroupLevel: '',
     // 用户ID
-    userId: '',
+    userId: -1,
     // 用户返点
     userRebate: 0,
     // 用户状态
@@ -52,27 +52,39 @@ const initState = () => {
 }
 
 // getters
-const getters = {}
+const getters = {
+  getLoginStatus: (state) => {
+    // const userToken = Global.cookieCache.get('token')
+    // if (userToken !== '' && userToken !== null && userToken.length > 0) {
+    return state.userId > 0
+    // } else {
+    //   return true
+    // }
+  },
+}
 
 // actions
 const actions = {
-  getUserInfo ({commit}, {token}) {
-    // commit(types.CHECKOUT_TICKET_INFO)
-    return loginApi.getUserInfo(
-      {
-        token,
-      },
-      ({data}) => {
-        return commit(types.USER_LOGIN_SUCCESS, data)
-      },
-    )
-  },
+  // getUserInfo ({commit}, {token}) {
+  //   // commit(types.CHECKOUT_TICKET_INFO)
+  //   return loginApi.getUserInfo(
+  //     {
+  //       token,
+  //     },
+  //     ({data}) => {
+  //       return commit(types.USER_LOGIN_SUCCESS, data)
+  //     },
+  //   )
+  // },
 }
 
 // mutations
 const mutations = {
   [types.USER_LOGIN_SUCCESS] (state, data) {
     Object.assign(state, data)
+  },
+  [types.USER_CLEAR] (state) {
+    Object.assign(state, initState())
   },
 }
 
