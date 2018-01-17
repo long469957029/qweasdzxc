@@ -590,6 +590,8 @@
     padding: 0;
     white-space: nowrap;
     min-width: 20px;
+    transition: background-color .5s;
+
     &.title-num-last {
       border-right: 1px solid #e6e6e6;
     }
@@ -601,6 +603,8 @@
     border-radius: 10px;
     display: inline-block;
     color: #ffffff;
+
+    transition: background-color .5s;
   }
   .blue {
     background-color: #14b1bb;
