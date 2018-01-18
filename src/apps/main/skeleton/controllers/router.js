@@ -8,8 +8,8 @@ const SideMenuMainView = Base.LayoutView.extend({
 
 export default {
   async(resolve, viewPromise, params, config = {}) {
-    if (!_.isEmpty(config)) {
-      config = params
+    if (_.isEmpty(config)) {
+      config = _.isUndefined(params) ? {} : params
       params = {}
     }
     viewPromise().then((view) => {
