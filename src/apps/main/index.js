@@ -6,7 +6,7 @@ import AnimatedInteger from 'com/animated-integer'
 import store from '../store/index'
 
 import MainHeader from 'skeleton/bases/header/index'
-import whiteList from './directAccess'
+
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
 
@@ -31,7 +31,6 @@ const appRouters = require('./app.routers')
 // 配置初始化路由（按功能模块）
 const router = appRouters.install()
 
-
 const desHash = window.location.hash
 
 window.location.hash = '#/i'
@@ -55,69 +54,44 @@ window.$route = app.$route
 
 //每次路由变化是调用，切换显示区域
 router.beforeEach((to, from, next) => {
-  let isVue = false
-  _(['/bc', '/analysis']).each((bcRouter) => {
-    if (to.path.indexOf(bcRouter) !== -1) {
+  // let isVue = false
+  // _(['/bc', '/analysis', '/i']).each((bcRouter) => {
+  //   if (to.path.indexOf(bcRouter) !== -1) {
+  //     isVue = true
+  //   }
+  // })
+  // if (to.path === '/') {
+  //   isVue = true
+  // }
+  // if (to.path === '/bc/19') {
+  //   isVue = false
+  // }
+  // $('#main').toggle(!isVue)
+  // $('#main-vue').toggle(isVue)
+  // next()
+  // permissionsConf.dealUserRouter(router)
+  // window.app.$store.commit(types.USER_SET_ROUTERS, router)
+  if (store.getters.checkPermission(to.path)) {
+    let isVue = false
+    _(['/bc', '/analysis', '/i']).each((bcRouter) => {
+      if (to.path.indexOf(bcRouter) !== -1) {
+        isVue = true
+      }
+    })
+    if (to.path === '/') {
       isVue = true
     }
-  })
-  if (to.path === '/bc/19') {
-    isVue = false
+    if (to.path === '/bc/19') {
+      isVue = false
+    }
+    $('#main').toggle(!isVue)
+    $('#main-vue').toggle(isVue)
+    next()
+  } else {
+    console.log('请重新登录')
+    $('#main-vue').toggle(true)
+    next('/') // 否则全部重定向到首页
   }
-  $('#main').toggle(!isVue)
-  $('#main-vue').toggle(isVue)
-  next()
-  // // 判断用户是否登录
-  // if (store.getters.getLoginStatus) {
-  //   // 如果当前处于登录状态，并且跳转地址为login，则自动跳回系统首页
-  //   // 这种情况出现在手动修改地址栏地址时
-  //   if (to.path === 'index.html') {
-  //     router.replace('')
-  //   } else {
-  //     // 如果跳转页面存在于路由中则进入，否则跳转到404
-  //     // 因为可以通过改变url值进行访问，所以必须有该判断
-  //     if (to.matched.length) {
-  //       if (whiteList.indexOf(to.path) < 0) {
-  //         // store.dispatch('user/actionlog', to)
-  //       }
-  //       let isVue = false
-  //       _(['/bc', '/analysis']).each((bcRouter) => {
-  //         if (to.path.indexOf(bcRouter) !== -1) {
-  //           isVue = true
-  //         }
-  //       })
-  //       if (to.path === '/bc/19') {
-  //         isVue = false
-  //       }
-  //       $('#main').toggle(!isVue)
-  //       $('#main-vue').toggle(isVue)
-  //       next()
-  //     } else {
-  //       router.replace('')
-  //     }
-  //   }
-  // } else {
-  //   // 如果是免登陆的页面则直接进入，否则跳转到登录页面
-  //   if (whiteList.indexOf(to.path) >= 0) {
-  //     // console.log('该页面无需登录即可访问')
-  //     let isVue = false
-  //     _(['/bc', '/analysis']).each((bcRouter) => {
-  //       if (to.path.indexOf(bcRouter) !== -1) {
-  //         isVue = true
-  //       }
-  //     })
-  //
-  //     if (to.path === '/bc/19') {
-  //       isVue = false
-  //     }
-  //     $('#main').toggle(!isVue)
-  //     $('#main-vue').toggle(isVue)
-  //     next()
-  //   } else {
-  //     // console.log('请重新登录')
-  //     router.replace('')
-  //   }
-  // }
 })
 App.start()
 

@@ -1,23 +1,42 @@
-/**
- * Created by steven on 2018/1/17.
- */
-// 需要登录认证的页面
-const routerList = [
+// 需要验证菜单
+const permissionsList = [
   {
-    path: 'bc',
-    desc: 'ticket',
-    view: false,
+    path: '/bc',
+    mame: 'ticket',
+    needLogin: true,
   },
   {
-    path: 'uc',
-    desc: 'userCenter',
-    view: false,
+    path: '/uc',
+    mame: 'user',
+    needLogin: true,
   },
   {
-    path: 'ac',
-    desc: 'teamCenter',
-    view: false,
+    path: '/fc',
+    mame: 'fund',
+    needLogin: true,
+  },
+  {
+    path: '/vip',
+    mame: 'vip',
+    needLogin: false,
+  },
+  {
+    path: '/ac',
+    mame: 'team',
+    needLogin: true,
+  },
+  {
+    path: '/nc',
+    mame: 'notice',
+    needLogin: true,
   },
 ]
 
-export default routerList
+module.exports = {
+  get(id) {
+    return _(permissionsList).findWhere({
+      id,
+    })
+  },
+  permissionsList,
+}
