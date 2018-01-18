@@ -7,16 +7,16 @@ const SideMenuMainView = Base.LayoutView.extend({
 })
 
 export default {
-  async(resolve, viewPromise, params, config) {
+  async(resolve, viewPromise, params, config = {}) {
     if (!config) {
       config = params
       params = {}
     }
     viewPromise().then((view) => {
       if (config.parentRouter) {
-        this.changeSubReginView(view.default ? new view.default(params) :  new view(params), config)
+        this.changeSubReginView(view.default ? new view.default(params) : new view(params), config)
       } else {
-        this.changeMainReginView(view.default ? new view.default(params) :  new view(params), config)
+        this.changeMainReginView(view.default ? new view.default(params) : new view(params), config)
       }
       // resolve()
     })
@@ -161,5 +161,4 @@ export default {
     })
   },
 }
-
 

@@ -5,7 +5,7 @@ import Vue from 'vue'
 import store from '../store/index'
 import MainHeader from 'skeleton/bases/header/index'
 
-Object.defineProperty(Vue.prototype, '_', {value: _})
+Object.defineProperty(Vue.prototype, '_', { value: _ })
 
 require('widgets')
 
@@ -26,11 +26,11 @@ const appRouters = require('./app.routers')
 // 配置初始化路由（按功能模块）
 const router = appRouters.install()
 
-//每次路由变化是调用，切换显示区域
+// 每次路由变化是调用，切换显示区域
 router.beforeEach((to, from, next) => {
   let isVue = false
 
-  _(['/bc', '/analysis']).each(function (router) {
+  _(['/bc', '/analysis', '/aa']).each((router) => {
     if (to.path.indexOf(router) !== -1) {
       isVue = true
     }
