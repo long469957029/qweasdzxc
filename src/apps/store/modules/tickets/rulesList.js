@@ -73,10 +73,20 @@ const getters = {
 
 // actions
 const actions = {
-  getTicketRules ({ commit }, ticketId) {
+  getTicketRules ({ commit }, {ticketId, type}) {
     commit(types.CHECKOUT_TICKET_RULES)
+
+    const sign = Global.localCache.get(`ticketList.${ticketId}.${type}`);
+
+    if (sign) {
+      commit(types.GET_TICKET_RULES_SUCCESS, Global.localCache.get(sign))
+    }
+
     return betting.getTicketRules(
-      ticketId,
+      {
+        ticketId,
+        type
+      },
       ({ data }) => { return commit(types.GET_TICKET_RULES_SUCCESS, data) },
       () => { return commit(types.GET_TICKET_RULES_FAILURE) },
     )

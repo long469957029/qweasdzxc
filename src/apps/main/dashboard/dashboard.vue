@@ -221,6 +221,10 @@
         }
       }
     },
+    computed: mapGetters([
+      'topClassicalTicket',
+      'topHandicapTicket'
+    ]),
     mounted() {
       dashboard.getIndexGameXhr(
         ({data}) => {
