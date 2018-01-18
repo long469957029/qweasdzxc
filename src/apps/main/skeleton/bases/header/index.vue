@@ -180,6 +180,12 @@
         })
         return false
       },
+      renderMsgList(data){
+        console.log(data)
+      }
+    },
+    mounted(){
+      Global.m.subscribe('news', 'news:updating', this.renderMsgList)
     }
   }
 </script>

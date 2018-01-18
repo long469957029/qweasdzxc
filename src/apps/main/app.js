@@ -214,7 +214,7 @@ const _bindChaseDetailHandler = () => {
       bStyle: 'width: 848px;height:570px;',
       body: '<div class="fc-gr-chase-detail"></div>',
       closeBtn: false,
-      bodyClass: 'no-padding',
+      bodyClass: 'no-padding no-bg',
     })
     const $selectContainer = $dialog.find('.fc-gr-chase-detail')
     const editChaseDetailView = new ChaseDetailView({chaseFormId: cId, tradeNo: tradeno})

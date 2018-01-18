@@ -182,6 +182,12 @@
         locUrl: 'http://' + window.location.host
       }
     },
+    computed:{
+      ...mapGetters([
+        'topClasscialTicket',
+        'topHandicapTicket',
+      ])
+    },
     methods: {
       gameGoTo(index){
         this.gameIndex = index > this.gameCount ? 1 : index

@@ -13,7 +13,7 @@ const SystemMessageView = Base.ItemView.extend({
 
   getNoticeListXhr(data) {
     _(data).extend({
-      version: 2,
+      version: 1,
       pageSize: 10,
     })
     return Global.sync.ajax({
