@@ -132,7 +132,6 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
   import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
   import ticketConfig from 'skeleton/misc/ticketConfig'
 

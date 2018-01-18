@@ -30,6 +30,9 @@ const initState = () => {
 
 // getters
 const getters = {
+  // lastOpenPlanId: state => {
+  //   return state.lastOpenId
+  // }
 }
 
 // actions

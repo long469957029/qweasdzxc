@@ -18,12 +18,16 @@
       </div>
     </div>
     <div class="balls-main">
-      <div class="balls-col" v-for="col in cols">
-        <span class="ball-unit" v-for="row in rows">
-          <span class="ball" :class="fComboList[col - 1][row - 1].style" v-if="fComboList[col - 1] && fComboList[col - 1][row - 1] && fComboList[col - 1][row - 1].title">
+      <div class="balls-col" v-for="col in cols" :key="col">
+        <transition-group class="ball-unit" v-for="row in rows" :key="row"
+                          v-on:before-enter="beforeEnter"
+                          v-on:enter="enter"
+                          v-on:leave="leave"
+                          v-bind:css="false">
+          <span class="ball" :key="`${col}-${row}`" :class="fComboList[col - 1][row - 1].style" v-if="fComboList[col - 1] && fComboList[col - 1][row - 1] && fComboList[col - 1][row - 1].title">
             {{fComboList[col - 1][row - 1].title}}
           </span>
-        </span>
+        </transition-group>
       </div>
     </div>
   </div>
@@ -96,7 +100,11 @@
           this.getData()
         },
         immediate: true
+      },
+      lastOpenId() {
+        this.getData()
       }
+
     },
 
     computed: {
@@ -110,7 +118,11 @@
           //龙虎和的特殊判断,如果是和 合并到上一列
           let comboCol
           if (this.comboList[i].result === '和') {
+            //当前第一期就拿到和 则直接跳过
             comboCol = flattenComboList.pop()
+            if (!comboCol) {
+              continue
+            }
             prevLH = comboCol[comboCol.length - 1].title
             comboCol = comboCol.concat(_.times(this.comboList[i].combo, () => {
               return {
@@ -148,9 +160,15 @@
 
           let leftRow = this.rows - disparityList.length
 
-          if (comboCol.length > leftRow) {
+          if (comboCol.length > leftRow && leftRow !== 0) {
 
-            _.each(disparityList, (disparity) => {
+            let currentRowLeftDisparity = comboCol.splice(leftRow, comboCol.length - leftRow)
+
+            // let isMostRight = true
+
+            for(let disIndex = disparityList.length - 1; disIndex >= 0; --disIndex) {
+              let disparity = disparityList[disIndex]
+
               if (!_.isEmpty(disparity)) {
                 comboCol.push(disparity.pop())
               } else {
@@ -159,14 +177,11 @@
                   style: ''
                 })
               }
-            })
 
-            if (_.flatten(disparityList).length === 0) {
-              disparityList = []
             }
 
-            disparityList.push(_.last(comboCol, comboCol.length - leftRow))
-          } else {
+            disparityList.push(currentRowLeftDisparity)
+          } else if (comboCol.length <= leftRow) {
 
             comboCol = [...comboCol, ..._.times(leftRow - comboCol.length, () => {
               return {
@@ -175,7 +190,9 @@
               }
             })]
 
-            _.each(disparityList, (disparity) => {
+            let isMostRight = true
+
+            _.forEachRight(disparityList, (disparity) => {
               if (!_.isEmpty(disparity)) {
                 comboCol.push(disparity.pop())
               } else {
@@ -184,22 +201,134 @@
                   style: ''
                 })
               }
+
+              if (isMostRight && _.isEmpty(disparity)) {
+                this.spliceEmpty(disparityList)
+              } else {
+                isMostRight = false
+              }
+            })
+          } else {
+
+            let isMostRight = true
+
+            _.forEachRight(disparityList, (disparity) => {
+              if (!_.isEmpty(disparity)) {
+                comboCol.push(disparity.pop())
+              } else {
+                comboCol.push({
+                  title: '',
+                  style: ''
+                })
+              }
+
+              if (isMostRight && _.isEmpty(disparity)) {
+                this.spliceEmpty(disparityList)
+              } else {
+                isMostRight = false
+              }
             })
 
-            if (_.flatten(disparityList).length === 0) {
-              disparityList = []
+            if (disparityList.length === this.rows) {
+              --i
             }
           }
 
           fComboList.push(comboCol)
         }
 
+        while(disparityList.length > 0) {
+          let leftRow = this.rows - disparityList.length
+          let comboCol = _.times(leftRow, () => {
+            return {
+              title: '',
+              style: ''
+            }
+          })
+
+          let isMostRight = true
+          _.forEachRight(disparityList, (disparity) => {
+            if (!_.isEmpty(disparity)) {
+              comboCol.push(disparity.pop())
+            } else {
+              comboCol.push({
+                title: '',
+                style: ''
+              })
+            }
+
+            if (isMostRight && _.isEmpty(disparity)) {
+              this.spliceEmpty(disparityList)
+            } else {
+              isMostRight = false
+            }
+          })
+          fComboList.push(comboCol)
+        }
+
 
         return _.last(fComboList, this.cols)
-      }
+      },
+      ...mapState({
+        lastOpenId: state => state.bettingInfo.lastOpenId
+      }),
     },
 
     methods: {
+      beforeEnter: function (el) {
+        el.style.opacity = 0
+        // el.style.transform = 'translateY(200px)'
+        Velocity(el, {
+          translateY: '200px',
+        }, {
+          duration: 0,
+        })
+      },
+      enter: function (el, done) {
+        Velocity(el, {
+          translateY: '0px',
+          opacity: .5,
+        }, {
+          duration: 500,
+        })
+        Velocity(el, {
+          opacity: 1,
+          rotateZ: '360deg',
+        }, {
+          duration: 500,
+        })
+        Velocity(el, {
+          scaleX: 1.2,
+          scaleY: 1.2,
+        }, {
+          duration: 300
+        })
+        Velocity(el, {
+          scaleX: 1.0,
+          scaleY: 1.0,
+        }, {
+          duration: 300,
+          complete: done
+        })
+      },
+      leave: function (el, done) {
+        Velocity(el, {
+          translateY: '200px',
+          opacity: 0,
+        }, {
+          duration: 1000,
+          complete: done
+        })
+      },
+      spliceEmpty(disparityList) {
+        for(let disIndex = disparityList.length - 1; disIndex >= 0; --disIndex) {
+          if (_.isEmpty(disparityList[disIndex])) {
+            disparityList.pop()
+          } else {
+            break
+          }
+        }
+      },
 
       createComboCol(combo, {result}) {
         return _.times(combo, () => {
@@ -306,6 +435,7 @@
     margin: 5px;
     display: flex;
     border: 1px solid $sec-line-color;
+    overflow: hidden;
   }
 
   .balls-col {
@@ -316,6 +446,7 @@
     line-height: 18px;
     display: inline-block;
     border-radius: 50px;
+    transform: translateY(200px);
     &.gray {
       background-color: $im-line-color;
       color: $new-inverse-color;
@@ -342,6 +473,10 @@
     margin-left: -1px;
     vertical-align: bottom;
     background-color: $def-white-color;
+  }
+
+  .flip-list-move {
+    transition: transform 1s;
   }
 
 </style>
