@@ -10,7 +10,7 @@
           <i class="fa fa-user-o" aria-hidden="true"></i>
         </div>
         <input class="login-input" :class="{'parsley-error': usernameError,'parsley-success':usernameSuccess}"
-               @blur="verifyUserName()"
+               @blur="verifyUserName"
                placeholder="请输入您的用户名" v-model="username"
                autocomplete="off" required></div>
 
@@ -19,14 +19,14 @@
         </div>
         <input type="password" class="login-input"
                :class="{'parsley-error': passwordError,'parsley-success':pwdSuccess}"
-               @blur="verifyPwd()" @keyup.enter="userLogin"
+               @blur="verifyPwd" @keyup.enter="userLogin"
                placeholder="请输入您的密码" v-model="password"
                autocomplete="off" required></div>
       <div class="login-input-item" :class="{'hidden':showCodeItem}">
         <div class="login-verity-img sfa sfa-icon-verify">
         </div>
         <input class="login-verity" :class="{'parsley-error': codeError,'parsley-success':codeSuccess}"
-               @blur="verifyCode()"
+               @blur="verifyCode"
                placeholder="请输入验证码" v-model="code" maxlength="4" required
                autocomplete="off">
         <img class="js-login-valImg  var-code" :src="codeUrl">
@@ -129,7 +129,7 @@
             // int BYSUPER = 106;// 总代开户
             Global.cookieCache.set('token', data.root.token)
             Global.cookieCache.set('loginState', true)
-            Global.m.oauth.start()
+//            Global.m.oauth.start()
             const status = Number(data.root.userStatus)
 //            status = Number(status)
             if (status === 0 || status === 100 || status === 102) {
@@ -144,7 +144,16 @@
               this.$emit('dialogClose')
 //              window.location.href = 'index.html'
             }
-            this.$store.commit(types.USER_LOGIN_SUCCESS, data.root)
+            const acctInfo = data.root || {}
+            acctInfo.fBalance = _(acctInfo.balance).convert2yuan()
+            acctInfo.fLastLoginTime = _(acctInfo.lastLoginTime).toTime()
+            acctInfo.fLoginTime = _(acctInfo.loginTime).toTime()
+            if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
+              this.autoLogoutCountdown(acctInfo.outTime)
+            }
+            window.Global.memoryCache.set('acctInfo', acctInfo)
+            window.Global.m.publish('acct:updating', acctInfo)
+            this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
           } else if (data.msg.indexOf('验证码') !== -1) {
             this.showCodeItem = false
             this.codeError = true

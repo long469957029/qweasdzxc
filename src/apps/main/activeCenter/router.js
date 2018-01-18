@@ -1,14 +1,8 @@
-const ActiveCenterView = () => import(/* webpackChunkName: "active-center" */ './activeCenter')
+const ActiveCenterView = () => { return import(/* webpackChunkName: "active-center" */ './activeCenter.vue') }
 
 export default [
   {
     path: '/aa',
-    component(resolve) {
-      RouterController.async(resolve, ActiveCenterView, {
-        main: {
-          title: '活动中心',
-        },
-      })
-    }
+    component: ActiveCenterView,
   },
 ]
