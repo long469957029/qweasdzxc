@@ -625,7 +625,7 @@
       float: left;
       margin: 9px 0;
       padding: 0 9px;
-      /*position: relative;*/
+      position: relative;
       border-left:1px solid $sec-line-color;
     }
     .db-ticket-game-type {

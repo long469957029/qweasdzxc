@@ -1,11 +1,11 @@
 <template>
   <div v-if="total > 0">
-    <div class="notice-content inline-block" @click="showNoticeDialog">
+    <div class="notice-content inline-block">
       <transition name="notice-trans">
-        <a v-if="isShow">{{noticeList[nowIndex - 1].title}}</a>
+        <a v-if="isShow" @click="showNoticeDialog(noticeList[nowIndex - 1].bulletionId)">{{noticeList[nowIndex - 1].title}}</a>
       </transition>
       <transition name="notice-trans-old">
-        <a v-if="!isShow">{{noticeList[nowIndex - 1].title}}</a>
+        <a v-if="!isShow" @click="showNoticeDialog(noticeList[nowIndex - 1].bulletionId)">{{noticeList[nowIndex - 1].title}}</a>
       </transition>
     </div>
     <div class="bulletin-pager inline-block">
@@ -155,6 +155,7 @@
       position: relative;
       color: #333333;
       display: block;
+      cursor: pointer;
       /*width: 930px;*/
       /*overflow: -webkit-marquee;*/
       /*-webkit-marquee-style: scroll;*/
