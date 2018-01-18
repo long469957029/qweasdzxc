@@ -118,10 +118,10 @@ export default {
         }
       })
     },
-    openDetailDialog() {
+    openDetailDialog(rid) {
       this.isFetching = true
 
-      activity.getActivityDetail({rid: 1}, ({data}) => {
+      activity.getActivityDetail({rid}, ({data}) => {
         if (data && data.result === 0) {
           const result = data.root
           this.isFetching = false

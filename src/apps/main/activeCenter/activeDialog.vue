@@ -16,9 +16,7 @@
         </div>
         <div class="desc">{{actSummary}}</div>
       </div>
-      <div class="content">
-        {{actContent}}
-      </div>
+      <div class="content" v-html="actContent"></div>
     </div>
   </div>
 </template>
@@ -32,7 +30,7 @@ export default {
     'actPic',
     'startDate',
     'endDate',
-  ]
+  ],
 }
 </script>
 <style lang="scss" scoped>
