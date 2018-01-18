@@ -8,7 +8,7 @@ import store from '../store/index'
 import MainHeader from 'skeleton/bases/header/index'
 import whiteList from './directAccess'
 
-Object.defineProperty(Vue.prototype, '_', {value: _})
+Object.defineProperty(Vue.prototype, '_', { value: _ })
 
 Vue.component('animated-integer', AnimatedInteger)
 
@@ -56,7 +56,7 @@ window.$route = app.$route
 //每次路由变化是调用，切换显示区域
 router.beforeEach((to, from, next) => {
   let isVue = false
-  _(['/bc', '/analysis', '/i']).each((bcRouter) => {
+  _(['/bc', '/analysis', '/i', '/aa']).each((bcRouter) => {
     if (to.path.indexOf(bcRouter) !== -1) {
       isVue = true
     }
