@@ -1,38 +1,224 @@
-<!--&lt;!&ndash; <div class="js-aa-list overflow-auto" style="height: 532px;">活动中心</div> &ndash;&gt;-->
-
-<!--<div class="aa-banner">-->
-<!--<div class="aa-banner-container">-->
-<!--<div class="aa-banner-title">这里是优惠标题</div>-->
-<!--<div class="aa-banner-desc">这里是优惠简介这里是优惠简介这里是优惠简介这里是优惠简介这里是优惠简介这里是优惠简介这里是优惠简介</div>-->
-<!--<div class="btn aa-banner-btn js-aa-check-detail">查看详情>></div>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<div class="aa-container">-->
-<!--<div class="aa-navbar">-->
-<!--<div class="js-aa-query aa-query-option" data-type="1">体育</div>-->
-<!--<div class="js-aa-query aa-query-option" data-type="2">真人</div>-->
-<!--<div class="js-aa-query aa-query-option" data-type="3">老虎机</div>-->
-<!--<div class="js-aa-query aa-query-option" data-type="4">全部</div>-->
-<!--<div class="js-aa-query aa-query-option" data-type="5">新会员</div>-->
-<!--<div class="js-aa-query aa-query-option" data-type="6">存款</div>-->
-<!--<div class="js-aa-query aa-query-option" data-type="7">返水</div>-->
-<!--</div>-->
-<!--<div class="aa-timeline">-->
-<!--</div>-->
-<!--<div class="js-aa-list"></div>-->
-
-<!--</div>-->
 <template>
-  <div id="app">
-    {{ message }}
+  <div>
+    <div class="aa-banner">
+      <div class="aa-banner-container"></div>
+    </div>
+    <div class="aa-container">
+      <active-navbar @fetchData="queryActivity" :activityType="activityType" :isFetching="isFetching"></active-navbar>
+      <active-timeline :timelineHeight="timelineHeight" :filterActivityList="filterActivityList"></active-timeline>
+      <div>
+        <active-item :filterActivityList="filterActivityList" @openDetailDialog="openDetailDialog" :isFetching="isFetching"></active-item>
+      </div>
+      <div class="timeline-add">
+        <div :class="`add-btn ${isFetching ? 'disabled' : ''}`" @click="fetchMore">点击加载更多</div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="detailDialog" v-show="showDetailDialog">
+      <active-dialog :actTitle="actTitle" :actSummary="actSummary" :actContent="actContent" :actPic="actPic" :startDate="startDate" :endDate="endDate"></active-dialog>
+    </div>
   </div>
 </template>
 <script>
-  const app = new Vue({
-    el: '#app',
-    data: {
-      message: 'Hasdasdaue!'
+import VueIsInView from 'vue-is-in-view';
+Vue.use(VueIsInView);
+
+import activity from "api/activity";
+import ActiveNavbar from './activeNavbar.vue'
+import ActiveItem from './activeItem.vue'
+import ActiveTimeline from './activeTimeline.vue'
+import ActiveDialog from './activeDialog.vue'
+
+const PAGESIZE = 6
+const PAGECOUNT = 1
+
+export default {
+  name: "active-center",
+
+  components: {
+    ActiveNavbar,
+    ActiveItem,
+    ActiveTimeline,
+    ActiveDialog
+  },
+
+  data() {
+    return {
+      activityList: [],
+      pageSize: PAGESIZE,
+      pageCount: PAGECOUNT,
+      activityType: '',
+      showDetailDialog: false,
+      dialogBanner: '',
+      isFetching: false,
+
+      // 活动详情
+      actTitle: '', // 活动主题
+      actSummary: '', // 活动摘要
+      actContent: '', // 活动内容
+      actPic: '', // 活动图片
+      startDate: '', // 活动开始时间
+      endDate: '', // 活动结束时间
     }
-  })
+  },
+  mounted() {
+    activity.getActivityList({ activityType: this.activityType, pageSize: this.pageSize, }, ({ data }) => {
+      if (data && data.result === 0) {
+        const { records } = data.root
+        this.activityList = records
+      }
+    })
+  },
+  computed: {
+    filterActivityList() {
+      if (this.activityList && this.activityList.length > 0) {
+        return this.activityList.filter(
+          activity => activity.activityStatus !== 4
+        )
+      } else {
+        return []
+      }
+    },
+    timelineHeight() {
+      const row = Math.round(this.activityList.length / 2)
+      return 23 + 360 * row + 40 * (row - 1) + 40
+    }
+  },
+
+  methods: {
+    queryActivity(activityType) {
+      this.activityType = activityType
+      this.isFetching = true
+      activity.getActivityList({activityType: this.activityType, pageSize: this.pageSize}, ({data}) => {
+        if (data && data.result === 0) {
+          const { records } = data.root
+          this.activityList = records
+
+          this.isFetching = false
+
+          this.pageCount = PAGECOUNT // 更换类型 初始化页数
+        }
+      })
+    },
+    fetchMore() {
+      if (this.isFetching) {
+        console.log('pendding')
+        return
+      }
+      this.pageCount = this.pageCount + 1
+      this.isFetching = true
+      activity.getActivityList({activityType: this.activityType, pageSize: this.pageSize * this.pageCount}, ({data}) => {
+        if (data && data.result === 0) {
+          const { records } = data.root
+          this.activityList = records
+
+          this.isFetching = false
+        }
+      })
+    },
+    openDetailDialog() {
+      this.isFetching = true
+
+      activity.getActivityDetail({rid: 1}, ({data}) => {
+        if (data && data.result === 0) {
+          const result = data.root
+          this.isFetching = false
+
+          this.actTitle = result.activityTitle
+          this.actSummary = result.activitySummary
+          this.actContent = result.activityContent
+          this.actPic = result.bannerDetailPicUrl
+          this.startDate = result.startDate
+          this.endDate = result.endDate
+
+          // 代表活动有主题页链结，执行跳转不弹窗
+          if (result.linkUrl) {
+            window.open(result.linkUrl)
+            return
+          }
+
+          this.showDetailDialog = true
+
+          this.$nextTick(() => {
+            $(this.$refs.detailDialog).modal({
+              backdrop: 'static',
+            })
+              .on('hidden.modal', () => {
+                this.showDetailDialog = false
+              })
+          })
+        }
+      })
+    },
+    closeDetailDialog(){
+      $(this.$refs.detailDialog).modal('hide')
+    },
+  }
+}
 </script>
+<style lang='scss' scoped>
+@import "../misc/mixin";
+@import "../misc/variable";
+@import "~base/styles/variable";
+
+.aa-banner {
+  @include banner-background("misc/aa-banner.png");
+  height: 330px;
+  width: 100%;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .aa-banner-container {
+    @include center-center();
+    width: 1200px;
+  }
+}
+
+.aa-container {
+  @include center-container(1200px);
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.add-btn {
+  width: 240px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 14px;
+  color: white;
+  margin: 24px auto;
+  background: $main-deep-color;
+  border-radius: 25px / 25px;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover, &:active {
+    background: darken($main-deep-color, 10%)
+  }
+
+  &.disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 7px;
+  background: #d1d3d6;
+  margin: 5px auto;
+}
+
+.timeline-add {
+  margin-bottom: 25px;
+  position: relative;
+  z-index: 1;
+}
+</style>
+
