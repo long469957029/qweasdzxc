@@ -92,7 +92,8 @@ const sscConfig = {
       showNumberDetail: false,
       trendOps: {
         periods: trendPeriods,
-      }
+      },
+      isOfficial: true,
     }, bettingTypes.SSC),
     Object.assign({
       id: 21,
@@ -102,7 +103,8 @@ const sscConfig = {
       showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
       trendOps: {
         periods: trendPeriods,
-      }
+      },
+      isOfficial: true,
     }, bettingTypes.SSC),
     Object.assign({
       id: 27,
@@ -112,7 +114,8 @@ const sscConfig = {
       showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
       trendOps: {
         periods: trendPeriods,
-      }
+      },
+      isOfficial: true,
     }, bettingTypes.SSC),
     Object.assign({
       id: 25,
@@ -220,7 +223,8 @@ const threeDConfig = [
     hasMargin: true,
     trendOps: {
       periods: trendLowPeriods,
-    }
+    },
+    isOfficial: true,
   }, bettingTypes.THREED),
   // {
   //  id: 17,
@@ -283,29 +287,28 @@ const handicapMark6Config = [
     id: 34,
     mark: 'mark6',
     zhName: '香港六合彩',
-    hasMargin: true,
     badge: 'new',
   }, bettingTypes.MARK6),
 ]
 
 const handicapSscConfig = [
-  {
+  Object.assign({
     id: 1,
     mark: 'ssc',
     zhName: '重庆时时彩',
-    hasMargin: true,
     badge: 'new',
-  },
+    roadBalls: true,
+  }, bettingTypes.SSC),
 ]
 
 const handicapPk10Config = [
-  {
+  Object.assign({
     id: 18,
     mark: 'ssc',
     zhName: '北京PK10',
-    hasMargin: true,
     badge: 'new',
-  },
+    roadBalls: true,
+  }, bettingTypes.PK10),
 ]
 
 const lowConfig = {
@@ -324,6 +327,12 @@ const allConfig = sscConfig.list.concat(
   // handicapSscConfig,
   // handicapPk10Config,
 )
+
+const allHandicapConfig = [
+  ...handicapMark6Config,
+  ...handicapPk10Config,
+  ...handicapSscConfig,
+]
 
 const completeAllConfig = [sscConfig, oneFiveConfig, lowConfig, happyConfig]
 
@@ -461,9 +470,11 @@ export default {
       },
     }
   },
-  getById(id) {
-    return _(allConfig).find((item) => {
-      return item.id === id
-    })
+  getById(id, type = consts.TICKET_NORMAL_TYPE) {
+    if (type === consts.TICKET_NORMAL_TYPE) {
+      return _(allConfig).findWhere({id})
+    } else {
+      return _(allHandicapConfig).findWhere({id})
+    }
   },
 }

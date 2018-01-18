@@ -83,6 +83,7 @@
     .setting {
       display: inline-block;
       cursor: pointer;
+      transition: color .5s;
 
       :hover {
         color: $new-main-deep-color;
@@ -148,10 +149,12 @@
         display: inline-block;
         z-index: -2;
         background-image: linear-gradient(#fefefe 0%, #f6f6f6 100%);
+        transition: all .5s;
       }
 
       &:hover {
         color: $def-white-color;
+        transition: color .5s;
         &:before {
           border: 2px solid #1198a1;
         }
