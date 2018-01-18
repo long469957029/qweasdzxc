@@ -1,4 +1,6 @@
-const DashboardView = require('dashboard/views/dashboard')
+
+import DashboardView from './dashboard'
+
 const NoticeDetailView = require('dynamicCenter/views/noticeDetail')
 
 const Init = {
