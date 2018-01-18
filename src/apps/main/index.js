@@ -56,11 +56,16 @@ window.$route = app.$route
 //每次路由变化是调用，切换显示区域
 router.beforeEach((to, from, next) => {
   let isVue = false
-  _(['/bc', '/analysis']).each((bcRouter) => {
+  _(['/bc', '/analysis', '/i']).each((bcRouter) => {
     if (to.path.indexOf(bcRouter) !== -1) {
       isVue = true
     }
   })
+
+  if (to.path === '/') {
+    isVue = true
+  }
+
   if (to.path === '/bc/19') {
     isVue = false
   }
