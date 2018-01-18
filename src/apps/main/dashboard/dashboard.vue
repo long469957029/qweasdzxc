@@ -109,7 +109,7 @@
                 <li :class="[{active: ticketType === 2},'db-ticket-game-type-item']"  @click="showTicket(2)">经典玩法</li>
               </ul>
               <a class="db-ticket-more">更多彩种 >></a>
-              <div @mouseover="showArrow()" @mouseout="showArrow()">
+              <div class="ticket-game-main" @mouseover="showArrow()" @mouseout="showArrow()">
                 <transition name="arrow-left">
                   <a class="db-ticket-arrow left" @click="ticketSwitch('left')" v-show="ticketCount > 3 && showArrowBtn"></a>
                 </transition>
@@ -275,12 +275,13 @@
   }
   .ticketGroup-enter,.ticketGroup-leave-to{
     opacity: 0;
+    transform: translateY(272px);
   }
   .ticketGroup-enter-active,.ticketGroup-leave-active{
     @include transition-cfg;
   }
   .ticketGroup-move{
-    transition: transform .5s;
+    transition: all .5s;
   }
 
   body, .carousel-table-content {
@@ -624,25 +625,8 @@
       float: left;
       margin: 9px 0;
       padding: 0 9px;
-      position: relative;
+      /*position: relative;*/
       border-left:1px solid $sec-line-color;
-    }
-    .db-ticket-arrow{
-      position: absolute;
-      display: block;
-      width: 30px;
-      height: 30px;
-      top: 136px;
-      z-index: 2;
-      cursor: pointer;
-      &.left{
-        background: url("./misc/arrow-left.png") no-repeat;
-        left: 10px;
-      }
-      &.right{
-        background: url("./misc/arrow-right.png") no-repeat;
-        right: 10px;
-      }
     }
     .db-ticket-game-type {
       width: 666px;
@@ -673,24 +657,38 @@
       font-size: 14px;
       cursor: pointer;
     }
+    .ticket-game-main{
+      width: 665px;
+      height: 272px;
+      position: relative;
+      .db-ticket-arrow{
+        position: absolute;
+        display: block;
+        width: 30px;
+        height: 30px;
+        top: 100px;
+        z-index: 2;
+        cursor: pointer;
+        &.left{
+          background: url("./misc/arrow-left.png") no-repeat;
+          left: 10px;
+        }
+        &.right{
+          background: url("./misc/arrow-right.png") no-repeat;
+          right: 10px;
+        }
+      }
+    }
     .db-ticket-game-type-container {
       width: 665px;
       height: 272px;
       overflow: hidden;
-      position: relative;
       >div{
         display: flex;
       }
-      /*.type-container{*/
-      /*display: flex;*/
-      /*position: absolute;*/
-      /*top:0px;*/
-      /*left: 0px;*/
-      /*}*/
     }
     .db-ticket-item{
       display: inline-block;
-      /*float: left;*/
       width: 222px;
       position: relative;
       &:after{
