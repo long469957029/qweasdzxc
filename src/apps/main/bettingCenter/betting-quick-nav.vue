@@ -56,20 +56,25 @@
         },
         immediate: true
       },
-      'ticketId'(currentId) {
-        if (this.ticketType === consts.TICKET_HANDICAP_TYPE) {
-          this.$store.commit(types.ACTIVE_TOP_TICKETS, {
-            currentId,
-          })
-        } else {
-          this.$store.dispatch(types.SET_TOP_CURRENT_TICKET, {
-            ticketId: currentId,
-          })
-          this.$store.commit(types.RESORT_TOP_TICKETS, {
-            currentId,
-          })
-        }
-      },
+      'ticketId': {
+        handler(currentId) {
+          //盘口
+          if (this.ticketType === consts.TICKET_HANDICAP_TYPE) {
+            this.$store.commit(types.ACTIVE_TOP_TICKETS, {
+              currentId,
+            })
+          } else {
+            //普通
+            this.$store.dispatch(types.SET_TOP_CURRENT_TICKET, {
+              ticketId: currentId,
+            })
+            this.$store.commit(types.RESORT_TOP_TICKETS, {
+              currentId,
+            })
+          }
+        },
+        immediate: true
+      }
     },
 
     // mounted() {

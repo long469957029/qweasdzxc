@@ -28,7 +28,6 @@ const actions = {
   }) {
     return new Promise((resolve) => {
       if (!_.isEmpty(state[type])) {
-        state.type = type
         resolve()
         return
       }
