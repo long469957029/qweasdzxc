@@ -23,6 +23,9 @@ const MediatorModule = Base.Module.extend({
       'safe:updating': {
         safe: true,
       },
+      'acct:loginOut': {
+        acct: true,
+      },
     })
 
     _(this).extend(Base.MediatorFacade)

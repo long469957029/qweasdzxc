@@ -8,8 +8,8 @@ const SideMenuMainView = Base.LayoutView.extend({
 
 export default {
   async(resolve, viewPromise, params, config = {}) {
-    if (!config) {
-      config = params
+    if (_.isEmpty(config)) {
+      config = _.isUndefined(params) ? {} : params
       params = {}
     }
     viewPromise().then((view) => {
@@ -84,7 +84,7 @@ export default {
     if (currentView) {
       this._changeReginView(currentView, view, config)
     } else {
-      Global.appRouter.navigate(_(config.parentRouter).addHrefArgs('_t', _.now()), { trigger: true, replace: false })
+      Global.appRouter.navigate(_(config.parentRouter).addHrefArgs('_t', _.now()), {trigger: true, replace: false})
     }
   },
 
@@ -100,7 +100,7 @@ export default {
         className: 'clearfix',
         template: require('skeleton/templates/main.html'),
         serializeData() {
-          _(config.main).extend({ titleDes: config.main.titleDes || null })
+          _(config.main).extend({titleDes: config.main.titleDes || null})
           return config.main
         },
       })

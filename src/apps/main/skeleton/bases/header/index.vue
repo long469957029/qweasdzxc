@@ -9,72 +9,78 @@
       <div class="js-gl-service header-customer-entry  pull-right overflow-hidden">
         <span class="sfa sfa-customer-service"></span><span class="header-customer-text">在线客服</span>
       </div>
-      <div class="header-not-login pull-right  anima ted fadeOutRig htBig" v-show="loginPanel">
-        <a class="header-try header-try" href="javascript:void(0);">免费试玩</a>
-        <button type="button" class="js-header-login header-login " @click="showLogin">登录</button>
-      </div>
-      <div class="js-header-has-logined header-has-logined  pull-right animated fadeInRightBig"
-           v-show="userPanel">
-        <div class="js-header-menu header-menu">
-          <span class="sfa header-headshot "><img :src="imgUrl"/></span>
-          <span class="js-header-username header-name">{{userUname}}</span>
-          <i class="fa fa-angle-down "></i>
-          <div class="header-menu-place"></div>
-          <div class="js-header-menu-body header-menu-body">
-            <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
-            <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
-            <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
-            <div class="header-menu-item" v-on:click="logoutHandler"><i
-              class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
-              <span class="header-menu-item-text inline-block" >退出</span></div>
-          </div>
+      <transition mode="out-in"
+                  enter-active-class="animated-general fadeInRightBig"
+                  leave-active-class="animated-general fadeOutRightBig"
+      >
+        <div class="header-not-login pull-right" v-if="!isLogin" key="login">
+          <a class="header-try header-try" href="javascript:void(0);">免费试玩</a>
+          <button type="button" class="js-header-login header-login " @click="showLogin">登录</button>
         </div>
-        <div class="header-amount-panel">
-          ￥
-          <div class="js-header-amount header-amount">{{userAmount}}</div>
-          <div class="js-header-recharge header-recharge">充值</div>
-        </div>
-        <div class="js-header-announcement header-announcement active">
-          <span class="sfa sfa-announcement "></span><span>消息</span>
-          <span class="js-header-announcement-num header-announcement-num">6</span>
-          <div class="header-announcement-place"></div>
-          <div class="js-header-announcement-body header-announcement-body">
-            <div class="header-announcement-content">
-              <div class="content-item">
-                <div class="content-item-panel">
-                  <div class="content-item-title-panel">
-                    <div class="content-item-img inline-block"></div>
-                    <div class="content-item-title inline-block">手机端商城本周上线</div>
-                    <div class="content-item-date pull-right inline-block">2017/08/19</div>
-                  </div>
-                  <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
-                </div>
-              </div>
-              <div class="content-item">
-                <div class="content-item-panel">
-                  <div class="content-item-title-panel">
-                    <div class="content-item-img inline-block"></div>
-                    <div class="content-item-title inline-block">手机端商城本周上线</div>
-                    <div class="content-item-date pull-right inline-block">2017/08/19</div>
-                  </div>
-                  <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
-                </div>
-              </div>
-              <div class="content-item">
-                <div class="content-item-panel">
-                  <div class="content-item-title-panel">
-                    <div class="content-item-img inline-block"></div>
-                    <div class="content-item-title inline-block">手机端商城本周上线</div>
-                    <div class="content-item-date pull-right inline-block">2017/08/19</div>
-                  </div>
-                  <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
-                </div>
-              </div>
+        <div class="js-header-has-logined header-has-logined  pull-right" key="logined"
+             v-else>
+          <div class="js-header-menu header-menu">
+            <span class="sfa header-headshot "><img :src="imgUrl"/></span>
+            <span class="js-header-username header-name">{{userUname}}</span>
+            <i class="fa fa-angle-down "></i>
+            <div class="header-menu-place"></div>
+            <div class="js-header-menu-body header-menu-body">
+              <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
+              <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
+              <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
+              <div class="header-menu-item" v-on:click="logoutHandler"><i
+                class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
+                <span class="header-menu-item-text inline-block">退出</span></div>
             </div>
-            <div class="header-announcement-showMore">查看更多</div>
+          </div>
+
+          <div class="header-amount-panel">
+            <div class="header-amount-img">￥</div>
+            <div class=" header-amount">{{userAmount}}</div>
+            <div class="js-header-recharge header-recharge">充值</div>
+          </div>
+          <div class="js-header-announcement header-announcement active">
+            <span class="sfa sfa-announcement "></span><span>消息</span>
+            <span class="js-header-announcement-num header-announcement-num">6</span>
+            <div class="header-announcement-place"></div>
+            <div class="js-header-announcement-body header-announcement-body">
+              <div class="header-announcement-content">
+                <div class="content-item">
+                  <div class="content-item-panel">
+                    <div class="content-item-title-panel">
+                      <div class="content-item-img inline-block"></div>
+                      <div class="content-item-title inline-block">手机端商城本周上线</div>
+                      <div class="content-item-date pull-right inline-block">2017/08/19</div>
+                    </div>
+                    <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
+                  </div>
+                </div>
+                <div class="content-item">
+                  <div class="content-item-panel">
+                    <div class="content-item-title-panel">
+                      <div class="content-item-img inline-block"></div>
+                      <div class="content-item-title inline-block">手机端商城本周上线</div>
+                      <div class="content-item-date pull-right inline-block">2017/08/19</div>
+                    </div>
+                    <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
+                  </div>
+                </div>
+                <div class="content-item">
+                  <div class="content-item-panel">
+                    <div class="content-item-title-panel">
+                      <div class="content-item-img inline-block"></div>
+                      <div class="content-item-title inline-block">手机端商城本周上线</div>
+                      <div class="content-item-date pull-right inline-block">2017/08/19</div>
+                    </div>
+                    <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
+                  </div>
+                </div>
+              </div>
+              <div class="header-announcement-showMore">查看更多</div>
+            </div>
           </div>
         </div>
-      </div>
+      </transition>
     </div>
     <!-- 登录 -->
     <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="loginModal"
@@ -118,13 +124,14 @@
         return this.$store.state.userInfo.uName
       },
       userAmount() {
-        return _(this.$store.state.userInfo.balance).formatDiv(10000, {fixed: 2})
+        return this.$store.state.userInfo.fBalance
       },
       imgUrl(){
-        const iconId = this.$store.state.userInfo.headIcon
-        const url = avatarConf.get(iconId).logo
-        return url
-      }
+        return avatarConf.get(this.$store.state.userInfo.headIcon).logo
+      },
+      isLogin(){
+        return this.$store.getters.getLoginStatus
+      },
     },
 
     filters: {},
@@ -153,7 +160,6 @@
       },
       logoutHandler() {
         Global.ui.loader.show()
-
         $(document).confirm({
           content: '<div class="m-TB-lg">确定要退出登录？</div>',
           type: 'exit',
@@ -162,7 +168,10 @@
               if (data && data.result === 0) {
                 Global.cookieCache.clear('token')
                 Global.cookieCache.clear('loginState')
-                window.location.href = 'index.html'
+//                window.location.href = 'index.html'
+                Global.router.goTo('')
+                app.$store.commit(types.USER_CLEAR)
+                window.Global.m.publish('acct:loginOut')
               }
             }).always(() => {
               Global.ui.loader.hide()
@@ -377,6 +386,14 @@
       }
       .header-amount-panel {
         display: inline-block;
+        .header-amount-img {
+          display: inline-block;
+          height: 40px;
+          color: #ffffff;
+          font-size: 14px;
+          position: absolute;
+          margin-left: 12px;
+        }
         .header-amount {
           display: inline-block;
           //width: 106px;
@@ -386,7 +403,7 @@
           text-align: right;
           border-left: 2px solid #41a6ad;
           vertical-align: top;
-          padding: 0 4px 0 14px;
+          padding: 0 4px 0 28px;
         }
         .header-recharge {
           display: inline-block;
@@ -503,7 +520,6 @@
                 border-bottom: 1px dashed $def-line-color;
               }
               &:hover {
-                background-color: $sec-line-color;
                 .content-item-title-panel {
                   .content-item-img {
                     background: $new-main-deep-color;
