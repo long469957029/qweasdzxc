@@ -147,7 +147,7 @@ function fromConfig(rowsResult) {
 
   return _(rowsResult).reduce((total, result) => {
     return _(result).reduce((total, select) => {
-      return total + algorithmProps.config[select]
+      return total + algorithmProps.config[select.num]
     }, total)
   }, 0)
 }

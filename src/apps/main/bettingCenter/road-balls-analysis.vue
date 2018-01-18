@@ -435,6 +435,7 @@
     margin: 5px;
     display: flex;
     border: 1px solid $sec-line-color;
+    background-color: #ffffff;
     overflow: hidden;
   }
 

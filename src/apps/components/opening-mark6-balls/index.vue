@@ -1,7 +1,7 @@
 <template>
   <div class="opening-mark6-balls">
     <template v-for="i in counts">
-      <div class="inline-block vertical-top" :key="i">
+      <div class="inline-block text-center vertical-top" :key="i">
         <div class="ball-item-wrapper">
           <div class="ball-item">
             <div class="ball-item-inner" ref="balls">

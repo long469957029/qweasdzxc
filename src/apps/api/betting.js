@@ -17,7 +17,7 @@ export default {
     return Global.sync.axios({
       url: '/ticket/ticketmod/ticketplaylist.json',
       localCache: true,
-      cacheName: `ticketList.${ticketId}`,
+      cacheName: `ticketList.${ticketId}.${type}`,
       data: {
         ticketId,
         type,
@@ -108,7 +108,8 @@ export default {
       url: '/ticket/show/getTopTickets.json',
       data: {
         type,
-      }
+      },
+      abort: false
     })
       .then(then)
       .catch(fail)
