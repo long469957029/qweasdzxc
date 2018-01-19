@@ -13,6 +13,12 @@ const getters = {
   fTickets: (state) => {
     return state[state.type]
   },
+  topClassicalTicket: (state) => {
+    return _.first(state[consts.TICKET_NORMAL_TYPE])
+  },
+  topHandicapTicket: (state) => {
+    return _.first(state[consts.TICKET_HANDICAP_TYPE])
+  }
 }
 
 // actions
@@ -58,6 +64,18 @@ const actions = {
 
 // mutations
 const mutations = {
+  [types.TOGGLE_TOP_TICKETS_BY_TYPE] (state, {type}) {
+    state.type = type
+  },
+
+  [types.USER_LOGIN_SUCCESS] () {
+    this.dispatch(types.GET_TOP_TICKETS, {
+      type: consts.TICKET_NORMAL_TYPE
+    })
+    this.dispatch(types.GET_TOP_TICKETS, {
+      type: consts.TICKET_HANDICAP_TYPE
+    })
+  },
   // [types.CHECKOUT_TICKET_RULES] (state) {
   //   // clear
   //   Object.assign(state, initState())
@@ -74,11 +92,7 @@ const mutations = {
       const ticket = ticketConfig.getById(id)
       Vue.set(ticket, 'active', index === 0)
       return ticket
-      // return Object.assign(ticketConfig.getById(id), {
-      //   active: index === 0
-      // })
     })
-    state.type = type
   },
 
   [types.GET_TOP_TICKETS_FAILURE] (state) {

@@ -40,14 +40,22 @@
       }
     },
 
-    computed: mapGetters({
-      fTickets: 'fTickets',
-    }),
+    computed: mapGetters([
+      'fTickets',
+    ]),
 
     methods: {
     },
 
     watch: {
+      'ticketType':{
+        handler(currentId) {
+          this.$store.commit(types.TOGGLE_TOP_TICKETS_BY_TYPE, {
+            type: currentId
+          })
+        },
+        immediate: true
+      },
       'ticketId'(currentId) {
         if (this.ticketType === consts.TICKET_HANDICAP_TYPE) {
           this.$store.commit(types.ACTIVE_TOP_TICKETS, {
@@ -62,14 +70,6 @@
           })
         }
       },
-      'ticketType':{
-        handler(currentId) {
-          this.$store.dispatch(types.GET_TOP_TICKETS, {
-            type: currentId
-          })
-        },
-        immediate: true
-      }
     },
 
     // mounted() {

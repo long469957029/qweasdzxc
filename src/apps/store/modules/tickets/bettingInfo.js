@@ -30,12 +30,16 @@ const initState = () => {
 
 // getters
 const getters = {
+  // lastOpenPlanId: state => {
+  //   return state.lastOpenId
+  // }
 }
 
 // actions
 const actions = {
   getTicketInfo ({ commit }, { ticketId, type }) {
     // commit(types.CHECKOUT_TICKET_INFO)
+
     return betting.getTicketInfo(
       {
         ticketId,

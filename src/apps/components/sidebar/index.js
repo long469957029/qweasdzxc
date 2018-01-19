@@ -1,5 +1,3 @@
-
-
 require('./index.scss')
 
 const avatarCfg = require('userCenter/misc/avatarConfig')
@@ -29,7 +27,10 @@ const SidebarView = Base.ItemView.extend({
       isTeam: sidebar.router === 'ac',
       dividendStatus: acctInfo.dividendStatus,
       userName: acctInfo.username,
-      img: avatarCfg.get(_.isNull(acctInfo.headIcon) ? _.random(1, 21) : _(acctInfo.headIcon).toString()).logo,
+// <<<<<<< HEAD
+//       img: avatarCfg.get(_.isNull(acctInfo.headIcon) ? _.random(1, 21) : _(acctInfo.headIcon).toString()).logo,
+// =======
+      img: avatarCfg.get(_(acctInfo.headIcon).toString()).logo,
     }
   },
   onRender() {
@@ -40,7 +41,9 @@ const SidebarView = Base.ItemView.extend({
     this.$iconMail = this.$('.js-sfa-icon-mail')
     this.$safeLevel = this.$('.js-user-info-safe-level')
     this.$progressBar = this.$('.js-safe-progress-bar')
-    this.subscribe('safe', 'safe:updating', () => { self._onRender() })
+    this.subscribe('safe', 'safe:updating', () => {
+      self._onRender()
+    })
   },
   _onRender() {
     const accountSafe = Global.memoryCache.get('accountSafe')
@@ -55,7 +58,7 @@ const SidebarView = Base.ItemView.extend({
     } else {
       this.$safeLevel.html('高')
     }
-    this.$progressBar.css({ width: `${accountSafe ? _(_(accountSafe.securityLevel).div(5)).mul(100) : 0}%` })
+    this.$progressBar.css({width: `${accountSafe ? _(_(accountSafe.securityLevel).div(5)).mul(100) : 0}%`})
   },
 
   formatSidebar(sidebar) {

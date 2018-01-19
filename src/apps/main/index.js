@@ -54,23 +54,6 @@ window.$route = app.$route
 
 //每次路由变化是调用，切换显示区域
 router.beforeEach((to, from, next) => {
-  // let isVue = false
-  // _(['/bc', '/analysis', '/i']).each((bcRouter) => {
-  //   if (to.path.indexOf(bcRouter) !== -1) {
-  //     isVue = true
-  //   }
-  // })
-  // if (to.path === '/') {
-  //   isVue = true
-  // }
-  // if (to.path === '/bc/19') {
-  //   isVue = false
-  // }
-  // $('#main').toggle(!isVue)
-  // $('#main-vue').toggle(isVue)
-  // next()
-  // permissionsConf.dealUserRouter(router)
-  // window.app.$store.commit(types.USER_SET_ROUTERS, router)
   if (store.getters.checkPermission(to.path)) {
     let isVue = false
     _(['/bc', '/analysis', '/i']).each((bcRouter) => {
@@ -107,6 +90,8 @@ Global.m.oauth.check().done((res) => {
 
     // 开启消息监听
     Global.m.news.start()
+
+    window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
 
     // 开启菜单权限监听
     // Global.ui.menu.start()

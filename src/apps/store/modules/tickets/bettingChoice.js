@@ -496,7 +496,10 @@ const formatBettingNumber = (bettingNumber, options) => {
   } else {
     number += _(bettingNumber).map((row) => {
       if (_.isEmpty(row)) {
-        row = ['-']
+        row = [{
+          title: '-',
+          num: '-'
+        }]
       }
 
       // 如果有值，则用该符号隔开number

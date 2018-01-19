@@ -37,8 +37,9 @@ export default [
   },
   {
     path: '*',
-    component() {
-      RouterController.changeMainReginView(new DashboardView())
-    }
+    // component() {
+    //   RouterController.changeMainReginView(new DashboardView())
+    // }
+    component: DashboardView,
   }
 ]

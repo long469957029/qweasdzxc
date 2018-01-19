@@ -35,6 +35,7 @@ const NewsMediatorModule = Base.Module.extend({
     })
     const noticeXhr = Global.sync.ajax({
       url: '/acct/usernotice/getnoticelist.json',
+      version: 1,
       abort: false,
     })
 
