@@ -119,7 +119,8 @@
                 <div class="db-ticket-game-type-container" v-show="ticketType === 1">
                   <transition-group name="ticketGroup" tag="div">
                     <div class="db-ticket-item" v-for="item in handicapTicketList" :key="item.ticketId">
-                      <div class="db-ticket-logo"></div>
+                      <!--<div :class="`db-ticket-logo sfa-bc-new-ssc-${item.ticketId}`"></div>-->
+                      <div class="db-ticket-logo sfa-bc-new-ssc-1"></div>
                       <div class="db-ticket-name">{{item.ticketName}}</div>
                       <div class="db-ticket-num"><animated-integer :value="item.userBetCount"></animated-integer>人参与投注</div>
                       <div class="db-ticket-progress-bg">
@@ -131,7 +132,7 @@
                 <div class="db-ticket-game-type-container" v-show="ticketType === 2">
                   <transition-group name="ticketGroup" tag="div">
                     <div class="db-ticket-item" v-for="item in classicTicketLIst" :key="item.ticketId">
-                      <div class="db-ticket-logo"></div>
+                      <div class="db-ticket-logo sfa-bc-new-ssc-1"></div>
                       <div class="db-ticket-name">{{item.ticketName}}</div>
                       <div class="db-ticket-num"><animated-integer :value="item.userBetCount"></animated-integer>人参与投注</div>
                       <div class="db-ticket-progress-bg">
@@ -711,9 +712,9 @@
       }
     }
     .db-ticket-logo{
-      width: 222px;
-      height:188px;
-      cursor: pointer;
+      width: 155px;
+      height:160px;
+      margin: 11px 33.5px;
     }
     .db-ticket-name{
       height:20px;
