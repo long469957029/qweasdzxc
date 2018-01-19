@@ -25,7 +25,7 @@ const SidebarView = Base.ItemView.extend({
     return {
       menus: sidebar,
       showUserInfo: sidebar.router === 'uc', // _(sidebar).findIndex({ router: 'uc' }) > -1,
-      showTeamEntry: acctInfo.userType === 0,
+      showTeamEntry: acctInfo ? acctInfo.userType === 0 : false,
       isTeam: sidebar.router === 'ac',
       dividendStatus: acctInfo.dividendStatus,
       userName: acctInfo.username,

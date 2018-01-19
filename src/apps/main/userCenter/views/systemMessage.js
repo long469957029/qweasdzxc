@@ -11,6 +11,12 @@ const SystemMessageView = Base.ItemView.extend({
     'click .js-message-btn': 'messageBtnHandler',
   },
 
+  setNoticeEntry() {
+    return Global.sync.ajax({
+      url: '/acct/usernotice/entryNoticeList.json',
+    })
+  },
+
   getNoticeListXhr(data) {
     _(data).extend({
       version: 1,
@@ -32,6 +38,7 @@ const SystemMessageView = Base.ItemView.extend({
   onRender() {
     this.$systemMessageMain = this.$('.js-system-message-main')
     this.$page = this.$('.js-system-message-page')
+    this.setNoticeEntry()
     this.getNoticeList({ pageIndex: 0 })
   },
 

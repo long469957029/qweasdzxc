@@ -210,7 +210,6 @@ const _bindChaseDetailHandler = () => {
     const cId = $target.data('id')
     const tradeno = $target.data('no')
     const $dialog = Global.ui.dialog.show({
-      size: 'modal-chase',
       bStyle: 'width: 848px;height:570px;',
       body: '<div class="fc-gr-chase-detail"></div>',
       closeBtn: false,

@@ -32,9 +32,10 @@ const BetDetailView = Base.ItemView.extend({
         const info = res.root.chaseTicketPlayDetail[0]
         const openNum = res.root.openNum ? res.root.openNum : '等,待,开,奖'
         const openNumHtml = []
-
-        _(openNum.split(',')).each((num) => {
-          openNumHtml.push(`<li><span class="js-gr-bet-num">${num}</span><span class="gr-bet-num-shadow"></span></li>`)
+        const openArr = openNum.split(',')
+        const ballClass = openArr.length === 10 ? 'sm-ball' : ''
+        _(openArr).each((num) => {
+          openNumHtml.push(`<li class="${ballClass}"><span class="js-gr-bet-num">${num}</span></li>`)
         })
         self.$('.js-fc-gr-bet-openNum').html(openNumHtml.join(''))
         self.$('.js-gr-bet-username').html(res.root.username)
