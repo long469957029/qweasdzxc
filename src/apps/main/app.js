@@ -1,7 +1,5 @@
 import NavbarView from 'skeleton/bases/navbar'
 
-import FooterView from 'skeleton/bases/footer'
-
 import ToolbarView from 'skeleton/bases/toolbar'
 
 import RechargeView from 'com/fundOperate'
