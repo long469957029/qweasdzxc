@@ -100,12 +100,12 @@ const BettingRecordsView = Base.ItemView.extend({
           },
           {
             label: '操作 ',
-            name: 'ticketPlanId',
+            name: 'ticketTradeNo',
             width: '10%',
-            formatter(bet) {
-              let btnlist = `<a class="btn btn-link btn-link-inverse js-bc-records-detail" data-id="${bet.ticketTradeNo}">查看</a>`
+            formatter(ticketTradeNo, index, bet) {
+              let btnlist = `<a class="btn btn-link btn-link-inverse js-gl-bet-detail-dialog" data-id="${ticketTradeNo}">查看</a>`
               if (bet.canCancel) {
-                btnlist = `<a class="btn btn-link btn-link-inverse js-bc-records-cancel" data-id="${bet.ticketTradeNo}">撤单</a> / ${btnlist}`
+                btnlist = `<a class="btn btn-link btn-link-inverse js-bc-records-cancel" data-id="${ticketTradeNo}">撤单</a> / ${btnlist}`
               }
               return btnlist
             },
@@ -201,10 +201,10 @@ const BettingRecordsView = Base.ItemView.extend({
           },
           {
             label: '操作',
-            name: 'ticketTradeNo',
+            name: 'ticketChaseId',
             width: '10%',
             formatter(val, index, bet) {
-              return `<a class="btn-link btn-link-inverse js-bc-chase-detail"  data-id="${bet.ticketTradeNo}" >查看</a>`
+              return `<a class="btn-link btn-link-inverse js-gl-chase-detail-dialog"  data-id="${bet.ticketChaseId}" >查看</a>`
             },
           },
         ],

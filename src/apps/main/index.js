@@ -139,6 +139,8 @@ Global.m.oauth.check().done((res) => {
     // 开启消息监听
     Global.m.news.start()
 
+    window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
+
     // 开启菜单权限监听
     // Global.ui.menu.start()
   }

@@ -108,7 +108,8 @@
                 <li :class="[{active: ticketType === 1},'db-ticket-game-type-item']" @click="showTicket(1)">盘口玩法</li>
                 <li :class="[{active: ticketType === 2},'db-ticket-game-type-item']"  @click="showTicket(2)">经典玩法</li>
               </ul>
-              <a class="db-ticket-more">更多彩种 >></a>
+              <router-link :to="ticketType === 1 ? `#bc/2/${_.isEmpty(topHandicapTicket) ? 1 : topHandicapTicket.id}`
+                : `#bc/0/${_.isEmpty(topClassicalTicket) ? 1 : topClassicalTicket.id}`" class="db-ticket-more">更多彩种 >></router-link>
               <div class="ticket-game-main" @mouseover="showArrow()" @mouseout="showArrow()">
                 <transition name="arrow-left">
                   <a class="db-ticket-arrow left" @click="ticketSwitch('left')" v-show="ticketCount > 3 && showArrowBtn"></a>
@@ -180,14 +181,8 @@
         ticketCount: 0,
         ticketIndex: 1,
         showArrowBtn:false,
-        locUrl: 'http://' + window.location.host
+        locUrl: 'http://' + window.location.host,
       }
-    },
-    computed:{
-      ...mapGetters([
-        'topClasscialTicket',
-        'topHandicapTicket',
-      ])
     },
     methods: {
       gameGoTo(index){
@@ -222,6 +217,10 @@
         }
       }
     },
+    computed: mapGetters([
+      'topClassicalTicket',
+      'topHandicapTicket'
+    ]),
     mounted() {
       dashboard.getIndexGameXhr(
         ({data}) => {
