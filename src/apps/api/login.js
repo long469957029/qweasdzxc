@@ -26,13 +26,10 @@ export default {
     })
       .then(then)
   },
-  // doauth接口
-  getUserInfo ({token}, then) {
+  // 退出登录
+  logout(then) {
     return Global.sync.axios({
-      url: '/acct/login/doauth.json',
-      data: {
-        token,
-      },
+      url: '/acct/login/dologout.json',
     })
       .then(then)
   },
