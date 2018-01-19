@@ -108,6 +108,8 @@
         amount: 0.00,
         username: '',
         userAvatar: '',
+        newRowCount:0,
+        newList:[]
       }
     },
 

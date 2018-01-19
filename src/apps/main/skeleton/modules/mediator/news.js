@@ -29,27 +29,27 @@ const NewsMediatorModule = Base.Module.extend({
   fetchNews() {
     const self = this
 
-    const letterXhr = Global.sync.ajax({
-      url: '/acct/usernotice/getletterlist.json',
-      abort: false,
-    })
+    // const letterXhr = Global.sync.ajax({
+    //   url: '/acct/usernotice/getletterlist.json',
+    //   abort: false,
+    // })
     const noticeXhr = Global.sync.ajax({
-      url: '/acct/usernotice/getnoticelist.json',
-      version: 1,
+      url: '/info/feedback/stat.json',
       abort: false,
     })
 
-    return $.when(letterXhr, noticeXhr)
-      .done((letterResData, noticeResData) => {
-        const letterRes = letterResData[0]
-        const noticeRes = noticeResData[0]
+    // return $.when(letterXhr, noticeXhr)
+    return noticeXhr
+      .done((res) => {
+        // const letterRes = letterResData[0]
+        // const noticeRes = noticeResData[0]
 
-        if (letterRes.root && noticeRes.root) {
+        if (res.root) {
           self.model.set({
             // letterList: letterRes.root.letterList,
-            unReadLetter: letterRes.root.unReadLetter,
+            // unReadLetter: letterRes.root.unReadLetter,
             // noticeList: noticeRes.root.noticeList,
-            unReadNotice: noticeRes.root.unReadNotice,
+            newList: res.root.rowCount,
           }, {
             parse: true,
           })
