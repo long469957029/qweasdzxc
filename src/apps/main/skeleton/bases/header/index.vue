@@ -28,7 +28,7 @@
               <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
               <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
               <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
-              <div class="header-menu-item" v-on:click="logoutHandler"><i
+              <div class="header-menu-item" :click="logoutHandler"><i
                 class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
                 <span class="header-menu-item-text inline-block">退出</span></div>
             </div>
@@ -41,11 +41,11 @@
           </div>
           <div class="js-header-announcement header-announcement active">
             <span class="sfa sfa-announcement "></span><span>消息</span>
-            <span class="js-header-announcement-num header-announcement-num">6</span>
+            <span class="js-header-announcement-num header-announcement-num" v-if="newRowCount > 0">{{newRowCount}}</span>
             <div class="header-announcement-place"></div>
             <div class="js-header-announcement-body header-announcement-body">
               <div class="header-announcement-content">
-                <div class="content-item">
+                <div class="content-item" v-for="item in newList" :key="item.time">
                   <div class="content-item-panel">
                     <div class="content-item-title-panel">
                       <div class="content-item-img inline-block"></div>
@@ -182,8 +182,9 @@
         })
         return false
       },
-      renderMsgList(data){
-        console.log(data)
+      renderMsgList(model){
+        this.newRowCount = model.get('newRowCount')
+        this.newList = model.get('newList')
       }
     },
     mounted(){

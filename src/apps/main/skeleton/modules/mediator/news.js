@@ -49,7 +49,8 @@ const NewsMediatorModule = Base.Module.extend({
             // letterList: letterRes.root.letterList,
             // unReadLetter: letterRes.root.unReadLetter,
             // noticeList: noticeRes.root.noticeList,
-            newList: res.root.rowCount,
+            newRowCount: res.root.rowCount,
+            newList: res.root.dataList,
           }, {
             parse: true,
           })
