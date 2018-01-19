@@ -40,7 +40,6 @@ export default {
   methods: {
     queryChange(event) {
       if (this.isFetching) {
-        console.log('pendding')
         return
       }
       const activityType = event.currentTarget.dataset.type

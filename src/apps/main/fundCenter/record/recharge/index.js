@@ -104,7 +104,11 @@ const RechargeView = SearchGrid.extend({
     const row = []
     row.push(rowInfo.tradeNo)
     row.push(_(rowInfo.payTime).toTime())
-    row.push(`<span class="m-right-sm">${rowInfo.type}</span>[${rowInfo.bankName}]`)
+    if (rowInfo.type === 1 || rowInfo.type === 4 || rowInfo.type === 5 || rowInfo.type === 11) {
+      row.push(`<span class="m-right-sm">${rowInfo.type}</span>[${rowInfo.bankName}]`)
+    } else {
+      row.push(`<span class="m-right-sm">${rowInfo.type}</span>`)
+    }
     row.push(`<span class="text-account-add">+${_(rowInfo.amount) / 10000}</span>`)
     // row.push(rowInfo.balance / 10000)
 

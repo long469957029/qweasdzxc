@@ -6,7 +6,9 @@ const FundView = Base.ItemView.extend({
 
   template: require('./index.html'),
 
-  events: {},
+  events: {
+    // 'click .js-logout': 'logoutHandler', // 退出登录
+  },
   getFundSummaryXhr(data) {
     return Global.sync.ajax({
       url: '/fund/balance/summary.json',
@@ -65,7 +67,7 @@ const FundView = Base.ItemView.extend({
     _(data).each((record) => {
       const html = []
       const createDate = _(record.date).toTime()
-      const recordAmount = _(record.date).formatDiv(10000, { fixed: 2 })
+      const recordAmount = _(record.date).formatDiv(10000, {fixed: 2})
       if (record.type === 1) {
         html.push('<div class="js-sideBar-record-item operation-record-item">')
         html.push('<div class="record-action">充值</div>')
@@ -153,6 +155,9 @@ const FundView = Base.ItemView.extend({
     })
     this.$('.js-sideBar-record-items').html(itemHtml.join(''))
   },
+  // logoutHandler() {
+  //   window.app.$store.commit(types.USER_LOGIN_OUT)
+  // },
 })
 
 export default FundView

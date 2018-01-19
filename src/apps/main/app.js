@@ -1,5 +1,10 @@
 import NavbarView from 'skeleton/bases/navbar'
+<<<<<<< HEAD
 import FooterView from 'skeleton/bases/footer'
+=======
+// import NoticeView from 'skeleton/bases/notice'
+// import FooterView from 'skeleton/bases/footer'
+>>>>>>> release/int
 import ToolbarView from 'skeleton/bases/toolbar'
 
 import RechargeView from 'com/fundOperate'
@@ -82,19 +87,19 @@ const _bindFundOperatorDialogHandler = () => {
       rechargeView.destroy()
     })
     $fundOperateDialog.on('click.modal', '.js-rc-close-dialog', () => {
-      Global.router.goTo('#/aa')
+      Global.router.goTo('aa')
       $fundOperateDialog.modal('hide')
     })
     $fundOperateDialog.on('click.modal', '.js-rc-recharge-to-record', () => {
-      Global.router.goTo('#/fc/rd')
+      Global.router.goTo('fc/rd')
       $fundOperateDialog.modal('hide')
     })
     $fundOperateDialog.on('click.modal', '.js-wd-goTo-fundPwd', () => {
-      Global.router.goTo('#/uc/pl')
+      Global.router.goTo('uc/pl')
       $fundOperateDialog.modal('hide')
     })
     $fundOperateDialog.on('click.modal', '.js-wd-goTo-bankCard', () => {
-      Global.router.goTo('#/uc/cm')
+      Global.router.goTo('uc/cm')
       $fundOperateDialog.modal('hide')
     })
   })
@@ -151,7 +156,6 @@ const _bindChaseDetailHandler = () => {
     const cId = $target.data('id')
     const tradeno = $target.data('no')
     const $dialog = Global.ui.dialog.show({
-      size: 'modal-chase',
       bStyle: 'width: 848px;height:570px;',
       body: '<div class="fc-gr-chase-detail"></div>',
       closeBtn: false,

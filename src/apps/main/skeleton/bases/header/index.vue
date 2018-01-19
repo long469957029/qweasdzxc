@@ -28,7 +28,7 @@
               <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
               <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
               <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
-              <div class="header-menu-item" v-on:click="logoutHandler"><i
+              <div class="header-menu-item" v-on:click="logout"><i
                 class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
                 <span class="header-menu-item-text inline-block">退出</span></div>
             </div>
@@ -84,7 +84,7 @@
     </div>
     <!-- 登录 -->
     <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="loginModal"
-         v-show="showLoginModal">
+         v-show="openOpenDialog">
       <login ref="login" @dialogClose="closeDialog"></login>
     </div>
   </div>
@@ -98,7 +98,6 @@
 
     data () {
       return {
-        showLoginModal: false,
         //提交中，禁用按钮
         pushing: false,
         // 默认显示登录
@@ -121,16 +120,21 @@
 
     computed: {
       userUname() {
-        return this.$store.state.userInfo.uName
+        return this.$store.state.loginStore.uName
       },
       userAmount() {
-        return this.$store.state.userInfo.fBalance
+        return this.$store.state.loginStore.fBalance
       },
       imgUrl(){
-        return avatarConf.get(this.$store.state.userInfo.headIcon).logo
+        return avatarConf.get(this.$store.state.loginStore.headIcon).logo
       },
       isLogin(){
         return this.$store.getters.getLoginStatus
+      },
+      openOpenDialog(){
+        if (this.$store.getters.getLoginDialogStatus) {
+          this.openLoginDialog()
+        }
       },
     },
 
@@ -138,10 +142,12 @@
 
     methods: {
       showLogin() {
-
         this.pushing = true
-        this.showLoginModal = true
-
+//        this.showLoginModal = true
+        this.$store.commit(types.OPEN_LOGIN_DIALOG, true)
+        this.openLoginDialog()
+      },
+      openLoginDialog(){
         this.$nextTick(() => {
 //          this.$refs.showLogin.init()
 
@@ -149,7 +155,7 @@
             backdrop: 'static',
           })
             .on('hidden.modal', () => {
-              this.showLoginModal = false
+              this.$store.commit(types.OPEN_LOGIN_DIALOG, false)
             })
         })
       },
@@ -158,7 +164,7 @@
         this.userPanel = true
         $(this.$refs.loginModal).modal('hide')
       },
-      logoutHandler() {
+      logout() {
         Global.ui.loader.show()
         $(document).confirm({
           content: '<div class="m-TB-lg">确定要退出登录？</div>',
@@ -168,9 +174,8 @@
               if (data && data.result === 0) {
                 Global.cookieCache.clear('token')
                 Global.cookieCache.clear('loginState')
-//                window.location.href = 'index.html'
                 Global.router.goTo('')
-                app.$store.commit(types.USER_CLEAR)
+                app.$store.commit(types.USER_LOGOUT_SUCCESS)
                 window.Global.m.publish('acct:loginOut')
               }
             }).always(() => {
