@@ -84,7 +84,7 @@
     </div>
     <!-- 登录 -->
     <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="loginModal"
-         v-show="showLoginModal">
+         v-show="checkOpenDialog">
       <login ref="login" @dialogClose="closeDialog"></login>
     </div>
   </div>
@@ -98,7 +98,6 @@
 
     data () {
       return {
-        showLoginModal: false,
         //提交中，禁用按钮
         pushing: false,
         // 默认显示登录
@@ -121,16 +120,21 @@
 
     computed: {
       userUname() {
-        return this.$store.state.userInfo.uName
+        return this.$store.state.doAuth.uName
       },
       userAmount() {
-        return this.$store.state.userInfo.fBalance
+        return this.$store.state.doAuth.fBalance
       },
       imgUrl(){
-        return avatarConf.get(this.$store.state.userInfo.headIcon).logo
+        return avatarConf.get(this.$store.state.doAuth.headIcon).logo
       },
       isLogin(){
         return this.$store.getters.getLoginStatus
+      },
+      checkOpenDialog(){
+        if (this.$store.getters.getLoginDialogStatus) {
+          this.openLoginDialog()
+        }
       },
     },
 
@@ -138,10 +142,12 @@
 
     methods: {
       showLogin() {
-
         this.pushing = true
-        this.showLoginModal = true
-
+//        this.showLoginModal = true
+        this.$store.commit(types.OPEN_LOGIN_DIALOG, true)
+        this.openLoginDialog()
+      },
+      openLoginDialog(){
         this.$nextTick(() => {
 //          this.$refs.showLogin.init()
 
@@ -149,7 +155,7 @@
             backdrop: 'static',
           })
             .on('hidden.modal', () => {
-              this.showLoginModal = false
+              this.$store.commit(types.OPEN_LOGIN_DIALOG, false)
             })
         })
       },

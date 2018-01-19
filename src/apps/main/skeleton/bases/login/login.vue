@@ -148,13 +148,14 @@
             acctInfo.fBalance = _(acctInfo.balance).convert2yuan()
             acctInfo.fLastLoginTime = _(acctInfo.lastLoginTime).toTime()
             acctInfo.fLoginTime = _(acctInfo.loginTime).toTime()
+            acctInfo.headIcon=_(acctInfo.headIcon).toString()
             if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
               this.autoLogoutCountdown(acctInfo.outTime)
             }
             window.Global.memoryCache.set('acctInfo', acctInfo)
             window.Global.m.publish('acct:updating', acctInfo)
             this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
-            this.$store.commit(types.ADD_ROUTERS)
+//            this.$store.commit(types.ADD_ROUTERS)
           } else if (data.msg.indexOf('验证码') !== -1) {
             this.showCodeItem = false
             this.codeError = true
