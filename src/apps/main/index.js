@@ -6,6 +6,8 @@ import AnimatedInteger from 'com/animated-integer'
 import store from '../store/index'
 
 import MainHeader from 'skeleton/bases/header/index'
+import whiteList from './directAccess'
+import MainFooter from 'skeleton/bases/footer/index'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -39,6 +41,7 @@ window.app = new Vue({
   el: '#main-wrapper',
   components: {
     MainHeader,
+    MainFooter,
   },
   store,
   router,
