@@ -12,7 +12,7 @@ const NewsMediatorModule = Base.Module.extend({
         this.check({logoutWhenUnLogin}, xhrOps)
           .always(() => {
             Global.polling.next('oauth:request', {
-              interval: self.interval,
+              interval: this.interval,
             })
           })
       })
@@ -36,7 +36,7 @@ const NewsMediatorModule = Base.Module.extend({
 
         window.Global.m.publish('acct:updating', acctInfo)
 
-        self.login = false
+        this.login = false
       })
 
     // 因应二号改版偷跑 先忽略验证使用者
