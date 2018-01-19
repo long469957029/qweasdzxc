@@ -30,7 +30,7 @@
     margin-top: 5px;
     float: left;
     position: relative;
-    z-index: 11;
+    z-index: 12;
     margin-left: 0px;
   }
 
@@ -56,7 +56,7 @@
       color: $font-dark;
       padding: 0px 20px;
       line-height: $nav-height;
-      z-index: 11;
+      z-index: 12;
       background-color: transparent;
       text-align: center;
       transition: background 0.3s ease;
@@ -88,7 +88,7 @@
       text-align: center;
       position: absolute;
       right: 0;
-      z-index: 11;
+      z-index: 12;
 
       .navbar-mall-icon {
         background: url('./images/navbar-mall-icon.png');
@@ -119,7 +119,7 @@
     height: $nav-height;
     left: 0;
     right: 0;
-    z-index: 10;
+    z-index: 11;
   }
 
   .navbar-slide-underline {
@@ -129,7 +129,7 @@
     position: absolute;
     top: 67px;
     left: 196px;
-    z-index: 10;
+    z-index: 11;
   }
 }
 
@@ -264,7 +264,7 @@
   background: url('./images/nav-channel-container.png');
   height: 200px;
   // transform: scaleY(0);
-  z-index: 10;
+  z-index: 12;
   left: 50%;
   transform: scaleY(0) translateX(-50%);
   width: 100vw;
