@@ -1,4 +1,4 @@
-import loginApi from '../../../api/login'
+import permissions from 'apps/main/directAccess'
 
 const initState = () => {
   return {
@@ -45,9 +45,11 @@ const initState = () => {
     userRebate: 0,
     // 用户状态
     userStatus: 0,
-    // 用户类型
+    // 用户类型,0:代理，1:会员，2:试玩账号
     userType: 0,
     username: '',
+    routers: permissions.permissionsList,
+    loginDialog: false,
   }
 }
 
@@ -56,30 +58,40 @@ const getters = {
   getLoginStatus: (state) => {
     return state.userId > 0
   },
+  checkPermission: (state) => (path) => {
+    let isPass = true
+    _(state.routers).each((item) => {
+      if (path.indexOf(item.path) >= 0) {
+        if (item.needLogin) {
+          if (state.userId > 0) {
+            isPass = true
+            return false
+          } else {
+            isPass = false
+            return false
+          }
+        }
+      }
+    })
+    return isPass
+  },
 }
 
 // actions
-const actions = {
-  // getUserInfo ({commit}, {token}) {
-  //   // commit(types.CHECKOUT_TICKET_INFO)
-  //   return loginApi.getUserInfo(
-  //     {
-  //       token,
-  //     },
-  //     ({data}) => {
-  //       return commit(types.USER_LOGIN_SUCCESS, data)
-  //     },
-  //   )
-  // },
-}
+const actions = {}
 
 // mutations
 const mutations = {
+  // 用户登录
   [types.USER_LOGIN_SUCCESS] (state, data) {
     Object.assign(state, data)
   },
+  // 清楚用户数据
   [types.USER_CLEAR] (state) {
     Object.assign(state, initState())
+  },
+  [types.USER_SET_ROUTERS]: (state, data) => {
+    state.routers = data
   },
 }
 

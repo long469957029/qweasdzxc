@@ -154,6 +154,7 @@
             window.Global.memoryCache.set('acctInfo', acctInfo)
             window.Global.m.publish('acct:updating', acctInfo)
             this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+            this.$store.commit(types.ADD_ROUTERS)
           } else if (data.msg.indexOf('验证码') !== -1) {
             this.showCodeItem = false
             this.codeError = true

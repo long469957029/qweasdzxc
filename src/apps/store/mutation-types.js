@@ -67,3 +67,6 @@ export const ACTIVE_TOP_TICKETS = 'ACTIVE_TOP_TICKETS'
 export const USER_CLEAR = 'USER_CLEAR'
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS'
 
+// 增加权限
+export const USER_SET_ROUTERS = 'USER_SET_ROUTERS'
+
