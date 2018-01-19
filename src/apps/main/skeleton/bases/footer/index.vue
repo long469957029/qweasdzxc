@@ -139,11 +139,11 @@ export default {
 }
 
 .footer-bg {
-  width: 602px;
+  width: 517px;
   height: 280px;
   background: url("./images/footer-bg.png");
   position: absolute;
-  right: -85px;
+  right: 0;
   top: 0;
 }
 
