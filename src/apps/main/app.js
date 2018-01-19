@@ -3,7 +3,7 @@
 
 import NavbarView from 'skeleton/bases/navbar'
 // import NoticeView from 'skeleton/bases/notice'
-import FooterView from 'skeleton/bases/footer'
+// import FooterView from 'skeleton/bases/footer'
 import ToolbarView from 'skeleton/bases/toolbar'
 
 import RechargeView from 'com/fundOperate'
@@ -32,7 +32,7 @@ App.addRegions({
   mainRegin: '#main',
   newbieRegin: '#newbie',
   winnerRegin: '#winner',
-  footerRegin: '#footer',
+  // footerRegin: '#footer',
   // mobileDownloadRegin:'#mobileDownload'
 })
 
@@ -259,7 +259,7 @@ App.addInitializer(() => {
   // App.noticeRegin.show(new NoticeView())
   // Global.newbieActivity.checkLogin()
 
-  App.footerRegin.show(new FooterView())
+  // App.footerRegin.show(new FooterView())
 
 
   Backbone.history.start()
