@@ -69,6 +69,7 @@ export const __ACTIVE_TOP_TICKETS = '__ACTIVE_TOP_TICKETS'
 // 用户登录相关
 export const USER_CLEAR = 'USER_CLEAR'
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS'
+export const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS'
 
 // 全局弹窗相关
 export const OPEN_LOGIN_DIALOG = 'OPEN_LOGIN_DIALOG'

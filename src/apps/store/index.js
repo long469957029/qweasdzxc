@@ -8,7 +8,7 @@ import bettingChoice from './modules/tickets/bettingChoice'
 import bettingChase from './modules/tickets/bettingChase'
 import bettingAnalysis from './modules/tickets/bettingAnalysis'
 import topTickets from './modules/tickets/topTickets'
-import doAuth from './modules/acct/doAuth'
+import loginStore from './modules/acct/loginStore'
 import dialog from './modules/global/dialog'
 
 Vue.use(Vuex)
@@ -25,7 +25,7 @@ export default new Vuex.Store({
     bettingChase,
     bettingAnalysis,
     topTickets,
-    doAuth,
+    loginStore,
     dialog,
   },
   strict: debug,

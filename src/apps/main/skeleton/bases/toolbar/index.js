@@ -16,6 +16,8 @@ const ToolbarView = Base.ItemView.extend({
     'click .js-toolbar-scroll-to-top': 'scrollHandler', // 回滚到顶部
     'click .js-toolbar-feedback-dialog': 'feedbackDialogHandler', // 意见反馈弹窗
     'click .js-toolbar-im-dialog': 'imDialogHandler', // 站内信弹窗
+    'click .js-logout': 'logoutHandler', // 退出登录
+
   },
 
   initialize() {
@@ -119,6 +121,28 @@ const ToolbarView = Base.ItemView.extend({
 
   scrollHandler() {
     $('html').animate({scrollTop: 0}, 'slow')
+  },
+  logoutHandler() {
+    Global.ui.loader.show()
+    $(document).confirm({
+      content: '<div class="m-TB-lg">确定要退出登录？</div>',
+      type: 'exit',
+      agreeCallback() {
+        Global.oauth.logout().done((data) => {
+          if (data && data.result === 0) {
+            Global.cookieCache.clear('token')
+            Global.cookieCache.clear('loginState')
+            Global.router.goTo('')
+            window.app.$store.commit(types.USER_LOGOUT_SUCCESS, true)
+            window.Global.m.publish('acct:loginOut')
+          }
+        }).always(() => {
+          Global.ui.loader.hide()
+        })
+      },
+    })
+    this.closeSidebarHandler()
+    return false
   },
 })
 
