@@ -305,7 +305,7 @@ const SyncModule = Base.Module.extend({
       url: ajaxUrl,
     })
     let token = Global.cookieCache.get('token')
-    if (noLoginUrl !== undefined) { // 如果抓不到token,使用固定临时token
+    if (noLoginUrl !== undefined && token === null) { // 如果抓不到token,使用固定临时token
       token = '000-000-000-000-player125'
     }
     return token

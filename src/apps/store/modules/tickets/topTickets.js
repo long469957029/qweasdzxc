@@ -4,6 +4,8 @@ const initState = () => {
   return {
     [consts.TICKET_NORMAL_TYPE]: [],
     [consts.TICKET_HANDICAP_TYPE]: [],
+    normalPromise: null,
+    handicapPromise: null,
     type: 0,
   }
 }
@@ -28,7 +30,6 @@ const actions = {
   }) {
     return new Promise((resolve) => {
       if (!_.isEmpty(state[type])) {
-        state.type = type
         resolve()
         return
       }
@@ -68,11 +69,11 @@ const mutations = {
     state.type = type
   },
 
-  [types.USER_LOGIN_SUCCESS] () {
-    this.dispatch(types.GET_TOP_TICKETS, {
+  [types.USER_LOGIN_SUCCESS] (state) {
+    state.normalPromise = this.dispatch(types.GET_TOP_TICKETS, {
       type: consts.TICKET_NORMAL_TYPE
     })
-    this.dispatch(types.GET_TOP_TICKETS, {
+    state.handicapPromise = this.dispatch(types.GET_TOP_TICKETS, {
       type: consts.TICKET_HANDICAP_TYPE
     })
   },
@@ -100,6 +101,11 @@ const mutations = {
   },
 
   [types.ACTIVE_TOP_TICKETS] (state, {currentId}) {
+    state.handicapPromise.then(() => {
+      this.commit(types.__ACTIVE_TOP_TICKETS, {currentId})
+    })
+  },
+  [types.__ACTIVE_TOP_TICKETS] (state, {currentId}) {
     const curTicket = _.findWhere(state[state.type], {
       id: currentId
     })
@@ -110,6 +116,11 @@ const mutations = {
   },
 
   [types.RESORT_TOP_TICKETS] (state, {currentId}) {
+    state.normalPromise.then(() => {
+      this.commit(types.__RESORT_TOP_TICKETS, {currentId})
+    })
+  },
+  [types.__RESORT_TOP_TICKETS] (state, {currentId}) {
     const curTicket = _.findWhere(state[state.type], {
       id: currentId
     })
@@ -120,7 +131,7 @@ const mutations = {
       })
       curTicket.active = true
     } else {
-      state[state.type] = _.each(state[state.type], (ticket) => {
+      _.each(state[state.type], (ticket) => {
         ticket.active = false
       })
       state[state.type].pop()

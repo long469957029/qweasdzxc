@@ -12,6 +12,9 @@ const urlList = [
     url: '/info/activitylist/geturgentbulletinlist.json',
   },
   {
+    url: 'info/activitylist/geturgentbulletinlist.json',
+  },
+  {
     url: '/info/indexGameConfig/gameConf.json',
   },
   {

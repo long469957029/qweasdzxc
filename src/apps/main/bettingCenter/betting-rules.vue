@@ -2,11 +2,16 @@
   <div class="bc-basic-rules bg-deep">
     <div class="tab-toolbar tab-pill tab-pill-deep">
       <div class="tab-title" v-if="title">{{title}}</div>
-      <div :class="['tab-group',  !title ? 'no-margin' : '']">
-      <span class="tab" :class="{active: rule.selected}" v-for="rule in rules" @click="ruleChange(rule)">
-        <span class="tab-inner">{{rule.title}}</span>
-      </span>
-      </div>
+        <transition-group :class="['tab-group',  !title ? 'no-margin' : '']"
+                          v-on:before-enter="beforeEnter"
+                          v-on:enter="enter"
+                          v-on:leave="leave"
+                          v-bind:css="false"
+        >
+          <span class="tab" :class="{active: rule.selected}" v-for="(rule, index) in rules" @click="ruleChange(rule)" :key="index">
+            <span class="tab-inner">{{rule.title}}</span>
+          </span>
+        </transition-group>
     </div>
   </div>
 </template>
@@ -37,8 +42,40 @@
     },
 
     methods: {
-      ruleChange: function(rule) {
+      ruleChange(rule) {
         ruleSelect(this, rule)
+      },
+      beforeEnter(el) {
+        el.style.opacity = 0
+        Velocity(el, {
+          translateY: -150,
+        }, {
+          duration: 0,
+        })
+      },
+      enter(el, done) {
+        Velocity(el, {
+          opacity: 1,
+          translateY: 0,
+        }, {
+          duration: 500,
+        })
+        Velocity(el, {
+          translateY: -10,
+        }, {
+          loop: 2,
+          duration: 100,
+          complete: done
+        })
+      },
+      leave(el, done) {
+        Velocity(el, {
+          opacity: 0,
+          translateY: -150,
+        }, {
+          duration: 500,
+          complete: done
+        })
       }
     },
 
