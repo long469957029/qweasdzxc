@@ -2,8 +2,6 @@ import NavbarView from 'skeleton/bases/navbar'
 
 import FooterView from 'skeleton/bases/footer'
 
-// import NoticeView from 'skeleton/bases/notice'
-// import FooterView from 'skeleton/bases/footer'
 import ToolbarView from 'skeleton/bases/toolbar'
 
 import RechargeView from 'com/fundOperate'
@@ -19,7 +17,6 @@ App.addRegions({
   navbarRegin: '#navbar',
   toolbarRegin: '#toolbar',
   mainRegin: '#main',
-  footerRegin: '#footer',
 })
 
 function _bindServiceHandler() {
@@ -176,9 +173,6 @@ App.addInitializer(() => {
   }))
 
   App.toolbarRegin.show(new ToolbarView())
-
-  App.footerRegin.show(new FooterView())
-
 
   Backbone.history.start()
 
