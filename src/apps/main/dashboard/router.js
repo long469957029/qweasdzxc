@@ -4,17 +4,11 @@ import DashboardView from './dashboard.vue'
 const NoticeDetailView = require('dynamicCenter/views/noticeDetail')
 
 const Init = {
-  template: `<div></div>`
+  template: `<div style="height: 1000px"></div>`
 }
-// '': 'dashboard', // 概览
-//   ':anything': 'dashboard', // 概览
-//   'nb/detail/:noticeId': 'noticeDetail', // 公告详情
 export default [
   {
     path: '/',
-    // component() {
-    //   RouterController.changeMainReginView(new DashboardView())
-    // }
     component: DashboardView,
   },
   {
@@ -36,10 +30,21 @@ export default [
     component: Init,
   },
   {
-    path: '*',
-    // component() {
-    //   RouterController.changeMainReginView(new DashboardView())
-    // }
+    path: ':anything',
     component: DashboardView,
+    redirect: to => {
+      $('#main').toggle(false)
+      $('#main-vue').toggle(true)
+      return to
+    }
+  },
+  {
+    path: '*',
+    component: DashboardView,
+    redirect: to => {
+      $('#main').toggle(false)
+      $('#main-vue').toggle(true)
+      return to
+    }
   }
 ]

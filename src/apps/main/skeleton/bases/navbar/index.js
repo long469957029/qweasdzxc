@@ -8,23 +8,10 @@ const NavsView = Base.ItemView.extend({
     'click .js-db-nav-scroll': 'navScrollToggleHandler',
     'mouseenter .js-nav-ticket-list': 'navMouseenterrInHandler',
     'mouseleave .js-nav-ticket-list': 'navmouseLeaveHandler',
-    // 'mouseleave .nav-sub': 'outTicketSelectHandler',
-    // 'mouseenter .js-nav-game-type': 'gameTypeEnterHandler',
     'mouseleave .js-nav-game-type': 'gameTypeLeaveHandler',
-    // 'click .js-nav-channel-item': 'channelItemClickHandler',
     'click .js-nav-channel-btn': 'jumpGamePageHandler',
     'click .js-navbar-tab': 'tabEffectHandler',
   },
-  // gameTypeEnterHandler(e) {
-  //   const $target = $(e.currentTarget)
-  //   const $gameContainer = $target.find('.js-nav-channel-container')
-  //   $gameContainer.toggleClass('hidden', false)
-  // },
-  // gameTypeLeaveHandler(e) {
-  //   const $target = $(e.currentTarget)
-  //   const $gameContainer = $target.find('.js-nav-channel-container')
-  //   $gameContainer.toggleClass('hidden', true)
-  // },
 
   // type:1, // 游戏类型：1真人，2体育，3老虎机，4捕鱼
   // channelId:1, // 渠道类型：1AG，2EBET，3BBIN，4PT，5MG，6GG，7 188体育
@@ -60,15 +47,6 @@ const NavsView = Base.ItemView.extend({
     }
   },
 
-  // channelItemClickHandler(e) {
-  //   const $target = $(e.currentTarget)
-  //   if ($target.find('.js-nav-channel-btn')[0]) {
-  //     $target.find('.js-nav-channel-btn').trigger('click')
-  //   } else {
-  //     $target.find('.js-nav-link').trigger('click')
-  //   }
-  //   return false
-  // },
   jumpGamePageHandler(e) {
     e.stopPropagation()
     e.preventDefault()
@@ -130,12 +108,7 @@ const NavsView = Base.ItemView.extend({
   },
 
 
-  initialize() {
-    // this._lastId = null;
-  },
-
   serializeData () {
-    const self = this
     this.acctInfo = Global.memoryCache.get('acctInfo')
     let agencyMenuIndex = null
     const beginTicketList = ticketConfig.getBeginlist()
@@ -206,33 +179,10 @@ const NavsView = Base.ItemView.extend({
 
     this.$underLine = this.$('.js-navbar-slide-underline')
   },
-  // generateGameMenu: function(gameList){
-  //   var self = this;
-  //   var $channelList = this.$('.js-nav-channel-list');
-  //   var thirdPartGameMenu = _(this.options.navbar).filter(function(menu){
-  //     return menu.thirdPartGame;
-  //   });
-  //   _(gameList).each(function(game){
-  //     var type = game.type;
-  //     var channelId = game.channelId;
-  //
-  //     self.$('.js-nav-channel-list[type='+type+']').append(self.gameTemplate())
-  //   });
-  //
-  // },
-
   // common APIs
 
   isShow () {
     return !this.$navScrollBtn.hasClass('down')
-  },
-
-  showScroll () {
-    this.$navScrollBtn.removeClass('hidden')
-  },
-
-  hideScroll () {
-    this.$navScrollBtn.addClass('hidden')
   },
 
   // event handlers

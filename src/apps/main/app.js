@@ -1,9 +1,10 @@
-// import HeaderView from 'skeleton/bases/header'
-
-
 import NavbarView from 'skeleton/bases/navbar'
-// import NoticeView from 'skeleton/bases/notice'
+<<<<<<< HEAD
 import FooterView from 'skeleton/bases/footer'
+=======
+// import NoticeView from 'skeleton/bases/notice'
+// import FooterView from 'skeleton/bases/footer'
+>>>>>>> release/int
 import ToolbarView from 'skeleton/bases/toolbar'
 
 import RechargeView from 'com/fundOperate'
@@ -13,59 +14,14 @@ import './index.css'
 const BetDetailView = require('fundCenter/gameRecord/betDetail')
 const ChaseDetailView = require('fundCenter/gameRecord/chaseDetail')
 
-
-// import WithDrawView from 'com/fundOperate/withdraw'
-// import TransferView from 'com/fundOperate/transfer'
-
 const App = new window.Base.Application()
 
-App.on('start', () => {
-  $('body').addClass('loaded').find('.wm-loader-wrapper').remove()
-  $('.js-wrapper').removeClass('hide')
-})
-
 App.addRegions({
-  // headerRegion: '#header2',
   navbarRegin: '#navbar',
-  // noticeRegin: '#notice',
   toolbarRegin: '#toolbar',
   mainRegin: '#main',
-  newbieRegin: '#newbie',
-  winnerRegin: '#winner',
   footerRegin: '#footer',
-  // mobileDownloadRegin:'#mobileDownload'
 })
-
-
-const support = {
-  animations: window.Modernizr.cssanimations,
-}
-const animEndEventNames = {
-  WebkitAnimation: 'webkitAnimationEnd',
-  OAnimation: 'oAnimationEnd',
-  msAnimation: 'MSAnimationEnd',
-  animation: 'animationend',
-}
-const animEndEventName = animEndEventNames[window.Modernizr.prefixed('animation')]
-
-function onEndAnimation($el, callback) {
-  const onEndCallbackFn = function (ev) {
-    if (support.animations) {
-      if (ev.target !== this) {
-        return
-      }
-      this.removeEventListener(animEndEventName, onEndCallbackFn)
-    }
-    if (callback && typeof callback === 'function') {
-      callback.call()
-    }
-  }
-  if (support.animations) {
-    $el.on(animEndEventName, onEndCallbackFn)
-  } else {
-    onEndCallbackFn()
-  }
-}
 
 function _bindServiceHandler() {
   $(document).off('click.service').on('click.service', '.js-gl-service', () => {
@@ -93,16 +49,6 @@ function _bindClosePopoverHandler() {
         }
       })
     }
-  })
-}
-
-function _bindClickFeedbackHandler() {
-  $(document).off('click.clickFeedback', '.cbutton').on('click.clickFeedback', '.cbutton', (e) => {
-    const $target = $(e.currentTarget)
-    $target.addClass('cbutton--click')
-    onEndAnimation($target.hasClass('cbutton--complex') ? $target.find('.cbutton__helper') : $target, () => {
-      $target.removeClass('cbutton--click')
-    })
   })
 }
 
@@ -223,40 +169,14 @@ const _bindChaseDetailHandler = () => {
       $(this).remove()
       editChaseDetailView.destroy()
     })
-    // $dialog.off('click.cancelBet')
-    //   .on('click.cancelBet', '.js-gr-submitBtn', (ev) => {
-    //     const $currContainer = $dialog.find('.fc-gr-bet-detail-form')
-    //     const clpValidate = $currContainer.parsley().validate()
-    //     if (clpValidate) {
-    //       const $target2 = $(ev.currentTarget)
-    //       $target2.button('loading')
-    //       return Global.sync.ajax({
-    //         url: '/ticket/bet/cancel.json',
-    //         data: {
-    //           betId: $dialog.find('.js-gr-ticketBetId').val(),
-    //         },
-    //       }).done((res) => {
-    //         if (res && res.result === 0) {
-    //           Global.ui.notification.show('操作成功。')
-    //           $dialog.modal('hide')
-    //         } else {
-    //           Global.ui.notification.show('操作失败。')
-    //         }
-    //       })
-    //     }
-    //   })
   })
 }
 App.addInitializer(() => {
-  // App.headerRegion.show(new HeaderView())
   App.navbarRegin.show(new NavbarView({
     navbar: Global.ui.menu.getNav(),
   }))
 
   App.toolbarRegin.show(new ToolbarView())
-
-  // App.noticeRegin.show(new NoticeView())
-  // Global.newbieActivity.checkLogin()
 
   App.footerRegin.show(new FooterView())
 
@@ -265,7 +185,6 @@ App.addInitializer(() => {
 
   _bindServiceHandler()
   _bindClosePopoverHandler()
-  _bindClickFeedbackHandler()
   _bindClickModalFadeHandler()
   _bindFundOperatorDialogHandler() // 全局绑定资金操作(充值 提现 转帐)弹窗
   _bindBetDetailHandler() // 全局投注详情弹窗

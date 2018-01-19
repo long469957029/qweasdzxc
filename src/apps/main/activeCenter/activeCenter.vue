@@ -4,13 +4,13 @@
       <div class="aa-banner-container"></div>
     </div>
     <div class="aa-container">
-      <active-navbar @fetchData="queryActivity" :activityType="activityType" :isFetching="isFetching"></active-navbar>
+      <active-navbar @fetchData="queryActivity" :activityType="activityType" :isFetching="queryFetching"></active-navbar>
       <active-timeline :timelineHeight="timelineHeight" :filterActivityList="filterActivityList"></active-timeline>
       <div>
-        <active-item :filterActivityList="filterActivityList" @openDetailDialog="openDetailDialog" :isFetching="isFetching"></active-item>
+        <active-item :filterActivityList="filterActivityList" @openDetailDialog="openDetailDialog" :isFetching="openDialogFetching"></active-item>
       </div>
-      <div class="timeline-add">
-        <div :class="`add-btn ${isFetching ? 'disabled' : ''}`" @click="fetchMore">点击加载更多</div>
+      <div class="timeline-add" v-show="showAddMoreBtn">
+        <div :class="`add-btn ${fetchMoreFetching ? 'disabled' : ''}`" @click="fetchMore">点击加载更多</div>
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
@@ -52,7 +52,13 @@ export default {
       activityType: '',
       showDetailDialog: false,
       dialogBanner: '',
-      isFetching: false,
+      queryFetching: false,
+      fetchMoreFetching: false,
+      openDialogFetching: false,
+
+      // 判断是否显示加载更多按钮用
+      rowCount: 0,
+
 
       // 活动详情
       actTitle: '', // 活动主题
@@ -67,6 +73,7 @@ export default {
     activity.getActivityList({ activityType: this.activityType, pageSize: this.pageSize, }, ({ data }) => {
       if (data && data.result === 0) {
         const { records } = data.root
+        this.rowCount = data.root.rowCount
         this.activityList = records
       }
     })
@@ -84,47 +91,55 @@ export default {
     timelineHeight() {
       const row = Math.round(this.activityList.length / 2)
       return 23 + 360 * row + 40 * (row - 1) + 40
+    },
+
+    showAddMoreBtn() {
+      const currentItemLength = this.activityList.length
+      if (this.rowCount <= currentItemLength) {
+        return false
+      } else {
+        return true
+      }
     }
   },
 
   methods: {
     queryActivity(activityType) {
       this.activityType = activityType
-      this.isFetching = true
+      this.queryFetching = true
       activity.getActivityList({activityType: this.activityType, pageSize: this.pageSize}, ({data}) => {
         if (data && data.result === 0) {
           const { records } = data.root
+          this.rowCount = data.root.rowCount
           this.activityList = records
-
-          this.isFetching = false
+          this.queryFetching = false
 
           this.pageCount = PAGECOUNT // 更换类型 初始化页数
         }
       })
     },
     fetchMore() {
-      if (this.isFetching) {
-        console.log('pendding')
+      if (this.fetchMoreFetching) {
         return
       }
       this.pageCount = this.pageCount + 1
-      this.isFetching = true
+      this.fetchMoreFetching = true
       activity.getActivityList({activityType: this.activityType, pageSize: this.pageSize * this.pageCount}, ({data}) => {
         if (data && data.result === 0) {
           const { records } = data.root
           this.activityList = records
 
-          this.isFetching = false
+          this.fetchMoreFetching = false
         }
       })
     },
     openDetailDialog(rid) {
-      this.isFetching = true
+      this.openDialogFetching = true
 
       activity.getActivityDetail({rid}, ({data}) => {
         if (data && data.result === 0) {
           const result = data.root
-          this.isFetching = false
+          this.openDialogFetching = false
 
           this.actTitle = result.activityTitle
           this.actSummary = result.activitySummary

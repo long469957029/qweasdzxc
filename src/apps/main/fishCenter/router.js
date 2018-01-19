@@ -2,7 +2,7 @@ const FishCenterView = () => import(/* webpackChunkName: "outer-center" */ './in
 
 export default [
   {
-    path: '/fc',
+    path: '/fh',
     component: function(resolve) {
       RouterController.async(resolve, FishCenterView)
     },
