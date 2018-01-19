@@ -62,7 +62,7 @@ const SystemMessageView = Base.ItemView.extend({
         return `<div class="system-message-list js-system-message-list clearfix">
                   <div class="pull-left m-top-md m-left-md">
                     <div class="message-title ${item.new ? 'new' : ''} ${Number(item.isRead) === 0 ? 'unRead' : ''} font-sm">${item.title}</div>
-                    <div class="message-sub-title text-auxiliary">积分商城每日好券限量放送，每天不同时间段您到可以在商城中兑换到不同的优惠券惊喜</div>
+                    <div class="message-sub-title text-auxiliary">${item.desc}</div>
                   </div>
                   <div class="pull-right m-right-md p-top-md">
                     <div class="message-date text-auxiliary font-sm inline-block m-right-md vertical-middle">[${_(item.time).toTime()}]</div>

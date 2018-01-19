@@ -89,7 +89,8 @@
                 </span>
                 </div>
                 <div class="desc">{{item.couponDesc}}</div>
-                <a :href="`#/ma?type=${item.couponType === 0 ? 1 : 0}`" class="btn-mall-exchange" target="_blank">立即兑换</a>
+                <a :href="`#/ma?type=${item.couponType === 0 ? 1 : 0}`" class="btn-mall-exchange"
+                   target="_blank">立即兑换</a>
                 <div class="image"></div>
               </div>
             </div>
@@ -106,26 +107,33 @@
             <div class="db-ticket-game">
               <ul class="db-ticket-game-type">
                 <li :class="[{active: ticketType === 1},'db-ticket-game-type-item']" @click="showTicket(1)">盘口玩法</li>
-                <li :class="[{active: ticketType === 2},'db-ticket-game-type-item']"  @click="showTicket(2)">经典玩法</li>
+                <li :class="[{active: ticketType === 2},'db-ticket-game-type-item']" @click="showTicket(2)">经典玩法</li>
               </ul>
               <router-link :to="ticketType === 1 ? `#bc/2/${_.isEmpty(topHandicapTicket) ? 1 : topHandicapTicket.id}`
-                : `#bc/0/${_.isEmpty(topClassicalTicket) ? 1 : topClassicalTicket.id}`" class="db-ticket-more">更多彩种 >></router-link>
+                : `#bc/0/${_.isEmpty(topClassicalTicket) ? 1 : topClassicalTicket.id}`" class="db-ticket-more">更多彩种 >>
+              </router-link>
               <div class="ticket-game-main" @mouseover="showArrow()" @mouseout="showArrow()">
                 <transition name="arrow-left">
-                  <a class="db-ticket-arrow left" @click="ticketSwitch('left')" v-show="ticketCount > 3 && showArrowBtn"></a>
+                  <a class="db-ticket-arrow left" @click="ticketSwitch('left')"
+                     v-show="ticketCount > 3 && showArrowBtn"></a>
                 </transition>
                 <transition name="arrow-right">
-                  <a class="db-ticket-arrow right" @click="ticketSwitch('right')" v-show="ticketCount > 3 && showArrowBtn"></a>
+                  <a class="db-ticket-arrow right" @click="ticketSwitch('right')"
+                     v-show="ticketCount > 3 && showArrowBtn"></a>
                 </transition>
                 <div class="db-ticket-game-type-container" v-show="ticketType === 1">
                   <transition-group name="ticketGroup" tag="div">
                     <div class="db-ticket-item" v-for="item in handicapTicketList" :key="item.ticketId">
                       <!--<div :class="`db-ticket-logo sfa-bc-new-ssc-${item.ticketId}`"></div>-->
-                      <div class="db-ticket-logo sfa-bc-new-ssc-1"></div>
+                      <router-link :to="`/bc/2/${item.ticketId}`" class="db-ticket-logo sfa-bc-new-ssc-1"></router-link>
                       <div class="db-ticket-name">{{item.ticketName}}</div>
-                      <div class="db-ticket-num"><animated-integer :value="item.userBetCount"></animated-integer>人参与投注</div>
+                      <div class="db-ticket-num">
+                        <animated-integer :value="item.userBetCount"></animated-integer>
+                        人参与投注
+                      </div>
                       <div class="db-ticket-progress-bg">
-                        <div class="db-ticket-progress" :style="{width: item.userBetCount > 4000 ? '100%' : (item.userBetCount > 1000 ? `${_(item.userBetCount).div(4000)}%` : '25%')}"></div>
+                        <div class="db-ticket-progress"
+                             :style="progressWidth(item.userBetCount)"></div>
                       </div>
                     </div>
                   </transition-group>
@@ -133,11 +141,15 @@
                 <div class="db-ticket-game-type-container" v-show="ticketType === 2">
                   <transition-group name="ticketGroup" tag="div">
                     <div class="db-ticket-item" v-for="item in classicTicketLIst" :key="item.ticketId">
-                      <div class="db-ticket-logo sfa-bc-new-ssc-1"></div>
+                      <router-link :to="`/bc/0/${item.ticketId}`" class="db-ticket-logo sfa-bc-new-ssc-1"></router-link>
                       <div class="db-ticket-name">{{item.ticketName}}</div>
-                      <div class="db-ticket-num"><animated-integer :value="item.userBetCount"></animated-integer>人参与投注</div>
+                      <div class="db-ticket-num">
+                        <animated-integer :value="item.userBetCount"></animated-integer>
+                        人参与投注
+                      </div>
                       <div class="db-ticket-progress-bg">
-                        <div class="db-ticket-progress" :style="{width: item.userBetCount > 4000 ? '100%' : (item.userBetCount > 1000 ? `${_(item.userBetCount).div(4000)}%` : '25%')}"></div>
+                        <div class="db-ticket-progress"
+                             :style="progressWidth(item.userBetCount)"></div>
                       </div>
                     </div>
                   </transition-group>
@@ -175,12 +187,12 @@
         gameCount: 2,
         PTGameList: [],
         mallList: [],
-        handicapTicketList:[],
-        classicTicketLIst:[],
-        ticketType:1,
+        handicapTicketList: [],
+        classicTicketLIst: [],
+        ticketType: 1,
         ticketCount: 0,
         ticketIndex: 1,
-        showArrowBtn:false,
+        showArrowBtn: false,
         locUrl: 'http://' + window.location.host,
       }
     },
@@ -207,24 +219,30 @@
         const arr = this.ticketType === 1 ? this.handicapTicketList : this.classicTicketLIst
         if (type === 'left') {
           arr.unshift(arr.pop())
-        } else{
+        } else {
           arr.push(arr.shift())
         }
-        if(this.ticketType === 1){
+        if (this.ticketType === 1) {
           this.handicapTicketList = arr
         } else {
           this.classicTicketLIst = arr
         }
+      },
+      progressWidth(num){
+        const width = num > 4000 ? '100%' : (num > 1000 ? `${_(num).div(4000)}%` : '25%')
+        return `width:${width}`
       }
     },
-    computed: mapGetters([
-      'topClassicalTicket',
-      'topHandicapTicket'
-    ]),
+    computed: {
+      ...mapGetters([
+        'topClassicalTicket',
+        'topHandicapTicket'
+      ])
+    },
     mounted() {
       dashboard.getIndexGameXhr(
         ({data}) => {
-          if(data && data.result === 0){
+          if (data && data.result === 0) {
             this.PTGameList = data.root.indexGames || this.PTGameList
             this.runGameInv()
           }
@@ -232,14 +250,14 @@
       )
       dashboard.getMallHotListXhr(
         ({data}) => {
-          if(data && data.result === 0){
+          if (data && data.result === 0) {
             this.mallList = data.root.records || this.mallList
           }
         }
       )
       dashboard.getIndexTicketXhr(
         ({data}) => {
-          if(data && data.result === 0){
+          if (data && data.result === 0) {
             this.handicapTicketList = data.root.handicapTickets || this.handicapTicketList
             this.classicTicketLIst = data.root.classicTickets || this.classicTicketLIst
             this.ticketCount = this.handicapTicketList.length
@@ -258,35 +276,44 @@
   @mixin transition-cfg {
     transition: all .5s;
   }
+
   .game-contant-enter {
     transform: scale(0, 0);
   }
+
   .game-contant-enter-active {
     transition: all .5s .2s;
   }
+
   .game-contant-leave-active {
     transform: translateX(-900px);
     @include transition-cfg;
   }
-  .arrow-left-enter, .arrow-left-leave-to{
+
+  .arrow-left-enter, .arrow-left-leave-to {
     opacity: 0;
     transform: translateX(10px);
   }
-  .arrow-right-enter, .arrow-right-leave-to{
+
+  .arrow-right-enter, .arrow-right-leave-to {
     opacity: 0;
     transform: translateX(-10px);
   }
-  .arrow-left-enter-active, .arrow-right-enter-active, .arrow-left-leave-active, .arrow-right-leave-active{
+
+  .arrow-left-enter-active, .arrow-right-enter-active, .arrow-left-leave-active, .arrow-right-leave-active {
     @include transition-cfg;
   }
-  .ticketGroup-enter,.ticketGroup-leave-to{
+
+  .ticketGroup-enter, .ticketGroup-leave-to {
     opacity: 0;
     transform: translateY(272px);
   }
-  .ticketGroup-enter-active,.ticketGroup-leave-active{
+
+  .ticketGroup-enter-active, .ticketGroup-leave-active {
     @include transition-cfg;
   }
-  .ticketGroup-move{
+
+  .ticketGroup-move {
     transition: all .5s;
   }
 
@@ -395,7 +422,7 @@
         background: url('./misc/db-slot-ad.png') no-repeat center;
       }
     }
-    .dashboard-row-contant{
+    .dashboard-row-contant {
       font-size: 0;
       /*display: inline-block;*/
       margin: 9px;
@@ -418,7 +445,7 @@
         display: flex;
         justify-content: center;
         position: relative;
-        .db-slot-name{
+        .db-slot-name {
           padding: 10px 20px;
           font-size: $font-md;
           color: $def-white-color;
@@ -428,22 +455,22 @@
           position: absolute;
           bottom: 0px;
         }
-        .db-slot-img{
+        .db-slot-img {
           display: block;
           width: 100%;
           height: 100%;
         }
-        .db-slot-mask{
+        .db-slot-mask {
           position: absolute;
           width: 100%;
           height: 100%;
-          background: rgba(0,0,0,.4);
+          background: rgba(0, 0, 0, .4);
           display: flex;
           justify-content: center;
           align-items: center;
           opacity: 0;
           transition: opacity .5s;
-          .db-slot-play-btn{
+          .db-slot-play-btn {
             width: 80px;
             height: 80px;
             background: url("./misc/db-slot-btn.png") no-repeat;
@@ -452,29 +479,29 @@
             transition: transform .5s;
           }
         }
-        .db-slot-icon{
+        .db-slot-icon {
           position: absolute;
           width: 45px;
           height: 25px;
-          left:-3px;
-          top:-3px;
+          left: -3px;
+          top: -3px;
           z-index: 2;
           font-size: $font-xs;
           color: $def-white-color;
           padding-left: 5px;
           line-height: 20px;
-          &.new{
+          &.new {
             background: url("./misc/db-slot-new.png") no-repeat;
           }
-          &.hot{
+          &.hot {
             background: url("./misc/db-slot-hot.png") no-repeat;
           }
         }
-        &:hover{
-          .db-slot-mask{
+        &:hover {
+          .db-slot-mask {
             opacity: 1;
           }
-          .db-slot-play-btn{
+          .db-slot-play-btn {
             transform: rotate(360deg);
           }
         }
@@ -524,29 +551,29 @@
       background: transparent;
       display: block;
       font-size: $font-md;
-      transition: color,background .5s;
-      &:hover{
+      transition: color, background .5s;
+      &:hover {
         color: $def-white-color;
       }
     }
     .db-ah-play-btn-blue {
       color: #4f84da;
       border: 1px solid #4f84da;
-      &:hover{
+      &:hover {
         background: #4f84da;
       }
     }
     .db-ah-play-btn-green {
       color: #14b1bb;
       border: 1px solid #14b1bb;
-      &:hover{
+      &:hover {
         background: #14b1bb;
       }
     }
     .db-ah-play-btn-purple {
       color: #9f6ec5;
       border: 1px solid #9f6ec5;
-      &:hover{
+      &:hover {
         background: #9f6ec5;
       }
     }
@@ -607,15 +634,16 @@
         background: transparent;
         border: 1px solid $new-main-deep-color;
         border-radius: 20px / 20px;
-        transition: color,background .5s;
+        transition: color, background .5s;
         cursor: pointer;
-        &:hover{
+        &:hover {
           color: $def-white-color;
           background: $new-main-deep-color;
         }
       }
     }
   }
+
   .db-ticket {
     height: 330px;
     background: #fff;
@@ -632,13 +660,13 @@
       margin: 9px 0;
       padding: 0 9px;
       position: relative;
-      border-left:1px solid $sec-line-color;
+      border-left: 1px solid $sec-line-color;
     }
     .db-ticket-game-type {
       width: 666px;
       height: 34px;
       padding: 0 12px;
-      border-bottom:1px solid $def-line-color;
+      border-bottom: 1px solid $def-line-color;
     }
     .db-ticket-game-type-item {
       height: 34px;
@@ -663,11 +691,11 @@
       font-size: 14px;
       cursor: pointer;
     }
-    .ticket-game-main{
+    .ticket-game-main {
       width: 665px;
       height: 272px;
       position: relative;
-      .db-ticket-arrow{
+      .db-ticket-arrow {
         position: absolute;
         display: block;
         width: 30px;
@@ -675,11 +703,11 @@
         top: 100px;
         z-index: 2;
         cursor: pointer;
-        &.left{
+        &.left {
           background: url("./misc/arrow-left.png") no-repeat;
           left: 10px;
         }
-        &.right{
+        &.right {
           background: url("./misc/arrow-right.png") no-repeat;
           right: 10px;
         }
@@ -689,60 +717,62 @@
       width: 665px;
       height: 272px;
       overflow: hidden;
-      >div{
+      > div {
         display: flex;
       }
     }
-    .db-ticket-item{
+    .db-ticket-item {
       display: inline-block;
       width: 222px;
       position: relative;
-      &:after{
+      &:after {
         content: '';
         width: 1px;
         height: 114px;
         position: absolute;
-        right:0;
+        right: 0;
         top: 35px;
         background-color: $sec-line-color;
       }
-      &:last-child:after{
-        width:0;
+      &:last-child:after {
+        width: 0;
       }
     }
-    .db-ticket-logo{
+    .db-ticket-logo {
       width: 155px;
-      height:160px;
+      height: 160px;
       margin: 11px 33.5px;
+      cursor: pointer;
+      display: block;
     }
-    .db-ticket-name{
-      height:20px;
+    .db-ticket-name {
+      height: 20px;
       line-height: 20px;
       font-size: 14px;
       text-align: center;
       color: $def-black-color;
     }
-    .db-ticket-num{
-      height:22px;
+    .db-ticket-num {
+      height: 22px;
       font-size: 12px;
       color: $font-auxiliary-color;
       line-height: 22px;
       text-align: center;
     }
-    .db-ticket-progress-bg{
+    .db-ticket-progress-bg {
       position: relative;
       width: 161px;
-      height:7px;
-      margin: 7px 30px 27px ;
+      height: 7px;
+      margin: 7px 30px 27px;
       background: #ececec;
       border: 1px solid #e2e2e2;
       border-radius: 3px;
     }
-    .db-ticket-progress{
+    .db-ticket-progress {
       position: absolute;
       top: -1px;
       width: 161px;
-      height:7px;
+      height: 7px;
       background: #14b1bb;
       border: 1px solid #14b1bb;
       border-radius: 3px;
@@ -754,11 +784,13 @@
     margin-left: 12px;
     background: #fff;
   }
-  .db-block-border{
+
+  .db-block-border {
     height: 2px;
     width: 100%;
     background: linear-gradient(to right, #4fbab0, #598bee);
   }
+
   .db-activity-content {
     height: 328px;
     background: url('./misc/db-new-activity.png');
