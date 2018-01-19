@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import urlList from './noLoginSync'
 
 const CancelToken = axios.CancelToken
 
@@ -73,11 +74,13 @@ const SyncModule = Base.Module.extend({
       // ajaxOptions.url = 'http://forehead.5x5x.com' + ajaxOptions.url;
 
       if ((_.isEmpty(ajaxOptions.data) || _.isObject(ajaxOptions.data)) && _.isEmpty(ajaxOptions.files) && !ajaxOptions.withoutToken) {
+        const realToken = this.checkToken(ajaxOptions.url)
         ajaxOptions.data = _.extend({
-          token: Global.cookieCache.get('token'),
+          token: realToken,
         }, ajaxOptions.data)
       } else if (!ajaxOptions.withoutToken) {
-        ajaxOptions.url += `?token=${Global.cookieCache.get('token')}` || ''
+        const realToken = this.checkToken(ajaxOptions.url)
+        ajaxOptions.url += `?token=${realToken}` || ''
       }
 
       if (ajaxOptions.localCache && ajaxOptions.cacheName) {
@@ -166,7 +169,7 @@ const SyncModule = Base.Module.extend({
         withoutToken: false,
         transformRequest: [function (data, headers) {
           // debugger
-          return qs.stringify(data, { arrayFormat: 'brackets' })
+          return qs.stringify(data, {arrayFormat: 'brackets'})
         }],
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -211,11 +214,13 @@ const SyncModule = Base.Module.extend({
       }))
 
       if ((_.isEmpty(ajaxOptions.data) || _.isObject(ajaxOptions.data)) && _.isEmpty(ajaxOptions.files) && !ajaxOptions.withoutToken) {
+        const realToken = this.checkToken(ajaxOptions.url)
         ajaxOptions.data = _.extend({
-          token: Global.cookieCache.get('token'),
+          token: realToken,
         }, ajaxOptions.data)
       } else if (!ajaxOptions.withoutToken) {
-        ajaxOptions.url += `?token=${Global.cookieCache.get('token')}` || ''
+        const realToken = this.checkToken(ajaxOptions.url)
+        ajaxOptions.url += `?token=${realToken}` || ''
       }
 
       if (ajaxOptions.localCache && ajaxOptions.cacheName) {
@@ -228,7 +233,7 @@ const SyncModule = Base.Module.extend({
         }
       }
 
-      const localCacheCb = ({ data }) => {
+      const localCacheCb = ({data}) => {
         if (data.sign && data.sign === sign) {
           Object.assign(data, Global.localCache.get(sign))
         } else if (data && data.result === 0 && data.sign && data.root) {
@@ -293,6 +298,17 @@ const SyncModule = Base.Module.extend({
 
   axios() {
     return this._axios.apply(this._axios, arguments)
+  },
+
+  checkToken(ajaxUrl) {
+    const noLoginUrl = _(urlList.getAll()).findWhere({
+      url: ajaxUrl,
+    })
+    let token = Global.cookieCache.get('token')
+    if (noLoginUrl !== undefined) { // 如果抓不到token,使用固定临时token
+      token = '000-000-000-000-player125'
+    }
+    return token
   },
 })
 

@@ -27,9 +27,6 @@ const SidebarView = Base.ItemView.extend({
       isTeam: sidebar.router === 'ac',
       dividendStatus: acctInfo.dividendStatus,
       userName: acctInfo.username,
-// <<<<<<< HEAD
-//       img: avatarCfg.get(_.isNull(acctInfo.headIcon) ? _.random(1, 21) : _(acctInfo.headIcon).toString()).logo,
-// =======
       img: avatarCfg.get(_(acctInfo.headIcon).toString()).logo,
     }
   },
