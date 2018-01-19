@@ -34,13 +34,16 @@ export const install = () => {
       ...activeCenterRouter,
       // ...acctInfo.userType !== 1 ? agencyCenterRouter : [],
       ...agencyCenterRouter,
+      // 真人
       ...realCenterRouter,
+      // 老虎机
       ...slotCenterRouter,
       ...fundCenterRouter,
       ...gameCenterRouter,
       ...sportCenterRouter,
       ...newsCenterRouter,
       ...dynamicCenterRouter,
+      // 捕鱼
       ...fishCenterRouter,
       ...helpCenterRouter,
       ...mallCenterRouter,

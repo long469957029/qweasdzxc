@@ -310,7 +310,7 @@ const menuConfig = [
   },
   {
     name: '捕鱼',
-    router: 'fc',
+    router: 'fh',
     navItemType: navItemType.dropdown,
     hasDropdown: true,
     dropdownType: dropdownType.entry,
@@ -322,7 +322,7 @@ const menuConfig = [
         channelName: 'AG捕鱼王',
         desc: '纯3D捕鱼，百万奖金',
         imgSrc: 'icon-fish-ag',
-        router: 'fc',
+        router: 'fh',
       },
       {
         channelId: channelId.gg,
@@ -330,7 +330,7 @@ const menuConfig = [
         channelName: 'GG捕鱼天下',
         desc: '高清全景游戏画面',
         imgSrc: 'icon-fish-gg',
-        router: 'fc',
+        router: 'fh',
       },
     ],
   },
