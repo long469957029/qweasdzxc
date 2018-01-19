@@ -45,38 +45,18 @@
             <div class="header-announcement-place"></div>
             <div class="js-header-announcement-body header-announcement-body">
               <div class="header-announcement-content">
-                <div class="content-item" v-for="item in newList" :key="item.time">
+                <div class="content-item" v-for="item in newList" :key="_(item.time).add(_.random(10000))">
                   <div class="content-item-panel">
                     <div class="content-item-title-panel">
                       <div class="content-item-img inline-block"></div>
-                      <div class="content-item-title inline-block">手机端商城本周上线</div>
-                      <div class="content-item-date pull-right inline-block">2017/08/19</div>
+                      <div class="content-item-title inline-block">{{item.title}}</div>
+                      <div class="content-item-date pull-right inline-block">{{_(item.time).toTime()}}</div>
                     </div>
-                    <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
-                  </div>
-                </div>
-                <div class="content-item">
-                  <div class="content-item-panel">
-                    <div class="content-item-title-panel">
-                      <div class="content-item-img inline-block"></div>
-                      <div class="content-item-title inline-block">手机端商城本周上线</div>
-                      <div class="content-item-date pull-right inline-block">2017/08/19</div>
-                    </div>
-                    <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
-                  </div>
-                </div>
-                <div class="content-item">
-                  <div class="content-item-panel">
-                    <div class="content-item-title-panel">
-                      <div class="content-item-img inline-block"></div>
-                      <div class="content-item-title inline-block">手机端商城本周上线</div>
-                      <div class="content-item-date pull-right inline-block">2017/08/19</div>
-                    </div>
-                    <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
+                    <div class="content-item-text">{{item.desc}}</div>
                   </div>
                 </div>
               </div>
-              <div class="header-announcement-showMore">查看更多</div>
+              <router-link to="/uc/mg" class="header-announcement-showMore">查看更多</router-link>
             </div>
           </div>
         </div>
@@ -537,6 +517,7 @@
                     color: $new-main-deep-color;
                   }
                 }
+                background-color: ;
               }
             }
           }
@@ -544,8 +525,12 @@
             color: $font-auxiliary-color;
             background: $sec-line-color;
             font-size: 14px;
-            padding: 8px 141px;
+            width: 100%;
+            height: 54px;
+            line-height: 54px;
+            text-align: center;
             margin-top: -4px;
+            display: block;
             &:hover {
               color: $new-main-deep-color;
             }

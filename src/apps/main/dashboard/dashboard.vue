@@ -56,7 +56,7 @@
                   <!--<div class="dashboard-row-inner">-->
                   <div class="col-md-6" v-for="item in PTGameList" :key="item.gameId">
                     <div class="content-item-1x">
-                      <span class="db-slot-icon new">NEW</span>
+                      <span class="db-slot-icon new"></span>
                       <div class="db-slot-name">{{item.gameName}}</div>
                       <img class="db-slot-img" :src="locUrl + item.imageUrl"/>
                       <div class="db-slot-mask">
