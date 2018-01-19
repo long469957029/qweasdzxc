@@ -241,7 +241,8 @@
             trigger: 'hover',
             container: this.$el,
             html: true,
-            content: `<div class="bc-popover-exp font-sm"><span class="font-bold">玩法说明：</span>${playInfo.playDes}</div><div class="font-sm"><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
+            content: `<div class="bc-popover-exp font-sm text-default">玩法说明：<span class="text-inverse">${playInfo.playDes}</span></div>
+<div class="font-sm text-default">中奖举例：<span class="text-inverse">${playInfo.playExample.replace(/\|/g, '<br />')}</span></div>`,
             placement: 'bottom',
           })
 
@@ -249,7 +250,7 @@
             trigger: 'hover',
             container: this.$el,
             html: true,
-            content: `<div class="font-sm"><span class="font-bold">中奖举例：</span>${playInfo.playExample.replace(/\|/g, '<br />')}</div>`,
+            content: `<div class="font-sm text-default">中奖举例：<span class="text-inverse">${playInfo.playExample.replace(/\|/g, '<br />')}</span></div>`,
             placement: 'bottom',
           })
 

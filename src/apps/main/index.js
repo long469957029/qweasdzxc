@@ -25,9 +25,6 @@ modules.install()
 
 const appRouters = require('./app.routers')
 
-// 因应二号改版 验证机制不同 可以新增一个新的 userType 作为游客
-// Global.memoryCache.set('acctInfo', { userType: 1 })
-
 // 配置初始化路由（按功能模块）
 const router = appRouters.install()
 
@@ -52,7 +49,12 @@ window.store = store
 window.router = router
 window.$route = app.$route
 
-//每次路由变化是调用，切换显示区域
+
+router.onReady(() => {
+  $('body').addClass('loaded').find('.wm-loader-wrapper').remove()
+  $('.js-wrapper').removeClass('hide')
+})
+//每次路由变化时调用，切换显示区域
 router.beforeEach((to, from, next) => {
   if (store.getters.checkPermission(to.path)) {
     let isVue = false
@@ -72,14 +74,18 @@ router.beforeEach((to, from, next) => {
     next()
   } else {
     console.log('请重新登录')
+    $('#main').toggle(false)
     $('#main-vue').toggle(true)
     next('/') // 否则全部重定向到首页
   }
 })
+
 App.start()
 
 // 进行系统OAuth校验
-Global.m.oauth.check().done((res) => {
+
+Global.m.oauth.check()
+  .done((res) => {
   if (res && res.result === 0) {
     // /** **************************************************************** */
     // // appRouters.install()
