@@ -45,7 +45,7 @@
             <div class="header-announcement-place"></div>
             <div class="js-header-announcement-body header-announcement-body">
               <div class="header-announcement-content">
-                <div class="content-item" v-for="item in newList" :key="_(item.time).add(_.random(10000))">
+                <router-link class="content-item" v-for="item in newList" :key="_(item.time).add(_.random(10000))" :to="messageLink(item.type,item.noticeId)" tag="div">
                   <div class="content-item-panel">
                     <div class="content-item-title-panel">
                       <div class="content-item-img inline-block"></div>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="content-item-text">{{item.desc}}</div>
                   </div>
-                </div>
+                </router-link>
               </div>
               <router-link to="/uc/mg" class="header-announcement-showMore">查看更多</router-link>
             </div>
@@ -165,6 +165,16 @@
       renderMsgList(model){
         this.newRowCount = model.get('newRowCount')
         this.newList = model.get('newList')
+      },
+      messageLink(type,id){
+        const url = type === 0 ? '/uc/mg' : '/uc/fb'
+        const data = { path: url}
+        if (type === 0){
+          _(data).extend({
+            query:{id: id}
+          })
+        }
+        return data
       }
     },
     mounted(){
@@ -462,21 +472,32 @@
           &:before {
             content: "";
             position: absolute;
-            width: 12px;
-            height: 12px;
-            background: white;
-            transform: translateX(-50%) translateY(-50%) rotate(45deg);
-            top: -1px;
-            border-top: 1px solid $def-gray-color;
-            border-left: 1px solid $def-gray-color;
-            right: 43%;
-            border-top-left-radius: 4px;
+            width: 0px;
+            height: 0px;
+            border: 6px solid transparent;
+            top: -12px;
+            left: 50%;
+            border-bottom-color: $def-line-color;
+          }
+          &:after{
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            border: 5px solid transparent;
+            border-bottom-color: $def-white-color;
+            top: -10px;
+            left: 50.5%;
           }
           .header-announcement-content {
             height: 318px;
             .content-item {
               height: 80px;
-              padding: 25px 20px 0 25px;
+              padding: 26px 20px 0 26px;
+              transition: all .5s;
+              .content-item-panel{
+                border-bottom: 1px dashed $def-line-color;
+              }
               .content-item-title-panel {
                 color: $font-auxiliary-color;
                 height: 14px;
@@ -504,9 +525,13 @@
               .content-item-text {
                 color: $font-auxiliary-color;
                 text-align: left;
-                line-height: 20px;
-                padding-bottom: 15px;
-                border-bottom: 1px dashed $def-line-color;
+                /*line-height: 20px;*/
+                padding-bottom: 5px;
+                width: 100%;
+                height: 50px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
               }
               &:hover {
                 .content-item-title-panel {
@@ -517,7 +542,7 @@
                     color: $new-main-deep-color;
                   }
                 }
-                background-color: ;
+                background-color: $sec-line-color;
               }
             }
           }
@@ -526,11 +551,13 @@
             background: $sec-line-color;
             font-size: 14px;
             width: 100%;
-            height: 54px;
-            line-height: 54px;
+            height: 56px;
+            line-height: 56px;
             text-align: center;
             margin-top: -4px;
             display: block;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
             &:hover {
               color: $new-main-deep-color;
             }

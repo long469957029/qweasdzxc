@@ -10,11 +10,11 @@ const FeedBackView = Base.ItemView.extend({
     'click .js-feed-form-btn': 'checkFormHandler',
     'click .js-open-more': 'openMoreHandler',
   },
-  setFeedBackEntry() {
-    return Global.sync.ajax({
-      url: 'info/feedback/entryList.json',
-    })
-  },
+  // setFeedBackEntry() {
+  //   return Global.sync.ajax({
+  //     url: 'info/feedback/entryList.json',
+  //   })
+  // },
   getFeedXhr(data) {
     _(data).extend({
       pageSize: 10,
@@ -38,7 +38,7 @@ const FeedBackView = Base.ItemView.extend({
     this.$feedError = this.$('.js-feed-from-error')
     this.$feedPage = this.$('.js-feed-page')
     this.$feedList = this.$('.js-list-info')
-    this.setFeedBackEntry()
+    // this.setFeedBackEntry()
     this.getFeedList({ pageIndex: 0 })
   },
 

@@ -27,7 +27,7 @@ const SidebarView = Base.ItemView.extend({
       showUserInfo: sidebar.router === 'uc', // _(sidebar).findIndex({ router: 'uc' }) > -1,
       showTeamEntry: acctInfo ? acctInfo.userType === 0 : false,
       isTeam: sidebar.router === 'ac',
-      dividendStatus: acctInfo.dividendStatus,
+      dividendStatus: acctInfo ? acctInfo.dividendStatus : 0,
       userName: acctInfo.username,
       img: avatarCfg.get(acctInfo.headIcon).logo,
     }

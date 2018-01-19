@@ -40,6 +40,7 @@ const SystemMessageView = Base.ItemView.extend({
     this.$page = this.$('.js-system-message-page')
     this.setNoticeEntry()
     this.getNoticeList({ pageIndex: 0 })
+    console.log(this.options.noticeId)
   },
 
   getNoticeList(data) {
@@ -50,6 +51,7 @@ const SystemMessageView = Base.ItemView.extend({
       })
       .done((res) => {
         if (res.result === 0) {
+          self._parentView.renderUnread({ unReadNotice: res.root.unReadNotice, newFeedbackCount: res.root.newFeedbackCount })
           self.formateNoticeList(res.root.noticeList)
           if (_.isUndefined(self.pagination)) {
             self.initPage(res.root.rowCount)
@@ -68,7 +70,7 @@ const SystemMessageView = Base.ItemView.extend({
       const list = _(data).map((item) => {
         return `<div class="system-message-list js-system-message-list clearfix">
                   <div class="pull-left m-top-md m-left-md">
-                    <div class="message-title ${item.new ? 'new' : ''} ${Number(item.isRead) === 0 ? 'unRead' : ''} font-sm">${item.title}</div>
+                    <div class="message-title js-message-title-${item.noticeId} ${item.new ? 'new' : ''} ${Number(item.isRead) === 0 ? 'unRead' : ''} font-sm">${item.title}</div>
                     <div class="message-sub-title text-auxiliary">${item.desc}</div>
                   </div>
                   <div class="pull-right m-right-md p-top-md">
@@ -142,6 +144,8 @@ const SystemMessageView = Base.ItemView.extend({
       }
     } else {
       this.$(`.js-message-info-${id}`).addClass('hidden')
+      $target.parents('.js-system-message-list').removeClass('active')
+      this.$(`.js-message-title-${id}`).removeClass('unRead')
     }
   },
 })
