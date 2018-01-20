@@ -17,6 +17,7 @@ const MyMessageView = TabView.extend({
           name: 'jsSystemMessage',
           id: 'jsSystemMessage',
           view: SystemMessageInfoView,
+          options: { noticeId: this.options.noticeId },
         }, {
           label: '建议反馈<span class="js-uc-feed-unRead-main"></span>',
           name: 'jsFeedback',
@@ -32,27 +33,23 @@ const MyMessageView = TabView.extend({
 
     this.$unReadNotice = this.$('.js-uc-sys-unRead-main')
     this.$unReadFeed = this.$('.js-uc-feed-unRead-main')
-
-    this.subscribe('news', 'news:updating', this.renderUnread)
   },
 
-  renderUnread(model) {
-    const unReadNotice = model.get('unReadNotice')
-    const unReadFeed = model.get('unReadLetter')
-    if (unReadNotice === 0) {
+  renderUnread(data) {
+    if (data.unReadNotice === 0) {
       this.$unReadNotice.addClass('hidden')
     } else {
       this.$unReadNotice.removeClass('hidden')
     }
-    this.$unReadNotice.html(`<span class="text-prominent">（${unReadNotice}）</span>`)
+    this.$unReadNotice.html(`<span class="text-prominent">（${data.unReadNotice}）</span>`)
 
-    if (unReadFeed === 0) {
+    if (data.newFeedbackCount === 0) {
       this.$unReadFeed.addClass('hidden')
     } else {
       this.$unReadFeed.removeClass('hidden')
     }
 
-    this.$unReadFeed.html(`<span class="text-prominent">（${unReadFeed}）</span>`)
+    this.$unReadFeed.html(`<span class="text-prominent">（${data.newFeedbackCount}）</span>`)
   },
 })
 
