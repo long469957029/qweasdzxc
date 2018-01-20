@@ -182,4 +182,4 @@ const FeedBackView = Base.ItemView.extend({
   },
 })
 
-module.exports = FeedBackView
+export default FeedBackView

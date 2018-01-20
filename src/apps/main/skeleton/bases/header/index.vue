@@ -45,16 +45,16 @@
             <div class="header-announcement-place"></div>
             <div class="js-header-announcement-body header-announcement-body">
               <div class="header-announcement-content">
-                <router-link class="content-item" v-for="item in newList" :key="_(item.time).add(_.random(10000))" :to="messageLink(item.type,item.noticeId)" tag="div">
+                <a :href="messageLink(item.type,item.noticeId)" class="content-item" v-for="item in newList" :key="_(item.time).add(_.random(10000))">
                   <div class="content-item-panel">
                     <div class="content-item-title-panel">
                       <div class="content-item-img inline-block"></div>
                       <div class="content-item-title inline-block">{{item.title}}</div>
                       <div class="content-item-date pull-right inline-block">{{_(item.time).toTime()}}</div>
                     </div>
-                    <div class="content-item-text">{{item.desc}}</div>
+                    <div class="content-item-text" v-html="formatDesc(item.desc)">}</div>
                   </div>
-                </router-link>
+                </a>
               </div>
               <router-link to="/uc/mg" class="header-announcement-showMore">查看更多</router-link>
             </div>
@@ -167,14 +167,21 @@
         this.newList = model.get('newList')
       },
       messageLink(type,id){
-        const url = type === 0 ? '/uc/mg' : '/uc/fb'
-        const data = { path: url}
+        let url = type === 0 ? '#/uc/mg' : '#/uc/fb'
+//        const data = { path: url}
         if (type === 0){
-          _(data).extend({
-            query:{id: id}
-          })
+//          _(data).extend({
+//            query:{id: id}
+//          })
+          url = url + `?id=${id}`
         }
-        return data
+        return url
+      },
+      formatDesc(text){
+        if(text.length > 42) {
+          text = text.slice(0, 41) + '...'
+        }
+        return text
       }
     },
     mounted(){
@@ -492,6 +499,7 @@
           .header-announcement-content {
             height: 318px;
             .content-item {
+              display: block;
               height: 80px;
               padding: 26px 20px 0 26px;
               transition: all .5s;
@@ -525,13 +533,14 @@
               .content-item-text {
                 color: $font-auxiliary-color;
                 text-align: left;
-                /*line-height: 20px;*/
-                padding-bottom: 5px;
-                width: 100%;
-                height: 50px;
+                line-height: 20px;
+                margin-bottom: 5px;
+                width: 294px;
+                height: 40px;
+                position: relative;
                 overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                /*text-overflow: ellipsis;*/
+                /*white-space: nowrap;*/
               }
               &:hover {
                 .content-item-title-panel {

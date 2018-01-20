@@ -31,7 +31,7 @@
                 <div class="carousel-table-content">
                   <div class="dashboard-row-inner">
                     <div class=" content-item-2x db-ah-bjl clearfix">
-                      <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-blue">立即游戏</router-link>
+                      <router-link to="rc" class="db-ah-play-btn db-ah-play-btn-blue">立即游戏</router-link>
                     </div>
                     <div class="clearfix"></div>
                   </div>
