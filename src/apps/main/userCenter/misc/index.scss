@@ -960,16 +960,16 @@
       background-color: #f8f8f8;
       color: $new-inverse-color;
       padding: 0px 20px;
-      height: 0;
+      //height: 0;
       overflow: hidden;
       width: 878px;
     }
     &.active{
       @include boxShadowDef;
       border: none;
-      .message-info{
-        animation: msgHieght .3s linear forwards;
-      }
+      //.message-info{
+      //  padding: 20px 20px;
+      //}
     }
     .message-title{
       position: relative;
