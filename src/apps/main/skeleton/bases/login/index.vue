@@ -1,51 +1,55 @@
 <template>
-  <div class="modal-dialog modal-login">
-    <div class="login-head">
-      <a class="close btn-close" data-dismiss="modal">×</a>
-      <span class="modal-head-title">无线娱乐会员登录</span>
-    </div>
-    <div class="login-body">
-      <div class="login-input-item">
-        <div class="login-username-img">
-          <i class="fa fa-user-o" aria-hidden="true"></i>
-        </div>
-        <input class="login-input" :class="{'parsley-error': usernameError,'parsley-success':usernameSuccess}"
-               @blur="verifyUserName"
-               placeholder="请输入您的用户名" v-model="username"
-               autocomplete="off" required></div>
-
-      <div class="login-input-item">
-        <div class="login-password-img sfa sfa-icon-password">
-        </div>
-        <input type="password" class="login-input"
-               :class="{'parsley-error': passwordError,'parsley-success':pwdSuccess}"
-               @blur="verifyPwd" @keyup.enter="userLogin"
-               placeholder="请输入您的密码" v-model="password"
-               autocomplete="off" required></div>
-      <div class="login-input-item" :class="{'hidden':showCodeItem}">
-        <div class="login-verity-img sfa sfa-icon-verify">
-        </div>
-        <input class="login-verity" :class="{'parsley-error': codeError,'parsley-success':codeSuccess}"
-               @blur="verifyCode"
-               placeholder="请输入验证码" v-model="code" maxlength="4" required
-               autocomplete="off">
-        <img class="js-login-valImg  var-code" :src="codeUrl">
-        <div class="login-verity-refresh pull-right inline-block" :class="{'toCircle':toCircle}"><i class="fa fa-repeat"
-                                                                                                    aria-hidden="true"
-                                                                                                    v-on:click="clickRefreshValCode"></i>
-        </div>
-        <input type="hidden" value="0">
+  <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="loginModal">
+       <!--v-show="openLogin">-->
+    <div class="modal-dialog modal-login">
+      <div class="login-head">
+        <a class="close btn-close" data-dismiss="modal">×</a>
+        <span class="modal-head-title">无线娱乐会员登录</span>
       </div>
-    </div>
-    <div class="login-footer">
-      <div class="login-error-container" v-show="showErrorMsg">
-        <span class="sfa sfa-error-icon vertical-sub pull-left"></span>
-        <div class="tooltip-inner parsley-required">{{errorMsg}}</div>
+      <div class="login-body">
+        <div class="login-input-item">
+          <div class="login-username-img">
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+          </div>
+          <input class="login-input" :class="{'parsley-error': usernameError,'parsley-success':usernameSuccess}"
+                 @blur="verifyUserName"
+                 placeholder="请输入您的用户名" v-model="username"
+                 autocomplete="off" required></div>
 
+        <div class="login-input-item">
+          <div class="login-password-img sfa sfa-icon-password">
+          </div>
+          <input type="password" class="login-input"
+                 :class="{'parsley-error': passwordError,'parsley-success':pwdSuccess}"
+                 @blur="verifyPwd" @keyup.enter="userLogin"
+                 placeholder="请输入您的密码" v-model="password"
+                 autocomplete="off" required></div>
+        <div class="login-input-item" :class="{'hidden':showCodeItem}">
+          <div class="login-verity-img sfa sfa-icon-verify">
+          </div>
+          <input class="login-verity" :class="{'parsley-error': codeError,'parsley-success':codeSuccess}"
+                 @blur="verifyCode"
+                 placeholder="请输入验证码" v-model="code" maxlength="4" required
+                 autocomplete="off">
+          <img class="js-login-valImg  var-code" :src="codeUrl">
+          <div class="login-verity-refresh pull-right inline-block" :class="{'toCircle':toCircle}"><i
+            class="fa fa-repeat"
+            aria-hidden="true"
+            v-on:click="clickRefreshValCode"></i>
+          </div>
+          <input type="hidden" value="0">
+        </div>
       </div>
-      <button @click="userLogin" class="submit btn-login-submit" data-loading-text="登录中" :disabled="pushing">登录
-      </button>
-      <span @click="forgotPwd" class="btn-forgot-pwd btn-link">忘记密码?</span>
+      <div class="login-footer">
+        <div class="login-error-container" v-show="showErrorMsg">
+          <span class="sfa sfa-error-icon vertical-sub pull-left"></span>
+          <div class="tooltip-inner parsley-required">{{errorMsg}}</div>
+
+        </div>
+        <button @click="userLogin" class="submit btn-login-submit" data-loading-text="登录中" :disabled="pushing">登录
+        </button>
+        <span @click="forgotPwd" class="btn-forgot-pwd btn-link">忘记密码?</span>
+      </div>
     </div>
   </div>
 </template>
@@ -82,10 +86,19 @@
     props: {},
 
     components: {},
-    watch: {},
+    watch: {
+      loginDialogStatus(loginDialogStatus) {
+        if (loginDialogStatus) {
+          this.openLoginDialog()
+        }
+      },
+    },
 
-    computed: {},
-
+    computed: {
+      loginDialogStatus(){
+        return this.$store.getters.loginDialogStatus
+      },
+    },
     filters: {},
 
     methods: {
@@ -148,13 +161,14 @@
             acctInfo.fBalance = _(acctInfo.balance).convert2yuan()
             acctInfo.fLastLoginTime = _(acctInfo.lastLoginTime).toTime()
             acctInfo.fLoginTime = _(acctInfo.loginTime).toTime()
-            acctInfo.headIcon=_(acctInfo.headIcon).toString()
+            acctInfo.headIcon = _(acctInfo.headIcon).toString()
             if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
               this.autoLogoutCountdown(acctInfo.outTime)
             }
             window.Global.memoryCache.set('acctInfo', acctInfo)
             window.Global.m.publish('acct:updating', acctInfo)
             this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+            this.closeDialog()
 //            this.$store.commit(types.ADD_ROUTERS)
           } else if (data.msg.indexOf('验证码') !== -1) {
             this.showCodeItem = false
@@ -252,35 +266,6 @@
                 this.refreshValCode()
               }
             })
-//          this.$store.dispatch('valCodeXhr', {
-//            code: this.code
-//          })
-//            .then((res) => {
-//              if (res && res.result === 0) {
-//                this.codeError = false
-//                this.showErrorMsg = false
-//                this.codeSuccess = false
-//              } else {
-//                if (this.showErrorMsg = false) {
-//                  this.codeError = true
-//                  this.showErrorMsg = true
-//                  this.codeSuccess = false
-//                  this.errorMsg = '请输入验证码！'
-//                } else {
-//                  this.codeError = true
-//                  this.showErrorMsg = true
-//                  this.codeSuccess = false
-//                  this.errorMsg = '验证码输入有误！'
-//                }
-//                this.refreshValCodeHandler()
-//              }
-//            }).fail(() => {
-//            this.codeError = true
-//            this.showErrorMsg = true
-//            this.codeSuccess = false
-//            this.errorMsg = '验证失败！'
-//            this.refreshValCodeHandler()
-//          })
         }
         return true
       },
@@ -311,6 +296,20 @@
           }
         })
         return isHasNumber
+      },
+      openLoginDialog(){
+        this.$nextTick(() => {
+//          this.$refs.showLogin.init()
+          $(this.$refs.loginModal).modal({
+            backdrop: 'static',
+          })
+            .on('hidden.modal', () => {
+              this.$store.commit(types.TOGGLE_LOGIN_DIALOG, false)
+            })
+        })
+      },
+      closeDialog(){
+        $(this.$refs.loginModal).modal('hide')
       },
     }
   }

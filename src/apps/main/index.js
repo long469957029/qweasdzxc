@@ -5,9 +5,10 @@ import Vue from 'vue'
 import AnimatedInteger from 'com/animated-integer'
 import store from '../store/index'
 
-import MainHeader from 'skeleton/bases/header/index'
-import whiteList from './directAccess'
-import MainFooter from 'skeleton/bases/footer/index'
+import MainHeader from 'skeleton/bases/header'
+import Login from 'skeleton/bases/login'
+import Logout from 'skeleton/bases/login/logout'
+import MainFooter from 'skeleton/bases/footer'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -39,6 +40,8 @@ window.app = new Vue({
   components: {
     MainHeader,
     MainFooter,
+    Login,
+    Logout
   },
   store,
   router,
@@ -76,7 +79,6 @@ router.beforeEach((to, from, next) => {
     $('#main-vue').toggle(isVue)
     next()
   } else {
-    store.commit(types.OPEN_LOGIN_DIALOG, true)
     $('#main').toggle(false)
     $('#main-vue').toggle(true)
     next('/') // 否则全部重定向到首页

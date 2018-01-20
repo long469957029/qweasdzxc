@@ -1,4 +1,5 @@
 import permissions from 'apps/main/directAccess'
+import login from 'api/login'
 
 const initState = () => {
   return {
@@ -49,7 +50,6 @@ const initState = () => {
     userType: 0,
     username: '',
     routers: permissions.permissionsList,
-    loginOutStatus: false,
   }
 }
 
@@ -57,9 +57,6 @@ const initState = () => {
 const getters = {
   getLoginStatus: (state) => {
     return state.userId > 0
-  },
-  getLoginOutStatus: (state) => {
-    return state.loginOutStatus
   },
   checkPermission: (state) => (path) => {
     let isPass = true
@@ -81,7 +78,13 @@ const getters = {
 }
 
 // actions
-const actions = {}
+const actions = {
+  [types.DO_LOGOUT] ({commit}) {
+    login.logout(({data}) => {
+      return commit(types.USER_LOGOUT_SUCCESS, data)
+    })
+  },
+}
 
 // mutations
 const mutations = {
@@ -94,7 +97,16 @@ const mutations = {
     Object.assign(state, initState())
   },
   [types.USER_LOGOUT_SUCCESS] (state, data) {
-    Object.assign(state, initState())
+    if (data && data.result === 0) {
+      Object.assign(state, initState())
+      Global.cookieCache.clear('token')
+      Global.cookieCache.clear('loginState')
+      Global.router.goTo('')
+      window.Global.m.publish('acct:loginOut')
+      this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
+    }
+  },
+  [types.TOGGLE_DO_LOGOUT] (state, data) {
     state.loginOutStatus = data
   },
 }
