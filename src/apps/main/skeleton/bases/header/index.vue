@@ -121,11 +121,7 @@
       },
       messageLink(type,id){
         let url = type === 0 ? '#/uc/mg' : '#/uc/fb'
-//        const data = { path: url}
         if (type === 0){
-//          _(data).extend({
-//            query:{id: id}
-//          })
           url = url + `?id=${id}`
         }
         return url

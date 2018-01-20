@@ -9,6 +9,7 @@ import MainHeader from 'skeleton/bases/header'
 import Login from 'skeleton/bases/login'
 import Logout from 'skeleton/bases/login/logout'
 import MainFooter from 'skeleton/bases/footer'
+import ResetPwd from 'skeleton/bases/login/resetPassWord'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -41,7 +42,8 @@ window.app = new Vue({
     MainHeader,
     MainFooter,
     Login,
-    Logout
+    Logout,
+    ResetPwd
   },
   store,
   router,
