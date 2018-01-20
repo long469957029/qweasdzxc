@@ -2,7 +2,7 @@
   <div class="top-nav">
     <div class="header-main ">
       <div class="pull-left">
-        <a class="header-left-link" href="#/">线路中心</a>
+        <a class="header-left-link" href="change.html">线路中心</a>
         <a class="header-left-link" href="#/">急速登录器</a>
         <a class="header-left-link" href="#/">防劫持教程</a>
       </div>

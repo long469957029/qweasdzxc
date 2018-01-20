@@ -79,6 +79,7 @@ router.beforeEach((to, from, next) => {
     $('#main-vue').toggle(isVue)
     next()
   } else {
+    store.commit(types.TOGGLE_LOGIN_DIALOG,true)
     $('#main').toggle(false)
     $('#main-vue').toggle(true)
     next('/') // 否则全部重定向到首页
