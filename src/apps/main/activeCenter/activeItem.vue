@@ -198,7 +198,7 @@ export default {
       background: darken($main-deep-color, 10%);
     }
 
-    &.pendding {
+    &.pendding, &.disabled {
       background: #ccc;
       cursor: not-allowed;
     }

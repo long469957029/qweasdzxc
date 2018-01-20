@@ -13,18 +13,18 @@
                   enter-active-class="animated-general fadeInRightBig"
                   leave-active-class="animated-general fadeOutRightBig"
       >
-        <div class="header-not-login pull-right" v-if="!isLogin" key="login">
+        <div class="header-not-login pull-right" v-if="!loginStatus" key="login">
           <a class="header-try header-try" href="javascript:void(0);">免费试玩</a>
-          <button type="button" class="js-header-login header-login " @click="showLogin">登录</button>
+          <button type="button" class="header-login " @click="showLogin">登录</button>
         </div>
-        <div class="js-header-has-logined header-has-logined  pull-right" key="logined"
+        <div class="header-has-logined  pull-right" key="logined"
              v-else>
-          <div class="js-header-menu header-menu">
+          <div class="header-menu">
             <span class="sfa header-headshot "><img :src="imgUrl"/></span>
-            <span class="js-header-username header-name">{{userUname}}</span>
+            <span class="header-name">{{userUname}}</span>
             <i class="fa fa-angle-down "></i>
             <div class="header-menu-place"></div>
-            <div class="js-header-menu-body header-menu-body">
+            <div class="header-menu-body">
               <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
               <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
               <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
@@ -62,16 +62,10 @@
         </div>
       </transition>
     </div>
-    <!-- 登录 -->
-    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="loginModal"
-         v-show="openOpenDialog">
-      <login ref="login" @dialogClose="closeDialog"></login>
-    </div>
   </div>
 </template>
 
 <script>
-  import Login from 'skeleton/bases/login/login'
   import avatarConf from 'userCenter/misc/avatarConfig'
   export default{
     name: 'main-header',
@@ -95,10 +89,10 @@
     props: {},
 
     components: {
-      Login,
     },
 
-    watch: {},
+    watch: {
+    },
 
     computed: {
       userUname() {
@@ -110,13 +104,8 @@
       imgUrl(){
         return avatarConf.get(this.$store.state.loginStore.headIcon).logo
       },
-      isLogin(){
+      loginStatus(){
         return this.$store.getters.getLoginStatus
-      },
-      openOpenDialog(){
-        if (this.$store.getters.getLoginDialogStatus) {
-          this.openLoginDialog()
-        }
       },
     },
 
@@ -124,48 +113,7 @@
 
     methods: {
       showLogin() {
-        this.pushing = true
-//        this.showLoginModal = true
-        this.$store.commit(types.OPEN_LOGIN_DIALOG, true)
-        this.openLoginDialog()
-      },
-      openLoginDialog(){
-        this.$nextTick(() => {
-//          this.$refs.showLogin.init()
-
-          $(this.$refs.loginModal).modal({
-            backdrop: 'static',
-          })
-            .on('hidden.modal', () => {
-              this.$store.commit(types.OPEN_LOGIN_DIALOG, false)
-            })
-        })
-      },
-      closeDialog(){
-        this.loginPanel = false
-        this.userPanel = true
-        $(this.$refs.loginModal).modal('hide')
-      },
-      logout() {
-        Global.ui.loader.show()
-        $(document).confirm({
-          content: '<div class="m-TB-lg">确定要退出登录？</div>',
-          type: 'exit',
-          agreeCallback() {
-            Global.oauth.logout().done((data) => {
-              if (data && data.result === 0) {
-                Global.cookieCache.clear('token')
-                Global.cookieCache.clear('loginState')
-                Global.router.goTo('')
-                app.$store.commit(types.USER_LOGOUT_SUCCESS)
-                window.Global.m.publish('acct:loginOut')
-              }
-            }).always(() => {
-              Global.ui.loader.hide()
-            })
-          },
-        })
-        return false
+        this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
       },
       renderMsgList(model){
         this.newRowCount = model.get('newRowCount')
@@ -187,6 +135,9 @@
           text = text.slice(0, 41) + '...'
         }
         return text
+      },
+      logout(){
+        this.$store.commit(types.TOGGLE_LOGOUT_DIALOG, true)
       }
     },
     mounted(){
