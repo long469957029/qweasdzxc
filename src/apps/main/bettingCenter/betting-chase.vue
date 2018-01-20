@@ -133,7 +133,7 @@
 </template>
 
 <script>
-  import RadioGroup from 'com/RadioGroup/index.vue'
+  import RadioGroup from 'com/RadioGroup'
 
   export default {
     name: "betting-chase",

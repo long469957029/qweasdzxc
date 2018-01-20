@@ -5,61 +5,6 @@
 '~uiCom/tab-toolbar/index.scss',
 '~uiCom/pulse/index.scss';
 
-.bc-main{
-  max-width: 1200px;
-  margin: 0 auto;
-  background-color: $def-white-color;
-  box-shadow: 0px 0px 5px rgba(0,0,0,0.4);
-  overflow: hidden;
-}
-.bc-main-area {
-  height: 140px;
-  position: relative;
-  .bc-area-ticket-info{
-    width: 145px;
-    margin: 15px 40px;
-    .ticket-info{
-      width: 100%;
-      height: 27px;
-      background-color: #129fa8;
-      color: $def-white-color;
-      line-height: 27px;
-      font-size: 12px;
-      text-align: center;
-    }
-  }
-  .bc-curt-plan-main {
-    margin-top: 40px;
-    .bc-plan-title {
-     // padding-top: 3px;
-    }
-  }
-  .bc-entry-list{
-    padding-top: 10px;
-    a{
-      display: block;
-      width: 95px;
-      height: 28px;
-      line-height: 28px;
-      border-radius: 20px;
-      color: $def-white-color;
-      margin-top: 10px;
-      text-align: center;
-      &.entry-list-open{
-        background-color: #108e96;
-      }
-      &.entry-list-trend{
-        background-color: #129fa8;
-      }
-      &.entry-list-des{
-        background-color: #129fa8;
-      }
-    }
-  }
-  .betting-mode {
-    color: $new-black-color;
-  }
-}
 .bc-play-main{
   user-select: none;
   .bc-play-left{

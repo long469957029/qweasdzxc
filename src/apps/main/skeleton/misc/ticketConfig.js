@@ -299,6 +299,13 @@ const handicapSscConfig = [
     badge: 'new',
     roadBalls: true,
   }, bettingTypes.SSC),
+  Object.assign({
+    id: 10,
+    mark: 'ssc',
+    zhName: '无限分分彩',
+    badge: 'new',
+    roadBalls: true,
+  }, bettingTypes.SSC),
 ]
 
 const handicapPk10Config = [

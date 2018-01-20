@@ -27,20 +27,20 @@
             <!-- 优惠讯息 真人-->
             <transition name="game-contant">
               <div class="dashboard-row-contant clearfix" v-show="gameIndex === 1">
-                <router-link to="/rc" class="db-game-ad db-ah-ad"></router-link>
+                <router-link to="rc" class="db-game-ad db-ah-ad"></router-link>
                 <div class="carousel-table-content">
                   <div class="dashboard-row-inner">
                     <div class=" content-item-2x db-ah-bjl clearfix">
-                      <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-blue">立即游戏</router-link>
+                      <router-link to="rc" class="db-ah-play-btn db-ah-play-btn-blue">立即游戏</router-link>
                     </div>
                     <div class="clearfix"></div>
                   </div>
                   <div class="dashboard-row-inner">
                     <div class="db-ah-sb clearfix">
-                      <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-green ">立即游戏</router-link>
+                      <router-link to="rc" class="db-ah-play-btn db-ah-play-btn-green ">立即游戏</router-link>
                     </div>
                     <div class="db-ah-lp clearfix">
-                      <router-link to="/rc" class="db-ah-play-btn db-ah-play-btn-purple ">立即游戏</router-link>
+                      <router-link to="rc" class="db-ah-play-btn db-ah-play-btn-purple ">立即游戏</router-link>
                     </div>
                     <div class="clearfix"></div>
                   </div>
@@ -51,7 +51,7 @@
             <!-- 优惠讯息 老虎机-->
             <transition name="game-contant">
               <div class="dashboard-row-contant clearfix" v-show="gameIndex === 2">
-                <router-link to="/aa" class="db-game-ad db-slot-ad "></router-link>
+                <router-link to="aa" class="db-game-ad db-slot-ad "></router-link>
                 <div class="carousel-table-content">
                   <!--<div class="dashboard-row-inner">-->
                   <div class="col-md-6" v-for="item in PTGameList" :key="item.gameId">
@@ -60,7 +60,7 @@
                       <div class="db-slot-name">{{item.gameName}}</div>
                       <img class="db-slot-img" :src="locUrl + item.imageUrl"/>
                       <div class="db-slot-mask">
-                        <router-link to="/aa" class="db-slot-play-btn"></router-link>
+                        <router-link to="aa" class="db-slot-play-btn"></router-link>
                       </div>
                     </div>
                   </div>
@@ -109,7 +109,7 @@
                 <li :class="[{active: ticketType === 1},'db-ticket-game-type-item']" @click="showTicket(1)">盘口玩法</li>
                 <li :class="[{active: ticketType === 2},'db-ticket-game-type-item']" @click="showTicket(2)">经典玩法</li>
               </ul>
-              <router-link :to="ticketType === 1 ? `/bc/2/${_.isEmpty(topHandicapTicket) ? 1 : topHandicapTicket.id}`
+              <router-link :to="ticketType === 1 ? `bc/2/${_.isEmpty(topHandicapTicket) ? 1 : topHandicapTicket.id}`
                 : `/bc/0/${_.isEmpty(topClassicalTicket) ? 1 : topClassicalTicket.id}`" class="db-ticket-more">更多彩种 >>
               </router-link>
               <div class="ticket-game-main" @mouseover="showArrow()" @mouseout="showArrow()">
@@ -125,7 +125,7 @@
                   <transition-group name="ticketGroup" tag="div">
                     <div class="db-ticket-item" v-for="item in handicapTicketList" :key="item.ticketId">
                       <!--<div :class="`db-ticket-logo sfa-bc-new-ssc-${item.ticketId}`"></div>-->
-                      <router-link :to="`/bc/2/${item.ticketId}`" class="db-ticket-logo sfa-bc-new-ssc-1"></router-link>
+                      <router-link :to="`bc/2/${item.ticketId}`" class="db-ticket-logo sfa-bc-new-ssc-1"></router-link>
                       <div class="db-ticket-name">{{item.ticketName}}</div>
                       <div class="db-ticket-num">
                         <animated-integer :value="item.userBetCount"></animated-integer>
@@ -141,7 +141,7 @@
                 <div class="db-ticket-game-type-container" v-show="ticketType === 2">
                   <transition-group name="ticketGroup" tag="div">
                     <div class="db-ticket-item" v-for="item in classicTicketLIst" :key="item.ticketId">
-                      <router-link :to="`/bc/0/${item.ticketId}`" class="db-ticket-logo sfa-bc-new-ssc-1"></router-link>
+                      <router-link :to="`bc/0/${item.ticketId}`" class="db-ticket-logo sfa-bc-new-ssc-1"></router-link>
                       <div class="db-ticket-name">{{item.ticketName}}</div>
                       <div class="db-ticket-num">
                         <animated-integer :value="item.userBetCount"></animated-integer>

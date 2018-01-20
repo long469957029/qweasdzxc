@@ -1,26 +1,22 @@
 <template>
-  <div id="js-bc-main" class="bc-main">
-    <betting-quick-nav :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType"></betting-quick-nav>
-    <ticket-info-banner :ticket-info="ticketInfo" :betting-type="ticketType"></ticket-info-banner>
-    <betting-main-area-handicap :ticket-info="ticketInfo" :ticket-id="ticketId" v-if="ticketType === 2"></betting-main-area-handicap>
-    <betting-main-area :ticket-info="ticketInfo" :ticket-id="ticketId" v-else></betting-main-area>
+  <div class="bc-main-wrapper">
+    <div class="bc-main">
+      <betting-quick-nav :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType"></betting-quick-nav>
+      <mmc-betting-main-area :ticket-info="ticketInfo" :ticket-id="ticketId"></mmc-betting-main-area>
+    </div>
   </div>
 </template>
 
 <script>
   import BettingQuickNav from './betting-quick-nav'
-  import TicketInfoBanner from './ticket-info-banner'
-  import BettingMainArea from './betting-main-area'
-  import BettingMainAreaHandicap from './betting-main-area-handicap'
+  import MmcBettingMainArea from './mmc-betting-main-area'
 
   export default {
-    name: "betting-center",
+    name: "mmc-betting-center",
 
     components: {
       BettingQuickNav,
-      TicketInfoBanner,
-      BettingMainArea,
-      BettingMainAreaHandicap,
+      MmcBettingMainArea
     },
 
     props: {
@@ -39,7 +35,6 @@
       '$route':{
         handler(to) {
           this.ticketInfo = ticketConfig.getById(this.ticketId, this.ticketType)
-          // this.ticketInfo = ticketConfig.getComplete(this.ticketId)
 
           // 暂时在这重置bettingChoice
           this.$store.commit(types.RESET_BETTING_CHOICE)
@@ -62,12 +57,16 @@
   }
 </script>
 
-<style lange="scss" scoped>
+<style lang="scss" scoped>
   .bc-main{
-    max-width: 1200px;
+    max-width: 1227px;
     margin: 0 auto;
-    background-color: $def-white-color;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.4);
     overflow: hidden;
+  }
+  .bc-main-wrapper {
+    width: 100%;
+    height: 100%;
+    background: url(./misc/mmc-background.png) no-repeat;
+    background-size: cover;
   }
 </style>

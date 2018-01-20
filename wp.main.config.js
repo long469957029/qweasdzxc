@@ -199,8 +199,8 @@ module.exports = {
       api: 'apps/api',
       'consts': 'apps/store/consts',
       'mutation-types': 'apps/store/mutation-types',
-      StaticGrid: 'com/static-grid/index.vue',
-      AnimatedInteger: 'com/animated-integer/index.vue',
+      StaticGrid: 'com/static-grid/mmc-betting-center.vue',
+      AnimatedInteger: 'com/animated-integer/mmc-betting-center.vue',
       ticketConfig: 'apps/main/skeleton/misc/ticketConfig',
       bettingTypes: 'apps/main/skeleton/misc/betting-types',
 
