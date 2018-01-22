@@ -373,6 +373,7 @@
         /*position: absolute;*/
         display: inline-block;
         vertical-align: top;
+        margin-left: 40px;
       }
       .var-code {
         width: 110px;
