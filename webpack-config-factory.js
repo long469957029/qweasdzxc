@@ -129,7 +129,7 @@ module.exports = function(options) {
       includeSourcemap: false
     },
     {
-      filepath: path.resolve('./src/dll/*.dll.js'),
+      filepath: path.resolve('./src/dll/*.js'),
       hash: true,
       includeSourcemap: false
     }
