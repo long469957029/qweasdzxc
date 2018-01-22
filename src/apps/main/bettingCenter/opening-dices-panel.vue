@@ -50,8 +50,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   .dice-statistic {
     width: 100px;

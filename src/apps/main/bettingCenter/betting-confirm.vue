@@ -75,8 +75,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   //modal-confirm
   .modal-confirm {

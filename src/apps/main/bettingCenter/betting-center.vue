@@ -62,7 +62,7 @@
   }
 </script>
 
-<style lange="scss" scoped>
+<style lang="scss" scoped>
   .bc-main{
     max-width: 1200px;
     margin: 0 auto;

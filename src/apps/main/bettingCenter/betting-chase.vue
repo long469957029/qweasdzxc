@@ -560,8 +560,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
 </script>
 
 <style lang="scss">
-  @import
-  "~base/styles/variable";
+
 
   .modal-chase {
     border: 0;

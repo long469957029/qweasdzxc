@@ -439,8 +439,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~base/styles/variable";
-
   .handicap-grid {
     margin-bottom: 18px;
     .title {

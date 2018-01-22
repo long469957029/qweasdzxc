@@ -402,8 +402,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   .bc-page-content {
     min-height: 290px;

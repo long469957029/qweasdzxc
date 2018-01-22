@@ -290,8 +290,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   .bc-main-area {
     height: 140px;

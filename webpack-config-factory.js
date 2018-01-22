@@ -117,11 +117,7 @@ module.exports = function(options) {
     noParse: appConfig.noParse,
     rules: [
       {
-        test: /\.jpg$/,
-        use: ['url-loader?limit=1024']
-      },
-      {
-        test: /\.gif$/,
+        test: /\.(jpg|gif)$/,
         use: ['url-loader?limit=1024']
       },
       {
@@ -143,19 +139,30 @@ module.exports = function(options) {
           path.join(__dirname, 'src/apps')
         ]
       },
-      {
-        test: /snap/,
-        use: 'imports-loader?this=>window,fix=>module.exports=0'
-      },
+      // {
+      //   test: /snap/,
+      //   use: 'imports-loader?this=>window,fix=>module.exports=0'
+      // },
       {
         test: /\.vue$/,
         use: {
           loader: 'vue-loader',
           options: {
             loaders: {
-              js: 'babel-loader'
+              js: 'babel-loader',
+              scss: [
+                'style-loader',
+                'css-loader',
+                'postcss-loader',
+                'sass-loader',
+                {
+                  loader: 'sass-resources-loader',
+                  options: {
+                    resources: './src/base/styles/_variable.scss',
+                  },
+                },
+              ],
             },
-            postcss: [require('postcss-cssnext')()]
           }
         },
         include: [path.join(__dirname, 'src')]
@@ -164,11 +171,7 @@ module.exports = function(options) {
         test: /\.js$/,
         use: {
           loader: 'babel-loader',
-          options: {
-          }
         },
-        // include: options.debug ? [path.join(__dirname, 'src')] : [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules')],
-        // include: [path.join(__dirname, 'src')],
         include: options.debug ? [path.join(__dirname, 'src')] : [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules', 'ramda')],
         exclude: /jquery|jqmeter|turn.html4/,
       },
@@ -178,9 +181,19 @@ module.exports = function(options) {
   if (options.debug) {
     module.rules.push({
       test:   /\.scss$/,
-      use: ['style-loader', 'css-loader?sourceMap', 'postcss-loader', 'sass-loader'],
+      use: [
+        'style-loader',
+        'css-loader',
+        'postcss-loader',
+        'sass-loader',
+        {
+          loader: 'sass-resources-loader',
+          options: {
+            resources: './src/base/styles/_variable.scss',
+          },
+        },
+      ],
       include: [path.join(__dirname, 'src')],
-      exclude: [path.join(__dirname, 'src/apps/packages/merchants')]
     });
 
     module.rules.push({
@@ -194,19 +207,20 @@ module.exports = function(options) {
       test: /\.scss$/,
       use: ExtractTextPlugin.extract({
         fallback: "style-loader",
-        use: ['css-loader', 'postcss-loader', 'sass-loader']
+        use: [
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: './src/base/styles/_variable.scss',
+            },
+          },
+        ]
       }),
       include: [path.join(__dirname, 'src')],
     });
-
-    // module.rules.push({
-    //   test:   /\.scss$/,
-    //   use: ExtractTextPlugin.extract({
-    //     fallback: "style-loader",
-    //     use: ['css-loader', 'postcss-loader?pack=rem', 'sass-loader']
-    //   }),
-    //   include: [path.join(__dirname, 'src/apps/packages/merchants')]
-    // });
 
     module.rules.push({
       test: /\.css$/,
@@ -222,8 +236,6 @@ module.exports = function(options) {
     entry: entry,
     output: output,
     externals: {
-    //require("jquery") 是引用自外部模块的
-    //对应全局变量 jQuery
     '$': 'jQuery'
     },
     resolve: resolve,

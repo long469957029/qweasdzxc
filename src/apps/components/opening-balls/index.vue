@@ -120,8 +120,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   .opening-balls{
     max-width: 295px;

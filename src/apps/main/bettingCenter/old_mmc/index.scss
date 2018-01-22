@@ -242,8 +242,9 @@
 
   .bc-play-container {
     height: 256px;
-    border: 0px;
+    border: 0;
     padding-left: 30px;
+    background: $def-white-color;
     .bc-play-area.loaded  {
       height: 256px;
       width: 100%;

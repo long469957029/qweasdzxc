@@ -475,8 +475,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~base/styles/variable";
-
   .analysis-center {
     width: 1200px;
     margin: 0 auto;

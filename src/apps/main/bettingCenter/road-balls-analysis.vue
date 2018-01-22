@@ -374,8 +374,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   .road-balls-analysis {
     margin: 0 15px 90px;

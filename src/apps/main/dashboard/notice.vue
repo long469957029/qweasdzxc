@@ -137,7 +137,6 @@
 
 </script>
 <style lang="scss" scoped>
-  @import "~base/styles/variable";
   @mixin transition-cfg {
     transition: all .5s;
   }

@@ -711,7 +711,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~base/styles/variable";
 
   .opening-panel-inner {
     top: 30px;

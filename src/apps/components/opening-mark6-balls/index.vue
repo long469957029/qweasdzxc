@@ -133,8 +133,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   .opening-mark6-balls{
     max-width: 395px;

@@ -42,8 +42,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~base/styles/variable";
-
   .timeline-container {
     position: absolute;
     left: 0;

@@ -471,7 +471,7 @@ export default {
       handicap: {
         // 重庆时时彩  无限秒秒彩  无限分分彩  北京PK10  香港六合彩
         list: [
-          ..._.filter(sscConfig.list, (item) => { return item.id === 1 || item.id === 10 || item.id === 19 }),
+          ..._.filter(sscConfig.list, (item) => { return item.id === 1 || item.id === 10}),
           ...bjPKConfig.concat(this.getById(34)),
         ],
       },
