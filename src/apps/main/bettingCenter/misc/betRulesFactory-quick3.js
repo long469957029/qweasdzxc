@@ -22,13 +22,13 @@ function createDanTuo(num) {
             num,
           },
         },
-        { name: 'conflict-y' },
+        {name: 'conflict-y'},
       ],
     }, {
       title: '拖码',
       items: six,
       operate: 'none',
-      limits: [{ name: 'conflict-y' }],
+      limits: [{name: 'conflict-y'}],
     },
   ]
 }
@@ -119,7 +119,7 @@ function _create(ticketId) {
     algorithmProps: {
       num: 3,
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     list: factory.createList(createDanTuo(2)),
     create: algorithm.getCreateFunc(3, {
       range: six,
@@ -223,7 +223,7 @@ function _create(ticketId) {
         ],
         operate: 'clear',
         limits: [
-          { name: 'conflict-y' },
+          {name: 'conflict-y'},
         ],
         doubleNum: true,
       },
@@ -231,7 +231,7 @@ function _create(ticketId) {
         title: '不同号',
         items: six,
         operate: 'clear',
-        limits: [{ name: 'conflict-y' }],
+        limits: [{name: 'conflict-y'}],
       },
     ]),
     topOp: 'none',

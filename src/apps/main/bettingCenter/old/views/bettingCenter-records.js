@@ -1,5 +1,3 @@
-
-
 const BettingRecordsView = Base.ItemView.extend({
 
   template: require('bettingCenter/templates/bettingCenter-records.html'),
@@ -76,7 +74,7 @@ const BettingRecordsView = Base.ItemView.extend({
             name: 'prizeTotalMoney',
             width: '10%',
             formatter(val, index, bet) {
-            // 0:未中奖，1：已中奖，2：用户撤单，3：系统撤单,ticketResult,prizeTotalMoney
+              // 0:未中奖，1：已中奖，2：用户撤单，3：系统撤单,ticketResult,prizeTotalMoney
               let status = ''
               if (bet.ticketBetStatus === 2) {
                 status = '用户撤单'
@@ -126,7 +124,7 @@ const BettingRecordsView = Base.ItemView.extend({
     }
   },
 
-  renderChaseHandler () {
+  renderChaseHandler() {
     if (!this.bettingChaseRecords) {
       this.bettingChaseRecords = this.$drawRecords.staticGrid({
         tableClass: this.tableClass,
@@ -257,16 +255,16 @@ const BettingRecordsView = Base.ItemView.extend({
     }
   },
 
-  _renderMark6LotteryRecord () {
+  _renderMark6LotteryRecord() {
     return {
       tableClass: this.tableClass,
       colModel: [
-        { label: '期号', name: 'ticketPlanId', width: '35%' },
+        {label: '期号', name: 'ticketPlanId', width: '35%'},
         {
           label: '开奖号',
           name: 'ticketOpenNum',
           width: '50%',
-          formatter (val) {
+          formatter(val) {
             const numArr = val.split(',')
             _(numArr).each((num, index) => {
               numArr[index] = `<span class='mark6Num'>${num}</span>`
@@ -278,7 +276,7 @@ const BettingRecordsView = Base.ItemView.extend({
           label: '和值',
           name: 'ticketOpenNum',
           width: '15%',
-          formatter (val) {
+          formatter(val) {
             const numArr = val.split(',')
             const sumVal = _.reduce(numArr, (memo, num) => {
               return memo + parseInt(num, 10)
@@ -300,18 +298,18 @@ const BettingRecordsView = Base.ItemView.extend({
     }
   },
 
-  _renderSSCLotteryRecord () {
+  _renderSSCLotteryRecord() {
     return {
       tableClass: this.tableClass,
       colModel: [
-        { label: '期号', name: 'ticketPlanId', width: '42%' },
-        { label: '开奖号', name: 'ticketOpenNum', width: '24%' },
-        { label: '前三', name: 'qianSan', width: '17%' },
+        {label: '期号', name: 'ticketPlanId', width: '42%'},
+        {label: '开奖号', name: 'ticketOpenNum', width: '24%'},
+        {label: '前三', name: 'qianSan', width: '17%'},
         {
           label: '后三',
           name: 'houSan',
           width: '17%',
-          formatter (val) {
+          formatter(val) {
             return val
           },
         },
@@ -328,12 +326,12 @@ const BettingRecordsView = Base.ItemView.extend({
       dataProp: 'root.openedList',
     }
   },
-  _render115LotteryRecord () {
+  _render115LotteryRecord() {
     return {
       tableClass: this.tableClass,
       colModel: [
-        { label: '期号', name: 'ticketPlanId', width: '50%' },
-        { label: '开奖号', name: 'ticketOpenNum', width: '50%' },
+        {label: '期号', name: 'ticketPlanId', width: '50%'},
+        {label: '开奖号', name: 'ticketOpenNum', width: '50%'},
       ],
       url: '/ticket/ticketmod/openhistory.json',
       abort: false,
@@ -350,9 +348,9 @@ const BettingRecordsView = Base.ItemView.extend({
     return {
       tableClass: this.tableClass,
       colModel: [
-        { label: '期号', name: 'ticketPlanId', width: '10%' },
-        { label: '开奖号', name: 'ticketOpenNum', width: '10%' },
-        { label: '三星', name: 'qianSan', width: '10%' },
+        {label: '期号', name: 'ticketPlanId', width: '10%'},
+        {label: '开奖号', name: 'ticketOpenNum', width: '10%'},
+        {label: '三星', name: 'qianSan', width: '10%'},
       ],
       url: '/ticket/ticketmod/openhistory.json',
       abort: false,
@@ -365,12 +363,12 @@ const BettingRecordsView = Base.ItemView.extend({
       dataProp: 'root.openedList',
     }
   },
-  _renderbjpk10LotteryRecord () {
+  _renderbjpk10LotteryRecord() {
     return {
       tableClass: this.tableClass,
       colModel: [
-        { label: '期号', name: 'ticketPlanId', width: '30%' },
-        { label: '开奖号', name: 'ticketOpenNum', width: '70%' },
+        {label: '期号', name: 'ticketPlanId', width: '30%'},
+        {label: '开奖号', name: 'ticketOpenNum', width: '70%'},
       ],
       url: '/ticket/ticketmod/openhistory.json',
       abort: false,

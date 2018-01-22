@@ -32,7 +32,7 @@
       }
     },
     watch: {
-      '$route':{
+      '$route': {
         handler(to) {
           this.ticketInfo = ticketConfig.getById(this.ticketId, this.ticketType)
 
@@ -58,11 +58,12 @@
 </script>
 
 <style lang="scss" scoped>
-  .bc-main{
+  .bc-main {
     max-width: 1227px;
     margin: 0 auto;
     overflow: hidden;
   }
+
   .bc-main-wrapper {
     width: 100%;
     height: 100%;

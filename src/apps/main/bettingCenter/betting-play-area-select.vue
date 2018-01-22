@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div :class="componentType || ''">
     <!--选择位置-->
-    <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
+    <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals"
+                                @positionChange="positionChange"></betting-play-area-position>
 
     <div class="bc-missOptional-main" v-if="missOptional && _.find(playRule.topOp, op => op)">
       <transition-group
@@ -9,7 +10,8 @@
         leave-active-class="animated fadeOutLeftBig absolute"
       >
         <div class="inline-block transition" :key="'analysis'" v-if="playRule.analysis">
-          <div class="bc-missOption-btn" @click="toggleCurrentMiss" :class="{active: showMiss}">当前遗漏</div><div class="bc-missOption-btn" @click="toggleColdHot" :class="{active: showCold}">30期冷热</div>
+          <div class="bc-missOption-btn" @click="toggleCurrentMiss" :class="{active: showMiss}">当前遗漏</div>
+          <div class="bc-missOption-btn" @click="toggleColdHot" :class="{active: showCold}">30期冷热</div>
         </div>
         <slot name="autoAdd" v-if="playRule.topOp.auto"></slot>
         <div class="bc-missOption-btn" :key="'clear'" @click="clearAllSelected" v-if="playRule.topOp.clear">清除选号</div>
@@ -21,8 +23,10 @@
       enter-active-class="fadeIn animated"
     >
       <div v-if="show">
-        <div class="bc-page-content active" :class="`bc-page-content-${playRule.style.position}`" v-for="n in totalPage" v-show="n === 1">
-          <div class="bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList" v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
+        <div class="bc-page-content active" :class="`bc-page-content-${playRule.style.position}`" v-for="n in totalPage"
+             v-show="n === 1">
+          <div class="bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList"
+               v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
 
             <div class="tab-toolbar" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
 
@@ -49,8 +53,9 @@
               </div>
 
               <div class="tab-group no-margin inline-block">
-                <div v-for="n in fRule.row.totalPage"  class="clearfix inline-block">
-                  <div class="bc-select-item" v-for="(item, itemIndex) in fRule.row.fItems" v-if="!fRule.row.page || (itemIndex < n * fRule.row.page && itemIndex >= (n - 1) * fRule.row.page)">
+                <div v-for="n in fRule.row.totalPage" class="clearfix inline-block">
+                  <div class="bc-select-item" v-for="(item, itemIndex) in fRule.row.fItems"
+                       v-if="!fRule.row.page || (itemIndex < n * fRule.row.page && itemIndex >= (n - 1) * fRule.row.page)">
                   <span class="cbutton cbutton--effect-novak tab" @click="selectNumber(item, fRule.row)"
                         :class="[fRule.limit, {active: item.selected, clearfix: playRule.style.row !== 1 && Math.ceil(fRule.row.fItem / itemIndex) === playRule.style.row}]">
                     <span v-if="!fRule.row.doubleNum">{{item.title}}</span>
@@ -61,18 +66,25 @@
                       enter-active-class="animated rotateIn"
                       leave-active-class="animated rotateOut"
                     >
-                    <div class="miss-item" :class="currentMiss[index][itemIndex].style" v-if="showMiss && playRule.analysis">{{currentMiss[index][itemIndex].num}}</div>
-                    <div class="miss-item" :class="coldHot[index][itemIndex].style" v-if="showCold && playRule.analysis">{{coldHot[index][itemIndex].num}}</div>
+                      <div class="miss-item" :class="currentMiss[index][itemIndex].style"
+                           v-if="showMiss && playRule.analysis">{{currentMiss[index][itemIndex].num}}
+                      </div>
+                      <div class="miss-item" :class="coldHot[index][itemIndex].style"
+                           v-if="showCold && playRule.analysis">{{coldHot[index][itemIndex].num}}
+                      </div>
                     </transition>
                   </div>
-                  <span v-if="fRule.row.op.clear2" class="operate-clear cursor-pointer" @click="selectOperate('clear', fRule.row)">清空</span>
+                  <span v-if="fRule.row.op.clear2" class="operate-clear cursor-pointer"
+                        @click="selectOperate('clear', fRule.row)">清空</span>
                 </div>
               </div>
 
             </div>
 
-            <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select vertical-middle clearfix" :class="playRule.style.operate === 'block' ? 'm-center' : 'm-left-lg pull-right'" v-if="fRule.row.hasOp">
-              <div class="tab-group m-left-md">
+            <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select vertical-middle clearfix"
+                 :class="playRule.style.operate === 'block' ? 'm-center' : 'm-left-lg pull-right'"
+                 v-if="fRule.row.hasOp">
+              <div class="tab-group clearfix">
                 <span class="tab" @click="selectOperate('all', fRule.row)" v-if="fRule.row.op.all">全</span>
                 <span class="tab" @click="selectOperate('big', fRule.row)" v-if="fRule.row.op.big">大</span>
                 <span class="tab" @click="selectOperate('small', fRule.row)" v-if="fRule.row.op.small">小</span>
@@ -100,13 +112,17 @@
     props: {
       playRule: Object,
       ticketInfo: Object,
+      componentType: {
+        type: String,
+        default: ''
+      },
       missOptional: {
         type: Boolean,
         default: true
       }
     },
 
-    data: function() {
+    data: function () {
       return {
         selectOptionals: [],
         lotteryList: [],
@@ -139,7 +155,7 @@
     },
 
     computed: mapState({
-      computedRuleList: function() {
+      computedRuleList: function () {
         return _(this.playRule.list).map((RuleItem) => {
           let fItems
           RuleItem.hasOp = _([RuleItem.op.all, RuleItem.op.big, RuleItem.op.small, RuleItem.op.odd, RuleItem.op.even, RuleItem.op.clear]).some()
@@ -201,7 +217,7 @@
         let results = []
         if (this.coefficient) {
           results = _(createTimes).times(this.playRule.create, this.playRule)
-          _(results).each(function(result) {
+          _(results).each(function (result) {
             result.statistics = Math.round(_(this.coefficient).mul(result.statistics))
             result.selectOptionals = this.selectOptionals
           }, this)
@@ -269,7 +285,7 @@
               options: {
                 type
               }
-          })
+            })
           })
         } else {
           this.$store.commit(types.ADD_PREV_BET, {
@@ -310,7 +326,7 @@
       $_statisticsLottery() {
         let count = 0
 
-        this.lotteryList = _(this.playRule.list).map(function(item) {
+        this.lotteryList = _(this.playRule.list).map(function (item) {
           let selected = []
 
           if (item.isShow) {
@@ -362,11 +378,11 @@
 
         // 纵向不允许冲突
         if (!num.selected && !_.isEmpty(cy)) {
-          _.each(this.formattedRuleList, rule =>  {
+          _.each(this.formattedRuleList, rule => {
             if (row !== rule.row) {
               _.each(rule.row.fItems, item => {
                 if (num.num === item.num) {
-                  item.selected= false;
+                  item.selected = false;
                 }
               })
             }
@@ -402,8 +418,6 @@
 </script>
 
 <style lang="scss" scoped>
-
-
   .bc-page-content {
     min-height: 290px;
     width: 100%;
@@ -422,7 +436,8 @@
       }
     }
   }
-  .bc-playArea-items{
+
+  .bc-playArea-items {
     margin: 20px auto 20px auto;
     min-height: 70px;
   }
@@ -437,6 +452,7 @@
     line-height: 20px;
     color: $font-auxiliary-color;
   }
+
   .miss-item {
     font-size: 12px;
     text-align: center;
@@ -449,7 +465,7 @@
     }
   }
 
-  .bc-quick-select{
+  .bc-quick-select {
     width: 221px;
     height: 39px;
     border-top: 1px solid $def-gray-color;
@@ -482,11 +498,12 @@
       color: $new-main-deep-color;
     }
   }
+
   .tab-longhu {
     .tab {
       width: 100px;
       height: 48px;
-      background: linear-gradient(0deg, #e6e6e6 0%, #f2f2f2 46%, #fdfdfd 100%), linear-gradient( #f0f0f0, #f0f0f0);
+      background: linear-gradient(0deg, #e6e6e6 0%, #f2f2f2 46%, #fdfdfd 100%), linear-gradient(#f0f0f0, #f0f0f0);
       box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.08);
       border-radius: 10px;
       border: solid 1px #cccccc;
@@ -502,5 +519,23 @@
 
   .tab-group {
     max-width: 695px;
+  }
+
+  /*mmc*/
+
+  .mmc {
+    .bc-quick-select {
+      width: 172px;
+    }
+    .tab-toolbar {
+      .tab-group {
+        margin-left: 15px;
+      }
+      &.tab-border {
+        .tab {
+          width: 14px;
+        }
+      }
+    }
   }
 </style>

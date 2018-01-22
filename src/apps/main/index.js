@@ -36,26 +36,8 @@ const desHash = window.location.hash
 
 window.location.hash = '#/i'
 
-window.app = new Vue({
-  el: '#main-wrapper',
-  components: {
-    MainHeader,
-    MainFooter,
-    Login,
-    Logout,
-    ResetPwd
-  },
-  store,
-  router,
-})
-
-_.delay(() => {
-  window.location.hash = desHash === '#/i' ? '#/' : desHash
-}, 0)
-
 window.store = store
 window.router = router
-window.$route = app.$route
 
 
 router.onReady(() => {
@@ -93,6 +75,26 @@ App.start()
 // 进行系统OAuth校验
 
 Global.m.oauth.check()
+  .complete(() => {
+    window.app = new Vue({
+      el: '#main-wrapper',
+      components: {
+        MainHeader,
+        MainFooter,
+        Login,
+        Logout,
+        ResetPwd
+      },
+      store,
+      router,
+    })
+
+    window.$route = app.$route
+
+    _.delay(() => {
+      window.location.hash = desHash === '#/i' ? '#/' : desHash
+    }, 0)
+  })
   .done((res) => {
   if (res && res.result === 0) {
     // /** **************************************************************** */

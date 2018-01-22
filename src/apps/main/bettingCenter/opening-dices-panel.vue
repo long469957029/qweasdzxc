@@ -1,6 +1,7 @@
 <template>
   <div>
-    <opening-dices :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="openingNum" :default-opening="ticketInfo.defaultOpening"></opening-dices>
+    <opening-dices :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="openingNum"
+                   :default-opening="ticketInfo.defaultOpening"></opening-dices>
     <div class="dice-statistic">
       <div class="dice-total">和值 : <span class="font-md">{{totalNum}}</span></div>
       <div class="dice-form">
@@ -57,6 +58,7 @@
     display: inline-block;
     vertical-align: top;
   }
+
   .dice-form-item {
     width: 20px;
     height: 20px;
@@ -66,6 +68,7 @@
     border-radius: 5px;
     margin-right: 2px;
   }
+
   .dice-total {
     line-height: 24px;
   }

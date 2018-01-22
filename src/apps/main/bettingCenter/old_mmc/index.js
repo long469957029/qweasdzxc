@@ -1,4 +1,3 @@
-
 import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
 import BettingRecordsView from './bettingCenter-records'
 
@@ -72,11 +71,11 @@ const BettingCenterView = Base.ItemView.extend({
 
     this.listenTo(this.rulesCollection, 'sync sync:fromCache', this.renderBasicRules)
 
-    this.listenTo(this.model, 'change:levelId', function(model, levelId) {
+    this.listenTo(this.model, 'change:levelId', function (model, levelId) {
       this.renderAdvanceRules(levelId)
     })
 
-    this.listenTo(this.model, 'change:playId', function(model, playId) {
+    this.listenTo(this.model, 'change:playId', function (model, playId) {
       this.renderPlayArea()
       this.renderPlayInfo(this.rulesCollection.getPlayInfo(model.get('groupId'), playId))
 
@@ -116,7 +115,7 @@ const BettingCenterView = Base.ItemView.extend({
     }
 
     // 快捷入口
-    this.on('entry:show router:back', function() {
+    this.on('entry:show router:back', function () {
       this.bettingRecordsView.update()
     })
   },
@@ -205,7 +204,7 @@ const BettingCenterView = Base.ItemView.extend({
           label: '玩法/投注内容  ', name: 'title', key: true, width: '55%',
         },
         // {label: '奖金模式', name: 'bonusMode', width: '20%'},
-        { label: '注数/倍数/模式', name: 'mode', width: '45%' },
+        {label: '注数/倍数/模式', name: 'mode', width: '45%'},
         // {label: '注数/倍数/模式', name: 'mode', width: '20%'}
         // {label: '投注金额', name: 'bettingMoney', width: '17%'}
       ],
@@ -222,10 +221,10 @@ const BettingCenterView = Base.ItemView.extend({
         {
           label: '玩法/投注内容  ', name: 'title', key: true, width: '48%',
         },
-        { label: '奖金模式', name: 'bonusMode', width: '12%' },
-        { label: '注数', name: 'statistics', width: '12%' },
-        { label: '倍数', name: 'multiple', width: '12%' },
-        { label: '状态', name: 'status', width: '16%' },
+        {label: '奖金模式', name: 'bonusMode', width: '12%'},
+        {label: '注数', name: 'statistics', width: '12%'},
+        {label: '倍数', name: 'multiple', width: '12%'},
+        {label: '状态', name: 'status', width: '16%'},
       ],
       showHeader: false,
       height: 150,
@@ -242,7 +241,7 @@ const BettingCenterView = Base.ItemView.extend({
         {
           label: '开奖结果  ', name: 'result', key: true, width: '45%',
         },
-        { label: '状态', name: 'status', width: '15%' },
+        {label: '状态', name: 'status', width: '15%'},
       ],
       showHeader: false,
       height: 150,
@@ -272,7 +271,7 @@ const BettingCenterView = Base.ItemView.extend({
       self.selectNum(data)
     })
   },
-  selectNum (data) {
+  selectNum(data) {
     const self = this
     if (data && !_.isNull(data) && !_.isUndefined(data) && !_.isEmpty(data)) {
       // this.$('.js-bc-basic-rule[data-id='+ data.ticketRuleId +']').trigger('click');
@@ -306,8 +305,8 @@ const BettingCenterView = Base.ItemView.extend({
         self.model.set('multiple', num)
       },
       onOverMax(maxNum) {
-        Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">${ 
-          _(self.rulesCollection.limitMoney).convert2yuan()}</span>元，` +
+        Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">${
+            _(self.rulesCollection.limitMoney).convert2yuan()}</span>元，` +
           `已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
       },
     })
@@ -380,7 +379,7 @@ const BettingCenterView = Base.ItemView.extend({
     const advanceRules = this.rulesCollection.getPlayGroups(levelId)
     const length = advanceRules.length
     this.levelId = levelId
-    this.$advanceRules.html(_(advanceRules).map(function(rules, index) {
+    this.$advanceRules.html(_(advanceRules).map(function (rules, index) {
       let containerClass
       // 强制两排显示
       if (length > 2) {
@@ -471,7 +470,7 @@ const BettingCenterView = Base.ItemView.extend({
 
     this.options.type = playRule.type
 
-    this.currentPlayAreaView.on('statistic', function(statistics) {
+    this.currentPlayAreaView.on('statistic', function (statistics) {
       this.model.set({
         statistics,
       })
@@ -521,10 +520,10 @@ const BettingCenterView = Base.ItemView.extend({
     const previewList = this.model.get('previewList')
     const self = this
 
-    const rows = _(previewList).map(function(previewInfo) {
+    const rows = _(previewList).map(function (previewInfo) {
       let title = `【${previewInfo.levelName}_${previewInfo.playName}】 `
       if (previewInfo.formatBettingNumber.length > 20) {
-        title += `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link bc-betting-preview-detail">${ 
+        title += `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link bc-betting-preview-detail">${
           previewInfo.formatBettingNumber.slice(0, 20)}...</a>`
       } else {
         title += previewInfo.formatBettingNumber
@@ -540,7 +539,7 @@ const BettingCenterView = Base.ItemView.extend({
 
     const $rows = this.lotteryPreview.renderRow(rows)
 
-    $rows.each(function(index, row) {
+    $rows.each(function (index, row) {
       const $row = $(row)
       const $detail = $row.find('.js-bc-betting-preview-detail')
       let betNumber = previewList[index].bettingNumber
@@ -869,7 +868,7 @@ const BettingCenterView = Base.ItemView.extend({
     this.isBegin = true
     this.isReturn = false// 由于后续对isBegin的状态更新相对请求返回会有延迟，导致可能在初始动画中如果使用isBegin变量的判断可能出现误差，因此引入此状态
     this.LeftTimes--
-    this.BetinfoList.push({ status: '0' })
+    this.BetinfoList.push({status: '0'})
     this.BetRes = undefined
     this.showWinResult(false)
     this.showLastResult(false)
@@ -900,7 +899,7 @@ const BettingCenterView = Base.ItemView.extend({
     const result = '0,0,0,0,0'// 初始化动画结束的位置
     const resultArr = (`${result}`).split(',')
     // 4.依次让五个数字开始转动
-    this.$('.mmc-num').each(function(index) {
+    this.$('.mmc-num').each(function (index) {
       const $num = $(this)
       // 启动每个数字的动画延时为50ms
 
@@ -975,7 +974,7 @@ const BettingCenterView = Base.ItemView.extend({
             betInfo.result = res.root.openCode
             betInfo.status = '1'
             betInfo.bonus = res.root.winPrize
-            self.normalStop(res.root ? res.root : { openCode: '0,0,0,0,0' })
+            self.normalStop(res.root ? res.root : {openCode: '0,0,0,0,0'})
           } else {
             // 1.异常终止
             betInfo.status = '2'
@@ -1004,7 +1003,7 @@ const BettingCenterView = Base.ItemView.extend({
     // 如果单次开奖还未终止
     if (self.isBegin) {
       const resultArr = (`${root.openCode}`).split(',')
-      self.$('.mmc-num').each(function(index) {
+      self.$('.mmc-num').each(function (index) {
         const $num = $(this)
         let second = 0.5
         const delay = 200
@@ -1249,10 +1248,10 @@ const BettingCenterView = Base.ItemView.extend({
     const previewList = this.model.get('previewList')
     const self = this
     const size = _(previewList).size()
-    const rows = _(previewList).map(function(previewInfo, index) {
+    const rows = _(previewList).map(function (previewInfo, index) {
       let title = `【${previewInfo.levelName}_${previewInfo.playName}】 `
       if (previewInfo.formatBettingNumber.length > 20) {
-        title += `<a href="javascript:void(0)" class="js-bc-betting-curr-preview-detail btn-link ">${ 
+        title += `<a href="javascript:void(0)" class="js-bc-betting-curr-preview-detail btn-link ">${
           previewInfo.formatBettingNumber.slice(0, 20)}...</a>`
       } else {
         title += previewInfo.formatBettingNumber
@@ -1371,7 +1370,7 @@ const BettingCenterView = Base.ItemView.extend({
     if (type === 'up') {
       if (currentY > -280) {
         this.canTrunPage = false
-        $target.animate({ top: currentY + height }, speed, easing, () => {
+        $target.animate({top: currentY + height}, speed, easing, () => {
           self.canTrunPage = true
         })
       }
@@ -1381,7 +1380,7 @@ const BettingCenterView = Base.ItemView.extend({
       // });
     } else if (currentY < 0) {
       this.canTrunPage = false
-      $target.animate({ top: currentY - height }, speed, easing, () => {
+      $target.animate({top: currentY - height}, speed, easing, () => {
         self.canTrunPage = true
       })
     }
@@ -1440,7 +1439,7 @@ const BettingCenterView = Base.ItemView.extend({
   },
   getTicketInfoAndDeal() {
     const self = this
-    this.getTicketInfoXhr({ ticketId: this.options.ticketId }).done((res) => {
+    this.getTicketInfoXhr({ticketId: this.options.ticketId}).done((res) => {
       res.result === 0 ? self.ticketInfo = res.root : self.ticketInfo = null
       if (res.result === 0) {
         if (res.root && res.root.sale) {
@@ -1462,7 +1461,7 @@ const BettingCenterView = Base.ItemView.extend({
       }
     })
   },
-  getUsePackInfoXhr () {
+  getUsePackInfoXhr() {
     return Global.sync.ajax({
       url: '/info/redpack/ticketamount.json',
       data: {
@@ -1470,7 +1469,7 @@ const BettingCenterView = Base.ItemView.extend({
       },
     })
   },
-  getUsePackStatus () {
+  getUsePackStatus() {
     const self = this
     this.getUsePackInfoXhr()
       .done((res) => {
@@ -1484,7 +1483,7 @@ const BettingCenterView = Base.ItemView.extend({
         }
       })
   },
-  checkUserRedPackHanler (e) {
+  checkUserRedPackHanler(e) {
     const $target = $(e.currentTarget)
     const type = $target.data('type')
     Number(type) === 0 ? $target.removeClass('sfa sfa-checkbox-def').addClass('sfa sfa-checkbox-on') : $target.removeClass('sfa sfa-checkbox-on').addClass('sfa sfa-checkbox-def')

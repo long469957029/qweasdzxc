@@ -6,7 +6,7 @@
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" >
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                 :disabled="!canBet || pushing || !sale || pending">
           投注
@@ -33,7 +33,8 @@
           <div class="main-row" v-for="rowItem in rule.items">
 
             <!--根据是否存在子项进行区别渲染-->
-            <div class="main-item" v-for="item in rowItem" v-if="item.row" :class="{selected: item.selected}" @click="select(item)">
+            <div class="main-item" v-for="item in rowItem" v-if="item.row" :class="{selected: item.selected}"
+                 @click="select(item)">
               <div class="main-item-left" v-if="!_.isEmpty(item)">
                 <span class="item" :class="item.style">{{item.title}}</span>
 
@@ -43,7 +44,8 @@
               </div>
               <div class="main-item-right" v-if="!_.isEmpty(item)">
                 <span class="item odds" v-if="rule.showItemOdds">{{item.odds}}</span>
-                <input type="text" class="money-input" v-if="rule.showMoneyInput" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney($event, item)" />
+                <input type="text" class="money-input" v-if="rule.showMoneyInput" v-model.number="item.betMoney"
+                       @click.stop @keyup.stop="inputBetMoney($event, item)"/>
               </div>
             </div>
 
@@ -53,7 +55,8 @@
                 <span class="item odds" v-if="rule.showItemOdds">{{item.odds}}</span>
               </div>
               <div class="main-item-right" v-if="!_.isEmpty(item) && rule.showMoneyInput">
-                <input type="text" class="money-input" v-model.number="item.betMoney" @click.stop @keyup.stop="inputBetMoney($event, item)" />
+                <input type="text" class="money-input" v-model.number="item.betMoney" @click.stop
+                       @keyup.stop="inputBetMoney($event, item)"/>
               </div>
             </div>
 
@@ -69,8 +72,8 @@
             <div class="side-operate" @click="selectOperate('even', rule)">双</div>
           </div>
           <div class="side-row">
-            <div class="side-operate"  @click="selectOperate('add_big', rule)">和大</div>
-            <div class="side-operate"  @click="selectOperate('add_small', rule)">和小</div>
+            <div class="side-operate" @click="selectOperate('add_big', rule)">和大</div>
+            <div class="side-operate" @click="selectOperate('add_small', rule)">和小</div>
           </div>
           <div class="side-row">
             <div class="side-operate" @click="selectOperate('add_odd', rule)">和单</div>
@@ -118,7 +121,7 @@
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" >
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                 :disabled="!canBet || pushing || !sale || pending">
           投注
@@ -151,7 +154,7 @@
       pending: Boolean,
     },
 
-    data: function() {
+    data: function () {
       return {
         chips: [5, 10, 200, 5000, 10000],
         lotteryList: [],
@@ -582,9 +585,11 @@
       color: $prominent-color;
     }
   }
+
   .total-panel {
     margin: 10px;
   }
+
   .betting-panel {
     vertical-align: top;
     font-size: 14px;
@@ -597,10 +602,12 @@
     margin-right: 10px;
     border-color: $def-gray-color;
   }
+
   .btn {
     padding: 7px 22px;
     margin-right: 10px;
   }
+
   .side-operate {
     cursor: pointer;
   }

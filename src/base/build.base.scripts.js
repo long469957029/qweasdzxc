@@ -42,3 +42,6 @@ require('./scripts/bootstrap')
 window.moment = require('moment')
 
 window.moment.locale('zh-cn')
+
+require('../vendor/build.core')
+

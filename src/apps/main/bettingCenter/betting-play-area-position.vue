@@ -3,7 +3,8 @@
     <div class="bc-optional-main">
       <label class="m-right-mlg" v-for="(optional, index) in fOptionals.list">
         <span class="custom-checkbox">
-          <input type="checkbox" :id="'position-' + index" class="js-bc-playArea-position-item" name="optional" @change="change"
+          <input type="checkbox" :id="'position-' + index" class="js-bc-playArea-position-item" name="optional"
+                 @change="change"
                  :value="optional.id" v-model="optional.checked">
           <label class="checkbox-label" :for="'position-' + index"></label>
         </span>
@@ -21,7 +22,7 @@
     },
 
     computed: mapState({
-      fOptionals: function() {
+      fOptionals: function () {
         return this.optionals
       }
     }),
@@ -31,7 +32,7 @@
         this.$emit('positionChange', this.fOptionals);
       }
     },
-    mounted: function() {
+    mounted: function () {
       this.$emit('positionChange', this.fOptionals);
     }
   }

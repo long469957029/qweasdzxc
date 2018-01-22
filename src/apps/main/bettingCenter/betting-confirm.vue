@@ -22,10 +22,13 @@
       <div class="betting-title">投注内容</div>
       <div class="bc-confirm-list">
         <ul class="" v-if="type === 'normal'">
-          <li class="bc-betDetail-text" v-for="item in bettingList">{{item.levelName}}{{item.playName}} | {{item.formatBettingNumber}} | {{item.statistics}}注 | {{item.fPrefabMoney}}元</li>
+          <li class="bc-betDetail-text" v-for="item in bettingList">{{item.levelName}}{{item.playName}} |
+            {{item.formatBettingNumber}} | {{item.statistics}}注 | {{item.fPrefabMoney}}元
+          </li>
         </ul>
         <ul class="" v-else>
-          <li class="bc-betDetail-text" v-for="item in bettingList">{{item.playName}} | {{item.formatBettingNumber}}</li>
+          <li class="bc-betDetail-text" v-for="item in bettingList">{{item.playName}} | {{item.formatBettingNumber}}
+          </li>
         </ul>
       </div>
       <div class="total">
@@ -35,7 +38,9 @@
     </div>
     <div class="modal-footer">
       <div class="text-center control-confirm">
-        <button type="button" class="btn btn-orange btn-lg font-sm" data-loading-text="保存中" @click="bettingConfirm">确认投注</button>
+        <button type="button" class="btn btn-orange btn-lg font-sm" data-loading-text="保存中" @click="bettingConfirm">
+          确认投注
+        </button>
         <button type="button" class="btn btn-link btn-right confirm-reject" data-dismiss="modal">取消</button>
       </div>
     </div>
@@ -58,7 +63,7 @@
       'bettingInfo.leftSecond': {
         handler(newVal, oldVal) {
           if (newVal) {
-            $(this.$refs.confirmCountdown).countdown(this.bettingInfo.leftTime + _.now(), function(event) {
+            $(this.$refs.confirmCountdown).countdown(this.bettingInfo.leftTime + _.now(), function (event) {
               $(this).html(event.strftime('%H:%M:%S'));
             });
           }

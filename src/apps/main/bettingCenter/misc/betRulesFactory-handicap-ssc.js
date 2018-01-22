@@ -110,7 +110,6 @@ const getBalls = () => {
 }
 
 
-
 function _create(ticketId) {
   // 两面盘
   factory.addHandicapRule([ticketId, '210101'], {
@@ -480,7 +479,7 @@ function _create(ticketId) {
         showMoneyInput: true,
         operate: 'none',
       },
-      ]),
+    ]),
     bettingArea: ['top', 'bottom'],
   })
 
