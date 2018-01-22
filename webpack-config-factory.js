@@ -52,12 +52,12 @@ module.exports = function(options) {
       path.resolve(__dirname, 'node_modules'),
       'node_modules',
     ],
-    extensions: ['.js', '.vue', '.scss', 'html'],
+    extensions: ['.js', '.vue', 'html'],
     alias: appConfig.resolve.alias
   };
 
   //==============plugins================
-  var plugins = [
+  let plugins = [
     // new webpack.ResolverPlugin(
     //   new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
     // ),

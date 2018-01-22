@@ -149,6 +149,7 @@
               }
             })
             prevLH = ''
+
           }
 
           flattenComboList.push(comboCol)
