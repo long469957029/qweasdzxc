@@ -12,7 +12,7 @@
         <div class="quick-list" v-for="(ticketInfo, i) in ticketList">
           <div class="quick-ticket-type-name">{{ticketInfo.title}}</div>
           <div class="ticket-inner-list clearfix">
-            <router-link :to="`/bc/${item.id}`" v-for="item in ticketInfo.list" class="ticket-info">
+            <router-link :to="`/bc/${item.id}`" v-for="(item, i) in ticketInfo.list" :key="i" class="ticket-info">
               {{item.zhName}}
               <i v-if="item.badge === 'hot'" class="sfa-badge-hot"></i>
               <i v-else-if="item.badge === 'new'" class="sfa-badge-new"></i>
@@ -83,8 +83,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   .bc-main-quick {
     width: 100%;

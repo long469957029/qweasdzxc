@@ -61,8 +61,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~base/styles/variable";
-
   .item-container {
     display: flex;
     justify-content: space-between;

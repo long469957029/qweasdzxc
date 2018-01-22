@@ -3,7 +3,7 @@
     <!--选择位置-->
     <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
 
-    <div class="bc-missOptional-main" v-if="_.find(playRule.topOp, op => op)">
+    <div class="bc-missOptional-main" v-if="missOptional && _.find(playRule.topOp, op => op)">
       <transition-group
         enter-active-class="animated fadeInLeftBig"
         leave-active-class="animated fadeOutLeftBig absolute"
@@ -100,6 +100,10 @@
     props: {
       playRule: Object,
       ticketInfo: Object,
+      missOptional: {
+        type: Boolean,
+        default: true
+      }
     },
 
     data: function() {
@@ -398,8 +402,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   .bc-page-content {
     min-height: 290px;

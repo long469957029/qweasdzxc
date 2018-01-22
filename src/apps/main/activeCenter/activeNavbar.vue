@@ -73,7 +73,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~base/styles/variable";
   .aa-navbar {
     width: 1200px;
     height: 90px;

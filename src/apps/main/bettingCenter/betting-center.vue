@@ -62,6 +62,12 @@
   }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  .bc-main{
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: $def-white-color;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
 </style>

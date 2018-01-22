@@ -74,8 +74,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~base/styles/variable";
-
   .betting-chips-setting {
     margin-right: 20px;
     position: relative;

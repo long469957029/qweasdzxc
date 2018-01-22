@@ -3,7 +3,7 @@ module.exports = {
     main: './src/apps/main/index.js',
     // login: './src/apps/packages/login/login.js',
     // register: './src/apps/packages/register/register.js',
-    vendor: './src/vendor/build.core.js',
+    // vendor: './src/vendor/build.core.js',
     base: './src/base/build.base.js',
     trend: './src/apps/packages/trend/index.js',
     change: './src/apps/packages/change/index.js',
@@ -37,7 +37,7 @@ module.exports = {
     index: {
       title: '无限娱乐',
       template: './entry/index.html',
-      chunks: ['common', 'vendor', 'base', 'main'],
+      chunks: ['common', 'base', 'main'],
     },
     // login: {
     //   title: '无限娱乐',
@@ -47,124 +47,139 @@ module.exports = {
     register: {
       title: '无限娱乐',
       template: './entry/register.html',
-      chunks: ['common', 'vendor', 'base', 'register'],
+      chunks: ['common', 'base', 'register'],
     },
     trend: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
       chunks: ['common', 'base', 'trend'],
     },
-    change: {
-      title: '无限娱乐',
-      template: './entry/package-vue.html',
-      chunks: ['common', 'vendor','base', 'change'],
-    },
-    charge: {
-      title: '充值结果',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'charge'],
-    },
-    mmc: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'base', 'mmc'],
-    },
-    merchants: {
-      title: '无限娱乐',
-      template: './entry/merchants.html',
-      chunks: ['common', 'vendor', 'base', 'merchants'],
-    },
+    // change: {
+    //   title: '无限娱乐',
+    //   template: './entry/package-vue.html',
+    //   chunks: ['common', 'vendor','base', 'change'],
+    // },
+    // charge: {
+    //   title: '充值结果',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'charge'],
+    // },
+    // mmc: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'base', 'mmc'],
+    // },
     resetPassword: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'resetPassword'],
+      chunks: ['common', 'base', 'resetPassword'],
     },
     updateUserInfo: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'updateUserInfo'],
+      chunks: ['common', 'base', 'updateUserInfo'],
     },
-    404: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'base', '404'],
-    },
-    changeUrl: {
-      title: '线路检测',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'changeUrl'],
-    },
-
-    leaflets: {
-      title: '宣传页',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'leaflets'],
-    },
+    // charge: {
+    //   title: '充值结果',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'charge'],
+    // },
+    // mmc: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'base', 'mmc'],
+    // },
+    // merchants: {
+    //   title: '无限娱乐',
+    //   template: './entry/merchants.html',
+    //   chunks: ['common', 'vendor', 'base', 'merchants'],
+    // },
+    // resetPassword: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'resetPassword'],
+    // },
+    // 404: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'base', '404'],
+    // },
+    // changeUrl: {
+    //   title: '线路检测',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'changeUrl'],
+    // },
+    //
+    // leaflets: {
+    //   title: '宣传页',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'leaflets'],
+    // },
     // client: {
     //  title: '无限娱乐 - 客户端下载',
     //  template: './entry/package.html',
     //  chunks: ['common', 'base', 'client']
     // },
-    download: {
-      title: '无限娱乐 - 客户端下载',
-      template: './entry/package.html',
-      chunks: ['common', 'base', 'download'],
-    },
-    dragonAndTiger: {
-      title: '无限娱乐 - 龙虎彩',
-      template: './entry/package.html',
-      chunks: ['common', 'base', 'dragonAndTiger'],
-    },
-    oneYear: {
-      title: '无限娱乐周年庆',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'oneYear'],
-    },
-    vip: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'vip'],
-    },
-    expedition: {
-      title: '无限娱乐 携手共进 远征星辰',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'expedition'],
-    },
-    newDownload: {
-      title: '无限娱乐 - 客户端下载',
-      template: './entry/package.html',
-      chunks: ['common', 'base', 'newDownload'],
-    },
-    integration: {
-      title: '无限娱乐 - integration',
-      template: './entry/package.html',
-      chunks: ['common', 'base', 'integration'],
-    },
-    binding: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'base', 'binding'],
-    },
-    regist: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'regist'],
-    },
-    update: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'update15'],
-    },
-    rebateDesc: {
-      title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'rebateDesc'],
-    },
-    logger: {
-      title: '无限在线娱乐',
-      template: './src/apps/packages/logger/index.html',
-      chunks: ['common', 'logger'],
-    },
+    // download: {
+    //   title: '无限娱乐 - 客户端下载',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'base', 'download'],
+    // },
+    // dragonAndTiger: {
+    //   title: '无限娱乐 - 龙虎彩',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'base', 'dragonAndTiger'],
+    // },
+    // oneYear: {
+    //   title: '无限娱乐周年庆',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'oneYear'],
+    // },
+    // vip: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'vip'],
+    // },
+    // expedition: {
+    //   title: '无限娱乐 携手共进 远征星辰',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'expedition'],
+    // },
+    // newDownload: {
+    //   title: '无限娱乐 - 客户端下载',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'base', 'newDownload'],
+    // },
+    // integration: {
+    //   title: '无限娱乐 - integration',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'base', 'integration'],
+    // },
+    // binding: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'base', 'binding'],
+    // },
+    // regist: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'regist'],
+    // },
+    // update: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'update15'],
+    // },
+    // rebateDesc: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'rebateDesc'],
+    // },
+    // logger: {
+    //   title: '无限在线娱乐',
+    //   template: './src/apps/packages/logger/index.html',
+    //   chunks: ['common', 'logger'],
+    // },
   },
   output: {
     path: 'main',
@@ -205,8 +220,8 @@ module.exports = {
       api: 'apps/api',
       'consts': 'apps/store/consts',
       'mutation-types': 'apps/store/mutation-types',
-      StaticGrid: 'com/static-grid/index.vue',
-      AnimatedInteger: 'com/animated-integer/index.vue',
+      StaticGrid: 'com/static-grid',
+      AnimatedInteger: 'com/animated-integer',
       ticketConfig: 'apps/main/skeleton/misc/ticketConfig',
       bettingTypes: 'apps/main/skeleton/misc/betting-types',
 

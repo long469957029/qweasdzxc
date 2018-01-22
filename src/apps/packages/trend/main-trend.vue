@@ -538,8 +538,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   .trend-center {
     background-color: #ffffff;

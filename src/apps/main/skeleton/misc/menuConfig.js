@@ -335,7 +335,7 @@ const menuConfig = [
     ],
   },
   {
-    router: 'bc/19',
+    router: 'bc/0/10',
     name: '彩票',
     navItemType: navItemType.dropdown,
     hasDropdown: true,

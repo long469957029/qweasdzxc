@@ -1,13 +1,14 @@
-var _ = require('underscore');
-var path = require('path');
-var webpack = require('webpack');
+let _ = require('underscore');
+let path = require('path');
+let webpack = require('webpack');
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-var AssetsPlugin = require('assets-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+let AssetsPlugin = require('assets-webpack-plugin');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
+let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+let AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 
 
 module.exports = function(options) {
@@ -27,7 +28,7 @@ module.exports = function(options) {
   }, {});
 
   //==============output================
-  var output = {
+  let output = {
     path: path.join(__dirname, 'dist/' + appConfig.output.path)
   };
 
@@ -51,12 +52,12 @@ module.exports = function(options) {
       path.resolve(__dirname, 'node_modules'),
       'node_modules',
     ],
-    extensions: ['.js', '.vue', '.scss', 'html'],
+    extensions: ['.js', '.vue', 'html'],
     alias: appConfig.resolve.alias
   };
 
   //==============plugins================
-  var plugins = [
+  let plugins = [
     // new webpack.ResolverPlugin(
     //   new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
     // ),
@@ -71,6 +72,14 @@ module.exports = function(options) {
   if (process.env.NODE_ENV === 'analyse') {
     plugins.push(new BundleAnalyzerPlugin())
   }
+
+  plugins.push(new webpack.DllReferencePlugin({
+    // context: path.join(__dirname, 'src', 'vendor'),
+    context: __dirname,
+    // scope: 'vendorDLL',
+    manifest: require('./src/dll/vendor-manifest.json'),
+    extensions: ['', '.js']
+  }));
 
   if (options.debug) {
     //plugins.push(new CommonsChunkPlugin('vendor.js', appConfig.commonChunks));
@@ -91,7 +100,7 @@ module.exports = function(options) {
         chunks: _(commonChunk).isEmpty() ? Infinity: commonChunk
       }));
     });
-    //plugins.push(new CommonsChunkPlugin('vendor.[hash].js', appConfig.commonChunks));
+
     plugins.push(new ExtractTextPlugin('[name].[hash].styles.css'));
     plugins.push(new AssetsPlugin());
     plugins.push(new UglifyJsPlugin());
@@ -112,16 +121,26 @@ module.exports = function(options) {
     }));
   });
 
+  plugins.push(new AddAssetHtmlPlugin([
+    {
+      filepath: require.resolve('./src/dll/vendor.styles.css'),
+      typeOfAsset: 'css',
+      hash: true,
+      includeSourcemap: false
+    },
+    {
+      filepath: require.resolve('./src/dll/vendor.js'),
+      hash: true,
+      includeSourcemap: false
+    }
+  ]));
+
   //==============module================
   const module = {
     noParse: appConfig.noParse,
     rules: [
       {
-        test: /\.jpg$/,
-        use: ['url-loader?limit=1024']
-      },
-      {
-        test: /\.gif$/,
+        test: /\.(jpg|gif)$/,
         use: ['url-loader?limit=1024']
       },
       {
@@ -143,19 +162,30 @@ module.exports = function(options) {
           path.join(__dirname, 'src/apps')
         ]
       },
-      {
-        test: /snap/,
-        use: 'imports-loader?this=>window,fix=>module.exports=0'
-      },
+      // {
+      //   test: /snap/,
+      //   use: 'imports-loader?this=>window,fix=>module.exports=0'
+      // },
       {
         test: /\.vue$/,
         use: {
           loader: 'vue-loader',
           options: {
             loaders: {
-              js: 'babel-loader'
+              js: 'babel-loader',
+              scss: [
+                'style-loader',
+                'css-loader',
+                'postcss-loader',
+                'sass-loader',
+                {
+                  loader: 'sass-resources-loader',
+                  options: {
+                    resources: './src/base/styles/_variable.scss',
+                  },
+                },
+              ],
             },
-            postcss: [require('postcss-cssnext')()]
           }
         },
         include: [path.join(__dirname, 'src')]
@@ -164,11 +194,7 @@ module.exports = function(options) {
         test: /\.js$/,
         use: {
           loader: 'babel-loader',
-          options: {
-          }
         },
-        // include: options.debug ? [path.join(__dirname, 'src')] : [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules')],
-        // include: [path.join(__dirname, 'src')],
         include: options.debug ? [path.join(__dirname, 'src')] : [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules', 'ramda')],
         exclude: /jquery|jqmeter|turn.html4/,
       },
@@ -178,9 +204,19 @@ module.exports = function(options) {
   if (options.debug) {
     module.rules.push({
       test:   /\.scss$/,
-      use: ['style-loader', 'css-loader?sourceMap', 'postcss-loader', 'sass-loader'],
+      use: [
+        'style-loader',
+        'css-loader',
+        'postcss-loader',
+        'sass-loader',
+        {
+          loader: 'sass-resources-loader',
+          options: {
+            resources: './src/base/styles/_variable.scss',
+          },
+        },
+      ],
       include: [path.join(__dirname, 'src')],
-      exclude: [path.join(__dirname, 'src/apps/packages/merchants')]
     });
 
     module.rules.push({
@@ -194,19 +230,20 @@ module.exports = function(options) {
       test: /\.scss$/,
       use: ExtractTextPlugin.extract({
         fallback: "style-loader",
-        use: ['css-loader', 'postcss-loader', 'sass-loader']
+        use: [
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: './src/base/styles/_variable.scss',
+            },
+          },
+        ]
       }),
       include: [path.join(__dirname, 'src')],
     });
-
-    // module.rules.push({
-    //   test:   /\.scss$/,
-    //   use: ExtractTextPlugin.extract({
-    //     fallback: "style-loader",
-    //     use: ['css-loader', 'postcss-loader?pack=rem', 'sass-loader']
-    //   }),
-    //   include: [path.join(__dirname, 'src/apps/packages/merchants')]
-    // });
 
     module.rules.push({
       test: /\.css$/,
@@ -222,8 +259,6 @@ module.exports = function(options) {
     entry: entry,
     output: output,
     externals: {
-    //require("jquery") 是引用自外部模块的
-    //对应全局变量 jQuery
     '$': 'jQuery'
     },
     resolve: resolve,

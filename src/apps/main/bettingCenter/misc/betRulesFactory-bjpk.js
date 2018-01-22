@@ -339,7 +339,7 @@ function _create(ticketId) {
     format: { symbol: ' ' },
     formatToNum: true,
     analysis: false,
-    create: algorithm.getCreateFunc(2, {
+    create: algorithm.getCreateFunc(1, {
       range: danshuang,
       matching: true,
     }),
@@ -355,6 +355,10 @@ function _create(ticketId) {
       items: _.range(3, 20),
       operate: 'none',
     }),
+    create: algorithm.getCreateFunc(1, {
+      range: _.range(3, 20),
+      matching: true,
+    }),
   })
 
   // 冠亚季军和值
@@ -366,6 +370,10 @@ function _create(ticketId) {
     list: factory.createList([''], {
       items: _.range(6, 28),
       operate: 'none',
+    }),
+    create: algorithm.getCreateFunc(1, {
+      range: _.range(6, 28),
+      matching: true,
     }),
   })
 }

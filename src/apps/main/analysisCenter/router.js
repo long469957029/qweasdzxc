@@ -2,6 +2,7 @@ const AnalysisCenterView = () => import(/* webpackChunkName: "analysis-center" *
 
 export default [
   {
+    name: 'analysis',
     path: '/analysis/:ticketId',
     component: AnalysisCenterView,
     props: (route) => ({
