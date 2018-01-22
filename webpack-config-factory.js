@@ -1,13 +1,14 @@
-var _ = require('underscore');
-var path = require('path');
-var webpack = require('webpack');
+let _ = require('underscore');
+let path = require('path');
+let webpack = require('webpack');
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-var AssetsPlugin = require('assets-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+let AssetsPlugin = require('assets-webpack-plugin');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
+let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+let AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 
 
 module.exports = function(options) {
@@ -27,7 +28,7 @@ module.exports = function(options) {
   }, {});
 
   //==============output================
-  var output = {
+  let output = {
     path: path.join(__dirname, 'dist/' + appConfig.output.path)
   };
 
@@ -72,6 +73,14 @@ module.exports = function(options) {
     plugins.push(new BundleAnalyzerPlugin())
   }
 
+  plugins.push(new webpack.DllReferencePlugin({
+    // context: path.join(__dirname, 'src', 'vendor'),
+    context: __dirname,
+    // scope: 'vendorDLL',
+    manifest: require('./src/dll/vendor-manifest.json'),
+    extensions: ['', '.js']
+  }));
+
   if (options.debug) {
     //plugins.push(new CommonsChunkPlugin('vendor.js', appConfig.commonChunks));
     _(appConfig.commonChunks).each(function(commonChunk, name) {
@@ -91,7 +100,7 @@ module.exports = function(options) {
         chunks: _(commonChunk).isEmpty() ? Infinity: commonChunk
       }));
     });
-    //plugins.push(new CommonsChunkPlugin('vendor.[hash].js', appConfig.commonChunks));
+
     plugins.push(new ExtractTextPlugin('[name].[hash].styles.css'));
     plugins.push(new AssetsPlugin());
     plugins.push(new UglifyJsPlugin());
@@ -111,6 +120,20 @@ module.exports = function(options) {
       resources : entryInfo.resources
     }));
   });
+
+  plugins.push(new AddAssetHtmlPlugin([
+    {
+      filepath: require.resolve('./src/dll/vendor.styles.css'),
+      typeOfAsset: 'css',
+      hash: true,
+      includeSourcemap: false
+    },
+    {
+      filepath: require.resolve('./src/dll/vendor.js'),
+      hash: true,
+      includeSourcemap: false
+    }
+  ]));
 
   //==============module================
   const module = {

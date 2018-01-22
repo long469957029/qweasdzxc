@@ -4,7 +4,6 @@ require('./misc/index.scss')
 const sidebar = Global.ui.menu.get('uc')
 
 const MyMessageViewInfo = () => import(/* webpackChunkName: "user-center" */ './views/myMessage')
-
 const PersonalManageView = () => import(/* webpackChunkName: "user-center" */ './views/personalManage')
 const CardManageView = () => import(/* webpackChunkName: "user-center" */ './views/cardManage')
 const PriceDetailsView = () => import(/* webpackChunkName: "user-center" */ './views/priceDetails')
@@ -81,6 +80,29 @@ export default [
     path: '/uc/mg',
     component: function(resolve) {
       RouterController.async(resolve, MyMessageViewInfo, {
+        noticeId: _.getUrlParam('id'),
+        triggerTab: 'jsSystemMessage',
+      }, {
+        sidebar,
+      })
+    }
+  },
+  // {
+  //   path: '/uc/mg/:id',
+  //   component: function(resolve) {
+  //     RouterController.async(resolve, MyMessageViewInfo, {
+  //       noticeId: $route.params.id,
+  //     }, {
+  //       sidebar,
+  //     })
+  //   }
+  // },
+  {
+    path: '/uc/fb',
+    component: function(resolve) {
+      RouterController.async(resolve, MyMessageViewInfo, {
+        triggerTab: 'jsFeedback',
+      }, {
         sidebar,
       })
     }

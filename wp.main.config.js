@@ -3,9 +3,10 @@ module.exports = {
     main: './src/apps/main/index.js',
     // login: './src/apps/packages/login/login.js',
     // register: './src/apps/packages/register/register.js',
-    vendor: './src/vendor/build.core.js',
+    // vendor: './src/vendor/build.core.js',
     base: './src/base/build.base.js',
     trend: './src/apps/packages/trend/index.js',
+    change: './src/apps/packages/change/index.js',
     // trendOld: './src/apps/packages/trend/old/index.js',
     // resetPassword: './src/apps/packages/resetPassword/resetPassword.js',
     updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
@@ -36,7 +37,7 @@ module.exports = {
     index: {
       title: '无限娱乐',
       template: './entry/index.html',
-      chunks: ['common', 'vendor', 'base', 'main'],
+      chunks: ['common', 'base', 'main'],
     },
     // login: {
     //   title: '无限娱乐',
@@ -46,17 +47,37 @@ module.exports = {
     register: {
       title: '无限娱乐',
       template: './entry/register.html',
-      chunks: ['common', 'vendor', 'base', 'register'],
+      chunks: ['common', 'base', 'register'],
     },
     trend: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
       chunks: ['common', 'base', 'trend'],
     },
+    // change: {
+    //   title: '无限娱乐',
+    //   template: './entry/package-vue.html',
+    //   chunks: ['common', 'vendor','base', 'change'],
+    // },
+    // charge: {
+    //   title: '充值结果',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'vendor', 'base', 'charge'],
+    // },
+    // mmc: {
+    //   title: '无限娱乐',
+    //   template: './entry/package.html',
+    //   chunks: ['common', 'base', 'mmc'],
+    // },
+    resetPassword: {
+      title: '无限娱乐',
+      template: './entry/package.html',
+      chunks: ['common', 'base', 'resetPassword'],
+    },
     updateUserInfo: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'updateUserInfo'],
+      chunks: ['common', 'base', 'updateUserInfo'],
     },
     // charge: {
     //   title: '充值结果',

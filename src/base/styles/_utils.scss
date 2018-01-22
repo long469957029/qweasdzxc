@@ -278,6 +278,10 @@
   animation-duration: 0.5s;
   animation-fill-mode: both
 }
+.animated-slow {
+  animation-duration: 3s;
+  animation-fill-mode: both
+}
 .list-unstyled {
   padding-left: 0;
   list-style: none;

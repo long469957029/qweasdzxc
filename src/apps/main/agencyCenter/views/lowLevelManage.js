@@ -81,7 +81,7 @@ const LowLevelManageView = SearchGrid.extend({
     this.$teamBalance = this.$('.js-team-balance')
     this.$personalInput = this.$('.js-personal-input')
     this.$teamInput = this.$('.js-team-input')
-    Global.newbieActivity.checkAgent()
+    // Global.newbieActivity.checkAgent()
   },
 
   renderGrid(gridData) {

@@ -2,7 +2,7 @@
   <div class="top-nav">
     <div class="header-main ">
       <div class="pull-left">
-        <a class="header-left-link" href="#/">线路中心</a>
+        <a class="header-left-link" href="change.html">线路中心</a>
         <a class="header-left-link" href="#/">急速登录器</a>
         <a class="header-left-link" href="#/">防劫持教程</a>
       </div>
@@ -28,7 +28,7 @@
               <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
               <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
               <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
-              <div class="header-menu-item" v-on:click="logout"><i
+              <div class="header-menu-item" @click="logout"><i
                 class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
                 <span class="header-menu-item-text inline-block">退出</span></div>
             </div>
@@ -41,42 +41,22 @@
           </div>
           <div class="js-header-announcement header-announcement active">
             <span class="sfa sfa-announcement "></span><span>消息</span>
-            <span class="js-header-announcement-num header-announcement-num">6</span>
+            <span class="js-header-announcement-num header-announcement-num" v-if="newRowCount > 0">{{newRowCount}}</span>
             <div class="header-announcement-place"></div>
             <div class="js-header-announcement-body header-announcement-body">
               <div class="header-announcement-content">
-                <div class="content-item">
+                <a :href="messageLink(item.type,item.noticeId)" class="content-item" v-for="item in newList" :key="_(item.time).add(_.random(10000))">
                   <div class="content-item-panel">
                     <div class="content-item-title-panel">
                       <div class="content-item-img inline-block"></div>
-                      <div class="content-item-title inline-block">手机端商城本周上线</div>
-                      <div class="content-item-date pull-right inline-block">2017/08/19</div>
+                      <div class="content-item-title inline-block">{{item.title}}</div>
+                      <div class="content-item-date pull-right inline-block">{{_(item.time).toTime()}}</div>
                     </div>
-                    <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
+                    <div class="content-item-text" v-html="formatDesc(item.desc)">}</div>
                   </div>
-                </div>
-                <div class="content-item">
-                  <div class="content-item-panel">
-                    <div class="content-item-title-panel">
-                      <div class="content-item-img inline-block"></div>
-                      <div class="content-item-title inline-block">手机端商城本周上线</div>
-                      <div class="content-item-date pull-right inline-block">2017/08/19</div>
-                    </div>
-                    <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
-                  </div>
-                </div>
-                <div class="content-item">
-                  <div class="content-item-panel">
-                    <div class="content-item-title-panel">
-                      <div class="content-item-img inline-block"></div>
-                      <div class="content-item-title inline-block">手机端商城本周上线</div>
-                      <div class="content-item-date pull-right inline-block">2017/08/19</div>
-                    </div>
-                    <div class="content-item-text">作为目前发展最为迅速，玩家人手必备的“无限彩票APP”客户端，同步更新上线积分...</div>
-                  </div>
-                </div>
+                </a>
               </div>
-              <div class="header-announcement-showMore">查看更多</div>
+              <router-link to="/uc/mg" class="header-announcement-showMore">查看更多</router-link>
             </div>
           </div>
         </div>
@@ -101,6 +81,8 @@
         amount: 0.00,
         username: '',
         userAvatar: '',
+        newRowCount:0,
+        newList:[]
       }
     },
 
@@ -133,8 +115,22 @@
       showLogin() {
         this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
       },
-      renderMsgList(data){
-        console.log(data)
+      renderMsgList(model){
+        this.newRowCount = model.get('newRowCount')
+        this.newList = model.get('newList')
+      },
+      messageLink(type,id){
+        let url = type === 0 ? '#/uc/mg' : '#/uc/fb'
+        if (type === 0){
+          url = url + `?id=${id}`
+        }
+        return url
+      },
+      formatDesc(text){
+        if(text.length > 42) {
+          text = text.slice(0, 41) + '...'
+        }
+        return text
       },
       logout(){
         this.$store.commit(types.TOGGLE_LOGOUT_DIALOG, true)
@@ -435,21 +431,33 @@
           &:before {
             content: "";
             position: absolute;
-            width: 12px;
-            height: 12px;
-            background: white;
-            transform: translateX(-50%) translateY(-50%) rotate(45deg);
-            top: -1px;
-            border-top: 1px solid $def-gray-color;
-            border-left: 1px solid $def-gray-color;
-            right: 43%;
-            border-top-left-radius: 4px;
+            width: 0px;
+            height: 0px;
+            border: 6px solid transparent;
+            top: -12px;
+            left: 50%;
+            border-bottom-color: $def-line-color;
+          }
+          &:after{
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            border: 5px solid transparent;
+            border-bottom-color: $def-white-color;
+            top: -10px;
+            left: 50.5%;
           }
           .header-announcement-content {
             height: 318px;
             .content-item {
+              display: block;
               height: 80px;
-              padding: 25px 20px 0 25px;
+              padding: 26px 20px 0 26px;
+              transition: all .5s;
+              .content-item-panel{
+                border-bottom: 1px dashed $def-line-color;
+              }
               .content-item-title-panel {
                 color: $font-auxiliary-color;
                 height: 14px;
@@ -478,8 +486,13 @@
                 color: $font-auxiliary-color;
                 text-align: left;
                 line-height: 20px;
-                padding-bottom: 15px;
-                border-bottom: 1px dashed $def-line-color;
+                margin-bottom: 5px;
+                width: 294px;
+                height: 40px;
+                position: relative;
+                overflow: hidden;
+                /*text-overflow: ellipsis;*/
+                /*white-space: nowrap;*/
               }
               &:hover {
                 .content-item-title-panel {
@@ -490,6 +503,7 @@
                     color: $new-main-deep-color;
                   }
                 }
+                background-color: $sec-line-color;
               }
             }
           }
@@ -497,8 +511,14 @@
             color: $font-auxiliary-color;
             background: $sec-line-color;
             font-size: 14px;
-            padding: 8px 141px;
+            width: 100%;
+            height: 56px;
+            line-height: 56px;
+            text-align: center;
             margin-top: -4px;
+            display: block;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
             &:hover {
               color: $new-main-deep-color;
             }
