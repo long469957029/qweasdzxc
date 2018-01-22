@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="bc-line"></div>
-        <div class="m-LR-smd">
+        <div class="m-LR-md">
           <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
             <transition name="fade" mode="out-in"
                         enter-active-class="animated-quick fadeIn"
@@ -230,6 +230,9 @@
     }),
 
     watch: {
+      '$route' (to, from) {
+        recordsOpenView.updateTicketId(this.ticketId)
+      },
       'bettingChoice.playId': {
         handler: function (playId) {
           if (playId === -1) {
@@ -777,6 +780,7 @@
     .bc-advance-rules {
       color: #666666;
       max-width: 80%;
+      margin-left: 15px;
       .tab-toolbar {
         &:last-of-type {
           margin-bottom: 3px;
@@ -849,5 +853,31 @@
     font-weight: 600;
     transform: translateY(-5px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .bc-lottery-preview {
+    width: 878px;
+    margin-right: 10px;
+    border-radius: $globalBtnRadius;
+    border: 1px solid $def-gray-color;
+
+    .table th, .table td {
+      padding: 6px 3px;
+      font-size: 12px;
+    }
+
+    .bc-lottery-clear {
+      width: 47px;
+      height: 22px;
+      border: 1px solid #c9c9c9;
+      text-align: center;
+      line-height: 22px;
+      border-radius: 5px;
+      background: linear-gradient(to bottom, #fafafa, #e4e4e4);
+      transition: background 1s;
+      &:hover {
+        background: linear-gradient(to bottom, #f1f1f1, #e4e4e4);
+      }
+    }
   }
 </style>

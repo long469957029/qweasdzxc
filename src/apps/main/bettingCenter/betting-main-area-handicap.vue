@@ -76,6 +76,9 @@
     }),
 
     watch: {
+      '$route' (to, from) {
+        recordsOpenView.updateTicketId(this.ticketId)
+      },
       'bettingChoice.playId': {
         handler: function (playId) {
           if (playId === -1) {

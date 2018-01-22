@@ -188,6 +188,7 @@ module.exports = {
   resolve: {
     alias: {
       packages: 'apps/packages',
+      build: 'apps/build.js',
       com: 'apps/components',
       uiCom: 'apps/uiComponents',
       widgets: 'apps/widgets',
@@ -211,10 +212,8 @@ module.exports = {
       gameCenter: 'apps/main/gameCenter',
       mallCenter: 'apps/main/mallCenter',
 
-      snap: 'Snap.svg/dist/snap.svg',
       bootstrap: 'vendor/scripts/bootstrap',
       modernizr: 'vendor/scripts/modernizr',
-      // vue: 'vue/dist/vue.js',
       vue: 'vue/dist/vue.esm.js',
 
       api: 'apps/api',
