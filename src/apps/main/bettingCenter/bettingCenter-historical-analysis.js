@@ -1,5 +1,3 @@
-
-
 const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
   template: require('./bettingCenter-historical-analysis.html'),
@@ -10,8 +8,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
   url: '/ticket/ticketmod/openhistory.json',
 
-  events: {
-  },
+  events: {},
 
   llhKeysArr: ['w', 'k', 'b', 's', 'g'],
 
@@ -19,10 +16,10 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
     ssc: {
       pageSize: 15,
       formats: [
-        function(val) {
+        function (val) {
           return val
         },
-        function(val) {
+        function (val) {
           const html = ['<div class="open-nums">']
           const numList = val.split(',')
           const keyPositionRelly = _(this.playRule.keyPosition).filter((item) => {
@@ -39,7 +36,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
           return html.join('')
         },
-        function(val) {
+        function (val) {
           return this.getFormType(val, this.playRule && this.playRule.keyPosition, this.playRule && this.playRule.formType)
         },
       ],
@@ -48,7 +45,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
       pageSize: 15,
       formats: [
         null,
-        function(val) {
+        function (val) {
           const html = ['<div class="open-nums">']
           const numList = val.split(',')
           _(numList).each((num, index) => {
@@ -71,7 +68,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
         function (val) {
           return val.substring(4)
         },
-        function(val) {
+        function (val) {
           const html = ['<div class="open-nums">']
           const numList = val.split(',')
           const keyPosition = _(this.playRule.keyPosition).filter((item) => {
@@ -88,7 +85,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
           return html.join('')
         },
-        function(val) {
+        function (val) {
           return this.getFormType(val, this.playRule && this.playRule.keyPosition, this.playRule && this.playRule.formType)
         },
       ],
@@ -97,7 +94,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
       pageSize: 15,
       formats: [
         null,
-        function(val) {
+        function (val) {
           const html = ['<div class="open-nums">']
           const numList = val.split(',')
           _(numList).each(function (num, index) {
@@ -111,14 +108,14 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
           return html.join('')
         },
-        function(val) {
+        function (val) {
           return this.getFormType(val, this.playRule && this.playRule.keyPosition, this.playRule && this.playRule.formType)
         },
       ],
     },
   },
 
-  serializeData () {
+  serializeData() {
     return {
       ticketId: this.options.ticketId,
     }
@@ -137,10 +134,10 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
     this.$hisList = this.$('.js-his-both-list')
     // this.renderDrawRecords()
   },
-  update () {
+  update() {
     this.renderDrawRecords()
   },
-  updateByPlayRule (playRule) {
+  updateByPlayRule(playRule) {
     this.playRule = playRule
 
     if (this.drawRecords) {
@@ -171,7 +168,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
       this.drawRecords.update()
     }
   },
-  generateGridOptions (ops) {
+  generateGridOptions(ops) {
     const self = this
     const options = {
       tableClass: this.tableClass,
@@ -247,7 +244,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
     return formType
   },
-  getFormSumAndSpan (keyPosition, type) { // type 1 代表和值 2代表跨度
+  getFormSumAndSpan(keyPosition, type) { // type 1 代表和值 2代表跨度
     const formType = {
       name: type === 1 ? '和值' : '跨度',
       keyName: '',
@@ -272,7 +269,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
     }
     return formType
   },
-  getFormGroup (keyPosition) {
+  getFormGroup(keyPosition) {
     const formType = {
       name: '形态',
       keyName: '',
@@ -297,7 +294,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
     return formType
   },
 
-  getFormDragon (keyPosition) {
+  getFormDragon(keyPosition) {
     const formType = {
       name: '形态',
       keyName: '',

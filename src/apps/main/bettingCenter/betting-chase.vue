@@ -33,12 +33,14 @@
               <label class="control-label">追号期数</label>
               <radio-group :radio-list="radioList" v-model="planPrefab" class="m-right-lg"></radio-group>
               <input name="chasePlans" type="text" class=" chase-input js-gl-monitor bc-monitor" autocomplete="off"
-                     data-monitor-type="number" v-model.number="chasePlans" ref="chasePlans" />
+                     data-monitor-type="number" v-model.number="chasePlans" ref="chasePlans"/>
               期
               <label class="control-label m-left-md">起始倍数</label>
               <input name="startMultiple" type="text" class="js-gl-monitor bc-monitor chase-input" autocomplete="off"
-                     v-model="startMultiple" /> 倍
-              <button type="button" class="chase-create btn btn-cool pull-right" @click="chaseCreate()" :disabled="!plans.length || pushing">生成追号计划</button>
+                     v-model="startMultiple"/> 倍
+              <button type="button" class="chase-create btn btn-cool pull-right" @click="chaseCreate()"
+                      :disabled="!plans.length || pushing">生成追号计划
+              </button>
             </div>
           </form>
         </div>
@@ -48,19 +50,22 @@
             <div class="control-group font-sm">
               <label class="control-label">追号期数</label>
               <input name="chasePlans" type="text" class="js-gl-monitor bc-monitor chase-input" autocomplete="off"
-                     data-monitor-type="number" v-model.number="chasePlans" ref="chasePlans" />
+                     data-monitor-type="number" v-model.number="chasePlans" ref="chasePlans"/>
               期
               <label class="control-label m-left-lg">起始倍数</label>
-              <input name="startMultiple" type="text" class="js-gl-monitor bc-monitor chase-input" data-monitor-type="number" autocomplete="off"
-                     v-model="startMultiple" /> 倍
+              <input name="startMultiple" type="text" class="js-gl-monitor bc-monitor chase-input"
+                     data-monitor-type="number" autocomplete="off"
+                     v-model="startMultiple"/> 倍
               <label class="control-label m-left-lg">每隔</label>
               <input name="gaps" type="text" class="js-gl-monitor bc-monitor chase-input" autocomplete="off"
-                     data-monitor-type="number" data-monitor-range="[1, 99999]" v-model="gaps" />
+                     data-monitor-type="number" data-monitor-range="[1, 99999]" v-model="gaps"/>
               期
               <label class="control-label m-left-md">倍数X</label>
               <input name="incMultiple" type="text" class="js-gl-monitor bc-monitor chase-input" autocomplete="off"
-                     data-monitor-type="number" data-monitor-range="[1, 99999]" v-model="incMultiple" />
-              <button type="button" class="chase-create btn btn-cool pull-right" @click="chaseCreate({type: 'multi'})" :disabled="!plans.length || pushing">生成追号计划</button>
+                     data-monitor-type="number" data-monitor-range="[1, 99999]" v-model="incMultiple"/>
+              <button type="button" class="chase-create btn btn-cool pull-right" @click="chaseCreate({type: 'multi'})"
+                      :disabled="!plans.length || pushing">生成追号计划
+              </button>
             </div>
           </form>
         </div>
@@ -70,38 +75,45 @@
             <div class="control-group">
               <label class="control-label">追号期数</label>
               <input name="chasePlans" type="text" class="js-gl-monitor bc-monitor chase-input" autocomplete="off"
-                     data-monitor-type="number" v-model.number="chasePlans" ref="chasePlans" />
+                     data-monitor-type="number" v-model.number="chasePlans" ref="chasePlans"/>
               期
               <label class="control-label m-left-lg">起始倍数</label>
-              <input name="startMultiple" type="text" class="js-gl-monitor bc-monitor chase-input" data-monitor-type="number" autocomplete="off"
-                     v-model="startMultiple" /> 倍
-              <button type="button" class="chase-create btn btn-cool pull-right" @click="chaseRateCreate()" :disabled="!plans.length || pushing">生成追号计划</button>
+              <input name="startMultiple" type="text" class="js-gl-monitor bc-monitor chase-input"
+                     data-monitor-type="number" autocomplete="off"
+                     v-model="startMultiple"/> 倍
+              <button type="button" class="chase-create btn btn-cool pull-right" @click="chaseRateCreate()"
+                      :disabled="!plans.length || pushing">生成追号计划
+              </button>
             </div>
             <div class="control-group m-left-lg">
               <label class="inline-block no-margin">
                 <div class="custom-radio radio-inverse">
-                  <input type="radio" id="jsBcChaseType1" class="js-bc-chaseType" name="chaseType" value="rate" v-model="chaseType">
+                  <input type="radio" id="jsBcChaseType1" class="js-bc-chaseType" name="chaseType" value="rate"
+                         v-model="chaseType">
                   <label for="jsBcChaseType1"></label>
                 </div>
                 利润率>=
                 <input name="rate" type="text" class="js-gl-monitor bc-monitor chase-input" autocomplete="off"
-                       data-monitor-type="number" data-monitor-range="[1, 99999]" v-model="rate" /> %
+                       data-monitor-type="number" data-monitor-range="[1, 99999]" v-model="rate"/> %
               </label>
               <label class="inline-block m-left-md no-margin">
                 <div class="custom-radio radio-inverse">
-                  <input type="radio" id="jsBcChaseType3" class="js-bc-chaseType" name="chaseType" value="amount" v-model="chaseType">
+                  <input type="radio" id="jsBcChaseType3" class="js-bc-chaseType" name="chaseType" value="amount"
+                         v-model="chaseType">
                   <label for="jsBcChaseType3"></label>
                 </div>
                 利润金额
                 <input name="amount" type="text" class="js-gl-monitor bc-monitor chase-input" autocomplete="off"
-                       data-monitor-type="number" data-monitor-range="[1, 999999]" v-model="amount" />
+                       data-monitor-type="number" data-monitor-range="[1, 999999]" v-model="amount"/>
               </label>
               元
             </div>
           </form>
         </div>
-        <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :table-class="lotteryGridOps.tableClass" :col-model="lotteryGridOps.colModel"
-                     :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="chaseList" ref="normalGrid"></static-grid>
+        <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :table-class="lotteryGridOps.tableClass"
+                     :col-model="lotteryGridOps.colModel"
+                     :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="chaseList"
+                     ref="normalGrid"></static-grid>
       </div>
     </div>
     <div class="modal-footer">
@@ -117,15 +129,19 @@
         <div class="pull-left p-top-sm">
           <label>
                 <span class="custom-checkbox">
-                  <input type="checkbox" id="js-bc-chase-1" class="js-bc-chase-suspend" v-model="suspend" />
+                  <input type="checkbox" id="js-bc-chase-1" class="js-bc-chase-suspend" v-model="suspend"/>
                   <label class="checkbox-label" for="js-bc-chase-1"></label>
                 </span>
             中奖后停止追号
           </label>
         </div>
         <div class="pull-right">
-          <button type="button" class="btn btn-white btn-lg font-sm" :disabled="!selectedChaseList.length || pushing" @click="clearAll">清除追号</button>
-          <button type="button" class="btn btn-orange btn-lg font-sm" data-loading-text="投注中" :disabled="!selectedChaseList.length || pushing" @click="chaseConfirm">确定投注</button>
+          <button type="button" class="btn btn-white btn-lg font-sm" :disabled="!selectedChaseList.length || pushing"
+                  @click="clearAll">清除追号
+          </button>
+          <button type="button" class="btn btn-orange btn-lg font-sm" data-loading-text="投注中"
+                  :disabled="!selectedChaseList.length || pushing" @click="chaseConfirm">确定投注
+          </button>
         </div>
       </div>
     </div>
@@ -152,7 +168,7 @@
       totalLottery: Object
     },
 
-    data: function() {
+    data: function () {
       return {
         fPreviewList: [],
         singleType: true,
@@ -274,7 +290,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
       },
       chaseList: {
         handler() {
-          this.selectedChaseList = _.where(this.chaseList, {selected : true})
+          this.selectedChaseList = _.where(this.chaseList, {selected: true})
           this.totalMoney = _.chain(this.selectedChaseList).reduce((total, item) => total + item.betMoney, 0).convert2yuan().value()
         },
         deep: true

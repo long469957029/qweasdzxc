@@ -124,6 +124,10 @@ gulp.task('server.webpack', () => {
     'mock/*.json': {
       target: 'http://localhost:7070/',
     },
+    '/acct/imgcode/code':{
+      target: serverIP,
+      changeOrigin: true,
+    }
     // '*.jsonp': {
     //   target: serverIP,
     //   changeOrigin: true,

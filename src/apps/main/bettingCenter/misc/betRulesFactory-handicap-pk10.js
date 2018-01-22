@@ -110,7 +110,6 @@ const getBalls = () => {
 }
 
 
-
 function _create(ticketId) {
   // 两面盘
   factory.addHandicapRule([ticketId, '210101'], {
@@ -492,8 +491,7 @@ function _create(ticketId) {
               style: 'gray circle',
               showOdds: true,
             },
-            {
-            },
+            {},
             {
               num: '1012',
               title: '冠亚小',
@@ -525,8 +523,7 @@ function _create(ticketId) {
               style: 'gray circle',
               showOdds: true,
             },
-            {
-            },
+            {},
             {
               num: '1013',
               title: '冠亚单',
@@ -558,8 +555,7 @@ function _create(ticketId) {
               style: 'gray circle',
               showOdds: true,
             },
-            {
-            },
+            {},
             {
               num: '1014',
               title: '冠亚双',

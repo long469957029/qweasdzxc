@@ -174,9 +174,9 @@ function _create(ticketId) {
       ids: [ticketId, '020101'],
       list: ['百位', '十位', null],
     },
-    { ids: [ticketId, '020102'] },
-    { ids: [ticketId, '020201'] },
-    { ids: [ticketId, '020202'] },
+    {ids: [ticketId, '020102']},
+    {ids: [ticketId, '020201']},
+    {ids: [ticketId, '020202']},
   ])
 
   //= =================================================
@@ -187,9 +187,9 @@ function _create(ticketId) {
       ids: [ticketId, '020103'],
       list: [null, '十位', '个位'],
     },
-    { ids: [ticketId, '020104'] },
-    { ids: [ticketId, '020203'] },
-    { ids: [ticketId, '020204'] },
+    {ids: [ticketId, '020104']},
+    {ids: [ticketId, '020203']},
+    {ids: [ticketId, '020204']},
   ])
 
   //= =================================================

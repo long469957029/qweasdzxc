@@ -7,7 +7,7 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
     'click .js-toggle-page': 'togglePageHandler',
   },
 
-  initialize () {
+  initialize() {
     this.options.selectOptionals = []
     this.options.rowsResult = []
     // this.mark6TicketIdArr = ticketConfig.getMark6TicketIdArr()
@@ -23,7 +23,7 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
         for (let j = (i * this.options.page); j < this.options.page * (i + 1); j++) {
           newList.push(this.options.list[j])
         }
-        html.push(`<div class="jc-page-content bc-page-content js-pageIndex-${i}">${_(newList).map(function(item) {
+        html.push(`<div class="jc-page-content bc-page-content js-pageIndex-${i}">${_(newList).map(function (item) {
           item.hasOp = _(item.op).some()
           return item.isShow ? this.playItemsTpl({
             limit: _(item.limits).pluck('name').join(' '),
@@ -38,7 +38,7 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
         }, this).join('')}</div>`)
       }
     } else {
-      html.push(`<div class="">${_(this.options.list).map(function(item) {
+      html.push(`<div class="">${_(this.options.list).map(function (item) {
         item.hasOp = _(item.op).some() // 龙虎和为全false
         return item.isShow ? this.playItemsTpl({
           limit: _(item.limits).pluck('name').join(' '),
@@ -75,7 +75,7 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
   statisticsLottery() {
     let count = 0
 
-    this.options.rowsResult = _(this.options.list).map(function(item) {
+    this.options.rowsResult = _(this.options.list).map(function (item) {
       let selected = []
 
       if (item.isShow) {
@@ -229,8 +229,18 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
         let weiNum = ''
         let touNum
         switch (op) {
-          case 'shu': case 'niu': case 'hu': case 'tu': case '_long': case 'she':
-          case 'ma': case 'yang': case 'hou': case 'ji': case 'gou': case 'zhu':
+          case 'shu':
+          case 'niu':
+          case 'hu':
+          case 'tu':
+          case '_long':
+          case 'she':
+          case 'ma':
+          case 'yang':
+          case 'hou':
+          case 'ji':
+          case 'gou':
+          case 'zhu':
             $items.each((index, ele) => {
               const $this = $(ele)
               _(selectNum.nums).each((num) => {
@@ -248,8 +258,14 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
           case 'mark6-small':
             self._selectNumbers($items.removeClass('active').filter(':lt(24)'), $itemsToolbars)
             break
-          case 'red': case 'blue': case 'green':
-            if (op === 'blue') { arrStr = 'blueArr' } else if (op === 'green') { arrStr = 'greenArr' }
+          case 'red':
+          case 'blue':
+          case 'green':
+            if (op === 'blue') {
+              arrStr = 'blueArr'
+            } else if (op === 'green') {
+              arrStr = 'greenArr'
+            }
             thisColorArr = this.options.list[0].htmlNeedInfo.colorArr[arrStr]
             // let selectEle = []
             $items.each((index, ele) => {
@@ -263,8 +279,16 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
             $items.removeClass('active')
             this._selectNumbers($(selectEle), $itemsToolbars)
             break
-          case 'wei0': case 'wei1': case 'wei2': case 'wei3': case 'wei4':
-          case 'wei5': case 'wei6': case 'wei7': case 'wei8': case 'wei9':
+          case 'wei0':
+          case 'wei1':
+          case 'wei2':
+          case 'wei3':
+          case 'wei4':
+          case 'wei5':
+          case 'wei6':
+          case 'wei7':
+          case 'wei8':
+          case 'wei9':
             weiNum = op.substring(op.length - 1)
             // let selectEle = []
             $items.each((index, ele) => {
@@ -277,7 +301,11 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
             $items.removeClass('active')
             this._selectNumbers($(selectEle), $itemsToolbars)
             break
-          case 'tou0': case 'tou1': case 'tou2': case 'tou3': case 'tou4':
+          case 'tou0':
+          case 'tou1':
+          case 'tou2':
+          case 'tou3':
+          case 'tou4':
             touNum = op.substring(op.length - 1)
             // let selectEle = []
             $items.each((index, ele) => {
@@ -386,7 +414,7 @@ const BettingCenterPlayAreaView = Base.ItemView.extend({
     $targetPage.siblings().removeClass('active')
   },
   // 六合号码选择
-  _mark6SelectNumber ($target, $parent) {
+  _mark6SelectNumber($target, $parent) {
     // const active = $target.hasClass('active')
     $target.toggleClass('active')
     const $activeItem = $parent.find('.js-bc-select-item.active')

@@ -19,12 +19,12 @@ function createDanTuo(num) {
             num,
           },
         },
-        { name: 'conflict-y' },
+        {name: 'conflict-y'},
       ],
     }, {
       title: '拖码',
       items: eleven,
-      limits: [{ name: 'conflict-y' }],
+      limits: [{name: 'conflict-y'}],
     },
   ]
 }
@@ -40,7 +40,7 @@ function _create(ticketId) {
     list: factory.createList(['第一位', '第二位', '第三位'], {
       items: eleven,
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(3, {
       range: eleven,
       innerSort: true,
@@ -58,7 +58,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(3, {
       range: eleven,
       innerSplit: ' ',
@@ -97,7 +97,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(3, {
       range: eleven,
       innerSplit: ' ',
@@ -112,7 +112,7 @@ function _create(ticketId) {
     algorithmProps: {
       num: 3,
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     list: factory.createList(createDanTuo(2)),
     create: algorithm.getCreateFunc(3, {
       range: eleven,
@@ -130,7 +130,7 @@ function _create(ticketId) {
     list: factory.createList(['第一位', '第二位'], {
       items: eleven,
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(2, {
       range: eleven,
       innerSort: true,
@@ -148,7 +148,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(2, {
       range: eleven,
       repeat: true,
@@ -185,7 +185,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(2, {
       range: eleven,
       repeat: true,
@@ -199,7 +199,7 @@ function _create(ticketId) {
     algorithmProps: {
       num: 2,
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     list: factory.createList(createDanTuo(1)),
     create: algorithm.getCreateFunc(3, {
       range: eleven,
@@ -382,7 +382,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(1, {
       range: eleven,
       innerSort: true,
@@ -401,7 +401,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(2, {
       range: eleven,
       innerSort: true,
@@ -420,7 +420,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(3, {
       range: eleven,
       innerSort: true,
@@ -439,7 +439,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(4, {
       range: eleven,
       innerSort: true,
@@ -458,7 +458,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(5, {
       range: eleven,
       innerSort: true,
@@ -477,7 +477,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(6, {
       range: eleven,
       innerSort: true,
@@ -496,7 +496,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(7, {
       range: eleven,
       innerSort: true,
@@ -515,7 +515,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(6, {
       range: eleven,
       innerSort: true,
@@ -531,7 +531,7 @@ function _create(ticketId) {
     algorithmProps: {
       num: 2,
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     list: factory.createList(createDanTuo(1)),
     create: algorithm.getCreateFunc(3, {
       range: eleven,
@@ -545,7 +545,7 @@ function _create(ticketId) {
     algorithmProps: {
       num: 3,
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     list: factory.createList(createDanTuo(2)),
     create: algorithm.getCreateFunc(3, {
       range: eleven,
@@ -559,7 +559,7 @@ function _create(ticketId) {
     algorithmProps: {
       num: 4,
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     list: factory.createList(createDanTuo(3)),
     create: algorithm.getCreateFunc(3, {
       range: eleven,
@@ -573,7 +573,7 @@ function _create(ticketId) {
     algorithmProps: {
       num: 5,
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     list: factory.createList(createDanTuo(4)),
     create: algorithm.getCreateFunc(3, {
       range: eleven,
@@ -587,7 +587,7 @@ function _create(ticketId) {
     algorithmProps: {
       num: 6,
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     list: factory.createList(createDanTuo(5)),
     create: algorithm.getCreateFunc(3, {
       range: eleven,
@@ -601,7 +601,7 @@ function _create(ticketId) {
     algorithmProps: {
       num: 7,
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     list: factory.createList(createDanTuo(6)),
     create: algorithm.getCreateFunc(3, {
       range: eleven,
@@ -615,7 +615,7 @@ function _create(ticketId) {
     algorithmProps: {
       num: 8,
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     list: factory.createList(createDanTuo(7)),
     create: algorithm.getCreateFunc(3, {
       range: eleven,

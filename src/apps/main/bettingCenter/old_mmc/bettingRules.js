@@ -1,5 +1,3 @@
-
-
 const Collection = require('skeleton/collection')
 
 const BettingRulesCollection = Collection.extend({

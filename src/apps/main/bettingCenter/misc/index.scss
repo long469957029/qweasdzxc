@@ -1,23 +1,22 @@
 @charset "UTF-8";
 
-@import
-"~base/styles/imports",
+@import "~base/styles/imports",
 '~uiCom/tab-toolbar/index.scss',
 '~uiCom/pulse/index.scss';
 
-.bc-play-main{
+.bc-play-main {
   user-select: none;
-  .bc-play-left{
+  .bc-play-left {
     width: 921px;
     color: $inverse-color;
     border-right: 1px solid $def-line-color;
-    .bc-line{
+    .bc-line {
       width: 100%;
       height: 3px;
-      background: linear-gradient(to bottom,#dcdcdc,#f0f0f0);
+      background: linear-gradient(to bottom, #dcdcdc, #f0f0f0);
     }
   }
-  .bc-side-area{
+  .bc-side-area {
     position: relative;
     width: 278px;
     min-height: 845px;
@@ -29,7 +28,7 @@
     .tab-toolbar {
       margin-bottom: 0;
       padding-left: 10px;
-      .tab.active{
+      .tab.active {
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
       }
@@ -43,10 +42,10 @@
     }
   }
 
-  .bc-missOptional-main{
+  .bc-missOptional-main {
     width: 100%;
     margin: 15px 5px;
-    .bc-missOption-btn{
+    .bc-missOption-btn {
       width: 74px;
       height: 26px;
       border: 1px solid $def-gray-color;
@@ -59,7 +58,7 @@
       cursor: pointer;
       margin-right: 5px;
       transition: all .3s ease-out;
-      &.active{
+      &.active {
         color: $def-white-color;
         background-color: $main-deep-color;
         border-color: $main-deep-color;
@@ -67,8 +66,7 @@
     }
   }
 
-
-  .bc-unit-select-add{
+  .bc-unit-select-add {
     width: 58px;
     height: 20px;
     padding-left: 8px;
@@ -81,23 +79,23 @@
   .bc-multi-range {
     height: 30px;
   }
-  .bc-jb-btn{
+  .bc-jb-btn {
     font-size: $font-md;
     width: 180px;
     height: 48px;
-    border-bottom: 3px solid rgba(0,0,0,0.4);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.4);
     font-weight: 600;
   }
-  .bc-bottom-area{
+  .bc-bottom-area {
     width: 100%;
     height: 257px;
     overflow: hidden;
   }
-  .bc-records-tabs-list{
+  .bc-records-tabs-list {
     width: 100%;
     height: 36px;
     background-color: $sec-line-color;
-    .bc-records-tab{
+    .bc-records-tab {
       display: inline-block;
       width: 140px;
       height: 36px;
@@ -106,9 +104,9 @@
       line-height: 36px;
       position: relative;
       text-align: center;
-      &.active{
+      &.active {
         background-color: $def-white-color;
-        &:before{
+        &:before {
           content: '';
           width: 100%;
           height: 3px;
@@ -120,25 +118,25 @@
       }
     }
   }
-  .bc-records-tables{
+  .bc-records-tables {
     width: 100%;
     height: 168px;
-    table{
-      thead{
+    table {
+      thead {
         border-bottom: 1px solid $def-line-color;
       }
-      th{
+      th {
         color: $new-inverse-color;
       }
-      tr{
+      tr {
         border-bottom: 1px dashed $sec-line-color;
       }
     }
   }
-  .his-main{
-    th{
+  .his-main {
+    th {
       position: relative;
-      &:after{
+      &:after {
         width: 1px;
         height: 15px;
         content: '';
@@ -148,18 +146,18 @@
         right: 0px;
         top: 11px;
       }
-      &:last-child{
-        &:after{
+      &:last-child {
+        &:after {
           display: none;
         }
       }
     }
-    td{
+    td {
       padding: 13px 3px;
     }
-    .open-nums{
+    .open-nums {
       max-width: 150px;
-      span{
+      span {
         width: 20px;
         height: 20px;
         border: 1px solid $third-line-color;
@@ -170,14 +168,13 @@
         margin-left: 4px;
         margin-bottom: 2px;
       }
-      .key-num{
+      .key-num {
         border-color: $new-main-deep-color;
         color: $new-main-deep-color;
       }
     }
   }
 }
-
 
 .bc-lottery-preview {
   width: 878px;
@@ -190,21 +187,21 @@
     font-size: 12px;
   }
 
-
-  .bc-lottery-clear{
+  .bc-lottery-clear {
     width: 47px;
     height: 22px;
     border: 1px solid #c9c9c9;
     text-align: center;
     line-height: 22px;
     border-radius: 5px;
-    background: linear-gradient(to bottom,#fafafa,#e4e4e4);
+    background: linear-gradient(to bottom, #fafafa, #e4e4e4);
     transition: background 1s;
-    &:hover{
-      background: linear-gradient(to bottom,#f1f1f1,#e4e4e4);
+    &:hover {
+      background: linear-gradient(to bottom, #f1f1f1, #e4e4e4);
     }
   }
 }
+
 .db-ticket-bread-item {
   &.active {
     a {
@@ -264,16 +261,14 @@
 }
 
 .text-circle.circle-sm {
-   margin-right: 5px;
-   width: 24px;
-   height: 24px;
-   line-height: 24px;
-   font-size: 16px;
-   margin-bottom: 8px;
-   margin-top: 8px;
- }
-
-
+  margin-right: 5px;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 16px;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
 
 .js-bc-last-plan-results2 {
   //position: relative;
@@ -281,7 +276,7 @@
   padding-top: 10px;
 }
 
-.num{
+.num {
   //position: absolute;
   position: relative;
   display: inline-block;
@@ -293,12 +288,14 @@
   height: 25px;
   overflow: hidden;
 }
-.num-con{
+
+.num-con {
   position: relative;
   //top:-430px;
-  top:0px;
+  top: 0px;
 }
-.num-img{
+
+.num-img {
   background: url("~base/images/openNum.png") no-repeat;
   //width: 124px;
   //height: 1298px;
@@ -315,7 +312,7 @@
   background-size: 100%;
 }
 
-.bc-hgcaculate-examplerow{
+.bc-hgcaculate-examplerow {
   text-align: left;
   height: 20px;
   margin: 2px 5px 2px 5px;
@@ -341,9 +338,9 @@
   margin-bottom: 4px;
 }
 
-.all-clear{
+.all-clear {
   position: absolute;
-  left:0;
+  left: 0;
   bottom: 0;
   width: auto !important;
   height: 18px;
@@ -358,7 +355,7 @@
   margin-bottom: -66px;
   color: #000;
   cursor: pointer;
-  &:hover{
+  &:hover {
     background-color: transparent;
     border: 0;
     color: #000;
@@ -372,7 +369,7 @@
 }
 
 //** animate **
-@keyframes bounceInRight{
+@keyframes bounceInRight {
 
   from, 60%, 75%, 90%, to {
     -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
@@ -402,7 +399,8 @@
     transform: translate3d(-1200px, 0, 0);
   }
 }
-@keyframes ticketZoomInUp{
+
+@keyframes ticketZoomInUp {
 
   from {
     opacity: 0;
@@ -419,4 +417,5 @@
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
   }
 }
+
 //** animate **

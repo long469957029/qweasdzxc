@@ -12,7 +12,9 @@
           <span>{{bettingInfo.planId}}</span>
           期
           <div>
-            <span :class="['sfa m-right-xs vertical-sub cursor-pointer', musicStatus ? 'sfa-bc-muisc' : 'sfa-bc-muisc1']" title="开奖声音" @click="openMusic"></span>投注截止
+            <span
+              :class="['sfa m-right-xs vertical-sub cursor-pointer', musicStatus ? 'sfa-bc-muisc' : 'sfa-bc-muisc1']"
+              title="开奖声音" @click="openMusic"></span>投注截止
           </div>
         </div>
         <div class="bc-plan-title text-right m-right-sm pull-left" v-else>
@@ -29,20 +31,23 @@
           <div>开奖号码</div>
         </div>
 
-        <opening-balls :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.defaultOpening"
-                       v-if="ticketInfo.openingType === 'balls'" @mouseover="calculateStatus = true" @mouseout="calculateStatus = false"
+        <opening-balls :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="bettingInfo.lastOpenNum"
+                       :default-opening="ticketInfo.defaultOpening"
+                       v-if="ticketInfo.openingType === 'balls'" @mouseover="calculateStatus = true"
+                       @mouseout="calculateStatus = false"
         ></opening-balls>
         <opening-dices-panel class="inline-block" v-else-if="ticketInfo.openingType === 'dices'"
                              :opening-num="bettingInfo.lastOpenNum" :ticket-info="ticketInfo"
         ></opening-dices-panel>
-        <opening-mark6-balls :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.defaultOpening"
-          v-else-if="ticketInfo.openingType === 'mark-balls'"
+        <opening-mark6-balls :counts="ticketInfo.counts" :range="ticketInfo.range"
+                             :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.defaultOpening"
+                             v-else-if="ticketInfo.openingType === 'mark-balls'"
         ></opening-mark6-balls>
         <!--<div class="bc-last-plan-results pull-left" v-if="bettingInfo.sale && bettingInfo.pending">-->
-          <!--<span class="text-circle">等</span>-->
-          <!--<span class="text-circle">待</span>-->
-          <!--<span class="text-circle">开</span>-->
-          <!--<span class="text-circle">奖</span>-->
+        <!--<span class="text-circle">等</span>-->
+        <!--<span class="text-circle">待</span>-->
+        <!--<span class="text-circle">开</span>-->
+        <!--<span class="text-circle">奖</span>-->
         <!--</div>-->
         <div class="bc-hgcalculate-example" v-if="ticketInfo.showNumberDetail&& calculateStatus">
           <div class="bc-hgcaculate-examplerow">万位:<span v-html="calculateInfo ? calculateInfo.wan : ''"></span></div>
@@ -107,7 +112,7 @@
         //上期号码计算浮动框显示状态
         calculateStatus: false,
         countdown: {},
-        audio: { over, prize, openCode }
+        audio: {over, prize, openCode}
       }
     },
 
@@ -295,10 +300,10 @@
   .bc-main-area {
     height: 140px;
     position: relative;
-    .bc-area-ticket-info{
+    .bc-area-ticket-info {
       width: 145px;
       margin: 15px 40px;
-      .ticket-info{
+      .ticket-info {
         width: 100%;
         height: 27px;
         background-color: #129fa8;
@@ -314,9 +319,9 @@
         // padding-top: 3px;
       }
     }
-    .bc-entry-list{
+    .bc-entry-list {
       padding-top: 10px;
-      a{
+      a {
         display: block;
         width: 95px;
         height: 28px;
@@ -325,13 +330,13 @@
         color: $def-white-color;
         margin-top: 10px;
         text-align: center;
-        &.entry-list-open{
+        &.entry-list-open {
           background-color: #108e96;
         }
-        &.entry-list-trend{
+        &.entry-list-trend {
           background-color: #129fa8;
         }
-        &.entry-list-des{
+        &.entry-list-des {
           background-color: #129fa8;
         }
       }
@@ -352,17 +357,17 @@
       position: relative;
       vertical-align: top;
     }
-    .bc-last-plan-results{
-      .text-circle{
+    .bc-last-plan-results {
+      .text-circle {
         font-family: Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
         position: relative;
-        &:after{
+        &:after {
           content: '';
           width: 18px;
           height: 4px;
           border-radius: 50%;
           background: rgba(0, 0, 0, 0.15);
-          box-shadow: 0 0 20px rgba(0,0,0,1);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 1);
           position: absolute;
           bottom: -10px;
           left: 11px;
@@ -370,7 +375,7 @@
         }
       }
     }
-    .bc-hgcalculate-example{
+    .bc-hgcalculate-example {
       margin: 3px;
       position: absolute;
       left: 150px;
@@ -396,8 +401,7 @@
     animation: rotate 5s infinite;
   }
 
-  @keyframes rotate
-  {
+  @keyframes rotate {
     0% {
       transform: rotateY(0);
     }

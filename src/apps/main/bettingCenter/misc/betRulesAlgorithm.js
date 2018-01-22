@@ -1,7 +1,5 @@
-
-
 function mulAll(rowsResult) {
-  return _(rowsResult).reduce(function(total, result, index) {
+  return _(rowsResult).reduce(function (total, result, index) {
     if (this.list[index].isShow) {
       total *= result.length
     }
@@ -11,7 +9,7 @@ function mulAll(rowsResult) {
 
 function mulAllNotRepeat(rowsResult) {
   const combinations = []
-  let total = _(rowsResult).reduce(function(total, result, index) {
+  let total = _(rowsResult).reduce(function (total, result, index) {
     if (this.list[index].isShow) {
       total *= result.length
     }
@@ -48,7 +46,7 @@ function mulAllNotRepeat(rowsResult) {
 }
 
 function addAll(rowsResult) {
-  return _(rowsResult).reduce(function(total, result, index) {
+  return _(rowsResult).reduce(function (total, result, index) {
     if (this.list[index].isShow) {
       total += result.length
     }
@@ -285,7 +283,7 @@ function getCreateFunc(length, options) {
   // options.repeat = options.maxRepeat > 1;
 
 
-  return function() {
+  return function () {
     let result = []
     let index = 0
     let current = []
@@ -307,7 +305,7 @@ function getCreateFunc(length, options) {
       currentNum = _.sample(options.range)
 
       if (!options.repeat && _(current).chain().flatten().contains(currentNum)
-        .value()) {
+          .value()) {
         --index
         continue
       }
@@ -399,7 +397,7 @@ function getValidateFunc(length, options) {
     innerSort: false,
   })
 
-  return function(numberList) {
+  return function (numberList) {
     const result = {
       statistics: 0,
       errorNumbers: [],

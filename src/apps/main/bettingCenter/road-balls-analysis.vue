@@ -3,17 +3,19 @@
     <div class="panel">
       <div class="panel-main">
         <div class="btn-group">
-          <button class="btn" v-for="operate in roadBalls.operates" :class="{active: typeId === operate.id}" @click="changeType(operate.id)">
+          <button class="btn" v-for="operate in roadBalls.operates" :class="{active: typeId === operate.id}"
+                  @click="changeType(operate.id)">
             {{operate.title}}
           </button>
         </div>
         <div class="panel-advance">
-        <template v-for="(advanceType, n) in advanceTypes">
-        <span class="advance-btn" :class="{active: advanceTypeId === advanceType.id}" @click="changeAdvanceType(advanceType.id)">
+          <template v-for="(advanceType, n) in advanceTypes">
+        <span class="advance-btn" :class="{active: advanceTypeId === advanceType.id}"
+              @click="changeAdvanceType(advanceType.id)">
           {{advanceType.title}}
         </span>
-          {{advanceTypes.length !== n + 1 ? ' | ' : ''}}
-        </template>
+            {{advanceTypes.length !== n + 1 ? ' | ' : ''}}
+          </template>
         </div>
       </div>
     </div>
@@ -24,7 +26,8 @@
                           v-on:enter="enter"
                           v-on:leave="leave"
                           v-bind:css="false">
-          <span class="ball" :key="`${col}-${row}`" :class="fComboList[col - 1][row - 1].style" v-if="fComboList[col - 1] && fComboList[col - 1][row - 1] && fComboList[col - 1][row - 1].title">
+          <span class="ball" :key="`${col}-${row}`" :class="fComboList[col - 1][row - 1].style"
+                v-if="fComboList[col - 1] && fComboList[col - 1][row - 1] && fComboList[col - 1][row - 1].title">
             {{fComboList[col - 1][row - 1].title}}
           </span>
         </transition-group>
@@ -114,7 +117,7 @@
         let flattenComboList = []
         let prevLH = ''
 
-        for(let i = 0; this.comboList.length > i; ++i) {
+        for (let i = 0; this.comboList.length > i; ++i) {
           //龙虎和的特殊判断,如果是和 合并到上一列
           let comboCol
           if (this.comboList[i].result === '和') {
@@ -155,7 +158,7 @@
           flattenComboList.push(comboCol)
         }
 
-        for(let i = 0; flattenComboList.length > i; ++i) {
+        for (let i = 0; flattenComboList.length > i; ++i) {
 
           let comboCol = flattenComboList[i]
 
@@ -167,7 +170,7 @@
 
             // let isMostRight = true
 
-            for(let disIndex = disparityList.length - 1; disIndex >= 0; --disIndex) {
+            for (let disIndex = disparityList.length - 1; disIndex >= 0; --disIndex) {
               let disparity = disparityList[disIndex]
 
               if (!_.isEmpty(disparity)) {
@@ -238,7 +241,7 @@
           fComboList.push(comboCol)
         }
 
-        while(disparityList.length > 0) {
+        while (disparityList.length > 0) {
           let leftRow = this.rows - disparityList.length
           let comboCol = _.times(leftRow, () => {
             return {
@@ -322,7 +325,7 @@
         })
       },
       spliceEmpty(disparityList) {
-        for(let disIndex = disparityList.length - 1; disIndex >= 0; --disIndex) {
+        for (let disIndex = disparityList.length - 1; disIndex >= 0; --disIndex) {
           if (_.isEmpty(disparityList[disIndex])) {
             disparityList.pop()
           } else {
@@ -343,8 +346,8 @@
       changeType(typeId) {
         this.typeId = typeId
         this.advanceTypes = _.findWhere(this.roadBalls.operates, {
-            id: typeId
-          }).pos
+          id: typeId
+        }).pos
         this.changeAdvanceType(0)
       },
       changeAdvanceType(advanceTypeId) {
@@ -394,6 +397,7 @@
     overflow: hidden;
     border: solid 1px #d7d7d7;
   }
+
   .btn {
     width: 66px;
     height: 27px;
@@ -413,15 +417,18 @@
       background-color: #ffffff;
     }
   }
+
   .btn-group {
     margin-right: 20px;
     > .btn + .btn {
       margin-left: 0;
     }
   }
+
   .panel-advance {
     display: inline-block;
   }
+
   .advance-btn {
     cursor: pointer;
     color: $new-inverse-color;
@@ -441,6 +448,7 @@
 
   .balls-col {
   }
+
   .ball {
     width: 18px;
     height: 18px;

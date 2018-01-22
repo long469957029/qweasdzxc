@@ -2,7 +2,8 @@
   <div id="js-bc-main" class="bc-main">
     <betting-quick-nav :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType"></betting-quick-nav>
     <ticket-info-banner :ticket-info="ticketInfo" :betting-type="ticketType"></ticket-info-banner>
-    <betting-main-area-handicap :ticket-info="ticketInfo" :ticket-id="ticketId" v-if="ticketType === 2"></betting-main-area-handicap>
+    <betting-main-area-handicap :ticket-info="ticketInfo" :ticket-id="ticketId"
+                                v-if="ticketType === 2"></betting-main-area-handicap>
     <betting-main-area :ticket-info="ticketInfo" :ticket-id="ticketId" v-else></betting-main-area>
   </div>
 </template>
@@ -36,7 +37,7 @@
       }
     },
     watch: {
-      '$route':{
+      '$route': {
         handler(to) {
           this.ticketInfo = ticketConfig.getById(this.ticketId, this.ticketType)
           // this.ticketInfo = ticketConfig.getComplete(this.ticketId)
@@ -63,11 +64,11 @@
 </script>
 
 <style lang="scss" scoped>
-  .bc-main{
+  .bc-main {
     max-width: 1200px;
     margin: 0 auto;
     background-color: $def-white-color;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.4);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
     overflow: hidden;
   }
 </style>

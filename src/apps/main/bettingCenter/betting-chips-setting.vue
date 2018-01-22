@@ -1,28 +1,28 @@
 <template>
-<div class="betting-chips-setting">
-  <div class="setting" @click="openSetting">
-    <span class="setting-icon"></span>
-    <span class="setting-title">筹码设置：</span>
-  </div>
-  <div class="chips-popover" :class="{in: show}">
-    <div class="arrow"></div>
-    <div class="popover-content">
-      <span class="setting-title setting-title-setting">筹码设置</span>
-      <div class="setting-group">
-        <select class="chip-setting" v-for="i in 5" v-model="chips[i - 1]">
-          <option v-for="n in 10" :value="n * Math.pow(10, i - 1)">{{n * Math.pow(10, i - 1)}}</option>
-        </select>
+  <div class="betting-chips-setting">
+    <div class="setting" @click="openSetting">
+      <span class="setting-icon"></span>
+      <span class="setting-title">筹码设置：</span>
+    </div>
+    <div class="chips-popover" :class="{in: show}">
+      <div class="arrow"></div>
+      <div class="popover-content">
+        <span class="setting-title setting-title-setting">筹码设置</span>
+        <div class="setting-group">
+          <select class="chip-setting" v-for="i in 5" v-model="chips[i - 1]">
+            <option v-for="n in 10" :value="n * Math.pow(10, i - 1)">{{n * Math.pow(10, i - 1)}}</option>
+          </select>
+        </div>
+        <button class="btn btn-cool save-btn" @click="fadeSetting">
+          确定
+        </button>
       </div>
-      <button class="btn btn-cool save-btn" @click="fadeSetting">
-        确定
-      </button>
+    </div>
+
+    <div class="chips">
+      <span class="chip" v-for="chip in chips" @click="addBetMoney(chip)">{{chip}}</span>
     </div>
   </div>
-
-  <div class="chips">
-    <span class="chip" v-for="chip in chips" @click="addBetMoney(chip)">{{chip}}</span>
-  </div>
-</div>
 
 </template>
 
@@ -34,7 +34,7 @@
       chips: Array,
     },
 
-    data: function() {
+    data: function () {
       return {
         fChips: [5, 10, 200, 5000, 10000],
         show: false
@@ -62,7 +62,7 @@
       }
     },
 
-    mounted: function() {
+    mounted: function () {
       $(document).off(`click.chips-setting.${this._uid}`).on(`click.chips-setting.${this._uid}`, (e) => {
         if (!$.contains(this.$el, e.target)) {
           this.fadeSetting()

@@ -2,16 +2,17 @@
   <div class="bc-basic-rules bg-deep">
     <div class="tab-toolbar tab-pill tab-pill-deep">
       <div class="tab-title" v-if="title">{{title}}</div>
-        <transition-group :class="['tab-group',  !title ? 'no-margin' : '']"
-                          v-on:before-enter="beforeEnter"
-                          v-on:enter="enter"
-                          v-on:leave="leave"
-                          v-bind:css="false"
-        >
-          <span class="tab" :class="{active: rule.selected}" v-for="(rule, index) in rules" @click="ruleChange(rule)" :key="index">
+      <transition-group :class="['tab-group',  !title ? 'no-margin' : '']"
+                        v-on:before-enter="beforeEnter"
+                        v-on:enter="enter"
+                        v-on:leave="leave"
+                        v-bind:css="false"
+      >
+          <span class="tab" :class="{active: rule.selected}" v-for="(rule, index) in rules" @click="ruleChange(rule)"
+                :key="index">
             <span class="tab-inner">{{rule.title}}</span>
           </span>
-        </transition-group>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -27,9 +28,9 @@
       initialRules: Array,
     },
 
-    data: function() {
-        return {
-          rules: []
+    data: function () {
+      return {
+        rules: []
       }
     },
 
@@ -132,7 +133,7 @@
     if (!rule) {
       return
     }
-    rules.forEach(function(rule) {
+    rules.forEach(function (rule) {
       rule.selected = false
     })
     rule.selected = true
