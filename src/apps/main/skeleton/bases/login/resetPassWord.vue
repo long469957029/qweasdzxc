@@ -54,8 +54,8 @@
             </ul>
           </div>
           <div class="step-list">
-            <transition name="setpAnimate">
-              <div class="rp-step-div" v-show="stepsIndex === 0">
+            <transition name="setp-animate">
+              <div class="rp-step-div" v-if="stepsIndex === 0">
                 <form action="javascript:void(0);" class="form-horizontal rp-step-1-form " ref="verifyUN">
                   <div class="text-center m-TB-md font-sm">请输入您要找回密码的账号</div>
                   <div class="control-group">
@@ -70,8 +70,8 @@
                     <div class="controls">
                       <input type="text" class="input-varCode" @keyup="valCode" v-model="codeVal" name=""
                              placeholder="输入验证码">
-                      <input type="hidden" class="js-rp-valResult" value="1">
-                      <img class="var-code" :src="codeSrc">
+                      <!--<input type="hidden" class="js-rp-valResult" value="1">-->
+                      <img class="var-code" :src="codeSrc" @click="refreshValCode">
                       <!--<span class="js-rp-val-result-div re-val-result-div" id="jsRPValResult"><span-->
                         <!--class="js-re-val-res"></span></span>-->
                       <div class="text-hot m-top-xs" v-if="codeError">
@@ -92,48 +92,59 @@
             </transition>
 
             <!--选择密码找回方式-->
-            <transition name="setpAnimate">
-              <div class="rp-step-div" v-show="stepsIndex === 1">
-                <div class="find-type">
+            <transition name="setp-animate">
+              <div class="rp-step-div" v-if="stepsIndex === 1">
+                <div class="find-type m-top-md clearfix" v-if="findTypeNum === 0">
                   <div class="type-list">
-                    <div class="text-center font-sm">密保问题</div>
-                    <div></div>
-                    <div class="text-center">
-                      <button type="button" class="btn" @click="">立即找回</button>
+                    <div class="text-center font-sm m-bottom-md">密保问题</div>
+                    <div :class="['icon',{active: hasBindQes}]">
+                      <div class="wechat"></div>
+                    </div>
+                    <div class="text-center m-top-md">
+                      <button type="button" :class="['btn', 'find-btn', {disable: !hasBindQes}]" :disabled="!hasBindQes" @click="findType(1)">立即找回</button>
                     </div>
                   </div>
                   <div class="type-list">
-                    <div class="text-center font-sm">手机验证</div>
-                    <div></div>
-                    <div class="text-center">
-                      <button type="button" class="btn" @click="">立即找回</button>
+                    <div class="text-center font-sm m-bottom-md">手机验证</div>
+                    <div :class="['icon',{active: hasBindMoblie}]">
+                      <div class="moblie"></div>
+                    </div>
+                    <div class="text-center m-top-md">
+                      <button type="button" :class="['btn', 'find-btn', {disable: !hasBindMoblie}]" :disabled="!hasBindMoblie" @click="findType(2)">立即找回</button>
                     </div>
                   </div>
                   <div class="type-list">
-                    <div class="text-center font-sm">游戏验证</div>
-                    <div></div>
-                    <div class="text-center">
-                      <button type="button" class="btn" @click="">立即找回</button>
+                    <div class="text-center font-sm m-bottom-md">邮箱验证</div>
+                    <div :class="['icon',{active: hasBindMail}]">
+                      <div class="mail"></div>
+                    </div>
+                    <div class="text-center m-top-md">
+                      <button type="button" :class="['btn', 'find-btn', {disable: !hasBindMail}]" :disabled="!hasBindMail" @click="findType(3)">立即找回</button>
                     </div>
                   </div>
+                  <div class="clearfix"></div>
                   <div class="text-center font-sm m-TB-md">
                     <i class="sfa sfa-error-icon"></i>
                     温馨提示：如以上方式都无法使用，请与
-                    <a class="text-hot">在线客服</a>
+                    <a class="text-hot cursor-pointer">在线客服</a>
                     联系，协助解决问题。
                   </div>
+                </div>
+                <div v-if="findTypeNum === 1">
+                  <div class="text-center m-TB-md font-sm">请正确输入密保问题</div>
+
                 </div>
               </div>
             </transition>
             <!--修改登录密码-->
-            <transition name="setpAnimate">
-              <div class="rp-step-div" v-show="stepsIndex === 2">
+            <transition name="setp-animate">
+              <div class="rp-step-div" v-if="stepsIndex === 2">
               </div>
             </transition>
 
             <!--完成-->
-            <transition name="setpAnimate">
-              <div class="rp-step-div" v-show="stepsIndex === 3">
+            <transition name="setp-animate">
+              <div class="rp-step-div" v-if="stepsIndex === 3">
               </div>
             </transition>
           </div>
@@ -144,20 +155,32 @@
 </template>
 <script>
   import resetPwd from '../../../../api/resetPwd'
+
+  const initData = function() {
+    return {
+      url: window.self.location.toString(),
+      codeUrl: '',
+      codeSrc: '',
+      codeVal: '',
+      codeRes: 1,
+      userName: '',
+      stepsIndex: 0,  //当前步骤数
+      codeError: false,
+      codeErrorText: '',
+      hasBindQes: false,
+      hasBindMoblie:false,
+      hasBindMail:false,
+      email: '',
+      mobile: '',
+      findTypeNum: 0,
+      loginToken: '',
+      questionList: [],
+
+    }
+  }
   export default {
     name: 'reset-pwd',
-    data(){
-      return {
-        url: window.self.location.toString(),
-        codeUrl: '',
-        codeSrc: '',
-        codeVal: '',
-        userName: '',
-        stepsIndex: 0,  //当前步骤数
-        codeError: false,
-        codeErrorText: '',
-      }
-    },
+    data: initData,
     watch: {
       resetPassWordDialogStatus(resetPassWordDialogStatus) {
         if (resetPassWordDialogStatus) {
@@ -173,16 +196,21 @@
     methods: {
       openResetPwdDialog(){
         this.$nextTick(() => {
+          this.codeUrl = `${this.url.substring(0, this.url.indexOf('/', this.url.indexOf('://', 0) + 3))}/acct/imgcode/code`
+          this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
           $(this.$refs.resetPwdModal).modal({
             backdrop: 'static',
           })
             .on('hidden.modal', () => {
+              Object.assign(this.$data, initData())
               this.$store.commit(types.TOGGLE_RESET_PASSWORD_DIALOG, false)
             })
         })
       },
+      refreshValCode(){
+        this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
+      },
       valCode(){
-        console.log(this.codeVal)
         if(this.codeVal && this.codeVal !== '' && this.codeVal.length === 4) {
           resetPwd.valCodeXhr({
             code:this.codeVal
@@ -191,23 +219,74 @@
               if(data && data.result === 0){
                 this.codeError = false
                 this.codeErrorText = ''
+                this.codeRes = 0
               } else {
                 this.codeError = true
                 this.codeErrorText = '验证码错误'
+                this.refreshValCode()
               }
             },
             ({data}) => {
               this.codeError = true
               this.codeErrorText = '验证码错误'
+              this.refreshValCode()
             }
           )
         }
       },
       verifyUsetName(){
         const status = $(this.$refs.verifyUN).parsley().validate()
-        if (status) {
-
+        if(this.codeVal === '' || this.codeRes === 1) {
+          this.codeError = true
+          this.codeErrorText = '请输入正确的验证码'
+          return false
         }
+        if (status) {
+          resetPwd.verifyUserNameXhr({ username: this.userName, verifyCode: this.codeVal },
+            ({data}) => {
+              if(data && data.result === 0){
+                this.hasBindQes = data.root.qesStatus === 1
+                this.hasBindMoblie = !_.isNull(data.root.mobile)
+                this.hasBindMail= !_.isNull(data.root.email)
+                this.email = data.root.email
+                this.mobile = data.root.mobile
+                this.loginToken = data.root.pwdToken
+                this.stepsIndex += 1
+              } else {
+                this.codeError = true
+                this.codeErrorText = '用户名验证失败'
+              }
+            }),
+            ({data}) => {
+              this.codeError = true
+              this.codeErrorText = '验证用户名请求失败'
+            }
+        }
+      },
+      findType(type){
+        if(type === 1){
+          if(_.isEmpty(this.questionList)){
+            this.getQeqList()
+          } else {
+            this.findTypeNum = type
+          }
+        } else {
+          this.findTypeNum = type
+        }
+      },
+      getQeqList(){
+        resetPwd.getSecurityQuestionXhr({username: this.userName,loginToken: this.loginToken},
+          ({data}) => {
+            if(data && data.result === 0){
+              this.findTypeNum = 1
+            } else {
+              Global.ui.notification.show(data.msg === 'fail' ? '密保问题获取请求服务失败' : data.msg)
+            }
+          },
+          ({data})=>{
+            Global.ui.notification.show(data.msg === 'fail' ? '密保问题获取请求服务失败' : data.msg)
+          }
+        )
       }
     },
     mounted(){
@@ -217,6 +296,18 @@
   }
 </script>
 <style lang="scss" scoped>
+  @mixin transition-cfg {
+    transition: all .5s;
+  }
+  .setp-animate-entry{
+    opacity: 0;
+  }
+  .setp-animate-leave{
+    transform: translateX(-600px);
+  }
+  .setp-animate-entry-active, .setp-animate-leave-active {
+    @include transition-cfg;
+  }
   @mixin input-def {
     background-color: $prominent-dialog-body;
     border-radius: $globalInputRadius;
@@ -253,6 +344,7 @@
       overflow: hidden;
       .step-list {
         /*position: relative;*/
+        /*display: flex;*/
       }
       .reset-input {
         width: 348px;
@@ -277,8 +369,10 @@
       }
       .rp-step-div {
         width: 600px;
-        margin: 0 auto;
+        /*margin: 0 auto;*/
         /*position: absolute;*/
+        display: inline-block;
+        vertical-align: top;
       }
       .var-code {
         width: 110px;
@@ -291,6 +385,41 @@
       .type-list {
         width: 33.3%;
         float:left;
+      }
+      .find-btn{
+        width: 90px;
+        height: 36px;
+        &.disable{
+          background-color: $def-gray-color;
+          border-color: $def-gray-color;
+        }
+      }
+      .icon{
+        width: 90px;
+        height: 90px;
+        box-shadow: 0px 2px 2px 0px
+        rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        margin: 0 auto;
+        background-color: $def-line-color;
+        &.active{
+          background-color: $new-main-deep-color;
+        }
+        .wechat{
+          width: 100%;
+          height: 100%;
+          background: url("~base/images/wechat-bg.png");
+        }
+        .moblie{
+          width: 100%;
+          height: 100%;
+          background: url("~base/images/mobile-bg.png");
+        }
+        .mail{
+          width: 100%;
+          height: 100%;
+          background: url("~base/images/mail-bg.png");
+        }
       }
     }
   }
