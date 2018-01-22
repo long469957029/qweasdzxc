@@ -35,7 +35,7 @@
           <div class="login-verity-refresh pull-right inline-block" :class="{'toCircle':toCircle}"><i
             class="fa fa-repeat"
             aria-hidden="true"
-            v-on:click="clickRefreshValCode"></i>
+            @click="clickRefreshValCode"></i>
           </div>
           <input type="hidden" value="0">
         </div>
@@ -48,7 +48,7 @@
         </div>
         <button @click="userLogin" class="submit btn-login-submit" data-loading-text="登录中" :disabled="pushing">登录
         </button>
-        <span @click="forgotPwd" class="btn-forgot-pwd btn-link">忘记密码?</span>
+        <span @click="forgotPwd" class="btn-forgot-pwd btn-link" data-dismiss="modal">忘记密码?</span>
       </div>
     </div>
   </div>
@@ -184,7 +184,7 @@
         })
       },
       forgotPwd() {
-
+        this.$store.commit(types.TOGGLE_RESET_PASSWORD_DIALOG, true)
       },
       verifyUserName(){
         if (this.username === '') {
