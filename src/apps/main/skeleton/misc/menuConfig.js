@@ -212,40 +212,48 @@ const menuConfig = [
     navItemType: navItemType.link,
     mask: true,
   },
+  // {
+  //   name: '体育',
+  //   router: 'sp',
+  //   navItemType: navItemType.dropdown,
+  //   hasDropdown: true,
+  //   dropdownType: dropdownType.list,
+  //   bannerTitle: '体育投注 Sports',
+  //   bannerDesc: '赛事应有尽有，玩法一应俱全',
+  //   subGame: [
+  //     {
+  //       channelName: '足球',
+  //       gameLink: 'sport/football',
+  //     },
+  //     {
+  //       channelName: '蓝球',
+  //       gameLink: 'sport/basketball',
+  //     },
+  //     {
+  //       channelName: '板球',
+  //       gameLink: 'sport/ben',
+  //     },
+  //     {
+  //       channelName: '足球',
+  //       gameLink: 'sport/football',
+  //     },
+  //     {
+  //       channelName: '蓝球',
+  //       gameLink: 'sport/basketball',
+  //     },
+  //     {
+  //       channelName: '板球',
+  //       gameLink: 'sport/ben',
+  //     },
+  //   ],
+  // },
   {
-    name: '体育',
-    router: 'sp',
+    router: 'bc/0/10',
+    name: '彩票',
     navItemType: navItemType.dropdown,
     hasDropdown: true,
-    dropdownType: dropdownType.list,
-    bannerTitle: '体育投注 Sports',
-    bannerDesc: '赛事应有尽有，玩法一应俱全',
-    subGame: [
-      {
-        channelName: '足球',
-        gameLink: 'sport/football',
-      },
-      {
-        channelName: '蓝球',
-        gameLink: 'sport/basketball',
-      },
-      {
-        channelName: '板球',
-        gameLink: 'sport/ben',
-      },
-      {
-        channelName: '足球',
-        gameLink: 'sport/football',
-      },
-      {
-        channelName: '蓝球',
-        gameLink: 'sport/basketball',
-      },
-      {
-        channelName: '板球',
-        gameLink: 'sport/ben',
-      },
-    ],
+    dropdownType: dropdownType.classifyList,
+    bannerPicClass: 'ticketPic',
   },
   {
     name: '娱乐场',
@@ -333,14 +341,6 @@ const menuConfig = [
         router: 'fh',
       },
     ],
-  },
-  {
-    router: 'bc/0/10',
-    name: '彩票',
-    navItemType: navItemType.dropdown,
-    hasDropdown: true,
-    dropdownType: dropdownType.classifyList,
-    bannerPicClass: 'ticketPic',
   },
   {
     router: 'aa',

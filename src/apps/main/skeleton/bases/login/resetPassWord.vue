@@ -191,8 +191,6 @@
   }
 </script>
 <style lang="scss" scoped>
-  @import "~base/styles/variable";
-
   @mixin input-def {
     background-color: $prominent-dialog-body;
     border-radius: $globalInputRadius;
