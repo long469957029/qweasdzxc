@@ -52,7 +52,7 @@ module.exports = function(options) {
       path.resolve(__dirname, 'node_modules'),
       'node_modules',
     ],
-    extensions: ['.js', '.vue', 'html'],
+    extensions: ['.js', '.vue', '.scss', '.html'],
     alias: appConfig.resolve.alias
   };
 
@@ -123,13 +123,13 @@ module.exports = function(options) {
 
   plugins.push(new AddAssetHtmlPlugin([
     {
-      filepath: require.resolve('./src/dll/vendor.styles.css'),
+      filepath: path.resolve('./src/dll/*.styles.css'),
       typeOfAsset: 'css',
       hash: true,
       includeSourcemap: false
     },
     {
-      filepath: require.resolve('./src/dll/vendor.js'),
+      filepath: path.resolve('./src/dll/*.js'),
       hash: true,
       includeSourcemap: false
     }
