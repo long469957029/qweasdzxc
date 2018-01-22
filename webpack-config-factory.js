@@ -52,7 +52,7 @@ module.exports = function(options) {
       path.resolve(__dirname, 'node_modules'),
       'node_modules',
     ],
-    extensions: ['.js', '.vue', 'scss', 'html'],
+    extensions: ['.js', '.vue', '.scss', '.html'],
     alias: appConfig.resolve.alias
   };
 
