@@ -704,8 +704,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   .bc-chase {
     text-decoration: none;

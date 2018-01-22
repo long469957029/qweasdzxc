@@ -49,8 +49,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
 
   .radio-group {
     box-sizing:border-box;

@@ -106,8 +106,6 @@ export default {
 </script>
 
 <style lang="scss"  scoped>
-@import "~base/styles/variable";
-
 .flex-row {
   display: flex;
   flex-direction: row;

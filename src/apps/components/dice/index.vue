@@ -38,8 +38,7 @@
 </script>
 
 <style lang="scss">
-  @import
-  "~base/styles/variable";
+
 
   $dices: (
     default: (

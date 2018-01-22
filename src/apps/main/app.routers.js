@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import dashboardRouter from 'dashboard/router'
 import bettingCenterRouter from 'bettingCenter/router'
 import userCenterRouter from 'userCenter/router'
-import vipCenterRouter from 'vipCenter/router'
+// import vipCenterRouter from 'vipCenter/router'
 import activeCenterRouter from 'activeCenter/router'
 import realCenterRouter from 'realCenter/router'
 import slotCenterRouter from 'slotCenter/router'
@@ -31,9 +31,8 @@ export const install = () => {
     routes: [
       ...bettingCenterRouter,
       ...userCenterRouter,
-      ...vipCenterRouter,
+      // ...vipCenterRouter,
       ...activeCenterRouter,
-      // ...acctInfo.userType !== 1 ? agencyCenterRouter : [],
       ...agencyCenterRouter,
       // 真人
       ...realCenterRouter,

@@ -54,19 +54,19 @@
       </div>
     </div>
     <div class="bc-entry-list pull-right m-right-md">
-      <router-link :to="`/analysis/${ticketInfo.id}`" target="_blank" class="entry-list-open">
+      <router-link :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}" target="_blank" class="entry-list-open">
         <!--跳转到历史分析-->
         <span class="sfa sfa-bc-icon-open-num vertical-middle"></span>
         开奖号码
       </router-link>
-      <a :href="'trend.html?ticketId=' + ticketInfo.id" target="_blank" class="entry-list-trend">
+      <router-link :to="'trend.html?ticketId=' + ticketInfo.id" target="_blank" class="entry-list-trend">
         <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
         号码走势
-      </a>
-      <a :href="`#hc?page=${ticketInfo.type}`" class="router entry-list-des">
+      </router-link>
+      <router-link :to="`#hc?page=${ticketInfo.type}`" class="router entry-list-des">
         <span class="sfa sfa-bc-icon-des vertical-middle"></span>
         游戏说明
-      </a>
+      </router-link>
     </div>
     <audio ref="overAudio" :src="audio.over"></audio>
     <audio ref="prizeAudio" :src="audio.prize"></audio>
@@ -290,8 +290,56 @@
 </script>
 
 <style lang="scss" scoped>
-  @import
-  "~base/styles/variable";
+
+
+  .bc-main-area {
+    height: 140px;
+    position: relative;
+    .bc-area-ticket-info{
+      width: 145px;
+      margin: 15px 40px;
+      .ticket-info{
+        width: 100%;
+        height: 27px;
+        background-color: #129fa8;
+        color: $def-white-color;
+        line-height: 27px;
+        font-size: 12px;
+        text-align: center;
+      }
+    }
+    .bc-curt-plan-main {
+      margin-top: 40px;
+      .bc-plan-title {
+        // padding-top: 3px;
+      }
+    }
+    .bc-entry-list{
+      padding-top: 10px;
+      a{
+        display: block;
+        width: 95px;
+        height: 28px;
+        line-height: 28px;
+        border-radius: 20px;
+        color: $def-white-color;
+        margin-top: 10px;
+        text-align: center;
+        &.entry-list-open{
+          background-color: #108e96;
+        }
+        &.entry-list-trend{
+          background-color: #129fa8;
+        }
+        &.entry-list-des{
+          background-color: #129fa8;
+        }
+      }
+    }
+    .betting-mode {
+      color: $new-black-color;
+    }
+  }
 
   .bc-plan-main {
     margin-top: 40px;

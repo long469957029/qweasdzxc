@@ -316,8 +316,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~base/styles/variable";
-
   .modal-login {
     border: 0;
     width: 386px;

@@ -39,6 +39,8 @@ const fs = require('fs')
 const rename = require('gulp-rename')
 const fontConfig = require('./font-config.json')
 
+var dllConfig = require('./webpack.dll.config');
+
 let serverIP = 'http://forehead.5x5x.com'
 
 let packageConfig
@@ -367,6 +369,21 @@ gulp.task('zip', () => {
     .pipe(zip('forehead_wx_v3.zip'))
     .pipe(gulp.dest('www'))
 })
+
+//编译dll
+gulp.task('dll:prepare', function(callback) {
+  del('./src/dist/dll/*');
+  global.DLL = 1;
+
+  webpack(dllConfig, function(err, stats) {
+    if(err) throw new gutil.PluginError("webpack", err);
+    gutil.log("[webpack]", stats.toString({
+      // output options
+    }));
+    callback();
+  });
+});
+
 
 // 字体提取格式转换，原生字体推荐ttf原生格式
 gulp.task('font.min', (cb) => {

@@ -5,8 +5,6 @@ stats.json
 .idea
 dist
 error
-bower_components
-test
 webpack-assets.json
 .project
 .package-lock.json
