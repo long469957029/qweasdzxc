@@ -99,7 +99,6 @@ $.widget('gl.changeUrl', {
 
     this.getServerListXhr()
       .always(() => {
-
       })
       .done((res) => {
         if (res.result === 0) {
