@@ -348,9 +348,9 @@ const menuConfig = [
     navItemType: navItemType.link,
   },
   {
-    router: 'newDownload.html',
+    router: 'mb',
     name: '手机投注',
-    navItemType: navItemType.outerLink,
+    navItemType: navItemType.link,
   },
 
   {
