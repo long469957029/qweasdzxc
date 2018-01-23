@@ -1,9 +1,9 @@
-
+require('csshake')
+require('animate.css')
 
 window.Backbone = require('backbone')
 window.Base = require('./scripts/base')
 
-require('./scripts/under-helper')
 require('./scripts/utils')
 require('./scripts/triggerMehtod')
 require('./scripts/domRefresh')

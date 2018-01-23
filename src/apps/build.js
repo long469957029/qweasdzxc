@@ -1,8 +1,8 @@
-import AnimateInteger from './components/animated-integer'
+import AnimatedInteger from './components/animated-integer'
 import CustomCheckbox from './components/custom-checkbox'
 
 
 export {
-  AnimateInteger,
+  AnimatedInteger,
   CustomCheckbox
 }

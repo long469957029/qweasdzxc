@@ -2,7 +2,7 @@ const App = require('./app')
 const modules = require('skeleton/modules')
 
 import Vue from 'vue'
-import AnimatedInteger from 'com/animated-integer'
+import {AnimatedInteger} from 'build'
 import store from '../store/index'
 
 import MainHeader from 'skeleton/bases/header'

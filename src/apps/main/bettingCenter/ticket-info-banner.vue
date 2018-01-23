@@ -64,10 +64,10 @@
         <span class="sfa sfa-bc-icon-open-num vertical-middle"></span>
         开奖号码
       </router-link>
-      <router-link :to="'trend.html?ticketId=' + ticketInfo.id" target="_blank" class="entry-list-trend">
+      <a :href="`trend.html?ticketId=${ticketInfo.id}`" target="_blank" class="entry-list-trend">
         <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
         号码走势
-      </router-link>
+      </a>
       <router-link :to="`#hc?page=${ticketInfo.type}`" class="router entry-list-des">
         <span class="sfa sfa-bc-icon-des vertical-middle"></span>
         游戏说明

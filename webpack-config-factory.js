@@ -53,7 +53,45 @@ module.exports = function(options) {
       'node_modules',
     ],
     extensions: ['.js', '.vue', '.scss', '.html'],
-    alias: appConfig.resolve.alias
+    alias: {
+      packages: 'apps/packages',
+      build: 'apps/build.js',
+      com: 'apps/components',
+      uiCom: 'apps/uiComponents',
+      widgets: 'apps/widgets',
+
+      skeleton: 'apps/main/skeleton',
+      dashboard: 'apps/main/dashboard',
+      userCenter: 'apps/main/userCenter',
+      vipCenter: 'apps/main/vipCenter',
+      agencyCenter: 'apps/main/agencyCenter',
+      fundCenter: 'apps/main/fundCenter',
+      accountCenter: 'apps/main/accountCenter',
+      activeCenter: 'apps/main/activeCenter',
+      realCenter: 'apps/main/realCenter',
+      slotCenter: 'apps/main/slotCenter',
+      fishCenter: 'apps/main/fishCenter',
+      sportCenter: 'apps/main/sportCenter',
+      bettingCenter: 'apps/main/bettingCenter',
+      newsCenter: 'apps/main/newsCenter',
+      dynamicCenter: 'apps/main/dynamicCenter',
+      helpCenter: 'apps/main/helpCenter',
+      gameCenter: 'apps/main/gameCenter',
+      mallCenter: 'apps/main/mallCenter',
+
+      bootstrap: 'vendor/scripts/bootstrap',
+      modernizr: 'vendor/scripts/modernizr',
+      vue: 'vue/dist/vue.esm.js',
+
+      api: 'apps/api',
+      'consts': 'apps/store/consts',
+      'mutation-types': 'apps/store/mutation-types',
+      StaticGrid: 'com/static-grid',
+      ticketConfig: 'apps/main/skeleton/misc/ticketConfig',
+      bettingTypes: 'apps/main/skeleton/misc/betting-types',
+
+      RouterController: 'apps/main/skeleton/controllers/router',
+    }
   };
 
   //==============plugins================
@@ -64,7 +102,26 @@ module.exports = function(options) {
     new webpack.DefinePlugin({
       DEBUG: Boolean(options.debug),
     }),
-    new webpack.ProvidePlugin(appConfig.providePlugin),
+    new webpack.ProvidePlugin({
+      Vue: ['vue/dist/vue.esm.js', 'default'],
+      mapState: ['vuex', 'mapState'],
+      mapGetters: ['vuex', 'mapGetters'],
+      jQuery: 'jquery',
+      $: 'jquery',
+      'window.jQuery': 'jquery',
+      bootstrap: 'bootstrap',
+      _: 'underscore',
+      R: 'ramda',
+      slimScroll: 'jquery-slimscroll',
+      Velocity: 'velocity-animate',
+      RouterController: ['RouterController', 'default'],
+
+      consts: 'consts',
+      types: 'mutation-types',
+      StaticGrid: ['StaticGrid', 'default'],
+      ticketConfig: ['ticketConfig', 'default'],
+      bettingTypes: 'bettingTypes',
+    }),
     new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /zh-cn/),
 
   ];
@@ -264,9 +321,6 @@ module.exports = function(options) {
     resolve: resolve,
     plugins: plugins,
     module: module,
-    //     ]
-    //   };
-    // },
     devServer: {
       port: appConfig.port
     }

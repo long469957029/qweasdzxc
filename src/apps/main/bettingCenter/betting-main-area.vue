@@ -879,5 +879,10 @@
         background: linear-gradient(to bottom, #f1f1f1, #e4e4e4);
       }
     }
+    .mmc {
+      &.table thead th {
+        background-color: transparent;
+      }
+    }
   }
 </style>

@@ -23,10 +23,10 @@
             <span class="sfa sfa-bc-icon-open-num vertical-middle"></span>
             开奖号码
           </router-link>
-          <router-link :to="'trend.html?ticketId=' + ticketInfo.id" target="_blank" class="entry-list-trend">
+          <a :href="`trend.html?ticketId=${ticketInfo.id}`" target="_blank" class="entry-list-trend">
             <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
             号码走势
-          </router-link>
+          </a>
           <router-link :to="`#hc?page=${ticketInfo.type}`" class="router entry-list-des">
             <span class="sfa sfa-bc-icon-des vertical-middle"></span>
             游戏说明
@@ -100,7 +100,7 @@
               <label class="m-left-xs">倍</label>
             </div>
 
-            <div class="inline-block m-left-smd">
+            <div class="inline-block m-LR-sm">
               <span>共</span>
               <animated-integer class="text-pleasant font-sm" :value="bettingChoice.statistics"></animated-integer>
               <span>注，金额</span>
@@ -129,25 +129,21 @@
         </div>
 
         <div class="m-bottom-xs m-left-md">
-          <div class="clearfix bc-margin-xs">
-            <div class="sfa-mmc-betting-record">
-              <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
-                           :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
-                           ref="lotteryGrid"></static-grid>
-            </div>
+          <div class="sfa-mmc-betting-record">
+            <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
+                         :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
+                         ref="lotteryGrid"></static-grid>
           </div>
         </div>
       </div>
     </div>
     <div class="sfa-mmc-content-bottom">
-      <div class="m-top-md p-top-sm text-center m-bottom-md">
-        <button class="sfa sfa-mmc-start-lg-btn no-border" v-if="firstOpen" @click="lotteryConfirm"
-                :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
-        </button>
-        <button class="sfa sfa-mmc-again-btn no-border" v-else @click="lotteryConfirm"
-                :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
-        </button>
-      </div>
+      <button class="sfa sfa-mmc-start-lg-btn no-border" v-if="firstOpen" @click="lotteryConfirm"
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+      </button>
+      <button class="sfa sfa-mmc-again-btn no-border" v-else @click="lotteryConfirm"
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+      </button>
     </div>
 
 
@@ -187,7 +183,6 @@
       CustomCheckbox,
       BettingConfirm,
       StaticGrid,
-      AnimatedInteger,
       BettingRules,
       BettingAdvanceRules,
       BettingPlayAreaSelect,
@@ -207,7 +202,7 @@
         flashIndex: 0,
 
         lotteryGridOps: {
-          wrapperClass: 'bc-lottery-preview table',
+          wrapperClass: 'bc-lottery-preview table mmc',
           colModel: [
             {
               label: '玩法', name: 'title', key: true, width: '15%',
@@ -227,7 +222,8 @@
             },
           ],
           height: 192,
-          emptyTip: '暂未添加选号',
+          showEmpty: true,
+          emptyTip: '<div class="sfa sfa-empty vertical-middle"></div> 暂未添加选号',
         },
         fPreviewList: [],
 
@@ -773,6 +769,8 @@
 
   .sfa-mmc-betting-record {
     margin-left: 22px;
+    position: relative;
+    z-index: 1;
   }
 
   .bc-lottery-preview {
@@ -832,7 +830,7 @@
   }
 
   .sfa-mmc-add-btn {
-    margin-right: 7px;
+    margin-right: 15px;
   }
 
   .bc-play-main {
@@ -980,14 +978,9 @@
 
   .sfa-mmc-content-bottom {
     position: relative;
-    top: -55px;
+    text-align: center;
+    top: -230px;
     left: 32px;
-  }
-
-  .bc-chase {
-    text-decoration: none;
-    font-size: 12px;
-    color: #666666;
   }
 
   .advance-play-des {
@@ -1078,28 +1071,10 @@
     @include select-def;
   }
 
-  .ba-chase-tip {
-    position: absolute;
-    width: 120px;
-    height: 19px;
-    line-height: 19px;
-    color: $def-white-color;
-    background-color: $main-deep-color;
-    text-align: center;
-    font-size: $font-xs;
-    top: 3px;
-    left: 80px;
-    border-radius: 3px;
-    &:before {
-      content: ' ';
-      position: absolute;
-      width: 0;
-      height: 0;
-      border: 5px transparent solid;
-      border-right-color: $main-deep-color;
-      left: -9px;
-      top: 3px;
-    }
+  .sfa-mmc-start-lg-btn {
+    position: relative;
+    top: 260px;
+    background-color: transparent;
   }
 
   .bc-md-btn {

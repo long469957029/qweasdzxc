@@ -28,9 +28,7 @@
       <div v-html="loading" v-show="_.isEmpty(showRows) && showLoading"></div>
 
       <div class="empty-container text-center" v-show="_.isEmpty(showRows) && showEmpty">
-        <div class="empty-container-main">
-          <div class="grid-empty sfa-grid-empty"></div>
-          {{emptyTip}}
+        <div class="empty-container-main" v-html="emptyTip">
         </div>
       </div>
     </div>
@@ -96,7 +94,7 @@
         url: '',
         startOnLoading: true,
         showHeader: true,
-        showEmpty: false,
+        showEmpty: !_.isEmpty(this.emptyTip),
         abort: true,
         showRows: [],
         dataProp: 'root',
@@ -283,22 +281,18 @@
 
       renderEmpty() {
         this.showEmpty = true
-        return this
       },
 
       hideEmpty() {
         this.showEmpty = false
-        return this
       },
 
       renderLoading() {
         this.showLoading = false
-        return this
       },
 
       hideLoading() {
         this.showLoading = true
-        return this
       },
 
       renderFail() {

@@ -2,8 +2,6 @@
 
 const gulp = require('gulp')
 const gutil = require('gulp-util')
-const uglify = require('gulp-uglify')
-// const concat = require('gulp-concat')
 const minfyCss = require('gulp-minify-css')
 const path = require('path')
 const del = require('del')
@@ -31,15 +29,13 @@ const devFactory = require('./webpack.dev.factory')
 const productionFactory = require('./webpack.production.factory')
 
 const mainConfig = require('./wp.main.config')
-const externalConfig = require('./wp.external.config')
 const Fontmin = require('fontmin')
 const zip = require('gulp-zip')
-const svgo = require('imagemin-svgo')
 const fs = require('fs')
 const rename = require('gulp-rename')
 const fontConfig = require('./font-config.json')
 
-var dllConfig = require('./webpack.dll.config');
+const dllConfig = require('./webpack.dll.config');
 
 let serverIP = 'http://forehead.5x5x.com'
 
@@ -53,13 +49,8 @@ switch (argv.package) {
     projectPath = 'main'
     zipPath.push('www/main/**')
     break
-  case 'external':
-    packageConfig = externalConfig
-    projectPath = 'external'
-    zipPath.push('www/external/**')
-    break
   case 'all':
-    zipPath.push('www/main/*', 'www/external/**')
+    zipPath.push('www/main/*')
     break
   default:
     packageConfig = mainConfig

@@ -21,6 +21,7 @@ module.exports = {
       'jquery-slimscroll',
       'jquery',
       'velocity-animate',
+      './src/base/build.base.dll.js',
       './src/vendor/build.core.js',
       './src/vendor/scripts/md5',
       './src/vendor/scripts/sha512',
@@ -59,6 +60,14 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: 'url-loader?limit=10000&minetype=application/font-woff'
+      },
+      {
+        test: /\.(ttf|eot|svg|swf|mp3|wav)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: 'file-loader'
+      },
       {
         test: /\.js$/,
         use: {
