@@ -41,7 +41,6 @@ export const SSC = {
   type: 'ssc',
   positions: ['万位', '千位', '百位', '十位', '个位'],
   trend: true,
-  trendType: 'new',
   playSeriesIdList: sccPlaySeriesIdList
 }
 
@@ -54,7 +53,6 @@ export const CHOOSE15 = {
   type: 'choose15',
   positions: ['第一位', '第二位', '第三位', '第四位', '第五位'],
   trend: true,
-  trendType: 'old',
 }
 
 export const THREED = {
@@ -66,7 +64,6 @@ export const THREED = {
   type: 'threeD',
   positions: ['百位', '十位', '个位'],
   trend: true,
-  trendType: 'new',
   playSeriesIdList: threeDPlaySeriesIdList
 }
 
@@ -79,7 +76,6 @@ export const P5P3 = {
   type: 'p5p3',
   positions: ['万位', '千位', '百位', '十位', '个位'],
   trend: true,
-  trendType: 'old',
 }
 
 export const PK10 = {
@@ -91,7 +87,6 @@ export const PK10 = {
   type: 'pk10',
   positions: ['冠军', '亚军', '季军', '第四名', '第五名', '第六名', '第七名', '第八名', '第九名', '第十名'],
   trend: true,
-  trendType: 'old',
 }
 
 export const QUICK3 = {
@@ -103,7 +98,6 @@ export const QUICK3 = {
   type: 'quick3',
   positions: ['万位', '千位', '百位'],
   trend: true,
-  trendType: 'old',
 }
 
 

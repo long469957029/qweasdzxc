@@ -1,3 +1,21 @@
+const trendMmcPeriods = [
+  {
+    title: '近30期',
+    name: 'pageSize',
+    value: 30,
+  },
+  {
+    title: '近50期',
+    name: 'pageSize',
+    value: 50,
+  },
+  {
+    title: '近100期',
+    name: 'pageSize',
+    value: 100,
+  },
+]
+
 const trendPeriods = [
   {
     title: '近30期',
@@ -42,8 +60,10 @@ const sscConfig = {
       zhName: '无限秒秒彩',
       badge: '',
       trendOps: {
-        periods: trendPeriods,
-      }
+        periods: trendMmcPeriods,
+        split: 1,
+      },
+      trendType: 'old',
     }, bettingTypes.SSC),
     Object.assign({
       id: 32,
@@ -53,7 +73,9 @@ const sscConfig = {
       showNumberDetail: false,
       trendOps: {
         periods: trendPeriods,
-      }
+        split: 1,
+      },
+      isOfficial: true,
     }, bettingTypes.SSC),
     Object.assign({
       id: 10,
@@ -63,6 +85,7 @@ const sscConfig = {
       // badge: 'fire',
       trendOps: {
         periods: trendPeriods,
+        split: 1,
       }
     }, bettingTypes.SSC),
     Object.assign({
@@ -72,6 +95,7 @@ const sscConfig = {
       badge: '',
       trendOps: {
         periods: trendPeriods,
+        split: 1,
       }
     }, bettingTypes.SSC),
     Object.assign({
@@ -81,6 +105,7 @@ const sscConfig = {
       badge: 'hot',
       trendOps: {
         periods: trendLowPeriods,
+        split: 1,
       },
       isOfficial: true,
     }, bettingTypes.SSC),
@@ -92,6 +117,7 @@ const sscConfig = {
       showNumberDetail: false,
       trendOps: {
         periods: trendPeriods,
+        split: 1,
       },
       isOfficial: true,
     }, bettingTypes.SSC),
@@ -103,6 +129,7 @@ const sscConfig = {
       showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
       trendOps: {
         periods: trendPeriods,
+        split: 1,
       },
       isOfficial: true,
     }, bettingTypes.SSC),
@@ -114,6 +141,7 @@ const sscConfig = {
       showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
       trendOps: {
         periods: trendPeriods,
+        split: 1,
       },
       isOfficial: true,
     }, bettingTypes.SSC),
@@ -125,6 +153,7 @@ const sscConfig = {
       showNumberDetail: true,
       trendOps: {
         periods: trendPeriods,
+        split: 1,
       },
       isOfficial: true,
     }, bettingTypes.SSC),
@@ -136,6 +165,7 @@ const sscConfig = {
       showNumberDetail: true,
       trendOps: {
         periods: trendLowPeriods,
+        split: 1,
       },
       isOfficial: true,
     }, bettingTypes.SSC),
@@ -147,6 +177,7 @@ const sscConfig = {
       showNumberDetail: true,
       trendOps: {
         periods: trendLowPeriods,
+        split: 1,
       },
       isOfficial: true,
     }, bettingTypes.SSC),
@@ -158,6 +189,7 @@ const sscConfig = {
       showNumberDetail: true,
       trendOps: {
         periods: trendLowPeriods,
+        split: 1,
       },
       isOfficial: true,
     }, bettingTypes.SSC),
@@ -177,6 +209,7 @@ const oneFiveConfig = {
       badge: '',
       trendOps: {
         periods: trendPeriods,
+        split: 2,
       }
     }, bettingTypes.CHOOSE15),
     Object.assign({
@@ -185,7 +218,9 @@ const oneFiveConfig = {
       zhName: '山东11选5',
       trendOps: {
         periods: trendLowPeriods,
-      }
+        split: 2,
+      },
+      isOfficial: true,
     }, bettingTypes.CHOOSE15),
     Object.assign({
       id: 4,
@@ -193,7 +228,9 @@ const oneFiveConfig = {
       zhName: '广东11选5',
       trendOps: {
         periods: trendLowPeriods,
-      }
+        split: 2,
+      },
+      isOfficial: true,
     }, bettingTypes.CHOOSE15),
     Object.assign({
       id: 11,
@@ -201,7 +238,9 @@ const oneFiveConfig = {
       zhName: '江西11选5',
       trendOps: {
         periods: trendLowPeriods,
-      }
+        split: 2,
+      },
+      isOfficial: true,
     }, bettingTypes.CHOOSE15),
   ],
 }
@@ -214,6 +253,7 @@ const threeDConfig = [
     badge: 'new',
     trendOps: {
       periods: trendPeriods,
+      split: 1,
     }
   }, bettingTypes.THREED),
   Object.assign({
@@ -223,6 +263,7 @@ const threeDConfig = [
     hasMargin: true,
     trendOps: {
       periods: trendLowPeriods,
+      split: 1,
     },
     isOfficial: true,
   }, bettingTypes.THREED),
@@ -245,6 +286,7 @@ const p5p3Config = [
     hasMargin: true,
     trendOps: {
       periods: trendLowPeriods,
+      split: 1,
     }
   }, bettingTypes.P5P3),
 ]
@@ -258,7 +300,9 @@ const bjPKConfig = [
     badge: 'hot',
     trendOps: {
       periods: trendLowPeriods,
+      split: 2,
     },
+    isOfficial: true,
   }, bettingTypes.PK10),
 ]
 
@@ -270,7 +314,9 @@ const quickConfig = [
     hasMargin: true,
     trendOps: {
       periods: trendLowPeriods,
+      split: 1,
     },
+    isOfficial: true,
   }, bettingTypes.QUICK3)
 ]
 
