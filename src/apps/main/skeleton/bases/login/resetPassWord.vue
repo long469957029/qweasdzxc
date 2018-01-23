@@ -140,7 +140,7 @@
                     <label class="control-label">问题一：</label>
                     <div class="controls">
                       <select class="select-qes" v-model="questionFirst" @change="changeQes(1)">
-                        <option v-for="item in questionList" :value="item.qesId" v-show="item.qesId !== questionSelect1">
+                        <option v-for="item in qesFirstList" :value="item.qesId">
                           {{item.question}}
                         </option>
                       </select>
@@ -156,7 +156,7 @@
                     <label class="control-label">问题二：</label>
                     <div class="controls">
                       <select class="select-qes" v-model="questionSecond" @change="changeQes(2)">
-                        <option v-for="item in questionList" :value="item.qesId" v-show="item.qesId !== questionSelect2">
+                        <option v-for="item in qesSecondList" :value="item.qesId">
                           {{item.question}}
                         </option>
                       </select>
@@ -216,12 +216,12 @@
       findTypeNum: 0,
       loginToken: '',
       questionList: [],
+      qesFirstList: [],
+      qesSecondList: [],
       questionFirst: 1,
       answerFirst: '',
       questionSecond: 2,
       answerSecond: '',
-      questionSelect1: 2,
-      questionSelect2: 1,
     }
   }
   export default {
@@ -324,7 +324,15 @@
         resetPwd.getSecurityQuestionXhr({username: this.userName, loginToken: this.loginToken},
           ({data}) => {
             if (data && data.result === 0) {
-              this.questionList = data.root
+              this.questionList = [...data.root]
+              const first = [...data.root]
+              const second = [...data.root]
+              this.qesFirstList = _(first).remove((n)=>{
+                return n.qesId !== 2
+              })
+              this.qesSecondList = _(second).remove((n) => {
+                return n.qesId !== 1
+              })
               this.findTypeNum = 1
             } else {
               Global.ui.notification.show(data.msg === 'fail' ? '密保问题获取请求服务失败' : data.msg)
@@ -336,10 +344,15 @@
         )
       },
       changeQes(num){
+        const arr = [...this.questionList]
         if(num === 1) {
-          this.questionSelect1 = this.questionSecond
+          this.qesSecondList = _(arr).remove((n) => {
+            return n.qesId !== this.questionFirst
+          })
         } else{
-          this.questionSelect2 = this.questionFirst
+          this.qesFirstList = _(arr).remove((n) => {
+            return n.qesId !== this.questionSecond
+          })
         }
 //        this.questionSelect = num === 1 ? this.questionSecond : this.questionFirst
       },

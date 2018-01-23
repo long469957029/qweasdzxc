@@ -1,6 +1,6 @@
 const core = require('mathjs/core')
 
-import { repeat, fill, chunk, cloneDeep, forEachRight } from 'lodash'
+import { repeat, fill, chunk, cloneDeep, forEachRight, remove } from 'lodash'
 
 const math = core.create()
 
@@ -18,6 +18,7 @@ _.mixin({
   fill,
   chunk,
   forEachRight,
+  remove,
   // 首字母大写
   ucFirst(string) {
     return string.replace(/\b\w+\b/g, (word) => {
