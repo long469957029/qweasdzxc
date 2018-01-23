@@ -126,6 +126,45 @@ export default {
         device: 0
       }
     })
-  }
+  },
+
+  //秒秒彩开奖
+  pushMmcBetting({ planId, bet, usePack = 0 }, then, fail) {
+    return Global.sync.axios({
+      url: '/ticket/bet/betMmc.json',
+      data: {
+        // planId,
+        bet,
+        usePack,
+      }
+    })
+      .then(then)
+      .catch(fail)
+  },
+  //秒秒彩模拟开奖
+  pushMmcSimulationBetting({ planId, bet, usePack = 0 }, then, fail) {
+    return Global.sync.axios({
+      url: '/ticket/bet/virtmmc.json',
+      data: {
+        // planId,
+        bet,
+        usePack,
+      }
+    })
+      .then(then)
+      .catch(fail)
+  },
+
+  //取得秒秒彩信息
+  getMmcTicketInfo({ticketId = 19}) {
+    return Global.sync.axios({
+      url: '/ticket/ticketmod/ticketinfoMmc.json',
+      data: {
+        ticketId: ticketId
+      }
+    })
+      .then(then)
+      .catch(fail)
+  },
 }
 

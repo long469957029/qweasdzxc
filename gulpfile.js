@@ -1,5 +1,3 @@
-
-
 const gulp = require('gulp')
 const gutil = require('gulp-util')
 const minfyCss = require('gulp-minify-css')
@@ -25,10 +23,7 @@ const WebpackDevServer = require('webpack-dev-server')
 
 const argv = require('minimist')(process.argv.slice(2))
 
-const devFactory = require('./webpack.dev.factory')
-const productionFactory = require('./webpack.production.factory')
-
-const mainConfig = require('./wp.main.config')
+const webpackConfig = require('./webpack.config')
 const Fontmin = require('fontmin')
 const zip = require('gulp-zip')
 const fs = require('fs')
@@ -45,7 +40,7 @@ const zipPath = []
 
 switch (argv.package) {
   case 'main':
-    packageConfig = mainConfig
+    packageConfig = webpackConfig
     projectPath = 'main'
     zipPath.push('www/main/**')
     break
@@ -53,14 +48,10 @@ switch (argv.package) {
     zipPath.push('www/main/*')
     break
   default:
-    packageConfig = mainConfig
+    packageConfig = webpackConfig
     projectPath = 'main'
     zipPath.push('www/main/**')
     break
-}
-
-if (argv.env === 'uat') {
-  serverIP = 'http://forehead.5x5x.com/'
 }
 
 gulp.task('server', () => {
@@ -69,11 +60,6 @@ gulp.task('server', () => {
 
 // Start a webpack-dev-server
 gulp.task('server.webpack', () => {
-  console.log(serverIP)
-  const devConfig = devFactory({
-    appConfig: packageConfig,
-  })
-
   // let proxy = [
   //   {
   //     path: '*.json',
@@ -129,8 +115,8 @@ gulp.task('server.webpack', () => {
     // },
   })
 
-  new WebpackDevServer(webpack(devConfig), {
-    publicPath: devConfig.output.publicPath,
+  new WebpackDevServer(webpack(packageConfig), {
+    publicPath: packageConfig.output.publicPath,
     hot: true,
     historyApiFallback: true,
     inline:true,
@@ -146,12 +132,12 @@ gulp.task('server.webpack', () => {
     },
     // 取消框架域名检测
     disableHostCheck: true
-  }).listen(devConfig.devServer.port, 'localhost', (err) => {
+  }).listen(packageConfig.devServer.port, 'localhost', (err) => {
     if (err) {
       console.log(err)
     }
 
-    console.log(`Listening at localhost:${devConfig.devServer.port}`)
+    console.log(`Listening at localhost:${packageConfig.devServer.port}`)
   })
 })
 

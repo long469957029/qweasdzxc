@@ -147,6 +147,7 @@
 </template>
 
 <script>
+  import {StaticGrid} from 'build'
   import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
   import ticketConfig from 'skeleton/misc/ticketConfig'
 
