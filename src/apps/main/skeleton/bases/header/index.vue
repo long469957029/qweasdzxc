@@ -592,6 +592,7 @@
       -ms-flex-direction: column;
       border-radius: 7px;
       box-shadow: 0 3px 8px 0 #999999;
+      z-index:1050;
       .launcher-header {
         width: 760px;
         height: 150px;

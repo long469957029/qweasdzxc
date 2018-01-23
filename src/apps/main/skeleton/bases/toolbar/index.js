@@ -28,12 +28,16 @@ const ToolbarView = Base.ItemView.extend({
 
   onRender() {
     const self = this
-    this.subscribe('acct', 'acct:updating', () => {
-      self.$('.js-toolbar-option-operation-container').toggleClass('hidden', false)
+    this.subscribe('acct', 'acct:login', () => {
+      $('.js-toolbar-option-operation-container').removeClass('hidden')
     })
     this.subscribe('acct', 'acct:loginOut', () => {
-      self.$('.js-toolbar-option-operation-container').toggleClass('hidden', true)
+      $('.js-toolbar-option-operation-container').addClass('hidden')
     })
+    const token = Global.cookieCache.get('token')
+    if (token && token !== '' || token !== undefined) {
+      self.$('.js-toolbar-option-operation-container').removeClass('hidden')
+    }
     self.$sidebar = self.$('.js-toolbar-sidebar')
     self.$closeMask = self.$('.js-sidebar-close')
   },
@@ -146,4 +150,4 @@ const ToolbarView = Base.ItemView.extend({
   },
 })
 
-module.exports = ToolbarView
+export default ToolbarView
