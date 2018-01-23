@@ -53,8 +53,8 @@
           </ul>
         </div>
         <div class="step-list clearfix">
-          <transition name="setp-animate">
-            <div class="rp-step-div" v-show="stepsIndex === 0">
+          <transition name="step-animate">
+            <div class="rp-step-div" v-if="stepsIndex === 0">
               <form action="javascript:void(0);" class="form-horizontal rp-step-1-form " ref="verifyUN">
                 <div class="text-center m-TB-md font-sm">请输入您要找回密码的账号</div>
                 <div class="control-group">
@@ -69,10 +69,7 @@
                   <div class="controls">
                     <input type="text" class="input-varCode" @keyup="valCode" v-model="codeVal" name=""
                            placeholder="输入验证码">
-                    <!--<input type="hidden" class="js-rp-valResult" value="1">-->
                     <img class="var-code" :src="codeSrc" @click="refreshValCode">
-                    <!--<span class="js-rp-val-result-div re-val-result-div" id="jsRPValResult"><span-->
-                    <!--class="js-re-val-res"></span></span>-->
                     <div class="text-hot m-top-xs" v-if="codeError">
                       <span class="sfa sfa-error-icon vertical-middle"></span>
                       {{codeErrorText}}
@@ -89,8 +86,8 @@
           </transition>
 
           <!--选择密码找回方式-->
-          <transition name="setp-animate">
-            <div class="rp-step-div" v-show="stepsIndex === 1">
+          <transition name="step-animate">
+            <div class="rp-step-div" v-if="stepsIndex === 1">
               <div class="find-type m-top-md clearfix" v-show="findTypeNum === 0">
                 <div class="type-list">
                   <div class="text-center font-sm m-bottom-md">密保问题</div>
@@ -133,14 +130,14 @@
                   联系，协助解决问题。
                 </div>
               </div>
-              <div v-show="findTypeNum === 1">
+              <div v-if="findTypeNum === 1">
                 <div class="text-center m-TB-md font-sm">请正确输入密保问题</div>
                 <form action="javascript:void(0);" class="form-horizontal rp-step-1-form" ref="verifyQes">
                   <div class="control-group">
                     <label class="control-label">问题一：</label>
                     <div class="controls">
                       <select class="select-qes" v-model="questionFirst" @change="changeQes(1)">
-                        <option v-for="item in qesFirstList" :value="item.qesId">
+                        <option v-for="item in qesFirstList" :value="item">
                           {{item.question}}
                         </option>
                       </select>
@@ -156,7 +153,7 @@
                     <label class="control-label">问题二：</label>
                     <div class="controls">
                       <select class="select-qes" v-model="questionSecond" @change="changeQes(2)">
-                        <option v-for="item in qesSecondList" :value="item.qesId">
+                        <option v-for="item in qesSecondList" :value="item">
                           {{item.question}}
                         </option>
                       </select>
@@ -168,6 +165,10 @@
                       <input type="text" class="qes-input" v-model="answerSecond" required>
                     </div>
                   </div>
+                  <div class="text-hot text-center m-TB-xs" v-if="qesError">
+                    <span class="sfa sfa-error-icon vertical-middle"></span>
+                    {{qesErrorText}}
+                  </div>
                   <div class="text-center">
                     <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyQes">提交</button>
                   </div>
@@ -176,17 +177,26 @@
                   </div>
                 </form>
               </div>
+              <div v-if="findTypeNum === 2 || findTypeNum === 3">
+                <reset-pwd-input :find-type="findTypeNum" :mobile="mobile" :email="email" :user-name="userName"
+                                 :login-token="loginToken" @goprev="goPrev" @gonext="goStepsNext"></reset-pwd-input>
+              </div>
             </div>
           </transition>
           <!--修改登录密码-->
-          <transition name="setp-animate">
-            <div class="rp-step-div" v-show="stepsIndex === 2">
+          <transition name="step-animate">
+            <div class="rp-step-div" v-if="stepsIndex === 2">
+              <reset-set-pwd :user-name="userName" :login-token="loginToken" @gonext="goStepsNext"></reset-set-pwd>
             </div>
           </transition>
 
           <!--完成-->
-          <transition name="setp-animate">
-            <div class="rp-step-div" v-show="stepsIndex === 3">
+          <transition name="step-animate">
+            <div class="rp-step-div" v-if="stepsIndex === 3">
+              <div class="info text-cool m-TB-lg font-md text-center">
+                <span class="sfa sfa-checkmark-blue vertical-middle"></span>
+                您的新密码已经设置成功！
+              </div>
             </div>
           </transition>
         </div>
@@ -195,7 +205,13 @@
   </div>
 </template>
 <script>
-  import resetPwd from '../../../../api/resetPwd'
+  import {
+    valCodeXhr,
+    verifyUserNameXhr,
+    getSecurityQuestionXhr,
+    verifySecurityQuestionXhr} from 'api/resetPwd'
+  import resetPwdInput from './resetPwdInput'
+  import resetSetPwd from './resetSetPwd'
 
   const initData = function () {
     return {
@@ -213,20 +229,26 @@
       hasBindMail: false,
       email: '',
       mobile: '',
-      findTypeNum: 0,
+      findTypeNum: 0, // 选择找回密码方式id
       loginToken: '',
       questionList: [],
       qesFirstList: [],
       qesSecondList: [],
-      questionFirst: 1,
+      questionFirst: {},
       answerFirst: '',
-      questionSecond: 2,
+      questionSecond: {},
       answerSecond: '',
+      qesError:false,
+      qesErrorText: '',
     }
   }
   export default {
     name: 'reset-pwd',
     data: initData,
+    components:{
+      resetPwdInput,
+      resetSetPwd
+    },
     watch: {
       resetPassWordDialogStatus(resetPassWordDialogStatus) {
         if (resetPassWordDialogStatus) {
@@ -258,7 +280,7 @@
       },
       valCode(){
         if (this.codeVal && this.codeVal !== '' && this.codeVal.length === 4) {
-          resetPwd.valCodeXhr({
+          valCodeXhr({
               code: this.codeVal
             },
             ({data}) => {
@@ -288,7 +310,7 @@
           return false
         }
         if (status) {
-          resetPwd.verifyUserNameXhr({username: this.userName, verifyCode: this.codeVal},
+          verifyUserNameXhr({username: this.userName, verifyCode: this.codeVal},
             ({data}) => {
               if (data && data.result === 0) {
                 this.hasBindQes = data.root.qesStatus === 1
@@ -302,11 +324,11 @@
                 this.codeError = true
                 this.codeErrorText = '用户名验证失败'
               }
-            }),
+            },
             ({data}) => {
               this.codeError = true
               this.codeErrorText = '验证用户名请求失败'
-            }
+            })
         }
       },
       findType(type){
@@ -321,18 +343,14 @@
         }
       },
       getQeqList(){
-        resetPwd.getSecurityQuestionXhr({username: this.userName, loginToken: this.loginToken},
+        getSecurityQuestionXhr({username: this.userName, loginToken: this.loginToken},
           ({data}) => {
             if (data && data.result === 0) {
               this.questionList = [...data.root]
-              const first = [...data.root]
-              const second = [...data.root]
-              this.qesFirstList = _(first).remove((n)=>{
-                return n.qesId !== 2
-              })
-              this.qesSecondList = _(second).remove((n) => {
-                return n.qesId !== 1
-              })
+              this.questionFirst = data.root[0]
+              this.questionSecond = data.root[1]
+              this.qesFirstList  = [...data.root]
+              this.qesSecondList  = [...data.root]
               this.findTypeNum = 1
             } else {
               Global.ui.notification.show(data.msg === 'fail' ? '密保问题获取请求服务失败' : data.msg)
@@ -347,20 +365,56 @@
         const arr = [...this.questionList]
         if(num === 1) {
           this.qesSecondList = _(arr).remove((n) => {
-            return n.qesId !== this.questionFirst
+            return n.qesId !== this.questionFirst.qesId
           })
         } else{
           this.qesFirstList = _(arr).remove((n) => {
-            return n.qesId !== this.questionSecond
+            return n.qesId !== this.questionSecond.qesId
           })
         }
-//        this.questionSelect = num === 1 ? this.questionSecond : this.questionFirst
       },
       verifyQes(){
-
+        const status = $(this.$refs.verifyQes).parsley().validate()
+        if(status){
+          const secrityList = [
+            {
+              securityId: this.questionFirst.qesId,
+              securityQes: this.questionFirst.question,
+              securityAsw: this.answerFirst,
+            },
+            {
+              securityId: this.questionSecond.qesId,
+              securityQes: this.questionSecond.question,
+              securityAsw: this.answerSecond,
+            }
+            ]
+          verifySecurityQuestionXhr({username: this.userName, loginToken: this.loginToken, secrityList},
+            ({data}) =>{
+              if(data && data.result === 0){
+                this.goStepsNext()
+              } else if (data.root != null && _(data.root).isNumber()) {
+                if (data.root > 0) {
+                  this.qesErrorText =  `验证失败,剩余${res.root}次机会。`
+                } else {
+                  this.qesErrorText =  '验证失败,请一个小时后再验证！'
+                }
+                this.qesError = true
+              } else{
+                this.qesError = true
+                this.qesErrorText =  `验证失败,${data.msg}`
+              }
+            },
+            ({data})=>{
+              this.qesError = true
+              this.qesErrorText = '密保问题验证请求失败'
+            })
+        }
       },
       goPrev(){
-        this.findTypeNum -= 1
+        this.findTypeNum = 0
+      },
+      goStepsNext(){
+        this.stepsIndex += 1
       }
     },
     mounted(){
@@ -369,18 +423,18 @@
     }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   @mixin transition-cfg {
     transition: all .5s;
   }
-  .setp-animate-enter {
+  .step-animate-enter {
     opacity: 0;
   }
   .step-animate-enter-active {
     transition: all .5s .5s;
   }
 
-  .setp-animate-leave-active {
+  .step-animate-leave-active {
     transform: translateX(-600px);
     opacity: 0;
     @include transition-cfg;
@@ -397,6 +451,9 @@
     border-radius: 5px;
     background-color: $def-white-color;
     margin: 0 auto;
+    .filled{
+      margin-left: 0px;
+    }
     .reset-header {
       width: 800px;
       height: 60px;
@@ -417,8 +474,9 @@
       padding: 20px 0px;
       /*overflow: hidden;*/
       .step-list {
-        position: relative;
+        /*position: relative;*/
         /*min-height: 266px;*/
+        display: flex;
       }
       .reset-input {
         width: 348px;
@@ -443,9 +501,9 @@
       }
       .rp-step-div {
         width: 600px;
-        position: relative;
+        /*position: relative;*/
         background-color: $def-white-color;
-        left: 40px;
+        margin-left: 40px;
       }
       .var-code {
         width: 110px;
@@ -502,6 +560,10 @@
         width: 348px;
         height: 36px;
         background-color: $def-white-color;
+      }
+      .info{
+        height: 40px;
+        line-height: 40px;
       }
     }
   }
