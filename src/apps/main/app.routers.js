@@ -19,6 +19,7 @@ import gameCenterRouter from 'gameCenter/router'
 import mallCenterRouter from 'mallCenter/router'
 import analysisCenterRouter from './analysisCenter/router'
 import mobileBetCenterRouter from './mobileBetCenter/router'
+import aboutUsRouter from './aboutUs/router'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,8 @@ export const install = () => {
       ...dashboardRouter,
       // 手机投注
       ...mobileBetCenterRouter,
+      // 关于我们
+      ...aboutUsRouter,
     ],
   })
 }

@@ -17,9 +17,13 @@ $navbar-container-color: white;
 
 
 }
-
+.main-top{
+  position: relative;
+  z-index: 1;
+}
 .navbar-container {
   background-color: $navbar-container-color;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .4);
 }
 .nav {
   position: relative;
