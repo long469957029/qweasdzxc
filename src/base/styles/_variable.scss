@@ -715,6 +715,10 @@ $text-circle-colors: (
 );
 
 $text-circle-sizes: (
+  xs: (
+    width: 28px,
+    font-size: $font-sm
+  ),
   sm: (
     width: 35px,
     font-size: $font-jb

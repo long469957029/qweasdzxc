@@ -138,7 +138,6 @@ const actions = {
         { planId, bet, usePack: state.usePack },
         ({ data }) => {
           resolve(data)
-          return commit(types.PUSH_BETTING_SUCCESS, { res: data, type })
         },
         () => { return commit(types.PUSH_BETTING_FAILURE) },
       )

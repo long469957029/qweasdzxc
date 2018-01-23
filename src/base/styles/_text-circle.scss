@@ -10,6 +10,10 @@
 
   @include text-circle-size('md', $text-circle-sizes);
 
+  &.text-circle-xs {
+    @include text-circle-size('xs', $text-circle-sizes);
+  }
+
   &.text-circle-sm {
     @include text-circle-size('sm', $text-circle-sizes);
   }
