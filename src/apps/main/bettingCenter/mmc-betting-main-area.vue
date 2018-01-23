@@ -221,6 +221,11 @@
 
   let recordsOpenView
 
+  //TODO 开奖立即停止
+  //TODO 最终结果展示
+  //TODO 连续开奖选矿
+  //TODO nav
+  //TODO 停止时按钮的变化
   export default {
     name: "mmc-betting-main-area",
     props: {
