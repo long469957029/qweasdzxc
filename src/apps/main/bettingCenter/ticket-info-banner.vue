@@ -43,12 +43,7 @@
                              :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.defaultOpening"
                              v-else-if="ticketInfo.openingType === 'mark-balls'"
         ></opening-mark6-balls>
-        <!--<div class="bc-last-plan-results pull-left" v-if="bettingInfo.sale && bettingInfo.pending">-->
-        <!--<span class="text-circle">等</span>-->
-        <!--<span class="text-circle">待</span>-->
-        <!--<span class="text-circle">开</span>-->
-        <!--<span class="text-circle">奖</span>-->
-        <!--</div>-->
+
         <div class="bc-hgcalculate-example" v-if="ticketInfo.showNumberDetail&& calculateStatus">
           <div class="bc-hgcaculate-examplerow">万位:<span v-html="calculateInfo ? calculateInfo.wan : ''"></span></div>
           <div class="bc-hgcaculate-examplerow">千位:<span v-html="calculateInfo ? calculateInfo.qian : ''"></span></div>
@@ -64,10 +59,10 @@
         <span class="sfa sfa-bc-icon-open-num vertical-middle"></span>
         开奖号码
       </router-link>
-      <router-link :to="'trend.html?ticketId=' + ticketInfo.id" target="_blank" class="entry-list-trend">
+      <a :href="`trend.html?ticketId=${ticketInfo.id}`" target="_blank" class="entry-list-trend">
         <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
         号码走势
-      </router-link>
+      </a>
       <router-link :to="`#hc?page=${ticketInfo.type}`" class="router entry-list-des">
         <span class="sfa sfa-bc-icon-des vertical-middle"></span>
         游戏说明

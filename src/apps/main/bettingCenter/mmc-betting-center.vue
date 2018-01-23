@@ -26,7 +26,6 @@
 
     data() {
       return {
-        bettingType: 1,
         ticketInfo: {},
         ticketList: ticketConfig.getCompleteAll(),
       }
@@ -38,13 +37,7 @@
 
           // 暂时在这重置bettingChoice
           this.$store.commit(types.RESET_BETTING_CHOICE)
-          this.$store.commit(types.CHECKOUT_TICKET_INFO)
 
-          // 取得当前彩票信息
-          this.$store.dispatch('getTicketInfo', {
-            ticketId: this.ticketId,
-            type: this.ticketType,
-          })
           // 取得当前彩票规则
           this.$store.dispatch('getTicketRules', {
             ticketId: this.ticketId,

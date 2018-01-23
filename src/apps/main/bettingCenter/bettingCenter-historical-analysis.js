@@ -125,6 +125,11 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
   },
 
+
+  updateTicketId(ticketId) {
+    this.options.ticketId = ticketId
+  },
+
   onRender() {
     this.$hisNum = this.$('.js-bc-his-num')
     this.$drawRecords = this.$('.js-his-draw')

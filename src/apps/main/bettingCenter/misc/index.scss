@@ -1,8 +1,7 @@
 @charset "UTF-8";
 
 @import "~base/styles/imports",
-'~uiCom/tab-toolbar/index.scss',
-'~uiCom/pulse/index.scss';
+'~uiCom/tab-toolbar/index.scss';
 
 .bc-play-main {
   user-select: none;
@@ -28,6 +27,7 @@
     .tab-toolbar {
       margin-bottom: 0;
       padding-left: 10px;
+      position: relative;
       .tab.active {
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
@@ -62,6 +62,36 @@
         color: $def-white-color;
         background-color: $main-deep-color;
         border-color: $main-deep-color;
+      }
+    }
+  }
+  .bc-lottery-preview {
+    &.mmc {
+      .table{
+        background-color: transparent;
+        thead th {
+          background-color: transparent;
+          color: $def-black-color;
+        }
+      }
+    }
+
+    .table th, .table td {
+      padding: 6px 3px;
+      font-size: 12px;
+    }
+
+    .bc-lottery-clear {
+      width: 47px;
+      height: 22px;
+      border: 1px solid #c9c9c9;
+      text-align: center;
+      line-height: 22px;
+      border-radius: 5px;
+      background: linear-gradient(to bottom, #fafafa, #e4e4e4);
+      transition: background 1s;
+      &:hover {
+        background: linear-gradient(to bottom, #f1f1f1, #e4e4e4);
       }
     }
   }
@@ -176,57 +206,6 @@
   }
 }
 
-.bc-lottery-preview {
-  width: 878px;
-  margin-right: 10px;
-  border-radius: $globalBtnRadius;
-  border: 1px solid $def-gray-color;
-
-  .table th, .table td {
-    padding: 6px 3px;
-    font-size: 12px;
-  }
-
-  .bc-lottery-clear {
-    width: 47px;
-    height: 22px;
-    border: 1px solid #c9c9c9;
-    text-align: center;
-    line-height: 22px;
-    border-radius: 5px;
-    background: linear-gradient(to bottom, #fafafa, #e4e4e4);
-    transition: background 1s;
-    &:hover {
-      background: linear-gradient(to bottom, #f1f1f1, #e4e4e4);
-    }
-  }
-}
-
-.db-ticket-bread-item {
-  &.active {
-    a {
-      color: #02eefd;
-    }
-  }
-}
-
-.control-inline {
-  display: inline-block;
-  margin-right: 50px;
-}
-
-.bc-profit-normalAmount {
-  margin-right: 39px;
-}
-
-.bc-chase-normal-planId {
-  width: 195px;
-}
-
-.bc-lottery-preview-del {
-  margin-top: 2px;
-}
-
 .bc-monitor {
   width: 35px;
 }
@@ -240,76 +219,6 @@
   height: 38px;
   font-size: 14px;
   line-height: 24px;
-}
-
-.bc-togglePage-btn {
-  background-color: #fff;
-  color: #666666;
-  border: 1px solid #878585;
-  width: 240px;
-  padding: 6px;
-}
-
-.bc-togglePage-btn.active {
-  color: #f0efee;
-  background-color: #e8675d;
-}
-
-.bc-page-control {
-  padding-left: 100px;
-  margin: 10px 0;
-}
-
-.text-circle.circle-sm {
-  margin-right: 5px;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
-  font-size: 16px;
-  margin-bottom: 8px;
-  margin-top: 8px;
-}
-
-.js-bc-last-plan-results2 {
-  //position: relative;
-  //z-index: 99;
-  padding-top: 10px;
-}
-
-.num {
-  //position: absolute;
-  position: relative;
-  display: inline-block;
-  //left: 248px;
-  //top: 171px;
-  //width: 124px;
-  width: 28px;
-  //height: 198px;
-  height: 25px;
-  overflow: hidden;
-}
-
-.num-con {
-  position: relative;
-  //top:-430px;
-  top: 0px;
-}
-
-.num-img {
-  background: url("~base/images/openNum.png") no-repeat;
-  //width: 124px;
-  //height: 1298px;
-  width: 25px;
-  height: 300px;
-  //margin-bottom: 4px;
-  background-size: 100%;
-}
-
-.no-num-img {
-  background: url("~base/images/noNum.png") no-repeat;
-  width: 25px;
-  height: 30px;
-  background-size: 100%;
 }
 
 .bc-hgcaculate-examplerow {
@@ -337,85 +246,8 @@
   padding: 5px 0;
   margin-bottom: 4px;
 }
-
-.all-clear {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: auto !important;
-  height: 18px;
-  border: 0;
-  background-color: transparent;
-  background-image: url("~base/images/sprites/assets/all-clear.png");
-  background-repeat: no-repeat;
-  background-position-y: center;
-  line-height: 18px;
-  padding-left: 23px;
-  margin-left: 600px;
-  margin-bottom: -66px;
-  color: #000;
-  cursor: pointer;
-  &:hover {
-    background-color: transparent;
-    border: 0;
-    color: #000;
-  }
-}
-
 .bc-popover-exp {
   border-bottom: 1px dashed $def-gray-color;
   padding-bottom: 5px;
   margin-bottom: 5px;
 }
-
-//** animate **
-@keyframes bounceInRight {
-
-  from, 60%, 75%, 90%, to {
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-  }
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(1200px, 0, 0);
-    transform: translate3d(1200px, 0, 0);
-  }
-  60% {
-    opacity: 1;
-    z-index: 2;
-    -webkit-transform: translate3d(-1225px, 0, 0);
-    transform: translate3d(-1225px, 0, 0);
-  }
-  75% {
-    -webkit-transform: translate3d(-1190px, 0, 0);
-    transform: translate3d(-1190px, 0, 0);
-  }
-  90% {
-    -webkit-transform: translate3d(-1200px, 0, 0);
-    transform: translate3d(-1200px, 0, 0);
-  }
-  to {
-    -webkit-transform: translate3d(-1200px, 0, 0);
-    transform: translate3d(-1200px, 0, 0);
-  }
-}
-
-@keyframes ticketZoomInUp {
-
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(.1, .1, .1) translate3d(0, 1000px, 0);
-    transform: scale3d(.1, .1, .1) translate3d(0, 1000px, 0);
-    -webkit-animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
-    animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
-  }
-  60% {
-    opacity: 1;
-    -webkit-transform: scale3d(.475, .475, .475) translate3d(0, -60px, 0);
-    transform: scale3d(.475, .475, .475) translate3d(0, -60px, 0);
-    -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
-    animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
-  }
-}
-
-//** animate **

@@ -1,5 +1,4 @@
-import ticketConfig from 'skeleton/misc/ticketConfig'
-import betting from '../../../api/betting'
+import {pushBettingApi, pushChaseApi} from 'api/betting'
 
 const initState = () => {
   return {
@@ -74,7 +73,7 @@ const actions = {
     }, [])
 
     return new Promise((resolve) => {
-      betting.pushBetting(
+      pushBettingApi(
         { planId, bet, usePack: state.usePack },
         ({ data }) => {
           resolve(data)
@@ -103,7 +102,7 @@ const actions = {
     }, [])
 
     return new Promise((resolve) => {
-      betting.pushChase(
+      pushChaseApi(
         {
           plan, play, suspend, usePack: state.usePack, amount,
         },

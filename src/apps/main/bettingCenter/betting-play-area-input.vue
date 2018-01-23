@@ -1,5 +1,5 @@
 <template>
-  <div class="play-area-input">
+  <div class="play-area-input" :class="componentType || ''">
     <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals"
                                 @positionChange="positionChange"></betting-play-area-position>
 
@@ -41,6 +41,10 @@
 
     props: {
       playRule: Object,
+      componentType: {
+        type: String,
+        default: ''
+      },
     },
 
     data: function () {

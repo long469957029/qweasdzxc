@@ -1,7 +1,11 @@
 @charset "UTF-8";
 
 @import '../../../misc/mixin';
-@import '../../../misc/variable';
+
+$nav-height: 70px;
+$nav-item-horizontal-padding: 20px;
+$nav-item-vertical-padding: 5px;
+$navbar-container-color: white;
 
 .nav-main {
   height: $nav-height;
@@ -319,7 +323,7 @@
     .sfa-mall-sport-icon {
       width: 25px;
       height: 25px;
-      background: darken($background-gray, 50%);;
+      background: darken($font-auxiliary-color, 50%);;
       border-radius: 20px;
       margin-right: 20px;
     }
@@ -418,7 +422,7 @@
 
   .entry-item-title {
     font-size: 16px;
-    color: $font-gray;
+    color: $new-inverse-color;
     margin-bottom: 10px
   }
 
@@ -510,7 +514,7 @@
 
     > a{
       font-size: 12px;
-      color: $font-gray;
+      color: $new-inverse-color;
       background: transparent;
       transition: color .3s;
     }

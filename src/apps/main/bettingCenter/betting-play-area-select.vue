@@ -30,7 +30,7 @@
 
             <div class="tab-toolbar" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
 
-              <div class="js-bc-select-item-title tab-title" v-if="fRule.row.title && fRule.row.title !== '无'">
+              <div class="select-item-title tab-title" v-if="fRule.row.title && fRule.row.title !== '无'">
                 <div>{{fRule.row.title}}</div>
                 <transition
                   enter-active-class="animated fadeIn"
@@ -40,7 +40,7 @@
                   <div class="miss-title" v-if="showCold && playRule.analysis">冷热</div>
                 </transition>
               </div>
-              <div class="js-bc-select-item-title tab-title" v-else-if="!fRule.row.title">
+              <div class="select-item-title tab-title" v-else-if="!fRule.row.title">
                 <div>号码</div>
                 <transition
                   name="custom-classes-transition"
@@ -529,12 +529,18 @@
     }
     .tab-toolbar {
       .tab-group {
-        margin-left: 15px;
+        margin-left: 10px;
       }
       &.tab-border {
         .tab {
-          width: 14px;
+          width: 17px;
         }
+      }
+    }
+    .select-item-title {
+      margin-left: 10px;
+      > div {
+        min-width: 45px;
       }
     }
   }

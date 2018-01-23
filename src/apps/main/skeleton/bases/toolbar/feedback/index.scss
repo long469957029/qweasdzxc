@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-@import '../../../../misc/variable';
 @import '../../../../misc/mixin';
 
 .feedback-panel {
@@ -54,7 +53,7 @@
       line-height: 40px;
       padding: 10px 20px;
       font-size: 16px;
-      color: $font-gray;
+      color: $new-inverse-color;
     }
     .feedback-select-container {
       vertical-align: top;

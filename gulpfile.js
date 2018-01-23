@@ -1,9 +1,5 @@
-
-
 const gulp = require('gulp')
 const gutil = require('gulp-util')
-const uglify = require('gulp-uglify')
-// const concat = require('gulp-concat')
 const minfyCss = require('gulp-minify-css')
 const path = require('path')
 const del = require('del')
@@ -27,19 +23,14 @@ const WebpackDevServer = require('webpack-dev-server')
 
 const argv = require('minimist')(process.argv.slice(2))
 
-const devFactory = require('./webpack.dev.factory')
-const productionFactory = require('./webpack.production.factory')
-
-const mainConfig = require('./wp.main.config')
-const externalConfig = require('./wp.external.config')
+const webpackConfig = require('./webpack.config')
 const Fontmin = require('fontmin')
 const zip = require('gulp-zip')
-const svgo = require('imagemin-svgo')
 const fs = require('fs')
 const rename = require('gulp-rename')
 const fontConfig = require('./font-config.json')
 
-var dllConfig = require('./webpack.dll.config');
+const dllConfig = require('./webpack.dll.config');
 
 let serverIP = 'http://forehead.5x5x.com'
 
@@ -49,27 +40,18 @@ const zipPath = []
 
 switch (argv.package) {
   case 'main':
-    packageConfig = mainConfig
+    packageConfig = webpackConfig
     projectPath = 'main'
     zipPath.push('www/main/**')
-    break
-  case 'external':
-    packageConfig = externalConfig
-    projectPath = 'external'
-    zipPath.push('www/external/**')
     break
   case 'all':
-    zipPath.push('www/main/*', 'www/external/**')
+    zipPath.push('www/main/*')
     break
   default:
-    packageConfig = mainConfig
+    packageConfig = webpackConfig
     projectPath = 'main'
     zipPath.push('www/main/**')
     break
-}
-
-if (argv.env === 'uat') {
-  serverIP = 'http://forehead.5x5x.com/'
 }
 
 gulp.task('server', () => {
@@ -78,11 +60,6 @@ gulp.task('server', () => {
 
 // Start a webpack-dev-server
 gulp.task('server.webpack', () => {
-  console.log(serverIP)
-  const devConfig = devFactory({
-    appConfig: packageConfig,
-  })
-
   // let proxy = [
   //   {
   //     path: '*.json',
@@ -138,8 +115,8 @@ gulp.task('server.webpack', () => {
     // },
   })
 
-  new WebpackDevServer(webpack(devConfig), {
-    publicPath: devConfig.output.publicPath,
+  new WebpackDevServer(webpack(packageConfig), {
+    publicPath: packageConfig.output.publicPath,
     hot: true,
     historyApiFallback: true,
     inline:true,
@@ -155,12 +132,12 @@ gulp.task('server.webpack', () => {
     },
     // 取消框架域名检测
     disableHostCheck: true
-  }).listen(devConfig.devServer.port, 'localhost', (err) => {
+  }).listen(packageConfig.devServer.port, 'localhost', (err) => {
     if (err) {
       console.log(err)
     }
 
-    console.log(`Listening at localhost:${devConfig.devServer.port}`)
+    console.log(`Listening at localhost:${packageConfig.devServer.port}`)
   })
 })
 

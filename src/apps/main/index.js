@@ -2,7 +2,7 @@ const App = require('./app')
 const modules = require('skeleton/modules')
 
 import Vue from 'vue'
-import AnimatedInteger from 'com/animated-integer'
+import {AnimatedInteger} from 'build'
 import store from '../store/index'
 
 import MainHeader from 'skeleton/bases/header'
@@ -48,7 +48,7 @@ router.onReady(() => {
 router.beforeEach((to, from, next) => {
   if (store.getters.checkPermission(to.path)) {
     let isVue = false
-    _(['/bc', '/analysis', '/i', '/aa']).each((bcRouter) => {
+    _(['/bc', '/analysis', '/i', '/aa','/mb']).each((bcRouter) => {
       if (to.path.indexOf(bcRouter) !== -1) {
         isVue = true
       }

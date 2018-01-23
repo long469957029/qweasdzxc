@@ -1,4 +1,4 @@
-import betting from '../../../api/betting'
+import {setTopCurrentTicketApi, getTopTicketsApi} from 'api/betting'
 
 const initState = () => {
   return {
@@ -34,7 +34,7 @@ const actions = {
         return
       }
 
-      betting.getTopTickets(
+      getTopTicketsApi(
         { type },
         ({ data }) => {
           resolve(data)
@@ -53,7 +53,7 @@ const actions = {
     type,
   }) {
     return new Promise((resolve) => {
-      betting.setTopCurrentTicket(
+      setTopCurrentTicketApi(
         { ticketId, type },
         ({ data }) => {
           resolve(data)
