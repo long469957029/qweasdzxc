@@ -175,7 +175,6 @@ export default {
 </script>
 <style lang='scss' scoped>
 @import "../misc/mixin";
-@import "../misc/variable";
 
 .aa-banner {
   @include banner-background("misc/aa-banner.png");

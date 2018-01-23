@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-@import '../../../../misc/variable';
 @import '../../../../misc/mixin';
 
 @mixin float-item($font-size, $color, $width, $height, $margin) {
@@ -105,7 +104,7 @@
 
   .fund-transfer-amount {
     font-size: 14px;
-    color: $font-gray;
+    color: $new-inverse-color;
   }
   .pocket-transfer-container {
     border-top: 2px solid $def-line-color;
@@ -195,8 +194,8 @@
         font-size: 12px;
         text-align: center;
         margin-top: 7px;
-        color: $font-gray;
-        border: 1px solid $font-gray;
+        color: $new-inverse-color;
+        border: 1px solid $new-inverse-color;
         padding: 0 3px;
         border-radius: 3px;
 

@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-@import '../misc/variable';
 @import '../misc/mixin';
 
 [class*="col-"] {
@@ -415,7 +414,7 @@
   }
 
   .win-item-name {
-    color: $font-gray;
+    color: $new-inverse-color;
     font-size: 12px;
     text-align: left;
     float: left;
@@ -478,7 +477,7 @@
     text-align: center;
     bottom: -40px;
     font-size: 14px;
-    color: $font-gray;
+    color: $new-inverse-color;
   }
 }
 

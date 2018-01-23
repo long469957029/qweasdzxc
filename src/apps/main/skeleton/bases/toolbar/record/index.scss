@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-@import '../../../../misc/variable';
 @import '../../../../misc/mixin';
 
 @mixin float-item($font-size, $color, $width, $height, $margin) {
@@ -93,7 +92,7 @@
       height: 76px;
 
       .game-date, .game-title {
-        @include float-item(14px, $font-gray, 50%, 30px, 0);
+        @include float-item(14px, $new-inverse-color, 50%, 30px, 0);
         font-size: 12px;
       }
 

@@ -202,7 +202,7 @@
         flashIndex: 0,
 
         lotteryGridOps: {
-          wrapperClass: 'bc-lottery-preview table mmc',
+          wrapperClass: 'bc-lottery-preview mmc',
           colModel: [
             {
               label: '玩法', name: 'title', key: true, width: '15%',
@@ -778,28 +778,6 @@
     position: relative;
     left: 24px;
     top: 20px;
-    .table thead th {
-      background: $def-white-color;
-    }
-
-    .table th, .table td {
-      padding: 6px 3px;
-      font-size: 12px;
-    }
-
-    .bc-lottery-clear {
-      width: 47px;
-      height: 22px;
-      border: 1px solid #c9c9c9;
-      text-align: center;
-      line-height: 22px;
-      border-radius: 5px;
-      background: linear-gradient(to bottom, #fafafa, #e4e4e4);
-      transition: background 1s;
-      &:hover {
-        background: linear-gradient(to bottom, #f1f1f1, #e4e4e4);
-      }
-    }
   }
 
   .bc-entry-list {
