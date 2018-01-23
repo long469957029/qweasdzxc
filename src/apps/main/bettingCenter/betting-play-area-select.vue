@@ -529,11 +529,11 @@
     }
     .tab-toolbar {
       .tab-group {
-        margin-left: 15px;
+        margin-left: 10px;
       }
       &.tab-border {
         .tab {
-          width: 14px;
+          width: 17px;
         }
       }
     }
