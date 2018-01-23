@@ -127,6 +127,7 @@ const getColdHotApi = ({ ticketId, playSeriesId }, then) => {
     data: {
       ticketId,
       playSeriesId,
+      platform:2,
       token: 'a8d60d17-2957-450a-9421-0749c2621704',
     },
     dataType: 'jsonp',
@@ -192,18 +193,18 @@ const setTopCurrentTicketApi = ({ticketId, type = 0}) => {
 
 /**
  * 秒秒彩开奖
- * @param planId
  * @param bet
  * @param usePack
  * @param then
  * @param fail
  * @returns {*|Promise<T>}
  */
-const pushMmcBettingApi = ({ planId, bet, usePack = 0 }, then, fail) => {
+const pushMmcBettingApi = ({bet, usePack = 0 }, then, fail) => {
   return Global.sync.axios({
     url: '/ticket/bet/betMmc.json',
+    tradition: true,
     data: {
-      // planId,
+      planId: 'mmc',
       bet,
       usePack,
     }
@@ -221,14 +222,9 @@ const pushMmcBettingApi = ({ planId, bet, usePack = 0 }, then, fail) => {
  * @param fail
  * @returns {*|Promise<T>}
  */
-const pushMmcSimulationBettingApi = ({ planId, bet, usePack = 0 }, then, fail) => {
+const pushMmcSimulationBettingApi = (then, fail) => {
   return Global.sync.axios({
     url: '/ticket/bet/virtmmc.json',
-    data: {
-      // planId,
-      bet,
-      usePack,
-    }
   })
     .then(then)
     .catch(fail)
@@ -239,7 +235,7 @@ const pushMmcSimulationBettingApi = ({ planId, bet, usePack = 0 }, then, fail) =
  * @param ticketId
  * @returns {*|Promise<T>}
  */
-const getMmcTicketInfoApi = ({ticketId = 19}) => {
+const getMmcTicketInfoApi = ({ticketId = 19}, then ,fail) => {
   return Global.sync.axios({
     url: '/ticket/ticketmod/ticketinfoMmc.json',
     data: {

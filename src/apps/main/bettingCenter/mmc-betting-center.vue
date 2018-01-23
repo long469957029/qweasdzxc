@@ -40,7 +40,7 @@
           this.$store.commit(types.CHECKOUT_TICKET_INFO)
 
           // 取得当前彩票信息
-          this.$store.dispatch(types.GET_TICKET_INFO, {
+          this.$store.dispatch(types.GET_MMC_TICKET_INFO, {
             ticketId: this.ticketId,
             type: this.ticketType,
           })
@@ -60,7 +60,6 @@
   .bc-main {
     max-width: 1227px;
     margin: 0 auto;
-    overflow: hidden;
   }
 
   .bc-main-wrapper {

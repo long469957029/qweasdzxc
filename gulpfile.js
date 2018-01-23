@@ -165,11 +165,8 @@ gulp.task('release', (cb) => {
 })
 
 gulp.task('webpack', (callback) => {
-  const productionConfig = productionFactory({
-    appConfig: packageConfig,
-  })
 
-  webpack(productionConfig, (err, stats) => {
+  webpack(packageConfig, (err, stats) => {
     if (err) throw new gutil.PluginError('webpack', err)
     gutil.log('[webpack]', stats.toString({
       // output options
@@ -301,11 +298,7 @@ gulp.task('release.clean', (callback) => {
 gulp.task('release.build', (callback) => {
   del(`./dist/${projectPath}/*`)
 
-  const productionConfig = productionFactory({
-    appConfig: packageConfig,
-  })
-
-  webpack(productionConfig, (err, stats) => {
+  webpack(packageConfig, (err, stats) => {
     if (err) throw new gutil.PluginError('webpack', err)
     gutil.log('[webpack]', stats.toString({
       // output options
@@ -318,30 +311,28 @@ gulp.task('release.build', (callback) => {
 gulp.task('release.js', (cb) => {
   return pump([
     gulp.src([`./dist/${projectPath}/*.js`]),
-    gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath))
+    gulp.dest(path.join('./www/', projectPath))
   ], cb)
 })
 
 // 压缩转移css
 gulp.task('release.css', () => {
   return gulp.src([`./dist/${projectPath}/*.css`])
-    .pipe(minfyCss({
-      compatibility: 'ie8',
-    }))
-    .pipe(gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath)))
+    .pipe(minfyCss())
+    .pipe(gulp.dest(path.join('./www/', projectPath)))
 })
 
 // 压缩转移其它资源 assets
 gulp.task('release.assets', () => {
   return gulp.src([`./dist/${projectPath}/*.+(jpg|png|gif|eot|woff|svg|tff|eot|woff2|swf|ico|mp3|wav)`])
-    .pipe(gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath)))
+    .pipe(gulp.dest(path.join('./www/', projectPath)))
   // .pipe(gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath + '/' + packageConfig.output.publicPath)));
 })
 
 // 压缩转移css
 gulp.task('release.html', () => {
   return gulp.src([`./dist/${projectPath}/*.html`])
-    .pipe(gulp.dest(path.join(`./www/${packageConfig.output.path}/`)))
+    .pipe(gulp.dest(path.join('./www/', projectPath)))
 })
 
 // 打压缩包，默认打www/main程序包，gulp zip --package=external，打external文件夹下的压缩包，gulp zip --package=all，将mian和external两个文件夹下的所有文件一起打包
@@ -391,6 +382,7 @@ gulp.task('font.minimal', (cb) => {
     if (_(fontInfo.targets).contains('eot')) {
       fontmin.use(Fontmin.ttf2eot())
     }
+
 
     if (_(fontInfo.targets).contains('woff')) {
       fontmin.use(Fontmin.ttf2woff({

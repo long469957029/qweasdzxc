@@ -9,5 +9,16 @@
       "eot",
       "svg"
     ]
+  },
+  {
+    "font": "AdobeHeitiStd-Regular.ttf",
+    "dest": "./src/base/fonts",
+    "target": "AdobeHeitiStd-Regular",
+    "text": "1234567890/正在开奖第期",
+    "targets": [
+      "woff",
+      "eot",
+      "svg"
+    ]
   }
 ]

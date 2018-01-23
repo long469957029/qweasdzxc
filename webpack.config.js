@@ -499,7 +499,7 @@ if (DEV) {
 module.exports = {
   devtool: DEV ? 'eval-source-map' : false,
   entry,
-  output: output,
+  output,
   externals: {
     '$': 'jQuery'
   },

@@ -1,4 +1,4 @@
-import {getTicketInfoApi} from 'api/betting'
+import {getTicketInfoApi, getMmcTicketInfoApi} from 'api/betting'
 
 const initState = () => {
   return {
@@ -48,6 +48,14 @@ const actions = {
       ({ data }) => { return commit(types.GET_TICKET_INFO_SUCCESS, data) },
     )
   },
+  [types.GET_MMC_TICKET_INFO]({commit}, {ticketId}) {
+    return getMmcTicketInfoApi(
+      {
+        ticketId,
+      },
+      ({ data }) => { return commit(types.GET_TICKET_INFO_SUCCESS, data) },
+    )
+  }
 }
 
 // mutations

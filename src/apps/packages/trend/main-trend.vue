@@ -229,6 +229,8 @@
       ticketId: {
         handler(ticketId) {
           this.ticketInfo = ticketConfig.getById(ticketId)
+          this.currentSearch = 'pageSize'
+          this.currentSearchIndex = 0
 
           this.checkoutData()
           this.getData()
@@ -261,20 +263,7 @@
         this.getData()
       },
       getData() {
-        if (this.ticketInfo.trendType === 'new') {
-          analysisApi.getTrend({
-            trendTypeId: 1,
-            ticketId: this.ticketInfo.isOfficial ? this.ticketId : this.ticketId + 10000,
-            // playSeriesId: this.ticketInfo.playSeriesIdList[0].id,
-            days: this.currentSearch === 'date' ? this.date : '',
-            limit: this.currentSearch === 'pageSize' ? this.pageSize : ''
-          }, (res) => {
-            if (res && res.result === 0) {
-              this.trendsList = res.root.trendsList || []
-              this.formatData()
-            }
-          })
-        } else {
+        if (this.ticketInfo.trendType === 'old') {
           analysisApi.getTrendByOld({
             ticketId: this.ticketId,
             days: this.currentSearch === 'date' ? this.date : '',
@@ -293,6 +282,19 @@
                 }
               })
 
+              this.formatData()
+            }
+          })
+        } else {
+          analysisApi.getTrend({
+            trendTypeId: 1,
+            ticketId: this.ticketInfo.isOfficial ? this.ticketId : this.ticketId + 10000,
+            // playSeriesId: this.ticketInfo.playSeriesIdList[0].id,
+            days: this.currentSearch === 'date' ? this.date : '',
+            limit: this.currentSearch === 'pageSize' ? this.pageSize : ''
+          }, (res) => {
+            if (res && res.result === 0) {
+              this.trendsList = res.root.trendsList || []
               this.formatData()
             }
           })
@@ -326,8 +328,8 @@
           }
         })
         _.each(this.trendsList, (item) => {
-          item.openNums = _.isString(item.openResult) ? _.times(item.openResult.length / 2, (i) => {
-            return item.open.slice(i, (this.ticketInfo.trendOps.split * i + 1))
+          item.openNums = _.isString(item.openResult) ? _.times(item.openResult.length / this.ticketInfo.trendOps.split, (i) => {
+            return item.openResult.slice((this.ticketInfo.trendOps.split * i), (this.ticketInfo.trendOps.split * (i + 1)))
           }) : item.openResult
           item.fOpenResult = _.map(item.openNums, num => {
             return {

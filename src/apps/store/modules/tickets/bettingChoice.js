@@ -1,4 +1,4 @@
-import {pushBettingApi, pushChaseApi} from 'api/betting'
+import {pushBettingApi, pushChaseApi, pushMmcBettingApi} from 'api/betting'
 
 const initState = () => {
   return {
@@ -111,6 +111,36 @@ const actions = {
           return commit(types.PUSH_CHASE_SUCCESS, data)
         },
         () => { return commit(types.PUSH_CHASE_FAILURE) },
+      )
+    })
+  },
+
+  [types.PUSH_MMC_BETTING] ({ state, commit }, {
+    planId,
+    type = 'previewList',
+  }) {
+    const bettingList = state[type]
+    const bet = _(bettingList).reduce((list, item) => {
+      list.push({
+        betNum: item.bettingNumber,
+        playId: item.playId,
+        betMultiple: item.multiple,
+        moneyMethod: item.unit,
+        // 0 高奖金 1 有返点
+        betMethod: item.betMethod,
+      })
+
+      return list
+    }, [])
+
+    return new Promise((resolve) => {
+      pushMmcBettingApi(
+        { planId, bet, usePack: state.usePack },
+        ({ data }) => {
+          resolve(data)
+          return commit(types.PUSH_BETTING_SUCCESS, { res: data, type })
+        },
+        () => { return commit(types.PUSH_BETTING_FAILURE) },
       )
     })
   },
