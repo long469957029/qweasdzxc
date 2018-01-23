@@ -1,4 +1,12 @@
-// 取得当期彩票信息
+/**
+ * 取得当期彩票信息
+ * @param ticketId
+ * @param type
+ * @param version
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
 const getTicketInfoApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
   return Global.sync.axios({
     url: '/ticket/ticketmod/ticketinfo.json',
@@ -11,7 +19,16 @@ const getTicketInfoApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
     .then(then)
     .catch(fail)
 }
-// 取得彩票相关规则
+
+/**
+ * 取得彩票相关规则
+ * @param ticketId
+ * @param type
+ * @param version
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
 const getTicketRulesApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
   return Global.sync.axios({
     url: '/ticket/ticketmod/ticketplaylist.json',
@@ -27,7 +44,15 @@ const getTicketRulesApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
     .catch(fail)
 }
 
-// 提交投注
+/**
+ * 提交投注
+ * @param planId
+ * @param bet
+ * @param usePack
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
 const pushBettingApi = ({ planId, bet, usePack }, then, fail) => {
   return Global.sync.axios({
     url: '/ticket/bet/bet.json',
@@ -42,7 +67,13 @@ const pushBettingApi = ({ planId, bet, usePack }, then, fail) => {
     .catch(fail)
 }
 
-// 取得追号期数
+/**
+ * 取得追号期数
+ * @param ticketId
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
 const getPlansApi = ({ ticketId }, then, fail) => {
   return Global.sync.axios({
     url: '/ticket/chase/chaseinfo.json',
@@ -54,7 +85,17 @@ const getPlansApi = ({ ticketId }, then, fail) => {
     .catch(fail)
 }
 
-// 提交追号
+/**
+ * 提交追号
+ * @param plan
+ * @param play
+ * @param suspend
+ * @param usePack
+ * @param amount
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
 const pushChaseApi = ({
   plan, play, suspend, usePack, amount,
 }, then, fail) => {
@@ -73,8 +114,13 @@ const pushChaseApi = ({
     .catch(fail)
 }
 
-// jsonp 考虑以后直接只用CORS
-// 取得30期冷热
+/**
+ * TODO jsonp 考虑以后直接只用CORS
+ * 取得30期冷热
+ * @param ticketId
+ * @param playSeriesId
+ * @param then
+ */
 const getColdHotApi = ({ ticketId, playSeriesId }, then) => {
   return Global.sync.ajax({
     url: 'http://trend.ybf01.com/trends/data/coldHotData.json',
@@ -88,7 +134,12 @@ const getColdHotApi = ({ ticketId, playSeriesId }, then) => {
     .done(then)
 }
 
-// 当前遗漏
+/**
+ * 当前遗漏
+ * @param ticketId
+ * @param playSeriesId
+ * @param then
+ */
 const getCurrentMissApi = ({ ticketId, playSeriesId }, then) => {
   return Global.sync.ajax({
     url: 'http://trend.ybf01.com/trends/data/currentMiss.json',
@@ -102,7 +153,13 @@ const getCurrentMissApi = ({ ticketId, playSeriesId }, then) => {
     .done(then)
 }
 
-//取得顶部彩种
+/**
+ * 取得顶部彩种
+ * @param type
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
 const getTopTicketsApi = ({type = 0}, then, fail) => {
   return Global.sync.axios({
     url: '/ticket/show/getTopTickets.json',
@@ -116,7 +173,12 @@ const getTopTicketsApi = ({type = 0}, then, fail) => {
   // /ticket/show/viewTicket.json
 }
 
-//设置当前顶部彩种
+/**
+ * 设置当前顶部彩种
+ * @param ticketId
+ * @param type
+ * @returns {*}
+ */
 const setTopCurrentTicketApi = ({ticketId, type = 0}) => {
   return Global.sync.axios({
     url: '/ticket/show/viewTicket.json',
@@ -128,7 +190,15 @@ const setTopCurrentTicketApi = ({ticketId, type = 0}) => {
   })
 }
 
-//秒秒彩开奖
+/**
+ * 秒秒彩开奖
+ * @param planId
+ * @param bet
+ * @param usePack
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
 const pushMmcBettingApi = ({ planId, bet, usePack = 0 }, then, fail) => {
   return Global.sync.axios({
     url: '/ticket/bet/betMmc.json',
@@ -141,7 +211,16 @@ const pushMmcBettingApi = ({ planId, bet, usePack = 0 }, then, fail) => {
     .then(then)
     .catch(fail)
 }
-//秒秒彩模拟开奖
+
+/**
+ * 秒秒彩模拟开奖
+ * @param planId
+ * @param bet
+ * @param usePack
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
 const pushMmcSimulationBettingApi = ({ planId, bet, usePack = 0 }, then, fail) => {
   return Global.sync.axios({
     url: '/ticket/bet/virtmmc.json',
@@ -155,7 +234,11 @@ const pushMmcSimulationBettingApi = ({ planId, bet, usePack = 0 }, then, fail) =
     .catch(fail)
 }
 
-//取得秒秒彩信息
+/**
+ * 取得秒秒彩信息
+ * @param ticketId
+ * @returns {*|Promise<T>}
+ */
 const getMmcTicketInfoApi = ({ticketId = 19}) => {
   return Global.sync.axios({
     url: '/ticket/ticketmod/ticketinfoMmc.json',
@@ -177,7 +260,7 @@ export {
   pushChaseApi,
   setTopCurrentTicketApi,
   getColdHotApi,
+  getMmcTicketInfoApi,
   pushMmcBettingApi,
   pushMmcSimulationBettingApi,
-  getMmcTicketInfoApi,
 }
