@@ -14,6 +14,9 @@ const MediatorModule = Base.Module.extend({
       'acct:updating': {
         acct: true,
       },
+      'acct:login': {
+        acct: true,
+      },
       'bet:updating': {
         bet: true,
       },

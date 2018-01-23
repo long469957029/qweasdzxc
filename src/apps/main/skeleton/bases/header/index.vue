@@ -3,8 +3,8 @@
     <div class="header-main ">
       <div class="pull-left">
         <a class="header-left-link" href="change.html">线路中心</a>
-        <a class="header-left-link" href="#/">急速登录器</a>
-        <a class="header-left-link" href="#/">防劫持教程</a>
+        <a class="header-left-link" @click="showLoginLauncher">急速登录器</a>
+        <a class="header-left-link" href='/dns.docx' target='_blank'>防dns劫持教程</a>
       </div>
       <div class="js-gl-service header-customer-entry  pull-right overflow-hidden">
         <span class="sfa sfa-customer-service"></span><span class="header-customer-text">在线客服</span>
@@ -41,11 +41,13 @@
           </div>
           <div class="js-header-announcement header-announcement active">
             <span class="sfa sfa-announcement "></span><span>消息</span>
-            <span class="js-header-announcement-num header-announcement-num" v-if="newRowCount > 0">{{newRowCount}}</span>
+            <span class="js-header-announcement-num header-announcement-num"
+                  v-if="newRowCount > 0">{{newRowCount}}</span>
             <div class="header-announcement-place"></div>
             <div class="js-header-announcement-body header-announcement-body">
               <div class="header-announcement-content">
-                <a :href="messageLink(item.type,item.noticeId)" class="content-item" v-for="item in newList" :key="_(item.time).add(_.random(10000))">
+                <a :href="messageLink(item.type,item.noticeId)" class="content-item" v-for="item in newList"
+                   :key="_(item.time).add(_.random(10000))">
                   <div class="content-item-panel">
                     <div class="content-item-title-panel">
                       <div class="content-item-img inline-block"></div>
@@ -61,6 +63,37 @@
           </div>
         </div>
       </transition>
+    </div>
+    <!-- 急速登录器弹窗 -->
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="loginLauncherModal"
+         v-if="loginLauncherDialog">
+      <div class="modal-dialog modal-loginLauncher">
+        <div class="launcher-header">
+          <a class="close btn-close" data-dismiss="modal">×</a>
+        </div>
+        <div class="modal-container">
+          <div class="modal-container-left inline-block"></div>
+          <div class="modal-container-right inline-block">
+            <div class="container-head"></div>
+            <div class="container-line"></div>
+            <div class="container-text">
+              <span class="text-circle"></span>
+              <span class="text-desc">根据您的网络状况，推荐3条最快的访问线路</span>
+            </div>
+            <div class="container-text">
+              <span class="text-circle"></span>
+              <span class="text-desc">完美避免假冒、山寨版网站，保证账号资金安全</span>
+            </div>
+            <div class="container-text">
+              <span class="text-circle"></span>
+              <span class="text-desc">只需下载一次，永久自动更新</span>
+            </div>
+            <div class="container-download">
+              <a href="/setup.exe" target="_blank" class="logger">下载登录器</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -81,18 +114,17 @@
         amount: 0.00,
         username: '',
         userAvatar: '',
-        newRowCount:0,
-        newList:[]
+        newRowCount: 0,
+        newList: [],
+        loginLauncherDialog: false,
       }
     },
 
     props: {},
 
-    components: {
-    },
+    components: {},
 
-    watch: {
-    },
+    watch: {},
 
     computed: {
       userUname() {
@@ -119,22 +151,36 @@
         this.newRowCount = model.get('newRowCount')
         this.newList = model.get('newList')
       },
-      messageLink(type,id){
+      messageLink(type, id){
         let url = type === 0 ? '#/uc/mg' : '#/uc/fb'
-        if (type === 0){
+        if (type === 0) {
           url = url + `?id=${id}`
         }
         return url
       },
       formatDesc(text){
-        if(text.length > 42) {
+        if (text.length > 42) {
           text = text.slice(0, 41) + '...'
         }
         return text
       },
       logout(){
         this.$store.commit(types.TOGGLE_LOGOUT_DIALOG, true)
-      }
+      },
+      showLoginLauncher(){
+        this.loginLauncherDialog = true
+        this.$nextTick(() => {
+          $(this.$refs.loginLauncherModal).modal({
+            backdrop: 'static',
+          })
+            .on('hidden.modal', () => {
+              this.loginLauncherDialog = false
+            })
+        })
+      },
+      closeDialog(){
+        $(this.$refs.loginLauncherModal).modal('hide')
+      },
     },
     mounted(){
       Global.m.subscribe('news', 'news:updating', this.renderMsgList)
@@ -168,6 +214,7 @@
       color: rgba(255, 255, 255, 0.5);
       margin-right: 24px;
       line-height: 40px;
+      cursor: pointer;
     }
     .header-try {
       display: inline-block;
@@ -438,7 +485,7 @@
             left: 50%;
             border-bottom-color: $def-line-color;
           }
-          &:after{
+          &:after {
             content: "";
             position: absolute;
             width: 0px;
@@ -455,7 +502,7 @@
               height: 80px;
               padding: 26px 20px 0 26px;
               transition: all .5s;
-              .content-item-panel{
+              .content-item-panel {
                 border-bottom: 1px dashed $def-line-color;
               }
               .content-item-title-panel {
@@ -532,6 +579,83 @@
         }
       }
     }
-
+    .modal-loginLauncher {
+      border: 0;
+      width: 760px;
+      min-height: 450px;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      border-radius: 7px;
+      box-shadow: 0 3px 8px 0 #999999;
+      z-index:1050;
+      .launcher-header {
+        width: 760px;
+        height: 150px;
+        background-image: url('./misc/loginLauncher-back.png');
+        .btn-close{
+          color:#fff;
+          &.active,&:hover{
+            color:#fff;
+          }
+        }
+      }
+      .modal-container {
+        margin-top: -30px;
+        .modal-container-left {
+          margin: 15px 30px;
+          width: 354px;
+          float: left;
+          height: 218px;
+          background-image: url('./misc/loginLauncher-computer.png');
+        }
+        .modal-container-right {
+          text-align: left;
+          .container-head {
+            width: 207px;
+            height: 28px;
+            background-image: url('./misc/loginLauncher-title.png');
+          }
+          .container-line {
+            width: 40px;
+            height: 3px;
+            margin-top: 18px;
+            margin-bottom: 10px;
+            background-color: #17b4bd;
+          }
+          .container-text {
+            padding: 8px 0;
+            .text-circle {
+              width: 5px;
+              height: 5px;
+              border-radius: 40px;
+              float: left;
+              margin-right: 8px;
+              background-color: #cccccc;
+              margin-top: 7px;
+            }
+            .text-desc {
+              font-size: 14px;
+              color: #cccccc;
+            }
+          }
+          .container-download {
+            margin-top: 35px;
+            border-radius: 25px;
+            text-align: center;
+            font-size: 17px;
+            padding: 13px 0;
+            height: 22px;
+            width: 210px;
+            background-color: #15b2bc;
+            color: #fff;
+          }
+        }
+      }
+    }
   }
 </style>

@@ -103,27 +103,27 @@ export const ssc = {
         },
         {
           title: '仟拾',
-          id: 99,
+          id: 5,
           variable: 'LLH.LLH',
         },
         {
           title: '仟个',
-          id: 99,
+          id: 6,
           variable: 'LLH.LLH',
         },
         {
           title: '佰拾',
-          id: 99,
+          id: 7,
           variable: 'LLH.LLH',
         },
         {
           title: '佰个',
-          id: 99,
+          id: 8,
           variable: 'LLH.LLH',
         },
         {
           title: '拾个',
-          id: 99,
+          id: 9,
           variable: 'LLH.LLH',
         },
       ]

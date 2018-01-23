@@ -5,8 +5,8 @@
         <div>
           <div class="link-list">
             <!-- 关于我们 和规则和条款是同一个页面的不同内容页   -->
-            <li><a href="promotion.html" target="_blank">关于我们</a></li>
-            <li><a href="promotion.html" target="_blank">规则与条款</a></li>
+            <li><router-link :to="{path:'/au',query: { page: 'AboutUs' }}">关于我们</router-link></li>
+            <li><router-link :to="{path:'/au',query: { page: 'RulesAndTerms' }}" >规则与条款</router-link></li>
             <!-- 常见问题是去帮助中心 -->
             <li><a href="#/hc?page=newbie">常见问题</a></li>
             <!-- 游戏规则也是去帮助中心 -->

@@ -37,7 +37,7 @@ const getters = {
 
 // actions
 const actions = {
-  getTicketInfo ({ commit }, { ticketId, type }) {
+  [types.GET_TICKET_INFO]({ commit }, { ticketId, type }) {
     // commit(types.CHECKOUT_TICKET_INFO)
 
     return getTicketInfoApi(

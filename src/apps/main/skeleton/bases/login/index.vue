@@ -166,7 +166,7 @@
               this.autoLogoutCountdown(acctInfo.outTime)
             }
             window.Global.memoryCache.set('acctInfo', acctInfo)
-            window.Global.m.publish('acct:updating', acctInfo)
+            window.Global.m.publish('acct:login', acctInfo)
             this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
             this.closeDialog()
 //            this.$store.commit(types.ADD_ROUTERS)

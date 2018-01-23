@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="bc-line"></div>
-        <div class="m-LR-md">
+        <div class="m-LR-smd">
           <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
             <transition name="fade" mode="out-in"
                         enter-active-class="animated-quick fadeIn"
