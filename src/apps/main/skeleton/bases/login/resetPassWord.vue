@@ -72,8 +72,12 @@
                              placeholder="输入验证码">
                       <input type="hidden" class="js-rp-valResult" value="1">
                       <img class="var-code" :src="codeSrc">
-                      <span class="js-rp-val-result-div re-val-result-div" id="jsRPValResult"><span
-                        class="js-re-val-res"></span></span>
+                      <!--<span class="js-rp-val-result-div re-val-result-div" id="jsRPValResult"><span-->
+                        <!--class="js-re-val-res"></span></span>-->
+                      <div class="text-hot m-top-xs" v-if="codeError">
+                        <span class="sfa sfa-error-icon vertical-middle"></span>
+                        {{codeErrorText}}
+                      </div>
                     </div>
                   </div>
                   <div class="js-rp-notice-page1">
@@ -139,6 +143,7 @@
   </div>
 </template>
 <script>
+  import resetPwd from '../../../../api/resetPwd'
   export default {
     name: 'reset-pwd',
     data(){
@@ -149,6 +154,8 @@
         codeVal: '',
         userName: '',
         stepsIndex: 0,  //当前步骤数
+        codeError: false,
+        codeErrorText: '',
       }
     },
     watch: {
@@ -176,6 +183,25 @@
       },
       valCode(){
         console.log(this.codeVal)
+        if(this.codeVal && this.codeVal !== '' && this.codeVal.length === 4) {
+          resetPwd.valCodeXhr({
+            code:this.codeVal
+            },
+            ({data}) => {
+              if(data && data.result === 0){
+                this.codeError = false
+                this.codeErrorText = ''
+              } else {
+                this.codeError = true
+                this.codeErrorText = '验证码错误'
+              }
+            },
+            ({data}) => {
+              this.codeError = true
+              this.codeErrorText = '验证码错误'
+            }
+          )
+        }
       },
       verifyUsetName(){
         const status = $(this.$refs.verifyUN).parsley().validate()
