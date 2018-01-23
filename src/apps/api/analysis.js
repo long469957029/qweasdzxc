@@ -9,11 +9,11 @@ export default {
    **/
   getTrend({trendTypeId, ticketId, playSeriesId, days = null, limit = 30}, then) {
     return Global.sync.ajax({
-      url: 'http://trend.ybf01.com/trends/trend/sscTrend.json',
+      url: 'http://trend.ybf01.com/trends/trend/trendAnalyzeP2.json',
       data: {
-        trendTypeId,
+        // trendTypeId,
         ticketId,
-        playSeriesId,
+        // playSeriesId,
         days,
         limit
       },
@@ -23,7 +23,8 @@ export default {
   },
 
   /**
-   * 就走势图
+   * 旧走势图
+   * 只给秒秒彩使用
    * @param ticketId
    * @param limit
    * @param days
@@ -45,10 +46,17 @@ export default {
       .catch(fail)
   },
 
-  // 当前遗漏
+  /**
+   * 路珠分析
+   * @param ticketId
+   * @param types
+   * @param locations
+   * @param limit
+   * @param then
+   */
   getRoadBalls({ ticketId, types, locations, limit = 100 }, then) {
     return Global.sync.ajax({
-      url: 'http://trend.ybf01.com/trends/trend/combo.json',
+      url: 'http://trend.ybf01.com/trends/trend/comboP2.json',
       data: {
         ticketId,
         types,

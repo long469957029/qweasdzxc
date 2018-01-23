@@ -1,4 +1,4 @@
-import betting from 'api/betting'
+import {getPlansApi} from 'api/betting'
 
 
 const initState = () => {
@@ -18,7 +18,7 @@ const actions = {
     ticketId,
   }) {
     return new Promise((resolve) => {
-      betting.getPlans(
+      getPlansApi(
         { ticketId },
         ({ data }) => {
           resolve(data)

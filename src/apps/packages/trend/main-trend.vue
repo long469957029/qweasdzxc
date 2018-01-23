@@ -265,7 +265,7 @@
           analysisApi.getTrend({
             trendTypeId: 1,
             ticketId: this.ticketInfo.isOfficial ? this.ticketId : this.ticketId + 10000,
-            playSeriesId: this.ticketInfo.playSeriesIdList[0].id,
+            // playSeriesId: this.ticketInfo.playSeriesIdList[0].id,
             days: this.currentSearch === 'date' ? this.date : '',
             limit: this.currentSearch === 'pageSize' ? this.pageSize : ''
           }, (res) => {
@@ -283,10 +283,12 @@
             // endDate,
           }, ({data}) => {
             if (data && data.result === 0) {
+              let missingList = _.times(this.ticketInfo.counts, () => _.fill(Array(this.ticketInfo.range.length), 0))
               this.trendsList = _.map(data.root.openedList || [], opening => {
+                const openResult = opening.ticketOpenNum.split(',')
                 return {
-                  missList: _.chunk(opening.missingData, this.ticketInfo.range.length),
-                  openResult: opening.ticketOpenNum.split(','),
+                  missList: this.$_computedMissing(missingList, openResult),
+                  openResult,
                   ticketPlanId: opening.ticketPlanId
                 }
               })
@@ -296,6 +298,24 @@
           })
         }
       },
+
+      /**
+       * 计算遗漏
+       */
+      $_computedMissing(missingList, openList) {
+        missingList.forEach((list, i) => {
+          list.forEach((num, pos) => {
+            if (pos === _.indexOf(this.ticketInfo.range, openList[i])) {
+              missingList[i][pos] = 0
+            } else {
+              ++missingList[i][pos]
+            }
+          })
+        })
+
+        return _.cloneDeep(missingList)
+      },
+
       formatData() {
         let totalMissList = _.map(this.ticketInfo.range, (num) => {
           return {
@@ -306,7 +326,9 @@
           }
         })
         _.each(this.trendsList, (item) => {
-          item.openNums = _.isString(item.openResult) ? item.openResult.split('') : item.openResult
+          item.openNums = _.isString(item.openResult) ? _.times(item.openResult.length / 2, (i) => {
+            return item.open.slice(i, (this.ticketInfo.trendOps.split * i + 1))
+          }) : item.openResult
           item.fOpenResult = _.map(item.openNums, num => {
             return {
               title: num,

@@ -1,4 +1,4 @@
-import betting from '../../../api/betting'
+import {getTicketInfoApi} from 'api/betting'
 
 const initState = () => {
   return {
@@ -37,10 +37,10 @@ const getters = {
 
 // actions
 const actions = {
-  getTicketInfo ({ commit }, { ticketId, type }) {
+  [types.GET_TICKET_INFO]({ commit }, { ticketId, type }) {
     // commit(types.CHECKOUT_TICKET_INFO)
 
-    return betting.getTicketInfo(
+    return getTicketInfoApi(
       {
         ticketId,
         type,

@@ -26,7 +26,6 @@
 
     data() {
       return {
-        bettingType: 1,
         ticketInfo: {},
         ticketList: ticketConfig.getCompleteAll(),
       }
@@ -41,12 +40,12 @@
           this.$store.commit(types.CHECKOUT_TICKET_INFO)
 
           // 取得当前彩票信息
-          this.$store.dispatch('getTicketInfo', {
+          this.$store.dispatch(types.GET_TICKET_INFO, {
             ticketId: this.ticketId,
             type: this.ticketType,
           })
           // 取得当前彩票规则
-          this.$store.dispatch('getTicketRules', {
+          this.$store.dispatch(types.GET_TICKET_RULES, {
             ticketId: this.ticketId,
             type: this.ticketType,
           })

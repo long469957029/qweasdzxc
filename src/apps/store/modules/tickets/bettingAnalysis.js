@@ -1,4 +1,4 @@
-import betting from '../../../api/betting'
+import {getColdHotApi, getCurrentMissApi} from 'api/betting'
 
 const initState = () => {
   return {
@@ -28,7 +28,7 @@ const getPlaySeriesId = (ticketId) => {
 // actions
 const actions = {
   getColdHot ({ commit }, { ticketId }) {
-    betting.getColdHot(
+    getColdHotApi(
       {
         ticketId,
         playSeriesId: getPlaySeriesId(ticketId),
@@ -38,7 +38,7 @@ const actions = {
   },
 
   getCurrentMiss ({ commit }, { ticketId }) {
-    betting.getCurrentMiss(
+    getCurrentMissApi(
       {
         ticketId,
         playSeriesId: getPlaySeriesId(ticketId),

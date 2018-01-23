@@ -149,6 +149,7 @@
 </template>
 
 <script>
+  import {StaticGrid} from 'build'
   import RadioGroup from 'com/RadioGroup'
 
   export default {

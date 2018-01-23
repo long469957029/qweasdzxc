@@ -43,12 +43,7 @@
                              :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.defaultOpening"
                              v-else-if="ticketInfo.openingType === 'mark-balls'"
         ></opening-mark6-balls>
-        <!--<div class="bc-last-plan-results pull-left" v-if="bettingInfo.sale && bettingInfo.pending">-->
-        <!--<span class="text-circle">等</span>-->
-        <!--<span class="text-circle">待</span>-->
-        <!--<span class="text-circle">开</span>-->
-        <!--<span class="text-circle">奖</span>-->
-        <!--</div>-->
+
         <div class="bc-hgcalculate-example" v-if="ticketInfo.showNumberDetail&& calculateStatus">
           <div class="bc-hgcaculate-examplerow">万位:<span v-html="calculateInfo ? calculateInfo.wan : ''"></span></div>
           <div class="bc-hgcaculate-examplerow">千位:<span v-html="calculateInfo ? calculateInfo.qian : ''"></span></div>
