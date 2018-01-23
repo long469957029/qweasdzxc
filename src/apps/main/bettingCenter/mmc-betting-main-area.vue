@@ -159,7 +159,6 @@
 <script>
   import {CustomCheckbox, StaticGrid} from 'build'
   import betRulesConfig from './misc/betRulesConfig'
-  import {getMmcTicketInfo} from 'api/betting'
 
 
   import BettingRules from './betting-rules'

@@ -1,4 +1,4 @@
-import betting from '../../../api/betting'
+import {getTicketRulesApi} from 'api/betting'
 
 const initState = () => {
   return {
@@ -82,7 +82,7 @@ const actions = {
       commit(types.GET_TICKET_RULES_SUCCESS, Global.localCache.get(sign))
     }
 
-    return betting.getTicketRules(
+    return getTicketRulesApi(
       {
         ticketId,
         type
