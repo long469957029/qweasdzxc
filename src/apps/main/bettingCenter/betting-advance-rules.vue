@@ -3,7 +3,8 @@
     <div class="tab-toolbar tab-pill tab-pill-main" v-for="(rules, index) in rulesList" v-show="show">
       <div class="tab-title" v-if="rules.title">{{rules.title}}</div>
       <div :class="['tab-group',  !rules.title ? 'no-margin' : '']">
-      <span class="tab" :class="{active: rule.selected}" v-for="rule in rules.playList" @click="ruleChange(rule, rules, index)">
+      <span class="tab" :class="{active: rule.selected}" v-for="rule in rules.playList"
+            @click="ruleChange(rule, rules, index)">
         <span class="tab-inner">{{rule.title}}</span>
       </span>
       </div>
@@ -23,7 +24,7 @@
 
     },
 
-    data: function() {
+    data: function () {
       return {
         rulesList: [],
         show: true,
@@ -50,7 +51,7 @@
     },
 
     computed: mapState({
-      levelId () {
+      levelId() {
         return this.$store.state.bettingChoice.levelId
       }
     }),
@@ -68,8 +69,8 @@
     }
 
     //目前默认选中第一个玩法
-    rulesList.forEach(function(rules) {
-      rules.playList.forEach(function(rule) {
+    rulesList.forEach(function (rules) {
+      rules.playList.forEach(function (rule) {
         rule.selected = false
       });
     })

@@ -1,5 +1,3 @@
-
-
 /**
  * MMC专用，20160525
  */
@@ -72,13 +70,13 @@ const BettingChoiceModelMMC = Model.extend({
   initialize() {
     this.on('change:multiple change:statistics change:userRebate change:betMethod', this.calculateByPrefab)
     this.on('change:maxBonus change:multiple change:unit', this.calculateMaxBonus)
-    this.on('change:maxMultiple change:unit', function() {
+    this.on('change:maxMultiple change:unit', function () {
       const info = this.pick('maxMultiple', 'unit')
       this.set('formatMaxMultiple', _(info.maxMultiple).chain().mul(10000).div(info.unit)
         .value())
     })
 
-    this.on('change:unit', function(model, unit) {
+    this.on('change:unit', function (model, unit) {
       this.set('formatUnit', unit === 10000 ? '元' : unit === 1000 ? '角' : unit === 100 ? '分' : '厘')
       this.calculateByPrefab()
     })
@@ -199,10 +197,9 @@ const BettingChoiceModelMMC = Model.extend({
     const items = []
     const sameBets = []
 
-    options = _(options || {}).defaults({
-    })
+    options = _(options || {}).defaults({})
 
-    _(bettingList).each(function(bettingInfo) {
+    _(bettingList).each(function (bettingInfo) {
       let sameBet
       let statistics
 
@@ -300,7 +297,7 @@ const BettingChoiceModelMMC = Model.extend({
       // return this._addBets([bettingInfo], _(options || {}).extend(selectInfo));
       if (!_.isNull(this.get('maxBetNums')) && selectInfo.statistics > this.get('maxBetNums')) {
         // this._addBets([bettingInfo], _(options || {}).extend(selectInfo,{buy:true}));
-        return { maxBetNums: this.get('maxBetNums') }
+        return {maxBetNums: this.get('maxBetNums')}
       }
       return this._addBets([bettingInfo], _(options || {}).extend(selectInfo))
     }

@@ -21,7 +21,7 @@ const danshuang = [
     title: '双',
     num: 4
   },
-  ]
+]
 const longhu = [
   {
     title: '龙',
@@ -46,7 +46,7 @@ function _create(ticketId) {
     list: factory.createList(['冠军'], {
       items: ten,
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(2, {
       range: ten,
       matching: true,
@@ -63,7 +63,7 @@ function _create(ticketId) {
     list: factory.createList(['冠军', '亚军'], {
       items: ten,
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(2, {
       range: ten,
       matching: true,
@@ -81,7 +81,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(2, {
       range: ten,
       repeat: true,
@@ -99,7 +99,7 @@ function _create(ticketId) {
     list: factory.createList(['冠军', '亚军', '季军'], {
       items: ten,
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(3, {
       range: ten,
       matching: true,
@@ -117,7 +117,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(3, {
       range: ten,
       repeat: true,
@@ -135,7 +135,7 @@ function _create(ticketId) {
     list: factory.createList(['冠军', '亚军', '季军', '第四名'], {
       items: ten,
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(4, {
       range: ten,
       matching: true,
@@ -153,7 +153,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(4, {
       range: ten,
       repeat: true,
@@ -171,7 +171,7 @@ function _create(ticketId) {
     list: factory.createList(['冠军', '亚军', '季军', '第四名', '第五名'], {
       items: ten,
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(5, {
       range: ten,
       matching: true,
@@ -189,7 +189,7 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(5, {
       range: ten,
       repeat: true,
@@ -205,7 +205,7 @@ function _create(ticketId) {
     list: factory.createList(['冠军', '亚军', '季军', '第四名', '第五名'], {
       items: ten,
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(1, {
       range: ten,
       matching: true,
@@ -217,7 +217,7 @@ function _create(ticketId) {
     list: factory.createList(['第六名', '第七名', '第八名', '第九名', '第十名'], {
       items: ten,
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     create: algorithm.getCreateFunc(1, {
       range: ten,
       matching: true,
@@ -237,7 +237,7 @@ function _create(ticketId) {
       numType: 'longhu',
       position: 'center',
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
@@ -256,7 +256,7 @@ function _create(ticketId) {
       numType: 'longhu',
       position: 'center',
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
@@ -276,7 +276,7 @@ function _create(ticketId) {
       numType: 'longhu',
       position: 'center',
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
@@ -296,7 +296,7 @@ function _create(ticketId) {
       numType: 'longhu',
       position: 'center',
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
@@ -316,14 +316,13 @@ function _create(ticketId) {
       numType: 'longhu',
       position: 'center',
     },
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: longhu,
       matching: true,
     }),
   })
-
 
 
   // =========================
@@ -336,7 +335,7 @@ function _create(ticketId) {
       items: danshuang,
       operate: 'none',
     }),
-    format: { symbol: ' ' },
+    format: {symbol: ' '},
     formatToNum: true,
     analysis: false,
     create: algorithm.getCreateFunc(1, {

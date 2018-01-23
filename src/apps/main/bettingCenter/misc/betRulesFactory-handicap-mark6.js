@@ -4,8 +4,12 @@ import betFormat from './betFormat'
 const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
 const getSpecialFortyNine = () => {
-  return _.chain(bettingTypes.MARK6.getNum()).groupBy((item) => { return item.num[item.num.length - 1] })
-    .values().sortBy((itemList) => { return itemList[0].num })
+  return _.chain(bettingTypes.MARK6.getNum()).groupBy((item) => {
+    return item.num[item.num.length - 1]
+  })
+    .values().sortBy((itemList) => {
+      return itemList[0].num
+    })
     .flatten()
     .value()
 }

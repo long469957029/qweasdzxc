@@ -1,13 +1,15 @@
 <template>
   <div class="bc-main-quick">
     <transition-group name="flip-list" tag="div" class="pull-left top-list">
-      <router-link v-for="ticket in fTickets" :to="`/bc/${ticketType}/${ticket.id}`" class="top-list-info" :class="{active: ticket.active}" :key="ticket.id">
+      <router-link v-for="ticket in fTickets" :to="`/bc/${ticketType}/${ticket.id}`" class="top-list-info"
+                   :class="{active: ticket.active}" :key="ticket.id">
         {{ticket.zhName}}
         <i :class="`sfa-badge-${ticket.badge}`" v-if="ticket.badge"></i>
       </router-link>
     </transition-group>
     <div class="quick-more pull-right">
-      <a class="sfa cursor-pointer bc-quick-more-btn" :class="[isShowMore ? 'sfa-bc-quick-close' : 'sfa-bc-quick-more']" v-if="ticketType === 0" @click="isShowMore = !isShowMore"></a>
+      <a class="sfa cursor-pointer bc-quick-more-btn" :class="[isShowMore ? 'sfa-bc-quick-close' : 'sfa-bc-quick-more']"
+         v-if="ticketType === 0" @click="isShowMore = !isShowMore"></a>
       <div class="quick-ticket-nav quick-ticket-main" :class="{'quick-ticket-list-animate' : isShowMore}">
         <div class="quick-list" v-for="(ticketInfo, i) in ticketList">
           <div class="quick-ticket-type-name">{{ticketInfo.title}}</div>
@@ -44,11 +46,10 @@
       'fTickets',
     ]),
 
-    methods: {
-    },
+    methods: {},
 
     watch: {
-      'ticketType':{
+      'ticketType': {
         handler(currentId) {
           this.$store.commit(types.TOGGLE_TOP_TICKETS_BY_TYPE, {
             type: currentId
@@ -90,23 +91,23 @@
     height: 70px;
     background-color: #f3fbfc;
 
-    .top-list{
+    .top-list {
       display: flex;
-      a{
+      a {
         display: inline-block;
         margin-left: 10px;
         padding: 10px 20px;
         border-radius: 20px;
         color: $main-deep-color;
-        font-size:$font-md;
+        font-size: $font-md;
         cursor: pointer;
         margin-top: 15px;
         position: relative;
-        &.active,&:hover{
+        &.active, &:hover {
           background-color: $main-deep-color;
           color: $def-white-color;
         }
-        i{
+        i {
           position: absolute;
           top: 5px;
           right: 5px;
@@ -118,20 +119,20 @@
       display: flex;
       flex-direction: row;
       height: 100%;
-      &:first-of-type{
+      &:first-of-type {
         flex-grow: 1;
       }
     }
 
-    .quick-more{
+    .quick-more {
       width: 5%;
       height: 70px;
       position: relative;
 
-      .bc-quick-more-btn{
+      .bc-quick-more-btn {
         margin-top: 24.5px;
       }
-      .quick-ticket-nav{
+      .quick-ticket-nav {
         position: absolute;
         width: 1200px;
         height: 180px;
@@ -143,32 +144,32 @@
         background: $main-deep-color;
         top: 70px;
 
-        &.active,&:hover{
+        &.active, &:hover {
           background-color: $main-deep-color;
         }
-        i{
+        i {
           position: absolute;
           top: 5px;
           right: 5px;
         }
-        &.quick-ticket-list-animate{
+        &.quick-ticket-list-animate {
           animation: bounceInRight 1s forwards;
         }
-        .quick-ticket-type-name{
-          font-size:$font-md;
+        .quick-ticket-type-name {
+          font-size: $font-md;
           color: $def-white-color;
-          writing-mode:vertical-lr;
+          writing-mode: vertical-lr;
           display: inline-block;
           margin-top: 10px;
         }
-        .ticket-inner-list{
+        .ticket-inner-list {
           display: flex;
           flex-direction: column;
           flex-wrap: wrap;
           width: auto;
           flex-grow: 1;
         }
-        .ticket-info{
+        .ticket-info {
           margin-left: 15px;
           padding: 5px 15px 5px 30px;
           border-radius: 20px;
@@ -178,7 +179,7 @@
           font-size: 12px;
           color: $def-white-color;
           cursor: pointer;
-          &:before{
+          &:before {
             content: ' ';
             width: 0;
             height: 0;
@@ -188,17 +189,17 @@
             top: 11px;
             left: 10px;
           }
-          &.active,&:hover{
+          &.active, &:hover {
             background-color: #009297;
           }
-          i{
+          i {
             position: relative;
             top: -6px;
             right: -1px;
             display: inline-block;
           }
         }
-        .quick-ticket-line{
+        .quick-ticket-line {
           width: 1px;
           height: 100px;
           background-color: $def-white-color;
@@ -212,6 +213,7 @@
   .flip-list-move {
     transition: transform 1s;
   }
+
   .flip-list-leave-active {
     transition: opacity 0.3s;
     opacity: 0;

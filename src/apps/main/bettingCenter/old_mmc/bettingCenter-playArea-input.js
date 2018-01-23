@@ -1,5 +1,3 @@
-
-
 const betRulesAlgorithm = require('bettingCenter/misc/betRulesAlgorithm')
 
 const BettingCenterPlayAreaInputView = Base.ItemView.extend({
@@ -141,7 +139,7 @@ const BettingCenterPlayAreaInputView = Base.ItemView.extend({
 
     if (this.options.coefficient) {
       results = _(createTimes).times(this.options.create, this.options)
-      _(results).each(function(result) {
+      _(results).each(function (result) {
         result.statistics = Math.round(_(this.options.coefficient).mul(result.statistics))
         result.selectOptionals = this.options.selectOptionals
       }, this)

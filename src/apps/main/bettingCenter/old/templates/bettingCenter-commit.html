@@ -1,20 +1,21 @@
 <dl class="clearfix p-bottom-xm no-margin font-sm">
 
-    <% if (!_.isArray(planId)) { %>
-    <dd class="overflow-hidden m-TB-sm ">
-        <p class="m-bottom-xm"><%=ticketInfo.info.zhName%>&nbsp;<span class="js-bc-confirm-planId "><%=planId %></span> &nbsp;期</p>
+  <% if (!_.isArray(planId)) { %>
+  <dd class="overflow-hidden m-TB-sm ">
+    <p class="m-bottom-xm"><%=ticketInfo.info.zhName%>&nbsp;<span class="js-bc-confirm-planId "><%=planId %></span>
+      &nbsp;期</p>
     <span class="font-md font-bold ">总计 <span class=""><%=totalInfo.totalLottery %></span> 注，
     总共 <span class="text-pleasant"><%=_(totalInfo.totalMoney).convert2yuan() %></span> 元
     </span>
-    </dd>
-    <% } else { %>
-    <dd class="overflow-hidden m-bottom-sm">
-        从 <span class="text-pleasant"><%=planId[0] %></span>
-        至 <span class="text-pleasant"><%=planId[1] %></span> 期
-    <dd class="overflow-hidden m-bottom-sm">
-        每期 <span class="text-pleasant"><%=totalInfo.totalLottery %></span> 注，
-        总共 <span class="text-pleasant"><%=_(totalInfo.totalMoney).convert2yuan() %></span> 元
-    </dd>
-    <% } %>
+  </dd>
+  <% } else { %>
+  <dd class="overflow-hidden m-bottom-sm">
+    从 <span class="text-pleasant"><%=planId[0] %></span>
+    至 <span class="text-pleasant"><%=planId[1] %></span> 期
+  <dd class="overflow-hidden m-bottom-sm">
+    每期 <span class="text-pleasant"><%=totalInfo.totalLottery %></span> 注，
+    总共 <span class="text-pleasant"><%=_(totalInfo.totalMoney).convert2yuan() %></span> 元
+  </dd>
+  <% } %>
 </dl>
 

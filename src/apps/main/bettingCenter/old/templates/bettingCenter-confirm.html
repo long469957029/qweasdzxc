@@ -9,7 +9,8 @@
     </dd>
     <dd class="overflow-hidden m-bottom-sm">
       总计 <span class="text-pleasant"><%=totalInfo.totalLottery %></span> 注，
-      总共 <span class="text-pleasant"><%=_(totalInfo.totalMoney).convert2yuan() %></span> 元</dd>
+      总共 <span class="text-pleasant"><%=_(totalInfo.totalMoney).convert2yuan() %></span> 元
+    </dd>
     <% } else { %>
     <dd class="overflow-hidden m-TB-sm">
       从 <span class="text-pleasant"><%=planId[0] %></span>
@@ -23,7 +24,7 @@
   </dl>
   <ul class="bc-confirm-list no-padding border-all min-height-smd max-height-smd overflow-auto bg-mute">
     <% _(previewList).each(function(item) { %>
-    <li class="bc-betDetail-text " >[<%=item.levelName %>_<%=item.playName %>] <%=item.formatBettingNumber %></li>
+    <li class="bc-betDetail-text ">[<%=item.levelName %>_<%=item.playName %>] <%=item.formatBettingNumber %></li>
     <% }); %>
   </ul>
 </div>

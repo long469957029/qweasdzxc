@@ -4,6 +4,7 @@ function numRand() {
   const rand = parseInt(Math.random() * (x - y + 1) + y)
   return rand
 }
+
 let isBegin = false
 $(() => {
   const u = 265
@@ -14,7 +15,7 @@ $(() => {
     const result = numRand()
     $('#res').text(`摇奖结果 = ${result}`)
     const num_arr = (`${result}`).split('')
-    $('.num').each(function(index) {
+    $('.num').each(function (index) {
       const _num = $(this)
       setTimeout(() => {
         _num.animate({

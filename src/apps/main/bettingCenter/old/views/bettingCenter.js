@@ -1,5 +1,3 @@
-
-
 const BettingChoiceModel = require('bettingCenter/models/bettingChoice')
 const BettingInfoModel = require('bettingCenter/models/bettingInfo')
 const BettingRulesCollection = require('bettingCenter/collections/bettingRules')
@@ -60,7 +58,7 @@ const BettingCenterView = Base.ItemView.extend({
     }
   },
 
-  initialize () {
+  initialize() {
     this.model = new BettingChoiceModel()
     this.infoModel = new BettingInfoModel()
     this.rulesCollection = new BettingRulesCollection()
@@ -71,7 +69,7 @@ const BettingCenterView = Base.ItemView.extend({
 
     // 如果是六合彩加载生肖对应的球
     if (_.indexOf(this.mark6TicketIdArr, parseInt(this.options.ticketId, 10)) > -1) {
-      this.getMark6SxNumber({ ticketId: this.options.ticketId })
+      this.getMark6SxNumber({ticketId: this.options.ticketId})
     }
 
     this.rulesCollection.fetch({
@@ -96,11 +94,11 @@ const BettingCenterView = Base.ItemView.extend({
 
     this.listenTo(this.rulesCollection, 'sync sync:fromCache', this.renderBasicRules)
 
-    this.listenTo(this.model, 'change:levelId', function(model, levelId) {
+    this.listenTo(this.model, 'change:levelId', function (model, levelId) {
       this.renderAdvanceRules(levelId)
     })
 
-    this.listenTo(this.model, 'change:playId', function(model, playId) {
+    this.listenTo(this.model, 'change:playId', function (model, playId) {
       const playRule = betRulesConfig.get(this.model.pick('playId'))
       this.renderPlayArea()
       this.renderPlayInfo(this.rulesCollection.getPlayInfo(model.get('groupId'), playId))
@@ -125,7 +123,7 @@ const BettingCenterView = Base.ItemView.extend({
     // this.listenTo(this.model,'change:maxBonus',this.renderBetMode);
 
     // 快捷入口
-    this.on('entry:show router:back', function() {
+    this.on('entry:show router:back', function () {
       this.bettingRecordsView.update()
       if (this.$el.closest('html').length !== 0) {
         Global.newbieActivity.checkBetting()
@@ -219,12 +217,16 @@ const BettingCenterView = Base.ItemView.extend({
         {
           label: '投注内容', name: 'betNum', key: true, width: '17%',
         },
-        { label: '注数', name: 'note', width: '10%' },
-        { label: '倍数', name: 'multiple', width: '12.5%' },
-        { label: '模式', name: 'mode', width: '12.5%' },
-        { label: '投注金额', name: 'bettingMoney', width: '12.5%' },
-        { label: '预期盈利', name: 'profit', width: '12.5%' },
-        { label: '<div class="js-bc-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清除</div>', name: 'operate', width: '8%' },
+        {label: '注数', name: 'note', width: '10%'},
+        {label: '倍数', name: 'multiple', width: '12.5%'},
+        {label: '模式', name: 'mode', width: '12.5%'},
+        {label: '投注金额', name: 'bettingMoney', width: '12.5%'},
+        {label: '预期盈利', name: 'profit', width: '12.5%'},
+        {
+          label: '<div class="js-bc-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清除</div>',
+          name: 'operate',
+          width: '8%'
+        },
       ],
       height: 110,
       startOnLoading: false,
@@ -274,7 +276,7 @@ const BettingCenterView = Base.ItemView.extend({
       self.selectNum(data)
     })
   },
-  selectNum (data) {
+  selectNum(data) {
     const self = this
     if (data && !_.isNull(data) && !_.isUndefined(data) && !_.isEmpty(data)) {
       // this.$('.js-bc-basic-rule[data-id='+ data.ticketRuleId +']').trigger('click');
@@ -357,8 +359,8 @@ const BettingCenterView = Base.ItemView.extend({
         self.model.set('multiple', num)
       },
       onOverMax(maxNum) {
-        Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">${ 
-          _(self.rulesCollection.limitMoney).convert2yuan()}</span>元，` +
+        Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">${
+            _(self.rulesCollection.limitMoney).convert2yuan()}</span>元，` +
           `已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
       },
     })
@@ -476,13 +478,15 @@ const BettingCenterView = Base.ItemView.extend({
 
   _slotMachineEffect(openNum, show) {
     let startflag = false
+
     // var index=0;
     function reset(el) {
-      el.css({ top: 0 })
+      el.css({top: 0})
     }
+
     function letGo(numCol, top, time) {
-      $(numCol).animate({ top: -275 }, 600, 'linear', function () {
-        $(this).css('top', 0).animate({ top }, time, 'linear')
+      $(numCol).animate({top: -275}, 600, 'linear', function () {
+        $(this).css('top', 0).animate({top}, time, 'linear')
       })
     }
 
@@ -559,7 +563,7 @@ const BettingCenterView = Base.ItemView.extend({
         groupId: this.ticketRuleId,
       }
     } else {
-      this.getTicketInfotXhr({ ticketId: this.options.ticketId }).done((res) => {
+      this.getTicketInfotXhr({ticketId: this.options.ticketId}).done((res) => {
         if (res.result === 0 && res.root.lastPlayId) {
           const lastPlayId = res.root.lastPlayId.toString()
           const groupId = lastPlayId.substring(0, lastPlayId.length - 4)
@@ -607,7 +611,7 @@ const BettingCenterView = Base.ItemView.extend({
     const advanceRules = this.rulesCollection.getPlayGroups(levelId)
     this.levelId = levelId
 
-    this.$advanceRules.html(_(advanceRules).map(function(rules) {
+    this.$advanceRules.html(_(advanceRules).map(function (rules) {
       return this.rulesTpl({
         tabToolbarClass: 'tab-pill tab-pill-main',
         ruleClass: 'js-bc-advance-rule',
@@ -784,7 +788,7 @@ const BettingCenterView = Base.ItemView.extend({
 
     this.options.type = playRule.type
 
-    this.currentPlayAreaView.on('statistic', function(statistics) {
+    this.currentPlayAreaView.on('statistic', function (statistics) {
       this.model.set({
         statistics,
       })
@@ -930,11 +934,11 @@ const BettingCenterView = Base.ItemView.extend({
     const previewList = this.model.get('previewList')
     const self = this
 
-    const rows = _(previewList).map(function(previewInfo) {
+    const rows = _(previewList).map(function (previewInfo) {
       const title = `${previewInfo.levelName}_${previewInfo.playName}`
       let betNum = ''
       if (previewInfo.formatBettingNumber.length > 20) {
-        betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link">${ 
+        betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link">${
           previewInfo.formatBettingNumber.slice(0, 20)}...</a>`
       } else {
         betNum = previewInfo.formatBettingNumber
@@ -961,7 +965,7 @@ const BettingCenterView = Base.ItemView.extend({
 
     const $rows = this.lotteryPreview.renderRow(rows)
 
-    $rows.each(function(index, row) {
+    $rows.each(function (index, row) {
       const $row = $(row)
       const $detail = $row.find('.js-bc-betting-preview-detail')
       // const $multipleAdd = $row.find(`.js-bc-betting-multiple-add-${index}`)
@@ -1144,8 +1148,8 @@ const BettingCenterView = Base.ItemView.extend({
           const playInfoBetBonu = _.pick(this.rulesCollection.getCurrentPlay(), 'betMethodMax', 'betMethodMin')
           selectItem.each((index, ele) => {
             const $ele = $(ele)
-            const itemInfo = _.findWhere(playRule.formatToNumInfo, { name: $ele.data('num') })
-            let betBonu = _.findWhere(betBonus, { betType: itemInfo.value })
+            const itemInfo = _.findWhere(playRule.formatToNumInfo, {name: $ele.data('num')})
+            let betBonu = _.findWhere(betBonus, {betType: itemInfo.value})
             // 如果是红、蓝、绿球
             if (!betBonu) {
               betBonu = playInfoBetBonu
@@ -1157,8 +1161,8 @@ const BettingCenterView = Base.ItemView.extend({
           // 六合彩除了特码、正码组下类型的号码球更改赔率数值
           selectItem.each((index, ele) => {
             const $ele = $(ele)
-            const itemInfo = _.findWhere(playRule.formatToNumInfo, { name: $ele.data('num') })
-            const betBonu = _.findWhere(betBonus, { betType: itemInfo.value })
+            const itemInfo = _.findWhere(playRule.formatToNumInfo, {name: $ele.data('num')})
+            const betBonu = _.findWhere(betBonus, {betType: itemInfo.value})
             const odds = self.setMark6NumberOdds(betBonu ? betBonu[betMethod] : '')
             $ele.find('.mark6-odds').html(odds)
           })
@@ -1267,7 +1271,7 @@ const BettingCenterView = Base.ItemView.extend({
 
       const $chaseContainer = $dialog.find('.js-bc-chase-container')
 
-      $dialog.on('hidden.modal', function() {
+      $dialog.on('hidden.modal', function () {
         $(this).remove()
         chaseView.destroy()
       })
@@ -1286,7 +1290,7 @@ const BettingCenterView = Base.ItemView.extend({
         self.getUsePackStatus()
       }).render()
 
-      chaseView.listenTo(this.infoModel, 'change:planId', function() {
+      chaseView.listenTo(this.infoModel, 'change:planId', function () {
         const planInfo = self.infoModel.pick('planId', 'lastPlanId')
         if (planInfo.lastPlanId !== planInfo.planId) {
           this.trigger('change:planId', planInfo.lastPlanId)
@@ -1379,14 +1383,16 @@ const BettingCenterView = Base.ItemView.extend({
           })
       },
     }).confirm('instance')
+
     function changePlanId(model, newPlanId) {
       planId = newPlanId
       confirm.element.find('.js-bc-confirm-planId').text(planId)
     }
+
     this.infoModel.off('change:planId', changePlanId).on('change:planId', changePlanId)
   },
 
-  lotteryBuyHandler (e) {
+  lotteryBuyHandler(e) {
     const self = this
     const $target = $(e.currentTarget)
     // do add
@@ -1399,9 +1405,9 @@ const BettingCenterView = Base.ItemView.extend({
       maxBetNums: this.rulesCollection.getPlayInfo(this.model.get('groupId'), this.model.get('playId')).maxBetNums,
     })
     if (this.options.type === 'select') {
-      this.addSelectLottery({ buy: true })
+      this.addSelectLottery({buy: true})
     } else {
-      this.addInputLottery({ buy: true })
+      this.addInputLottery({buy: true})
     }
     // do save
     const info = this.model.pick('buyInfo', 'buyList')
@@ -1491,6 +1497,7 @@ const BettingCenterView = Base.ItemView.extend({
       planId = newPlanId
       // confirm.element.find('.js-bc-confirm-planId').text(planId);
     }
+
     this.infoModel.off('change:planId', changePlanId).on('change:planId', changePlanId)
   },
 
@@ -1577,13 +1584,13 @@ const BettingCenterView = Base.ItemView.extend({
     }
   },
 
-  bchgCalculateshow () {
+  bchgCalculateshow() {
     if (this.$showNumberDetail) {
       this.$hgcalculate.show()
     }
   },
 
-  bchgCalculatehide () {
+  bchgCalculatehide() {
     if (this.$showNumberDetail) {
       this.$hgcalculate.hide()
     }
@@ -1595,7 +1602,7 @@ const BettingCenterView = Base.ItemView.extend({
       data,
     })
   },
-  getUsePackInfoXhr () {
+  getUsePackInfoXhr() {
     return Global.sync.ajax({
       url: '/info/redpack/ticketamount.json',
       data: {
@@ -1646,7 +1653,7 @@ const BettingCenterView = Base.ItemView.extend({
   // resizeRecords () {
   //   this.$recordsContainer.find('.slimScrollDiv,.js-wt-body-main').css({ height: this.$bcMainAreaRight.height() - 394 })
   // },
-  getUsePackStatus () {
+  getUsePackStatus() {
     const self = this
     this.getUsePackInfoXhr()
       .done((res) => {
@@ -1666,14 +1673,14 @@ const BettingCenterView = Base.ItemView.extend({
       })
     Global.m.publish('redNum:updating')
   },
-  checkUserRedPackHanler (e) {
+  checkUserRedPackHanler(e) {
     const $target = $(e.currentTarget)
     const type = $target.data('type')
     Number(type) === 0 ? $target.removeClass('sfa sfa-checkbox-def').addClass('sfa sfa-checkbox-on') : $target.removeClass('sfa sfa-checkbox-on').addClass('sfa sfa-checkbox-def')
     Number(type) === 0 ? $target.data('type', 1) : $target.data('type', 0)
     this.model.set('usePack', $target.data('type'))
   },
-  showTicketListHandler (e) {
+  showTicketListHandler(e) {
     const $target = $(e.currentTarget)
     const type = $target.data('type')
     if (type === 0) {

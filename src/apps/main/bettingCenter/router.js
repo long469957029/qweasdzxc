@@ -18,7 +18,7 @@ export default [
   },
   {
     path: '/bc/old/19',
-    component: function() {
+    component: function () {
       RouterController.changeMainReginView(new MMCBettingCenterView({
         ticketId: 19,
       }))

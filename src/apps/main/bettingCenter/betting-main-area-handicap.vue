@@ -7,7 +7,8 @@
         <betting-advance-rules :type="'single-hidden'"></betting-advance-rules>
         <div class="m-LR-smd">
           <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
-            <betting-play-area-handicap :play-info="playInfo" :play-rule="playRule" :ticket-info="ticketInfo" :pushing="pushing" :sale="bettingInfo.sale" :pending="bettingInfo.pending"
+            <betting-play-area-handicap :play-info="playInfo" :play-rule="playRule" :ticket-info="ticketInfo"
+                                        :pushing="pushing" :sale="bettingInfo.sale" :pending="bettingInfo.pending"
                                         ref="area" @lotteryBuy="lotteryBuy"></betting-play-area-handicap>
           </div>
         </div>
@@ -20,7 +21,9 @@
 
     <!-- 确认投注 -->
     <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="confirm">
-      <betting-confirm :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice" :betting-list="bettingChoice.buyList" :type="`handicap`"  @bettingConfirm="bettingConfirm"></betting-confirm>
+      <betting-confirm :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
+                       :betting-list="bettingChoice.buyList" :type="`handicap`"
+                       @bettingConfirm="bettingConfirm"></betting-confirm>
     </div>
   </div>
 </template>
@@ -65,7 +68,7 @@
       }
     },
     computed: mapState({
-      playLevels: function() {
+      playLevels: function () {
         return this.$store.getters.playLevels
       },
       bettingChoice: 'bettingChoice',
@@ -74,7 +77,7 @@
 
     watch: {
       'bettingChoice.playId': {
-        handler: function(playId) {
+        handler: function (playId) {
           if (playId === -1) {
             return
           }
@@ -95,17 +98,17 @@
         },
       },
       'bettingInfo.planId': {
-        handler: function(newPlanId, oldPlanId) {
+        handler: function (newPlanId, oldPlanId) {
           if (this.$el.offsetWidth && newPlanId !== '------------' && oldPlanId !== '------------' && !this.bettingInfo.pending) {
             Global.ui.notification.show(
               `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
-              { id: 'ticketNotice', hasFooter: false, displayTime: 800 },
+              {id: 'ticketNotice', hasFooter: false, displayTime: 800},
             )
           }
         }
       },
       'bettingInfo.lastOpenId': {
-        handler: function() {
+        handler: function () {
           recordsOpenView.update()
         }
       },
@@ -183,7 +186,7 @@
       },
     },
 
-    mounted: function() {
+    mounted: function () {
       recordsOpenView = new HisAnalysisView({
         el: this.$refs.bcSideArea,
         ticketId: this.ticketId,

@@ -1,6 +1,7 @@
 <template>
   <div class="play-area-input">
-    <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals" @positionChange="positionChange"></betting-play-area-position>
+    <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals"
+                                @positionChange="positionChange"></betting-play-area-position>
 
     <div class="clearfix m-TB-md">
       <div class="js-bc-numbers-container bc-textarea-main pull-left" @click="focusInput">
@@ -12,7 +13,8 @@
             3、导入文本内容后将覆盖文本框中现有的内容。
           </p>
         </div>
-        <textarea class="height-100 width-100 no-resize no-padding no-margin no-border hidden" ref="numbersArea" @blur="blurInput" @keyup="betChange" v-model="numbers"></textarea>
+        <textarea class="height-100 width-100 no-resize no-padding no-margin no-border hidden" ref="numbersArea"
+                  @blur="blurInput" @keyup="betChange" v-model="numbers"></textarea>
       </div>
 
       <div class="input-operate-area pull-left">
@@ -41,7 +43,7 @@
       playRule: Object,
     },
 
-    data: function() {
+    data: function () {
       return {
         // 回车 逗号 分号 冒号 竖线 空白字符
         splitReg: /[\r\n,\;:\|\s]+/,
@@ -62,7 +64,7 @@
       },
     },
 
-    mounted: function() {
+    mounted: function () {
       $(this.$refs.fileLoad).fileLoad({
         title: '导入文件',
         accept: '.txt',
@@ -123,7 +125,7 @@
 
         if (this.coefficient) {
           results = _(createTimes).times(this.playRule.create, this.options)
-          _(results).each(function(result) {
+          _(results).each(function (result) {
             result.statistics = Math.round(_(this.coefficient).mul(result.statistics))
             result.selectOptionals = this.selectOptionals
           }, this)
@@ -218,6 +220,7 @@
   .play-area-input {
     padding: 0 15px;
   }
+
   .bc-textarea-main {
     width: 680px;
     height: 170px;
@@ -225,8 +228,15 @@
     border-radius: 5px;
     border: solid 1px #d7d7d7;
   }
+
   .input-operate-area {
     margin-left: 30px;
     margin-top: 20px;
+  }
+
+  .mmc {
+    .bc-textarea-main {
+      width: 615px;
+    }
   }
 </style>
