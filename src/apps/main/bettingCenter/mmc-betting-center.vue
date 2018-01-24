@@ -1,8 +1,8 @@
 <template>
-  <div class="bc-main-wrapper">
+  <div class="bc-main-wrapper clearfix">
     <div class="bc-main">
-      <betting-quick-nav :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType"></betting-quick-nav>
-      <mmc-betting-main-area :ticket-info="ticketInfo" :ticket-id="ticketId"></mmc-betting-main-area>
+      <betting-quick-nav :key="'quick-nav'" :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType" :component-type="componentType"></betting-quick-nav>
+      <mmc-betting-main-area :ticket-info="ticketInfo" :ticket-id="ticketId" :component-type="componentType"></mmc-betting-main-area>
     </div>
   </div>
 </template>
@@ -26,6 +26,7 @@
 
     data() {
       return {
+        componentType: 'mmc',
         ticketInfo: {},
         ticketList: ticketConfig.getCompleteAll(),
       }
@@ -60,7 +61,6 @@
   .bc-main {
     max-width: 1227px;
     margin: 0 auto;
-    overflow-x: hidden;
   }
 
   .bc-main-wrapper {

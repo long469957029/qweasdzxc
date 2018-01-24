@@ -221,7 +221,7 @@
         clearInterval(nextTimer)
 
         timer = _.delay(() => {
-          this.$store.dispatch('getTicketInfo', {
+          this.$store.dispatch(types.GET_TICKET_INFO, {
             ticketId: this.bettingInfo.ticketId,
             type: this.bettingType
           })
@@ -267,7 +267,7 @@
 
           // 取得下一期的信息延迟一秒再做
           nextTimer = _.delay(() => {
-            this.$store.dispatch('getTicketInfo', {
+            this.$store.dispatch(types.GET_TICKET_INFO, {
               ticketId: this.bettingInfo.ticketId,
               type: this.bettingType
             })

@@ -183,7 +183,7 @@
       }
     }
     td {
-      padding: 13px 3px;
+      padding: 12px 1px;
     }
     .open-nums {
       max-width: 150px;
@@ -250,4 +250,15 @@
   border-bottom: 1px dashed $def-gray-color;
   padding-bottom: 5px;
   margin-bottom: 5px;
+}
+.his-top {
+  width: 185px;
+  position: relative;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+.more-analysis {
+  font-size: 14px;
+  line-height: 18px;
+  color: $new-inverse-color;
 }

@@ -72,7 +72,12 @@
 
           _.delay(() => {
             Velocity(this.$refs.balls[i], 'stop')
-            this.$refs.balls[i].style.top = `${-this.totalHeight}px`
+
+            Velocity(this.$refs.balls[i], {
+              top: -this.totalHeight + this.$_getDes(i)
+            }, {
+              duration: 0
+            })
 
             Velocity(this.$refs.balls[i], {
               top: this.$_getDes(i),

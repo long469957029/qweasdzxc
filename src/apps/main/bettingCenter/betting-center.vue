@@ -1,6 +1,6 @@
 <template>
   <div id="js-bc-main" class="bc-main">
-    <betting-quick-nav :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType"></betting-quick-nav>
+      <betting-quick-nav :key="'quick-nav'" :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType" :componentType="''"></betting-quick-nav>
     <ticket-info-banner :ticket-info="ticketInfo" :betting-type="ticketType"></ticket-info-banner>
     <betting-main-area-handicap :ticket-info="ticketInfo" :ticket-id="ticketId"
                                 v-if="ticketType === 2"></betting-main-area-handicap>
@@ -69,6 +69,5 @@
     margin: 0 auto;
     background-color: $def-white-color;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
-    overflow-x: hidden;
   }
 </style>

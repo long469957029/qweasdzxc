@@ -12,6 +12,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
   llhKeysArr: ['w', 'k', 'b', 's', 'g'],
 
+
   GridOps: {
     ssc: {
       pageSize: 15,
@@ -20,7 +21,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
           return val
         },
         function (val) {
-          const html = ['<div class="open-nums">']
+          const html = ['<div class="open-nums clearfix m-center">']
           const numList = val.split(',')
           const keyPositionRelly = _(this.playRule.keyPosition).filter((item) => {
             return item
@@ -118,6 +119,7 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
   serializeData() {
     return {
       ticketId: this.options.ticketId,
+      title: this.options.title ?  this.options.title : '最近15期开奖号码'
     }
   },
 
@@ -160,6 +162,10 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
 
       if (_(sscTicketIdArr).contains(this.options.ticketId)) {
         this.gridOps = this.GridOps.ssc
+        if (this.options.ticketId === 19) {
+          this.url = '/ticket/bet/openHistory.json'
+          this.gridOps.pageSize = 9
+        }
       } else if (_(c115TicketIdArr).contains(this.options.ticketId)) {
         this.gridOps = this.GridOps['115']
       } else if (_(dpcTicketIdArr).contains(this.options.ticketId)) {
@@ -187,26 +193,39 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
         pageSize: ops.pageSize,
         ticketId: this.options.ticketId,
       },
-      dataProp: 'root.openedList',
+      dataProp: ops.dataProp ? ops.dataProp : 'root.openedList',
     }
 
-    options.colModel.push({
-      label: '期号',
-      name: 'ticketPlanId',
-      width: '32%',
-      formatter: ops.formats && ops.formats[0] ? function () {
-        return ops.formats[0].apply(self, arguments)
-      } : null,
-    })
+    if (this.options.ticketId === 19) {
+      options.colModel.push({
+        label: '开奖号码',
+        name: 'ticketOpenNum',
+        width: '50%',
+        formatter: ops.formats && ops.formats[1] ? function () {
+          return ops.formats[1].apply(self, arguments)
+        } : null,
+      })
+    } else {
 
-    options.colModel.push({
-      label: '开奖号码',
-      name: 'ticketOpenNum',
-      width: '50%',
-      formatter: ops.formats && ops.formats[1] ? function () {
-        return ops.formats[1].apply(self, arguments)
-      } : null,
-    })
+      options.colModel.push({
+        label: '期号',
+        name: 'ticketPlanId',
+        width: '32%',
+        formatter: ops.formats && ops.formats[0] ? function () {
+          return ops.formats[0].apply(self, arguments)
+        } : null,
+      })
+
+      options.colModel.push({
+        label: '开奖号码',
+        name: 'ticketOpenNum',
+        width: '50%',
+        formatter: ops.formats && ops.formats[1] ? function () {
+          return ops.formats[1].apply(self, arguments)
+        } : null,
+      })
+    }
+
 
     if (this.playRule && this.playRule.formType && ops.formats && ops.formats[2]) {
       const fromData = ops.formats[2].apply(self, arguments)

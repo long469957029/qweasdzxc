@@ -173,7 +173,7 @@
           <div class="bottom-panel-bottom text-center">
             <button class="sfa sfa-mmc-add-btn no-border" @click="lotteryAdd"
                     :disabled="pushing || !bettingInfo.sale || bettingInfo.pending"></button>
-            <button class="sfa sfa-mmc-start-btn no-border" @click="lotteryBuy"
+            <button class="sfa sfa-mmc-start-btn no-border" @click="lotteryAddAndConfirm"
                     :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
             </button>
           </div>
@@ -205,12 +205,31 @@
       </button>
     </div>
 
+    <!-- 最后开奖结果 -->
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="finalResult">
+      <div class="final-result-wrapper">
+        <div class="final-result-inner sfa-mmc-winning" v-if="totalWinPrize">
+          <span class="final-result-close sfa sfa-mmc-result-close" data-dismiss="modal"></span>
+          <div class="winning-result">总计中奖金额为<br />
+          <span class="winning-prize">{{fTotalWinPrize}}</span> 元
+          </div>
+        </div>
+        <div class="final-result-inner sfa-mmc-lose" v-else>
+          <span class="final-result-close sfa sfa-mmc-result-close" data-dismiss="modal"></span>
+          <div class="lose-result">
+            祝您下次好运！
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
   import {pushMmcSimulationBettingApi} from 'api/betting'
   import {CustomCheckbox, StaticGrid} from 'build'
+  import MmcOpeningNumGroup from "bettingCenter/mmc-opening-num-group";
   import betRulesConfig from './misc/betRulesConfig'
 
 
@@ -222,11 +241,9 @@
 
   //backbone旧组件
   import HisAnalysisView from './bettingCenter-historical-analysis'
-  import MmcOpeningNumGroup from "bettingCenter/mmc-opening-num-group";
 
   let recordsOpenView
 
-  //TODO 最终结果展示
   //TODO 连续开奖选择
   //TODO nav
   export default {
@@ -234,6 +251,7 @@
     props: {
       ticketInfo: Object,
       ticketId: Number,
+      componentType: String,
     },
     components: {
       MmcOpeningNumGroup,
@@ -247,7 +265,6 @@
     data() {
       return {
         lever: false,
-        componentType: 'mmc',
         loading: Global.ui.loader.get(),
         unit: 10000,
         continuousOpenSelectList: [1, 5, 10, 15, 20, 25],
@@ -274,6 +291,8 @@
         stopWhenWinning: false,
         selectStatus: true,
         flashIndex: 0,
+        //最后开奖结果
+        showFinalResult: true,
 
         lotteryGridOps: {
           wrapperClass: 'bc-lottery-preview mmc',
@@ -320,9 +339,6 @@
     },
 
     watch: {
-      '$route'() {
-        recordsOpenView.update()
-      },
       opening: {
         handler(current) {
           if (current) {
@@ -518,12 +534,16 @@
           this.stopping = false
           this.opening = false
 
-          this.$_showFinalResult()
+          this.toggleFinalResult(true)
         }
       },
 
-      $_showFinalResult() {
-
+      toggleFinalResult(flag = true) {
+        $(this.$refs.finalResult).modal({
+          backdrop: 'static',
+        })
+        // this.$refs.finalResult
+        this.showFinalResult = flag
       },
 
       /**
@@ -582,83 +602,6 @@
           this.simulationOpen = false
           this.pushing = false
         })
-      },
-
-      lotteryBuy() {
-        if (this.opening || this.pushing) {
-          return
-        }
-        if (!this.bettingChoice.multiple) {
-          Global.ui.notification.show('倍数为0，不能投注')
-          return false
-        }
-
-        if (this.playRule.type === 'select') {
-          this.$_addSelectLottery({type: 'buy'})
-        } else {
-          this.$_addInputLottery({type: 'buy'})
-        }
-
-        //do save
-        let planId = this.bettingInfo.planId
-        const inputCount = _(this.bettingChoice.buyList).reduce((_inputCount, previewInfo) => {
-          if (previewInfo.type === 'input') {
-            _inputCount += previewInfo.statistics
-          }
-          return _inputCount
-        }, 0)
-
-        if (inputCount > 100000) {
-          Global.ui.notification.show('非常抱歉，目前平台单式投注只支持最多10万注单。')
-          return false
-        }
-        if (_.isEmpty(this.bettingChoice.buyList)) {
-          Global.ui.notification.show('请至少选择一注投注号码！')
-          return false
-        }
-
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
-          Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
-            'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
-          return false
-        }
-        const maxBetNums = this.bettingChoice.playInfo.maxBetNums
-        if (maxBetNums && !_.isNull(maxBetNums) && Number(this.bettingChoice.buyList[0].statistics) > maxBetNums) {
-          Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${maxBetNums} 注，请重新选择  `)
-          this.$store.commit(types.EMPTY_BUY_BETTING)
-          return false
-        }
-
-        this.opening = true
-        this.pushing = true
-
-        this.toggleLever()
-
-        this.$store.dispatch(types.PUSH_MMC_BETTING, {
-          planId,
-          type: 'buyList'
-        })
-          .catch(() => {
-            this.pushing = false
-          })
-          .then((res) => {
-            this.pushing = false
-            if (res && res.result === 0) {
-              Global.m.oauth.check()
-
-              const fOpeningReuslt = this.$_formatOpeningResult(res.root, this.currentOpeningCount)
-              this.fOpeningResultList.unshift(fOpeningReuslt)
-
-              this.lastOpening = fOpeningReuslt.fOpenCode
-
-            } else if (res.root && res.root.errorCode === 101) {
-              Global.ui.notification.show('账号余额不足，请先<a href="#/fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
-            } else {
-              Global.ui.notification.show(res.msg || '')
-            }
-
-            this.$_emptySelect();
-          })
       },
 
       $_formatOpeningResult(openingResult, index) {
@@ -777,16 +720,20 @@
         if (result) {
           if (!_.isEmpty(result)) {
             if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
-              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择  `)
+              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择`)
+              return false
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
               this.$refs.areaSelect.empty()
+              return true
             }
           } else {
             this.$refs.areaSelect.empty()
+            return true
           }
         } else {
           Global.ui.notification.show('号码选择不完整，请重新选择！')
+          return false
         }
       },
 
@@ -798,6 +745,7 @@
           if (!_.isEmpty(result)) {
             if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
               Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择`)
+              return false
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
             }
@@ -816,26 +764,35 @@
           }
 
           this.$refs.areaInput.empty()
+          return true
         } else {
           Global.ui.notification.show('号码选择不完整，请重新选择！')
+          return false
         }
       },
 
-      lotteryAdd(e) {
+      lotteryAdd() {
         if (!this.bettingChoice.multiple) {
           Global.ui.notification.show('倍数为0，不能投注')
           return false
         }
 
         if (this.playRule.type === 'select') {
-          this.$_addSelectLottery()
+          return this.$_addSelectLottery()
         } else {
-          this.$_addInputLottery()
+          return this.$_addInputLottery()
         }
       },
+
+      lotteryAddAndConfirm() {
+        if (this.lotteryAdd()) {
+          this.lotteryConfirm()
+        }
+      }
     },
 
     mounted: function () {
+
       $(this.$refs.multiRange).numRange({
         onChange: (num) => {
           this.$store.commit(types.SET_MULTIPLE, num)
@@ -858,7 +815,11 @@
       recordsOpenView = new HisAnalysisView({
         el: this.$refs.bcSideArea,
         ticketId: this.ticketId,
+        title: '最近开奖号码',
       }).render()
+
+      recordsOpenView.height = 430
+      recordsOpenView.update()
 
       this.flashTimer = setInterval(() => {
         ++this.flashIndex
@@ -919,10 +880,11 @@
 
   .mmc-lottery-main {
     position: relative;
-    top: -35px;
+    top: -40px;
     left: 33px;
     width: 1190px;
     background: url(./misc/mmc-content-slice.png) repeat-y center center;
+    overflow: hidden;
   }
 
   .bottom-panel-top {
@@ -1392,6 +1354,45 @@
     box-shadow: inset 0px 1px 2px 0px
     rgba(105, 105, 105, 0.4);
   }
+
+  .final-result-wrapper {
+    margin: 7% auto 0;
+  }
+  .final-result-inner {
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .winning-result {
+    position: relative;
+    top: 140px;
+    font-size: 18px;
+    line-height: 30px;
+    color: #f09932;
+    width: 130px;
+    text-align: center;
+    margin: 0 auto;
+    .winning-prize {
+      font-size: 24px;
+    }
+  }
+  .lose-result {
+    color: $new-inverse-color;
+    font-size: 18px;
+    position: relative;
+    width: 139px;
+    margin: 0 auto;
+    text-align: center;
+    top: 164px;
+  }
+  .final-result-close {
+    cursor: pointer;
+    position: absolute;
+    top: -23px;
+    right: -10px;
+  }
+
+
   /*@keyframes opacity {*/
     /*from {*/
       /*opacity: 0.6;*/
