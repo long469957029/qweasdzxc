@@ -21,6 +21,7 @@ export default Base.ItemView.extend({
     'click .js-fm-in-item': 'selectInGameHandler',
     'click .js-fc-fm-change': 'changeInOutStatusHandler',
     'focus .js-fc-fm-change': 'focusInOutStatusHandler',
+    'click .js-fc-fm-info-btn': 'searchPeopleInfoHandler',
   },
   refreshHandler(e) {
     e.stopPropagation()
@@ -45,22 +46,6 @@ export default Base.ItemView.extend({
   rechargeHandler() {
     $('.js-gl-hd-re').trigger('click')
   },
-  // withdrawHandler() {
-  //   const acctInfo = Global.memoryCache.get('acctInfo')
-  //
-  //   if (!acctInfo || acctInfo.userStatus === 100) {
-  //     Global.ui.notification.show('用户已被冻结，无法进行提现操作。')
-  //     return false
-  //   }
-  //   if (Global.memoryCache.get('acctInfo').foundsLock) {
-  //     Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
-  //       'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" ' +
-  //       'class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
-  //     return false
-  //   }
-  //
-  //   Global.appRouter.navigate('#fc/wd', {trigger: true, replace: false})
-  // },
   // 获取平台转账信息
   getPlatformInfoXhr(data) {
     return Global.sync.ajax({
@@ -79,20 +64,6 @@ export default Base.ItemView.extend({
       Global.router.goTo(`fc/tr?toId=${channelId}`)
     }
   },
-
-  // getChannelAmountXhr(data) {
-  //   return Global.sync.ajax({
-  //     url: '/fund/balance/gamebalance.json',
-  //     data,
-  //   })
-  // },
-
-  // refreshChannelAmountXhr(data) {
-  //   return Global.sync.ajax({
-  //     url: '/fund/balance/balance.json',
-  //     data,
-  //   })
-  // },
   getFundSummaryXhr(data) {
     return Global.sync.ajax({
       url: '/fund/balance/summary.json',
@@ -140,19 +111,19 @@ export default Base.ItemView.extend({
     this.toId = _.getUrlParam('toId')
     this.$from = this.$('.js-fc-tf-from')
     this.$to = this.$('.js-fc-tf-to')
-
+    this.$timeset = this.$('.js-fm-timeset')
     this.timeset = new Timeset({
       el: this.$timeset,
+      size: 'input-md',
       startTimeHolder: '起始日期',
       endTimeHolder: '结束日期',
       startOps: {
-        format: 'YYYY-MM-DD HH:MM:SS',
+        format: 'YYYY-MM-DD',
       },
       endOps: {
-        format: 'YYYY-MM-DD HH:MM:SS',
+        format: 'YYYY-MM-DD',
       },
       showIcon: true,
-      size: 'timer-record-input',
     }).render()
 
     this.timeset.$startDate.on('dp.change', () => {
@@ -214,16 +185,6 @@ export default Base.ItemView.extend({
   },
   renderAccountInfo() {
     const self = this
-    // const acctInfo = Global.memoryCache.get('acctInfo')
-    // // if (acctInfo.userRebate <= 128) {
-    // //   this.$('.js-fc-fm-channel-operation').removeClass('hidden')
-    // // }
-    // // 配置锁定
-    // if (acctInfo.foundsLock) {
-    //   this.$('.js-fc-fm-lock').html('资金解锁').data('status', '1')// sfa-h-locked
-    // } else {
-    //   this.$('.js-fc-fm-lock').html('资金锁定').data('status', '0')// sfa-h-unlocked
-    // }
     $.when(this.AccountXhr).done((res) => {
       if (res.result === 0) {
         self.$('.js-fc-fm-to-mb').html(_(res.root.total).convert2yuan())// 总余额
@@ -253,11 +214,6 @@ export default Base.ItemView.extend({
   },
   renderOtherData(reqData) {
     const self = this
-    // this.getNewUserActiveUserXhr(reqData).done((res) => {
-    //   if (res.result == 0) {
-    //     self.$NewUser.html(`${res.root.newSub}/${res.root.active}`)
-    //   }
-    // })
     this.getRechargeWithdrawlXhr(reqData).done((res) => {
       if (res.result === 0) {
         if (res.root.recharge > 0) {
@@ -562,5 +518,12 @@ export default Base.ItemView.extend({
             `<span class="parsley-error-text">${res.msg}</span><div>`)
         }
       })
+  },
+  searchPeopleInfoHandler(){
+    const reqData = {
+      startTime: this.timeset.$startDate.val(),
+      endTime: this.timeset.$endDate.val(),
+    }
+    this.renderOtherData(reqData)
   },
 })

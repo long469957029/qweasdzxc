@@ -65,7 +65,7 @@ const NewsMediatorModule = Base.Module.extend({
       Global.sync.setLogout()
       Global.ui.notification.show('由于您长时间未操作，系统自动为您退出登录！', {
         event() {
-          window.location.href = 'login.html'
+          window.location.href = 'index.html'
         },
       })
     }
