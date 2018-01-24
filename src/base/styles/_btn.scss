@@ -172,7 +172,9 @@ button.btn.btn-xs, input[type="submit"].btn.btn-xs {
 
   @include btn-links($font-colors);
 }
-
+.btn-im{
+  font-size: 12px;
+}
 .btn-toolbar {
   margin-top: 10px;
   margin-bottom: 10px;

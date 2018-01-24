@@ -108,10 +108,10 @@ const MoneyDetailView = SearchGrid.extend({
     this.grid.addFooterRows({
       trClass: 'tr-footer',
       columnEls: [
-        '<strong>所有页总计</strong>',
-        '', '', '',
-        _(_(gridData.income).add(gridData.spending)).fixedConvert2yuan(),
-        '', '',
+        // '<strong>所有页总计</strong>',
+        // '', '', '',
+        // _(_(gridData.income).add(gridData.spending)).fixedConvert2yuan(),
+        // '', '',
       ],
     }).hideLoading()
   },

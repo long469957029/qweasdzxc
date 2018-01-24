@@ -3,7 +3,7 @@ import './index.scss'
 import FundView from './fund' // 资金管理
 import RecordView from './record' // 游戏记录
 import CouponView from './coupon' // 我的优惠券
-import MessageView from './message' // 站内消息
+// import MessageView from './message' // 站内消息
 import FeedbackView from './feedback' // 意见反馈
 
 const ToolbarView = Base.ItemView.extend({
@@ -15,7 +15,7 @@ const ToolbarView = Base.ItemView.extend({
     'click .js-sidebar-close': 'closeSidebarHandler', // 收起侧边栏
     'click .js-toolbar-scroll-to-top': 'scrollHandler', // 回滚到顶部
     'click .js-toolbar-feedback-dialog': 'feedbackDialogHandler', // 意见反馈弹窗
-    'click .js-toolbar-im-dialog': 'imDialogHandler', // 站内信弹窗
+    // 'click .js-toolbar-im-dialog': 'imDialogHandler', // 站内信弹窗
     'click .js-logout': 'logoutHandler', // 退出登录
 
   },
@@ -32,7 +32,7 @@ const ToolbarView = Base.ItemView.extend({
       $('.js-toolbar-option-operation-container').removeClass('hidden')
     })
     const token = Global.cookieCache.get('token')
-    if (token && token !== '' || token !== undefined) {
+    if (token && token !== '' && token !== undefined && token !== null) {
       self.$('.js-toolbar-option-operation-container').removeClass('hidden')
     }
     this.subscribe('acct', 'acct:loginOut', () => {
@@ -90,22 +90,6 @@ const ToolbarView = Base.ItemView.extend({
       default:
         break
     }
-  },
-  imDialogHandler() {
-    const $imDialog = Global.ui.dialog.show({
-      size: 'im-dialog-panel',
-      // bStyle: 'width: 832;height:600;border:0;"',
-      bodyClass: 'js-sideBar-im im-panel',
-      body: '<div class="im-dialog-container"></div>',
-    })
-    const $dialogContainer = $imDialog.find('.im-dialog-container')
-    const messageView = new MessageView()
-    $dialogContainer.html(messageView.render().el)
-
-    $imDialog.on('hidden.modal', function () {
-      $(this).remove()
-      messageView.destroy()
-    })
   },
   feedbackDialogHandler() {
     const $feedbackDialog = Global.ui.dialog.show({

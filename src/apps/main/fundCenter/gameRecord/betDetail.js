@@ -55,7 +55,12 @@ const BetDetailView = Base.ItemView.extend({
         self.$('.js-gr-bet-username').html(res.root.username)
         self.$('.js-gr-bet-tradeNo').html(res.root.ticketBetNo)
         self.$('.js-gr-time').html(_(res.root.betTime).toTime())
-        self.$('.js-gr-bet-play').html(`${res.root.ticketName}-${info.ticketLevelName}-${info.ticketPlayName}`)
+        if(!res.root.handicap){
+          self.$('.js-gr-bet-play').html(`${res.root.ticketName}-${info.ticketLevelName}-${info.ticketPlayName}`)
+        }else{
+          self.$('.js-gr-bet-play').html(`${res.root.chaseTicketPlayDetail[0].playName}`)
+        }
+
 
         let cell = _(res.root.singleMoney).convert2yuan()
         if (info.betMethod === 0) {

@@ -164,15 +164,15 @@ const ReportManageView = SearchGrid.extend({
       trClass: 'tr-footer',
       columnEls: [
         '<strong>总计</strong>',
-        _(gridData.ticketTotal).convert2yuan({ fixed: 2 }),
-        _(gridData.agTotal).convert2yuan({ fixed: 2 }),
-        _(gridData.ebetTotal).convert2yuan({ fixed: 2 }),
-        _(gridData.bbinTotal).convert2yuan({ fixed: 2 }),
-        _(gridData.ptTotal).convert2yuan({ fixed: 2 }),
-        _(gridData.mgTotal).convert2yuan({ fixed: 2 }),
-        _(gridData.agFishTotal).convert2yuan({ fixed: 2 }),
-        _(gridData.ggFishTotal).convert2yuan({ fixed: 2 }),
-        _(gridData.profitTotal).convert2yuan({ fixed: 2 }),
+        _(gridData.ticketTotal).convert2yuan({fixed: 2}),
+        _(gridData.agTotal).convert2yuan({fixed: 2}),
+        _(gridData.ebetTotal).convert2yuan({fixed: 2}),
+        _(gridData.bbinTotal).convert2yuan({fixed: 2}),
+        _(gridData.ptTotal).convert2yuan({fixed: 2}),
+        _(gridData.mgTotal).convert2yuan({fixed: 2}),
+        _(gridData.agFishTotal).convert2yuan({fixed: 2}),
+        _(gridData.ggFishTotal).convert2yuan({fixed: 2}),
+        _(gridData.profitTotal).convert2yuan({fixed: 2}),
       ],
     })
       .hideLoading()
@@ -193,16 +193,20 @@ const ReportManageView = SearchGrid.extend({
       row.push(`<a class="js-pf-sub btn-link" data-label="${rowInfo.username}" 
         data-user-id="${rowInfo.userId}" href="javascript:void(0)">${rowInfo.username}</a>`)
     }
-    row.push(_(rowInfo.ticket).convert2yuan({ fixed: 2, clear: false }))
-    row.push(_(rowInfo.ag).convert2yuan({ fixed: 2, clear: false }))
-    row.push(_(rowInfo.ebet).convert2yuan({ fixed: 2, clear: false }))
-    row.push(_(rowInfo.bbin).convert2yuan({ fixed: 2, clear: false }))
-    row.push(_(rowInfo.pt).convert2yuan({ fixed: 2, clear: false }))
-    row.push(_(rowInfo.mg).convert2yuan({ fixed: 2, clear: false }))
-    row.push(_(rowInfo.agFish).convert2yuan({ fixed: 2, clear: false }))
-    row.push(_(rowInfo.ggFish).convert2yuan({ fixed: 2, clear: false }))
+    row.push(_(rowInfo.ticket).convert2yuan({fixed: 2, clear: false}))
+    row.push(_(rowInfo.ag).convert2yuan({fixed: 2, clear: false}))
+    row.push(_(rowInfo.ebet).convert2yuan({fixed: 2, clear: false}))
+    row.push(_(rowInfo.bbin).convert2yuan({fixed: 2, clear: false}))
+    row.push(_(rowInfo.pt).convert2yuan({fixed: 2, clear: false}))
+    row.push(_(rowInfo.mg).convert2yuan({fixed: 2, clear: false}))
+    row.push(_(rowInfo.agFish).convert2yuan({fixed: 2, clear: false}))
+    row.push(_(rowInfo.ggFish).convert2yuan({fixed: 2, clear: false}))
     // row.push(_(rowInfo.s188).convert2yuan({fixed:2, clear: false}));
-    row.push(_(rowInfo.profit).convert2yuan({ fixed: 2, clear: false }))
+    if (rowInfo.profit > 0) {
+      row.push('+' + _(rowInfo.profit).convert2yuan({fixed: 2, clear: false}))
+    } else {
+      row.push(_(rowInfo.profit).convert2yuan({fixed: 2, clear: false}))
+    }
     return row
   },
 })

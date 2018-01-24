@@ -244,6 +244,7 @@
               width: 360px;
               height: 170px;
               li {
+                cursor: pointer;
                 line-height: 85px;
                 list-style: none;
                 font-size: 16px;
@@ -880,6 +881,7 @@
             width: 360px;
             height: 170px;
             li {
+              cursor: pointer;
               line-height: 85px;
               list-style: none;
               font-size: 16px;
@@ -1116,11 +1118,8 @@
           }
           .fc-wd-bank-tips-addCard {
             color: $new-main-deep-color;
-            position: absolute;
-            right: 15px;
-            .fc-wd-bank-tips-addCard {
-              margin-right: 44px;
-            }
+            float: right;
+            cursor: pointer;
           }
         }
         .fc-rc-leftBar-bottom-area {

@@ -66,14 +66,16 @@ module.exports = {
   getQuickAmountHtml(lastPayInfo, type) {
     const setList = []
     let initAmount = 0
-    _(lastPayInfo.keyAmount).each((amount, index) => {
-      setList.push('<li class="js-rc-select-quickSet')
-      if (index === 0) { // 默认选择第一个配置，并初始化充值金额的值
-        setList.push(' active')
-        initAmount = amount
-      }
-      setList.push(`" data-type='${type}' data-value='${amount}'>${amount}</li>`)
-    })
+    if (lastPayInfo !== undefined) {
+      _(lastPayInfo.keyAmount).each((amount, index) => {
+        setList.push('<li class="js-rc-select-quickSet')
+        if (index === 0) { // 默认选择第一个配置，并初始化充值金额的值
+          setList.push(' active')
+          initAmount = amount
+        }
+        setList.push(`" data-type='${type}' data-value='${amount}'>${amount}</li>`)
+      })
+    }
     return {
       setHtml: setList.join(''),
       amount: initAmount,
@@ -99,11 +101,18 @@ module.exports = {
   },
   // 处理手续费数据
   doFeeData(payInfo) {
-    let minAmount = _(payInfo.minMoneyLimit).convert2yuan({fixed: 0})
-    let maxAmount = _(payInfo.maxMoneyLimit).convert2yuan({fixed: 0})
-    const maxFeeLimit = _(payInfo.maxFeeLimit).convert2yuan({fixed: 0})
-    const feeLimit = parseFloat(payInfo.feeLimit) / 100
-    const feeChargeAmount = _(payInfo.feeChargeAmount).convert2yuan({fixed: 0})
+    let minAmount = 0
+    let maxAmount = 0
+    let maxFeeLimit = 0
+    let feeLimit = 0
+    let feeChargeAmount = 0
+    if (payInfo !== undefined) {
+      minAmount = _(payInfo.minMoneyLimit).convert2yuan({fixed: 0})
+      maxAmount = _(payInfo.maxMoneyLimit).convert2yuan({fixed: 0})
+      maxFeeLimit = _(payInfo.maxFeeLimit).convert2yuan({fixed: 0})
+      feeLimit = parseFloat(payInfo.feeLimit) / 100
+      feeChargeAmount = _(payInfo.feeChargeAmount).convert2yuan({fixed: 0})
+    }
     if (minAmount === 0) {
       minAmount = 1
     }
@@ -123,9 +132,15 @@ module.exports = {
     const selected = []
     const items = []
     // 取已选中的支付方式信息并赋值
-    const selectedData = _(data).findWhere({
+    let selectedData = _(data).findWhere({
       paymentType: type,
     })
+    if (selectedData === undefined) {
+      type = 1
+      selectedData = _(data).findWhere({
+        paymentType: 1,
+      })
+    }
     const logo = quickPayConfig.get(selectedData.paymentType).className
     const name = quickPayConfig.get(selectedData.paymentType).zhName
     selected.push(`<div class="js-fc-rc-payType-selectedItem" data-type="${selectedData.paymentType}" data-name="${name}"  data-id="${selectedData.paymentId}">`)
@@ -158,6 +173,7 @@ module.exports = {
     return {
       selectedItem: selected.join(''),
       items: items.join(''),
+      type: type,
     }
   },
   getBankList(type, data, id) {

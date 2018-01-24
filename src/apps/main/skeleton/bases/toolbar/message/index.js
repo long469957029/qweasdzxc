@@ -96,7 +96,8 @@ const MessageView = Base.ItemView.extend({
   onRender() {
     const acctInfo = Global.memoryCache.get('acctInfo')
     this.username = acctInfo.username
-    this.userPic = acctInfo.username
+    this.contactUser = this.options.userId
+
     this.renderGetContactInfoXhr()
     this.renderGetRecentlyInfoXhr()
     this.pollingContactInfoHandler()
@@ -141,12 +142,20 @@ const MessageView = Base.ItemView.extend({
   },
   //  获取左侧联系人菜单信息
   renderContactData(data) {
+    let acPerson = this.activePerson
+    if (this.contactUser != undefined) {
+      acPerson = {
+        type: 'user',
+        id: this.contactUser
+      }
+      this.activePerson = acPerson
+    }
     // 显示系统管理员状态
-    this.$('.js-contact-admin').html(imService.getAdmin(this.activePerson))
+    this.$('.js-contact-admin').html(imService.getAdmin(acPerson))
     // 显示上级状态
-    this.$('.js-contact-superior').html(imService.getSuperior(data.parent, this.activePerson))
+    this.$('.js-contact-superior').html(imService.getSuperior(data.parent, acPerson))
     // 显示下级列表
-    this.$('.js-person-sub-container').html(imService.getItemsHtml(data.subList, this.parentId, this.activePerson))
+    this.$('.js-person-sub-container').html(imService.getItemsHtml(data.subList, this.parentId, acPerson))
   },
 
   // 私聊涉及方法
@@ -167,39 +176,43 @@ const MessageView = Base.ItemView.extend({
     this.getUserChatXhr(data)
       .done((res) => {
         if (res.result === 0) {
-          // 处理私聊数据并生成html
-          const chatData = res.root.records
-          let chatResult = []
-          const recordLastIndex = res.root.records.length - 1
-          const lastRecordId = res.root.records[recordLastIndex].rid
-          if (this.chatLastRecordId === '' || lastRecordId < this.chatLastRecordId) {
-            this.chatLastRecordId = lastRecordId
-          }
-          if (_.isEmpty(this.chatList.chatData)) {
-            chatResult = chatData
-            // this.chatLastRecordId = imService.getChatLastRecordId(res.root.records)
-          } else {
-            chatResult = imService.insertChatList(chatData, this.chatList.chatData)
-          }
-          this.chatList = {
-            chatUser: id,
-            chatData: chatResult,
-          }
-          if (id === 'admin') {
-            self.$('.js-chat-admin-content').html(imService.getChatMessageByDateHtml(this.chatList.chatData, 'admin', res.root.records.length, this.pageIndex, res.root.rowCount))
-            // 当点击联系人时将下拉框滚动至最下方
-            if (type === 'scroll') {
-              const $div = this.$('.js-chat-admin-content')
-              $div.scrollTop($div[0].scrollHeight)
+          if (res.root.records.length > 0) {
+            // 处理私聊数据并生成html
+            const chatData = res.root.records
+            let chatResult = []
+            let recordLastIndex = res.root.records.length - 1
+            if (recordLastIndex < 0) {
+              recordLastIndex = 0
             }
-          } else {
-            self.$('.js-chat-message-content-panel').html(imService.getChatMessageByDateHtml(this.chatList.chatData, null, res.root.records.length, this.pageIndex, res.root.rowCount))
-            // 当点击联系人时将下拉框滚动至最下方
-            if (type === 'scroll') {
-              this.scrollbarBottomHandler()
+            const lastRecordId = res.root.records[recordLastIndex].rid
+            if (this.chatLastRecordId === '' || lastRecordId < this.chatLastRecordId) {
+              this.chatLastRecordId = lastRecordId
+            }
+            if (_.isEmpty(this.chatList.chatData)) {
+              chatResult = chatData
+              // this.chatLastRecordId = imService.getChatLastRecordId(res.root.records)
+            } else {
+              chatResult = imService.insertChatList(chatData, this.chatList.chatData)
+            }
+            this.chatList = {
+              chatUser: id,
+              chatData: chatResult,
+            }
+            if (id === 'admin') {
+              self.$('.js-chat-admin-content').html(imService.getChatMessageByDateHtml(this.chatList.chatData, 'admin', res.root.records.length, this.pageIndex, res.root.rowCount))
+              // 当点击联系人时将下拉框滚动至最下方
+              if (type === 'scroll') {
+                const $div = this.$('.js-chat-admin-content')
+                $div.scrollTop($div[0].scrollHeight)
+              }
+            } else {
+              self.$('.js-chat-message-content-panel').html(imService.getChatMessageByDateHtml(this.chatList.chatData, null, res.root.records.length, this.pageIndex, res.root.rowCount))
+              // 当点击联系人时将下拉框滚动至最下方
+              if (type === 'scroll') {
+                this.scrollbarBottomHandler()
+              }
             }
           }
-
         } else {
           Global.ui.notification.show('未知错误')
         }
@@ -275,7 +288,10 @@ const MessageView = Base.ItemView.extend({
           const beforeHeight = $div[0].scrollHeight
           // 处理私聊数据并生成html
           const list = this.chatList.chatData
-          const recordLastIndex = res.root.records.length - 1
+          let recordLastIndex = res.root.records.length - 1
+          if (recordLastIndex < 0) {
+            recordLastIndex = 0
+          }
           this.chatLastRecordId = res.root.records[recordLastIndex].rid
           // this.chatList.chatData = list.unshift(res.root.records)
           this.chatList.chatData = res.root.records.concat(list)
