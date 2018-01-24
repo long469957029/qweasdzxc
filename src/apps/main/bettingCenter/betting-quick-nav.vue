@@ -132,7 +132,7 @@
         cursor: pointer;
         margin-top: 15px;
         position: relative;
-        &:hover,&:active {
+        &:hover,&.active {
           background: $new-main-deep-color;
           color: $def-white-color;
         }
