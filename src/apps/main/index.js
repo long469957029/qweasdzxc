@@ -10,6 +10,7 @@ import Login from 'skeleton/bases/login'
 import Logout from 'skeleton/bases/login/logout'
 import MainFooter from 'skeleton/bases/footer'
 import ResetPwd from 'skeleton/bases/login/resetPassWord'
+import LoginLauncher from 'skeleton/bases/loginLauncher'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -83,7 +84,8 @@ Global.m.oauth.check()
         MainFooter,
         Login,
         Logout,
-        ResetPwd
+        ResetPwd,
+        LoginLauncher
       },
       store,
       router,

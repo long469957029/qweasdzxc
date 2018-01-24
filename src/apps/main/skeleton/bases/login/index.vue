@@ -93,11 +93,10 @@
         }
       },
     },
-
     computed: {
-      loginDialogStatus(){
-        return this.$store.getters.loginDialogStatus
-      },
+      ...mapGetters([
+        'loginDialogStatus',
+      ]),
     },
     filters: {},
 

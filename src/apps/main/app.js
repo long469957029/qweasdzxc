@@ -56,15 +56,14 @@ function _bindClickModalFadeHandler() {
   })
 }
 const _bindFundOperatorDialogHandler = () => {
-  $(document).off('click.fundDialog').on('click.fundDialog', '.js-header-recharge', () => {
+  $(document).off('click.fundDialog').on('click.fundDialog', '.js-header-recharge', (e) => {
+    const $target = $(e.currentTarget)
+    const tabName = $target.data('name')
     const acctInfo = Global.memoryCache.get('acctInfo')
     if (!acctInfo || acctInfo.userStatus === 100) {
-      Global.ui.notification.show('用户已被冻结，无法进行充值操作')
+      Global.ui.notification.show('用户已被冻结，无法进行资金操作')
       return
     }
-
-    const rechargeView = new RechargeView()
-
     const $fundOperateDialog = Global.ui.dialog.show({
       id: _.now(),
       title: '',
@@ -72,6 +71,9 @@ const _bindFundOperatorDialogHandler = () => {
       bStyle: 'width: 740px;height:680px;border: 1px solid #d7d7d7;;"',
       bodyClass: 'js-fund-operate fund-operate',
       body: '<div class="js-fund-operate-container"></div>',
+    })
+    const rechargeView = new RechargeView({
+      triggerTab: tabName
     })
 
     $fundOperateDialog.find('.js-fund-operate').html(rechargeView.render().el)

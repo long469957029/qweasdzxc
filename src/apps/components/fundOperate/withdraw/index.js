@@ -35,16 +35,34 @@ const WithdrawView = Base.ItemView.extend({
       url: '/fund/withdraw/info.json',
     })
   },
+  getActivityInfo () {
+    return Global.sync.ajax({
+      async: false,
+      url: '/info/activityCenter/fundList.json',
+    })
+  },
   onRender() {
     const self = this
-    if (this.options.bank && this.options.pwd) {
-      this.getInfoXhr()
-        .always(() => {
-          self.loadingFinish()
-        })
-        .done((res) => {
-          const data = res && res.root || {}
-          if (res && res.result === 0) {
+    this.getActivityInfo()
+      .always(() => {
+        self.loadingFinish()
+      })
+      .done((res) => {
+        if (res && res.result === 0) {
+          // 生成充值页广告
+          this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
+        } else {
+          Global.ui.notification.show('服务器异常')
+        }
+      })
+    this.getInfoXhr()
+      .always(() => {
+        self.loadingFinish()
+      })
+      .done((res) => {
+        const data = res && res.root || {}
+        if (res && res.result === 0) {
+          if (res.root.hasBankCard && res.root.hasMoneyPwd) {
             this.$('.js-fc-wd-set-view').addClass('hidden')
             this.$('.js-fc-wd-operate-view').removeClass('hidden')
             // 生成充值页广告
@@ -63,15 +81,15 @@ const WithdrawView = Base.ItemView.extend({
             self.initWithdrawData(data)
             self.withdrawData = data
           } else {
-            Global.ui.notification.show('服务器异常')
+            this.$('.jc-wd-set-tips-text').html(withdrawService.getPreWithdrawTips(res.root.hasBankCard && res.root.hasMoneyPwd))
+            if (res.root.hasBankCard && !res.root.hasMoneyPwd) {
+              this.$('.js-wd-goTo-fundPwd').addClass('hidden')
+            }
           }
-        })
-    } else {
-      this.$('.jc-wd-set-tips-text').html(withdrawService.getPreWithdrawTips(this.options.bank, this.options.pwd))
-      if (this.options.bank && !this.options.pwd) {
-        this.$('.js-wd-goTo-fundPwd').addClass('hidden')
-      }
-    }
+        } else {
+          Global.ui.notification.show('服务器异常')
+        }
+      })
   },
   initWithdrawData(data, bankId) {
     // 初始化银行卡列表

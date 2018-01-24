@@ -31,13 +31,14 @@ const ToolbarView = Base.ItemView.extend({
     this.subscribe('acct', 'acct:login', () => {
       $('.js-toolbar-option-operation-container').removeClass('hidden')
     })
-    this.subscribe('acct', 'acct:loginOut', () => {
-      $('.js-toolbar-option-operation-container').addClass('hidden')
-    })
     const token = Global.cookieCache.get('token')
     if (token && token !== '' || token !== undefined) {
       self.$('.js-toolbar-option-operation-container').removeClass('hidden')
     }
+    this.subscribe('acct', 'acct:loginOut', () => {
+      $('.js-toolbar-option-operation-container').addClass('hidden')
+    })
+
     self.$sidebar = self.$('.js-toolbar-sidebar')
     self.$closeMask = self.$('.js-sidebar-close')
   },

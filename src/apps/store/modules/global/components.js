@@ -4,10 +4,11 @@
 
 const initState = () => {
   return {
-    // 定义全局显示Login弹窗属性
+    // 定义全局显示弹窗属性
     openLoginDialog: false,
     openLogoutDialog: false,
     openResetPassWordDialog: false,
+    openLoginLauncher: false,
   }
 }
 
@@ -22,24 +23,29 @@ const getters = {
   resetPassWordDialogStatus: (state) => {
     return state.openResetPassWordDialog
   },
+  loginLauncherStatus: (state) => {
+    return state.openLoginLauncher
+  },
 }
 
 // actions
-const actions = {
-
-}
+const actions = {}
 
 // mutations
 const mutations = {
   [types.TOGGLE_LOGIN_DIALOG](state, data) {
     state.openLoginDialog = data
   },
+
   [types.TOGGLE_LOGOUT_DIALOG](state, data) {
     state.openLogoutDialog = data
   },
   [types.TOGGLE_RESET_PASSWORD_DIALOG](state, data) {
     state.openResetPassWordDialog = data
-  }
+  },
+  [types.TOGGLE_LOGIN_LAUNCHER](state, data) {
+    state.openLoginLauncher = data
+  },
 }
 
 export default {

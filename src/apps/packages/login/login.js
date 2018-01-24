@@ -14,7 +14,7 @@ const Encryption = require('com/encryption')
 
 $.widget('gl.login', {
 
-  template: require('./login.html'),
+  template: require('./index.html'),
 
 
   // 获得登入二维码token

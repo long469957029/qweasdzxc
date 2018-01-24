@@ -68,11 +68,11 @@ const appConfig = {
       template: './entry/package-vue.html',
       chunks: ['common', 'base', 'trend'],
     },
-    // change: {
-    //   title: '无限娱乐',
-    //   template: './entry/package-vue.html',
-    //   chunks: ['common', 'vendor','base', 'change'],
-    // },
+    change: {
+      title: '无限娱乐',
+      template: './entry/package-vue.html',
+      chunks: ['common', 'base', 'change'],
+    },
     // charge: {
     //   title: '充值结果',
     //   template: './entry/package.html',

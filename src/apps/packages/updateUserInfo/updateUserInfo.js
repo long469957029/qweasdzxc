@@ -114,7 +114,7 @@ $.widget('gl.updateUserInfo', {
       }
 
       if (!flag) {
-        return 
+        return
       }
 
       formInstance.submitEvent.preventDefault()
@@ -142,7 +142,7 @@ $.widget('gl.updateUserInfo', {
               type: 'success',
               btnContent: '立即登陆',
               event() {
-                window.location.href = 'login.html'
+                window.location.href = 'index.html'
               },
             })
           } else {
@@ -259,7 +259,7 @@ $.widget('gl.updateUserInfo', {
       self._showValResult(1, self.$userUNameValDes, '昵称仅支持英文和数字，不能以数字开头', this.$userUNameValRes)
       return isValidate
     }
-    
+
     this.checkUNameExistXhr(data).fail(() => {
       self._showValResult(1, self.$userUNameValDes, '昵称验证失败', self.$userUNameValRes)
     }).done((res) => {
@@ -282,7 +282,7 @@ $.widget('gl.updateUserInfo', {
     if (passwordOld === '') {
       this._showValResult(1, this.$passwordOldValDes, msg, this.$passwordOldValRes)
       return false
-    } 
+    }
     this._showValResult(0, this.$passwordOldValDes, '', this.$passwordOldValRes)
     return true
   },
@@ -309,7 +309,7 @@ $.widget('gl.updateUserInfo', {
     if (validationStatus) {
       this._showValResult(0, this.$passwordValDes, '', this.$passwordValRes)
       return true
-    } 
+    }
     this._showValResult(1, this.$passwordValDes, msg, this.$passwordValRes)
     return false
   },
@@ -389,7 +389,7 @@ $.widget('gl.updateUserInfo', {
     }
   },
   quitHandler() {
-    window.location.href = 'login.html'
+    window.location.href = 'index.html'
   },
   strBetweenIsNumber (str, star, end) {
     const strArr = str.split('').slice(star, end)

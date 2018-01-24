@@ -28,11 +28,29 @@ const RechargeView = Base.ItemView.extend({
   gotoAliPayHandler () {
     window.open('https://www.alipay.com')
   },
+  getActivityInfo () {
+    return Global.sync.ajax({
+      async: false,
+      url: '/info/activityCenter/fundList.json',
+    })
+  },
   initialize() {
   },
 
   onRender() {
     const self = this
+    this.getActivityInfo()
+      .always(() => {
+        self.loadingFinish()
+      })
+      .done((res) => {
+        if (res && res.result === 0) {
+          // 生成充值页广告
+          this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
+        } else {
+          Global.ui.notification.show('服务器异常')
+        }
+      })
     // 请求充值基础数据（已开通支付方式，银行等）
     this.getRechargeBaseInfoXhr()
       .done((res) => {

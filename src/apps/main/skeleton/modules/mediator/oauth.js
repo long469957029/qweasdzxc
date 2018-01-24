@@ -35,7 +35,6 @@ const NewsMediatorModule = Base.Module.extend({
         window.Global.memoryCache.set('acctInfo', acctInfo)
 
         window.Global.m.publish('acct:updating', acctInfo)
-
         this.login = false
       })
 

@@ -2,7 +2,7 @@
   <div class="top-nav">
     <div class="header-main ">
       <div class="pull-left">
-        <a class="header-left-link" href="change.html">线路中心</a>
+        <a class="header-left-link" href="/change.html">线路中心</a>
         <a class="header-left-link" @click="showLoginLauncher">急速登录器</a>
         <a class="header-left-link" href='/dns.docx' target='_blank'>防dns劫持教程</a>
       </div>
@@ -21,7 +21,7 @@
              v-else>
           <div class="header-menu">
             <span class="sfa header-headshot "><img :src="imgUrl"/></span>
-            <span class="header-name">{{userUname}}</span>
+            <span class="header-name">{{username}}</span>
             <i class="fa fa-angle-down "></i>
             <div class="header-menu-place"></div>
             <div class="header-menu-body">
@@ -36,8 +36,8 @@
 
           <div class="header-amount-panel">
             <div class="header-amount-img">￥</div>
-            <div class=" header-amount">{{userAmount}}</div>
-            <div class="js-header-recharge header-recharge">充值</div>
+            <div class=" header-amount">{{amount}}</div>
+            <div class="js-header-recharge header-recharge" data-name="jsFcRecharge">充值</div>
           </div>
           <div class="js-header-announcement header-announcement active">
             <span class="sfa sfa-announcement "></span><span>消息</span>
@@ -65,36 +65,7 @@
       </transition>
     </div>
     <!-- 急速登录器弹窗 -->
-    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="loginLauncherModal"
-         v-if="loginLauncherDialog">
-      <div class="modal-dialog modal-loginLauncher">
-        <div class="launcher-header">
-          <a class="close btn-close" data-dismiss="modal">×</a>
-        </div>
-        <div class="modal-container">
-          <div class="modal-container-left inline-block"></div>
-          <div class="modal-container-right inline-block">
-            <div class="container-head"></div>
-            <div class="container-line"></div>
-            <div class="container-text">
-              <span class="text-circle"></span>
-              <span class="text-desc">根据您的网络状况，推荐3条最快的访问线路</span>
-            </div>
-            <div class="container-text">
-              <span class="text-circle"></span>
-              <span class="text-desc">完美避免假冒、山寨版网站，保证账号资金安全</span>
-            </div>
-            <div class="container-text">
-              <span class="text-circle"></span>
-              <span class="text-desc">只需下载一次，永久自动更新</span>
-            </div>
-            <div class="container-download">
-              <a href="/setup.exe" target="_blank" class="logger">下载登录器</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </template>
 
@@ -111,8 +82,8 @@
         loginPanel: true,
         // 默认隐藏用户界面
         userPanel: false,
-        amount: 0.00,
-        username: '',
+//        amount: 0.00,
+//        username: '',
         userAvatar: '',
         newRowCount: 0,
         newList: [],
@@ -124,14 +95,18 @@
 
     components: {},
 
-    watch: {},
+    watch: {
+      userInfo(userInfo) {
+        this.showUserInfo(userInfo)
+      },
+    },
 
     computed: {
-      userUname() {
-        return this.$store.state.loginStore.uName
+      amount(){
+        return this.$store.getters.getUserInfo.fBalance
       },
-      userAmount() {
-        return this.$store.state.loginStore.fBalance
+      username(){
+        return this.$store.getters.getUserInfo.uName
       },
       imgUrl(){
         return avatarConf.get(this.$store.state.loginStore.headIcon).logo
@@ -147,6 +122,13 @@
       showLogin() {
         this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
       },
+      showLoginLauncher(){
+        this.$store.commit(types.TOGGLE_LOGIN_LAUNCHER, true)
+      },
+//      showUserInfo(userInfo){
+//        this.amount = userInfo.fBalance
+//        this.username = userInfo.uName
+//      },
       renderMsgList(model){
         this.newRowCount = model.get('newRowCount')
         this.newList = model.get('newList')
@@ -167,20 +149,6 @@
       logout(){
         this.$store.commit(types.TOGGLE_LOGOUT_DIALOG, true)
       },
-      showLoginLauncher(){
-        this.loginLauncherDialog = true
-        this.$nextTick(() => {
-          $(this.$refs.loginLauncherModal).modal({
-            backdrop: 'static',
-          })
-            .on('hidden.modal', () => {
-              this.loginLauncherDialog = false
-            })
-        })
-      },
-      closeDialog(){
-        $(this.$refs.loginLauncherModal).modal('hide')
-      },
     },
     mounted(){
       Global.m.subscribe('news', 'news:updating', this.renderMsgList)
@@ -199,7 +167,7 @@
     left: 0;
     right: 0;
     top: 0;
-    z-index: 1050;
+    z-index: 1000;
     position: relative;
     vertical-align: middle;
 
@@ -575,84 +543,6 @@
           background: $new-main-deep-hover-color;
           .header-announcement-body {
             display: block;
-          }
-        }
-      }
-    }
-    .modal-loginLauncher {
-      border: 0;
-      width: 760px;
-      min-height: 450px;
-      background-color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-      -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-      border-radius: 7px;
-      box-shadow: 0 3px 8px 0 #999999;
-      z-index:1050;
-      .launcher-header {
-        width: 760px;
-        height: 150px;
-        background-image: url('./misc/loginLauncher-back.png');
-        .btn-close{
-          color:#fff;
-          &.active,&:hover{
-            color:#fff;
-          }
-        }
-      }
-      .modal-container {
-        margin-top: -30px;
-        .modal-container-left {
-          margin: 15px 30px;
-          width: 354px;
-          float: left;
-          height: 218px;
-          background-image: url('./misc/loginLauncher-computer.png');
-        }
-        .modal-container-right {
-          text-align: left;
-          .container-head {
-            width: 207px;
-            height: 28px;
-            background-image: url('./misc/loginLauncher-title.png');
-          }
-          .container-line {
-            width: 40px;
-            height: 3px;
-            margin-top: 18px;
-            margin-bottom: 10px;
-            background-color: #17b4bd;
-          }
-          .container-text {
-            padding: 8px 0;
-            .text-circle {
-              width: 5px;
-              height: 5px;
-              border-radius: 40px;
-              float: left;
-              margin-right: 8px;
-              background-color: #cccccc;
-              margin-top: 7px;
-            }
-            .text-desc {
-              font-size: 14px;
-              color: #cccccc;
-            }
-          }
-          .container-download {
-            margin-top: 35px;
-            border-radius: 25px;
-            text-align: center;
-            font-size: 17px;
-            padding: 13px 0;
-            height: 22px;
-            width: 210px;
-            background-color: #15b2bc;
-            color: #fff;
           }
         }
       }

@@ -171,7 +171,7 @@ $.widget('gl.register', {
             type: 'success',
             btnContent: '登陆',
             event () {
-              window.location.href = 'login.html'
+              window.location.href = 'index.html'
             },
           })
           // self.element.find('.js-re-notice').html(self._getErrorEl('注册成功！'));
@@ -223,7 +223,7 @@ $.widget('gl.register', {
     if (validationStatus) {
       this._showValResult(0, this.$passwordValDes, '', this.$passwordValRes)
       return true
-    } 
+    }
     this._showValResult(1, this.$passwordValDes, msg, this.$passwordValRes)
     return false
   },
@@ -360,23 +360,23 @@ $.widget('gl.register', {
     //   self._showValResult(1,this.$usernameValDes,"用户名已存在",self.$usernameValRes);
     //   return false;
     // }
-    
+
     var myReg = /^[A-Za-z][A-Za-z0-9]{3,15}$/
     if (!myReg.test(this.$username.val())) {
       self._showValResult(1, this.$usernameValDes, '仅支持4-16位字母和数字，不能以数字开头', self.$usernameValRes)
       return false
     }
-    
+
     if (this.$username.val() === '') {
       self._showValResult(1, this.$usernameValDes, '用户名不能为空', self.$usernameValRes)
       return false
-    } 
+    }
     var myReg = /^[A-Za-z][A-Za-z0-9]{3,15}$/
     if (!myReg.test(this.$username.val())) {
       self._showValResult(1, this.$usernameValDes, '仅支持4-16位字母和数字，不能以数字开头', self.$usernameValRes)
       return
     }
-    
+
     this.checkNameExistXhr(data).fail(() => {
       self._showValResult(1, self.$usernameValDes, '仅支持4-16位字母和数字，不能以数字开头', self.$usernameValRes)
     }).done((res) => {

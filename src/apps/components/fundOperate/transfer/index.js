@@ -36,7 +36,26 @@ const TransferView = Base.ItemView.extend({
       tradition: true,
     })
   },
+  getActivityInfo () {
+    return Global.sync.ajax({
+      async: false,
+      url: '/info/activityCenter/fundList.json',
+    })
+  },
   onRender() {
+    const self = this
+    this.getActivityInfo()
+      .always(() => {
+        self.loadingFinish()
+      })
+      .done((res) => {
+        if (res && res.result === 0) {
+          // 生成充值页广告
+          this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
+        } else {
+          Global.ui.notification.show('服务器异常')
+        }
+      })
     // 初始化转出钱包选择框
     const fromData = transferService.getFromData()
     this.$('.js-tr-out-selected').html(fromData.fromSelected)

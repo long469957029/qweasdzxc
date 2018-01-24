@@ -11,7 +11,8 @@ export default Base.ItemView.extend({
 
   events: {
     // 'click .js-fc-tf-change': 'changeFromTOHandler',
-    'click .js-fc-fm-re-btn': 'submitPlatformTransferHandler',
+    'click .js-fc-fm-tr-btn': 'submitPlatformTransferHandler',
+    'click .js-fc-fm-re-btn': 'rechargeHandler',
     'click .js-fc-fm-wd-btn': 'withdrawHandler',
     'click .js-fc-fm-operation-btn': 'goToTransferHandler', // js-fc-fm-operation-btn
     'click .js-fc-fm-refresh': 'refreshHandler',
@@ -79,13 +80,13 @@ export default Base.ItemView.extend({
   },
   getRechargeWithdrawlXhr(data) {
     return Global.sync.ajax({
-      url: '/info/gamereport/recharge.json',
+      url: '/info/gamereport/myrecharge.json',
       data,
     })
   },
   getProfitXhr(data) {
     return Global.sync.ajax({
-      url: '/info/gamereport/profit.json',
+      url: '/info/gamereport/myprofit.json',
       data,
     })
   },

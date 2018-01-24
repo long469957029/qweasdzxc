@@ -58,6 +58,9 @@ const getters = {
   getLoginStatus: (state) => {
     return state.userId > 0
   },
+  getUserInfo: (state) => {
+    return state
+  },
   checkPermission: (state) => (path) => {
     let isPass = true
     _(state.routers).each((item) => {
