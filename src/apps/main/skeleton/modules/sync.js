@@ -289,7 +289,8 @@ const SyncModule = Base.Module.extend({
 
   setLogout() {
     this.login = false
-    Global.cookieCache.clear('token')
+    // Global.cookieCache.clear('token')
+    window.app.$store.commit(types.USER_LOGOUT_SUCCESS, true)
   },
 
   ajax() {

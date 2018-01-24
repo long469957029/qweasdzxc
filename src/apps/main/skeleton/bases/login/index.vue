@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-login">
       <div class="login-head">
         <a class="close btn-close" data-dismiss="modal">×</a>
-        <span class="modal-head-title">无线娱乐会员登录</span>
+        <span class="modal-head-title">无限娱乐会员登录</span>
       </div>
       <div class="login-body">
         <div class="login-input-item">
