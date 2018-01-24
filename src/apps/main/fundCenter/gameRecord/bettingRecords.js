@@ -69,18 +69,10 @@ const BettingRecordsView = SearchGrid.extend({
     // 初始化时间选择
     new Timeset({
       el: this.$('.js-pf-timeset'),
-      startTimeHolder: '起始日期',
-      startDefaultDate: _(moment().add('day', 0)).toDate(),
-      endTimeHolder: '结束日期',
-      endDefaultDate: _(moment().add('day', 1)).toDate(),
-      startOps: {
-        format: 'YYYY-MM-DD HH:mm:ss',
-      },
-      endOps: {
-        format: 'YYYY-MM-DD HH:mm:ss',
-      },
-      showIcon: true,
+      startDefaultDate: _(moment().startOf('day')).toTime(),
+      endDefaultDate: _(moment().endOf('day')).toTime(),
       size: 'timer-record-input',
+      showIcon: true,
     }).render()
 
     // 初始化彩种选择

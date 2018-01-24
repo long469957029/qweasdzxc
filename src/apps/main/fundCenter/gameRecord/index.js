@@ -77,13 +77,13 @@ const TeamBettingRecordView = TabView.extend({
           view: PlatfomrMoneyDetailView,
           options: { channelId: channelId.gg },
         },
-        {
-          label: '188体育',
-          name: 'jsFcMdPlatform',
-          id: 'jsFcMdPlatform',
-          view: PlatfomrMoneyDetailView,
-          options: { channelId: channelId.sport },
-        },
+        // {
+        //   label: '188体育',
+        //   name: 'jsFcMdPlatform',
+        //   id: 'jsFcMdPlatform',
+        //   view: PlatfomrMoneyDetailView,
+        //   options: { channelId: channelId.sport },
+        // },
       ],
     })
   },

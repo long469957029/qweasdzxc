@@ -48,7 +48,7 @@ router.onReady(() => {
 router.beforeEach((to, from, next) => {
   if (store.getters.checkPermission(to.path)) {
     let isVue = false
-    _(['/bc', '/analysis', '/i', '/aa','/mb']).each((bcRouter) => {
+    _(['/bc', '/analysis', '/i', '/aa','/mb','/au']).each((bcRouter) => {
       if (to.path.indexOf(bcRouter) !== -1) {
         isVue = true
       }

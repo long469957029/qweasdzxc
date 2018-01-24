@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-login">
       <div class="login-head">
         <a class="close btn-close" data-dismiss="modal">×</a>
-        <span class="modal-head-title">无线娱乐会员登录</span>
+        <span class="modal-head-title">无限娱乐会员登录</span>
       </div>
       <div class="login-body">
         <div class="login-input-item">
@@ -166,7 +166,7 @@
               this.autoLogoutCountdown(acctInfo.outTime)
             }
             window.Global.memoryCache.set('acctInfo', acctInfo)
-            window.Global.m.publish('acct:updating', acctInfo)
+            window.Global.m.publish('acct:login', acctInfo)
             this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
             this.closeDialog()
 //            this.$store.commit(types.ADD_ROUTERS)

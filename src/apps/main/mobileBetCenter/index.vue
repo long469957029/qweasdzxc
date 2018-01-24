@@ -88,7 +88,6 @@
     min-height: 584px;
     position: relative;
     background-color: #f9f9f9;
-    width: 100vw;
     .center-content {
       width: 1193px;
       margin: 0 auto;
@@ -99,7 +98,7 @@
       position: absolute;
       text-align: center;
       background-color: $def-white-color;
-      width: 100vw;
+      width: 100%;
       .center-bar-container {
         width: 1200px;
         margin: 0 auto;

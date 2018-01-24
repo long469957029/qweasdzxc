@@ -24,7 +24,7 @@
           </transition>
           <transition enter-active-class="animated-slow fadeInUp">
             <div class="container-left-content2" v-if="showLine4">
-              <div><span class="text-desc-eng">COMING</span><span class="text-desc-eng">SONG</span></div>
+              <div><span class="text-desc-eng">COMING</span><span class="text-desc-eng">SOON</span></div>
               <div><span class="text-desc">即将上线</span><span class="text-desc">···</span></div>
             </div>
           </transition>
@@ -133,6 +133,8 @@
         margin-top: 40px;
         line-height: 28px;
         .text-desc-eng {
+          font-family: PingFangSC-Regular, sans-serif!important;
+          font-weight: 100;
           font-size: 25px;
           color: #cccccc;
           margin-right: 12px;
@@ -142,6 +144,8 @@
           font-size: 27px;
           color: $font-auxiliary-color;
           margin-right: 12px;
+          font-family: PingFangSC-Regular, sans-serif!important;
+          font-weight: 100;
         }
 
       }

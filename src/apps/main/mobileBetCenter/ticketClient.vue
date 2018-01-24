@@ -31,7 +31,7 @@
           <transition enter-active-class="animated-slow fadeInUp">
             <div class="container-left-content2" v-if="showLine5">
               <span class="text-circle"></span>
-              <span class="text-desc">前所未有的顺畅感你，像玩游戏一样玩转彩票</span>
+              <span class="text-desc">前所未有的顺畅感，像玩游戏一样玩转彩票</span>
             </div>
           </transition>
         </div>
@@ -195,8 +195,9 @@
             width: 210px;
             height: 30px;
             background-color: #e6e6e6;
-            line-height: 24px;
             margin: 0 auto;
+            font-size: 14px;
+            line-height: 28px;
             color: $def-black-color;
           }
           .download-QRCord {
