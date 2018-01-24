@@ -1,21 +1,26 @@
 <template>
   <div>
-    <div class="loading">
+    <div class="loading" v-show="loading">
       <img src="../download/images/wx/loading.gif" width="150" height="150">
     </div>
-    <div id="fullpage" class="opacity-0">
+    <div id="fullpage" class="" v-show="!loading" ref="fullpage">
       <div class="section " id="section1">
         <div class="register-header">
           <div class="header-container">
-            <div class="register-logo"></div>
+            <div class="pull-left">
+              <div class="register-logo"></div>
+              <span class="title">欢迎您的加入</span>
+            </div>
+            <div class="pull-right down-btn">
+              <span class="vertical-top">手机端下载</span>
+              <a href="./download.html" class="icon android"></a>
+              <a href="./download.html" class="icon ios"></a>
+            </div>
           </div>
         </div>
         <div class="panel basic-white">
-          <a href="/newDownload.html" target="_blank" class="download-link"></a>
-          <div class="panel-reg"></div>
-          <div class="panel-main">
-
-            <div class="js-pg-resetPassword-main wizard clearfix ac-reg-body" role="application" id="steps-uid-0">
+          <div class="panel-main clearfix">
+            <div class="clearfix ac-reg-body">
               <div class="reg-ad pull-right">
                 <div id="jsREADCarousel" class="js-re-carousel-container carousel slide">
                   <ol class="js-re-navigate carousel-indicators">
@@ -25,78 +30,52 @@
                 </div>
               </div>
               <div class="reg-info pull-left">
-                <div class="js-re-register-container">
+                <form action="javascript:void(0);" id="jsRegisterForm" class="js-re-registerForm form-horizontal">
+                  <div class="input-control">
+                    <div class="input-icon name"></div>
+                    <input type="text" class="register-input" name="userName" v-model.trim="userName" @focus="inputFocus(1)" @blur="inputBlur(1)"
+                           placeholder="请设置您的账号" autocomplete="off"/>
+                    <span class="input-check" v-if="userStatus === 3"></span>
+                  </div>
+                  <div :class="['error-text',{'text-hot': userStatus === 2}]">
+                    <span :class="['sfa',{'sfa-error-gray-icon': userStatus === 1 && userErrorText !== '','sfa-error-icon': userStatus === 2 && userErrorText !== ''}]"></span>
+                    {{userErrorText}}
+                  </div>
+                  <div class="input-control">
+                    <div class="input-icon pwd"></div>
+                    <input type="password" class="register-input" name="userName" v-model.trim="passWord" @focus="inputFocus(2)" @blur="inputBlur(2)"
+                           placeholder="请设置您的密码" autocomplete="off"/>
+                    <span class="input-check" v-if="pwdStatus === 3"></span>
+                  </div>
+                  <div :class="['error-text',{'text-hot': pwdStatus === 2}]">
+                    <span :class="['sfa',{'sfa-error-gray-icon': pwdStatus === 1 && pwdErrorText !== '','sfa-error-icon': pwdStatus === 2 && pwdErrorText !== ''}]"></span>
+                    {{pwdErrorText}}
+                  </div>
+                  <div class="input-control">
+                    <div class="input-icon code"></div>
+                    <input type="text" class="register-input code-input" name="userName" v-model.trim="codeVal" placeholder="请输入验证码" autocomplete="off"/>
+                    <img class="var-code" :src="codeSrc" @click="refreshValCode">
+                    <span class="input-check" v-if="codeStatus === 3"></span>
+                  </div>
+                  <div :class="['error-text',{'text-hot': codeStatus === 2}]">
+                    <span :class="['sfa',{'sfa-error-gray-icon': codeStatus === 1 && codeErrorText !== '' ,'sfa-error-icon': codeStatus === 2 && codeErrorText !== '' }]"></span>
+                    {{codeErrorText}}
+                  </div>
+                  <div class="m-bottom-sm clearfix width-reg">
+                    <div class="pull-left">
+                      <custom-checkbox v-model="agree"></custom-checkbox>
+                    </div>
+                    <span class="promise-hint pull-right">*我确定我已年满18岁，并已阅读和接受<a class="js-promise-open promise-link">无限娱乐平台的政策及隐私声明协议。</a></span>
+                  </div>
 
-                  <form action="javascript:void(0);" id="jsRegisterForm" class="js-re-registerForm form-horizontal">
-
-                    <div class="control-group">
-                      <div class="controls">
-                        <div class="input-prefix">
-                          <div class="name-icon"></div>
-                        </div>
-                        <input type="text" class="js-re-userName" name="userName" placeholder="输入用户名" autocomplete="off" />
-                        <div>
-                          <span class="help-inline js-re-verify-username">*4-16个字符，支持英文和数字，不能以数字开头</span>
-                        </div>
-                        <input type="hidden" class="js-re-username-val-res" value="1">
-                      </div>
-                      <div class="controls">
-                        <span class="js-re-name-tip text-danger form-control hidden"></span>
-                      </div>
-                    </div>
-                    <div class="control-group">
-                      <div class="controls">
-                        <div class="input-prefix">
-                          <div class="password-icon"></div>
-                        </div>
-                        <input type="password" id="jsRELoginPassword" name="loginPwd" placeholder="输入密码" autocomplete="off">
-
-                        <div>
-                          <span class="help-inline js-re-verify-password">6-20位字符组成（不含空格），区分大小写，不能是9位以下的纯数字</span>
-                        </div>
-                        <input type="hidden" class="js-re-password-val-res" value="1">
-                      </div>
-                    </div>
-                    <div class="js-login-valRegion m-bottom-sm clearfix control-group">
-                      <div class="controls">
-                        <div class="input-prefix">
-                          <div class="validation-icon"></div>
-                        </div>
-                        <input type="text" class="js-re-valCode input-block-level input-varCode" placeholder="输入验证码" name="" maxlength="4">
-                        <input type="hidden" class="js-re-valCode-val-res" value="1">
-                        <img class="js-re-valImg var-code ">
-
-                        <div style="height:20px;">
-                          <span class=" js-re-valCode-val-des"></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="js-promise-check-valRegion m-bottom-sm clearfix control-group promise-check-valRegion">
-                      <div class="inline-block checkbox-container">
-                        <input type="checkbox" class="js-promise-check input-block-level" checked>
-                        <label></label>
-                      </div>
-                      <div class="inline-block">
-                        <span class="promise-hint">*我确定我已年满18岁，并已阅读和接受</span>
-                        <a class="js-promise-open promise-link">无限娱乐平台的政策及隐私声明协议</a>
-                        <span class="promise-hint">。</span>
-                      </div>
-                      <div style="height:20px;margin-left: 24px;">
-                        <span class="js-promise-check-val-des"></span>
-                      </div>
-                    </div>
-
-                    <div class="control-group">
-                      <div class="controls">
-                        <button class="js-re-register-submit btn btn-cool ac-reg-button" data-loading-text="保存中">立即注册</button>
-                        <a class="highlight-link" href="/login.html">已有账号? 立即登录?</a>
-                      </div>
-                    </div>
-                    <div class="js-re-notice">
-                    </div>
-                    <input type="hidden" class="js-re-linkId" name="linkId">
-                  </form>
-                </div>
+                  <div class="text-left m-top-lg">
+                    <button class="btn btn-cool ac-reg-btn" :disabled="!agree" data-loading-text="保存中">立即注册
+                    </button>
+                  </div>
+                  <div class="width-reg text-center m-top-md">
+                    <span class="text-auxiliary">已有账号?<a class="text-inverse m-left-xs" href="/login.html">请登录</a></span>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -139,19 +118,27 @@
         <div class="promise-hr"></div>
         <div class="promise-content">
           <p>一、 为避免于本网站投注时之争议，所有用户请务必于进入无限娱乐网站前详阅无限娱乐所定之各项规则，客户一旦进入无限娱乐时，即被视为已接受无限娱乐的所有协议与规则。</p>
-          <p>二、 请定期修改自己的登录密码及资金密码，会员有责任确保自己的帐户以及登入资料的保密性，以会员帐号及密码进行的任何网上投注，将被视为有效。敬请不定时做密码变更之动作。若帐号密码被盗用，进行的投注，无限娱乐一概不负赔偿责任。</p>
+          <p>
+            二、 请定期修改自己的登录密码及资金密码，会员有责任确保自己的帐户以及登入资料的保密性，以会员帐号及密码进行的任何网上投注，将被视为有效。敬请不定时做密码变更之动作。若帐号密码被盗用，进行的投注，无限娱乐一概不负赔偿责任。</p>
 
-          <p>三、 投注相关条款：①网上投注如未能成功提交，投注将被视为无效。②凡玩家于开奖途中且尚无结果前自动或强制断线时，并不影响开奖结算之结果。③若遇官网未开奖或开奖结果错误，本平台将根据实际情况做退奖退买处理；④如遇发生不可抗拒之灾害，骇客入侵，网络问题造成数据丢失的情况，以平台公告为最终方案。⑤无限娱乐将会对所有的电子交易进行记录，如有任何争议，本公司将会以注单记录为准。</p>
+          <p>
+            三、 投注相关条款：①网上投注如未能成功提交，投注将被视为无效。②凡玩家于开奖途中且尚无结果前自动或强制断线时，并不影响开奖结算之结果。③若遇官网未开奖或开奖结果错误，本平台将根据实际情况做退奖退买处理；④如遇发生不可抗拒之灾害，骇客入侵，网络问题造成数据丢失的情况，以平台公告为最终方案。⑤无限娱乐将会对所有的电子交易进行记录，如有任何争议，本公司将会以注单记录为准。</p>
 
-          <p>四、 若经本公司发现会员以不正当手法<利用外挂程式>进行投注或以任何非正常方式进行的个人、团体投注有损公司利益之投注情事发生，本公司保留权利取消该类注单以及注单产生的收益，并停用该会员帐号。无论代理还是会员，发现漏洞隐瞒不报，利用漏洞恶意刷钱、通过非法手段作弊、或造谣污蔑，攻击平台者，经平台核实后一律无条件永久冻结账号处理，账号所有金钱概不退还。另外，所有会员参与平台的活动时，投注彩票类游戏时不可超过总注数的70%。</p>
+          <p>四、 若经本公司发现会员以不正当手法
+            <利用外挂程式>
+              进行投注或以任何非正常方式进行的个人、团体投注有损公司利益之投注情事发生，本公司保留权利取消该类注单以及注单产生的收益，并停用该会员帐号。无论代理还是会员，发现漏洞隐瞒不报，利用漏洞恶意刷钱、通过非法手段作弊、或造谣污蔑，攻击平台者，经平台核实后一律无条件永久冻结账号处理，账号所有金钱概不退还。另外，所有会员参与平台的活动时，投注彩票类游戏时不可超过总注数的70%。
+          </p>
 
-          <p>五、 若无限娱乐发现会员有重复申请帐号行为时，保留取消、收回会员所有优惠，以及优惠所产生的盈利权利。每位玩家、每一住址、每一电子邮箱、每一电话号码、相同支付卡/信用卡号码，以及共享电脑环境 (例如:网吧、其他公共用电脑等)只能够拥有一个会员帐号，各项优惠只适用于每位客户在本公司唯一的帐户。</p>
+          <p>
+            五、 若无限娱乐发现会员有重复申请帐号行为时，保留取消、收回会员所有优惠，以及优惠所产生的盈利权利。每位玩家、每一住址、每一电子邮箱、每一电话号码、相同支付卡/信用卡号码，以及共享电脑环境 (例如:网吧、其他公共用电脑等)只能够拥有一个会员帐号，各项优惠只适用于每位客户在本公司唯一的帐户。</p>
 
           <p>六、 本平台高频彩种每期最高奖金限额400000.00元，超出按400000.00元计算，超出的奖金无效并清0。</p>
 
-          <p>七、 单挑奖金限额50,000元，超出限额的奖金不予发放。单挑模式说明：理论中奖金额大于投注本金99倍的订单即为单挑模式。玩法及注数包括：【高频时时彩以及低频彩系列】[五星直选]1000注包含以内，[四星直选]100注包含以内，[四星组选24]4注包含以内，[四星组选12]8注包含以内，[四星组选6]16注包含以内，[四星组选4]25注包含以内，[三星直选]10注包含以内，[三星直选和值]10注包含以内，[三星组六]1注，[三星组三]3注包含以内，[组选和值]2注包含以内，[二星直选]1注，[二星直选和值]1注。【高频PK10以及11选5系列】[前二玩法]1注，[前三玩法]10注包含以内，[任选五中五]以及[任选五中五胆拖]5注包含以内等。同一IP地址包括共享电脑环境(如网吧等)、多帐号投注，每期单挑盈利奖金视为同一会员投注。</p>
+          <p>
+            七、 单挑奖金限额50,000元，超出限额的奖金不予发放。单挑模式说明：理论中奖金额大于投注本金99倍的订单即为单挑模式。玩法及注数包括：【高频时时彩以及低频彩系列】[五星直选]1000注包含以内，[四星直选]100注包含以内，[四星组选24]4注包含以内，[四星组选12]8注包含以内，[四星组选6]16注包含以内，[四星组选4]25注包含以内，[三星直选]10注包含以内，[三星直选和值]10注包含以内，[三星组六]1注，[三星组三]3注包含以内，[组选和值]2注包含以内，[二星直选]1注，[二星直选和值]1注。【高频PK10以及11选5系列】[前二玩法]1注，[前三玩法]10注包含以内，[任选五中五]以及[任选五中五胆拖]5注包含以内等。同一IP地址包括共享电脑环境(如网吧等)、多帐号投注，每期单挑盈利奖金视为同一会员投注。</p>
 
-          <p>八、 平台取款时间为上午10:00-凌晨02:00，其他时间提款不排除会出现延误情况，并与提款银行维护等特殊情况有关；平台每日最多提款30次，单笔最低提款100元，单笔最高50000元，超过次数的提现将收取1%的手续费，最高为50元。</p>
+          <p>
+            八、 平台取款时间为上午10:00-凌晨02:00，其他时间提款不排除会出现延误情况，并与提款银行维护等特殊情况有关；平台每日最多提款30次，单笔最低提款100元，单笔最高50000元，超过次数的提现将收取1%的手续费，最高为50元。</p>
 
           <p>九、 为了防止有人恶意洗钱，会员提款必须要消费充值的20%方可进行，真人类娱乐需消费1倍流水才可出款，否则财务不予受理。</p>
 
@@ -167,16 +154,150 @@
   </div>
 </template>
 <script>
+  import {
+    checkNameExistApi,
+    registerApi,
+    getBannerADApi } from 'api/register'
   export default {
     name: 'register',
     data(){
-      return{
-
+      return {
+        loading: true,
+        url: window.self.location.toString(),
+        codeUrl: '',
+        codeSrc: '',
+        linkId: '',
+        userStatus: 1, // 1代表不显示错误提示  2表示显示错误  3表示验证成功
+        userErrorText:'',
+        pwdStatus: 1,
+        pwdErrorText:'',
+        codeStatus: 1,
+        codeErrorText:'',
+        userName:'',
+        passWord:'',
+        codeVal:'',
+        agree:false
       }
     },
-    methods:{
+    methods: {
+      init(){
+        $(this.$refs.fullpage).fullpage({
+          verticalCentered: false,
+          css3: true,
+          navigation: true,
+          loopBottom: true,
+          afterLoad (anchorLink, index) {
+            const selectorHeader = `#section${index} .section-header`
+            const selectorContent = `#section${index} .section-content`
+            $(selectorHeader).addClass('active')
+            $(selectorContent).addClass('active')
+          },
 
-    }
+          onLeave (index, nextIndex, direction) {
+            const selectorHeader = `#section${index} .section-header`
+            const selectorContent = `#section${index} .section-content`
+            $(selectorHeader).removeClass('active')
+            $(selectorContent).removeClass('active')
+          },
+        })
+      },
+      inputFocus(type){
+        if(type === 1){
+          if(this.userStatus !== 2){
+            this.userErrorText = '4-16个字符，支持中英文和数字,不能以数字开头'
+          }
+        }else if (type === 2){
+          if(this.pwdStatus !== 2){
+            this.pwdErrorText = '6-20位字符组成（不含空格），区分大小写，不能是9位以下的纯数字'
+          }
+        }
+      },
+      inputBlur(type){
+        if(type === 1){
+          this.checkNameExist()
+        }else if (type === 2){
+          this.valPassword()
+        }else{
+
+        }
+      },
+      checkNameExist(){
+        if(this.userName === ''){
+          this.userStatus = 2
+          this.userErrorText = '用户名不能为空'
+          return false
+        }
+        const myReg = /^[A-Za-z][A-Za-z0-9]{3,15}$/
+        if (!myReg.test(this.userName)) {
+          this.userStatus = 2
+          this.userErrorText = '仅支持4-16位字母和数字，不能以数字开头'
+          return false
+        }
+        checkNameExistApi({username:this.userName},
+          ({data}) => {
+            if(data && data.result === 0){
+              this.userStatus = 3
+              this.userErrorText = ''
+            }else {
+              this.userStatus = 2
+              if (data.msg === 'invalid user token') {
+                this.userErrorText = '操作异常，请清除浏览器缓存'
+              }else {
+                this.userErrorText = data.msg === 'fail' ? '校验用户名失败' : data.msg
+              }
+            }
+          },
+          ({data}) => {
+            this.userStatus = true
+            this.userErrorText = data.msg === 'fail' ? '校验用户名失败' : data.msg
+          }
+        )
+      },
+      valPassword(){
+        if (this.passWord === '') {
+          this.pwdErrorText = '登录密码不能为空'
+          this.pwdStatus = 2
+          return false
+        }
+        let validationStatus = true
+        const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
+        if (this.passWord.length < 9 && this.strBetweenIsNumber(this.passWord, 0, 7)) {
+          validationStatus = false
+        } else if (!pwReg.test(this.passWord)) {
+          validationStatus = false
+        }
+
+        if (validationStatus) {
+          this.pwdErrorText = ''
+          this.pwdStatus = 3
+          return true
+        }
+        this.pwdErrorText = '密码为6-20位字符组成（不含空格），区分大小写，不能是9位以下的纯数字'
+        this.pwdStatus = 2
+        return false
+      },
+      strBetweenIsNumber (str, star, end) {
+        const strArr = str.split('').slice(star, end)
+        let isHasNumber = true
+        $.each(strArr, (index, item) => {
+          if (!$.isNumeric(item)) {
+            isHasNumber = false
+          }
+        })
+        return isHasNumber
+      },
+      refreshValCode(){
+        this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
+      },
+    },
+    mounted(){
+      setTimeout(() => {
+        this.loading = false
+        this.init()
+      }, 500)
+      this.codeUrl = `${this.url.substring(0, this.url.indexOf('/', this.url.indexOf('://', 0) + 3))}/acct/imgcode/code`
+      this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
+    },
   }
 </script>
 <style lang="scss" scoped>
@@ -184,8 +305,8 @@
   $main-border-color: #007e90 !default;
   $input-placeholder: #0297ad !default;
 
-  .reg-ad{
-    display:inline-block;
+  .reg-ad {
+    display: inline-block;
     width: 332px;
     float: none;
     position: absolute;
@@ -194,7 +315,7 @@
     transform: translateY(-50%);
   }
 
-  .ac-reg-pic{
+  .ac-reg-pic {
     width: 322px;
     // height: 390px;
     // margin: 3px 25px 0 25px;
@@ -208,13 +329,13 @@
 
   .panel {
     margin: 0 auto;
-    width: 960px;
-    height: 470px;
-    box-shadow: 0px 6px 10px 0px #d3d3d3;
-    border-radius: 5px;
-    top: 54%;
-    transform: translateY(-50%);
-    margin-top: -120px;
+    width: 1000px;
+    height: 546px;
+    background-color: $def-white-color;
+    box-shadow: 0px 2px 18px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    position: relative;
+    top: 50px;
 
     .download-link {
       background: url('images/download-link.png');
@@ -226,81 +347,67 @@
       display: inline-block;
     }
 
-    .panel-reg {
-      background: url('images/reg.png');
-      position: absolute;
-      width: 162px;
-      height: 89px;
-      top: -8px;
-      left: -7px;
-    }
-    .ac-reg-body{
+    .ac-reg-body {
 
-      .reg-info{
+      .reg-info {
         display: inline-block;
-        width: 560px;
-        position: absolute;
-        top: 53%;
-        left: 0px;
-        transform: translateY(-50%);
+        width: 495px;
+        height: 461px;
+        border-right: 1px solid $im-line-color;
+        margin-top: 23px;
+        padding-left: 65px;
+        padding-top: 39px;
         .control-label {
           font-size: 16px;
         }
       }
 
-      .highlight-link {
-        color: #fa5c56;
-        text-decoration: underline;
-        font-size: 14px;
-        transform: translate(4px,18px);
-        display: inline-block;
-      }
-
-      .control-group {
-        margin-bottom: 30px;
-        height: 50px;
+      .input-control{
+        width: 378px;
+        height: 48px;
+        background-color: #f9f9f9;
+        border-radius: 3px;
+        border: solid 1px $im-line-color;
         position: relative;
-        .input-prefix {
+        .input-icon{
+          width: 50px;
+          height: 50px;
+          display: inline-block;
+          &.name{
+            background: url("./images/name-icon.png") center no-repeat;
+          }
+          &.pwd{
+            background: url("./images/password-icon.png") center no-repeat;
+          }
+          &.code{
+            background: url("./images/validation-icon.png") center no-repeat;
+          }
+        }
+        .register-input{
+          vertical-align: top;
+          border: none;
+          height: 40px;
+          width: 312px;
+          &.code-input{
+            width: 198px;
+          }
+        }
+        .input-check{
+          display: block;
+          width: 18px;
+          height: 18px;
+          background: url("./images/register-check.png") no-repeat;
           position: absolute;
-          top: 0;
-          left: 71px;
-          border: 1px solid #d8d9d9;
-          border-right: none;
-          border-radius: 0;
-          border-top-left-radius: 5px;
-          border-bottom-left-radius: 5px;
-          background: #fbfbfb;
-          width: 48px;
-          height: 48px;
-
-          .name-icon {
-            background: url('images/name-icon.png');
-            width: 21px;
-            height: 22px;
-            margin: 13px auto 0;
-          }
-
-          .password-icon {
-            background: url('images/password-icon.png');
-            width: 19px;
-            height: 22px;
-            margin: 13px auto 0;
-          }
-
-          .validation-icon {
-            background: url('images/validation-icon.png');
-            width: 19px;
-            height: 20px;
-            margin: 14px auto 0;
-          }
+          right: -25px;
+          top: 15px;
         }
-        .val-img-times {
-          line-height: 17px;
-          margin-top: 4px;
-        }
-        .val-img-check{
-          line-height: 17px;
-          margin-top: 4px;
+      }
+      .error-text{
+        width: 378px;
+        height: 40px;
+        line-height: 40px;
+        .sfa{
+          transform: translateY(2px);
         }
       }
 
@@ -315,24 +422,6 @@
       }
       :-moz-placeholder { /* Firefox 18- */
         color: #d8d9d9;
-      }
-
-      input {
-        width: 325px;
-        height: 50px;
-        border: 1px solid #dfdfdf;
-        line-height: 50px;
-        border-radius: 5px;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        font-size: 14px;
-        box-sizing: border-box;
-        box-shadow: inset -4px 11px 4px -10px #d8d9d9;
-        transition: all .3s;
-        padding: 4px 12px;
-        &:focus, &:active {
-          box-shadow: inset -4px 9px 4px -10px #d8d9d9;
-        }
       }
 
       .checkbox-container {
@@ -365,8 +454,9 @@
       }
 
       .promise-hint {
-        color: #666;
-        letter-spacing: -1px;
+        width: 350px;
+        color: $font-auxiliary-color;
+        font-size:$font-xs;
       }
 
       .promise-link {
@@ -377,31 +467,26 @@
         cursor: pointer;
       }
 
-      .promise-check-valRegion {
-        margin-left: 72px;
-        margin-top: 48px;
+      .width-reg {
+        width: 378px;
       }
-
       .help-inline {
         font-size: 12px;
         color: #666;
       }
-      .input-varCode {
-        // border: 1px solid darkgray;
-        // border-radius: 4px;
-        // height: 32px;
-        // width: 161px;
-        // padding-top: 4px;
-        // padding-bottom: 4px;
-      }
       .var-code {
-        background-color: #eceff4;
-        height: 35px;
-        width: 70px;
-        border: 1px solid #888;
-        transform: translateX(-85px);
+        height: 49px;
+        width: 110px;
+        border-radius: 3px;
+        position: absolute;
+        top:0;
+        right:0;
       }
-      .ac-reg-button{
+      .ac-reg-btn{
+        width: 380px;
+        height: 54px;
+      }
+      .ac-reg-button {
         width: 260px;
         height: 50px;
         border-radius: 4px;
@@ -413,15 +498,13 @@
     }
   }
 
-
-
-  .ac-reg-code-lan-width{
+  .ac-reg-code-lan-width {
     width: 170px;
   }
-  .ac-reg-code-left-width{
+
+  .ac-reg-code-left-width {
     width: 75px;
   }
-
 
   .header-login {
     font-size: 16px;
@@ -440,9 +523,30 @@
   }
 
   #section1, #section2, #section3, #section4, #section5 {
-    background: url(images/section-bg.png) no-repeat;
-    background-size: 100% 100%;
+    /*background: url(images/section-bg.png) no-repeat;*/
+    /*background-size: 100% 100%;*/
     position: relative;
+    background-color: $title-gray;
+    &:before {
+      content: '';
+      position: absolute;
+      width: 398px;
+      height: 248px;
+      background: url("./images/bg-left-top.png") no-repeat;
+      display: block;
+      top: 0;
+      left: 0;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 741px;
+      height: 411px;
+      right: 0;
+      bottom: 0;
+      background: url("./images/bg-right-down.png") no-repeat;
+    }
 
     & .vertical-center {
       position: relative;
@@ -481,22 +585,21 @@
     }
   }
 
-
   @keyframes show {
-    0%{
+    0% {
       opacity: 0;
     }
-    100%{
+    100% {
       opacity: 1;
     }
   }
 
   @keyframes fadeRightIn {
-    0%{
+    0% {
       transform: translateX(50px);
       opacity: 0;
     }
-    100%{
+    100% {
       transform: translateX(0px);
       opacity: 1;
     }
@@ -524,11 +627,11 @@
   }
 
   @keyframes fadeTopIn {
-    0%{
+    0% {
       transform: translateY(-50px);
       opacity: 0;
     }
-    100%{
+    100% {
       transform: translateY(0px);
       opacity: 1;
     }
@@ -555,15 +658,16 @@
   }
 
   @keyframes fadeBottomIn {
-    0%{
+    0% {
       transform: translateY(50px);
       opacity: 0;
     }
-    100%{
+    100% {
       transform: translateY(0px);
       opacity: 1;
     }
   }
+
   #section4 {
     .section-header {
       background: url('images/section-4-header.png');
@@ -605,22 +709,51 @@
   }
 
   .register-header {
-    background: url('images/header-bg.png');
     position: relative;
     width: 100%;
-    height: 85px;
-    background-size: cover;
+    height: 90px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.08);
 
-    & .header-container {
-      padding-top: 10px;
+    .header-container {
+      padding-top: 15px;
       width: 1100px;
       margin: 0 auto;
     }
 
-    & .register-logo {
-      background: url('images/register-logo.png');
-      width: 223px;
-      height: 58px;
+    .register-logo {
+      background: url('images/register-logo.png') no-repeat;
+      width: 181px;
+      height: 47px;
+      display: inline-block;
+    }
+    .title {
+      display: inline-block;
+      font-size: 24px;
+      color: $new-inverse-color;
+      margin-left: 25px;
+      vertical-align: top;
+      margin-top: 18px;
+    }
+    .down-btn {
+      height: 35px;
+      line-height: 35px;
+      font-size: 14px;
+      color: $new-inverse-color;
+      margin-top: 12.5px;
+      .icon {
+        width: 34px;
+        height: 35px;
+        display: inline-block;
+        margin-left: 10px;
+        cursor: pointer;
+        &.android {
+          background: url("./images/icon-android.png") no-repeat;
+        }
+        &.ios {
+          background: url("./images/icon-ios.png") no-repeat;
+        }
+      }
     }
   }
 
@@ -794,7 +927,6 @@
     }
   }
 
-
   .loading img {
     position: absolute;
     top: 50%;
@@ -805,7 +937,6 @@
     transform: translateY(-50%);
     margin: 0 auto;
   }
-
 
   .promise-mask {
     position: absolute;
@@ -855,7 +986,7 @@
         font-size: 14px;
       }
 
-      .ac-reg-button{
+      .ac-reg-button {
         width: 210px;
         height: 50px;
         border-radius: 4px;
@@ -881,16 +1012,16 @@
     animation: infinite-move 1.5s infinite linear forwards;
   }
 
-  @keyframes infinite-move{
+  @keyframes infinite-move {
     0% {
-      transform:translateY(0);
+      transform: translateY(0);
     }
 
     50% {
-      transform:translateY(20%);
+      transform: translateY(20%);
     }
     100% {
-      transform:translateY(0);
+      transform: translateY(0);
     }
   }
 </style>
