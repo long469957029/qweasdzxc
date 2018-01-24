@@ -42,16 +42,18 @@
               <span class="opening-icon sfa sfa-mmc-betting-content">
                 投注内容
               </span>
-              <span class="font-sm">
+              <span class="font-sm m-left-sm">
                 投注<span class="text-cool">{{openingCount}}</span>次，共<span class="text-prominent">{{fTotalMoney}}</span>元
               </span>
             </div>
             <div class="opening-group" ref="previewGroup">
               <div class="opening-cell" v-for="(preview, index) in fPreviewList">
-                <div class="opening-left">{{preview.title}}</div>
+                <div class="opening-left">【{{preview.title}}】</div>
                 <div class="opening-center" v-html="preview.betNum"></div>
                 <div class="opening-right">{{preview.bettingMoney}}</div>
-                <div class="opening-operate sfa cursor-pointer" @click="lotteryDelete(index)">删</div>
+                <div class="opening-operate cursor-pointer" @click="lotteryDelete(index)">
+                  <span class="sfa sfa-mmc-delete" v-show="!opening"></span>
+                </div>
               </div>
             </div>
 
@@ -61,7 +63,7 @@
               <span class="opening-icon sfa sfa-mmc-opening-result">
                 开奖结果
               </span>
-              <span class="font-sm">
+              <span class="font-sm m-left-sm">
                 开奖<span class="text-cool">{{currentOpeningCount}}</span>次，中奖<animated-integer class="text-prominent" :value="fTotalWinPrize"></animated-integer>元
               </span>
             </div>
@@ -75,7 +77,7 @@
                   <span class="text-circle text-circle-xs" :class="{'circle-winning': openingResult.winPrize}"
                         v-for="num in openingResult.fOpenCode">{{num}}</span>
                 </div>
-                <div class="opening-right " v-if="openingResult.winPrize">
+                <div class="opening-right text-prominent " v-if="openingResult.completed && openingResult.winPrize">
                   中奖{{openingResult.fWinPrize}}元
                 </div>
                 <div class="opening-right" v-else>{{openingResult.completed ? '未中奖' : ''}}</div>
@@ -164,7 +166,7 @@
               <option v-for="openNum in continuousOpenSelectList" :key="openNum">{{openNum}}</option>
             </select>
             <label class="stop-checkbox">
-              <custom-checkbox></custom-checkbox>
+              <custom-checkbox v-model="stopWhenWinning"></custom-checkbox>
               中奖即停止
             </label>
           </div>
@@ -189,6 +191,9 @@
     <div class="sfa-mmc-content-bottom">
       <button class="bottom-lg-btn sfa sfa-mmc-start-lg-btn no-border"
               v-if="selectStatus" @click="lotteryConfirm"
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+      </button>
+      <button class="bottom-lg-btn sfa sfa-mmc-stopping-btn no-border" v-else-if="stopping"
               :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
       </button>
       <button class="bottom-lg-btn sfa sfa-mmc-stop-btn no-border"
@@ -221,11 +226,9 @@
 
   let recordsOpenView
 
-  //TODO 开奖立即停止
   //TODO 最终结果展示
-  //TODO 连续开奖选矿
+  //TODO 连续开奖选择
   //TODO nav
-  //TODO 停止时按钮的变化
   export default {
     name: "mmc-betting-main-area",
     props: {
@@ -259,7 +262,7 @@
         //当前正在开奖期数
         currentOpeningCount: 1,
         //手动停止
-        stoping: false,
+        stopping: false,
         playRule: {},
         playInfo: {},
         //提交中，禁用按钮
@@ -267,6 +270,8 @@
         simulationOpen: false,
         //开奖中
         opening: false,
+        //中奖时停止
+        stopWhenWinning: false,
         selectStatus: true,
         flashIndex: 0,
 
@@ -506,22 +511,26 @@
         this.fOpeningResultList[0].completed = true
         this.totalWinPrize += this.fOpeningResultList[0].winPrize
         this.fTotalWinPrize = _.convert2yuan(this.totalWinPrize)
-        if (this.currentOpeningCount < this.totalOpeningCount && !this.stoping) {
+        if (this.currentOpeningCount < this.totalOpeningCount && !this.stopping && !(this.stopWhenWinning && this.fOpeningResultList[0].winPrize)) {
           ++this.currentOpeningCount
           this.$_pushBetting()
         } else {
-          this.stoping = false
+          this.stopping = false
           this.opening = false
 
-          //this.showFinalResult()
+          this.$_showFinalResult()
         }
+      },
+
+      $_showFinalResult() {
+
       },
 
       /**
        *
        */
       lotteryStop() {
-        this.stoping = true
+        this.stopping = true
       },
 
       $_prepareOpening() {
@@ -737,6 +746,11 @@
       lotteryDelete(index) {
         this.$store.commit(types.EMPTY_PREV_BETTING, {
           index
+        })
+        this.$nextTick(() => {
+          if (_.isEmpty(this.fPreviewList)) {
+            this.reSelect()
+          }
         })
       },
 
@@ -1293,19 +1307,23 @@
     display: inline-block;
     vertical-align: top;
     border-right: 1px solid #e6e6e6;
+    &:last-of-type {
+      border-right: 0;
+    }
   }
 
   .opening-panel-title {
     text-align: left;
     margin-bottom: 15px;
+    padding: 0 30px;
+    width: 451px;
   }
 
   .opening-group {
     width: 451px;
     height: 310px;
     overflow: auto;
-    padding: 0 25px;
-    margin-right: 15px;
+    padding: 0 30px;
   }
 
   .opening-cell {
@@ -1321,6 +1339,14 @@
     }
   }
 
+  .opening-operate {
+    width: 40px;
+    .sfa {
+      position: relative;
+      top: 5px;
+    }
+  }
+
   .opening-cell {
     transition: all 1s;
   }
@@ -1333,7 +1359,7 @@
   }
 
   .opening-left {
-    width: 141px;
+    width: 131px;
   }
 
   .opening-center {
@@ -1342,7 +1368,7 @@
   }
 
   .opening-right {
-    width: 120px;
+    width: 80px;
   }
   .opening-icon {
     line-height: 42px;
