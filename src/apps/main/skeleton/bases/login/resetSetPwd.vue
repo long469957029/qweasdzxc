@@ -1,7 +1,7 @@
 <template>
   <div>
     <form action="javascript:void(0);" class="form-horizontal rp-step-1-form " ref="setLoginPwd">
-      <div class="text-center m-TB-md font-sm">请输入设置账户的新密码</div>
+      <div class="text-center m-TB-md p-top-sm font-sm">请设置账户的新密码</div>
       <div class="control-group">
         <label class="control-label">新密码：</label>
         <div class="controls">

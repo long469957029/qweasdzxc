@@ -56,7 +56,7 @@
           <transition name="step-animate">
             <div class="rp-step-div" v-if="stepsIndex === 0">
               <form action="javascript:void(0);" class="form-horizontal rp-step-1-form " ref="verifyUN">
-                <div class="text-center m-TB-md font-sm">请输入您要找回密码的账号</div>
+                <div class="text-center m-TB-md p-top-sm font-sm">请输入您要找回密码的账号</div>
                 <div class="control-group">
                   <label class="control-label">用户名：</label>
                   <div class="controls">
@@ -76,9 +76,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="js-rp-notice-page1">
-                </div>
-                <div class="text-center">
+                <div class="text-center m-top-lg">
                   <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyUsetName">提交</button>
                 </div>
               </form>
@@ -88,7 +86,7 @@
           <!--选择密码找回方式-->
           <transition name="step-animate">
             <div class="rp-step-div" v-if="stepsIndex === 1">
-              <div class="find-type m-top-md clearfix" v-show="findTypeNum === 0">
+              <div class="find-type m-top-lg clearfix" v-show="findTypeNum === 0">
                 <div class="type-list">
                   <div class="text-center font-sm m-bottom-md">密保问题</div>
                   <div :class="['icon',{active: hasBindQes}]">
@@ -123,15 +121,15 @@
                   </div>
                 </div>
                 <div class="clearfix"></div>
-                <div class="text-center font-sm m-TB-md">
+                <div class="text-center font-sm m-top-lg m-bottom-md">
                   <i class="sfa sfa-error-icon"></i>
                   温馨提示：如以上方式都无法使用，请与
-                  <a class="text-hot cursor-pointer">在线客服</a>
+                  <a class="text-hot cursor-pointer js-gl-service">在线客服</a>
                   联系，协助解决问题。
                 </div>
               </div>
               <div v-if="findTypeNum === 1">
-                <div class="text-center m-TB-md font-sm">请正确输入密保问题</div>
+                <div class="text-center m-TB-md p-top-sm font-sm">请正确输入密保问题</div>
                 <form action="javascript:void(0);" class="form-horizontal rp-step-1-form" ref="verifyQes">
                   <div class="control-group">
                     <label class="control-label">问题一：</label>
@@ -169,7 +167,7 @@
                     <span class="sfa sfa-error-icon vertical-middle"></span>
                     {{qesErrorText}}
                   </div>
-                  <div class="text-center">
+                  <div class="text-center m-top-lg">
                     <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyQes">提交</button>
                   </div>
                   <div class="text-center">
@@ -415,7 +413,7 @@
       },
       goStepsNext(){
         this.stepsIndex += 1
-      }
+      },
     },
     mounted(){
       this.codeUrl = `${this.url.substring(0, this.url.indexOf('/', this.url.indexOf('://', 0) + 3))}/acct/imgcode/code`
@@ -451,6 +449,7 @@
     border-radius: 5px;
     background-color: $def-white-color;
     margin: 0 auto;
+    /*min-height: 550px;*/
     .filled{
       margin-left: 0px;
     }
@@ -471,12 +470,16 @@
     .reset-main {
       width: 680px;
       margin: 0 auto;
-      padding: 20px 0px;
+      /*padding: 50px 0px;*/
+      min-height: 490px;
       /*overflow: hidden;*/
       .step-list {
         /*position: relative;*/
         /*min-height: 266px;*/
         display: flex;
+      }
+      .steps{
+        margin-top: 60px;
       }
       .reset-input {
         width: 348px;

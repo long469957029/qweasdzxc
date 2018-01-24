@@ -2,18 +2,14 @@
   <div class="width-100 bc-play-main">
     <div class="relative">
       <div class="sfa sfa-mmc-outer-border"></div>
-      <div class="sfa-mmc-content-top opening-panel-inner">
+      <div class="opening-panel-inner" :class="!selectStatus ? 'sfa-mmc-content-opening' : 'sfa-mmc-content-top'">
         <span class="sfa sfa-bc-ssc-mmc"></span>
         <div class="opening-wrapper sfa-mmc-opening-panel">
           <div class="opening-flash" :class="`sfa-mmc-opening-flash-${flashIndex}`"></div>
-          <div class="opening-content">
-            <span class="opening-unit"></span>
-            <span class="opening-unit"></span>
-            <span class="opening-unit"></span>
-            <span class="opening-unit"></span>
-            <span class="opening-unit"></span>
-          </div>
-          <div class="sfa-mmc-simulation-btn"></div>
+          <mmc-opening-num-group class="opening-content" :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="lastOpening"
+                         :default-opening="ticketInfo.defaultOpening" @openCompleted="openCompleted"
+          ></mmc-opening-num-group>
+          <div class="sfa-mmc-simulation-btn" @click="simulationOpening"></div>
         </div>
 
         <div class="bc-entry-list pull-right m-right-md">
@@ -32,10 +28,65 @@
             游戏说明
           </router-link>
         </div>
+        <div :class="lever ? 'sfa-mmc-lever-down' : 'sfa-mmc-lever'">
+        </div>
       </div>
     </div>
-    <div class="mmc-lottery-main">
-      <div class="mmc-lottery-main-inner">
+    <div class="mmc-lottery-main" ref="main">
+      <div class="mmc-lottery-main-open" ref="mainOpen">
+        <div class="opening-title" v-if="opening">第<span class="opening-title-inner">{{currentOpeningCount}}</span>/{{openingCount}}期 正在开奖</div>
+        <div class="opening-title cursor-pointer" v-else @click="reSelect">重新选号</div>
+        <div class="opening-main">
+          <div class="opening-panel">
+            <div class="opening-panel-title">
+              <span class="opening-icon sfa sfa-mmc-betting-content">
+                投注内容
+              </span>
+              <span class="font-sm m-left-sm">
+                投注<span class="text-cool">{{openingCount}}</span>次，共<span class="text-prominent">{{fTotalMoney}}</span>元
+              </span>
+            </div>
+            <div class="opening-group" ref="previewGroup">
+              <div class="opening-cell" v-for="(preview, index) in fPreviewList">
+                <div class="opening-left">【{{preview.title}}】</div>
+                <div class="opening-center" v-html="preview.betNum"></div>
+                <div class="opening-right">{{preview.bettingMoney}}</div>
+                <div class="opening-operate cursor-pointer" @click="lotteryDelete(index)">
+                  <span class="sfa sfa-mmc-delete" v-show="!opening"></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="opening-panel">
+            <div class="opening-panel-title">
+              <span class="opening-icon sfa sfa-mmc-opening-result">
+                开奖结果
+              </span>
+              <span class="font-sm m-left-sm">
+                开奖<span class="text-cool">{{currentOpeningCount}}</span>次，中奖<animated-integer class="text-prominent" :value="fTotalWinPrize"></animated-integer>元
+              </span>
+            </div>
+            <transition-group class="opening-group" ref="openingGroup" name="opening-cell" tag="div">
+              <div class="opening-cell" v-for="(openingResult) in fOpeningResultList" :key="openingResult.index">
+                <div class="opening-left">{{openingResult.title}}</div>
+                <div class="opening-center" v-if="!openingResult.completed">
+                  --------- 正在开奖  ---------
+                </div>
+                <div class="opening-center" v-else>
+                  <span class="text-circle text-circle-xs" :class="{'circle-winning': openingResult.winPrize}"
+                        v-for="num in openingResult.fOpenCode">{{num}}</span>
+                </div>
+                <div class="opening-right text-prominent " v-if="openingResult.completed && openingResult.winPrize">
+                  中奖{{openingResult.fWinPrize}}元
+                </div>
+                <div class="opening-right" v-else>{{openingResult.completed ? '未中奖' : ''}}</div>
+              </div>
+            </transition-group>
+          </div>
+        </div>
+      </div>
+      <div class="mmc-lottery-main-inner" ref="mainInner">
 
         <div class="bc-play-container clearfix">
           <div class="bc-play-left pull-left">
@@ -111,18 +162,18 @@
               <option value="">使用代金券</option>
             </select>
             连续开奖
-            <select class="bc-m-select">
+            <select class="bc-m-select" v-model="openingCount">
               <option v-for="openNum in continuousOpenSelectList" :key="openNum">{{openNum}}</option>
             </select>
             <label class="stop-checkbox">
-              <custom-checkbox></custom-checkbox>
+              <custom-checkbox v-model="stopWhenWinning"></custom-checkbox>
               中奖即停止
             </label>
           </div>
           <div class="bottom-panel-bottom text-center">
             <button class="sfa sfa-mmc-add-btn no-border" @click="lotteryAdd"
                     :disabled="pushing || !bettingInfo.sale || bettingInfo.pending"></button>
-            <button class="sfa sfa-mmc-start-btn no-border" @click="lotteryBuy"
+            <button class="sfa sfa-mmc-start-btn no-border" @click="lotteryAddAndConfirm"
                     :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
             </button>
           </div>
@@ -138,26 +189,47 @@
       </div>
     </div>
     <div class="sfa-mmc-content-bottom">
-      <button class="sfa sfa-mmc-start-lg-btn no-border" v-if="firstOpen" @click="lotteryConfirm"
+      <button class="bottom-lg-btn sfa sfa-mmc-start-lg-btn no-border"
+              v-if="selectStatus" @click="lotteryConfirm"
               :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
       </button>
-      <button class="sfa sfa-mmc-again-btn no-border" v-else @click="lotteryConfirm"
+      <button class="bottom-lg-btn sfa sfa-mmc-stopping-btn no-border" v-else-if="stopping"
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+      </button>
+      <button class="bottom-lg-btn sfa sfa-mmc-stop-btn no-border"
+              v-else-if="opening" @click="lotteryStop"
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+      </button>
+      <button class="bottom-lg-btn sfa sfa-mmc-again-btn no-border" v-else @click="lotteryConfirmAgain"
               :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
       </button>
     </div>
 
-
-    <!-- 确认投注 -->
-    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="confirm">
-      <betting-confirm :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
-                       :betting-list="bettingChoice.previewList" :type="`normal`"
-                       @bettingConfirm="bettingConfirm"></betting-confirm>
+    <!-- 最后开奖结果 -->
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="finalResult">
+      <div class="final-result-wrapper">
+        <div class="final-result-inner sfa-mmc-winning" v-if="totalWinPrize">
+          <span class="final-result-close sfa sfa-mmc-result-close" data-dismiss="modal"></span>
+          <div class="winning-result">总计中奖金额为<br />
+          <span class="winning-prize">{{fTotalWinPrize}}</span> 元
+          </div>
+        </div>
+        <div class="final-result-inner sfa-mmc-lose" v-else>
+          <span class="final-result-close sfa sfa-mmc-result-close" data-dismiss="modal"></span>
+          <div class="lose-result">
+            祝您下次好运！
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 </template>
 
 <script>
+  import {pushMmcSimulationBettingApi} from 'api/betting'
   import {CustomCheckbox, StaticGrid} from 'build'
+  import MmcOpeningNumGroup from "bettingCenter/mmc-opening-num-group";
   import betRulesConfig from './misc/betRulesConfig'
 
 
@@ -165,7 +237,6 @@
   import BettingAdvanceRules from './betting-advance-rules'
   import BettingPlayAreaSelect from './betting-play-area-select'
   import BettingPlayAreaInput from './betting-play-area-input'
-  import BettingConfirm from "./betting-confirm";
 
 
   //backbone旧组件
@@ -173,15 +244,18 @@
 
   let recordsOpenView
 
+  //TODO 连续开奖选择
+  //TODO nav
   export default {
     name: "mmc-betting-main-area",
     props: {
       ticketInfo: Object,
       ticketId: Number,
+      componentType: String,
     },
     components: {
+      MmcOpeningNumGroup,
       CustomCheckbox,
-      BettingConfirm,
       StaticGrid,
       BettingRules,
       BettingAdvanceRules,
@@ -190,16 +264,35 @@
     },
     data() {
       return {
-        componentType: 'mmc',
+        lever: false,
         loading: Global.ui.loader.get(),
-        firstOpen: true,
         unit: 10000,
         continuousOpenSelectList: [1, 5, 10, 15, 20, 25],
+        //开奖次数
+        openingCount: 5,
+        //总投注金额
+        fTotalMoney: 0,
+        //总中奖金额
+        totalWinPrize: 0,
+        fTotalWinPrize: 0,
+        totalOpeningCount: 0,
+        //当前正在开奖期数
+        currentOpeningCount: 1,
+        //手动停止
+        stopping: false,
         playRule: {},
         playInfo: {},
         //提交中，禁用按钮
         pushing: false,
+        simulationOpen: false,
+        //开奖中
+        opening: false,
+        //中奖时停止
+        stopWhenWinning: false,
+        selectStatus: true,
         flashIndex: 0,
+        //最后开奖结果
+        showFinalResult: true,
 
         lotteryGridOps: {
           wrapperClass: 'bc-lottery-preview mmc',
@@ -230,19 +323,49 @@
         advanceShowMode: 'classic', //classic | single
 
         showChaseModal: false,
+
+        lastOpening: ['0', '0', '0', '0', '0'],
+        fOpeningResultList: []
       }
     },
-    computed: mapState({
-      playLevels: function () {
-        return this.$store.getters.playLevels
-      },
-      bettingChoice: 'bettingChoice',
-      bettingInfo: 'bettingInfo',
-    }),
+    computed: {
+      ...mapState({
+        playLevels() {
+          return this.$store.getters.playLevels
+        },
+        bettingChoice: 'bettingChoice',
+        bettingInfo: 'bettingInfo',
+      })
+    },
 
     watch: {
-      '$route' () {
-
+      opening: {
+        handler(current) {
+          if (current) {
+            Velocity(this.$refs.main, {
+              height: 500
+            })
+            Velocity(this.$refs.mainInner, {
+              opacity: 0,
+            })
+            Velocity(this.$refs.mainOpen, {
+              opacity: 1,
+            })
+          }
+        },
+      },
+      selectStatus(selectStatus) {
+        if (selectStatus) {
+          Velocity(this.$refs.main, {
+            height: 1005
+          })
+          Velocity(this.$refs.mainInner, {
+            opacity: 1,
+          })
+          Velocity(this.$refs.mainOpen, {
+            opacity: 0,
+          })
+        }
       },
       'bettingChoice.playId': {
         handler: function (playId) {
@@ -287,6 +410,7 @@
             placement: 'bottom',
           })
 
+
           this.$store.dispatch('getColdHot', {ticketId: this.ticketInfo.id})
           this.$store.dispatch('getCurrentMiss', {ticketId: this.ticketInfo.id})
         },
@@ -303,11 +427,12 @@
       },
       'bettingChoice.previewList': {
         handler: function (previewList) {
+          let totalMoney = 0
           this.fPreviewList = _(previewList).map(function (previewInfo, index) {
             const title = `${previewInfo.levelName}_${previewInfo.playName}`
             let betNum = ''
             if (previewInfo.formatBettingNumber.length > 20) {
-              betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link">${
+              betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail-${index} btn-link">${
                 previewInfo.formatBettingNumber.slice(0, 20)}...</a>`
             } else {
               betNum = previewInfo.formatBettingNumber
@@ -320,12 +445,13 @@
               <option value="10" ${previewInfo.unit === 10 ? 'selected' : ''}>厘</option>
             </select>`
 
+            totalMoney += previewInfo.prefabMoney
+
             return {
               title,
               betNum,
               note: `${previewInfo.statistics}注`,
               multiple: multipleDiv,
-              // multiple: previewInfo.multiple,
               mode: modeSelect,
               bettingMoney: `${previewInfo.fPrefabMoney}元`,
               bonus: `${previewInfo.fBetBonus}元`,
@@ -333,10 +459,12 @@
             }
           }, this)
 
+          this.fTotalMoney = _.convert2yuan(totalMoney * this.openingCount)
+
           this.$nextTick(() => {
             this.$refs.lotteryGrid.getRows().forEach((row, index) => {
               const $row = $(row)
-              const $detail = $row.find('.js-bc-betting-preview-detail')
+              const $detail = $(this.$el).find(`.js-bc-betting-preview-detail-${index}`)
               const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
               let betNumber = previewList[index].bettingNumber
 
@@ -384,7 +512,63 @@
     },
 
     methods: {
+      /**
+       * 重新选号
+       */
+      reSelect() {
+        this.$store.commit(types.EMPTY_PREV_BETTING)
+        this.selectStatus = true
+        this.fOpeningResultList = []
+      },
+      /**
+       * 开奖全部完成
+       */
+      openCompleted() {
+        this.fOpeningResultList[0].completed = true
+        this.totalWinPrize += this.fOpeningResultList[0].winPrize
+        this.fTotalWinPrize = _.convert2yuan(this.totalWinPrize)
+        if (this.currentOpeningCount < this.totalOpeningCount && !this.stopping && !(this.stopWhenWinning && this.fOpeningResultList[0].winPrize)) {
+          ++this.currentOpeningCount
+          this.$_pushBetting()
+        } else {
+          this.stopping = false
+          this.opening = false
 
+          this.toggleFinalResult(true)
+        }
+      },
+
+      toggleFinalResult(flag = true) {
+        $(this.$refs.finalResult).modal({
+          backdrop: 'static',
+        })
+        // this.$refs.finalResult
+        this.showFinalResult = flag
+      },
+
+      /**
+       *
+       */
+      lotteryStop() {
+        this.stopping = true
+      },
+
+      $_prepareOpening() {
+        this.opening = true
+        this.pushing = true
+        this.selectStatus = false
+        this.totalOpeningCount = this.openingCount
+        this.currentOpeningCount = 1
+        this.totalWinPrize = 0
+        this.fTotalWinPrize = 0
+      },
+
+      toggleLever() {
+        this.lever = true
+        _.delay(() => {
+          this.lever = false
+        }, 200)
+      },
       modeChange(mode) {
         this.advanceShowMode = mode
       },
@@ -403,85 +587,43 @@
         })
       },
 
-      lotteryBuy() {
-        if (!this.bettingChoice.multiple) {
-          Global.ui.notification.show('倍数为0，不能投注')
-          return false
+      simulationOpening() {
+        if (this.simulationOpen || this.opening || this.pushing) {
+          return
         }
-
-        if (this.playRule.type === 'select') {
-          this.$_addSelectLottery({type: 'buy'})
-        } else {
-          this.$_addInputLottery({type: 'buy'})
-        }
-
-        //do save
-        let planId = this.bettingInfo.planId
-        const inputCount = _(this.bettingChoice.buyList).reduce((_inputCount, previewInfo) => {
-          if (previewInfo.type === 'input') {
-            _inputCount += previewInfo.statistics
-          }
-          return _inputCount
-        }, 0)
-
-        if (inputCount > 100000) {
-          Global.ui.notification.show('非常抱歉，目前平台单式投注只支持最多10万注单。')
-          return false
-        }
-        if (_.isEmpty(this.bettingChoice.buyList)) {
-          Global.ui.notification.show('请至少选择一注投注号码！')
-          return false
-        }
-
-        // 腾讯分分彩，金额限制1000元
-        if (this.ticketId === 31 && _(this.bettingChoice.buyInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
-          Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-          this.$store.commit(types.EMPTY_BUY_BETTING)
-          return false
-        }
-
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
-          Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
-            'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
-          return false
-        }
-        const maxBetNums = this.bettingChoice.playInfo.maxBetNums
-        if (maxBetNums && !_.isNull(maxBetNums) && Number(this.bettingChoice.buyList[0].statistics) > maxBetNums) {
-          Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${maxBetNums} 注，请重新选择  `)
-          this.$store.commit(types.EMPTY_BUY_BETTING)
-          return false
-        }
-
+        this.simulationOpen = true
         this.pushing = true
-
-        this.$store.dispatch('pushBetting', {
-          planId,
-          type: 'buyList'
+        pushMmcSimulationBettingApi(({data}) => {
+          this.pushing = false
+          if (data && data.result === 0) {
+            this.lastOpening = data.root.openCode.split(',')
+          }
+        }, () => {
+          this.simulationOpen = false
+          this.pushing = false
         })
-          .catch(() => {
-            this.pushing = false
-          })
-          .then((res) => {
-            this.pushing = false
-            if (res && res.result === 0) {
-              Global.m.oauth.check()
+      },
 
-              Global.ui.notification.show('投注成功！', {
-                type: 'success',
-                hasFooter: false,
-                displayTime: 800,
-              })
-            } else if (res.root && res.root.errorCode === 101) {
-              Global.ui.notification.show('账号余额不足，请先<a href="#/fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
-            } else {
-              Global.ui.notification.show(res.msg || '')
-            }
+      $_formatOpeningResult(openingResult, index) {
+        return Object.assign({
+          index: index,
+          title: `【第${index}次开奖】`,
+          completed: false,
+          fOpenCode: openingResult.openCode.split(','),
+          fWinPrize: _.convert2yuan(openingResult.winPrize),
+        }, openingResult)
+      },
 
-            this.$_emptySelect();
-          })
+      lotteryConfirmAgain() {
+        this.fOpeningResultList = []
+        this.lotteryConfirm()
       },
 
       lotteryConfirm() {
+        if (this.opening || this.pushing) {
+          return
+        }
+
         const inputCount = _(this.bettingChoice.previewList).reduce((_inputCount, previewInfo) => {
           if (previewInfo.type === 'input') {
             _inputCount += previewInfo.statistics
@@ -500,31 +642,22 @@
         }
 
 
-        // 腾讯分分彩，金额限制1000元
-        if (this.ticketId === 31 && this.bettingChoice.totalInfo.fTotalMoney > ticketConfig.getComplete(31).info.betAmountLimit) {
-          Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-          return false
-        }
-
         if (Global.memoryCache.get('acctInfo').foundsLock) {
           Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
             'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
           return false
         }
+        if (!this.opening) {
+          this.toggleLever()
+        }
 
-        $(this.$refs.confirm).modal({
-          backdrop: 'static',
-        })
+        this.$_prepareOpening()
+
+        this.$_pushBetting()
       },
 
-      bettingConfirm() {
-        this.pushing = true
-
-
-        $(this.$refs.confirm).modal('hide')
-
-        this.$store.dispatch('pushBetting', {
-          planId: this.bettingInfo.planId,
+      $_pushBetting() {
+        this.$store.dispatch(types.PUSH_MMC_BETTING, {
           type: 'previewList'
         })
           .catch(() => {
@@ -534,22 +667,18 @@
             this.pushing = false
 
             if (res && res.result === 0) {
-              this.$store.commit(types.EMPTY_PREV_BETTING)
 
               Global.m.oauth.check()
 
-              Global.ui.notification.show('投注成功！', {
-                type: 'success',
-                hasFooter: false,
-                displayTime: 800,
-              })
+              const fOpeningReuslt = this.$_formatOpeningResult(res.root, this.currentOpeningCount)
+              this.fOpeningResultList.unshift(fOpeningReuslt)
+              this.lastOpening = fOpeningReuslt.fOpenCode
+
             } else if (res.root && res.root.errorCode === 101) {
               Global.ui.notification.show('账号余额不足，请先<a href="#/fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
             } else {
               Global.ui.notification.show(res.msg || '')
             }
-
-            this.$_emptySelect();
           })
       },
 
@@ -560,6 +689,11 @@
       lotteryDelete(index) {
         this.$store.commit(types.EMPTY_PREV_BETTING, {
           index
+        })
+        this.$nextTick(() => {
+          if (_.isEmpty(this.fPreviewList)) {
+            this.reSelect()
+          }
         })
       },
 
@@ -586,16 +720,20 @@
         if (result) {
           if (!_.isEmpty(result)) {
             if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
-              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择  `)
+              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择`)
+              return false
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
               this.$refs.areaSelect.empty()
+              return true
             }
           } else {
             this.$refs.areaSelect.empty()
+            return true
           }
         } else {
           Global.ui.notification.show('号码选择不完整，请重新选择！')
+          return false
         }
       },
 
@@ -607,6 +745,7 @@
           if (!_.isEmpty(result)) {
             if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
               Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择`)
+              return false
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
             }
@@ -625,26 +764,35 @@
           }
 
           this.$refs.areaInput.empty()
+          return true
         } else {
           Global.ui.notification.show('号码选择不完整，请重新选择！')
+          return false
         }
       },
 
-      lotteryAdd(e) {
+      lotteryAdd() {
         if (!this.bettingChoice.multiple) {
           Global.ui.notification.show('倍数为0，不能投注')
           return false
         }
 
         if (this.playRule.type === 'select') {
-          this.$_addSelectLottery()
+          return this.$_addSelectLottery()
         } else {
-          this.$_addInputLottery()
+          return this.$_addInputLottery()
         }
       },
+
+      lotteryAddAndConfirm() {
+        if (this.lotteryAdd()) {
+          this.lotteryConfirm()
+        }
+      }
     },
 
     mounted: function () {
+
       $(this.$refs.multiRange).numRange({
         onChange: (num) => {
           this.$store.commit(types.SET_MULTIPLE, num)
@@ -667,7 +815,11 @@
       recordsOpenView = new HisAnalysisView({
         el: this.$refs.bcSideArea,
         ticketId: this.ticketId,
+        title: '最近开奖号码',
       }).render()
+
+      recordsOpenView.height = 430
+      recordsOpenView.update()
 
       this.flashTimer = setInterval(() => {
         ++this.flashIndex
@@ -675,6 +827,27 @@
           this.flashIndex = 0
         }
       }, 300)
+
+      $(this.$refs.previewGroup).slimScroll({
+        height: 310,
+        railVisible: true,
+        size: '14px',
+        color: '#f2f4f4',
+        railColor: '#d9d9d9',
+        distance: '10px',
+        opacity: 1,
+        railOpacity: 1,
+      })
+      $(this.$refs.openingGroup).slimScroll({
+        height: 310,
+        railVisible: true,
+        size: '14px',
+        color: '#f2f4f4',
+        railColor: '#d9d9d9',
+        distance: '10px',
+        opacity: 1,
+        railOpacity: 1,
+      })
     },
 
     destroyed() {
@@ -685,11 +858,13 @@
 
 <style lang="scss" scoped>
 
-
   .opening-panel-inner {
     top: 30px;
     position: relative;
     left: 32px;
+  }
+  .sfa-mmc-content-opening {
+    z-index: 2;
   }
 
   .sfa-bc-ssc-mmc {
@@ -705,10 +880,11 @@
 
   .mmc-lottery-main {
     position: relative;
-    top: -35px;
+    top: -40px;
     left: 33px;
     width: 1190px;
     background: url(./misc/mmc-content-slice.png) repeat-y center center;
+    overflow: hidden;
   }
 
   .bottom-panel-top {
@@ -719,8 +895,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0.5;
-    animation: opacity 1s infinite alternate;
   }
 
   .opening-wrapper {
@@ -753,6 +927,11 @@
     width: 1100px;
     position: relative;
     left: 28px;
+  }
+  .mmc-lottery-main-open {
+    position: absolute;
+    opacity: 0;
+    left: 70px;
   }
 
   .sfa-mmc-betting-record {
@@ -941,6 +1120,16 @@
       }
     }
   }
+  .sfa-mmc-lever {
+    position: absolute;
+    right: -18px;
+    top: 37px;
+  }
+  .sfa-mmc-lever-down {
+    position: absolute;
+    right: -18px;
+    top: 53px;
+  }
 
   .sfa-mmc-content-bottom {
     position: relative;
@@ -1037,9 +1226,10 @@
     @include select-def;
   }
 
-  .sfa-mmc-start-lg-btn {
-    position: relative;
+  .bottom-lg-btn {
+    position: absolute;
     top: 260px;
+    left: 338px;
     background-color: transparent;
   }
 
@@ -1052,13 +1242,173 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   }
 
-  @keyframes opacity {
-    from {
-      opacity: 0.6;
+  .opening-title {
+    z-index: 22;
+    position: relative;
+    text-align: center;
+    font-family: AdobeHeitiStd-Regular;
+    font-size: 24px;
+    font-weight: normal;
+    letter-spacing: -1px;
+    color: #fffdc9;
+    margin-right: 20px;
+    .opening-title-inner {
+      color: #ffc600;
     }
+  }
 
-    to {
-      opacity: 1;
+  .opening-main {
+    color: #666;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    top: 50px;
+  }
+
+  .opening-panel {
+    display: inline-block;
+    vertical-align: top;
+    border-right: 1px solid #e6e6e6;
+    &:last-of-type {
+      border-right: 0;
+    }
+  }
+
+  .opening-panel-title {
+    text-align: left;
+    margin-bottom: 15px;
+    padding: 0 30px;
+    width: 451px;
+  }
+
+  .opening-group {
+    width: 451px;
+    height: 310px;
+    overflow: auto;
+    padding: 0 30px;
+  }
+
+  .opening-cell {
+    display: flex;
+    height: 50px;
+    line-height: 50px;
+    background-color: #f2f4f4;
+    box-shadow: inset 0px 1px 1px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    margin-bottom: 15px;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  .opening-operate {
+    width: 40px;
+    .sfa {
+      position: relative;
+      top: 5px;
+    }
+  }
+
+  .opening-cell {
+    transition: all 1s;
+  }
+  .opening-cell-enter, .opening-cell-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .opening-cell-leave-active {
+    position: absolute;
+  }
+
+  .opening-left {
+    width: 131px;
+  }
+
+  .opening-center {
+    width: 200px;
+    flex-grow: 1;
+  }
+
+  .opening-right {
+    width: 80px;
+  }
+  .opening-icon {
+    line-height: 42px;
+    text-indent: 36px;
+    font-size: 16px;
+  }
+
+  .sfa {
+    outline: 0;
+  }
+  .text-circle {
+    color: $new-inverse-color;
+    background-color: rgba(117, 117, 117, 0.18);
+    box-shadow: inset 0px 1px 2px 0px
+    rgba(105, 105, 105, 0.07);
+
+  }
+  .circle-winning {
+    color: $def-white-color;
+    background-color: $new-main-deep-color;
+    box-shadow: inset 0px 1px 2px 0px
+    rgba(105, 105, 105, 0.4);
+  }
+
+  .final-result-wrapper {
+    margin: 7% auto 0;
+  }
+  .final-result-inner {
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .winning-result {
+    position: relative;
+    top: 140px;
+    font-size: 18px;
+    line-height: 30px;
+    color: #f09932;
+    width: 130px;
+    text-align: center;
+    margin: 0 auto;
+    .winning-prize {
+      font-size: 24px;
+    }
+  }
+  .lose-result {
+    color: $new-inverse-color;
+    font-size: 18px;
+    position: relative;
+    width: 139px;
+    margin: 0 auto;
+    text-align: center;
+    top: 164px;
+  }
+  .final-result-close {
+    cursor: pointer;
+    position: absolute;
+    top: -23px;
+    right: -10px;
+  }
+
+
+  /*@keyframes opacity {*/
+    /*from {*/
+      /*opacity: 0.6;*/
+    /*}*/
+
+    /*to {*/
+      /*opacity: 1;*/
+    /*}*/
+  /*}*/
+</style>
+
+<style lang="scss">
+  .opening-group {
+    .slimScrollBar {
+      width: 10px !important;
+      right: 12px !important;;
     }
   }
 </style>

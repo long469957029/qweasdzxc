@@ -27,19 +27,17 @@ export default {
    * 只给秒秒彩使用
    * @param ticketId
    * @param limit
-   * @param days
    * @param then
    * @param fail
    * @returns {*|Promise<T>}
    */
-  getTrendByOld({ticketId, limit = 30, days = null}, then, fail) {
+  getTrendByOld({ticketId, limit = 30}, then, fail) {
     return Global.sync.axios({
       url: '/ticket/ticketmod/trendDetail.json',
       data: {
         ticketId,
         lastOpenNum: limit,
-        days,
-        isNumberDistributed: true
+        isNumberDistributed: false
       },
     })
       .then(then)

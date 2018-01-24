@@ -112,6 +112,6 @@ Global.m.oauth.check()
     window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
 
     // 开启菜单权限监听
-    // Global.ui.menu.start()
+    Global.ui.menu.start()
   }
 })
