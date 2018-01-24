@@ -20,13 +20,18 @@ App.addRegions({
 function _bindServiceHandler() {
   $(document).off('click.service').on('click.service', '.js-gl-service', () => {
     const acctInfo = Global.memoryCache.get('acctInfo')
-    const username = acctInfo.username
-    const vip = `(VIP${acctInfo.memberLevel})`
-    const newwin = window.open(
-      `${_.getCustomerServiceUrl()}&info=${encodeURIComponent(`userId=${acctInfo.userId}&name=${username}${vip}`)}`,
-      'service',
-      'width=800,height=680',
-    )
+    let newwin = ''
+    if(!_.isUndefined(acctInfo)){
+      const username = acctInfo.username
+      const vip = `(VIP${acctInfo.memberLevel})`
+      newwin = window.open(
+        `${_.getCustomerServiceUrl()}&info=${encodeURIComponent(`userId=${acctInfo.userId}&name=${username}${vip}`)}`,
+        'service',
+        'width=800,height=680',
+      )
+    }else{
+      newwin = window.open(`${_.getCustomerServiceUrl()}`,'service','width=800,height=680')
+    }
     newwin.moveTo(100, 50)
   })
 }
