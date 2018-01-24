@@ -13,7 +13,7 @@ const SidemenuModule = Base.Module.extend({
   onStart() {
     _.bindAll(this, 'updateMenuAuth')
 
-    Global.m.subscribe('acct', 'acct:updating', this.updateMenuAuth)
+    window.Global.m.subscribe('acct', 'acct:updating', this.updateMenuAuth)
   },
 
   updateMenuAuth(acctInfo) {

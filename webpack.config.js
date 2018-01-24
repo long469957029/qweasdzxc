@@ -16,7 +16,7 @@ const appConfig = {
   entry: {
     main: './src/apps/main/index.js',
     // login: './src/apps/packages/login/login.js',
-    // register: './src/apps/packages/register/register.js',
+    register: './src/apps/packages/register/register.js',
     // vendor: './src/vendor/build.core.js',
     base: './src/base/build.base.js',
     trend: './src/apps/packages/trend/index.js',
