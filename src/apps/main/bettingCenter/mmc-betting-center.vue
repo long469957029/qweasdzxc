@@ -60,6 +60,7 @@
   .bc-main {
     max-width: 1227px;
     margin: 0 auto;
+    overflow-x: hidden;
   }
 
   .bc-main-wrapper {

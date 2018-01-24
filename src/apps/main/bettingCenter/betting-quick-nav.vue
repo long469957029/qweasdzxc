@@ -136,13 +136,13 @@
         position: absolute;
         width: 1200px;
         height: 180px;
-        right: -1200px;
+        right: 0;
         box-sizing: border-box;
         padding: 30px 55px;
-        display: flex;
         z-index: 2;
         background: $main-deep-color;
         top: 70px;
+        display: none;
 
         &.active, &:hover {
           background-color: $main-deep-color;
@@ -154,12 +154,14 @@
         }
         &.quick-ticket-list-animate {
           animation: bounceInRight 1s forwards;
+          display: flex;
         }
         .quick-ticket-type-name {
           font-size: $font-md;
           color: $def-white-color;
           writing-mode: vertical-lr;
-          display: inline-block;
+          display: in
+          line-block;
           margin-top: 10px;
         }
         .ticket-inner-list {
