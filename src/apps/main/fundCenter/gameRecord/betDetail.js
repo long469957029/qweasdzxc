@@ -34,9 +34,23 @@ const BetDetailView = Base.ItemView.extend({
         const openNumHtml = []
         const openArr = openNum.split(',')
         const ballClass = openArr.length === 10 ? 'sm-ball' : ''
-        _(openArr).each((num) => {
-          openNumHtml.push(`<li class="${ballClass}"><span class="js-gr-bet-num">${num}</span></li>`)
-        })
+        if (res.root.ticketName.indexOf("六合彩") === 0) {
+          _(openArr).each((num, index) => {
+            const mark6Conf = bettingTypes.MARK6.getNum()
+            const styleConf = _(mark6Conf).findWhere({
+              num: num
+            })
+            if (index === openArr.length - 1) {
+              openNumHtml.push(`<div class="add">+</div>`)
+            }
+            openNumHtml.push(`<li class="mark6 sm-ball ${styleConf.style}"><div class="gr-bet-num">${num}</div>`)
+            openNumHtml.push(`<div class="gr-bet-sx">${styleConf.sx}</div></li>`)
+          })
+        } else {
+          _(openArr).each((num) => {
+            openNumHtml.push(`<li class="${ballClass} style"><span class="js-gr-bet-num">${num}</span></li>`)
+          })
+        }
         self.$('.js-fc-gr-bet-openNum').html(openNumHtml.join(''))
         self.$('.js-gr-bet-username').html(res.root.username)
         self.$('.js-gr-bet-tradeNo').html(res.root.ticketBetNo)
@@ -64,20 +78,35 @@ const BetDetailView = Base.ItemView.extend({
           betMethod = 0.002
         }
         self.$('.js-gr-ticketBetId').val(res.root.ticketBetId)
-        self.$('.js-gr-bet-money').html(`${_(res.root.betAllMoney).convert2yuan()}元（${betMethod}*${info.betMultiple}倍*${info.betNum}注）`)
+        let betMoneyDesc = ''
+        if (res.root.handicap) {
+          const betMoneyDesc = '（${betMethod}*${info.betMultiple}倍*${info.betNum}注）'
+        }
+        self.$('.js-gr-bet-money').html(`${_(res.root.betAllMoney).formatDiv(10000)}元${betMoneyDesc}`)
         if (res.root.canCancel && this.isSelf) {
           self.$('.js-gr-bet-detail-win').addClass('hidden')
           self.$('.js-gr-bet-detail-profit').addClass('hidden')
           self.$('.js-gr-submit-container').removeClass('hidden')
         } else {
-          self.$('.js-gr-bet-win').html(`<span class="text-account-cut">${_(res.root.betAllMoney).convert2yuan()}</span>`)
-          const profit = _(res.root.money).convert2yuan() - _(res.root.betAllMoney).convert2yuan()
+          if (res.root.money > 0) {
+            self.$('.js-gr-bet-win').html(`<span class="text-account-cut">${_(res.root.money).formatDiv(10000)}</span>`)
+          } else {
+            self.$('.js-gr-bet-win').html(`<span>${_(res.root.money).formatDiv(10000)}</span>`)
+          }
+
+          let profit = _(res.root.money - res.root.betAllMoney).formatDiv(10000)
+          if (res.root.ticketBetStatus === 2 || res.root.ticketBetStatus === 3) {
+            profit = 0
+          }
           if (profit > 0) {
             self.$('.js-gr-bet-profit').html(`<span class="text-account-cut">${profit}</span>`)
+          } else if (profit === 0) {
+            self.$('.js-gr-bet-profit').html(`<span>${profit}</span>`)
           } else {
             self.$('.js-gr-bet-profit').html(`<span class="text-account-add">${profit}</span>`)
           }
         }
+
       } else {
         Global.ui.notification.show('操作失败。')
       }

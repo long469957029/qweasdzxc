@@ -21,7 +21,7 @@ function _bindServiceHandler() {
   $(document).off('click.service').on('click.service', '.js-gl-service', () => {
     const acctInfo = Global.memoryCache.get('acctInfo')
     let newwin = ''
-    if(!_.isUndefined(acctInfo)){
+    if (!_.isUndefined(acctInfo)) {
       const username = acctInfo.username
       const vip = `(VIP${acctInfo.memberLevel})`
       newwin = window.open(
@@ -29,8 +29,8 @@ function _bindServiceHandler() {
         'service',
         'width=800,height=680',
       )
-    }else{
-      newwin = window.open(`${_.getCustomerServiceUrl()}`,'service','width=800,height=680')
+    } else {
+      newwin = window.open(`${_.getCustomerServiceUrl()}`, 'service', 'width=800,height=680')
     }
     newwin.moveTo(100, 50)
   })
@@ -48,6 +48,16 @@ function _bindClosePopoverHandler() {
         }
       })
     }
+  })
+}
+function _bindCloseTablePopoverHandler() {
+  $(document).off('click').on('click', (e) => {
+    const $target = $(e.target)
+    const $popover = $target.find('.popover')
+    _($popover).each((el) => {
+      const $el = $(el)
+      $el.remove()
+    })
   })
 }
 
@@ -187,6 +197,7 @@ App.addInitializer(() => {
   _bindFundOperatorDialogHandler() // 全局绑定资金操作(充值 提现 转帐)弹窗
   _bindBetDetailHandler() // 全局投注详情弹窗
   _bindChaseDetailHandler()
+  _bindCloseTablePopoverHandler()
 })
 
 

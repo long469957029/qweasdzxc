@@ -486,7 +486,7 @@
                   border-radius: 9px;
                   text-align: center;
                   margin-top: 5px;
-                  margin-left: -10px;
+                  margin-left: -12px;
                   position: absolute;
                 }
                 .content-item-title {
@@ -503,7 +503,7 @@
                 line-height: 20px;
                 margin-bottom: 5px;
                 width: 294px;
-                height: 40px;
+                height: 50px;
                 position: relative;
                 overflow: hidden;
                 /*text-overflow: ellipsis;*/
