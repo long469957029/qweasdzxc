@@ -179,7 +179,13 @@
         passWord:'',
         codeVal:'',
         agree:false,
-        showPromise:false
+        showPromise:false,
+        bannerCfg:[
+          {
+            advUrl: null,
+            picUrl: require('./images/banner-1.png'),
+          },
+        ]
       }
     },
     methods: {
@@ -331,7 +337,8 @@
           ({data}) => {
             if(data && data.result === 0){
               const acctInfo = data.root
-              this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+              Global.cookieCache.set('token', data.root.token)
+              Global.cookieCache.set('loginState', true)
               setTimeout(() => {
                 window.location.href = 'index.html'
               },2000)
