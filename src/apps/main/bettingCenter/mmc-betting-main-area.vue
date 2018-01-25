@@ -68,13 +68,13 @@
               </span>
             </div>
             <transition-group class="opening-group" ref="openingGroup" name="opening-cell" tag="div">
-              <div class="opening-cell" v-for="(openingResult) in fOpeningResultList" :key="openingResult.index">
+              <div class="opening-cell" v-for="(openingResult, i) in fOpeningResultList" :key="openingResult.index">
                 <div class="opening-left">{{openingResult.title}}</div>
                 <div class="opening-center" v-if="!openingResult.completed">
                   --------- 正在开奖  ---------
                 </div>
                 <div class="opening-center" v-else>
-                  <span class="text-circle text-circle-xs" :class="{'circle-winning': openingResult.winPrize}"
+                  <span class="text-circle text-circle-xs" :class="{'circle-winning': !opening && i === 0}"
                         v-for="num in openingResult.fOpenCode">{{num}}</span>
                 </div>
                 <div class="opening-right text-prominent " v-if="openingResult.completed && openingResult.winPrize">
@@ -269,7 +269,7 @@
         unit: 10000,
         continuousOpenSelectList: [1, 5, 10, 15, 20, 25],
         //开奖次数
-        openingCount: 5,
+        openingCount: 1,
         //总投注金额
         fTotalMoney: 0,
         //总中奖金额
@@ -356,6 +356,7 @@
       },
       selectStatus(selectStatus) {
         if (selectStatus) {
+
           Velocity(this.$refs.main, {
             height: 1005
           })
@@ -375,6 +376,7 @@
           this.playRule = betRulesConfig.get(playId)
 
           recordsOpenView.updateByPlayRule(this.playRule)
+          recordsOpenView.update()
 
           this.$store.commit(types.SET_CHECKOUT_CHOICE)
 
@@ -524,6 +526,12 @@
        * 开奖全部完成
        */
       openCompleted() {
+        if (this.simulationOpen) {
+          this.simulationOpen = false
+          recordsOpenView.update()
+          return
+        }
+
         this.fOpeningResultList[0].completed = true
         this.totalWinPrize += this.fOpeningResultList[0].winPrize
         this.fTotalWinPrize = _.convert2yuan(this.totalWinPrize)
@@ -533,6 +541,7 @@
         } else {
           this.stopping = false
           this.opening = false
+          recordsOpenView.update()
 
           this.toggleFinalResult(true)
         }
@@ -819,7 +828,6 @@
       }).render()
 
       recordsOpenView.height = 430
-      recordsOpenView.update()
 
       this.flashTimer = setInterval(() => {
         ++this.flashIndex
@@ -1321,16 +1329,17 @@
   }
 
   .opening-left {
-    width: 131px;
+    width: 121px;
   }
 
   .opening-center {
-    width: 200px;
+    width: 185px;
     flex-grow: 1;
   }
 
   .opening-right {
-    width: 80px;
+    width: 105px;
+    flex-grow: 1;
   }
   .opening-icon {
     line-height: 42px;
@@ -1405,7 +1414,7 @@
 </style>
 
 <style lang="scss">
-  .opening-group {
+  .opening-main {
     .slimScrollBar {
       width: 10px !important;
       right: 12px !important;;

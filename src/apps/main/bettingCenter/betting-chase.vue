@@ -17,7 +17,7 @@
             <span>翻倍追号</span>
           </a>
         </li>
-        <li v-if="singleType">
+        <li v-if="singleType && isProfit">
           <a href="#jsBcChaseProfit" data-toggle="tab" data-index="2" data-name="profit">
             <span>利润率追号</span>
           </a>
@@ -173,6 +173,7 @@
       return {
         fPreviewList: [],
         singleType: true,
+        isProfit: true,
         maxMultiple: 999999,
         basicBettingMoney: 0,
         basicMaxBonus: 0,
@@ -313,6 +314,9 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
           basicMaxBonus: 0,
         }
 
+        let totalProfit = 0
+        let totalPrefabMoney = 0
+
         const category = {
           playId: [],
           betMethod: [],
@@ -321,13 +325,16 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
 
         params.fPreviewList = _(this.previewList).map((previewInfo) => {
           const info = _({}).extend(previewInfo)
-          info.multiple = 1
+          // info.multiple = 1
 
           if (previewInfo.maxMultiple < params.maxMultiple) {
             params.maxMultiple = previewInfo.maxMultiple
           }
 
           params.prefabMoney = _(previewInfo.prefabMoney).div(previewInfo.multiple)
+
+          totalProfit += params.prefabMoney
+          totalPrefabMoney += params.prefabMoney
 
           params.basicBettingMoney = _(params.basicBettingMoney).add(params.prefabMoney)
           params.basicMaxBonus = _(params.basicMaxBonus).add(_(previewInfo.formatMaxBonus).div(previewInfo.multiple))
@@ -346,6 +353,8 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
         if (category.playId.length !== 1 || category.betMethod.length !== 1 || category.unit.length !== 1) {
           params.singleType = false
         }
+
+        this.isProfit = params.basicBettingMoney < params.basicMaxBonus
 
         Object.assign(this, params)
 

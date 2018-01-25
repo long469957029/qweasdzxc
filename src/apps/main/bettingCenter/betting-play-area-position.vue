@@ -40,6 +40,6 @@
 
 <style scoped>
   .bc-optional-main {
-    margin: 15px 0;
+    margin: 10px 0 0;
   }
 </style>

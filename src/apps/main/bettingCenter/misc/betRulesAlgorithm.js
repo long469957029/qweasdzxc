@@ -24,9 +24,9 @@ function mulAllNotRepeat(rowsResult) {
   function _count() {
     if (combinations.length < rowsResult.length) {
       _(rowsResult[combinations.length]).each((item, index, row) => {
-        const isFind = _(combinations).contains(item)
+        const isFind = _(combinations).contains(item.num)
         if (!isFind) {
-          combinations.push(item)
+          combinations.push(item.num)
           if (combinations.length === rowsResult.length) {
             total++
             combinations.pop()
@@ -73,8 +73,8 @@ function _group(n, cTimes, factor) {
 function group(rowsResult) {
   let total = 0
   const algorithmProps = this.algorithmProps
-  const mainRow = rowsResult[algorithmProps.mainRow] && rowsResult[algorithmProps.mainRow]
-  const subRow = rowsResult[1 - algorithmProps.mainRow] && rowsResult[1 - algorithmProps.mainRow]
+  const mainRow = _.pluck(rowsResult[algorithmProps.mainRow] && rowsResult[algorithmProps.mainRow], 'num')
+  const subRow = _.pluck(rowsResult[1 - algorithmProps.mainRow] && rowsResult[1 - algorithmProps.mainRow], 'num')
   let n = mainRow.length
 
   // 组选都做两次相加
@@ -114,7 +114,7 @@ function statistics(rowsResult) {
   const halfCount = Math.ceil(totalCount / 2)
 
   return _(selectedList).reduce((total, selectNum) => {
-    let n = selectNum
+    let n = selectNum.num
     if (totalCount - selectNum < halfCount) {
       n = totalCount - selectNum
     }

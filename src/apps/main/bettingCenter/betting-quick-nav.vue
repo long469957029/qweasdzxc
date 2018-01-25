@@ -11,7 +11,7 @@
         </transition-group>
         <div class="quick-more pull-right">
           <a class="sfa cursor-pointer bc-quick-more-btn" :class="[isShowMore ? 'sfa-bc-quick-close' : 'sfa-bc-quick-more']"
-             v-if="ticketType === 0" @click="toggleShowMore"></a>
+             v-if="ticketType === 0" @click="toggleShowMore(!isShowMore)"></a>
         </div>
       </div>
       <div class="quick-split"></div>
@@ -53,6 +53,9 @@
     ]),
 
     watch: {
+      '$route'() {
+        this.toggleShowMore(false)
+      },
       'ticketType': {
         handler(currentId) {
           this.$store.commit(types.TOGGLE_TOP_TICKETS_BY_TYPE, {
@@ -82,8 +85,8 @@
       }
     },
     methods: {
-      toggleShowMore() {
-        this.isShowMore = !this.isShowMore
+      toggleShowMore(flag) {
+        this.isShowMore = flag
         if (this.isShowMore) {
           Velocity(this.$refs.mainQuick, {
             height: 250,
@@ -157,6 +160,7 @@
       width: 5%;
       height: 70px;
       position: relative;
+      z-index: 2;
 
       .bc-quick-more-btn {
         margin-top: 24.5px;

@@ -3,6 +3,8 @@ let webpack = require('webpack');
 let path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
+const DEV = process.env.NODE_ENV !== 'production'
+
 module.exports = {
   context: __dirname,
   output: {

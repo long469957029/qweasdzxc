@@ -33,7 +33,7 @@ const appRouters = require('./app.routers')
 // 配置初始化路由（按功能模块）
 const router = appRouters.install()
 
-const desHash = window.location.hash
+let desHash = window.location.hash
 
 window.location.hash = '#/i'
 
@@ -60,6 +60,17 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/bc/19') {
       isVue = false
     }
+    if (!isVue && to.path !== '/i') {
+      desHash = window.location.hash
+      next()
+      window.location.hash = '#/i'
+      Global.appRouter.navigate(desHash.substring(1), { trigger: false, replace: true })
+      $('#main').toggle(!isVue)
+      $('#main-vue').toggle(isVue)
+      return
+    } else if(!isVue) {
+      window.location.hash = desHash
+    }
     $('#main').toggle(!isVue)
     $('#main-vue').toggle(isVue)
     next()
@@ -69,6 +80,11 @@ router.beforeEach((to, from, next) => {
     $('#main-vue').toggle(true)
     next('/') // 否则全部重定向到首页
   }
+})
+//临时解决popover框bug
+router.beforeEach((to, from, next) => {
+  $('.popover').remove()
+  next()
 })
 
 App.start()

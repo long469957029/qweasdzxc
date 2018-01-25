@@ -1,9 +1,5 @@
 <template>
   <div :class="componentType || ''">
-    <!--选择位置-->
-    <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals"
-                                @positionChange="positionChange"></betting-play-area-position>
-
     <div class="bc-missOptional-main" v-if="missOptional && _.find(playRule.topOp, op => op)">
       <transition-group
         enter-active-class="animated fadeInLeftBig"
@@ -17,6 +13,20 @@
         <div class="bc-missOption-btn" :key="'clear'" @click="clearAllSelected" v-if="playRule.topOp.clear">清除选号</div>
       </transition-group>
     </div>
+
+    <!--选择位置-->
+    <div class="tab-toolbar tab-circle tab-default" v-if="!_.isEmpty(playRule.optionals)">
+      <div class="select-item-title tab-title">
+        <div>位置</div>
+      </div>
+      <div class="tab-group no-margin inline-block">
+        <div class="clearfix inline-block">
+          <betting-play-area-position  :optionals="playRule.optionals"
+                                      @positionChange="positionChange"></betting-play-area-position>
+        </div>
+      </div>
+    </div>
+
     <!--选区-->
     <transition
       name="custom-classes-transition"
@@ -102,7 +112,7 @@
 
 <script>
   import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
-  import BettingPlayAreaPosition from "./betting-play-area-position";
+  import BettingPlayAreaPosition from "./betting-play-area-position"
 
   export default {
     name: "betting-play-area-select",
@@ -244,13 +254,13 @@
             }), row)
             break
           case 'odd':
-            this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
+            this.$_selectNumbers(_.filter(row.fItems, (num) => {
               num.selected = false
               return num.num % 2
             }), row)
             break
           case 'even':
-            this.$_selectNumbers(_.filter(row.fItems, (num, index) => {
+            this.$_selectNumbers(_.filter(row.fItems, (num) => {
               num.selected = false
               return !(num.num % 2)
             }), row)
@@ -280,7 +290,7 @@
                 lotteryList: result.lotteryList,
                 selectOptionals: result.selectOptionals,
                 statistics: result.statistics,
-                format: this.type,
+                format: this.playRule.format
               },
               options: {
                 type
@@ -292,7 +302,7 @@
             bettingInfo: {
               lotteryList: this.lotteryList,
               selectOptionals: this.selectOptionals,
-              format: this.type,
+              format: this.playRule.format
             },
             options: {
               type

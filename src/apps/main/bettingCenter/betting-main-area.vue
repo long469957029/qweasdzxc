@@ -212,7 +212,8 @@
             },
           ],
           height: 145,
-          emptyTip: '暂未添加选号',
+          showEmpty: true,
+          emptyTip: '<div class="sfa sfa-empty vertical-middle"></div> 暂未添加选号',
         },
         fPreviewList: [],
 
@@ -232,6 +233,9 @@
     watch: {
       '$route' (to, from) {
         recordsOpenView.updateTicketId(this.ticketId)
+        this.$store.commit(types.SET_MULTIPLE, 1)
+        $(this.$refs.multiRange).numRange('numChange', 1)
+        this.unit = 10000
       },
       'bettingChoice.playId': {
         handler: function (playId) {
@@ -278,6 +282,10 @@
 
           this.$store.dispatch('getColdHot', {ticketId: this.ticketInfo.id})
           this.$store.dispatch('getCurrentMiss', {ticketId: this.ticketInfo.id})
+
+
+          //隐藏popover
+          $('.js-bc-betting-preview-detail').popover('hide')
         },
       },
       'bettingInfo.planId': {

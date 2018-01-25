@@ -164,7 +164,6 @@ const BettingCenterHisAnalysisDetailView = Base.ItemView.extend({
         this.gridOps = this.GridOps.ssc
         if (this.options.ticketId === 19) {
           this.url = '/ticket/bet/openHistory.json'
-          this.gridOps.pageSize = 9
         }
       } else if (_(c115TicketIdArr).contains(this.options.ticketId)) {
         this.gridOps = this.GridOps['115']

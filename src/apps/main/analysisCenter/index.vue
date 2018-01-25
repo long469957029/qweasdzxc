@@ -481,6 +481,7 @@
     background: #ffffff;
     border-left: 1px solid $def-gray-color;
     border-right: 1px solid $def-gray-color;
+    overflow: hidden;
   }
 
   .sfa-tickets {
@@ -513,7 +514,6 @@
     border-radius: 5px;
     border: solid 1px #e6e6e6;
     box-sizing: border-box;
-    overflow: hidden;
   }
   .main {
     margin: 20px auto;
