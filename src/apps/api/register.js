@@ -25,12 +25,16 @@ const checkNameExistApi = ({username}, then, fail) => {
  * @param fail
  * @returns {*|Promise.<T>}
  */
-const registerApi = ({data}, then, fail) => {
+const registerApi = ({userName,loginPwd,linkId}, then, fail) => {
   return Global.sync.axios({
     type: 'POST',
     url: '/acct/reg/doreg.json',
     withoutToken: true,
-    data,
+    data:{
+      userName,
+      loginPwd,
+      linkId
+    },
   })
     .then(then)
     .catch(fail)

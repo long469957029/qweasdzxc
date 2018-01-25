@@ -53,7 +53,8 @@
                   </div>
                   <div class="input-control">
                     <div class="input-icon code"></div>
-                    <input type="text" class="register-input code-input" name="userName" v-model.trim="codeVal" placeholder="请输入验证码" autocomplete="off"/>
+                    <input type="text" class="register-input code-input" name="userName" v-model.trim="codeVal"
+                           @change="codeValVerification" placeholder="请输入验证码" autocomplete="off"/>
                     <img class="var-code" :src="codeSrc" @click="refreshValCode">
                     <span class="input-check" v-if="codeStatus === 3"></span>
                   </div>
@@ -65,11 +66,11 @@
                     <div class="pull-left">
                       <custom-checkbox v-model="agree"></custom-checkbox>
                     </div>
-                    <span class="promise-hint pull-right">*我确定我已年满18岁，并已阅读和接受<a class="js-promise-open promise-link">无限娱乐平台的政策及隐私声明协议。</a></span>
+                    <span class="promise-hint pull-right">*我确定我已年满18岁，并已阅读和接受<a class="js-promise-open promise-link" @click="showPromise = !showPromise">无限娱乐平台的政策及隐私声明协议。</a></span>
                   </div>
 
                   <div class="text-left m-top-lg">
-                    <button class="btn btn-cool ac-reg-btn" :disabled="!agree" data-loading-text="保存中">立即注册
+                    <button class="btn btn-cool ac-reg-btn" :disabled="!agree" @click="register" data-loading-text="保存中">立即注册
                     </button>
                   </div>
                   <div class="width-reg text-center m-top-md">
@@ -112,7 +113,7 @@
         </div>
       </div>
     </div>
-    <div class="js-promise-mask promise-mask hidden">
+    <div class="js-promise-mask promise-mask " v-show="showPromise">
       <div class="promise-container">
         <div class="promise-reg"></div>
         <div class="promise-hr"></div>
@@ -148,7 +149,7 @@
 
           <p>十二、 无限娱乐保留不定时修改或增加本协定或游戏规则或保密条例等的操作权利，更改条款将从更改发生后立即生效，并保留一切有争议事项及最后的决策权。</p>
         </div>
-        <button class="js-promise-close btn btn-cool ac-reg-button">确定</button>
+        <button class="js-promise-close btn btn-cool ac-reg-button" @click="showPromise = !showPromise">确定</button>
       </div>
     </div>
   </div>
@@ -158,6 +159,7 @@
     checkNameExistApi,
     registerApi,
     getBannerADApi } from 'api/register'
+  import {valCodeXhr} from 'api/resetPwd'
   export default {
     name: 'register',
     data(){
@@ -176,7 +178,8 @@
         userName:'',
         passWord:'',
         codeVal:'',
-        agree:false
+        agree:false,
+        showPromise:false
       }
     },
     methods: {
@@ -276,6 +279,27 @@
         this.pwdStatus = 2
         return false
       },
+      codeValVerification(){
+        if(this.codeVal !== '' && this.codeVal.length === 4){
+          valCodeXhr({code:this.codeVal},
+            ({data}) => {
+              if(data && data.result === 0){
+                this.codeStatus = 3
+                this.codeErrorText = ''
+              }else{
+                this.codeStatus = 2
+                this.codeErrorText = data.msg === 'fail' ? '验证码输入有误' : data.msg
+                this.refreshValCode()
+              }
+            },
+            ({data}) => {
+              this.codeStatus = 2
+              this.codeErrorText = data.msg === 'fail' ? '验证码输入有误' : data.msg
+              this.refreshValCode()
+            }
+          )
+        }
+      },
       strBetweenIsNumber (str, star, end) {
         const strArr = str.split('').slice(star, end)
         let isHasNumber = true
@@ -289,6 +313,49 @@
       refreshValCode(){
         this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
       },
+      register(){
+        if(this.userName === '' || this.userStatus !== 3){
+          this.userStatus = 2
+          this.userErrorText = '仅支持4-16位字母和数字，不能以数字开头'
+          return false
+        }
+        if(!this.valPassword()){
+          return false
+        }
+        if(this.codeVal === '' || this.codeStatus !== 3){
+          this.codeStatus = 2
+          this.codeErrorText = '请输入正确的验证码'
+          return false
+        }
+        registerApi({userName:this.userName,loginPwd:this.passWord,linkId:this.linkId},
+          ({data}) => {
+            if(data && data.result === 0){
+              const acctInfo = data.root
+              this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+              setTimeout(() => {
+                window.location.href = 'index.html'
+              },2000)
+              Global.ui.notification.show('注册成功！')
+            }else {
+              const btnContent = data.msg === 'fail' ? '确定' : '重新注册'
+              Global.ui.notification.show(data.msg === 'fail' ? '注册失败' : data.msg, {
+                btnContent,
+                event () {
+                  window.location.reload()
+                },
+              })
+            }
+          },
+          ({data}) => {
+            Global.ui.notification.show('注册失败！', {
+              btnContent: '重新注册',
+              event () {
+                window.location.reload()
+              },
+            })
+          }
+        )
+      }
     },
     mounted(){
       setTimeout(() => {
@@ -297,6 +364,7 @@
       }, 500)
       this.codeUrl = `${this.url.substring(0, this.url.indexOf('/', this.url.indexOf('://', 0) + 3))}/acct/imgcode/code`
       this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
+      this.linkId = _.getUrlParam('linkId')
     },
   }
 </script>
