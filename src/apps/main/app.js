@@ -3,11 +3,13 @@ import NavbarView from 'skeleton/bases/navbar'
 import ToolbarView from 'skeleton/bases/toolbar'
 
 import RechargeView from 'com/fundOperate'
+import MessageView from 'skeleton/bases/toolbar/message' // 站内消息
 
 import './index.css'
 
 const BetDetailView = require('fundCenter/gameRecord/betDetail')
 const ChaseDetailView = require('fundCenter/gameRecord/chaseDetail')
+
 
 const App = new window.Base.Application()
 
@@ -21,7 +23,7 @@ function _bindServiceHandler() {
   $(document).off('click.service').on('click.service', '.js-gl-service', () => {
     const acctInfo = Global.memoryCache.get('acctInfo')
     let newwin = ''
-    if(!_.isUndefined(acctInfo)){
+    if (!_.isUndefined(acctInfo)) {
       const username = acctInfo.username
       const vip = `(VIP${acctInfo.memberLevel})`
       newwin = window.open(
@@ -29,8 +31,8 @@ function _bindServiceHandler() {
         'service',
         'width=800,height=680',
       )
-    }else{
-      newwin = window.open(`${_.getCustomerServiceUrl()}`,'service','width=800,height=680')
+    } else {
+      newwin = window.open(`${_.getCustomerServiceUrl()}`, 'service', 'width=800,height=680')
     }
     newwin.moveTo(100, 50)
   })
@@ -50,7 +52,6 @@ function _bindClosePopoverHandler() {
     }
   })
 }
-
 function _bindClickModalFadeHandler() {
   $(document).off('click.modal-backdrop', '.modal-backdrop').on('click.modal-backdrop', '.modal-backdrop', (e) => {
     const $target = $(e.currentTarget)
@@ -172,6 +173,37 @@ const _bindChaseDetailHandler = () => {
     })
   })
 }
+// const _bindCloseTablePopoverHandler = () => {
+//   $(document).off('click').on('click', '.popover', (e) => {
+//     const $target = $(e.target)
+//     const $popover = $target.find('.popover')
+//     _($popover).each((el) => {
+//       const $el = $(el)
+//       $el.remove()
+//     })
+//   })
+// }
+// 站内信弹窗
+const _bindImDialogHandler = () => {
+  $(document).off('click.imDialog').on('click.imDialog', '.js-toolbar-im-dialog', (e) => {
+    const $target = $(e.currentTarget)
+    const id = $target.data('id')
+    const $imDialog = Global.ui.dialog.show({
+      size: 'im-dialog-panel',
+      // bStyle: 'width: 832;height:600;border:0;"',
+      bodyClass: 'js-sideBar-im im-panel',
+      body: '<div class="im-dialog-container"></div>',
+    })
+    const $dialogContainer = $imDialog.find('.im-dialog-container')
+    const messageView = new MessageView({userId: id})
+    $dialogContainer.html(messageView.render().el)
+
+    $imDialog.on('hidden.modal', function () {
+      $(this).remove()
+      messageView.destroy()
+    })
+  })
+}
 App.addInitializer(() => {
   App.navbarRegin.show(new NavbarView({
     navbar: Global.ui.menu.getNav(),
@@ -187,6 +219,8 @@ App.addInitializer(() => {
   _bindFundOperatorDialogHandler() // 全局绑定资金操作(充值 提现 转帐)弹窗
   _bindBetDetailHandler() // 全局投注详情弹窗
   _bindChaseDetailHandler()
+  _bindImDialogHandler() // 站内信弹窗
+  // _bindCloseTablePopoverHandler()
 })
 
 

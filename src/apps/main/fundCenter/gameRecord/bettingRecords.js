@@ -118,7 +118,7 @@ const BettingRecordsView = SearchGrid.extend({
             // title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
             trigger: 'click',
             html: true,
-            content: `<span class="inline-block text-account-add m-right-sm">详细号码：</span><span class="js-pf-popover inline-block word-break">${items.betNum}</span>`,
+            content: `<span class="inline-block text-account-add m-right-sm">详细号码：</span><span class="js-pf-popover inline-block word-break ">${items.betNum}</span>`,
             placement: 'bottom',
           })
         } else {

@@ -136,7 +136,7 @@ const LowLevelManageView = SearchGrid.extend({
       row.push(`${freeze}<span class="${textClass}">${rowInfo.userName}</span>`)
     }
     row.push(`<span class="${textClass}">${rowInfo.userType === 0 ? '代理' : '会员'}</span>`)
-    row.push(`<span class="${textClass}">${_(rowInfo.rebate).formatDiv(10, { fixed: 1 })}%</span>`)
+    row.push(`<span class="${textClass}">${_(rowInfo.rebate).formatDiv(10, {fixed: 1})}%</span>`)
 
     row.push(`<span class="${textClass}">${_(rowInfo.balance).convert2yuan()}</span>`)
     row.push(`<span class="${textClass}">${_(rowInfo.subBalance).convert2yuan()}</span>`)
@@ -156,7 +156,7 @@ const LowLevelManageView = SearchGrid.extend({
     // cell.push(`<a href="${_.getUrl(`/detail/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link text-cool">详情</a>`)
 
     if (rowInfo.direct && !this.isSub()) {
-      cell.push(`<a href="${_.getUrl(`/message/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">站内信</a>`)
+      cell.push(`<button class="btn btn-link btn-im js-toolbar-im-dialog" data-id="${rowInfo.userId}">站内信</button>`)
       if (!acctInfo.merchant) {
         cell.push(`<a class="btn btn-link js-ac-point-up" data-userid="${rowInfo.userId}" data-username="${rowInfo.userName}">升点</a>`)
       }
@@ -270,7 +270,7 @@ const LowLevelManageView = SearchGrid.extend({
     })
     $dialogContant.html(rebataView.render().el)
 
-    $dialog.on('hidden.modal', function() {
+    $dialog.on('hidden.modal', function () {
       $(this).remove()
       rebataView.destroy()
     })

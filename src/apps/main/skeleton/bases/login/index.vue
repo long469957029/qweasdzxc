@@ -1,6 +1,6 @@
 <template>
   <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="loginModal">
-       <!--v-show="openLogin">-->
+    <!--v-show="openLogin">-->
     <div class="modal-dialog modal-login">
       <div class="login-head">
         <a class="close btn-close" data-dismiss="modal">×</a>
@@ -146,12 +146,18 @@
 //            status = Number(status)
             if (status === 0 || status === 100 || status === 102) {
               this.$emit('dialogClose')
-            } else if (status === 103 || status === 104 || status === 105 || status === 106) {
-              const ur = `userName=${data.root.username}${data.root.uName ? `&uName=${data.root.uName}` : ''}&status=${status}`
-              window.location.href = `updateUserInfo.html?${encodeURI(ur)}`
+            } else if (status === 104 || status === 105 || status === 106) {
+//              const ur = `userName=${data.root.username}${data.root.uName ? `&uName=${data.root.uName}` : ''}&status=${status}`
+//              window.location.href = `updateUserInfo.html?${encodeURI(ur)}`
+              this.$store.commit(types.TOGGLE_RESET_INIT_PWD, true)
+              $(this.$refs.loginModal).modal('hide')
             } else if (status === 101) {
               this.showErrorMsg = true
               this.errorMsg = '完全冻结的用户无法登录！'
+            }
+            else if (status === 103) {
+              this.showErrorMsg = true
+              this.errorMsg = '该用户已被回收！'
             } else {
               this.$emit('dialogClose')
 //              window.location.href = 'index.html'

@@ -10,8 +10,10 @@ const TransferView = Base.ItemView.extend({
   events: {
     'click .js-rc-next-step': 'submitPlatformTransferHandler',
     'click .js-fc-rc-pre': 'preStepHandler',
-    'click .js-tr-select-out-down': 'selectOutDownHandler',
-    'click .js-tr-select-in-down': 'selectInDownHandler',
+    // 'click .js-tr-select-out-down': 'selectOutDownHandler',
+    // 'click .js-tr-select-in-down': 'selectInDownHandler',
+    'click .js-tr-out-select': 'selectOutDownHandler',
+    'click .js-tr-in-select': 'selectInDownHandler',
     'click .js-fc-tr-change': 'changeInOutStatusHandler',
     'click .js-tr-out-item': 'selectFromGameHandler',
     'click .js-tr-in-item': 'selectInGameHandler',

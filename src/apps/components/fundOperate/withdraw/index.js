@@ -11,7 +11,7 @@ const WithdrawView = Base.ItemView.extend({
     'click .js-rc-next-step': 'submitHandler',
     'click .js-fc-rc-pre': 'preStepHandler',
     'keyup .js-wd-amount-input': 'amountChangeHandler',
-    'click .js-select-bank-down': 'selectBankDownHandler',
+    'click .js-wd-bank-select': 'selectBankDownHandler',
     'click .js-wd-bank-item': 'changeBankHandler',
   },
 

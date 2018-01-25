@@ -16,7 +16,7 @@ const appConfig = {
   entry: {
     main: './src/apps/main/index.js',
     // login: './src/apps/packages/login/login.js',
-    // register: './src/apps/packages/register/register.js',
+    register: './src/apps/packages/register/index.js',
     // vendor: './src/vendor/build.core.js',
     base: './src/base/build.base.js',
     trend: './src/apps/packages/trend/index.js',
@@ -60,7 +60,7 @@ const appConfig = {
     // },
     register: {
       title: '无限娱乐',
-      template: './entry/register.html',
+      template: './entry/package-vue.html',
       chunks: ['common', 'base', 'register'],
     },
     trend: {

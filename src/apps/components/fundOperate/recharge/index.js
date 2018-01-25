@@ -11,7 +11,8 @@ const RechargeView = Base.ItemView.extend({
     'click .js-rc-next-step': 'nextStepHandler',
     'click .js-fc-rc-pre': 'preStepHandler',
     'click .js-select-type-down': 'selectTypeDownHandler',
-    'click .js-select-bank-down': 'selectBankDownHandler',
+    // 'click .js-select-bank-down': 'selectBankDownHandler',
+    'click .js-fc-re-bankList-select': 'selectBankDownHandler',
     'click .js-rc-select-quickSet': 'selectQuickSetHandler',
     'keyup .js-rc-money-input': 'amountChangeHandler',
     'click .js-fc-rc-payType-item': 'changeTypeHandler',
@@ -92,7 +93,11 @@ const RechargeView = Base.ItemView.extend({
     const lastPayInfo = rechargeService.getPaymentInfo(type, data)
     const feeData = rechargeService.doFeeData(lastPayInfo)
 
+
     // 3.初始化支付方式子类型
+    if (type !== paymentData.type) {
+      type = paymentData.type
+    }
     const nameRequired = this.$('.js-rc-aliPay-name').attr('required') // 当不是支付宝转账时，名称输入框设置为非必填项
     // 判断方式选择不同支付方式div显示状态
     if (type === 1 || type === 4 || type === 5 || type === 11) { // 银联支付一/二/三，显示银行列表

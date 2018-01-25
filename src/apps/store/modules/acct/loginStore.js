@@ -104,9 +104,9 @@ const mutations = {
       Object.assign(state, initState())
       Global.cookieCache.clear('token')
       Global.cookieCache.clear('loginState')
-      Global.router.goTo('')
       window.Global.m.publish('acct:loginOut')
       this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
+      window.location.href=''
     }
   },
   [types.TOGGLE_DO_LOGOUT] (state, data) {

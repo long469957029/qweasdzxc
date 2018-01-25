@@ -14,7 +14,7 @@
                   leave-active-class="animated-general fadeOutRightBig"
       >
         <div class="header-not-login pull-right" v-if="!loginStatus" key="login">
-          <a class="header-try header-try" href="javascript:void(0);">免费试玩</a>
+          <button type="button" class="header-login " @click="showFreeTrial">免费试玩</button>
           <button type="button" class="header-login " @click="showLogin">登录</button>
         </div>
         <div class="header-has-logined  pull-right" key="logined"
@@ -106,7 +106,11 @@
         return this.$store.getters.getUserInfo.fBalance
       },
       username(){
-        return this.$store.getters.getUserInfo.uName
+        if (this.$store.getters.getUserInfo.uName === '' || this.$store.getters.getUserInfo.uName === null) {
+          return this.$store.getters.getUserInfo.username
+        } else {
+          return this.$store.getters.getUserInfo.uName
+        }
       },
       imgUrl(){
         return avatarConf.get(this.$store.state.loginStore.headIcon).logo
@@ -125,10 +129,9 @@
       showLoginLauncher(){
         this.$store.commit(types.TOGGLE_LOGIN_LAUNCHER, true)
       },
-//      showUserInfo(userInfo){
-//        this.amount = userInfo.fBalance
-//        this.username = userInfo.uName
-//      },
+      showFreeTrial(){
+        this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
+      },
       renderMsgList(model){
         this.newRowCount = model.get('newRowCount')
         this.newList = model.get('newList')
@@ -486,7 +489,7 @@
                   border-radius: 9px;
                   text-align: center;
                   margin-top: 5px;
-                  margin-left: -10px;
+                  margin-left: -12px;
                   position: absolute;
                 }
                 .content-item-title {
@@ -503,7 +506,7 @@
                 line-height: 20px;
                 margin-bottom: 5px;
                 width: 294px;
-                height: 40px;
+                height: 50px;
                 position: relative;
                 overflow: hidden;
                 /*text-overflow: ellipsis;*/

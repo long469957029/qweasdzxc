@@ -11,6 +11,8 @@ import Logout from 'skeleton/bases/login/logout'
 import MainFooter from 'skeleton/bases/footer'
 import ResetPwd from 'skeleton/bases/login/resetPassWord'
 import LoginLauncher from 'skeleton/bases/loginLauncher'
+import FreeTrial from 'skeleton/bases/freeTrial'
+import ResetInitPwd from 'skeleton/bases/login/resetInitialPwd'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -49,7 +51,7 @@ router.onReady(() => {
 router.beforeEach((to, from, next) => {
   if (store.getters.checkPermission(to.path)) {
     let isVue = false
-    _(['/bc', '/analysis', '/i', '/aa','/mb','/au']).each((bcRouter) => {
+    _(['/bc', '/analysis', '/i', '/aa', '/mb', '/au']).each((bcRouter) => {
       if (to.path.indexOf(bcRouter) !== -1) {
         isVue = true
       }
@@ -75,7 +77,7 @@ router.beforeEach((to, from, next) => {
     $('#main-vue').toggle(isVue)
     next()
   } else {
-    store.commit(types.TOGGLE_LOGIN_DIALOG,true)
+    store.commit(types.TOGGLE_LOGIN_DIALOG, true)
     $('#main').toggle(false)
     $('#main-vue').toggle(true)
     next('/') // 否则全部重定向到首页
@@ -101,7 +103,9 @@ Global.m.oauth.check()
         Login,
         Logout,
         ResetPwd,
-        LoginLauncher
+        LoginLauncher,
+        FreeTrial,
+        ResetInitPwd
       },
       store,
       router,
@@ -114,20 +118,20 @@ Global.m.oauth.check()
     }, 0)
   })
   .done((res) => {
-  if (res && res.result === 0) {
-    // /** **************************************************************** */
-    // // appRouters.install()
-    // /** **************************************************************** */
+    if (res && res.result === 0) {
+      // /** **************************************************************** */
+      // // appRouters.install()
+      // /** **************************************************************** */
 
-    // 开启oauth监听
-    Global.m.oauth.start()
+      // 开启oauth监听
+      Global.m.oauth.start()
 
-    // 开启消息监听
-    Global.m.news.start()
+      // 开启消息监听
+      Global.m.news.start()
 
-    window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
+      window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
 
-    // 开启菜单权限监听
-    Global.ui.menu.start()
-  }
-})
+      // 开启菜单权限监听
+      Global.ui.menu.start()
+    }
+  })

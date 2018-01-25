@@ -1,13 +1,15 @@
 @charset "UTF-8";
 
 @import "~base/styles/imports";
-@mixin cd-betDetail-close{
+
+@mixin cd-betDetail-close {
   top: 25px;
   right: 30px;
   font-size: 40px;
   width: 25px;
   height: 25px;
 }
+
 .fc-gr-detail {
   .popover .popover-content {
     background-color: $def-white-color;
@@ -60,7 +62,7 @@
         width: 40px;
         height: 40px;
         line-height: 40px;
-        background: $new-main-deep-color;
+
         border-radius: 50px;
         font-size: 22px;
         -moz-border-radius: 50px;
@@ -71,7 +73,6 @@
         .gr-bet-num-shadow {
           display: block;
           margin-left: 7px;
-          background: radial-gradient(#cccccc, #f9f9f9);
           box-shadow: 1px 0px 25px #cccccc;
           width: 27px;
           height: 12px;
@@ -79,31 +80,60 @@
           -webkit-border-radius: 100px / 19px;
           border-radius: 100px / 19px;
         }
-        &.sm-ball{
+        &.sm-ball {
           width: 33px;
           height: 33px;
           font-size: 18px;
           line-height: 33px;
-          &:after{
+          &:after {
             top: 40px;
             left: 8px;
           }
         }
-        &:after{
+        &:after {
           content: '';
           width: 18px;
           height: 4px;
           border-radius: 50%;
           background: rgba(0, 0, 0, 0.15);
-          box-shadow: 0 0 20px rgba(0,0,0,1);
+          box-shadow: 0 0 20px rgba(0, 0, 0, 1);
           position: absolute;
           top: 45px;
           left: 11px;
           transform: rotateX(65deg);
         }
+        &.style {
+          background: $new-main-deep-color;
+        }
+        &.mark6 {
+          margin-top: -10px;
+          .gr-bet-sx {
+            color: #333333;
+            font-size: 14px;
+            margin-top: 10px;
+          }
+        }
+        &.green{
+          background: #8dc782;
+        }
+        &.blue{
+          background: #4785b0;
+        }
+        &.red{
+          background: #e06d69;
+        }
+      }
+      .add{
+        display: inline-block;
+        font-size: 24px;
+        position: relative;
+        vertical-align: top;
+        color: #666;
+        width: 40px;
+        margin-top: -5px;
       }
     }
-    .cd-betDetail-close{
+    .cd-betDetail-close {
       @include cd-betDetail-close;
     }
   }
@@ -204,7 +234,7 @@
         display: inline-block;
       }
     }
-    .cd-betDetail-close{
+    .cd-betDetail-close {
       @include cd-betDetail-close;
     }
   }
@@ -285,13 +315,13 @@
       }
     }
   }
-  .gr-submit-container{
+  .gr-submit-container {
     margin-top: 20px;
     text-align: center;
   }
-  .btn-link-red{
-    color:$prominent-red-color;
-    background:$def-white-color;
-    border:0
+  .btn-link-red {
+    color: $prominent-red-color;
+    background: $def-white-color;
+    border: 0
   }
 }

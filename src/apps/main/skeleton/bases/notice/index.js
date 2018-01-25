@@ -19,7 +19,7 @@ export default Base.ItemView.extend({
   getXhr() {
     return Global.sync.ajax({
       url: '/info/activitylist/geturgentbulletinlist.json',
-      version: 2,
+      data: {version: 2},
     })
   },
 
