@@ -22,12 +22,14 @@
           <div class="panel-main clearfix">
             <div class="clearfix ac-reg-body">
               <div class="reg-ad pull-right">
-                <div id="jsREADCarousel" class="js-re-carousel-container carousel slide">
-                  <ol class="js-re-navigate carousel-indicators">
-                  </ol>
-                  <div class="js-re-ad-container carousel-inner ac-reg-pic">
-                  </div>
-                </div>
+                <swiper :options="swiperOption"  ref="mySwiper">
+                  <swiper-slide v-for="(item, i) in bannerCfg" :key="i">
+                    <a :href="item.advUrl">
+                      <img :src="item.picUrl"/>
+                    </a>
+                  </swiper-slide>
+                  <div class="swiper-pagination" slot="pagination"></div>
+                </swiper>
               </div>
               <div class="reg-info pull-left">
                 <form action="javascript:void(0);" id="jsRegisterForm" class="js-re-registerForm form-horizontal">
@@ -80,7 +82,24 @@
               </div>
             </div>
           </div>
-          <div class="tutorial"></div>
+        </div>
+        <div class="tutorial">
+          <div class="tutorial-title inline-block">新手引导</div>
+          <div class="tutorial-arrow"></div>
+          <div class="tutorial-text tutorial-one">
+            <span class="num">01</span>
+            <span class="text">注册账号</span>
+          </div>
+          <div class="tutorial-arrow"></div>
+          <div class="tutorial-text tutorial-two">
+            <span class="num">02</span>
+            <span class="text">登录平台享新手优惠</span>
+          </div>
+          <div class="tutorial-arrow"></div>
+          <div class=" tutorial-text tutorial-two">
+            <span class="num">03</span>
+            <span class="text">下载手机端畅玩无限</span>
+          </div>
         </div>
         <div class="next-btn js-move-down"></div>
       </div>
@@ -160,8 +179,14 @@
     registerApi,
     getBannerADApi } from 'api/register'
   import {valCodeXhr} from 'api/resetPwd'
+  import 'swiper/dist/css/swiper.css'
+  import { swiper,swiperSlide } from 'vue-awesome-swiper'
   export default {
     name: 'register',
+    components:{
+      swiper,
+      swiperSlide
+    },
     data(){
       return {
         loading: true,
@@ -179,7 +204,29 @@
         passWord:'',
         codeVal:'',
         agree:false,
-        showPromise:false
+        showPromise:false,
+        bannerCfg:[
+          {
+            advUrl: null,
+            picUrl: require('./images/banner-1.png'),
+          },
+          {
+            advUrl: null,
+            picUrl: require('./images/banner-2.png'),
+          }
+        ],
+        swiperOption: {
+          spaceBetween: 30,
+          centeredSlides: true,
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          },
+        }
       }
     },
     methods: {
@@ -331,7 +378,8 @@
           ({data}) => {
             if(data && data.result === 0){
               const acctInfo = data.root
-              this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+              Global.cookieCache.set('token', data.root.token)
+              Global.cookieCache.set('loginState', true)
               setTimeout(() => {
                 window.location.href = 'index.html'
               },2000)
@@ -368,7 +416,7 @@
     },
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   $main-light-color: #1ba1b5 !default;
   $main-border-color: #007e90 !default;
   $input-placeholder: #0297ad !default;
@@ -376,11 +424,10 @@
   .reg-ad {
     display: inline-block;
     width: 332px;
-    float: none;
-    position: absolute;
-    top: 50%;
-    right: 40px;
-    transform: translateY(-50%);
+    height: 390px;
+    overflow: hidden;
+    margin-top: 55px;
+    margin-right: 50px;
   }
 
   .ac-reg-pic {
@@ -495,30 +542,6 @@
       .checkbox-container {
         width: 25px;
         height: 25px;
-      }
-
-      input[type='checkbox'] {
-        width: 20px;
-        height: 20px;
-        outline: none;
-        box-shadow: none;
-        opacity: 0;
-        position: absolute;
-        z-index: 2;
-
-        & + label {
-          background: url('images/check-off.png');
-          width: 16px;
-          height: 16px;
-          transform: translate(0px, 12px);
-        }
-
-        &:checked + label {
-          background: url('images/checked.png');
-          width: 19px;
-          height: 17px;
-          transform: translate(-1px, 10px);
-        }
       }
 
       .promise-hint {
@@ -642,14 +665,56 @@
   #section1 {
 
     .tutorial {
-      background: url('images/tutorial.png');
-      width: 896px;
-      height: 83px;
+      /*background: url('images/tutorial.png');*/
+      width: 1000px;
+      height: 73px;
       margin: 0px auto;
-      position: absolute;
-      bottom: -125px;
-      left: 0;
-      right: 0;
+      position: relative;
+      top: 100px;
+      line-height: 73px;
+      .tutorial-title{
+        width: 115px;
+        height: 42px;
+        text-align: right;
+        line-height: 42px;
+        font-size: 18px;
+        color:$new-main-deep-color;
+        background: url("./images/tutorial-guide.png") no-repeat;
+      }
+      .tutorial-arrow{
+        display: inline-block;
+        width: 29px;
+        height: 18px;
+        background: url("./images/tutorial-arrow.png") no-repeat;
+        margin-left: 3px;
+      }
+      .tutorial-text{
+        width: 231px;
+        height: 73px;
+        display: inline-block;
+        margin-left: 3px;
+        vertical-align: top;
+        line-height: 73px;
+        padding-left: 19px;
+        &.tutorial-one{
+          background: url("./images/tutorial-one.png") no-repeat;
+        }
+        &.tutorial-two{
+          background: url("./images/toturial-two.png") no-repeat;
+        }
+        &.tutorial-three{
+          background: url("./images/tutorial-three.png") no-repeat;
+        }
+        .num{
+          font-size:48px;
+          color: $def-gray-color;
+        }
+        .text{
+          vertical-align: top;
+          color:$new-inverse-color;
+          font-size: $font-md;
+        }
+      }
     }
   }
 
@@ -844,19 +909,19 @@
   .opacity-0 {
     opacity: 0;
   }
-
   #fp-nav ul,
   .fp-slidesNav ul {
-    margin: 28px 0px 68px;;
     padding: 0;
 
     li {
       display: block;
-      width: 14px;
-      height: 13px;
-      margin: 24px 16px;
+      width: 140px;
+      height: auto;
       position: relative;
-
+      display: flex;
+      align-items: center;
+      margin: 0;
+      margin-top: 20px;
       a {
         display: block;
         position: relative;
@@ -865,64 +930,82 @@
         height: 100%;
         cursor: pointer;
         text-decoration: none;
+        /*margin: 24px 16px;*/
 
-        &.active span {
-          height: 10px;
-          width: 10px;
-          margin: -5px 0 0 -5px;
-          border-radius: 100%;
-          background: #00b4b9;
-
-          #fp-nav ul li:hover &,
-          #fp-slidesNav ul li:hover & {
-            height: 10px;
-            width: 10px;
-            margin: -5px 0 0 -5px;
-            border-radius: 100%;
+        &.active{
+          width: 140px;
+          height: 100px;
+          span {
+            position: relative;
+            width: 140px;
+            height: 100px;
+            margin: 0;
+            left: 0;
+            top:0;
+            background-color: $new-main-deep-color;
+            border-radius: 0px;
+            border-top-left-radius: 50%;
+            border-bottom-left-radius: 50%;
+            animation: fadeInRight .8s;
+            &:before{
+              content: '';
+              width: 16px;
+              height: 28px;
+              background: url("./images/mouse.png") no-repeat;
+              display: block;
+              position: relative;
+              top:29px;
+              left: 74px;
+            }
+            &:after{
+              content: '';
+              width: 15px;
+              height: 10px;
+              background: url("./images/full-down.png") no-repeat;
+              display: block;
+              position: relative;
+              position: relative;
+              top:40px;
+              left: 75px;
+            }
           }
         }
 
         span {
           border-radius: 50%;
-          position: absolute;
+          position: relative;
           z-index: 1;
           height: 10px;
           width: 10px;
           border: 0;
-          background: #bdbdbd;
-          left: 50%;
-          top: 50%;
-          margin: -5px 0 0 -5px;
-          -webkit-transition: all 0.1s ease-in-out;
-          -moz-transition: all 0.1s ease-in-out;
-          -o-transition: all 0.1s ease-in-out;
-          transition: all 0.1s ease-in-out;
+          background-color: rgba(0, 0, 0, 0.1);
+          margin: 0;
+          margin-left: 8px;
+          /*-webkit-transition: all 0.1s ease-in-out;*/
+          /*-moz-transition: all 0.1s ease-in-out;*/
+          /*-o-transition: all 0.1s ease-in-out;*/
+          /*transition: all 0.1s ease-in-out;*/
+          display: block;
         }
       }
 
       &:hover {
-
-        a, a.active {
-          span {
-            width: 10px;
-            height: 10px;
-            margin: -5px 0px 0px -5px;
+        a{
+          span{
+            margin: 0px 0px 0px 8px;
+          }
+          &.active {
+            span {
+              width: 140px;
+              height: 100px;
+              border-radius: 0px;
+              border-top-left-radius: 50%;
+              border-bottom-left-radius: 50%;
+              margin: 0;
+            }
           }
         }
       }
-
-      &:nth-last-child(1) {
-        width: 15px;
-        &::after {
-          content: '';
-          width: 22px;
-          height: 38px;
-          background: url('images/mouse.png');
-          position: absolute;
-          transform: translate(-3px, 13px);
-        }
-      }
-
     }
   }
 
@@ -930,14 +1013,11 @@
     position: fixed;
     z-index: 100;
     margin-top: -32px;
-    top: 50%;
+    top: 40%;
     opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
     &.right {
-      right: 35px;
-      background: #f1f1f1;
-      border: 1px solid #d2d2d2;
-      border-radius: 35px;
+      right: 0px;
     }
     &.left {
       left: 17px
@@ -1068,16 +1148,37 @@
   }
 
   .next-btn {
-    background: url('images/next-btn.png');
-    width: 46px;
-    height: 41px;
+    /*background: url('images/next-btn.png');*/
+    width: 231px;
+    height: 61px;
     position: absolute;
     left: 0;
     right: 0;
     margin: 0 auto;
-    bottom: 25px;
+    bottom: 0;
     cursor: pointer;
-    animation: infinite-move 1.5s infinite linear forwards;
+    &:before{
+      content: '';
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 1px dashed $im-line-color;
+      display: block;
+      position: relative;
+      top:0;
+      left: -34.5px;
+    }
+    &:after{
+      content: '';
+      width: 23px;
+      height: 13px;
+      background: url("./images/next-arrow.png") no-repeat;
+      position: absolute;
+      top: 31px;
+      left: 105px;
+      display: block;
+      animation: infinite-move 1.5s infinite linear forwards;
+    }
   }
 
   @keyframes infinite-move {
@@ -1090,6 +1191,17 @@
     }
     100% {
       transform: translateY(0);
+    }
+  }
+  @keyframes fadeInRight{
+
+    from {
+      -webkit-transform: translate3d(100%, 0, 0);
+      transform: translate3d(100%, 0, 0);
+    }
+    to {
+      -webkit-transform: none;
+      transform: none;
     }
   }
 </style>

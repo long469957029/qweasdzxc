@@ -1,10 +1,13 @@
+const bannerConfig = () => {
+  return [
+    {
+      advUrl: null,
+      picUrl: require('./images/banner-1.png'),
+    },
+  ]
+}
 
-
-const bannerConfig = [
-  {
-    advUrl: null,
-    picUrl: require('./banner-1.png'),
-  },
-]
-
-module.exports = bannerConfig
+// module.exports = bannerConfig
+export {
+  bannerConfig
+}
