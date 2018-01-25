@@ -16,6 +16,7 @@ import ResetInitPwd from 'skeleton/bases/login/resetInitialPwd'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
+Object.defineProperty(Vue.prototype, '$', {value: $})
 
 Vue.component('animated-integer', AnimatedInteger)
 
