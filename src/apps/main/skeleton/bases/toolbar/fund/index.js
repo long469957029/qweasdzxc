@@ -7,7 +7,6 @@ const FundView = Base.ItemView.extend({
   template: require('./index.html'),
 
   events: {
-    // 'click .js-logout': 'logoutHandler', // 退出登录
   },
   getFundSummaryXhr(data) {
     return Global.sync.ajax({
@@ -155,9 +154,6 @@ const FundView = Base.ItemView.extend({
     })
     this.$('.js-sideBar-record-items').html(itemHtml.join(''))
   },
-  // logoutHandler() {
-  //   window.app.$store.commit(types.USER_LOGIN_OUT)
-  // },
 })
 
 export default FundView

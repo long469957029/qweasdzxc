@@ -116,18 +116,8 @@ const ToolbarView = Base.ItemView.extend({
     $(document).confirm({
       content: '<div class="m-TB-lg">确定要退出登录？</div>',
       type: 'exit',
-      agreeCallback() {
-        Global.oauth.logout().done((data) => {
-          if (data && data.result === 0) {
-            Global.cookieCache.clear('token')
-            Global.cookieCache.clear('loginState')
-            Global.router.goTo('')
-            window.app.$store.commit(types.USER_LOGOUT_SUCCESS, true)
-            window.Global.m.publish('acct:loginOut')
-          }
-        }).always(() => {
-          Global.ui.loader.hide()
-        })
+      agreeCallback: () => {
+        window.app.$store.dispatch(types.DO_LOGOUT)
       },
     })
     this.closeSidebarHandler()
