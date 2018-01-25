@@ -49,12 +49,9 @@
     },
 
     computed: {
-//      ...mapGetters([
-//        'loginLauncherStatus',
-//      ]),
-      loginLauncherStatus(){
-        return this.$store.getters.loginLauncherStatus
-      },
+      ...mapGetters([
+        'loginLauncherStatus',
+      ]),
     },
 
     filters: {},
