@@ -8,6 +8,9 @@ export default {
   getBannerADXhr (then, fail) {
     return Global.sync.axios({
       url: '/acct/usernotice/getdashboardadvertise.json',
+      data:{
+        version:1
+      }
     })
       .then(then)
       .catch(fail)
@@ -22,7 +25,7 @@ export default {
   getNoticeXhr (then, fail) {
     return Global.sync.axios({
       url: '/info/activitylist/geturgentbulletinlist.json',
-      version: 2,
+      data: {version: 2},
     })
       .then(then)
       .catch(fail)

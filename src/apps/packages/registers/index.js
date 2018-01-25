@@ -1,8 +1,8 @@
 require('./register.scss')
 require('packages/misc/common-init.js')
 // require('./jquery-ui.js');
-const logo = require('skeleton/bases/footer/footerLogo.png')
-const calendar = require('skeleton/bases/footer/footerCalendar.png')
+// const logo = require('skeleton/bases/footer/footerLogo.png')
+// const calendar = require('skeleton/bases/footer/footerCalendar.png')
 const qrcode = require('packages/newDownload/qrCode/iso-download.png')
 
 // var footer = require('skeleton/base/footer');
@@ -98,8 +98,8 @@ $.widget('gl.registers', {
     this.$code.attr('src', qrcode)
     this.$desc.html('下载最新横屏手机客户端')
     var self = this
-    this.element.find('.js-footer-logo').attr('src', logo)
-    this.element.find('.js-footer-calendar-icon').attr('src', calendar)
+    // this.element.find('.js-footer-logo').attr('src', logo)
+    // this.element.find('.js-footer-calendar-icon').attr('src', calendar)
     this.$calendarText = this.element.find('.js-footer-calendar-text')
     let bonus = 290861502// 1499500814494
     const now = ((moment().valueOf() - 1499500814494) / 1000).toFixed(0)
