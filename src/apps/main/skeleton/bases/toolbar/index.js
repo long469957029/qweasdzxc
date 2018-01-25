@@ -43,13 +43,18 @@ const ToolbarView = Base.ItemView.extend({
     self.$closeMask = self.$('.js-sidebar-close')
   },
 
-  closeSidebarHandler() {
+  closeSidebarHandler(e) {
+    const $target = $(e.currentTarget)
+    const path = $target.data('id')
     const self = this
     self.$sidebar.closest('.js-toolbar-container').find('.js-toolbar-option').each((index, dom) => {
       $(dom).removeClass('active')
     })
     self.$sidebar.closest('.js-toolbar-container').removeClass('open')
     self.$closeMask.addClass('hidden')
+    if (path !== undefined) {
+      Global.router.goTo(path)
+    }
   },
 
   openSidebarHandler(e) {

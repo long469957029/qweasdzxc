@@ -23,6 +23,7 @@ export default Base.ItemView.extend({
     'click .js-fc-fm-change': 'changeInOutStatusHandler',
     'focus .js-fc-fm-change': 'focusInOutStatusHandler',
     'click .js-fc-fm-info-btn': 'searchPeopleInfoHandler',
+    'click .js-fc-fm-wd-bankCard-img':'changeUrlHandler',
   },
   refreshHandler(e) {
     e.stopPropagation()
@@ -38,6 +39,7 @@ export default Base.ItemView.extend({
         if (res.result === 0) {
           this.$('.js-fc-fm-to-mb').html(_(res.root.total).convert2yuan()) // 总余额
           this.$('.js-fc-fm-wv-mb').html(_(res.root.validBalance).convert2yuan()) // 可用余额
+          $target.removeClass('fa-spin')
         }
       })
     } else {
@@ -220,13 +222,19 @@ export default Base.ItemView.extend({
         if (res.root.recharge > 0) {
           self.$Recharge.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-recharge-gray', false)
           self.$Recharge.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-recharge-green', true)
-          self.$Recharge.html(_(res.root.recharge).convert2yuan())
+        }else{
+          self.$Recharge.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-recharge-gray', true)
+          self.$Recharge.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-recharge-green', false)
         }
+        self.$Recharge.html(_(res.root.recharge).convert2yuan())
         if (res.root.withdraw > 0) {
           self.$Withdraw.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-withdraw-gray', false)
           self.$Withdraw.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-withdraw-green', true)
-          self.$Withdraw.html(_(res.root.withdraw).convert2yuan())
+        }else{
+          self.$Withdraw.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-withdraw-gray', true)
+          self.$Withdraw.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-withdraw-green', false)
         }
+        self.$Withdraw.html(_(res.root.withdraw).convert2yuan())
       }
     })
     this.getProfitXhr(reqData).done((res) => {
@@ -234,33 +242,51 @@ export default Base.ItemView.extend({
         if (res.root.bet > 0) {
           self.$Bet.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-bet-gray', false)
           self.$Bet.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-bet-green', true)
-          self.$Bet.html(_(res.root.bet).convert2yuan())
+        }else{
+          self.$Bet.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-bet-gray', true)
+          self.$Bet.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-bet-green', false)
         }
+        self.$Bet.html(_(res.root.bet).convert2yuan())
         if (res.root.prize > 0) {
           self.$Bonus.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-award-gray', false)
           self.$Bonus.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-award-green', true)
-          self.$Bonus.html(_(res.root.prize).convert2yuan())
+        }else{
+          self.$Bonus.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-award-gray', true)
+          self.$Bonus.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-award-green', false)
         }
+        self.$Bonus.html(_(res.root.prize).convert2yuan())
         if (res.root.rebate > 0) {
           self.$Rebate.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-rebate-gray', false)
           self.$Rebate.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-rebate-green', true)
-          self.$Rebate.html(_(res.root.rebate).convert2yuan())
+        }else{
+          self.$Rebate.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-rebate-gray', true)
+          self.$Rebate.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-rebate-green', false)
         }
+        self.$Rebate.html(_(res.root.rebate).convert2yuan())
         if (res.root.gameRebate > 0) {
           self.$back.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-back-gray', false)
           self.$back.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-back-green', true)
-          self.$back.html(_(res.root.gameRebate).convert2yuan())
+        }else{
+          self.$back.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-back-gray', true)
+          self.$back.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-back-green', false)
         }
+        self.$back.html(_(res.root.gameRebate).convert2yuan())
         if (res.root.activity > 0) {
           self.$Activity.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-activity-gray', false)
           self.$Activity.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-activity-green', true)
-          self.$Activity.html(_(res.root.activity).convert2yuan())
+        }else{
+          self.$Activity.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-activity-gray', true)
+          self.$Activity.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-activity-green', false)
         }
+        self.$Activity.html(_(res.root.activity).convert2yuan())
         if (res.root.profit > 0) {
           self.$Profit.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-profit-gray', false)
           self.$Profit.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-profit-green', true)
-          self.$Profit.html(_(res.root.profit).convert2yuan())
+        }else{
+          self.$Profit.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-profit-gray', true)
+          self.$Profit.closest('li').find('.fc-fm-info-item-img-area').toggleClass('sfa-icon-profit-green', false)
         }
+        self.$Profit.html(_(res.root.profit).convert2yuan())
       }
     })
   },
@@ -527,4 +553,7 @@ export default Base.ItemView.extend({
     }
     this.renderOtherData(reqData)
   },
+  changeUrlHandler(){
+    Global.router.goTo('uc/cm')
+  }
 })

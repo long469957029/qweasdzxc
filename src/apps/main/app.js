@@ -202,6 +202,12 @@ const _bindImDialogHandler = () => {
       $(this).remove()
       messageView.destroy()
     })
+    $imDialog.on('click.modal', '.js-admin-message-change', (e) => {
+      const $target = $(e.currentTarget)
+      const path = $target.data('id')
+      Global.router.goTo(path)
+      $imDialog.modal('hide')
+    })
   })
 }
 App.addInitializer(() => {

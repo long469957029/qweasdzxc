@@ -745,12 +745,11 @@
       display: block;
       position: absolute;
       top: 2px;
-      left: 0;
     }
   }
   .ac-lowLevelSelect{
     width: 288px;
-    height: 577px;
+    height: 583px;
     border: 1px solid $def-gray-color;
     margin-top: 25px;
     .ac-lowLevelSelect-header{
@@ -789,10 +788,11 @@
       color: $font-auxiliary-color;
     }
     .user-tree-list{
-      width: 90%;
       margin: 0 auto;
       overflow-y: auto;
       overflow-x: hidden;
+      height: 501px;
+      padding: 0 20px;
     }
   }
   .ac-tf-line{

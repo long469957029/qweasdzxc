@@ -283,10 +283,16 @@
     text-align: center;
     .items-empty-img{
       width: 99px;
-      margin-top: 140px;
+      margin-top: 130px;
       height: 99px;
       display: inline-block;
       background: url("~base/images/v2/icon-record-empty.png");
+    }
+    .items-empty-text{
+        font-size: 14px;
+        color: #999999;
+        margin-left: 5px;
+        margin-top: 5px;
     }
   }
 }

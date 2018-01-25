@@ -44,12 +44,17 @@
     text-align: center;
     height: 141px;
     padding: 0px 10px;
+    .fc-gr-close {
+      margin-right: 10px;
+      margin-top: 10px;
+    }
     .fc-gr-bet-type {
-      padding: 25px 90px;
+      margin: 25px auto;
       font-size: 14px;
       color: $def-black-color;
       .fc-gr-bet-type-no {
         color: $prominent-color;
+        margin: 0 3px;
       }
     }
     .fc-gr-bet-num {
@@ -113,17 +118,17 @@
             margin-top: 10px;
           }
         }
-        &.green{
+        &.green {
           background: #8dc782;
         }
-        &.blue{
+        &.blue {
           background: #4785b0;
         }
-        &.red{
+        &.red {
           background: #e06d69;
         }
       }
-      .add{
+      .add {
         display: inline-block;
         font-size: 24px;
         position: relative;
@@ -197,6 +202,10 @@
     height: 151px;
     padding: 15px 0px 5px 15px;
     color: $def-black-color;
+    .betDetail-close{
+      margin-top: 10px;
+      margin-right: 10px;
+    }
     .jc-cd-chase-status {
       background-color: $new-main-deep-color;
       color: $def-white-color;
@@ -297,13 +306,13 @@
         background-color: transparent !important;
       }
       .slimScrollDiv {
-        height: 184px !important;
+        height: 180px !important;
         .table tbody td {
           background: transparent !important;
         }
 
         .table th, .table td {
-          padding: 8px 3px;
+          padding: 6px 3px;
         }
         tbody td:first-child {
           border-bottom: 0;
@@ -312,6 +321,9 @@
           border-bottom: 0;
         }
 
+      }
+      .js-wt-body-main {
+        height: 181px !important;
       }
     }
   }

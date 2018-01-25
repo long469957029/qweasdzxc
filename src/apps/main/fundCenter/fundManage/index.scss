@@ -46,6 +46,7 @@
           .fc-fm-amount-sum-img {
             color: #cccccc;
             font-size: 17px;
+            cursor: pointer;
           }
         }
 
@@ -116,6 +117,7 @@
         height: 40px;
         display: block;
         margin-top: 30px;
+        cursor: pointer;
         margin-left: -40px;
         background: url("../../../../base/images/sprites/fund/icon-bankCard-gray.png") no-repeat;
         &.active, &:hover {
@@ -275,10 +277,10 @@
         }
 
       }
-      .fc-tf-div-submit{
+      .fc-tf-div-submit {
         position: absolute;
         top: 248px;
-        .js-fc-fm-re-btn {
+        .fc-fm-tf-btn {
           width: 175px;
           height: 35px;
           border-radius: 20px;
@@ -287,27 +289,37 @@
           background-color: #14b1bb;
         }
       }
-      .fc-fm-error-container{
+      .fc-fm-error-container {
         position: absolute;
         top: 308px;
         margin-left: 40px;
-        .sfa-error-icon{
-          margin-top:2px;
+        .sfa-error-icon {
+          margin-top: 2px;
         }
-        .parsley-error-text{
-          margin-left:3px;
+        .parsley-error-text {
+          margin-left: 3px;
+        }
+      }
+      .fc-fm-tr-error-container {
+        position: absolute;
+        top: 240px;
+        .sfa-error-icon {
+          margin-top: 2px;
+        }
+        .parsley-error-text {
+          margin-left: 3px;
         }
       }
       .fc-fm-out-select {
         z-index: 4;
         position: absolute;
-        top:30px;
+        top: 30px;
         .fc-fm-div-name {
           display: block;
           margin-bottom: 5px;
         }
         .fc-fm-out-select-panel {
-          z-index:5;
+          z-index: 5;
           overflow: hidden;
           width: 208px;
           height: 33px;
@@ -356,13 +368,13 @@
       .fc-fm-in-select {
         position: absolute;
         top: 109px;
-        z-index:2;
+        z-index: 2;
         .fc-fm-div-name {
           display: block;
           margin-bottom: 5px;
         }
         .fc-fm-in-select-panel {
-          z-index:3;
+          z-index: 3;
           overflow: hidden;
           width: 208px;
           height: 33px;
@@ -408,9 +420,9 @@
         }
 
       }
-      .parsley-errors-list.filled{
-        margin-top:10px;
-        margin-left:5px;
+      .parsley-errors-list.filled {
+        margin-top: 10px;
+        margin-left: 5px;
       }
     }
     .fc-tf-change {

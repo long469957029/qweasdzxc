@@ -7,6 +7,7 @@ const FundView = Base.ItemView.extend({
   template: require('./index.html'),
 
   events: {
+
   },
   getFundSummaryXhr(data) {
     return Global.sync.ajax({

@@ -34,6 +34,7 @@ const MessageView = Base.ItemView.extend({
     'click .js-recently-mass-message': 'clickRecentlyMessMassageHandler',
     'click .js-mess-more-content': 'showMoreMessHandler',
     'click .js-admin-more-content': 'showMoreAdminHandler',
+    'click .js-admin-message-change': 'changeToAdminMessageUrlHandler',
   },
   getChatTotalXhr (data) {
     return Global.sync.ajax({
@@ -620,7 +621,6 @@ const MessageView = Base.ItemView.extend({
       this.$('.js-im-mass-message').removeClass('active')
     }
   },
-
   // 轮询联系列表信息
   pollingContactInfoHandler() {
     this.contactPolling = setInterval(() => {
