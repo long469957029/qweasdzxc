@@ -1,12 +1,12 @@
 <template>
   <div class="slide-show" v-if="!bannerLoading" @mouseover="clearInv" @mouseout="runInv">
     <div class="slide-img">
-      <a :href="slides[nowIndex].href">
+      <a :href="slides[nowIndex].advUrl">
         <transition name="slide-trans">
-          <img v-if="isShow" :src="slides[nowIndex].src">
+          <img v-if="isShow" :src="locUrl + slides[nowIndex].picUrl">
         </transition>
         <transition name="slide-trans-old">
-          <img v-if="!isShow" :src="slides[nowIndex].src">
+          <img v-if="!isShow" :src="locUrl + slides[nowIndex].picUrl">
         </transition>
       </a>
     </div>
@@ -41,19 +41,20 @@
       return {
         slides:[
           {
-            src: require('./misc/banner-1.png'),
+            picUrl: require('./misc/banner-1.png'),
           },
           {
-            src: require('./misc/banner-2.png'),
+            picUrl: require('./misc/banner-2.png'),
           },
           {
-            src: require('./misc/banner-3.png'),
+            picUrl: require('./misc/banner-3.png'),
           }
         ],
         nowIndex: 0,
         isShow: true,
         isPage: false,
-        bannerLoading:true
+        bannerLoading:true,
+        locUrl: 'http://' + window.location.host,
       }
     },
     computed: {
