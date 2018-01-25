@@ -30,7 +30,7 @@
         </span>
         <div class="date-panel timer-calendar-input timer-record-input">
           <input type="text" ref="date" v-model="date" />
-          <span class="timer-calendar sfa-icon-time"></span>
+          <span class="timer-calendar sfa-icon-time" @click="$($refs.date).data('DateTimePicker').show()"></span>
         </div>
       </div>
     </div>

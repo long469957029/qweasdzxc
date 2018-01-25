@@ -1086,7 +1086,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680151'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    algorithm: algorithm.group,
+    algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
@@ -1099,7 +1099,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680152'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    algorithm: algorithm.group,
+    algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
@@ -1112,7 +1112,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680153'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    algorithm: algorithm.group,
+    algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
@@ -1125,7 +1125,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680154'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    algorithm: algorithm.group,
+    algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
