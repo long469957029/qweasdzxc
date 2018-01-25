@@ -1,7 +1,6 @@
 import Register from './register'
 import CustomCheckbox from 'com/custom-checkbox'
 import store from '../../store/index'
-import { swiper } from 'vue-awesome-swiper'
 
 import SyncModule from 'skeleton/modules/sync'
 import OauthMediatorModule from 'skeleton/modules/mediator/oauth'
@@ -25,7 +24,6 @@ window.Global.module('ui.dialog', DialogModule)
 Object.defineProperty(Vue.prototype, '_', { value: _ })
 
 Vue.component('custom-checkbox', CustomCheckbox)
-Vue.component('swiper', swiper)
 
 window.app = new Vue({
   template: `<div><register></register></div>`,
