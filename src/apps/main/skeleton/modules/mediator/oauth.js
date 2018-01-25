@@ -24,17 +24,11 @@ const NewsMediatorModule = Base.Module.extend({
       .done((res) => {
         const acctInfo = res.root || {}
 
-        acctInfo.fBalance = _(acctInfo.balance).convert2yuan()
-        acctInfo.fLastLoginTime = _(acctInfo.lastLoginTime).toTime()
-        acctInfo.fLoginTime = _(acctInfo.loginTime).toTime()
-
         if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
           this.autoLogoutCountdown(acctInfo.outTime)
         }
 
-        window.Global.memoryCache.set('acctInfo', acctInfo)
-
-        window.Global.m.publish('acct:updating', acctInfo)
+        window.store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
         this.login = false
       })
 
