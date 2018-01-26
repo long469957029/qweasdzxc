@@ -31,7 +31,7 @@ const longhu = [
   },
   {
     title: '和',
-    num: 1
+    num: 2
   }
 ]
 

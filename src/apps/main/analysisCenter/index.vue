@@ -78,8 +78,8 @@
           <th v-if="analysis.championAndRunnerUp" :colspan="3">冠亚和</th>
 
           <th v-if="analysis.specialCode" :colspan="3">特码<span class="sfa question"></span></th>
-          <th v-if="analysis.total" :colspan="analysis.doubleHead ? 3 : 1">总和<span class="sfa question"></span></th>
-          <th v-if="analysis.longHu">1~5龙虎<span class="sfa question"></span></th>
+          <th v-if="analysis.total" :colspan="analysis.doubleHead ? 3 : 1">总和</th>
+          <th v-if="analysis.longHu">万个龙虎</th>
           <th v-if="analysis.form">形态<span class="sfa question"></span></th>
 
           <th v-if="analysis.compareLongHu" :colspan="3">
@@ -456,9 +456,9 @@
         }
       )
 
-      $(this.$refs.body).slimScroll({
-        height: 1000,
-      })
+      // $(this.$refs.body).slimScroll({
+      //   height: 1000,
+      // })
 
       $(this.$refs.date).datetimepicker({
         format: 'YYYY-MM-DD',
@@ -658,5 +658,6 @@
     background: url(./misc/left.png);
     width: 10px;
     height: 18px;
+    transform: rotate(180deg);
   }
 </style>

@@ -60,6 +60,7 @@ const sscConfig = {
       zhName: '无限秒秒彩',
       badge: '',
       trendOps: {
+        distribution: true,
         periods: trendMmcPeriods,
         split: 1,
       },
@@ -72,6 +73,7 @@ const sscConfig = {
       badge: 'hot',
       showNumberDetail: false,
       trendOps: {
+        distribution: true,
         periods: trendPeriods,
         split: 1,
       },
@@ -84,6 +86,7 @@ const sscConfig = {
       badge: 'hot',
       // badge: 'fire',
       trendOps: {
+        distribution: true,
         periods: trendPeriods,
         split: 1,
       }
@@ -94,6 +97,7 @@ const sscConfig = {
       zhName: '无限三分彩',
       badge: '',
       trendOps: {
+        distribution: true,
         periods: trendPeriods,
         split: 1,
       }
@@ -104,6 +108,7 @@ const sscConfig = {
       zhName: '重庆时时彩',
       badge: 'hot',
       trendOps: {
+        distribution: true,
         periods: trendLowPeriods,
         split: 1,
       },
@@ -116,6 +121,7 @@ const sscConfig = {
       badge: 'new',
       showNumberDetail: false,
       trendOps: {
+        distribution: true,
         periods: trendPeriods,
         split: 1,
       },
@@ -128,6 +134,7 @@ const sscConfig = {
       badge: '',
       showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
       trendOps: {
+        distribution: true,
         periods: trendPeriods,
         split: 1,
       },
@@ -140,6 +147,7 @@ const sscConfig = {
       badge: '',
       showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
       trendOps: {
+        distribution: true,
         periods: trendPeriods,
         split: 1,
       },
@@ -152,6 +160,7 @@ const sscConfig = {
       badge: '',
       showNumberDetail: true,
       trendOps: {
+        distribution: true,
         periods: trendPeriods,
         split: 1,
       },
@@ -164,6 +173,7 @@ const sscConfig = {
       badge: '',
       showNumberDetail: true,
       trendOps: {
+        distribution: true,
         periods: trendLowPeriods,
         split: 1,
       },
@@ -176,6 +186,7 @@ const sscConfig = {
       badge: '',
       showNumberDetail: true,
       trendOps: {
+        distribution: true,
         periods: trendLowPeriods,
         split: 1,
       },
@@ -188,6 +199,7 @@ const sscConfig = {
       badge: '',
       showNumberDetail: true,
       trendOps: {
+        distribution: true,
         periods: trendLowPeriods,
         split: 1,
       },
@@ -208,6 +220,7 @@ const oneFiveConfig = {
       zhName: '11选5分分彩',
       badge: '',
       trendOps: {
+        distribution: true,
         periods: trendPeriods,
         split: 2,
       }
@@ -217,6 +230,7 @@ const oneFiveConfig = {
       mark: 'sd',
       zhName: '山东11选5',
       trendOps: {
+        distribution: true,
         periods: trendLowPeriods,
         split: 2,
       },
@@ -227,6 +241,7 @@ const oneFiveConfig = {
       mark: 'gd',
       zhName: '广东11选5',
       trendOps: {
+        distribution: true,
         periods: trendLowPeriods,
         split: 2,
       },
@@ -237,6 +252,7 @@ const oneFiveConfig = {
       mark: 'jx',
       zhName: '江西11选5',
       trendOps: {
+        distribution: true,
         periods: trendLowPeriods,
         split: 2,
       },
@@ -252,6 +268,7 @@ const threeDConfig = [
     hasMargin: true,
     badge: 'new',
     trendOps: {
+      distribution: true,
       periods: trendPeriods,
       split: 1,
     }
@@ -262,6 +279,7 @@ const threeDConfig = [
     zhName: '3D',
     hasMargin: true,
     trendOps: {
+      distribution: true,
       periods: trendLowPeriods,
       split: 1,
     },
@@ -285,9 +303,11 @@ const p5p3Config = [
     zhName: 'P3/P5',
     hasMargin: true,
     trendOps: {
+      distribution: true,
       periods: trendLowPeriods,
       split: 1,
-    }
+    },
+    isOfficial: true,
   }, bettingTypes.P5P3),
 ]
 
@@ -301,6 +321,17 @@ const bjPKConfig = [
     trendOps: {
       periods: trendLowPeriods,
       split: 2,
+      distribution: false,
+      splitTrend: [
+        {
+          title: '前五名',
+          pos: [0, 5]
+        },
+        {
+          title: '后五名',
+          pos: [5, 10]
+        }
+      ]
     },
     isOfficial: true,
   }, bettingTypes.PK10),
@@ -314,6 +345,7 @@ const quickConfig = [
     hasMargin: true,
     trendOps: {
       periods: trendLowPeriods,
+      distribution: true,
       split: 1,
     },
     isOfficial: true,
