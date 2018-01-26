@@ -164,11 +164,14 @@
             background-color: $new-main-body-color;
           }
           .contact-container {
-            overflow: auto;
             padding: 8px 0 0 0;
             height: 408px;
             background-color: $new-main-body-color;
             border-bottom: 1px solid $def-line-color;
+            .person-sub-container{
+              overflow: auto;
+              height: 300px;
+            }
             .person-item {
               cursor: pointer;
               padding: 8px 0 8px 26px;

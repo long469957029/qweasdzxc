@@ -16,8 +16,8 @@ export default Base.ItemView.extend({
     'click .js-fc-fm-wd-btn': 'withdrawHandler',
     'click .js-fc-fm-operation-btn': 'goToTransferHandler', // js-fc-fm-operation-btn
     'click .js-fc-fm-refresh': 'refreshHandler',
-    'click .js-fm-select-out-down': 'selectOutDownHandler',
-    'click .js-fm-select-in-down': 'selectInDownHandler',
+    'click .js-fm-out-select': 'selectOutDownHandler',
+    'click .js-fm-in-select': 'selectInDownHandler',
     'click .js-fm-out-item': 'selectFromGameHandler',
     'click .js-fm-in-item': 'selectInGameHandler',
     'click .js-fc-fm-change': 'changeInOutStatusHandler',

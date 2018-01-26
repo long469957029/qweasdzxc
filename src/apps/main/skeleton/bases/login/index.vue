@@ -139,17 +139,24 @@
             // int RESET = 104;// 重置
             // int BYPARENT = 105;// 手工开户
             // int BYSUPER = 106;// 总代开户
+            const acctInfo = data.root || {}
+            if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
+              this.autoLogoutCountdown(acctInfo.outTime)
+            }
             Global.cookieCache.set('token', data.root.token)
             Global.cookieCache.set('loginState', true)
 //            Global.m.oauth.start()
             const status = Number(data.root.userStatus)
 //            status = Number(status)
             if (status === 0 || status === 100 || status === 102) {
-              this.$emit('dialogClose')
+//              this.$emit('dialogClose')
+              this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+              this.closeDialog()
             } else if (status === 104 || status === 105 || status === 106) {
 //              const ur = `userName=${data.root.username}${data.root.uName ? `&uName=${data.root.uName}` : ''}&status=${status}`
-//              window.location.href = `updateUserInfo.html?${encodeURI(ur)}`
-              this.$store.commit(types.TOGGLE_RESET_INIT_PWD, true)
+//              window.location.href = `resetInitPwd.html?${encodeURI(ur)}`
+//              this.$store.commit(types.TOGGLE_RESET_INIT_PWD, true)
+              window.location.href = 'resetInitPwd.html'
               $(this.$refs.loginModal).modal('hide')
             } else if (status === 101) {
               this.showErrorMsg = true
@@ -160,16 +167,9 @@
               this.errorMsg = '该用户已被回收！'
             } else {
               this.$emit('dialogClose')
-//              window.location.href = 'index.html'
-            }
-            const acctInfo = data.root || {}
-            if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
-              this.autoLogoutCountdown(acctInfo.outTime)
+              window.location.href = 'index.html'
             }
 
-            this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
-
-            this.closeDialog()
           } else if (data.msg.indexOf('验证码') !== -1) {
             this.showCodeItem = false
             this.codeError = true

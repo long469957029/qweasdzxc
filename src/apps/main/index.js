@@ -12,7 +12,6 @@ import MainFooter from 'skeleton/bases/footer'
 import ResetPwd from 'skeleton/bases/login/resetPassWord'
 import LoginLauncher from 'skeleton/bases/loginLauncher'
 import FreeTrial from 'skeleton/bases/freeTrial'
-import ResetInitPwd from 'skeleton/bases/login/resetInitialPwd'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -67,11 +66,11 @@ router.beforeEach((to, from, next) => {
       desHash = window.location.hash
       next()
       window.location.hash = '#/i'
-      Global.appRouter.navigate(desHash.substring(1), { trigger: false, replace: true })
+      Global.appRouter.navigate(desHash.substring(1), {trigger: false, replace: true})
       $('#main').toggle(!isVue)
       $('#main-vue').toggle(isVue)
       return
-    } else if(!isVue) {
+    } else if (!isVue) {
       window.location.hash = desHash
     }
     $('#main').toggle(!isVue)
@@ -92,6 +91,9 @@ router.beforeEach((to, from, next) => {
 
 App.start()
 
+// 开启菜单权限监听
+Global.ui.menu.start()
+
 // 进行系统OAuth校验
 
 Global.m.oauth.check()
@@ -106,7 +108,6 @@ Global.m.oauth.check()
         ResetPwd,
         LoginLauncher,
         FreeTrial,
-        ResetInitPwd
       },
       store,
       router,
@@ -132,7 +133,5 @@ Global.m.oauth.check()
 
       window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
 
-      // 开启菜单权限监听
-      Global.ui.menu.start()
     }
   })
