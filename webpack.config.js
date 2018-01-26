@@ -287,6 +287,9 @@ let plugins = [
   // ),
   new webpack.DefinePlugin({
     DEBUG: Boolean(DEV),
+    'process.env': {
+      NODE_ENV: DEV ? '"dev"' : '"production"'
+    }
   }),
   new webpack.ProvidePlugin({
     Vue: ['vue/dist/vue.esm.js', 'default'],
@@ -345,7 +348,11 @@ if (DEV) {
 
   plugins.push(new ExtractTextPlugin('[name].[hash].styles.css'));
   plugins.push(new AssetsPlugin());
-  plugins.push(new UglifyJsPlugin());
+  plugins.push(new UglifyJsPlugin({
+    compress: {
+      warnings: false
+    }
+  }));
 }
 
 // 生成静态入口html，插件存在bug，无法根据chunks的顺序插入，而是按照了entry的id的顺序，不可控
