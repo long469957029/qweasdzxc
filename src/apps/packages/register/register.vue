@@ -23,14 +23,17 @@
             <div class="panel-main clearfix">
               <div class="clearfix ac-reg-body">
                 <div class="reg-ad pull-right">
-                  <swiper :options="swiperOption" ref="mySwiper">
-                    <swiper-slide v-for="(item, i) in bannerCfg" :key="i">
-                      <a :href="item.advUrl">
-                        <img :src="item.picUrl"/>
-                      </a>
-                    </swiper-slide>
-                    <div class="swiper-pagination" slot="pagination"></div>
-                  </swiper>
+                  <div class="banner"></div>
+                  <div class="content">
+                    <div class="title">新人注册四重壕礼等你领：</div>
+                    <div class="line"></div>
+                    <div class="text">
+                      <p>1、新人专属大礼包，首次充值即返惊喜</p>
+                      <p>2、每天投注都有礼，连续三天好礼不断</p>
+                      <p>3、新人专属代金券，指定彩种免费娱乐</p>
+                      <p>4、新用户完成手机和邮箱认证、绑定银行卡，还有现金奖励</p>
+                    </div>
+                  </div>
                 </div>
                 <div class="reg-info pull-left">
                   <form action="javascript:void(0);" id="jsRegisterForm" class="js-re-registerForm form-horizontal">
@@ -75,7 +78,7 @@
                         <custom-checkbox v-model="agree"></custom-checkbox>
                       </div>
                       <span class="promise-hint pull-right">*我确定我已年满18岁，并已阅读和接受<a class="js-promise-open promise-link"
-                                                                                  @click="showPromise = !showPromise">无限娱乐平台的政策及隐私声明协议。</a></span>
+                                                                                  @click="showPromiseDailog">无限娱乐平台的政策及隐私声明协议。</a></span>
                     </div>
 
                     <div class="text-left m-top-lg">
@@ -107,7 +110,7 @@
               <span class="text">下载手机端畅玩无限</span>
             </div>
           </div>
-          <div class="next-btn js-move-down"></div>
+          <div class="next-btn js-move-down" @click="moveSectionDown"></div>
         </div>
         <div class="section" id="section2">
           <div class="vertical-center">
@@ -133,7 +136,7 @@
               <div class="pull-right right"></div>
             </div>
           </div>
-          <div class="next-btn js-move-down"></div>
+          <div class="next-btn js-move-down" @click="moveSectionDown"></div>
         </div>
         <div class="section" id="section3">
           <div class="vertical-center">
@@ -143,7 +146,7 @@
               <div class="sub-title">玩法更新最快，平台衔接最稳</div>
             </div>
             <div class="section-content">
-              <div :class="['game-info',{'active': gameIndex === 1}]" @mouseover="gameHover(1)">
+              <div :class="['game-info',{'active': gameIndex === 1}]" @mouseover="gameHover(1)" @mouseout="startGameChange">
                 <div class="game-logo one"></div>
                 <div class="game-title">彩票平台</div>
                 <div class="game-text">
@@ -155,7 +158,7 @@
                   </ul>
                 </div>
               </div>
-              <div :class="['game-info',{'active': gameIndex === 2}]" @mouseover="gameHover(2)">
+              <div :class="['game-info',{'active': gameIndex === 2}]" @mouseover="gameHover(2)" @mouseout="startGameChange">
                 <div class="game-logo two"></div>
                 <div class="game-title">真人视讯</div>
                 <div class="game-text">
@@ -166,7 +169,7 @@
                   </ul>
                 </div>
               </div>
-              <div :class="['game-info',{'active': gameIndex === 3}]" @mouseover="gameHover(3)">
+              <div :class="['game-info',{'active': gameIndex === 3}]" @mouseover="gameHover(3)" @mouseout="startGameChange">
                 <div class="game-logo three"></div>
                 <div class="game-title">电子游戏</div>
                 <div class="game-text">
@@ -176,7 +179,7 @@
                   </ul>
                 </div>
               </div>
-              <div :class="['game-info',{'active': gameIndex === 4}]" @mouseover="gameHover(4)">
+              <div :class="['game-info',{'active': gameIndex === 4}]" @mouseover="gameHover(4)" @mouseout="startGameChange">
                 <div class="game-logo four"></div>
                 <div class="game-title">捕鱼游戏</div>
                 <div class="game-text">
@@ -186,7 +189,7 @@
                   </ul>
                 </div>
               </div>
-              <div :class="['game-info',{'active': gameIndex === 5}]" @mouseover="gameHover(5)">
+              <div :class="['game-info',{'active': gameIndex === 5}]" @mouseover="gameHover(5)" @mouseout="startGameChange">
                 <div class="game-logo five"></div>
                 <div class="game-title">体育平台</div>
                 <div class="game-text">
@@ -198,7 +201,7 @@
               </div>
             </div>
           </div>
-          <div class="next-btn js-move-down"></div>
+          <div class="next-btn js-move-down" @click="moveSectionDown"></div>
         </div>
         <div class="section" id="section4">
           <div class="vertical-center">
@@ -226,9 +229,20 @@
                   <span class="">安卓手机</span>
                 </div>
               </div>
+              <div class="content">
+                <div class="phone"></div>
+                <div class="hand"></div>
+                <div class="banner">
+                  <swiper :options="swiperOption" ref="myPhoneSwiper">
+                    <swiper-slide v-for="(item, i) in phoneBannerCfg" :key="i">
+                        <img :src="item.url"/>
+                    </swiper-slide>
+                  </swiper>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="next-btn js-move-down"></div>
+          <div class="next-btn js-move-down" @click="moveSectionDown"></div>
         </div>
         <div class="section" id="section5">
           <div class="section-header">
@@ -277,7 +291,7 @@
     </div>
     <div class="js-promise-mask promise-mask " v-show="showPromise">
       <div class="promise-container">
-        <div class="promise-reg"></div>
+        <div class="promise-reg">无限娱乐政策声明及用户协议</div>
         <div class="promise-hr"></div>
         <div class="promise-content">
           <p>一、 为避免于本网站投注时之争议，所有用户请务必于进入无限娱乐网站前详阅无限娱乐所定之各项规则，客户一旦进入无限娱乐时，即被视为已接受无限娱乐的所有协议与规则。</p>
@@ -311,7 +325,7 @@
 
           <p>十二、 无限娱乐保留不定时修改或增加本协定或游戏规则或保密条例等的操作权利，更改条款将从更改发生后立即生效，并保留一切有争议事项及最后的决策权。</p>
         </div>
-        <button class="js-promise-close btn btn-cool ac-reg-button" @click="showPromise = !showPromise">确定</button>
+        <button class="js-promise-close btn btn-cool ac-reg-button" @click="showPromiseDailog">确定</button>
       </div>
     </div>
   </div>
@@ -351,18 +365,10 @@
         codeVal: '',
         agree: false,
         showPromise: false,
-        bannerCfg: [
-          {
-            advUrl: null,
-            picUrl: require('./images/banner-1.png'),
-          },
-          {
-            advUrl: null,
-            picUrl: require('./images/banner-2.png'),
-          }
-        ],
         swiperOption: {
-          spaceBetween: 30,
+          slidesPerView: 1,
+          spaceBetween: 10,
+          loop: true,
           centeredSlides: true,
           autoplay: {
             delay: 2500,
@@ -375,6 +381,17 @@
         },
         gameIndex:1,
         fiveIndex:0,
+        phoneBannerCfg:[
+          {
+            url:require('./images/section-4-banner1.png')
+          },
+          {
+            url:require('./images/section-4-banner2.png')
+          },
+          {
+            url:require('./images/section-4-banner3.png')
+          }
+        ],
       }
     },
     methods: {
@@ -384,20 +401,33 @@
           css3: true,
           navigation: true,
           loopBottom: true,
-          afterLoad (anchorLink, index) {
+          afterLoad: (anchorLink, index) => {
             const selectorHeader = `#section${index} .section-header`
             const selectorContent = `#section${index} .section-content`
             $(selectorHeader).addClass('active')
             $(selectorContent).addClass('active')
+            if(index === 3){
+              this.startGameChange()
+            }
           },
 
-          onLeave (index, nextIndex, direction) {
+          onLeave: (index, nextIndex, direction) => {
             const selectorHeader = `#section${index} .section-header`
             const selectorContent = `#section${index} .section-content`
             $(selectorHeader).removeClass('active')
             $(selectorContent).removeClass('active')
+            this.clearGameChange()
           },
         })
+      },
+      startGameChange(){
+        this.gameInterval = setInterval(() => {
+          const index = this.gameIndex + 1
+          this.gameIndex = index > 5 ? 1 : index
+        }, 3000)
+      },
+      clearGameChange(){
+        clearInterval(this.gameInterval)
       },
       inputFocus(type){
         if (type === 1) {
@@ -554,6 +584,18 @@
       },
       gameHover(num){
         this.gameIndex = num
+        this.clearGameChange()
+      },
+      moveSectionDown(){
+        $.fn.fullpage.moveSectionDown()
+      },
+      showPromiseDailog(){
+        this.showPromise = !this.showPromise
+        if(this.showPromise){
+          $.fn.fullpage.setAllowScrolling(false)
+        }else{
+          $.fn.fullpage.setAllowScrolling(true)
+        }
       }
     },
     mounted(){
@@ -579,6 +621,25 @@
     overflow: hidden;
     margin-top: 55px;
     margin-right: 50px;
+    .banner{
+      width: 340px;
+      height: 155px;
+      background: url('./images/banner-1.png') no-repeat;
+    }
+    .title{
+      font-size: $font-md;
+      margin-top: 20px;
+    }
+    .line{
+      width: 28px;
+      height: 3px;
+      margin-top: 15px;
+      background: $new-main-deep-color;
+    }
+    .text{
+      margin-top: 15px;
+      font-size: $font-xs;
+    }
   }
 
   .ac-reg-pic {
@@ -602,17 +663,7 @@
     border-radius: 3px;
     position: relative;
     top: 140px;
-
-    .download-link {
-      background: url('images/download-link.png');
-      width: 178px;
-      height: 45px;
-      position: absolute;
-      top: -52px;
-      right: 0px;
-      display: inline-block;
-    }
-
+    
     .ac-reg-body {
 
       .reg-info {
@@ -802,6 +853,7 @@
       position: relative;
       top: 47%;
       transform: translateY(-50%);
+      z-index: 1;
     }
     & .section-header {
       position: relative;
@@ -1140,6 +1192,7 @@
       margin-top: 150px;
       transform: translateY(50px);
       opacity: 0;
+      position: relative;
       .btn-list{
         display: flex;
         width: 656px;
@@ -1202,6 +1255,42 @@
             height: 25px;
             background: url("./images/webphone.png") no-repeat;
           }
+        }
+      }
+      .content{
+        width: 689px;
+        height: 360px;
+        background: url("./images/ball-bg.png") no-repeat;
+        position: absolute;
+        top: 140px;
+        left: 50%;
+        margin-left: -345px;
+        .hand{
+          width: 793px;
+          height: 381px;
+          background: url("./images/section-4-hand.png") no-repeat;
+          position: absolute;
+          top: 78px;
+          left: 152px;
+          z-index: 3;
+        }
+        .phone{
+          width: 544px;
+          height: 373px;
+          background: url("./images/section-4-phone.png") no-repeat;
+          position: absolute;
+          z-index: 1;
+          top: 43px;
+          left: 171px;
+        }
+        .banner{
+          width: 409px;
+          height: 233px;
+          position: absolute;
+          transform: rotate(-17deg);
+          top: 112px;
+          z-index: 2;
+          left: 240px;
         }
       }
       &.active {
@@ -1549,14 +1638,17 @@
       background: white;
 
       .promise-reg {
-        background: url('images/promise-reg.png');
+        background: url('images/promise-reg.png') no-repeat;
         width: 289px;
-        height: 47px;
+        height: 44px;
         position: absolute;
         left: 0;
         right: 0;
         margin: 0 auto;
         top: -9px;
+        font-size: $font-md;
+        text-align: center;
+        line-height: 44px;
       }
       .promise-hr {
         border-bottom: 1px solid;
@@ -1579,7 +1671,7 @@
         width: 210px;
         height: 50px;
         border-radius: 4px;
-        background: linear-gradient(to bottom, #00d3d8, #00bbc0);
+        /*background: linear-gradient(to bottom, #00d3d8, #00bbc0);*/
         font-size: 16px;
         color: white;
         margin: 10px auto;
