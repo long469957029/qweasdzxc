@@ -6,7 +6,9 @@ const SidebarView = Base.ItemView.extend({
 
   template: require('./index.html'),
 
-  events: {},
+  events: {
+    'click .js-user-info-safe-up':'changeUrlHandler',
+  },
 
   initialize() {
     // this.subscribe('safe', 'safe:updating', this.render)
@@ -69,6 +71,9 @@ const SidebarView = Base.ItemView.extend({
       })
     })
     return sidebar
+  },
+  changeUrlHandler(){
+    Global.router.goTo('uc/pl')
   },
 })
 

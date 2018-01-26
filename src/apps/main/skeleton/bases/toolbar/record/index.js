@@ -35,6 +35,7 @@ const RecordView = Base.ItemView.extend({
       const createTime = _(game.date).toTime()
       const betAmount = _(game.bet).convert2yuan()
       let gameStatus = ''
+
       if (game.type === 1) {
         if (game.status === 0) {
           gameStatus = '等待开奖'
