@@ -386,6 +386,7 @@ const mutations = {
         // 显示用
         formatBettingNumber: formatBettingNumber(bettingInfo.lotteryList, {
           type: 'display',
+          selectOptionals: bettingInfo.selectOptionals,
           format: bettingInfo.format,
         }),
         type: bettingInfo.type,

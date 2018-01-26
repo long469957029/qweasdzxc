@@ -22,6 +22,11 @@ const BettingRecordsView = Base.ItemView.extend({
     this.renderBettingRecords()
   },
 
+  updateTicketId(ticketId) {
+    this.options.ticketId = ticketId
+    this.bettingRecords.options.data.ticketId = ticketId
+  },
+
   renderBettingRecords() {
     if (!this.bettingRecords) {
       this.bettingRecords = this.$bettingRecords.staticGrid({
@@ -62,6 +67,9 @@ const BettingRecordsView = Base.ItemView.extend({
             label: '注数/倍数/模式 ',
             name: 'ticketName',
             width: '12%',
+            formatter(val, index, bet) {
+
+            },
           },
           {
             label: '投注金额',

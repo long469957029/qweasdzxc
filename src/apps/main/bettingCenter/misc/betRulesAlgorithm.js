@@ -78,11 +78,11 @@ function group(rowsResult) {
   let n = mainRow.length
 
   // 组选都做两次相加
-  total = _(total).add(_group(n, algorithmProps.cTimes, _(subRow).isUndefined() ? 1 : _(subRow).difference(mainRow).length))
+  total = _(total).add(_group(n, algorithmProps.cTimes, _.isEmpty(subRow) ? 1 : _(subRow).difference(mainRow).length))
 
   --n
 
-  if (!_(subRow).isUndefined()) {
+  if (!_.isEmpty(subRow)) {
     total = _(total).add(_group(n, algorithmProps.cTimes, _(mainRow).intersection(subRow).length))
   }
 

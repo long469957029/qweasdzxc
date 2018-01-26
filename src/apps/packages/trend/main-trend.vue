@@ -7,6 +7,16 @@
       <select class="ticket-list" v-model="ticketId">
         <option v-for="ticket in ticketList" :value="ticket.id">{{ticket.zhName}}</option>
       </select>
+      <transition
+        enter-active-class="animated-quick fadeIn"
+        leave-active-class="animated-quick fadeOut"
+      >
+        <div class="distribution-change-panel btn-toolbar" v-if="ticketInfo.trendOps.splitTrend">
+          <div class="btn-group" v-for="(split, i) in ticketInfo.trendOps.splitTrend" :key="i">
+            <button class="btn btn-lg font-xs m-right-xs" :class="{'btn-white': currentSplit === split}" @click="changeShowPos(split)">{{split.title}}</button>
+          </div>
+        </div>
+      </transition>
     </div>
     <div class="trend-main">
       <div class="trend-select">
@@ -49,18 +59,18 @@
         <th rowspan="2">
           开奖号码
         </th>
-        <th v-for="position in ticketInfo.positions" :colspan="ticketInfo.range.length">
+        <th v-for="position in fPositions" :colspan="ticketInfo.range.length">
           {{position}}
         </th>
-        <th :colspan="ticketInfo.range.length">号码分布</th>
+        <th :colspan="ticketInfo.range.length" v-if="ticketInfo.trendOps.distribution">号码分布</th>
       </tr>
       <tr>
-        <template v-for="position in ticketInfo.positions">
+        <template v-for="position in fPositions">
           <th class="title-num" v-for="(num, index) in ticketInfo.range" :class="{'title-num-last': ticketInfo.range.length === index + 1}">
             {{num}}
           </th>
         </template>
-        <th class="title-num" v-for="(num, index) in ticketInfo.range" :class="{'title-num-last': ticketInfo.range.length === index + 1}">
+        <th class="title-num" v-for="(num, index) in ticketInfo.range" :class="{'title-num-last': ticketInfo.range.length === index + 1}" v-if="ticketInfo.trendOps.distribution">
           {{num}}
         </th>
       </tr>
@@ -73,7 +83,7 @@
             {{num}}
           </template>
         </td>
-        <template v-for="(position, i) in ticketInfo.positions">
+        <template v-for="(position, i) in fPositions">
           <template v-for="(miss, index) in item.fMissList[i]">
             <td v-if="miss.title !== 0" class="title-num" :class="{'title-num-last': ticketInfo.range.length === index + 1, 'missing-line': missingLine && miss.missingLine}">
               {{!missing ? '' : miss.title}}
@@ -83,7 +93,7 @@
             </td>
           </template>
         </template>
-        <template v-for="(miss, index) in item.fTotalMissList">
+        <template v-for="(miss, index) in item.fTotalMissList" v-if="ticketInfo.trendOps.distribution">
           <td v-if="miss.title !== 0" class="title-num" :class="{'title-num-last': ticketInfo.range.length === index + 1, 'missing-line': missingLine && miss.missingLine}">
             {{!missing ? '' : miss.title}}
           </td>
@@ -102,7 +112,7 @@
             <th>{{hotNum}}</th>
           </template>
         </template>
-        <template v-for="hotNum in totalNumList">
+        <template v-for="hotNum in totalNumList" v-if="ticketInfo.trendOps.distribution">
           <th>{{hotNum}}</th>
         </template>
       </tr>
@@ -140,20 +150,20 @@
         <th rowspan="2">
           开奖号码
         </th>
-        <template v-for="position in ticketInfo.positions">
+        <template v-for="position in fPositions">
           <th class="title-num" v-for="(num, index) in ticketInfo.range" :class="{'title-num-last': ticketInfo.range.length === index + 1}">
             {{num}}
           </th>
         </template>
-        <th class="title-num" v-for="(num, index) in ticketInfo.range" :class="{'title-num-last': ticketInfo.range.length === index + 1}">
+        <th class="title-num" v-for="(num, index) in ticketInfo.range" :class="{'title-num-last': ticketInfo.range.length === index + 1}" v-if="ticketInfo.trendOps.distribution">
           {{num}}
         </th>
       </tr>
       <tr class="bottom-title">
-        <th v-for="position in ticketInfo.positions" :colspan="ticketInfo.range.length">
+        <th v-for="position in fPositions" :colspan="ticketInfo.range.length">
           {{position}}
         </th>
-        <th :colspan="ticketInfo.range.length">号码分布</th>
+        <th :colspan="ticketInfo.range.length" v-if="ticketInfo.trendOps.distribution">号码分布</th>
       </tr>
       </thead>
     </table>
@@ -222,6 +232,8 @@
         pageSize: 30,
         currentSearch: 'pageSize',
         currentSearchIndex: 0,
+        currentSplit: {},
+        fPositions: []
       }
     },
 
@@ -229,6 +241,8 @@
       ticketId: {
         handler(ticketId) {
           this.ticketInfo = ticketConfig.getById(ticketId)
+          this.currentSplit = _.first(this.ticketInfo.trendOps.splitTrend)
+          this.fPositions = this.ticketInfo.positions
           this.currentSearch = 'pageSize'
           this.currentSearchIndex = 0
 
@@ -243,6 +257,11 @@
     },
 
     methods: {
+      changeShowPos(split) {
+        this.currentSplit = split
+        this.fPositions = _.slice(this.ticketInfo.positions, split.pos[0], split.pos[1])
+        this.formatData()
+      },
       checkoutData() {
         this.fTrendsList = []
         this.trendsList = []
@@ -319,6 +338,8 @@
       },
 
       formatData() {
+        this.fTrendsList = []
+
         let totalMissList = _.map(this.ticketInfo.range, (num) => {
           return {
             title: 0,
@@ -418,13 +439,14 @@
           })
 
           let fMissList = _.map(this.trendsList[i].missList, (missList, index) => {
+            let numIndex = 0
             return _.map(missList, (miss, missIndex) => {
               let fMiss = {
                 title: miss,
                 missingLine: false,
               }
 
-              const pos = index * _.size(missList) + Number(missIndex)
+              const pos = index * _.size(missList) + numIndex
               if (miss === 0) {
                 missLine[pos] = false
               }
@@ -434,9 +456,10 @@
               }
 
               //最大遗漏
-              if (miss > this.maxMissingList[index][missIndex]) {
-                this.maxMissingList[index][missIndex] = miss
+              if (miss > this.maxMissingList[index][numIndex]) {
+                this.maxMissingList[index][numIndex] = miss
               }
+              ++numIndex
 
               return fMiss
             })
@@ -510,7 +533,10 @@
           })
         })
 
-        this.maxContinuousList.push(totalMaxContinuousList)
+        if (this.ticketInfo.trendOps.distribution) {
+          this.maxContinuousList.push(totalMaxContinuousList)
+        }
+
 
         //平均遗漏值
         this.averageMissingList = _.map(this.hotNumList, hotNums => {
@@ -518,12 +544,34 @@
             return num ? Math.floor(this.trendsList.length / num) : this.trendsList.length
           })
         })
-        this.averageMissingList.push(_.map(this.totalNumList, num => {
-          return num ? Math.ceil(this.trendsList.length / num) : this.trendsList.length
-        }))
+
+
+        //总平均遗漏
+        if (this.ticketInfo.trendOps.distribution) {
+          this.averageMissingList.push(_.map(this.totalNumList, num => {
+            return num ? Math.ceil(this.trendsList.length / num) : this.trendsList.length
+          }))
+        }
 
         //最大遗漏
-        this.maxMissingList.push(totalMaxMissingList)
+        if (this.ticketInfo.trendOps.distribution) {
+          this.maxMissingList.push(totalMaxMissingList)
+        }
+
+        if (this.currentSplit) {
+          this.maxMissingList = _.slice(this.maxMissingList, this.currentSplit.pos[0], this.currentSplit.pos[1])
+          this.averageMissingList = _.slice(this.averageMissingList, this.currentSplit.pos[0], this.currentSplit.pos[1])
+          this.maxContinuousList = _.slice(this.maxContinuousList, this.currentSplit.pos[0], this.currentSplit.pos[1])
+          this.hotNumList = _.slice(this.hotNumList, this.currentSplit.pos[0], this.currentSplit.pos[1])
+          this.totalNumList = _.slice(this.totalNumList, this.currentSplit.pos[0], this.currentSplit.pos[1])
+
+          this.fTrendsList = this.fTrendsList.map(info => {
+            info.fMissList = _.slice(info.fMissList, this.currentSplit.pos[0], this.currentSplit.pos[1])
+            info.fOpenResult = _.slice(info.fOpenResult, this.currentSplit.pos[0], this.currentSplit.pos[1])
+            info.fTotalMissList = _.slice(info.fTotalMissList, this.currentSplit.pos[0], this.currentSplit.pos[1])
+            return info
+          })
+        }
 
 
         this.$nextTick(() => {
@@ -714,6 +762,12 @@
         }
       }
     }
+  }
+  .distribution-change-panel {
+    display: inline-block;
+    position: relative;
+    margin-left: 30px;
+    bottom: 10px;
   }
 
 </style>

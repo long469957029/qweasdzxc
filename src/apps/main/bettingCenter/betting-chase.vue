@@ -261,7 +261,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
             },
           ],
           startOnLoading: false,
-          height: 200,
+          height: 240,
         },
         chaseList: [],
         selectedChaseList: [],
@@ -680,6 +680,10 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
 
       tbody td {
         padding: 7px 0;
+        &:nth-of-type(2) {
+          text-align: left;
+          padding-left: 40px;
+        }
       }
     }
     .control-label {
