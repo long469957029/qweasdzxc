@@ -270,17 +270,7 @@
             </div>
           </div>
           <div class="register-footer">
-            <div class="line"></div>
-            <div class="list">
-              合作伙伴：
-              <div class="inline-block  m-left-md ag"></div>
-              <div class="inline-block  m-left-md ag"></div>
-              <div class="inline-block  m-left-md ag"></div>
-              <div class="inline-block  m-left-md ag"></div>
-              <div class="inline-block  m-left-md ag"></div>
-              <div class="inline-block  m-left-md ag"></div>
-            </div>
-            <div class="text-center">Copyright © 2017-2018 无限娱乐 版权所有</div>
+            <footer-copyright></footer-copyright>
           </div>
         </div>
       </div>
@@ -335,9 +325,11 @@
   import {valCodeXhr} from 'api/resetPwd'
   import 'swiper/dist/css/swiper.css'
   import {swiper, swiperSlide} from 'vue-awesome-swiper'
+  import FooterCopyright from "../../components/footer/index.vue";
   export default {
     name: 'register',
     components: {
+      FooterCopyright,
       swiper,
       swiperSlide
     },
@@ -1351,7 +1343,7 @@
     bottom: 0;
     width: 100%;
     height: 135px;
-    
+
   }
 
   .opacity-0 {
