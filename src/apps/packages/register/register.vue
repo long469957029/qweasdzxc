@@ -207,7 +207,26 @@
               <div class="line"></div>
               <div class="sub-title">买大买小，投多投少，无限想象</div>
             </div>
-            <div class="section-content"></div>
+            <div class="section-content">
+              <div class="btn-list">
+                <div class="info">
+                  <span class="icon windows"></span>
+                  <span class="">PC客户端</span>
+                </div>
+                <div class="info">
+                  <span class="icon web-phone"></span>
+                  <span class="">手机网页版</span>
+                </div>
+                <div class="info">
+                  <span class="icon apple"></span>
+                  <span class="">苹果手机</span>
+                </div>
+                <div class="info">
+                  <span class="icon android"></span>
+                  <span class="">安卓手机</span>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="next-btn js-move-down"></div>
         </div>
@@ -217,9 +236,51 @@
             <div class="line"></div>
             <div class="sub-title">有实力，最受信任的游戏平台</div>
           </div>
-          <div class="section-content"></div>
+          <div class="section-content">
+            <div class="info-list">
+              <div :class="['info', 'one', {'active': fiveIndex === 1}]" @mouseover="fiveIndex = 1">
+                <div class="logo"></div>
+                <div class="title">安全稳定，严密防护</div>
+                <div class="sub-title">128位银行级加密，百万级服务器架构</div>
+              </div>
+              <div :class="['info', 'two', {'active': fiveIndex === 2}]" @mouseover="fiveIndex = 2">
+                <div class="logo"></div>
+                <div class="title">原创自主研发，应变更灵活</div>
+                <div class="sub-title">
+                  <p>每位用户的需求，我们都可以实现</p>
+                  <p>私人定制更简单</p>
+                </div>
+              </div>
+              <div :class="['info', 'three', {'active': fiveIndex === 3}]" @mouseover="fiveIndex = 3">
+                <div class="logo"></div>
+                <div class="title">积分体系，让利回馈</div>
+                <div class="sub-title">
+                  <p>用积分换手机、话费、夺宝等</p>
+                  <p>有积分就有丰厚的回报</p>
+                </div>
+              </div>
+              <div :class="['info', 'four', {'active': fiveIndex === 4}]" @mouseover="fiveIndex = 4">
+                <div class="logo"></div>
+                <div class="title">充提稳固，分秒必达</div>
+                <div class="sub-title">
+                  <p>转账、网银、微信、支付宝、到账更快捷</p>
+                  <p>提款迅速，5分钟到账</p>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="register-footer">
-            <div class="footer-content"></div>
+            <div class="line"></div>
+            <div class="list">
+              合作伙伴：
+              <div class="inline-block  m-left-md ag"></div>
+              <div class="inline-block  m-left-md ag"></div>
+              <div class="inline-block  m-left-md ag"></div>
+              <div class="inline-block  m-left-md ag"></div>
+              <div class="inline-block  m-left-md ag"></div>
+              <div class="inline-block  m-left-md ag"></div>
+            </div>
+            <div class="text-center">Copyright © 2017-2018 无限娱乐 版权所有</div>
           </div>
         </div>
       </div>
@@ -321,6 +382,7 @@
           },
         },
         gameIndex:1,
+        fiveIndex:0,
       }
     },
     methods: {
@@ -752,7 +814,7 @@
     & .section-header {
       position: relative;
       margin: 0 auto;
-      /*transform: translateY(90px);*/
+      transform: translateY(50px);
       .title {
         font-size: 36px;
         color: $new-main-deep-color;
@@ -893,9 +955,11 @@
 
   #section2 {
     .section-header {
-      /*background: url('images/section-2-header.png');*/
       width: 1099px;
       height: 180px;
+      .title{
+        background: url("./images/brand.png") no-repeat center;
+      }
     }
     .section-content {
       width: 1165px;
@@ -954,12 +1018,13 @@
 
   #section3 {
     .section-header {
-      /*background: url('images/section-3-header.png');*/
       width: 1099px;
       height: 182px;
+      .title{
+        background: url('./images/entertainment.png') no-repeat center;
+      }
     }
     .section-content {
-      /*background: url('images/section-3-content.png');*/
       width: 1202px;
       height: 405px;
       margin-top: 70px;
@@ -1051,7 +1116,7 @@
       }
 
       &.active {
-        animation: fadeTopIn .8s ease .3s forwards;
+        animation: fadeTopIn .5s ease forwards;
       }
     }
   }
@@ -1069,40 +1134,162 @@
 
   #section4 {
     .section-header {
-      background: url('images/section-4-header.png');
       width: 1265px;
       height: 180px;
+      transform: translateY(90px);
+      .title{
+        background: url('./images/mobile.png') no-repeat center;
+      }
     }
     .section-content {
-      background: url('images/section-4-content.png');
+      /*background: url('images/section-4-content.png');*/
       width: 1347px;
       height: 495px;
       margin-top: 150px;
       transform: translateY(50px);
       opacity: 0;
-
+      .btn-list{
+        display: flex;
+        width: 656px;
+        margin: 0 auto;
+        .info{
+          width: 160px;
+          height: 40px;
+          background-color: $def-white-color;
+          border-radius: 20px;
+          border: solid 1px $font-auxiliary-color;
+          line-height: 40px;
+          text-align: center;
+          margin-left: 24px;
+          color: $new-inverse-color;
+          cursor: pointer;
+          transition:  background-color .5s;
+          &:hover{
+            background-color: $new-main-deep-color;
+            border-color: $new-main-deep-color;
+            color: $def-white-color;
+            .icon{
+              &.apple{
+                background: url("./images/apple-active.png") no-repeat;
+              }
+              &.android{
+                background: url("./images/android-active.png") no-repeat;
+              }
+              &.windows{
+                background: url("./images/pc-active.png") no-repeat;
+              }
+              &.web-phone{
+                background: url("./images/webphone-active.png") no-repeat;
+              }
+            }
+          }
+        }
+        .icon{
+          display: inline-block;
+          vertical-align: middle;
+          transform: translateY(-3px);
+          margin-right: 5px;
+          transition: background .5s;
+          &.apple{
+            width: 21px;
+            height: 25px;
+            background: url("./images/apple.png") no-repeat;
+          }
+          &.android{
+            width: 23px;
+            height: 24px;
+            background: url("./images/android.png") no-repeat;
+          }
+          &.windows{
+            width: 25px;
+            height: 24px;
+            background: url("./images/pc.png") no-repeat;
+          }
+          &.web-phone{
+            width: 15px;
+            height: 25px;
+            background: url("./images/webphone.png") no-repeat;
+          }
+        }
+      }
       &.active {
-        animation: fadeBottomIn .8s ease .3s forwards;
+        animation: fadeBottomIn .5s ease forwards;
       }
     }
   }
 
   #section5 {
     .section-header {
-      background: url('images/section-5-header.png');
       width: 1099px;
       height: 180px;
-      transform: translateY(60px);
+      transform: translateY(140px);
+      .title{
+        background: url("./images/confidence.png") no-repeat center;
+      }
     }
     .section-content {
-      background: url('images/section-5-content.png');
-      width: 807px;
-      height: 294px;
-      margin-top: 110px;
+      width: 1200px;
+      height: 280px;
+      margin: 0 auto;
+      padding-top: 250px;
       opacity: 0;
-
+      .info-list{
+        display: flex;
+        .info{
+          width: 280px;
+          height: 226px;
+          margin-left: 20px;
+          cursor: pointer;
+          padding-top: 54px;
+          .logo{
+            width: 69px;
+            height: 69px;
+            margin: 0 auto;
+          }
+          .title{
+            font-size: $font-md;
+            color: $def-white-color;
+            text-align: center;
+            margin-top: 30px;
+          }
+          .sub-title{
+            font-size: $font-xs;
+            color: $def-white-color;
+            text-align: center;
+            margin-top: 20px;
+          }
+          &.one{
+            background: url("./images/section-five-one.png") no-repeat;
+            .logo{
+              background: url("./images/section-five-logo-one.png") no-repeat;
+            }
+          }
+          &.two{
+            background: url("./images/section-five-two.png") no-repeat;
+            .logo{
+              background: url("./images/section-five-logo-two.png") no-repeat;
+            }
+          }
+          &.three{
+            background: url("./images/section-five-three.png") no-repeat;
+            .logo{
+              background: url("./images/section-five-logo-three.png") no-repeat;
+            }
+          }
+          &.four{
+            background: url("./images/section-five-four.png") no-repeat;
+            .logo{
+              background: url("./images/section-five-logo-four.png") no-repeat;
+            }
+          }
+          &.active{
+            animation: flipInY .8s;
+            background: $new-main-deep-color;
+          }
+        }
+      }
       &.active {
-        animation: show .8s ease .3s forwards;
+        animation: show .5s ease forwards;
       }
     }
   }
@@ -1160,19 +1347,11 @@
   }
 
   .register-footer {
-    background: #5e5f66;
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 138px;
-    padding-top: 20px;
-
-    & .footer-content {
-      background: url('images/footer-content.png');
-      width: 854px;
-      height: 98px;
-      margin: 0 auto;
-    }
+    height: 135px;
+    
   }
 
   .opacity-0 {
@@ -1517,5 +1696,15 @@
       transform: none;
     }
   }
-
+  /*@keyframes infoFlipInY {*/
+    /*from{*/
+      /*transform: rotate3d(0, 1, 0, 90deg);*/
+    /*}*/
+    /*50%{*/
+      /*transform: rotate3d(0, 1, 0, 10deg);*/
+    /*}*/
+    /*to{*/
+      /*transform:none;*/
+    /*}*/
+  /*}*/
 </style>
