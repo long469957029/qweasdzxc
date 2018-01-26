@@ -663,7 +663,7 @@
     border-radius: 3px;
     position: relative;
     top: 140px;
-    
+
     .ac-reg-body {
 
       .reg-info {
