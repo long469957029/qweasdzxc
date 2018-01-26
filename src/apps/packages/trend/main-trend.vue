@@ -242,7 +242,11 @@
         handler(ticketId) {
           this.ticketInfo = ticketConfig.getById(ticketId)
           this.currentSplit = _.first(this.ticketInfo.trendOps.splitTrend)
-          this.fPositions = this.ticketInfo.positions
+          if (this.currentSplit) {
+            this.fPositions = _.slice(this.ticketInfo.positions, this.currentSplit.pos[0], this.currentSplit.pos[1])
+          } else {
+            this.fPositions = this.ticketInfo.positions
+          }
           this.currentSearch = 'pageSize'
           this.currentSearchIndex = 0
 

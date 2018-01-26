@@ -30,7 +30,7 @@ const getBalls = () => {
         showOdds: true,
       },
       {
-        num: '1001',
+        num: '101',
         title: '大',
         showOdds: true,
       },
@@ -49,7 +49,7 @@ const getBalls = () => {
         showOdds: true,
       },
       {
-        num: '1002',
+        num: '102',
         title: '小',
         showOdds: true,
       },
@@ -68,7 +68,7 @@ const getBalls = () => {
         showOdds: true,
       },
       {
-        num: '1003',
+        num: '103',
         title: '单',
         showOdds: true,
       },
@@ -87,7 +87,7 @@ const getBalls = () => {
         showOdds: true,
       },
       {
-        num: '1004',
+        num: '104',
         title: '双',
         showOdds: true,
       },
@@ -523,7 +523,7 @@ function _create(ticketId) {
           [
             {
               num: '1003',
-              title: '总和大',
+              title: '总和单',
               showOdds: true,
             },
             {
@@ -589,7 +589,7 @@ function _create(ticketId) {
           [
             {
               num: '1003',
-              title: '总和大',
+              title: '总和单',
               showOdds: true,
             },
             {
@@ -655,7 +655,7 @@ function _create(ticketId) {
           [
             {
               num: '1003',
-              title: '总和大',
+              title: '总和单',
               showOdds: true,
             },
             {
@@ -721,7 +721,7 @@ function _create(ticketId) {
           [
             {
               num: '1003',
-              title: '总和大',
+              title: '总和单',
               showOdds: true,
             },
             {
