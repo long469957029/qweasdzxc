@@ -11,7 +11,7 @@
             <li><a href="#/hc?page=newbie">常见问题</a></li>
             <!-- 游戏规则也是去帮助中心 -->
             <li><a href="#/hc?page=newbie">游戏规则</a></li>
-            <li><a href="newDownload.html" target="_blank">下载中心</a></li>
+            <li><router-link to="mb" >下载中心</router-link></li>
             <li><a href="/index.html#nb/detail/287">防劫持教程</a></li>
           </div>
 

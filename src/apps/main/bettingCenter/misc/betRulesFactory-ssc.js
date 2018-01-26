@@ -902,25 +902,8 @@ function _create(ticketId) {
     }),
   })
 
-  // 组选和值
-  factory.addRule([ticketId, '590256'], {
-    algorithm: algorithm.fromConfig,
-    algorithmProps: {
-      config: [null, 1, 2, 2, 4, 5, 6, 8, 10, 11, 13, 14, 14, 15, 15, 14, 14, 13, 11, 10, 8, 6, 5, 4, 2, 2, 1],
-    },
-    optionals: algorithm.getOptionals(3),
-    list: factory.createList([''], {
-      items: _.range(1, 27),
-      operate: 'none',
-    }),
-    analysis: false,
-    create: algorithm.getCreateFunc(1, {
-      range: _.range(1, 27),
-    }),
-  })
-
   // 混合组选
-  factory.addRule([ticketId, '590257'], {
+  factory.addRule([ticketId, '590256'], {
     type: 'input',
     validate: algorithm.getValidateFunc(3, {
       acceptRepeat: 1,
@@ -933,6 +916,23 @@ function _create(ticketId) {
     create: algorithm.getCreateFunc(3, {
       outerSort: true,
       slice: [2],
+    }),
+  })
+
+  // 组选和值
+  factory.addRule([ticketId, '590257'], {
+    algorithm: algorithm.fromConfig,
+    algorithmProps: {
+      config: [null, 1, 2, 2, 4, 5, 6, 8, 10, 11, 13, 14, 14, 15, 15, 14, 14, 13, 11, 10, 8, 6, 5, 4, 2, 2, 1],
+    },
+    optionals: algorithm.getOptionals(3),
+    list: factory.createList([''], {
+      items: _.range(1, 27),
+      operate: 'none',
+    }),
+    analysis: false,
+    create: algorithm.getCreateFunc(1, {
+      range: _.range(1, 27),
     }),
   })
 
@@ -1086,7 +1086,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680151'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    algorithm: algorithm.group,
+    algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
@@ -1099,7 +1099,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680152'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    algorithm: algorithm.group,
+    algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
@@ -1112,7 +1112,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680153'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    algorithm: algorithm.group,
+    algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
@@ -1125,7 +1125,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680154'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    algorithm: algorithm.group,
+    algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,

@@ -21,6 +21,7 @@ const appConfig = {
     base: './src/base/build.base.js',
     trend: './src/apps/packages/trend/index.js',
     change: './src/apps/packages/change/index.js',
+    resetInitPwd:'./src/apps/packages/resetInitPwd/index.js',
     // trendOld: './src/apps/packages/trend/old/index.js',
     // resetPassword: './src/apps/packages/resetPassword/resetPassword.js',
     updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
@@ -72,6 +73,11 @@ const appConfig = {
       title: '无限娱乐',
       template: './entry/package-vue.html',
       chunks: ['common', 'base', 'change'],
+    },
+    resetInitPwd: {
+      title: '无限娱乐',
+      template: './entry/package-vue.html',
+      chunks: ['common', 'base', 'resetInitPwd'],
     },
     // charge: {
     //   title: '充值结果',
@@ -287,6 +293,9 @@ let plugins = [
   // ),
   new webpack.DefinePlugin({
     DEBUG: Boolean(DEV),
+    'process.env': {
+      NODE_ENV: DEV ? '"dev"' : '"production"'
+    }
   }),
   new webpack.ProvidePlugin({
     Vue: ['vue/dist/vue.esm.js', 'default'],
@@ -345,7 +354,11 @@ if (DEV) {
 
   plugins.push(new ExtractTextPlugin('[name].[hash].styles.css'));
   plugins.push(new AssetsPlugin());
-  plugins.push(new UglifyJsPlugin());
+  plugins.push(new UglifyJsPlugin({
+    compress: {
+      warnings: false
+    }
+  }));
 }
 
 // 生成静态入口html，插件存在bug，无法根据chunks的顺序插入，而是按照了entry的id的顺序，不可控

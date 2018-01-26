@@ -50,6 +50,9 @@ const initState = () => {
     userType: 0,
     username: '',
     routers: permissions.permissionsList,
+    fBalance: 0,
+    fLastLoginTime: '',
+    fLoginTime: '',
   }
 }
 
@@ -93,6 +96,15 @@ const actions = {
 const mutations = {
   // 用户登录
   [types.USER_LOGIN_SUCCESS] (state, data) {
+
+    window.Global.memoryCache.set('acctInfo', data)
+    window.Global.m.publish('acct:login', data)
+    window.Global.m.publish('acct:updating', data)
+
+    data.fBalance = _(data.balance).convert2yuan()
+    data.fLastLoginTime = _(data.lastLoginTime).toTime()
+    data.fLoginTime = _(data.loginTime).toTime()
+    data.headIcon = _(data.headIcon).toString()
     Object.assign(state, data)
   },
   // 清楚用户数据

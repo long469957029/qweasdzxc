@@ -176,6 +176,9 @@
       left: 0;
       bottom: 0;
     }
+    .tab-toolbar.tab-pill.tab-pill-deep .tab {
+      padding: 0 3px;
+    }
   }
 
 </style>

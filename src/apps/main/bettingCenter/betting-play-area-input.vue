@@ -8,7 +8,7 @@
         <div class="height-100 width-100 cursor-text" ref="fileTip">
           <p style="font-size:12px;line-height:170%;">
             说明：<br>
-            1、每一注号码之间的间隔符支持 回车 [ 逗号[,] 分号[;] 冒号[:] 竖线 [|]<br>
+            1、每一注号码之间的间隔符支持 回车 逗号[,] 分号[;] 冒号[:] 竖线 [|]<br>
             2、文件格式必须是.txt格式。<br>
             3、导入文本内容后将覆盖文本框中现有的内容。
           </p>
@@ -19,7 +19,7 @@
 
       <div class="input-operate-area pull-left">
         <div class="m-bottom-md">
-          <button type="button" class="btn btn-white btn-linear bc-input-btn" @click="delRepeat">删除重复号</button>
+          <button type="button" class="btn btn-white btn-linear bc-input-btn" @click="delRepeat">清理错误与重复</button>
         </div>
         <div class="m-bottom-md" ref="fileLoad"></div>
         <div class="m-bottom-md">
@@ -62,8 +62,7 @@
     watch: {
       numbers: {
         handler(newval, oldval) {
-          const contents = _(newval).trim()
-          this.splitNumbers = contents.split(this.splitReg)
+          this.splitNumbers = this.$_split()
         }
       },
     },
@@ -101,12 +100,22 @@
         this.$_statisticsLottery()
       },
       delRepeat() {
-        const result = this.$_checkRepeat(this.$_split())
+        const repeat = this.$_checkRepeat(this.$_split())
+        const validate = this.$_validate(repeat.passNumbers)
 
-        this.numbers = result.passNumbers.join(',')
+        this.numbers = validate.passNumbers.join(',')
 
-        if (!_.isEmpty(result.repeatNumbers)) {
-          Global.ui.notification.show(`以下号码重复，已进行自动过滤<br />${result.repeatNumbers.join(',')}`)
+        const html = ['<div class=" max-height-smd overflow-auto">']
+        if (!_.isEmpty(repeat.repeatNumbers)) {
+          html.push(`<p class="word-break">以下号码重复，已进行自动过滤<br />${bettingInfo.repeatNumbers.join(',')}</p>`)
+        }
+        if (!_.isEmpty(validate.errorNumbers)) {
+          html.push(`<p class="word-break">以下号码错误，已进行自动过滤<br />${bettingInfo.errorNumbers.join(',')}</p>`)
+        }
+        html.push('</div>')
+
+        if (html.length > 2) {
+          Global.ui.notification.show(html.join(''))
         }
 
         this.$_statisticsLottery()
@@ -149,10 +158,14 @@
         repeat.repeatNumbers = repeat.repeatNumbers.concat(validate.repeatNumbers)
 
         let bettingInfo = {
-          lotteryList: _(validate.passNumbers).map((passNumber) => {
-            return passNumber.split(',')
-          }),
-          format: this.type,
+          lotteryList: [_(validate.passNumbers).map((passNumber) => {
+            const splitNum = passNumber.split(',')
+            return {
+              title: splitNum,
+              num: splitNum
+            }
+          })],
+          format: this.playRule.format,
           selectOptionals: this.selectOptionals,
           repeatNumbers: repeat.repeatNumbers,
           errorNumbers: validate.errorNumbers,
@@ -198,7 +211,7 @@
 
       $_split() {
         const contents = _(this.numbers).trim()
-        return contents.split(this.splitReg)
+        return contents.split(this.playRule.splitReg || this.splitReg)
       },
 
       $_validate(numberList) {

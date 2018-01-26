@@ -30,7 +30,7 @@
         </span>
         <div class="date-panel timer-calendar-input timer-record-input">
           <input type="text" ref="date" v-model="date" />
-          <span class="timer-calendar sfa-icon-time"></span>
+          <span class="timer-calendar sfa-icon-time" @click="$($refs.date).data('DateTimePicker').show()"></span>
         </div>
       </div>
     </div>
@@ -481,6 +481,7 @@
     background: #ffffff;
     border-left: 1px solid $def-gray-color;
     border-right: 1px solid $def-gray-color;
+    overflow: hidden;
   }
 
   .sfa-tickets {
@@ -513,7 +514,6 @@
     border-radius: 5px;
     border: solid 1px #e6e6e6;
     box-sizing: border-box;
-    overflow: hidden;
   }
   .main {
     margin: 20px auto;

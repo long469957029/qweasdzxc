@@ -215,7 +215,8 @@ const CardManageView = Base.ItemView.extend({
                 title: '温馨提示',
                 content: '为了您的账户安全，请先设置资金密码后再来绑定银行卡',
                 agreeCallback() {
-                  Global.appRouter.navigate(_('#as/pl').addHrefArgs('_t', _.now()), { trigger: true, replace: false })
+                  // Global.appRouter.navigate(_('#as/pl').addHrefArgs('_t', _.now()), { trigger: true, replace: false })
+                  Global.router.goTo('uc/pl')
                 },
               })
             }

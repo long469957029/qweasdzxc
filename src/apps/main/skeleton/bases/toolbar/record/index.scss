@@ -137,16 +137,22 @@
     .recent-game-items-empty {
       text-align: center;
       .recent-game-items-empty-img {
-        margin-top:140px;
+        margin-top:130px;
         width: 99px;
         height: 99px;
         display: inline-block;
         background: url("~base/images/v2/icon-record-empty.png");
       }
+      .recent-game-items-empty-text{
+        color: #999999;
+        margin-left: 5px;
+        margin-top: 5px;
+      }
     }
   }
   .recent-more {
     display: block;
+    cursor: pointer;
     font-size: 14px;
     color: $new-inverse-color;
     margin: 17px auto;

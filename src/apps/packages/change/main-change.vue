@@ -630,6 +630,10 @@
           margin: 14px;
           color: #666666;
           font-size: 12px;
+          .footer-copyright-name {
+            margin-left: 3px;
+          }
+
         }
       }
     }

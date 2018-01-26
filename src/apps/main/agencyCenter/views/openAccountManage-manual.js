@@ -149,7 +149,7 @@ const OpenAccountManageView = Base.ItemView.extend({
         .done((res) => {
           if (res && res.result === 0) {
             self.showCopyDailog(globalData)
-
+            Global.router.goTo('ac/oam')
             self.render()
           } else {
             Global.ui.notification.show(`保存失败，${res.msg}`)

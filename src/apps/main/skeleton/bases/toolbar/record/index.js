@@ -20,7 +20,7 @@ const RecordView = Base.ItemView.extend({
       if (res.result === 0) {
         self.$('.js-sideBar-Bet-Today').html(_(res.root.dataTotal.betTotal).convert2yuan())// 总余额
         self.$('.js-sideBar-Profit-Today').html(_(res.root.dataTotal.profitTotal).convert2yuan())// 可用余额
-        if (res.root.records > 0) {
+        if (res.root.records.length > 0) {
           this.renderData(res.root.records)
         } else {
           this.$('.js-sideBar-record-items-empty').removeClass('hidden')
@@ -35,6 +35,7 @@ const RecordView = Base.ItemView.extend({
       const createTime = _(game.date).toTime()
       const betAmount = _(game.bet).convert2yuan()
       let gameStatus = ''
+
       if (game.type === 1) {
         if (game.status === 0) {
           gameStatus = '等待开奖'
@@ -52,8 +53,9 @@ const RecordView = Base.ItemView.extend({
       html.push(`<div class="game-state">${gameStatus}</div>`)
       html.push('<div class="clearfix"></div>')
       html.push('</div>')
+      itemHtml.push(html.join(''))
     })
-    this.$('.recent-game-items').html(itemHtml.join(''))
+    this.$('.js-recent-game-items').html(itemHtml.join(''))
   },
 })
 

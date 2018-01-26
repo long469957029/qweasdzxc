@@ -9,6 +9,8 @@ const initState = () => {
     openLogoutDialog: false,
     openResetPassWordDialog: false,
     openLoginLauncher: false,
+    openFreeTrialDialog: false,
+    openRestInitPwdDialog: false,
   }
 }
 
@@ -25,6 +27,12 @@ const getters = {
   },
   loginLauncherStatus: (state) => {
     return state.openLoginLauncher
+  },
+  freeTrialStatus: (state) => {
+    return state.openFreeTrialDialog
+  },
+  resetInitPwdStatus: (state) => {
+    return state.openRestInitPwdDialog
   },
 }
 
@@ -45,6 +53,12 @@ const mutations = {
   },
   [types.TOGGLE_LOGIN_LAUNCHER](state, data) {
     state.openLoginLauncher = data
+  },
+  [types.TOGGLE_FREE_TRIAL](state, data) {
+    state.openFreeTrialDialog = data
+  },
+  [types.TOGGLE_RESET_INIT_PWD](state, data) {
+    state.openRestInitPwdDialog = data
   },
 }
 

@@ -1,0 +1,377 @@
+<template>
+  <div class="reset-center">
+    <div class="reset-header">
+      <div class="reset-title">
+        <div class="inline-block">
+          <div class="reset-logo-reset-lg inline-block"></div>
+          <div class="reset-title-name inline-block">
+            重置密码
+          </div>
+        </div>
+        <div class="js-gl-service reset-title-panel inline-block">
+          <a href="javascript:void(0)"
+             onclick="newwin = window.open('https://szzero.livechatvalue.com/chat/chatClient/chatbox.jsp?companyID=576264&amp;configID=53412&amp;jid=9259996324&amp;s=1&amp;enterurl=http%3A%2F%2Fforehead.5x5x.com%2Flogin.html','service','width=800,height=680'); newwin.moveTo(100,50);"
+             title="联系客服">
+            <span class="title-img inline-block"></span>
+            <span class="title-text inline-block">在线客服</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="reset-body clearfix">
+      <div class="reset-body-left" ref="leftBuilding"></div>
+      <div class="reset-body-right" ref="rightBuilding"></div>
+      <div class="reset-panel">
+        <div class="reset-panel-title">
+          <span class="title-img"></span>
+          <span>提示：此账户由上级开户生成，为保障您的账户安全，请修改初始密码！</span>
+        </div>
+        <div class="pwd-input-panel">
+          <span class="pwd-desc">新登陆密码：</span>
+          <input type="password" class="pwd-input" v-model="passwordModel"
+                 @blur="verifyPwd" @keyup.enter="resetInitPwd"
+                 autocomplete="off" required></div>
+
+        <div class="message-container">
+          <span class="sfa sfa-error-gray-icon"></span>
+          <span class="message-text" v-if="passwordModel">@{{verifyPwd.errorText}}</span>
+          <!--<span class="message-text">4-16个字符，支持中英文和数字，不能以数字开头</span>-->
+        </div>
+        <div class="pwd-input-panel">
+          <span class="pwd-desc-confirm">确认密码：</span>
+          <input type="password" class="pwd-input" v-model="passwordcheckModel"
+                 @blur="verifyConfirmPwd" @keyup.enter="resetInitPwd"
+                 autocomplete="off" required></div>
+
+        <div class="message-container">
+          <span class="sfa sfa-error-gray-icon"></span>
+          <span class="message-text" v-if="passwordcheckModel">@{{verifyPwd.errorText}}</span>
+        </div>
+        <div class="reset-submit-container">
+          <span class="reset-submit" @click="resetInitPwd">确定</span>
+          <span class="reset-cancel">取消</span>
+        </div>
+      </div>
+      <div class="reset-panel-footer">
+        <div class="footer-line"></div>
+        <div class="footer-partner">
+          <span class="footer-partner-text inline-block">合作伙伴：</span>
+          <span class="footer-partner-ag inline-block"></span>
+          <span class="footer-partner-playtech inline-block"></span>
+          <span class="footer-partner-micro inline-block"></span>
+          <span class="footer-partner-unipay inline-block"></span>
+          <span class="footer-partner-alipay inline-block"></span>
+          <span class="footer-partner-wx inline-block"></span>
+        </div>
+        <div class="footer-copyright">
+          Copyright <i class="fa fa-copyright footer-copyright-img" aria-hidden="true"></i> 2017-2018<span
+          class="footer-copyright-name">无限娱乐</span> 版权所有
+        </div>
+        <div class="footer-tips">
+          无限娱乐郑重提示：彩票有风险、投注需谨慎，未满18周岁的青少年禁止购买
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
+<script>
+  export default{
+    name: 'reset-init-pwd',
+
+    data () {
+      return {
+        passwordFlag: false
+      }
+    },
+
+    props: {},
+
+    components: {},
+
+    mounted () {
+      this.$nextTick(() => {
+      })
+    },
+
+    watch: {},
+
+    computed: {},
+
+    filters: {},
+
+    methods: {
+      resetInitPwd(){
+      },
+      verifyPwd(){
+        let errorText = ''
+      else
+        {
+          const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
+          if (this.passwordModel.length < 9 && this.strBetweenIsNumber(this.passwordModel, 0, 7)) {
+            errorText = '密码不能是9位以下的纯数字！'
+            return false
+          } else if (!pwReg.test(this.passwordModel)) {
+            errorText = '密码为6-20位字符组成（不含空格），区分大小写！'
+            return false
+          }
+          if (this.passwordModel === '') {
+          }
+        }
+      },
+      verifyConfirmPwd(){
+        if (this.password === '') {
+          this.passwordError = false
+          this.showErrorMsg = false
+          this.pwdSuccess = false
+        } else {
+          const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
+          if (this.password.length < 9 && this.strBetweenIsNumber(this.password, 0, 7)) {
+            this.passwordError = true
+            this.showErrorMsg = true
+            this.pwdSuccess = false
+            this.errorMsg = '密码不能是9位以下的纯数字！'
+            return false
+          } else if (!pwReg.test(this.password)) {
+            this.passwordError = true
+            this.showErrorMsg = true
+            this.pwdSuccess = false
+            this.errorMsg = '密码为6-20位字符组成（不含空格），区分大小写！'
+            return false
+          }
+        }
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+  @import "~base/styles/imports";
+
+  .reset-center {
+    height: 100%;
+    overflow: hidden;
+    .reset-header {
+      width: 100%;
+      height: 89px;
+      position: relative;
+      background: #ffffff;
+      z-index: 51;
+      box-shadow: 0 3px 8px 0 #e6e6e6;
+      .reset-title {
+        padding-top: 14px;
+        width: 1000px;
+        margin: 0 auto;
+        .reset-logo-reset-lg {
+          height: 47px;
+          width: 181px;
+          background: url('./misc/navbar-logo.png');
+        }
+        .reset-title-name {
+          margin-left: 26px;
+          font-size: 24px;
+          vertical-align: top;
+          margin-top: 19px;
+          color: #666666;
+        }
+        .reset-title-panel {
+          float: right;
+          margin-top: 19px;
+          width: 90px;
+          font-size: 14px;
+          text-align: right;
+          height: 14px;
+          line-height: 14px;
+          position: relative;
+          .title-img {
+            width: 25px;
+            height: 19px;
+            background-image: url('./misc/initPwd-CustomService.png');
+          }
+          .title-text {
+            margin-top: 3px;
+            margin-left: 8px;
+            float: right;
+            color: #666666;
+          }
+        }
+      }
+    }
+    .reset-body {
+      width: 100%;
+      height: 100%;
+      background: #fafafa;
+      position: relative;
+      box-sizing: border-box;
+      top: 0;
+      .reset-body-left {
+        width: 398px;
+        background-image: url("./misc/initPwd-back-left.png");
+        position: absolute;
+        left: 0;
+        /*background-size: cover;*/
+        height: 248px;
+      }
+      .reset-body-right {
+        width: 741px;
+        background-image: url("./misc/initPwd-backgound-right.png");
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        /*background-size: cover;*/
+        height: 411px;
+      }
+      .reset-panel {
+        border-radius: 5px;
+        width: 1000px;
+        z-index: 50;
+        height: 460px;
+        position: relative;
+        background: $def-white-color;
+        margin: 65px auto;
+        box-sizing: border-box;
+        border: 1px solid #e6e6e6;
+        box-shadow: 0 3px 8px 0 #e6e6e6;
+        opacity: 0.8;
+        padding: 40px 115px;
+        .reset-panel-title {
+          padding: 4px 60px;
+          height: 25px;
+          line-height: 25px;
+          width: 498px;
+          font-size: 12px;
+          color: #666666;
+          background-color: #fffcee;
+          border: 1px solid #edd28b;
+          margin-bottom: 45px;
+          .title-img {
+            float: left;
+            width: 21px;
+            height: 25px;
+            margin-right: 5px;
+            background-image: url("./misc/initPwd-light.png");
+          }
+        }
+        .pwd-input-panel {
+          font-size: 14px;
+          margin-top: 20px;
+          .pwd-desc {
+            color: #666666;
+            width: 80px;
+          }
+          .pwd-desc-confirm {
+            color: #666666;
+            width: 80px;
+            margin-left: 13px;
+          }
+          .pwd-input {
+            background-color: #f9f9f9;
+            padding: 11px 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            outline-width: 0;
+            width: 258px;
+            &.active, &:hover {
+              border: 1px solid #14b1bb;
+            }
+          }
+        }
+        .message-container {
+          margin: 10px 88px;
+          height: 14px;
+          line-height: 14px;
+          color: #999999;
+          font-size: 12px;
+          .message-text {
+            vertical-align: top;
+            color: #cccccc;
+          }
+        }
+        .reset-submit-container {
+          padding: 30px 88px;
+          .reset-submit {
+            padding: 10px 80px;
+            background-color: #14b1bb;
+            color: #ffffff;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-right: 20px;
+          }
+          .reset-cancel {
+            color: #999999;
+            font-size: 14px;
+            cursor: pointer;
+          }
+        }
+      }
+      .reset-panel-footer {
+        font-size: 0;
+        margin: 150px auto 50px;
+        width: 1000px;
+        color: #333333;
+        text-align: center;
+        z-index: 50;
+        position: relative;
+        .footer-copyright {
+          margin: 14px;
+          color: #999999;
+          font-size: 12px;
+          .footer-copyright-name {
+            margin-left: 3px;
+          }
+        }
+        .footer-tips {
+          margin: 3px;
+          color: #999999;
+          font-size: 12px;
+        }
+        .footer-line {
+          width: 1200px;
+          height: 1px;
+          margin-bottom: 43px;
+          margin-left: -100px;
+          background-image: url("./misc/initPwd-back-line.png");
+        }
+        .footer-partner {
+          color: #999999;
+          font-size: 12px;
+          margin-bottom: 32px;
+          .footer-partner-text {
+            vertical-align: top;
+          }
+          .footer-partner-ag {
+            width: 104px;
+            height: 25px;
+            background-image: url("./misc/initPwd-logo-ag.png");
+          }
+          .footer-partner-playtech {
+            width: 104px;
+            height: 25px;
+            background-image: url("./misc/initPwd-logo-playtech.png");
+          }
+          .footer-partner-micro {
+            width: 104px;
+            height: 25px;
+            background-image: url("./misc/initPwd-logo-micro.png");
+          }
+          .footer-partner-unipay {
+            width: 104px;
+            height: 25px;
+            background-image: url("./misc/initPwd-logo-unipay.png");
+          }
+          .footer-partner-alipay {
+            width: 104px;
+            height: 25px;
+            background-image: url("./misc/initPwd-logo-ali.png");
+          }
+          .footer-partner-wx {
+            width: 104px;
+            height: 25px;
+            background-image: url("./misc/initPwd-logo-wx.png");
+          }
+        }
+      }
+    }
+  }
+</style>

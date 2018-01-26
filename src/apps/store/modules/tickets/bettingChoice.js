@@ -280,13 +280,13 @@ const mutations = {
         if (!_.isNull(state.playInfo.maxBetNums) && state.statistics > state.playInfo.maxBetNums) {
           this.commit(types.ADD_BETS, {
             bettingList: [bettingInfo],
-            options: _(options || {}).extend({ statistics: state.statistics }, options),
+            options: _(options).extend({ statistics: state.statistics }, options),
           })
           state.addPrevBetResult = { maxBetNums: state.playInfo.maxBetNums }
         } else {
           this.commit(types.ADD_BETS, {
             bettingList: [bettingInfo],
-            options: _(options || {}).extend({ statistics: state.statistics }),
+            options: _(options).extend({ statistics: state.statistics }),
           })
         }
 
@@ -382,10 +382,6 @@ const mutations = {
         playName: state.playName,
         bettingNumber: formatBettingNumber(bettingInfo.lotteryList, {
           selectOptionals: bettingInfo.selectOptionals,
-          formatToNum: bettingInfo.formatToNum,
-          playId: state.playId,
-          ticketId: state.ticketId,
-          formatToNumInfo: bettingInfo.formatToNumInfo || false,
         }),
         // 显示用
         formatBettingNumber: formatBettingNumber(bettingInfo.lotteryList, {
@@ -519,7 +515,7 @@ const formatBettingNumber = (bettingNumber, options) => {
   }
 
   if (bettingNumber.length === 1) {
-    // bettingNumber[0][options.type === 'display' ? 'title' : 'num']
+    // number += bettingNumber[0][options.type === 'display' ? 'title' : 'num']
     number += _.pluck(bettingNumber[0], options.type === 'display' ? 'title' : 'num').join(',')
   } else {
     number += _(bettingNumber).map((row) => {
@@ -539,32 +535,9 @@ const formatBettingNumber = (bettingNumber, options) => {
     }).join(',')
   }
 
-  // if (options.formatToNum) {
-  //   number = _formatToNum(number, options)
-  // }
 
   return number
 }
-
-// 将球上的文字转换成对应的数值
-const _formatToNum = (betNum, options) => {
-  let newNum = betNum
-
-  while (newNum.indexOf('大') !== -1 || newNum.indexOf('小') !== -1 || newNum.indexOf('单') !== -1 || newNum.indexOf('双') !== -1
-  || newNum.indexOf('龙') !== -1 || newNum.indexOf('虎') !== -1 || newNum.indexOf('和') !== -1 || newNum.indexOf('三同号通选') !== -1 || newNum.indexOf('三连号通选') !== -1) {
-    newNum = newNum.replace('大', 1)
-    newNum = newNum.replace('小', 2)
-    newNum = newNum.replace('单', 3)
-    newNum = newNum.replace('双', 4)
-    newNum = newNum.replace('龙', 0)
-    newNum = newNum.replace('虎', 1)
-    newNum = newNum.replace('和', 2)
-    newNum = newNum.replace('三同号通选', 0)
-    newNum = newNum.replace('三连号通选', 0)
-  }
-  return newNum
-}
-
 
 const $_calculateByPrefab = (data) => {
   let prefabMoney = 0

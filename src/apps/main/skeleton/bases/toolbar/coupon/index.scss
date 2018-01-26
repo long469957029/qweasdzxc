@@ -21,11 +21,17 @@
   .mall-coupon-container-empty {
     text-align: center;
     .myCoupon-record-empty-img {
-      margin-top: 120px;
+      margin-top: 110px;
       width: 99px;
       height: 99px;
       display: inline-block;
       background: url("~base/images/v2/icon-coupon-empty.png");
+    }
+    .myCoupon-record-empty-text{
+      color: #999999;
+      font-size: 14px;
+      margin-left: 5px;
+      margin-top: 5px;
     }
   }
   .recent-more {
@@ -56,6 +62,12 @@
       height: 99px;
       display: inline-block;
       background: url("~base/images/v2/icon-coupon-empty.png");
+    }
+    .system-record-empty-text{
+      color: #999999;
+      margin-left: 5px;
+      margin-top: 5px;
+      font-size: 14px;
     }
   }
   .sidebar-systemCoupon-container {

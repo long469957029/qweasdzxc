@@ -13,7 +13,7 @@
           </div>
         </div>
 
-        <!-- 露珠 -->
+        <!-- 路珠 -->
         <road-balls-analysis :ticket-info="ticketInfo" v-if="ticketInfo.roadBalls"></road-balls-analysis>
       </div>
       <div class="bc-side-area pull-right" ref="bcSideArea"></div>

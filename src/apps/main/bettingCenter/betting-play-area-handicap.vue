@@ -213,10 +213,6 @@
       }
     },
 
-    // computed: mapState({
-    //   playInfo: state => state.bettingChoice.playInfo
-    // }),
-
     methods: {
 
       select(item) {
