@@ -65,8 +65,8 @@ $.widget('gl.pagination', {
     let minSphere
     // 最大区间
     let maxSphere
-    // let size
-    //
+    let size
+
     // if (totalSize === 0) {
     // return;
     // }
@@ -78,11 +78,11 @@ $.widget('gl.pagination', {
       (Math.floor(_(this.options.maxPaginationNum).div(2)) - pageIndex + minSphere) - 1
     maxSphere = maxSphere > (totalPage - 1) ? (totalPage - 1) : maxSphere
 
-    // if (pageIndexs <= this.options.maxPaginationNum) {
-    //   size = pageIndexs
-    // } else {
-    //   size = this.options.maxPaginationNum
-    // }
+    if (pageIndexs <= this.options.maxPaginationNum) {
+      size = pageIndexs
+    } else {
+      size = this.options.maxPaginationNum
+    }
 
     html.push('<div class="clearfix">')
 
@@ -101,56 +101,67 @@ $.widget('gl.pagination', {
           html.push('<li class="pagination-pre disabled" data-pageIndex="prev"><span>&lt;</span></li>')
           // html.push('<li class="pagination-pre disabled" data-pageIndex="prev"><span>&lt;上一页</span></li>')
         }
-        if (maxSphere <= 3) {
-          for (i = minSphere; i <= maxSphere; ++i) {
-            html.push(`<li data-pageIndex="${i}"`)
-            if (i === pageIndex) {
-              html.push(' class="active" ')
-            }
-            html.push(`><span>${i + 1}</span></li>`)
+        // if (maxSphere <= maxSphere) {
+        //   for (i = minSphere; i <= maxSphere; ++i) {
+        //     html.push(`<li data-pageIndex="${i}"`)
+        //     if (i === pageIndex) {
+        //       html.push(' class="active" ')
+        //     }
+        //     html.push(`><span>${i + 1}</span></li>`)
+        //   }
+        // } else {
+        //   const preHtml = []
+        //   const lastHtml = []
+        //   if (pageIndex < 1) {
+        //     lastHtml.push(`<li data-pageIndex="${maxSphere}" ><span>${maxSphere + 1}</span></li>`)
+        //     for (i = minSphere; i <= 1; ++i) {
+        //       if (i === pageIndex) {
+        //         preHtml.push(`<li data-pageIndex="${i}" class="active"><span>${i + 1}</span></li>`)
+        //       } else {
+        //         preHtml.push(`<li data-pageIndex="${i}" ><span>${i + 1}</span></li>`)
+        //       }
+        //     }
+        //     html.push(preHtml.join(''))
+        //     html.push('<li class="foot-nav-null">···</li>')
+        //     html.push(lastHtml)
+        //   } else if (pageIndex >= maxSphere - 1) {
+        //     preHtml.push('<li data-pageIndex="0"><span>1</span></li>')
+        //     for (i = maxSphere - 1; i <= maxSphere; ++i) {
+        //       if (i === pageIndex) {
+        //         lastHtml.push(`<li data-pageIndex="${i}" class="active"><span>${i + 1}</span></li>`)
+        //       } else {
+        //         lastHtml.push(`<li data-pageIndex="${i}" ><span>${i + 1}</span></li>`)
+        //       }
+        //     }
+        //     html.push(preHtml)
+        //     html.push('<li class="foot-nav-null">···</li>')
+        //     html.push(lastHtml.join(''))
+        //   } else {
+        //     lastHtml.push(`<li data-pageIndex="${maxSphere}" ><span>${maxSphere + 1}</span></li>`)
+        //     for (i = pageIndex - 1; i <= pageIndex; ++i) {
+        //       if (i === pageIndex) {
+        //         preHtml.push(`<li data-pageIndex="${i}" class="active"><span>${i + 1}</span></li>`)
+        //       } else {
+        //         preHtml.push(`<li data-pageIndex="${i}" ><span>${i + 1}</span></li>`)
+        //       }
+        //     }
+        //     html.push(preHtml.join(''))
+        //     html.push('<li class="foot-nav-null">···</li>')
+        //     html.push(lastHtml)
+        //   }
+        // }
+        this.options.pageIndex = pageIndex;
+        //页号
+        for (i = minSphere; i <= maxSphere; ++i) {
+          html.push('<li data-pageIndex="' + i + '"');
+          if (i === pageIndex) {
+            html.push(' class="active" ');
           }
-        } else {
-          const preHtml = []
-          const lastHtml = []
-          if (pageIndex < 1) {
-            lastHtml.push(`<li data-pageIndex="${maxSphere}" ><span>${maxSphere + 1}</span></li>`)
-            for (i = minSphere; i <= 1; ++i) {
-              if (i === pageIndex) {
-                preHtml.push(`<li data-pageIndex="${i}" class="active"><span>${i + 1}</span></li>`)
-              } else {
-                preHtml.push(`<li data-pageIndex="${i}" ><span>${i + 1}</span></li>`)
-              }
-            }
-            html.push(preHtml.join(''))
-            html.push('<li class="foot-nav-null">···</li>')
-            html.push(lastHtml)
-          } else if (pageIndex >= maxSphere - 1) {
-            preHtml.push('<li data-pageIndex="0"><span>1</span></li>')
-            for (i = maxSphere - 1; i <= maxSphere; ++i) {
-              if (i === pageIndex) {
-                lastHtml.push(`<li data-pageIndex="${i}" class="active"><span>${i + 1}</span></li>`)
-              } else {
-                lastHtml.push(`<li data-pageIndex="${i}" ><span>${i + 1}</span></li>`)
-              }
-            }
-            html.push(preHtml)
-            html.push('<li class="foot-nav-null">···</li>')
-            html.push(lastHtml.join(''))
-          } else {
-            lastHtml.push(`<li data-pageIndex="${maxSphere}" ><span>${maxSphere + 1}</span></li>`)
-            for (i = pageIndex - 1; i <= pageIndex; ++i) {
-              if (i === pageIndex) {
-                preHtml.push(`<li data-pageIndex="${i}" class="active"><span>${i + 1}</span></li>`)
-              } else {
-                preHtml.push(`<li data-pageIndex="${i}" ><span>${i + 1}</span></li>`)
-              }
-            }
-            html.push(preHtml.join(''))
-            html.push('<li class="foot-nav-null">···</li>')
-            html.push(lastHtml)
-          }
+          html.push('><span>' + (i + 1) + '</span></li>');
         }
-
+        if(totalPage - 2 > maxSphere){
+          html.push('&hellip;<li data-pageIndex="' + (totalPage-1) + '"><span>' + (totalPage) + '</span></li>');
+        }
 
         if (pageIndex < totalPage - 1) {
           html.push(`<li class="pagination-next" data-pageIndex="next" data-maxPageIndex="${pageIndexs}"><span>&gt;</span></li>`)

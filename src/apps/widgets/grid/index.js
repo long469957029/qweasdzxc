@@ -26,7 +26,7 @@ $.widget('gl.grid', {
     // pagination
     pageIndex: 0,
     pageSize: 15,
-    maxPaginationNum: 6,
+    maxPaginationNum: 5,
     totalSize: 0,
     onPaginationChange: _.noop,
     emptyClass: 'sfa-grid-empty',
