@@ -219,13 +219,11 @@ gulp.task('build.sprite', (callback) => {
 
   _(spriteConfig).each((info) => {
 
-    console.log(spriteTarget, info.name)
 
     if (spriteTarget !== 'all' && info.name !== spriteTarget) {
       finished += 1
       return
     }
-    console.log(1)
     const spriteData =
       gulp.src([`./src/base/images/${info.name}/*.png`, `./src/base/images/${info.name}/*/*`])
         .pipe(spritesmith({
