@@ -247,13 +247,13 @@ gulp.task('build.sprite', (callback) => {
   //     }));
   //
   // var imgStreamMG = spriteDataMG.img
-  //   .pipe(imagemin({
-  //     progressive: true,
-  //     svgoPlugins: [{removeViewBox: false}],
-  //     // use: [pngquant({
-  //     //   quality: '60-80'
-  //     // })]
-  //   }))
+  //   // .pipe(imagemin({
+  //   //   progressive: true,
+  //   //   svgoPlugins: [{removeViewBox: false}],
+  //   //   // use: [pngquant({
+  //   //   //   quality: '60-80'
+  //   //   // })]
+  //   // }))
   //   .pipe(gulp.dest('./src/base/images'));
   // spriteDataMG.css.pipe(gulp.dest('./src/base/styles'));
   // //end  MG老虎机专用雪碧图
@@ -270,18 +270,18 @@ gulp.task('build.sprite', (callback) => {
   //         sprite.name = 'sfa-' + sprite.name;
   //       }
   //     }));
-  //
+
   // var imgStreamPT = spriteDataPT.img
-  //   .pipe(imagemin({
-  //     progressive: true,
-  //     svgoPlugins: [{removeViewBox: false}],
-  //     // use: [pngquant({
-  //     //   quality: '60-80'
-  //     // })]
-  //   }))
+  //   // .pipe(imagemin({
+  //   //   progressive: true,
+  //   //   svgoPlugins: [{removeViewBox: false}],
+  //   //   // use: [pngquant({
+  //   //   //   quality: '60-80'
+  //   //   // })]
+  //   // }))
   //   .pipe(gulp.dest('./src/base/images'));
   // spriteDataPT.css.pipe(gulp.dest('./src/base/styles'));
-  // //end  PT老虎机专用雪碧图
+  //end  PT老虎机专用雪碧图
   callback()
 })
 
