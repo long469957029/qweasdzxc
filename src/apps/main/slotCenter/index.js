@@ -106,7 +106,8 @@ const SlotCenterView = Base.ItemView.extend({
           const { hotGames } = res.root
 
           const html = _.map(hotGames, (hotGame) => {
-            return self.hotGameTpl(hotGame)
+            const img = require(`base/images/game/slot-${hotGame.channelId}-${hotGame.gameCode}.png`)
+            return self.hotGameTpl({hotGame,img})
           })
 
           self.$hotGames.html(html)
@@ -169,7 +170,8 @@ const SlotCenterView = Base.ItemView.extend({
           const { gameList } = res.root
           const html = _.chunk(gameList, 4).map((rowItems) => {
             const game = _.map(rowItems, (item) => {
-              return self.gameTpl(item)
+              const img = require(`base/images/game/slot-${item.channelId}-${item.gameCode}.png`)
+              return self.gameTpl({item,img})
             }).join('')
             return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
           })
@@ -220,7 +222,8 @@ const SlotCenterView = Base.ItemView.extend({
           const { gameList } = res.root
           const html = _.chunk(gameList, 4).map((rowItems) => {
             const game = _.map(rowItems, (item) => {
-              return self.gameTpl(item)
+              const img = require(`base/images/game/slot-${item.channelId}-${item.gameCode}.png`)
+              return self.gameTpl({item,img})
             }).join('')
             return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
           })
@@ -279,7 +282,8 @@ const SlotCenterView = Base.ItemView.extend({
           const { gameList } = res.root
           const html = _.chunk(gameList, 4).map((rowItems) => {
             const game = _.map(rowItems, (item) => {
-              return self.gameTpl(item)
+              const img = require(`base/images/game/slot-${item.channelId}-${item.gameCode}.png`)
+              return self.gameTpl({item, img})
             }).join('')
             return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
           })
