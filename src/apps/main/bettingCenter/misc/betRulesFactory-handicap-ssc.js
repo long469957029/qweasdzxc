@@ -421,7 +421,7 @@ function _create(ticketId) {
   factory.addHandicapRule([ticketId, '310101'], {
     list: factory.createHandicapList([
       {
-        title: ['选项 赔率 下注', '选项 赔率 下注', '选项 赔率 下注', '选项 赔率 下注', '选项 赔率 下注'],
+        title: ['选项 赔率        下注   ', '选项 赔率        下注   ', '选项 赔率        下注   ', '选项 赔率        下注   ', '选项 赔率        下注   '],
         items: getBalls(),
         showItemOdds: true,
         showMoneyInput: true,

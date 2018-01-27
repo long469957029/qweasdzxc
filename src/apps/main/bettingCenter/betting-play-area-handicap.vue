@@ -456,6 +456,7 @@
         flex-grow: 1;
         border-right: 1px solid #e6e6e6;
         width: 0;
+        white-space: pre;
 
         &:last-child {
           border-right: none;
