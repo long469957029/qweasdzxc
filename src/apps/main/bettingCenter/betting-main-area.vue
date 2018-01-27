@@ -283,8 +283,16 @@
             placement: 'bottom',
           })
 
-          this.$store.dispatch('getColdHot', {ticketId: this.ticketInfo.id})
-          this.$store.dispatch('getCurrentMiss', {ticketId: this.ticketInfo.id})
+          if (this.playRule.analysis) {
+            this.$store.dispatch(types.GET_COLD_HOT, {
+              ticketId: this.ticketId,
+              ...this.playRule.analysisRequestProps
+            })
+            this.$store.dispatch(types.GET_CURRENT_MISS, {
+              ticketId: this.ticketId,
+              ...this.playRule.analysisRequestProps
+            })
+          }
 
 
           //隐藏popover
