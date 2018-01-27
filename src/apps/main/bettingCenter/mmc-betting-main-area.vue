@@ -602,6 +602,8 @@
         }
         this.simulationOpen = true
         this.pushing = true
+
+        this.toggleLever()
         pushMmcSimulationBettingApi(({data}) => {
           this.pushing = false
           if (data && data.result === 0) {
@@ -666,6 +668,7 @@
       },
 
       $_pushBetting() {
+        this.toggleLever()
         this.$store.dispatch(types.PUSH_MMC_BETTING, {
           type: 'previewList'
         })
@@ -1414,7 +1417,7 @@
 </style>
 
 <style lang="scss">
-  .opening-main {
+  .opening-panel-title {
     .slimScrollBar {
       width: 10px !important;
       right: 12px !important;;

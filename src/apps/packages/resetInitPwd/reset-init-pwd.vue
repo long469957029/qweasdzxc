@@ -56,20 +56,21 @@
         </div>
       </div>
       <div class="reset-panel-footer">
-        <div class="footer-line"></div>
-        <div class="footer-partner">
-          <span class="footer-partner-text inline-block">合作伙伴：</span>
-          <span class="footer-partner-ag inline-block"></span>
-          <span class="footer-partner-playtech inline-block"></span>
-          <span class="footer-partner-micro inline-block"></span>
-          <span class="footer-partner-unipay inline-block"></span>
-          <span class="footer-partner-alipay inline-block"></span>
-          <span class="footer-partner-wx inline-block"></span>
-        </div>
-        <div class="footer-copyright">
-          Copyright <i class="fa fa-copyright footer-copyright-img" aria-hidden="true"></i> 2017-2018<span
-          class="footer-copyright-name">无限娱乐</span> 版权所有
-        </div>
+        <!--<div class="footer-line"></div>-->
+        <!--<div class="footer-partner">-->
+        <!--<span class="footer-partner-text inline-block">合作伙伴：</span>-->
+        <!--<span class="footer-partner-ag inline-block"></span>-->
+        <!--<span class="footer-partner-playtech inline-block"></span>-->
+        <!--<span class="footer-partner-micro inline-block"></span>-->
+        <!--<span class="footer-partner-unipay inline-block"></span>-->
+        <!--<span class="footer-partner-alipay inline-block"></span>-->
+        <!--<span class="footer-partner-wx inline-block"></span>-->
+        <!--</div>-->
+        <!--<div class="footer-copyright">-->
+        <!--Copyright <i class="fa fa-copyright footer-copyright-img" aria-hidden="true"></i> 2017-2018<span-->
+        <!--class="footer-copyright-name">无限娱乐</span> 版权所有-->
+        <!--</div>-->
+        <footer-copyright></footer-copyright>
         <div class="footer-tips">
           无限娱乐郑重提示：彩票有风险、投注需谨慎，未满18周岁的青少年禁止购买
         </div>
@@ -80,6 +81,8 @@
 </template>
 <script>
   import loginApi from 'api/login'
+  import FooterCopyright from "./../components/footer/index"
+
   export default{
     name: 'reset-init-pwd',
     data () {
@@ -98,7 +101,7 @@
 
     props: {},
 
-    components: {},
+    components: {FooterCopyright},
 
     mounted () {
       this.$nextTick(() => {
@@ -162,7 +165,7 @@
             errorText = '密码不能是9位以下的纯数字！'
           } else if (!pwReg.test(this.passwordModel)) {
             errorText = '密码为6-20位字符组成（不含空格），区分大小写！'
-          }else {
+          } else {
             errorText = ''
           }
         } else {
@@ -413,64 +416,64 @@
         text-align: center;
         z-index: 50;
         position: relative;
-        .footer-copyright {
-          margin: 14px;
-          color: #999999;
-          font-size: 12px;
-          .footer-copyright-name {
-            margin-left: 3px;
-          }
-        }
+        /*.footer-copyright {*/
+        /*margin: 14px;*/
+        /*color: #999999;*/
+        /*font-size: 12px;*/
+        /*.footer-copyright-name {*/
+        /*margin-left: 3px;*/
+        /*}*/
+        /*}*/
         .footer-tips {
           margin: 3px;
           color: #999999;
           font-size: 12px;
         }
-        .footer-line {
-          width: 1200px;
-          height: 1px;
-          margin-bottom: 43px;
-          margin-left: -100px;
-          background-image: url("./misc/initPwd-back-line.png");
-        }
-        .footer-partner {
-          color: #999999;
-          font-size: 12px;
-          margin-bottom: 32px;
-          .footer-partner-text {
-            vertical-align: top;
-          }
-          .footer-partner-ag {
-            width: 104px;
-            height: 25px;
-            background-image: url("./misc/initPwd-logo-ag.png");
-          }
-          .footer-partner-playtech {
-            width: 104px;
-            height: 25px;
-            background-image: url("./misc/initPwd-logo-playtech.png");
-          }
-          .footer-partner-micro {
-            width: 104px;
-            height: 25px;
-            background-image: url("./misc/initPwd-logo-micro.png");
-          }
-          .footer-partner-unipay {
-            width: 104px;
-            height: 25px;
-            background-image: url("./misc/initPwd-logo-unipay.png");
-          }
-          .footer-partner-alipay {
-            width: 104px;
-            height: 25px;
-            background-image: url("./misc/initPwd-logo-ali.png");
-          }
-          .footer-partner-wx {
-            width: 104px;
-            height: 25px;
-            background-image: url("./misc/initPwd-logo-wx.png");
-          }
-        }
+        /*<!--.footer-line {-->*/
+        /*<!--width: 1200px;-->*/
+        /*<!--height: 1px;-->*/
+        /*<!--margin-bottom: 43px;-->*/
+        /*<!--margin-left: -100px;-->*/
+        /*<!--background-image: url("./misc/initPwd-back-line.png");-->*/
+        /*<!--}-->*/
+        /*.footer-partner {*/
+        /*color: #999999;*/
+        /*font-size: 12px;*/
+        /*margin-bottom: 32px;*/
+        /*.footer-partner-text {*/
+        /*vertical-align: top;*/
+        /*}*/
+        /*.footer-partner-ag {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-ag.png");*/
+        /*}*/
+        /*.footer-partner-playtech {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-playtech.png");*/
+        /*}*/
+        /*.footer-partner-micro {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-micro.png");*/
+        /*}*/
+        /*.footer-partner-unipay {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-unipay.png");*/
+        /*}*/
+        /*.footer-partner-alipay {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-ali.png");*/
+        /*}*/
+        /*.footer-partner-wx {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-wx.png");*/
+        /*}*/
+        /*}*/
       }
     }
   }

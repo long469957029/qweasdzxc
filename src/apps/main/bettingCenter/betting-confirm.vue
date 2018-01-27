@@ -22,8 +22,9 @@
       <div class="betting-title">投注内容</div>
       <div class="bc-confirm-list">
         <ul class="" v-if="type === 'normal'">
-          <li class="bc-betDetail-text" v-for="item in bettingList">{{item.levelName}}{{item.playName}} |
-            {{item.formatBettingNumber}} | {{item.statistics}}注 | {{item.fPrefabMoney}}元
+          <li class="bc-betDetail-text" v-for="item in bettingList">
+            <span class="confirm-title">{{item.levelName}}{{item.playName}} | </span>
+            <span class="confirm-content"> {{item.formatBettingNumber}} | {{item.statistics}}注 | {{item.fPrefabMoney}}元</span>
           </li>
         </ul>
         <ul class="" v-else>
@@ -123,9 +124,7 @@
       overflow: auto;
       background-color: #f5f5f5;
       .bc-betDetail-text {
-        text-indent: -10px;
         word-wrap: break-word;
-        white-space: pre;
         padding-left: 20px;
         padding-top: 5px;
         padding-bottom: 10px;
@@ -134,8 +133,9 @@
           color: $def-gray-color;
           font-size: 16px;
           padding-right: 5px;
-          position: relative;
-          top: 0;
+          position: absolute;
+          top: 5px;
+          left: 4px;
         }
       }
     }
@@ -152,6 +152,16 @@
       text-align: center;
       padding: 20px 0 10px;
       font-size: 14px;
+    }
+
+    .confirm-title {
+      float: left;
+    }
+    .confirm-content {
+      display: inline-block;
+      float: left;
+      width: 375px;
+      padding-left: 5px;
     }
   }
 </style>

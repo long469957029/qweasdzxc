@@ -47,7 +47,7 @@ function _create(ticketId) {
       items: ten,
     }),
     format: {symbol: ' '},
-    create: algorithm.getCreateFunc(2, {
+    create: algorithm.getCreateFunc(1, {
       range: ten,
       matching: true,
     }),

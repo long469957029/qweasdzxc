@@ -233,6 +233,9 @@
     watch: {
       '$route' (to, from) {
         recordsOpenView.updateTicketId(this.ticketId)
+        bettingRecordsView.updateTicketId(this.ticketId)
+        bettingRecordsView.update()
+
         this.$store.commit(types.SET_MULTIPLE, 1)
         $(this.$refs.multiRange).numRange('numChange', 1)
         this.unit = 10000
