@@ -257,6 +257,21 @@
 
     }
   }
+  .sc-content-empty{
+    width: 100%;
+    margin-top: 100px;
+    .icon{
+      width: 204px;
+      height: 174px;
+      margin: 0 auto;
+      &.search{
+        background: url("./images/icon-search.png") no-repeat;
+      }
+      &.collection{
+        background: url("./images/icon-collection.png") no-repeat;
+      }
+    }
+  }
 }
 
 .sc-game-row {
