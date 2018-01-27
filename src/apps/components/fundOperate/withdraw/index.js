@@ -43,18 +43,22 @@ const WithdrawView = Base.ItemView.extend({
   },
   onRender() {
     const self = this
-    this.getActivityInfo()
-      .always(() => {
-        self.loadingFinish()
-      })
-      .done((res) => {
-        if (res && res.result === 0) {
-          // 生成充值页广告
-          this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
-        } else {
-          Global.ui.notification.show('服务器异常')
-        }
-      })
+    if (!Global.memoryCache.get('rechargeAc')) {
+      this.getActivityInfo()
+        .always(() => {
+          self.loadingFinish()
+        })
+        .done((res) => {
+          if (res && res.result === 0) {
+            // 生成充值页广告
+            this.$('.jc-rc-activity').html(rechargeService.getFunActivity(res.root.records))
+          } else {
+            Global.ui.notification.show('服务器异常')
+          }
+        })
+    } else {
+      this.$('.jc-rc-activity').html(rechargeService.getFunActivity(Global.memoryCache.get('rechargeAc')))
+    }
     this.getInfoXhr()
       .always(() => {
         self.loadingFinish()

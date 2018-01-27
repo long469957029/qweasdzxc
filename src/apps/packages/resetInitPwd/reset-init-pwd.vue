@@ -56,20 +56,6 @@
         </div>
       </div>
       <div class="reset-panel-footer">
-        <!--<div class="footer-line"></div>-->
-        <!--<div class="footer-partner">-->
-        <!--<span class="footer-partner-text inline-block">合作伙伴：</span>-->
-        <!--<span class="footer-partner-ag inline-block"></span>-->
-        <!--<span class="footer-partner-playtech inline-block"></span>-->
-        <!--<span class="footer-partner-micro inline-block"></span>-->
-        <!--<span class="footer-partner-unipay inline-block"></span>-->
-        <!--<span class="footer-partner-alipay inline-block"></span>-->
-        <!--<span class="footer-partner-wx inline-block"></span>-->
-        <!--</div>-->
-        <!--<div class="footer-copyright">-->
-        <!--Copyright <i class="fa fa-copyright footer-copyright-img" aria-hidden="true"></i> 2017-2018<span-->
-        <!--class="footer-copyright-name">无限娱乐</span> 版权所有-->
-        <!--</div>-->
         <footer-copyright></footer-copyright>
         <div class="footer-tips">
           无限娱乐郑重提示：彩票有风险、投注需谨慎，未满18周岁的青少年禁止购买
@@ -81,7 +67,7 @@
 </template>
 <script>
   import loginApi from 'api/login'
-  import FooterCopyright from "./../components/footer/index"
+  import FooterCopyright from "com/footer/index"
 
   export default{
     name: 'reset-init-pwd',

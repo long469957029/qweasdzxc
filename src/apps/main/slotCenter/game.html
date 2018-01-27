@@ -1,23 +1,23 @@
 <div class="col-md-3">
   <div class="sc-game-item">
     <div class="sc-game-mask">
-      <div class="sc-like-btn <%= collect ? liked : '' %>"></div>
+      <div class="sc-like-btn <%= item.collect ? liked : '' %>"></div>
       <div
         class="sc-game-btn ripple-btn primary js-sc-game-btn"
-        data-game-id="<%= gameId %>"
+        data-game-id="<%= item.gameId %>"
         data-type="0"
         data-device="0"
       >开始游戏</div>
       <div
         class="sc-game-btn ripple-btn secondary js-sc-game-btn"
-        data-game-id="<%= gameId %>"
+        data-game-id="<%= item.gameId %>"
         data-type="1"
         data-device="0"
       >免费试玩</div>
     </div>
     <div class="sc-game-img">
-      <span class="sfa sfa-slot-<%=channelId%>-<%=gameCode%>"></span>
+      <img src=<%=img%> >
     </div>
-    <div class="sc-game-title"><%= name %></div>
+    <div class="sc-game-title"><%= item.name %></div>
   </div>
 </div>

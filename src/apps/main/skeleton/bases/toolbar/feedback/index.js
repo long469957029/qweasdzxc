@@ -31,24 +31,24 @@ const FeedbackView = Base.ItemView.extend({
     if (!this.parsley.validate()) {
       return false
     }
-    const type = this.$('.js-feedback-type').find('option:selected').val()
-    const title = this.$('.js-feedback-title').val()
-    const feedContent = this.$('.js-feedback-content').val()
-
-    const data = {
-      adviceType: type,
-      subject: title,
-      content: feedContent,
-    }
-    self.submitFeedbackXhr(data)
-      .done((res) => {
-        if (res.result === 0) {
-          Global.ui.notification.show('提交成功！')
-          self.trigger('hidden.modal')
-        } else {
-          Global.ui.notification.show('提交失败！')
-        }
-      })
+    // const type = this.$('.js-feedback-type').find('option:selected').val()
+    // const title = this.$('.js-feedback-title').val()
+    // const feedContent = this.$('.js-feedback-content').val()
+    //
+    // const data = {
+    //   adviceType: type,
+    //   subject: title,
+    //   content: feedContent,
+    // }
+    // self.submitFeedbackXhr(data)
+    //   .done((res) => {
+    //     if (res.result === 0) {
+    //       Global.ui.notification.show('提交成功！')
+    //       self.trigger('hidden.modal')
+    //     } else {
+    //       Global.ui.notification.show('提交失败！')
+    //     }
+    //   })
   },
 })
 

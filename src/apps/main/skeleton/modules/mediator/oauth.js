@@ -36,7 +36,6 @@ const NewsMediatorModule = Base.Module.extend({
     if (logoutWhenUnLogin) {
       this._checkUserIsEffective(oauthXhr);
     }
-
     return oauthXhr
   },
 

@@ -112,31 +112,30 @@ const SyncModule = Base.Module.extend({
       }
 
       currentXhr = _ajax(ajaxOptions, options)
-
       if (ajaxOptions.abort) {
         this.xhrList[ajaxOptions.url] = currentXhr
       }
 
       // 因应二号改版偷跑 先忽略验证接口的错误
-      // currentXhr.fail(function (xhr, resType, type) {
-      //   if (resType === 'error') {
-      //     if (type === 'Unauthorized') {
-      //       if (!_(ajaxOptions.data.token).isEmpty()) {
-      //         this.login = false;
-      //         Global.ui.notification.show('您的账户已登出,请重新登录！', {
-      //           event: function () {
-      //             window.location.href = 'login.html';
-      //           }
-      //         });
-      //       } else if (ajaxOptions.autoLogout) {
-      //         window.location.href = 'login.html';
-      //       }
-      //     } else if (xhr.status == 401) {
-      //       window.location.href = 'login.html';
-      //       //Global.ui.notification.show('网络不给力，请稍后再试。');
-      //     }
-      //   }
-      // });
+      currentXhr.fail(function (xhr, resType, type) {
+        if (resType === 'error') {
+          if (type === 'Unauthorized') {
+            if (!_(ajaxOptions.data.token).isEmpty()) {
+              this.login = false;
+              Global.ui.notification.show('您的账户已登出,请重新登录！', {
+                event: function () {
+                  // window.location.href = 'index.html';
+                }
+              });
+            } else if (ajaxOptions.autoLogout) {
+              // window.location.href = 'index.html';
+            }
+          } else if (xhr.status == 401) {
+            window.location.href = 'index.html';
+            //Global.ui.notification.show('网络不给力，请稍后再试。');
+          }
+        }
+      });
 
       if (!this.login) {
         currentXhr.abort()
@@ -156,6 +155,7 @@ const SyncModule = Base.Module.extend({
       let prevSameXhr
       let promise
       let sign
+      let currentXhr
 
       if (typeof url === 'object') {
         ajaxOptions = url
@@ -257,27 +257,22 @@ const SyncModule = Base.Module.extend({
           cancel,
         }
       }
+      // currentXhr = _ajax(ajaxOptions, options)
 
-      // 因应二号改版偷跑 先忽略验证接口的错误
-      // currentXhr.fail(function (xhr, resType, type) {
-      //   if (resType === 'error') {
-      //     if (type === 'Unauthorized') {
-      //       if (!_(ajaxOptions.data.token).isEmpty()) {
-      //         this.login = false;
-      //         Global.ui.notification.show('您的账户已登出,请重新登录！', {
-      //           event: function () {
-      //             window.location.href = 'login.html';
-      //           }
-      //         });
-      //       } else if (ajaxOptions.autoLogout) {
-      //         window.location.href = 'login.html';
-      //       }
-      //     } else if (xhr.status == 401) {
-      //       window.location.href = 'login.html';
-      //       //Global.ui.notification.show('网络不给力，请稍后再试。');
-      //     }
-      //   }
-      // });
+      // if (ajaxOptions.abort) {
+      //   this.xhrList[ajaxOptions.url] = currentXhr
+      // }
+      promise.catch(function (xhr, resType, type) {
+        if (xhr.response.status === 401 || xhr.response.statusText==='Unauthorized') {
+          Global.ui.notification.show('您的账户已登出,请重新登录！', {
+            event: function () {
+              // window.location.href = 'index.html';
+              // window.app.$store.dispatch(types.DO_LOGOUT)
+              window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+            }
+          });
+        }
+      });
 
       if (!this.login) {
         cancel()

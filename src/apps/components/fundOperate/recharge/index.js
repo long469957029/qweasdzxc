@@ -40,31 +40,39 @@ const RechargeView = Base.ItemView.extend({
 
   onRender() {
     const self = this
-    this.getActivityInfo()
-      .always(() => {
-        self.loadingFinish()
-      })
-      .done((res) => {
-        if (res && res.result === 0) {
+    if (!Global.memoryCache.get('rechargeAc')) { //如果缓存里面没有活动数据就调用接口查询
+      $.when(this.getActivityInfo(), this.getRechargeBaseInfoXhr()).done(function (res1, res2) {
+        if (res1[0] && res1[0].result === 0) {
           // 生成充值页广告
-          this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
+          Global.memoryCache.set('rechargeAc', res1[0].root.records)
+        } else {
+          Global.ui.notification.show('服务器异常')
+        }
+        if (res2[0].result === 0) {
+          // 获取上次采用的支付方式,初始化面板
+          self.initPaymentData(res2[0].root.lastPaymentType, res2[0].root.paymentList)
         } else {
           Global.ui.notification.show('服务器异常')
         }
       })
-    // 请求充值基础数据（已开通支付方式，银行等）
-    this.getRechargeBaseInfoXhr()
-      .done((res) => {
-        if (res.result === 0) {
-          // 获取上次采用的支付方式,初始化面板
-          self.initPaymentData(res.root.lastPaymentType, res.root.paymentList)
-          // self.initPaymentType(res.root.paymentList)
-          this.paymentList = res.root.paymentList
-        }
-      })
-
+    } else {
+      // 请求充值基础数据（已开通支付方式，银行等）
+      if (!Global.memoryCache.get('rechargeList')) {
+        this.getRechargeBaseInfoXhr()
+          .done((res) => {
+            if (res.result === 0) {
+              // 获取上次采用的支付方式,初始化面板
+              Global.memoryCache.set('rechargeList', res.root)
+              self.initPaymentData(res.root.lastPaymentType, res.root.paymentList)
+            }
+          })
+      } else {
+        const data = Global.memoryCache.get('rechargeList')
+        self.initPaymentData(data.lastPaymentType, data.paymentList)
+      }
+    }
     // 生成充值页广告
-    this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
+    this.$('.jc-rc-activity').html(rechargeService.getFunActivity(Global.memoryCache.get('rechargeAc')))
     // 初始化内容滑动效果数据
     this.conInnerConWidth = 740
     this.conSize = this.$('.jc-fc-rc-view').size()
@@ -79,6 +87,7 @@ const RechargeView = Base.ItemView.extend({
   },
   // 获取上次采用的支付方式,初始化面板
   initPaymentData(type, data) {
+    this.paymentList = data
     if (type === null) {
       type = 1
     }

@@ -48,9 +48,17 @@
     @include with-margin(8px);
     position: relative;
 
-    .sfa {
-      transform: scale(0.78);
-      transform-origin: top left;
+    //.sfa {
+    //  transform: scale(0.78);
+    //  transform-origin: top left;
+    //}
+    img{
+      width: 155px;
+      height: 110px;
+      background-color: #f9fbfe;
+      border-radius: 5px;
+      border: solid 1px rgba(255, 255, 255, 0.5);
+      box-sizing: border-box;
     }
   }
 
@@ -91,7 +99,7 @@
     color: white;
     font-size: 14px;
     text-align: center;
-    margin-top: -30px;
+    margin-top: 10px;
   }
 }
 
@@ -247,6 +255,21 @@
     &:hover, &:active {
       background: $new-main-deep-hover-color;
 
+    }
+  }
+  .sc-content-empty{
+    width: 100%;
+    margin-top: 100px;
+    .icon{
+      width: 204px;
+      height: 174px;
+      margin: 0 auto;
+      &.search{
+        background: url("./images/icon-search.png") no-repeat;
+      }
+      &.collection{
+        background: url("./images/icon-collection.png") no-repeat;
+      }
     }
   }
 }
@@ -498,8 +521,11 @@
   border-radius: 5px;
   overflow: hidden;
 
-  .sfa {
-    transform: scale(1.02);
+  //.sfa {
+  //  transform: scale(1.02);
+  //}
+  img{
+    height: 150px;
   }
 }
 

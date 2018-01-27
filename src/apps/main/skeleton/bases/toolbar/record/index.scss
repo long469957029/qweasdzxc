@@ -120,30 +120,33 @@
         color: $def-black-color;
         text-align: left;
         line-height: 0;
+        width: 100px;
       }
 
       .game-amount {
         color: $def-black-color;
         text-align: center;
         line-height: 0;
+        width: 100px;
       }
 
       .game-state {
         color: $def-black-color;
         text-align: right;
         line-height: 0;
+        width: 63px;
       }
     }
     .recent-game-items-empty {
       text-align: center;
       .recent-game-items-empty-img {
-        margin-top:130px;
+        margin-top: 130px;
         width: 99px;
         height: 99px;
         display: inline-block;
         background: url("~base/images/v2/icon-record-empty.png");
       }
-      .recent-game-items-empty-text{
+      .recent-game-items-empty-text {
         color: #999999;
         margin-left: 5px;
         margin-top: 5px;
