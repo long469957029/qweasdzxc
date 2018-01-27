@@ -111,6 +111,30 @@ const ToolbarView = Base.ItemView.extend({
     $feedbackDialog.on('hidden.modal', function () {
       $(this).remove()
     })
+    $feedbackDialog.off('click.submitFeedback')
+      .on('click.submitFeedback', '.js-feedback-submit', (ev) => {
+        const $currContainer = $feedbackDialog.find('.js-sideBar-feedback-form')
+        const clpValidate = $currContainer.parsley().validate()
+        if (clpValidate) {
+          const $target2 = $(ev.currentTarget)
+          $target2.button('loading')
+          return Global.sync.ajax({
+            url: '/info/feedback/create.json',
+            data: {
+              adviceType: $feedbackDialog.find('.js-feedback-type').find('option:selected').val(),
+              subject: $feedbackDialog.find('.js-feedback-title').val(),
+              content: $feedbackDialog.find('.js-feedback-content').val(),
+            },
+          }).done((res) => {
+            if (res && res.result === 0) {
+              Global.ui.notification.show('提交成功。')
+              $feedbackDialog.modal('hide')
+            } else {
+              Global.ui.notification.show('提交失败。')
+            }
+          })
+        }
+      })
   },
 
   scrollHandler() {

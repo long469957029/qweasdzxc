@@ -7,6 +7,9 @@ const imagemin = require('gulp-imagemin')
 const pngquant = require('imagemin-pngquant')
 const cache = require('gulp-cache')
 const pump = require('pump')
+const minimist = require('minimist')
+const buffer = require('vinyl-buffer');
+const csso = require('gulp-csso');
 
 const _ = require('underscore')
 
@@ -21,7 +24,7 @@ const spritesmith = require('gulp.spritesmith')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 
-const argv = require('minimist')(process.argv.slice(2))
+const argv = minimist(process.argv.slice(2))
 
 const webpackConfig = require('./webpack.config')
 const Fontmin = require('fontmin')
@@ -204,85 +207,59 @@ gulp.task('image.min', () => {
 // })
 
 gulp.task('build.sprite', (callback) => {
-  const spriteData =
-    gulp.src(['./src/base/images/sprites/*.png', './src/base/images/sprites/*/*'])
-      .pipe(spritesmith({
-        imgName: 'sprite.png',
-        cssName: '_sprite.scss',
-        cssFormat: 'scss',
-        imgPath: '~base/images/sprite.png',
-        algorithm: 'binary-tree',
-        cssVarMap (sprite) {
-          sprite.name = `sfa-${sprite.name}`
-        },
-      }))
+  const spriteConfig = require('./sprites-config')
 
-  const imgStream = spriteData.img
-    .pipe(imagemin([
-      imagemin.gifsicle({interlaced: true}),
-      imagemin.jpegtran({progressive: true}),
-      imagemin.optipng({optimizationLevel: 5}),
-      imagemin.svgo({
-        plugins: [
-          {removeViewBox: true},
-          {cleanupIDs: false}
-        ]
-      })
-    ]))
-    .pipe(gulp.dest('./src/base/images'))
-  spriteData.css.pipe(gulp.dest('./src/base/styles'))
-  // 老虎机雪碧图相关scss文件生成后需要修改变量名及方法名，因此其他常规sprites文件夹下的图片合成雪碧图时，先注释以下内容，
-  // //begin MG老虎机专用雪碧图
-  // var spriteDataMG =
-  //   gulp.src(['./src/base/images/spritesMG/*.png', './src/base/images/spritesMG/*/*'])
-  //     .pipe(spritesmith({
-  //       imgName: 'spriteMG.png',
-  //       cssName: '_spriteMG.scss',
-  //       cssFormat: 'scss',
-  //       imgPath: '~base/images/spriteMG.png',
-  //       algorithm: 'binary-tree',
-  //       cssVarMap: function(sprite) {
-  //         sprite.name = 'sfa-' + sprite.name;
-  //       }
-  //     }));
-  //
-  // var imgStreamMG = spriteDataMG.img
-  //   // .pipe(imagemin({
-  //   //   progressive: true,
-  //   //   svgoPlugins: [{removeViewBox: false}],
-  //   //   // use: [pngquant({
-  //   //   //   quality: '60-80'
-  //   //   // })]
-  //   // }))
-  //   .pipe(gulp.dest('./src/base/images'));
-  // spriteDataMG.css.pipe(gulp.dest('./src/base/styles'));
-  // //end  MG老虎机专用雪碧图
-  // //begin PT老虎机专用雪碧图
-  // var spriteDataPT =
-  //   gulp.src(['./src/base/images/spritesPT/*.png', './src/base/images/spritesPT/*/*'])
-  //     .pipe(spritesmith({
-  //       imgName: 'spritePT.png',
-  //       cssName: '_spritePT.scss',
-  //       cssFormat: 'scss',
-  //       imgPath: '~base/images/spritePT.png',
-  //       algorithm: 'binary-tree',
-  //       cssVarMap: function(sprite) {
-  //         sprite.name = 'sfa-' + sprite.name;
-  //       }
-  //     }));
+  const args = minimist(process.argv.slice(1));
 
-  // var imgStreamPT = spriteDataPT.img
-  //   // .pipe(imagemin({
-  //   //   progressive: true,
-  //   //   svgoPlugins: [{removeViewBox: false}],
-  //   //   // use: [pngquant({
-  //   //   //   quality: '60-80'
-  //   //   // })]
-  //   // }))
-  //   .pipe(gulp.dest('./src/base/images'));
-  // spriteDataPT.css.pipe(gulp.dest('./src/base/styles'));
-  //end  PT老虎机专用雪碧图
-  callback()
+  const spriteTarget = args.target
+
+  const total = spriteConfig.length
+  let finished = 0
+  // process.exit()
+
+  _(spriteConfig).each((info) => {
+
+
+    if (spriteTarget !== 'all' && info.name !== spriteTarget) {
+      finished += 1
+      return
+    }
+    const spriteData =
+      gulp.src([`./src/base/images/${info.name}/*.png`, `./src/base/images/${info.name}/*/*`])
+        .pipe(spritesmith({
+          imgName: `${info.name}.png`,
+          cssName: `_${info.name}.scss`,
+          cssFormat: 'scss',
+          imgPath: `~base/images/${info.name}.png`,
+          algorithm: 'binary-tree',
+          cssSpritesheetName: info.name,
+          cssVarMap (sprite) {
+            sprite.name = `sfa-${sprite.name}`
+          },
+        }))
+
+    const imgStream = spriteData.img
+      .pipe(buffer())
+      .pipe(imagemin([
+        imagemin.gifsicle({interlaced: true}),
+        imagemin.jpegtran({progressive: true}),
+        imagemin.optipng({optimizationLevel: 5}),
+        imagemin.svgo({
+          plugins: [
+            {removeViewBox: true},
+            {cleanupIDs: false}
+          ]
+        })
+      ]))
+      .pipe(gulp.dest('./src/base/images'))
+    spriteData.css
+      .pipe(gulp.dest('./src/base/styles'))
+
+    finished += 1
+    if (finished === total) {
+      callback()
+    }
+  })
 })
 
 // 清理dist
@@ -318,7 +295,8 @@ gulp.task('release.js', (cb) => {
 // 压缩转移css
 gulp.task('release.css', () => {
   return gulp.src([`./dist/${projectPath}/*.css`])
-    .pipe(minfyCss())
+    .pipe(csso())
+    // .pipe(minfyCss())
     .pipe(gulp.dest(path.join('./www/', projectPath)))
 })
 

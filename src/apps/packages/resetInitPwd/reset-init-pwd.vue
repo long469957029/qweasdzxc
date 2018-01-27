@@ -28,45 +28,34 @@
         </div>
         <div class="pwd-input-panel">
           <span class="pwd-desc">新登陆密码：</span>
-          <input type="password" class="pwd-input" v-model="passwordModel"
+          <input type="password" class="pwd-input" v-model="passwordModel" @focus="verifyPwd"
                  @blur="verifyPwd" @keyup.enter="resetInitPwd"
                  autocomplete="off" required></div>
 
         <div class="message-container">
-          <span class="sfa sfa-error-gray-icon"></span>
-          <span class="message-text" v-if="passwordModel">@{{verifyPwd.errorText}}</span>
+          <span class="sfa sfa-error-gray-icon" v-if="errorIcon===1"></span>
+          <span class="sfa sfa-error-icon" v-else-if="errorIcon===2"></span>
+          <span class="message-text"
+                :class="{error:errorIcon===2}">{{errorText}}</span>
           <!--<span class="message-text">4-16个字符，支持中英文和数字，不能以数字开头</span>-->
         </div>
-        <div class="pwd-input-panel">
+        <div class="pwd-input-panel confirm">
           <span class="pwd-desc-confirm">确认密码：</span>
           <input type="password" class="pwd-input" v-model="passwordcheckModel"
-                 @blur="verifyConfirmPwd" @keyup.enter="resetInitPwd"
+                 @focus="verifyConfirmPwd" @keyup.enter="resetInitPwd"
                  autocomplete="off" required></div>
 
-        <div class="message-container">
-          <span class="sfa sfa-error-gray-icon"></span>
-          <span class="message-text" v-if="passwordcheckModel">@{{verifyPwd.errorText}}</span>
+        <div class="message-container confirm">
+          <span class="sfa sfa-error-gray-icon" v-if="checkErrorIcon===1"></span>
+          <span class="sfa sfa-error-icon" v-else-if="checkErrorIcon===2"></span>
+          <span class="message-text" :class="{error:checkErrorIcon===2}">{{checkErrorText}}</span>
         </div>
         <div class="reset-submit-container">
           <span class="reset-submit" @click="resetInitPwd">确定</span>
-          <span class="reset-cancel">取消</span>
+          <span class="reset-cancel" @click="cancelInitPwd">取消</span>
         </div>
       </div>
       <div class="reset-panel-footer">
-        <!--<div class="footer-line"></div>-->
-        <!--<div class="footer-partner">-->
-          <!--<span class="footer-partner-text inline-block">合作伙伴：</span>-->
-          <!--<span class="footer-partner-ag inline-block"></span>-->
-          <!--<span class="footer-partner-playtech inline-block"></span>-->
-          <!--<span class="footer-partner-micro inline-block"></span>-->
-          <!--<span class="footer-partner-unipay inline-block"></span>-->
-          <!--<span class="footer-partner-alipay inline-block"></span>-->
-          <!--<span class="footer-partner-wx inline-block"></span>-->
-        <!--</div>-->
-        <!--<div class="footer-copyright">-->
-          <!--Copyright <i class="fa fa-copyright footer-copyright-img" aria-hidden="true"></i> 2017-2018<span-->
-          <!--class="footer-copyright-name">无限娱乐</span> 版权所有-->
-        <!--</div>-->
         <footer-copyright></footer-copyright>
         <div class="footer-tips">
           无限娱乐郑重提示：彩票有风险、投注需谨慎，未满18周岁的青少年禁止购买
@@ -77,13 +66,22 @@
   </div>
 </template>
 <script>
-  import FooterCopyright from "../../components/footer/index";
+  import loginApi from 'api/login'
+  import FooterCopyright from "com/footer/index"
+
   export default{
     name: 'reset-init-pwd',
-
     data () {
       return {
-        passwordFlag: false
+        passwordFlag: false,
+        passwordModel: '',
+        passwordcheckModel: '',
+        errorText: '',
+        checkErrorText: '',
+        errorIcon: 0,
+        checkErrorIcon: 0,
+        pwdTips: false,
+        userToken: ''
       }
     },
 
@@ -101,48 +99,124 @@
     computed: {},
 
     filters: {},
-
+    created(){
+      this.userToken = Global.cookieCache.get('token')
+      Global.cookieCache.clear('token')
+      Global.cookieCache.clear('loginState')
+    },
     methods: {
       resetInitPwd(){
+        if (this.passwordModel === '') {
+          this.errorIcon = 2
+          this.errorText = '密码不能为空'
+          return false
+        }
+        if (this.passwordcheckModel === '') {
+          this.checkErrorIcon = 2
+          this.checkErrorText = '密码不能为空'
+          return false
+        }
+        if (this.passwordcheckModel !== this.passwordModel) {
+          this.checkErrorIcon = 2
+          this.checkErrorText = '两次密码输入不一致'
+          return false
+        }
+        if (!this.verifyPwd() && !this.verifyConfirmPwd()) {
+          return false
+        }
+        loginApi.resetInitPwd({
+          newPwd: this.passwordcheckModel,
+          userToken: this.userToken,
+        }, ({data}) => {
+          if (data.result === 0) {
+            window.Global.cookieCache.set('token', this.userToken,)
+            window.Global.cookieCache.set('loginState', true)
+            window.history.back(-1)
+          } else {
+            this.checkErrorIcon = 2
+            this.checkErrorText = data.msg.length === 0 ? '重置密码失败！' : data.msg
+          }
+        })
+      },
+      cancelInitPwd(){
+        Global.cookieCache.clear('token')
+        Global.cookieCache.clear('loginState')
+        window.history.go(-1)
       },
       verifyPwd(){
         let errorText = ''
-//      else
-//        {
-//          const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
-//          if (this.passwordModel.length < 9 && this.strBetweenIsNumber(this.passwordModel, 0, 7)) {
-//            errorText = '密码不能是9位以下的纯数字！'
-//            return false
-//          } else if (!pwReg.test(this.passwordModel)) {
-//            errorText = '密码为6-20位字符组成（不含空格），区分大小写！'
-//            return false
-//          }
-//          if (this.passwordModel === '') {
-//          }
-//        }
-      },
-      verifyConfirmPwd(){
-        if (this.password === '') {
-          this.passwordError = false
-          this.showErrorMsg = false
-          this.pwdSuccess = false
+        const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
+        if (this.passwordModel.length > 0) {
+          if (this.passwordModel.length < 9 && this.strBetweenIsNumber(this.passwordModel, 0, 7)) {
+            errorText = '密码不能是9位以下的纯数字！'
+          } else if (!pwReg.test(this.passwordModel)) {
+            errorText = '密码为6-20位字符组成（不含空格），区分大小写！'
+          } else {
+            errorText = ''
+          }
         } else {
-          const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
-          if (this.password.length < 9 && this.strBetweenIsNumber(this.password, 0, 7)) {
-            this.passwordError = true
-            this.showErrorMsg = true
-            this.pwdSuccess = false
-            this.errorMsg = '密码不能是9位以下的纯数字！'
-            return false
-          } else if (!pwReg.test(this.password)) {
-            this.passwordError = true
-            this.showErrorMsg = true
-            this.pwdSuccess = false
-            this.errorMsg = '密码为6-20位字符组成（不含空格），区分大小写！'
+          this.errorIcon = 0
+          this.errorText = ''
+          return false
+        }
+        if (errorText !== '') {
+          this.errorIcon = 2
+          this.errorText = errorText
+          return false
+        } else {
+          if (this.passwordModel.length > 0) {
+            this.errorIcon = 0
+            this.errorText = ''
+            return true
+          } else {
+            this.errorIcon = 1
+            this.errorText = '密码为6-20位字符组成（不含空格），区分大小写'
             return false
           }
         }
-      }
+      },
+      verifyConfirmPwd(){
+        let errorText = ''
+        const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
+        if (this.passwordcheckModel.length > 0) {
+          if (this.passwordcheckModel.length < 9 && this.strBetweenIsNumber(this.passwordcheckModel, 0, 7)) {
+            errorText = '密码不能是9位以下的纯数字！'
+          } else if (!pwReg.test(this.passwordModel)) {
+            errorText = '密码为6-20位字符组成（不含空格），区分大小写！'
+          } else {
+            errorText = ''
+          }
+        } else {
+          this.checkErrorIcon = 0
+          this.checkErrorText = ''
+          return false
+        }
+        if (errorText !== '') {
+          this.checkErrorIcon = 2
+          this.checkErrorText = errorText
+          return false
+        } else {
+          if (this.passwordcheckModel.length > 0) {
+            this.checkErrorIcon = 0
+            this.checkErrorText = ''
+            return true
+          } else {
+            this.checkErrorIcon = 1
+            this.checkErrorText = '密码为6-20位字符组成（不含空格），区分大小写'
+            return false
+          }
+        }
+      },
+      strBetweenIsNumber (str, star, end) {
+        const strArr = str.split('').slice(star, end)
+        let isHasNumber = true
+        $.each(strArr, (index, item) => {
+          if (!$.isNumeric(item)) {
+            isHasNumber = false
+          }
+        })
+        return isHasNumber
+      },
     }
   }
 </script>
@@ -277,6 +351,10 @@
               border: 1px solid #14b1bb;
             }
           }
+          &.confirm {
+            position: fixed;
+            top: 330px;
+          }
         }
         .message-container {
           margin: 10px 88px;
@@ -287,10 +365,19 @@
           .message-text {
             vertical-align: top;
             color: #cccccc;
+            &.error {
+              color: #e84c4c;
+            }
+          }
+          &.confirm {
+            position: fixed;
+            top: 390px;
           }
         }
         .reset-submit-container {
           padding: 30px 88px;
+          position: fixed;
+          top: 420px;
           .reset-submit {
             padding: 10px 80px;
             background-color: #14b1bb;
@@ -316,12 +403,12 @@
         z-index: 50;
         position: relative;
         /*.footer-copyright {*/
-          /*margin: 14px;*/
-          /*color: #999999;*/
-          /*font-size: 12px;*/
-          /*.footer-copyright-name {*/
-            /*margin-left: 3px;*/
-          /*}*/
+        /*margin: 14px;*/
+        /*color: #999999;*/
+        /*font-size: 12px;*/
+        /*.footer-copyright-name {*/
+        /*margin-left: 3px;*/
+        /*}*/
         /*}*/
         .footer-tips {
           margin: 3px;
@@ -329,49 +416,49 @@
           font-size: 12px;
         }
         /*<!--.footer-line {-->*/
-          /*<!--width: 1200px;-->*/
-          /*<!--height: 1px;-->*/
-          /*<!--margin-bottom: 43px;-->*/
-          /*<!--margin-left: -100px;-->*/
-          /*<!--background-image: url("./misc/initPwd-back-line.png");-->*/
+        /*<!--width: 1200px;-->*/
+        /*<!--height: 1px;-->*/
+        /*<!--margin-bottom: 43px;-->*/
+        /*<!--margin-left: -100px;-->*/
+        /*<!--background-image: url("./misc/initPwd-back-line.png");-->*/
         /*<!--}-->*/
         /*.footer-partner {*/
-          /*color: #999999;*/
-          /*font-size: 12px;*/
-          /*margin-bottom: 32px;*/
-          /*.footer-partner-text {*/
-            /*vertical-align: top;*/
-          /*}*/
-          /*.footer-partner-ag {*/
-            /*width: 104px;*/
-            /*height: 25px;*/
-            /*background-image: url("./misc/initPwd-logo-ag.png");*/
-          /*}*/
-          /*.footer-partner-playtech {*/
-            /*width: 104px;*/
-            /*height: 25px;*/
-            /*background-image: url("./misc/initPwd-logo-playtech.png");*/
-          /*}*/
-          /*.footer-partner-micro {*/
-            /*width: 104px;*/
-            /*height: 25px;*/
-            /*background-image: url("./misc/initPwd-logo-micro.png");*/
-          /*}*/
-          /*.footer-partner-unipay {*/
-            /*width: 104px;*/
-            /*height: 25px;*/
-            /*background-image: url("./misc/initPwd-logo-unipay.png");*/
-          /*}*/
-          /*.footer-partner-alipay {*/
-            /*width: 104px;*/
-            /*height: 25px;*/
-            /*background-image: url("./misc/initPwd-logo-ali.png");*/
-          /*}*/
-          /*.footer-partner-wx {*/
-            /*width: 104px;*/
-            /*height: 25px;*/
-            /*background-image: url("./misc/initPwd-logo-wx.png");*/
-          /*}*/
+        /*color: #999999;*/
+        /*font-size: 12px;*/
+        /*margin-bottom: 32px;*/
+        /*.footer-partner-text {*/
+        /*vertical-align: top;*/
+        /*}*/
+        /*.footer-partner-ag {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-ag.png");*/
+        /*}*/
+        /*.footer-partner-playtech {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-playtech.png");*/
+        /*}*/
+        /*.footer-partner-micro {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-micro.png");*/
+        /*}*/
+        /*.footer-partner-unipay {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-unipay.png");*/
+        /*}*/
+        /*.footer-partner-alipay {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-ali.png");*/
+        /*}*/
+        /*.footer-partner-wx {*/
+        /*width: 104px;*/
+        /*height: 25px;*/
+        /*background-image: url("./misc/initPwd-logo-wx.png");*/
+        /*}*/
         /*}*/
       }
     }

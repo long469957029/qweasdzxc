@@ -10,7 +10,7 @@ const initState = () => {
     openResetPassWordDialog: false,
     openLoginLauncher: false,
     openFreeTrialDialog: false,
-    openRestInitPwdDialog: false,
+    token: '',
   }
 }
 
@@ -31,8 +31,8 @@ const getters = {
   freeTrialStatus: (state) => {
     return state.openFreeTrialDialog
   },
-  resetInitPwdStatus: (state) => {
-    return state.openRestInitPwdDialog
+  userToken: (state) => {
+    return state.token
   },
 }
 
@@ -59,6 +59,9 @@ const mutations = {
   },
   [types.TOGGLE_RESET_INIT_PWD](state, data) {
     state.openRestInitPwdDialog = data
+  },
+  [types.COMMIT_USER_TOKEN](state, data) {
+    state.token = data
   },
 }
 

@@ -96,7 +96,6 @@ const actions = {
 const mutations = {
   // 用户登录
   [types.USER_LOGIN_SUCCESS] (state, data) {
-
     window.Global.memoryCache.set('acctInfo', data)
     window.Global.m.publish('acct:login', data)
     window.Global.m.publish('acct:updating', data)
@@ -118,12 +117,25 @@ const mutations = {
       Global.cookieCache.clear('loginState')
       window.Global.m.publish('acct:loginOut')
       this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
-      window.location.href=''
+      window.location.href = ''
+    }
+  },
+  [types.USER_LOGOUT_SUCCESS] (state, data) {
+    if (data && data.result === 0) {
+      Object.assign(state, initState())
+      Global.cookieCache.clear('token')
+      Global.cookieCache.clear('loginState')
+      window.Global.m.publish('acct:loginOut')
+      this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
+      window.location.href = ''
+    } else if (data && data.result === -1) {
+
     }
   },
   [types.TOGGLE_DO_LOGOUT] (state, data) {
     state.loginOutStatus = data
   },
+
 }
 
 export default {
