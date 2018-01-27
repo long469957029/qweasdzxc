@@ -113,4 +113,7 @@ module.exports = {
       id,
     })
   },
+  getAll(){
+    return banks
+  }
 }

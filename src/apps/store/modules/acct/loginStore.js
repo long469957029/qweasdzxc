@@ -128,6 +128,8 @@ const mutations = {
       window.Global.m.publish('acct:loginOut')
       this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
       window.location.href = ''
+    } else if (data && data.result === -1) {
+
     }
   },
   [types.TOGGLE_DO_LOGOUT] (state, data) {

@@ -8,8 +8,7 @@ const SystemMessageView = Base.ItemView.extend({
   startOnLoading: true,
 
   events: {
-    // 'click .js-message-btn': 'messageBtnHandler',
-    'click .js-system-message-list': 'messageBtnHandler',
+    'click .js-message-btn': 'messageBtnHandler',
   },
 
   setNoticeEntry() {

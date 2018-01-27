@@ -46,18 +46,24 @@ const TransferView = Base.ItemView.extend({
   },
   onRender() {
     const self = this
-    this.getActivityInfo()
-      .always(() => {
-        self.loadingFinish()
-      })
-      .done((res) => {
-        if (res && res.result === 0) {
-          // 生成充值页广告
-          this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
-        } else {
-          Global.ui.notification.show('服务器异常')
-        }
-      })
+    if (!Global.memoryCache.get('rechargeAc')) {
+      this.getActivityInfo()
+        .always(() => {
+          self.loadingFinish()
+        })
+        .done((res) => {
+          if (res && res.result === 0) {
+            // 生成充值页广告
+            Global.memoryCache.set('rechargeAc', res1[0].root.records)
+            this.$('.jc-rc-activity').html(rechargeService.getFunActivity(res.root.records))
+          } else {
+            Global.ui.notification.show('服务器异常')
+          }
+        })
+    } else {
+      this.$('.jc-rc-activity').html(rechargeService.getFunActivity(Global.memoryCache.get('rechargeAc')))
+    }
+
     // 初始化转出钱包选择框
     const fromData = transferService.getFromData()
     this.$('.js-tr-out-selected').html(fromData.fromSelected)
@@ -89,16 +95,24 @@ const TransferView = Base.ItemView.extend({
     const self = this
     const $from = this.$('.js-tr-out-selectedItem').data('id')
     const $to = this.$('.js-tr-in-selectedItem').data('id')
-    this.getPlatformInfoXhr({channelId: Number($to) || Number($from) || '1'}).always(() => {
-      this.loadingFinish()
-    }).done((res) => {
-      if (res.result === 0) {
-        self.plaftfromData = res.root
-        this.$('.fc-tr-amount-tips').toggleClass('hidden', false)
-        this.$('.fc-rc-leftBar-bottom-area').css('top', '235px')
-        self.renderPlatformTransferTypeLimit()
-      }
-    })
+    if(!Global.memoryCache.get('platformInfo')){
+      this.getPlatformInfoXhr({channelId: Number($to) || Number($from) || '1'}).always(() => {
+        this.loadingFinish()
+      }).done((res) => {
+        if (res.result === 0) {
+          self.plaftfromData = res.root
+          this.$('.fc-tr-amount-tips').toggleClass('hidden', false)
+          this.$('.fc-rc-leftBar-bottom-area').css('top', '235px')
+          Global.memoryCache.set('platformInfo', res.root)
+          self.renderPlatformTransferTypeLimit()
+        }
+      })
+    }else{
+      self.plaftfromData = Global.memoryCache.get('platformInfo')
+      this.$('.fc-tr-amount-tips').toggleClass('hidden', false)
+      this.$('.fc-rc-leftBar-bottom-area').css('top', '235px')
+      self.renderPlatformTransferTypeLimit()
+    }
   },
   // 修改面板规则及展示数据
   renderPlatformTransferTypeLimit() {

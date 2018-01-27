@@ -21,7 +21,7 @@
     height: 15px;
     line-height: 15px;
     top: 11px;
-    left: 23px;
+    left: 10px;
     transform: translate(-50%, -50%);
     background: white;
     border-radius: 3px;
@@ -31,7 +31,8 @@
     padding: 0px;
   }
   .table th, .table td {
-    padding: 7px 3px;
+    padding: 8px 3px;
+    position: relative;
   }
 }
 

@@ -141,11 +141,13 @@ const BettingRecordsView = SearchGrid.extend({
 
   formatRowData(rowInfo, index) {
     const row = []
-    const rowTop = (index * 40) + 11
+    // const rowTop = (index * 40) + 11
     // 投注时间
     if (rowInfo.chaseId) {
+      // row.push('<div class="fc-td-record-status" ' +
+      //   `style="top:${rowTop}px">追</div><button class="js-gl-bet-detail-dialog btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
       row.push('<div class="fc-td-record-status" ' +
-        `style="top:${rowTop}px">追</div><button class="js-gl-bet-detail-dialog btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
+        `>追</div><button class="js-gl-bet-detail-dialog btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
     } else {
       row.push(`<button class="js-gl-bet-detail-dialog btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
     }
