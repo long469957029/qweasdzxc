@@ -1,6 +1,6 @@
 import './misc/index.scss'
-const BettingCenter = () => import(/* webpackChunkName: "analysis-center" */ './betting-center')
-const MMCBettingCenter = () => import(/* webpackChunkName: "analysis-center" */ './mmc-betting-center')
+const BettingCenter = () => import(/* webpackChunkName: "betting-center" */ './betting-center')
+const MMCBettingCenter = () => import(/* webpackChunkName: "betting-center" */ './mmc-betting-center')
 
 export default [
   {
