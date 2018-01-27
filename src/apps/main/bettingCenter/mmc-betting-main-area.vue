@@ -549,7 +549,7 @@
 
       toggleFinalResult(flag = true) {
         $(this.$refs.finalResult).modal({
-          backdrop: 'static',
+          // backdrop: 'static',
         })
         // this.$refs.finalResult
         this.showFinalResult = flag
@@ -868,6 +868,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '~base/styles/_spritesMMC';
 
   .opening-panel-inner {
     top: 30px;
@@ -932,6 +933,9 @@
     display: inline-block;
     left: 50px;
     cursor: pointer;
+    &:hover {
+      @include sprite($sfa-mmc-simulation-hover-btn);
+    }
   }
 
   .mmc-lottery-main-inner {
@@ -1326,9 +1330,6 @@
   .opening-cell-enter, .opening-cell-leave-to {
     opacity: 0;
     transform: translateY(30px);
-  }
-  .opening-cell-leave-active {
-    position: absolute;
   }
 
   .opening-left {
