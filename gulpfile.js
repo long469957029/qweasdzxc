@@ -204,83 +204,83 @@ gulp.task('image.min', () => {
 // })
 
 gulp.task('build.sprite', (callback) => {
-  // const spriteData =
-  //   gulp.src(['./src/base/images/sprites/*.png', './src/base/images/sprites/*/*'])
-  //     .pipe(spritesmith({
-  //       imgName: 'sprite.png',
-  //       cssName: '_sprite.scss',
-  //       cssFormat: 'scss',
-  //       imgPath: '~base/images/sprite.png',
-  //       algorithm: 'binary-tree',
-  //       cssVarMap (sprite) {
-  //         sprite.name = `sfa-${sprite.name}`
-  //       },
-  //     }))
-  //
-  // const imgStream = spriteData.img
-  //   .pipe(imagemin([
-  //     imagemin.gifsicle({interlaced: true}),
-  //     imagemin.jpegtran({progressive: true}),
-  //     imagemin.optipng({optimizationLevel: 5}),
-  //     imagemin.svgo({
-  //       plugins: [
-  //         {removeViewBox: true},
-  //         {cleanupIDs: false}
-  //       ]
-  //     })
-  //   ]))
-  //   .pipe(gulp.dest('./src/base/images'))
-  // spriteData.css.pipe(gulp.dest('./src/base/styles'))
+  const spriteData =
+    gulp.src(['./src/base/images/sprites/*.png', './src/base/images/sprites/*/*'])
+      .pipe(spritesmith({
+        imgName: 'sprite.png',
+        cssName: '_sprite.scss',
+        cssFormat: 'scss',
+        imgPath: '~base/images/sprite.png',
+        algorithm: 'binary-tree',
+        cssVarMap (sprite) {
+          sprite.name = `sfa-${sprite.name}`
+        },
+      }))
+
+  const imgStream = spriteData.img
+    .pipe(imagemin([
+      imagemin.gifsicle({interlaced: true}),
+      imagemin.jpegtran({progressive: true}),
+      imagemin.optipng({optimizationLevel: 5}),
+      imagemin.svgo({
+        plugins: [
+          {removeViewBox: true},
+          {cleanupIDs: false}
+        ]
+      })
+    ]))
+    .pipe(gulp.dest('./src/base/images'))
+  spriteData.css.pipe(gulp.dest('./src/base/styles'))
   // 老虎机雪碧图相关scss文件生成后需要修改变量名及方法名，因此其他常规sprites文件夹下的图片合成雪碧图时，先注释以下内容，
   // //begin MG老虎机专用雪碧图
-  var spriteDataMG =
-    gulp.src(['./src/base/images/spritesMG/*.png', './src/base/images/spritesMG/*/*'])
-      .pipe(spritesmith({
-        imgName: 'spriteMG.png',
-        cssName: '_spriteMG.scss',
-        cssFormat: 'scss',
-        imgPath: '~base/images/spriteMG.png',
-        algorithm: 'binary-tree',
-        cssVarMap: function(sprite) {
-          sprite.name = 'sfa-' + sprite.name;
-        }
-      }));
+  // var spriteDataMG =
+  //   gulp.src(['./src/base/images/spritesMG/*.png', './src/base/images/spritesMG/*/*'])
+  //     .pipe(spritesmith({
+  //       imgName: 'spriteMG.png',
+  //       cssName: '_spriteMG.scss',
+  //       cssFormat: 'scss',
+  //       imgPath: '~base/images/spriteMG.png',
+  //       algorithm: 'binary-tree',
+  //       cssVarMap: function(sprite) {
+  //         sprite.name = 'sfa-' + sprite.name;
+  //       }
+  //     }));
+  //
+  // var imgStreamMG = spriteDataMG.img
+  //   // .pipe(imagemin({
+  //   //   progressive: true,
+  //   //   svgoPlugins: [{removeViewBox: false}],
+  //   //   // use: [pngquant({
+  //   //   //   quality: '60-80'
+  //   //   // })]
+  //   // }))
+  //   .pipe(gulp.dest('./src/base/images'));
+  // spriteDataMG.css.pipe(gulp.dest('./src/base/styles'));
+  // //end  MG老虎机专用雪碧图
+  // //begin PT老虎机专用雪碧图
+  // var spriteDataPT =
+  //   gulp.src(['./src/base/images/spritesPT/*.png', './src/base/images/spritesPT/*/*'])
+  //     .pipe(spritesmith({
+  //       imgName: 'spritePT.png',
+  //       cssName: '_spritePT.scss',
+  //       cssFormat: 'scss',
+  //       imgPath: '~base/images/spritePT.png',
+  //       algorithm: 'binary-tree',
+  //       cssVarMap: function(sprite) {
+  //         sprite.name = 'sfa-' + sprite.name;
+  //       }
+  //     }));
 
-  var imgStreamMG = spriteDataMG.img
-    // .pipe(imagemin({
-    //   progressive: true,
-    //   svgoPlugins: [{removeViewBox: false}],
-    //   // use: [pngquant({
-    //   //   quality: '60-80'
-    //   // })]
-    // }))
-    .pipe(gulp.dest('./src/base/images'));
-  spriteDataMG.css.pipe(gulp.dest('./src/base/styles'));
-  //end  MG老虎机专用雪碧图
-  //begin PT老虎机专用雪碧图
-  var spriteDataPT =
-    gulp.src(['./src/base/images/spritesPT/*.png', './src/base/images/spritesPT/*/*'])
-      .pipe(spritesmith({
-        imgName: 'spritePT.png',
-        cssName: '_spritePT.scss',
-        cssFormat: 'scss',
-        imgPath: '~base/images/spritePT.png',
-        algorithm: 'binary-tree',
-        cssVarMap: function(sprite) {
-          sprite.name = 'sfa-' + sprite.name;
-        }
-      }));
-
-  var imgStreamPT = spriteDataPT.img
-    // .pipe(imagemin({
-    //   progressive: true,
-    //   svgoPlugins: [{removeViewBox: false}],
-    //   // use: [pngquant({
-    //   //   quality: '60-80'
-    //   // })]
-    // }))
-    .pipe(gulp.dest('./src/base/images'));
-  spriteDataPT.css.pipe(gulp.dest('./src/base/styles'));
+  // var imgStreamPT = spriteDataPT.img
+  //   // .pipe(imagemin({
+  //   //   progressive: true,
+  //   //   svgoPlugins: [{removeViewBox: false}],
+  //   //   // use: [pngquant({
+  //   //   //   quality: '60-80'
+  //   //   // })]
+  //   // }))
+  //   .pipe(gulp.dest('./src/base/images'));
+  // spriteDataPT.css.pipe(gulp.dest('./src/base/styles'));
   //end  PT老虎机专用雪碧图
   callback()
 })
