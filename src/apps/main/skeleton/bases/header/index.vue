@@ -125,6 +125,7 @@
     methods: {
       showLogin() {
         this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+//        this.openLoginDialog()
       },
       showLoginLauncher(){
         this.$store.commit(types.TOGGLE_LOGIN_LAUNCHER, true)
@@ -152,6 +153,17 @@
       logout(){
         this.$store.commit(types.TOGGLE_LOGOUT_DIALOG, true)
       },
+//      openLoginDialog(){
+//        this.$nextTick(() => {
+////          this.$refs.showLogin.init()
+//          $('.modal').modal({
+//            backdrop: 'static',
+//          })
+//            .on('hidden.modal', () => {
+//              this.$store.commit(types.TOGGLE_LOGIN_DIALOG, false)
+//            })
+//        })
+//      },
     },
     mounted(){
       Global.m.subscribe('news', 'news:updating', this.renderMsgList)

@@ -112,12 +112,12 @@ $navbar-container-color: white;
   @keyframes fadeInDown {
     from {
       opacity: 0;
-      transform: translate3d(-50%, -100%, 0);
+      transform: translate3d(-50%, -30%, 0);
     }
 
     to {
       opacity: 1;
-      transform: translate3d(-50%, 0, 0);
+      transform: translate3d(-50%, 1%, 0);
     }
   }
 
@@ -269,7 +269,8 @@ $navbar-container-color: white;
 
 .nav-channel-container{
   position: absolute;
-  background: url('./images/nav-channel-container.png');
+  //background: url('./images/nav-channel-container.png');
+  background: $def-white-color;
   height: 200px;
   // transform: scaleY(0);
   z-index: 12;

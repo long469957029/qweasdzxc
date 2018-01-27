@@ -41,7 +41,10 @@
           },
         })
       },
-    }
+    },
+//    mounted(){
+//      this.logout()
+//    }
   }
 </script>
 

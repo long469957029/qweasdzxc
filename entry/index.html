@@ -46,11 +46,11 @@
     </div>
   </div>
   <main-footer></main-footer>
-  <login></login>
+  <login v-if="loginDialogStatus"></login>
   <logout></logout>
-  <reset-pwd></reset-pwd>
-  <login-launcher></login-launcher>
-  <free-trial></free-trial>
+  <reset-pwd v-if="resetPassWordDialogStatus"></reset-pwd>
+  <!--<login-launcher></login-launcher>-->
+  <!--<free-trial></free-trial>-->
 </div>
 <div id="toolbar" class="home-toolbar-container js-toolbar-container"></div>
 

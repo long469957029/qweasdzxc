@@ -115,7 +115,7 @@ const _bindBetDetailHandler = () => {
     const $dialog = Global.ui.dialog.show({
       size: 'modal-bet',
       bStyle: 'width: 535px;height:620px;',
-      body: '<div class="fc-gr-bet-detail sfa sfa-dailog-betting-detail"></div>',
+      body: '<div class="fc-gr-bet-detail"></div>',
       closeBtn: false,
       bodyClass: 'no-padding',
     })

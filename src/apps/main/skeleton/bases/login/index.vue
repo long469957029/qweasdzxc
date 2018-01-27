@@ -86,18 +86,7 @@
     props: {},
 
     components: {},
-    watch: {
-      loginDialogStatus(loginDialogStatus) {
-        if (loginDialogStatus) {
-          this.openLoginDialog()
-        }
-      },
-    },
-    computed: {
-      ...mapGetters([
-        'loginDialogStatus',
-      ]),
-    },
+
     filters: {},
 
     methods: {
@@ -295,21 +284,22 @@
         })
         return isHasNumber
       },
-      openLoginDialog(){
-        this.$nextTick(() => {
-//          this.$refs.showLogin.init()
-          $(this.$refs.loginModal).modal({
-            backdrop: 'static',
-          })
-            .on('hidden.modal', () => {
-              this.$store.commit(types.TOGGLE_LOGIN_DIALOG, false)
-            })
-        })
-      },
+
       closeDialog(){
         $(this.$refs.loginModal).modal('hide')
       },
-    }
+    },
+    mounted(){
+      this.$nextTick(() => {
+//          this.$refs.showLogin.init()
+        $(this.$refs.loginModal).modal({
+          backdrop: 'static',
+        })
+          .on('hidden.modal', () => {
+            this.$store.commit(types.TOGGLE_LOGIN_DIALOG, false)
+          })
+      })
+    },
   }
 </script>
 
