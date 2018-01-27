@@ -34,23 +34,42 @@ const RecordView = Base.ItemView.extend({
       const html = []
       const createTime = _(game.date).toTime()
       const betAmount = _(game.bet).convert2yuan()
-      let gameStatus = ''
 
-      if (game.type === 1) {
-        if (game.status === 0) {
-          gameStatus = '等待开奖'
-        } else if (game.status === 1) {
-          gameStatus = '已中奖'
-        } else if (game.status === 2) {
-          gameStatus = '未中奖'
+      // if (game.type === 1) {
+      //   if (game.status === 0) {
+      //     gameStatus = '等待开奖'
+      //   } else if (game.status === 1) {
+      //     gameStatus = '已中奖'
+      //   } else if (game.status === 2) {
+      //     gameStatus = '未中奖'
+      //   }
+      // }
+      // 0:未中奖，1：已中奖，2：用户撤单，3：系统撤单,ticketResult,prizeTotalMoney
+      // 状态
+      let status = ''
+      if (game.status === 2) {
+        status = '用户撤单'
+      } else if (game.status === 3) {
+        status = '系统撤单'
+      } else if (game.hasException) {
+        status = '等待开奖'
+      } else if (game.ticketResult === null) {
+        if (game.status > 0) {
+          status = '未中奖'
+        } else {
+          status = '等待开奖'
         }
+      } else if (game.price === 0) {
+        status = '未中奖'
+      } else {
+        status = `<span class="text-account-cut">${_(game.price).convert2yuan()}</span>`
       }
       html.push('<div class="recent-game-item">')
       html.push(`<div class="game-title">${game.name}</div>`)
       html.push(`<div class="game-date">${createTime}</div>`)
       html.push(`<div class="game-type">${game.playName}</div>`)
       html.push(`<div class="game-amount">${betAmount}</div>`)
-      html.push(`<div class="game-state">${gameStatus}</div>`)
+      html.push(`<div class="game-state">${status}</div>`)
       html.push('<div class="clearfix"></div>')
       html.push('</div>')
       itemHtml.push(html.join(''))

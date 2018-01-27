@@ -14,7 +14,7 @@ export default {
       .catch(fail)
   },
   // 登录
-  pushLoginInfo({username, loginPwd, param, code}, then) {
+  pushLoginInfo({username, loginPwd, param, code}, then, fail) {
     return Global.sync.axios({
       url: '/acct/login/dologin.json',
       data: {
@@ -25,6 +25,7 @@ export default {
       },
     })
       .then(then)
+      .catch(fail)
   },
   // 退出登录
   logout(then) {
@@ -32,5 +33,17 @@ export default {
       url: '/acct/login/dologout.json',
     })
       .then(then)
+  },
+  // 重置用户初始密码
+  resetInitPwd({newPwd, userToken}, then, fail) {
+    return Global.sync.axios({
+      url: 'acct/userinfo/setloginpwd.json',
+      data: {
+        password: newPwd,
+        token: userToken,
+      }
+    })
+      .then(then)
+      .catch(fail)
   },
 }

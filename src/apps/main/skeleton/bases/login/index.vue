@@ -143,21 +143,19 @@
             if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
               this.autoLogoutCountdown(acctInfo.outTime)
             }
-            Global.cookieCache.set('token', data.root.token)
-            Global.cookieCache.set('loginState', true)
-//            Global.m.oauth.start()
+            window.Global.cookieCache.set('token', acctInfo.token)
+            window.Global.cookieCache.set('loginState', true)
             const status = Number(data.root.userStatus)
-//            status = Number(status)
             if (status === 0 || status === 100 || status === 102) {
-//              this.$emit('dialogClose')
               this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
               this.closeDialog()
             } else if (status === 104 || status === 105 || status === 106) {
 //              const ur = `userName=${data.root.username}${data.root.uName ? `&uName=${data.root.uName}` : ''}&status=${status}`
 //              window.location.href = `resetInitPwd.html?${encodeURI(ur)}`
 //              this.$store.commit(types.TOGGLE_RESET_INIT_PWD, true)
-              window.location.href = 'resetInitPwd.html'
+//              this.$store.commit(types.COMMIT_USER_TOKEN, acctInfo.token)
               $(this.$refs.loginModal).modal('hide')
+              window.location.href = 'resetInitPwd.html'
             } else if (status === 101) {
               this.showErrorMsg = true
               this.errorMsg = '完全冻结的用户无法登录！'
