@@ -102,7 +102,7 @@
 </template>
 
 <script>
-  import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
+  import betRulesAlgorithm from './misc/betRulesAlgorithm'
   import BettingPlayAreaPosition from "./betting-play-area-position"
 
   export default {
@@ -225,6 +225,22 @@
         }
 
         return results
+      },
+
+      autoCreate() {
+        const result = this.playRule.create(this.playRule)
+
+        result.lotteryList.forEach((selected, index) => {
+          // if (!_.isEmpty(selected)) {
+          this.formattedRuleList[index].row.fItems.forEach(row => {
+            row.selected = !!_.findWhere(selected, {
+              num: row.num
+            })
+          })
+          // }
+        })
+
+        this.$_statisticsLottery()
       },
 
       selectOperate(op, row) {
@@ -520,6 +536,9 @@
 
   .tab-group {
     max-width: 695px;
+  }
+  .cbutton {
+    transition: all .3s ease-out;
   }
 
   /*mmc*/
