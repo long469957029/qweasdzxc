@@ -347,7 +347,7 @@ $navbar-container-color: white;
 
   .nav-channel-container {
     border: 1px solid #f0f0f0;
-    padding: 45px 0 0 60px;
+    padding: 31px 0 0 60px;
     position: relative;
     width: 310px;
     display: flex;
@@ -477,7 +477,7 @@ $navbar-container-color: white;
     background: url('./images/classic-title-classic.png');
     width: 43px;
     height: 103px;
-    z-index: 8;
+    z-index: 14;
   }
 
   .classic-title-handicap {
@@ -487,7 +487,7 @@ $navbar-container-color: white;
     background: url('./images/classic-title-handicap.png');
     width: 43px;
     height: 104px;
-    z-index: 8;
+    z-index: 14;
   }
 
   .classic-section {
