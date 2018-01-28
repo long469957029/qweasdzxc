@@ -112,12 +112,12 @@ $navbar-container-color: white;
   @keyframes fadeInDown {
     from {
       opacity: 0;
-      transform: translate3d(-50%, -30%, 0);
+      transform: translate3d(-50%, -25%, 0);
     }
 
     to {
       opacity: 1;
-      transform: translate3d(-50%, 1%, 0);
+      transform: translate3d(-50%, 0.5px, 0);
     }
   }
 
