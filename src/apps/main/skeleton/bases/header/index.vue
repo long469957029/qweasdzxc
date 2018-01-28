@@ -178,17 +178,17 @@
           }
         })
       },
-      openLoginDialog(){
-        this.$nextTick(() => {
-//          this.$refs.showLogin.init()
-          $('.modal').modal({
-            backdrop: 'static',
-          })
-            .on('hidden.modal', () => {
-              this.$store.commit(types.TOGGLE_LOGIN_DIALOG, false)
-            })
-        })
-      },
+//      openLoginDialog(){
+//        this.$nextTick(() => {
+////          this.$refs.showLogin.init()
+//          $('.modal').modal({
+//            backdrop: 'static',
+//          })
+//            .on('hidden.modal', () => {
+//              this.$store.commit(types.TOGGLE_LOGIN_DIALOG, false)
+//            })
+//        })
+//      },
     },
     mounted(){
       Global.m.subscribe('news', 'news:updating', this.renderMsgList)
