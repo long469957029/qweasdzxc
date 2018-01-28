@@ -42,7 +42,7 @@ const appConfig = {
     // regist: './src/apps/packages/registers/index.js',
     // update15: './src/apps/packages/update/update15.js',
     // rebateDesc: './src/apps/packages/rebateDescription/rebateDescription.js',
-    // logger: './src/apps/packages/logger/index.js',
+    logger: './src/apps/packages/logger/index.js',
   },
   port: 3002,
   commonChunks: {
@@ -195,11 +195,11 @@ const appConfig = {
     //   template: './entry/package.html',
     //   chunks: ['common', 'vendor', 'base', 'rebateDesc'],
     // },
-    // logger: {
-    //   title: '无限在线娱乐',
-    //   template: './src/apps/packages/logger/index.html',
-    //   chunks: ['common', 'logger'],
-    // },
+    logger: {
+      title: '无限在线娱乐',
+      template: './src/apps/packages/logger/index.html',
+      chunks: ['common', 'logger'],
+    },
   },
   output: {
     path: 'main',
@@ -238,54 +238,6 @@ if (DEV) {
   output.chunkFilename = '[name].[hash].bundle.js';
 }
 
-//==============resolve================
-const resolve = {
-  modules: [
-    path.resolve(__dirname, 'src'),
-    path.resolve(__dirname, 'node_modules'),
-    'node_modules',
-  ],
-  extensions: ['.js', '.vue', '.scss', '.html'],
-  alias: {
-    packages: 'apps/packages',
-    build: 'apps/build.js',
-    com: 'apps/components',
-    uiCom: 'apps/uiComponents',
-    widgets: 'apps/widgets',
-
-    skeleton: 'apps/main/skeleton',
-    dashboard: 'apps/main/dashboard',
-    userCenter: 'apps/main/userCenter',
-    vipCenter: 'apps/main/vipCenter',
-    agencyCenter: 'apps/main/agencyCenter',
-    fundCenter: 'apps/main/fundCenter',
-    accountCenter: 'apps/main/accountCenter',
-    activeCenter: 'apps/main/activeCenter',
-    realCenter: 'apps/main/realCenter',
-    slotCenter: 'apps/main/slotCenter',
-    fishCenter: 'apps/main/fishCenter',
-    sportCenter: 'apps/main/sportCenter',
-    bettingCenter: 'apps/main/bettingCenter',
-    newsCenter: 'apps/main/newsCenter',
-    dynamicCenter: 'apps/main/dynamicCenter',
-    helpCenter: 'apps/main/helpCenter',
-    gameCenter: 'apps/main/gameCenter',
-    mallCenter: 'apps/main/mallCenter',
-
-    bootstrap: 'vendor/scripts/bootstrap',
-    modernizr: 'vendor/scripts/modernizr',
-    vue: 'vue/dist/vue.esm.js',
-
-    api: 'apps/api',
-    'consts': 'apps/store/consts',
-    'mutation-types': 'apps/store/mutation-types',
-    ticketConfig: 'apps/main/skeleton/misc/ticketConfig',
-    bettingTypes: 'apps/main/skeleton/misc/betting-types',
-
-    RouterController: 'apps/main/skeleton/controllers/router',
-  }
-};
-
 //==============plugins================
 let plugins = [
   // new webpack.ResolverPlugin(
@@ -312,9 +264,9 @@ let plugins = [
     RouterController: ['RouterController', 'default'],
 
     consts: 'consts',
-    types: 'mutation-types',
+    types: 'types',
     ticketConfig: ['ticketConfig', 'default'],
-    bettingTypes: 'bettingTypes',
+    bettingTypes: ['bettingTypes', 'default'],
   }),
   new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /zh-cn/),
 
@@ -516,8 +468,53 @@ module.exports = {
   externals: {
     '$': 'jQuery'
   },
-  resolve: resolve,
-  plugins: plugins,
+  resolve: {
+    modules: [
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'node_modules'),
+      'node_modules',
+    ],
+    extensions: ['.js', '.vue', '.scss', '.html'],
+    alias: {
+      packages: 'apps/packages',
+      build: 'apps/build.js',
+      com: 'apps/components',
+      uiCom: 'apps/uiComponents',
+      widgets: 'apps/widgets',
+
+      skeleton: 'apps/main/skeleton',
+      dashboard: 'apps/main/dashboard',
+      userCenter: 'apps/main/userCenter',
+      vipCenter: 'apps/main/vipCenter',
+      agencyCenter: 'apps/main/agencyCenter',
+      fundCenter: 'apps/main/fundCenter',
+      accountCenter: 'apps/main/accountCenter',
+      activeCenter: 'apps/main/activeCenter',
+      realCenter: 'apps/main/realCenter',
+      slotCenter: 'apps/main/slotCenter',
+      fishCenter: 'apps/main/fishCenter',
+      sportCenter: 'apps/main/sportCenter',
+      bettingCenter: 'apps/main/bettingCenter',
+      newsCenter: 'apps/main/newsCenter',
+      dynamicCenter: 'apps/main/dynamicCenter',
+      helpCenter: 'apps/main/helpCenter',
+      gameCenter: 'apps/main/gameCenter',
+      mallCenter: 'apps/main/mallCenter',
+
+      bootstrap: 'vendor/scripts/bootstrap',
+      modernizr: 'vendor/scripts/modernizr',
+      vue: 'vue/dist/vue.esm.js',
+
+      api: 'apps/api',
+      'consts': 'apps/store/consts',
+      types: 'apps/store/mutation-types',
+      ticketConfig: 'apps/main/skeleton/misc/ticketConfig',
+      bettingTypes: 'apps/main/skeleton/misc/betting-types',
+
+      RouterController: 'apps/main/skeleton/controllers/router',
+    }
+  },
+  plugins,
   module: modules,
   devServer: {
     port: appConfig.port

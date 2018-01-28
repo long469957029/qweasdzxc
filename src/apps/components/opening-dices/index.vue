@@ -110,7 +110,7 @@
                   this.rollingStatus[i] = false
                 }
               })
-            }, 1000 * i + 5000)
+            }, 1000 * i + 3500)
           }
         }
 

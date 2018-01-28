@@ -135,6 +135,7 @@
     methods: {
       showLogin() {
         this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+//        this.openLoginDialog()
       },
       showLoginLauncher(){
         this.$store.commit(types.TOGGLE_LOGIN_LAUNCHER, true)
@@ -175,6 +176,17 @@
             }
             window.Global.cookieCache.set('security', status)
           }
+        })
+      },
+      openLoginDialog(){
+        this.$nextTick(() => {
+//          this.$refs.showLogin.init()
+          $('.modal').modal({
+            backdrop: 'static',
+          })
+            .on('hidden.modal', () => {
+              this.$store.commit(types.TOGGLE_LOGIN_DIALOG, false)
+            })
         })
       },
     },

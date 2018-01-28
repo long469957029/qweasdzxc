@@ -75,21 +75,15 @@
     },
 
     watch: {
-      ticketInfo: {
+      '$route': {
         handler() {
           this.roadBalls = roadBalls[this.ticketInfo.type]
           this.typeId = 10
           this.advanceTypeId = 0
-          this.advanceTypes = []
           this.currentAdvanceType = {}
           this.roadInfo = {}
           this.comboList = []
 
-        },
-        immediate: true
-      },
-      roadBalls: {
-        handler() {
           this.advanceTypes = _.findWhere(this.roadBalls.operates, {
             id: this.typeId
           }).pos
@@ -97,6 +91,10 @@
         },
         immediate: true
       },
+      // roadBalls: {
+      //   handler() {
+      //   },
+      // },
 
       currentAdvanceType: {
         handler() {
@@ -105,7 +103,9 @@
         immediate: true
       },
       lastOpenId() {
-        this.getData()
+        _.delay(() => {
+          this.getData()
+        }, 5000)
       }
 
     },

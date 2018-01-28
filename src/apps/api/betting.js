@@ -115,20 +115,20 @@ const pushChaseApi = ({
 }
 
 /**
- * TODO jsonp 考虑以后直接只用CORS
- * 取得30期冷热
+ * 取得30期冷热 五星
  * @param ticketId
  * @param playSeriesId
  * @param then
+ * @param type
+ * @param isOfficial
  */
-const getColdHotApi = ({ ticketId, playSeriesId }, then) => {
+const getColdHotApi = ({ ticketId, playSeriesId, isOfficial, type = 'normal' }, then) => {
   return Global.sync.ajax({
-    url: 'http://trend.ybf01.com/trends/data/coldHotData.json',
+    url: type === 'normal' ? 'http://trend.ybf01.com/trends/data/coldHotData.json' : 'http://trend.ybf01.com/trends/data/numDisColdHotData.json',
     data: {
-      ticketId,
+      ticketId: isOfficial ? ticketId : ticketId + 10000,
       playSeriesId,
-      platform:2,
-      token: 'a8d60d17-2957-450a-9421-0749c2621704',
+      platform: 2,
     },
     dataType: 'jsonp',
   })
@@ -136,18 +136,20 @@ const getColdHotApi = ({ ticketId, playSeriesId }, then) => {
 }
 
 /**
- * 当前遗漏
+ * 当前遗漏 五星
  * @param ticketId
  * @param playSeriesId
  * @param then
+ * @param type
+ * @param isOfficial
  */
-const getCurrentMissApi = ({ ticketId, playSeriesId }, then) => {
+const getCurrentMissApi = ({ ticketId, playSeriesId, isOfficial, type = 'normal' }, then) => {
   return Global.sync.ajax({
-    url: 'http://trend.ybf01.com/trends/data/currentMiss.json',
+    url: type === 'normal' ? 'http://trend.ybf01.com/trends/data/currentMiss.json' : 'http://trend.ybf01.com/trends/data/numDisCurrentMiss.json',
     data: {
-      ticketId,
+      ticketId: isOfficial ? ticketId : ticketId + 10000,
       playSeriesId,
-      token: 'a8d60d17-2957-450a-9421-0749c2621704',
+      platform: 2
     },
     dataType: 'jsonp',
   })

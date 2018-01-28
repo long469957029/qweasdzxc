@@ -51,36 +51,22 @@
 
     components: {},
 
-    watch: {
-      freeTrialStatus(freeTrialStatus) {
-        if (freeTrialStatus) {
-          this.openFreeTrial()
-        }
-      },
-    },
-
-    computed: {
-      ...mapGetters([
-        'freeTrialStatus',
-      ]),
-    },
-
     filters: {},
 
     methods: {
-      openFreeTrial(){
-        this.$nextTick(() => {
-          $(this.$refs.freeTrailModal).modal({
-            backdrop: 'static',
-          })
-            .on('hidden.modal', () => {
-              this.$store.commit(types.TOGGLE_FREE_TRIAL, false)
-            })
-        })
-      },
       closeDialog(){
         $(this.$refs.freeTrailModal).modal('hide')
       },
+    },
+    mounted(){
+      this.$nextTick(() => {
+        $(this.$refs.freeTrailModal).modal({
+          backdrop: 'static',
+        })
+          .on('hidden.modal', () => {
+            this.$store.commit(types.TOGGLE_FREE_TRIAL, false)
+          })
+      })
     }
   }
 </script>

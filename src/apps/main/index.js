@@ -111,6 +111,15 @@ Global.m.oauth.check()
       },
       store,
       router,
+      computed: {
+        ...mapGetters([
+          'loginDialogStatus',
+          'logoutDialogStatus',
+          'resetPassWordDialogStatus',
+          'loginLauncherStatus',
+          'freeTrialStatus'
+        ]),
+      },
     })
 
     window.$route = app.$route

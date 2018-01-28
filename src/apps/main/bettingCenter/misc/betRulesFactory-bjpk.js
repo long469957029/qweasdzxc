@@ -42,6 +42,11 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '010101'], {
     algorithm: algorithm.mulAllNotRepeat,
+    analysisProps: {
+      type: 'normal',
+      playSeriesId: 20019,
+      startPos: 0,
+    },
     keyPosition: ['冠军'],
     list: factory.createList(['冠军'], {
       items: ten,
@@ -59,6 +64,11 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '020101'], {
     algorithm: algorithm.mulAllNotRepeat,
+    analysisProps: {
+      type: 'normal',
+      playSeriesId: 20019,
+      startPos: 0,
+    },
     keyPosition: ['冠军', '亚军'],
     list: factory.createList(['冠军', '亚军'], {
       items: ten,
@@ -95,6 +105,11 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '030101'], {
     algorithm: algorithm.mulAllNotRepeat,
+    analysisProps: {
+      type: 'normal',
+      playSeriesId: 20019,
+      startPos: 0,
+    },
     keyPosition: ['冠军', '亚军', '季军'],
     list: factory.createList(['冠军', '亚军', '季军'], {
       items: ten,
@@ -131,6 +146,11 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '040101'], {
     algorithm: algorithm.mulAllNotRepeat,
+    analysisProps: {
+      type: 'normal',
+      playSeriesId: 20019,
+      startPos: 0,
+    },
     keyPosition: ['冠军', '亚军', '季军', '第四名'],
     list: factory.createList(['冠军', '亚军', '季军', '第四名'], {
       items: ten,
@@ -167,6 +187,11 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '050101'], {
     algorithm: algorithm.mulAllNotRepeat,
+    analysisProps: {
+      type: 'normal',
+      playSeriesId: 20019,
+      startPos: 0,
+    },
     keyPosition: ['冠军', '亚军', '季军', '第四名', '第五名'],
     list: factory.createList(['冠军', '亚军', '季军', '第四名', '第五名'], {
       items: ten,
@@ -202,6 +227,11 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '060102'], {
     algorithm: algorithm.addAll,
+    analysisProps: {
+      type: 'normal',
+      playSeriesId: 20019,
+      startPos: 0,
+    },
     list: factory.createList(['冠军', '亚军', '季军', '第四名', '第五名'], {
       items: ten,
     }),
@@ -214,6 +244,11 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '060103'], {
     algorithm: algorithm.addAll,
+    analysisProps: {
+      type: 'normal',
+      playSeriesId: 20019,
+      startPos: -5,
+    },
     list: factory.createList(['第六名', '第七名', '第八名', '第九名', '第十名'], {
       items: ten,
     }),
@@ -229,7 +264,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '160101'], {
     formType: 'DRAGON',
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -248,7 +283,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '160102'], {
     formType: 'DRAGON',
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -268,7 +303,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '160103'], {
     formType: 'DRAGON',
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -288,7 +323,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '160104'], {
     formType: 'DRAGON',
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -308,7 +343,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '160105'], {
     formType: 'DRAGON',
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -350,7 +385,7 @@ function _create(ticketId) {
     formType: 'SUM',
     keyPosition: ['冠军', '亚军'],
     analysis: false,
-    list: factory.createList([''], {
+    list: factory.createList(['号码'], {
       items: _.range(3, 20),
       operate: 'none',
     }),
@@ -366,7 +401,7 @@ function _create(ticketId) {
     formType: 'SUM',
     keyPosition: ['冠军', '亚军', '季军'],
     analysis: false,
-    list: factory.createList([''], {
+    list: factory.createList(['号码'], {
       items: _.range(6, 28),
       operate: 'none',
     }),

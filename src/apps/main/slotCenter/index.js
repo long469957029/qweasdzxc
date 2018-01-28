@@ -66,6 +66,10 @@ const SlotCenterView = Base.ItemView.extend({
     self.$tabContainer = self.$('.js-type-option-container')
     self.$search = self.$('.js-sc-search')
     self.$tab = self.$('.js-type-option')
+    self.$loadMore = self.$('.js-sc-load-more')
+    self.$empty = self.$('.js-sc-content-empty')
+    self.$emptyIcon = self.$('.js-sc-empty-icon')
+    self.$emptyText = self.$('.js-sc-empty-text')
 
     self.$gameList = self.$('.js-sc-content-container')
 
@@ -106,7 +110,8 @@ const SlotCenterView = Base.ItemView.extend({
           const { hotGames } = res.root
 
           const html = _.map(hotGames, (hotGame) => {
-            return self.hotGameTpl(hotGame)
+            const img = require(`base/images/game/slot-${hotGame.channelId}-${hotGame.gameCode}.png`)
+            return self.hotGameTpl({hotGame,img})
           })
 
           self.$hotGames.html(html)
@@ -167,14 +172,29 @@ const SlotCenterView = Base.ItemView.extend({
       .done((res) => {
         if (res.result === 0 && res.root) {
           const { gameList } = res.root
-          const html = _.chunk(gameList, 4).map((rowItems) => {
-            const game = _.map(rowItems, (item) => {
-              return self.gameTpl(item)
-            }).join('')
-            return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
-          })
+          if(_.isEmpty(gameList)){
+            self.$empty.removeClass('hidden')
+            self.$emptyIcon.addClass('search').removeClass('collection')
+            self.$emptyText.html(`非常抱歉，未找到与“${gameName}”相关的游戏！`)
+            self.$loadMore.addClass('hidden')
+            self.$gameList.empty()
+          }else{
+            self.$empty.addClass('hidden')
+            const html = _.chunk(gameList, 4).map((rowItems) => {
+              const game = _.map(rowItems, (item) => {
+                const img = require(`base/images/game/slot-${item.channelId}-${item.gameCode}.png`)
+                return self.gameTpl({item,img})
+              }).join('')
+              return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
+            })
 
-          self.$gameList.html(html)
+            self.$gameList.html(html)
+            if(gameList.length < 16) {
+              self.$loadMore.addClass('hidden')
+            } else {
+              self.$loadMore.removeClass('hidden')
+            }
+          }
         } else {
           Global.ui.notification.show('获取游戏列表失败')
         }
@@ -189,7 +209,6 @@ const SlotCenterView = Base.ItemView.extend({
     })
     $target.addClass('active')
     self.options.pageIndex = 0
-
     self.renderGameList()
   },
 
@@ -218,14 +237,29 @@ const SlotCenterView = Base.ItemView.extend({
       .done((res) => {
         if (res.result === 0 && res.root) {
           const { gameList } = res.root
-          const html = _.chunk(gameList, 4).map((rowItems) => {
-            const game = _.map(rowItems, (item) => {
-              return self.gameTpl(item)
-            }).join('')
-            return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
-          })
+          if(_.isEmpty(gameList) && reqData.collect === 1){
+            self.$empty.removeClass('hidden')
+            self.$emptyIcon.addClass('collection').removeClass('search')
+            self.$emptyText.html('暂无收藏，点击游戏右上角收藏按钮可将常玩的游戏加入收藏呦~')
+            self.$loadMore.addClass('hidden')
+            self.$gameList.empty()
+          }else{
+            self.$empty.addClass('hidden')
+            const html = _.chunk(gameList, 4).map((rowItems) => {
+              const game = _.map(rowItems, (item) => {
+                const img = require(`base/images/game/slot-${item.channelId}-${item.gameCode}.png`)
+                return self.gameTpl({item,img})
+              }).join('')
+              return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
+            })
 
-          self.$gameList.html(html)
+            self.$gameList.html(html)
+            if(gameList.length < 16) {
+              self.$loadMore.addClass('hidden')
+            } else {
+              self.$loadMore.removeClass('hidden')
+            }
+          }
         } else {
           Global.ui.notification.show('获取游戏列表失败')
         }
@@ -279,12 +313,18 @@ const SlotCenterView = Base.ItemView.extend({
           const { gameList } = res.root
           const html = _.chunk(gameList, 4).map((rowItems) => {
             const game = _.map(rowItems, (item) => {
-              return self.gameTpl(item)
+              const img = require(`base/images/game/slot-${item.channelId}-${item.gameCode}.png`)
+              return self.gameTpl({item, img})
             }).join('')
             return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
           })
 
           self.$gameList.append(html)
+          if(gameList.length < 16) {
+            self.$loadMore.addClass('hidden')
+          } else {
+            self.$loadMore.removeClass('hidden')
+          }
         } else {
           Global.ui.notification.show('获取游戏列表失败')
         }

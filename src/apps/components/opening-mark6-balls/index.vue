@@ -97,14 +97,14 @@
               Velocity(this.$refs.balls[i], {
                 top: this.$_getDes(i),
               }, {
-                duration: 2000,
+                duration: 1500,
                 easing: 'ease-out',
                 complete: () => {
                   this.$set(this.rollingStatus, i, false)
                   // this.rollingStatus[i] = false
                 }
               })
-            }, 500 * i + 5000)
+            }, 500 * i + 3500)
           }
         }
 
