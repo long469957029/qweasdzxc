@@ -42,7 +42,7 @@ const appConfig = {
     // regist: './src/apps/packages/registers/index.js',
     // update15: './src/apps/packages/update/update15.js',
     // rebateDesc: './src/apps/packages/rebateDescription/rebateDescription.js',
-    // logger: './src/apps/packages/logger/index.js',
+    logger: './src/apps/packages/logger/index.js',
   },
   port: 3002,
   commonChunks: {
@@ -195,11 +195,11 @@ const appConfig = {
     //   template: './entry/package.html',
     //   chunks: ['common', 'vendor', 'base', 'rebateDesc'],
     // },
-    // logger: {
-    //   title: '无限在线娱乐',
-    //   template: './src/apps/packages/logger/index.html',
-    //   chunks: ['common', 'logger'],
-    // },
+    logger: {
+      title: '无限在线娱乐',
+      template: './src/apps/packages/logger/index.html',
+      chunks: ['common', 'logger'],
+    },
   },
   output: {
     path: 'main',
