@@ -36,6 +36,11 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '010101'], {
     keyPosition: ['万位', '千位', '百位', null, null],
+    analysisProps: {
+      type: 'normal',
+      playSeriesId: 20013,
+      startPos: 0,
+    },
     algorithm: algorithm.mulAllNotRepeat,
     list: factory.createList(['第一位', '第二位', '第三位'], {
       items: eleven,
@@ -71,6 +76,11 @@ function _create(ticketId) {
   // 组选复式
   factory.addRule([ticketId, '010201'], {
     keyPosition: ['万位', '千位', '百位', null, null],
+    analysisProps: {
+      type: 'distribution',
+      playSeriesId: 20014,
+      startPos: 0,
+    },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -126,6 +136,11 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '020101'], {
     keyPosition: ['万位', '千位', null, null, null],
+    analysisProps: {
+      type: 'normal',
+      playSeriesId: 20013,
+      startPos: 0,
+    },
     algorithm: algorithm.mulAllNotRepeat,
     list: factory.createList(['第一位', '第二位'], {
       items: eleven,
@@ -159,6 +174,11 @@ function _create(ticketId) {
   // 组选复式
   factory.addRule([ticketId, '020201'], {
     keyPosition: ['万位', '千位', null, null, null],
+    analysisProps: {
+      type: 'distribution',
+      playSeriesId: 20015,
+      startPos: 0,
+    },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -212,9 +232,14 @@ function _create(ticketId) {
 
   // 前三一码不定位
   factory.addRule([ticketId, '030101'], {
+    analysisProps: {
+      type: 'distribution',
+      playSeriesId: 20014,
+      startPos: 0,
+    },
     keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.addAll,
-    list: factory.createList([''], {
+    list: factory.createList(['号码'], {
       items: eleven,
     }),
     create: algorithm.getCreateFunc(1, {
@@ -228,6 +253,11 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '040101'], {
     keyPosition: ['万位', '千位', '百位', null, null],
+    analysisProps: {
+      type: 'normal',
+      playSeriesId: 20013,
+      startPos: 0,
+    },
     algorithm: algorithm.addAll,
     list: factory.createList(['第一位', '第二位', '第三位'], {
       items: eleven,
@@ -243,12 +273,17 @@ function _create(ticketId) {
 
   // 任选一中一
   factory.addRule([ticketId, '050101'], {
+    analysisProps: {
+      type: 'distribution',
+      playSeriesId: 20013,
+      startPos: 0,
+    },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
     },
-    list: factory.createList([''], {
+    list: factory.createList(['号码'], {
       items: eleven,
     }),
     create: algorithm.getCreateFunc(2, {
@@ -259,6 +294,11 @@ function _create(ticketId) {
 
   // 任选二中二
   factory.addRule([ticketId, '050102'], {
+    analysisProps: {
+      type: 'distribution',
+      playSeriesId: 20013,
+      startPos: 0,
+    },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -275,6 +315,11 @@ function _create(ticketId) {
 
   // 任选三中三
   factory.addRule([ticketId, '050103'], {
+    analysisProps: {
+      type: 'distribution',
+      playSeriesId: 20013,
+      startPos: 0,
+    },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -291,6 +336,11 @@ function _create(ticketId) {
 
   // 任选四中四
   factory.addRule([ticketId, '050104'], {
+    analysisProps: {
+      type: 'distribution',
+      playSeriesId: 20013,
+      startPos: 0,
+    },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -307,6 +357,11 @@ function _create(ticketId) {
 
   // 任选五中五
   factory.addRule([ticketId, '050105'], {
+    analysisProps: {
+      type: 'distribution',
+      playSeriesId: 20013,
+      startPos: 0,
+    },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -323,6 +378,11 @@ function _create(ticketId) {
 
   // 任选六中五
   factory.addRule([ticketId, '050106'], {
+    analysisProps: {
+      type: 'distribution',
+      playSeriesId: 20013,
+      startPos: 0,
+    },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -339,6 +399,11 @@ function _create(ticketId) {
 
   // 任选七中五
   factory.addRule([ticketId, '050107'], {
+    analysisProps: {
+      type: 'distribution',
+      playSeriesId: 20013,
+      startPos: 0,
+    },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -355,6 +420,11 @@ function _create(ticketId) {
 
   // 任选八中五
   factory.addRule([ticketId, '050108'], {
+    analysisProps: {
+      type: 'distribution',
+      playSeriesId: 20013,
+      startPos: 0,
+    },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,

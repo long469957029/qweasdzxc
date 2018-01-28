@@ -54,7 +54,7 @@ function addRule(ids, {
   // 注数的算法
   algorithm = _.noop,
   algorithmProps = {},
-  analysis = true,
+  analysisProps,
   format,
   splitReg,
   validate,
@@ -89,7 +89,7 @@ function addRule(ids, {
       validate,
       type,
       limits,
-      analysis,
+      analysisProps,
       algorithm,
       algorithmProps,
       style,

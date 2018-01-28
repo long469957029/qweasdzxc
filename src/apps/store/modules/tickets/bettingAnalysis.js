@@ -11,39 +11,72 @@ const initState = () => {
 const getters = {
 }
 
-const getPlaySeriesId = (ticketId) => {
-  let playSeriesId
-  if (_.indexOf([1, 19, 27, 25, 13, 32, 19, 10, 1, 21], ticketId) !== -1) {
-    playSeriesId = 20001
-  } else if (_.indexOf([14, 5, 4, 11], ticketId) !== -1) {
-    playSeriesId = 20013
-  } else if (_.indexOf([6, 16], ticketId) !== -1) {
-    playSeriesId = 20016
-  } else if (_.indexOf([18], ticketId) !== -1) {
-    playSeriesId = 20019
-  }
+// 时时彩
+//
+// 五星:20001
+// 四星:20002
+// 前三星:20003
+// 中三星:20004
+// 后三星:20005
+// 前二星:20006
+// 后二星:20007
+//
+// 11选5
+//
+// 五星:20013
+// 前三星:20014
+// 前二星:20015
+//
+// 3D
+//
+// 3D_三星 20016
+// 3D_前二星 20017
+// 3D_后二星 20018
 
-  return playSeriesId
-}
+// const getPlaySeriesId = (ticketId) => {
+//   let playSeriesId
+//     //ssc
+//   if (_.indexOf([1, 19, 27, 25, 13, 32, 19, 10, 1, 21], ticketId) !== -1) {
+//     playSeriesId = 20001
+//     //115
+//   } else if (_.indexOf([14, 5, 4, 11], ticketId) !== -1) {
+//     playSeriesId = 20013
+//     //3d
+//   } else if (_.indexOf([6, 16], ticketId) !== -1) {
+//     playSeriesId = 20016
+//     //pk10
+//   } else if (_.indexOf([18], ticketId) !== -1) {
+//     playSeriesId = 20019
+//   }
+//
+//   return playSeriesId
+// }
+
 // actions
 const actions = {
-  getColdHot ({ commit }, { ticketId }) {
+  [types.GET_COLD_HOT] ({ commit }, { ticketId, playSeriesId, isOfficial, type = 'normal'}) {
+    this.commit(types.CHECK_OUT_COLD_HOT)
     getColdHotApi(
       {
         ticketId,
-        playSeriesId: getPlaySeriesId(ticketId),
+        playSeriesId,
+        isOfficial,
+        type
       },
       (data) => { return commit(types.GET_COLD_HOT_SUCCESS, data) },
     )
   },
 
-  getCurrentMiss ({ commit }, { ticketId }) {
+  [types.GET_CURRENT_MISS] ({ commit }, { ticketId, playSeriesId, isOfficial, type = 'normal' }) {
+    this.commit(types.CHECK_OUT_CURRENT_MISS)
     getCurrentMissApi(
       {
         ticketId,
-        playSeriesId: getPlaySeriesId(ticketId),
+        playSeriesId,
+        isOfficial,
+        type
       },
-      (data) => { return commit(types.GET_CURRENT_MISS_SUCCESS, data) },
+      (data) => { return commit(types.GET_CURRENT_MISS_SUCCESS, data) }
     )
   },
 }
@@ -72,6 +105,12 @@ const formatNum = (list) => {
 
 // mutations
 const mutations = {
+  [types.CHECK_OUT_COLD_HOT] (state) {
+    state.coldHot = []
+  },
+  [types.CHECK_OUT_CURRENT_MISS] (state) {
+    state.currentMiss = []
+  },
   [types.GET_COLD_HOT_SUCCESS] (state, res) {
     if (res && res.result === 0) {
       state.coldHot = formatNum(res.root || [])

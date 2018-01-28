@@ -450,6 +450,7 @@ const completeAllConfig = [sscConfig, oneFiveConfig, lowConfig, happyConfig]
 // var newCompleteAllConfig = [ sscCopy, oneFiveConfig, lowCopy, happyConfig];
 // --end
 
+/** @typedef {Object} ticketConfig */
 export default {
   getSccList() {
     return sscConfig.list

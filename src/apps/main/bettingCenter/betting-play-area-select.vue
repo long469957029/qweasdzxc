@@ -5,7 +5,7 @@
         enter-active-class="animated fadeInLeftBig"
         leave-active-class="animated fadeOutLeftBig absolute"
       >
-        <div class="inline-block transition" :key="'analysis'" v-if="playRule.analysis">
+        <div class="inline-block transition" :key="'analysis'" v-if="playRule.analysisProps">
           <div class="bc-missOption-btn" @click="toggleCurrentMiss" :class="{active: showMiss}">当前遗漏</div>
           <div class="bc-missOption-btn" @click="toggleColdHot" :class="{active: showCold}">30期冷热</div>
         </div>
@@ -40,25 +40,15 @@
 
             <div class="tab-toolbar" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
 
-              <div class="select-item-title tab-title" v-if="fRule.row.title && fRule.row.title !== '无'">
+              <div class="select-item-title tab-title" v-if="fRule.row.title">
                 <div>{{fRule.row.title}}</div>
                 <transition
                   enter-active-class="animated fadeIn"
                   leave-active-class="animated fadeOut"
+                  v-if="playRule.analysisProps && playRule.analysisProps.startPos <= index"
                 >
-                  <div class="miss-title" v-if="showMiss && playRule.analysis">遗漏</div>
-                  <div class="miss-title" v-if="showCold && playRule.analysis">冷热</div>
-                </transition>
-              </div>
-              <div class="select-item-title tab-title" v-else-if="!fRule.row.title">
-                <div>号码</div>
-                <transition
-                  name="custom-classes-transition"
-                  enter-active-class="animated fadeIn"
-                  leave-active-class="animated fadeOut"
-                >
-                  <div class="miss-title" v-if="showMiss && playRule.analysis">遗漏</div>
-                  <div class="miss-title" v-if="showCold && playRule.analysis">冷热</div>
+                  <div class="miss-title" v-if="showMiss && !_.isEmpty(currentMiss)">遗漏</div>
+                  <div class="miss-title" v-if="showCold && !_.isEmpty(coldHot)">冷热</div>
                 </transition>
               </div>
 
@@ -75,12 +65,13 @@
                       name="custom-classes-transition"
                       enter-active-class="animated rotateIn"
                       leave-active-class="animated rotateOut"
+                      v-if="playRule.analysisProps && playRule.analysisProps.startPos <= index"
                     >
-                      <div class="miss-item" :class="currentMiss[index][itemIndex].style"
-                           v-if="showMiss && playRule.analysis">{{currentMiss[index][itemIndex].num}}
+                      <div class="miss-item" :class="currentMiss[index - playRule.analysisProps.startPos][itemIndex].style"
+                           v-if="showMiss && !_.isEmpty(currentMiss)">{{currentMiss[index - playRule.analysisProps.startPos][itemIndex].num}}
                       </div>
-                      <div class="miss-item" :class="coldHot[index][itemIndex].style"
-                           v-if="showCold && playRule.analysis">{{coldHot[index][itemIndex].num}}
+                      <div class="miss-item" :class="coldHot[index - playRule.analysisProps.startPos][itemIndex].style"
+                           v-if="showCold && !_.isEmpty(coldHot)">{{coldHot[index - playRule.analysisProps.startPos][itemIndex].num}}
                       </div>
                     </transition>
                   </div>
@@ -336,7 +327,7 @@
       $_statisticsLottery() {
         let count = 0
 
-        this.lotteryList = _(this.playRule.list).map(function (item) {
+        this.lotteryList = _(this.playRule.list).map((item) => {
           let selected = []
 
           if (item.isShow) {

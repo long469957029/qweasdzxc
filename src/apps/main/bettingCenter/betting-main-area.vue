@@ -35,14 +35,16 @@
                         enter-active-class="animated-quick fadeIn"
                         leave-active-class="animated-quick fadeOut"
             >
-              <betting-play-area-select :play-rule="playRule" :ticket-info="ticketInfo" ref="areaSelect"
-                                        v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
-                <div slot="autoAdd" class="bc-missOption-btn" :key="'autoBet'" data-times="1" @click="autoAdd(1)">机选一注
-                </div>
-              </betting-play-area-select>
-              <betting-play-area-input :play-rule="playRule" ref="areaInput"
-                                       v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
-              <div class="height-100" v-html="loading" v-else></div>
+              <keep-alive>
+                <betting-play-area-select :play-rule="playRule" :ticket-info="ticketInfo" ref="areaSelect"
+                                          v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
+                  <div slot="autoAdd" class="bc-missOption-btn" :key="'autoBet'" data-times="1" @click="autoAdd(1)">机选一注
+                  </div>
+                </betting-play-area-select>
+                <betting-play-area-input :play-rule="playRule" ref="areaInput"
+                                         v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
+                <div class="height-100" v-html="loading" v-else></div>
+              </keep-alive>
             </transition>
           </div>
         </div>
@@ -149,7 +151,6 @@
 <script>
   import {StaticGrid} from 'build'
   import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
-  import ticketConfig from 'skeleton/misc/ticketConfig'
 
 
   import BettingRules from './betting-rules'
@@ -283,8 +284,18 @@
             placement: 'bottom',
           })
 
-          this.$store.dispatch('getColdHot', {ticketId: this.ticketInfo.id})
-          this.$store.dispatch('getCurrentMiss', {ticketId: this.ticketInfo.id})
+          if (this.playRule.analysisProps) {
+            this.$store.dispatch(types.GET_COLD_HOT, {
+              ticketId: this.ticketId,
+              isOfficial: this.ticketInfo.isOfficial,
+              ...this.playRule.analysisProps
+            })
+            this.$store.dispatch(types.GET_CURRENT_MISS, {
+              ticketId: this.ticketId,
+              isOfficial: this.ticketInfo.isOfficial,
+              ...this.playRule.analysisProps
+            })
+          }
 
 
           //隐藏popover

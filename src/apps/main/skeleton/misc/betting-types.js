@@ -1,3 +1,4 @@
+
 // 四星:20002
 // 前三星:20003
 // 中三星:20004
@@ -30,7 +31,6 @@ const threeDPlaySeriesIdList = [
     id: 20016,
   }
 ]
-
 
 export const SSC = {
   range: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
@@ -197,4 +197,15 @@ export const MARK6 = {
   sx: shengXiao,
   type: 'mark6',
   trend: false,
+}
+
+/** @typedef {Object} bettingTypes */
+export default {
+  SSC,
+  CHOOSE15,
+  THREED,
+  QUICK3,
+  P5P3,
+  PK10,
+  MARK6,
 }
