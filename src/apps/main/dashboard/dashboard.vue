@@ -276,11 +276,11 @@
   }
 
   .game-contant-enter {
-    transform: scale(0, 0);
+    transform: translateX(900px);
   }
 
   .game-contant-enter-active {
-    transition: all .5s .2s;
+    transition: all .5s;
   }
 
   .game-contant-leave-active {

@@ -110,7 +110,7 @@
 
 <style scoped>
   .slide-trans-enter-active {
-    transition: all .5s;
+    transition: all 1s;
   }
 
   .slide-trans-enter {
@@ -119,7 +119,7 @@
   }
 
   .slide-trans-old-leave-active {
-    transition: all .5s;
+    transition: all 1s;
     opacity: 0;
   }
 
@@ -138,10 +138,13 @@
   }
 
   .slide-img img {
-    width: 100%;
+    width: 1920px;
     height: 100%;
     position: absolute;
     top: 0;
+    max-width: 1920px;
+    left: 50%;
+    margin-left: -960px;
   }
 
   .slide-pages {
