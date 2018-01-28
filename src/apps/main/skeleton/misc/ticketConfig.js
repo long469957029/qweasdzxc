@@ -72,6 +72,7 @@ const sscConfig = {
       zhName: 'QQ30秒',
       badge: 'hot',
       showNumberDetail: false,
+      openWhenTimeout: true,
       trendOps: {
         distribution: true,
         periods: trendPeriods,

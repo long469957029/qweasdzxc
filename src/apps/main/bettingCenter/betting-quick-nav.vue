@@ -190,6 +190,7 @@
       writing-mode: vertical-lr;
       display: inline-block;
       margin-top: 10px;
+      width: 20px;
     }
     .ticket-inner-list {
       display: flex;

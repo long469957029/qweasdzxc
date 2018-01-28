@@ -656,16 +656,11 @@
             'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
           return false
         }
-        if (!this.opening) {
-          this.toggleLever()
-        }
 
-        this.$_prepareOpening()
-
-        this.$_pushBetting()
+        this.$_pushBetting({init: true})
       },
 
-      $_pushBetting() {
+      $_pushBetting({init = false} = {}) {
         this.toggleLever()
         this.$store.dispatch(types.PUSH_MMC_BETTING, {
           type: 'previewList'
@@ -683,6 +678,10 @@
               const fOpeningReuslt = this.$_formatOpeningResult(res.root, this.currentOpeningCount)
               this.fOpeningResultList.unshift(fOpeningReuslt)
               this.lastOpening = fOpeningReuslt.fOpenCode
+
+              if (init) {
+                this.$_prepareOpening()
+              }
 
             } else if (res.root && res.root.errorCode === 101) {
               Global.ui.notification.show('账号余额不足，请先<a href="#/fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')

@@ -145,6 +145,14 @@
       update() {
         this.$_getDataXhr()
       },
+      setHeight(height) {
+        this.height = height
+        if (this.height > 0) {
+          $(this.$refs.body).slimScroll({
+            height: this.height,
+          })
+        }
+      },
 
       $_getDataXhr() {
         this.clean()
