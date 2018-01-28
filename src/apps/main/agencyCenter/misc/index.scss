@@ -152,7 +152,7 @@
     padding: 0px !important;
     margin: 0 auto;
     position: relative;
-    top:-11px;
+    top: -11px;
     &:first-child {
       border-bottom: 1px solid $def-gray-color;
       border-radius: 0px;
@@ -167,7 +167,7 @@
 }
 
 .ac-lowLevel-rebate-view {
-  .ac-lowLevel-title{
+  .ac-lowLevel-title {
     width: 100%;
     height: 49px;
     background-color: $sec-line-color;
@@ -176,13 +176,13 @@
     font-size: $font-md;
     color: $def-black-color;
   }
-  .lowLevel-input{
+  .lowLevel-input {
     width: 246px;
     height: 30px;
     text-align: center;
     color: $def-black-color;
   }
-  .lowLevel-percent-sign{
+  .lowLevel-percent-sign {
     position: relative;
     top: 1px;
     right: 25px;
@@ -191,12 +191,12 @@
     width: 108px;
     height: 36px;
   }
-  .lowLevel-error{
+  .lowLevel-error {
     padding-left: 100px;
     padding-top: 5px;
   }
-  .close{
-    font-size:30px;
+  .close {
+    font-size: 30px;
   }
 
 }
@@ -213,10 +213,10 @@
       }
     }
   }
-  .control-group{
+  .control-group {
     margin-bottom: 10px;
   }
-  .filled{
+  .filled {
     margin: 0px;
   }
   .ac-openAccount-rebate-notice {
@@ -232,7 +232,7 @@
     .tooltip-inner {
       max-width: none;
     }
-    .manual-rebate-sign{
+    .manual-rebate-sign {
       color: #aaaaaa;
       position: relative;
       right: 25px;
@@ -251,11 +251,11 @@
       display: inline-block;
     }
   }
-  .input1{
+  .input1 {
     width: 258px;
     height: 25px;
     background-color: #f9f9f9;
-    font-size:$font-sm;
+    font-size: $font-sm;
   }
   .btn-group {
     button {
@@ -273,7 +273,7 @@
       color: $new-main-deep-color;
       position: relative;
       background-color: $prominent-dialog-body;
-      &:after{
+      &:after {
         content: '';
         width: 21px;
         height: 19px;
@@ -293,7 +293,7 @@
       cursor: pointer;
       padding-left: 5px;
     }
-    .ac-red-pack-text{
+    .ac-red-pack-text {
       width: 243px;
       background-color: #fdf6e9;
       border-radius: 5px;
@@ -302,11 +302,11 @@
       margin-left: 120px;
       margin-bottom: 10px;
     }
-    .ac-red-type{
+    .ac-red-type {
       border: 1px solid $def-gray-color;
       border-radius: $globalBtnRadius;
       margin-left: 72px;
-      button{
+      button {
         width: 52px;
         height: 23px;
         background-color: $def-white-color;
@@ -314,19 +314,19 @@
         border: none;
         border-radius: 0;
         margin: 0;
-        &:after{
+        &:after {
           display: none;
         }
-        &:first-child{
+        &:first-child {
           border-right: 1px solid $def-gray-color;
           border-bottom-left-radius: $globalBtnRadius;
           border-top-left-radius: $globalBtnRadius;
         }
-        &:last-child{
+        &:last-child {
           border-bottom-right-radius: $globalBtnRadius;
           border-top-right-radius: $globalBtnRadius;
         }
-        &.active{
+        &.active {
           background-color: $new-main-deep-color;
           color: $def-white-color;
         }
@@ -380,28 +380,28 @@
     width: 946px;
     margin: 0 auto;
     padding-top: 25px;
-    .tooltip{
+    .tooltip {
       position: absolute;
-      .tooltip-inner{
-        background: rgba(0,0,0,0.8);
+      .tooltip-inner {
+        background: rgba(0, 0, 0, 0.8);
         color: $def-white-color;
       }
     }
-    .btn{
+    .btn {
       width: 60px;
       height: 27px;
       border-radius: $globalInputRadius;
-      background: linear-gradient(to bottom,$def-white-color,$sec-line-color);
+      background: linear-gradient(to bottom, $def-white-color, $sec-line-color);
       color: $new-inverse-color;
       font-size: $font-xs;
       border-color: $def-gray-color;
     }
-    .input-link{
+    .input-link {
       width: 200px;
       margin-right: 10px;
       font-size: 12px;
       height: 18px;
-      box-shadow: inset 0px 1px 1px rgba(0,0,0,.3);
+      box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .3);
     }
     .ac-span-link {
       width: 170px;
@@ -415,7 +415,7 @@
       width: 135px;
       height: 18px;
       font-size: 12px;
-      box-shadow: inset 0px 1px 1px rgba(0,0,0,.3);
+      box-shadow: inset 0px 1px 1px rgba(0, 0, 0, .3);
     }
     .ac-span-remark {
       width: 104px;
@@ -425,7 +425,7 @@
       overflow: hidden;
       vertical-align: middle;
     }
-    .ac-btn-red-detail{
+    .ac-btn-red-detail {
       width: 32px;
       height: 32px;
       display: inline-block;
@@ -444,7 +444,7 @@
       width: 150px;
       height: 150px;
       border: 16px solid $def-white-color;
-      box-shadow: 0px 0px 3px rgba(0,0,0,.5);
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, .5);
       background-color: $def-white-color;
       display: none;
       z-index: 2;
@@ -634,9 +634,9 @@
   }
 }
 
-.open-confirm-main{
+.open-confirm-main {
   border-radius: 5px;
-  .confim-title{
+  .confim-title {
     width: 480px;
     height: 50px;
     color: $def-black-color;
@@ -645,12 +645,12 @@
     position: relative;
     background-color: $sec-line-color;
     font-size: $font-md;
-    .close{
+    .close {
       color: #d8d8d8;
-      font-size:30px;
+      font-size: 30px;
     }
   }
-  .contant-info{
+  .contant-info {
     width: 275px;
     height: 70px;
     margin: 0 auto;
@@ -659,23 +659,25 @@
     border-radius: 10px;
     padding-top: 15px;
   }
-  .open-confirm-btn{
+  .open-confirm-btn {
     width: 108px;
     height: 36px;
   }
 }
-.copy-contant{
+
+.copy-contant {
   width: 300px;
   margin: 0 auto;
 }
-.red-pack-container{
+
+.red-pack-container {
   width: 378px;
   height: 413px;
   background: url("./red-pack-detail-bg.png") no-repeat;
   position: relative;
   font-size: $font-sm;
   color: $def-black-color;
-  .red-close{
+  .red-close {
     width: 17px;
     height: 16px;
     background: url("./red-pack-detail-close.png") no-repeat;
@@ -684,60 +686,61 @@
     right: 30px;
     cursor: pointer;
   }
-  .red-btn{
+  .red-btn {
     display: block;
     width: 245px;
     height: 45px;
     background-color: #f0c862;
     color: #92411f;
-    font-size:$font-sm;
+    font-size: $font-sm;
     text-align: center;
     line-height: 45px;
     border-radius: 50px;
     margin: 105px 0 0 80px;
     cursor: pointer;
   }
-  .num-text{
+  .num-text {
     color: #e54d4b;
   }
-  .red-detail-main{
+  .red-detail-main {
     width: 294px;
     margin: 0 auto;
     transform: translateX(11px);
     padding-top: 40px;
   }
-  .red-pack-title{
+  .red-pack-title {
     margin-top: 120px;
     text-align: center;
   }
 }
-.ac-moneyTransfer-view{
+
+.ac-moneyTransfer-view {
   border-top: 1px solid $third-line-color;
   padding-top: 67px;
   color: $new-inverse-color;
   padding-left: 100px;
-  .ac-user-select{
+  .ac-user-select {
     width: 290px;
   }
-  .user-select-btn{
-    .btn{
+  .user-select-btn {
+    .btn {
       width: 58px;
       background-color: $def-white-color;
       border-color: $def-gray-color;
       color: $new-inverse-color;
-      transition: background-color,color,border-color 1s;
-      &:hover,&:focus{
+      transition: background-color, color, border-color 1s;
+      &:hover, &:focus {
         color: $def-white-color;
         background-color: $new-main-deep-color;
         border-color: $new-main-deep-color;
       }
     }
   }
-  .user-title{
-    font-size:$font-md;
+  .user-title {
+    font-size: $font-md;
     padding-left: 12px;
     position: relative;
-    &:after{
+    &:after {
       content: '';
       width: 4px;
       height: 17px;
@@ -745,40 +748,41 @@
       display: block;
       position: absolute;
       top: 2px;
+      left: 0;
     }
   }
-  .ac-lowLevelSelect{
+  .ac-lowLevelSelect {
     width: 288px;
     height: 583px;
     border: 1px solid $def-gray-color;
     margin-top: 25px;
-    .ac-lowLevelSelect-header{
+    .ac-lowLevelSelect-header {
       width: 100%;
       height: 50px;
       background-color: #f8f8f8;
     }
-    .ac-low-multi-search{
+    .ac-low-multi-search {
       width: 264px;
       height: 30px;
       border-radius: 20px;
       background-color: $def-white-color;
       margin: 10px 12px 0 12px;
-      i{
+      i {
         color: #d8d8d8;
         margin-top: 7px;
         margin-left: 20px;
       }
-      .input-search-user{
+      .input-search-user {
         width: 200px;
         height: 22px;
         border: none;
       }
     }
   }
-  .user-tree{
+  .user-tree {
     width: 100%;
     overflow: hidden;
-    .user-tree-title{
+    .user-tree-title {
       width: 100%;
       height: 29px;
       border-bottom: 2px solid $def-gray-color;
@@ -787,7 +791,7 @@
       padding-left: 25px;
       color: $font-auxiliary-color;
     }
-    .user-tree-list{
+    .user-tree-list {
       margin: 0 auto;
       overflow-y: auto;
       overflow-x: hidden;
@@ -795,7 +799,7 @@
       padding: 0 20px;
     }
   }
-  .ac-tf-line{
+  .ac-tf-line {
     width: 0px;
     height: 577px;
     border: 1px dashed $def-gray-color;
@@ -803,13 +807,13 @@
     margin-left: 100px;
     margin-top: 50px;
   }
-  .ac-transfer-contant{
+  .ac-transfer-contant {
     width: 400px;
     margin-left: 100px;
-    .user-choose-list{
+    .user-choose-list {
       width: 400px;
       margin-top: 29px;
-      .list-empty{
+      .list-empty {
         width: 241px;
         height: 64px;
         background-color: #f9f9f9;
@@ -818,9 +822,9 @@
         line-height: 64px;
         padding-left: 20px;
       }
-      .choose-list-container{
+      .choose-list-container {
         width: 400px;
-        li{
+        li {
           list-style: none;
           //width: 68px;
           //height: 24px;
@@ -835,21 +839,21 @@
       }
     }
   }
-  .ac-group{
+  .ac-group {
     margin-top: 50px;
-    .transfer-type{
+    .transfer-type {
       width: 258px;
       height: 38px;
       background: url(~base/images/v2/icon-select-down.png) no-repeat scroll 95% center transparent;
       background-color: #f9f9f9;
     }
-    .input1{
+    .input1 {
       width: 246px;
       height: 28px;
       background-color: #f9f9f9;
     }
-    .control-confirm{
-      .btn{
+    .control-confirm {
+      .btn {
         width: 190px;
         height: 40px;
         border-radius: 20px;
@@ -858,7 +862,8 @@
     }
   }
 }
-.ac-dm-um-log{
+
+.ac-dm-um-log {
   width: 15px;
   height: 17px;
   background: url('log-btn.png') no-repeat;
@@ -866,12 +871,13 @@
   cursor: pointer;
   vertical-align: text-bottom;
   position: relative;
-  &:hover,&:focus{
+  &:hover, &:focus {
     background: url("log-btn-hover.png") no-repeat;
   }
 }
-.ac-log-main{
-  .ac-log-header{
+
+.ac-log-main {
+  .ac-log-header {
     font-size: $font-sm;
     color: $def-black-color;
     position: relative;
@@ -879,7 +885,7 @@
     padding-top: 10px;
     font-weight: bold;
     margin-bottom: 20px;
-    &:before{
+    &:before {
       content: '';
       width: 15px;
       height: 17px;
@@ -889,21 +895,21 @@
       top: 10px;
       left: 0px;
     }
-    .close{
+    .close {
       font-size: 30px;
       position: absolute;
       top: 10px;
       right: 0px;
     }
   }
-  .ac-log-container{
+  .ac-log-container {
     width: 338px;
     height: 128px;
     margin: 0 auto;
-    table{
+    table {
       border: 1px solid $def-gray-color;
       overflow: auto;
-      td{
+      td {
         border: 1px solid $def-gray-color;
         background-color: #f8f8f8;
         padding: 5px 3px;
@@ -912,25 +918,27 @@
     }
   }
 }
-.ac-dm-page{
-  .popover{
+
+.ac-dm-page {
+  .popover {
     box-shadow: none;
     border: 1px solid $def-gray-color;
     border-radius: 5px;
     max-width: 380px;
     width: 380px;
-    .arrow{
+    .arrow {
       right: -11px;
-      &:after{
+      &:after {
         border-left-color: $def-white-color;
       }
     }
   }
-  .popover-content{
+  .popover-content {
     background-color: $def-white-color;
   }
 }
-.llm-operator-sub{
+
+.llm-operator-sub {
   text-align: center;
   display: inline-block;
 }

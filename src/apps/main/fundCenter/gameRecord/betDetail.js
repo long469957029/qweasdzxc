@@ -91,8 +91,14 @@ const BetDetailView = Base.ItemView.extend({
         if (res.root.canCancel && this.isSelf) {
           self.$('.js-gr-bet-detail-win').addClass('hidden')
           self.$('.js-gr-bet-detail-profit').addClass('hidden')
-          self.$('.js-gr-submit-container').removeClass('hidden')
+          if(!res.root.handicap){
+            self.$('.js-gr-submit-container').removeClass('hidden')
+          }
         } else {
+          if(!res.root.openNum){
+            self.$('.js-gr-bet-detail-win').addClass('hidden')
+            self.$('.js-gr-bet-detail-profit').addClass('hidden')
+          }
           if (res.root.money > 0) {
             self.$('.js-gr-bet-win').html(`<span class="text-account-cut">${_(res.root.money).formatDiv(10000)}</span>`)
           } else {
@@ -111,7 +117,6 @@ const BetDetailView = Base.ItemView.extend({
             self.$('.js-gr-bet-profit').html(`<span class="text-account-add">${profit}</span>`)
           }
         }
-
       } else {
         Global.ui.notification.show('操作失败。')
       }
