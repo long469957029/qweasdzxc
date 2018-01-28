@@ -122,7 +122,7 @@
           <span class="m-right-lg font-sm">共追号
             <span class="text-cool">{{selectedChaseList.length}}</span>
             期，金额
-            <span class="text-orange">{{totalMoney}}</span>
+            <span class="text-orange">{{fTotalMoney}}</span>
             元
           </span>
         </div>
@@ -191,6 +191,7 @@
         suspend: true,
         chaseType: 'rate',
         totalMoney: 0,
+        fTotalMoney: 0,
 
         radioList: [
           {
@@ -293,7 +294,8 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
       chaseList: {
         handler() {
           this.selectedChaseList = _.where(this.chaseList, {selected: true})
-          this.totalMoney = _.chain(this.selectedChaseList).reduce((total, item) => total + item.betMoney, 0).convert2yuan().value()
+          this.totalMoney = _.chain(this.selectedChaseList).reduce((total, item) => total + item.betMoney, 0).value()
+          this.fTotalMoney = _.convert2yuan(this.totalMoney)
         },
         deep: true
       }
@@ -682,7 +684,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
         padding: 7px 0;
         &:nth-of-type(2) {
           text-align: left;
-          padding-left: 40px;
+          padding-left: 35px;
         }
       }
     }

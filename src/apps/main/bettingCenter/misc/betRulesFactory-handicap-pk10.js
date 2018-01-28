@@ -462,7 +462,7 @@ function _create(ticketId) {
             },
             {
               num: '1011',
-              title: '冠亚大',
+              title: '冠亚和大',
               showOdds: true,
             },
           ],
@@ -494,7 +494,7 @@ function _create(ticketId) {
             {},
             {
               num: '1012',
-              title: '冠亚小',
+              title: '冠亚和小',
               showOdds: true,
             },
           ],
@@ -526,7 +526,7 @@ function _create(ticketId) {
             {},
             {
               num: '1013',
-              title: '冠亚单',
+              title: '冠亚和单',
               showOdds: true,
             },
           ],
@@ -558,7 +558,7 @@ function _create(ticketId) {
             {},
             {
               num: '1014',
-              title: '冠亚双',
+              title: '冠亚和双',
               showOdds: true,
             },
           ],

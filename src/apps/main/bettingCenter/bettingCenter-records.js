@@ -63,14 +63,14 @@ const BettingRecordsView = Base.ItemView.extend({
             name: 'betNum',
             width: '12%',
           },
-          {
-            label: '注数/倍数/模式 ',
-            name: 'ticketName',
-            width: '12%',
-            formatter(val, index, bet) {
-
-            },
-          },
+          // {
+          //   label: '注数/倍数/模式 ',
+          //   name: 'ticketName',
+          //   width: '12%',
+          //   formatter(val, index, bet) {
+          //
+          //   },
+          // },
           {
             label: '投注金额',
             name: 'betTotalMoney',

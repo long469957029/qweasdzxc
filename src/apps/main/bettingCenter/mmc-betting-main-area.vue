@@ -206,7 +206,7 @@
     </div>
 
     <!-- 最后开奖结果 -->
-    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="finalResult">
+    <div class="modal-result modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="finalResult">
       <div class="final-result-wrapper">
         <div class="final-result-inner sfa-mmc-winning" v-if="totalWinPrize">
           <span class="final-result-close sfa sfa-mmc-result-close" data-dismiss="modal"></span>
@@ -548,9 +548,7 @@
       },
 
       toggleFinalResult(flag = true) {
-        $(this.$refs.finalResult).modal({
-          // backdrop: 'static',
-        })
+        $(this.$refs.finalResult).modal()
         // this.$refs.finalResult
         this.showFinalResult = flag
       },
@@ -1403,6 +1401,12 @@
     position: absolute;
     top: -23px;
     right: -10px;
+  }
+  .modal-result {
+    width: 260px;
+    left: 50%;
+    margin-left: -130px;
+    top: 15% !important;
   }
 
 

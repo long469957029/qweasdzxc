@@ -66,7 +66,7 @@
   .bc-main-wrapper {
     width: 100%;
     height: 100%;
-    background: url(./misc/mmc-background.png) no-repeat;
+    background: url(./misc/mmc-background.jpg) no-repeat;
     background-size: cover;
   }
 </style>
