@@ -1213,26 +1213,30 @@
   margin: 15px 45px;
   text-align: center;
   .fc-wd-confirmView-title {
-    cursor: pointer;
-    text-align: left;
-    .title-left {
-      font-size: 14px;
-      color: $def-gray-color;
-      &.active, &:hover {
-        color: $new-main-deep-color;
-      }
-    }
-    .title-right {
-      font-size: 14px;
+    margin-top: 60px;
+    padding: 0 180px;
+    font-size: 14px;
+    .text-back-title1 {
       color: $font-auxiliary-color;
-      &.active, &:hover {
-        color: $new-main-deep-color;
-      }
+    }
+    .js-tr-leftNum {
+      color: $new-inverse-color;
+      margin-left: 3px;
+      margin-right: 3px;
+    }
+    .text-back-title2 {
+      color: $font-auxiliary-color;
+      margin-right: 3px;
+    }
+    .title-back {
+      color: $new-main-deep-color;
+      text-decoration: underline;
+      cursor: pointer;
     }
   }
   .fc-wd-confirmView-confirm-img {
     margin-top: 110px;
-    margin-left: 287px;
+    //margin-left: 287px;
   }
   .fc-wd-confirmView-confirm-Tips {
     font-size: 18px;
@@ -1242,7 +1246,7 @@
   .fc-wd-confirmView-confirm-transferPage {
     font-size: 14px;
     margin-top: 20px;
-    padding: 0 110px;
+    padding: 0 84px;
     line-height: 25px;
     .rc-recharge-to-record {
       cursor: pointer;

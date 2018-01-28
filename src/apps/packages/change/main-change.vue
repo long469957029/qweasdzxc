@@ -80,7 +80,7 @@
                 <div class="change-desc-img">
                 </div>
                 <div class="change-desc-text">
-                  本平台秉承重视安全的宗旨，经不定期更换域名，<br>为了使您能随时最方便的获取到平台最新最快的登录域名，<br>请按<span class="text-cope">CTRL+D</span>收藏本页面,
+                  本平台秉承重视安全的宗旨，不定期更换域名，<br>为了使您能随时最方便的获取到平台最新最快的登录域名，<br>请按<span class="text-cope">CTRL+D</span>收藏本页面,
                   <br>或<a class="download-url" href='/setup.exe' target='_blank'>下载登录器</a>获取永久自动更新。
                 </div>
               </div>

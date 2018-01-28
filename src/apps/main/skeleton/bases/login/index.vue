@@ -305,6 +305,7 @@
 
 <style lang="scss" scoped>
   .modal-login {
+    z-index:1051;
     border: 0;
     width: 386px;
     min-height: 425px;

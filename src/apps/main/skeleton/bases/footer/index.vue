@@ -19,15 +19,17 @@
             <span class="download-list">
               <!-- 下载手机app点击任意icon都是进到下载中心页面 -->
               <span>下载手机APP：</span>
-              <a class="android-icon" href="newDownload.html" target="_blank"></a>
-              <a class="ios-icon" href="newDownload.html" target="_blank"></a>
+              <router-link to="mb" ><div class="android-icon"></div></router-link>
+              <router-link to="mb" ><div class="ios-icon"></div></router-link>
+              <!--<a class="android-icon" href="newDownload.html" target="_blank"></a>-->
+              <!--<a class="ios-icon" href="newDownload.html" target="_blank"></a>-->
             </span>
           </div>
           <p>Copyright © 2016-2017 无限娱乐 版权所有</p>
           <p>无限娱乐郑重提示：彩票有风险，投注需谨慎，未满18周岁的青少年禁止购买</p>
           <div class="desc-bottom">
             <span class="cooperator-list">
-              <span>合作夥伴：</span>
+              <span>合作伙伴：</span>
               <transition-group name="carousel-list" class="flex-row">
                 <div v-for="index in cooperatorList" :key="`cooperator-${index}`" :class="`carousel-item cooperator-icon-${index}`"></div>
               </transition-group>

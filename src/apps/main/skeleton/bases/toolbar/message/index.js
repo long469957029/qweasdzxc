@@ -24,12 +24,16 @@ const MessageView = Base.ItemView.extend({
     'focus .js-im-contact-search': 'searchPanelChangeHandle',
     'click .js-search-input-cancel': 'cancelSearchInputHandle',
     'keydown .js-chat-input': 'sendChatHandle',
+    'click .js-chat-footer-send':'sendPrivateMessageHandle',
     'click .js-chat-more-content': 'showMoreChatHandler',
     'click .js-mess-select-contact': 'selectMessContactHandler',
     'click .selected-sub-item-cancel': 'cancelMessContactHandler',
     'click .js-mess-select-allContact': 'selectAllContactHandler',
     'click .js-mess-clear-allContact': 'clearAllContactHandler',
     'keyup .js-mess-search-panel-search': 'searchMessContactHandler',
+    'keydown .js-mess-input': 'sendChatHandle',
+    'keyup .js-mess-input': 'messInputChangeHandler',
+    'click .js-mess-footer-send': 'sendMessMessageHandle',
     'click .js-recently-message-close': 'delRecentlyContactHandler',
     'click .js-recently-mass-message': 'clickRecentlyMessMassageHandler',
     'click .js-mess-more-content': 'showMoreMessHandler',
@@ -437,7 +441,7 @@ const MessageView = Base.ItemView.extend({
 
   // 群发消息
   sendMessMessageHandle() {
-    const typeContent = this.$('.js-chat-input').val()
+    const typeContent = this.$('.js-mess-input').val()
     const userContainer = this.$('.js-selected-sub-item')
     const userList = []
     if (userContainer.length === 0) {
@@ -459,7 +463,7 @@ const MessageView = Base.ItemView.extend({
       userIds: userString,
     }
     if (typeContent !== '') {
-      this.$('.js-chat-input').val('')
+      this.$('.js-mess-input').val('')
       this.$('.js-chat-message-content-panel').after(imService.insertChat(this.userPic, this.username, typeContent))
       // 先创建群
       if (_.isEmpty(this.activePerson)) {
@@ -767,6 +771,15 @@ const MessageView = Base.ItemView.extend({
     if (content !== undefined && content.length > 0) {
       if (!this.$('.js-chat-footer-send').hasClass('.active')) {
         this.$('.js-chat-footer-send').addClass('active')
+      }
+    }
+  },
+  messInputChangeHandler() {
+    const content = this.$('.js-mess-input').val()
+    this.$('.js-content-editable').html(content)
+    if (content !== undefined && content.length > 0) {
+      if (!this.$('.js-mess-footer-send').hasClass('.active')) {
+        this.$('.js-mess-footer-send').addClass('active')
       }
     }
   },

@@ -3,7 +3,7 @@
     <div class="header-main ">
       <div class="pull-left">
         <a class="header-left-link" href="/change.html">线路中心</a>
-        <a class="header-left-link" @click="showLoginLauncher">急速登录器</a>
+        <a class="header-left-link" @click="showLoginLauncher">极速登录器</a>
         <a class="header-left-link" href='/dns.docx' target='_blank'>防dns劫持教程</a>
       </div>
       <div class="js-gl-service header-customer-entry  pull-right overflow-hidden">
@@ -23,7 +23,9 @@
             <span class="sfa header-headshot "><img :src="imgUrl"/></span>
             <span class="header-name">{{username}}</span>
             <i class="fa fa-angle-down "></i>
-            <div class="header-menu-place"></div>
+            <router-link to="fc/fm">
+              <div class="header-menu-place"></div>
+            </router-link>
             <div class="header-menu-body">
               <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
               <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
@@ -43,7 +45,9 @@
             <span class="sfa sfa-announcement "></span><span>消息</span>
             <span class="js-header-announcement-num header-announcement-num"
                   v-if="newRowCount > 0">{{newRowCount}}</span>
-            <div class="header-announcement-place"></div>
+            <router-link to="uc/mg">
+              <div class="header-announcement-place"></div>
+            </router-link>
             <div class="js-header-announcement-body header-announcement-body">
               <div class="header-announcement-content">
                 <a :href="messageLink(item.type,item.noticeId)" class="content-item" v-for="item in newList"
@@ -71,6 +75,7 @@
 
 <script>
   import avatarConf from 'userCenter/misc/avatarConfig'
+  import fundApi from 'api/fund'
   export default{
     name: 'main-header',
 
@@ -99,6 +104,11 @@
       userInfo(userInfo) {
         this.showUserInfo(userInfo)
       },
+      loginStatus(loginStatus){
+        if (loginStatus) {
+          this.getUserSecurityInfo()
+        }
+      }
     },
 
     computed: {
@@ -152,6 +162,21 @@
       },
       logout(){
         this.$store.commit(types.TOGGLE_LOGOUT_DIALOG, true)
+      },
+      getUserSecurityInfo(){
+        fundApi.userSecurityInfo(({data}) => {
+          if (data.result === 0) {
+            let status = 0
+            if (data.root.hasBankCard && data.root.hasMoneyPwd) {
+              status = 1
+            } else if (!data.root.hasBankCard && data.root.hasMoneyPwd) {
+              status = 2
+            } else if (data.root.hasBankCard && !data.root.hasMoneyPwd) {
+              status = 3
+            }
+            window.Global.cookieCache.set('security', status)
+          }
+        })
       },
 //      openLoginDialog(){
 //        this.$nextTick(() => {
