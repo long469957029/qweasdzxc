@@ -120,14 +120,15 @@ const pushChaseApi = ({
  * @param playSeriesId
  * @param then
  * @param type
+ * @param isOfficial
  */
-const getColdHotApi = ({ ticketId, playSeriesId, type = 'normal' }, then) => {
+const getColdHotApi = ({ ticketId, playSeriesId, isOfficial, type = 'normal' }, then) => {
   return Global.sync.ajax({
     url: type === 'normal' ? 'http://trend.ybf01.com/trends/data/coldHotData.json' : 'http://trend.ybf01.com/trends/data/numDisColdHotData.json',
     data: {
-      ticketId,
+      ticketId: isOfficial ? ticketId : ticketId + 10000,
       playSeriesId,
-      platform:2,
+      platform: 2,
     },
     dataType: 'jsonp',
   })
@@ -140,14 +141,15 @@ const getColdHotApi = ({ ticketId, playSeriesId, type = 'normal' }, then) => {
  * @param playSeriesId
  * @param then
  * @param type
+ * @param isOfficial
  */
-const getCurrentMissApi = ({ ticketId, playSeriesId, type = 'normal' }, then) => {
+const getCurrentMissApi = ({ ticketId, playSeriesId, isOfficial, type = 'normal' }, then) => {
   return Global.sync.ajax({
     url: type === 'normal' ? 'http://trend.ybf01.com/trends/data/currentMiss.json' : 'http://trend.ybf01.com/trends/data/numDisCurrentMiss.json',
     data: {
-      ticketId,
+      ticketId: isOfficial ? ticketId : ticketId + 10000,
       playSeriesId,
-      platform:2
+      platform: 2
     },
     dataType: 'jsonp',
   })

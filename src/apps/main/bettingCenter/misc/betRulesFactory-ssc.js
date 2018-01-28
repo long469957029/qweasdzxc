@@ -44,9 +44,10 @@ function _create(ticketId) {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     algorithm: algorithm.mulAll,
-    analysisRequestProps: {
+    analysisProps: {
       type: 'normal',
       playSeriesId: 20001,
+      startPos: 0,
     },
     list: factory.createList(['万位', '千位', '百位', '十位', '个位']),
     create: algorithm.getCreateFunc(5, {
@@ -71,16 +72,17 @@ function _create(ticketId) {
   factory.addRule([ticketId, '010201'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
       cTimes: 5,
     },
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(5, {
       outerSort: true,
     }),
@@ -90,9 +92,10 @@ function _create(ticketId) {
   factory.addRule([ticketId, '010202'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20001,
+      startPos: 1,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -109,9 +112,10 @@ function _create(ticketId) {
   factory.addRule([ticketId, '010203'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20001,
+      startPos: 1,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -128,9 +132,10 @@ function _create(ticketId) {
   factory.addRule([ticketId, '010204'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20001,
+      startPos: 1,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -147,9 +152,10 @@ function _create(ticketId) {
   factory.addRule([ticketId, '010205'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20001,
+      startPos: 1,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -166,9 +172,10 @@ function _create(ticketId) {
   factory.addRule([ticketId, '010206'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20001,
+      startPos: 1,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -181,29 +188,19 @@ function _create(ticketId) {
     }),
   })
 
-  // 一码不定位
-  factory.addRule([9], {
-    algorithm: algorithm.group,
-    algorithmProps: {
-      mainRow: 0,
-      cTimes: 1,
-    },
-    list: factory.createList(['']),
-    create: algorithm.getCreateFunc(1),
-  })
-
   // 二码不定位
   factory.addRule([ticketId, '080301'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
       cTimes: 2,
     },
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {
       outerSort: true,
     }),
@@ -211,16 +208,17 @@ function _create(ticketId) {
 
   // 三码不定位
   factory.addRule([ticketId, '080302'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
       cTimes: 3,
     },
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(3, {
       outerSort: true,
     }),
@@ -233,9 +231,10 @@ function _create(ticketId) {
   factory.addRule([ticketId, '020101'], {
     formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'normal',
       playSeriesId: 20002,
+      startPos: 1,
     },
     algorithm: algorithm.mulAll,
     list: factory.createList([null, '千位', '百位', '十位', '个位']),
@@ -262,16 +261,17 @@ function _create(ticketId) {
   factory.addRule([ticketId, '020201'], {
     formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'normal',
       playSeriesId: 20002,
+      startPos: 0,
     },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
       cTimes: 4,
     },
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(4, {
       outerSort: true,
     }),
@@ -281,9 +281,10 @@ function _create(ticketId) {
   factory.addRule([ticketId, '020202'], {
     formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20002,
+      startPos: 1,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -300,9 +301,10 @@ function _create(ticketId) {
   factory.addRule([ticketId, '020203'], {
     formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20002,
+      startPos: 0,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -319,9 +321,10 @@ function _create(ticketId) {
   factory.addRule([ticketId, '020204'], {
     formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20002,
+      startPos: 1,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -337,32 +340,34 @@ function _create(ticketId) {
   // 一码不定位
   factory.addRule([ticketId, '080201'], {
     keyPosition: [null, '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20002,
+      startPos: 0,
     },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
     },
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(1),
   })
 
   // 二码不定位
   factory.addRule([ticketId, '080202'], {
     keyPosition: [null, '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
       playSeriesId: 20002,
+      startPos: 0,
     },
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
       cTimes: 2,
     },
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {
       outerSort: true,
     }),
@@ -370,14 +375,15 @@ function _create(ticketId) {
 
   //= =================================================
   // 三星
-  function addThreeRules(rules, {playSeriesId}) {
+  function addThreeRules(rules, {playSeriesId, startPos}) {
     // 复式
     factory.addRule(rules[0].ids, {
       formType: 'GROUP',
       keyPosition: rules[0].list,
-      analysisRequestProps: {
+      analysisProps: {
         type: 'normal',
         playSeriesId,
+        startPos,
       },
       algorithm: algorithm.mulAll,
       list: factory.createList(rules[0].list),
@@ -409,7 +415,7 @@ function _create(ticketId) {
         selectCount: 3,
       },
       analysis: false,
-      list: factory.createList([''], {
+      list: factory.createList(['号码'], {
         items: _.range(28),
         operate: 'none',
       }),
@@ -427,7 +433,7 @@ function _create(ticketId) {
         config: [10, 54, 96, 126, 144, 150, 144, 126, 96, 54],
       },
       analysis: false,
-      list: factory.createList(['']),
+      list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(1),
     })
 
@@ -435,16 +441,17 @@ function _create(ticketId) {
     factory.addRule(rules[4].ids, {
       formType: 'GROUP',
       keyPosition: rules[0].list,
-      analysisRequestProps: {
+      analysisProps: {
         type: 'distribution',
         playSeriesId,
+        startPos: 0,
       },
       algorithm: algorithm.factorial,
       algorithmProps: {
         mainRow: 0,
         cTimes: 2,
       },
-      list: factory.createList(['']),
+      list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(2, {
         outerSort: true,
       }),
@@ -453,16 +460,17 @@ function _create(ticketId) {
     factory.addRule(rules[5].ids, {
       formType: 'GROUP',
       keyPosition: rules[0].list,
-      analysisRequestProps: {
+      analysisProps: {
         type: 'distribution',
         playSeriesId,
+        startPos: 0,
       },
       algorithm: algorithm.group,
       algorithmProps: {
         mainRow: 0,
         cTimes: 3,
       },
-      list: factory.createList(['']),
+      list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(3, {
         outerSort: true,
       }),
@@ -476,7 +484,7 @@ function _create(ticketId) {
       algorithmProps: {
         config: [null, 1, 2, 2, 4, 5, 6, 8, 10, 11, 13, 14, 14, 15, 15, 14, 14, 13, 11, 10, 8, 6, 5, 4, 2, 2, 1],
       },
-      list: factory.createList([''], {
+      list: factory.createList(['号码'], {
         items: _.range(1, 27),
         operate: 'none',
       }),
@@ -490,15 +498,16 @@ function _create(ticketId) {
     factory.addRule(rules[7].ids, {
       formType: 'GROUP',
       keyPosition: rules[0].list,
-      analysisRequestProps: {
+      analysisProps: {
         type: 'distribution',
         playSeriesId,
+        startPos: 0,
       },
       algorithm: algorithm.staticVal,
       algorithmProps: {
         val: 54,
       },
-      list: factory.createList([''], {
+      list: factory.createList(['号码'], {
         operate: 'none',
         limits: [
           {
@@ -562,32 +571,34 @@ function _create(ticketId) {
     // 一码不定位
     factory.addRule(rules[11].ids, {
       keyPosition: rules[0].list,
-      analysisRequestProps: {
+      analysisProps: {
         type: 'distribution',
         playSeriesId,
+        startPos: 0,
       },
       algorithm: algorithm.group,
       algorithmProps: {
         mainRow: 0,
         cTimes: 1,
       },
-      list: factory.createList(['']),
+      list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(1),
     })
 
     // 二码不定位
     factory.addRule(rules[12].ids, {
       keyPosition: rules[0].list,
-      analysisRequestProps: {
+      analysisProps: {
         type: 'distribution',
         playSeriesId,
+        startPos: 0,
       },
       algorithm: algorithm.group,
       algorithmProps: {
         mainRow: 0,
         cTimes: 2,
       },
-      list: factory.createList(['']),
+      list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(2, {
         outerSort: true,
       }),
@@ -613,7 +624,8 @@ function _create(ticketId) {
     {ids: [ticketId, '080101']},
     {ids: [ticketId, '080102']},
   ], {
-    playSeriesId: 20003
+    playSeriesId: 20003,
+    startPos: 0,
   })
 
   //= =================================================
@@ -636,7 +648,8 @@ function _create(ticketId) {
     {ids: [ticketId, '080103']},
     {ids: [ticketId, '080104']},
   ], {
-    playSeriesId: 20004
+    playSeriesId: 20004,
+    startPos: 1,
   })
 
   //= =================================================
@@ -660,20 +673,22 @@ function _create(ticketId) {
     {ids: [ticketId, '080105']},
     {ids: [ticketId, '080106']},
   ], {
-    playSeriesId: 20005
+    playSeriesId: 20005,
+    startPos: 2,
   })
 
   //= =================================================
   // 二星
 
-  function addTwoRules(rules, {playSeriesId}) {
+  function addTwoRules(rules, {playSeriesId, startPos}) {
     // 直选复式
     factory.addRule(rules[0].ids, {
       formType: 'SUM',
       keyPosition: rules[0].list,
-      analysisRequestProps: {
+      analysisProps: {
         type: 'normal',
         playSeriesId,
+        startPos,
       },
       algorithm: algorithm.mulAll,
       list: factory.createList(rules[0].list),
@@ -704,7 +719,7 @@ function _create(ticketId) {
         selectCount: 2,
       },
       analysis: false,
-      list: factory.createList([''], {
+      list: factory.createList(['号码'], {
         items: _.range(19),
         operate: 'none',
       }),
@@ -721,19 +736,24 @@ function _create(ticketId) {
         config: [10, 18, 16, 14, 12, 10, 8, 6, 4, 2],
       },
       analysis: false,
-      list: factory.createList(['']),
+      list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(1),
     })
     // 组选复式
     factory.addRule(rules[4].ids, {
       formType: 'SUM',
       keyPosition: rules[0].list,
+      analysisProps: {
+        type: 'distribution',
+        playSeriesId,
+        startPos: 0,
+      },
       algorithm: algorithm.group,
       algorithmProps: {
         mainRow: 0,
         cTimes: 2,
       },
-      list: factory.createList(['']),
+      list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(2, {
         outerSort: true,
       }),
@@ -761,7 +781,7 @@ function _create(ticketId) {
       algorithmProps: {
         config: [null, 1, 1, 2, 2, 3, 3, 4, 4, 5, 4, 4, 3, 3, 2, 2, 1, 1],
       },
-      list: factory.createList([''], {
+      list: factory.createList(['号码'], {
         items: _.range(1, 18),
         operate: 'none',
       }),
@@ -775,15 +795,16 @@ function _create(ticketId) {
     factory.addRule(rules[7].ids, {
       formType: 'SUM',
       keyPosition: rules[0].list,
-      analysisRequestProps: {
+      analysisProps: {
         type: 'distribution',
         playSeriesId,
+        startPos: 0,
       },
       algorithm: algorithm.staticVal,
       algorithmProps: {
         val: 9,
       },
-      list: factory.createList([''], {
+      list: factory.createList(['号码'], {
         operate: 'none',
         limits: [
           {
@@ -813,7 +834,8 @@ function _create(ticketId) {
     {ids: [ticketId, '560253']},
     {ids: [ticketId, '560254']},
   ], {
-    playSeriesId: 20006
+    playSeriesId: 20006,
+    startPos: 0,
   })
 
   //= =================================================
@@ -832,16 +854,18 @@ function _create(ticketId) {
     {ids: [ticketId, '570253']},
     {ids: [ticketId, '570254']},
   ], {
-    playSeriesId: 20007
+    playSeriesId: 20007,
+    startPos: 3,
   })
 
   //= =================================================
-  // 一星
+  // 定位胆
 
   factory.addRule([ticketId, '070101'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'normal',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.addAll,
     list: factory.createList(['万位', '千位', '百位', '十位', '个位']),
@@ -855,9 +879,10 @@ function _create(ticketId) {
 
   // 复式
   factory.addRule([ticketId, '590151'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'normal',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.optionalDouble,
     algorithmProps: {
@@ -889,7 +914,7 @@ function _create(ticketId) {
       selectCount: 2,
     },
     optionals: algorithm.getOptionals(2),
-    list: factory.createList([''], {
+    list: factory.createList(['号码'], {
       items: _.range(19),
       operate: 'none',
     }),
@@ -901,9 +926,10 @@ function _create(ticketId) {
 
   // 组选复式
   factory.addRule([ticketId, '590154'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -911,7 +937,7 @@ function _create(ticketId) {
       cTimes: 2,
     },
     optionals: algorithm.getOptionals(2),
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {
       outerSort: true,
     }),
@@ -938,7 +964,7 @@ function _create(ticketId) {
       config: [null, 1, 1, 2, 2, 3, 3, 4, 4, 5, 4, 4, 3, 3, 2, 2, 1, 1],
     },
     optionals: algorithm.getOptionals(2),
-    list: factory.createList([''], {
+    list: factory.createList(['号码'], {
       items: _.range(1, 18),
       operate: 'none',
     }),
@@ -953,9 +979,10 @@ function _create(ticketId) {
 
   // 复式
   factory.addRule([ticketId, '590251'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'normal',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.optionalDouble,
     algorithmProps: {
@@ -987,7 +1014,7 @@ function _create(ticketId) {
       selectCount: 3,
     },
     optionals: algorithm.getOptionals(3),
-    list: factory.createList([''], {
+    list: factory.createList(['号码'], {
       items: _.range(28),
       operate: 'none',
     }),
@@ -999,9 +1026,10 @@ function _create(ticketId) {
 
   // 组三
   factory.addRule([ticketId, '590254'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.factorial,
     algorithmProps: {
@@ -1009,16 +1037,17 @@ function _create(ticketId) {
       cTimes: 2,
     },
     optionals: algorithm.getOptionals(3),
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {
       outerSort: true,
     }),
   })
   // 组六
   factory.addRule([ticketId, '590255'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -1026,7 +1055,7 @@ function _create(ticketId) {
       cTimes: 3,
     },
     optionals: algorithm.getOptionals(3),
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(3, {
       outerSort: true,
     }),
@@ -1056,7 +1085,7 @@ function _create(ticketId) {
       config: [null, 1, 2, 2, 4, 5, 6, 8, 10, 11, 13, 14, 14, 15, 15, 14, 14, 13, 11, 10, 8, 6, 5, 4, 2, 2, 1],
     },
     optionals: algorithm.getOptionals(3),
-    list: factory.createList([''], {
+    list: factory.createList(['号码'], {
       items: _.range(1, 27),
       operate: 'none',
     }),
@@ -1071,9 +1100,10 @@ function _create(ticketId) {
 
   // 复式
   factory.addRule([ticketId, '590351'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'normal',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.optionalDouble,
     algorithmProps: {
@@ -1100,9 +1130,10 @@ function _create(ticketId) {
 
   // 组选24
   factory.addRule([ticketId, '590353'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -1110,7 +1141,7 @@ function _create(ticketId) {
       cTimes: 4,
     },
     optionals: algorithm.getOptionals(4),
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(4, {
       outerSort: true,
     }),
@@ -1118,9 +1149,10 @@ function _create(ticketId) {
 
   // 组选12
   factory.addRule([ticketId, '590354'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 1,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -1136,9 +1168,10 @@ function _create(ticketId) {
 
   // 组选6
   factory.addRule([ticketId, '590355'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -1154,9 +1187,10 @@ function _create(ticketId) {
 
   // 组选4
   factory.addRule([ticketId, '590356'], {
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 1,
     },
     algorithm: algorithm.group,
     algorithmProps: {
@@ -1236,16 +1270,17 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680151'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
     },
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(1),
   })
 
@@ -1253,16 +1288,17 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680152'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
     },
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(1),
   })
 
@@ -1270,16 +1306,17 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680153'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
     },
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(1),
   })
 
@@ -1287,16 +1324,17 @@ function _create(ticketId) {
   factory.addRule([ticketId, '680154'], {
     formType: 'GROUP',
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
-    analysisRequestProps: {
+    analysisProps: {
       type: 'distribution',
-      playSeriesId: 20001
+      playSeriesId: 20001,
+      startPos: 0,
     },
     algorithm: algorithm.addAll,
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
     },
-    list: factory.createList(['']),
+    list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(1),
   })
 
@@ -1305,7 +1343,7 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: ['万位', '千位', null, null, null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -1325,7 +1363,7 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: ['万位', null, '百位', null, null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -1345,7 +1383,7 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: ['万位', null, null, '十位', null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -1365,7 +1403,7 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: ['万位', null, null, null, '个位'],
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -1385,7 +1423,7 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, '千位', '百位', null, null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -1405,7 +1443,7 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, '千位', null, '十位', null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -1425,7 +1463,7 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, '千位', null, null, '个位'],
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -1445,7 +1483,7 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, null, '百位', '十位', null],
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -1465,7 +1503,7 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, null, '百位', null, '个位'],
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),
@@ -1485,7 +1523,7 @@ function _create(ticketId) {
     formType: 'DRAGON',
     keyPosition: [null, null, null, '百位', '个位'],
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: longhu,
       operate: 'none',
     }),

@@ -54,22 +54,26 @@ const getters = {
 
 // actions
 const actions = {
-  [types.GET_COLD_HOT] ({ commit }, { ticketId, playSeriesId, type = 'normal' }) {
+  [types.GET_COLD_HOT] ({ commit }, { ticketId, playSeriesId, isOfficial, type = 'normal'}) {
+    this.commit(types.CHECK_OUT_COLD_HOT)
     getColdHotApi(
       {
         ticketId,
         playSeriesId,
+        isOfficial,
         type
       },
       (data) => { return commit(types.GET_COLD_HOT_SUCCESS, data) },
     )
   },
 
-  [types.GET_CURRENT_MISS] ({ commit }, { ticketId, playSeriesId, type = 'normal' }) {
+  [types.GET_CURRENT_MISS] ({ commit }, { ticketId, playSeriesId, isOfficial, type = 'normal' }) {
+    this.commit(types.CHECK_OUT_CURRENT_MISS)
     getCurrentMissApi(
       {
         ticketId,
         playSeriesId,
+        isOfficial,
         type
       },
       (data) => { return commit(types.GET_CURRENT_MISS_SUCCESS, data) }
@@ -101,6 +105,12 @@ const formatNum = (list) => {
 
 // mutations
 const mutations = {
+  [types.CHECK_OUT_COLD_HOT] (state) {
+    state.coldHot = []
+  },
+  [types.CHECK_OUT_CURRENT_MISS] (state) {
+    state.currentMiss = []
+  },
   [types.GET_COLD_HOT_SUCCESS] (state, res) {
     if (res && res.result === 0) {
       state.coldHot = formatNum(res.root || [])

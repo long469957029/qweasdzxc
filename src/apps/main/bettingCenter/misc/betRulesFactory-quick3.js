@@ -39,7 +39,7 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '170101'], {
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: _.range(3, 19),
       // operate: 'none'
     }),
@@ -58,7 +58,7 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '240151'], {
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: [{
         title: '三同号通选',
         num: 0
@@ -79,7 +79,7 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '250151'], {
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: trebleDanxuan,
       doublenum: true,
       operate: 'clear',
@@ -102,7 +102,7 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 3,
     },
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: six,
       operate: 'clear',
     }),
@@ -144,7 +144,7 @@ function _create(ticketId) {
   // 三连号通选
   factory.addRule([ticketId, '260151'], {
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: [{
         title: '三连号通选',
         num: 0
@@ -172,7 +172,7 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '270151'], {
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: doubleFuxuan,
       doublenum: true,
       operate: 'clear',
@@ -255,7 +255,7 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 2,
     },
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: six,
       operate: 'clear',
     }),
@@ -284,7 +284,7 @@ function _create(ticketId) {
   // 猜就中一个号码
   factory.addRule([ticketId, '230101'], {
     algorithm: algorithm.addAll,
-    list: factory.createList(['无'], {
+    list: factory.createList([''], {
       items: six,
       operate: 'clear',
     }),
