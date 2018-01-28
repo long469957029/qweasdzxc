@@ -13,38 +13,27 @@
 
     components: {},
 
-    watch: {
-      logoutDialogStatus(logoutDialogStatus){
-        if (logoutDialogStatus) {
-          this.logout()
-        }
-      }
-    },
-
-    computed: {
-      logoutDialogStatus(){
-        return this.$store.getters.logoutDialogStatus
-      },
-    },
-
     filters: {},
 
     methods: {
-      logout() {
-        Global.ui.loader.show()
+
+    },
+    mounted(){
+      this.$nextTick(() => {
         $(document).confirm({
           content: '<div class="m-TB-lg">确定要退出登录？</div>',
           type: 'exit',
+          closeBtn: false,
           agreeCallback: () => {
-              this.$store.dispatch(types.DO_LOGOUT)
+            this.$store.dispatch(types.DO_LOGOUT)
             //Global.ui.loader.hide()
           },
+          rejectCallback:() =>{
+            this.$store.commit(types.TOGGLE_LOGOUT_DIALOG,false)
+          }
         })
-      },
-    },
-//    mounted(){
-//      this.logout()
-//    }
+      })
+    }
   }
 </script>
 

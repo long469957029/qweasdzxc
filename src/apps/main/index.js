@@ -115,7 +115,9 @@ Global.m.oauth.check()
         ...mapGetters([
           'loginDialogStatus',
           'logoutDialogStatus',
-          'resetPassWordDialogStatus'
+          'resetPassWordDialogStatus',
+          'loginLauncherStatus',
+          'freeTrialStatus'
         ]),
       },
     })
