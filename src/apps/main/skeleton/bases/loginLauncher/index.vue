@@ -40,36 +40,21 @@
     props: {},
 
     components: {},
-    watch: {
-      loginLauncherStatus(loginLauncherStatus) {
-        if (loginLauncherStatus) {
-          this.openLoginLauncher()
-        }
-      },
-    },
-
-    computed: {
-      ...mapGetters([
-        'loginLauncherStatus',
-      ]),
-    },
 
     filters: {},
 
     methods: {
-      openLoginLauncher(){
-        this.$nextTick(() => {
-          $(this.$refs.loginLauncherModal).modal({
-            backdrop: 'static',
-          })
-            .on('hidden.modal', () => {
-              this.$store.commit(types.TOGGLE_LOGIN_LAUNCHER, false)
-            })
+
+    },
+    mounted(){
+      this.$nextTick(() => {
+        $(this.$refs.loginLauncherModal).modal({
+          backdrop: 'static',
         })
-      },
-      closeDialog(){
-        $(this.$refs.loginLauncherModal).modal('hide')
-      },
+          .on('hidden.modal', () => {
+            this.$store.commit(types.TOGGLE_LOGIN_LAUNCHER, false)
+          })
+      })
     }
   }
 </script>

@@ -15,6 +15,7 @@ $.widget('gl.confirm', {
     content: '确定进行当前操作？',
     btnLeftText: '确定',
     btnRightText: '取消',
+    closeBtn: false
   },
 
   _create() {
@@ -32,6 +33,7 @@ $.widget('gl.confirm', {
       subTitle: this.options.content,
       size: this.options.size,
       footer: this.options.noFooter ? '' : footer,
+      closeBtn: this.options.closeBtn
     }
 
     if (this.options.type === 'exit') {
@@ -48,6 +50,7 @@ $.widget('gl.confirm', {
         modalClass: 'modal-notification',
         id: this.uuid,
         body: body.join(''),
+        closeBtn: this.options.closeBtn
       }
     }
 

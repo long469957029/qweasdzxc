@@ -32,14 +32,14 @@
     color: $badgeColor;
     font-size: 16px;
 
-    @include sprite($sfa-ad-badge);
+    //@include sprite($sfa-ad-badge);
     line-height: $badgeLineHeight;
     text-indent: 55px;
     z-index: 1;
     font-weight: bold;
 
     &.ad-badge-over {
-      @include sprite($sfa-ad-badge-over);
+      //@include sprite($sfa-ad-badge-over);
     }
   }
 

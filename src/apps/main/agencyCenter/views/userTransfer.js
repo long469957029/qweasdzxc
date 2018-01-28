@@ -156,7 +156,7 @@ const MoneyTransferView = Base.ItemView.extend({
                 text: sub.subAcctName,
                 value: sub.subAcctId,
                 subItem: false,
-                img: avatarCfg.get(sub.headIconId).logo,
+                img: avatarCfg.get(_(sub.headIconId).toString()).logo,
               }
             }))
             self.initRequestParams()
@@ -257,7 +257,7 @@ const MoneyTransferView = Base.ItemView.extend({
                   text: sub.subAcctName,
                   value: sub.subAcctId,
                   subItem: false,
-                  img: avatarCfg.get(sub.headIconId).logo,
+                  img: avatarCfg.get(_(sub.headIconId).toString()).logo,
                 }
               }))
             }

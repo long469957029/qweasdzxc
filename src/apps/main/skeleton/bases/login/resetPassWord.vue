@@ -247,32 +247,7 @@
       resetPwdInput,
       resetSetPwd
     },
-    watch: {
-      resetPassWordDialogStatus(resetPassWordDialogStatus) {
-        if (resetPassWordDialogStatus) {
-          this.openResetPwdDialog()
-        }
-      },
-    },
-    computed: {
-      resetPassWordDialogStatus(){
-        return this.$store.getters.resetPassWordDialogStatus
-      },
-    },
     methods: {
-      openResetPwdDialog(){
-        this.$nextTick(() => {
-          this.codeUrl = `${this.url.substring(0, this.url.indexOf('/', this.url.indexOf('://', 0) + 3))}/acct/imgcode/code`
-          this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
-          $(this.$refs.resetPwdModal).modal({
-            backdrop: 'static',
-          })
-            .on('hidden.modal', () => {
-              Object.assign(this.$data, initData())
-              this.$store.commit(types.TOGGLE_RESET_PASSWORD_DIALOG, false)
-            })
-        })
-      },
       refreshValCode(){
         this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
       },
@@ -416,8 +391,17 @@
       },
     },
     mounted(){
-      this.codeUrl = `${this.url.substring(0, this.url.indexOf('/', this.url.indexOf('://', 0) + 3))}/acct/imgcode/code`
-      this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
+      this.$nextTick(() => {
+        this.codeUrl = `${this.url.substring(0, this.url.indexOf('/', this.url.indexOf('://', 0) + 3))}/acct/imgcode/code`
+        this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
+        $(this.$refs.resetPwdModal).modal({
+          backdrop: 'static',
+        })
+          .on('hidden.modal', () => {
+            Object.assign(this.$data, initData())
+            this.$store.commit(types.TOGGLE_RESET_PASSWORD_DIALOG, false)
+          })
+      })
     }
   }
 </script>
