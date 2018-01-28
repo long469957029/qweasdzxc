@@ -246,7 +246,7 @@ module.exports = {
           sendTime = _(item.sendTime).formatAMPM()
         }
         let userName = item.userName
-        let userAvatar = item.fromUserHeadIconId
+        let userAvatar = item.headIconId
         let avatarPic = ''
         if (item.userName === 'admin') {
           userName = '系统管理员'

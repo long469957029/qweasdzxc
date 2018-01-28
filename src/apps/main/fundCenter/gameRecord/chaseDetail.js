@@ -28,9 +28,10 @@ const BetDetailView = Base.ItemView.extend({
   },
   onRender() {
     this.$('.js-cd-bet-select-content').addClass('active')
+    this.getChaseData()
+  },
+  getChaseData(){
     const self = this
-    this.maxLength = 20
-
     this.getBetDetailXhr({
       userId: this.options.userId,
       chaseFormId: this.options.chaseFormId,
@@ -55,6 +56,7 @@ const BetDetailView = Base.ItemView.extend({
       }
     })
   },
+
   // 编辑一般数据
   renderGeneralInfo(info) {
     this.$('.jc-cd-chase-no').html(info.chaseFormNo)
@@ -86,16 +88,16 @@ const BetDetailView = Base.ItemView.extend({
     const playData = info.chaseTicketPlayDetail[0]
     this.$('.js-cd-content-play').html(`${playData.ticketLevelName}-${playData.ticketLevelName}`)
     let betMethod = ''
-    if (info.moneyMethod === 10000) {
+    if (info.chaseTicketPlayDetail[0].moneyMethod === 10000) {
       betMethod = 2
-    } else if (info.moneyMethod === 1000) {
+    } else if (info.chaseTicketPlayDetail[0].moneyMethod === 1000) {
       betMethod = 0.2
-    } else if (info.moneyMethod === 100) {
+    } else if (info.chaseTicketPlayDetail[0].moneyMethod === 100) {
       betMethod = 0.02
-    } else if (info.moneyMethod === 10) {
+    } else if (info.chaseTicketPlayDetail[0].moneyMethod === 10) {
       betMethod = 0.002
     }
-    this.$('.js-cd-content-bet').html(`${_(playData.singleMoney).fixedConvert2yuan()}元（${betMethod}*${playData.betMethod}倍*${playData.betNum}注）`)
+    this.$('.js-cd-content-bet').html(`${_(playData.singleMoney).formatDiv(10000)}元（${betMethod}*${playData.betMethod}倍*${playData.betNum}注）`)
     this.$('.js-cd-content-num').html(playData.betNums)
     this.$('.js-cd-ticketBetId').val(info.chaseFormId)
   },
@@ -106,8 +108,8 @@ const BetDetailView = Base.ItemView.extend({
       tableClass: 'table table-bordered table-hover table-center',
       height: 230,
       colModel: [
-        { label: '', name: '', width: '2%' },
-        { label: '奖期', name: 'ticketPlanId', width: '15%' },
+        {label: '', name: '', width: '2%'},
+        {label: '奖期', name: 'ticketPlanId', width: '15%'},
         {
           label: '开奖号码',
           name: 'ticketResult',
@@ -116,7 +118,7 @@ const BetDetailView = Base.ItemView.extend({
             return val ? val.split(',') : ''
           },
         },
-        { label: '倍数', name: 'betMultiple', width: '15%' },
+        {label: '倍数', name: 'betMultiple', width: '15%'},
         {
           label: '投注金额',
           name: 'amount',
@@ -168,7 +170,7 @@ const BetDetailView = Base.ItemView.extend({
             return ''
           },
         },
-        { label: '', name: '', width: '2%' },
+        {label: '', name: '', width: '2%'},
       ],
       row,
     })
@@ -188,7 +190,7 @@ const BetDetailView = Base.ItemView.extend({
     const self = this
     const $target = $(e.currentTarget)
     $target.button('loading')
-    const data = { chaseId: this.$('.js-cd-ticketBetId').val() }
+    const data = {chaseId: this.$('.js-cd-ticketBetId').val()}
     this.cancelTrackXhl(data).always(() => {
       $target.button('reset')
     })
@@ -197,8 +199,11 @@ const BetDetailView = Base.ItemView.extend({
           Global.ui.notification.show('终止追号成功', {
             type: 'success',
           })
+          // this.getChaseData()
           self.render()
-          self._getGridXhr()
+          self.selectNoHandle()
+          $('.js-fc-gr-tr-query').trigger('click'); //模拟点击事件刷新追号列表
+          // self._getGridXhr()
         } else if (res.msg.indexOf('fail') !== -1) {
           Global.ui.notification.show('终止追号失败!')
         } else {
@@ -218,10 +223,11 @@ const BetDetailView = Base.ItemView.extend({
     })
   },
   confirmCancelTrack(e) {
+    const self = this
     const $target = $(e.currentTarget)
     $target.button('loading')
     const chasePlanId = $target.data('chaseplanid')
-    const data = { chasePlanId, chaseId: this.$('.js-cd-ticketBetId').val() }
+    const data = {chasePlanId, chaseId: this.$('.js-cd-ticketBetId').val()}
     this.cancelTrackXhl(data).always(() => {
       $target.button('reset')
     })
@@ -230,6 +236,8 @@ const BetDetailView = Base.ItemView.extend({
           Global.ui.notification.show('撤销追号成功', {
             type: 'success',
           })
+          self.render()
+          self.selectNoHandle()
         } else if (res.msg.indexOf('fail') !== -1) {
           Global.ui.notification.show('撤销追号失败!')
         } else {

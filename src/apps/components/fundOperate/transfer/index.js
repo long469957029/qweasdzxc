@@ -8,8 +8,8 @@ const TransferView = Base.ItemView.extend({
   template: require('./index.html'),
 
   events: {
-    'click .js-rc-next-step': 'submitPlatformTransferHandler',
-    'click .js-fc-rc-pre': 'preStepHandler',
+    'click .js-tr-next-step': 'submitPlatformTransferHandler',
+    'click .js-fc-tr-pre': 'preStepHandler',
     // 'click .js-tr-select-out-down': 'selectOutDownHandler',
     // 'click .js-tr-select-in-down': 'selectInDownHandler',
     'click .js-tr-out-select': 'selectOutDownHandler',
@@ -54,7 +54,7 @@ const TransferView = Base.ItemView.extend({
         .done((res) => {
           if (res && res.result === 0) {
             // 生成充值页广告
-            Global.memoryCache.set('rechargeAc', res1[0].root.records)
+            Global.memoryCache.set('rechargeAc', res.root.record)
             this.$('.jc-rc-activity').html(rechargeService.getFunActivity(res.root.records))
           } else {
             Global.ui.notification.show('服务器异常')

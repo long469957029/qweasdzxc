@@ -95,6 +95,9 @@ const _bindFundOperatorDialogHandler = () => {
     $fundOperateDialog.on('click.modal', '.js-rc-recharge-to-record', () => {
       Global.router.goTo('fc/rd')
       $fundOperateDialog.modal('hide')
+      $('.js-refresh-withdraw-record').trigger('click')
+      $('.js-refresh-recharge-record').trigger('click')
+      $('.js-refresh-transfer-record').trigger('click')
     })
     $fundOperateDialog.on('click.modal', '.js-wd-goTo-fundPwd', () => {
       Global.router.goTo('uc/pl')
