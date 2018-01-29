@@ -175,6 +175,7 @@ function _create(ticketId) {
       list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(2, {
         outerSort: true,
+        slice: false,
       }),
     })
 

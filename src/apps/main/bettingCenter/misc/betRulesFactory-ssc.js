@@ -204,6 +204,7 @@ function _create(ticketId) {
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {
       outerSort: true,
+      slice: false,
     }),
   })
 
@@ -222,6 +223,7 @@ function _create(ticketId) {
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(3, {
       outerSort: true,
+      slice: false,
     }),
   })
 
@@ -373,6 +375,7 @@ function _create(ticketId) {
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {
       outerSort: true,
+      slice: false,
     }),
   })
 
@@ -606,6 +609,7 @@ function _create(ticketId) {
       list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(2, {
         outerSort: true,
+        slice: false,
       }),
     })
   }
