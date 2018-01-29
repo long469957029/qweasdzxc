@@ -1233,6 +1233,7 @@ function _create(ticketId) {
     analysis: false,
     create: algorithm.getCreateFunc(2, {
       range: danshuang,
+      repeat: true,
       matching: true,
     }),
   })
@@ -1248,6 +1249,7 @@ function _create(ticketId) {
     analysis: false,
     create: algorithm.getCreateFunc(3, {
       range: danshuang,
+      repeat: true,
       matching: true,
     }),
   })
@@ -1263,6 +1265,7 @@ function _create(ticketId) {
     analysis: false,
     create: algorithm.getCreateFunc(2, {
       range: danshuang,
+      repeat: true,
       matching: true,
     }),
   })
@@ -1277,6 +1280,7 @@ function _create(ticketId) {
     analysis: false,
     create: algorithm.getCreateFunc(3, {
       range: danshuang,
+      repeat: true,
       matching: true,
     }),
   })

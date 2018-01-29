@@ -224,13 +224,14 @@
         showChaseModal: false,
       }
     },
-    computed: mapState({
-      playLevels: function () {
-        return this.$store.getters.playLevels
-      },
-      bettingChoice: 'bettingChoice',
-      bettingInfo: 'bettingInfo',
-    }),
+    computed: {
+      ...mapGetters([
+        'playLevels'
+      ]),
+      ...mapState({
+        bettingChoice: 'bettingChoice',
+        bettingInfo: 'bettingInfo',
+      })},
 
     watch: {
       '$route' (to, from) {

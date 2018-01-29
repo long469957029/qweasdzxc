@@ -368,7 +368,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
       chaseCreate({type = 'normal', init = false} = {}) {
         //生成追号列表，并选中
         if (this.chasePlans > this.chaseList.length) {
-          const chasePlans = this.plans.slice(0, this.chasePlans > 5 ? this.chasePlans : 5)
+          const chasePlans = this.plans.slice(0, this.chasePlans > 15 ? this.chasePlans : 15)
 
           this.chaseList = _(chasePlans).map((chasePlan, index) => this.$_create(chasePlan, this.chasePlans > index, init))
         } else {
@@ -404,7 +404,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
 
       chaseRateCreate() {
         if (this.chasePlans > this.chaseList.length) {
-          const chasePlans = this.plans.slice(0, this.chasePlans > 5 ? this.chasePlans : 5)
+          const chasePlans = this.plans.slice(0, this.chasePlans > 15 ? this.chasePlans : 15)
 
           this.chaseList = _(chasePlans).map((chasePlan, index) => this.$_create(chasePlan, this.chasePlans > index, false))
         } else {

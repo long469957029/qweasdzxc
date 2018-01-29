@@ -40,10 +40,10 @@
       '$route': {
         handler(to) {
           this.ticketInfo = ticketConfig.getById(this.ticketId, this.ticketType)
-          // this.ticketInfo = ticketConfig.getComplete(this.ticketId)
 
           // 暂时在这重置bettingChoice
           this.$store.commit(types.RESET_BETTING_CHOICE)
+          this.$store.commit(types.CHECKOUT_PLAN_ID)
           // this.$store.commit(types.CHECKOUT_TICKET_INFO)
 
           // 取得当前彩票信息

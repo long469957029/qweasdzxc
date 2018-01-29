@@ -72,6 +72,11 @@ const mutations = {
     Object.assign(state, initState())
   },
 
+  [types.CHECKOUT_PLAN_ID] (state) {
+    state.planId = '------------'
+    state.init = true
+  },
+
   [types.GET_TICKET_INFO_SUCCESS] (state, res) {
     if (res && res.result === 0) {
       const data = res.root || {}

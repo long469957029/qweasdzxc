@@ -6,7 +6,7 @@
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney">
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" @blur="isInputing = false">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                 :disabled="!canBet || pushing || !sale || pending">
           投注
@@ -121,7 +121,7 @@
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney">
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" @blur="isInputing = false">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                 :disabled="!canBet || pushing || !sale || pending">
           投注
@@ -161,13 +161,14 @@
         formattedRuleList: [],
         type: 'handicap',
         betMoney: null,
-        canBet: false
+        canBet: false,
+        isInputing: false,
       }
     },
 
     watch: {
       'playRule.list': {
-        handler(list, oldVal) {
+        handler(list) {
           _.chain(list).pluck('items').each((itemGroup, index) => {
             _.each(itemGroup, (itemList) => {
               if (list[index].showItemOdds) {
@@ -187,7 +188,8 @@
       'betMoney': {
         handler() {
           _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
-            if (item.selected && !item.betMoney) {
+            if (item.selected && (!item.betMoney || this.isInputing)) {
+              this.isInputing = true
               item.betMoney = this.betMoney
             }
           })
@@ -233,6 +235,7 @@
       addBetMoney(addMoney) {
         this.betMoney += addMoney
       },
+
 
       inputTotalBetMoney() {
         if (!_.isNumber(this.betMoney) || this.betMoney === 0) {
