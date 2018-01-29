@@ -20,7 +20,7 @@
           <col :width="col.width" v-for="col in colModel">
         </colgroup>
         <tbody>
-          <tr v-for="row in showRows" v-html="row" ref="bodyRows"></tr>
+        <tr v-for="row in showRows" v-html="row" ref="bodyRows"></tr>
         </tbody>
 
       </table>
@@ -65,7 +65,7 @@
       },
       rows: {
         type: Array,
-        default: function() {
+        default: function () {
           return []
         }
       },
@@ -77,27 +77,37 @@
         type: Number,
         default: 0
       },
-      showLoading: {
-        type: Boolean,
-        default: false
+      url: {
+        type: String,
+        default: '',
       },
       colModel: {
         type: Array,
-        default: function() {
+        default() {
           return []
         }
       },
+      dataProp: {
+        type: String,
+        default: 'root'
+      },
+      reqData: {
+        type: Object,
+        default() {
+          return {}
+        }
+      }
     },
 
-    data: function () {
+    data() {
       return {
-        url: '',
+        showLoading: false,
+        showEmpty: !_.isEmpty(this.emptyTip),
         startOnLoading: true,
         showHeader: true,
-        showEmpty: !_.isEmpty(this.emptyTip),
         abort: true,
         showRows: [],
-        dataProp: 'root',
+        innerRows: [],
         hasBorder: _.isUndefined(this.hasBorder) ? this.tableClass.indexOf('table-bordered') > -1 : this.hasBorder,
         loading: Global.ui.loader.get(),
       }
@@ -105,39 +115,37 @@
 
     watch: {
       rows: {
-        handler: function(data) {
-          let showRows = _.map(data, function(item, index, data) {
+        handler() {
+          this.innerRows = this.rows
+        },
+        deep: true
+      },
+      innerRows: {
+        handler(data) {
+          this.showRows = _.map(data, (item, index, data) => {
             return this.formatRowData(item, index, data)
           }, this)
-
-          this.showRows = showRows
         },
         deep: true
       }
     },
 
-    mounted: function() {
+    mounted() {
       if (this.height > 0) {
         $(this.$refs.body).slimScroll({
           height: this.height,
         })
       }
 
-      // this.$tbody = this.element.find('.js-wt-tbody')
-      // this.$footerDiv = this.element.find('.js-wt-footer-main')
-      // this.$footerBody = this.$footerDiv.find('tbody')
-
 
       if (this.url && this.initRemote) {
         this.$_getDataXhr()
-      } else if (_.isEmpty(this.row)) {
+      } else if (_.isEmpty(this.showRows)) {
         if (this.startOnLoading) {
           this.renderLoading()
         } else {
           this.renderEmpty()
         }
-      } else {
-        this.renderRow(this.row)
       }
     },
 
@@ -156,12 +164,12 @@
 
       $_getDataXhr() {
         this.clean()
-          .renderLoading()
+        this.renderLoading()
 
         $http({
           url: this.url,
           abort: this.abort,
-          data: this.data,
+          data: this.reqData,
         })
           .catch((xhr, type) => {
             this.hideLoading()
@@ -172,15 +180,13 @@
           .then(({data}) => {
             this.hideLoading()
             if (data && data.result === 0) {
-              this.currentData = _(this.dataProp.split('.')).reduce((_res, prop) => {
+              this.innerRows = _(this.dataProp.split('.')).reduce((_res, prop) => {
                 let data = _res[prop]
                 if (!data) {
                   data = []
                 }
                 return data
               }, data)
-              this.renderRow(this.currentData)
-              // self.element.trigger('update:done', res.root, res)
             } else {
               this.renderFail()
             }
@@ -248,15 +254,8 @@
         return this.$refs.bodyRows || []
       },
 
-      getHeight() {
-        return this.element.find('table').height()
-      },
-
       clean() {
-        this.$tbody.empty()
-        this.$footerBody.empty()
-
-        return this
+        this.showRows = []
       },
 
       addFooterRows(rows, options) {
@@ -273,18 +272,6 @@
           this.$footerBody.prepend($rows)
         }
         return $rows
-      },
-
-      reformat(gridOps) {
-        // if (this.currentData) {
-        //   if (gridOps) {
-        //     this._create(_(gridOps).extend({
-        //       initRemote: false,
-        //       row: this.currentData,
-        //     }))
-        //   }
-          // this.renderRow()
-        // }
       },
 
       renderEmpty() {
@@ -305,7 +292,7 @@
 
       renderFail() {
         this.hideEmpty()
-        this.$tbody.html(`<tr><td class="text-center" colspan="${this.options.colModel.length}">加载数据失败</td></tr>`)
+        // this.$tbody.html(`<tr><td class="text-center" colspan="${this.options.colModel.length}">加载数据失败</td></tr>`)
       }
     },
   }

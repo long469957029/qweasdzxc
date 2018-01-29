@@ -94,21 +94,31 @@ const actions = {
 
 // mutations
 const mutations = {
-  // 用户登录
+  // 用户登录成功
   [types.USER_LOGIN_SUCCESS] (state, data) {
+    this.commit(types.USER_OAUTH_SUCCESS, data)
+
+    // 开启oauth监听
+    window.Global.m.oauth.start()
+    // 开启消息监听
+    window.Global.m.news.start()
+
+    Object.assign(state, data)
+  },
+
+  // 用户oauth确认成功
+  [types.USER_OAUTH_SUCCESS] (state, data) {
     window.Global.memoryCache.set('acctInfo', data)
     window.Global.m.publish('acct:login', data)
     window.Global.m.publish('acct:updating', data)
+
     data.fBalance = _(data.balance).convert2yuan()
     data.fLastLoginTime = _(data.lastLoginTime).toTime()
     data.fLoginTime = _(data.loginTime).toTime()
     data.headIcon = _(data.headIcon).toString()
-    // 开启oauth监听
-    window.Global.m.oauth.start()
     Object.assign(state, data)
-    // 开启消息监听
-    window.Global.m.news.start()
   },
+
   // 清除用户数据
   [types.USER_CLEAR] (state) {
     Object.assign(state, initState())

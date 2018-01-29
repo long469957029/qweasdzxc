@@ -126,8 +126,7 @@
           </div>
         </div>
       </div>
-      <div class="bc-side-area pull-right" ref="bcSideArea"></div>
-      <betting-history class="bc-side-area pull-right"></betting-history>
+      <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" ref="bettingHisotry"></betting-history>
     </div>
     <div class="bc-bottom-area" ref="recordsContainer"></div>
 
@@ -164,10 +163,10 @@
 
 
   //backbone旧组件
-  import HisAnalysisView from './bettingCenter-historical-analysis'
+  // import HisAnalysisView from './bettingCenter-historical-analysis'
   import BettingRecordsView from './bettingCenter-records'
 
-  let recordsOpenView
+  // let recordsOpenView
   let bettingRecordsView
 
   export default {
@@ -236,7 +235,6 @@
 
     watch: {
       '$route' (to, from) {
-        recordsOpenView.updateTicketId(this.ticketId)
         bettingRecordsView.updateTicketId(this.ticketId)
         bettingRecordsView.update()
 
@@ -250,8 +248,6 @@
             return
           }
           this.playRule = betRulesConfig.get(playId)
-
-          recordsOpenView.updateByPlayRule(this.playRule)
 
           this.$store.commit(types.SET_CHECKOUT_CHOICE)
 
@@ -317,7 +313,7 @@
       },
       'bettingInfo.lastOpenId': {
         handler: function () {
-          recordsOpenView.update()
+          this.$refs.bettingHisotry.update()
           bettingRecordsView.update()
         }
       },
@@ -332,7 +328,7 @@
         }
       },
       'bettingChoice.previewList': {
-        handler: function (previewList) {
+        handler(previewList) {
           this.fPreviewList = _(previewList).map(function (previewInfo, index) {
             const title = `${previewInfo.levelName}_${previewInfo.playName}`
             let betNum = ''
@@ -371,7 +367,7 @@
               let betNumber = previewList[index].bettingNumber
 
               if ($multipleAdd.numRange('instance')) {
-                $multipleAdd.numRange('setRange', 1, previewList[index].formatMaxMultiple)
+                $multipleAdd.numRange('numChange', previewList[index].multiple)
               } else {
                 $multipleAdd.numRange({
                   defaultValue: previewList[index].multiple,
@@ -426,11 +422,6 @@
         }
 
         this.$refs.areaSelect.autoCreate()
-
-        // this.$_addSelectLottery({
-        //   type: 'auto',
-        //   results: lotteryResults
-        // })
       },
 
       lotteryBuy() {
@@ -737,11 +728,6 @@
           this.lotteryPreviewUnitChange($(e.currentTarget).closest('tr').index(), e.currentTarget.value)
         })
 
-      recordsOpenView = new HisAnalysisView({
-        el: this.$refs.bcSideArea,
-        ticketId: this.ticketId,
-      }).render()
-
       bettingRecordsView = new BettingRecordsView({
         el: this.$refs.recordsContainer,
         ticketId: this.ticketId,
@@ -885,5 +871,14 @@
     margin-right: 10px;
     border-radius: $globalBtnRadius;
     border: 1px solid $def-gray-color;
+  }
+
+  .bc-side-area {
+    position: relative;
+    width: 278px;
+    min-height: 845px;
+    left: -1px;
+    border-left: 1px solid $def-line-color;
+    box-sizing: border-box;
   }
 </style>

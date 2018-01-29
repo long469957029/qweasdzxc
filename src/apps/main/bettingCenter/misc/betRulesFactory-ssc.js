@@ -263,7 +263,7 @@ function _create(ticketId) {
     formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
     analysisProps: {
-      type: 'normal',
+      type: 'distribution',
       playSeriesId: 20002,
       startPos: 0,
     },

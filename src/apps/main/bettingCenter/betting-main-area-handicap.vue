@@ -16,7 +16,7 @@
         <!-- 路珠 -->
         <road-balls-analysis :ticket-info="ticketInfo" v-if="ticketInfo.roadBalls"></road-balls-analysis>
       </div>
-      <div class="bc-side-area pull-right" ref="bcSideArea"></div>
+      <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" ref="bettingHisotry"></betting-history>
     </div>
 
     <!-- 确认投注 -->
@@ -33,13 +33,8 @@
   import BettingRules from './betting-rules'
   import BettingAdvanceRules from './betting-advance-rules'
   import BettingPlayAreaHandicap from './betting-play-area-handicap'
-  import BettingConfirm from "./betting-confirm";
-
-
-  //backbone旧组件
-  import HisAnalysisView from './bettingCenter-historical-analysis'
-
-  let recordsOpenView
+  import BettingConfirm from "./betting-confirm"
+  import BettingHistory from "./betting-history"
 
   export default {
     name: "betting-main-area-handicap",
@@ -53,6 +48,7 @@
       BettingAdvanceRules,
       BettingPlayAreaHandicap,
       RoadBallsAnalysis,
+      BettingHistory,
     },
     data() {
       return {
@@ -68,7 +64,7 @@
       }
     },
     computed: mapState({
-      playLevels: function () {
+      playLevels() {
         return this.$store.getters.playLevels
       },
       bettingChoice: 'bettingChoice',
@@ -76,17 +72,12 @@
     }),
 
     watch: {
-      '$route' (to, from) {
-        recordsOpenView.updateTicketId(this.ticketId)
-      },
       'bettingChoice.playId': {
-        handler: function (playId) {
+        handler(playId) {
           if (playId === -1) {
             return
           }
           this.playRule = betRulesConfig.get(playId)
-
-          recordsOpenView.updateByPlayRule(this.playRule)
 
           this.$store.commit(types.SET_CHECKOUT_CHOICE)
 
@@ -101,7 +92,7 @@
         },
       },
       'bettingInfo.planId': {
-        handler: function (newPlanId, oldPlanId) {
+        handler(newPlanId, oldPlanId) {
           if (this.$el.offsetWidth && newPlanId !== '------------' && oldPlanId !== '------------' && !this.bettingInfo.pending) {
             Global.ui.notification.show(
               `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
@@ -111,8 +102,8 @@
         }
       },
       'bettingInfo.lastOpenId': {
-        handler: function () {
-          recordsOpenView.update()
+        handler() {
+          this.$refs.bettingHisotry.update()
         }
       },
     },
@@ -188,15 +179,12 @@
           })
       },
     },
-
-    mounted: function () {
-      recordsOpenView = new HisAnalysisView({
-        el: this.$refs.bcSideArea,
-        ticketId: this.ticketId,
-      }).render()
-    }
   }
 </script>
 
 <style lang="scss" scoped>
+  .bc-play-main .bc-side-area {
+    width: 278px;
+    min-height: 845px;
+  }
 </style>
