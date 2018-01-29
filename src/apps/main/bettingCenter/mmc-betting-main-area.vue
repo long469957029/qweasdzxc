@@ -139,7 +139,7 @@
             </div>
           </div>
 
-          <div class="bc-side-area pull-right" ref="bcSideArea"></div>
+          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="430" ref="bettingHistory"></betting-history>
         </div>
         <div class="div-line"></div>
 
@@ -242,13 +242,8 @@
   import BettingAdvanceRules from './betting-advance-rules'
   import BettingPlayAreaSelect from './betting-play-area-select'
   import BettingPlayAreaInput from './betting-play-area-input'
-  //backbone旧组件
-  import HisAnalysisView from './bettingCenter-historical-analysis'
+  import BettingHistory from './betting-history'
 
-  let recordsOpenView
-
-  //TODO 连续开奖选择
-  //TODO nav
   export default {
     name: "mmc-betting-main-area",
     props: {
@@ -262,6 +257,7 @@
       StaticGrid,
       BettingRules,
       BettingAdvanceRules,
+      BettingHistory,
       BettingPlayAreaSelect,
       BettingPlayAreaInput,
     },
@@ -378,9 +374,6 @@
           }
           this.playRule = betRulesConfig.get(playId)
 
-          recordsOpenView.updateByPlayRule(this.playRule)
-          recordsOpenView.update()
-
           this.$store.commit(types.SET_CHECKOUT_CHOICE)
 
           this.playInfo = this.$store.getters.playInfo(playId, this.bettingChoice.groupId);
@@ -414,10 +407,6 @@
             content: `<div class="font-sm text-default">中奖举例：<span class="text-inverse">${playInfo.playExample.replace(/\|/g, '<br />')}</span></div>`,
             placement: 'bottom',
           })
-
-
-          this.$store.dispatch('getColdHot', {ticketId: this.ticketInfo.id})
-          this.$store.dispatch('getCurrentMiss', {ticketId: this.ticketInfo.id})
         },
       },
       unit: {
@@ -474,7 +463,7 @@
               let betNumber = previewList[index].bettingNumber
 
               if ($multipleAdd.numRange('instance')) {
-                $multipleAdd.numRange('setRange', 1, previewList[index].formatMaxMultiple)
+                $multipleAdd.numRange('numChange', previewList[index].multiple)
               } else {
                 $multipleAdd.numRange({
                   defaultValue: previewList[index].multiple,
@@ -531,7 +520,7 @@
       openCompleted() {
         if (this.simulationOpen) {
           this.simulationOpen = false
-          recordsOpenView.update()
+          this.$refs.bettingHisotry.update()
           return
         }
 
@@ -544,7 +533,7 @@
         } else {
           this.stopping = false
           this.opening = false
-          recordsOpenView.update()
+          this.$refs.bettingHisotry.update()
 
           this.toggleFinalResult(true)
         }
@@ -823,14 +812,6 @@
         .on('change', '.js-bc-preview-unit', (e) => {
           this.lotteryPreviewUnitChange($(e.currentTarget).closest('tr').index(), e.currentTarget.value)
         })
-
-      recordsOpenView = new HisAnalysisView({
-        el: this.$refs.bcSideArea,
-        ticketId: this.ticketId,
-        title: '最近开奖号码',
-      }).render()
-
-      recordsOpenView.height = 430
 
       this.flashTimer = setInterval(() => {
         ++this.flashIndex

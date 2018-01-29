@@ -107,6 +107,7 @@
         showHeader: true,
         abort: true,
         showRows: [],
+        innerRows: [],
         hasBorder: _.isUndefined(this.hasBorder) ? this.tableClass.indexOf('table-bordered') > -1 : this.hasBorder,
         loading: Global.ui.loader.get(),
       }
@@ -114,12 +115,16 @@
 
     watch: {
       rows: {
+        handler() {
+          this.innerRows = this.rows
+        },
+        deep: true
+      },
+      innerRows: {
         handler(data) {
-          let showRows = _.map(data, function (item, index, data) {
+          this.showRows = _.map(data, (item, index, data) => {
             return this.formatRowData(item, index, data)
           }, this)
-
-          this.showRows = showRows
         },
         deep: true
       }
@@ -135,7 +140,7 @@
 
       if (this.url && this.initRemote) {
         this.$_getDataXhr()
-      } else if (_.isEmpty(this.rows)) {
+      } else if (_.isEmpty(this.showRows)) {
         if (this.startOnLoading) {
           this.renderLoading()
         } else {
@@ -175,7 +180,7 @@
           .then(({data}) => {
             this.hideLoading()
             if (data && data.result === 0) {
-              this.rows = _(this.dataProp.split('.')).reduce((_res, prop) => {
+              this.innerRows = _(this.dataProp.split('.')).reduce((_res, prop) => {
                 let data = _res[prop]
                 if (!data) {
                   data = []
