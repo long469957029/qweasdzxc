@@ -16,6 +16,7 @@ const getters = {
     return state[state.type]
   },
   topClassicalTicket: (state) => {
+    Global.m.publish('ticketId:updating', _.first(state[consts.TICKET_NORMAL_TYPE]))
     return _.first(state[consts.TICKET_NORMAL_TYPE])
   },
   topHandicapTicket: (state) => {

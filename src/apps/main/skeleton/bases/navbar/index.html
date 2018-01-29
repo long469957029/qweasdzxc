@@ -25,7 +25,7 @@
             <% } else { %>
               <li class="<%= menu.className || '' %>" data-index="<%= index %>">
                 <% if (menu.navItemType === 1) { %>
-                  <a href="#/<%= menu.router %>" class="js-navbar-tab"><%= menu.name %><div class="navbar-down-icon"></div></a>
+                  <a href="#/<%= menu.router %>" class="js-navbar-tab <%= (menu.name === '彩票' ? 'js-nav-ticket' : '')%>"><%= menu.name %><div class="navbar-down-icon"></div></a>
                 <% } else if (menu.navItemType === 2) { %>
                   <a href="<%=menu.first || menu.router %>" target="_blank"><%= menu.name %></a>
                 <% } else if (menu.navItemType === 3) { %>
