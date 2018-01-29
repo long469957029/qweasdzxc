@@ -29,6 +29,9 @@ const MediatorModule = Base.Module.extend({
       'acct:loginOut': {
         acct: true,
       },
+      'ticketId:updating': {
+        ticketId: true,
+      },
     })
 
     _(this).extend(Base.MediatorFacade)
