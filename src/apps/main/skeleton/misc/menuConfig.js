@@ -272,19 +272,19 @@ const menuConfig = [
         router: 'rc',
       },
       {
-        channelId: channelId.ebet,
-        gameId: 2,
-        channelName: 'EBET娱乐场',
-        desc: '亚洲最稳健的平台',
-        imgSrc: 'icon-real-ebet',
-        router: 'rc',
-      },
-      {
         channelId: channelId.bbin,
         gameId: 3,
         channelName: 'BBIN娱乐场',
         desc: '移动娱乐第一品牌',
         imgSrc: 'icon-real-bbin',
+        router: 'rc',
+      },
+      {
+        channelId: channelId.ebet,
+        gameId: 2,
+        channelName: 'EBET娱乐场',
+        desc: '亚洲最稳健的平台',
+        imgSrc: 'icon-real-ebet',
         router: 'rc',
       },
 

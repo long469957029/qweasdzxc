@@ -35,7 +35,7 @@
                 <% } %>
                 <% if (menu.dropdownType === 1) { %>
                   <div class="js-nav-channel-container nav-channel-container">
-                    <ul>
+                    <ul class="nav-channel-content">
                       <div class="nav-channel-banner <%= menu.bannerPicClass %>"></div>
                       <div class="nav-channel-list-container">
                         <%_(menu.subGame).each(function(channel){%>
@@ -50,7 +50,7 @@
                 <% } %>
                 <% if (menu.dropdownType === 2) { %>
                   <div class="js-nav-channel-container nav-channel-container">
-                    <ul>
+                    <ul class="nav-channel-content">
                       <div class="nav-channel-banner <%= menu.bannerPicClass %>"></div>
                       <div class="nav-channel-entry-container">
                         <%_(menu.subGame).each(function(channel, index, subGame){%>
@@ -71,11 +71,11 @@
                 <% } %>
                 <% if (menu.dropdownType === 3) { %>
                   <div class="js-nav-channel-container nav-channel-container">
-                    <ul>
+                    <div class="nav-channel-content">
                       <div class="nav-channel-banner <%= menu.bannerPicClass %>"></div>
                       <div class="nav-channel-main">
-                        <div class="classic-title-classic"></div>
-                        <ul class="nav-channel-container classic-container">
+                        <div class="classic-title">经典模式</div>
+                        <ul class="container-list classic">
                           <% _(classicTicketList.list).each(function(ticket, index){%>
                           <li>
                             <span class="navbar-ticket-chavon"></span>
@@ -89,8 +89,8 @@
                       </div>
 
                       <div class="nav-channel-main">
-                        <div class="classic-title-handicap"></div>
-                        <ul class="nav-channel-container">
+                        <div class="classic-title">盘口模式</div>
+                        <ul class="container-list handicap">
                           <% _(handicapTicketList.list).each(function(ticket, index){%>
                           <li>
                             <span class="navbar-ticket-chavon"></span>
@@ -102,7 +102,7 @@
                           <%})%>
                         </ul>
                       </div>
-                    </ul>
+                    </div>
                   </div>
                 <% } %>
               </li>

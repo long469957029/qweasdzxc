@@ -1,6 +1,9 @@
+/**
+ *
+ * @type {*|Gulp}
+ */
 const gulp = require('gulp')
 const gutil = require('gulp-util')
-const minfyCss = require('gulp-minify-css')
 const path = require('path')
 const del = require('del')
 const imagemin = require('gulp-imagemin')
@@ -104,10 +107,14 @@ gulp.task('server.webpack', () => {
     'mock/*.json': {
       target: 'http://localhost:7070/',
     },
-    '/acct/imgcode/code':{
+    '/acct/imgcode/code': {
       target: serverIP,
       changeOrigin: true,
-    }
+    },
+    '/info/imgs/': {
+      target: serverIP,
+      changeOrigin: true,
+    },
     // '*.jsonp': {
     //   target: serverIP,
     //   changeOrigin: true,
@@ -296,7 +303,6 @@ gulp.task('release.js', (cb) => {
 gulp.task('release.css', () => {
   return gulp.src([`./dist/${projectPath}/*.css`])
     .pipe(csso())
-    // .pipe(minfyCss())
     .pipe(gulp.dest(path.join('./www/', projectPath)))
 })
 

@@ -1,7 +1,7 @@
 export default {
   // 取得所有彩种
   getTicketList (then) {
-    return Global.sync.axios({
+    return $http({
       url: '/ticket/ticketmod/ticketlist.json',
     })
       .then(then)
@@ -9,7 +9,7 @@ export default {
 
   //取得彩种开奖信息
   getTicketOpeningList ({ticketId, pageSize, date}, then) {
-    return Global.sync.axios({
+    return $http({
       url: '/ticket/ticketmod/openHistoryDetail.json',
       data: {
         ticketId,

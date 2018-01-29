@@ -15,6 +15,10 @@ const SyncModule = Base.Module.extend({
   initialize() {
     this.initAjax()
     this.initAxios()
+
+    Vue.prototype.$http = this._axios
+    Vue.http = this._axios
+    window.$http = this._axios
   },
 
   initAjax() {

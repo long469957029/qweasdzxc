@@ -297,7 +297,7 @@
     position: relative;
     .bc-area-ticket-info {
       width: 145px;
-      margin: 15px 40px;
+      margin: 15px 40px 0;
       .ticket-info {
         width: 100%;
         height: 27px;

@@ -38,7 +38,7 @@
               <keep-alive>
                 <betting-play-area-select :play-rule="playRule" :ticket-info="ticketInfo" ref="areaSelect"
                                           v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
-                  <div slot="autoAdd" class="bc-missOption-btn" :key="'autoBet'" data-times="1" @click="autoAdd(1)">机选一注
+                  <div slot="autoAdd" class="bc-missOption-btn" :key="'autoBet'" data-times="1" @click="autoAdd">机选一注
                   </div>
                 </betting-play-area-select>
                 <betting-play-area-input :play-rule="playRule" ref="areaInput"
@@ -127,6 +127,7 @@
         </div>
       </div>
       <div class="bc-side-area pull-right" ref="bcSideArea"></div>
+      <betting-history class="bc-side-area pull-right"></betting-history>
     </div>
     <div class="bc-bottom-area" ref="recordsContainer"></div>
 
@@ -158,7 +159,8 @@
   import BettingPlayAreaSelect from './betting-play-area-select'
   import BettingPlayAreaInput from './betting-play-area-input'
   import BettingChase from './betting-chase'
-  import BettingConfirm from "./betting-confirm";
+  import BettingHistory from './betting-history'
+  import BettingConfirm from "./betting-confirm"
 
 
   //backbone旧组件
@@ -182,6 +184,7 @@
       BettingPlayAreaSelect,
       BettingPlayAreaInput,
       BettingChase,
+      BettingHistory,
     },
     data() {
       return {
@@ -416,18 +419,18 @@
         this.advanceShowMode = mode
       },
 
-      autoAdd(times) {
+      autoAdd() {
         if (!this.bettingChoice.multiple) {
           Global.ui.notification.show('倍数为0，不能投注')
           return false
         }
 
-        const lotteryResults = this.$refs.areaSelect.create(times)
+        this.$refs.areaSelect.autoCreate()
 
-        this.$_addSelectLottery({
-          type: 'auto',
-          results: lotteryResults
-        })
+        // this.$_addSelectLottery({
+        //   type: 'auto',
+        //   results: lotteryResults
+        // })
       },
 
       lotteryBuy() {

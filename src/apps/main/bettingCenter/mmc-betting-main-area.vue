@@ -6,8 +6,9 @@
         <span class="sfa sfa-bc-ssc-mmc"></span>
         <div class="opening-wrapper sfa-mmc-opening-panel">
           <div class="opening-flash" :class="`sfa-mmc-opening-flash-${flashIndex}`"></div>
-          <mmc-opening-num-group class="opening-content" :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="lastOpening"
-                         :default-opening="ticketInfo.defaultOpening" @openCompleted="openCompleted"
+          <mmc-opening-num-group class="opening-content" :counts="ticketInfo.counts" :range="ticketInfo.range"
+                                 :opening-balls="lastOpening"
+                                 :default-opening="ticketInfo.defaultOpening" @openCompleted="openCompleted"
           ></mmc-opening-num-group>
           <div class="sfa-mmc-simulation-btn" @click="simulationOpening"></div>
         </div>
@@ -34,7 +35,9 @@
     </div>
     <div class="mmc-lottery-main" ref="main">
       <div class="mmc-lottery-main-open" ref="mainOpen">
-        <div class="opening-title" v-if="opening">第<span class="opening-title-inner">{{currentOpeningCount}}</span>/{{openingCount}}期 正在开奖</div>
+        <div class="opening-title" v-if="opening">第<span class="opening-title-inner">{{currentOpeningCount}}</span>/{{openingCount}}期
+          正在开奖
+        </div>
         <div class="opening-title cursor-pointer" v-else @click="reSelect">重新选号</div>
         <div class="opening-main">
           <div class="opening-panel">
@@ -64,14 +67,15 @@
                 开奖结果
               </span>
               <span class="font-sm m-left-sm">
-                开奖<span class="text-cool">{{currentOpeningCount}}</span>次，中奖<animated-integer class="text-prominent" :value="fTotalWinPrize"></animated-integer>元
+                开奖<span class="text-cool">{{currentOpeningCount}}</span>次，中奖<animated-integer class="text-prominent"
+                                                                                              :value="fTotalWinPrize"></animated-integer>元
               </span>
             </div>
             <transition-group class="opening-group" ref="openingGroup" name="opening-cell" tag="div">
               <div class="opening-cell" v-for="(openingResult, i) in fOpeningResultList" :key="openingResult.index">
                 <div class="opening-left">{{openingResult.title}}</div>
                 <div class="opening-center" v-if="!openingResult.completed">
-                  --------- 正在开奖  ---------
+                  --------- 正在开奖 ---------
                 </div>
                 <div class="opening-center" v-else>
                   <span class="text-circle text-circle-xs" :class="{'circle-winning': !opening && i === 0}"
@@ -90,7 +94,8 @@
 
         <div class="bc-play-container clearfix">
           <div class="bc-play-left pull-left">
-            <betting-rules class="inline-block" :component-type="componentType" :initial-rules="playLevels"></betting-rules>
+            <betting-rules class="inline-block" :component-type="componentType"
+                           :initial-rules="playLevels"></betting-rules>
             <div class="bc-play-select-area clearfix">
               <betting-advance-rules v-show="advanceShowMode === 'classic'"
                                      @modeChange="modeChange"></betting-advance-rules>
@@ -210,8 +215,8 @@
       <div class="final-result-wrapper">
         <div class="final-result-inner sfa-mmc-winning" v-if="totalWinPrize">
           <span class="final-result-close sfa sfa-mmc-result-close" data-dismiss="modal"></span>
-          <div class="winning-result">总计中奖金额为<br />
-          <span class="winning-prize">{{fTotalWinPrize}}</span> 元
+          <div class="winning-result">总计中奖金额为<br/>
+            <span class="winning-prize">{{fTotalWinPrize}}</span> 元
           </div>
         </div>
         <div class="final-result-inner sfa-mmc-lose" v-else>
@@ -237,8 +242,6 @@
   import BettingAdvanceRules from './betting-advance-rules'
   import BettingPlayAreaSelect from './betting-play-area-select'
   import BettingPlayAreaInput from './betting-play-area-input'
-
-
   //backbone旧组件
   import HisAnalysisView from './bettingCenter-historical-analysis'
 
@@ -656,16 +659,11 @@
             'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
           return false
         }
-        if (!this.opening) {
-          this.toggleLever()
-        }
 
-        this.$_prepareOpening()
-
-        this.$_pushBetting()
+        this.$_pushBetting({init: true})
       },
 
-      $_pushBetting() {
+      $_pushBetting({init = false} = {}) {
         this.toggleLever()
         this.$store.dispatch(types.PUSH_MMC_BETTING, {
           type: 'previewList'
@@ -683,6 +681,10 @@
               const fOpeningReuslt = this.$_formatOpeningResult(res.root, this.currentOpeningCount)
               this.fOpeningResultList.unshift(fOpeningReuslt)
               this.lastOpening = fOpeningReuslt.fOpenCode
+
+              if (init) {
+                this.$_prepareOpening()
+              }
 
             } else if (res.root && res.root.errorCode === 101) {
               Global.ui.notification.show('账号余额不足，请先<a href="#/fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
@@ -873,6 +875,7 @@
     position: relative;
     left: 32px;
   }
+
   .sfa-mmc-content-opening {
     z-index: 2;
   }
@@ -941,6 +944,7 @@
     position: relative;
     left: 28px;
   }
+
   .mmc-lottery-main-open {
     position: absolute;
     opacity: 0;
@@ -1091,53 +1095,14 @@
         }
       }
     }
-    .his-main {
-      th {
-        position: relative;
-        &:after {
-          width: 1px;
-          height: 15px;
-          content: '';
-          background-color: $def-line-color;
-          display: block;
-          position: absolute;
-          right: 0px;
-          top: 11px;
-        }
-        &:last-child {
-          &:after {
-            display: none;
-          }
-        }
-      }
-      td {
-        padding: 13px 3px;
-      }
-      .open-nums {
-        max-width: 150px;
-        span {
-          width: 20px;
-          height: 20px;
-          border: 1px solid $third-line-color;
-          border-radius: 50%;
-          text-align: center;
-          line-height: 20px;
-          float: left;
-          margin-left: 4px;
-          margin-bottom: 2px;
-        }
-        .key-num {
-          border-color: $new-main-deep-color;
-          color: $new-main-deep-color;
-        }
-      }
-    }
   }
+
   .sfa-mmc-lever {
     position: absolute;
     right: -18px;
     top: 37px;
   }
+
   .sfa-mmc-lever-down {
     position: absolute;
     right: -18px;
@@ -1325,6 +1290,7 @@
   .opening-cell {
     transition: all 1s;
   }
+
   .opening-cell-enter, .opening-cell-leave-to {
     opacity: 0;
     transform: translateY(30px);
@@ -1343,6 +1309,7 @@
     width: 105px;
     flex-grow: 1;
   }
+
   .opening-icon {
     line-height: 42px;
     text-indent: 36px;
@@ -1352,23 +1319,24 @@
   .sfa {
     outline: 0;
   }
+
   .text-circle {
     color: $new-inverse-color;
     background-color: rgba(117, 117, 117, 0.18);
-    box-shadow: inset 0px 1px 2px 0px
-    rgba(105, 105, 105, 0.07);
+    box-shadow: inset 0px 1px 2px 0px rgba(105, 105, 105, 0.07);
 
   }
+
   .circle-winning {
     color: $def-white-color;
     background-color: $new-main-deep-color;
-    box-shadow: inset 0px 1px 2px 0px
-    rgba(105, 105, 105, 0.4);
+    box-shadow: inset 0px 1px 2px 0px rgba(105, 105, 105, 0.4);
   }
 
   .final-result-wrapper {
     margin: 7% auto 0;
   }
+
   .final-result-inner {
     position: relative;
     margin: 0 auto;
@@ -1387,6 +1355,7 @@
       font-size: 24px;
     }
   }
+
   .lose-result {
     color: $new-inverse-color;
     font-size: 18px;
@@ -1396,12 +1365,14 @@
     text-align: center;
     top: 164px;
   }
+
   .final-result-close {
     cursor: pointer;
     position: absolute;
     top: -23px;
     right: -10px;
   }
+
   .modal-result {
     width: 260px;
     left: 50%;
@@ -1409,15 +1380,14 @@
     top: 15% !important;
   }
 
-
   /*@keyframes opacity {*/
-    /*from {*/
-      /*opacity: 0.6;*/
-    /*}*/
+  /*from {*/
+  /*opacity: 0.6;*/
+  /*}*/
 
-    /*to {*/
-      /*opacity: 1;*/
-    /*}*/
+  /*to {*/
+  /*opacity: 1;*/
+  /*}*/
   /*}*/
 </style>
 

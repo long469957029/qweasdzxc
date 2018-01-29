@@ -3,7 +3,7 @@ const PAGEINDEX = 0
 
 export default {
   getActivityList({ activityType = '', pageSize = PAGESIZE, pageIndex = PAGEINDEX }, then, fail) {
-    return Global.sync.axios({
+    return $http({
       url: '/info/activityCenter/list.json',
       data: {
         activityType,
@@ -16,7 +16,7 @@ export default {
   },
 
   getActivityDetail({ rid = '' }, then, fail) {
-    return Global.sync.axios({
+    return $http({
       url: '/info/activityCenter/detail.json',
       data: {
         rid,

@@ -6,7 +6,7 @@
  * @returns {*|Promise.<T>}
  */
 const valCodeXhr = ({code}, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/acct/imgcode/val.json',
     data: {
       code,
@@ -24,7 +24,7 @@ const valCodeXhr = ({code}, then, fail) => {
  * @returns {*|Promise.<T>}
  */
 const verifyUserNameXhr = ({username, verifyCode}, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/acct/login/verifyusername.json',
     data: {
       username,
@@ -43,7 +43,7 @@ const verifyUserNameXhr = ({username, verifyCode}, then, fail) => {
  * @returns {*|Promise.<T>}
  */
 const getSecurityQuestionXhr = ({username, loginToken}, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/acct/usersecurity/getqesforloginpwd.json',
     data: {
       username,
@@ -63,7 +63,7 @@ const getSecurityQuestionXhr = ({username, loginToken}, then, fail) => {
  * @returns {*|Promise.<T>}
  */
 const verifySecurityQuestionXhr = ({username, loginToken, secrityList}, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/acct/usersecurity/verqesforloginpwd.json',
     data: {
       secrityList,
@@ -85,7 +85,7 @@ const verifySecurityQuestionXhr = ({username, loginToken, secrityList}, then, fa
  * @returns {*|Promise.<T>}
  */
 const setSmscodeXhr = ({url, token,username,type = 6}, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url,
     data: {
       token,
@@ -107,7 +107,7 @@ const setSmscodeXhr = ({url, token,username,type = 6}, then, fail) => {
  * @returns {*|Promise.<T>}
  */
 const verifyCodeXhr = ({url,token,username,type = 6, code}, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url,
     data: {
       token,
@@ -129,7 +129,7 @@ const verifyCodeXhr = ({url,token,username,type = 6, code}, then, fail) => {
  * @returns {Promise.<T>|*}
  */
 const resetLoginPwd = ({loginPwd,username,loginToken}, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/acct/userinfo/resetloginpwd.json',
     data: {
       loginPwd,
