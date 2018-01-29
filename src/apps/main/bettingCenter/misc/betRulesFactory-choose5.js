@@ -92,6 +92,7 @@ function _create(ticketId) {
     create: algorithm.getCreateFunc(3, {
       range: eleven,
       outerSort: true,
+      slice: false,
     }),
   })
 
@@ -190,6 +191,7 @@ function _create(ticketId) {
     create: algorithm.getCreateFunc(2, {
       range: eleven,
       innerSort: true,
+      slice: false,
     }),
   })
 
@@ -286,7 +288,7 @@ function _create(ticketId) {
     list: factory.createList(['号码'], {
       items: eleven,
     }),
-    create: algorithm.getCreateFunc(2, {
+    create: algorithm.getCreateFunc(1, {
       range: eleven,
       innerSort: true,
     }),
@@ -310,6 +312,7 @@ function _create(ticketId) {
     create: algorithm.getCreateFunc(2, {
       range: eleven,
       innerSort: true,
+      slice: false,
     }),
   })
 
@@ -328,9 +331,10 @@ function _create(ticketId) {
     list: factory.createList(['选三中三'], {
       items: eleven,
     }),
-    create: algorithm.getCreateFunc(2, {
+    create: algorithm.getCreateFunc(3, {
       range: eleven,
       innerSort: true,
+      slice: false,
     }),
   })
 
@@ -349,9 +353,10 @@ function _create(ticketId) {
     list: factory.createList(['选四中四'], {
       items: eleven,
     }),
-    create: algorithm.getCreateFunc(2, {
+    create: algorithm.getCreateFunc(4, {
       range: eleven,
       innerSort: true,
+      slice: false,
     }),
   })
 
@@ -370,9 +375,10 @@ function _create(ticketId) {
     list: factory.createList(['选五中五'], {
       items: eleven,
     }),
-    create: algorithm.getCreateFunc(2, {
+    create: algorithm.getCreateFunc(5, {
       range: eleven,
       innerSort: true,
+      slice: false,
     }),
   })
 
@@ -391,9 +397,10 @@ function _create(ticketId) {
     list: factory.createList(['选六中五'], {
       items: eleven,
     }),
-    create: algorithm.getCreateFunc(2, {
+    create: algorithm.getCreateFunc(6, {
       range: eleven,
       innerSort: true,
+      slice: false,
     }),
   })
 
@@ -412,9 +419,10 @@ function _create(ticketId) {
     list: factory.createList(['选七中五'], {
       items: eleven,
     }),
-    create: algorithm.getCreateFunc(2, {
+    create: algorithm.getCreateFunc(7, {
       range: eleven,
       innerSort: true,
+      slice: false,
     }),
   })
 
@@ -433,9 +441,10 @@ function _create(ticketId) {
     list: factory.createList(['选八中五'], {
       items: eleven,
     }),
-    create: algorithm.getCreateFunc(2, {
+    create: algorithm.getCreateFunc(8, {
       range: eleven,
       innerSort: true,
+      slice: false,
     }),
   })
 

@@ -6,7 +6,7 @@ export default {
    * @returns {*|Promise.<T>}
    */
   getBannerADXhr (then, fail) {
-    return Global.sync.axios({
+    return $http({
       url: '/acct/usernotice/getdashboardadvertise.json',
       data:{
         version:1
@@ -23,7 +23,7 @@ export default {
    * @returns {*|Promise.<T>}
    */
   getNoticeXhr (then, fail) {
-    return Global.sync.axios({
+    return $http({
       url: '/info/activitylist/geturgentbulletinlist.json',
       data: {version: 2},
     })
@@ -38,7 +38,7 @@ export default {
    * @returns {Promise.<T>|*}
    */
   getIndexGameXhr (then, fail) {
-    return Global.sync.axios({
+    return $http({
       url: '/info/indexGameConfig/gameConf.json',
     })
       .then(then)
@@ -51,7 +51,7 @@ export default {
    * @returns {*|Promise.<T>}
    */
   getMallHotListXhr (then, fail) {
-    return Global.sync.axios({
+    return $http({
       url: '/mall/coupon/newItemList.json',
     })
       .then(then)
@@ -64,7 +64,7 @@ export default {
    * @returns {*|Promise.<T>}
    */
   getIndexTicketXhr (then, fail) {
-    return Global.sync.axios({
+    return $http({
       url: 'ticket/ticketmod/indexlist.json',
     })
       .then(then)

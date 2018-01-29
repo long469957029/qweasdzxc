@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import analysisApi from 'api/analysis'
+  import {getRoadBallsApi} from 'api/analysis'
   import * as roadBalls from './misc/road-balls'
 
   const ballStyle = {
@@ -361,7 +361,7 @@
         })
       },
       getData() {
-        analysisApi.getRoadBalls({
+        getRoadBallsApi({
           ticketId: this.ticketInfo.id,
           types: this.typeId,
           locations: this.advanceTypeId

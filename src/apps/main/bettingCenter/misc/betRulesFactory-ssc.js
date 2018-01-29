@@ -85,6 +85,7 @@ function _create(ticketId) {
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(5, {
       outerSort: true,
+      slice: false,
     }),
   })
 
@@ -274,6 +275,7 @@ function _create(ticketId) {
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(4, {
       outerSort: true,
+      slice: false,
     }),
   })
 
@@ -314,6 +316,7 @@ function _create(ticketId) {
     list: factory.createList(['二重号位']),
     create: algorithm.getCreateFunc(2, {
       slice: [0, 1],
+      slice: false,
     }),
   })
 
@@ -454,6 +457,7 @@ function _create(ticketId) {
       list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(2, {
         outerSort: true,
+        slice: false,
       }),
     })
     // 组六
@@ -473,6 +477,7 @@ function _create(ticketId) {
       list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(3, {
         outerSort: true,
+        slice: false,
       }),
     })
 
@@ -756,6 +761,7 @@ function _create(ticketId) {
       list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(2, {
         outerSort: true,
+        slice: false,
       }),
     })
     // 组选单式
@@ -940,6 +946,7 @@ function _create(ticketId) {
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {
       outerSort: true,
+      slice: false,
     }),
   })
 
@@ -1040,6 +1047,7 @@ function _create(ticketId) {
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {
       outerSort: true,
+      slice: false,
     }),
   })
   // 组六
@@ -1058,6 +1066,7 @@ function _create(ticketId) {
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(3, {
       outerSort: true,
+      slice: false,
     }),
   })
 
@@ -1144,6 +1153,7 @@ function _create(ticketId) {
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(4, {
       outerSort: true,
+      slice: false,
     }),
   })
 
@@ -1181,7 +1191,8 @@ function _create(ticketId) {
     optionals: algorithm.getOptionals(4),
     list: factory.createList(['二重号位']),
     create: algorithm.getCreateFunc(2, {
-      slice: [0, 1],
+      // slice: [0, 1],
+      slice: false,
     }),
   })
 
@@ -1201,6 +1212,7 @@ function _create(ticketId) {
     list: factory.createList(['三重号位', '单号位']),
     create: algorithm.getCreateFunc(2, {
       slice: [0, 1],
+      // slice: false,
     }),
   })
 

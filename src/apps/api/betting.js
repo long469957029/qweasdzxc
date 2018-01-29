@@ -8,7 +8,7 @@
  * @returns {*|Promise<T>}
  */
 const getTicketInfoApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/ticket/ticketmod/ticketinfo.json',
     data: {
       ticketId,
@@ -30,7 +30,7 @@ const getTicketInfoApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
  * @returns {*|Promise<T>}
  */
 const getTicketRulesApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/ticket/ticketmod/ticketplaylist.json',
     localCache: true,
     cacheName: `ticketList.${ticketId}.${type}`,
@@ -54,7 +54,7 @@ const getTicketRulesApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
  * @returns {*|Promise<T>}
  */
 const pushBettingApi = ({ planId, bet, usePack }, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/ticket/bet/bet.json',
     tradition: true,
     data: {
@@ -75,7 +75,7 @@ const pushBettingApi = ({ planId, bet, usePack }, then, fail) => {
  * @returns {*|Promise<T>}
  */
 const getPlansApi = ({ ticketId }, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/ticket/chase/chaseinfo.json',
     data: {
       ticketId,
@@ -99,7 +99,7 @@ const getPlansApi = ({ ticketId }, then, fail) => {
 const pushChaseApi = ({
   plan, play, suspend, usePack, amount,
 }, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/ticket/chase/chase.json',
     tradition: true,
     data: {
@@ -164,7 +164,7 @@ const getCurrentMissApi = ({ ticketId, playSeriesId, isOfficial, type = 'normal'
  * @returns {*|Promise<T>}
  */
 const getTopTicketsApi = ({type = 0}, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/ticket/show/getTopTickets.json',
     data: {
       type,
@@ -183,7 +183,7 @@ const getTopTicketsApi = ({type = 0}, then, fail) => {
  * @returns {*}
  */
 const setTopCurrentTicketApi = ({ticketId, type = 0}) => {
-  return Global.sync.axios({
+  return $http({
     url: '/ticket/show/viewTicket.json',
     data: {
       ticketId,
@@ -202,7 +202,7 @@ const setTopCurrentTicketApi = ({ticketId, type = 0}) => {
  * @returns {*|Promise<T>}
  */
 const pushMmcBettingApi = ({bet, usePack = 0 }, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/ticket/bet/betMmc.json',
     tradition: true,
     data: {
@@ -225,7 +225,7 @@ const pushMmcBettingApi = ({bet, usePack = 0 }, then, fail) => {
  * @returns {*|Promise<T>}
  */
 const pushMmcSimulationBettingApi = (then, fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/ticket/bet/virtmmc.json',
   })
     .then(then)
@@ -238,7 +238,7 @@ const pushMmcSimulationBettingApi = (then, fail) => {
  * @returns {*|Promise<T>}
  */
 const getMmcTicketInfoApi = ({ticketId = 19}, then ,fail) => {
-  return Global.sync.axios({
+  return $http({
     url: '/ticket/ticketmod/ticketinfoMmc.json',
     data: {
       ticketId: ticketId

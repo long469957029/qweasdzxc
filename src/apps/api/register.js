@@ -6,7 +6,7 @@
  * @returns {*|Promise.<T>}
  */
 const checkNameExistApi = ({username}, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     type: 'POST',
     url: '/acct/reg/userexist.json',
     withoutToken: true,
@@ -26,7 +26,7 @@ const checkNameExistApi = ({username}, then, fail) => {
  * @returns {*|Promise.<T>}
  */
 const registerApi = ({userName,loginPwd,linkId}, then, fail) => {
-  return Global.sync.axios({
+  return $http({
     type: 'POST',
     url: '/acct/reg/doreg.json',
     withoutToken: true,
@@ -46,7 +46,7 @@ const registerApi = ({userName,loginPwd,linkId}, then, fail) => {
  * @returns {*|Promise.<T>}
  */
 const getBannerADApi = (then, fail) => {
-  return Global.sync.axios({
+  return $http({
     type: 'POST',
     url: '/acct/usernotice/getregadvertise.json',
     withoutToken: true,

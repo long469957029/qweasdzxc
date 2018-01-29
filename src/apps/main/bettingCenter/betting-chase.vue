@@ -262,7 +262,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
             },
           ],
           startOnLoading: false,
-          height: 240,
+          height: 300,
         },
         chaseList: [],
         selectedChaseList: [],
@@ -368,7 +368,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
       chaseCreate({type = 'normal', init = false} = {}) {
         //生成追号列表，并选中
         if (this.chasePlans > this.chaseList.length) {
-          const chasePlans = this.plans.slice(0, this.chasePlans > 15 ? this.chasePlans : 15)
+          const chasePlans = this.plans.slice(0, this.chasePlans > 5 ? this.chasePlans : 5)
 
           this.chaseList = _(chasePlans).map((chasePlan, index) => this.$_create(chasePlan, this.chasePlans > index, init))
         } else {
@@ -404,7 +404,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
 
       chaseRateCreate() {
         if (this.chasePlans > this.chaseList.length) {
-          const chasePlans = this.plans.slice(0, this.chasePlans > 15 ? this.chasePlans : 15)
+          const chasePlans = this.plans.slice(0, this.chasePlans > 5 ? this.chasePlans : 5)
 
           this.chaseList = _(chasePlans).map((chasePlan, index) => this.$_create(chasePlan, this.chasePlans > index, false))
         } else {
@@ -572,6 +572,14 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
     },
 
     mounted() {
+      $(this.$el).on('shown', '.chase-nav a', (e) => {
+        if (e.currentTarget.dataset.name === 'profit') {
+          this.$refs.normalGrid.setHeight(264)
+        } else {
+          this.$refs.normalGrid.setHeight(300)
+        }
+      })
+
       $(this.$el).on('change', '#js-bc-select-all', (e) => {
         _.each(this.chaseList, item => item.selected = e.target.checked)
       })

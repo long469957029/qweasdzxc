@@ -4,7 +4,7 @@
 export default {
   // 获得登入二维码token
   valCodeXhr ({code}, then, fail) {
-    return Global.sync.axios({
+    return $http({
       url: '/acct/imgcode/val.json',
       data: {
         code,
@@ -15,7 +15,7 @@ export default {
   },
   // 登录
   pushLoginInfo({username, loginPwd, param, code}, then, fail) {
-    return Global.sync.axios({
+    return $http({
       url: '/acct/login/dologin.json',
       data: {
         username,
@@ -29,14 +29,14 @@ export default {
   },
   // 退出登录
   logout(then) {
-    return Global.sync.axios({
+    return $http({
       url: '/acct/login/dologout.json',
     })
       .then(then)
   },
   // 重置用户初始密码
   resetInitPwd({newPwd, userToken}, then, fail) {
-    return Global.sync.axios({
+    return $http({
       url: 'acct/userinfo/setloginpwd.json',
       data: {
         password: newPwd,

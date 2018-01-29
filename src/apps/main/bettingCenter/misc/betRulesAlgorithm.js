@@ -265,7 +265,7 @@ function getCreateFunc(length, options) {
   length = length || 5
   options = _(options || {}).defaults({
     innerSplit: '',
-    range: _.range(10),
+    range: bettingTypes.SSC.range,
     repeat: false,
     // 最小接受的相同数,默认1
     minRepeat: 1,
@@ -329,16 +329,20 @@ function getCreateFunc(length, options) {
       current = _(current).sortBy()
     }
 
-    _(options.slice).reduce((startIndex, sliceIndex) => {
-      let nums = current.slice(startIndex, sliceIndex + 1)
+    if (options.slice) {
+      _(options.slice).reduce((startIndex, sliceIndex) => {
+        let nums = current.slice(startIndex, sliceIndex + 1)
 
-      if (options.innerSort) {
-        nums = _(nums).sortBy()
-      }
-      result.push(nums)
+        if (options.innerSort) {
+          nums = _(nums).sortBy()
+        }
+        result.push(nums)
 
-      return sliceIndex + 1
-    }, 0)
+        return sliceIndex + 1
+      }, 0)
+    } else {
+      result = [current]
+    }
 
     if (options.matching) {
       _(this.list).each((item, index) => {

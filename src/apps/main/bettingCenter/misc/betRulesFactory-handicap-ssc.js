@@ -1,14 +1,16 @@
 import betFormat from './betFormat'
 import factory from 'bettingCenter/misc/betRulesFactory'
 
-const fifty = _.range(1, 51)
+const fifty = _.range(0, 50)
 
 const getFifty = () => {
   return _.map(fifty, (num, index) => {
-    const fMum = `${(num !== 0 && num % 10 === 0 ? 10 : (num % 10)) + (100 * Math.ceil((index + 1) / 10)) - 1}`
+    // const fMum = `${(num !== 0 && num % 10 === 0 ? 10 : (num % 10)) + (100 * Math.ceil((index + 1) / 10)) - 1}`
+    const fMum = `${(num % 10 + (100 * Math.ceil((index + 1) / 10)))}`
     return {
       num: fMum,
-      title: num !== 0 && num % 10 === 0 ? 10 : (num % 10),
+      title:  num % 10,
+      // title: num !== 0 && num % 10 === 0 ? 10 : (num % 10),
       style: 'gray circle',
     }
   })
