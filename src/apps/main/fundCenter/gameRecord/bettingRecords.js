@@ -113,23 +113,14 @@ const BettingRecordsView = SearchGrid.extend({
 
     _(gridData.betList).each((items, index) => {
       if ((items.betNum).length >= 16) {
-        if (index === 0 || index === 1) {
-          $('.js-uc-betDetail-betNum').eq(num).popover({
-            // title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
-            trigger: 'click',
-            html: true,
-            content: `<span class="inline-block text-account-add m-right-sm">详细号码：</span><span class="js-pf-popover inline-block word-break ">${items.betNum}</span>`,
-            placement: 'bottom',
-          })
-        } else {
-          $('.js-uc-betDetail-betNum').eq(num).popover({
-            // title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
-            trigger: 'click',
-            html: true,
-            content: `<span class="inline-block text-account-add m-right-sm">详细号码：</span><span class="js-pf-popover inline-block word-break">${items.betNum}</span>`,
-            placement: 'top',
-          })
-        }
+        const placement = index < 4 ? 'bottom' : 'top'
+        $('.js-uc-betDetail-betNum').eq(num).popover({
+          // title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
+          trigger: 'click',
+          html: true,
+          content: `<span class="inline-block text-account-add m-right-sm">详细号码：</span><span class="js-pf-popover inline-block word-break ">${items.betNum}</span>`,
+          placement,
+        })
         num += 1
       }
     })
