@@ -28,7 +28,7 @@ const NewsMediatorModule = Base.Module.extend({
           this.autoLogoutCountdown(acctInfo.outTime)
         }
 
-        window.store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
+        window.store.commit(types.USER_OAUTH_SUCCESS, acctInfo)
         this.login = false
       })
 

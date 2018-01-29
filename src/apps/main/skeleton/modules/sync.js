@@ -266,12 +266,10 @@ const SyncModule = Base.Module.extend({
       // if (ajaxOptions.abort) {
       //   this.xhrList[ajaxOptions.url] = currentXhr
       // }
-      promise.catch(function (xhr, resType, type) {
-        if (xhr.response.status === 401 || xhr.response.statusText==='Unauthorized') {
+      promise.catch(({message}) => {
+        if (message.indexOf('401') > -1) {
           Global.ui.notification.show('您的账户已登出,请重新登录！', {
             event: function () {
-              // window.location.href = 'index.html';
-              // window.app.$store.dispatch(types.DO_LOGOUT)
               window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
             }
           });

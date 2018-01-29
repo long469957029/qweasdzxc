@@ -94,8 +94,20 @@ const actions = {
 
 // mutations
 const mutations = {
-  // 用户登录
+  // 用户登录成功
   [types.USER_LOGIN_SUCCESS] (state, data) {
+    window.Global.memoryCache.set('acctInfo', data)
+    window.Global.m.publish('acct:login', data)
+    window.Global.m.publish('acct:updating', data)
+
+    data.fBalance = _(data.balance).convert2yuan()
+    data.fLastLoginTime = _(data.lastLoginTime).toTime()
+    data.fLoginTime = _(data.loginTime).toTime()
+    data.headIcon = _(data.headIcon).toString()
+    Object.assign(state, data)
+  },
+  // 用户oauth确认成功
+  [types.USER_OAUTH_SUCCESS] (state, data) {
     window.Global.memoryCache.set('acctInfo', data)
     window.Global.m.publish('acct:login', data)
     window.Global.m.publish('acct:updating', data)
