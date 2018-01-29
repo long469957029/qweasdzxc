@@ -122,21 +122,38 @@ const SyncModule = Base.Module.extend({
           if (type === 'Unauthorized') {
             if (!_(ajaxOptions.data.token).isEmpty()) {
               this.login = false;
-              Global.ui.notification.show('您的账户已登出,请重新登录！', {
+              Global.ui.notification.show('网络不给力，请稍后再试。', {
                 event: function () {
                   // window.location.href = 'index.html';
                 }
               });
             } else if (ajaxOptions.autoLogout) {
-              // window.location.href = 'index.html';
             }
           } else if (xhr.status == 401) {
-            window.location.href = 'index.html';
-            //Global.ui.notification.show('网络不给力，请稍后再试。');
           }
         }
       });
-
+      currentXhr.success(function (xhr, resType, type) {
+        if(xhr && xhr.result==-1){
+          // Global.cookieCache.clear('token')
+          // Global.cookieCache.clear('loginState')
+          // Global.cookieCache.clear('security')
+          // window.Global.m.publish('acct:loginOut')
+          // // 关闭oauth轮询监听
+          // window.Global.m.oauth.stop()
+          Global.ui.notification.show('您的账户已登出,请重新登录！', {
+            event: function () {
+              window.app.$store.commit(types.USER_CLEAR)
+              window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+            },
+            countDown: 3000
+          });
+          setTimeout(function(){
+            // window.location.href = 'login.html';
+            window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+          },3000);
+        }
+      });
       if (!this.login) {
         currentXhr.abort()
       }
@@ -264,6 +281,7 @@ const SyncModule = Base.Module.extend({
       // }
       promise.catch(function (xhr, resType, type) {
         if (xhr.response.status === 401 || xhr.response.statusText==='Unauthorized') {
+          window.app.$store.commit(types.USER_CLEAR)
           Global.ui.notification.show('您的账户已登出,请重新登录！', {
             event: function () {
               // window.location.href = 'index.html';

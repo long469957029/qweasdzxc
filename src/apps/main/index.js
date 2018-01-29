@@ -94,6 +94,8 @@ App.start()
 // 开启菜单权限监听
 Global.ui.menu.start()
 
+
+
 // 进行系统OAuth校验
 
 Global.m.oauth.check()

@@ -144,6 +144,7 @@ const _bindBetDetailHandler = () => {
             },
           }).done((res) => {
             if (res && res.result === 0) {
+              window.Global.m.publish('acct:cancelBet')
               Global.ui.notification.show('操作成功。')
               $dialog.modal('hide')
             } else {

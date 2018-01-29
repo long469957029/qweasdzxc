@@ -55,18 +55,18 @@ const BetDetailView = Base.ItemView.extend({
         self.$('.js-gr-bet-username').html(res.root.username)
         self.$('.js-gr-bet-tradeNo').html(res.root.ticketBetNo)
         self.$('.js-gr-time').html(_(res.root.betTime).toTime())
-        if (!res.root.handicap) {
-          self.$('.js-gr-bet-play').html(`${res.root.ticketName}-${info.ticketLevelName}-${info.ticketPlayName}`)
-        } else {
-          self.$('.js-gr-bet-play').html(`${res.root.chaseTicketPlayDetail[0].playName}`)
-        }
+        // if (!res.root.handicap) {
+        //   self.$('.js-gr-bet-play').html(`${res.root.ticketName}-${info.ticketLevelName}-${info.ticketPlayName}`)
+        // } else {
+        self.$('.js-gr-bet-play').html(`${res.root.ticketName}- ${res.root.chaseTicketPlayDetail[0].playName}`)
+        // }
 
 
         let cell = _(res.root.chaseTicketPlayDetail[0].singleMoney).convert2yuan()
         // if (info.betMethod === 0) {
-        //   cell = `${+cell}/0.0%`
+        //   cell = `${+cell} / 0.0 % `
         // } else {
-        //   cell = `${+cell}/${_(info.userRebate).formatDiv(10)}%`
+        //   cell = `${+cell} /${_(info.userRebate).formatDiv(10)} % `
         // }
         self.$('.js-gr-bet-method').html(cell)
 
@@ -87,22 +87,27 @@ const BetDetailView = Base.ItemView.extend({
         if (res.root.handicap) {
           const betMoneyDesc = '（${betMethod}*${info.betMultiple}倍*${info.betNum}注）'
         }
-        self.$('.js-gr-bet-money').html(`${_(res.root.betAllMoney).formatDiv(10000)}元${betMoneyDesc}`)
+        self.$('.js-gr-bet-money').html(`${_(res.root.betAllMoney).formatDiv(10000)}元${betMoneyDesc}`
+        )
         if (res.root.canCancel && this.isSelf) {
           self.$('.js-gr-bet-detail-win').addClass('hidden')
           self.$('.js-gr-bet-detail-profit').addClass('hidden')
-          if(!res.root.handicap){
+          if (!res.root.handicap) {
             self.$('.js-gr-submit-container').removeClass('hidden')
           }
         } else {
-          if(!res.root.openNum){
+          if (!res.root.openNum && res.root.handicap) {
             self.$('.js-gr-bet-detail-win').addClass('hidden')
             self.$('.js-gr-bet-detail-profit').addClass('hidden')
           }
           if (res.root.money > 0) {
-            self.$('.js-gr-bet-win').html(`<span class="text-account-cut">${_(res.root.money).formatDiv(10000)}</span>`)
+            self.$('.js-gr-bet-win').html(
+              `<span class="text-account-cut">${_(res.root.money).formatDiv(10000)}</span>`
+            )
           } else {
-            self.$('.js-gr-bet-win').html(`<span>${_(res.root.money).formatDiv(10000)}</span>`)
+            self.$('.js-gr-bet-win').html(
+              `<span>${_(res.root.money).formatDiv(10000)}</span>`
+            )
           }
 
           let profit = _(res.root.money - res.root.betAllMoney).formatDiv(10000)
@@ -110,11 +115,17 @@ const BetDetailView = Base.ItemView.extend({
             profit = 0
           }
           if (profit > 0) {
-            self.$('.js-gr-bet-profit').html(`<span class="text-account-cut">${profit}</span>`)
+            self.$('.js-gr-bet-profit').html(
+              `<span class="text-account-cut">${profit}</span>`
+            )
           } else if (profit === 0) {
-            self.$('.js-gr-bet-profit').html(`<span>${profit}</span>`)
+            self.$('.js-gr-bet-profit').html(
+              `<span>${profit}</span>`
+            )
           } else {
-            self.$('.js-gr-bet-profit').html(`<span class="text-account-add">${profit}</span>`)
+            self.$('.js-gr-bet-profit').html(
+              `<span class="text-account-add">${profit}</span>`
+            )
           }
         }
       } else {

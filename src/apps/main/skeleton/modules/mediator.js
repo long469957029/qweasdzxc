@@ -1,5 +1,3 @@
-
-
 // 中间者启动必要文件,用于配置权限等
 
 const MediatorModule = Base.Module.extend({
@@ -27,6 +25,9 @@ const MediatorModule = Base.Module.extend({
         safe: true,
       },
       'acct:loginOut': {
+        acct: true,
+      },
+      'acct:cancelBet': {
         acct: true,
       },
     })

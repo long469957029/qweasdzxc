@@ -171,7 +171,9 @@
                     <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyQes">提交</button>
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn btn-link font-sm m-top-sm" data-loading-text="校验中" @click="goPrev">返回上一步</button>
+                    <button type="button" class="btn btn-link font-sm m-top-sm" data-loading-text="校验中" @click="goPrev">
+                      返回上一步
+                    </button>
                   </div>
                 </form>
               </div>
@@ -207,7 +209,8 @@
     valCodeXhr,
     verifyUserNameXhr,
     getSecurityQuestionXhr,
-    verifySecurityQuestionXhr} from 'api/resetPwd'
+    verifySecurityQuestionXhr
+  } from 'api/resetPwd'
   import resetPwdInput from './resetPwdInput'
   import resetSetPwd from './resetSetPwd'
 
@@ -236,14 +239,14 @@
       answerFirst: '',
       questionSecond: {},
       answerSecond: '',
-      qesError:false,
+      qesError: false,
       qesErrorText: '',
     }
   }
   export default {
     name: 'reset-pwd',
     data: initData,
-    components:{
+    components: {
       resetPwdInput,
       resetSetPwd
     },
@@ -322,8 +325,8 @@
               this.questionList = [...data.root]
               this.questionFirst = data.root[0]
               this.questionSecond = data.root[1]
-              this.qesFirstList  = [...data.root]
-              this.qesSecondList  = [...data.root]
+              this.qesFirstList = [...data.root]
+              this.qesSecondList = [...data.root]
               this.findTypeNum = 1
             } else {
               Global.ui.notification.show(data.msg === 'fail' ? '密保问题获取请求服务失败' : data.msg)
@@ -336,11 +339,11 @@
       },
       changeQes(num){
         const arr = [...this.questionList]
-        if(num === 1) {
+        if (num === 1) {
           this.qesSecondList = _(arr).remove((n) => {
             return n.qesId !== this.questionFirst.qesId
           })
-        } else{
+        } else {
           this.qesFirstList = _(arr).remove((n) => {
             return n.qesId !== this.questionSecond.qesId
           })
@@ -348,7 +351,7 @@
       },
       verifyQes(){
         const status = $(this.$refs.verifyQes).parsley().validate()
-        if(status){
+        if (status) {
           const secrityList = [
             {
               securityId: this.questionFirst.qesId,
@@ -360,24 +363,24 @@
               securityQes: this.questionSecond.question,
               securityAsw: this.answerSecond,
             }
-            ]
+          ]
           verifySecurityQuestionXhr({username: this.userName, loginToken: this.loginToken, secrityList},
-            ({data}) =>{
-              if(data && data.result === 0){
+            ({data}) => {
+              if (data && data.result === 0) {
                 this.goStepsNext()
               } else if (data.root != null && _(data.root).isNumber()) {
                 if (data.root > 0) {
-                  this.qesErrorText =  `验证失败,剩余${res.root}次机会。`
+                  this.qesErrorText = `验证失败,剩余${res.root}次机会。`
                 } else {
-                  this.qesErrorText =  '验证失败,请一个小时后再验证！'
+                  this.qesErrorText = '验证失败,请一个小时后再验证！'
                 }
                 this.qesError = true
-              } else{
+              } else {
                 this.qesError = true
-                this.qesErrorText =  `验证失败,${data.msg}`
+                this.qesErrorText = `验证失败,${data.msg}`
               }
             },
-            ({data})=>{
+            ({data}) => {
               this.qesError = true
               this.qesErrorText = '密保问题验证请求失败'
             })
@@ -409,9 +412,11 @@
   @mixin transition-cfg {
     transition: all .5s;
   }
+
   .step-animate-enter {
     opacity: 0;
   }
+
   .step-animate-enter-active {
     transition: all .5s .5s;
   }
@@ -434,10 +439,12 @@
     background-color: $def-white-color;
     margin: 0 auto;
     /*min-height: 550px;*/
-    .filled{
+    .filled {
       margin-left: 0px;
     }
     .reset-header {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
       width: 800px;
       height: 60px;
       font-size: 18px;
@@ -462,7 +469,7 @@
         /*min-height: 266px;*/
         display: flex;
       }
-      .steps{
+      .steps {
         margin-top: 60px;
       }
       .reset-input {
@@ -548,7 +555,7 @@
         height: 36px;
         background-color: $def-white-color;
       }
-      .info{
+      .info {
         height: 40px;
         line-height: 40px;
       }

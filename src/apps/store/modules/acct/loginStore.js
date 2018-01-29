@@ -99,26 +99,28 @@ const mutations = {
     window.Global.memoryCache.set('acctInfo', data)
     window.Global.m.publish('acct:login', data)
     window.Global.m.publish('acct:updating', data)
-
     data.fBalance = _(data.balance).convert2yuan()
     data.fLastLoginTime = _(data.lastLoginTime).toTime()
     data.fLoginTime = _(data.loginTime).toTime()
     data.headIcon = _(data.headIcon).toString()
+    // 开启oauth监听
+    window.Global.m.oauth.start()
     Object.assign(state, data)
+    // 开启消息监听
+    window.Global.m.news.start()
   },
-  // 清楚用户数据
+  // 清除用户数据
   [types.USER_CLEAR] (state) {
     Object.assign(state, initState())
-  },
-  [types.USER_LOGOUT_SUCCESS] (state, data) {
-    if (data && data.result === 0) {
-      Object.assign(state, initState())
-      Global.cookieCache.clear('token')
-      Global.cookieCache.clear('loginState')
-      window.Global.m.publish('acct:loginOut')
-      this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
-      window.location.href = ''
-    }
+    Global.cookieCache.clear('token')
+    Global.cookieCache.clear('loginState')
+    Global.cookieCache.clear('security')
+    window.Global.m.publish('acct:loginOut')
+    // 关闭oauth轮询监听
+    window.Global.m.oauth.stop()
+    // 开启消息监听
+    window.Global.m.news.stop()
+    this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
   },
   [types.USER_LOGOUT_SUCCESS] (state, data) {
     if (data && data.result === 0) {
@@ -127,10 +129,12 @@ const mutations = {
       Global.cookieCache.clear('loginState')
       Global.cookieCache.clear('security')
       window.Global.m.publish('acct:loginOut')
+      // 关闭oauth轮询监听
+      window.Global.m.oauth.stop()
+      // 开启消息监听
+      window.Global.m.news.stop()
       this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
       window.location.href = ''
-    } else if (data && data.result === -1) {
-
     }
   },
   [types.TOGGLE_DO_LOGOUT] (state, data) {

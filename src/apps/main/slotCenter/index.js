@@ -154,7 +154,7 @@ const SlotCenterView = Base.ItemView.extend({
   changeTypeHandler() {
     const self = this
     self.$tab.each((index, tab) => {
-      if (index === 5) {
+      if (index === 0) {
         $(tab).addClass('active')
         return
       }
