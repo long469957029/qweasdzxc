@@ -1,7 +1,18 @@
 <template>
   <div class="play-area-input" :class="componentType || ''">
-    <betting-play-area-position v-if="!_.isEmpty(playRule.optionals)" :optionals="playRule.optionals"
-                                @positionChange="positionChange"></betting-play-area-position>
+
+    <!--选择位置-->
+    <div class="tab-toolbar tab-circle tab-default" v-if="!_.isEmpty(playRule.optionals)">
+      <div class="select-item-title tab-title">
+        <div>位置</div>
+      </div>
+      <div class="tab-group no-margin inline-block">
+        <div class="clearfix inline-block">
+          <betting-play-area-position  :optionals="playRule.optionals"
+                                       @positionChange="positionChange"></betting-play-area-position>
+        </div>
+      </div>
+    </div>
 
     <div class="clearfix m-TB-md">
       <div class="js-bc-numbers-container bc-textarea-main pull-left" @click="focusInput">

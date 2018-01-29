@@ -127,7 +127,14 @@
           }, this)
         },
         deep: true
-      }
+      },
+      colModel: {
+        handler() {
+          this.showRows = _.map(this.innerRows, (item, index, data) => {
+            return this.formatRowData(item, index, data)
+          }, this)
+        }
+      },
     },
 
     mounted() {

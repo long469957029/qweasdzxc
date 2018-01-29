@@ -36,21 +36,23 @@
     ssc: {
       pageSize: 15,
         formats: [
-          function(val) {
-            return val
-          },
-          function(val) {
-            const html = ['<div class="open-nums clearfix m-center">']
-            const numList = val.split(',')
-
-            _(numList).each((num, index) => {
-              if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index] && this.playRule.keyPosition.length !== 5) {
-                html.push(`<span class="key-num">${num}</span>`)
-              } else {
-                html.push(`<span>${num}</span>`)
-              }
-            })
-            html.push('</div>')
+        function (val) {
+          return val
+        },
+        function (val) {
+          const html = ['<div class="open-nums clearfix m-center">']
+          const numList = val.split(',')
+          const keyPositionRelly = _(this.playRule.keyPosition).filter((item) => {
+            return item
+          })
+          _(numList).each(function (num, index) {
+            if (this.playRule && this.playRule.keyPosition && this.playRule.keyPosition[index] && keyPositionRelly.length !== 5) {
+              html.push(`<span class="key-num">${num}</span>`)
+            } else {
+              html.push(`<span>${num}</span>`)
+            }
+          }, this)
+          html.push('</div>')
 
             return html.join('')
           },
@@ -385,7 +387,7 @@
         return formType
       },
       getDragonValue(keys) {
-        return `lhh.${this.llhKeysArr[keys[0]]}${this.llhKeysArr[keys[1]]}`
+        return `lhh.${llhKeysArr[keys[0]]}${llhKeysArr[keys[1]]}`
       },
 
       // getFormType(nums, keyPosition, type) {
@@ -495,24 +497,6 @@
     }
     td {
       padding: 12px 0;
-    }
-    .open-nums {
-      max-width: 150px;
-      span {
-        width: 20px;
-        height: 20px;
-        border: 1px solid $third-line-color;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 20px;
-        float: left;
-        margin-left: 4px;
-        margin-bottom: 2px;
-      }
-      .key-num {
-        border-color: $new-main-deep-color;
-        color: $new-main-deep-color;
-      }
     }
   }
 </style>

@@ -292,6 +292,8 @@
         flashIndex: 0,
         //最后开奖结果
         showFinalResult: true,
+        //记录初始化
+        recordInit: true,
 
         lotteryGridOps: {
           wrapperClass: 'bc-lottery-preview mmc',
@@ -374,6 +376,13 @@
           }
           this.playRule = betRulesConfig.get(playId)
 
+          if (this.recordInit) {
+            this.$nextTick(() => {
+              this.$refs.bettingHisotry.update()
+            })
+            this.recordInit = false
+          }
+
           this.$store.commit(types.SET_CHECKOUT_CHOICE)
 
           this.playInfo = this.$store.getters.playInfo(playId, this.bettingChoice.groupId);
@@ -406,10 +415,6 @@
             html: true,
             content: `<div class="font-sm text-default">中奖举例：<span class="text-inverse">${playInfo.playExample.replace(/\|/g, '<br />')}</span></div>`,
             placement: 'bottom',
-          })
-
-          this.$nextTick(() => {
-            this.$refs.bettingHisotry.update()
           })
         },
       },
@@ -549,9 +554,6 @@
         this.showFinalResult = flag
       },
 
-      /**
-       *
-       */
       lotteryStop() {
         this.stopping = true
       },
