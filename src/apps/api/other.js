@@ -9,7 +9,7 @@ export default {
    * @returns {*|Promise.<T>}
    */
   getServerListXhr (then, fail) {
-    return Global.sync.axios({
+    return $http({
       url: '/info/urls/list.json',
     })
       .then(then)

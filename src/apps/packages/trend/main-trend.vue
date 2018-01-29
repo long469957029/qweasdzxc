@@ -202,7 +202,7 @@
 </template>
 
 <script>
-  import analysisApi from 'api/analysis'
+  import {getTrendApi, getTrendByOldApi} from 'api/analysis'
   import Draw from './draw-line'
 
   export default {
@@ -287,7 +287,7 @@
       },
       getData() {
         if (this.ticketInfo.trendType === 'old') {
-          analysisApi.getTrendByOld({
+          getTrendByOldApi({
             ticketId: this.ticketId,
             days: this.currentSearch === 'date' ? this.date : '',
             limit: this.currentSearch === 'pageSize' ? this.pageSize : ''
@@ -309,7 +309,7 @@
             }
           })
         } else {
-          analysisApi.getTrend({
+          getTrendApi({
             trendTypeId: 1,
             ticketId: this.ticketInfo.isOfficial ? this.ticketId : this.ticketId + 10000,
             // playSeriesId: this.ticketInfo.playSeriesIdList[0].id,

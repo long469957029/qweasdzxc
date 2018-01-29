@@ -127,6 +127,7 @@
         </div>
       </div>
       <div class="bc-side-area pull-right" ref="bcSideArea"></div>
+      <betting-history class="bc-side-area pull-right"></betting-history>
     </div>
     <div class="bc-bottom-area" ref="recordsContainer"></div>
 
@@ -158,7 +159,8 @@
   import BettingPlayAreaSelect from './betting-play-area-select'
   import BettingPlayAreaInput from './betting-play-area-input'
   import BettingChase from './betting-chase'
-  import BettingConfirm from "./betting-confirm";
+  import BettingHistory from './betting-history'
+  import BettingConfirm from "./betting-confirm"
 
 
   //backbone旧组件
@@ -182,6 +184,7 @@
       BettingPlayAreaSelect,
       BettingPlayAreaInput,
       BettingChase,
+      BettingHistory,
     },
     data() {
       return {

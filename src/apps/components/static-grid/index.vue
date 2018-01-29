@@ -158,7 +158,7 @@
         this.clean()
           .renderLoading()
 
-        Global.sync.axios({
+        $http({
           url: this.url,
           abort: this.abort,
           data: this.data,

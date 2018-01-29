@@ -4,7 +4,7 @@
 export default {
   // 获取用户是否设置银行卡及资金密码
   userSecurityInfo (then) {
-    return Global.sync.axios({
+    return $http({
       url: '/fund/withdraw/info.json',
     })
       .then(then)

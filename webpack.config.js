@@ -506,7 +506,7 @@ module.exports = {
       vue: 'vue/dist/vue.esm.js',
 
       api: 'apps/api',
-      'consts': 'apps/store/consts',
+      consts: 'apps/store/consts',
       types: 'apps/store/mutation-types',
       ticketConfig: 'apps/main/skeleton/misc/ticketConfig',
       bettingTypes: 'apps/main/skeleton/misc/betting-types',
