@@ -139,7 +139,7 @@
             </div>
           </div>
 
-          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="430" ref="bettingHistory"></betting-history>
+          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="430" ref="bettingHisotry"></betting-history>
         </div>
         <div class="div-line"></div>
 
@@ -406,6 +406,10 @@
             html: true,
             content: `<div class="font-sm text-default">中奖举例：<span class="text-inverse">${playInfo.playExample.replace(/\|/g, '<br />')}</span></div>`,
             placement: 'bottom',
+          })
+
+          this.$nextTick(() => {
+            this.$refs.bettingHisotry.update()
           })
         },
       },

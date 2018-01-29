@@ -157,6 +157,15 @@
   }
 }
 
+.bc-side-area {
+  position: relative;
+  width: 278px;
+  min-height: 845px;
+  left: -1px;
+  border-left: 1px solid $def-line-color;
+  box-sizing: border-box;
+}
+
 .bc-monitor {
   width: 35px;
 }
@@ -210,8 +219,13 @@
 }
 
 .betting-history {
+  .table {
+    background-color: transparent;
+  }
+
   .table th, .table td {
     padding: 10px 0;
+    background-color: transparent;
   }
 }
 

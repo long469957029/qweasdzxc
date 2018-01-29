@@ -163,7 +163,6 @@
 
 
   //backbone旧组件
-  // import HisAnalysisView from './bettingCenter-historical-analysis'
   import BettingRecordsView from './bettingCenter-records'
 
   // let recordsOpenView
@@ -871,14 +870,5 @@
     margin-right: 10px;
     border-radius: $globalBtnRadius;
     border: 1px solid $def-gray-color;
-  }
-
-  .bc-side-area {
-    position: relative;
-    width: 278px;
-    min-height: 845px;
-    left: -1px;
-    border-left: 1px solid $def-line-color;
-    box-sizing: border-box;
   }
 </style>
