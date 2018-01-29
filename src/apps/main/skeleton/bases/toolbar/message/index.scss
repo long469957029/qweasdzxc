@@ -565,7 +565,7 @@
           }
           .select-sub {
             cursor: pointer;
-            line-height: 16px;
+            line-height: 10px;
             color: $font-auxiliary-color;
             padding-top: 10px;
             .select-sub-img {
@@ -575,7 +575,7 @@
           }
           .select-sub-container {
             overflow: auto;
-            height: 130px;
+            height: 129px;
             width: 185px;
             margin-top: 6px;
             .select-sub-items {

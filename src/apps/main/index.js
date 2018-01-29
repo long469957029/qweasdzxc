@@ -94,6 +94,8 @@ App.start()
 // 开启菜单权限监听
 Global.ui.menu.start()
 
+
+
 // 进行系统OAuth校验
 
 Global.m.oauth.check()
@@ -135,10 +137,10 @@ Global.m.oauth.check()
       // /** **************************************************************** */
 
       // 开启oauth监听
-      Global.m.oauth.start()
+      // Global.m.oauth.start()
 
       // 开启消息监听
-      Global.m.news.start()
+      // Global.m.news.start()
 
       window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
 

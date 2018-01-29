@@ -6,9 +6,7 @@ const FundView = Base.ItemView.extend({
 
   template: require('./index.html'),
 
-  events: {
-
-  },
+  events: {},
   getFundSummaryXhr(data) {
     return Global.sync.ajax({
       url: '/fund/balance/summary.json',
@@ -69,7 +67,7 @@ const FundView = Base.ItemView.extend({
       const createDate = _(record.date).toTime()
       const recordAmount = _(record.amount).formatDiv(10000, {fixed: 2})
       if (record.type === 1) {
-        html.push('<div class="js-sideBar-record-item operation-record-item">')
+        html.push('<div class="js-sideBar-record-item operation-record-item" data-id="${record.ticketTradeNo}>')
         html.push('<div class="record-action">充值</div>')
         html.push(`<div class="record-date">${createDate}</div>`)
         html.push('<div class="clearfix"></div>')

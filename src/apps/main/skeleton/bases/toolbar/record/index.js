@@ -35,15 +35,7 @@ const RecordView = Base.ItemView.extend({
       const createTime = _(game.date).toTime()
       const betAmount = _(game.bet).convert2yuan()
 
-      // if (game.type === 1) {
-      //   if (game.status === 0) {
-      //     gameStatus = '等待开奖'
-      //   } else if (game.status === 1) {
-      //     gameStatus = '已中奖'
-      //   } else if (game.status === 2) {
-      //     gameStatus = '未中奖'
-      //   }
-      // }
+
       // 0:未中奖，1：已中奖，2：用户撤单，3：系统撤单,ticketResult,prizeTotalMoney
       // 状态
       let status = ''
@@ -64,7 +56,7 @@ const RecordView = Base.ItemView.extend({
       } else {
         status = `<span class="text-account-cut">${_(game.price).convert2yuan()}</span>`
       }
-      html.push('<div class="recent-game-item">')
+      html.push(`<div class="js-gl-bet-detail-dialog recent-game-item " data-id="${game.ticketTradeNo}">`)
       html.push(`<div class="game-title">${game.name}</div>`)
       html.push(`<div class="game-date">${createTime}</div>`)
       html.push(`<div class="game-type">${game.playName}</div>`)

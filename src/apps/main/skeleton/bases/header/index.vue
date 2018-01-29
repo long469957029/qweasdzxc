@@ -4,7 +4,7 @@
       <div class="pull-left">
         <a class="header-left-link" href="/change.html">线路中心</a>
         <a class="header-left-link" @click="showLoginLauncher">极速登录器</a>
-        <a class="header-left-link" href='/dns.docx' target='_blank'>防dns劫持教程</a>
+        <a class="header-left-link" href='/dns.docx' target='_blank'>防DNS劫持教程</a>
       </div>
       <div class="js-gl-service header-customer-entry  pull-right overflow-hidden">
         <span class="sfa sfa-customer-service"></span><span class="header-customer-text">在线客服</span>
@@ -23,9 +23,7 @@
             <span class="sfa header-headshot "><img :src="imgUrl"/></span>
             <span class="header-name">{{username}}</span>
             <i class="fa fa-angle-down "></i>
-            <router-link to="fc/fm">
-              <div class="header-menu-place"></div>
-            </router-link>
+              <div class="header-menu-place" @click="goToPersonCenter"></div>
             <div class="header-menu-body">
               <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
               <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
@@ -45,9 +43,7 @@
             <span class="sfa sfa-announcement "></span><span>消息</span>
             <span class="js-header-announcement-num header-announcement-num"
                   v-if="newRowCount > 0">{{newRowCount}}</span>
-            <router-link to="uc/mg">
-              <div class="header-announcement-place"></div>
-            </router-link>
+              <div class="header-announcement-place"  @click="goToAnnouncement"></div>
             <div class="js-header-announcement-body header-announcement-body">
               <div class="header-announcement-content">
                 <a :href="messageLink(item.type,item.noticeId)" class="content-item" v-for="item in newList"
@@ -189,9 +185,16 @@
 //            })
 //        })
 //      },
+      goToPersonCenter(){
+        window.Global.router.goTo('fc/fm')
+      },
+      goToAnnouncement(){
+        window.Global.router.goTo('uc/mg')
+      },
     },
+
     mounted(){
-      Global.m.subscribe('news', 'news:updating', this.renderMsgList)
+      window.Global.m.subscribe('news', 'news:updating', this.renderMsgList)
     }
   }
 </script>
