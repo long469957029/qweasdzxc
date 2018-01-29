@@ -167,6 +167,7 @@ const NavsView = Base.ItemView.extend({
   },
 
   onRender () {
+    const self = this
     this.$navMain = this.$('.js-db-nav-main')
 
     this.$navScrollBtn = this.$('.js-db-nav-scroll')
@@ -178,6 +179,13 @@ const NavsView = Base.ItemView.extend({
     this.$navMallSubList = this.$('.js-nav-mall-sub-list')
 
     this.$underLine = this.$('.js-navbar-slide-underline')
+
+    this.$navTicket = this.$('.js-nav-ticket')
+
+    Global.m.subscribe('ticketId', 'ticketId:updating', function(data){
+      const id = _.isUndefined(data) ? 10 : data.id
+      $('.js-nav-ticket').removeAttr('href').attr('href',`#/bc/0/${id}`)
+    })
   },
   // common APIs
 

@@ -30,6 +30,9 @@ const MediatorModule = Base.Module.extend({
       'acct:cancelBet': {
         acct: true,
       },
+      'ticketId:updating': {
+        ticketId: true,
+      },
     })
 
     _(this).extend(Base.MediatorFacade)
