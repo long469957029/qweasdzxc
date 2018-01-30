@@ -12,6 +12,7 @@ import MainFooter from 'skeleton/bases/footer'
 import ResetPwd from 'skeleton/bases/login/resetPassWord'
 import LoginLauncher from 'skeleton/bases/loginLauncher'
 import FreeTrial from 'skeleton/bases/freeTrial'
+import DialogManage from 'skeleton/bases/dialogManage'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -110,6 +111,7 @@ Global.m.oauth.check()
         ResetPwd,
         LoginLauncher,
         FreeTrial,
+        DialogManage
       },
       store,
       router,

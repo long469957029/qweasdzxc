@@ -99,7 +99,7 @@
                     </div>
                     <div class="width-reg text-center m-top-md">
                     <span class="text-auxiliary">已有账号?<a class="text-inverse m-left-xs"
-                                                         href="/login.html">请登录</a></span>
+                                                         href="/index.html">请登录</a></span>
                     </div>
                   </form>
                 </div>
