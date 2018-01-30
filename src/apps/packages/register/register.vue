@@ -15,6 +15,17 @@
             <a href="./download.html" class="icon android"></a>
             <a href="./download.html" class="icon ios"></a>
           </div>
+          <transition name="redPack">
+            <div class="register-red-pack" v-if="showRedPack">
+              <div class="line-left"></div>
+              <div class="line-right"></div>
+              <div class="red-main clearfix">
+                <div class="red-title"></div>
+                <div class="red-money"><span class="num">{{redPackNum}}</span>元</div>
+                <div class="red-time">红包<span class="time">{{redPackTime}}s</span>后失效</div>
+              </div>
+            </div>
+          </transition>
         </div>
       </div>
       <div id="fullpage" class="" ref="fullpage">
@@ -334,7 +345,10 @@
   import {
     checkNameExistApi,
     registerApi,
-    getBannerADApi
+    getBannerADApi,
+    sendLinkViewApi,
+    checkLinkTypeApi,
+    recieveRedpackApi
   } from 'api/register'
   import {valCodeXhr} from 'api/resetPwd'
   import 'swiper/dist/css/swiper.css'
@@ -392,6 +406,9 @@
             url:require('./images/section-4-banner3.png')
           }
         ],
+        redPackNum:0,
+        showRedPack:false,
+        redPackTime:60
       }
     },
     methods: {
@@ -596,7 +613,16 @@
         }else{
           $.fn.fullpage.setAllowScrolling(true)
         }
-      }
+      },
+      runTime(){
+        this.redPackTimeInv = setInterval(() => {
+          this.redPackTime -= 1
+          if(this.redPackTime < 0){
+            clearInterval(this.redPackTimeInv)
+            this.showRedPack = false
+          }
+        }, 1000)
+      },
     },
     mounted(){
       setTimeout(() => {
@@ -606,6 +632,22 @@
       this.codeUrl = `${this.url.substring(0, this.url.indexOf('/', this.url.indexOf('://', 0) + 3))}/acct/imgcode/code`
       this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
       this.linkId = _.getUrlParam('linkId')
+      sendLinkViewApi({linkId: this.linkId})
+      checkLinkTypeApi({linkUrl: this.linkId},
+        ({data}) => {
+          if(data && data.result === 0){
+            if(data.root.type === 5){
+              recieveRedpackApi({linkId: this.linkId},
+                ({data}) => {
+                  this.redPackNum = _(data.root.redpackAmount).convert2yuan()
+                  this.showRedPack = true
+                  this.runTime()
+                }
+              )
+            }
+          }
+        }
+      )
     },
   }
 </script>
@@ -614,6 +656,29 @@
   $main-border-color: #007e90 !default;
   $input-placeholder: #0297ad !default;
 
+  .redPack-enter-active{
+    animation: jumpDown .8s;
+  }
+  .redPack-leave-active{
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: all .5s;
+  }
+
+  @keyframes jumpDown {
+    from{
+      opacity: 0;
+      transform: translate3d(0, -10%, 0);
+    }
+    40%,to{
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    70%{
+      transform: translate3d(0, -15px, 0);
+    }
+
+  }
   .reg-ad {
     display: inline-block;
     width: 332px;
@@ -1383,12 +1448,14 @@
     box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.08);
     top:0;
     left: 0;
-    z-index: 1;
+    z-index: 10;
 
     .header-container {
       padding-top: 15px;
       width: 1100px;
       margin: 0 auto;
+      position: relative;
+      z-index: 10;
     }
 
     .register-logo {
@@ -1422,6 +1489,68 @@
         }
         &.ios {
           background: url("./images/icon-ios.png") no-repeat;
+        }
+      }
+    }
+    .register-red-pack{
+      position: absolute;
+      width: 124px;
+      height: 219px;
+      top: 90px;
+      left: -40px;
+      .line-left{
+        width: 12px;
+        height: 54px;
+        background: url("./images/line-left.png") no-repeat;
+        position: relative;
+        left: 50px;
+        z-index: 3;
+      }
+      .line-right{
+        width: 11px;
+        height: 53px;
+        background: url("./images/line-right.png") no-repeat;
+        position: relative;
+        top: -53px;
+        left: 62px;
+        z-index: 1;
+      }
+      .red-main{
+        width: 124px;
+        height: 165px;
+        background: url("./images/red-pack-bg.png") no-repeat;
+        z-index: 2;
+        position: relative;
+        top: -68px;
+        animation: rotateRed 4s infinite;
+        transform-origin:50% 5%;
+        .red-title{
+          width: 85px;
+          height: 14px;
+          background: url("./images/title.png") no-repeat;
+          margin: 54px 0px 0px 19px;
+        }
+        .red-money{
+          width: 80%;
+          margin: 0 auto;
+          text-align: center;
+          font-size: $font-xs;
+          color: rgba(111, 35, 28, 0.8);
+          margin-top: 15px;
+          .num{
+            font-size: 24px;
+            color: #eeb10c;
+            margin-top: 15px;
+          }
+        }
+        .red-time{
+          text-align: center;
+          font-size: $font-xs;
+          margin-top: 23px;
+          .time{
+            margin: 0px 3px;
+            font-size:13px;
+          }
         }
       }
     }
@@ -1780,15 +1909,12 @@
       transform: none;
     }
   }
-  /*@keyframes infoFlipInY {*/
-    /*from{*/
-      /*transform: rotate3d(0, 1, 0, 90deg);*/
-    /*}*/
-    /*50%{*/
-      /*transform: rotate3d(0, 1, 0, 10deg);*/
-    /*}*/
-    /*to{*/
-      /*transform:none;*/
-    /*}*/
-  /*}*/
+  @keyframes rotateRed {
+    0%,100%{
+      transform: rotate(-15deg);
+    }
+    50%{
+      transform: rotate(15deg);
+    }
+  }
 </style>
