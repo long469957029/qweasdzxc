@@ -74,15 +74,16 @@ function group(rowsResult) {
   let total = 0
   const algorithmProps = this.algorithmProps
   const mainRow = _.pluck(rowsResult[algorithmProps.mainRow] && rowsResult[algorithmProps.mainRow], 'num')
+  const preSubRow = rowsResult[1 - algorithmProps.mainRow] && rowsResult[1 - algorithmProps.mainRow]
   const subRow = _.pluck(rowsResult[1 - algorithmProps.mainRow] && rowsResult[1 - algorithmProps.mainRow], 'num')
   let n = mainRow.length
 
   // 组选都做两次相加
-  total = _(total).add(_group(n, algorithmProps.cTimes, _.isEmpty(subRow) ? 1 : _(subRow).difference(mainRow).length))
+  total = _(total).add(_group(n, algorithmProps.cTimes, _.isUndefined(preSubRow) ? 1 : _(subRow).difference(mainRow).length))
 
   --n
 
-  if (!_.isEmpty(subRow)) {
+  if (!_.isUndefined(preSubRow)) {
     total = _(total).add(_group(n, algorithmProps.cTimes, _(mainRow).intersection(subRow).length))
   }
 
