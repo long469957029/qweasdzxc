@@ -70,7 +70,7 @@ _.extend(Base.Storage.prototype, {
   isAvailable() {
     if (_.isFunction(this.storage.isAvailable)) {
       return this.storage.isAvailable()
-    } 
+    }
     return true
   },
   // Checks for the existance of `key` in the current store. Returns a boolean.
@@ -90,10 +90,10 @@ _.extend(Base.Storage.prototype, {
   //     });
   //     store.set('foo', 'bar'); // logged: foo changed to bar
   //
-  set(key, value) {
+  set(key, value, expires) {
     const string_value = (typeof value === 'string') ? value : JSON.stringify(value)
     key = key.toString()
-    this.storage.set(key, string_value)
+    this.storage.set(key, string_value, expires)
     if (key != this.meta_key) {
       this._addKey(key)
       this.$element.trigger(`set-${this.name}`, {
@@ -214,7 +214,7 @@ _.extend(Base.Storage.prototype, {
   fetch(key, callback) {
     if (!this.exists(key)) {
       return this.set(key, callback.apply(this))
-    } 
+    }
     return this.get(key)
   },
   // loads the response of a request to `path` into `key`.
@@ -423,6 +423,7 @@ Base.Storage.Cookie = function(name, element, options) {
   // set the expires in seconds or default 14 days
   this.expires_in = this.options.expires_in || 0
   // this.expires_in = this.options.expires_in || (14 * 24 * 60 * 60);
+  this.domain = options.domain || ''
 }
 _.extend(Base.Storage.Cookie.prototype, {
   isAvailable() {
@@ -451,6 +452,8 @@ _.extend(Base.Storage.Cookie.prototype, {
   _setCookie(key, value, expires) {
     if (!expires) {
       expires = (this.expires_in * 1000)
+    } else {
+      expires *= 1000
     }
     const date = new Date()
     date.setTime(date.getTime() + expires)
@@ -460,6 +463,10 @@ _.extend(Base.Storage.Cookie.prototype, {
     if (expires) {
       set_cookie.push('; expires=', date.toGMTString())
     }
+    if (this.domain) {
+      set_cookie.push('; domain=', this.domain)
+    }
+
     set_cookie = set_cookie.concat('; path=', this.path)
 
     document.cookie = set_cookie.join('')

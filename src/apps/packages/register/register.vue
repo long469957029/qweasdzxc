@@ -573,7 +573,7 @@
           ({data}) => {
             if (data && data.result === 0) {
               const acctInfo = data.root
-              Global.cookieCache.set('token', data.root.token)
+              Global.cookieCache.set('token', data.root.token, 90)
               Global.cookieCache.set('loginState', true)
               setTimeout(() => {
                 window.location.href = 'index.html'

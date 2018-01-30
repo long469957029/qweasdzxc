@@ -492,10 +492,17 @@
                 hasFooter: false,
                 displayTime: 800,
               })
-            } else if (res.root && res.root.errorCode === 101) {
-              Global.ui.notification.show('账号余额不足，请先<a href="#/fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
             } else {
-              Global.ui.notification.show(res.msg || '')
+              if (res.msg.indexOf('余额不足') > -1) {
+                Global.ui.notification.show(res.msg || '', {
+                  btnContent: '充值',
+                  event: () => {
+                    $('.header-main .js-header-recharge').trigger('click.fundDialog')
+                  }
+                })
+              } else {
+                Global.ui.notification.show(res.msg || '')
+              }
             }
 
             this.$_emptySelect();
@@ -566,10 +573,17 @@
                 hasFooter: false,
                 displayTime: 800,
               })
-            } else if (res.root && res.root.errorCode === 101) {
-              Global.ui.notification.show('账号余额不足，请先<a href="#/fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
             } else {
-              Global.ui.notification.show(res.msg || '')
+              if (res.msg.indexOf('余额不足') > -1) {
+                Global.ui.notification.show(res.msg || '', {
+                  btnContent: '充值',
+                  event: () => {
+                    $('.header-main .js-header-recharge').trigger('click.fundDialog')
+                  }
+                })
+              } else {
+                Global.ui.notification.show(res.msg || '')
+              }
             }
 
             this.$_emptySelect();

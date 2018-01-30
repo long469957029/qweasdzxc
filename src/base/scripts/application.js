@@ -114,12 +114,13 @@ Base.Application = Base.BaseObject.extend({
 
   _initStorage(options) {
     const optionCacheTypes = Base.getOption(options, 'cacheTypes') || ['memory', 'local', 'session', 'cookie']
-    
+
     for (let i = 0; i < optionCacheTypes.length; i++) {
       const optionCacheType = optionCacheTypes[i]
       this[`${optionCacheType}Cache`] = new Base.Storage({
         name: 'appstorage',
         type: optionCacheType,
+        domain: window.location.host.indexOf('localhost') > -1 ? '' : `.${_.last(window.location.host.split('.'), 2).join('.')}`
       })
     }
   },

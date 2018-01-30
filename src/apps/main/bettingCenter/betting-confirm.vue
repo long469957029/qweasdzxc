@@ -124,6 +124,7 @@
       overflow: auto;
       background-color: #f5f5f5;
       .bc-betDetail-text {
+        position: relative;
         word-wrap: break-word;
         padding-left: 20px;
         padding-top: 5px;

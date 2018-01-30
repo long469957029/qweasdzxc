@@ -8,8 +8,7 @@
       </div>
       <div class="tab-group no-margin inline-block">
         <div class="clearfix inline-block">
-          <betting-play-area-position  :optionals="playRule.optionals"
-                                       @positionChange="positionChange"></betting-play-area-position>
+          <betting-play-area-position :optionals="playRule.optionals" v-model="selectOptionals"></betting-play-area-position>
         </div>
       </div>
     </div>
@@ -81,10 +80,18 @@
           this.selectOptionals = []
           this.lotteryList = []
         }
-      }
+      },
+      selectOptionals: {
+        handler() {
+          this.$_calculateCoefficient()
+          this.$nextTick(() => {
+            this.$_statisticsLottery()
+          })
+        }
+      },
     },
 
-    mounted: function () {
+    mounted() {
       $(this.$refs.fileLoad).fileLoad({
         title: '导入文件',
         accept: '.txt',
@@ -100,11 +107,6 @@
 
         },
       })
-    },
-
-    activated() {
-      this.selectOptionals = []
-      this.lotteryList = []
     },
 
     methods: {
@@ -129,10 +131,10 @@
 
         const html = ['<div class=" max-height-smd overflow-auto">']
         if (!_.isEmpty(repeat.repeatNumbers)) {
-          html.push(`<p class="word-break">以下号码重复，已进行自动过滤<br />${bettingInfo.repeatNumbers.join(',')}</p>`)
+          html.push(`<p class="word-break">以下号码重复，已进行自动过滤<br />${repeat.repeatNumbers.join(',')}</p>`)
         }
         if (!_.isEmpty(validate.errorNumbers)) {
-          html.push(`<p class="word-break">以下号码错误，已进行自动过滤<br />${bettingInfo.errorNumbers.join(',')}</p>`)
+          html.push(`<p class="word-break">以下号码错误，已进行自动过滤<br />${validate.errorNumbers.join(',')}</p>`)
         }
         html.push('</div>')
 
@@ -148,11 +150,6 @@
         $(this.$refs.numbersArea).addClass('hidden')
         this.numbers = ''
         // this.$store.commit(types.SET_STATISTICS, 0)
-      },
-
-      positionChange(optionals) {
-        this.$_calculateCoefficient(optionals)
-        this.$_statisticsLottery()
       },
 
       create(createTimes) {
@@ -206,19 +203,15 @@
         this.$store.commit(types.SET_STATISTICS, validated && validated.statistics || 0)
       },
 
-      $_calculateCoefficient(optionals) {
+      $_calculateCoefficient() {
         let coefficient = 1
 
-        const selectedList = optionals.list.filter(optional => optional.checked);
-        const length = selectedList.length
-        if (!_.isEmpty(optionals)) {
+        if (!_.isEmpty(this.selectOptionals)) {
           coefficient = betRulesAlgorithm.optional(
-            optionals.coefficient,
-            length,
+            this.playRule.optionals.coefficient,
+            this.selectOptionals.length,
           )
         }
-
-        this.selectOptionals = _(selectedList).pluck('id')
         this.coefficient = coefficient
       },
 

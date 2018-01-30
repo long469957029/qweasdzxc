@@ -21,7 +21,7 @@ const appConfig = {
     base: './src/base/build.base.js',
     trend: './src/apps/packages/trend/index.js',
     change: './src/apps/packages/change/index.js',
-    resetInitPwd:'./src/apps/packages/resetInitPwd/index.js',
+    resetInitPwd: './src/apps/packages/resetInitPwd/index.js',
     // trendOld: './src/apps/packages/trend/old/index.js',
     // resetPassword: './src/apps/packages/resetPassword/resetPassword.js',
     updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
@@ -208,7 +208,7 @@ const appConfig = {
 };
 
 //==============entry================
-let entry = _(appConfig.entry).reduce(function(entries, entry, entryName) {
+let entry = _(appConfig.entry).reduce(function (entries, entry, entryName) {
   if (DEV) {
     entry = [
       'webpack-dev-server/client?http://localhost:' + appConfig.port,
@@ -286,21 +286,21 @@ plugins.push(new webpack.DllReferencePlugin({
 
 if (DEV) {
   //plugins.push(new CommonsChunkPlugin('vendor.js', appConfig.commonChunks));
-  _(appConfig.commonChunks).each(function(commonChunk, name) {
+  _(appConfig.commonChunks).each(function (commonChunk, name) {
     plugins.push(new CommonsChunkPlugin({
       name: name,
       filename: name + '.js',
       //filename: name + '.js',
-      chunks: _(commonChunk).isEmpty() ? Infinity: commonChunk
+      chunks: _(commonChunk).isEmpty() ? Infinity : commonChunk
     }));
   });
   plugins.push(new webpack.HotModuleReplacementPlugin());
 } else {
-  _(appConfig.commonChunks).each(function(commonChunk, name) {
+  _(appConfig.commonChunks).each(function (commonChunk, name) {
     plugins.push(new CommonsChunkPlugin({
       name: name,
       filename: name + '.[hash].js',
-      chunks: _(commonChunk).isEmpty() ? Infinity: commonChunk
+      chunks: _(commonChunk).isEmpty() ? Infinity : commonChunk
     }));
   });
 
@@ -315,7 +315,7 @@ if (DEV) {
 
 // 生成静态入口html，插件存在bug，无法根据chunks的顺序插入，而是按照了entry的id的顺序，不可控
 // 暂时用数字标明顺序
-_(appConfig.entries).each(function(entryInfo, entryName) {
+_(appConfig.entries).each(function (entryInfo, entryName) {
   plugins.push(new HtmlWebpackPlugin({
     title: entryInfo.title,
     filename: entryName + '.html',
@@ -324,7 +324,7 @@ _(appConfig.entries).each(function(entryInfo, entryName) {
     chunksSortMode: 'manual',
     inject: 'body',
     favicon: entryInfo.favicon,
-    resources : entryInfo.resources
+    resources: entryInfo.resources
   }));
 });
 
@@ -410,7 +410,7 @@ const modules = {
 
 if (DEV) {
   modules.rules.push({
-    test:   /\.scss$/,
+    test: /\.scss$/,
     use: [
       'style-loader',
       'css-loader',

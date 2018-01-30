@@ -43,7 +43,7 @@ const trendLowPeriods = [
   ...trendPeriods,
   {
     title: '近5天',
-    name: 'days',
+    name: 'date',
     value: 5,
   },
 ]
