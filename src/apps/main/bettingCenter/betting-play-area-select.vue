@@ -21,8 +21,7 @@
       </div>
       <div class="tab-group no-margin inline-block">
         <div class="clearfix inline-block">
-          <betting-play-area-position  :optionals="playRule.optionals"
-                                      @positionChange="positionChange"></betting-play-area-position>
+          <betting-play-area-position :optionals="playRule.optionals" v-model="selectOptionals"></betting-play-area-position>
         </div>
       </div>
     </div>
@@ -154,11 +153,19 @@
         }
       },
       playRule: {
-        handler(newVal) {
+        handler(playRule) {
           this.selectOptionals = []
           this.lotteryList = []
         }
-      }
+      },
+      selectOptionals: {
+        handler() {
+          this.$_calculateCoefficient()
+          this.$nextTick(() => {
+            this.$_statisticsLottery()
+          })
+        }
+      },
     },
 
     computed: mapState({
@@ -211,27 +218,22 @@
         })
       },
 
-      positionChange(optionals) {
-        this.$_calculateCoefficient(optionals)
-        this.$_statisticsLottery()
-      },
-
       selectNumber(num, items) {
         this.$_selectNumber(num, items)
       },
 
-      create(createTimes) {
-        let results = []
-        if (this.coefficient) {
-          results = _(createTimes).times(this.playRule.create, this.playRule)
-          _(results).each(function (result) {
-            result.statistics = Math.round(_(this.coefficient).mul(result.statistics))
-            result.selectOptionals = this.selectOptionals
-          }, this)
-        }
-
-        return results
-      },
+      // create(createTimes) {
+      //   let results = []
+      //   if (this.coefficient) {
+      //     results = _(createTimes).times(this.playRule.create, this.playRule)
+      //     _(results).each(function (result) {
+      //       result.statistics = Math.round(_(this.coefficient).mul(result.statistics))
+      //       result.selectOptionals = this.selectOptionals
+      //     }, this)
+      //   }
+      //
+      //   return results
+      // },
 
       autoCreate() {
         const result = this.playRule.create(this.playRule)
@@ -330,19 +332,16 @@
         this.clearAllSelected();
       },
 
-      $_calculateCoefficient(optionals) {
+      $_calculateCoefficient() {
         let coefficient = 1
 
-        const selectedList = optionals.list.filter(optional => optional.checked);
-        const length = selectedList.length
-        if (!_.isEmpty(optionals)) {
+        if (!_.isEmpty(this.selectOptionals)) {
           coefficient = betRulesAlgorithm.optional(
-            optionals.coefficient,
-            length,
+            this.playRule.optionals.coefficient,
+            this.selectOptionals.length,
           )
         }
 
-        this.selectOptionals = _(selectedList).pluck('id')
         this.coefficient = coefficient
       },
 

@@ -1,10 +1,9 @@
 <template>
   <div class="form-inline">
     <div class="bc-optional-main">
-      <label class="m-right-mlg" v-for="(optional, index) in fOptionals.list">
+      <label class="m-right-mlg" v-for="(optional, index) in optionals.list">
         <span class="custom-checkbox">
           <input type="checkbox" :id="'position-' + index" class="js-bc-playArea-position-item" name="optional"
-                 @change="change"
                  :value="optional.id" v-model="optional.checked">
           <label class="checkbox-label" :for="'position-' + index"></label>
         </span>
@@ -18,23 +17,20 @@
   export default {
     name: "betting-play-area-position",
     props: {
-      optionals: Object
+      optionals: Object,
+      value: Array
     },
 
-    computed: mapState({
-      fOptionals: function () {
-        return this.optionals
-      }
-    }),
-
-    methods: {
-      change() {
-        this.$emit('positionChange', this.fOptionals);
+    watch: {
+      optionals: {
+        handler(currentOptionals) {
+          const selectedList = currentOptionals.list.filter(optional => optional.checked);
+          this.$emit('input', _(selectedList).pluck('id'))
+        },
+        immediate: true,
+        deep: true,
       }
     },
-    mounted: function () {
-      this.$emit('positionChange', this.fOptionals);
-    }
   }
 </script>
 
