@@ -377,6 +377,7 @@ const handicapSscConfig = [
     zhName: '重庆时时彩',
     badge: 'new',
     roadBalls: true,
+    twoSide: true,
   }, bettingTypes.SSC),
   Object.assign({
     id: 10,
@@ -394,6 +395,7 @@ const handicapPk10Config = [
     zhName: '北京PK10',
     badge: 'new',
     roadBalls: true,
+    twoSide: true,
   }, bettingTypes.PK10),
 ]
 

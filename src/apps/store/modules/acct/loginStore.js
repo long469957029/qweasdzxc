@@ -109,7 +109,7 @@ const mutations = {
   // 用户oauth确认成功
   [types.USER_OAUTH_SUCCESS] (state, data) {
     window.Global.memoryCache.set('acctInfo', data)
-    window.Global.cookieCache.set('token', data.token, 90)
+    window.Global.cookieCache.set('token', data.token, 160)
     window.Global.m.publish('acct:login', data)
     window.Global.m.publish('acct:updating', data)
 

@@ -192,7 +192,7 @@ $.widget('gl.login', {
                 if (res.result === 0) {
                   if (res.root.token) {
                     const token = res.root.token
-                    Global.cookieCache.set('token', token, 90)
+                    Global.cookieCache.set('token', token, 160)
                     Global.cookieCache.set('loginState', true)
                     window.location.href = 'index.html'
 
@@ -212,7 +212,7 @@ $.widget('gl.login', {
     const self = this
     if (data.root) { // App 登陆成功，socket 回传 token
       const token = data.root.token
-      Global.cookieCache.set('token', data.root.token, 90)
+      Global.cookieCache.set('token', data.root.token, 160)
       Global.cookieCache.set('loginState', true)
       window.location.href = 'index.html'
       // 清除 websocket
@@ -326,7 +326,7 @@ $.widget('gl.login', {
             Global.localCache.clear('account.remember')
           }
 
-          Global.cookieCache.set('token', data.root.token, 90)
+          Global.cookieCache.set('token', data.root.token, 160)
           Global.cookieCache.set('loginState', true)
           Global.m.oauth.check()
           status = Number(data.root.userStatus)

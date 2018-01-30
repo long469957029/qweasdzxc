@@ -1,18 +1,23 @@
 <template>
   <div class="betting-history">
     <div class="his-main">
-      <div class="his-top p-bottom-md p-top-md p-left-md">
+      <div class="his-top">
         <span class="sfa sfa-double-ball vertical-middle"></span>
         <span class="font-md text-default vertical-middle">{{title}}</span>
+        <span class="cursor-pointer" @click="togglePanel">></span>
       </div>
-      <static-grid class="his-draw" :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height"
-                   :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
-                   :emptyTip="gridOps.emptyTip"
-                   ref="historyGrid"></static-grid>
-      <div class="text-center p-top-smd p-LR-xs border-top">
-        <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}" target="_blank">
-          更多历史开奖
-        </router-link>
+      <div class="his-draw" ref="history">
+        <div ref="historyInner">
+          <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height"
+                       :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
+                       :emptyTip="gridOps.emptyTip"
+                       ref="historyGrid"></static-grid>
+          <div class="text-center p-top-smd p-LR-xs border-top">
+            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}" target="_blank">
+              更多历史开奖
+            </router-link>
+          </div>
+        </div>
       </div>
     </div>
     <div class="his-main">
@@ -21,7 +26,25 @@
           两面长龙排行
         </div>
       </div>
-      <div class="his-draw"></div>
+      <div class="his-draw two-side" ref="twoSide">
+        <div class="two-side-inner" ref="twoSideInner">
+          <div class="two-side-title">统计至第2017-1010-047期</div>
+          <div class="two-side-main">
+            <div class="two-side-cell">
+              <div class="cell-left">第五球------单</div>
+              <div class="cell-right">5期</div>
+            </div>
+            <div class="two-side-cell">
+              <div class="cell-left">第五球------单</div>
+              <div class="cell-right">5期</div>
+            </div>
+            <div class="two-side-cell">
+              <div class="cell-left">第五球------单</div>
+              <div class="cell-right">5期</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -193,7 +216,8 @@
     data() {
       return {
         tableClass: 'table table-center table-default',
-        gridOps: {}
+        gridOps: {},
+        currentPanel: 'record',
       }
     },
 
@@ -210,6 +234,25 @@
     },
 
     methods: {
+      togglePanel() {
+        this.currentPanel = this.currentPanel === 'record' ? 'twoSide' : 'record'
+        if(this.currentPanel === 'record') {
+          Velocity(this.$refs.history, {
+            height: this.$refs.historyInner.offsetHeight
+          })
+          Velocity(this.$refs.twoSide, {
+            height: 0
+          })
+        } else {
+          Velocity(this.$refs.history, {
+            height: 0
+          })
+          Velocity(this.$refs.twoSide, {
+            height: this.$refs.twoSide.offsetHeight
+          })
+        }
+      },
+
       update() {
         this.$refs.historyGrid.update()
       },
@@ -474,6 +517,12 @@
 </script>
 
 <style lang="scss" scoped>
+  .his-top {
+    width: 185px;
+    position: relative;
+    margin: 0 auto;
+    padding: 15px 0;
+  }
   .his-main {
     th {
       position: relative;
@@ -496,6 +545,20 @@
     td {
       padding: 12px 0;
     }
+  }
+  .his-draw {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .text-center.his-both-top.font-sm {
+    color: $def-black-color;
+  }
+
+  .his-top {
+    font-size: 14px;
+    color: $def-black-color;
+    border-bottom: 1px solid $im-line-color;
   }
 </style>
 
