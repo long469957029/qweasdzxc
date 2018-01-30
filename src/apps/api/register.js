@@ -110,11 +110,27 @@ const recieveRedpackApi = ({linkId},then, fail) => {
     .then(then)
     .catch(fail)
 }
+/**
+ * 新用户用户登录之后  校验是否有开户红包
+ * @param then
+ * @param fail
+ * @returns {*|Promise.<T>}
+ */
+const checkHasRedpackApi = (then, fail) => {
+  return $http({
+    type: 'POST',
+    url: '/info/redpack/openRedpack.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
 export {
   checkNameExistApi,
   registerApi,
   getBannerADApi,
   sendLinkViewApi,
   checkLinkTypeApi,
-  recieveRedpackApi
+  recieveRedpackApi,
+  checkHasRedpackApi
 }
