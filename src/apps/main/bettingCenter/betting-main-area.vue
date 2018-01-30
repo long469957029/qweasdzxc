@@ -395,8 +395,6 @@
                 })
               }
             });
-
-            // $(this.$refs.lotteryPreview).scrollTop(0)
           })
 
           this.$store.commit(types.CALCULATE_TOTAL)
