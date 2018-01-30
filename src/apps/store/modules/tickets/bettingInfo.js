@@ -75,6 +75,7 @@ const mutations = {
   [types.CHECKOUT_PLAN_ID] (state) {
     state.planId = '------------'
     state.init = true
+    state.lastOpenNum = []
   },
 
   [types.GET_TICKET_INFO_SUCCESS] (state, res) {

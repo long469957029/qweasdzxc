@@ -31,18 +31,20 @@
           <div>开奖号码</div>
         </div>
 
-        <opening-balls :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="bettingInfo.lastOpenNum"
-                       :default-opening="ticketInfo.defaultOpening"
-                       v-if="ticketInfo.openingType === 'balls'" @mouseover="calculateStatus = true"
-                       @mouseout="calculateStatus = false"
-        ></opening-balls>
-        <opening-dices-panel class="inline-block" v-else-if="ticketInfo.openingType === 'dices'"
-                             :opening-num="bettingInfo.lastOpenNum" :ticket-info="ticketInfo"
-        ></opening-dices-panel>
-        <opening-mark6-balls :counts="ticketInfo.counts" :range="ticketInfo.range"
-                             :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.defaultOpening"
-                             v-else-if="ticketInfo.openingType === 'mark-balls'"
-        ></opening-mark6-balls>
+        <keep-alive>
+          <opening-balls :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="bettingInfo.lastOpenNum"
+                         :default-opening="ticketInfo.defaultOpening"
+                         v-if="ticketInfo.openingType === 'balls'" @mouseover="calculateStatus = true"
+                         @mouseout="calculateStatus = false"
+          ></opening-balls>
+          <opening-dices-panel class="inline-block" v-else-if="ticketInfo.openingType === 'dices'"
+                               :opening-num="bettingInfo.lastOpenNum" :ticket-info="ticketInfo"
+          ></opening-dices-panel>
+          <opening-mark6-balls :counts="ticketInfo.counts" :range="ticketInfo.range"
+                               :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.defaultOpening"
+                               v-else-if="ticketInfo.openingType === 'mark-balls'"
+          ></opening-mark6-balls>
+        </keep-alive>
 
         <div class="bc-hgcalculate-example" v-if="ticketInfo.showNumberDetail&& calculateStatus">
           <div class="bc-hgcaculate-examplerow">万位:<span v-html="calculateInfo ? calculateInfo.wan : ''"></span></div>

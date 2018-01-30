@@ -37,7 +37,7 @@
         type: Array,
       }
     },
-    data: function () {
+    data() {
       return {
         rollingStatus: R.repeat(false, this.counts),
         init: true,

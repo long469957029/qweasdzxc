@@ -15,13 +15,13 @@
         </router-link>
       </div>
     </div>
-    <div class="his-main js-his-both hidden">
+    <div class="his-main">
       <div class="his-top">
         <div class="text-center his-both-top font-sm">
           两面长龙排行
         </div>
       </div>
-      <div class="his-draw js-his-both-list"></div>
+      <div class="his-draw"></div>
     </div>
   </div>
 </template>
@@ -193,9 +193,7 @@
     data() {
       return {
         tableClass: 'table table-center table-default',
-        gridOps: {
-
-        }
+        gridOps: {}
       }
     },
 
