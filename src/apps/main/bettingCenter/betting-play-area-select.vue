@@ -153,6 +153,12 @@
           this.totalPage = Math.ceil(this.formattedRuleList.length / newVal)
         }
       },
+      playRule: {
+        handler(newVal) {
+          this.selectOptionals = []
+          this.lotteryList = []
+        }
+      }
     },
 
     computed: mapState({

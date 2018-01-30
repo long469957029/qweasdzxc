@@ -76,6 +76,12 @@
           this.splitNumbers = this.$_split()
         }
       },
+      playRule: {
+        handler(newVal) {
+          this.selectOptionals = []
+          this.lotteryList = []
+        }
+      }
     },
 
     mounted: function () {
@@ -94,6 +100,11 @@
 
         },
       })
+    },
+
+    activated() {
+      this.selectOptionals = []
+      this.lotteryList = []
     },
 
     methods: {
