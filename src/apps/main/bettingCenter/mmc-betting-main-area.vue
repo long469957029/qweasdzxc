@@ -1225,6 +1225,7 @@
     letter-spacing: -1px;
     color: #fffdc9;
     margin-right: 20px;
+    line-height: 22px;
     .opening-title-inner {
       color: #ffc600;
     }
