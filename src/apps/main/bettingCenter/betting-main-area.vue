@@ -329,7 +329,7 @@
       },
       'bettingChoice.previewList': {
         handler(previewList) {
-          this.fPreviewList = _(previewList).map(function (previewInfo, index) {
+          this.fPreviewList = _(previewList).map((previewInfo, index) => {
             const title = `${previewInfo.levelName}_${previewInfo.playName}`
             let betNum = ''
             if (previewInfo.formatBettingNumber.length > 20) {
@@ -357,7 +357,7 @@
               bonus: `${previewInfo.fBetBonus}元`,
               operate: `<div class="js-lottery-delete lottery-preview-del icon-block m-right-md pull-right" data-index="${index}"></div>`,
             }
-          }, this)
+          })
 
           this.$nextTick(() => {
             this.$refs.lotteryGrid.getRows().forEach((row, index) => {
@@ -395,8 +395,6 @@
                 })
               }
             });
-
-            // $(this.$refs.lotteryPreview).scrollTop(0)
           })
 
           this.$store.commit(types.CALCULATE_TOTAL)

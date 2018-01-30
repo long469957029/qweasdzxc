@@ -442,15 +442,19 @@
             }
           })
 
+
           let fMissList = _.map(this.trendsList[i].missList, (missList, index) => {
+
+            let resortMissList = _.sortBy(missList, (index, missIndex) => Number(missIndex))
+
             let numIndex = 0
-            return _.map(missList, (miss, missIndex) => {
+            return _.map(resortMissList, (miss) => {
               let fMiss = {
                 title: miss,
                 missingLine: false,
               }
 
-              const pos = index * _.size(missList) + numIndex
+              const pos = index * _.size(resortMissList) + numIndex
               if (miss === 0) {
                 missLine[pos] = false
               }
@@ -531,10 +535,9 @@
               }
             }
           })
-
-          _.each(totalMaxContinuousList, (numItem) => {
-            numItem.maxCount = _.max(numItem.continuousList)
-          })
+        })
+        _.each(totalMaxContinuousList, (numItem) => {
+          numItem.maxCount = _.max(numItem.continuousList)
         })
 
         if (this.ticketInfo.trendOps.distribution) {

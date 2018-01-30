@@ -1,11 +1,10 @@
-import ticketConfig from 'skeleton/misc/ticketConfig'
-
 const BettingRecordsView = Base.ItemView.extend({
 
   template: require('./bettingCenter-records.html'),
 
   events: {
     'click .js-bc-records-tab': 'toggleTabHandler',
+    'click .js-bc-betting-preview-detail': 'popupHandler'
   },
 
   height: 125,
@@ -63,17 +62,14 @@ const BettingRecordsView = Base.ItemView.extend({
             name: 'betNum',
             width: '12%',
             formatter(val) {
-              return _(val).toTime()
+              let betNum = val
+              if (val.length > 20) {
+                betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link" data-num="${betNum}">${
+                  val.slice(0, 20)}...</a>`
+              }
+              return betNum
             },
           },
-          // {
-          //   label: '注数/倍数/模式 ',
-          //   name: 'ticketName',
-          //   width: '12%',
-          //   formatter(val, index, bet) {
-          //
-          //   },
-          // },
           {
             label: '投注金额',
             name: 'betTotalMoney',
@@ -235,166 +231,6 @@ const BettingRecordsView = Base.ItemView.extend({
     }
   },
 
-  renderDrawRecords() {
-    if (!this.drawRecords) {
-      let gridTable = {}
-      const sscTicketIdArr = _(ticketConfig.getSccList()).pluck('id')
-      const c115TicketIdArr = _(ticketConfig.getChoose5List()).pluck('id')
-      const dpcTicketIdArr = _(ticketConfig.getLowList()).pluck('id')
-      // var bjpk10TicketIdArr = _(ticketConfig.getHappyList()).pluck('id');
-      const bjpk10TicketIdArr = _(ticketConfig.getBjPkList()).pluck('id')
-      const quick3TicketIdArr = _(ticketConfig.getQuickList()).pluck('id')
-      const mark6TicketIdArr = _(ticketConfig.getMark6List()).pluck('id')
-
-      if (_(sscTicketIdArr).indexOf(this.options.ticketId) !== -1) {
-        gridTable = this._renderSSCLotteryRecord()
-      } else if (_(c115TicketIdArr).indexOf(this.options.ticketId) !== -1) {
-        gridTable = this._render115LotteryRecord()
-      } else if (_(dpcTicketIdArr).indexOf(this.options.ticketId) !== -1) {
-        if (_(mark6TicketIdArr).indexOf(this.options.ticketId) !== -1) {
-          gridTable = this._renderMark6LotteryRecord()
-        } else {
-          gridTable = this._renderDPCLotteryRecord()
-        }
-      } else if (_(bjpk10TicketIdArr).indexOf(this.options.ticketId) !== -1) {
-        gridTable = this._renderbjpk10LotteryRecord()
-      } else if (_(quick3TicketIdArr).indexOf(this.options.ticketId) !== -1) {
-        gridTable = this._render115LotteryRecord()
-      }
-
-      this.drawRecords = this.$drawRecords.staticGrid(gridTable).staticGrid('instance')
-    } else {
-      this.drawRecords.update()
-    }
-  },
-
-  _renderMark6LotteryRecord() {
-    return {
-      tableClass: this.tableClass,
-      colModel: [
-        {label: '期号', name: 'ticketPlanId', width: '35%'},
-        {
-          label: '开奖号',
-          name: 'ticketOpenNum',
-          width: '50%',
-          formatter(val) {
-            const numArr = val.split(',')
-            _(numArr).each((num, index) => {
-              numArr[index] = `<span class='mark6Num'>${num}</span>`
-            })
-            return numArr.join()
-          },
-        },
-        {
-          label: '和值',
-          name: 'ticketOpenNum',
-          width: '15%',
-          formatter(val) {
-            const numArr = val.split(',')
-            const sumVal = _.reduce(numArr, (memo, num) => {
-              return memo + parseInt(num, 10)
-            }, 0)
-            return sumVal
-          },
-        },
-      ],
-      url: '/ticket/ticketmod/openhistory.json',
-      emptyTip: '最近无开奖记录',
-      abort: false,
-      initRemote: false,
-      height: this.height,
-      data: {
-        pageSize: 30,
-        ticketId: this.options.ticketId,
-      },
-      dataProp: 'root.openedList',
-    }
-  },
-
-  _renderSSCLotteryRecord() {
-    return {
-      tableClass: this.tableClass,
-      colModel: [
-        {label: '期号', name: 'ticketPlanId', width: '42%'},
-        {label: '开奖号', name: 'ticketOpenNum', width: '24%'},
-        {label: '前三', name: 'qianSan', width: '17%'},
-        {
-          label: '后三',
-          name: 'houSan',
-          width: '17%',
-          formatter(val) {
-            return val
-          },
-        },
-      ],
-      url: '/ticket/ticketmod/openhistory.json',
-      emptyTip: '最近无开奖记录',
-      abort: false,
-      initRemote: false,
-      height: this.height,
-      data: {
-        pageSize: 30,
-        ticketId: this.options.ticketId,
-      },
-      dataProp: 'root.openedList',
-    }
-  },
-  _render115LotteryRecord() {
-    return {
-      tableClass: this.tableClass,
-      colModel: [
-        {label: '期号', name: 'ticketPlanId', width: '50%'},
-        {label: '开奖号', name: 'ticketOpenNum', width: '50%'},
-      ],
-      url: '/ticket/ticketmod/openhistory.json',
-      abort: false,
-      height: this.height,
-      initRemote: false,
-      data: {
-        pageSize: 84,
-        ticketId: this.options.ticketId,
-      },
-      dataProp: 'root.openedList',
-    }
-  },
-  _renderDPCLotteryRecord() {
-    return {
-      tableClass: this.tableClass,
-      colModel: [
-        {label: '期号', name: 'ticketPlanId', width: '10%'},
-        {label: '开奖号', name: 'ticketOpenNum', width: '10%'},
-        {label: '三星', name: 'qianSan', width: '10%'},
-      ],
-      url: '/ticket/ticketmod/openhistory.json',
-      abort: false,
-      height: this.height,
-      initRemote: false,
-      data: {
-        pageSize: 20,
-        ticketId: this.options.ticketId,
-      },
-      dataProp: 'root.openedList',
-    }
-  },
-  _renderbjpk10LotteryRecord() {
-    return {
-      tableClass: this.tableClass,
-      colModel: [
-        {label: '期号', name: 'ticketPlanId', width: '30%'},
-        {label: '开奖号', name: 'ticketOpenNum', width: '70%'},
-      ],
-      url: '/ticket/ticketmod/openhistory.json',
-      abort: false,
-      height: this.height,
-      initRemote: false,
-      data: {
-        pageSize: 84,
-        ticketId: this.options.ticketId,
-      },
-      dataProp: 'root.openedList',
-    }
-  },
-
   // common APIs
   update() {
     // const resizeHeight = $('.js-bc-main-area-right').height() - 394
@@ -418,6 +254,18 @@ const BettingRecordsView = Base.ItemView.extend({
     this.options.type = $target.data('type')
     this.update()
   },
+  popupHandler(e) {
+    if (!$(e.currentTarget).data('popover')) {
+      $(e.currentTarget).popover({
+        title: '详细号码',
+        trigger: 'click',
+        html: true,
+        container: 'body',
+        content: `<div class="js-pf-popover">${e.currentTarget.dataset.num}</div>`,
+        placement: 'right',
+      }).popover('show')
+    }
+  }
 })
 
 export default BettingRecordsView
