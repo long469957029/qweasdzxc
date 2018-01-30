@@ -504,8 +504,8 @@ module.exports = {
       bootstrap: 'vendor/scripts/bootstrap',
       modernizr: 'vendor/scripts/modernizr',
       vue: 'vue/dist/vue.esm.js',
-
       api: 'apps/api',
+      filters: 'apps/filters',
       consts: 'apps/store/consts',
       types: 'apps/store/mutation-types',
       ticketConfig: 'apps/main/skeleton/misc/ticketConfig',
