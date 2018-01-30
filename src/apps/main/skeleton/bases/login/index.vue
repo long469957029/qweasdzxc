@@ -132,7 +132,7 @@
             if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
               this.autoLogoutCountdown(acctInfo.outTime)
             }
-            window.Global.cookieCache.set('token', acctInfo.token)
+            window.Global.cookieCache.set('token', acctInfo.token, 90)
             window.Global.cookieCache.set('loginState', true)
             const status = Number(data.root.userStatus)
             if (status === 0 || status === 100 || status === 102) {

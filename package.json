@@ -29,6 +29,7 @@
   "scripts": {
     "dev": "gulp server",
     "analysis": "cross-env NODE_ENV=analyse gulp server",
+    "dll:prepare": "gulp dll:prepare",
     "release": "cross-env NODE_ENV=production gulp release",
     "sprite:all": "gulp build.sprite --target all",
     "sprite:normal": "gulp build.sprite --target sprites",
