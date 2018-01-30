@@ -139,7 +139,8 @@
             </div>
           </div>
 
-          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="430" ref="bettingHisotry"></betting-history>
+          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="430"
+                           ref="bettingHisotry"></betting-history>
         </div>
         <div class="div-line"></div>
 
@@ -227,7 +228,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -540,6 +540,7 @@
           ++this.currentOpeningCount
           this.$_pushBetting()
         } else {
+          this.pushing = false
           this.stopping = false
           this.opening = false
           this.$refs.bettingHisotry.update()
@@ -550,7 +551,6 @@
 
       toggleFinalResult(flag = true) {
         $(this.$refs.finalResult).modal()
-        // this.$refs.finalResult
         this.showFinalResult = flag
       },
 
@@ -681,10 +681,18 @@
                 this.$_prepareOpening()
               }
 
-            } else if (res.root && res.root.errorCode === 101) {
-              Global.ui.notification.show('账号余额不足，请先<a href="#/fc/re" class="router btn-link btn-link-hot"  data-dismiss="modal">充值</a>。')
             } else {
-              Global.ui.notification.show(res.msg || '')
+              this.opening = false
+              if (res.msg.indexOf('余额不足') > -1) {
+                Global.ui.notification.show(res.msg || '', {
+                  btnContent: '充值',
+                  event: () => {
+                    $('.header-main .js-header-recharge').trigger('click.fundDialog')
+                  }
+                })
+              } else {
+                Global.ui.notification.show(res.msg || '')
+              }
             }
           })
       },

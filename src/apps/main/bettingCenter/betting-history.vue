@@ -84,9 +84,9 @@
     },
     p5p3: {
       pageSize: 15,
-        formats: [
+      formats: [
         function (val) {
-          return val.substring(4)
+          return val
         },
         function (val) {
           const html = ['<div class="open-nums">']
@@ -114,7 +114,7 @@
       pageSize: 15,
       formats: [
         function (val) {
-          return val.substring(4)
+          return val
         },
         function (val) {
           const html = ['<div class="open-nums">']

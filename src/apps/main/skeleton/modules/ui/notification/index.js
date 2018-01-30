@@ -24,6 +24,7 @@ const NotificationModule = Base.Module.extend({
       btnContent: '确认',
       countdown: 0,
       displayTime: 0, // 显示时间，0无限制。
+      btnClass: ''
     }
     if (options.notiType === 'cloud') {
       ops.modalClass = 'modal-cloud'
@@ -58,7 +59,7 @@ const NotificationModule = Base.Module.extend({
           footer += `<div class="m-top-smd m-bottom-md text-center"><button type="button" class="js-pf-notification-btn btn btn-lg p-LR-lg" data-dismiss="modal">${options.btnContent}</button></div>`
         } else {
           footer += `<div class="m-top-smd m-bottom-xs text-center">
-                    <button type="button" class="js-pf-notification-btn btn btn-lg btn-cool p-LR-lg" data-dismiss="modal">${options.btnContent}</button></div>`
+                    <button type="button" class="js-pf-notification-btn btn btn-lg btn-cool p-LR-lg ${this.options.btnClass}" data-dismiss="modal">${options.btnContent}</button></div>`
         }
       }
     }
