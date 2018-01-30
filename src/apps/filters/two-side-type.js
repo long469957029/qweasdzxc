@@ -3,7 +3,7 @@ const TYPE = {
     units: '个位',
     tens: '十位',
     hundreds: '百位',
-    thousand: '千位',
+    thousands: '千位',
     tenThousands: '万位',
     LLH: '龙虎和',
     sum: '总和',

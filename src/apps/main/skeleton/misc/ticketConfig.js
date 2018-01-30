@@ -367,6 +367,7 @@ const handicapMark6Config = [
     mark: 'mark6',
     zhName: '香港六合彩',
     badge: 'new',
+    isOfficial: true,
   }, bettingTypes.MARK6),
 ]
 
@@ -378,6 +379,7 @@ const handicapSscConfig = [
     badge: 'new',
     roadBalls: true,
     twoSide: true,
+    isOfficial: true,
   }, bettingTypes.SSC),
   Object.assign({
     id: 10,
@@ -396,6 +398,7 @@ const handicapPk10Config = [
     badge: 'new',
     roadBalls: true,
     twoSide: true,
+    isOfficial: true,
   }, bettingTypes.PK10),
 ]
 

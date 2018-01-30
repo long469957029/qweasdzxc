@@ -31,7 +31,7 @@
           <div class="two-side-title">统计至第2017-1010-047期</div>
           <div class="two-side-main">
             <div class="two-side-cell" v-for="item in twoSideList">
-              <div class="cell-left">{{item.type | twoSideType}}------{{item.result}}</div>
+              <div class="cell-left">{{item.type | twoSideType(ticketInfo.type)}}------{{item.result}}</div>
               <div class="cell-right">{{item.count}}期</div>
             </div>
           </div>
@@ -43,7 +43,7 @@
 
 <script>
   import {getTwoSideApi} from 'api/analysis'
-  import twoSideType from 'filters'
+  import twoSideType from 'filters/two-side-type'
   import {StaticGrid} from 'build'
 
   const llhKeysArr = ['w', 'k', 'b', 's', 'g']
@@ -243,7 +243,7 @@
         getTwoSideApi({
           ticketId: this.ticketInfo.id,
           isOfficial: this.ticketInfo.isOfficial
-        }, ({data}) => {
+        }, (data) => {
           if (data && data.result === 0) {
             this.twoSideList = data.root
           }
