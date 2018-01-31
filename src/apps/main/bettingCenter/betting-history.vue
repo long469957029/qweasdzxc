@@ -23,11 +23,13 @@
   <div class="betting-history" v-else>
     <div class="his-main">
       <div class="his-top">
-        <span class="sfa sfa-double-ball vertical-middle"></span>
+        <span class="his-icon">
+        <span class="sfa sfa-double-ball double-ball-sm vertical-middle"></span>
+        </span>
         <span class="font-md text-default vertical-middle">{{title}}</span>
-        <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" :class="{up: currentPanel !== 'twoSide'}" @click="togglePanel"></span>
+        <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" :class="{up: currentPanel !== 'twoSide'}" @click="togglePanel()"></span>
       </div>
-      <div class="his-draw" ref="history" :style="currentPanel === 'twoSide' ? 'height:0' : ''">
+      <div class="his-draw" ref="history">
         <div ref="historyInner">
           <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height"
                        :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
@@ -43,10 +45,12 @@
     </div>
     <div class="his-main" v-if="ticketInfo.twoSide">
       <div class="his-top">
-        <span class="sfa sfa-double-ball vertical-middle"></span>
+        <span class="his-icon">
+        <span class="sfa sfa-mmc-two-side vertical-middle"></span>
+        </span>
         <span class="font-md text-default vertical-middle">两面长龙排行</span>
       </div>
-      <div class="his-draw two-side" ref="twoSide" :style="currentPanel === 'twoSide' ? '' : 'height:0'">
+      <div class="his-draw two-side" ref="twoSide">
         <div class="two-side-inner" ref="twoSideInner">
           <div class="two-side-title">统计至第{{lastOpenId}}期</div>
             <transition-group class="two-side-main"
@@ -330,14 +334,20 @@
     watch: {
       '$route': {
         handler() {
-          if (!this.ticketInfo.twoSide) {
-            this.currentPanel = 'record'
-          } else {
-            this.currentPanel = 'twoSide'
-          }
-          this.twoSideList = []
-          this.$refs.historyGrid.clean()
-        }
+          this.$nextTick(() => {
+            if (!this.ticketInfo.twoSide) {
+              this.togglePanel('record')
+              // this.currentPanel = 'record'
+            } else {
+              this.togglePanel('twoSide')
+              // this.currentPanel = 'twoSide'
+            }
+            this.twoSideList = []
+            this.$refs.historyGrid.clean()
+          })
+
+        },
+        immediate: true
       },
       playRule: {
         handler() {
@@ -366,8 +376,14 @@
           }
         })
       },
-      togglePanel() {
-        this.currentPanel = this.currentPanel === 'record' ? 'twoSide' : 'record'
+
+      togglePanel(currentPanel) {
+        if (currentPanel) {
+          this.currentPanel = currentPanel
+        } else {
+          this.currentPanel = this.currentPanel === 'record' ? 'twoSide' : 'record'
+        }
+
         if(this.currentPanel === 'record') {
           Velocity(this.$refs.history, {
             height: this.$refs.historyInner.offsetHeight,
@@ -707,6 +723,14 @@
 
   .cell-right {
     color: $new-main-deep-color;
+  }
+  .double-ball-sm {
+    transform: scale(0.8);
+    margin-left: -6px;
+  }
+  .his-icon {
+    width: 40px;
+    display: inline-block;
   }
 </style>
 

@@ -51,9 +51,10 @@ const getTicketRulesApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
  * @param usePack
  * @param then
  * @param fail
- * @returns {*|Promise<T>}
+ * @returns {* | Promise<T>}
+ * @param couponRid
  */
-const pushBettingApi = ({ planId, bet, usePack }, then, fail) => {
+const pushBettingApi = ({ planId, bet, usePack = 0, couponRid = 0 }, then, fail) => {
   return $http({
     url: '/ticket/bet/bet.json',
     tradition: true,
@@ -61,6 +62,7 @@ const pushBettingApi = ({ planId, bet, usePack }, then, fail) => {
       planId,
       bet,
       usePack,
+      couponRid
     },
   })
     .then(then)
