@@ -71,7 +71,7 @@
               <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
               <span>元</span>
             </div>
-            <betting-vouchers class="bc-vouchers-select"></betting-vouchers>
+            <betting-vouchers class="bc-vouchers-select" :betting-money="bettingChoice.prefabMoney"></betting-vouchers>
             <div class="pull-right m-right-sm">
               <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                       :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">

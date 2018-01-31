@@ -6,8 +6,8 @@ const initState = () => {
       {
         "rid": 35,
         "ticketId": 1,
-        "betAmount": 1000000,
-        "bonus": 100000,
+        "betAmount": 100000000,
+        "bonus": 10000000,
         "validStartDate": 1517370920705,
         "validEndDate": 1517821199000
       },
@@ -17,7 +17,7 @@ const initState = () => {
         "betAmount": 10000000,
         "bonus": 1000000,
         "validStartDate": 1517370920705,
-        "validEndDate": 1517821199000
+        "validEndDate": 1517821189000
       },
       {
         "rid": 38,
@@ -25,7 +25,7 @@ const initState = () => {
         "betAmount": 10000000,
         "bonus": 1000000,
         "validStartDate": 1517370920705,
-        "validEndDate": 1517821199000
+        "validEndDate": 1517821117000
       }
     ]
   }

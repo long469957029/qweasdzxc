@@ -10,20 +10,15 @@
             系统推荐
           </label>
           <div class="title-right">
-            代金券 <span class="text-prominent">3</span> 张，<span class="text-prominent">2</span> 张可用
+            代金券 <span class="text-prominent">{{list.length}}</span> 张，
+            <span class="text-prominent">{{_.where(list, {available: true}).length}}</span> 张可用
           </div>
         </div>
-        <div class="vouchers-main">
-          <div class="vouchers-unit" v-for="(item, i) in list">
-            <!--{-->
-            <!--"rid": 35,-->
-            <!--"ticketId": 1,-->
-            <!--"betAmount": 1000000,-->
-            <!--"bonus": 100000,-->
-            <!--"validStartDate": 1517370920705,-->
-            <!--"validEndDate": 1517821199000-->
-            <!--},-->
-            <div class="unit-left sfa-bc-vouchers-usable">
+        <transition-group name="flip-list" tag="div" class="vouchers-main">
+          <div class="vouchers-unit" v-for="item in fList" :key="item.rid">
+            <div class="unit-left" :class="[item.available ? 'sfa-bc-vouchers-usable' : 'sfa-bc-vouchers-disabled', {selected: item.selected}]"
+                 @click="select(item)"
+            >
               ¥{{item.bonus | convert2yuan}}
             </div>
             <div class="unit-right">
@@ -31,25 +26,7 @@
               <div class="unit-expired">有效期至 {{item.validEndDate | toTime}}</div>
             </div>
           </div>
-          <div class="vouchers-unit">
-            <div class="unit-left sfa-bc-vouchers-disabled">
-              ¥20
-            </div>
-            <div class="unit-right">
-              <div class="unit-comment">单笔投注满30元即可用</div>
-              <div class="unit-expired">有效期至 2017-10-19 17:54:42</div>
-            </div>
-          </div>
-          <div class="vouchers-unit">
-            <div class="unit-left sfa-bc-vouchers-selected">
-              ¥20
-            </div>
-            <div class="unit-right">
-              <div class="unit-comment">单笔投注满30元即可用</div>
-              <div class="unit-expired">有效期至 2017-10-19 17:54:42</div>
-            </div>
-          </div>
-        </div>
+        </transition-group>
       </div>
     </div>
   </div>
@@ -60,28 +37,69 @@
   export default {
     name: "betting-vouchers",
 
+    props: {
+      bettingMoney: {
+        type: Number,
+        default: 0
+      }
+    },
+
     data() {
       return {
         show: false,
         systemRecommend: false,
+        fList: []
+      }
+    },
+
+    watch: {
+      list: {
+        handler() {
+          this.fList = this.list
+        },
+        immediate: true
+      },
+      bettingMoney() {
+        this.fList = _.chain(this.fList).each((item) => {
+          item.available = this.bettingMoney > item.betAmount
+        }).sortBy((item) => {
+          if (item.available) {
+            return true
+          } else {
+            return item.validEndDate
+          }
+        }).value()
       }
     },
 
     methods: {
       togglePopover() {
         this.show = !this.show
-      }
+      },
+      select(item) {
+        if (!item.available) {
+          return
+        }
+
+        this.fList.forEach((item) => {
+          item.selected = false
+        })
+        item.selected = true
+      },
     },
 
     computed: {
       ...mapState({
         list(state) {
-          return _.map(state.bettingVouchers.list, (item) => {
+          return _.chain(state.bettingVouchers.list).map((item) => {
             return {
+              available: false,
               selected: false,
               ...item
             }
-          })
+          }).sortBy((item) => {
+            return !item.available
+          }).value()
         }
       })
     }
@@ -89,6 +107,8 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '~base/styles/_spritesBC';
+
   .betting-vouchers {
     display: inline-block;
     position: relative;
@@ -180,6 +200,22 @@
     }
   }
 
+
+  .flip-list-move {
+    transition: transform 1s;
+  }
+
+  .flip-list-leave-active {
+    transition: opacity 0.3s;
+    opacity: 0;
+    position: absolute;
+  }
+
+  .sfa-bc-vouchers-usable {
+    &.selected {
+      @include sprite($sfa-bc-vouchers-selected);
+    }
+  }
   @keyframes q {
     0% {
       transform: scale(0)
