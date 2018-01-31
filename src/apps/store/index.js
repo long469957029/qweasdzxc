@@ -7,6 +7,7 @@ import rulesList from './modules/tickets/rulesList'
 import bettingChoice from './modules/tickets/bettingChoice'
 import bettingChase from './modules/tickets/bettingChase'
 import bettingAnalysis from './modules/tickets/bettingAnalysis'
+import bettingVouchers from './modules/tickets/bettingVouchers'
 import topTickets from './modules/tickets/topTickets'
 import loginStore from './modules/acct/loginStore'
 import components from './modules/global/components'
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     bettingChoice,
     bettingChase,
     bettingAnalysis,
+    bettingVouchers,
     topTickets,
     loginStore,
     components,

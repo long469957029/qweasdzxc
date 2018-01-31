@@ -243,11 +243,26 @@ const getMmcTicketInfoApi = ({ticketId = 19}, then ,fail) => {
   return $http({
     url: '/ticket/ticketmod/ticketinfoMmc.json',
     data: {
-      ticketId: ticketId
+      ticketId
     }
   })
     .then(then)
     .catch(fail)
+}
+
+/**
+ * 取得代金券
+ * @param ticketId
+ * @param then
+ */
+const getVouchersApi = ({ticketId}, then) => {
+  return $http({
+    url: '/info/redpack/ticketCouponList.json',
+    data: {
+      ticketId
+    }
+  })
+    .then(then)
 }
 
 export {
@@ -263,4 +278,5 @@ export {
   getMmcTicketInfoApi,
   pushMmcBettingApi,
   pushMmcSimulationBettingApi,
+  getVouchersApi,
 }

@@ -14,6 +14,9 @@
   import BettingMainArea from './betting-main-area'
   import BettingMainAreaHandicap from './betting-main-area-handicap'
 
+  //api
+  import {getVouchersApi} from 'api/betting'
+
   export default {
     name: "betting-center",
 
@@ -55,6 +58,11 @@
           this.$store.dispatch(types.GET_TICKET_RULES, {
             ticketId: this.ticketId,
             type: this.ticketType,
+          })
+
+          //取得彩票数据
+          this.$store.dispatch(types.GET_VOUCHERS, {
+            ticketId: this.ticketId,
           })
         },
         immediate: true

@@ -188,7 +188,7 @@
         display: block;
         width: 11px;
         height: 11px;
-        border: 1px solid $new-main-deep-color;
+        border: 1px solid $def-gray-color;
         background: #fff;
         z-index: -1;
         top: -7px;

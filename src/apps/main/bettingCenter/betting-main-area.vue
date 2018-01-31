@@ -71,9 +71,7 @@
               <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
               <span>元</span>
             </div>
-            <select name="" class="m-left-smd bc-vouchers-select">
-              <option value="">使用代金券</option>
-            </select>
+            <betting-vouchers class="bc-vouchers-select"></betting-vouchers>
             <div class="pull-right m-right-sm">
               <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                       :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
@@ -126,7 +124,8 @@
           </div>
         </div>
       </div>
-      <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" ref="bettingHisotry"></betting-history>
+      <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule"
+                       ref="bettingHisotry"></betting-history>
     </div>
     <div class="bc-bottom-area" ref="recordsContainer"></div>
 
@@ -164,6 +163,7 @@
 
   //backbone旧组件
   import BettingRecordsView from './bettingCenter-records'
+  import BettingVouchers from 'bettingCenter/betting-vouchers';
 
   // let recordsOpenView
   let bettingRecordsView
@@ -175,6 +175,7 @@
       ticketId: Number,
     },
     components: {
+      BettingVouchers,
       BettingConfirm,
       StaticGrid,
       BettingRules,
@@ -231,17 +232,21 @@
       ...mapState({
         bettingChoice: 'bettingChoice',
         bettingInfo: 'bettingInfo',
-      })},
+      })
+    },
 
     watch: {
-      '$route' (to, from) {
-        bettingRecordsView.updateTicketId(this.ticketId)
-        bettingRecordsView.update()
+      '$route': {
+        handler() {
+          bettingRecordsView.updateTicketId(this.ticketId)
+          bettingRecordsView.update()
 
-        this.$store.commit(types.SET_MULTIPLE, 1)
-        $(this.$refs.multiRange).numRange('numChange', 1)
-        this.unit = 10000
+          this.$store.commit(types.SET_MULTIPLE, 1)
+          $(this.$refs.multiRange).numRange('numChange', 1)
+          this.unit = 10000
+        },
       },
+
       'bettingChoice.playId': {
         handler: function (playId) {
           if (playId === -1) {
@@ -840,9 +845,12 @@
 
   .bc-vouchers-select {
     width: 106px;
-    height: 30px;
-    font-size: 12px;
-    @include select-def;
+    color: $new-inverse-color;
+    border-radius: 5px;
+    vertical-align: bottom;
+    top: 2px;
+    position: relative;
+    left: 10px;
   }
 
   .ba-chase-tip {
