@@ -231,7 +231,7 @@
       progressWidth(num){
         const width = num > 4000 ? '100%' : (num > 1000 ? `${_(num).div(4000)}%` : '25%')
         return `width:${width}`
-      }
+      },
     },
     computed: {
       ...mapGetters([

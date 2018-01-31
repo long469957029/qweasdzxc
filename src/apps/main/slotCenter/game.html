@@ -1,7 +1,7 @@
 <div class="col-md-3">
   <div class="sc-game-item">
     <div class="sc-game-mask">
-      <div class="sc-like-btn <%= item.collect ? liked : '' %>"></div>
+      <div class="sc-like-btn js-sc-slot-collect <%= item.collect ? 'liked' : '' %>" data-id="<%= item.gameId %>"></div>
       <div
         class="sc-game-btn ripple-btn primary js-sc-game-btn"
         data-game-id="<%= item.gameId %>"

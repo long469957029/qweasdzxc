@@ -15,7 +15,7 @@ import newsCenterRouter from 'newsCenter/router'
 import dynamicCenterRouter from 'dynamicCenter/router'
 import fundCenterRouter from 'fundCenter/router'
 import helpCenterRouter from 'helpCenter/router'
-import gameCenterRouter from 'gameCenter/router'
+// import gameCenterRouter from 'gameCenter/router'
 import mallCenterRouter from 'mallCenter/router'
 import analysisCenterRouter from './analysisCenter/router'
 import mobileBetCenterRouter from './mobileBetCenter/router'
@@ -40,7 +40,6 @@ export const install = () => {
       // 老虎机
       ...slotCenterRouter,
       ...fundCenterRouter,
-      ...gameCenterRouter,
       ...sportCenterRouter,
       ...newsCenterRouter,
       ...dynamicCenterRouter,

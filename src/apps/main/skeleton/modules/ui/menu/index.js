@@ -50,6 +50,11 @@ const SidemenuModule = Base.Module.extend({
 
     _(_(this.get('ac').sub).chain().pluck('list').flatten()
       .value()).findWhere({
+      id: 503, // 下级直属分红
+    }).auth = acctInfo.merchant
+
+    _(_(this.get('ac').sub).chain().pluck('list').flatten()
+      .value()).findWhere({
       id: 500, // 招商下级转账
     }).auth = !acctInfo.merchant
   },

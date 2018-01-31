@@ -72,6 +72,7 @@
 <script>
   import avatarConf from 'userCenter/misc/avatarConfig'
   import fundApi from 'api/fund'
+  import { getAccountSafeApi } from 'api/userCenter'
   export default{
     name: 'main-header',
 
@@ -159,6 +160,16 @@
       logout(){
         this.$store.commit(types.TOGGLE_LOGOUT_DIALOG, true)
       },
+      getAccountSafe(){
+        getAccountSafeApi(
+          ({data}) => {
+            if(data && data.result === 0){
+              Global.memoryCache.set('accountSafe', data.root)
+              Global.m.publish('safe:updating', data.root)
+            }
+          }
+        )
+      },
       getUserSecurityInfo(){
         fundApi.userSecurityInfo(({data}) => {
           if (data.result === 0) {
@@ -173,18 +184,8 @@
             window.Global.cookieCache.set('security', status)
           }
         })
+        this.getAccountSafe()
       },
-//      openLoginDialog(){
-//        this.$nextTick(() => {
-////          this.$refs.showLogin.init()
-//          $('.modal').modal({
-//            backdrop: 'static',
-//          })
-//            .on('hidden.modal', () => {
-//              this.$store.commit(types.TOGGLE_LOGIN_DIALOG, false)
-//            })
-//        })
-//      },
       goToPersonCenter(){
         window.Global.router.goTo('fc/fm')
       },
@@ -195,6 +196,9 @@
 
     mounted(){
       window.Global.m.subscribe('news', 'news:updating', this.renderMsgList)
+      if(this.loginStatus){  //登陆状态下 获取用户安全设置信息
+        this.getAccountSafe()
+      }
     }
   }
 </script>

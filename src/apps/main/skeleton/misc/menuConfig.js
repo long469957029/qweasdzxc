@@ -183,6 +183,13 @@ const menuConfig = [
             quickShowName: '下级<br/>分红',
           },
           {
+            id: 503,
+            router: '/ac/ld',
+            name: '下级直属分红',
+            needAuth: true,
+            quickShowName: '下级直属<br/>分红',
+          },
+          {
             id: 502,
             router: '/ac/sum',
             name: '签约用户',
