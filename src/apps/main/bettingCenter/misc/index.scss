@@ -225,7 +225,7 @@
     background-color: transparent;
   }
   .open-nums {
-    max-width: 150px;
+    //max-width: 150px;
     span {
       width: 20px;
       height: 20px;
@@ -233,9 +233,9 @@
       border-radius: 50%;
       text-align: center;
       line-height: 20px;
-      float: left;
       margin-left: 4px;
       margin-bottom: 2px;
+      display: inline-block;
     }
     .key-num {
       border-color: $new-main-deep-color;

@@ -6,7 +6,7 @@
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" @blur="isInputing = false">
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" @keydown="inputValidate" @blur="isInputing = false">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                 :disabled="!canBet || pushing || !sale || pending">
           投注
@@ -45,7 +45,7 @@
               <div class="main-item-right" v-if="!_.isEmpty(item)">
                 <span class="item odds" v-if="rule.showItemOdds">{{item.odds}}</span>
                 <input type="text" class="money-input" v-if="rule.showMoneyInput" v-model.number="item.betMoney"
-                       @click.stop @keyup.stop="inputBetMoney($event, item)"/>
+                       @click.stop @keyup.stop="inputBetMoney(item)" @keydown.stop="inputValidate"/>
               </div>
             </div>
 
@@ -56,7 +56,7 @@
               </div>
               <div class="main-item-right" v-if="!_.isEmpty(item) && rule.showMoneyInput">
                 <input type="text" class="money-input" v-model.number="item.betMoney" @click.stop
-                       @keyup.stop="inputBetMoney($event, item)"/>
+                       @keyup.stop="inputBetMoney(item)" @keydown.stop="inputValidate"/>
               </div>
             </div>
 
@@ -121,7 +121,7 @@
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" @blur="isInputing = false">
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" @keydown="inputValidate" @blur="isInputing = false">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                 :disabled="!canBet || pushing || !sale || pending">
           投注
@@ -222,7 +222,7 @@
         item.betMoney = item.selected ? this.betMoney : null
       },
 
-      inputBetMoney($event, item) {
+      inputBetMoney(item) {
         if (!_.isNumber(item.betMoney) || item.betMoney === 0) {
           item.betMoney = null
         } else {
@@ -236,6 +236,12 @@
         this.betMoney += addMoney
       },
 
+
+      inputValidate($event) {
+        if (!_.validateNumber($event.keyCode)) {
+          $event.preventDefault()
+        }
+      },
 
       inputTotalBetMoney() {
         if (!_.isNumber(this.betMoney) || this.betMoney === 0) {

@@ -56,6 +56,7 @@ function _create(ticketId) {
   // 组三
   factory.addRule([ticketId, '010201'], {
     formType: 'GROUP',
+    formHighlight: ['组三'],
     keyPosition: ['万位', '千位', '百位', null, null],
     analysisProps: {
       type: 'distribution',
@@ -77,6 +78,7 @@ function _create(ticketId) {
   // 组六
   factory.addRule([ticketId, '010202'], {
     formType: 'GROUP',
+    formHighlight: ['组六'],
     keyPosition: ['万位', '千位', '百位', null, null],
     analysisProps: {
       type: 'distribution',

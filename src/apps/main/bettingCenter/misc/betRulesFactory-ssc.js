@@ -71,6 +71,7 @@ function _create(ticketId) {
   // 组选120
   factory.addRule([ticketId, '010201'], {
     formType: 'GROUP',
+    formHighlight: ['组选120'],
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
@@ -92,6 +93,7 @@ function _create(ticketId) {
   // 组选60
   factory.addRule([ticketId, '010202'], {
     formType: 'GROUP',
+    formHighlight: ['组选60'],
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
@@ -112,6 +114,7 @@ function _create(ticketId) {
   // 组选30
   factory.addRule([ticketId, '010203'], {
     formType: 'GROUP',
+    formHighlight: ['组选30'],
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
@@ -132,6 +135,7 @@ function _create(ticketId) {
   // 组选20
   factory.addRule([ticketId, '010204'], {
     formType: 'GROUP',
+    formHighlight: ['组选20'],
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
@@ -152,6 +156,7 @@ function _create(ticketId) {
   // 组选10
   factory.addRule([ticketId, '010205'], {
     formType: 'GROUP',
+    formHighlight: ['组选10'],
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
@@ -172,6 +177,7 @@ function _create(ticketId) {
   // 组选5
   factory.addRule([ticketId, '010206'], {
     formType: 'GROUP',
+    formHighlight: ['组选5'],
     keyPosition: ['万位', '千位', '百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
@@ -264,6 +270,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '020201'], {
     formType: 'GROUP',
     keyPosition: [null, '千位', '百位', '十位', '个位'],
+    formHighlight: ['组选24'],
     analysisProps: {
       type: 'distribution',
       playSeriesId: 20002,
@@ -284,6 +291,7 @@ function _create(ticketId) {
   // 组选12
   factory.addRule([ticketId, '020202'], {
     formType: 'GROUP',
+    formHighlight: ['组选12'],
     keyPosition: [null, '千位', '百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
@@ -304,6 +312,7 @@ function _create(ticketId) {
   // 组选6
   factory.addRule([ticketId, '020203'], {
     formType: 'GROUP',
+    formHighlight: ['组选6'],
     keyPosition: [null, '千位', '百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
@@ -325,6 +334,7 @@ function _create(ticketId) {
   // 组选4
   factory.addRule([ticketId, '020204'], {
     formType: 'GROUP',
+    formHighlight: ['组选4'],
     keyPosition: [null, '千位', '百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
@@ -446,6 +456,7 @@ function _create(ticketId) {
     // 组三
     factory.addRule(rules[4].ids, {
       formType: 'GROUP',
+      formHighlight: ['组三'],
       keyPosition: rules[0].list,
       analysisProps: {
         type: 'distribution',
@@ -466,6 +477,7 @@ function _create(ticketId) {
     // 组六
     factory.addRule(rules[5].ids, {
       formType: 'GROUP',
+      formHighlight: ['组六'],
       keyPosition: rules[0].list,
       analysisProps: {
         type: 'distribution',
@@ -1224,6 +1236,7 @@ function _create(ticketId) {
   // 趣味
   // 后二大小单双
   factory.addRule([ticketId, '670151'], {
+    keyPosition: [null, null, null, '十位', '个位'],
     algorithm: algorithm.mulAll,
     list: factory.createList(['十位', '个位'], {
       items: danshuang,
@@ -1240,6 +1253,7 @@ function _create(ticketId) {
 
   // 后三大小单双
   factory.addRule([ticketId, '670152'], {
+    keyPosition: [null, null, '百位', '十位', '个位'],
     algorithm: algorithm.mulAll,
     list: factory.createList(['百位', '十位', '个位'], {
       items: danshuang,
@@ -1256,6 +1270,7 @@ function _create(ticketId) {
 
   // 前二大小单双
   factory.addRule([ticketId, '670153'], {
+    keyPosition: ['万位', '千位', null, null, null],
     algorithm: algorithm.mulAll,
     list: factory.createList(['万位', '千位'], {
       items: danshuang,
@@ -1271,6 +1286,7 @@ function _create(ticketId) {
   })
   // 前三大小单双
   factory.addRule([ticketId, '670154'], {
+    keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.mulAll,
     list: factory.createList(['万位', '千位', '百位'], {
       items: danshuang,

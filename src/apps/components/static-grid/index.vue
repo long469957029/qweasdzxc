@@ -19,7 +19,7 @@
         <colgroup>
           <col :width="col.width" v-for="col in colModel">
         </colgroup>
-        <transition-group class="two-side-main"
+        <transition-group
                           enter-active-class="animated-quick fadeIn"
                           leave-active-class="animated-quick fadeOut"
                           tag="tbody"

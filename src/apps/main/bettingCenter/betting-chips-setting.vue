@@ -171,7 +171,7 @@
       left: 5px;
       z-index: 10;
       display: none;
-      width: 445px;
+      width: 435px;
       padding: 15px 15px 5px;
       text-align: left;
       white-space: normal;
@@ -188,7 +188,7 @@
         display: block;
         width: 11px;
         height: 11px;
-        border: 1px solid #999;
+        border: 1px solid $new-main-deep-color;
         background: #fff;
         z-index: -1;
         top: -7px;
@@ -210,7 +210,6 @@
       }
       .save-btn {
         padding: 5px 18px;
-        margin-right: 10px;
         vertical-align: top;
       }
     }

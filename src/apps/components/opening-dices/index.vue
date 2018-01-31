@@ -80,6 +80,12 @@
             this.rolling()
           }
         }
+      },
+      '$route': {
+        handler() {
+          this.rollingStatus = R.repeat(false, this.counts)
+          this.init = true
+        }
       }
     },
 
