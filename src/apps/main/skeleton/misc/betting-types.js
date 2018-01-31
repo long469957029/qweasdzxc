@@ -41,6 +41,7 @@ export const SSC = {
   type: 'ssc',
   positions: ['万位', '千位', '百位', '十位', '个位'],
   trend: true,
+  abbreviated: true,
   playSeriesIdList: sccPlaySeriesIdList
 }
 
@@ -52,6 +53,7 @@ export const CHOOSE15 = {
   defaultSelectPlay: '4,0,4',
   type: 'choose15',
   positions: ['第一位', '第二位', '第三位', '第四位', '第五位'],
+  abbreviated: true,
   trend: true,
 }
 
@@ -97,6 +99,7 @@ export const QUICK3 = {
   defaultSelectPlay: '9',
   type: 'quick3',
   positions: ['万位', '千位', '百位'],
+  abbreviated: true,
   trend: true,
 }
 

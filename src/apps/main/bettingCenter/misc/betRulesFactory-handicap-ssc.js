@@ -459,7 +459,7 @@ function _create(ticketId) {
           [
             {
               num: '1003',
-              title: '总和大',
+              title: '总和单',
               showOdds: true,
             },
             {

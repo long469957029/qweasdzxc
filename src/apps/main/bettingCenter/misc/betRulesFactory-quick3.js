@@ -38,6 +38,8 @@ function _create(ticketId) {
   // 和值
 
   factory.addRule([ticketId, '170101'], {
+    formType: 'QUICk_SUM',
+    keyPosition: [true, true, true],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: _.range(3, 19),
@@ -57,6 +59,9 @@ function _create(ticketId) {
   // 三同号通选
 
   factory.addRule([ticketId, '240151'], {
+    formType: 'QUICK',
+    formHighlight: ['三同号'],
+    keyPosition: [true, true, true],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: [{
@@ -78,6 +83,9 @@ function _create(ticketId) {
   // 三同号单选
 
   factory.addRule([ticketId, '250151'], {
+    formType: 'QUICK',
+    formHighlight: ['三同号'],
+    keyPosition: [true, true, true],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: trebleDanxuan,
@@ -97,6 +105,9 @@ function _create(ticketId) {
 
   // 标准
   factory.addRule([ticketId, '190101'], {
+    formType: 'QUICK',
+    formHighlight: ['三不同'],
+    keyPosition: [true, true, true],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -115,6 +126,8 @@ function _create(ticketId) {
 
   // 胆拖
   factory.addRule([ticketId, '190102'], {
+    formType: 'QUICK',
+    keyPosition: [true, true, true],
     algorithm: algorithm.banker,
     algorithmProps: {
       num: 3,
@@ -143,6 +156,9 @@ function _create(ticketId) {
   //= =============================
   // 三连号通选
   factory.addRule([ticketId, '260151'], {
+    formType: 'QUICK',
+    formHighlight: ['三连号'],
+    keyPosition: [true, true, true],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: [{
@@ -171,6 +187,9 @@ function _create(ticketId) {
   // 二同号复选
 
   factory.addRule([ticketId, '270151'], {
+    formType: 'QUICK',
+    formHighlight: ['二同号'],
+    keyPosition: [true, true, true],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: doubleFuxuan,
@@ -186,6 +205,9 @@ function _create(ticketId) {
 
   // 二同号单选
   factory.addRule([ticketId, '280151'], {
+    formType: 'QUICK',
+    formHighlight: ['二同号'],
+    keyPosition: [true, true, true],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 1,
@@ -250,6 +272,9 @@ function _create(ticketId) {
 
   // 标准
   factory.addRule([ticketId, '220101'], {
+    formType: 'QUICK',
+    formHighlight: ['二同号'],
+    keyPosition: [true, true, true],
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -283,6 +308,8 @@ function _create(ticketId) {
   // ==========================
   // 猜就中一个号码
   factory.addRule([ticketId, '230101'], {
+    formType: 'QUICK',
+    keyPosition: [true, true, true],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: six,

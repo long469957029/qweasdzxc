@@ -54,6 +54,7 @@ function addRule(ids, {
   // 注数的算法
   algorithm = _.noop,
   algorithmProps = {},
+  formHighlight,
   analysisProps,
   format,
   splitReg,
@@ -80,6 +81,7 @@ function addRule(ids, {
     playId: Number(`${ids[0]}${ids[1]}`),
     rule: {
       formType,
+      formHighlight,
       keyPosition,
       list,
       optionals,

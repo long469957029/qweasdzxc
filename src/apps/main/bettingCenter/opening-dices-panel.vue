@@ -15,6 +15,7 @@
 
 <script>
   import openingDices from 'com/opening-dices'
+  import {quick3Sum} from 'filters'
 
   export default {
     name: "opening-dices-panel",
@@ -39,11 +40,7 @@
     watch: {
       'openingNum': {
         handler(newVal) {
-          this.totalNum = _.reduce(newVal, (total, num) => {
-            return total + Number(num)
-          }, 0)
-          this.parity = this.totalNum % 2 ? '单' : '双'
-          this.magnitude = this.totalNum > 9 ? '大' : '小'
+          ({totalNum: this.totalNum, parity: this.parity, magnitude: this.magnitude} = quick3Sum(newVal))
         }
       }
     }

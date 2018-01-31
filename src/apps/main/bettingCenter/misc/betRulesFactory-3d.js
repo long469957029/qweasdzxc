@@ -9,6 +9,7 @@ function _create(ticketId) {
   // 直选复式
   factory.addRule([ticketId, '010101'], {
     formType: 'GROUP',
+    keyPosition: ['百位', '十位', '个位'],
     analysisProps: {
       type: 'normal',
       playSeriesId: 20016,
@@ -25,6 +26,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '010102'], {
     type: 'input',
     formType: 'GROUP',
+    keyPosition: ['百位', '十位', '个位'],
     validate: algorithm.getValidateFunc(3),
     create: algorithm.getCreateFunc(3, {
       slice: [2],
@@ -35,7 +37,8 @@ function _create(ticketId) {
 
   // 直选和值
   factory.addRule([ticketId, '010103'], {
-    formType: 'GROUP',
+    formType: 'SUM',
+    keyPosition: ['百位', '十位', '个位'],
     algorithm: algorithm.statistics,
     algorithmProps: {
       selectCount: 3,
@@ -53,6 +56,8 @@ function _create(ticketId) {
   // 组三
   factory.addRule([ticketId, '010201'], {
     formType: 'GROUP',
+    formHighlight: ['组三'],
+    keyPosition: ['百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
       playSeriesId: 20016,
@@ -73,6 +78,8 @@ function _create(ticketId) {
   // 组六
   factory.addRule([ticketId, '010202'], {
     formType: 'GROUP',
+    formHighlight: ['组六'],
+    keyPosition: ['百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
       playSeriesId: 20016,
@@ -92,7 +99,8 @@ function _create(ticketId) {
 
   // 组选和值
   factory.addRule([ticketId, '010203'], {
-    formType: 'GROUP',
+    formType: 'SUM',
+    keyPosition: ['百位', '十位', '个位'],
     algorithm: algorithm.fromConfig,
     algorithmProps: {
       config: [null, 1, 2, 2, 4, 5, 6, 8, 10, 11, 13, 14, 14, 15, 15, 14, 14, 13, 11, 10, 8, 6, 5, 4, 2, 2, 1],
@@ -111,6 +119,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '010204'], {
     type: 'input',
     formType: 'GROUP',
+    keyPosition: ['百位', '十位', '个位'],
     validate: algorithm.getValidateFunc(3, {
       acceptRepeat: 1,
       maxRepeat: 2,
@@ -127,11 +136,11 @@ function _create(ticketId) {
   //= =================================================
   // 二星
 
-  function addTwoRules(rules) {
+  function addTwoRules(rules, {list}) {
     let rule = rules.shift()
     // 直选复式
     factory.addRule(rule.ids, {
-      formType: 'PAIR',
+      keyPosition: list,
       analysisProps: {
         type: 'normal',
         playSeriesId: 20016,
@@ -149,7 +158,7 @@ function _create(ticketId) {
     // 直选单式
     factory.addRule(rule.ids, {
       type: 'input',
-      formType: 'PAIR',
+      keyPosition: list,
       validate: algorithm.getValidateFunc(2),
       create: algorithm.getCreateFunc(2, {
         slice: [1],
@@ -161,7 +170,7 @@ function _create(ticketId) {
     rule = rules.shift()
     // 组选复式
     factory.addRule(rule.ids, {
-      formType: 'PAIR',
+      keyPosition: list,
       analysisProps: {
         type: 'normal',
         playSeriesId: 20016,
@@ -183,7 +192,7 @@ function _create(ticketId) {
     // 组选单式
     factory.addRule(rule.ids, {
       type: 'input',
-      formType: 'PAIR',
+      keyPosition: list,
       validate: algorithm.getValidateFunc(2, {
         acceptRepeat: 0,
         innerSort: true,
@@ -198,32 +207,31 @@ function _create(ticketId) {
   // 前二
 
   addTwoRules([
-    {
-      ids: [ticketId, '020101'],
-      list: ['百位', '十位', null],
-    },
+    {ids: [ticketId, '020101']},
     {ids: [ticketId, '020102']},
     {ids: [ticketId, '020201']},
     {ids: [ticketId, '020202']},
-  ])
+  ], {
+    list: ['百位', '十位', null],
+  })
 
   //= =================================================
   // 后二
 
   addTwoRules([
-    {
-      ids: [ticketId, '020103'],
-      list: [null, '十位', '个位'],
-    },
+    {ids: [ticketId, '020103']},
     {ids: [ticketId, '020104']},
     {ids: [ticketId, '020203']},
     {ids: [ticketId, '020204']},
-  ])
+  ], {
+    list: [null, '十位', '个位'],
+  })
 
   //= =================================================
   // 定位胆
 
   factory.addRule([ticketId, '030101'], {
+    keyPosition: ['百位', '十位', '个位'],
     analysisProps: {
       type: 'normal',
       playSeriesId: 20016,
@@ -241,6 +249,7 @@ function _create(ticketId) {
 
   // 一码不定位
   factory.addRule([ticketId, '040101'], {
+    keyPosition: ['百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
       playSeriesId: 20016,
@@ -257,6 +266,7 @@ function _create(ticketId) {
 
   // 二码不定位
   factory.addRule([ticketId, '040102'], {
+    keyPosition: ['百位', '十位', '个位'],
     analysisProps: {
       type: 'distribution',
       playSeriesId: 20016,

@@ -227,6 +227,7 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '060102'], {
     algorithm: algorithm.addAll,
+    keyPosition: ['冠军', '亚军', '季军', '第四名', '第五名'],
     analysisProps: {
       type: 'normal',
       playSeriesId: 20019,
@@ -243,6 +244,7 @@ function _create(ticketId) {
   })
 
   factory.addRule([ticketId, '060103'], {
+    keyPosition: [null, null, null, null, null, '第六名', '第七名', '第八名', '第九名', '第十名'],
     algorithm: algorithm.addAll,
     analysisProps: {
       type: 'normal',
@@ -263,6 +265,7 @@ function _create(ticketId) {
   // 龙虎
   factory.addRule([ticketId, '160101'], {
     formType: 'DRAGON',
+    keyPosition: ['冠军', null, null, null, null, null, null, null, null, '第十名'],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: longhu,
@@ -282,6 +285,7 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '160102'], {
     formType: 'DRAGON',
+    keyPosition: [null, '亚军', null, null, null, null, null, null, '第九名', null],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: longhu,
@@ -302,6 +306,7 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '160103'], {
     formType: 'DRAGON',
+    keyPosition: [null, null, '季军', null, null, null, null, '第八名', null, null],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: longhu,
@@ -322,6 +327,7 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '160104'], {
     formType: 'DRAGON',
+    keyPosition: [null, null, null, '第四名', null, null, '第七名', null, null, null],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: longhu,
@@ -342,6 +348,7 @@ function _create(ticketId) {
 
   factory.addRule([ticketId, '160105'], {
     formType: 'DRAGON',
+    keyPosition: [null, null, null, null, '第五名', '第六名', null, null, null, null],
     algorithm: algorithm.addAll,
     list: factory.createList([''], {
       items: longhu,
