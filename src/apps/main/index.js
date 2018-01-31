@@ -122,7 +122,8 @@ Global.m.oauth.check()
           'logoutDialogStatus',
           'resetPassWordDialogStatus',
           'loginLauncherStatus',
-          'freeTrialStatus'
+          'freeTrialStatus',
+          'getLoginStatus'
         ]),
       },
     })

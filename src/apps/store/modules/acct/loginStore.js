@@ -104,6 +104,8 @@ const mutations = {
     window.Global.m.news.start()
 
     Object.assign(state, data)
+
+    Global.m.oauth.check()
   },
 
   // 用户oauth确认成功

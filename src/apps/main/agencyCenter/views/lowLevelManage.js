@@ -159,15 +159,16 @@ const LowLevelManageView = SearchGrid.extend({
       cell.push(`<button class="btn btn-link btn-im js-toolbar-im-dialog" data-id="${rowInfo.userId}">站内信</button>`)
       if (!acctInfo.merchant) {
         cell.push(`<a class="btn btn-link js-ac-point-up" data-userid="${rowInfo.userId}" data-username="${rowInfo.userName}">升点</a>`)
+        cell.push('<a href="javascript:void(0);"  class="js-ac-llm-cp btn btn-link ">转账</a>')
+        cell.push(`<div class="llm-operator-sub"><a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
+        cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a></div>`)
+      }else{
+        cell.push(`<a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
+        cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a>`)
       }
-      cell.push('<a href="javascript:void(0);"  class="js-ac-llm-cp btn btn-link ">转账</a>')
     }
 
-    cell.push(`<div class="llm-operator-sub"><a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
-    // cell.push(`<a href="${_.addHrefArgs(`#ac/track/${rowInfo.userId}`, 'name', rowInfo.userName)}" class="router btn btn-link">追号</a>`)
-    cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a></div>`)
-
-    if (cell.length > 2) {
+    if (cell.length > 3) {
       html.push('<div class="relative">')
       html = html.concat(cell.splice(0, 3))
       html.push('<i class="js-ac-expend-btn ac-expend-btn fa fa-angle-up fa-rotate-180 fa-2x"></i>')
@@ -176,7 +177,7 @@ const LowLevelManageView = SearchGrid.extend({
       html = html.concat(cell.splice(cell.length - 2, cell.length))
       html.push('</div></div>')
     } else {
-      html.push(cell)
+      html = [...cell]
     }
 
 

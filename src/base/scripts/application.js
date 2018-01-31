@@ -120,7 +120,7 @@ Base.Application = Base.BaseObject.extend({
       this[`${optionCacheType}Cache`] = new Base.Storage({
         name: 'appstorage',
         type: optionCacheType,
-        domain: window.location.host.indexOf('localhost') > -1 ? '' : `.${_.last(window.location.host.split('.'), 2).join('.')}`
+        domain: window.location.hostname.indexOf('localhost') > -1 ? '' : `.${_.last(window.location.hostname.split('.'), 2).join('.')}`
       })
     }
   },

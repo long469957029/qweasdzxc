@@ -47,6 +47,11 @@ const SidemenuModule = Base.Module.extend({
       .value()).findWhere({
       id: 409, // 返点
     }).auth = acctInfo.merchant// t
+
+    _(_(this.get('ac').sub).chain().pluck('list').flatten()
+      .value()).findWhere({
+      id: 500, // 招商下级转账
+    }).auth = !acctInfo.merchant
   },
 
   getAll() {
