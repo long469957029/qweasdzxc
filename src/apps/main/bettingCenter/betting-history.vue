@@ -680,7 +680,7 @@
   }
   .his-draw {
     position: relative;
-    overflow: hidden;
+    /*overflow: hidden;*/
   }
 
   .text-center.his-both-top.font-sm {
