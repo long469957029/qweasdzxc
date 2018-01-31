@@ -99,7 +99,7 @@
                     </div>
                     <div class="width-reg text-center m-top-md">
                     <span class="text-auxiliary">已有账号?<a class="text-inverse m-left-xs"
-                                                         href="/login.html">请登录</a></span>
+                                                         href="/index.html">请登录</a></span>
                     </div>
                   </form>
                 </div>
@@ -572,9 +572,8 @@
         registerApi({userName: this.userName, loginPwd: this.passWord, linkId: this.linkId},
           ({data}) => {
             if (data && data.result === 0) {
-              const acctInfo = data.root
-              Global.cookieCache.set('token', data.root.token, 160)
-              Global.cookieCache.set('loginState', true)
+              window.Global.cookieCache.set('token', data.root.token, 150)
+              window.Global.cookieCache.set('loginState', true)
               setTimeout(() => {
                 window.location.href = 'index.html'
               }, 2000)

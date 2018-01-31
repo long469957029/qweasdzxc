@@ -157,6 +157,7 @@ const menuConfig = [
             id: 500,
             router: '/ac/tr',
             name: '转账下级',
+            needAuth: true,
             quickShowName: '转账<br/>下级',
           },
         ],
