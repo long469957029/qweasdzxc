@@ -85,6 +85,17 @@ const BettingRecordsView = SearchGrid.extend({
     }).join(''))
 
     SearchGrid.prototype.onRender.apply(this, arguments)
+    // 监听click事件
+    window.addEventListener('click', (e) => {
+      const $target = $(e.target)
+      if (!$target.hasClass('popover')
+        && $target.parent('.popover-content').length === 0
+        && $target.parent('.myPopover').length === 0
+        && $target.parent('.popover-title').length === 0
+        && $target.parent('.popover').length === 0 && $target.data("id") !== "folder") {
+        this.$('#popover').addClass('hide');
+      }
+    }, false)
   },
 
   renderGrid(gridData) {
@@ -156,7 +167,7 @@ const BettingRecordsView = SearchGrid.extend({
     row.push(rowInfo.ticketResult)
     // 投注内容
     if ((rowInfo.betNum).length >= 16) {
-      row.push('<a class="js-uc-betDetail-betNum btn-link btn-link-cool">详细号码</a>')
+      row.push('<a class="js-uc-betDetail-betNum btn-link btn-link-cool" data-id="folder">详细号码</a>')
     } else {
       row.push(rowInfo.betNum)
     }

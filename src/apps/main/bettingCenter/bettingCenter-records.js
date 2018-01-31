@@ -205,7 +205,7 @@ const BettingRecordsView = Base.ItemView.extend({
               } else if (val === 2) {
                 html = '已完成'
               } else {
-                html = '已中止'
+                html = '已终止'
               }
               return html
             },

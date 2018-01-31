@@ -131,12 +131,12 @@ const MoneyDetailView = SearchGrid.extend({
     // row.push(tradingStatusConfig.toZh(info.tradeType));
     row.push(info.tradeType)
     if (info.amount >= 0) {
-      row.push(`<span class="text-bold-prominent">+${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-bold-prominent">${_(info.amount).convert2yuan()}</span>`)
     } else {
       row.push(`<span class="">${_(info.amount).convert2yuan()}</span>`)
     }
 
-    row.push(`<span class="text-bold-cool">+${_(info.balance).convert2yuan()}</span>`)
+    row.push(`<span class="text-bold-cool">${_(info.balance).convert2yuan()}</span>`)
     let remark = info.remark
 
     if (remark.replace(/[\u4e00-\u9fa5]/g, '**').length > 16) {

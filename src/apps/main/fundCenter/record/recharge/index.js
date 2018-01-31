@@ -120,7 +120,7 @@ const RechargeView = SearchGrid.extend({
       statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-line"></span></span></div>')
     } else {
       statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">待支付</span><span class="fc-rc-status-line">-</span></span>')
-      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">未通过</span><span class="fc-rc-status-line-unPass">-</span></span>')
+      statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">未到账</span><span class="fc-rc-status-line-unPass">-</span></span>')
       statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-img"></span></span></div>')
     }
     row.push(statusList.join(''))

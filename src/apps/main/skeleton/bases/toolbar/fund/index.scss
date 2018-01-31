@@ -128,6 +128,7 @@
     height: 50px;
     line-height: 50px;
     .record-title, .operation-record-link {
+
       cursor: pointer;
       @include float-item(14px, $new-inverse-color, 50%, 35px, 20px);
     }
@@ -140,6 +141,7 @@
     }
 
     .operation-record-link {
+      margin-left: -10px;
       margin-bottom: 0 !important;
       height: 48px !important;
       line-height: 48px !important;
@@ -166,6 +168,7 @@
     }
 
     .record-date {
+      margin-left: -10px;
       text-align: right;
     }
 
@@ -174,7 +177,7 @@
     }
 
     .record-amount, .record-progress {
-      @include float-item(14px, $prominent-color, 37%, 35px, 0px);
+      @include float-item(14px, $prominent-color, 33%, 35px, 0px);
     }
 
     .record-amount {
@@ -183,7 +186,7 @@
 
     .record-progress {
       text-align: right;
-      width: 59%;
+      width: 63%;
       margin-left: 10px;
       .progress {
         float: left;
@@ -279,20 +282,20 @@
       }
     }
   }
-  .operation-record-empty{
+  .operation-record-empty {
     text-align: center;
-    .items-empty-img{
+    .items-empty-img {
       width: 99px;
       margin-top: 130px;
       height: 99px;
       display: inline-block;
       background: url("~base/images/v2/icon-record-empty.png");
     }
-    .items-empty-text{
-        font-size: 14px;
-        color: #999999;
-        margin-left: 5px;
-        margin-top: 5px;
+    .items-empty-text {
+      font-size: 14px;
+      color: #999999;
+      margin-left: 5px;
+      margin-top: 5px;
     }
   }
 }

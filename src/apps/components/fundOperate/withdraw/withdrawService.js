@@ -98,10 +98,10 @@ module.exports = {
     const pwdTips = '设置资金密码'
     const cardTips = '绑定提现银行卡'
     let tips = ''
-    if (status === 2) {
+    if (status === 3) {
       tips = pwdTips
     }
-    if (status === 1) {
+    if (status === 2) {
       tips = cardTips
     }
     if (status === 0) {
@@ -110,11 +110,10 @@ module.exports = {
     const html = []
     html.push('<div class=" fc-wd-set-view"><div class="fc-wd-set-img sfa sfa-icon-recharge-warning"></div>')
     html.push(`<div class="fc-wd-set-tips">为了您的资金安全，首次提现前请先<span class="jc-wd-set-tips-text wd-set-tips-text">${tips}</span></div><div class="fc-wd-set-goTo">`)
-    if (status === 3) {
-      this.$('.js-wd-goTo-fundPwd').addClass('hidden')
+    if (status === 3 || status === 0) {
       html.push('<button class="js-wd-goTo-fundPwd btn btn-wd-submit">去设置</button></div></div>')
     } else if (status === 2) {
-      html.push('<button class="js-wd-goTo-bankCard btn btn-wd-submit">去设置</button></div></div>')
+      html.push('<button class="js-wd-goTo-bankCard btn btn-wd-submit">去绑定</button></div></div>')
     }
     return html.join('')
 

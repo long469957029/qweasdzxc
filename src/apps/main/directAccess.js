@@ -30,21 +30,24 @@ const permissionsList = [
     mame: 'notice',
     needLogin: true,
   },
-  {
-    path: '/rc',
-    mame: 'realGame',
-    needLogin: true,
-  },
-  {
-    path: '/sc',
-    mame: 'slot',
-    needLogin: true,
-  },
-  {
-    path: '/fh',
-    mame: 'fish',
-    needLogin: true,
-  },
+  // 真人
+  // {
+  //   path: '/rc',
+  //   mame: 'realGame',
+  //   needLogin: true,
+  // },
+  // 老虎机
+  // {
+  //   path: '/sc',
+  //   mame: 'slot',
+  //   needLogin: true,
+  // },
+  // 捕鱼
+  // {
+  //   path: '/fh',
+  //   mame: 'fish',
+  //   needLogin: true,
+  // },
 ]
 
 module.exports = {

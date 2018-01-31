@@ -162,6 +162,7 @@
       getUserSecurityInfo(){
         fundApi.userSecurityInfo(({data}) => {
           if (data.result === 0) {
+            // 判断是否绑定银行卡，0：银行卡与密码都未绑定，1：银行卡与密码都已绑定，2：只绑定资金密码，3：只绑定银行卡
             let status = 0
             if (data.root.hasBankCard && data.root.hasMoneyPwd) {
               status = 1

@@ -203,7 +203,7 @@ const ReportManageView = SearchGrid.extend({
     row.push(_(rowInfo.ggFish).convert2yuan({fixed: 2, clear: false}))
     // row.push(_(rowInfo.s188).convert2yuan({fixed:2, clear: false}));
     if (rowInfo.profit > 0) {
-      row.push('+' + _(rowInfo.profit).convert2yuan({fixed: 2, clear: false}))
+      row.push(_(rowInfo.profit).convert2yuan({fixed: 2, clear: false}))
     } else {
       row.push(_(rowInfo.profit).convert2yuan({fixed: 2, clear: false}))
     }

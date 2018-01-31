@@ -72,7 +72,7 @@ const BetDetailView = Base.ItemView.extend({
         this.$('.jc-cd-chase-status').html('已完成')
         break
       case 3:
-        this.$('.jc-cd-chase-status').html('已中止')
+        this.$('.jc-cd-chase-status').html('已终止')
         break
       default:
         break
@@ -97,7 +97,9 @@ const BetDetailView = Base.ItemView.extend({
     } else if (info.chaseTicketPlayDetail[0].moneyMethod === 10) {
       betMethod = 0.002
     }
-    this.$('.js-cd-content-bet').html(`${_(playData.singleMoney).formatDiv(10000)}元（${betMethod}*${playData.betMethod}倍*${playData.betNum}注）`)
+    // this.$('.js-cd-content-bet').html(`${_(playData.singleMoney).formatDiv(10000)}元（${betMethod}*${playData.betMethod}倍*${playData.betNum}注）`)
+    this.$('.js-cd-content-bet').html(`${_(playData.singleMoney).formatDiv(10000)}元`)
+
     this.$('.js-cd-content-num').html(playData.betNums)
     this.$('.js-cd-ticketBetId').val(info.chaseFormId)
   },
