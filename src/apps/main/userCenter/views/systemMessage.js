@@ -74,16 +74,19 @@ const SystemMessageView = Base.ItemView.extend({
   formateNoticeList(data) {
     if (data) {
       const list = _(data).map((item) => {
-        return `<div class="system-message-list js-system-message-list clearfix accordion-group">
-                  <div class="pull-left m-top-md m-left-md">
-                    <div class="message-title js-message-title-${item.noticeId} ${item.new ? 'new' : ''} ${Number(item.isRead) === 0 ? 'unRead' : ''} font-sm">${item.title}</div>
-                    <div class="message-sub-title text-auxiliary">${item.desc}</div>
-                  </div>
-                  <div class="pull-right m-right-md p-top-md">
-                    <div class="message-date text-auxiliary font-sm inline-block m-right-md vertical-middle">[${_(item.time).toTime()}]</div>
-                    <a class="message-btn vertical-middle js-message-btn" data-noticeid="${item.noticeId}" data-read="${item.isRead}" data-toggle="collapse"
-             data-target="#message-info-${item.noticeId}" data-parent="#accordion1"></a>
-                  </div>
+        return `<div class="system-message-list js-system-message-list accordion-group">
+                  <div class="message-top cursor-pointer clearfix" data-toggle="collapse"
+               data-target="#message-info-${item.noticeId}" data-parent="#accordion1">
+                    <div class="pull-left m-top-md m-left-md">
+                      <div class="message-title js-message-title-${item.noticeId} ${item.new ? 'new' : ''} ${Number(item.isRead) === 0 ? 'unRead' : ''} font-sm">${item.title}</div>
+                      <div class="message-sub-title text-auxiliary">${item.desc}</div>
+                    </div>
+                    <div class="pull-right m-right-md p-top-md">
+                      <div class="message-date text-auxiliary font-sm inline-block m-right-md vertical-middle">[${_(item.time).toTime()}]</div>
+                      <a class="message-btn vertical-middle js-message-btn" data-noticeid="${item.noticeId}" data-read="${item.isRead}" data-toggle="collapse"
+               data-target="#message-info-${item.noticeId}" data-parent="#accordion1"></a>
+                    </div>
+                  </div>                  
                   <div class="message-info clearfix js-message-info js-message-info-${item.noticeId} collapse" id="message-info-${item.noticeId}">
                     <div class="m-TB-md">${item.content}</div>
                   </div>
