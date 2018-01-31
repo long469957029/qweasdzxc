@@ -46,4 +46,12 @@ export default {
       .then(then)
       .catch(fail)
   },
+  // 重置用户初始密码
+  freeTrialLogin(then, fail) {
+    return $http({
+      url: 'acct/userinfo/setloginpwd.json',
+    })
+      .then(then)
+      .catch(fail)
+  },
 }

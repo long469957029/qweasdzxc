@@ -57,6 +57,21 @@
       closeDialog(){
         $(this.$refs.freeTrailModal).modal('hide')
       },
+      getUserSecurityInfo(){
+        fundApi.userSecurityInfo(({data}) => {
+          if (data.result === 0) {
+            let status = 0
+            if (data.root.hasBankCard && data.root.hasMoneyPwd) {
+              status = 1
+            } else if (!data.root.hasBankCard && data.root.hasMoneyPwd) {
+              status = 2
+            } else if (data.root.hasBankCard && !data.root.hasMoneyPwd) {
+              status = 3
+            }
+            window.Global.cookieCache.set('security', status)
+          }
+        })
+      },
     },
     mounted(){
       this.$nextTick(() => {

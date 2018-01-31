@@ -147,7 +147,7 @@ const TrackRecordsView = SearchGrid.extend({
         rowInfo.formatChaseStatus = '已完成'
         break
       case 3:
-        rowInfo.formatChaseStatus = '已中止'
+        rowInfo.formatChaseStatus = '已终止'
         break
       default:
         break

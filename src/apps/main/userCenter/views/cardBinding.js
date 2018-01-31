@@ -230,6 +230,16 @@ define((require, exports, module) => {
               setTimeout(() => {
                 self.trigger('bind:success')
               }, 1500)
+              // 判断是否绑定银行卡，0：银行卡与密码都未绑定，1：银行卡与密码都已绑定，2：只绑定资金密码，3：只绑定银行卡
+              const preStatus = window.Global.cookieCache.get('security')
+              let status = 0
+              if (preStatus === 0) {
+                status = 3
+                window.Global.cookieCache.set('security', status)
+              } else if (preStatus === 2) {
+                status = 1
+                window.Global.cookieCache.set('security', status)
+              }
             } else {
               Global.ui.notification.show(`绑定失败，${res.msg}`)
             }
