@@ -63,9 +63,13 @@ const BettingRecordsView = Base.ItemView.extend({
             width: '12%',
             formatter(val) {
               let betNum = val
+              let tryCompact = betNum.split(' ')
+              if (tryCompact[0].length === 1) {
+                betNum = tryCompact.join('')
+              }
               if (val.length > 20) {
-                betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link" data-num="${betNum}">${
-                  val.slice(0, 20)}...</a>`
+                betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link" data-num="${val}">${
+                  betNum.slice(0, 20)}...</a>`
               }
               return betNum
             },
@@ -201,7 +205,7 @@ const BettingRecordsView = Base.ItemView.extend({
               } else if (val === 2) {
                 html = '已完成'
               } else {
-                html = '已中止'
+                html = '已终止'
               }
               return html
             },

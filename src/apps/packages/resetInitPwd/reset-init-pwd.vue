@@ -129,7 +129,7 @@
           userToken: this.userToken,
         }, ({data}) => {
           if (data.result === 0) {
-            window.Global.cookieCache.set('token', this.userToken, 90)
+            window.Global.cookieCache.set('token', this.userToken, 160)
             window.Global.cookieCache.set('loginState', true)
             window.history.back(-1)
           } else {

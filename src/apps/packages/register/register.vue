@@ -572,7 +572,7 @@
         registerApi({userName: this.userName, loginPwd: this.passWord, linkId: this.linkId},
           ({data}) => {
             if (data && data.result === 0) {
-              window.Global.cookieCache.set('token', data.root.token, 90)
+              window.Global.cookieCache.set('token', data.root.token, 150)
               window.Global.cookieCache.set('loginState', true)
               setTimeout(() => {
                 window.location.href = 'index.html'

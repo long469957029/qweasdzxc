@@ -133,7 +133,7 @@
         if (!_.isEmpty(repeat.repeatNumbers)) {
           html.push(`<p class="word-break">以下号码重复，已进行自动过滤<br />${repeat.repeatNumbers.join(',')}</p>`)
         }
-        if (!_.isEmpty(validate.errorNumbers)) {
+        if (!_.isEmpty(_.compact(validate.errorNumbers))) {
           html.push(`<p class="word-break">以下号码错误，已进行自动过滤<br />${validate.errorNumbers.join(',')}</p>`)
         }
         html.push('</div>')

@@ -129,9 +129,10 @@ const LowLevelManageView = SearchGrid.extend({
     const row = []
     const textClass = rowInfo.userId === this.acctInfo.userId ? 'text-bold-pleasant' : ''
     const freeze = (rowInfo.userStatus === 100 || rowInfo.userStatus === 101) ? '<span class="sfa sfa-freeze vertical-middle"></span>' : ''
+    const online = rowInfo.online ? '<span class="text-circle-online inline-block"></span>' : ''
     if (rowInfo.userSubAcctNum) {
       row.push(`${freeze}<a class="js-pf-sub btn-link ${textClass}" data-label="${rowInfo.userName}" data-user-parent-id="${rowInfo.userId}" href="javascript:void(0)">${
-        rowInfo.userName}(${rowInfo.userSubAcctNum})</a> `)
+        rowInfo.userName}(${rowInfo.userSubAcctNum})</a>${online} `)
     } else {
       row.push(`${freeze}<span class="${textClass}">${rowInfo.userName}</span>`)
     }
@@ -162,7 +163,7 @@ const LowLevelManageView = SearchGrid.extend({
         cell.push('<a href="javascript:void(0);"  class="js-ac-llm-cp btn btn-link ">转账</a>')
         cell.push(`<div class="llm-operator-sub"><a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
         cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a></div>`)
-      }else{
+      } else {
         cell.push(`<a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
         cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a>`)
       }

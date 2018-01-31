@@ -324,4 +324,19 @@ _.mixin({
     return gameConfig.getGameTypeList()
   },
 
+
+  /**
+   * 键盘验证
+   */
+  validateNumber(keyCode) {
+    // 数字
+    if (keyCode >= 48 && keyCode <= 57 ) return true
+    // 小数字键盘
+    if (keyCode >= 96 && keyCode <= 105) return true
+    // Backspace, del, 左右方向键
+    if (keyCode === 8 || keyCode === 46 || keyCode === 37 || keyCode === 39) return true
+
+    return false
+  }
+
 })

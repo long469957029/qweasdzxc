@@ -92,7 +92,7 @@ const mutations = {
 
     state[type] = _.map(data, (id, index) => {
       const ticket = ticketConfig.getById(id)
-      Vue.set(ticket, 'active', index === 0)
+      Vue.set(ticket, 'active', false)
       return ticket
     })
   },

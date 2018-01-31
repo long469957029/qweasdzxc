@@ -67,7 +67,7 @@ const FundView = Base.ItemView.extend({
       const createDate = _(record.date).toTime()
       const recordAmount = _(record.amount).formatDiv(10000, {fixed: 2})
       if (record.type === 1) {
-        html.push('<div class="js-sideBar-record-item operation-record-item" data-id="${record.ticketTradeNo}>')
+        html.push('<div class="js-sideBar-record-item operation-record-item">')
         html.push('<div class="record-action">充值</div>')
         html.push(`<div class="record-date">${createDate}</div>`)
         html.push('<div class="clearfix"></div>')
@@ -91,10 +91,10 @@ const FundView = Base.ItemView.extend({
         } else {
           html.push('<div class="inline-block fc-rc-status-container">' +
             '<span class="fc-rc-status active"><span class="fc-rc-status-button">待支付</span><span class="fc-rc-status-line">-</span></span>')
-          html.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">未通过</span><span class="fc-rc-status-line-unPass">-</span></span>')
+          html.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">未到账</span><span class="fc-rc-status-line-unPass">-</span></span>')
           html.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-img"></span></span></div>')
         }
-        html.push('</div><div class="clearfix"></div></div>')
+        html.push('</div><div class="clearfix"></div></div></div>')
         itemHtml.push(html.join(''))
       } else if (record.type === 2) {
         html.push('<div class="js-sideBar-record-item operation-record-item">')

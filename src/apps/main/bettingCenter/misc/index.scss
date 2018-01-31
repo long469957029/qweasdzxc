@@ -211,24 +211,21 @@
   padding-bottom: 5px;
   margin-bottom: 5px;
 }
-.his-top {
-  width: 185px;
-  position: relative;
-  margin: 0 auto;
-  padding: 10px 0;
-}
 
 .betting-history {
   .table {
     background-color: transparent;
   }
 
-  .table th, .table td {
+  .table th {
+    padding: 5px 0;
+  }
+  .table td {
     padding: 10px 0;
     background-color: transparent;
   }
   .open-nums {
-    max-width: 150px;
+    //max-width: 150px;
     span {
       width: 20px;
       height: 20px;
@@ -236,9 +233,9 @@
       border-radius: 50%;
       text-align: center;
       line-height: 20px;
-      float: left;
       margin-left: 4px;
       margin-bottom: 2px;
+      display: inline-block;
     }
     .key-num {
       border-color: $new-main-deep-color;

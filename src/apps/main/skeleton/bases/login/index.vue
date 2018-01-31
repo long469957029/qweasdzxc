@@ -132,7 +132,7 @@
             if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
               this.autoLogoutCountdown(acctInfo.outTime)
             }
-            window.Global.cookieCache.set('token', acctInfo.token, 90)
+            window.Global.cookieCache.set('token', acctInfo.token, 160)
             window.Global.cookieCache.set('loginState', true)
             const status = Number(data.root.userStatus)
             if (status === 0 || status === 100 || status === 102) {
@@ -162,7 +162,7 @@
             this.codeError = true
             this.showErrorMsg = true
             this.codeSuccess = false
-            this.errorMsg = '请输入验证码！'
+            this.errorMsg = '验证码错误,请重新输入'
             this.refreshValCode()
           } else {
             this.showErrorMsg = true
@@ -227,7 +227,7 @@
           this.codeError = true
           this.showErrorMsg = true
           this.pwdSuccess = false
-          this.errorMsg = '验证码输入错误！'
+          this.errorMsg = '验证码错误,请重新输入'
           return false
         } else {
           loginApi.valCodeXhr({
@@ -243,12 +243,12 @@
                   this.codeError = true
                   this.showErrorMsg = true
                   this.codeSuccess = false
-                  this.errorMsg = '请输入验证码！'
+                  this.errorMsg = '验证码错误,请重新输入'
                 } else {
                   this.codeError = true
                   this.showErrorMsg = true
                   this.codeSuccess = false
-                  this.errorMsg = '验证码输入有误！'
+                  this.errorMsg = '验证码错误,请重新输入'
                 }
                 this.refreshValCode()
               }

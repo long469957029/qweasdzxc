@@ -367,6 +367,7 @@ const handicapMark6Config = [
     mark: 'mark6',
     zhName: '香港六合彩',
     badge: 'new',
+    isOfficial: true,
   }, bettingTypes.MARK6),
 ]
 
@@ -377,12 +378,15 @@ const handicapSscConfig = [
     zhName: '重庆时时彩',
     badge: 'new',
     roadBalls: true,
+    twoSide: true,
+    isOfficial: true,
   }, bettingTypes.SSC),
   Object.assign({
     id: 10,
     mark: 'ssc',
     zhName: '无限分分彩',
     badge: 'new',
+    twoSide: true,
     roadBalls: true,
   }, bettingTypes.SSC),
 ]
@@ -394,6 +398,8 @@ const handicapPk10Config = [
     zhName: '北京PK10',
     badge: 'new',
     roadBalls: true,
+    twoSide: true,
+    isOfficial: true,
   }, bettingTypes.PK10),
 ]
 
@@ -421,35 +427,6 @@ const allHandicapConfig = [
 ]
 
 const completeAllConfig = [sscConfig, oneFiveConfig, lowConfig, happyConfig]
-
-// //--begin 彩种导航特殊配置
-// var hotTicketIdList = [19,32,10,1,21];
-// var sscCopy = _(sscConfig).deepCopy();
-// var lowCopy = _(lowConfig).deepCopy();
-
-// var newSSCCopy = [];
-// var newLowCopy = [];
-
-
-// _(sscCopy.list).each(function(item){
-//   if(item && !_(hotTicketIdList).contains(item.id)){
-//     newSSCCopy.push(item);
-//   }
-
-// });
-
-// _(lowCopy.list).each(function(item){
-//   if(item && !_(hotTicketIdList).contains(item.id)){
-//     newLowCopy.push(item);
-//   }
-
-// });
-
-// sscCopy.list = newSSCCopy;
-// lowCopy.list = newLowCopy;
-
-// var newCompleteAllConfig = [ sscCopy, oneFiveConfig, lowCopy, happyConfig];
-// --end
 
 /** @typedef {Object} ticketConfig */
 export default {
