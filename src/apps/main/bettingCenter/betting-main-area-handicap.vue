@@ -16,7 +16,9 @@
         <!-- 路珠 -->
         <road-balls-analysis :ticket-info="ticketInfo" v-if="ticketInfo.roadBalls"></road-balls-analysis>
       </div>
-      <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" ref="bettingHisotry"></betting-history>
+      <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule"
+                       :last-open-id="bettingInfo.lastOpenId"
+                       ref="bettingHisotry"></betting-history>
     </div>
 
     <!-- 确认投注 -->

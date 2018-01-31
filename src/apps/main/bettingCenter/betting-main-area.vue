@@ -215,7 +215,7 @@
           ],
           height: 145,
           showEmpty: true,
-          emptyTip: '<div class="sfa sfa-empty vertical-middle"></div> 暂未添加选号',
+          emptyTip: '<div class="sfa sfa-bc-empty vertical-middle"></div> 暂未添加选号',
         },
         fPreviewList: [],
 

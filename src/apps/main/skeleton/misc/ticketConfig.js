@@ -386,6 +386,7 @@ const handicapSscConfig = [
     mark: 'ssc',
     zhName: '无限分分彩',
     badge: 'new',
+    twoSide: true,
     roadBalls: true,
   }, bettingTypes.SSC),
 ]
@@ -426,35 +427,6 @@ const allHandicapConfig = [
 ]
 
 const completeAllConfig = [sscConfig, oneFiveConfig, lowConfig, happyConfig]
-
-// //--begin 彩种导航特殊配置
-// var hotTicketIdList = [19,32,10,1,21];
-// var sscCopy = _(sscConfig).deepCopy();
-// var lowCopy = _(lowConfig).deepCopy();
-
-// var newSSCCopy = [];
-// var newLowCopy = [];
-
-
-// _(sscCopy.list).each(function(item){
-//   if(item && !_(hotTicketIdList).contains(item.id)){
-//     newSSCCopy.push(item);
-//   }
-
-// });
-
-// _(lowCopy.list).each(function(item){
-//   if(item && !_(hotTicketIdList).contains(item.id)){
-//     newLowCopy.push(item);
-//   }
-
-// });
-
-// sscCopy.list = newSSCCopy;
-// lowCopy.list = newLowCopy;
-
-// var newCompleteAllConfig = [ sscCopy, oneFiveConfig, lowCopy, happyConfig];
-// --end
 
 /** @typedef {Object} ticketConfig */
 export default {

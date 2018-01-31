@@ -19,9 +19,13 @@
         <colgroup>
           <col :width="col.width" v-for="col in colModel">
         </colgroup>
-        <tbody>
-        <tr v-for="row in showRows" v-html="row" ref="bodyRows"></tr>
-        </tbody>
+        <transition-group class="two-side-main"
+                          enter-active-class="animated-quick fadeIn"
+                          leave-active-class="animated-quick fadeOut"
+                          tag="tbody"
+        >
+          <tr v-for="(row, i) in showRows" :key="i" v-html="row" ref="bodyRows"></tr>
+        </transition-group>
 
       </table>
 
@@ -262,7 +266,7 @@
       },
 
       clean() {
-        this.showRows = []
+        this.innerRows = []
       },
 
       addFooterRows(rows, options) {

@@ -1,12 +1,11 @@
 <template>
-  <div class="betting-history">
+  <div class="betting-history" v-if="!ticketInfo.twoSide">
     <div class="his-main">
       <div class="his-top">
         <span class="sfa sfa-double-ball vertical-middle"></span>
         <span class="font-md text-default vertical-middle">{{title}}</span>
-        <span class="cursor-pointer" @click="togglePanel">></span>
       </div>
-      <div class="his-draw" ref="history" :style="ticketInfo.twoSide ? 'height:0' : ''">
+      <div class="his-draw" ref="history">
         <div ref="historyInner">
           <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height"
                        :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
@@ -20,21 +19,46 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="betting-history" v-else>
     <div class="his-main">
       <div class="his-top">
         <span class="sfa sfa-double-ball vertical-middle"></span>
-        <span class="font-md text-default vertical-middle">两面长龙排行</span>
-        <span class="cursor-pointer" @click="togglePanel">></span>
+        <span class="font-md text-default vertical-middle">{{title}}</span>
+        <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" :class="{up: currentPanel !== 'twoSide'}" @click="togglePanel"></span>
       </div>
-      <div class="his-draw two-side" ref="twoSide">
-        <div class="two-side-inner" ref="twoSideInner">
-          <div class="two-side-title">统计至第2017-1010-047期</div>
-          <div class="two-side-main">
-            <div class="two-side-cell" v-for="item in twoSideList">
-              <div class="cell-left">{{item.type | twoSideType(ticketInfo.type)}}------{{item.result}}</div>
-              <div class="cell-right">{{item.count}}期</div>
-            </div>
+      <div class="his-draw" ref="history" :style="currentPanel === 'twoSide' ? 'height:0' : ''">
+        <div ref="historyInner">
+          <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height"
+                       :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
+                       :emptyTip="gridOps.emptyTip"
+                       ref="historyGrid"></static-grid>
+          <div class="text-center p-top-smd p-LR-xs border-top">
+            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}" target="_blank">
+              更多历史开奖
+            </router-link>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="his-main" v-if="ticketInfo.twoSide">
+      <div class="his-top">
+        <span class="sfa sfa-double-ball vertical-middle"></span>
+        <span class="font-md text-default vertical-middle">两面长龙排行</span>
+      </div>
+      <div class="his-draw two-side" ref="twoSide" :style="currentPanel === 'twoSide' ? '' : 'height:0'">
+        <div class="two-side-inner" ref="twoSideInner">
+          <div class="two-side-title">统计至第{{lastOpenId}}期</div>
+            <transition-group class="two-side-main"
+              enter-active-class="animated-quick fadeIn"
+              leave-active-class="animated-quick fadeOut"
+              tag="div"
+            >
+              <div class="two-side-cell" v-for="(item, i) in twoSideList" :key="i">
+                <div class="cell-left">{{item.type | twoSideType(ticketInfo.type)}}------{{item.result}}</div>
+                <div class="cell-right">{{item.count}}期</div>
+              </div>
+            </transition-group>
         </div>
       </div>
     </div>
@@ -200,6 +224,9 @@
         type: Object,
         required: true
       },
+      lastOpenId: {
+        type: String,
+      },
       height: {
         type: Number,
         default: 700,
@@ -210,7 +237,7 @@
       return {
         tableClass: 'table table-center table-default',
         gridOps: {},
-        currentPanel: 'record',
+        currentPanel: this.ticketInfo.twoSide ? 'twoSide' : 'record',
         twoSideList: []
       }
     },
@@ -220,6 +247,16 @@
     },
 
     watch: {
+      '$route': {
+        handler() {
+          if (!this.ticketInfo.twoSide) {
+            this.currentPanel = 'record'
+          } else {
+            this.currentPanel = 'twoSide'
+          }
+          this.twoSideList = []
+        }
+      },
       playRule: {
         handler() {
           this.gridOps = this.generateGridOptions(GRID_OPS[this.ticketInfo.type])
@@ -231,10 +268,15 @@
       },
       currentPanel: {
         handler() {
-          if (this.currentPanel) {
-            this.twoSideUpdate()
-          }
-        }
+          // this.$nextTick(() => {
+            if (this.currentPanel === 'twoSide') {
+              this.twoSideUpdate()
+            } else {
+              this.$refs.historyGrid.update()
+            }
+          // })
+        },
+        // immediate: true
       }
     },
 
@@ -253,23 +295,31 @@
         this.currentPanel = this.currentPanel === 'record' ? 'twoSide' : 'record'
         if(this.currentPanel === 'record') {
           Velocity(this.$refs.history, {
-            height: this.$refs.historyInner.offsetHeight
+            height: this.$refs.historyInner.offsetHeight,
+            opacity: 1,
           })
           Velocity(this.$refs.twoSide, {
-            height: 0
+            height: 0,
+            opacity: 0,
           })
         } else {
           Velocity(this.$refs.history, {
-            height: 0
+            height: 0,
+            opacity: 0,
           })
           Velocity(this.$refs.twoSide, {
-            height: this.$refs.twoSideInner.offsetHeight
+            height: this.$refs.twoSideInner.offsetHeight,
+            opacity: 1,
           })
         }
       },
 
       update() {
-        this.$refs.historyGrid.update()
+        if (this.currentPanel === 'twoSide') {
+          this.twoSideUpdate()
+        } else {
+          this.$refs.historyGrid.update()
+        }
       },
       generateGridOptions({pageSize = 15, dataProp = 'root.openedList', formats} = {}) {
         const options = {
@@ -535,7 +585,16 @@
   .his-top {
     position: relative;
     margin: 0 auto;
-    padding: 15px 0 15px 30px;
+    padding: 15px 20px 15px 30px;
+    .arrow {
+      position: relative;
+      float: right;
+      margin-top: 8px;
+      transition: all .5s;
+      &.up {
+        transform: rotateX(180deg);
+      }
+    }
   }
   .his-main {
     th {
