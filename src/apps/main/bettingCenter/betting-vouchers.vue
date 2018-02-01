@@ -41,7 +41,7 @@
       bettingMoney: {
         type: Number,
         default: 0
-      }
+      },
     },
 
     data() {
@@ -62,6 +62,11 @@
       bettingMoney() {
         this.fList = _.chain(this.fList).each((item) => {
           item.available = this.bettingMoney > item.betAmount
+          if (item.selected && !item.available) {
+            item.selected = false
+            this.$emit('input', {})
+          }
+
         }).sortBy((item) => {
           if (item.available) {
             return true
@@ -69,23 +74,83 @@
             return item.validEndDate
           }
         }).value()
+      },
+
+      systemRecommend(systemRecommend) {
+        if (systemRecommend) {
+          const maxItem = _.chain(this.fList).filter((item) => {
+            return item.available
+          }).max((item) => {
+            return item.bonus
+          }).value()
+
+          if (!_.isEmpty(maxItem)) {
+            const maxItemList = _.filter(this.fList, (item) => {
+              return maxItem.bonus === item.bonus
+            })
+
+            let recommend = _.min(maxItemList, (item) => {
+              return item.validEndDate
+            })
+
+            this.select(recommend, {
+              isEvent: false,
+              toggle: true
+            })
+          }
+        } else {
+          this.clearSelect()
+        }
       }
     },
 
     methods: {
-      togglePopover() {
-        this.show = !this.show
+      togglePopover({toggle} = {}) {
+        this.show = !_.isUndefined(toggle) ? toggle : !this.show
       },
-      select(item) {
-        if (!item.available) {
+
+      clearSelect() {
+        _.chain(this.fList).each((item) => {
+          item.selected = false
+        })
+      },
+
+      select(selectItem, {
+        isEvent = true,
+        toggle = false,
+      } = {}) {
+        if (!selectItem.available) {
+          return
+        }
+        if (isEvent) {
+          this.systemRecommend = false
+
+          this.$nextTick(() => {
+            this.$_setSelect(selectItem, {
+              toggle
+            })
+          })
           return
         }
 
-        this.fList.forEach((item) => {
-          item.selected = false
+        this.$_setSelect(selectItem, {
+          toggle
         })
-        item.selected = true
       },
+
+      $_setSelect(selectItem, {
+        toggle
+      }) {
+        this.fList.forEach((item) => {
+          if (selectItem !== item) {
+            item.selected = false
+          } else {
+            item.selected = toggle ? true : !item.selected
+
+            this.$emit('input', item.selected ? item : {})
+          }
+        })
+      }
     },
 
     computed: {
@@ -198,6 +263,10 @@
     .unit-expired {
       color: $font-auxiliary-color;
     }
+
+    .sfa-bc-vouchers-disabled {
+      color: $font-auxiliary-color;
+    }
   }
 
 
@@ -216,6 +285,7 @@
       @include sprite($sfa-bc-vouchers-selected);
     }
   }
+
   @keyframes q {
     0% {
       transform: scale(0)

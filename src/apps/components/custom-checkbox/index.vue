@@ -26,6 +26,13 @@
       }
     },
 
+    watch: {
+      checked(value) {
+        this.pChecked = value
+        this.$emit('change', this.pChecked)
+      }
+    },
+
     methods: {
       change() {
         this.$emit('change', this.pChecked)
