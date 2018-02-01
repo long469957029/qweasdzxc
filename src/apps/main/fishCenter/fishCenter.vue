@@ -99,10 +99,7 @@
                         flag = true
                         return true
                       } else if (item.status === 1) {
-                        Global.ui.notification.show(
-                          '当前游戏处于关闭状态，您可以尝试其他游戏！<br/><br/>',
-                          { id: 'ticketNotice', hasFooter: false, displayTime: 1000 },
-                        )
+                        Global.ui.notification.show('当前游戏处于关闭状态，您可以尝试其他游戏')
                       } else if (item.status === 2) {
                         Global.ui.notification.show(`平台官方维护中，维护时间：${
                           _(item.mStart).toTime()}至${_(item.mEnd).toTime()}`)// ,{displayTime:2000}
