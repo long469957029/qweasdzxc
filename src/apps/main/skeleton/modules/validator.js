@@ -107,10 +107,10 @@ var ValidatorModule = Base.Module.extend({
       .addMessage('zh_cn', 'zhandldbmaxlen', '只能输入中文、字母、点和空格,不能以空格和点开头或结尾，不能出现连续的点或空格,不能超过%s个字');
 
     ParsleyValidator.addValidator('phone', function (value) {
-      var myReg = /^[0-9]{8,11}$/;
+      var myReg = /^[0-9]{11,11}$/;
       return myReg.test(value);
     }, 43)
-      .addMessage('zh_cn', 'phone', '请输入8-11位数字');
+      .addMessage('zh_cn', 'phone', '请输入11位数字');
 
     ParsleyValidator.addValidator('customername', function (value) {
       var myReg = /^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]*$/;

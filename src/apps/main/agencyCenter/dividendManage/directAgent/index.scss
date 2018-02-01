@@ -3,6 +3,25 @@
 @import
 "~base/styles/imports";
 
+.ac-dm-md-main {
+  .ac-dm-md-head {
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid $third-line-color;
+    padding-left: 20px;
+  }
+  .david-select{
+    transform: translateY(5px);;
+  }
+  .ac-rm-btn{
+    width: 59px;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 15px;
+    border-radius: 3px;
+  }
+}
+
 .ac-dm-lg-grid{
   .portlet .portlet-body{
     padding: 0;

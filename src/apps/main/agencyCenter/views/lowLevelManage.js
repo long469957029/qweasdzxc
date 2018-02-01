@@ -19,7 +19,7 @@ const LowLevelManageView = SearchGrid.extend({
   initialize() {
     _(this.options).extend({
       footerClass: 'border-cool-top',
-      height: 480,
+      height: 552,
       title: '下级管理',
       columns: [
         {
@@ -167,6 +167,9 @@ const LowLevelManageView = SearchGrid.extend({
         cell.push(`<a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
         cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a>`)
       }
+    }else{
+      cell.push(`<div class="text-center"><a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
+      cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a></div>`)
     }
 
     if (cell.length > 3) {

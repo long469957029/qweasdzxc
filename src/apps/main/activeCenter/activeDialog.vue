@@ -68,6 +68,9 @@ export default {
 
   .container {
     padding: 25px 15px;
+    height: 390px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .header {

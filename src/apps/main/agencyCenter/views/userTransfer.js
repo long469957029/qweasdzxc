@@ -59,10 +59,6 @@ const MoneyTransferView = Base.ItemView.extend({
     })
   },
 
-  initialize() {
-    this.selectedUsers = []
-  },
-
   onRender() {
     const self = this
     const acctInfo = Global.memoryCache.get('acctInfo')
@@ -72,7 +68,7 @@ const MoneyTransferView = Base.ItemView.extend({
 
       Global.ui.notification.show('用户已被冻结，无法进行转账操作。')
     }
-
+    this.selectedUsers = []
     this.$form = this.$('.js-ac-transfer-form')
     this.$lowLevelSelect = this.$('.js-ac-lowLevelSelect')
     this.$btnSubmit = this.$('.js-ac-btn-submit')
@@ -282,13 +278,12 @@ const MoneyTransferView = Base.ItemView.extend({
       if (this.securityTip) {
         this.securityTip.destroy()
       }
-      this.securityTip = this.$el.securityTip({
+      $(document).securityTip({
         content: '请补充完您的安全信息后再转账',
         hasMoneyPwd: data.hasMoneyPwd,
         hasBankCard: true,
         showBankCard: false,
-        body: this.$el,
-      }).securityTip('instance')
+      })
       return
     }
 

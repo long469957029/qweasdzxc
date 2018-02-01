@@ -33,6 +33,7 @@ const TeamOverviewView = () => import(/* webpackChunkName: "agency-center" */ '.
 
 const LowLevelGrantView = () => import(/* webpackChunkName: "agency-center" */ './dividendManage/lowLevelGrant')
 const TabView = () => import(/* webpackChunkName: "agency-center" */ './dividendManage/index-tab')
+const DirectAgentView = () => import(/* webpackChunkName: "agency-center" */ './dividendManage/directAgent')
 
 const sidebar = Global.ui.menu.get('ac')
 
@@ -282,14 +283,14 @@ export default [
   {
     path: '/ac/ld',
     component: function(resolve) {
-      RouterController.async(resolve, DividendMangeView, {
+      RouterController.async(resolve, DirectAgentView, {
         triggerTab: 'jsAcDmDirectAgent'
       }, {
         main: {
-          title: '分红管理',
+          title: '下级直属分红',
         },
         sidebar,
-        activeMenu: 'ac/dm',
+        activeMenu: 'ac/ld',
       })
     },
   },

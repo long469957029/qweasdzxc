@@ -17,10 +17,12 @@ const SlotCenterView = Base.ItemView.extend({
     'click .js-sc-game-btn': 'jumpIntoGameHandler',
     'click .js-sc-load-more-btn': 'loadMoreHandler',
     'change .js-channel-select': 'changeTypeHandler',
+    'click .js-sc-slot-collect': 'collectHandler',
   },
 
   options: {
     pageIndex: 0,
+    pageSize:16
   },
 
   getSummaryXhr() {
@@ -48,6 +50,13 @@ const SlotCenterView = Base.ItemView.extend({
   getHotGameListXhr() {
     return Global.sync.ajax({
       url: '/info/indexGameConfig/gameConf.json',
+    })
+  },
+
+  slotGameCollecteXhr(data) {
+    return Global.sync.ajax({
+      url: '/ticket/game/addGameCollection.json',
+      data,
     })
   },
 
@@ -161,7 +170,6 @@ const SlotCenterView = Base.ItemView.extend({
       $(tab).removeClass('active')
     })
     self.options.pageIndex = 0
-
     self.renderGameList()
   },
 
@@ -189,7 +197,7 @@ const SlotCenterView = Base.ItemView.extend({
             })
 
             self.$gameList.html(html)
-            if(gameList.length < 16) {
+            if(res.root.gameCount < 16) {
               self.$loadMore.addClass('hidden')
             } else {
               self.$loadMore.removeClass('hidden')
@@ -218,7 +226,7 @@ const SlotCenterView = Base.ItemView.extend({
     const channelId = self.$('.js-channel-select').val()
     const subType = self.$tabContainer.find('.js-type-option.active').data('subtype') || ''
     const collect = self.$tabContainer.find('.js-type-option.active').data('collect') || 0
-    const pageSize = 16
+    const pageSize = this.options.pageSize
     const pageIndex = 0
     return {
       channelId,
@@ -252,9 +260,8 @@ const SlotCenterView = Base.ItemView.extend({
               }).join('')
               return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
             })
-
             self.$gameList.html(html)
-            if(gameList.length < 16) {
+            if(res.root.gameCount < 16) {
               self.$loadMore.addClass('hidden')
             } else {
               self.$loadMore.removeClass('hidden')
@@ -318,9 +325,8 @@ const SlotCenterView = Base.ItemView.extend({
             }).join('')
             return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
           })
-
           self.$gameList.append(html)
-          if(gameList.length < 16) {
+          if(_(self.options.pageIndex + 1).mul(self.options.pageSize) >= res.root.gameCount) {
             self.$loadMore.addClass('hidden')
           } else {
             self.$loadMore.removeClass('hidden')
@@ -329,6 +335,22 @@ const SlotCenterView = Base.ItemView.extend({
           Global.ui.notification.show('获取游戏列表失败')
         }
       })
+  },
+
+  collectHandler(e) {
+    const $target = $(e.currentTarget)
+    const collected = $target.hasClass('liked')
+    const gameId = $target.data('id')
+    const data = { type: (collected ? '1' : '0'), gameId }
+    this.slotGameCollecteXhr(data).done((res) => {
+      if (res.result == 0) {
+        if(collected) {
+          $target.removeClass('liked')
+        }else{
+          $target.addClass('liked')
+        }
+      }
+    })
   },
 
 })

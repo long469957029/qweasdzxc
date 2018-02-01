@@ -1,5 +1,5 @@
 
-
+require('../index.scss')
 require('./index.scss')
 const grantConfig = require('../grantConfig')
 
@@ -10,11 +10,19 @@ const LowLevelView = Base.ItemView.extend({
 
   template: require('./index.html'),
 
+  className: 'ac-dm',
+
   events: {
     'click .js-ac-dm-lg-type-btn': 'lowLevelDividendTypeChangeHandler',
     'click .js-ac-dm-lg-search': 'getLowLevelDividendRecord',
   },
 
+  dividRoleXhr(data) {
+    return Global.sync.ajax({
+      url: '/fund/divid/dividViewInfo.json',
+      data,
+    })
+  },
   getLowLevelDividendRecord(e) {
     const type = this.$type.filter('.active').data('type')
     const cycle = this.$cycle.val()
@@ -27,7 +35,7 @@ const LowLevelView = Base.ItemView.extend({
         this.TicketGridView.destroy()
       }
       this.TicketGridView = new TicketView({
-        type, halfMonth: cycle, month, userName, status, 
+        type, halfMonth: cycle, month, userName, status,
       })
       this.$grid.html(this.TicketGridView.render().el)
     } else if (type == 1) {
@@ -35,7 +43,7 @@ const LowLevelView = Base.ItemView.extend({
         this.GameGridView.destroy()
       }
       this.GameGridView = new GameView({
-        type, halfMonth: cycle, month, userName, status, 
+        type, halfMonth: cycle, month, userName, status,
       })
       this.$grid.html(this.GameGridView.render().el)
     }
@@ -96,7 +104,7 @@ const LowLevelView = Base.ItemView.extend({
     this.$type = this.$('.js-ac-dm-lg-type-btn')
     this.$cycle = this.$('select[name=cycle]')
     this.$grid = this.$('.js-ac-dm-lg-grid')
-    $.when(self._parentView.DividRoleData).done((res1) => {
+    this.dividRoleXhr().done((res1) => {
       if (res1.result == 0) {
         self.$type.filter('[data-type=0]').toggleClass('hidden', !res1.root.subDividTicket)
         self.$type.filter('[data-type=1]').toggleClass('hidden', !res1.root.subDividGame)

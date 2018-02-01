@@ -40,6 +40,7 @@ const SidebarView = Base.ItemView.extend({
     this.$iconMail = this.$('.js-sfa-icon-mail')
     this.$safeLevel = this.$('.js-user-info-safe-level')
     this.$progressBar = this.$('.js-safe-progress-bar')
+    this._onRender()
     this.subscribe('safe', 'safe:updating', () => {
       self._onRender()
     })
