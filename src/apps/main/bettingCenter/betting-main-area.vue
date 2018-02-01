@@ -493,7 +493,7 @@
 
         this.pushing = true
 
-        this.$refs.preBettingVouchers.togglePopover(false)
+        this.$refs.preBettingVouchers.togglePopover({toggle: false})
 
         const useVoucher = !_.isEmpty(this.prevVoucher)
 
@@ -582,7 +582,7 @@
 
         $(this.$refs.confirm).modal('hide')
 
-        this.$refs.totalBettingVouchers.togglePopover(false)
+        this.$refs.totalBettingVouchers.togglePopover({toggle: false})
 
         const useVoucher = !_.isEmpty(this.totalVoucher)
 
