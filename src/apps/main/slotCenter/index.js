@@ -18,11 +18,18 @@ const SlotCenterView = Base.ItemView.extend({
     'click .js-sc-load-more-btn': 'loadMoreHandler',
     'change .js-channel-select': 'changeTypeHandler',
     'click .js-sc-slot-collect': 'collectHandler',
+    'click .js-show-login': 'showLoginHandler'
   },
 
   options: {
     pageIndex: 0,
     pageSize:16
+  },
+
+  serializeData(){
+    return{
+      isLogin: this.checkLoginStatus()
+    }
   },
 
   getSummaryXhr() {
@@ -85,12 +92,24 @@ const SlotCenterView = Base.ItemView.extend({
     self.renderHotGame()
     self.renderRewardList()
     self.renderGameList()
-
-    self.renderAmount()
+    if(this.checkLoginStatus()) {
+      self.renderAmount()
+    } else{
+      this.subscribe('acct', 'acct:login', () => {
+        this.renderAmount()
+      })
+    }
   },
 
   debounceQuery() {
     this.throttleQuery()
+  },
+
+  checkLoginStatus(){
+    if(window.store.getters.getLoginStatus){
+      return true
+    }
+    return false
   },
 
   renderAmount() {
@@ -105,7 +124,7 @@ const SlotCenterView = Base.ItemView.extend({
           self.$ptBalance.html(_(ptBalance).formatDiv(10000, { fixed: 2 }))
           self.$mgBalance.html(_(mgBalance).formatDiv(10000, { fixed: 2 }))
         } else {
-          Global.ui.notification.show('获取资金馀额失败')
+          Global.ui.notification.show('获取资金余额失败')
         }
       })
   },
@@ -197,7 +216,7 @@ const SlotCenterView = Base.ItemView.extend({
             })
 
             self.$gameList.html(html)
-            if(res.root.gameCount < 16) {
+            if(res.root.gameCount < self.options.pageSize) {
               self.$loadMore.addClass('hidden')
             } else {
               self.$loadMore.removeClass('hidden')
@@ -261,7 +280,7 @@ const SlotCenterView = Base.ItemView.extend({
               return `<div class="sc-game-row">${game}<div class="clearfix"></div></div>`
             })
             self.$gameList.html(html)
-            if(res.root.gameCount < 16) {
+            if(res.root.gameCount < self.options.pageSize) {
               self.$loadMore.addClass('hidden')
             } else {
               self.$loadMore.removeClass('hidden')
@@ -275,23 +294,36 @@ const SlotCenterView = Base.ItemView.extend({
 
   jumpIntoGameHandler(e) {
     const self = this
-    self.acctInfo = Global.memoryCache.get('acctInfo')
-    if (this.acctInfo.foundsLock) {
-      Global.ui.notification.show('资金已锁定，请先' +
-        '<a href="javascript:void(0);" ' +
-        'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" ' +
-        'class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
-      return false
-    }
     const $target = $(e.currentTarget)
     const type = $target.data('type')
-    const gameId = $target.data('game-id')
+    if(type === 1){ // 需要调用免费试玩的接口   暂时还没有  先这么写
+      Global.ui.notification.show('免费试玩的接口还木有`别着急！')
+    }else{
+      if(this.checkLoginStatus()){
+        const acctInfo = Global.memoryCache.get('acctInfo')
+        if(acctInfo.userType === 2){
+          Global.ui.notification.show('试玩账号无法进入该游戏，请先注册正式游戏账号')
+        } else{
+          if (acctInfo.foundsLock) {
+            Global.ui.notification.show('资金已锁定，请先' +
+              '<a href="javascript:void(0);" ' +
+              'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" ' +
+              'class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
+            return false
+          }
 
-    this.$('.js-sc-gameId').val(gameId)
-    this.$('.js-sc-token').val(Global.cookieCache.get('token'))
-    this.$('.js-sc-type').val(type)
+          const gameId = $target.data('game-id')
 
-    self.$slotForm.submit()
+          this.$('.js-sc-gameId').val(gameId)
+          this.$('.js-sc-token').val(Global.cookieCache.get('token'))
+          this.$('.js-sc-type').val(type)
+
+          self.$slotForm.submit()
+        }
+      }else{
+        this.showLoginHandler()
+      }
+    }
   },
 
   loadMoreHandler() {
@@ -338,21 +370,27 @@ const SlotCenterView = Base.ItemView.extend({
   },
 
   collectHandler(e) {
-    const $target = $(e.currentTarget)
-    const collected = $target.hasClass('liked')
-    const gameId = $target.data('id')
-    const data = { type: (collected ? '1' : '0'), gameId }
-    this.slotGameCollecteXhr(data).done((res) => {
-      if (res.result == 0) {
-        if(collected) {
-          $target.removeClass('liked')
-        }else{
-          $target.addClass('liked')
+    if(this.checkLoginStatus()) {
+      const $target = $(e.currentTarget)
+      const collected = $target.hasClass('liked')
+      const gameId = $target.data('id')
+      const data = {type: (collected ? '1' : '0'), gameId}
+      this.slotGameCollecteXhr(data).done((res) => {
+        if (res.result == 0) {
+          if (collected) {
+            $target.removeClass('liked')
+          } else {
+            $target.addClass('liked')
+          }
         }
-      }
-    })
+      })
+    }else{
+      this.showLoginHandler()
+    }
   },
-
+  showLoginHandler(){
+    window.store.commit(types.TOGGLE_LOGIN_DIALOG,true)
+  }
 })
 
 module.exports = SlotCenterView
