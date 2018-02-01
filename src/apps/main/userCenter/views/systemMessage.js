@@ -40,7 +40,7 @@ const SystemMessageView = Base.ItemView.extend({
     this.$page = this.$('.js-system-message-page')
     this.setNoticeEntry()
     this.getNoticeList({ pageIndex: 0 })
-    console.log(this.options.noticeId)
+    // console.log(this.options.noticeId)
   },
 
   getNoticeList(data) {
@@ -75,16 +75,15 @@ const SystemMessageView = Base.ItemView.extend({
     if (data) {
       const list = _(data).map((item) => {
         return `<div class="system-message-list js-system-message-list accordion-group">
-                  <div class="message-top cursor-pointer clearfix" data-toggle="collapse"
-               data-target="#message-info-${item.noticeId}" data-parent="#accordion1">
+                  <div class="message-top cursor-pointer clearfix js-message-btn" data-toggle="collapse"
+               data-target="#message-info-${item.noticeId}" data-parent="#accordion1" data-noticeid="${item.noticeId}" data-read="${item.isRead}">
                     <div class="pull-left m-top-md m-left-md">
                       <div class="message-title js-message-title-${item.noticeId} ${item.new ? 'new' : ''} ${Number(item.isRead) === 0 ? 'unRead' : ''} font-sm">${item.title}</div>
                       <div class="message-sub-title text-auxiliary">${item.desc}</div>
                     </div>
                     <div class="pull-right m-right-md p-top-md">
                       <div class="message-date text-auxiliary font-sm inline-block m-right-md vertical-middle">[${_(item.time).toTime()}]</div>
-                      <a class="message-btn vertical-middle js-message-btn" data-noticeid="${item.noticeId}" data-read="${item.isRead}" data-toggle="collapse"
-               data-target="#message-info-${item.noticeId}" data-parent="#accordion1"></a>
+                      <a class="message-btn vertical-middle js-message-btn-a" ></a>
                     </div>
                   </div>                  
                   <div class="message-info clearfix js-message-info js-message-info-${item.noticeId} collapse" id="message-info-${item.noticeId}">
@@ -131,6 +130,7 @@ const SystemMessageView = Base.ItemView.extend({
       .removeClass('active')
     if ($target.hasClass('active')) {
       $target.parents('.js-system-message-list').addClass('active')
+      $target.find('.js-message-btn-a').toggleClass('active')
       if (!isRead) {
         if (self._setRead(id)) {
           $target.data('read', 1)
@@ -141,6 +141,7 @@ const SystemMessageView = Base.ItemView.extend({
       }
     } else {
       $target.parents('.js-system-message-list').removeClass('active')
+      $target.find('.js-message-btn-a').toggleClass('active')
     }
   },
 })
