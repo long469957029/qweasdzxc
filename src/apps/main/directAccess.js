@@ -30,11 +30,11 @@ const permissionsList = [
     mame: 'notice',
     needLogin: true,
   },
-  {
-    path: '/rc',
-    mame: 'realGame',
-    needLogin: true,
-  },
+  // {
+  //   path: '/rc',
+  //   mame: 'realGame',
+  //   needLogin: true,
+  // },
   // {
   //   path: '/sc',
   //   mame: 'slot',
