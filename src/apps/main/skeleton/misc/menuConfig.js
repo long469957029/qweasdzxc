@@ -1,3 +1,4 @@
+
 const navItemType = {
   dropdown: 1,
   outerLink: 2,

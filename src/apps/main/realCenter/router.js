@@ -1,10 +1,8 @@
-const RealCenterView = () => import(/* webpackChunkName: "outer-center" */ './index')
+const RealCenterView = () => import(/* webpackChunkName: "outer-center" */ './realCenter.vue')
 
 export default [
   {
     path: '/rc',
-    component: function(resolve) {
-      RouterController.async(resolve, RealCenterView)
-    }
+    component: RealCenterView
   },
 ]
