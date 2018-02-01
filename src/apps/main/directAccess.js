@@ -30,21 +30,6 @@ const permissionsList = [
     mame: 'notice',
     needLogin: true,
   },
-  // {
-  //   path: '/rc',
-  //   mame: 'realGame',
-  //   needLogin: true,
-  // },
-  // {
-  //   path: '/sc',
-  //   mame: 'slot',
-  //   needLogin: true,
-  // },
-  {
-    path: '/fh',
-    mame: 'fish',
-    needLogin: true,
-  },
 ]
 
 module.exports = {

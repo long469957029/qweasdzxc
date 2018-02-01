@@ -15,7 +15,7 @@
           </div>
           <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
           <div class="rc-item-hint-btn">进入大厅<span class="rc-double-right"></span></div>
-          <div class="rc-item-primary-btn ripple-btn js-rc-item-game" @click="startGame(1,1,1)" data-type="1" data-id="1" data-gameid="1">立即游戏 <span class="rc-double-right"></span></div>
+          <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,1,1)">立即游戏 <span class="rc-double-right"></span></div>
           <div class="rc-item-secondary-btn ripple-btn">手机版</div>
           <div class="rc-item-mask"></div>
         </div>
@@ -31,9 +31,9 @@
             BBIN余额：
             <span>{{_(bbinAmount).formatDiv(10000, { fixed: 2 })}}</span>
           </div>
-          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="getLoginStatus">余额转帐></div>
+          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
           <div class="rc-item-hint-btn">进入大厅<span class="rc-double-right"></span></div>
-          <div class="rc-item-primary-btn ripple-btn js-rc-item-game" @click="startGame(1,3,3)" data-type="1" data-id="3" data-gameid="3">立即游戏 <span class="rc-double-right"></span></div>
+          <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,3,3)">立即游戏 <span class="rc-double-right"></span></div>
           <div class="rc-item-secondary-btn ripple-btn">手机版</div>
           <div class="rc-item-mask"></div>
         </div>
@@ -49,9 +49,9 @@
             EBET余额：
             <span>{{_(ebetAmount).formatDiv(10000, { fixed: 2 })}}</span>
           </div>
-          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer">余额转帐></div>
+          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
           <div class="rc-item-hint-btn">进入大厅<span class="rc-double-right"></span></div>
-          <div class="rc-item-primary-btn ripple-btn js-rc-item-game" @click="startGame(1,2,2)" data-type="1" data-id="2" data-gameid="2">立即游戏 <span class="rc-double-right"></span></div>
+          <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,2,2)">立即游戏 <span class="rc-double-right"></span></div>
           <div class="rc-item-secondary-btn ripple-btn">手机版</div>
           <div class="rc-item-mask"></div>
         </div>
