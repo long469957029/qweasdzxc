@@ -11,7 +11,7 @@
             <li><a href="#/hc?page=newbie">常见问题</a></li>
             <!-- 游戏规则也是去帮助中心 -->
             <li><a href="#/hc?page=newbie">游戏规则</a></li>
-            <li><router-link to="mb" >下载中心</router-link></li>
+            <!--<li><router-link to="mb" >下载中心</router-link></li>-->
             <li><a href="/index.html#nb/detail/287">防劫持教程</a></li>
           </div>
 
@@ -19,8 +19,8 @@
             <span class="download-list">
               <!-- 下载手机app点击任意icon都是进到下载中心页面 -->
               <span>下载手机APP：</span>
-              <router-link to="mb" ><div class="android-icon"></div></router-link>
-              <router-link to="mb" ><div class="ios-icon"></div></router-link>
+              <!--<router-link to="mb" ><div class="android-icon"></div></router-link>-->
+              <!--<router-link to="mb" ><div class="ios-icon"></div></router-link>-->
               <!--<a class="android-icon" href="newDownload.html" target="_blank"></a>-->
               <!--<a class="ios-icon" href="newDownload.html" target="_blank"></a>-->
             </span>
@@ -72,6 +72,8 @@ export default {
   name: "main-footer",
   mounted() {
     const vm = this
+    vm.rotateCooperatorList()
+    vm.rotateDutyList()
     setInterval(function() {
       vm.rotateCooperatorList()
     }, 6000)

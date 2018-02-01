@@ -506,6 +506,7 @@ module.exports = {
       helpCenter: 'apps/main/helpCenter',
       gameCenter: 'apps/main/gameCenter',
       mallCenter: 'apps/main/mallCenter',
+      activity: 'apps/main/activity',
 
       bootstrap: 'vendor/scripts/bootstrap',
       modernizr: 'vendor/scripts/modernizr',

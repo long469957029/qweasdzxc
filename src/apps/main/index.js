@@ -2,7 +2,7 @@ const App = require('./app')
 const modules = require('skeleton/modules')
 
 import Vue from 'vue'
-import {AnimatedInteger, XDialog} from 'build'
+import {AnimatedInteger, XDialog, CustomCheckbox} from 'build'
 import store from '../store/index'
 
 import MainHeader from 'skeleton/bases/header'
@@ -18,6 +18,7 @@ import DialogManage from 'skeleton/bases/dialogManage'
 Object.defineProperty(Vue.prototype, '_', {value: _})
 Object.defineProperty(Vue.prototype, '$', {value: $})
 
+Vue.component('custom-checkbox', CustomCheckbox)
 Vue.component('animated-integer', AnimatedInteger)
 Vue.component('x-dialog', XDialog)
 
@@ -54,7 +55,7 @@ router.beforeEach((to, from, next) => {
   $('html').animate({scrollTop: 0})
   if (store.getters.checkPermission(to.path)) {
     let isVue = false
-    _(['/bc', '/analysis', '/i', '/aa', '/mb', '/au', '/rc', '/fh']).each((bcRouter) => {
+    _(['/bc', '/analysis', '/i', '/aa', '/mb', '/au', '/rc', '/fh', '/act']).each((bcRouter) => {
       if (to.path.indexOf(bcRouter) !== -1) {
         isVue = true
       }

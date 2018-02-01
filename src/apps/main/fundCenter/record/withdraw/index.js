@@ -104,23 +104,23 @@ const WithdrawView = SearchGrid.extend({
       statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已通过</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已出款</span><span class="fc-rc-status-line"></span></span></div>')
       statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
-      // } else if (rowInfo.flowStatus === 1) {
-      //   statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">审核中</span><span class="fc-rc-status-line">-</span></span>')
-      //   statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已通过</span><span class="fc-rc-status-line">-</span></span>')
-      //   statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已出款</span><span class="fc-rc-status-line"></span></span></div>')
-      //   statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
-    } else if (rowInfo.flowStatus === 1) {
+      } else if (rowInfo.flowStatus === 1) {
+        statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">审核中</span><span class="fc-rc-status-line">-</span></span>')
+        statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已通过</span><span class="fc-rc-status-line">-</span></span>')
+        statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已出款</span><span class="fc-rc-status-line"></span></span></div>')
+        statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
+    } else if (rowInfo.flowStatus === 2) {
       statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">审核中</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已通过</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已出款</span><span class="fc-rc-status-line"></span></span></div>')
       statusList.push('<div class="inline-block fc-rc-status-img-container"></div>')
-    } else if (rowInfo.flowStatus === 2) {
+    } else if (rowInfo.flowStatus === 3) {
       statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">审核中</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">未通过</span><span class="fc-rc-status-line-unPass">-</span></span>')
       statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已出款</span><span class="fc-rc-status-img"></span></span></div>')
       statusList.push('<div class="inline-block js-fc-img-container fc-rc-status-img-container "><i class="fa fa-exclamation-circle" aria-hidden="true"></i></div>' +
         `<div class="fc-rc-status-text-container hidden" style="top:${rowTop}px"><div class="fc-rc-status-text">${rowInfo.remark}</div></div>`)
-    } else if (rowInfo.flowStatus === 3) {
+    } else if (rowInfo.flowStatus === 4) {
       statusList.push('<div class="inline-block fc-rc-status-container"><span class="fc-rc-status active"><span class="fc-rc-status-button">审核中</span><span class="fc-rc-status-line">-</span></span>')
       statusList.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已通过</span><span class="fc-rc-status-line-unPass">-</span></span>')
       statusList.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">出款失败</span><span class="fc-rc-status-img"></span></span></div>')

@@ -340,3 +340,6 @@ _.mixin({
   }
 
 })
+
+Vue.filter('toTime', _.toTime)
+Vue.filter('convert2yuan', _.convert2yuan)

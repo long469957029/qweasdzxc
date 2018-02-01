@@ -54,8 +54,9 @@ const getters = {
 
 // actions
 const actions = {
-  pushBetting ({ state, commit }, {
+  pushBetting ({ state, commit, dispatch }, {
     planId,
+    prevVoucher,
     type = 'previewList',
   }) {
     const bettingList = state[type]
@@ -74,7 +75,7 @@ const actions = {
 
     return new Promise((resolve) => {
       pushBettingApi(
-        { planId, bet, usePack: state.usePack },
+        { planId, bet, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
         ({ data }) => {
           resolve(data)
           return commit(types.PUSH_BETTING_SUCCESS, { res: data, type })
