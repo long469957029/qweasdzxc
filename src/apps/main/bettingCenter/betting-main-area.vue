@@ -493,7 +493,9 @@
 
         this.pushing = true
 
-        this.$refs.preBettingVouchers.togglePopover({toggle: false})
+        if (this.$refs.preBettingVouchers) {
+          this.$refs.preBettingVouchers.togglePopover({toggle: false})
+        }
 
         const useVoucher = !_.isEmpty(this.prevVoucher)
 
@@ -582,7 +584,9 @@
 
         $(this.$refs.confirm).modal('hide')
 
-        this.$refs.totalBettingVouchers.togglePopover({toggle: false})
+        if (this.$refs.totalBettingVouchers) {
+          this.$refs.totalBettingVouchers.togglePopover({toggle: false})
+        }
 
         const useVoucher = !_.isEmpty(this.totalVoucher)
 
