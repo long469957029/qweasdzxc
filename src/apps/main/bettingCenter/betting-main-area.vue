@@ -64,16 +64,16 @@
               <label class="m-left-xs">倍</label>
             </div>
 
-            <div class="inline-block m-left-smd">
+            <div class="prev-panel inline-block">
               <span>共</span>
               <animated-integer class="text-pleasant font-sm" :value="bettingChoice.statistics"></animated-integer>
               <span>注，金额</span>
               <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
               <span>元</span>
             </div>
-            <select name="" class="m-left-smd bc-vouchers-select">
-              <option value="">使用代金券</option>
-            </select>
+            <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)" :betting-money="bettingChoice.prefabMoney"
+                              v-model="prevVoucher" ref="preBettingVouchers"
+            ></betting-vouchers>
             <div class="pull-right m-right-sm">
               <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                       :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
@@ -93,24 +93,31 @@
             <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
                          :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
                          ref="lotteryGrid"></static-grid>
-            <div class="overflow-hidden font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
+            <div class="font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
+              <div class="total-panel inline-block">
                 <span>
                   <span>预期盈利</span>
                   <animated-integer class="text-prominent"
                                     :value="bettingChoice.totalInfo.fTotalBetBonus"></animated-integer>
                   <span>元，</span>
                 </span>
-              <span>
+                <span>
                   <span>总投注 【</span>
                   <span class="text-pleasant">{{bettingChoice.totalInfo.totalLottery}}</span>
                   <span>】 注， </span>
                 </span>
-              <span>
+                <span>
                   <span>总金额</span>
                   <animated-integer class="text-prominent m-left-xs m-right-xs"
                                     :value="bettingChoice.totalInfo.fTotalMoney"></animated-integer>
                   <span>元</span>
                 </span>
+              </div>
+
+              <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)" :betting-money="bettingChoice.totalInfo.totalMoney"
+                                v-model="totalVoucher" ref="totalBettingVouchers"
+              ></betting-vouchers>
+
               <button class="bc-chase btn-link inline-block cursor-pointer m-left-md relative" @click="bettingChase"
                       :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                 <span class="sfa sfa-checkmark vertical-middle"></span>
@@ -126,7 +133,8 @@
           </div>
         </div>
       </div>
-      <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" ref="bettingHisotry"></betting-history>
+      <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule"
+                       ref="bettingHisotry"></betting-history>
     </div>
     <div class="bc-bottom-area" ref="recordsContainer"></div>
 
@@ -164,6 +172,7 @@
 
   //backbone旧组件
   import BettingRecordsView from './bettingCenter-records'
+  import BettingVouchers from 'bettingCenter/betting-vouchers';
 
   // let recordsOpenView
   let bettingRecordsView
@@ -175,6 +184,7 @@
       ticketId: Number,
     },
     components: {
+      BettingVouchers,
       BettingConfirm,
       StaticGrid,
       BettingRules,
@@ -222,6 +232,11 @@
         advanceShowMode: 'classic', //classic | single
 
         showChaseModal: false,
+
+        //快捷投注代金券
+        prevVoucher: {},
+        //总投注代金券
+        totalVoucher: {},
       }
     },
     computed: {
@@ -229,19 +244,24 @@
         'playLevels'
       ]),
       ...mapState({
+        bettingVouchers: 'bettingVouchers',
         bettingChoice: 'bettingChoice',
         bettingInfo: 'bettingInfo',
-      })},
+      })
+    },
 
     watch: {
-      '$route' (to, from) {
-        bettingRecordsView.updateTicketId(this.ticketId)
-        bettingRecordsView.update()
+      '$route': {
+        handler() {
+          bettingRecordsView.updateTicketId(this.ticketId)
+          bettingRecordsView.update()
 
-        this.$store.commit(types.SET_MULTIPLE, 1)
-        $(this.$refs.multiRange).numRange('numChange', 1)
-        this.unit = 10000
+          this.$store.commit(types.SET_MULTIPLE, 1)
+          $(this.$refs.multiRange).numRange('numChange', 1)
+          this.unit = 10000
+        },
       },
+
       'bettingChoice.playId': {
         handler: function (playId) {
           if (playId === -1) {
@@ -473,8 +493,15 @@
 
         this.pushing = true
 
+        if (this.$refs.preBettingVouchers) {
+          this.$refs.preBettingVouchers.togglePopover({toggle: false})
+        }
+
+        const useVoucher = !_.isEmpty(this.prevVoucher)
+
         this.$store.dispatch('pushBetting', {
           planId,
+          prevVoucher: this.prevVoucher,
           type: 'buyList'
         })
           .catch(() => {
@@ -486,6 +513,12 @@
               bettingRecordsView.update()
 
               Global.m.oauth.check()
+
+              if (useVoucher) {
+                this.$store.dispatch(types.GET_VOUCHERS, {
+                  ticketId: this.ticketId,
+                })
+              }
 
               Global.ui.notification.show('投注成功！', {
                 type: 'success',
@@ -551,8 +584,15 @@
 
         $(this.$refs.confirm).modal('hide')
 
+        if (this.$refs.totalBettingVouchers) {
+          this.$refs.totalBettingVouchers.togglePopover({toggle: false})
+        }
+
+        const useVoucher = !_.isEmpty(this.totalVoucher)
+
         this.$store.dispatch('pushBetting', {
           planId: this.bettingInfo.planId,
+          prevVoucher: this.totalVoucher,
           type: 'previewList'
         })
           .catch(() => {
@@ -565,6 +605,12 @@
               bettingRecordsView.update()
 
               this.$store.commit(types.EMPTY_PREV_BETTING)
+
+              if (useVoucher) {
+                this.$store.dispatch(types.GET_VOUCHERS, {
+                  ticketId: this.ticketId,
+                })
+              }
 
               Global.m.oauth.check()
 
@@ -840,9 +886,12 @@
 
   .bc-vouchers-select {
     width: 106px;
-    height: 30px;
-    font-size: 12px;
-    @include select-def;
+    color: $new-inverse-color;
+    border-radius: 5px;
+    vertical-align: bottom;
+    top: 2px;
+    position: relative;
+    left: 10px;
   }
 
   .ba-chase-tip {
@@ -884,4 +933,12 @@
     border-radius: $globalBtnRadius;
     border: 1px solid $def-gray-color;
   }
+
+  .prev-panel {
+    min-width: 190px;
+  }
+  .total-panel {
+    min-width: 450px;
+  }
+
 </style>

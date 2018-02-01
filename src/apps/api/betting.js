@@ -48,13 +48,13 @@ const getTicketRulesApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
  * 提交投注
  * @param planId
  * @param bet
- * @param usePack
  * @param then
  * @param fail
  * @returns {* | Promise<T>}
  * @param couponRid
  */
-const pushBettingApi = ({ planId, bet, usePack = 0, couponRid = 0 }, then, fail) => {
+const pushBettingApi = ({ planId, bet, couponRid = 0 }, then, fail) => {
+  const usePack = !!couponRid ? 1 : 0
   return $http({
     url: '/ticket/bet/bet.json',
     tradition: true,
@@ -243,11 +243,26 @@ const getMmcTicketInfoApi = ({ticketId = 19}, then ,fail) => {
   return $http({
     url: '/ticket/ticketmod/ticketinfoMmc.json',
     data: {
-      ticketId: ticketId
+      ticketId
     }
   })
     .then(then)
     .catch(fail)
+}
+
+/**
+ * 取得代金券
+ * @param ticketId
+ * @param then
+ */
+const getVouchersApi = ({ticketId}, then) => {
+  return $http({
+    url: '/info/redpack/ticketCouponList.json',
+    data: {
+      ticketId
+    }
+  })
+    .then(then)
 }
 
 export {
@@ -263,4 +278,5 @@ export {
   getMmcTicketInfoApi,
   pushMmcBettingApi,
   pushMmcSimulationBettingApi,
+  getVouchersApi,
 }
