@@ -10,7 +10,9 @@ const initState = () => {
     openResetPassWordDialog: false,
     openLoginLauncher: false,
     openFreeTrialDialog: false,
+    openGameDownLoadDialog: false,
     token: '',
+    gameDownLoadId:''
   }
 }
 
@@ -34,6 +36,12 @@ const getters = {
   userToken: (state) => {
     return state.token
   },
+  gameDownLoadStatus: (state) => {
+    return state.openGameDownLoadDialog
+  },
+  gameDownLoadGameId: (state) => {
+    return state.gameDownLoadId
+  }
 }
 
 // actions
@@ -62,6 +70,10 @@ const mutations = {
   },
   [types.COMMIT_USER_TOKEN](state, data) {
     state.token = data
+  },
+  [types.TOGGLE_GMAE_DOWN_LOAD](state, {showDialog, gameId = 1}) {
+    state.openGameDownLoadDialog = showDialog
+    state.gameDownLoadId = gameId
   },
 }
 

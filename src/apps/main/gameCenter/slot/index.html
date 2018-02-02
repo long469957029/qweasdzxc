@@ -45,7 +45,7 @@
           </div>
           <div class="entry-item-rest">
             PT余额：<span class="unit">￥</span><span class="js-ptBalance">0.00</span></div>
-          <div class="js-header-recharge entry-item-transfer" data-name="jsFcTransfer"> 转帐
+          <div class="<%= (isLogin ? 'js-header-recharge' : 'js-show-login')%> entry-item-transfer" data-name="jsFcTransfer"> 转帐
             <div class="sc-icon-right"></div>
           </div>
           <div class="clearfix"></div>
@@ -54,10 +54,10 @@
               <div class="sc-pc-icon"></div>
               PC客户端
             </a>
-            <div class="entry-item-btn ripple-btn">
+            <a class="entry-item-btn js-down-phone ripple-btn">
               <div class="sc-phone-icon"></div>
               手机版
-            </div>
+            </a>
           </div>
         </div>
         <div class="sc-entry-item">
@@ -67,7 +67,7 @@
           </div>
           <div class="entry-item-rest">
             MG余额：<span class="unit">￥</span><span class="js-mgBalance">0.00</span></div>
-          <div class="js-header-recharge entry-item-transfer" data-name="jsFcTransfer"> 转帐
+          <div class="<%= (isLogin ? 'js-header-recharge' : 'js-show-login')%> entry-item-transfer" data-name="jsFcTransfer"> 转帐
             <div class="sc-icon-right"></div>
           </div>
           <div class="clearfix"></div>
@@ -76,10 +76,10 @@
               <div class="sc-pc-icon"></div>
               PC客户端
             </a>
-            <div class="entry-item-btn ripple-btn">
+            <a class="entry-item-btn js-down-phone ripple-btn">
               <div class="sc-phone-icon"></div>
               手机版
-            </div>
+            </a>
           </div>
         </div>
       </div>

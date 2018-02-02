@@ -20,6 +20,9 @@ const urlList = [
   {
     url: '/mall/coupon/newItemList.json',
   },
+  {
+    url: '/ticket/game/prizeList.json',
+  }
 ]
 module.exports = {
   get(id) {

@@ -209,6 +209,19 @@
   right: 13px;
   z-index: 2;
 }
+.close-md{
+  width: 19px;
+  height: 19px;
+  background: url(~base/images/close-md.png) no-repeat;
+  position: absolute;
+  top:50%;
+  right: 13px;
+  margin-top: -9.5px;
+  cursor: pointer;
+  &.close-md-gray{
+    background: url(~base/images/close-md-gray.png) no-repeat;
+  }
+}
 
 button.close {
   padding: 0;

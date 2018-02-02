@@ -13,6 +13,7 @@ import ResetPwd from 'skeleton/bases/login/resetPassWord'
 import LoginLauncher from 'skeleton/bases/loginLauncher'
 import FreeTrial from 'skeleton/bases/freeTrial'
 import DialogManage from 'skeleton/bases/dialogManage'
+import GameDownLoad from 'gameCenter/downLoad'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -55,7 +56,7 @@ router.beforeEach((to, from, next) => {
   $('html').animate({scrollTop: 0})
   if (store.getters.checkPermission(to.path)) {
     let isVue = false
-    _(['/bc', '/analysis', '/i', '/aa', '/mb', '/au','/act']).each((bcRouter) => {
+    _(['/bc', '/analysis', '/i', '/aa', '/mb', '/au', '/rc', '/fh', '/act']).each((bcRouter) => {
       if (to.path.indexOf(bcRouter) !== -1) {
         isVue = true
       }
@@ -114,7 +115,8 @@ Global.m.oauth.check()
         ResetPwd,
         LoginLauncher,
         FreeTrial,
-        DialogManage
+        DialogManage,
+        GameDownLoad
       },
       store,
       router,
@@ -125,7 +127,8 @@ Global.m.oauth.check()
           'resetPassWordDialogStatus',
           'loginLauncherStatus',
           'freeTrialStatus',
-          'getLoginStatus'
+          'getLoginStatus',
+          'gameDownLoadStatus'
         ]),
       },
     })
