@@ -3,7 +3,7 @@
     <div class="reset-dialog clearfix">
       <div class="reset-header">
         找回密码
-        <a class="close btn-close" data-dismiss="modal">×</a>
+        <a class="close-md close-md-gray btn-close" data-dismiss="modal"></a>
       </div>
       <div class="reset-main clearfix wizard" ref="resetMain">
         <div class="steps clearfix">

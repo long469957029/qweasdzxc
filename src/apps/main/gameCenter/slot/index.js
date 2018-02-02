@@ -4,12 +4,12 @@ import './index.scss'
 
 const SlotCenterView = Base.ItemView.extend({
 
-  template: require('slotCenter/index.html'),
+  template: require('./index.html'),
 
-  hotGameTpl: _(require('slotCenter/hotGame.html')).template(),
-  rewardTpl: _(require('slotCenter/reward.html')).template(),
+  hotGameTpl: _(require('./hotGame.html')).template(),
+  rewardTpl: _(require('./reward.html')).template(),
 
-  gameTpl: _(require('slotCenter/game.html')).template(),
+  gameTpl: _(require('./game.html')).template(),
 
   events: {
     'click .js-type-option': 'tabHandler',
@@ -18,7 +18,8 @@ const SlotCenterView = Base.ItemView.extend({
     'click .js-sc-load-more-btn': 'loadMoreHandler',
     'change .js-channel-select': 'changeTypeHandler',
     'click .js-sc-slot-collect': 'collectHandler',
-    'click .js-show-login': 'showLoginHandler'
+    'click .js-show-login': 'showLoginHandler',
+    'click .js-down-phone': 'showDownPhoneHandler'
   },
 
   options: {
@@ -390,6 +391,9 @@ const SlotCenterView = Base.ItemView.extend({
   },
   showLoginHandler(){
     window.store.commit(types.TOGGLE_LOGIN_DIALOG,true)
+  },
+  showDownPhoneHandler(){
+    Global.ui.notification.show('暂未开放，敬请期待')
   }
 })
 

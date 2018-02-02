@@ -13,6 +13,7 @@ import ResetPwd from 'skeleton/bases/login/resetPassWord'
 import LoginLauncher from 'skeleton/bases/loginLauncher'
 import FreeTrial from 'skeleton/bases/freeTrial'
 import DialogManage from 'skeleton/bases/dialogManage'
+import GameDownLoad from 'gameCenter/downLoad'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -114,7 +115,8 @@ Global.m.oauth.check()
         ResetPwd,
         LoginLauncher,
         FreeTrial,
-        DialogManage
+        DialogManage,
+        GameDownLoad
       },
       store,
       router,
@@ -125,7 +127,8 @@ Global.m.oauth.check()
           'resetPassWordDialogStatus',
           'loginLauncherStatus',
           'freeTrialStatus',
-          'getLoginStatus'
+          'getLoginStatus',
+          'gameDownLoadStatus'
         ]),
       },
     })

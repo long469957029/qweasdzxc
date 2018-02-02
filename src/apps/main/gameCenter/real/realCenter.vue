@@ -16,7 +16,7 @@
           <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
           <div class="rc-item-hint-btn">进入大厅<span class="rc-double-right"></span></div>
           <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,1,1)">立即游戏 <span class="rc-double-right"></span></div>
-          <div class="rc-item-secondary-btn ripple-btn">手机版</div>
+          <div class="rc-item-secondary-btn ripple-btn" @click="showDownLoad(1)">手机版</div>
           <div class="rc-item-mask"></div>
         </div>
       </div>
@@ -34,7 +34,7 @@
           <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
           <div class="rc-item-hint-btn">进入大厅<span class="rc-double-right"></span></div>
           <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,3,3)">立即游戏 <span class="rc-double-right"></span></div>
-          <div class="rc-item-secondary-btn ripple-btn">手机版</div>
+          <div class="rc-item-secondary-btn ripple-btn" @click="showDownLoad(3)">手机版</div>
           <div class="rc-item-mask"></div>
         </div>
       </div>
@@ -52,7 +52,7 @@
           <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
           <div class="rc-item-hint-btn">进入大厅<span class="rc-double-right"></span></div>
           <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,2,2)">立即游戏 <span class="rc-double-right"></span></div>
-          <div class="rc-item-secondary-btn ripple-btn">手机版</div>
+          <div class="rc-item-secondary-btn ripple-btn" @click="showDownLoad(2)">手机版</div>
           <div class="rc-item-mask"></div>
         </div>
       </div>
@@ -154,6 +154,13 @@
       showLogin(){
         if(!this.getLoginStatus){
           this.$store.commit(types.TOGGLE_LOGIN_DIALOG,true)
+        }
+      },
+      showDownLoad(gameId){
+        if(gameId === 3){
+          Global.ui.notification.show('暂未开放，敬请期待')
+        }else{
+          this.$store.commit(types.TOGGLE_GMAE_DOWN_LOAD,{showDialog:true,gameId})
         }
       }
     }

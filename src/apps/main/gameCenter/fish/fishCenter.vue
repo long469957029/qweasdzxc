@@ -12,7 +12,7 @@
               <span class="fc-right-icon"></span>
             </div>
             <div class="fc-item-btn primary ripple-btn" @click="startGame(1,1,5)">立即游戏</div>
-            <div class="fc-item-btn secondary ripple-btn">手机版</div>
+            <div class="fc-item-btn secondary ripple-btn" @click="showDownLoad(5)">手机版</div>
           </div>
         </div>
         <div class="fc-item gg">
@@ -25,7 +25,7 @@
               <span class="fc-right-icon"></span>
             </div>
             <div class="fc-item-btn primary ripple-btn" @click="startGame(4,6,6)">立即游戏</div>
-            <div class="fc-item-btn secondary ripple-btn">手机版</div>
+            <div class="fc-item-btn secondary ripple-btn" @click="showDownLoad(6)">手机版</div>
           </div>
         </div>
       </div>
@@ -128,6 +128,9 @@
         if(!this.getLoginStatus){
           this.$store.commit(types.TOGGLE_LOGIN_DIALOG,true)
         }
+      },
+      showDownLoad(gameId){
+        this.$store.commit(types.TOGGLE_GMAE_DOWN_LOAD,{showDialog:true,gameId})
       }
     }
   }
