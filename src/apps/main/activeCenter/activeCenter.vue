@@ -4,7 +4,6 @@
       <div class="aa-banner-container"></div>
     </div>
     <div class="aa-container">
-      <router-link to="/aa/rechargeSalesActivity">/aa/rechargeSalesActivity</router-link>
       <active-navbar @fetchData="queryActivity" :activityType="activityType" :isFetching="queryFetching"></active-navbar>
       <active-timeline :timelineHeight="timelineHeight" :filterActivityList="filterActivityList"></active-timeline>
       <div>
