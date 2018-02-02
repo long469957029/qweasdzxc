@@ -255,7 +255,7 @@ const WithdrawView = Base.ItemView.extend({
     this.countdown = setInterval(() => {
       time -= 1
       this.$('.js-tr-leftSecond').text(time)
-      if (time < 0) {
+      if (time < 0 && this.cur > 0) {
         self.countDownSecond = time
         clearInterval(self.countdown)
         this.preStepHandler()
