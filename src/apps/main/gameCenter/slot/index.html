@@ -1,0 +1,114 @@
+<div class="sc-banner">
+  <div class="sc-banner-hot">
+    <div class="banner-hot-container">
+      <div class="banner-hot-row js-hotGames"></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-navbar">
+  <div class="sc-navbar-container">
+    <div class="sc-navbar-select-container">
+      <span>游戏平台</span>
+      <select class="sc-navbar-select js-channel-select">
+        <option value="">全部平台</option>
+        <option value="4">PT</option>
+        <option value="5">MG</option>
+      </select>
+    </div>
+    <div class="sc-navbar-option-container js-type-option-container">
+      <div class="sc-navbar-option ripple-btn js-type-option active">全部游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="1">电动老虎机</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="2">经典老虎机</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="3">刮刮乐</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="4">街机游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-subtype="5">牌桌游戏</div>
+      <div class="sc-navbar-option ripple-btn js-type-option" data-collect="1">
+        <span class="sc-collect-icon"></span>我的收藏
+      </div>
+    </div>
+    <div class="sc-navbar-search-container">
+      <div class="sc-search-icon"></div>
+      <input type="text" class="js-sc-search sc-search" placeholder="请输入游戏名称">
+    </div>
+  </div>
+</div>
+
+<div class="fc-body">
+  <div class="sc-container">
+    <div class="sc-sidebar">
+      <div class="sc-entry-container">
+        <div class="sc-entry-item">
+          <div class="entry-item-logo sc-pt-icon"></div>
+          <div class="entry-item-title">
+            PT老虎机
+          </div>
+          <div class="entry-item-rest">
+            PT余额：<span class="unit">￥</span><span class="js-ptBalance">0.00</span></div>
+          <div class="<%= (isLogin ? 'js-header-recharge' : 'js-show-login')%> entry-item-transfer" data-name="jsFcTransfer"> 转帐
+            <div class="sc-icon-right"></div>
+          </div>
+          <div class="clearfix"></div>
+          <div>
+            <a target="_blank" href="/wx.exe" class="entry-item-btn ripple-btn">
+              <div class="sc-pc-icon"></div>
+              PC客户端
+            </a>
+            <a class="entry-item-btn js-down-phone ripple-btn">
+              <div class="sc-phone-icon"></div>
+              手机版
+            </a>
+          </div>
+        </div>
+        <div class="sc-entry-item">
+          <div class="entry-item-logo sc-mg-icon"></div>
+          <div class="entry-item-title">
+            MG老虎机
+          </div>
+          <div class="entry-item-rest">
+            MG余额：<span class="unit">￥</span><span class="js-mgBalance">0.00</span></div>
+          <div class="<%= (isLogin ? 'js-header-recharge' : 'js-show-login')%> entry-item-transfer" data-name="jsFcTransfer"> 转帐
+            <div class="sc-icon-right"></div>
+          </div>
+          <div class="clearfix"></div>
+          <div>
+            <a target="_blank" href="/wx.exe" class="entry-item-btn ripple-btn">
+              <div class="sc-pc-icon"></div>
+              PC客户端
+            </a>
+            <a class="entry-item-btn js-down-phone ripple-btn">
+              <div class="sc-phone-icon"></div>
+              手机版
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc-win-container">
+        <div class="sc-win-head"></div>
+        <div class="sc-win-content">
+          <div class="sc-win-list js-rewardList"></div>
+        </div>
+      </div>
+    </div>
+    <div class="sc-content">
+      <div class="sc-content-container js-sc-content-container">
+      </div>
+      <div class="sc-load-more js-sc-load-more hidden">
+        <div class="sc-load-more-btn js-sc-load-more-btn ripple-btn">点击加载更多</div>
+        <div class="sc-load-icon"></div>
+      </div>
+      <div class="sc-content-empty js-sc-content-empty hidden">
+        <div class="js-sc-empty-icon icon"></div>
+        <div class="js-sc-empty-text m-top-sm text-inverse text-center font-sm"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form class="js-sc-slot-form hidden" action="/info/game/jump" target="_blank">
+  <input type="hidden" class="js-sc-gameId" name="gameId">
+  <input type="hidden" class="js-sc-token" name="token">
+  <input type="hidden" class="js-sc-type" name="type">
+  <input type="hidden" class="js-sc-device" name="device">
+</form>

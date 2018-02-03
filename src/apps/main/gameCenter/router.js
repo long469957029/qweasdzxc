@@ -1,28 +1,20 @@
-const SlotCenterView = () => import(/* webpackChunkName: "outer-center" */ './slot/slotTab')
+const SlotCenterView = () => import(/* webpackChunkName: "outer-center" */ './slot/index')
+const FishCenterView = () => import(/* webpackChunkName: "outer-center" */ './fish/fishCenter.vue')
+const RealCenterView = () => import(/* webpackChunkName: "outer-center" */ './real/realCenter.vue')
 
 export default [
   {
-    path: '/gc/sc',
+    path: '/sc',
     component: function(resolve) {
-      RouterController.async(resolve, SlotCenterView, {
-        triggerTab: 'jsPTSlot'
-      }, {
-        main: {
-          title: '老虎机',
-        },
-      })
-    },
+      RouterController.async(resolve, SlotCenterView)
+    }
   },
   {
-    path: '/gc/scmg',
-    component: function(resolve) {
-      RouterController.async(resolve, SlotCenterView, {
-        triggerTab: 'jsMGSlot'
-      }, {
-        main: {
-          title: '老虎机',
-        },
-      })
-    },
+    path: '/fh',
+    component: FishCenterView
+  },
+  {
+    path: '/rc',
+    component: RealCenterView
   },
 ]

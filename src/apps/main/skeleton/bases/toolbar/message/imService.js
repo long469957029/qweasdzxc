@@ -32,7 +32,7 @@ module.exports = {
       }
       const avatarPic = avatarConf.get(_(parentInfo.headIconId).toString()).logo
       supersiorHtml.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${parentInfo.userId}" data-name="我的上级">` +
-        `<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
+        `<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
     }
     return supersiorHtml.join('')
   },
@@ -62,7 +62,7 @@ module.exports = {
         }
         const avatarPic = avatarConf.get(_(user.headIconId).toString()).logo
         item.push(`<div class="js-contact-onePerson person-item ${status}" data-id="${user.userId}" data-name="我的上级">` +
-          `<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
+          `<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
       } else {
         let status = ''
         if (active.type === 'user' && active.id === user.userId) {
@@ -78,7 +78,7 @@ module.exports = {
         onlineCircle = ''
       }
       const avatarPic = avatarConf.get(_(user.headIconId).toString()).logo
-      item.push(`<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}`)
+      item.push(`<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}`)
       item.push(`<span class="contact-name">${name}</span></div>`)
       userHtml.push(item.join(''))
     })
@@ -141,7 +141,7 @@ module.exports = {
 
           const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
           itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="我的上级">` +
-            `<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
+            `<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
         } else {
           let status = ''
           if (active.type === 'user' && active.id === item.userId) {
@@ -157,7 +157,7 @@ module.exports = {
             onlineCircle = ''
           }
           const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
-          itemHtml.push(`<span class="sfa sfa-avatar-online ${offLineStatus}"><img src='${avatarPic}'  /></span>${onlineCircle}`)
+          itemHtml.push(`<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}`)
 
           let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-close recently-message-close"></span>'
           if (item.newMsgNum > 0) {

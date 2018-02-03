@@ -70,7 +70,7 @@ export default [
       RouterController.async(resolve, AccountSafeViewInfo, {
         main: {
           title: '账户安全',
-          titleDes: '建议您启动全部安全设置，以保障资金及资金安全',
+          titleDes: '建议您启动全部安全设置，以保障账号及资金安全',
         },
         sidebar,
       })

@@ -145,7 +145,7 @@ const SyncModule = Base.Module.extend({
           // window.Global.m.publish('acct:loginOut')
           // // 关闭oauth轮询监听
           // window.Global.m.oauth.stop()
-          window.app.$store.commit(types.USER_CLEAR)
+          window.store.commit(types.USER_CLEAR)
           Global.ui.notification.show('您的账户已登出,请重新登录！', {
             event: function () {
               window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)

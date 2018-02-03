@@ -24,7 +24,7 @@ const MessageView = Base.ItemView.extend({
     'focus .js-im-contact-search': 'searchPanelChangeHandle',
     'click .js-search-input-cancel': 'cancelSearchInputHandle',
     'keydown .js-chat-input': 'sendChatHandle',
-    'click .js-chat-footer-send':'sendPrivateMessageHandle',
+    'click .js-chat-footer-send': 'sendPrivateMessageHandle',
     'click .js-chat-more-content': 'showMoreChatHandler',
     'click .js-mess-select-contact': 'selectMessContactHandler',
     'click .selected-sub-item-cancel': 'cancelMessContactHandler',
@@ -352,6 +352,9 @@ const MessageView = Base.ItemView.extend({
       }
       this.$('.js-chat-message-content-panel').append(imService.insertChat(this.userPic, this.username, typeContent))
       const today = new Date()
+      if (this.chatList.chatData == undefined) {
+        this.chatList.chatData = []
+      }
       this.chatList.chatData.push({
         content: typeContent,
         fromUserHeadIconId: null,

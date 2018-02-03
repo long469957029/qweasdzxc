@@ -4,6 +4,7 @@
       <div class="aa-banner-container"></div>
     </div>
     <div class="aa-container">
+      <router-link to="/aa/rechargeSalesActivity">/aa/rechargeSalesActivity</router-link>
       <active-navbar @fetchData="queryActivity" :activityType="activityType" :isFetching="queryFetching"></active-navbar>
       <active-timeline :timelineHeight="timelineHeight" :filterActivityList="filterActivityList"></active-timeline>
       <div>
@@ -174,7 +175,7 @@ export default {
 }
 </script>
 <style lang='scss' scoped>
-@import "../misc/mixin";
+@import "../gameCenter/misc/mixin";
 
 .aa-banner {
   @include banner-background("misc/aa-banner.png");

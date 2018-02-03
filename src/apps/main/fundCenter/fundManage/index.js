@@ -43,7 +43,7 @@ export default Base.ItemView.extend({
         }
       })
     } else {
-      Global.ui.notification.show('请稍后再试!')
+      Global.ui.notification.show('操作过于频繁，请稍候再试!')
     }
   },
   rechargeHandler() {
