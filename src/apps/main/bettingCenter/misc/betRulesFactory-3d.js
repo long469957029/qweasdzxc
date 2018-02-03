@@ -147,7 +147,7 @@ function _create(ticketId) {
         startPos: 0,
       },
       algorithm: algorithm.mulAll,
-      list: factory.createList(rule.list),
+      list: factory.createList(list),
       create: algorithm.getCreateFunc(2, {
         repeat: true,
         matching: true,
