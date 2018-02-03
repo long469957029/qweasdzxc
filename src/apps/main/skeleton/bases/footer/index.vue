@@ -21,8 +21,8 @@
               <span>下载手机APP：</span>
               <!--<router-link to="mb" ><div class="android-icon"></div></router-link>-->
               <!--<router-link to="mb" ><div class="ios-icon"></div></router-link>-->
-              <!--<a class="android-icon" href="newDownload.html" target="_blank"></a>-->
-              <!--<a class="ios-icon" href="newDownload.html" target="_blank"></a>-->
+              <a class="android-icon" href="mb"></a>
+              <a class="ios-icon" href="mb"></a>
             </span>
           </div>
           <p>Copyright © 2016-2017 无限娱乐 版权所有</p>

@@ -34,11 +34,22 @@ export default {
       .catch(fail)
   },
   // 领取冲量活动奖励
-  doRechargeSalesPlan(then, fail){
+  doRechargeSalesPlan({cycle},then, fail){
     return $http({
-      url: '/info/agentsalesactivity/info.json',
+      url: '/info/agentsalesactivity/doget.json',
+      data:{
+        cycle:cycle,
+      }
     })
       .then(then)
       .catch(fail)
-  }
+  },
+  // 获取投注计划活动信息
+  getBetPlanInfo(then, fail){
+    return $http({
+      url: '/info/bettarget/info.json',
+    })
+      .then(then)
+      .catch(fail)
+  },
 }

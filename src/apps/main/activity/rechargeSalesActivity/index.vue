@@ -32,16 +32,17 @@
             <div class="rs-panel-value-items inline-block" v-for="value in item.days">
               <div class="rs-panel-value-item inline-block" :class="{light:index===1 || index===3|| index===5}">
                 <div class="item-select"
-                     :class="{canSelect:value.status===1,selected:value.status===2 ||value.status===3}">
+                     :class="{canSelect:value.status===1}">
                   <div class="item-select-set">￥<span class="item-text">{{_(value.bonus).formatDiv(10000)}}</span></div>
                 </div>
+                <div class="item-status" :class="{selected:value.status===2 ,pass:value.status===3}"></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="rs-panel-receive" v-if="cyclevalue.status===1">
+        <div class="rs-panel-receive" v-if="cycle===0" @click="submitReceive">
         </div>
-        <div class="rs-panel-received " v-else></div>
+        <div class="rs-panel-received " v-else-if="cycle>0"></div>
         <div class="rs-tips">
           <div class="rs-tips-text">活动说明：</div>
           <div class="rs-tips-text">1、从活动之日起，根据日均销量的不同，每7天可领取一次对应的奖金。</div>
@@ -71,7 +72,7 @@
         salesList: [],
         fromTime: '',
         endTime: '',
-        isReceive: false,
+        cycle: -1,
       }
     },
 
@@ -86,7 +87,7 @@
             this.salesList = data.root.itemList
             this.fromTime = _(data.root.fromDate).toDate('YYYY年M月D日')
             this.endTime = _(data.root.endDate).toDate('YYYY年M月D日')
-            this.isReceive = true
+            this.cycle = data.root.cycle
           }
         }
       )
@@ -99,9 +100,17 @@
     filters: {},
 
     methods: {
-//      submitReceive(){
-//
-//      }
+      submitReceive(){
+        activityInfo.doRechargeSalesPlan ({
+          cycle:this.cycle
+        },({data})=>{
+            if(data.result === 0){
+              Global.ui.notification.show('奖励领取成功')
+            }else{
+              Global.ui.notification.show('数据请求失败')
+            }
+        })
+      }
     }
   }
 </script>
@@ -220,11 +229,19 @@
                     position: absolute;
                     color: #760e0a;
                   }
+
+                }
+                .item-status {
+                  width: 60px;
+                  height: 52px;
+                  position: absolute;
+                  right: 0;
+                  top: 0;
                   &.selected {
-                    background-image: url('./misc/rs-value-recevied.png');
-                    width: 64px;
-                    height: 65px;
-                    position: absolute;
+                    background-image: url('./misc/rs-item-received.png');
+                  }
+                  &.pass {
+                    background-image: url('./misc/rs-item-pass.png');
                   }
                 }
               }
@@ -257,7 +274,7 @@
         .rs-panel-received {
           margin: 30px auto;
           cursor: pointer;
-          background-image: url('./misc/rs-received.png');
+          background-image: url('./misc/rs-cannot-recevie.png');
           width: 175px;
           height: 54px;
         }

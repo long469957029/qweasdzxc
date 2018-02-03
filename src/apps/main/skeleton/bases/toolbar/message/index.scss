@@ -165,11 +165,11 @@
           }
           .contact-container {
             padding: 8px 0 0 0;
+            overflow: auto;
             height: 408px;
             background-color: $new-main-body-color;
             border-bottom: 1px solid $def-line-color;
             .person-sub-container{
-              overflow: auto;
               height: 300px;
             }
             .person-item {

@@ -5,56 +5,58 @@
       <div class="bp-header-time">同一时间只能领取一个任务，完成后奖励将自动发放，您还可领取其他更高的任务。</div>
     </div>
     <div class="bp-task">
-      <div class="bp-task-item active">
+      <div class="bp-task-item" :class="{active:value===selectedItem}" v-for="(item,value) in activityList"
+           @click="selectTask(value)">
         <div class="item-status"></div>
-        <div class="item-title">任务一</div>
-        <div class="item-text">投注10000元</div>
-        <div class="item-text">奖励300元</div>
-        <div class="item-down"><i class="fa fa-angle-double-down" aria-hidden="true"></i></div>
+        <div class="item-title">{{item.name}}</div>
+        <div class="item-text">投注{{_(item.bet3).formatDiv(10000)}}元</div>
+        <div class="item-text">奖励{{_(item.bonus1 + item.bonus2 + item.bonus3 + item.addBonus).formatDiv(10000)}}元</div>
+        <div class="item-down" v-if="value===selectedItem"><i class="fa fa-angle-double-down" aria-hidden="true"></i>
+        </div>
       </div>
-      <div class="bp-task-item">
-        <div class="item-status"></div>
-        <div class="item-title">任务二</div>
-        <div class="item-text">投注10000元</div>
-        <div class="item-text">奖励300元</div>
-        <div class="item-down"></div>
-      </div>
-      <div class="bp-task-item">
-        <div class="item-status"></div>
-        <div class="item-title">任务三</div>
-        <div class="item-text">投注10000元</div>
-        <div class="item-text">奖励300元</div>
-        <div class="item-down"></div>
-      </div>
-      <div class="bp-task-item">
-        <div class="item-status"></div>
-        <div class="item-title">任务四</div>
-        <div class="item-text">投注10000元</div>
-        <div class="item-text">奖励300元</div>
-        <div class="item-down"></div>
-      </div>
-      <div class="bp-task-item">
-        <div class="item-status"></div>
-        <div class="item-title">任务五</div>
-        <div class="item-text">投注10000元</div>
-        <div class="item-text">奖励300元</div>
-        <div class="item-down"></div>
-      </div>
-      <div class="bp-task-item">
-        <div class="item-status"></div>
-        <div class="item-title">任务六</div>
-        <div class="item-text">投注10000元</div>
-        <div class="item-text">奖励300元</div>
-        <div class="item-down"></div>
-      </div>
+      <!--<div class="bp-task-item">-->
+      <!--<div class="item-status"></div>-->
+      <!--<div class="item-title">任务二</div>-->
+      <!--<div class="item-text">投注10000元</div>-->
+      <!--<div class="item-text">奖励300元</div>-->
+      <!--<div class="item-down"></div>-->
+      <!--</div>-->
+      <!--<div class="bp-task-item">-->
+      <!--<div class="item-status"></div>-->
+      <!--<div class="item-title">任务三</div>-->
+      <!--<div class="item-text">投注10000元</div>-->
+      <!--<div class="item-text">奖励300元</div>-->
+      <!--<div class="item-down"></div>-->
+      <!--</div>-->
+      <!--<div class="bp-task-item">-->
+      <!--<div class="item-status"></div>-->
+      <!--<div class="item-title">任务四</div>-->
+      <!--<div class="item-text">投注10000元</div>-->
+      <!--<div class="item-text">奖励300元</div>-->
+      <!--<div class="item-down"></div>-->
+      <!--</div>-->
+      <!--<div class="bp-task-item">-->
+      <!--<div class="item-status"></div>-->
+      <!--<div class="item-title">任务五</div>-->
+      <!--<div class="item-text">投注10000元</div>-->
+      <!--<div class="item-text">奖励300元</div>-->
+      <!--<div class="item-down"></div>-->
+      <!--</div>-->
+      <!--<div class="bp-task-item">-->
+      <!--<div class="item-status"></div>-->
+      <!--<div class="item-title">任务六</div>-->
+      <!--<div class="item-text">投注10000元</div>-->
+      <!--<div class="item-text">奖励300元</div>-->
+      <!--<div class="item-down"></div>-->
+      <!--</div>-->
     </div>
     <div class="bp-wavy-lines"></div>
     <div class="bp-task-detail">
       <div class="bp-task-content">
         <div class="bp-task-detail-title">任务详情</div>
         <div class="bp-task-detail-name">
-          <div class="detail-name inline-block">任务1</div>
-          <div class="bet-detail inline-block">投注10000元，奖励300元</div>
+          <div class="detail-name inline-block">{{taskName}}</div>
+          <div class="bet-detail inline-block">投注{{betAmount}}元，奖励{{reward}}元</div>
         </div>
         <div class="bp-task-target">
           <div class="bp-task-target-top">
@@ -132,12 +134,19 @@
   </div>
 </template>
 <script>
+  import activityInfo from 'api/activity'
+  import taskConf from './taskConf'
   export default{
     name: 'index',
 
     data () {
       return {
-        activityList: []
+        activityList: [],
+        selectedItem: 0,
+        detailList: [],
+        taskName: '',
+        betAmount: 0,
+        reward: 0,
       }
     },
 
@@ -146,6 +155,27 @@
     components: {},
 
     mounted () {
+      activityInfo.getBetPlanInfo(
+        ({data}) => {
+          if (data && data.result === 0) {
+            const acList = data.root.itemList
+            _(acList).each((item) => {
+              item.name = taskConf.get(item.index).name
+            })
+            const defaultList = _(acList).findWhere(
+              {
+                index: 0
+              })
+            this.activityList = acList
+            this.detailList = defaultList
+            this.taskName = taskConf.get(0).detailName
+
+            this.betAmount = _(defaultList.bet3).formatDiv(10000)
+            this.reward = _(defaultList.bonus1 + defaultList.bonus2 + defaultList.bonus3 + defaultList.addBonus).formatDiv(10000)
+
+          }
+        }
+      )
     },
 
     watch: {},
@@ -154,7 +184,11 @@
 
     filters: {},
 
-    methods: {}
+    methods: {
+      selectTask(){
+
+      }
+    }
   }
 </script>
 
@@ -207,6 +241,7 @@
         position: relative;
         text-align: center;
         height: 174px;
+        margin: 0 2px;
         .item-status {
           float: right;
           position: absolute;

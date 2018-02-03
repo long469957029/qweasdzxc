@@ -4,7 +4,7 @@
       <div class="pull-left">
         <a class="header-left-link" href="/change.html">线路中心</a>
         <a class="header-left-link" @click="showLoginLauncher">极速登录器</a>
-        <a class="header-left-link" href='/dns.docx' target='_blank'>防DNS劫持教程</a>
+        <a class="header-left-link" @click="clearCache">清理缓存</a>
       </div>
       <div class="js-gl-service header-customer-entry  pull-right overflow-hidden">
         <span class="sfa sfa-customer-service"></span><span class="header-customer-text">在线客服</span>
@@ -193,6 +193,9 @@
       goToAnnouncement(){
         window.Global.router.goTo('uc/mg')
       },
+      clearCache(){
+        Global.ui.notification.show('请按Ctrl+Shift+Delete进行浏览器缓存清理')
+      }
     },
 
     mounted(){

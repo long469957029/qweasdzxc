@@ -27,7 +27,7 @@
           <span>提示：此账户由上级开户生成，为保障您的账户安全，请修改初始密码！</span>
         </div>
         <div class="pwd-input-panel">
-          <span class="pwd-desc">新登陆密码：</span>
+          <span class="pwd-desc">新登录密码：</span>
           <input type="password" class="pwd-input" v-model="passwordModel" @focus="verifyPwd"
                  @blur="verifyPwd" @keyup.enter="resetInitPwd"
                  autocomplete="off" required></div>
