@@ -157,8 +157,8 @@
             this.curItem = _(data.root.itemList).findWhere({
               index: item.index
             })
-            this.process = 50 + '%'
-//            this.process = _(data.root.betTotal / data.root.rechargeTotal * item.betMulti).formatDiv(10000)
+//            this.process = 50 + '%'
+            this.process = _((data.root.betTotal / data.root.rechargeTotal * item.betMulti)*100).formatDiv(1,{fixed:0})+ '%'
           }
         })
         if (flag) {
