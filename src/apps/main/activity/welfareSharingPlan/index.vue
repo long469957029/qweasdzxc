@@ -6,7 +6,8 @@
           <div class="ws-header-logo1"></div>
           <div class="ws-header-logo2"></div>
           <div class="ws-header-logo3"></div>
-          <div class="ws-header-time">活动时间：2017年1月2日-2017年2月1日</div>
+          <div class="ws-header-time">活动时间：<span v-model="fromTime">{{fromTime}}</span>-<span v-model="endTime">{{endTime}}</span>
+          </div>
 
         </div>
       </div>
@@ -39,12 +40,15 @@
                 <div class="myReward-item top inline-block">可得奖励</div>
               </div>
               <div class="myReward-container-value">
-                <div class="myReward-item left inline-block">2017-07-12</div>
-                <div class="myReward-item inline-block">1224</div>
-                <div class="myReward-item inline-block">2333</div>
-                <div class="myReward-item inline-block">4444</div>
+                <div class="myReward-item left inline-block">{{_(myBonusList.date).toDate('YYYY-MM-DD')}}</div>
+                <div class="myReward-item inline-block">{{_(myBonusList.betAmount).formatDiv(10000)}}</div>
+                <div class="myReward-item inline-block">{{_(myBonusList.profit).formatDiv(10000)}}</div>
+                <div class="myReward-item inline-block">{{_(myBonusList.bonus).formatDiv(10000)}}</div>
               </div>
-              <div class="myReward-receive">确认领取</div>
+              <div class="myReward-receive recevie" v-if="!activityList.getBonus&&myBonusList.bonus>0" @click="recevieBonus">确认领取</div>
+              <div class="myReward-receive recevied" v-else-if="activityList.getBonus"></div>
+              <div class="myReward-receive unRecevie" v-else-if="!activityList.getBonus&&myBonusList.bonus<=0">
+              </div>
             </div>
           </div>
           <div class="content-welfare">
@@ -56,10 +60,10 @@
             <div class="content-welfare-calculation">
               <span class="welfare-calculation-title">福利计算机：</span>
               <span class="welfare-calculation-text">团队日销量</span>
-              <input class="welfare-calculation-input">
+              <input class="welfare-calculation-input" data-parsley-type="integer" required v-model="teamAmount">
               <span class="welfare-calculation-text">团队日亏损</span>
-              <input class="welfare-calculation-input">
-              <button class="btn btn-welfare-calculation">计算</button>
+              <input class="welfare-calculation-input" data-parsley-type="integer" required v-model="teamProfit">
+              <button class="btn btn-welfare-calculation" @click="curBonus">计算</button>
             </div>
             <div class="content-welfare-container">
               <div class="content-welfare-top">
@@ -73,25 +77,24 @@
                 <div class="welfare-top-item inline-block item3">奖励</div>
               </div>
               <div class="content-welfare-value">
-                <div class="content-welfare-value-item">
-                  <div class="welfare-item inline-block item1">200000</div>
-                  <div class="welfare-item inline-block item2">20</div>
-                  <div class="welfare-item inline-block item3">200</div>
-                  <div class="welfare-item inline-block item4">100</div>
-                  <div class="welfare-item inline-block item3">400</div>
-                  <div class="welfare-item inline-block item4">130</div>
-                  <div class="welfare-item inline-block item3">800</div>
-                  <div class="welfare-item inline-block item4">180</div>
-                </div>
-                <div class="content-welfare-value-item">
-                  <div class="welfare-item inline-block item1">200000</div>
-                  <div class="welfare-item inline-block item2">20</div>
-                  <div class="welfare-item inline-block item3">200</div>
-                  <div class="welfare-item inline-block item4">100</div>
-                  <div class="welfare-item inline-block item3">400</div>
-                  <div class="welfare-item inline-block item4">130</div>
-                  <div class="welfare-item inline-block item3">800</div>
-                  <div class="welfare-item inline-block item4">180</div>
+                <div class="content-welfare-value-item" v-for="bonus in bonusList">
+                  <div class="welfare-item inline-block item1">{{_(bonus.betAmount).formatDiv(10000)}}</div>
+                  <div class="welfare-item inline-block item2">{{_(bonus.bonus).formatDiv(10000)}}</div>
+                  <div class="welfare-item inline-block item3">{{_(bonus.profit1).formatDiv(10000)}}</div>
+                  <div class="welfare-item inline-block item4"
+                       :class="{active:bonus.bonus1===curResult&&curAmount===bonus.betAmount}">
+                    {{_(bonus.bonus1).formatDiv(10000)}}
+                  </div>
+                  <div class="welfare-item inline-block item3">{{_(bonus.profit2).formatDiv(10000)}}</div>
+                  <div class="welfare-item inline-block item4"
+                       :class="{active:bonus.bonus2===curResult&&curAmount===bonus.betAmount}">
+                    {{_(bonus.bonus2).formatDiv(10000)}}
+                  </div>
+                  <div class="welfare-item inline-block item3">{{_(bonus.profit3).formatDiv(10000)}}</div>
+                  <div class="welfare-item inline-block item4"
+                       :class="{active:bonus.bonus3===curResult&&curAmount===bonus.betAmount}">
+                    {{_(bonus.bonus3).formatDiv(10000)}}
+                  </div>
                 </div>
               </div>
             </div>
@@ -134,11 +137,22 @@
   </div>
 </template>
 <script>
+  import activityInfo from 'api/activity'
   export default{
     name: 'index',
 
     data () {
-      return {}
+      return {
+        myBonusList: '',
+        fromTime: '',
+        endTime: '',
+        activityList: '',
+        bonusList: '',
+        teamAmount: 0,
+        teamProfit: 0,
+        curResult: 0,
+        curAmount: 0,
+      }
     },
 
     props: {},
@@ -146,6 +160,7 @@
     components: {},
 
     mounted () {
+      this.initActivityData()
     },
 
     watch: {},
@@ -154,7 +169,64 @@
 
     filters: {},
 
-    methods: {}
+    methods: {
+      recevieBonus(){
+        activityInfo.doWelfareSharingPlan(
+          ({data}) => {
+            if (data && data.result === 0) {
+              Global.ui.notification.show('领取成功！今天再接再厉哦！')
+              this.initActivityData()
+            }else{
+              Global.ui.notification.show(data.msg)
+            }
+          }
+        )
+      },
+      curBonus(){
+        activityInfo.curWelfare({
+          amount: this.teamAmount,
+          profit: this.teamProfit
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            this.curResult = data.root.bonus
+            this.curAmount = this.getCurAmount(this.teamAmount)
+            this.initActivityData()
+          } else {
+            Global.ui.notification.show(data.msg)
+          }
+        })
+      },
+      getCurAmount(teamAmount){
+        const amountList = []
+        _(this.bonusList).each((item) => {
+          if (_(item.betAmount).formatDiv(10000) <= teamAmount) {
+            amountList.push(item.betAmount)
+          }
+        })
+        return amountList.sort()[amountList.length - 1]
+      },
+      initActivityData(){
+        activityInfo.getWelfareSharingPlanInfo(
+          ({data}) => {
+            if (data && data.result === 0) {
+              if (data.root.avaliable) {
+                if (_.isNull(data.root.yesterdayData)) {
+                  Global.ui.notification.show('您的账号暂时无法参与该活动，请与上级联系确认！')
+                } else {
+                  this.fromTime = _(data.root.fromDate).toDate('YYYY年M月D日')
+                  this.endTime = _(data.root.endDate).toDate('YYYY年M月D日')
+                  this.myBonusList = data.root.yesterdayData
+                  this.activityList = data.root
+                  this.bonusList = data.root.wages
+                }
+              } else {
+                Global.ui.notification.show('您的账号暂时无法参与该活动，请与上级联系确认！')
+              }
+            }
+          }
+        )
+      },
+    }
   }
 </script>
 
@@ -323,7 +395,6 @@
                 }
               }
               .myReward-receive {
-                background-image: url('./misc/ws-myReward-bottom.png');
                 margin: 25px auto;
                 width: 121px;
                 height: 49px;
@@ -331,6 +402,16 @@
                 font-size: 18px;
                 text-align: center;
                 line-height: 49px;
+                &.receive {
+                  cursor: pointer;
+                  background-image: url('./misc/ws-myReward-bottom.png');
+                }
+                &.recevied {
+                  background-image: url('./misc/ws-myReward-recevied.png');
+                }
+                &.unRecevie {
+                  background-image: url('./misc/ws-myReward-unRecevie.png');
+                }
               }
             }
           }
@@ -385,11 +466,11 @@
             }
             .content-welfare-container {
               font-size: 0;
-              .content-welfare-value{
-                border-bottom:1px solid #407392;
+              .content-welfare-value {
+                border-bottom: 1px solid #407392;
                 overflow: hidden;
               }
-              .welfare-top-item{
+              .welfare-top-item {
                 vertical-align: top;
                 width: 138px;
                 height: 45px;
@@ -399,8 +480,8 @@
                 color: #ffffff;
                 background: #4780a2;
                 border: 1px solid #5799c0;
-                 &.item1 {
-                   width: 114px;
+                &.item1 {
+                  width: 114px;
                 }
                 &.item2 {
                   width: 109px;
@@ -436,8 +517,8 @@
                   width: 101px;
                   border-right: 1px solid #407392;
                 }
-                &.active{
-                  background:#a5d7ba;
+                &.active {
+                  background: #a5d7ba;
                   color: #ffffff;
                 }
               }

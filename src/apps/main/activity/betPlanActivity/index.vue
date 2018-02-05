@@ -7,48 +7,14 @@
     <div class="bp-task">
       <div class="bp-task-item" :class="{active:value===selectedItem}" v-for="(item,value) in activityList"
            @click="selectTask(value)">
-        <div class="item-status"></div>
+        <div class="item-status"
+             :class="{doing:item.status==1,end:item.status===2,unenable:item.status===-1}"></div>
         <div class="item-title">{{item.name}}</div>
         <div class="item-text">投注{{_(item.bet3).formatDiv(10000)}}元</div>
         <div class="item-text">奖励{{_(item.bonus1 + item.bonus2 + item.bonus3 + item.addBonus).formatDiv(10000)}}元</div>
         <div class="item-down" v-if="value===selectedItem"><i class="fa fa-angle-double-down" aria-hidden="true"></i>
         </div>
       </div>
-      <!--<div class="bp-task-item">-->
-      <!--<div class="item-status"></div>-->
-      <!--<div class="item-title">任务二</div>-->
-      <!--<div class="item-text">投注10000元</div>-->
-      <!--<div class="item-text">奖励300元</div>-->
-      <!--<div class="item-down"></div>-->
-      <!--</div>-->
-      <!--<div class="bp-task-item">-->
-      <!--<div class="item-status"></div>-->
-      <!--<div class="item-title">任务三</div>-->
-      <!--<div class="item-text">投注10000元</div>-->
-      <!--<div class="item-text">奖励300元</div>-->
-      <!--<div class="item-down"></div>-->
-      <!--</div>-->
-      <!--<div class="bp-task-item">-->
-      <!--<div class="item-status"></div>-->
-      <!--<div class="item-title">任务四</div>-->
-      <!--<div class="item-text">投注10000元</div>-->
-      <!--<div class="item-text">奖励300元</div>-->
-      <!--<div class="item-down"></div>-->
-      <!--</div>-->
-      <!--<div class="bp-task-item">-->
-      <!--<div class="item-status"></div>-->
-      <!--<div class="item-title">任务五</div>-->
-      <!--<div class="item-text">投注10000元</div>-->
-      <!--<div class="item-text">奖励300元</div>-->
-      <!--<div class="item-down"></div>-->
-      <!--</div>-->
-      <!--<div class="bp-task-item">-->
-      <!--<div class="item-status"></div>-->
-      <!--<div class="item-title">任务六</div>-->
-      <!--<div class="item-text">投注10000元</div>-->
-      <!--<div class="item-text">奖励300元</div>-->
-      <!--<div class="item-down"></div>-->
-      <!--</div>-->
     </div>
     <div class="bp-wavy-lines"></div>
     <div class="bp-task-detail">
@@ -78,50 +44,50 @@
             </div>
             <div class="bp-value-panel">
               <div class="bp-value-item">
-                6000
+                {{_(detailList.bet1).formatDiv(10000)}}
               </div>
               <div class="bp-value-item">
-                8
-              </div>
-            </div>
-            <div class="bp-value-panel">
-              <div class="bp-value-item">
-                8000
-              </div>
-              <div class="bp-value-item">
-                28
+                {{_(detailList.bonus1).formatDiv(10000)}}
               </div>
             </div>
             <div class="bp-value-panel">
               <div class="bp-value-item">
-                10000
+                {{_(detailList.bet2).formatDiv(10000)}}
               </div>
               <div class="bp-value-item">
-                58
+                {{_(detailList.bonus2).formatDiv(10000)}}
+              </div>
+            </div>
+            <div class="bp-value-panel">
+              <div class="bp-value-item">
+                {{_(detailList.bet3).formatDiv(10000)}}
+              </div>
+              <div class="bp-value-item">
+                {{_(detailList.bonus3).formatDiv(10000)}}
               </div>
             </div>
             <div class="bp-value-panel add">
               <div class="value-money">
-                150
+                {{_(detailList.addBonus).formatDiv(10000)}}
               </div>
               <div>+</div>
               <div class="value-coupons">
-                无限分分彩代金券10元
+                {{couponsName}}代金券{{couponsAmount}}元
               </div>
             </div>
             <div class="bp-value-panel total">
               <div class="value-money">
-                150
+                {{totalAmount}}
               </div>
               <div>+</div>
               <div class="value-coupons">
-                无限分分彩代金券10元
+                {{couponsName}}代金券{{couponsAmount}}元
               </div>
             </div>
           </div>
         </div>
-        <div class="bp-task-receive"></div>
-        <div class="bp-task-received hidden"></div>
+        <div class="bp-task-receive" v-if="detailList.status===0" @click="recevieTask(detailList.index)"></div>
+        <div class="bp-task-received" v-else></div>
       </div>
     </div>
     <div class="bp-footer">
@@ -147,6 +113,9 @@
         taskName: '',
         betAmount: 0,
         reward: 0,
+        couponsName: '',
+        couponsAmount: 0,
+        totalAmount: 0,
       }
     },
 
@@ -158,21 +127,7 @@
       activityInfo.getBetPlanInfo(
         ({data}) => {
           if (data && data.result === 0) {
-            const acList = data.root.itemList
-            _(acList).each((item) => {
-              item.name = taskConf.get(item.index).name
-            })
-            const defaultList = _(acList).findWhere(
-              {
-                index: 0
-              })
-            this.activityList = acList
-            this.detailList = defaultList
-            this.taskName = taskConf.get(0).detailName
-
-            this.betAmount = _(defaultList.bet3).formatDiv(10000)
-            this.reward = _(defaultList.bonus1 + defaultList.bonus2 + defaultList.bonus3 + defaultList.addBonus).formatDiv(10000)
-
+            this.initActivityData(data, 'new')
           }
         }
       )
@@ -185,8 +140,59 @@
     filters: {},
 
     methods: {
-      selectTask(){
-
+      recevieTask(index){
+        activityInfo.doBetPlan({
+            index: index
+          },
+          ({data}) => {
+            if (data.result === 0) {
+              this.initActivityData(data, 'new')
+              Global.ui.notification.show('任务领取成功！')
+            }else{
+              Global.ui.notification.show(data.msg)
+            }
+          })
+      },
+      selectTask(index){
+        this.selectedItem = index
+        this.initActivityData(this.activityList, index)
+      },
+      initActivityData(data, type){
+        let defaultList = []
+        if (type === 'new') {
+          let flag = false
+          const acList = data.root.itemList
+          _(acList).each((item) => {
+            item.name = taskConf.get(item.index).name
+            if (item.status === 1) {
+              flag = true
+            }
+          })
+          if (flag) {
+            defaultList = _(acList).findWhere(
+              {
+                status: 1
+              })
+          } else {
+            defaultList = _(acList).findWhere(
+              {
+                index: 0
+              })
+          }
+          this.activityList = acList
+        } else {
+          defaultList = _(this.activityList).findWhere(
+            {
+              index: type
+            })
+        }
+        this.detailList = defaultList
+        this.taskName = taskConf.get(defaultList.index).detailName
+        this.betAmount = _(defaultList.bet3).formatDiv(10000)
+        this.reward = _(defaultList.bonus1 + defaultList.bonus2 + defaultList.bonus3 + defaultList.addBonus).formatDiv(10000)
+        this.couponsName = ticketConfig.getById(defaultList.ticketCoupon.ticketId).zhName
+        this.totalAmount = _(defaultList.bonus1 + defaultList.bonus2 + defaultList.bonus3 + defaultList.addBonus).formatDiv(10000)
+        this.couponsAmount = _(defaultList.ticketCoupon.amount).formatDiv(10000)
       }
     }
   }
@@ -242,13 +248,15 @@
         text-align: center;
         height: 174px;
         margin: 0 2px;
+        cursor: pointer;
         .item-status {
-          float: right;
-          position: absolute;
           width: 72px;
           height: 61px;
-
+          position: absolute;
+          top: 5px;
+          right: 4px;
           &.doing {
+
             background-image: url('./misc/bp-task-doing.png');
           }
           &.end {
@@ -275,7 +283,7 @@
           color: #ac976d;
           font-size: 37px;
           left: 50%;
-          margin-left: -11px;
+          margin-left: -7px;
         }
         &.active {
           background-image: url('./misc/bp-task-active.png');

@@ -10,34 +10,37 @@
         </div>
       </div>
     </div>
-    <div class="rp-process">
+    <div class="rp-process" v-show="showDoingTask">
       <div class="rp-process-panel">
         <div class="rp-process-back"></div>
         <div class="rp-process-title">当前任务进度</div>
         <div class="rp-process-content">
           <div class="rp-process-task inline-block">
             <div class="rp-task-title">当前任务</div>
-            <div class="rp-task-text">8倍流水返5%充值额</div>
+            <div class="rp-task-text">{{curItem.betMulti}}倍流水返{{_(curItem.bonusRate).formatDiv(100)}}%充值额</div>
           </div>
           <div class="rp-process-task-detail inline-block">
             <div class="detail-value">
               <div class="detail-value-item">
                 <div class="rp-task-title">您的充值额</div>
-                <div class="rp-value-text">10000</div>
+                <div class="rp-value-text">{{rechargeTotal}}</div>
               </div>
               <div class="detail-value-item">
                 <div class="rp-task-title">奖励金额</div>
-                <div class="rp-value-text">100</div>
+                <div class="rp-value-text">{{_(rechargeTotal * curItem.bonusRate).formatDiv(10000)}}</div>
               </div>
               <div class="detail-value-item claim">
                 <div class="rp-task-title">流水要求</div>
-                <div class="rp-value-text">1000000</div>
+                <div class="rp-value-text">{{rechargeTotal * curItem.betMulti}}</div>
               </div>
             </div>
             <div class="detail-process">
-              <span class="rp-task-title">流水进度</span>
-              <span class="rp-task-img"></span>
-              <span class="rp-task-text">5000/8000</span>
+              <div class="rp-task-title inline-block">流水进度</div>
+              <div class="rp-task-img inline-block">
+                <div class="rp-task-process" ref="process"
+                     v-is-in-view="{callback: visibilityChanged}"></div>
+              </div>
+              <div class="rp-task-text inline-block">{{betTotal}}/{{rechargeTotal * curItem.betMulti}}</div>
             </div>
           </div>
         </div>
@@ -47,81 +50,57 @@
       <div class="rp-plan-panel">
         <div class="rp-plan-back"></div>
         <div class="rp-plan-title">充值计划</div>
-        <div class="rp-plan-item">
-          <div class="item-img one inline-block"></div>
+        <div class="rp-plan-item" v-for="(item,index) in planList">
+          <div class="item-img inline-block"
+               :class="{one:index===0,two:index===1,three:index===2,four:index===3,five:index===4}"></div>
           <div class="item-text-container inline-block">
-            <div class="item-text"><span class="item-text-value">8</span>倍流水返回<span class="item-text-value">5%</span>
-              +无限分分彩<span class="item-text-value">10</span>元代金券
+            <div class="item-text"><span class="item-text-value">{{item.betMulti}}</span>倍流水返<span
+              class="item-text-value">{{_(item.bonusRate).formatDiv(100)}}%</span>充值额
+              +{{item.ticketCoupon.ticketName}}<span
+                class="item-text-value">{{_(item.ticketCoupon.amount).formatDiv(10000)}}</span>元代金券
             </div>
-            <div class="item-desc">如：充10000，流水10000元，返500元</div>
-          </div>
-          <div class="item-receive hidden">立即领取</div>
-          <div class="item-status doing"></div>
-        </div>
-        <div class="rp-plan-item">
-          <div class="item-img two inline-block"></div>
-          <div class="item-text-container inline-block">
-            <div class="item-text"><span class="item-text-value">8</span>倍流水返回<span class="item-text-value">5%</span>
-              +无限分分彩<span class="item-text-value">10</span>元代金券
+            <div class="item-desc">
+              如：充{{rechargeExp}}，流水{{rechargeExp * item.betMulti}}，返{{rechargeExp * _(item.bonusRate).formatDiv(10000)}}元
             </div>
-            <div class="item-desc">如：充10000，流水10000元，返500元</div>
           </div>
-          <div class="item-receive hidden">立即领取</div>
-          <div class="item-status done"></div>
-        </div>
-        <div class="rp-plan-item">
-          <div class="item-img three inline-block"></div>
-          <div class="item-text-container inline-block">
-            <div class="item-text"><span class="item-text-value">8</span>倍流水返回<span class="item-text-value">5%</span>
-              +无限分分彩<span class="item-text-value">10</span>元代金券
-            </div>
-            <div class="item-desc">如：充10000，流水10000元，返500元</div>
-          </div>
-          <div class="item-receive inline-block">立即领取</div>
-          <div class="item-status hidden"></div>
-        </div>
-        <div class="rp-plan-item">
-
-          <div class="item-img four inline-block"></div>
-          <div class="item-text-container inline-block">
-            <div class="item-text"><span class="item-text-value">8</span>倍流水返回<span class="item-text-value">5%</span>
-              +无限分分彩<span class="item-text-value">10</span>元代金券
-            </div>
-            <div class="item-desc">如：充10000，流水10000元，返500元</div>
-          </div>
-          <div class="item-receive inline-block">立即领取</div>
-          <div class="item-status hidden"></div>
-        </div>
-        <div class="rp-plan-item">
-          <div class="item-img five inline-block"></div>
-          <div class="item-text-container inline-block">
-            <div class="item-text"><span class="item-text-value">8</span>倍流水返回<span class="item-text-value">5%</span>
-              +无限分分彩<span class="item-text-value">10</span>元代金券
-            </div>
-            <div class="item-desc">如：充10000，流水10000元，返500元</div>
-          </div>
-          <div class="item-receive  inline-block">立即领取</div>
-          <div class="item-status hidden"></div>
+          <div class="item-receive" v-if="item.status===0" @click="taskRecevie(item.index)">立即领取</div>
+          <div class="item-status" :class="{doing:item.status===1,done:item.status===2}" v-else></div>
         </div>
       </div>
     </div>
     <div class="rp-footer">
       <div class="rp-footer-panel">
         <div class="rp-footer-title">活动规则</div>
-        <div class="rp-footer-text">1、单次充值金额需大于100元，小于100元充值活动资格无效。</div>
-        <div class="rp-footer-text">2、仅计算在领取任务后的首笔金额大于100的充值为返奖充值，流水可累积，充值不累积。如领取任务后充值1000元，打满8倍流水则奖励为1000*5%=50元，未打满8倍流水，
-          再次充值1000元（不再计算为奖励），打够此前1000元的8倍流水，则依然可享50元充值奖励。</div>
+        <div class="rp-footer-text">1、单次充值金额需大于{{minRecharge}}元，小于{{minRecharge}}元充值活动资格无效。</div>
+        <div class="rp-footer-text">
+          2、仅计算在领取任务后的首笔金额大于{{minRecharge}}的充值为返奖充值，流水可累积，充值不累积。如领取任务后充值1000元，打满8倍流水则奖励为1000*5%=50元，未打满8倍流水，
+          再次充值1000元（不再计算为奖励），打够此前1000元的8倍流水，则依然可享50元充值奖励。
+        </div>
         <div class="rp-footer-text">3、充值奖励在达到目标后自动返还，在完成一个任务后可领取其他的充值任务。</div>
       </div>
     </div>
   </div>
 </template>
 <script>
+  import activityInfo from 'api/activity'
+
+  import VueIsInView from 'vue-is-in-view';
+  Vue.use(VueIsInView);
+
   export default{
     name: 'index',
 
     data () {
-      return {}
+      return {
+        showDoingTask: true,
+        planList: '',
+        minRecharge: 0,
+        curItem: '',
+        betTotal: 0,
+        rechargeTotal: 0,
+        rechargeExp: 10000,
+        process: 0,
+      }
     },
 
     props: {},
@@ -129,8 +108,13 @@
     components: {},
 
     mounted () {
-      this.$nextTick(() => {
-      })
+      activityInfo.getRechargePlanInfo(
+        ({data}) => {
+          if (data && data.result === 0) {
+            this.initActivityData(data)
+          }
+        }
+      )
     },
 
     watch: {},
@@ -139,7 +123,49 @@
 
     filters: {},
 
-    methods: {}
+    methods: {
+      taskRecevie(index){
+        activityInfo.doRechargePlan({
+            index: index
+          },
+          ({data}) => {
+            if (data.result === 0) {
+              this.initActivityData(data)
+              Global.ui.notification.show('任务领取成功！')
+            } else {
+              Global.ui.notification.show(data.msg)
+            }
+          })
+      },
+
+      visibilityChanged() {
+        Velocity(this.$refs.process, {
+          width: this.process
+        })
+      },
+      initActivityData(data){
+        const flag = false
+        this.planList = data.root.itemList
+        this.rechargeTotal = _(data.root.rechargeTotal).formatDiv(10000)
+        this.betTotal = _(data.root.betTotal).formatDiv(10000)
+        this.minRecharge = _(data.root.recharge).formatDiv(10000)
+
+        //status -1：不可领取，0 可领取且未领取，1，已领取且进行中，2，已完成
+        _(data.root.itemList).each((item) => {
+          if (item.status === 1) {
+            flag === true
+            this.curItem = _(data.root.itemList).findWhere({
+              index: item.index
+            })
+            this.process = 50 + '%'
+//            this.process = _(data.root.betTotal / data.root.rechargeTotal * item.betMulti).formatDiv(10000)
+          }
+        })
+        if (flag) {
+          this.showDoingTask = true
+        }
+      }
+    }
   }
 </script>
 
@@ -288,7 +314,19 @@
                 margin-right: 10px;
               }
               .rp-task-img {
+                position: relative;
                 width: 365px;
+                background: #dfdfdf;
+                height: 17px;
+                border-radius: 20px;
+                .rp-task-process {
+                  position: absolute;
+                  left: 0;
+                  width: 0;
+                  background: #e0bd77;
+                  height: 17px;
+                  border-radius: 20px;
+                }
               }
               .rp-task-text {
                 margin-left: 25px;
@@ -387,9 +425,10 @@
             height: 54px;
             line-height: 54px;
             position: absolute;
-            margin-top: 18px;
+            top: 45px;
             border-radius: 4px;
             box-shadow: 0 3px 5px #e0bd77;
+            cursor: pointer;
           }
           .item-status {
             position: absolute;
@@ -411,7 +450,7 @@
     .rp-footer {
       width: 100%;
       background-image: url('./misc/rs-footer.png');
-      height:485px;
+      height: 485px;
       margin-top: -165px;
       .rp-footer-panel {
         padding-top: 220px;
