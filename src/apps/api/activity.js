@@ -2,7 +2,7 @@ const PAGESIZE = 6
 const PAGEINDEX = 0
 
 export default {
-  getActivityList({ activityType = '', pageSize = PAGESIZE, pageIndex = PAGEINDEX }, then, fail) {
+  getActivityList({activityType = '', pageSize = PAGESIZE, pageIndex = PAGEINDEX}, then, fail) {
     return $http({
       url: '/info/activityCenter/list.json',
       data: {
@@ -15,7 +15,7 @@ export default {
       .catch(fail)
   },
 
-  getActivityDetail({ rid = '' }, then, fail) {
+  getActivityDetail({rid = ''}, then, fail) {
     return $http({
       url: '/info/activityCenter/detail.json',
       data: {
@@ -25,4 +25,20 @@ export default {
       .then(then)
       .catch(fail)
   },
+  // 获取冲量活动信息
+  getRechargeSalesInfo(then, fail){
+    return $http({
+      url: '/info/agentsalesactivity/info.json',
+    })
+      .then(then)
+      .catch(fail)
+  },
+  // 领取冲量活动奖励
+  doRechargeSalesPlan(then, fail){
+    return $http({
+      url: '/info/agentsalesactivity/info.json',
+    })
+      .then(then)
+      .catch(fail)
+  }
 }

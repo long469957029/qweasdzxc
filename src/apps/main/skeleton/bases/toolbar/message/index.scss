@@ -176,6 +176,8 @@
               cursor: pointer;
               padding: 8px 0 8px 26px;
               height: 38px;
+              position: relative;
+
               .contact-name {
                 margin-left: 17px;
                 font-size: 14px;
@@ -215,6 +217,9 @@
                 margin-left: 13px;
               }
             }
+          }
+          .person-item-avatar{
+            float: left;
           }
           .recently-container {
             overflow: auto;
@@ -278,7 +283,7 @@
                 line-height: 12px;
                 text-align: center;
                 right: 27px;
-                margin-top: -37px;
+                margin-top: -28px;
                 .recently-newMessage-num-text {
                   transform: scale(0.8);
                   line-height: 14px;
@@ -351,6 +356,7 @@
           position: relative;
           background-color: $new-main-body-color;
           padding: 12px 0 12px 74px;
+          cursor: pointer;
           .contact-mass-message {
             cursor: pointer;
             .contact-footer-text {
@@ -713,6 +719,7 @@
     position: absolute;
     right: 27px;
     bottom: 16px;
+    cursor: pointer;
     &.active {
       background-position: 0;
       background-image: url("~base/images/sprites/im/icon-send-green.png")

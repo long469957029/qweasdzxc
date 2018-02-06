@@ -180,6 +180,7 @@ module.exports = {
     const selected = []
     const items = []
     let defaultID = ''
+    let selectedData = []
     const typeData = _(data).findWhere({
       paymentType: type,
     })
@@ -192,27 +193,31 @@ module.exports = {
       } else {
         defaultID = typeData.bankList[0].bankId
       }
-
-      unSelectedData = _(typeData.bankList).without(_(typeData.bankList).findWhere({
+      selectedData = _(typeData.bankList).findWhere({
         bankId: defaultID,
-      }))
+      })
+      unSelectedData = _(typeData.bankList).without(selectedData)
     } else {
       if (id) {
         defaultID = id
       } else {
         defaultID = bankConfig.get(1).id
       }
-      unSelectedData = _(bankConfig.getAll()).without(_(bankConfig.getAll()).findWhere({
+      selectedData = _(bankConfig.getAll()).findWhere({
         id: defaultID,
-      }))
+      })
+      unSelectedData = _(bankConfig.getAll()).without(selectedData)
     }
-    const selectedData = _(typeData.bankList).findWhere({
-      bankId: defaultID,
-    })
+
     // 取银行列表中第一行数据作为默认显示的银行
     const logo = bankConfig.get(defaultID).className
+
     const name = bankConfig.get(defaultID).zhName
-    selected.push(`<div class="js-fc-rc-bank-selectedItem" data-type="${type}" data-name="${name}" data-id="${defaultID}" data-code="${selectedData.bankCode}">`)
+    if(type===11){
+      selected.push(`<div class="js-fc-rc-bank-selectedItem" data-type="${type}" data-name="${name}" data-id="${defaultID}">`)
+    }else{
+      selected.push(`<div class="js-fc-rc-bank-selectedItem" data-type="${type}" data-name="${name}" data-id="${defaultID}" data-code="${selectedData.bankCode}">`)
+    }
     selected.push(`<span class="js-rc-type-icon rc-icon ${logo}"></span>`)
     selected.push(`<span class="js-rc-type-name rc-name">${name}</span>`)
     selected.push('<span class="js-rc-type-desc rc-desc">其他支付银行</span>')

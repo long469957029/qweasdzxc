@@ -177,7 +177,7 @@
     }
 
     .record-amount, .record-progress {
-      @include float-item(14px, $prominent-color, 33%, 35px, 0px);
+      @include float-item(14px, $prominent-color, 32%, 35px, 0px);
     }
 
     .record-amount {
@@ -185,8 +185,8 @@
     }
 
     .record-progress {
-      text-align: right;
-      width: 63%;
+      float: right;
+      width: 64%;
       margin-left: 10px;
       .progress {
         float: left;
