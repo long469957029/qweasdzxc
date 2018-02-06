@@ -24,7 +24,7 @@
       <div class="reset-panel">
         <div class="reset-panel-title">
           <span class="title-img"></span>
-          <span>提示：此账户由上级开户生成，为保障您的账户安全，请修改初始密码！</span>
+          <span>提示：您的登录密码已被重置，请重新设置新密码！</span>
         </div>
         <div class="pwd-input-panel">
           <span class="pwd-desc">新登录密码：</span>
@@ -352,8 +352,8 @@
             }
           }
           &.confirm {
-            position: fixed;
-            top: 330px;
+            position: absolute;
+            top: 180px;
           }
         }
         .message-container {

@@ -115,11 +115,11 @@ const BettingRecordsView = SearchGrid.extend({
     // 加上统计行
     this.grid.addFooterRows({
       trClass: 'tr-footer',
-      // columnEls: [
-      //   '<strong>所有页总计</strong>', '', '', '', '', '',
-      //   _(gridData.betMoneyTotal).fixedConvert2yuan(),
-      //   _(gridData.prizeMoneyTotal).convert2yuan(),
-      // ],
+      columnEls: [
+        '<strong>所有页总计</strong>', '', '', '', '', '',
+        _(gridData.betMoneyTotal).fixedConvert2yuan(),
+        _(gridData.prizeMoneyTotal).convert2yuan(),
+      ],
     }).hideLoading()
 
     _(gridData.betList).each((items, index) => {

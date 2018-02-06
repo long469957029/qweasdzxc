@@ -1,5 +1,3 @@
-
-
 const TicketSelectGroup = Base.PrefabView.extend({
 
   options: {
@@ -95,6 +93,7 @@ const TicketSelectGroup = Base.PrefabView.extend({
     if (!_(ticketId).isNaN()) {
       this._initLevelXhr({
         ticketId,
+        version: 1,
       })
         .done((res) => {
           if (res && res.result === 0) {
@@ -119,6 +118,7 @@ const TicketSelectGroup = Base.PrefabView.extend({
     if (!_(ticketLevelId).isNaN()) {
       this._initPlayXhr({
         ticketLevelId,
+        version:1
       })
         .done((res) => {
           if (res && res.result === 0) {

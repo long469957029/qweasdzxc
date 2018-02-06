@@ -28,7 +28,7 @@
 </script>
 <style lang="scss" scoped>
   .footer-main{
-    width: 1200px;
+    width: 1000px;
     margin: 0 auto;
   }
   .footer-copyright {
@@ -46,6 +46,7 @@
   .footer-line {
     width: 1200px;
     height: 1px;
+    margin-left: -100px;
     margin-bottom: 43px;
     background-image: url("./images/initPwd-back-line.png");
   }

@@ -80,7 +80,7 @@ module.exports = {
       }
     })
     firstHtml.push(`<span>1.单笔最低提现金额<span class="text-account-cut">${minFee}</span>元，最高提现限额<span class="text-account-cut">${maxFee}</span>元，`)
-    firstHtml.push(`今日还可以提现<span class="text-account-cut">${data.remainTimes}</span>次。`)
+    firstHtml.push(`今日还可以免费提现<span class="text-account-cut">${data.remainTimes}</span>次。`)
     if (data.feeType === 'percent') {
       firstHtml.push(`超过次数按 <span class="text-account-cut">${_(data.fee).formatDiv(100)}%</span>收取手续费。</div>`)
     }

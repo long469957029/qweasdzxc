@@ -139,7 +139,7 @@ const quickPay = [
   {
     type: 16,
     name: 'wxtransfer',
-    zhName: '微信扫码支付',
+    zhName: '微信转账',
     className: 'fc-re-wxTransfer',
     pic: require('base/images/v2/bank-JD.png'),
     sortId: 16,
