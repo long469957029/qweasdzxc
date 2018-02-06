@@ -80,13 +80,13 @@ const SignUserView = Base.ItemView.extend({
     this.$form.parsley()
 
 
-    window.ParsleyExtend.addAsyncValidator('accheckusername', function(xhr) {
-      const valid = xhr.responseJSON.result === 0
-
-      this.$element.parsley().domOptions.remoteMessage = xhr.responseJSON.msg || ''
-
-      return valid
-    }, '/fund/divid/valid.json')
+    // window.ParsleyExtend.addAsyncValidator('accheckusername', function(xhr) {
+    //   const valid = xhr.responseJSON.result === 0
+    //
+    //   this.$element.parsley().domOptions.remoteMessage = xhr.responseJSON.msg || ''
+    //
+    //   return valid
+    // }, '/fund/divid/valid.json')
 
 
     this.initPageStatus()
@@ -226,7 +226,7 @@ const SignUserView = Base.ItemView.extend({
   },
   _formatTicketData(rebateList) {
     const self = this
-    this.TicketRowIndex = 1
+    this.TicketRowIndex = 0
     if (this.options.edit) {
       return _(rebateList).map((item) => {
         return self._generateTicketRowData(item)

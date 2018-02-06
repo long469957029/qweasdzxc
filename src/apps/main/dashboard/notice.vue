@@ -24,7 +24,7 @@
           <div class="list-body">
               <transition-group name="list-detail" tag="div">
                 <div class="list-info" v-for="(item, index) in noticeList" :key="item.bulletionId" v-show="detailPage === index">
-                  <div class="title">【{{item.title}}】</div>
+                  <div class="title">{{item.title}}</div>
                   <div class="time">{{_(item.time).toTime()}}</div>
                   <div class="detail" v-html="item.content"></div>
                 </div>
@@ -158,9 +158,13 @@
     transform: translateY(50px);
   }
 
-  .list-detail-enter,.list-detail-leave-to{
+  .list-detail-enter{
     opacity: 0;
-    transform: scale(1.5,1.5);
+    transform: translateX(502px);
+  }
+  .list-detail-leave{
+    opacity: 0;
+    transform: translateX(-502px);
   }
   .list-detail-enter-active, .list-detail-leave-active{
     @include transition-cfg;
@@ -213,23 +217,25 @@
     width: 540px;
     height: 450px;
     background-color: $def-white-color;
-    box-shadow: 0px 5px 24px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 5px 24px 0px rgba(0, 0, 0, .1);
     border-radius: 5px;
-    border: solid 1px $def-gray-color;
     .header {
       width: 100%;
       height: 54px;
-      background-color: $sec-line-color;
+      background-color: $new-main-deep-color;
       text-align: center;
       font-size:18px;
       line-height: 54px;
       position: relative;
+      color: $def-white-color;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
     }
     .close{
       display: block;
       position: absolute;
       font-size:30px;
-      color: $font-auxiliary-color;
+      color: $def-white-color;
     }
     .list-body{
       width: 100%;
@@ -253,6 +259,7 @@
         width: 100%;
         font-size: $font-md;
         color: $def-black-color;
+        padding-left: 10px;
       }
       .time{
         font-size: $font-xs;
@@ -265,11 +272,11 @@
         color: $new-inverse-color;
         margin-top: 10px;
         border-top: 1px dashed $im-line-color;
-        padding-top: 20px;
         width: 100%;
         height: 182px;
         overflow-y: auto;
         overflow-x: hidden;
+        padding: 20px 10px 0px;
       }
       .page{
         text-align: center;
@@ -284,13 +291,13 @@
           width: 32px;
           height: 32px;
           line-height: 32px;
-          border: 1px solid $new-main-deep-color;
-          color: $new-main-deep-color;
+          border: 1px solid $def-gray-color;
+          color: $font-auxiliary-color;
           cursor: pointer;
           transition: color,background-color .5s;
           &:hover{
-            color:$def-white-color;
-            background-color: $new-main-deep-color;
+            color:$new-main-deep-color;
+            border-color: $new-main-deep-color;
           }
         }
         .page-btn-sm{

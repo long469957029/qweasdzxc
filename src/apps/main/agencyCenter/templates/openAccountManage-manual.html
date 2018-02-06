@@ -33,7 +33,7 @@
       <label class="control-label text-black">设置返点：</label>
       <div class="controls">
         <div class="js-ac-rebate-set-container">
-          <input type="text" class="js-ac-manual-rebate input1" value=""/>
+          <input type="text" class="js-ac-manual-rebate input1" autocomplete="off" value=""/>
           <i class="fa fa-percent manual-rebate-sign" aria-hidden="true"></i>
           <a class="js-look-bonus text-prominent look-bonus" data-ticket="constant">查看对应奖金</a>
           <div class="js-ac-manual-rebate-info text-inverse m-top-sm">
@@ -43,26 +43,28 @@
         </div>
       </div>
     </div>
+    <% if(!merchant){ %>
     <div class="control-group">
       <label class="control-label"></label>
       <div class="controls">
         <div class="custom-checkbox">
-          <input type="checkbox" id="ac-manual-checkbox" class="inbox-check js-ac-manual-checkbox" checked value="">
+          <input type="checkbox" id="ac-manual-checkbox" class="inbox-check js-ac-manual-checkbox" value="">
           <label class="checkbox-label" for="ac-manual-checkbox"></label>
         </div>
         <span class="text-black">给TA发个体验红包？</span>
       </div>
     </div>
-    <div class="control-group js-ac-red-pack-money">
+    <div class="control-group js-ac-red-pack-money hidden">
       <label class="control-label text-black">红包金额：</label>
       <div class="controls">
-        <input type="text" class="js-ac-red-pack input1">
+        <input type="text" class="js-ac-red-pack input1" autocomplete="off">
         <div class="text-inverse m-top-sm js-ac-red-pack-tip">
           <span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>
           红包金额不得低于1元
         </div>
       </div>
     </div>
+    <%}%>
     <div class="ac-submit-btn-div">
       <div class="controls">
         <button type="button" class="js-ac-submitOpenAccountInfo btn ac-open-account-manual-button" data-loading-text="保存中">立即开户</button>
