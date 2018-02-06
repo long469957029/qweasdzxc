@@ -243,10 +243,10 @@ const MoneyTransferView = Base.ItemView.extend({
         subAcctName: val,
       })
         .done((res) => {
-          const data = res.root || []
           if (res && res.result === 0) {
+            const data = res.root || []
             if (_(data.subUsers).isEmpty()) {
-              self.$searchContainer.html('<div class="text-center">没有匹配用户</div>')
+              self.$searchContainer.find('ul').html('<div class="text-center m-top-md">没有匹配用户</div>')
             } else {
               self.searchTreeView.insertNode(_(data.subUsers).map((sub) => {
                 return {
@@ -258,7 +258,7 @@ const MoneyTransferView = Base.ItemView.extend({
               }))
             }
           } else {
-            self.$searchContainer.html('<div class="text-center">没有匹配用户</div>')
+            self.$searchContainer.find('ul').html('<div class="text-center m-top-md">没有匹配用户</div>')
           }
         })
     } else {

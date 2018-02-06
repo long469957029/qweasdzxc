@@ -61,14 +61,14 @@
                   <label class="control-label">用户名：</label>
                   <div class="controls">
                     <input type="text" id="jsRPUserName" class="reset-input" v-model="userName" data-parsley-username
-                           placeholder="输入用户名" required/>
+                           placeholder="输入用户名" autocomplete="off" required/>
                   </div>
                 </div>
                 <div class="control-group">
                   <label class="control-label">验证码：</label>
                   <div class="controls">
                     <input type="text" class="input-varCode" @keyup="valCode" v-model="codeVal" name=""
-                           placeholder="输入验证码">
+                           placeholder="输入验证码" autocomplete="off">
                     <img class="var-code" :src="codeSrc" @click="refreshValCode">
                     <div class="text-hot m-top-xs" v-if="codeError">
                       <span class="sfa sfa-error-icon vertical-middle"></span>
@@ -144,7 +144,7 @@
                   <div class="control-group">
                     <label class="control-label">答案：</label>
                     <div class="controls">
-                      <input type="text" class="qes-input" v-model="answerFirst" required>
+                      <input type="text" class="qes-input" v-model="answerFirst" autocomplete="off" required>
                     </div>
                   </div>
                   <div class="control-group">
@@ -160,7 +160,7 @@
                   <div class="control-group">
                     <label class="control-label">答案：</label>
                     <div class="controls">
-                      <input type="text" class="qes-input" v-model="answerSecond" required>
+                      <input type="text" class="qes-input" v-model="answerSecond" autocomplete="off" required>
                     </div>
                   </div>
                   <div class="text-hot text-center m-TB-xs" v-if="qesError">
@@ -323,10 +323,16 @@
           ({data}) => {
             if (data && data.result === 0) {
               this.questionList = [...data.root]
+              const arr1 = _(data.root).clone()
+              const arr2 = _(data.root).clone()
               this.questionFirst = data.root[0]
-              this.questionSecond = data.root[1]
-              this.qesFirstList = [...data.root]
-              this.qesSecondList = [...data.root]
+              this.questionSecond = _(arr1).rest()[0]
+              this.qesFirstList = _(arr1).remove((n,index) => {
+                return index !== 1
+              })
+              this.qesSecondList = _(arr2).remove((n ,index) => {
+                return index !== 0
+              })
               this.findTypeNum = 1
             } else {
               Global.ui.notification.show(data.msg === 'fail' ? '密保问题获取请求服务失败' : data.msg)
@@ -370,7 +376,7 @@
                 this.goStepsNext()
               } else if (data.root != null && _(data.root).isNumber()) {
                 if (data.root > 0) {
-                  this.qesErrorText = `验证失败,剩余${res.root}次机会。`
+                  this.qesErrorText = `验证失败,剩余${data.root}次机会。`
                 } else {
                   this.qesErrorText = '验证失败,请一个小时后再验证！'
                 }
@@ -380,7 +386,7 @@
                 this.qesErrorText = `验证失败,${data.msg}`
               }
             },
-            ({data}) => {
+            ({fail}) => {
               this.qesError = true
               this.qesErrorText = '密保问题验证请求失败'
             })

@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       activityOptionList: [
-        { type: 1, name: '体育'},
+        { type: 1, name: '捕鱼'},
         { type: 2, name: '真人'},
         { type: 3, name: '老虎机'},
         { type: 4, name: '彩票'},

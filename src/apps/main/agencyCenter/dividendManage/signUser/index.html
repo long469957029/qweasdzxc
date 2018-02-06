@@ -9,7 +9,7 @@
   <div class="js-ac-dm-su-username-div ac-dm-su-username-div ac-dm-su-indent">
     <label class=" ac-dm-su-un-label font-xs">选择待签约下级：</label>
     <div>
-      <input type="text" class="ac-dm-su-input" name="username"
+      <input type="text" class="ac-dm-su-input" name="username" autocomplete="off"
       <%= (obj.userData?'readonly':'') %>
       value="<%=obj.userData && obj.userData.username %>"
       data-parsley-username
