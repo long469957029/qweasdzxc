@@ -300,12 +300,10 @@
                 this.codeError = true
                 this.codeErrorText = '用户名验证失败'
               }
-              return false
             },
-            ({fail}) => {
+            ({data}) => {
               this.codeError = true
               this.codeErrorText = '验证用户名请求失败'
-              return false
             })
         }
       },
@@ -378,7 +376,7 @@
                 this.goStepsNext()
               } else if (data.root != null && _(data.root).isNumber()) {
                 if (data.root > 0) {
-                  this.qesErrorText = `验证失败,剩余${res.root}次机会。`
+                  this.qesErrorText = `验证失败,剩余${data.root}次机会。`
                 } else {
                   this.qesErrorText = '验证失败,请一个小时后再验证！'
                 }
@@ -388,7 +386,7 @@
                 this.qesErrorText = `验证失败,${data.msg}`
               }
             },
-            ({data}) => {
+            ({fail}) => {
               this.qesError = true
               this.qesErrorText = '密保问题验证请求失败'
             })
