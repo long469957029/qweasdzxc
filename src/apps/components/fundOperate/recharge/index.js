@@ -17,7 +17,7 @@ const RechargeView = Base.ItemView.extend({
     'keyup .js-rc-money-input': 'amountChangeHandler',
     'click .js-fc-rc-payType-item': 'changeTypeHandler',
     'click .js-fc-rc-bank-item': 'changeBankHandler',
-    'click .jc-rc-info-copy': 'copySuccessHandler',
+    'click .jc-rc-info-copy-name': 'copyNameSuccessHandler',
     'click .js-fc-rc-recharge-submit': 'confirmHandler',
     'click .js-fc-re-gotoAliPay': 'gotoAliPayHandler',
   },
@@ -36,6 +36,7 @@ const RechargeView = Base.ItemView.extend({
     })
   },
   initialize() {
+    this.cur = 0
   },
 
   onRender() {
@@ -314,8 +315,12 @@ const RechargeView = Base.ItemView.extend({
       this.$('.js-select-bank-down').removeClass('up')
     }
   },
-  copySuccessHandler(e) {
+  copyNameSuccessHandler(e) {
     $(e.currentTarget).addClass('active').siblings().removeClass('active')
+    $(e.currentTarget).textCopy({
+      text: '账号：' + $(e.currentTarget).closest('li').find('.jc-rc-info-name').html(),
+      notShowToolTip: true
+    });
     Global.ui.notification.show('复制成功！')
   },
 })

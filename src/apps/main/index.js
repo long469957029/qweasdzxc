@@ -14,6 +14,7 @@ import LoginLauncher from 'skeleton/bases/loginLauncher'
 import FreeTrial from 'skeleton/bases/freeTrial'
 import DialogManage from 'skeleton/bases/dialogManage'
 import GameDownLoad from 'gameCenter/downLoad'
+import novicePackage from 'activity/novicePackageActivity'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -100,7 +101,6 @@ App.start()
 Global.ui.menu.start()
 
 
-
 // 进行系统OAuth校验
 
 Global.m.oauth.check()
@@ -116,7 +116,8 @@ Global.m.oauth.check()
         LoginLauncher,
         FreeTrial,
         DialogManage,
-        GameDownLoad
+        GameDownLoad,
+        novicePackage,
       },
       store,
       router,
@@ -128,7 +129,8 @@ Global.m.oauth.check()
           'loginLauncherStatus',
           'freeTrialStatus',
           'getLoginStatus',
-          'gameDownLoadStatus'
+          'gameDownLoadStatus',
+          'novicePackageStatus',
         ]),
       },
     })

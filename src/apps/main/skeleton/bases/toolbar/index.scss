@@ -214,3 +214,16 @@ $toolbar-option-width: 36px;
     }
   }
 }
+
+.activity-panel{
+  .novice-package{
+    background:url('misc/acbar-novice-package.gif') no-repeat;
+    width: 70px;
+    height: 110px;
+    display: block;
+    position: absolute;
+    right: -2px;
+    top: -118px;
+    cursor: pointer;
+  }
+}

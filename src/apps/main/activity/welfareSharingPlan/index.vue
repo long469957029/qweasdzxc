@@ -45,7 +45,9 @@
                 <div class="myReward-item inline-block">{{_(myBonusList.profit).formatDiv(10000)}}</div>
                 <div class="myReward-item inline-block">{{_(myBonusList.bonus).formatDiv(10000)}}</div>
               </div>
-              <div class="myReward-receive recevie" v-if="!activityList.getBonus&&myBonusList.bonus>0" @click="recevieBonus">确认领取</div>
+              <div class="myReward-receive recevie" v-if="!activityList.getBonus&&myBonusList.bonus>0"
+                   @click="recevieBonus">确认领取
+              </div>
               <div class="myReward-receive recevied" v-else-if="activityList.getBonus"></div>
               <div class="myReward-receive unRecevie" v-else-if="!activityList.getBonus&&myBonusList.bonus<=0">
               </div>
@@ -79,7 +81,8 @@
               <div class="content-welfare-value">
                 <div class="content-welfare-value-item" v-for="bonus in bonusList">
                   <div class="welfare-item inline-block item1">{{_(bonus.betAmount).formatDiv(10000)}}</div>
-                  <div class="welfare-item inline-block item2">{{_(bonus.bonus).formatDiv(10000)}}</div>
+                  <div class="welfare-item inline-block item2" :class="{active:bonus.bonus===curResult&&curAmount===bonus.betAmount}">{{_(bonus.bonus).formatDiv(10000)}}
+                  </div>
                   <div class="welfare-item inline-block item3">{{_(bonus.profit1).formatDiv(10000)}}</div>
                   <div class="welfare-item inline-block item4"
                        :class="{active:bonus.bonus1===curResult&&curAmount===bonus.betAmount}">
@@ -115,22 +118,21 @@
         </div>
         <div class="ws-footer-text">
           <div class="ws-text-circle">2</div>
-          活动统计周期为：根据团队前一天的销售与亏损情况，
-          按下表标准收到领取奖励，逾期作废。
+          活动统计周期为：根据团队前一天的销售与亏损情况， 按下表标准收到领取奖励，逾期作废。
         </div>
         <div class="ws-footer-text">
           <div class="ws-text-circle">3</div>
-          在同等销量的情况下，贡献的亏损值不同，所获取的奖励也不同。
-          如在销量10000的情况下，亏损200获得100元，亏损400获得130元，亏损500则可获得180元奖励，以此类推。
+          在同等销量的情况下，贡献的亏损值不同，所获取的奖励也不同。 如在销量10000的情况下，
+          亏损300获得100元，亏损500获得120元，亏损1000则可获得160元奖励，以此类推。
         </div>
         <div class="ws-footer-text">
           <div class="ws-text-circle">4</div>
-          领取获得奖励需销量，亏损同时达标才能获得对应的奖励，如销量达到亏损未达到，则以最低亏损段计算奖励：
-          如亏损达到销量未达到，则以最低销量计算奖励。
+          领取获得奖励需销量，亏损同时达标才能获得对应的奖励，如销量达到亏损未达到，
+          则以最低亏损段计算奖励： 如亏损达到销量未达到，则以最低销量计算奖励。
         </div>
         <div class="ws-footer-text">
           <div class="ws-text-circle">5</div>
-          每天销量封顶100万，亏损奖励最高18000元，无限娱乐享有活动的最终解释和修改权。
+          每天销量封顶100万，亏损奖励最高16000元，无限娱乐享有活动的最终解释和修改权。
         </div>
       </div>
     </div>
@@ -176,7 +178,7 @@
             if (data && data.result === 0) {
               Global.ui.notification.show('领取成功！今天再接再厉哦！')
               this.initActivityData()
-            }else{
+            } else {
               Global.ui.notification.show(data.msg)
             }
           }

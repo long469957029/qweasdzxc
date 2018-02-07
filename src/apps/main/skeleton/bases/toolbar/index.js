@@ -17,6 +17,7 @@ const ToolbarView = Base.ItemView.extend({
     'click .js-toolbar-feedback-dialog': 'feedbackDialogHandler', // 意见反馈弹窗
     // 'click .js-toolbar-im-dialog': 'imDialogHandler', // 站内信弹窗
     'click .js-logout': 'logoutHandler', // 退出登录
+    'click .js-novice-package': 'openNovicePackageHandler',//新手礼包弹窗
 
   },
 
@@ -152,6 +153,9 @@ const ToolbarView = Base.ItemView.extend({
     this.closeSidebarHandler()
     return false
   },
+  openNovicePackageHandler(){
+    window.app.$store.commit(types.TOGGLE_NOVICE_PACKAGE, true)
+  }
 })
 
 export default ToolbarView

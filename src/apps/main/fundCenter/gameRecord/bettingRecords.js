@@ -93,7 +93,7 @@ const BettingRecordsView = SearchGrid.extend({
         && $target.parent('.myPopover').length === 0
         && $target.parent('.popover-title').length === 0
         && $target.parent('.popover').length === 0 && $target.data("id") !== "folder") {
-        this.$('#popover').addClass('hide');
+        $('.js-pf-search-grid').find('popover').addClass('hidden');
       }
     }, false)
   },

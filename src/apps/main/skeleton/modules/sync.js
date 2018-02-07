@@ -138,7 +138,7 @@ const SyncModule = Base.Module.extend({
         }
       });
       currentXhr.success(function (xhr, resType, type) {
-        if(xhr && xhr.result==-1){
+        if (xhr && xhr.result == -1) {
           // Global.cookieCache.clear('token')
           // Global.cookieCache.clear('loginState')
           // Global.cookieCache.clear('security')
@@ -146,13 +146,15 @@ const SyncModule = Base.Module.extend({
           // // 关闭oauth轮询监听
           // window.Global.m.oauth.stop()
           window.store.commit(types.USER_CLEAR)
-          Global.ui.notification.show('您的账户已登出,请重新登录！', {
-            event: function () {
-              window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-              // window.location.href = ''
-            },
-            countDown: 3000
-          });
+          if (!window.app.$store.getters.loginDialogStatus) {
+            Global.ui.notification.show('您的账户已登出,请重新登录！', {
+              event: function () {
+                window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+                // window.location.href = ''
+              },
+              countDown: 3000
+            });
+          }
           // setTimeout(function(){
           //   // window.location.href = 'login.html';
           //   window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
@@ -286,11 +288,13 @@ const SyncModule = Base.Module.extend({
       // }
       promise.catch(({message}) => {
         if (message.indexOf('401') > -1) {
-          Global.ui.notification.show('您的账户已登出,请重新登录！', {
-            event: function () {
-              window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-            }
-          });
+          if (!window.app.$store.getters.loginDialogStatus) {
+            Global.ui.notification.show('您的账户已登出,请重新登录！', {
+              event: function () {
+                window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+              }
+            });
+          }
         }
       });
 

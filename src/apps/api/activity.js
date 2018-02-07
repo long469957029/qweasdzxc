@@ -110,4 +110,12 @@ export default {
       .then(then)
       .catch(fail)
   },
+  // 获取新手礼包活动信息
+  getNovicePackageInfo(then, fail){
+    return $http({
+      url: '/info/newpack/mypack.json',
+    })
+      .then(then)
+      .catch(fail)
+  },
 }

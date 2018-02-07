@@ -12,7 +12,8 @@ const initState = () => {
     openFreeTrialDialog: false,
     openGameDownLoadDialog: false,
     token: '',
-    gameDownLoadId:''
+    gameDownLoadId: '',
+    openNovicePackage: false,
   }
 }
 
@@ -41,6 +42,9 @@ const getters = {
   },
   gameDownLoadGameId: (state) => {
     return state.gameDownLoadId
+  },
+  novicePackageStatus: (state) => {
+    return state.openNovicePackage
   }
 }
 
@@ -74,6 +78,9 @@ const mutations = {
   [types.TOGGLE_GMAE_DOWN_LOAD](state, {showDialog, gameId = 1}) {
     state.openGameDownLoadDialog = showDialog
     state.gameDownLoadId = gameId
+  },
+  [types.TOGGLE_NOVICE_PACKAGE](state, data) {
+    state.openNovicePackage = data
   },
 }
 

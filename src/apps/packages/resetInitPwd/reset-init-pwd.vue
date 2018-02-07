@@ -28,7 +28,7 @@
         </div>
         <div class="pwd-input-panel">
           <span class="pwd-desc">新登录密码：</span>
-          <input type="password" class="pwd-input" v-model="passwordModel" @focus="verifyPwd"
+          <input type="password" class="pwd-input" v-model="passwordModel" @focus="showDesc"
                  @blur="verifyPwd" @keyup.enter="resetInitPwd"
                  autocomplete="off" required></div>
 
@@ -41,8 +41,8 @@
         </div>
         <div class="pwd-input-panel confirm">
           <span class="pwd-desc-confirm">确认密码：</span>
-          <input type="password" class="pwd-input" v-model="passwordcheckModel"
-                 @focus="verifyConfirmPwd" @keyup.enter="resetInitPwd"
+          <input type="password" class="pwd-input" v-model="passwordcheckModel" @focus="showConfirmDesc"
+                 @blur="verifyConfirmPwd" @keyup.enter="resetInitPwd"
                  autocomplete="off" required></div>
 
         <div class="message-container confirm">
@@ -207,6 +207,16 @@
           }
         }
       },
+      showDesc(){
+        this.errorIcon = 1
+        this.errorText = '6-20位字符组成（不含空格），区分大小写，不能是9位以下的纯数字'
+        return false
+      },
+      showConfirmDesc(){
+        this.checkErrorIcon = 1
+        this.checkErrorText = '请重复输入密码'
+        return false
+      },
       strBetweenIsNumber (str, star, end) {
         const strArr = str.split('').slice(star, end)
         let isHasNumber = true
@@ -370,14 +380,14 @@
             }
           }
           &.confirm {
-            position: fixed;
-            top: 390px;
+            position: absolute;
+            top: 237px;
           }
         }
         .reset-submit-container {
           padding: 30px 88px;
-          position: fixed;
-          top: 420px;
+          position: absolute;
+          top: 250px;
           .reset-submit {
             padding: 10px 80px;
             background-color: #14b1bb;
