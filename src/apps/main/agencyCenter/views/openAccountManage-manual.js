@@ -29,8 +29,10 @@ const OpenAccountManageView = Base.ItemView.extend({
       async: false,
     })
   },
-  initialize() {
-    // this.subSubAcctXhr = this.getSubAcctXhr();
+  serializeData(){
+    return{
+      merchant: Global.memoryCache.get('acctInfo').merchant
+    }
   },
 
   onRender() {

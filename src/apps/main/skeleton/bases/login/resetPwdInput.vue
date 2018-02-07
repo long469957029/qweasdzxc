@@ -11,7 +11,7 @@
       <div class="control-group">
         <label class="control-label">验证码：</label>
         <div class="controls">
-          <input type="text" class="input-varCode" v-model="code" required/>
+          <input type="text" class="input-varCode" autocomplete="off" v-model="code" required/>
           <a class="set-code-btn" @click="sendCode" :disabled="time > 0">{{text}}</a>
         </div>
       </div>

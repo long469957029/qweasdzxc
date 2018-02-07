@@ -52,7 +52,7 @@
                     <div class="content-item-title-panel">
                       <div class="content-item-img inline-block"></div>
                       <div class="content-item-title inline-block">{{item.title}}</div>
-                      <div class="content-item-date pull-right inline-block">{{_(item.time).toTime()}}</div>
+                      <div class="content-item-date pull-right inline-block">{{_(item.time).toDate()}}</div>
                     </div>
                     <div class="content-item-text" v-html="formatDesc(item.desc)">}</div>
                   </div>

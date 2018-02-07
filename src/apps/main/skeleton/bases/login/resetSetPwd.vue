@@ -6,14 +6,14 @@
         <label class="control-label">新密码：</label>
         <div class="controls">
           <input type="password" class="reset-input" id="jsRPLoginPwd1"  data-parsley-length="[6, 20]"
-                 v-model="pwdOne" value="" placeholder="6-20为字符组成，区分大小写，不能使用特殊字符"/>
+                 v-model="pwdOne" value="" placeholder="6-20为字符组成，区分大小写，不能使用特殊字符" autocomplete="off"/>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label">确认密码：</label>
         <div class="controls">
           <input type="password" class="reset-input" data-parsley-length="[6, 20]"
-                 data-parsley-equalto="#jsRPLoginPwd1" value=""/>
+                 data-parsley-equalto="#jsRPLoginPwd1" value="" autocomplete="off"/>
         </div>
       </div>
       <div class="error-container text-center" v-show="error">
