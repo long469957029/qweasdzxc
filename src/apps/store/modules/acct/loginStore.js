@@ -115,7 +115,7 @@ const mutations = {
     window.Global.m.publish('acct:login', data)
     window.Global.m.publish('acct:updating', data)
 
-    data.fBalance = _(data.balance).convert2yuan()
+    data.fBalance = data.balance === 0 ? _(data.balance).convert2yuan({fixed:2,clear:false}) : _(data.balance).convert2yuan()
     data.fLastLoginTime = _(data.lastLoginTime).toTime()
     data.fLoginTime = _(data.loginTime).toTime()
     data.headIcon = _(data.headIcon).toString()

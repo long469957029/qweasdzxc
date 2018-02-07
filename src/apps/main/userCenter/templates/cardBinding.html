@@ -4,7 +4,9 @@
   <form class="js-uc-steps js-uc-cb-fund-form uc-cb-fund-form form-horizontal">
     <div class="text-black font-sm text-center m-top-lg">请输入资金密码</div>
     <div class="text-center m-top-md m-bottom-md">
-      <input type="password" name="fundPwd" class="js-uc-cb-fundPwd uc-cb-fundPwd" required>
+      <div>
+        <input type="password" name="fundPwd" class="js-uc-cb-fundPwd uc-cb-fundPwd" data-parsley-error-message="请输入资金密码" required>
+      </div>
     </div>
     <div class="js-fundPwd-error text-center"></div>
     <div class="text-center m-top-lg">
@@ -50,8 +52,8 @@
       <label class="control-label">银行卡号：</label>
 
       <div class="controls">
-        <input type="text" class="js-uc-cbCardNo uc-lg-input input1" data-parsley-num data-parsley-length="[13,19]"
-               required>
+        <input type="text" class="js-uc-cbCardNo uc-lg-input input1" data-parsley-num data-parsley-length="[16,19]"
+               data-parsley-error-message="银行卡号由16或19位数字组成" required>
       </div>
 
     </div>

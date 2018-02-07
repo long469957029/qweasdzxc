@@ -115,7 +115,12 @@
         verifyCodeXhr(this.dataXhr,
           ({data}) => {
             if(data && data.result === 0){
-              this.$emit('gonext')
+              if(data.root && data.root.success === 0){
+                this.$emit('gonext')
+              }else{
+                this.error = true
+                this.errorText = '验证码错误'
+              }
             }else {
               this.error = true
               this.errorText = data.msg === 'fail' ? '验证码校验失败' : data.msg
