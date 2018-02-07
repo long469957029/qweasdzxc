@@ -100,3 +100,4 @@ export const TOGGLE_LOGIN_LAUNCHER = 'TOGGLE_LOGIN_LAUNCHER' // 急速登录器
 export const TOGGLE_FREE_TRIAL = 'TOGGLE_FREE_TRIAL' //免费试玩
 export const TOGGLE_RESET_INIT_PWD = 'TOGGLE_RESET_INIT_PWD' // 首次登陆修改密码
 export const TOGGLE_GMAE_DOWN_LOAD = 'TOGGLE_GMAE_DOWN_LOAD' //第三方游戏手机端下载弹窗
+export const TOGGLE_NOVICE_PACKAGE = 'TOGGLE_NOVICE_PACKAGE' // 新手礼包弹窗

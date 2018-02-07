@@ -22,6 +22,7 @@ const TransferView = Base.ItemView.extend({
   },
 
   initialize() {
+    this.cur = 0
   },
   // 获取平台转账信息
   getPlatformInfoXhr(data) {

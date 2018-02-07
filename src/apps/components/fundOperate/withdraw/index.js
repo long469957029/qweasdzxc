@@ -16,7 +16,7 @@ const WithdrawView = Base.ItemView.extend({
   },
 
   initialize() {
-
+    this.cur = 0
   },
   verifyPayPwdXhr (data) {
     return Global.sync.ajax({
