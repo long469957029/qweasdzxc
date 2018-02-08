@@ -18,7 +18,7 @@ const config = [
   },
   {
     id: 3,
-    zhName: '已开通',
+    zhName: '修改中',
     name: 'REVISE',
   },
 ]
