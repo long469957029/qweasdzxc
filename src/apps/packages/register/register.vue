@@ -638,9 +638,11 @@
             if(data.root.type === 5){
               recieveRedpackApi({linkId: this.linkId},
                 ({data}) => {
-                  this.redPackNum = _(data.root.redpackAmount).convert2yuan()
-                  this.showRedPack = true
-                  this.runTime()
+                  if(data && data.result === 0 && data.root){
+                    this.redPackNum = _(data.root.redpackAmount).convert2yuan()
+                    this.showRedPack = true
+                    this.runTime()
+                  }
                 }
               )
             }

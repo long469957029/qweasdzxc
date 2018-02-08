@@ -9,7 +9,7 @@ import TransferView from './transfer'
 const FundRecordsView = TabView.extend({
 
   // className: 'ac-wr-view',
-  className: 'fc-rw-detail',
+  className: 'fc-rw-detail p-bottom-lg',
 
   initialize() {
     _(this.options).extend({

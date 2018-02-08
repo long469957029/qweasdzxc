@@ -4,7 +4,7 @@
   display: inline-block;
   cursor: pointer;
   z-index: 10;
-  @include sprite($sfa-double-up);
+  //@include sprite($sfa-double-up);
 
   &.scroll-btn-bottom {
     top: inherit;
@@ -15,7 +15,7 @@
   //}
 
   &.down {
-    @include sprite($sfa-double-down);
+    //@include sprite($sfa-double-down);
     //&:hover {
       //@include sprite($sfa-double-down-active);
     //}

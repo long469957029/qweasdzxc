@@ -127,7 +127,7 @@ const SystemMessageView = Base.ItemView.extend({
     const isRead = Number($target.data('read'))
     $target.toggleClass('active').parents('.js-system-message-list').siblings().removeClass('active')
       .find('.js-message-btn')
-      .removeClass('active')
+      .removeClass('active').find('.js-message-btn-a').removeClass('active')
     if ($target.hasClass('active')) {
       $target.parents('.js-system-message-list').addClass('active')
       $target.find('.js-message-btn-a').toggleClass('active')

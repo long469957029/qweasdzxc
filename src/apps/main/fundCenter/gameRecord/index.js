@@ -12,7 +12,7 @@ const TeamBettingRecordView = TabView.extend({
 
   events: {},
 
-  className: 'fc-gr-detail basic-black',
+  className: 'fc-gr-detail basic-black p-bottom-lg',
 
   initialize() {
     _(this.options).extend({

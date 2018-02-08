@@ -202,6 +202,8 @@
 }
 
 .ac-openAccount-view {
+  min-height: 740px;
+  padding-bottom: 40px;
   ul {
     margin: 13px 15px 5px 15px;
     li {
@@ -624,6 +626,8 @@
 }
 
 .ac-team-main {
+  padding-bottom: 40px;
+  min-height: 740px;
   .checkbox-label {
     margin-top: 2px;
   }
@@ -719,6 +723,8 @@
   padding-top: 67px;
   color: $new-inverse-color;
   padding-left: 100px;
+  min-height: 700px;
+  padding-bottom: 40px;
   .ac-user-select {
     width: 290px;
   }
@@ -920,6 +926,8 @@
 }
 
 .ac-dm-page {
+  min-height: 740px;
+  padding-bottom: 40px;
   .popover {
     box-shadow: none;
     border: 1px solid $def-gray-color;
