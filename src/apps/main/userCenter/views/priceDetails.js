@@ -31,7 +31,7 @@ const TrackRecordsView = TabView.extend({
           template: '<div class="js-uc-lowContainer"><div class="js-uc-lowNotice"></div><div class="js-uc-lowGrid portlet-filter uc-prize"></div></div>',
         },
         {
-          label: '北京PK10',
+          label: '北京赛车/PK拾',
           name: 'happy',
           id: 'jsUCHappyTab',
           template: '<div class="js-uc-happyContainer"><div class="js-uc-happyNotice"></div><div class="js-uc-happyGrid portlet-filter uc-prize"></div></div>',

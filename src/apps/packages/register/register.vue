@@ -163,7 +163,7 @@
                 <div class="game-text">
                   <ul>
                     <li>重庆时时彩</li>
-                    <li>北京pk10</li>
+                    <li>北京赛车/PK拾</li>
                     <li>11选5</li>
                     <li>快乐彩</li>
                   </ul>

@@ -316,7 +316,7 @@ const bjPKConfig = [
   Object.assign({
     id: 18,
     mark: 'pk10',
-    zhName: '北京PK10',
+    zhName: '北京赛车/PK拾',
     hasMargin: true,
     badge: 'hot',
     trendOps: {
@@ -395,7 +395,7 @@ const handicapPk10Config = [
   Object.assign({
     id: 18,
     mark: 'ssc',
-    zhName: '北京PK10',
+    zhName: '北京赛车/PK拾',
     badge: 'new',
     roadBalls: true,
     twoSide: true,
@@ -526,7 +526,7 @@ export default {
         ],
       },
       handicap: {
-        // 重庆时时彩  无限秒秒彩  无限分分彩  北京PK10  香港六合彩
+        // 重庆时时彩  无限秒秒彩  无限分分彩  北京赛车/PK拾  香港六合彩
         list: [
           ..._.filter(sscConfig.list, (item) => { return item.id === 1 || item.id === 10}),
           ...bjPKConfig.concat(this.getById(34)),
