@@ -397,6 +397,11 @@
       },
       goStepsNext(){
         this.stepsIndex += 1
+        if(this.stepsIndex === 3){
+          setTimeout(() => {
+            $(this.$refs.resetPwdModal).modal('hide')
+          },2000)
+        }
       },
     },
     mounted(){
