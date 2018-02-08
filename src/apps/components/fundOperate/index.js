@@ -6,7 +6,7 @@ import TransferView from './transfer'
 
 const FundOperateView = TabView.extend({
 
-  className: 'fc-rw',
+  className: 'js-fc-rw fc-rw',
 
   initialize() {
     const cursize = 0

@@ -2,21 +2,25 @@
   <div>
     <red-pack-account v-if="showIndex === 1" :red-pack-type="0" :key="showIndex" @next="showNext"></red-pack-account>
     <red-pack-account v-if="showIndex === 2" :red-pack-type="1" :key="showIndex" @next="showNext"></red-pack-account>
+    <novice-package v-if="showIndex ===3" :red-pack-type="1" :key="showIndex" @next="showNext"></novice-package>
+
   </div>
 </template>
 <script>
   import RedPackAccount from 'com/redpackAccountDialog'
+  import NovicePackage from 'activity/novicePackageActivity'
   export default{
-    name:'dialog-manage',
-    components:{
-      RedPackAccount  // 注册开户红包弹窗
+    name: 'dialog-manage',
+    components: {
+      RedPackAccount,  // 注册开户红包弹窗
+      NovicePackage,  // 新手礼包弹窗
     },
     data(){
-      return{
-        showIndex:1  //弹窗顺序
+      return {
+        showIndex: 1  //弹窗顺序
       }
     },
-    methods:{
+    methods: {
       showNext(){
         this.showIndex += 1
       }

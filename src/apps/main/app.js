@@ -4,6 +4,7 @@ import ToolbarView from 'skeleton/bases/toolbar'
 
 import RechargeView from 'com/fundOperate'
 import MessageView from 'skeleton/bases/toolbar/message' // 站内消息
+import rechargeVipView from 'com/fundOperate/vip/index.html'
 
 import './index.css'
 
@@ -72,9 +73,9 @@ const _bindFundOperatorDialogHandler = () => {
     }
     const $fundOperateDialog = Global.ui.dialog.show({
       id: _.now(),
-      title: '',
-      size: 'fund-operate',
-      bStyle: 'width: 740px;height:680px;border: 1px solid #d7d7d7;;"',
+      // modalClass:'js-fund-operate-dialog',
+      size: 'js-fund-operate-dialog fund-operate',
+      bStyle: 'width: 740px;height:680px;border: 1px solid #d7d7d7;',
       bodyClass: 'js-fund-operate fund-operate',
       body: '<div class="js-fund-operate-container"></div>',
     })
@@ -83,7 +84,9 @@ const _bindFundOperatorDialogHandler = () => {
     })
 
     $fundOperateDialog.find('.js-fund-operate').html(rechargeView.render().el)
-
+    // if(window.store.getters.userIsVip){
+    $fundOperateDialog.find('.js-fund-operate-dialog').after('<div class="js-fund-vip-panel fund-vip-panel"><div class="js-fund-vip fund-vip"></div>')
+    // }
     $fundOperateDialog.on('hidden.modal', () => {
       $(this).remove()
       rechargeView.destroy()
@@ -107,7 +110,11 @@ const _bindFundOperatorDialogHandler = () => {
       Global.router.goTo('uc/cm')
       $fundOperateDialog.modal('hide')
     })
+    $fundOperateDialog.on('click.modal', '.js-fund-vip', () => {
+      $fundOperateDialog.find('.js-fund-vip-panel').append(rechargeVipView)
+    })
   })
+
 }
 
 // 查看用户投注记录

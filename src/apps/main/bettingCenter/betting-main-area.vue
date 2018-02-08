@@ -168,11 +168,11 @@
   import BettingChase from './betting-chase'
   import BettingHistory from './betting-history'
   import BettingConfirm from "./betting-confirm"
+  import BettingVouchers from 'bettingCenter/betting-vouchers'
 
 
   //backbone旧组件
   import BettingRecordsView from './bettingCenter-records'
-  import BettingVouchers from 'bettingCenter/betting-vouchers';
 
   // let recordsOpenView
   let bettingRecordsView
@@ -752,7 +752,7 @@
         }
       },
 
-      lotteryAdd(e) {
+      lotteryAdd() {
         if (!this.bettingChoice.multiple) {
           Global.ui.notification.show('倍数为0，不能投注')
           return false

@@ -26,11 +26,23 @@ const ToolbarView = Base.ItemView.extend({
 
   serializeData() {
   },
-
+  getNovicePackgeXhr(data) {
+    return Global.sync.ajax({
+      url: '/info/newpack/info.json',
+      data,
+    })
+  },
   onRender() {
     const self = this
     this.subscribe('acct', 'acct:login', () => {
       $('.js-toolbar-option-operation-container').removeClass('hidden')
+      this.getNovicePackgeXhr().done((res) => {
+        if (res.result === 0) {
+          if (res.root.status === 0 || res.root.status === 1) {
+            this.$('.js-novice-package').removeClass('hidden')
+          }
+        }
+      })
     })
     const token = Global.cookieCache.get('token')
     if (token && token !== '' && token !== undefined && token !== null) {
@@ -42,6 +54,7 @@ const ToolbarView = Base.ItemView.extend({
 
     self.$sidebar = self.$('.js-toolbar-sidebar')
     self.$closeMask = self.$('.js-sidebar-close')
+
   },
 
   closeSidebarHandler(e) {

@@ -101,7 +101,7 @@ const BettingRecordsView = SearchGrid.extend({
         && $target.parent('.myPopover').length === 0
         && $target.parent('.popover-title').length === 0
         && $target.parent('.popover').length === 0 && $target.data("id") !== "folder") {
-        $('.js-pf-search-grid').find('popover').addClass('hidden');
+        $('.js-uc-betDetail-betNum').popover('hide')
       }
     }, false)
   },
@@ -157,9 +157,9 @@ const BettingRecordsView = SearchGrid.extend({
       // row.push('<div class="fc-td-record-status" ' +
       //   `style="top:${rowTop}px">追</div><button class="js-gl-bet-detail-dialog btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
       row.push('<div class="fc-td-record-status" ' +
-        `>追</div><button class="js-gl-bet-detail-dialog btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
+        `>追</div><button class="js-gl-bet-detail-dialog btn btn-link btn-link-betRecord" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
     } else {
-      row.push(`<button class="js-gl-bet-detail-dialog btn btn-link" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
+      row.push(`<button class="js-gl-bet-detail-dialog btn btn-link btn-link-betRecord" data-id='${rowInfo.ticketTradeNo}'>${_(rowInfo.betTime).toTime()}</button>`)
     }
     // 彩种
     row.push(rowInfo.ticketName)

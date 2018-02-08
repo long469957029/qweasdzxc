@@ -14,6 +14,7 @@ const initState = () => {
     token: '',
     gameDownLoadId: '',
     openNovicePackage: false,
+    userIsVip: true,
   }
 }
 
@@ -45,6 +46,9 @@ const getters = {
   },
   novicePackageStatus: (state) => {
     return state.openNovicePackage
+  },
+  userIsVip: (state) => {
+    return state.userIsVip
   }
 }
 
@@ -81,6 +85,11 @@ const mutations = {
   },
   [types.TOGGLE_NOVICE_PACKAGE](state, data) {
     state.openNovicePackage = data
+  },
+  [types.USER_IS_VIP](state, data) {
+    if(data===0){
+      state.userIsVip = data
+    }
   },
 }
 
