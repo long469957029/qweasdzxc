@@ -31,7 +31,6 @@ const RechargeView = Base.ItemView.extend({
   },
   getActivityInfo () {
     return Global.sync.ajax({
-      async: false,
       url: '/info/activityCenter/fundList.json',
     })
   },
@@ -51,7 +50,7 @@ const RechargeView = Base.ItemView.extend({
         }
         if (res2[0].result === 0) {
           // 获取上次采用的支付方式,初始化面板
-          self.initPaymentData(res2[0].root.lastPaymentType, res2[0].root.paymentList)
+          self.initPaymentData(res2[0].root.lastPaymentType, res2[0].root.paymentList,res2[0].root.vip)
         } else {
           Global.ui.notification.show('服务器异常')
         }
@@ -64,12 +63,12 @@ const RechargeView = Base.ItemView.extend({
             if (res.result === 0) {
               // 获取上次采用的支付方式,初始化面板
               Global.memoryCache.set('rechargeList', res.root)
-              self.initPaymentData(res.root.lastPaymentType, res.root.paymentList)
+              self.initPaymentData(res.root.lastPaymentType, res.root.paymentList,res.root.vip)
             }
           })
       } else {
         const data = Global.memoryCache.get('rechargeList')
-        self.initPaymentData(data.lastPaymentType, data.paymentList)
+        self.initPaymentData(data.lastPaymentType, data.paymentList,data.vip)
       }
     }
     // 生成充值页广告
@@ -85,9 +84,34 @@ const RechargeView = Base.ItemView.extend({
       errorTemplate: '<div class="tooltip-inner">',
       trigger: 'change',
     })
+    // 监听click事件
+    window.addEventListener('click', (e) => {
+      const $target = $(e.target)
+      if ($target.hasClass('.js-fc-rc-payType-select')) {
+        this.selectTypeDownHandler()
+      }
+      if ($target.hasClass('.js-fc-re-bankList-select')) {
+        this.selectBankDownHandler()
+      }
+      if (!$target.hasClass('.js-fc-rc-payType-select') && !$target.hasClass('.js-fc-re-bankList-select')) {
+        const outHeight = this.$('.js-fc-rc-payType-select').height()
+        const inHeight = this.$('.js-fc-re-bankList-select').height()
+        if (outHeight > 100) {
+          this.$('.js-fc-rc-payType-select').removeClass('side-down')
+          this.$('.js-select-type-down').removeClass('up')
+        }
+        if (inHeight > 100) {
+          this.$('.js-fc-re-bankList-select').removeClass('side-down')
+          this.$('.js-select-bank-down').removeClass('up')
+        }
+      }
+    }, false)
   },
   // 获取上次采用的支付方式,初始化面板
-  initPaymentData(type, data) {
+  initPaymentData(type, data,vip) {
+    if(vip===0){
+      this.$('.js-fund-operate').append('<div class="js-fund-vip-img fund-vip-img"></div>')
+    }
     this.paymentList = data
     if (type === null) {
       type = 1
@@ -317,10 +341,6 @@ const RechargeView = Base.ItemView.extend({
   },
   copyNameSuccessHandler(e) {
     $(e.currentTarget).addClass('active').siblings().removeClass('active')
-    $(e.currentTarget).textCopy({
-      text: '账号：' + $(e.currentTarget).closest('li').find('.jc-rc-info-name').html(),
-      notShowToolTip: true
-    });
     Global.ui.notification.show('复制成功！')
   },
 })

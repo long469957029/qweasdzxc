@@ -23,7 +23,7 @@
             <span class="sfa header-headshot "><img :src="imgUrl"/></span>
             <span class="header-name">{{username}}</span>
             <i class="fa fa-angle-down "></i>
-              <div class="header-menu-place" @click="goToPersonCenter"></div>
+            <div class="header-menu-place" @click="goToPersonCenter"></div>
             <div class="header-menu-body">
               <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
               <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
@@ -43,7 +43,7 @@
             <span class="sfa sfa-announcement "></span><span>消息</span>
             <span class="js-header-announcement-num header-announcement-num"
                   v-if="newRowCount > 0">{{newRowCount}}</span>
-              <div class="header-announcement-place"  @click="goToAnnouncement"></div>
+            <div class="header-announcement-place" @click="goToAnnouncement"></div>
             <div class="js-header-announcement-body header-announcement-body">
               <div class="header-announcement-content">
                 <a :href="messageLink(item.type,item.noticeId)" class="content-item" v-for="item in newList"
@@ -72,7 +72,7 @@
 <script>
   import avatarConf from 'userCenter/misc/avatarConfig'
   import fundApi from 'api/fund'
-  import { getAccountSafeApi } from 'api/userCenter'
+  import {getAccountSafeApi} from 'api/userCenter'
   export default{
     name: 'main-header',
 
@@ -120,7 +120,17 @@
         }
       },
       imgUrl(){
-        return avatarConf.get(this.$store.state.loginStore.headIcon).logo
+        let logoId = this.$store.state.loginStore.headIcon
+        if (logoId === 'null' || logoId === undefined || logoId === null) {
+          logoId = 1
+        }
+        let result = ''
+        if ('png'.indexOf(logoId) !== -1) {
+          result = logoId
+        } else {
+          result = avatarConf.get(_(logoId).toString()).logo
+        }
+        return result
       },
       loginStatus(){
         return this.$store.getters.getLoginStatus
@@ -163,7 +173,7 @@
       getAccountSafe(){
         getAccountSafeApi(
           ({data}) => {
-            if(data && data.result === 0){
+            if (data && data.result === 0) {
               Global.memoryCache.set('accountSafe', data.root)
               Global.m.publish('safe:updating', data.root)
             }
@@ -200,7 +210,7 @@
 
     mounted(){
       window.Global.m.subscribe('news', 'news:updating', this.renderMsgList)
-      if(this.loginStatus){  //登陆状态下 获取用户安全设置信息
+      if (this.loginStatus) {  //登陆状态下 获取用户安全设置信息
         this.getAccountSafe()
       }
     }

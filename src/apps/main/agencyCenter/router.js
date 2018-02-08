@@ -274,7 +274,7 @@ export default [
       RouterController.async(resolve, DividendMangeView, {
         main: {
           title: '我的分红',
-          titleDes: '彩票分红每月1号和16号结算，游戏分红每月1号结算',
+          titleDes: '彩票及游戏分红均于每月1号结算',
         },
         sidebar,
       })
@@ -300,7 +300,7 @@ export default [
       RouterController.async(resolve, LowLevelGrantView, {
         main: {
           title: '下级分红',
-          titleDes: '彩票分红每月1号和16号结算，游戏分红每月1号结算，若未按时下发给下级平台会强制发放',
+          titleDes: '彩票及游戏分红均于每月1号结算，若未按时下发给下级平台会强制发放',
         },
         sidebar,
       })

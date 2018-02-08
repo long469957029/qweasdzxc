@@ -23,14 +23,14 @@ $.widget('gl.securityTip', {
     const self = this
 
     const body = []
-    body.push(`<div class="text-left ${this.options.customizeClass}">`)
+    body.push(`<div class="text-left ${this.options.customizeClass}"><a class="close btn-close" data-dismiss="modal">&times;</a>`)
     body.push('<div class="fc-security-notice-link">')
     let footer = ''
     if (this.options.showMoneyPwd) {
       body.push('<div class="security-notice-type-div">')
       let fundPasswordHmtl = '<span class="security-notice-span text-left">资金密码已设置完毕</span>'
       if (!this.options.hasMoneyPwd) {
-        fundPasswordHmtl = `<span class="security-notice-span text-left">${this.options.content ? this.options.content : '资金密码未设置，请先设置资金密码'}</span>`
+        fundPasswordHmtl = `<span class="security-notice-span text-left">${this.options.content ? this.options.content : '资金密码未设置，请先设置资金密码后再转账'}</span>`
         footer = '<a class="js-fc-aHref btn btn-cool btn-lg m-TB-smd font-sm" href="#/uc/pl">点击设置</a>'
       }
       body.push(`${fundPasswordHmtl}</div>`)

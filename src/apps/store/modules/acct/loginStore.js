@@ -53,6 +53,7 @@ const initState = () => {
     fBalance: 0,
     fLastLoginTime: '',
     fLoginTime: '',
+    vip: '',
   }
 }
 
@@ -97,6 +98,7 @@ const mutations = {
   // 用户登录成功
   [types.USER_LOGIN_SUCCESS] (state, data) {
     this.commit(types.USER_OAUTH_SUCCESS, data)
+    this.commit(types.USER_IS_VIP, data.vip)
 
     // 开启oauth监听
     window.Global.m.oauth.start()

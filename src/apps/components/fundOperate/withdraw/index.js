@@ -37,7 +37,6 @@ const WithdrawView = Base.ItemView.extend({
   },
   getActivityInfo () {
     return Global.sync.ajax({
-      async: false,
       url: '/info/activityCenter/fundList.json',
     })
   },
@@ -79,6 +78,20 @@ const WithdrawView = Base.ItemView.extend({
       this.ac = Global.memoryCache.get('rechargeAc')
       this.$('.jc-rc-activity').html(rechargeService.getFunActivity(Global.memoryCache.get('rechargeAc')))
     }
+    // 监听click事件
+    window.addEventListener('click', (e) => {
+      const $target = $(e.target)
+      if ($target.hasClass('.js-wd-bank-select')) {
+        this.selectBankDownHandler()
+      }
+      if (!$target.hasClass('.js-wd-bank-select')) {
+        const height =  this.$('.js-wd-bank-select').height()
+        if (height > 100) {
+          this.$('.js-wd-bank-select').removeClass('side-down')
+          this.$('.js-select-bank-down').removeClass('up')
+        }
+      }
+    }, false)
   },
   initPanelCss(data){
     this.$('.js-fc-wd-set-view').addClass('hidden')

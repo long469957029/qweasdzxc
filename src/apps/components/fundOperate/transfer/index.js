@@ -41,7 +41,6 @@ const TransferView = Base.ItemView.extend({
   },
   getActivityInfo () {
     return Global.sync.ajax({
-      async: false,
       url: '/info/activityCenter/fundList.json',
     })
   },
@@ -90,6 +89,28 @@ const TransferView = Base.ItemView.extend({
       errorTemplate: '<div class="tooltip-inner">',
       trigger: 'change',
     })
+    // 监听click事件
+    window.addEventListener('click', (e) => {
+      const $target = $(e.target)
+      if ($target.hasClass('.js-tr-out-select')) {
+        this.selectOutDownHandler()
+      }
+      if ($target.hasClass('.js-tr-in-select')) {
+        this.selectInDownHandler()
+      }
+      if (!$target.hasClass('.js-tr-out-select') && !$target.hasClass('.js-tr-in-select')) {
+        const outHeight = this.$('.js-tr-out-select').height()
+        const inHeight = this.$('.js-tr-in-select').height()
+        if (outHeight > 100) {
+          this.$('.js-tr-out-select').removeClass('side-down')
+          this.$('.js-tr-select-out-down').removeClass('up')
+        }
+        if (inHeight > 100) {
+          this.$('.js-tr-in-select').removeClass('side-down')
+          this.$('.js-tr-select-in-down').removeClass('up')
+        }
+      }
+    }, false)
   },
   // 初始化转账面板数据
   initTransferData() {

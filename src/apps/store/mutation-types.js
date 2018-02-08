@@ -91,6 +91,7 @@ export const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS'
 export const TOGGLE_DO_LOGOUT = 'TOGGLE_DO_LOGOUT'
 export const DO_LOGOUT = "DO_LOGOUT"
 export const COMMIT_USER_TOKEN = 'COMMIT_USER_TOKEN'
+export const USER_IS_VIP = 'USER_IS_VIP'
 
 // 全局弹窗相关
 export const TOGGLE_LOGIN_DIALOG = 'TOGGLE_LOGIN_DIALOG'

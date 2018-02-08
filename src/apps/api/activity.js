@@ -113,7 +113,15 @@ export default {
   // 获取新手礼包活动信息
   getNovicePackageInfo(then, fail){
     return $http({
-      url: '/info/newpack/mypack.json',
+      url: '/info/newpack/info.json',
+    })
+      .then(then)
+      .catch(fail)
+  },
+  // 领取新手礼包优惠券活动信息
+  doNovicePackage(then, fail){
+    return $http({
+      url: '/info/newpack/get.json',
     })
       .then(then)
       .catch(fail)

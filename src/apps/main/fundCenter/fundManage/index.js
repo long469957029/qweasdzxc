@@ -23,7 +23,7 @@ export default Base.ItemView.extend({
     'click .js-fc-fm-change': 'changeInOutStatusHandler',
     'focus .js-fc-fm-change': 'focusInOutStatusHandler',
     'click .js-fc-fm-info-btn': 'searchPeopleInfoHandler',
-    'click .js-fc-fm-wd-bankCard-img':'changeUrlHandler',
+    'click .js-fc-fm-wd-bankCard-img': 'changeUrlHandler',
   },
   refreshHandler(e) {
     e.stopPropagation()
@@ -185,6 +185,29 @@ export default Base.ItemView.extend({
         self.renderPlatformTransferTypeLimit()
       }
     })
+
+    // 监听click事件
+    window.addEventListener('click', (e) => {
+      const $target = $(e.target)
+      if ($target.hasClass('.js-fm-out-select')) {
+        this.selectOutDownHandler()
+      }
+      if ($target.hasClass('.js-fm-in-select')) {
+        this.selectInDownHandler()
+      }
+      if (!$target.hasClass('.js-fm-out-select') && !$target.hasClass('.js-fm-in-select')) {
+        const outHeight = this.$('.js-fm-out-select').height()
+        const inHeight = this.$('.js-fm-in-select').height()
+        if (outHeight > 100) {
+          this.$('.js-fm-out-select').removeClass('side-down')
+          this.$('.js-fm-select-out-down').removeClass('up')
+        }
+        if (inHeight > 100) {
+          this.$('.js-fm-in-select').removeClass('side-down')
+          this.$('.js-fm-select-in-down').removeClass('up')
+        }
+      }
+    }, false)
   },
   renderAccountInfo() {
     const self = this

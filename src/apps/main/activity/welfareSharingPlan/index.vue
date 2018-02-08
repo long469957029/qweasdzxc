@@ -45,11 +45,11 @@
                 <div class="myReward-item inline-block">{{_(myBonusList.profit).formatDiv(10000)}}</div>
                 <div class="myReward-item inline-block">{{_(myBonusList.bonus).formatDiv(10000)}}</div>
               </div>
-              <div class="myReward-receive recevie" v-if="!activityList.getBonus&&myBonusList.bonus>0"
+              <div class="myReward-receive receive" v-if="(!activityList.getBonus)&&myBonusList.bonus>0"
                    @click="recevieBonus">确认领取
               </div>
               <div class="myReward-receive recevied" v-else-if="activityList.getBonus"></div>
-              <div class="myReward-receive unRecevie" v-else-if="!activityList.getBonus&&myBonusList.bonus<=0">
+              <div class="myReward-receive unRecevie" v-else-if="(!activityList.getBonus)&&myBonusList.bonus<=0">
               </div>
             </div>
           </div>

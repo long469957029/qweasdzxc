@@ -40,9 +40,9 @@
             </div>
           </div>
         </div>
-        <div class="rs-panel-receive" v-if="cycle===0" @click="submitReceive">
+        <div class="rs-panel-receive" v-if="cycle>0" @click="submitReceive">
         </div>
-        <div class="rs-panel-received " v-else-if="cycle>0"></div>
+        <div class="rs-panel-received " v-else></div>
         <div class="rs-tips">
           <div class="rs-tips-text">活动说明：</div>
           <div class="rs-tips-text">1、从活动之日起，根据日均销量的不同，每7天可领取一次对应的奖金。</div>
