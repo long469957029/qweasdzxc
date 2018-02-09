@@ -84,10 +84,16 @@
       activityInfo.getRechargeSalesInfo(
         ({data}) => {
           if (data && data.result === 0) {
-            this.salesList = data.root.itemList
-            this.fromTime = _(data.root.fromDate).toDate('YYYY年M月D日')
-            this.endTime = _(data.root.endDate).toDate('YYYY年M月D日')
-            this.cycle = data.root.cycle
+              if(!available){
+                this.salesList = data.root.itemList
+                this.fromTime = _(data.root.fromDate).toDate('YYYY年M月D日')
+                this.endTime = _(data.root.endDate).toDate('YYYY年M月D日')
+                this.cycle = data.root.cycle
+              }else{
+                Global.ui.notification.show('您的账号暂时无法参与该活动，请与上级联系确认！')
+              }
+          }else{
+            Global.ui.notification.show('数据请求失败')
           }
         }
       )

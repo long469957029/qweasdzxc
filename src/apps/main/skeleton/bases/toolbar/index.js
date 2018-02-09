@@ -167,7 +167,7 @@ const ToolbarView = Base.ItemView.extend({
     return false
   },
   openNovicePackageHandler(){
-    window.app.$store.commit(types.TOGGLE_NOVICE_PACKAGE, true)
+    window.app.$store.commit(types.TOGGLE_NOVICE_PACKAGE, true,'click')
   }
 })
 

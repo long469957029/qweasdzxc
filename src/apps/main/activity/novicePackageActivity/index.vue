@@ -195,21 +195,39 @@
             if (data && data.result === 0) {
               // status:是否属于新手，0:已领取 1; 可领取  2:不展示
               if (data.root.status === 1 || data.root.status === 0) {
-                this.$nextTick(() => {
-                  $(this.$refs.novicePackageModal).modal({
-                    backdrop: 'static',
-                  })
-                    .on('hidden.modal', () => {
-                      this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, false)
-                    })
+                // 活动相关，新手活动首次登录
+                const cookie = new Base.Storage({
+                  name: 'appstorage',
+                  type: 'cookie',
                 })
-                this.initActivityData(data.root)
+                const novicePackageActivity = cookie.get('NovicePackageActivity')
+                const today = moment().format('YYYY-MM-DD')
+//            const novicePackage = moment().set('month', 0)
+//            novicePackge.set('date', 3)
+                if (today !== novicePackageActivity) {
+                  /** valid 是否首次登录,首次登录会自动弹出活动界面 */
+                  cookie.set('NovicePackageActivity', today)
+                  this.openActivityDialog()
+                } else if (this.$store.getters.openNovicePackageType === 'click') {
+                  this.openActivityDialog()
+                }
               }
             } else {
               Global.ui.notification.show(data.msg)
             }
           }
         )
+      },
+      openActivityDialog(){
+        this.$nextTick(() => {
+          $(this.$refs.novicePackageModal).modal({
+            backdrop: 'static',
+          })
+            .on('hidden.modal', () => {
+              this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, false)
+            })
+        })
+        this.initActivityData(data.root)
       },
       initActivityData(data){
         let couponsHeight = data.itemList.length

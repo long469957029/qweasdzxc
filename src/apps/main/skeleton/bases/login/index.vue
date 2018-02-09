@@ -156,7 +156,6 @@
               this.$emit('dialogClose')
               window.location.href = 'index.html'
             }
-
           } else if (data.msg.indexOf('验证码') !== -1) {
             this.showCodeItem = false
             this.codeError = true
@@ -181,8 +180,8 @@
         } else {
           const myReg = /^[A-Za-z][A-Za-z0-9]{3,15}$/
           if (!myReg.test(this.username)) {
-            this.showErrorMsg = true
-            this.errorMsg = ''
+//            this.showErrorMsg = true
+//            this.errorMsg = ''
             this.usernameError = true
             this.usernameSuccess = false
             return false
@@ -204,15 +203,15 @@
           const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
           if (this.password.length < 9 && this.strBetweenIsNumber(this.password, 0, 7)) {
             this.passwordError = true
-            this.showErrorMsg = true
+//            this.showErrorMsg = true
             this.pwdSuccess = false
-            this.errorMsg = ''
+//            this.errorMsg = ''
             return false
           } else if (!pwReg.test(this.password)) {
             this.passwordError = true
-            this.showErrorMsg = true
+//            this.showErrorMsg = true
             this.pwdSuccess = false
-            this.errorMsg = ''
+//            this.errorMsg = ''
             return false
           }
         }
@@ -305,7 +304,7 @@
 
 <style lang="scss" scoped>
   .modal-login {
-    z-index:1051;
+    z-index: 1051;
     border: 0;
     width: 386px;
     min-height: 425px;
@@ -349,7 +348,7 @@
             color: #666666;
             border: 1px solid $new-main-deep-color !important;
           }
-          &.confirm{
+          &.confirm {
             width: 314px;
             height: 44px;
           }

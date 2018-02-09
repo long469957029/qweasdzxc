@@ -26,22 +26,22 @@
         <div class="bp-task-detail-name">
           <div class="detail-name inline-block">{{taskName}}</div>
           <div class="bet-detail inline-block">投注{{betAmount}}元，奖励{{reward}}元</div>
-          <div class="bet-total inline-block pull-right" v-if="curStatus===1 || curStatus===2">完成投注额：{{betTotal}}</div>
+          <div class="bet-total inline-block pull-right" v-if="curStatus===1">完成投注额：{{betTotal}}</div>
         </div>
         <div class="bp-task-target">
           <div class="bp-task-target-top">
             <div class="target-item inline-block top"></div>
             <div class="target-item inline-block">目标一
-              <div class="target-item-done" v-show="target1Status"></div>
+              <div class="target-item-done" v-show="detailList.target1Status"></div>
             </div>
             <div class="target-item inline-block">目标二
-              <div class="target-item-done" v-show="target2Status"></div>
+              <div class="target-item-done" v-show="detailList.target2Status"></div>
             </div>
             <div class="target-item inline-block">目标三
-              <div class="target-item-done" v-show="target3Status"></div>
+              <div class="target-item-done" v-show="detailList.target3Status"></div>
             </div>
             <div class="target-item add inline-block">全程完成额外奖励
-              <div class="target-item-done add" v-show="addTargetStatus"></div>
+              <div class="target-item-done add" v-show="detailList.addTargetStatus"></div>
             </div>
             <div class="target-item total inline-block">任务总奖励</div>
           </div>
@@ -146,13 +146,10 @@
         couponsName: '',
         couponsAmount: 0,
         totalAmount: 0,
-        target1Status: false,
-        target2Status: false,
-        target3Status: false,
-        addTargetStatus: false,
         betTotal: 0,
         curStatus: -1,
         showConfirmModal: false,
+        haveDoingTask: false,
       }
     },
 
@@ -183,15 +180,19 @@
 
     methods: {
       confirmTask(){
-        this.showConfirmModal = true
-        this.$nextTick(() => {
-          $(this.$refs.betPlanModal).modal({
-            backdrop: 'static',
-          })
-            .on('hidden.modal', () => {
-              this.showConfirmModal = false
+        if (!this.haveDoingTask) {
+          this.showConfirmModal = true
+          this.$nextTick(() => {
+            $(this.$refs.betPlanModal).modal({
+              backdrop: 'static',
             })
-        })
+              .on('hidden.modal', () => {
+                this.showConfirmModal = false
+              })
+          })
+        }else{
+            this.recevieTask(this.selectedItem)
+        }
       },
       recevieTask(index){
         $(this.$refs.betPlanModal).modal('hide')
@@ -224,6 +225,23 @@
             if (item.status === 1) {
               flag = true
               index = item.index
+              this.haveDoingTask = true
+            }
+            if (item.bonusStatus === 1) {
+              item.target1Status = true
+              item.target2Status = false
+              item.target3Status = false
+              item.addTargetStatus = false
+            } else if (item.bonusStatus === 2) {
+              item.target1Status = true
+              item.target2Status = true
+              item.target3Status = false
+              item.addTargetStatus = false
+            } else if (item.bonusStatus === 3) {
+              item.target1Status = true
+              item.target2Status = true
+              item.target3Status = true
+              item.addTargetStatus = true
             }
           })
           if (flag) {
@@ -254,17 +272,6 @@
         this.couponsAmount = _(defaultList.ticketCoupon.amount).formatDiv(10000)
         this.curStatus = defaultList.status
 
-        if (defaultList.bonusStatus === 1) {
-          this.target1Status = true
-        } else if (defaultList.bonusStatus === 2) {
-          this.target1Status = true
-          this.target2Status = true
-        } else if (defaultList.bonusStatus === 3) {
-          this.target1Status = true
-          this.target2Status = true
-          this.target3Status = true
-          this.addTargetStatus = true
-        }
       }
     }
   }
@@ -544,7 +551,7 @@
         margin-bottom: 10px;
       }
       .bp-footer-text {
-        font-size: 12px;
+        font-size: 14px;
         line-height: 30px;
       }
     }
@@ -557,7 +564,7 @@
         background: #f0f0f0;
         height: 50px;
         line-height: 50px;
-        font-size: 14px;
+        font-size: 16px;
         color: #333333;
         text-align: center;
       }

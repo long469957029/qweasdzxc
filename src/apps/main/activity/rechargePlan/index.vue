@@ -7,8 +7,7 @@
         <div class="rp-header-shadow">
         </div>
         <div class="rp-header-text">
-          先领取任务，默认为领取任务后的第一笔充值为奖励返还的值，充值不累计流水可累积。
-          在完成一轮充值任务并领取奖励后，可领取下一轮的充值任务。
+          先领取任务，默认领取任务后的第一笔金额大于100的充值为奖励返还的值，充值不累计流水可累积。 在完成一轮充值任务并领取奖励后，可领取下一轮的充值任务。
         </div>
       </div>
     </div>
@@ -197,12 +196,12 @@
         //status -1：不可领取，0 可领取且未领取，1，已领取且进行中，2，已完成
         _(data.root.itemList).each((item) => {
           if (item.status === 1) {
-            flag === true
+            this.showDoingTask = true
             this.curItem = _(data.root.itemList).findWhere({
               index: item.index
             })
 //            this.process = 50 + '%'
-            let curBonus = _(data.root.rechargeTotal * item.bonusRate).formatDiv(10000)
+            let curBonus = _(_(data.root.rechargeTotal).formatDiv(10000) * _(item.bonusRate).formatDiv(10000)).formatDiv(1,{fixed:2})
             if (curBonus > _(item.maxBonus).formatDiv(10000)) {
               curBonus = _(item.maxBonus).formatDiv(10000)
             }
@@ -214,9 +213,6 @@
             this.process = process
           }
         })
-        if (flag) {
-          this.showDoingTask = true
-        }
       }
     }
   }
@@ -312,7 +308,7 @@
     .rp-process {
       width: 100%;
       position: relative;
-      margin-top: 60px;
+      padding-top: 60px;
       height: 345px;
       background-color: #ffffff;
       .rp-process-panel {
@@ -543,7 +539,7 @@
         background: #f0f0f0;
         height: 50px;
         line-height: 50px;
-        font-size: 14px;
+        font-size: 16px;
         color: #333333;
         text-align: center;
       }
@@ -554,7 +550,7 @@
         text-align: center;
       }
       .confirm-text2 {
-        font-size: 12px;
+        font-size: 14px;
         color: #666666;
         width: 263px;
         text-align: center;
