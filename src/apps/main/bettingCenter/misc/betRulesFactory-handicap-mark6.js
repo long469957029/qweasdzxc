@@ -349,9 +349,13 @@ const zongHe = [
   ],
 ]
 
+
+const keyPosition = [null, null, null, null, null, null, '特码']
+
 function _create(ticketId) {
   // 特码
   factory.addHandicapRule([ticketId, '210101'], {
+    keyPosition,
     list: factory.createHandicapList([
       {
         title: '特码',

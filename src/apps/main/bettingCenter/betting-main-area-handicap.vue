@@ -151,7 +151,7 @@
 
         $(this.$refs.confirm).modal('hide')
 
-        this.$store.dispatch('pushBetting', {
+        this.$store.dispatch(types.PUSH_BETTING, {
           planId: this.bettingInfo.planId,
           type: 'buyList'
         })
@@ -195,5 +195,8 @@
   .bc-play-main .bc-side-area {
     width: 278px;
     min-height: 845px;
+  }
+  .bc-play-container.clearfix {
+    display: flex;
   }
 </style>

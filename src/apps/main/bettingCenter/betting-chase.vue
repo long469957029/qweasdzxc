@@ -535,7 +535,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
 
         this.pushing = true
 
-        this.$store.dispatch('pushChase', {
+        this.$store.dispatch(types.PUSH_CHASE, {
           plan: this.selectedChaseList,
           suspend: this.suspend,
           amount: this.totalMoney

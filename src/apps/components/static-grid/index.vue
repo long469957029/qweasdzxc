@@ -29,7 +29,7 @@
 
       </table>
 
-      <div v-html="loading" v-show="_.isEmpty(showRows) && showLoading"></div>
+      <div class="height-100" v-html="loading" v-show="_.isEmpty(showRows) && showLoading"></div>
 
       <div class="empty-container text-center" v-show="_.isEmpty(showRows) && showEmpty">
         <div class="empty-container-main" v-html="emptyTip">

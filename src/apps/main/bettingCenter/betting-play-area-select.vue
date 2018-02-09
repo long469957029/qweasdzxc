@@ -449,10 +449,11 @@
     }
     &.bc-page-content-center {
       &.active {
-        display: table;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
       }
       .bc-playArea-items {
-        display: table-cell;
         vertical-align: middle;
         text-align: center;
       }
