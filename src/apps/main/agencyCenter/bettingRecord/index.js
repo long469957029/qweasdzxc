@@ -21,7 +21,14 @@ const TeamBettingRecordView = TabView.extend({
           id: 'jsAcBrTr',
           router: 'ac/tbr',
           view: TicketRecordView,
-          options: { userName: this.options.userName },
+          options: { userName: this.options.userName ,type: 0},
+        },
+        {
+          label: '双面盘',
+          name: 'jsAcDoubleSided',
+          id: 'jsAcDoubleSided',
+          view: TicketRecordView,
+          options: { type: 1},
         },
         {
           label: 'AG真人',

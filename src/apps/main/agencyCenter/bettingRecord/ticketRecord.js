@@ -71,6 +71,7 @@ const teamBettingRecordView = SearchGrid.extend({
       },
       reqData: {
         pageSize: 15,
+        betType: this.options.type
       },
     })
   },
@@ -93,6 +94,7 @@ const teamBettingRecordView = SearchGrid.extend({
     // 初始化彩种选择
     new TicketSelectGroup({
       el: this.$('.js-uc-ticket-select-group'),
+      type: this.options.type
     })
 
     SearchGrid.prototype.onRender.apply(this, arguments)

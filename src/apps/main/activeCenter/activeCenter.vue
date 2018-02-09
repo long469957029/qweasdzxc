@@ -148,12 +148,6 @@ export default {
           this.startDate = result.startDate
           this.endDate = result.endDate
 
-          // 代表活动有主题页链结，执行跳转不弹窗
-          if (result.linkUrl) {
-            window.open(result.linkUrl)
-            return
-          }
-
           this.showDetailDialog = true
 
           this.$nextTick(() => {

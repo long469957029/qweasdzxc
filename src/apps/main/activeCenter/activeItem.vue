@@ -19,7 +19,8 @@
           <div class="clock-icon"></div>
           {{timeRange(activity.startDate, activity.endDate)}}
         </div>
-        <button :class="{'item-btn': true, disabled: activity.activityStatus === 2, pendding: isFetching}" :data-rid="activity.rid" @click="checkDetail">查看详情</button>
+        <a class="item-btn" :href="activity.linkUrl" v-if="activity.linkUrl !== ''">查看详情</a>
+        <button :class="{'item-btn': true, disabled: activity.activityStatus === 2, pendding: isFetching}" :data-rid="activity.rid" @click="checkDetail" v-else>查看详情</button>
       </div>
     </div>
   </span>
@@ -181,6 +182,7 @@ export default {
   .item-btn {
     width: 96px;
     height: 30px;
+    line-height: 30px;
     text-align: center;
     background: $main-deep-color;
     color: white;

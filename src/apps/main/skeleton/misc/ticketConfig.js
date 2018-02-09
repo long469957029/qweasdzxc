@@ -316,7 +316,7 @@ const bjPKConfig = [
   Object.assign({
     id: 18,
     mark: 'pk10',
-    zhName: '北京PK10',
+    zhName: 'PK10',
     hasMargin: true,
     badge: 'hot',
     trendOps: {
@@ -395,7 +395,7 @@ const handicapPk10Config = [
   Object.assign({
     id: 18,
     mark: 'ssc',
-    zhName: '北京PK10',
+    zhName: 'PK10',
     badge: 'new',
     roadBalls: true,
     twoSide: true,

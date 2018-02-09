@@ -12,8 +12,14 @@
           </div>
           <div class="pull-right down-btn">
             <span class="vertical-top">手机端下载</span>
-            <a href="./download.html" class="icon android"></a>
-            <a href="./download.html" class="icon ios"></a>
+            <a class="icon android" @click="qrtype !== 1 ? qrtype = 1 : qrtype = 0"></a>
+            <a class="icon ios" @click="qrtype !== 2 ? qrtype = 2 : qrtype = 0"></a>
+            <div class="qrcode ios" v-show="qrtype === 2">
+              <div class="qrimg"></div>
+            </div>
+            <div class="qrcode android" v-show="qrtype === 1">
+              <div class="qrimg"></div>
+            </div>
           </div>
           <transition name="redPack">
             <div class="register-red-pack" v-if="showRedPack">
@@ -163,7 +169,7 @@
                 <div class="game-text">
                   <ul>
                     <li>重庆时时彩</li>
-                    <li>北京pk10</li>
+                    <li>PK10</li>
                     <li>11选5</li>
                     <li>快乐彩</li>
                   </ul>
@@ -408,7 +414,8 @@
         ],
         redPackNum:0,
         showRedPack:false,
-        redPackTime:60
+        redPackTime:60,
+        qrtype: 0
       }
     },
     methods: {
@@ -1479,6 +1486,7 @@
       font-size: 14px;
       color: $new-inverse-color;
       margin-top: 12.5px;
+      position: relative;
       .icon {
         width: 34px;
         height: 35px;
@@ -1490,6 +1498,26 @@
         }
         &.ios {
           background: url("./images/icon-ios.png") no-repeat;
+        }
+      }
+      .qrcode{
+        width: 150px;
+        height: 158px;
+        background: url("./images/qrcode-bg.png") no-repeat;
+        position: absolute;
+        &.ios{
+          left: 74px;
+        }
+        &.android{
+          left: 27px;
+        }
+        .qrimg{
+          width: 100px;
+          height: 100px;
+          background: url("./images/qrcode.png") center;
+          background-size: cover;
+          margin-top: 33px;
+          margin-left: 25px;
         }
       }
     }

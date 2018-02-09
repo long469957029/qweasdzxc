@@ -55,10 +55,7 @@ export default [
         main: {
           // icon: ucMenuConfig.icon,
           title: '我的奖金组',
-          titleDes: `单期高频彩奖金最大值为<span class="text-prominent"><span class="js-ac-pd-ssc-maxBonus" ></span>元</span>,
-          单期低频彩奖金最大值为<span class="text-prominent"><span class="js-ac-pd-low-maxBonus" ></span>元</span>;
-          中奖概率低于<span class="text-prominent"><span class="js-ac-pd-num"></span>%</span>的投注均为单挑模式,
-          单期奖金最大值为<span class="text-prominent"><span class="js-ac-pd-num-maxBonus"></span>元</span>`
+          titleDes: `平台彩种单期最高奖金限制：<span class="text-prominent"><span class="js-ac-pd-ssc-maxBonus" ></span>元</span>`
         },
         sidebar,
       })
