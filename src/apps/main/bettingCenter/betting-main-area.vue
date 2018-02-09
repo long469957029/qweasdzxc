@@ -950,4 +950,8 @@
     min-width: 450px;
   }
 
+  .bc-play-container.clearfix {
+    display: flex;
+  }
+
 </style>

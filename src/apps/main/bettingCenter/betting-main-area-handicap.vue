@@ -196,4 +196,7 @@
     width: 278px;
     min-height: 845px;
   }
+  .bc-play-container.clearfix {
+    display: flex;
+  }
 </style>

@@ -1397,4 +1397,7 @@
       right: 12px !important;;
     }
   }
+  .bc-play-container.clearfix {
+    display: flex;
+  }
 </style>
