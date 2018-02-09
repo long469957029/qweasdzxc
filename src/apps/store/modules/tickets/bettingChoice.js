@@ -33,6 +33,10 @@ const initState = () => {
     rebateMoney: 0,
     fPrefabMoney: 0,
     fRebateMoney: 0,
+    maxBetBonus: 0,
+    minBetBonus: 0,
+    fMaxBetBonus: 0,
+    fMinBetBonus: 0,
     maxMultiple: 100,
     formatMaxMultiple: 100,
     limitMoney: 0,
@@ -54,7 +58,7 @@ const getters = {
 
 // actions
 const actions = {
-  pushBetting ({ state, commit }, {
+  [types.PUSH_BETTING]({ state, commit }, {
     planId,
     prevVoucher,
     type = 'previewList',
@@ -85,7 +89,7 @@ const actions = {
     })
   },
 
-  pushChase ({ state, commit }, {
+  [types.PUSH_CHASE] ({ state, commit }, {
     plan,
     suspend,
     amount,
@@ -213,29 +217,45 @@ const mutations = {
   },
   [types.SET_PLAY_INFO] (state, playInfo) {
     state.playInfo = playInfo
-    let betBonus = 0
 
     if (playInfo.betBonus == null) {
-      betBonus = playInfo.betMethodMax
+      //奖金统一
+      state.betBonus = playInfo.betMethodMax
+
+      state.fBetBonus = _(state.betBonus).chain().div(10000).mul(state.unit)
+        .convert2yuan()
+        .value()
+      state.maxMultiple = playInfo.betMultiLimitMax
+
+      state.maxBetBonus = state.minBetBonus = state.fMaxBetBonus = state.fMinBetBonus = 0
+    } else {
+      //奖金不统一
+      this.commit(types.SET_CLAMP_BONUS, playInfo)
     }
 
-    state.betBonus = betBonus
-
-    state.fBetBonus = _(betBonus).chain().div(10000).mul(state.unit)
-      .convert2yuan()
-      .value()
-
-    state.maxMultiple = playInfo.betMultiLimitMax
     state.formatMaxMultiple = _(state.maxMultiple).chain().mul(10000).div(state.unit)
       .value()
   },
+  [types.SET_CLAMP_BONUS](state, playInfo) {
+    state.maxBetBonus = _.chain(playInfo.betBonus).map('betMethodMax').max().value()
+    state.minBetBonus = _.chain(playInfo.betBonus).map('betMethodMax').min().value()
+    state.fMaxBetBonus = _(state.maxBetBonus).chain().div(10000).mul(state.unit)
+      .convert2yuan()
+      .value()
+    state.fMinBetBonus = _(state.minBetBonus).chain().div(10000).mul(state.unit)
+      .convert2yuan()
+      .value()
+    state.maxMultiple = playInfo.betMultiLimitMax
+
+    state.betBonus = state.fBetBonus = 0
+  },
   // indexs 被选中号码的索引
   [types.UPDATE_BONUS] (state, indexs) {
-    let betBonus = 0
     const playInfo = state.playInfo
 
     if (playInfo.betBonus == null) {
-      betBonus = playInfo.betMethodMax
+      state.betBonus = playInfo.betMethodMax
+      state.maxMultiple = playInfo.betMultiLimitMax
     } else if (!_.isEmpty(indexs)) {
       const selectBonus = _(state.playInfo.betBonus).chain().sortBy((info) => {
         return info.betType
@@ -244,17 +264,23 @@ const mutations = {
       })
         .value()
 
-      betBonus = _(selectBonus).max((item) => {
+      const betBonus = _(selectBonus).max((item) => {
         return item.betMethodMax
       })
 
-      betBonus = betBonus.betMethodMax
+      state.betBonus = betBonus.betMethodMax
+      state.maxMultiple = betBonus.betMultiLimitMax
+    } else {
+      this.commit(types.SET_CLAMP_BONUS, playInfo)
     }
 
-    state.betBonus = betBonus
 
-    state.fBetBonus = _(betBonus).chain().div(10000).mul(state.unit)
+
+    state.fBetBonus = _(state.betBonus).chain().div(10000).mul(state.unit)
       .convert2yuan()
+      .value()
+
+    state.formatMaxMultiple = _(state.maxMultiple).chain().mul(10000).div(state.unit)
       .value()
   },
 
@@ -569,9 +595,11 @@ const $_calculateByPrefab = (data) => {
 
   data.prefabMoney = prefabMoney
   data.fPrefabMoney = _(prefabMoney).convert2yuan()
-  data.fBetBonus = _(data.betBonus).chain().div(10000).mul(data.unit).mul(data.multiple)
+  data.fBetBonus = _(data.betBonus).chain().div(10000).mul(data.unit)
     .convert2yuan()
     .value()
+
+  data.fTotalBetBonus = _.mul(data.fBetBonus, data.multiple)
 }
 
 

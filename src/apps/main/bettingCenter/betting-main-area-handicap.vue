@@ -151,7 +151,7 @@
 
         $(this.$refs.confirm).modal('hide')
 
-        this.$store.dispatch('pushBetting', {
+        this.$store.dispatch(types.PUSH_BETTING, {
           planId: this.bettingInfo.planId,
           type: 'buyList'
         })

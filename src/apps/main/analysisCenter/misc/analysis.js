@@ -130,7 +130,10 @@ export const quick3 = {
 
 export const mark6 = {
   periods: lowPeriods,
-  doubleHead: ['开奖号码', '正1 正2 正3 正4 正5 正6 特码'],
+  doubleHead: ['开奖号码', {
+    styles: 'title-mark6',
+    content: '正1    正2    正3    正4    正5    正6        特码'
+  }],
   numCol: {
     num: 'mark6',
   },
@@ -140,7 +143,10 @@ export const mark6 = {
 
 export const pk10 = {
   periods,
-  doubleHead: ['开奖号码', '冠  亚  季  四  五  六  七  八  九  十'],
+  doubleHead: ['开奖号码', {
+    styles: 'title-pk10',
+    content: '冠  亚  季  四  五  六  七  八  九  十'
+  }],
   numCol: {
     num: 'square',
     size: _.partial(compareSize, 5),
