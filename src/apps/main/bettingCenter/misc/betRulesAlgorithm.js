@@ -111,11 +111,11 @@ function statistics(rowsResult) {
   const algorithmProps = this.algorithmProps
   const totalCount = _(algorithmProps.selectCount).mul(9)
   const circleTimes = algorithmProps.selectCount - 1
-  const selectedList = rowsResult[0]
+  const selectedList = _.pluck(rowsResult[0], 'num')
   const halfCount = Math.ceil(totalCount / 2)
 
   return _(selectedList).reduce((total, selectNum) => {
-    let n = selectNum.num
+    let n = selectNum
     if (totalCount - selectNum < halfCount) {
       n = totalCount - selectNum
     }

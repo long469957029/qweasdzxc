@@ -54,8 +54,8 @@
                 <div class="opening-left">【{{preview.title}}】</div>
                 <div class="opening-center" v-html="preview.betNum"></div>
                 <div class="opening-right">{{preview.bettingMoney}}</div>
-                <div class="opening-operate cursor-pointer" @click="lotteryDelete(index)">
-                  <span class="sfa sfa-mmc-delete" v-show="!opening"></span>
+                <div class="opening-operate">
+                  <span class="sfa sfa-mmc-delete cursor-pointer" v-show="!opening" @click="lotteryDelete(index)"></span>
                 </div>
               </div>
             </div>
@@ -78,7 +78,7 @@
                   --------- 正在开奖 ---------
                 </div>
                 <div class="opening-center" v-else>
-                  <span class="text-circle text-circle-xs" :class="{'circle-winning': !opening && i === 0}"
+                  <span class="text-circle text-circle-xs" :class="{'circle-winning': (!opening && i === 0) || (opening && i === 1)}"
                         v-for="num in openingResult.fOpenCode">{{num}}</span>
                 </div>
                 <div class="opening-right text-prominent " v-if="openingResult.completed && openingResult.winPrize">
@@ -139,7 +139,7 @@
             </div>
           </div>
 
-          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="430"
+          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="430" title="最近开奖号码"
                            ref="bettingHisotry"></betting-history>
         </div>
         <div class="div-line"></div>
@@ -308,7 +308,7 @@
             {label: '倍数', name: 'multiple', width: '12.5%'},
             {label: '模式', name: 'mode', width: '12.5%'},
             {label: '投注金额', name: 'bettingMoney', width: '12.5%'},
-            {label: '预期盈利', name: 'bonus', width: '12.5%'},
+            {label: '预期奖金', name: 'bonus', width: '12.5%'},
             {
               label: `<div class="js-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清空</div>`,
               name: 'operate',
@@ -544,6 +544,7 @@
           this.stopping = false
           this.opening = false
           this.$refs.bettingHisotry.update()
+          Global.m.oauth.check()
 
           this.toggleFinalResult(true)
         }
@@ -660,6 +661,9 @@
 
       $_pushBetting({init = false} = {}) {
         this.toggleLever()
+
+        Global.m.oauth.check()
+
         this.$store.dispatch(types.PUSH_MMC_BETTING, {
           type: 'previewList'
         })
@@ -671,15 +675,13 @@
 
             if (res && res.result === 0) {
 
-              Global.m.oauth.check()
+              if (init) {
+                this.$_prepareOpening()
+              }
 
               const fOpeningReuslt = this.$_formatOpeningResult(res.root, this.currentOpeningCount)
               this.fOpeningResultList.unshift(fOpeningReuslt)
               this.lastOpening = fOpeningReuslt.fOpenCode
-
-              if (init) {
-                this.$_prepareOpening()
-              }
 
             } else {
               this.opening = false
@@ -806,7 +808,7 @@
       }
     },
 
-    mounted: function () {
+    mounted() {
 
       $(this.$refs.multiRange).numRange({
         onChange: (num) => {
@@ -1321,6 +1323,7 @@
     background-color: rgba(117, 117, 117, 0.18);
     box-shadow: inset 0px 1px 2px 0px rgba(105, 105, 105, 0.07);
 
+    transition: all .5s;
   }
 
   .circle-winning {
