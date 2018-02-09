@@ -18,6 +18,7 @@ const OpenAccountManagePriceView = () => import(/* webpackChunkName: "agency-cen
 const ReportManageView = () => import(/* webpackChunkName: "agency-center" */ './reportManage')
 const ProfitAndLossView = () => import(/* webpackChunkName: "agency-center" */ './profitAndLoss')
 
+const AgreementView = () => import(/* webpackChunkName: "agency-center" */ './dividendManage/agreement')
 const DividendMangeView = () => import(/* webpackChunkName: "agency-center" */ './dividendManage')
 const SignUserView = () => import(/* webpackChunkName: "agency-center" */ './dividendManage/signUser')
 
@@ -277,6 +278,20 @@ export default [
           titleDes: '彩票及游戏分红均于每月1号结算',
         },
         sidebar,
+        activeMenu: 'ac/dm',
+      })
+    },
+  },
+  {
+    path: '/ac/ag',
+    component: function(resolve) {
+      RouterController.async(resolve, AgreementView, {
+        main: {
+          title: '我的分红',
+          titleDes: '彩票分红每月1号和16号结算，游戏分红每月1号结算',
+        },
+        sidebar,
+        activeMenu: 'ac/dm',
       })
     },
   },

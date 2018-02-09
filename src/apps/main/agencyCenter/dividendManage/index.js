@@ -25,13 +25,14 @@ const DividendManageView = Base.ItemView.extend({
   },
   _render() {
     const acctInfo = Global.memoryCache.get('acctInfo')
-    if (acctInfo.dividendStatus === dividendConfig.getByName('APPLYING').id || acctInfo.dividendStatus === dividendConfig.getByName('REVISE').id) {
+    if (acctInfo.dividendStatus === dividendConfig.getByName('APPLYING').id) {
       // 申请中，渲染 签约页面
-      this.$el.html(new AgreementView().render().$el)
-    } else if (acctInfo.dividendStatus === dividendConfig.getByName('APPLIED').id || acctInfo.merchant) {
+      // this.$el.html(new AgreementView().render().$el)
+      Global.router.goTo('ac/ag')
+    } else if (acctInfo.dividendStatus === dividendConfig.getByName('APPLIED').id || acctInfo.dividendStatus === dividendConfig.getByName('REVISE').id || acctInfo.merchant) {
       // 已开通，渲染 tab页
       // this.$el.html(new TabView({ merchant: acctInfo.merchant, triggerTab: this.options.triggerTab }).render().$el)
-      this.$el.html(new MyDividView().render().$el)
+      this.$el.html(new MyDividView({dividendStatus:acctInfo.dividendStatus}).render().$el)
     }
   },
 })

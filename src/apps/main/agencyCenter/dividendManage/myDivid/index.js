@@ -3,6 +3,9 @@
 require('./index.scss')
 const grantConfig = require('../grantConfig.js')
 const levelConfig = require('../levelConfig.js')
+const dividendConfig = require('../dividendConfig')
+
+const Countdown = require('com/countdown')
 
 const MyDividView = Base.ItemView.extend({
 
@@ -38,6 +41,12 @@ const MyDividView = Base.ItemView.extend({
     })
   },
 
+  getAgreementXhr() {
+    return Global.sync.ajax({
+      url: '/fund/divid/reqinfo.json',
+    })
+  },
+
   onRender() {
     const self = this
     this.$type = this.$('.js-ac-dm-md-type-btn')
@@ -45,6 +54,29 @@ const MyDividView = Base.ItemView.extend({
     this.$status = this.$('.js-ac-dm-md-status')
     this.$graph = this.$('.js-ac-dm-md-graph')
     this.$grid = this.$('.js-ac-dm-md-settle-grid')
+    this.$reviseTip = this.$('.js-ac-dm-md-tip')
+    this.$timeCountdown = this.$('.js-time-countdown')
+
+    if(this.options.dividendStatus === dividendConfig.getByName('REVISE').id){
+      this.getAgreementXhr().done((res) => {
+        this.$reviseTip.removeClass('hidden')
+        this.timeCountdown = new Countdown({
+          el: this.$timeCountdown,
+          color: 'red',
+          size: 'sm',
+          needBg: true,
+        })
+          .render(res.root.leftSeconds * 1000)
+          .on('finish.countdown', () => {
+            Global.ui.notification.show('您未在协议有效期内签署，当前协议已失效。', {
+              event() {
+                Global.m.oauth.check()
+                Global.router.goTo('')
+              },
+            })
+          })
+      })
+    }
 
 
     this.getMyDividDataXhr({ type: 0 }).done((res) => {
@@ -89,7 +121,7 @@ const MyDividView = Base.ItemView.extend({
     this.initPageByType(type, 0)
   },
   cycleChangeHandler() {
-    const cycle = this.$cycle.val()
+    const cycle = Number(this.$cycle.val())
     const type = this.$('.js-ac-dm-md-type-btn.active').data('type')
     this.initPageByType(type, cycle)
   },
