@@ -3,13 +3,15 @@
 @import "~base/styles/imports";
 
 .ac-dm-md-main {
+  min-height: 740px;
+  padding-bottom: 40px;
   .ac-dm-md-tip {
     width: 945px;
     height: 39px;
     margin: 10px 20px;
     background-color: #fdf5ea;
     color: $new-inverse-color;
-    font-size: $font-sm;
+    font-size: $font-xs;
     line-height: 39px;
     .tip-btn {
       width: 78px;
@@ -36,6 +38,7 @@
       margin-left: 2px;
       display: inline-block;
       line-height: 30px;
+      margin-top: 5px;
     }
     .countdown-red-colon{
       color: $new-inverse-color;
@@ -55,7 +58,7 @@
     margin: 0;
   }
   .ac-dm-md-status {
-    width: 78px;
+    min-width: 78px;
     height: 26px;
     font-size: 14px;
     line-height: 24px;

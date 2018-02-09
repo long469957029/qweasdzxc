@@ -6,7 +6,7 @@ const MoneyTransferView = Base.ItemView.extend({
 
   template: require('agencyCenter/templates/userTransfer.html'),
 
-  className: 'ac-moneyTransfer-view',
+  className: 'ac-moneyTransfer-view clearfix',
 
   startOnLoading: true,
 

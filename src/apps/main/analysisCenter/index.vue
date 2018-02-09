@@ -77,13 +77,13 @@
 
           <th v-if="analysis.championAndRunnerUp" :colspan="3">冠亚和</th>
 
-          <th v-if="analysis.specialCode" :colspan="3">特码<span class="sfa question"></span></th>
+          <th v-if="analysis.specialCode" :colspan="3">特码</th>
           <th v-if="analysis.total" :colspan="analysis.doubleHead ? 3 : 1">总和</th>
           <th v-if="analysis.longHu">万个龙虎</th>
           <th v-if="analysis.form">形态<span class="sfa question"></span></th>
 
           <th v-if="analysis.compareLongHu" :colspan="3">
-            <span class="left" @click="longHuPos = --longHuPos % analysis.compareLongHu.length < 0 ? analysis.compareLongHu.length - 1 : longHuPos"><</span>
+            <span class="left" @click="longHuPos = --longHuPos % analysis.compareLongHu.length < 0 ? analysis.compareLongHu.length - 1 : longHuPos"></span>
             <span v-for="(position, i) in analysis.compareLongHu" v-show="longHuPos === i">{{position.title}}</span>
             <span class="right" @click="longHuPos = Math.abs(++longHuPos % analysis.compareLongHu.length)"></span>
           </th>
@@ -94,8 +94,8 @@
           </th>
           <template v-if="analysis.championAndRunnerUp">
             <th>和数</th>
-            <th>大小</th>
             <th>单双</th>
+            <th>大小</th>
           </template>
 
           <template v-if="analysis.specialCode">
@@ -110,7 +110,7 @@
           </template>
           <!--pk10龙虎-->
           <template v-if="analysis.compareLongHu">
-            <th>和数</th>
+            <th>单双</th>
             <th>大小</th>
             <th>龙虎</th>
           </template>
@@ -145,7 +145,7 @@
             <tbody>
             <tr v-for="opening in openedList">
               <td>{{opening.ticketPlanId}}</td>
-              <td>{{_.toDate(opening.openDate)}}</td>
+              <td>{{opening.openDate | toTime('YYYY-MM-DD H:mm')}}</td>
               <td>
                 <template v-for="(item, i) in opening.showTicketOpenNum">
                   <span v-if="analysis.numCol.num === 'balls'" :key="i" class="item blue circle m-right-xs" :class="item.style">{{item.title}}</span>
@@ -166,7 +166,7 @@
               <template v-if="analysis.specialCode">
                 <td><span :class="opening.fSpecialCode.size.style">{{opening.fSpecialCode.size.title}}</span></td>
                 <td><span :class="opening.fSpecialCode.singleAndDouble.style">{{opening.fSpecialCode.singleAndDouble.title}}</span></td>
-                <td><span :class="opening.fSpecialCode.total.style">{{opening.fSpecialCode.total.title}}</span></td>
+                <td><span :class="opening.fSpecialCode.total.style">{{opening.fSpecialCode.total.title.toString()[1]}}</span></td>
               </template>
 
               <template v-if="analysis.total">
@@ -182,9 +182,9 @@
 
               <!--pk10龙虎-->
               <template v-if="analysis.compareLongHu">
-                <td><span :class="opening.fCompareLongHu.longHu.style">{{opening.fCompareLongHu.longHu.title}}</span></td>
-                <td><span :class="opening.fCompareLongHu.size.style">{{opening.fCompareLongHu.size.title}}</span></td>
                 <td><span :class="opening.fCompareLongHu.singleAndDouble.style">{{opening.fCompareLongHu.singleAndDouble.title}}</span></td>
+                <td><span :class="opening.fCompareLongHu.size.style">{{opening.fCompareLongHu.size.title}}</span></td>
+                <td><span :class="opening.fCompareLongHu.longHu.style">{{opening.fCompareLongHu.longHu.title}}</span></td>
               </template>
             </tr>
             </tbody>
@@ -650,6 +650,7 @@
     background: url(./misc/left.png);
     width: 10px;
     height: 18px;
+    cursor: pointer;
   }
 
   .right {
@@ -659,5 +660,6 @@
     width: 10px;
     height: 18px;
     transform: rotate(180deg);
+    cursor: pointer;
   }
 </style>

@@ -60,6 +60,9 @@ const BettingRecordsView = SearchGrid.extend({
         url: '/ticket/bethistory/userbethistory.json?_t=1',
         abort: false,
       },
+      reqData: {
+        betType: this.options.type
+      },
       listProp: 'root.betList',
       // tip: '<div class="tip-hot"><span>注意</span> 投注记录只保留最近30天。</div>',
     })
@@ -78,11 +81,16 @@ const BettingRecordsView = SearchGrid.extend({
     // 初始化彩种选择
     new TicketSelectGroup({
       el: this.$('.js-uc-ticket-select-group'),
+      type: this.options.type,
     })
 
     this.$('select[name=betStatus]').html(_(betStatusConfig.get()).map((betStatus) => {
       return `<option value="${betStatus.id}">${betStatus.zhName}</option>`
     }).join(''))
+
+    if(this.options.type === 1){
+      this.$('.js-pf-select-ticket-level').addClass('hidden')
+    }
 
     SearchGrid.prototype.onRender.apply(this, arguments)
     // 监听click事件

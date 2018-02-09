@@ -501,7 +501,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
         const basicMaxBonus = _(this.basicMaxBonus).mul(multiple)
         // 累计投入
         const statisticsMoney = _(this.basicBettingMoney).mul(multiple + prevTotalMultiple)
-        // 预期盈利
+        // 预期奖金
         const expectBonus = _(basicMaxBonus).sub(statisticsMoney)
         // 利润率
         const bonusRate = _(expectBonus).div(statisticsMoney)

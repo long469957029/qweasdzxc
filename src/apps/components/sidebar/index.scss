@@ -3,8 +3,8 @@
 
 $boder-def-color: #e6e6e6;
 .sidebar {
-  min-height: 1100px;
-  border-right: 1px solid $boder-def-color;
+  min-height: 800px;
+  //border-right: 1px solid $boder-def-color;
   background-color: #f8f8f8;
   color: $inverse-color;
   //border-left: 1px solid gray;
@@ -133,4 +133,17 @@ $boder-def-color: #e6e6e6;
       }
     }
   }
+}
+.ac-dm-tip{
+  display: block;
+  position: absolute;
+  top: 11px;
+  right: 22px;
+  width: 40px;
+  height: 18px;
+  background: $prominent-color;
+  font-size: 12px;
+  line-height: 18px;
+  border-radius: 3px;
+  color: $def-white-color;
 }

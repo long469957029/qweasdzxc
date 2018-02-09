@@ -2,7 +2,7 @@
   <div class="betting-history" v-if="!ticketInfo.twoSide">
     <div class="his-main">
       <div class="his-top">
-        <span class="sfa sfa-double-ball vertical-middle"></span>
+        <span class="sfa sfa-mmc-double-ball vertical-middle"></span>
         <span class="font-md text-default vertical-middle">{{title}}</span>
       </div>
       <div class="his-draw" ref="history">
@@ -24,7 +24,7 @@
     <div class="his-main">
       <div class="his-top">
         <span class="his-icon">
-        <span class="sfa sfa-double-ball double-ball-sm vertical-middle"></span>
+        <span class="sfa sfa-mmc-double-ball double-ball-sm vertical-middle"></span>
         </span>
         <span class="font-md text-default vertical-middle">{{title}}</span>
         <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" :class="{up: currentPanel !== 'twoSide'}" @click="togglePanel()"></span>

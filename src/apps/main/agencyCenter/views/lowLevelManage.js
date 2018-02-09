@@ -7,7 +7,7 @@ const LowLevelManageView = SearchGrid.extend({
 
   template: require('agencyCenter/templates/lowLevelManage.html'),
 
-  className: 'lowLevelManage-view basic-black border-top',
+  className: 'lowLevelManage-view basic-black border-top p-bottom-lg',
 
   events: {
     'click .js-ac-expend-btn': 'expendHandler',

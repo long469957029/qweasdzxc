@@ -163,7 +163,7 @@
                 <div class="game-text">
                   <ul>
                     <li>重庆时时彩</li>
-                    <li>北京pk10</li>
+                    <li>北京赛车/PK拾</li>
                     <li>11选5</li>
                     <li>快乐彩</li>
                   </ul>
@@ -638,9 +638,11 @@
             if(data.root.type === 5){
               recieveRedpackApi({linkId: this.linkId},
                 ({data}) => {
-                  this.redPackNum = _(data.root.redpackAmount).convert2yuan()
-                  this.showRedPack = true
-                  this.runTime()
+                  if(data && data.result === 0 && data.root){
+                    this.redPackNum = _(data.root.redpackAmount).convert2yuan()
+                    this.showRedPack = true
+                    this.runTime()
+                  }
                 }
               )
             }

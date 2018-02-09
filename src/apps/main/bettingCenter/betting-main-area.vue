@@ -96,7 +96,7 @@
             <div class="font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
               <div class="total-panel inline-block">
                 <span>
-                  <span>预期盈利</span>
+                  <span>预期奖金</span>
                   <animated-integer class="text-prominent"
                                     :value="bettingChoice.totalInfo.fTotalBetBonus"></animated-integer>
                   <span>元，</span>
@@ -168,11 +168,11 @@
   import BettingChase from './betting-chase'
   import BettingHistory from './betting-history'
   import BettingConfirm from "./betting-confirm"
+  import BettingVouchers from 'bettingCenter/betting-vouchers'
 
 
   //backbone旧组件
   import BettingRecordsView from './bettingCenter-records'
-  import BettingVouchers from 'bettingCenter/betting-vouchers';
 
   // let recordsOpenView
   let bettingRecordsView
@@ -216,7 +216,7 @@
             {label: '倍数', name: 'multiple', width: '12.5%'},
             {label: '模式', name: 'mode', width: '12.5%'},
             {label: '投注金额', name: 'bettingMoney', width: '12.5%'},
-            {label: '预期盈利', name: 'bonus', width: '12.5%'},
+            {label: '预期奖金', name: 'bonus', width: '12.5%'},
             {
               label: `<div class="js-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清空</div>`,
               name: 'operate',
@@ -752,7 +752,7 @@
         }
       },
 
-      lotteryAdd(e) {
+      lotteryAdd() {
         if (!this.bettingChoice.multiple) {
           Global.ui.notification.show('倍数为0，不能投注')
           return false

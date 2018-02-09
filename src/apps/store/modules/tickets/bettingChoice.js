@@ -408,9 +408,9 @@ const mutations = {
         formatMaxBonus: state.formatMaxBonus,
       }
 
-      if (options.type === 'auto') {
-        $_calculateByPrefab(item)
-      }
+      // if (options.type === 'auto') {
+      //   $_calculateByPrefab(item)
+      // }
 
       // 判断是否有相同的投注,几个方面比较playId,unit,betMethod,bettingNumber
       if (options.type !== 'buy') {
@@ -423,19 +423,20 @@ const mutations = {
 
         if (sameBet) {
           sameBet.multiple = _(sameBet.multiple).add(item.multiple)
-          // if (sameBet.multiple > sameBet.maxMultiple) {
-          //  sameBet.multiple = sameBet.maxMultiple;
-          // }
+          if (sameBet.multiple > sameBet.maxMultiple) {
+           sameBet.multiple = sameBet.maxMultiple;
+          }
           item = sameBet
         }
       }
 
       // 计算prefabMoney 和 rebateMoney
 
-      item.prefabMoney = _(2).chain()
-        .mul(item.multiple).mul(item.statistics)
-        .mul(item.unit)
-        .value()
+      $_calculateByPrefab(item)
+      // item.prefabMoney = _(2).chain()
+      //   .mul(item.multiple).mul(item.statistics)
+      //   .mul(item.unit)
+      //   .value()
 
       if (sameBet) {
         sameBets.push(item)
@@ -568,7 +569,7 @@ const $_calculateByPrefab = (data) => {
 
   data.prefabMoney = prefabMoney
   data.fPrefabMoney = _(prefabMoney).convert2yuan()
-  data.fBetBonus = _(data.betBonus).chain().div(10000).mul(data.unit)
+  data.fBetBonus = _(data.betBonus).chain().div(10000).mul(data.unit).mul(data.multiple)
     .convert2yuan()
     .value()
 }

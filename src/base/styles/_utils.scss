@@ -518,12 +518,16 @@
 .admin-container {
   position: relative;
   width: 1200px;
-  min-height: 1100px;
+  //min-height: 1100px;
   margin: 0 auto;
-  background: white;
+  background: #f8f8f8;
   box-shadow: 0 0 5px rgba(0,0,0,0.4);
 }
-
+.admin-gl-main{
+  background: $def-white-color;
+  border-left: 1px solid #e6e6e6;
+  width: 999px;
+}
 @include sprites($sprites-sprites);
 @include sprites($sprites-b-c-sprites);
 @include sprites($sprites-m-m-c-sprites);
