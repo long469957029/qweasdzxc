@@ -9,9 +9,10 @@
     background: $prominent-dialog-body;
     .nav-tabs {
       height: 54px;
-      padding: 0 231px;
+      padding: 0 192px;
       background: $new-main-deep-color;
       li {
+        margin: 0 13px;
         a {
           margin-top: 17px;
           padding: 0px 13px;
@@ -369,6 +370,12 @@
   background-image: url('~base/images/v2/bank-JD.png');
 }
 
+.fc-re-wxTransfer {
+  width: 22px;
+  height: 23px;
+  background-image: url('~base/images/v2/bank-wx-transfer.png');
+}
+
 // 银行logo配置
 .fc-re-zhaoshang {
   width: 46px;
@@ -672,14 +679,17 @@
     margin-top: 15px;
     cursor: pointer;
     .fc-rc-rightBar-ac-img {
-      padding-bottom: 5px;
       float: left;
     }
     .fc-rc-rightBar-ac {
       width: 230px;
       height: 130px;
       margin: 18px 0 10px 0;
-      border: 1px solid #cccccc;
+      a {
+        img {
+          border-radius: 4px;
+        }
+      }
     }
     .fc-rc-rightBar-ac-link {
       color: $font-auxiliary-color;
@@ -1309,4 +1319,169 @@
     background: url('./vip/misc/fund-vip.gif');
     cursor: pointer;
   }
+}
+
+.fund-vip-tips {
+  padding: 11px 18px;
+  width: 738px;
+  text-align: left;
+  .tips-header {
+    height: 50px;
+    background: #14b1bb;
+    font-size: 18px;
+    color: #ffffff;
+    line-height: 50px;
+    text-align: center;
+  }
+  .tips-body {
+    padding: 68px 39px 46px;
+    background: #f9f9f9;
+    .tips-text1 {
+      color: #333333;
+      font-size: 16px;
+    }
+    .tips-text3 {
+      font-size: 12px;
+      color: #666666;
+      padding: 10px 0;
+    }
+    .tips-text2 {
+      font-size: 12px;
+      color: #666666;
+      padding: 5px 0;
+    }
+    .tips-text4 {
+      color: #f09932;
+    }
+    .tips-service-item {
+      display: inline-block;
+      background: #ffffff;
+      width: 265px;
+      height: 99px;
+      border-radius: 6px;
+      border-left: 1px solid #129098;
+      margin: 17px 0;
+      font-size: 0;
+      padding: 16px 24px;
+      &.left {
+        margin: 17px 28px 17px 0;
+      }
+      .item-num {
+        width: 95px;
+        height: 65px;
+        position: absolute;
+        margin-left: -8px;
+        &.one {
+          width: 82px;
+          background: url('./vip/misc/vip-num1.png');
+        }
+        &.two {
+          background: url('./vip/misc/vip-num2.png');
+        }
+        &.three {
+          background: url('./vip/misc/vip-num3.png');
+        }
+        &.four {
+          background: url('./vip/misc/vip-num4.png');
+        }
+      }
+      .item-text {
+        margin-top: 26px;
+        display: inline-block;
+      }
+      .item-img {
+        display: inline-block;
+        width: 68px;
+        height: 68px;
+        float: right;
+        margin-top: 16px;
+        &.one {
+          background: url('./vip/misc/vip-logo-one.png');
+        }
+        &.two {
+          background: url('./vip/misc/vip-logo-two.png');
+        }
+        &.three {
+          background: url('./vip/misc/vip-logo-three.png');
+        }
+        &.four {
+          background: url('./vip/misc/vip-logo-four.png');
+        }
+      }
+    }
+    .tips-end {
+      margin: 68px auto 0;
+      background: #14b1bb;
+      width: 320px;
+      height: 50px;
+      color: #ffffff;
+      font-size: 18px;
+      line-height: 50px;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}
+
+.btn-vip-tips-close {
+  top: 22px !important;
+  right: 26px !important;
+}
+
+.fund-operate-pay-tips {
+  background: #ffffff;
+  padding: 37px 20px;
+  width: 341px !important;
+  height: 156px !important;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+  margin: 120px auto !important;
+  .tips-content {
+    margin-top: 6px;
+    margin-left: 24px;
+    width: 237px;
+    float: right;
+    .tips-content-title {
+      color: #333333;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .tips-content-text {
+      color: #666666;
+      font-size: 14px;
+      line-height: 21px;
+      &.amount {
+        color: #f2a74d;
+      }
+    }
+    .tips-footer {
+      margin-top: 15px;
+      height: 38px;
+      line-height: 38px;
+      .tips-footer-submit {
+        display: inline-block;
+        width: 108px;
+        height: 38px;
+        background: #14b1bb;
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 38px;
+        text-align: center;
+        border-radius: 4px;
+        margin-left: -8px;
+        cursor: pointer;
+      }
+      .tips-footer-cancel {
+        color: #333333;
+        display: inline-block;
+        font-size: 14px;
+        margin-left: 16px;
+        cursor: pointer
+      }
+    }
+  }
+}
+
+.text-account-fund {
+  color: #f09932;
 }

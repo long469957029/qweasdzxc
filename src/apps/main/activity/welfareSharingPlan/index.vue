@@ -60,7 +60,7 @@
               <div class="title-right inline-block"></div>
             </div>
             <div class="content-welfare-calculation">
-              <span class="welfare-calculation-title">福利计算机：</span>
+              <span class="welfare-calculation-title">福利计算器：</span>
               <span class="welfare-calculation-text">团队日销量</span>
               <input class="welfare-calculation-input" data-parsley-type="integer" required v-model="teamAmount">
               <span class="welfare-calculation-text">团队日亏损</span>
@@ -81,7 +81,9 @@
               <div class="content-welfare-value">
                 <div class="content-welfare-value-item" v-for="bonus in bonusList">
                   <div class="welfare-item inline-block item1">{{_(bonus.betAmount).formatDiv(10000)}}</div>
-                  <div class="welfare-item inline-block item2" :class="{active:bonus.bonus===curResult&&curAmount===bonus.betAmount}">{{_(bonus.bonus).formatDiv(10000)}}
+                  <div class="welfare-item inline-block item2"
+                       :class="{active:bonus.bonus===curResult&&curAmount===bonus.betAmount}">
+                    {{_(bonus.bonus).formatDiv(10000)}}
                   </div>
                   <div class="welfare-item inline-block item3">{{_(bonus.profit1).formatDiv(10000)}}</div>
                   <div class="welfare-item inline-block item4"
@@ -205,7 +207,9 @@
             amountList.push(item.betAmount)
           }
         })
-        return amountList.sort()[amountList.length - 1]
+        return amountList.sort(function (a, b) {
+          return a < b ? 1 : -1
+        })[0]
       },
       initActivityData(){
         activityInfo.getWelfareSharingPlanInfo(

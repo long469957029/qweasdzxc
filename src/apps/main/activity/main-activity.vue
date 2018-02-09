@@ -36,7 +36,7 @@
 <style lang="scss" scoped>
   .main-activity{
     position: relative;
-    z-index: 1;
+    /*z-index: 1048;*/
   }
 </style>
 

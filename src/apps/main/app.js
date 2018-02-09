@@ -75,7 +75,7 @@ const _bindFundOperatorDialogHandler = () => {
       id: _.now(),
       // modalClass:'js-fund-operate-dialog',
       size: 'js-fund-operate-dialog fund-operate',
-      bStyle: 'width: 740px;height:680px;border: 1px solid #d7d7d7;',
+      bStyle: 'width: 740px;height:680px;',
       bodyClass: 'js-fund-operate fund-operate',
       body: '<div class="js-fund-operate-container"></div>',
     })
@@ -84,9 +84,10 @@ const _bindFundOperatorDialogHandler = () => {
     })
 
     $fundOperateDialog.find('.js-fund-operate').html(rechargeView.render().el)
-    // if(window.store.getters.userIsVip){
-    $fundOperateDialog.find('.js-fund-operate-dialog').after('<div class="js-fund-vip-panel fund-vip-panel"><div class="js-fund-vip fund-vip"></div>')
-    // }
+    if(window.store.getters.userIsVip){
+    $fundOperateDialog.find('.js-fund-operate-dialog').after('<div class="js-fund-vip-panel fund-vip-panel">' +
+      '<div class="js-fund-vip fund-vip"></div><div class="js-fund-vip-tips fund-vip-tips"></div></div><input class="js-vip-tips-active" type="hidden">')
+    }
     $fundOperateDialog.on('hidden.modal', () => {
       $(this).remove()
       rechargeView.destroy()
@@ -111,7 +112,14 @@ const _bindFundOperatorDialogHandler = () => {
       $fundOperateDialog.modal('hide')
     })
     $fundOperateDialog.on('click.modal', '.js-fund-vip', () => {
-      $fundOperateDialog.find('.js-fund-vip-panel').append(rechargeVipView)
+      const status = $fundOperateDialog.find('.js-vip-tips-active').val()
+      if (status === '' || status === undefined || status === 'hide') {
+        $fundOperateDialog.find('.js-fund-vip-tips').append(rechargeVipView)
+        $fundOperateDialog.find('.js-vip-tips-active').val('show')
+      }else if(status==='show'){
+        $fundOperateDialog.find('.js-fund-vip-tips-container').remove()
+        $fundOperateDialog.find('.js-vip-tips-active').val('hide')
+      }
     })
   })
 
