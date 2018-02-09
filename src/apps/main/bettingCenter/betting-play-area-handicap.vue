@@ -540,7 +540,7 @@
         }
         .main-item-left {
           width: 60%;
-          padding-left: 10%;
+          padding-left: 8%;
           text-align: left;
           box-sizing: border-box;
           line-height: 25px;
@@ -554,7 +554,7 @@
           flex-grow: 1;
         }
         .item {
-          margin: 0 5px 0 0;
+          margin: 0 4px 0 0;
         }
       }
       .red {
