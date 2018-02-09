@@ -127,9 +127,11 @@
     border: 1px solid $def-gray-color;
     margin-bottom: 12px;
     border-radius: 5px;
+    background-color: #f8f8f8;
     .portlet-header {
       text-align: center;
       line-height: 20px;
+      background-color: #f8f8f8;
       .portlet-title {
         line-height: 20px;
         font-size: 14px;
@@ -141,6 +143,7 @@
       height: 225px;
       overflow: auto;
       box-sizing: border-box;
+      background-color: #f8f8f8;
       p {
         &:last-of-type {
           margin-bottom: 0;

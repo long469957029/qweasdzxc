@@ -3,7 +3,7 @@ import SidebarView from 'com/sidebar'
 const SideMenuMainView = Base.LayoutView.extend({
   className: 'clearfix',
   template: '<div class="admin-container clearfix"><div class="js-gl-sidebar pull-left col-md-2"></div>' +
-  '<div class="js-gl-main pull-left col-md-10"></div></div>',
+  '<div class="js-gl-main admin-gl-main pull-left"></div></div>',
 })
 
 export default {

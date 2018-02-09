@@ -4,6 +4,9 @@
 
 .fc-fm-portlet {
   height: 120px;
+  ul{
+    background: $def-white-color;
+  }
   .fc-fm-amount-desc {
     font-size: 0px;
     vertical-align: middle;
@@ -132,6 +135,7 @@
     font-size: 0px;
     height: 340px;
     vertical-align: middle;
+    background: $def-white-color;
     .fc-fm-mb-qu-left {
       width: 590px;
       margin-top: 30px;

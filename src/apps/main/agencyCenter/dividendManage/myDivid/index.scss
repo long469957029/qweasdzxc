@@ -3,6 +3,8 @@
 @import "~base/styles/imports";
 
 .ac-dm-md-main {
+  min-height: 740px;
+  padding-bottom: 40px;
   .ac-dm-md-tip {
     width: 945px;
     height: 39px;
@@ -55,7 +57,7 @@
     margin: 0;
   }
   .ac-dm-md-status {
-    width: 78px;
+    min-width: 78px;
     height: 26px;
     font-size: 14px;
     line-height: 24px;

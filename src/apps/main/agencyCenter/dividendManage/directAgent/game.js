@@ -74,7 +74,7 @@ const GameDividView = SearchGrid.extend({
       // tip: '<span class="m-right-sm vertical-middle"><span class="js-pf-select-all cursor-pointer">全选</span> | ' +
       // '<span class="js-pf-inverse cursor-pointer">反选</span></span>' +
       // '<div class="btn-group"><button class="js-ac-multi-grant btn btn-sm">发放</button></div>',
-      height:600,
+      height:480,
     })
   },
 

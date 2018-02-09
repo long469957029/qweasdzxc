@@ -12,6 +12,8 @@ const RebateReportView = SearchGrid.extend({
 
   events: {},
 
+  className: 'p-bottom-lg',
+
   initialize () {
     _(this.options).extend({
       height: 600,

@@ -50,7 +50,7 @@
     },
     computed:{
       openBtn: function () {
-        return this.redPackType === 0 ? openRedPack = !openRedPack : this.getAward
+        return this.redPackType === 0 ? this.openRedPack = !this.openRedPack : this.getAward
       }
     },
     methods:{

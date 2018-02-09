@@ -5,6 +5,7 @@ const TicketSelectGroup = Base.PrefabView.extend({
     listClass: 'js-pf-select-ticket-list',
     levelClass: 'js-pf-select-ticket-level',
     playClass: 'js-pf-select-ticket-play',
+    type: 0, // 0代表普通彩票  1代表盘口玩法
     defaultList: {
       list: {
         label: '彩种',
@@ -42,6 +43,9 @@ const TicketSelectGroup = Base.PrefabView.extend({
   _initListXhr() {
     return Global.sync.ajax({
       url: '/ticket/ticketmod/ticketlist.json',
+      data:{
+        type: this.options.type
+      }
     })
   },
 
@@ -78,7 +82,9 @@ const TicketSelectGroup = Base.PrefabView.extend({
       })
 
     this.$(`.${self.options.listClass}`).html(html.join(''))
-    this.$(`.${self.options.levelClass}`).html(`<option value="${this.options.defaultList.level.value}">${this.options.defaultList.level.label}</option>`)
+    if(this.options.type === 0){
+      this.$(`.${self.options.levelClass}`).html(`<option value="${this.options.defaultList.level.value}">${this.options.defaultList.level.label}</option>`)
+    }
     this.$(`.${self.options.playClass}`).html(`<option value="${this.options.defaultList.play.value}">${this.options.defaultList.play.label}</option>`)
   },
 
@@ -94,6 +100,7 @@ const TicketSelectGroup = Base.PrefabView.extend({
       this._initLevelXhr({
         ticketId,
         version: 1,
+        type: this.options.type,
       })
         .done((res) => {
           if (res && res.result === 0) {
@@ -116,10 +123,16 @@ const TicketSelectGroup = Base.PrefabView.extend({
     const html = [`<option value="${this.options.defaultList.play.value}">${this.options.defaultList.play.label}</option>`]
 
     if (!_(ticketLevelId).isNaN()) {
-      this._initPlayXhr({
-        ticketLevelId,
-        version:1
-      })
+      const data = {
+        version:1,
+        type: this.options.type,
+      }
+      if(this.options.type === 0){
+        data.ticketLevelId = ticketLevelId
+      }else{
+        data.ticketId = ticketLevelId
+      }
+      this._initPlayXhr(data)
         .done((res) => {
           if (res && res.result === 0) {
             self.$(`.${self.options.playClass}`).html(_(res.root).reduce((html1, ticket) => {
@@ -144,8 +157,12 @@ const TicketSelectGroup = Base.PrefabView.extend({
   listChangeHandler(e) {
     const $target = $(e.currentTarget)
 
-    if (this.$el.find(`.${this.options.levelClass}`).length) {
-      this.trigger('list:change', $target.val())
+    if(this.options.type === 0){
+      if (this.$el.find(`.${this.options.levelClass}`).length) {
+        this.trigger('list:change', $target.val())
+      }
+    }else{
+      this.levelChange($target.val())
     }
   },
 

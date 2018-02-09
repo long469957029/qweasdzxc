@@ -12,7 +12,7 @@ const TeamBettingRecordView = TabView.extend({
 
   events: {},
 
-  className: 'fc-gr-detail basic-black',
+  className: 'fc-gr-detail basic-black p-bottom-lg',
 
   initialize() {
     _(this.options).extend({
@@ -23,6 +23,7 @@ const TeamBettingRecordView = TabView.extend({
           id: 'jsGcGrTr',
           router: 'fc/td',
           view: TicketRecordView,
+          options: { type: 0 },
         },
         {
           label: '彩票追号',
@@ -31,13 +32,13 @@ const TeamBettingRecordView = TabView.extend({
           router: 'fc/cr',
           view: ChaseRecordView,
         },
-        // {
-        //   label: '游戏投注',
-        //   name: 'jsGcGrGr',
-        //   id: 'jsGcGrGr',
-        //   router: 'gc/gr',
-        //   view: GameRecordView,
-        // },
+        {
+          label: '双面盘',
+          name: 'jsDoubleSided',
+          id: 'jsDoubleSided',
+          view: TicketRecordView,
+          options: { type: 1 },
+        },
         {
           label: 'AG',
           name: 'jsFcMdPlatform',
