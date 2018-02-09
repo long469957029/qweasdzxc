@@ -68,7 +68,7 @@ const longHu = (num1Index, num2Index, nums) => {
 
 const group = (nums) => {
   const length = _.uniq(nums.slice(0, 3)).length
-  return length === 3 ? '豹子' : length === 2 ? '组三' : '组六'
+  return length === 3 ? '组六' : length === 2 ? '组三' : '豹子'
 }
 
 export const ssc = {

@@ -54,7 +54,7 @@ const getters = {
 
 // actions
 const actions = {
-  pushBetting ({ state, commit, dispatch }, {
+  pushBetting ({ state, commit }, {
     planId,
     prevVoucher,
     type = 'previewList',
@@ -73,14 +73,14 @@ const actions = {
       return list
     }, [])
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       pushBettingApi(
         { planId, bet, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
         ({ data }) => {
           resolve(data)
           return commit(types.PUSH_BETTING_SUCCESS, { res: data, type })
         },
-        () => { return commit(types.PUSH_BETTING_FAILURE) },
+        reject,
       )
     })
   },
@@ -102,7 +102,7 @@ const actions = {
       return list
     }, [])
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       pushChaseApi(
         {
           plan, play, suspend, usePack: state.usePack, amount,
@@ -111,7 +111,7 @@ const actions = {
           resolve(data)
           return commit(types.PUSH_CHASE_SUCCESS, data)
         },
-        () => { return commit(types.PUSH_CHASE_FAILURE) },
+        reject,
       )
     })
   },
