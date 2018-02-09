@@ -16,6 +16,9 @@ const AliAndBankTransfer = Base.ItemView.extend({
     const lastPayInfo = rechargeService.getPaymentInfo(this.options.type, this.options.tips)
     const feeData = rechargeService.doFeeData(lastPayInfo)
     this.$('.js-rc-confirm-tips-content').html(rechargeService.get(this.options.type, feeData.min, feeData.max, feeData.limit, feeData.maxLimit))
+    if (this.options.type === 6) {
+      this.$('.js-fc-re-gotoAliPay').removeClass('hidden')
+    }
     const data = {
       amount: this.options.amount,
       name: this.options.name,

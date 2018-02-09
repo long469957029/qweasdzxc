@@ -2,6 +2,8 @@
   <div class="rechargePlan">
     <div class="rp-header">
       <div class="ws-header-img">
+        <div class="bp-header-time">活动时间：<span v-model="fromTime">{{fromTime}}</span>-<span
+          v-model="endTime">{{endTime}}</span></div>
         <div class="rp-header-shadow">
         </div>
         <div class="rp-header-text">
@@ -27,7 +29,7 @@
               </div>
               <div class="detail-value-item">
                 <div class="rp-task-title">奖励金额</div>
-                <div class="rp-value-text">{{_(rechargeTotal * curItem.bonusRate).formatDiv(10000)}}</div>
+                <div class="rp-value-text">{{curBonus}}</div>
               </div>
               <div class="detail-value-item claim">
                 <div class="rp-task-title">流水要求</div>
@@ -55,7 +57,7 @@
                :class="{one:index===0,two:index===1,three:index===2,four:index===3,five:index===4}"></div>
           <div class="item-text-container inline-block">
             <div class="item-text"><span class="item-text-value">{{item.betMulti}}</span>倍流水返<span
-              class="item-text-value">{{_(item.bonusRate).formatDiv(100)}}%</span>充值额
+              class="item-text-value">{{_(item.bonusRate).formatDiv(100)}}%</span>充值额（不超过<span class="item-text-value">{{_(item.maxBonus).formatDiv(10000)}}</span>元)
               +{{item.ticketCoupon.ticketName}}<span
                 class="item-text-value">{{_(item.ticketCoupon.amount).formatDiv(10000)}}</span>元代金券
             </div>
@@ -63,7 +65,9 @@
               如：充{{rechargeExp}}，流水{{rechargeExp * item.betMulti}}，返{{rechargeExp * _(item.bonusRate).formatDiv(10000)}}元
             </div>
           </div>
-          <div class="item-receive" v-if="item.status===0" @click="taskRecevie(item.index)">立即领取</div>
+          <div class="item-receive" v-if="item.status===0"
+               @click="confirmTask(item.betMulti,_(item.bonusRate).formatDiv(100),item.index)">立即领取
+          </div>
           <div class="item-status" :class="{doing:item.status===1,done:item.status===2}" v-else></div>
         </div>
       </div>
@@ -79,6 +83,20 @@
         <div class="rp-footer-text">3、充值奖励在达到目标后自动返还，在完成一个任务后可领取其他的充值任务。</div>
       </div>
     </div>
+    // 任务确认弹窗
+    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="rechargePlanModal"
+         v-show="showConfirmModal">
+      <div class="modal-dialog modal-recharge">
+        <div class="confirm-header">
+          任务确认
+          <a class="close btn-close" data-dismiss="modal">×</a>
+        </div>
+        <div class="confirm-text1"><span class="confirm-text3">{{curAmount}}</span>倍流水返<span class="confirm-text3">{{curLimit}}%充值额</span>
+        </div>
+        <div class="confirm-text2">领取任务后再完成该任务后，才可继续领取下一轮的充值任务哟～</div>
+        <div class="confirm-footer" @click="taskRecevie(curIndex)">确定</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -92,7 +110,7 @@
 
     data () {
       return {
-        showDoingTask: true,
+        showDoingTask: false,
         planList: '',
         minRecharge: 0,
         curItem: '',
@@ -100,6 +118,13 @@
         rechargeTotal: 0,
         rechargeExp: 10000,
         process: 0,
+        curBonus: 0,
+        fromTime: '',
+        endTime: '',
+        showConfirmModal: false,
+        curAmount: 0,
+        curLimit: 0,
+        curIndex: -1,
       }
     },
 
@@ -124,14 +149,31 @@
     filters: {},
 
     methods: {
+      confirmTask(amount, limit, index){
+        this.showConfirmModal = true
+        this.curAmount = amount
+        this.curLimit = limit
+        this.curIndex = index
+        this.$nextTick(() => {
+          $(this.$refs.rechargePlanModal).modal({
+            backdrop: 'static',
+          })
+            .on('hidden.modal', () => {
+              this.showConfirmModal = false
+            })
+        })
+      },
       taskRecevie(index){
+        $(this.$refs.rechargePlanModal).modal('hide')
         activityInfo.doRechargePlan({
             index: index
           },
           ({data}) => {
             if (data.result === 0) {
               this.initActivityData(data)
-              Global.ui.notification.show('任务领取成功！')
+              Global.ui.notification.show('任务领取成功！<br><div style="margin-top: 34px;font-size: 12px;color: #666666;    margin-bottom: -15px;">只要努力，没有什么是不可能的～</div>', {
+                type: 'success',
+              })
             } else {
               Global.ui.notification.show(data.msg)
             }
@@ -149,6 +191,8 @@
         this.rechargeTotal = _(data.root.rechargeTotal).formatDiv(10000)
         this.betTotal = _(data.root.betTotal).formatDiv(10000)
         this.minRecharge = _(data.root.recharge).formatDiv(10000)
+        this.fromTime = _(data.root.fromDate).toDate('M月D日')
+        this.endTime = _(data.root.endDate).toDate('M月D日')
 
         //status -1：不可领取，0 可领取且未领取，1，已领取且进行中，2，已完成
         _(data.root.itemList).each((item) => {
@@ -158,7 +202,16 @@
               index: item.index
             })
 //            this.process = 50 + '%'
-            this.process = _((data.root.betTotal / data.root.rechargeTotal * item.betMulti)*100).formatDiv(1,{fixed:0})+ '%'
+            let curBonus = _(data.root.rechargeTotal * item.bonusRate).formatDiv(10000)
+            if (curBonus > _(item.maxBonus).formatDiv(10000)) {
+              curBonus = _(item.maxBonus).formatDiv(10000)
+            }
+            this.curBonus = curBonus
+            let process = _((data.root.betTotal / (data.root.rechargeTotal * item.betMulti)) * 100).formatDiv(1, {fixed: 0}) + '%'
+            if (process > 100) {
+              process = 100
+            }
+            this.process = process
           }
         })
         if (flag) {
@@ -175,11 +228,12 @@
     font-family: "Microsoft Yahei", "Microsoft YaHei UI", sans-serif;
     display: block;
     position: relative;
-    background-color: #ffffff;
+    background-color: #f9f9f9;
     .rp-header {
       width: 100%;
       height: 600px;
       .ws-header-img {
+        margin-top: -1px;
         background-image: url('./misc/rp-header.png');
         width: 1920px;
         height: 100%;
@@ -202,6 +256,14 @@
           position: absolute;
           z-index: 2;
           text-align: center;
+        }
+        .bp-header-time {
+          font-size: 22px;
+          color: #d2a550;
+          position: absolute;
+          left: 50%;
+          top: 378px;
+          margin-left: -120px;
         }
         .rp-header-shadow {
           background: #ffffff;
@@ -252,6 +314,7 @@
       position: relative;
       margin-top: 60px;
       height: 345px;
+      background-color: #ffffff;
       .rp-process-panel {
         margin: 0 auto;
         position: relative;
@@ -351,10 +414,11 @@
       position: relative;
       background: #f9f9f9;
       .rp-plan-panel {
-        margin: 0 auto;
+        margin: 0 auto 300px;
         position: relative;
         width: 1200px;
         padding-top: 40px;
+        z-index: 1;
         .rp-plan-back {
           position: absolute;
           background-image: url('./misc/rp-rechargePlan.png');
@@ -374,7 +438,7 @@
           width: 1190px;
           height: 90px;
           padding: 30px 0 30px 30px;
-          margin: 25px 0;
+          margin-top: 25px;
           box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
           background: #ffffff;
           position: relative;
@@ -451,7 +515,8 @@
       width: 100%;
       background-image: url('./misc/rs-footer.png');
       height: 485px;
-      margin-top: -165px;
+      bottom: 0;
+      position: absolute;
       .rp-footer-panel {
         padding-top: 220px;
         width: 1200px;
@@ -467,6 +532,50 @@
           font-size: 18px;
           color: #666666;
         }
+      }
+    }
+    .modal-recharge {
+      z-index: 1050;
+      background: #ffffff;
+      width: 480px;
+      height: 310px;
+      .confirm-header {
+        background: #f0f0f0;
+        height: 50px;
+        line-height: 50px;
+        font-size: 14px;
+        color: #333333;
+        text-align: center;
+      }
+      .confirm-text1 {
+        font-size: 16px;
+        color: #666666;
+        margin: 65px auto 40px;
+        text-align: center;
+      }
+      .confirm-text2 {
+        font-size: 12px;
+        color: #666666;
+        width: 263px;
+        text-align: center;
+        margin: 0 auto;
+        line-height: 26px;
+      }
+      .confirm-text3 {
+        font-size: 16px;
+        color: #333333;
+      }
+      .confirm-footer {
+        margin: 20px auto;
+        background: #14b1bb;
+        color: #ffffff;
+        font-size: 12px;
+        border-radius: 5px;
+        width: 110px;
+        height: 38px;
+        line-height: 38px;
+        text-align: center;
+        cursor: pointer;
       }
     }
   }

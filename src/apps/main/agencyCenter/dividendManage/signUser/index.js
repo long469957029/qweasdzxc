@@ -52,6 +52,17 @@ const SignUserView = Base.ItemView.extend({
   },
 
   serializeData() {
+    const acctInfo = Global.memoryCache.get('acctInfo')
+    this.operationStatus = _.getUrlParam('operationStatus')
+    this.merchant = acctInfo.merchant
+    this.userRebate = acctInfo.userRebate
+    let showProtocol = true  //招行号和直属号  查看我的分红协议时  不显示协议
+    if(this.operationStatus && this.operationStatus === '3' && (this.merchant || this.userRebate === 130) ){
+      showProtocol = false
+    }
+    _(this.options).extend({
+      showProtocol
+    })
     return this.options
   },
 
@@ -187,7 +198,9 @@ const SignUserView = Base.ItemView.extend({
     const self = this
     this._getQuotaXhr().done((res) => {
       if (res.result === 0) {
-        self._parentView.setUserManageData(res.root)
+        if(self._parentView){
+          self._parentView.setUserManageData(res.root)
+        }
       }
     })
   },
@@ -211,13 +224,14 @@ const SignUserView = Base.ItemView.extend({
     if (this.TicketGrid) {
       this.TicketGrid.destroy()
     }
+    const labelText = this.operationStatus === 3 && this.merchant ? '团队日均销量' : '日量标准'
     this.TicketGrid = this.$ticketGrid.staticGrid({
       startOnLoading: false,
       // height: 80,
       tableClass: 'table table-bordered table-center',
       colModel: [
         { label: '序号', name: 'no', width: 90 },
-        { label: '日量标准', name: 'betTotal', width: 399 },
+        { label: labelText, name: 'betTotal', width: 399 },
         { label: '分红比例', name: 'divid', width: 399 },
       ],
       emptyTip: false,
@@ -268,17 +282,20 @@ const SignUserView = Base.ItemView.extend({
     if (this.GameGrid) {
       this.GameGrid.destroy()
     }
-
+    const colModel = [
+      { label: '序号', name: 'no', width: 90 },
+      { label: '亏损要求', name: 'profitTotal', width: 310 },
+      { label: '活跃要求', name: 'activeUser', width: 264 },
+      { label: '分红比例', name: 'divid', width: 224 },
+    ]
+    if(this.operationStatus === '3' && this.merchant){
+      colModel.splice(2,1)
+    }
     this.GameGrid = this.$gameGrid.staticGrid({
       startOnLoading: false,
       // height: 80,
       tableClass: 'table table-bordered table-center',
-      colModel: [
-        { label: '序号', name: 'no', width: 90 },
-        { label: '亏损要求', name: 'profitTotal', width: 310 },
-        { label: '活跃要求', name: 'activeUser', width: 264 },
-        { label: '分红比例', name: 'divid', width: 224 },
-      ],
+      colModel,
       emptyTip: false,
       row: this._formatGameData(rebateList || []),
     }).staticGrid('instance')
@@ -292,14 +309,24 @@ const SignUserView = Base.ItemView.extend({
         // return self.addGameRowHandler(item);
       })
     }
-    return _(rebateList).map((item, index) => {
-      return {
-        no: index + 1,
-        profitTotal: `≥${_(item.profitTotal).convert2yuan()}元`,
-        activeUser: `≥${item.activeUser}人/月`,
-        divid: `${_(item.divid).formatDiv(100)}%`,
-      }
-    })
+    if(this.operationStatus === '3' && this.merchant){
+      return _(rebateList).map((item, index) => {
+        return {
+          no: index + 1,
+          profitTotal: `≥${_(item.profitTotal).convert2yuan()}元`,
+          divid: `${_(item.divid).formatDiv(100)}%`,
+        }
+      })
+    } else{
+      return _(rebateList).map((item, index) => {
+        return {
+          no: index + 1,
+          profitTotal: `≥${_(item.profitTotal).convert2yuan()}元`,
+          activeUser: `≥${item.activeUser}人/月`,
+          divid: `${_(item.divid).formatDiv(100)}%`,
+        }
+      })
+    }
   },
   addGameRowHandler() {
     const rowData = this._generateGameRowData({})

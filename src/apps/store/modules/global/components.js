@@ -87,8 +87,10 @@ const mutations = {
     state.openNovicePackage = data
   },
   [types.USER_IS_VIP](state, data) {
-    if(data===0){
-      state.userIsVip = data
+    if(data===1){
+      state.userIsVip = true
+    }else if(data===0){
+      state.userIsVip = false
     }
   },
 }

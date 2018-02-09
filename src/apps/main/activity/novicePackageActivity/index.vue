@@ -230,8 +230,8 @@
         this.betLimit = _(data.betRate).formatDiv(10000)
         this.phoneBonus = _(data.bindPhoneBonus).formatDiv(10000)
         this.emailBonus = _(data.bindMailBonus).formatDiv(10000)
-        this.cardBonus = _(data.bindMailBonus).formatDiv(10000)
-        this.bindBonus = _(data.bindPhoneBonus + data.bindMailBonus + data.bindMailBonus).formatDiv(10000)
+        this.cardBonus = _(data.bindBankCardBonus).formatDiv(10000)
+        this.bindBonus = _(data.bindPhoneBonus + data.bindMailBonus + data.bindBankCardBonus).formatDiv(10000)
         this.rechargeStatus = data.rechargeStatus
         this.betStatus = data.betStatus
         this.bindStatus = data.bindStatus
@@ -241,7 +241,7 @@
         activityInfo.doNovicePackage(
           ({data}) => {
             if (data.result === 0) {
-              this.initActivityData(data)
+              this.getActivityData()
               Global.ui.notification.show('代金券领取成功！')
             } else {
               Global.ui.notification.show(data.msg)

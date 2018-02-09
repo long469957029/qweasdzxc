@@ -11,7 +11,7 @@
     margin: 10px 20px;
     background-color: #fdf5ea;
     color: $new-inverse-color;
-    font-size: $font-sm;
+    font-size: $font-xs;
     line-height: 39px;
     .tip-btn {
       width: 78px;
@@ -38,6 +38,7 @@
       margin-left: 2px;
       display: inline-block;
       line-height: 30px;
+      margin-top: 5px;
     }
     .countdown-red-colon{
       color: $new-inverse-color;

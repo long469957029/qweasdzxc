@@ -18,10 +18,10 @@ module.exports = {
   },
   // 生成温馨提示语句
   get(id, min, max, fee, maxFee) {
-    const onceMinCharge = `单次充值金额最低<span class="text-account-cut">${min}</span>元，`
-    const onceMaxCharge = `最高<span class="text-account-cut">${max}</span>元，`
-    const feeTips = `收取<span class="text-account-cut">${fee}%</span>手续费，`
-    const maxFeeTips = `最高不超过<span class="text-account-cut">${maxFee}</span>元`
+    const onceMinCharge = `单次充值金额最低<span class="text-account-fund">${min}</span>元，`
+    const onceMaxCharge = `最高<span class="text-account-fund">${max}</span>元，`
+    const feeTips = `收取<span class="text-account-fund">${fee}%</span>手续费，`
+    const maxFeeTips = `最高不超过<span class="text-account-fund">${maxFee}</span>元`
     let feeTotalTips = ''
     if (fee === 0 && maxFee === 0) {
       feeTotalTips = '免手续费'
@@ -40,6 +40,9 @@ module.exports = {
       html.push('<span>3.晚上23:30-01:00，使用支付宝转账到银行卡时如果提示第二天到账，请勿付款</span>')
     } else if (id === 11) {
       html.push('<span>2.平台账户会不定时更换，请在获得最新信息后充值，否则损失自负</span></br>')
+    }else if(id===16){
+      html.push('<span>2.晚上23:30-01:00，使用微信转账到银行卡时如果提示第二天到账，请勿付款</span></br>')
+      html.push('<span>3.平台账户会不定时更换，请在获得最新信息后充值，否则损失自负</span>')
     }
     return html.join('')
   },
