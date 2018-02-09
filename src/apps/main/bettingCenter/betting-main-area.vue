@@ -341,9 +341,11 @@
         }
       },
       'bettingInfo.lastOpenId': {
-        handler: function () {
-          this.$refs.bettingHisotry.update()
-          bettingRecordsView.update()
+        handler(current, prev) {
+          if (prev !== '-' && current !== '-') {
+            this.$refs.bettingHisotry.update()
+            bettingRecordsView.update()
+          }
         }
       },
       unit: {
