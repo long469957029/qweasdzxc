@@ -54,7 +54,7 @@ const MailBindingView = Base.ItemView.extend({
 
   sendCodeCountdown ($reSend, $countdown) {
     const self = this
-    let time = 30
+    let time = 60
     clearInterval(this.countdown)
     this.countdown = setInterval(() => {
       time -= 1
@@ -92,7 +92,8 @@ const MailBindingView = Base.ItemView.extend({
       }
       this.sendValidataCodeXhr(url, data).done((res) => {
         if (res && res.result === 0) {
-          $target.html('<span class="js-uc-pm-mobile-countdown">30</span>秒后重发')
+          self.$email.attr('disabled',true)
+          $target.html('<span class="js-uc-pm-mobile-countdown">60</span>秒后重发')
           $target.data('status', 1)
           self.sendCodeCountdown($target, $('.js-uc-pm-mobile-countdown'))
           self.$bindError.html('')
@@ -144,7 +145,7 @@ const MailBindingView = Base.ItemView.extend({
                 }
               }
             } else {
-              const dataError = {
+              const data = {
                 text: '您的验证码有误，请输入正确的验证码！',
               }
               if (type === 'add') {
@@ -154,11 +155,11 @@ const MailBindingView = Base.ItemView.extend({
                 self.$lastVerificationCode.focus()
                 data.el = self.$changeError
               }
-              self.getErrorEl(dataError)
+              self.getErrorEl(data)
               // Global.ui.notification.show('您的验证码有误，请输入正确的验证码！', { displayTime: 2000 })// (res.msg === 'fail' || res.msg === 'ok') ? '' : res.msg
             }
           } else {
-            const dataError = {
+            const data = {
               text: `绑定失败！${res.msg === 'fail' ? '' : res.msg}`,
             }
             if (type === 'add') {
@@ -166,7 +167,7 @@ const MailBindingView = Base.ItemView.extend({
             } else {
               data.el = self.$changeError
             }
-            self.getErrorEl(dataError)
+            self.getErrorEl(data)
             // Global.ui.notification.show(`绑定失败！${res.msg === 'fail' ? '' : res.msg}`, { displayTime: 2000 })
           }
         })

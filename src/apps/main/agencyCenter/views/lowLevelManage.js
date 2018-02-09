@@ -14,6 +14,7 @@ const LowLevelManageView = SearchGrid.extend({
     'click .js-ac-llm-cp': 'checkPayPwdSet',
     'change .js-select-type': 'selectChangeHandler',
     'click .js-ac-point-up': 'pointUpHandler',
+    'click .js-low-sub': 'subUserHandler',
   },
 
   initialize() {
@@ -33,22 +34,32 @@ const LowLevelManageView = SearchGrid.extend({
         {
           name: '返点',
           width: '10%',
+          sortable: true,
+          id: 1,
         },
         {
           name: '个人余额',
           width: '10%',
+          sortable: true,
+          id: 2,
         },
         {
           name: '团队余额',
           width: '12%',
+          sortable: true,
+          id: 5,
         },
         {
           name: '注册时间',
           width: '16%',
+          sortable: true,
+          id: 3,
         },
         {
           name: '不活跃天数',
           width: '10%',
+          sortable: true,
+          id: 4,
         },
         {
           name: '操作',
@@ -67,6 +78,7 @@ const LowLevelManageView = SearchGrid.extend({
       reqData: {
         pageSize: 12,
       },
+      subBreadCallBack:this.subUserHandler
     })
 
     this.on('router:back', function () {
@@ -127,11 +139,12 @@ const LowLevelManageView = SearchGrid.extend({
 
   formatRowData(rowInfo) {
     const row = []
-    const textClass = rowInfo.userId === this.acctInfo.userId ? 'text-bold-pleasant' : ''
+    const sameUserId = rowInfo.userId === this.userParentId
+    const textClass = sameUserId ? 'text-bold-pleasant' : ''
     const freeze = (rowInfo.userStatus === 100 || rowInfo.userStatus === 101) ? '<span class="sfa sfa-freeze vertical-middle"></span>' : ''
     const online = rowInfo.online ? '<span class="text-circle-online inline-block"></span>' : ''
-    if (rowInfo.userSubAcctNum) {
-      row.push(`${freeze}<a class="js-pf-sub btn-link ${textClass}" data-label="${rowInfo.userName}" data-user-parent-id="${rowInfo.userId}" href="javascript:void(0)">${
+    if (!sameUserId && rowInfo.userSubAcctNum) {
+      row.push(`${freeze}<a class="js-pf-sub js-low-sub btn-link ${textClass}" data-label="${rowInfo.userName}" data-user-parent-id="${rowInfo.userId}" href="javascript:void(0)">${
         rowInfo.userName}(${rowInfo.userSubAcctNum})</a>${online} `)
     } else {
       row.push(`${freeze}<span class="${textClass}">${rowInfo.userName}</span>`)
@@ -280,6 +293,11 @@ const LowLevelManageView = SearchGrid.extend({
       rebataView.destroy()
     })
   },
+  subUserHandler(e){
+    const $target = $(e.currentTarget)
+    this.userParentId = $target.data('user-parent-id')
+    console.log(this.userParentId)
+  }
 })
 
 module.exports = LowLevelManageView

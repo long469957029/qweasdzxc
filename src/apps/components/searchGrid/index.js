@@ -16,6 +16,7 @@ const SearchGrid = Base.PrefabView.extend({
     divider: true,
     tip: '',
     cover: true, // 参数覆盖  团队
+    subBreadCallBack: _.noop
   },
 
   constructor() {
@@ -299,6 +300,8 @@ const SearchGrid = Base.PrefabView.extend({
     const type = $target.data('type')
 
     const name = $target.data('label')
+
+    this.options.subBreadCallBack(e)
 
     // 删除并添加隐藏input
     const req = {}

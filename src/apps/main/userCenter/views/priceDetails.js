@@ -31,7 +31,7 @@ const TrackRecordsView = TabView.extend({
           template: '<div class="js-uc-lowContainer"><div class="js-uc-lowNotice"></div><div class="js-uc-lowGrid portlet-filter uc-prize"></div></div>',
         },
         {
-          label: '北京赛车/PK拾',
+          label: 'PK10',
           name: 'happy',
           id: 'jsUCHappyTab',
           template: '<div class="js-uc-happyContainer"><div class="js-uc-happyNotice"></div><div class="js-uc-happyGrid portlet-filter uc-prize"></div></div>',
@@ -111,7 +111,7 @@ const TrackRecordsView = TabView.extend({
           self.getMark6Table(self.formatMark6(res.root.playBonusList.levels), classValue)
         } else {
           self._getTable(self._formatNewGroups(self._formatLevelData(res.root.playBonusList.levels)), classValue)
-          self.$('.js-ac-pd-maxBonus').html(self.formatMoney(_(res.root.maxBonus).formatDiv(10000, { fixed: 0 }), 0))
+          $('.js-ac-pd-ssc-maxBonus').html(self.formatMoney(_(res.root.maxBonus).formatDiv(10000, { fixed: 0 }), 0))
         }
       } else {
         Global.ui.notification.show(res.msg)
