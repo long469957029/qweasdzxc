@@ -353,9 +353,9 @@
         handler() {
           this.gridOps = this.generateGridOptions(GRID_OPS[this.ticketInfo.type])
 
-          // this.$nextTick(() => {
-          //   this.update()
-          // })
+          this.$nextTick(() => {
+            this.update()
+          })
         },
       },
       currentPanel: {
@@ -389,10 +389,12 @@
             height: this.$refs.historyInner.offsetHeight,
             opacity: 1,
           })
-          Velocity(this.$refs.twoSide, {
-            height: 0,
-            opacity: 0,
-          })
+          if (this.$refs.twoSide) {
+            Velocity(this.$refs.twoSide, {
+              height: 0,
+              opacity: 0,
+            })
+          }
         } else {
           Velocity(this.$refs.history, {
             height: 0,
@@ -568,8 +570,8 @@
         return formType
       },
       getFormType(nums, keyPosition, type, item) {
-        var formType;
-        var numList = item.ticketOpenNum.split(',');
+        let formType;
+        let numList = item.ticketOpenNum.split(',');
         switch (type) {
           case 'QUICK':
             formType = getFormQuick(numList, keyPosition);

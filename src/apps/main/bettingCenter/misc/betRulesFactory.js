@@ -171,6 +171,7 @@ function addHandicapRule(ids, {
   // 注数的算法
   algorithm = _.noop,
   algorithmProps = {},
+  keyPosition = [],
   format = betFormat.star,
   showFormat = betFormat.handicapNormal,
   showOdds = true,
@@ -188,6 +189,7 @@ function addHandicapRule(ids, {
       showFormat,
       showOdds,
       algorithm,
+      keyPosition,
       algorithmProps,
       showMoneyInput,
       showItemOdds,

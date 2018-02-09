@@ -81,9 +81,9 @@ const TransferView = Base.ItemView.extend({
     this.conInnerConWidth = 740
     this.conSize = this.$('.jc-fc-rc-view').size()
     this.cur = this.options.cur
-    // if (!this.cur) {
-    //   this.cur = 0
-    // }
+    if (!this.cur || this.cur>=1) {
+      this.cur = 0
+    }
     this.platformParsley = this.$('.js-fc-tr-form').parsley({
       errorsWrapper: '<div class="tooltip parsley-errors-list"><span class="sfa sfa-error-icon vertical-sub pull-left"></div>',
       errorTemplate: '<div class="tooltip-inner">',

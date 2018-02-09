@@ -15,6 +15,7 @@ const initState = () => {
     gameDownLoadId: '',
     openNovicePackage: false,
     userIsVip: true,
+    openNovicePackageType: '',
   }
 }
 
@@ -49,6 +50,9 @@ const getters = {
   },
   userIsVip: (state) => {
     return state.userIsVip
+  },
+  openNovicePackageType: (state) => {
+    return state.openNovicePackageType
   }
 }
 
@@ -83,12 +87,15 @@ const mutations = {
     state.openGameDownLoadDialog = showDialog
     state.gameDownLoadId = gameId
   },
-  [types.TOGGLE_NOVICE_PACKAGE](state, data) {
+  [types.TOGGLE_NOVICE_PACKAGE](state, data, type) {
     state.openNovicePackage = data
+    state.openNovicePackageType = type
   },
   [types.USER_IS_VIP](state, data) {
-    if(data===0){
-      state.userIsVip = data
+    if (data === 1) {
+      state.userIsVip = true
+    } else if (data === 0) {
+      state.userIsVip = false
     }
   },
 }

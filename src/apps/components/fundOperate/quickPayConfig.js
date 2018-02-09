@@ -9,6 +9,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-quickPay.png'),
     sortId: 4,
     risky: true,
+    changeAmount: false,
   },
   {
     type: 1,
@@ -18,6 +19,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-UnionPay.png'),
     sortId: 1,
     risky: false,
+    changeAmount: false,
   },
   {
     type: 4,
@@ -27,6 +29,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-UnionPay.png'),
     sortId: 2,
     risky: false,
+    changeAmount: false,
   },
   {
     type: 5,
@@ -36,6 +39,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-UnionPay.png'),
     sortId: 3,
     risky: false,
+    changeAmount: false,
   },
   {
     type: 3,
@@ -45,6 +49,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-wxPay.png'),
     sortId: 8,
     risky: true,
+    changeAmount: true,
   },
   {
     type: 7,
@@ -54,6 +59,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-wxPay.png'),
     sortId: 9,
     risky: true,
+    changeAmount: true,
   },
   {
     type: 10,
@@ -63,6 +69,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-wxPay.png'),
     sortId: 10,
     risky: true,
+    changeAmount: true,
   },
   {
     type: 2,
@@ -72,6 +79,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-aliPay-pay.png'),
     sortId: 11,
     risky: true,
+    changeAmount: true,
   },
   {
     type: 6,
@@ -81,6 +89,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-aliPay-transfer.png'),
     sortId: 6,
     risky: true,
+    changeAmount: false,
   },
   {
     type: 8,
@@ -90,6 +99,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-creditCard.png'),
     sortId: 12,
     risky: false,
+    changeAmount: false,
   },
   {
     type: 11,
@@ -99,6 +109,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-bankCard-transfer.png'),
     sortId: 5,
     risky: true,
+    changeAmount: false,
   },
   {
     type: 12,
@@ -108,6 +119,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-saoPay.png'),
     sortId: 7,
     risky: true,
+    changeAmount: true,
   },
   {
     type: 13,
@@ -117,6 +129,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-qqPay.png'),
     sortId: 13,
     risky: true,
+    changeAmount: true,
   },
   {
     type: 14,
@@ -126,6 +139,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-UnionPay.png'),
     sortId: 14,
     risky: true,
+    changeAmount: true,
   },
   {
     type: 15,
@@ -135,6 +149,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-JD.png'),
     sortId: 15,
     risky: true,
+    changeAmount: true,
   },
   {
     type: 16,
@@ -144,6 +159,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-wx-transfer.png'),
     sortId: 16,
     risky: true,
+    changeAmount: true,
   },
 ]
 

@@ -108,7 +108,7 @@
                 </a>
               </div>
 
-              <div class="pull-right bc-advance-mode-main">
+              <div class="bc-advance-mode-main">
                 <div :class="advanceShowMode === 'single' ? 'advance-bonus-single' : 'advance-bonus'">
                   单注奖金：
                   <animated-integer class="text-prominent font-sm" :value="bettingChoice.fBetBonus"></animated-integer>
@@ -1123,15 +1123,14 @@
     color: #8094A6;
     text-align: center;
     margin: 5px 40px 0 0;
-    float: right;
     position: relative;
-    top: -2px;
+    vertical-align: top;
   }
 
   .bc-advance-mode-single {
-    float: left;
     color: $prominent-secondary-btn-color;
     margin: 20px 0 0 20px;
+    flex: 1;
     .advance-play-des {
       margin: 0 0 0 20px;
     }
@@ -1143,7 +1142,6 @@
   }
 
   .advance-bonus {
-    margin-right: 40px;
     margin-top: 15px;
   }
 
@@ -1155,10 +1153,12 @@
 
   .bc-play-select-area {
     min-height: 70px;
+    display: flex;
 
     .bc-advance-rules {
       color: #666666;
       max-width: 80%;
+      flex: 1;
       .tab-toolbar {
         &:last-of-type {
           margin-bottom: 3px;
@@ -1396,5 +1396,8 @@
       width: 10px !important;
       right: 12px !important;;
     }
+  }
+  .bc-play-container.clearfix {
+    display: flex;
   }
 </style>

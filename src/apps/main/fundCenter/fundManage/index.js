@@ -231,8 +231,6 @@ export default Base.ItemView.extend({
             self.$('.js-fc-fm-mb-mg').find('.js-fc-fm-channel-amount').html(_(game.balance).convert2yuan()) // mg余额
           } else if (channelId === 6) {
             self.$('.js-fc-fm-mb-gg').find('.js-fc-fm-channel-amount').html(_(game.balance).convert2yuan()) // gg余额
-          } else if (channelId === 7) {
-            self.$('.js-fc-fm-mb-188').find('.js-fc-fm-channel-amount').html(_(game.balance).convert2yuan()) // 188余额
           }
         })
       }

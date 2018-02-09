@@ -273,7 +273,7 @@ function _create(ticketId) {
   // 标准
   factory.addRule([ticketId, '220101'], {
     formType: 'QUICK',
-    formHighlight: ['二同号'],
+    // formHighlight: ['二同号'],
     keyPosition: [true, true, true],
     algorithm: algorithm.group,
     algorithmProps: {

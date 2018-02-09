@@ -136,6 +136,7 @@ const mutations = {
     // 开启消息监听
     window.Global.m.news.stop()
     this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
+    this.commit(types.USER_IS_VIP, 0)
   },
   [types.USER_LOGOUT_SUCCESS] (state, data) {
     if (data && data.result === 0) {
@@ -149,6 +150,7 @@ const mutations = {
       // 开启消息监听
       window.Global.m.news.stop()
       this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
+      this.commit(types.USER_IS_VIP, 0)
       window.location.href = ''
     }
   },

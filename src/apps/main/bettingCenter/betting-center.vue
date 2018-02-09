@@ -48,6 +48,7 @@
           this.$store.commit(types.RESET_BETTING_CHOICE)
           this.$store.commit(types.CHECKOUT_PLAN_ID)
           // this.$store.commit(types.CHECKOUT_TICKET_INFO)
+          this.$store.commit(types.CHECKOUT_TICKET_INFO)
 
           // 取得当前彩票信息
           this.$store.dispatch(types.GET_TICKET_INFO, {

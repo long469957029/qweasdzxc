@@ -28,7 +28,9 @@ const BetDetailView = Base.ItemView.extend({
       if (res && res.result === 0) {
         self.isSelf = !(!_(self.options.userId).isUndefined() && (`${Global.memoryCache.get('acctInfo').userId}` !== `${self.options.userId}`))
         self.$('.jc-gr-bet-type-name').html(res.root.ticketName)
-        self.$('.jc-gr-bet-type-no').html(res.root.ticketPlanId)
+        if (res.root.ticketPlanId !== 'mmc') {
+          self.$('.jc-gr-bet-type-no-panel').html('第<span class="jc-gr-bet-type-no fc-gr-bet-type-no">' + res.root.ticketPlanId + '</span>期')
+        }
         const info = res.root.chaseTicketPlayDetail[0]
         const openNum = res.root.openNum ? res.root.openNum : '等,待,开,奖'
         const openNumHtml = []

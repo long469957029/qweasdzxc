@@ -16,10 +16,19 @@
             </a>
           </div>
 
-          <div class="pull-right bc-advance-mode-main">
+          <div class="bc-advance-mode-main">
             <div :class="advanceShowMode === 'single' ? 'advance-bonus-single' : 'advance-bonus'">
               单注奖金：
-              <animated-integer class="text-prominent font-sm" :value="bettingChoice.fBetBonus"></animated-integer>
+              <div class="text-prominent font-sm inline-block">
+                <template v-if="bettingChoice.fBetBonus">
+                  <animated-integer :value="bettingChoice.fBetBonus"></animated-integer>
+                </template>
+                <template v-else>
+                  <animated-integer :value="bettingChoice.fMinBetBonus"></animated-integer>
+                  ~
+                  <animated-integer :value="bettingChoice.fMaxBetBonus"></animated-integer>
+                </template>
+              </div>
               元
             </div>
             <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic'">
@@ -332,9 +341,11 @@
         }
       },
       'bettingInfo.lastOpenId': {
-        handler: function () {
-          this.$refs.bettingHisotry.update()
-          bettingRecordsView.update()
+        handler(current, prev) {
+          if (prev !== '-' && current !== '-') {
+            this.$refs.bettingHisotry.update()
+            bettingRecordsView.update()
+          }
         }
       },
       unit: {
@@ -374,7 +385,7 @@
               // multiple: previewInfo.multiple,
               mode: modeSelect,
               bettingMoney: `${previewInfo.fPrefabMoney}元`,
-              bonus: `${previewInfo.fBetBonus}元`,
+              bonus: `${previewInfo.fTotalBetBonus}元`,
               operate: `<div class="js-lottery-delete lottery-preview-del icon-block m-right-md pull-right" data-index="${index}"></div>`,
             }
           })
@@ -499,7 +510,7 @@
 
         const useVoucher = !_.isEmpty(this.prevVoucher)
 
-        this.$store.dispatch('pushBetting', {
+        this.$store.dispatch(types.PUSH_BETTING, {
           planId,
           prevVoucher: this.prevVoucher,
           type: 'buyList'
@@ -590,7 +601,7 @@
 
         const useVoucher = !_.isEmpty(this.totalVoucher)
 
-        this.$store.dispatch('pushBetting', {
+        this.$store.dispatch(types.PUSH_BETTING, {
           planId: this.bettingInfo.planId,
           prevVoucher: this.totalVoucher,
           type: 'previewList'
@@ -813,15 +824,14 @@
     color: #8094A6;
     text-align: center;
     margin: 5px 40px 0 0;
-    float: right;
     position: relative;
-    top: -2px;
+    vertical-align: top;
   }
 
   .bc-advance-mode-single {
-    float: left;
     color: $prominent-secondary-btn-color;
     margin: 20px 0 0 20px;
+    flex: 1;
     .advance-play-des {
       margin: 0 0 0 20px;
     }
@@ -833,7 +843,6 @@
   }
 
   .advance-bonus {
-    margin-right: 40px;
     margin-top: 15px;
   }
 
@@ -845,11 +854,13 @@
 
   .bc-play-select-area {
     min-height: 70px;
+    display: flex;
 
     .bc-advance-rules {
       color: #666666;
       max-width: 80%;
       margin-left: 15px;
+      flex: 1;
       .tab-toolbar {
         &:last-of-type {
           margin-bottom: 3px;
@@ -939,6 +950,10 @@
   }
   .total-panel {
     min-width: 450px;
+  }
+
+  .bc-play-container.clearfix {
+    display: flex;
   }
 
 </style>

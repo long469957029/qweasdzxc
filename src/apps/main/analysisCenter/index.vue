@@ -89,9 +89,7 @@
           </th>
         </tr>
         <tr v-if="analysis.doubleHead">
-          <th>
-            {{analysis.doubleHead[1]}}
-          </th>
+          <th :class="analysis.doubleHead[1].styles">{{analysis.doubleHead[1].content}}</th>
           <template v-if="analysis.championAndRunnerUp">
             <th>和数</th>
             <th>单双</th>
@@ -661,5 +659,12 @@
     height: 18px;
     transform: rotate(180deg);
     cursor: pointer;
+  }
+  .title-pk10 {
+    white-space: pre;
+    letter-spacing: 1.7px;
+  }
+  .title-mark6 {
+    white-space: pre;
   }
 </style>

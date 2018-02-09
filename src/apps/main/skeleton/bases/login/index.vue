@@ -19,7 +19,7 @@
         <div class="login-input-item">
           <div class="login-password-img sfa sfa-icon-password">
           </div>
-          <input type="password" class="login-input"
+          <input type="password" class="login-input confirm"
                  :class="{'parsley-error': passwordError,'parsley-success':pwdSuccess}"
                  @blur="verifyPwd" @keyup.enter="userLogin"
                  placeholder="请输入您的密码" v-model="password"
@@ -156,7 +156,6 @@
               this.$emit('dialogClose')
               window.location.href = 'index.html'
             }
-
           } else if (data.msg.indexOf('验证码') !== -1) {
             this.showCodeItem = false
             this.codeError = true
@@ -181,8 +180,8 @@
         } else {
           const myReg = /^[A-Za-z][A-Za-z0-9]{3,15}$/
           if (!myReg.test(this.username)) {
-            this.showErrorMsg = true
-            this.errorMsg = '用户名仅支持4-16位字母和数字，不能以数字开头！'
+//            this.showErrorMsg = true
+//            this.errorMsg = ''
             this.usernameError = true
             this.usernameSuccess = false
             return false
@@ -204,15 +203,15 @@
           const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
           if (this.password.length < 9 && this.strBetweenIsNumber(this.password, 0, 7)) {
             this.passwordError = true
-            this.showErrorMsg = true
+//            this.showErrorMsg = true
             this.pwdSuccess = false
-            this.errorMsg = '密码不能是9位以下的纯数字！'
+//            this.errorMsg = ''
             return false
           } else if (!pwReg.test(this.password)) {
             this.passwordError = true
-            this.showErrorMsg = true
+//            this.showErrorMsg = true
             this.pwdSuccess = false
-            this.errorMsg = '密码为6-20位字符组成（不含空格），区分大小写！'
+//            this.errorMsg = ''
             return false
           }
         }
@@ -305,7 +304,7 @@
 
 <style lang="scss" scoped>
   .modal-login {
-    z-index:1051;
+    z-index: 1051;
     border: 0;
     width: 386px;
     min-height: 425px;
@@ -319,7 +318,7 @@
     -ms-flex-direction: column;
     .login-head {
       text-align: center;
-      font-size: 15px;
+      font-size: 18px;
       color: #333333;
       padding: 44px 0 17px 0;
     }
@@ -349,6 +348,10 @@
             color: #666666;
             border: 1px solid $new-main-deep-color !important;
           }
+          &.confirm {
+            width: 314px;
+            height: 44px;
+          }
         }
       }
       .login-username-img {
@@ -360,7 +363,7 @@
       }
       .login-password-img {
         position: absolute;
-        top: 14px;
+        top: 13px;
         left: 18px;
       }
       .login-verity-img {

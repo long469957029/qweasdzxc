@@ -31,13 +31,14 @@ $boder-def-color: #e6e6e6;
     border-bottom: 1px solid $boder-def-color;
     .user-info-photo {
       display: block;
-      width: 82px;
+      width: 81px;
       height: 82px;
       border-radius: 50%;
+      line-height: 79px;
       margin: 0 auto;
       background-color: $def-white-color;
       padding: 5px;
-      box-shadow: 0px 2px 5px #cbcbcb;
+      box-shadow: 0 0 5px #cbcbcb;
       margin-top: 45px;
     }
     .user-info-safe-up {
