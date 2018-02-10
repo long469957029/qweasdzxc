@@ -171,6 +171,12 @@
         rechargeStatus: 0,
         betStatus: 0,
         bindStatus: 0,
+        userId: Global.memoryCache.get('acctInfo').userId,
+        localStorage:  new Base.Storage({
+          name: 'appstorage',
+          type: 'local',
+        }),
+        data:''
       }
     },
 
@@ -182,9 +188,19 @@
       this.getActivityData()
     },
 
-    watch: {},
+    watch: {
+      novicePackageStatus:function () {
+        if(this.novicePackageStatus){
+          this.openActivityDialog()
+        }
+      }
+    },
 
-    computed: {},
+    computed: {
+      ...mapGetters([
+        'novicePackageStatus'
+      ])
+    },
 
     filters: {},
 
@@ -196,19 +212,11 @@
               // status:是否属于新手，0:已领取 1; 可领取  2:不展示
               if (data.root.status === 1 || data.root.status === 0) {
                 // 活动相关，新手活动首次登录
-                const cookie = new Base.Storage({
-                  name: 'appstorage',
-                  type: 'cookie',
-                })
-                const novicePackageActivity = cookie.get('NovicePackageActivity')
-                const today = moment().format('YYYY-MM-DD')
-//            const novicePackage = moment().set('month', 0)
-//            novicePackge.set('date', 3)
-                if (today !== novicePackageActivity) {
+                this.data = data
+                const hasShow = this.localStorage.get(this.userId + 'NovicePackageActivity')
+                if (!hasShow) {
                   /** valid 是否首次登录,首次登录会自动弹出活动界面 */
-                  cookie.set('NovicePackageActivity', today)
-                  this.openActivityDialog()
-                } else if (this.$store.getters.openNovicePackageType === 'click') {
+                 this. localStorage.set(this.userId + 'NovicePackageActivity', true)
                   this.openActivityDialog()
                 }
               }
@@ -227,7 +235,7 @@
               this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, false)
             })
         })
-        this.initActivityData(data.root)
+        this.initActivityData(this.data.root)
       },
       initActivityData(data){
         let couponsHeight = data.itemList.length
