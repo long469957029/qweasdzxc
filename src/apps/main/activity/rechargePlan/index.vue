@@ -32,7 +32,7 @@
               </div>
               <div class="detail-value-item claim">
                 <div class="rp-task-title">流水要求</div>
-                <div class="rp-value-text">{{rechargeTotal * curItem.betMulti}}</div>
+                <div class="rp-value-text">{{_(rechargeTotal).formatMul(Number(curItem.betMulti), {fixed:2})}}</div>
               </div>
             </div>
             <div class="detail-process">
@@ -149,6 +149,10 @@
 
     methods: {
       confirmTask(amount, limit, index){
+        if(_(this.planList).findIndex((item) => {return item.status === 1}) > -1){
+          Global.ui.notification.show('当前任务未完成，不可领取新任务')
+          return false
+        }
         this.showConfirmModal = true
         this.curAmount = amount
         this.curLimit = limit
@@ -187,9 +191,9 @@
       initActivityData(data){
         const flag = false
         this.planList = data.root.itemList
-        this.rechargeTotal = _(data.root.rechargeTotal).formatDiv(10000)
-        this.betTotal = _(data.root.betTotal).formatDiv(10000)
-        this.minRecharge = _(data.root.recharge).formatDiv(10000)
+        this.rechargeTotal = _(data.root.rechargeTotal).convert2yuan({fixed:2,clear:false})
+        this.betTotal = _(data.root.betTotal).convert2yuan({fixed:2})
+        this.minRecharge = _(data.root.recharge).convert2yuan({fixed:2,clear:false})
         this.fromTime = _(data.root.fromDate).toDate('M月D日')
         this.endTime = _(data.root.endDate).toDate('M月D日')
 
