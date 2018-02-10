@@ -141,7 +141,7 @@ const LowLevelManageView = SearchGrid.extend({
     const row = []
     console.log('formatRowData' + this.userParentId)
     const sameUserId = rowInfo.userId === this.userParentId
-    const textClass = sameUserId ? 'text-bold-pleasant' : ''
+    const textClass = sameUserId ? 'text-pleasant' : ''
     const freeze = (rowInfo.userStatus === 100 || rowInfo.userStatus === 101) ? '<span class="sfa sfa-freeze vertical-middle"></span>' : ''
     const online = rowInfo.online ? '<span class="text-circle-online inline-block"></span>' : ''
     if (!sameUserId && rowInfo.userSubAcctNum) {
