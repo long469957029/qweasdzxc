@@ -400,5 +400,19 @@ export default [
         activeMenu: 'ac/tr',
       })
     },
+    beforeEnter: (to, from, next) => {
+      const preStatus = window.Global.cookieCache.get('security')
+      if(preStatus === 1 || preStatus === 2){
+        next()
+      }else{
+        next(false)
+        $(document).securityTip({
+          content: '请补充完您的安全信息后再转账',
+          hasMoneyPwd: false,
+          hasBankCard: false,
+          showBankCard: false,
+        })
+      }
+    }
   },
 ]
