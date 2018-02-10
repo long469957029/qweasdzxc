@@ -2,7 +2,7 @@ const App = require('./app')
 const modules = require('skeleton/modules')
 
 import Vue from 'vue'
-import {AnimatedInteger, XDialog, CustomCheckbox} from 'build'
+import {Popover, AnimatedInteger, XDialog, CustomCheckbox} from 'build'
 import store from '../store/index'
 
 import MainHeader from 'skeleton/bases/header'
@@ -20,6 +20,7 @@ import novicePackage from 'activity/novicePackageActivity'
 Object.defineProperty(Vue.prototype, '_', {value: _})
 Object.defineProperty(Vue.prototype, '$', {value: $})
 
+Vue.use(Popover)
 Vue.component('custom-checkbox', CustomCheckbox)
 Vue.component('animated-integer', AnimatedInteger)
 Vue.component('x-dialog', XDialog)

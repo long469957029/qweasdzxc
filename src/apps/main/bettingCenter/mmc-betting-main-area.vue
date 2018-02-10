@@ -1045,53 +1045,6 @@
       border-bottom: 3px solid rgba(0, 0, 0, 0.4);
       font-weight: 600;
     }
-    .bc-bottom-area {
-      width: 100%;
-      height: 257px;
-      overflow: hidden;
-    }
-    .bc-records-tabs-list {
-      width: 100%;
-      height: 36px;
-      background-color: $sec-line-color;
-      .bc-records-tab {
-        display: inline-block;
-        width: 140px;
-        height: 36px;
-        font-size: $font-md;
-        color: $def-black-color;
-        line-height: 36px;
-        position: relative;
-        text-align: center;
-        &.active {
-          background-color: $def-white-color;
-          &:before {
-            content: '';
-            width: 100%;
-            height: 3px;
-            position: absolute;
-            background-color: $main-deep-color;
-            top: 0;
-            left: 0;
-          }
-        }
-      }
-    }
-    .bc-records-tables {
-      width: 100%;
-      height: 168px;
-      table {
-        thead {
-          border-bottom: 1px solid $def-line-color;
-        }
-        th {
-          color: $new-inverse-color;
-        }
-        tr {
-          border-bottom: 1px dashed $sec-line-color;
-        }
-      }
-    }
   }
 
   .sfa-mmc-lever {

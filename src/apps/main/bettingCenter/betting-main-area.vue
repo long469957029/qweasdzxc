@@ -99,7 +99,7 @@
 
         <div class="m-bottom-xs m-left-md">
           <div class="clearfix bc-margin-xs">
-            <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
+            <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel" :init-remote="false"
                          :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
                          ref="lotteryGrid"></static-grid>
             <div class="font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
@@ -145,7 +145,7 @@
       <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule"
                        ref="bettingHisotry"></betting-history>
     </div>
-    <div class="bc-bottom-area" ref="recordsContainer"></div>
+    <betting-records class="bc-bottom-area" ref="bettingRecords" :ticket-id="ticketId"></betting-records>
 
 
     <!-- 追号 -->
@@ -175,16 +175,10 @@
   import BettingPlayAreaSelect from './betting-play-area-select'
   import BettingPlayAreaInput from './betting-play-area-input'
   import BettingChase from './betting-chase'
+  import BettingRecords from './betting-records'
   import BettingHistory from './betting-history'
   import BettingConfirm from "./betting-confirm"
-  import BettingVouchers from 'bettingCenter/betting-vouchers'
-
-
-  //backbone旧组件
-  import BettingRecordsView from './bettingCenter-records'
-
-  // let recordsOpenView
-  let bettingRecordsView
+  import BettingVouchers from './betting-vouchers'
 
   export default {
     name: "betting-main-area",
@@ -193,6 +187,7 @@
       ticketId: Number,
     },
     components: {
+      BettingRecords,
       BettingVouchers,
       BettingConfirm,
       StaticGrid,
@@ -262,8 +257,7 @@
     watch: {
       '$route': {
         handler() {
-          bettingRecordsView.updateTicketId(this.ticketId)
-          bettingRecordsView.update()
+          this.$refs.bettingRecords.update()
 
           this.$store.commit(types.SET_MULTIPLE, 1)
           $(this.$refs.multiRange).numRange('numChange', 1)
@@ -344,7 +338,7 @@
         handler(current, prev) {
           if (prev !== '-' && current !== '-') {
             this.$refs.bettingHisotry.update()
-            bettingRecordsView.update()
+            this.$refs.bettingRecords.update()
           }
         }
       },
@@ -521,7 +515,7 @@
           .then((res) => {
             this.pushing = false
             if (res && res.result === 0) {
-              bettingRecordsView.update()
+              this.$refs.bettingRecords.update()
 
               Global.m.oauth.check()
 
@@ -613,7 +607,7 @@
             this.pushing = false
 
             if (res && res.result === 0) {
-              bettingRecordsView.update()
+              this.$refs.bettingRecords.update()
 
               this.$store.commit(types.EMPTY_PREV_BETTING)
 
@@ -681,7 +675,7 @@
       },
 
       chaseComplete() {
-        bettingRecordsView.update()
+        this.$refs.bettingRecords.update()
 
         $(this.$refs.chaseModal).modal('hide')
       },
@@ -796,11 +790,6 @@
         .on('change', '.js-bc-preview-unit', (e) => {
           this.lotteryPreviewUnitChange($(e.currentTarget).closest('tr').index(), e.currentTarget.value)
         })
-
-      bettingRecordsView = new BettingRecordsView({
-        el: this.$refs.recordsContainer,
-        ticketId: this.ticketId,
-      }).render()
     }
   }
 </script>
