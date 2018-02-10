@@ -267,7 +267,8 @@
         activityInfo.doNovicePackage(
           ({data}) => {
             if (data.result === 0) {
-              this.getActivityData()
+//              this.getActivityData()
+              this.couponsStatus = 1
               Global.ui.notification.show('代金券领取成功！')
             } else {
               Global.ui.notification.show(data.msg)

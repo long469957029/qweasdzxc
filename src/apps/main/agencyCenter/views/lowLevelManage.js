@@ -20,7 +20,7 @@ const LowLevelManageView = SearchGrid.extend({
   initialize() {
     _(this.options).extend({
       footerClass: 'border-cool-top',
-      height: 552,
+      height: 598,
       title: '下级管理',
       columns: [
         {
@@ -139,6 +139,7 @@ const LowLevelManageView = SearchGrid.extend({
 
   formatRowData(rowInfo) {
     const row = []
+    console.log('formatRowData' + this.userParentId)
     const sameUserId = rowInfo.userId === this.userParentId
     const textClass = sameUserId ? 'text-bold-pleasant' : ''
     const freeze = (rowInfo.userStatus === 100 || rowInfo.userStatus === 101) ? '<span class="sfa sfa-freeze vertical-middle"></span>' : ''
@@ -296,7 +297,7 @@ const LowLevelManageView = SearchGrid.extend({
   subUserHandler(e){
     const $target = $(e.currentTarget)
     this.userParentId = $target.data('user-parent-id')
-    console.log(this.userParentId)
+    console.log('handler' + this.userParentId)
   }
 })
 
