@@ -265,7 +265,7 @@ const threeDConfig = [
   Object.assign({
     id: 16,
     mark: '3d-ffc',
-    zhName: '3D分分彩',
+    zhName: 'QQ3D分分彩',
     hasMargin: true,
     badge: 'new',
     trendOps: {

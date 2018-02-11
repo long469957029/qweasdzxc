@@ -80,7 +80,8 @@
               <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
               <span>元</span>
             </div>
-            <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)" :betting-money="bettingChoice.prefabMoney"
+            <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
+                              :betting-money="bettingChoice.prefabMoney"
                               v-model="prevVoucher" ref="preBettingVouchers"
             ></betting-vouchers>
             <div class="pull-right m-right-sm">
@@ -99,9 +100,32 @@
 
         <div class="m-bottom-xs m-left-md">
           <div class="clearfix bc-margin-xs">
-            <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
-                         :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
-                         ref="lotteryGrid"></static-grid>
+            <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
+                              :init-remote="false"
+                              :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
+                              ref="lotteryGrid">
+              <tr slot="row" slot-scope="{row, index}" :key="index" ref="lotteryRows">
+                <td>{{row.title}}</td>
+
+                <td v-if="row.formatBetNum.length <= 20">{{row.formatBetNum}}</td>
+                <td v-else v-popover.right="{name: `bet${index}`}">
+                  <a href="javascript:void(0)" class="btn-link">{{row.formatBetNum | formatOpenNum}}</a>
+                  <div v-transfer-dom>
+                    <popover :name="`bet${index}`">
+                      <div class="title">详细号码</div>
+                      <div class="">{{row.betNum}}</div>
+                    </popover>
+                  </div>
+                </td>
+
+                <td>{{row.note}}</td>
+                <td v-html="row.multiple"></td>
+                <td v-html="row.mode"></td>
+                <td>{{row.bettingMoney}}</td>
+                <td>{{row.bonus}}</td>
+                <td v-html="row.operate"></td>
+              </tr>
+            </slot-static-grid>
             <div class="font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
               <div class="total-panel inline-block">
                 <span>
@@ -123,7 +147,8 @@
                 </span>
               </div>
 
-              <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)" :betting-money="bettingChoice.totalInfo.totalMoney"
+              <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
+                                :betting-money="bettingChoice.totalInfo.totalMoney"
                                 v-model="totalVoucher" ref="totalBettingVouchers"
               ></betting-vouchers>
 
@@ -145,7 +170,7 @@
       <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule"
                        ref="bettingHisotry"></betting-history>
     </div>
-    <div class="bc-bottom-area" ref="recordsContainer"></div>
+    <betting-records class="bc-bottom-area" ref="bettingRecords" :ticket-id="ticketId"></betting-records>
 
 
     <!-- 追号 -->
@@ -166,36 +191,35 @@
 </template>
 
 <script>
-  import {StaticGrid} from 'build'
+  import {formatOpenNum} from 'filters'
+  import {TransferDom} from 'build'
+
   import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
-
-
   import BettingRules from './betting-rules'
   import BettingAdvanceRules from './betting-advance-rules'
   import BettingPlayAreaSelect from './betting-play-area-select'
   import BettingPlayAreaInput from './betting-play-area-input'
   import BettingChase from './betting-chase'
+  import BettingRecords from './betting-records'
   import BettingHistory from './betting-history'
   import BettingConfirm from "./betting-confirm"
-  import BettingVouchers from 'bettingCenter/betting-vouchers'
-
-
-  //backbone旧组件
-  import BettingRecordsView from './bettingCenter-records'
-
-  // let recordsOpenView
-  let bettingRecordsView
+  import BettingVouchers from './betting-vouchers'
 
   export default {
     name: "betting-main-area",
+
+    directives: {
+      TransferDom
+    },
+
     props: {
       ticketInfo: Object,
       ticketId: Number,
     },
     components: {
+      BettingRecords,
       BettingVouchers,
       BettingConfirm,
-      StaticGrid,
       BettingRules,
       BettingAdvanceRules,
       BettingPlayAreaSelect,
@@ -203,6 +227,11 @@
       BettingChase,
       BettingHistory,
     },
+
+    filters: {
+      formatOpenNum,
+    },
+
     data() {
       return {
         loading: Global.ui.loader.get(),
@@ -216,19 +245,18 @@
           wrapperClass: 'bc-lottery-preview table table-dashed',
           colModel: [
             {
-              label: '玩法', name: 'title', key: true, width: '15%',
+              label: '玩法', width: '15%',
             },
             {
-              label: '投注内容', name: 'betNum', key: true, width: '17%',
+              label: '投注内容', width: '17%',
             },
-            {label: '注数', name: 'note', width: '10%'},
-            {label: '倍数', name: 'multiple', width: '12.5%'},
-            {label: '模式', name: 'mode', width: '12.5%'},
-            {label: '投注金额', name: 'bettingMoney', width: '12.5%'},
-            {label: '预期奖金', name: 'bonus', width: '12.5%'},
+            {label: '注数', width: '10%'},
+            {label: '倍数', width: '12.5%'},
+            {label: '模式', width: '12.5%'},
+            {label: '投注金额', width: '12.5%'},
+            {label: '预期奖金', width: '12.5%'},
             {
               label: `<div class="js-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清空</div>`,
-              name: 'operate',
               width: '8%'
             },
           ],
@@ -262,8 +290,7 @@
     watch: {
       '$route': {
         handler() {
-          bettingRecordsView.updateTicketId(this.ticketId)
-          bettingRecordsView.update()
+          this.$refs.bettingRecords.update()
 
           this.$store.commit(types.SET_MULTIPLE, 1)
           $(this.$refs.multiRange).numRange('numChange', 1)
@@ -324,10 +351,6 @@
               ...this.playRule.analysisProps
             })
           }
-
-
-          //隐藏popover
-          $('.js-bc-betting-preview-detail').popover('hide')
         },
       },
       'bettingInfo.planId': {
@@ -344,7 +367,7 @@
         handler(current, prev) {
           if (prev !== '-' && current !== '-') {
             this.$refs.bettingHisotry.update()
-            bettingRecordsView.update()
+            this.$refs.bettingRecords.update()
           }
         }
       },
@@ -362,13 +385,6 @@
         handler(previewList) {
           this.fPreviewList = _(previewList).map((previewInfo, index) => {
             const title = `${previewInfo.levelName}_${previewInfo.playName}`
-            let betNum = ''
-            if (previewInfo.formatBettingNumber.length > 20) {
-              betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link">${
-                previewInfo.formatBettingNumber.slice(0, 20)}...</a>`
-            } else {
-              betNum = previewInfo.formatBettingNumber
-            }
             const multipleDiv = `<div class="js-bc-preview-multiple-${index} p-top-xs"></div>`
             const modeSelect = `<select name="" class="js-bc-preview-unit select-default bc-unit-select-add">
               <option value="10000" ${previewInfo.unit === 10000 ? 'selected' : ''}>元</option>
@@ -379,7 +395,8 @@
 
             return {
               title,
-              betNum,
+              formatBetNum: previewInfo.formatBettingNumber,
+              betNum: previewInfo.bettingNumber,
               note: `${previewInfo.statistics}注`,
               multiple: multipleDiv,
               // multiple: previewInfo.multiple,
@@ -391,11 +408,9 @@
           })
 
           this.$nextTick(() => {
-            this.$refs.lotteryGrid.getRows().forEach((row, index) => {
+            _.each(this.$refs.lotteryGrid.getRows(), (row, index) => {
               const $row = $(row)
-              const $detail = $row.find('.js-bc-betting-preview-detail')
               const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
-              let betNumber = previewList[index].bettingNumber
 
               if ($multipleAdd.numRange('instance')) {
                 $multipleAdd.numRange('numChange', previewList[index].multiple)
@@ -412,17 +427,6 @@
                     Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
                   ${_(this.bettingChoice.limitMoney).convert2yuan()}</span>元，已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
                   },
-                })
-              }
-
-              if ($detail.length) {
-                $detail.popover({
-                  title: '详细号码',
-                  trigger: 'click',
-                  html: true,
-                  container: 'body',
-                  content: `<div class="js-pf-popover">${betNumber}</div>`,
-                  placement: 'right',
                 })
               }
             });
@@ -521,7 +525,7 @@
           .then((res) => {
             this.pushing = false
             if (res && res.result === 0) {
-              bettingRecordsView.update()
+              this.$refs.bettingRecords.update()
 
               Global.m.oauth.check()
 
@@ -613,7 +617,7 @@
             this.pushing = false
 
             if (res && res.result === 0) {
-              bettingRecordsView.update()
+              this.$refs.bettingRecords.update()
 
               this.$store.commit(types.EMPTY_PREV_BETTING)
 
@@ -681,7 +685,7 @@
       },
 
       chaseComplete() {
-        bettingRecordsView.update()
+        this.$refs.bettingRecords.update()
 
         $(this.$refs.chaseModal).modal('hide')
       },
@@ -796,11 +800,6 @@
         .on('change', '.js-bc-preview-unit', (e) => {
           this.lotteryPreviewUnitChange($(e.currentTarget).closest('tr').index(), e.currentTarget.value)
         })
-
-      bettingRecordsView = new BettingRecordsView({
-        el: this.$refs.recordsContainer,
-        ticketId: this.ticketId,
-      }).render()
     }
   }
 </script>
@@ -948,6 +947,7 @@
   .prev-panel {
     min-width: 190px;
   }
+
   .total-panel {
     min-width: 450px;
   }

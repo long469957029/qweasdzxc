@@ -69,7 +69,7 @@
       },
       rows: {
         type: Array,
-        default: function () {
+        default() {
           return []
         }
       },
@@ -100,16 +100,19 @@
         default() {
           return {}
         }
-      }
+      },
+      abort: {
+        type: Boolean,
+        default: true
+      },
     },
 
     data() {
       return {
-        showLoading: false,
+        showLoading: this.initRemote,
         showEmpty: !_.isEmpty(this.emptyTip),
-        startOnLoading: true,
+        startOnLoading: this.initRemote,
         showHeader: true,
-        abort: true,
         showRows: [],
         innerRows: [],
         hasBorder: _.isUndefined(this.hasBorder) ? this.tableClass.indexOf('table-bordered') > -1 : this.hasBorder,
@@ -155,7 +158,7 @@
         if (this.startOnLoading) {
           this.renderLoading()
         } else {
-          this.renderEmpty()
+          this.toggleEmpty(true)
         }
       }
     },
@@ -175,7 +178,7 @@
 
       $_getDataXhr() {
         this.clean()
-        this.renderLoading()
+        // this.renderLoading()
 
         $http({
           url: this.url,
@@ -198,6 +201,7 @@
                 }
                 return data
               }, data)
+              this.toggleEmpty(_.isEmpty(this.innerRows))
             } else {
               this.renderFail()
             }
@@ -275,7 +279,7 @@
         const $rows = $(this.formatRow(rows))
 
         this.hideLoading()
-        this.hideEmpty()
+        this.toggleEmpty(false)
 
         if (_.isUndefined(options.prepend)) {
           this.$footerBody.append($rows)
@@ -285,25 +289,20 @@
         return $rows
       },
 
-      renderEmpty() {
-        this.showEmpty = true
-      },
-
-      hideEmpty() {
-        this.showEmpty = false
+      toggleEmpty(flag) {
+        this.showEmpty = flag
       },
 
       renderLoading() {
-        this.showLoading = false
-      },
-
-      hideLoading() {
         this.showLoading = true
       },
 
+      hideLoading() {
+        this.showLoading = false
+      },
+
       renderFail() {
-        this.hideEmpty()
-        // this.$tbody.html(`<tr><td class="text-center" colspan="${this.options.colModel.length}">加载数据失败</td></tr>`)
+        this.toggleEmpty(false)
       }
     },
   }

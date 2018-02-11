@@ -19,13 +19,19 @@
         <colgroup>
           <col :width="col.width" v-for="col in colModel">
         </colgroup>
-        <tbody>
-        <tr v-for="row in showRows" v-html="row" ref="bodyRows"></tr>
+        <!--<transition-group-->
+          <!--enter-active-class="animated-quick fadeIn"-->
+          <!--leave-active-class="animated-quick fadeOut"-->
+          <!--tag="tbody"-->
+        <!--&gt;-->
+        <tbody ref="tbody">
+        <slot name="row" v-for="(row, index) in showRows" :row="row" :rows="showRows" :index="index"></slot>
         </tbody>
+        <!--</transition-group>-->
 
       </table>
 
-      <div v-html="loading" v-show="_.isEmpty(showRows) && showLoading"></div>
+      <div class="height-100" v-html="loading" v-show="_.isEmpty(showRows) && showLoading"></div>
 
       <div class="empty-container text-center" v-show="_.isEmpty(showRows) && showEmpty">
         <div class="empty-container-main" v-html="emptyTip">
@@ -47,7 +53,7 @@
 
 <script>
   export default {
-    name: "static-grid",
+    name: "slot-static-grid",
 
     props: {
       tableClass: {
@@ -65,7 +71,7 @@
       },
       rows: {
         type: Array,
-        default: function () {
+        default() {
           return []
         }
       },
@@ -96,16 +102,19 @@
         default() {
           return {}
         }
-      }
+      },
+      abort: {
+        type: Boolean,
+        default: true
+      },
     },
 
     data() {
       return {
-        showLoading: false,
+        showLoading: this.initRemote,
         showEmpty: !_.isEmpty(this.emptyTip),
-        startOnLoading: true,
+        startOnLoading: this.initRemote,
         showHeader: true,
-        abort: true,
         showRows: [],
         innerRows: [],
         hasBorder: _.isUndefined(this.hasBorder) ? this.tableClass.indexOf('table-bordered') > -1 : this.hasBorder,
@@ -122,17 +131,13 @@
       },
       innerRows: {
         handler(data) {
-          this.showRows = _.map(data, (item, index, data) => {
-            return this.formatRowData(item, index, data)
-          }, this)
+          this.showRows = data
         },
         deep: true
       },
       colModel: {
         handler() {
-          this.showRows = _.map(this.innerRows, (item, index, data) => {
-            return this.formatRowData(item, index, data)
-          }, this)
+          this.showRows = this.innerRows
         }
       },
     },
@@ -151,7 +156,7 @@
         if (this.startOnLoading) {
           this.renderLoading()
         } else {
-          this.renderEmpty()
+          this.toggleEmpty(true)
         }
       }
     },
@@ -171,7 +176,7 @@
 
       $_getDataXhr() {
         this.clean()
-        this.renderLoading()
+        // this.renderLoading()
 
         $http({
           url: this.url,
@@ -194,75 +199,17 @@
                 }
                 return data
               }, data)
+              this.toggleEmpty(_.isEmpty(this.innerRows))
             } else {
               this.renderFail()
             }
           })
       },
 
-      formatRowData(row, index, data) {
-        // 合并行
-        _(this.colModel).each((colInfo) => {
-          if (colInfo.merge) {
-            _(data).reduceRight((repeat, info) => {
-              if (!_(repeat.val).isUndefined() && info[colInfo.name] === repeat.val) {
-                repeat.num += 1
-              } else {
-                repeat.val = info[colInfo.name]
-                repeat.num = 0
-              }
-              info[`${colInfo.name}Rowspan`] = repeat.num + 1
-
-              return repeat
-            }, {
-              val: null,
-              num: 0,
-            })
-          }
-        })
-
-        return _(this.colModel).reduce((formatRow, colInfo) => {
-          const cell = []
-          let cellContent = ''
-          let rowName = ''
-          let dataName = ''
-          if (_(colInfo.name).indexOf('.') > -1) {
-            const arr = colInfo.name.split('.')
-            rowName = row[`${arr[0]}`][`${arr[1]}`]
-            dataName = index > 0 ? data[index - 1][`${arr[0]}`][`${arr[1]}`] : ''
-          } else {
-            rowName = row[`${colInfo.name}`]
-            dataName = index > 0 ? data[index - 1][`${colInfo.name}`] : ''
-          }
-          if (colInfo.merge && index > 0 && rowName === dataName) {
-            cell.push('')
-          } else {
-            cell.push(`<td rowspan="${row[`${colInfo.name}Rowspan`] || 1}">`)
-            if (colInfo.formatter) {
-              cellContent = colInfo.formatter(rowName, index, row)
-            } else if (rowName || rowName === 0) {
-              cellContent = rowName
-            }
-
-            cell.push(cellContent)
-
-            cell.push('</td>')
-          }
-
-          formatRow.push(cell.join(''))
-
-          return formatRow
-        }, []).join('')
-      },
-
       // common APIs
 
-      getRows() {
-        return this.$refs.bodyRows || []
-      },
-
       clean() {
-        this.showRows = []
+        this.innerRows = []
       },
 
       addFooterRows(rows, options) {
@@ -271,7 +218,7 @@
         const $rows = $(this.formatRow(rows))
 
         this.hideLoading()
-        this.hideEmpty()
+        this.toggleEmpty(false)
 
         if (_.isUndefined(options.prepend)) {
           this.$footerBody.append($rows)
@@ -281,25 +228,24 @@
         return $rows
       },
 
-      renderEmpty() {
-        this.showEmpty = true
+      getRows() {
+        return this.$refs.tbody.children|| []
       },
 
-      hideEmpty() {
-        this.showEmpty = false
+      toggleEmpty(flag) {
+        this.showEmpty = flag
       },
 
       renderLoading() {
-        this.showLoading = false
-      },
-
-      hideLoading() {
         this.showLoading = true
       },
 
+      hideLoading() {
+        this.showLoading = false
+      },
+
       renderFail() {
-        this.hideEmpty()
-        // this.$tbody.html(`<tr><td class="text-center" colspan="${this.options.colModel.length}">加载数据失败</td></tr>`)
+        this.toggleEmpty(false)
       }
     },
   }
