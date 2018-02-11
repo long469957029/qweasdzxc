@@ -275,7 +275,7 @@ export default [
       RouterController.async(resolve, DividendMangeView, {
         main: {
           title: '我的分红',
-          titleDes: '彩票及游戏分红均于每月1号结算',
+          titleDes: Global.memoryCache.get('acctInfo').merchant ? '彩票及游戏分红均于每月1号结算' : '彩票分红每月1日及16日结算，游戏分红每月1日结算',
         },
         sidebar,
         activeMenu: 'ac/dm',
@@ -400,5 +400,19 @@ export default [
         activeMenu: 'ac/tr',
       })
     },
+    beforeEnter: (to, from, next) => {
+      const preStatus = window.Global.cookieCache.get('security')
+      if(preStatus === 1 || preStatus === 2){
+        next()
+      }else{
+        next(from)
+        $(document).securityTip({
+          content: '资金密码未设置，请先设置资金密码后再转账',
+          hasMoneyPwd: false,
+          hasBankCard: false,
+          showBankCard: false,
+        })
+      }
+    }
   },
 ]

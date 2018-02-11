@@ -32,7 +32,7 @@
               </div>
               <div class="detail-value-item claim">
                 <div class="rp-task-title">流水要求</div>
-                <div class="rp-value-text">{{_(rechargeTotal).formatMul(Number(curItem.betMulti), {fixed:2})}}</div>
+                <div class="rp-value-text">{{rechargeTotal === '0.00' ? '0.00' : _(rechargeTotal).formatMul(Number(curItem.betMulti))}}</div>
               </div>
             </div>
             <div class="detail-process">
@@ -191,9 +191,9 @@
       initActivityData(data){
         const flag = false
         this.planList = data.root.itemList
-        this.rechargeTotal = _(data.root.rechargeTotal).convert2yuan({fixed:2,clear:false})
-        this.betTotal = _(data.root.betTotal).convert2yuan({fixed:2})
-        this.minRecharge = _(data.root.recharge).convert2yuan({fixed:2,clear:false})
+        this.rechargeTotal = data.root.rechargeTotal === 0 ? '0.00' : _(data.root.rechargeTotal).convert2yuan()
+        this.betTotal = data.root.betTotal ? '0.00' : _(data.root.betTotal).convert2yuan()
+        this.minRecharge = data.root.recharge ? '0.00' : _(data.root.recharge).convert2yuan()
         this.fromTime = _(data.root.fromDate).toDate('M月D日')
         this.endTime = _(data.root.endDate).toDate('M月D日')
 
