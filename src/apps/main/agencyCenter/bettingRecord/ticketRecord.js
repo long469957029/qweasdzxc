@@ -22,7 +22,7 @@ const teamBettingRecordView = SearchGrid.extend({
   initialize() {
     _(this.options).extend({
       footerClass: 'border-cool-top',
-      height: 615,
+      height: 492,
       title: '团队投注记录',
       tableClass: 'table table-similar table-bordered table-center',
       columns: [
@@ -70,7 +70,7 @@ const teamBettingRecordView = SearchGrid.extend({
         url: '/ticket/bethistory/userTeamBetHistory.json',
       },
       reqData: {
-        pageSize: 15,
+        pageSize: 12,
         betType: this.options.type
       },
     })

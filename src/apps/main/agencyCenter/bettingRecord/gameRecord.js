@@ -96,12 +96,12 @@ const gameRecordView = SearchGrid.extend({
         abort: false,
       },
       reqData: {
-        pageSize: 15,
+        pageSize: 12,
         channelId: this.options.channelId,
         type: this.options.type,
       },
       listProp: 'root.dataList',
-      height: 615,
+      height: 492,
     })
   },
 

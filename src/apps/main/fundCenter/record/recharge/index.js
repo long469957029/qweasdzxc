@@ -16,7 +16,7 @@ const RechargeView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
-      height: '530',
+      height: '504',
       columns: [
         {
           name: '交易流水号',
