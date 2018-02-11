@@ -160,10 +160,10 @@
   .operation-record-item {
     background-color: white;
     border-bottom: 1px dashed $def-line-color;
-    padding: 10px 10px;
+    padding: 10px 0 10px 10px;
 
     .record-action, .record-date {
-      @include float-item(14px, $new-inverse-color, 50%, 35px, 0px);
+      @include float-item(12px, $new-inverse-color, 50%, 35px, 0px);
     }
 
     .record-action {
@@ -171,7 +171,7 @@
     }
 
     .record-date {
-      margin-left: -10px;
+      margin-left: -5px;
       text-align: right;
     }
 
@@ -180,7 +180,7 @@
     }
 
     .record-amount, .record-progress {
-      @include float-item(14px, $prominent-color, 30%, 35px, 0px);
+      @include float-item(12px, $prominent-color, 30%, 35px, 0px);
     }
 
     .record-amount {
@@ -189,8 +189,8 @@
 
     .record-progress {
       float: right;
-      width: 66%;
-      margin-left: 10px;
+      width: 69%;
+      //margin-left: 5px;
       .progress {
         float: left;
         margin: 5px;
@@ -254,21 +254,25 @@
       padding-top: 1px;
       font-size: 0;
       .fc-rc-status {
-        font-size: 14px;
+        font-size: 12px;
         color: #666666;
         .fc-rc-status-button {
-          width: 50px;
-          height: 20px;
-          padding: 0 2px;
+          width: 43px;
+          height: 18px;
+          //padding: 0px 2px;
+          padding: 1px 6px;
           border: 1px solid #666666;
+          border-radius: 3px;
         }
         .fc-rc-status-button-unPass {
           width: 50px;
           height: 20px;
-          padding: 0px 2px;
+          //padding: 0px 2px;
+          padding: 1px 6px;
           background: #14b1bb;
           color: #ffffff;
           border: 1px solid #14b1bb;
+          border-radius: 3px;
         }
         .fc-rc-status-line-unPass {
           color: #14b1bb;
