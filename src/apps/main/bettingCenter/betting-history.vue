@@ -12,7 +12,8 @@
                        :emptyTip="gridOps.emptyTip"
                        ref="historyGrid"></static-grid>
           <div class="text-center p-top-smd p-LR-xs border-top">
-            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}" target="_blank">
+            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
+                         target="_blank">
               更多历史开奖
             </router-link>
           </div>
@@ -27,7 +28,8 @@
         <span class="sfa sfa-mmc-double-ball double-ball-sm vertical-middle"></span>
         </span>
         <span class="font-md text-default vertical-middle">{{title}}</span>
-        <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" :class="{up: currentPanel !== 'twoSide'}" @click="togglePanel()"></span>
+        <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" :class="{up: currentPanel !== 'twoSide'}"
+              @click="togglePanel()"></span>
       </div>
       <div class="his-draw" ref="history">
         <div ref="historyInner">
@@ -36,7 +38,8 @@
                        :emptyTip="gridOps.emptyTip"
                        ref="historyGrid"></static-grid>
           <div class="text-center p-top-smd p-LR-xs border-top">
-            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}" target="_blank">
+            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
+                         target="_blank">
               更多历史开奖
             </router-link>
           </div>
@@ -53,16 +56,16 @@
       <div class="his-draw two-side" ref="twoSide">
         <div class="two-side-inner" ref="twoSideInner">
           <div class="two-side-title">统计至第{{lastOpenId}}期</div>
-            <transition-group class="two-side-main"
-              enter-active-class="animated-quick fadeIn"
-              leave-active-class="animated-quick fadeOut"
-              tag="div"
-            >
-              <div class="two-side-cell" v-for="(item, i) in twoSideList" :key="i">
-                <div class="cell-left">{{item.type | twoSideType(ticketInfo.type)}}------{{item.result}}</div>
-                <div class="cell-right">{{item.count}}期</div>
-              </div>
-            </transition-group>
+          <transition-group class="two-side-main"
+                            enter-active-class="animated-quick fadeIn"
+                            leave-active-class="animated-quick fadeOut"
+                            tag="div"
+          >
+            <div class="two-side-cell" v-for="(item, i) in twoSideList" :key="i">
+              <div class="cell-left">{{item.type | twoSideType(ticketInfo.type)}}------{{item.result}}</div>
+              <div class="cell-right">{{item.count}}期</div>
+            </div>
+          </transition-group>
         </div>
       </div>
     </div>
@@ -77,7 +80,7 @@
   const GRID_OPS = {
     ssc: {
       pageSize: 15,
-        formats: [
+      formats: [
         function (val) {
           const html = ['<div class="open-nums clearfix m-center">']
           const numList = val.split(',')
@@ -93,12 +96,12 @@
           }, this)
           html.push('</div>')
 
-            return html.join('')
-          },
-          function (val, index, item) {
-            return this.getFormType(val, this.playRule.keyPosition, this.playRule.formType, item)
-          },
-        ],
+          return html.join('')
+        },
+        function (val, index, item) {
+          return this.getFormType(val, this.playRule.keyPosition, this.playRule.formType, item)
+        },
+      ],
     },
     choose15: {
       pageSize: 15,
@@ -384,7 +387,7 @@
           this.currentPanel = this.currentPanel === 'record' ? 'twoSide' : 'record'
         }
 
-        if(this.currentPanel === 'record') {
+        if (this.currentPanel === 'record') {
           Velocity(this.$refs.history, {
             height: this.$refs.historyInner.offsetHeight,
             opacity: 1,
@@ -508,7 +511,8 @@
               keyName: '',
             }
             break;
-          case 'DRAGON':case 'QUICK':
+          case 'DRAGON':
+          case 'QUICK':
             formType = {
               name: '形态',
               keyName: '',
@@ -657,6 +661,7 @@
       }
     }
   }
+
   .his-main {
     th {
       position: relative;
@@ -680,6 +685,7 @@
       padding: 12px 0;
     }
   }
+
   .his-draw {
     position: relative;
     /*overflow: hidden;*/
@@ -726,10 +732,12 @@
   .cell-right {
     color: $new-main-deep-color;
   }
+
   .double-ball-sm {
     transform: scale(0.8);
     margin-left: -6px;
   }
+
   .his-icon {
     width: 40px;
     display: inline-block;

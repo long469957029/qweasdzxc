@@ -52,7 +52,18 @@
             <div class="opening-group" ref="previewGroup">
               <div class="opening-cell" v-for="(preview, index) in fPreviewList">
                 <div class="opening-left">【{{preview.title}}】</div>
-                <div class="opening-center" v-html="preview.betNum"></div>
+
+                <div class="opening-center" v-if="preview.formatBetNum.length <= 20">{{preview.formatBetNum}}</div>
+                <div class="opening-center" v-else v-popover.right="{name: `open${index}`}">
+                  <a href="javascript:void(0)" class="btn-link">{{preview.formatBetNum | formatOpenNum}}</a>
+                  <div v-transfer-dom>
+                    <popover :name="`open${index}`">
+                      <div class="title">详细号码</div>
+                      <div class="">{{preview.betNum}}</div>
+                    </popover>
+                  </div>
+                </div>
+
                 <div class="opening-right">{{preview.bettingMoney}}</div>
                 <div class="opening-operate">
                   <span class="sfa sfa-mmc-delete cursor-pointer" v-show="!opening" @click="lotteryDelete(index)"></span>
@@ -79,7 +90,7 @@
                 </div>
                 <div class="opening-center" v-else>
                   <span class="text-circle text-circle-xs" :class="{'circle-winning': (!opening && i === 0) || (opening && i === 1)}"
-                        v-for="num in openingResult.fOpenCode">{{num}}</span>
+                        v-for="num in openingResult.ffOpenCodeOpenCode">{{num}}</span>
                 </div>
                 <div class="opening-right text-prominent " v-if="openingResult.completed && openingResult.winPrize">
                   中奖{{openingResult.fWinPrize}}元
@@ -187,9 +198,32 @@
 
         <div class="m-bottom-xs m-left-md">
           <div class="sfa-mmc-betting-record">
-            <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
-                         :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
-                         ref="lotteryGrid"></static-grid>
+            <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
+                              :init-remote="false"
+                              :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
+                              ref="lotteryGrid">
+              <tr slot="row" slot-scope="{row, index}" :key="index" ref="lotteryRows">
+                <td>{{row.title}}</td>
+
+                <td v-if="row.formatBetNum.length <= 20">{{row.formatBetNum}}</td>
+                <td v-else v-popover.right="{name: `bet${index}`}">
+                  <a href="javascript:void(0)" class="btn-link">{{row.formatBetNum | formatOpenNum}}</a>
+                  <div v-transfer-dom>
+                    <popover :name="`bet${index}`">
+                      <div class="title">详细号码</div>
+                      <div class="">{{row.betNum}}</div>
+                    </popover>
+                  </div>
+                </td>
+
+                <td>{{row.note}}</td>
+                <td v-html="row.multiple"></td>
+                <td v-html="row.mode"></td>
+                <td>{{row.bettingMoney}}</td>
+                <td>{{row.bonus}}</td>
+                <td v-html="row.operate"></td>
+              </tr>
+            </slot-static-grid>
           </div>
         </div>
       </div>
@@ -232,8 +266,10 @@
 </template>
 
 <script>
+  import {formatOpenNum} from 'filters'
+  import {TransferDom} from 'build'
   import {pushMmcSimulationBettingApi} from 'api/betting'
-  import {CustomCheckbox, StaticGrid} from 'build'
+  import {CustomCheckbox} from 'build'
   import MmcOpeningNumGroup from "bettingCenter/mmc-opening-num-group";
   import betRulesConfig from './misc/betRulesConfig'
 
@@ -246,20 +282,27 @@
 
   export default {
     name: "mmc-betting-main-area",
-    props: {
-      ticketInfo: Object,
-      ticketId: Number,
-      componentType: String,
+    directives: {
+      TransferDom
     },
     components: {
       MmcOpeningNumGroup,
       CustomCheckbox,
-      StaticGrid,
       BettingRules,
       BettingAdvanceRules,
       BettingHistory,
       BettingPlayAreaSelect,
       BettingPlayAreaInput,
+    },
+
+    filters: {
+      formatOpenNum,
+    },
+
+    props: {
+      ticketInfo: Object,
+      ticketId: Number,
+      componentType: String,
     },
     data() {
       return {
@@ -299,19 +342,18 @@
           wrapperClass: 'bc-lottery-preview mmc',
           colModel: [
             {
-              label: '玩法', name: 'title', key: true, width: '15%',
+              label: '玩法', width: '15%',
             },
             {
-              label: '投注内容', name: 'betNum', key: true, width: '17%',
+              label: '投注内容', width: '17%',
             },
-            {label: '注数', name: 'note', width: '10%'},
-            {label: '倍数', name: 'multiple', width: '12.5%'},
-            {label: '模式', name: 'mode', width: '12.5%'},
-            {label: '投注金额', name: 'bettingMoney', width: '12.5%'},
-            {label: '预期奖金', name: 'bonus', width: '12.5%'},
+            {label: '注数', width: '10%'},
+            {label: '倍数', width: '12.5%'},
+            {label: '模式', width: '12.5%'},
+            {label: '投注金额', width: '12.5%'},
+            {label: '预期奖金', width: '12.5%'},
             {
               label: `<div class="js-lottery-clear bc-lottery-clear m-left-sm cursor-pointer">清空</div>`,
-              name: 'operate',
               width: '8%'
             },
           ],
@@ -433,13 +475,6 @@
           let totalMoney = 0
           this.fPreviewList = _(previewList).map(function (previewInfo, index) {
             const title = `${previewInfo.levelName}_${previewInfo.playName}`
-            let betNum = ''
-            if (previewInfo.formatBettingNumber.length > 20) {
-              betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail-${index} btn-link">${
-                previewInfo.formatBettingNumber.slice(0, 20)}...</a>`
-            } else {
-              betNum = previewInfo.formatBettingNumber
-            }
             const multipleDiv = `<div class="js-bc-preview-multiple-${index} p-top-xs"></div>`
             const modeSelect = `<select name="" class="js-bc-preview-unit select-default bc-unit-select-add">
               <option value="10000" ${previewInfo.unit === 10000 ? 'selected' : ''}>元</option>
@@ -452,7 +487,8 @@
 
             return {
               title,
-              betNum,
+              formatBetNum: previewInfo.formatBettingNumber,
+              betNum: previewInfo.bettingNumber,
               note: `${previewInfo.statistics}注`,
               multiple: multipleDiv,
               mode: modeSelect,
@@ -467,9 +503,7 @@
           this.$nextTick(() => {
             this.$refs.lotteryGrid.getRows().forEach((row, index) => {
               const $row = $(row)
-              const $detail = $(this.$el).find(`.js-bc-betting-preview-detail-${index}`)
               const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
-              let betNumber = previewList[index].bettingNumber
 
               if ($multipleAdd.numRange('instance')) {
                 $multipleAdd.numRange('numChange', previewList[index].multiple)
@@ -486,17 +520,6 @@
                     Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
                   ${_(this.bettingChoice.limitMoney).convert2yuan()}</span>元，已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
                   },
-                })
-              }
-
-              if ($detail.length) {
-                $detail.popover({
-                  title: '详细号码',
-                  trigger: 'click',
-                  html: true,
-                  container: 'body',
-                  content: `<div class="js-pf-popover">${betNumber}</div>`,
-                  placement: 'right',
                 })
               }
             });

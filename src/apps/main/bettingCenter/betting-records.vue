@@ -5,10 +5,38 @@
       <div class="font-md bc-records-tab" :class="{active: type === 'chase'}" @click="toggleTab('chase')">我的追号</div>
     </div>
     <div class="bc-records-tables">
-      <static-grid v-show="type === 'betting'" :table-class="tableClass" :col-model="bettingOps.colModel" :height="height"
+      <slot-static-grid v-show="type === 'betting'" :table-class="tableClass" :col-model="bettingOps.colModel" :height="height"
                    :url="bettingOps.url" :reqData="bettingOps.data" :abort="false" :data-prop="bettingOps.dataProp"
                    :emptyTip="bettingOps.emptyTip"
-                   ref="bettingGrid"></static-grid>
+                   ref="bettingGrid">
+        <tr slot="row" slot-scope="{row, index}" :key="index">
+          <td>{{row.betTime | toTime}}</td>
+          <td>{{row.playName}}</td>
+          <td>{{row.ticketPlanId}}</td>
+          <td>{{row.ticketResult}}</td>
+
+          <td v-if="row.betNum.length <= 20">{{row.betNum}}</td>
+          <td v-else v-popover.right="{name: row.ticketTradeNo}">
+            <a href="javascript:void(0)" class="btn-link">{{row.betNum | formatOpenNum}}</a>
+            <div v-transfer-dom>
+              <popover :name="row.ticketTradeNo">
+                <div class="title">详细号码</div>
+                <div class="">{{row.betNum}}</div>
+              </popover>
+            </div>
+          </td>
+
+          <td>{{row.betTotalMoney | fixedConvert2yuan}}</td>
+          <td v-html="formatStatus(row.prizeTotalMoney, row)"></td>
+          <td>
+            <template v-if="row.canCancel">
+              <a class="btn btn-link btn-link-inverse js-bc-records-cancel" :data-id="row.ticketTradeNo">撤单</a>
+              /
+            </template>
+            <a class="btn btn-link btn-link-inverse js-gl-bet-detail-dialog" :data-id="row.ticketTradeNo">查看</a>
+          </td>
+        </tr>
+      </slot-static-grid>
       <static-grid v-show="type === 'chase'" :table-class="tableClass" :col-model="chaseOps.colModel" :height="height"
                    :url="chaseOps.url" :reqData="chaseOps.data" :abort="false" :data-prop="chaseOps.dataProp"
                    :emptyTip="chaseOps.emptyTip"
@@ -17,19 +45,19 @@
     <div class="text-center font-sm m-top-sm">
       <router-link to="/fc/td" class="btn btn-link text-auxiliary">更多记录>></router-link>
     </div>
-
-    <button v-popover="{ name: 'foo' }">daf</button>
-    <popover name="foo">
-      Hello
-    </popover>
   </div>
 </template>
 
 <script>
-  import {StaticGrid} from 'build'
+  import {formatOpenNum} from 'filters'
+  import {StaticGrid, TransferDom} from 'build'
 
   export default {
     name: 'betting-records',
+
+    directives: {
+      TransferDom
+    },
 
     components: {StaticGrid},
 
@@ -40,103 +68,72 @@
       }
     },
 
+    filters: {
+      formatOpenNum,
+    },
+
     data() {
       return {
         height: 125,
         type: 'betting',
         tableClass: 'table table-similar table-center no-margin',
 
+        formatStatus(val, bet) {
+          // 0:未中奖，1：已中奖，2：用户撤单，3：系统撤单,ticketResult,prizeTotalMoney
+          let status = ''
+          if (bet.ticketBetStatus === 2) {
+            status = '用户撤单'
+          } else if (bet.ticketBetStatus === 3) {
+            status = '系统撤单'
+          } else if (bet.hasException) {
+            status = '等待开奖'
+          } else if (bet.ticketResult === null) {
+            if (bet.ticketOpenStatus > 0) {
+              status = '未中奖'
+            } else {
+              status = '等待开奖'
+            }
+          } else if (bet.prizeTotalMoney === 0) {
+            status = '未中奖'
+          } else {
+            status = `<span class="text-pink">${_(bet.prizeTotalMoney).convert2yuan()}</span>`
+          }
+          return status
+        },
+
         bettingOps: {
           colModel: [
             {
               label: '投注时间',
-              name: 'betTime',
               width: '12%',
-              formatter(val) {
-                return _(val).toTime()
-              },
             },
             {
               label: '玩法',
-              name: 'playName',
               width: '10%',
             },
             {
               label: '期号',
-              name: 'ticketPlanId',
               width: '12%',
-              // formatter(val, index, bet) {
-              //   return `<a class="router btn-link btn-link-inverse" href="#bc/br/detail/${self.options.ticketId}/${bet.ticketTradeNo}">${val}</a>`
-              // },
             },
             {
               label: '开奖号码 ',
-              name: 'ticketResult',
               width: '12%',
             },
             {
               label: '投注内容 ',
-              name: 'betNum',
               width: '12%',
-              formatter(val) {
-                let betNum = val
-                let tryCompact = betNum.split(' ')
-                if (tryCompact[0].length === 1) {
-                  betNum = tryCompact.join('')
-                }
-                if (val.length > 20) {
-                  betNum = `<a href="javascript:void(0)" class="js-bc-betting-preview-detail btn-link" data-num="${val}">${
-                    betNum.slice(0, 20)}...</a>`
-                }
-                return betNum
-              },
             },
             {
               label: '投注金额',
-              name: 'betTotalMoney',
               width: '10%',
-              formatter(val) {
-                return _(val).fixedConvert2yuan()
-              },
             },
             {
               label: '状态',
-              name: 'prizeTotalMoney',
               width: '10%',
-              formatter(val, index, bet) {
-                // 0:未中奖，1：已中奖，2：用户撤单，3：系统撤单,ticketResult,prizeTotalMoney
-                let status = ''
-                if (bet.ticketBetStatus === 2) {
-                  status = '用户撤单'
-                } else if (bet.ticketBetStatus === 3) {
-                  status = '系统撤单'
-                } else if (bet.hasException) {
-                  status = '等待开奖'
-                } else if (bet.ticketResult === null) {
-                  if (bet.ticketOpenStatus > 0) {
-                    status = '未中奖'
-                  } else {
-                    status = '等待开奖'
-                  }
-                } else if (bet.prizeTotalMoney === 0) {
-                  status = '未中奖'
-                } else {
-                  status = `<span class="text-pink">${_(bet.prizeTotalMoney).convert2yuan()}</span>`
-                }
-                return status
-              },
             },
             {
               label: '操作 ',
-              name: 'ticketTradeNo',
               width: '10%',
-              formatter(ticketTradeNo, index, bet) {
-                let btnlist = `<a class="btn btn-link btn-link-inverse js-gl-bet-detail-dialog" data-id="${ticketTradeNo}">查看</a>`
-                if (bet.canCancel) {
-                  btnlist = `<a class="btn btn-link btn-link-inverse js-bc-records-cancel" data-id="${ticketTradeNo}">撤单</a> / ${btnlist}`
-                }
-                return btnlist
-              },
             },
           ],
           emptyTip: '最近无投注记录',
@@ -252,19 +249,6 @@
         this.type = type
         this.update()
       },
-
-      popup() {
-        if (!$(e.currentTarget).data('popover')) {
-          $(e.currentTarget).popover({
-            title: '详细号码',
-            trigger: 'click',
-            html: true,
-            container: 'body',
-            content: `<div class="js-pf-popover">${e.currentTarget.dataset.num}</div>`,
-            placement: 'right',
-          }).popover('show')
-        }
-      }
     },
   }
 </script>

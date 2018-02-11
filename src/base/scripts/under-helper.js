@@ -72,7 +72,7 @@ _.mixin({
       fixed: 3,
       clear: false,
     }, options)
-    return this.convert2yuan(money, options)
+    return _.convert2yuan(money, options)
   },
 
   convert2yuan(money, options) {
@@ -342,4 +342,5 @@ _.mixin({
 })
 
 Vue.filter('toTime', _.toTime)
+Vue.filter('fixedConvert2yuan', _.fixedConvert2yuan)
 Vue.filter('convert2yuan', _.convert2yuan)
