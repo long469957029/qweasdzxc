@@ -85,7 +85,7 @@ const ReportManageView = SearchGrid.extend({
   },
   initialize () {
     _(this.options).extend({
-      height: 450,
+      height: 552,
       title: '签约用户管理',
       columns: [
         {
@@ -116,6 +116,9 @@ const ReportManageView = SearchGrid.extend({
       // tip: '<div class="tip-hot"><span>提示</span>报表只保留最近35天的数据。</div>',
       gridOps: {
         emptyTip: '没有记录',
+      },
+      reqData: {
+        pageSize: 12,
       },
       ajaxOps: {
         url: '/fund/divid/findsublist.json',

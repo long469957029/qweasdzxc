@@ -18,7 +18,7 @@ const BettingRecordsView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
-      height: '515',
+      height: '504',
       columns: [
         {
           name: '投注时间',

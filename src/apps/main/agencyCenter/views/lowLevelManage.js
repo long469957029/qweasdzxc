@@ -20,7 +20,7 @@ const LowLevelManageView = SearchGrid.extend({
   initialize() {
     _(this.options).extend({
       footerClass: 'border-cool-top',
-      height: 598,
+      height: 552,
       title: '下级管理',
       columns: [
         {
