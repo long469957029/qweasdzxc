@@ -21,7 +21,7 @@ const MoneyDetailView = SearchGrid.extend({
     })
 
     _(this.options).extend({
-      height: '615',
+      height: '492',
       columns: [
         {
           name: '交易流水号',
@@ -29,7 +29,7 @@ const MoneyDetailView = SearchGrid.extend({
         },
         {
           name: '日期时间',
-          width: '16%',
+          width: '15%',
         },
         {
           name: '用户',
@@ -37,19 +37,19 @@ const MoneyDetailView = SearchGrid.extend({
         },
         {
           name: '类型',
-          width: '11%',
+          width: '10%',
         },
         {
           name: '收入/支出',
-          width: '12%',
+          width: '11%',
         },
         {
           name: '账户余额',
-          width: '14%',
+          width: '13%',
         },
         {
           name: '备注',
-          width: '15%',
+          width: '19%',
         },
       ],
       gridOps: {
@@ -59,7 +59,7 @@ const MoneyDetailView = SearchGrid.extend({
         url: '/fund/balance/history.json',
       },
       reqData: {
-        pageSize: 15,
+        pageSize: 12,
       },
     })
   },

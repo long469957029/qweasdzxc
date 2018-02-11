@@ -12,7 +12,7 @@ const ReportManageView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
-      height: 600,
+      height: 492,
       title: '报表查询',
       tableClass: 'table table-similar table-bordered table-center',
       columns: [
@@ -83,7 +83,7 @@ const ReportManageView = SearchGrid.extend({
       },
       reqData: {
         userId: Global.memoryCache.get('acctInfo').userId,
-        pageSize: 15,
+        pageSize: 12,
       },
       subOps: {
         url: '/info/gamereport/teamprofitdetail.json',
