@@ -90,7 +90,7 @@
                 </div>
                 <div class="opening-center" v-else>
                   <span class="text-circle text-circle-xs" :class="{'circle-winning': (!opening && i === 0) || (opening && i === 1)}"
-                        v-for="num in openingResult.ffOpenCodeOpenCode">{{num}}</span>
+                        v-for="num in openingResult.fOpenCode">{{num}}</span>
                 </div>
                 <div class="opening-right text-prominent " v-if="openingResult.completed && openingResult.winPrize">
                   中奖{{openingResult.fWinPrize}}元
@@ -267,9 +267,8 @@
 
 <script>
   import {formatOpenNum} from 'filters'
-  import {TransferDom} from 'build'
   import {pushMmcSimulationBettingApi} from 'api/betting'
-  import {CustomCheckbox} from 'build'
+  import {TransferDom, CustomCheckbox} from 'build'
   import MmcOpeningNumGroup from "bettingCenter/mmc-opening-num-group";
   import betRulesConfig from './misc/betRulesConfig'
 
@@ -501,7 +500,7 @@
           this.fTotalMoney = _.convert2yuan(totalMoney * this.openingCount)
 
           this.$nextTick(() => {
-            this.$refs.lotteryGrid.getRows().forEach((row, index) => {
+            _.each(this.$refs.lotteryGrid.getRows(), (row, index) => {
               const $row = $(row)
               const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
 
@@ -628,6 +627,8 @@
           this.pushing = false
           if (data && data.result === 0) {
             this.lastOpening = data.root.openCode.split(',')
+          } else {
+            Global.ui.notification.show(data.msg || '')
           }
         }, () => {
           this.simulationOpen = false
