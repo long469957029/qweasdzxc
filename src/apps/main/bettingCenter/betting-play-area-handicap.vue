@@ -256,8 +256,10 @@
 
       clearAll() {
         _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
-          item.selected = false
-          item.betMoney = null
+          if (!_.isEmpty(item)) {
+            item.selected = false
+            item.betMoney = null
+          }
         })
         this.betMoney = null
       },

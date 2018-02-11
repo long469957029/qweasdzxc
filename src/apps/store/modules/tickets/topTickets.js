@@ -90,11 +90,13 @@ const mutations = {
       data = res.root && res.root.ticketIds || []
     }
 
-    state[type] = _.map(data, (id, index) => {
+    state[type] = _.chain(data).map((id) => {
       const ticket = ticketConfig.getById(id)
-      Vue.set(ticket, 'active', false)
+      if (ticket) {
+        ticket.active = false
+      }
       return ticket
-    })
+    }).compact().value()
   },
 
   [types.GET_TOP_TICKETS_FAILURE] (state) {
