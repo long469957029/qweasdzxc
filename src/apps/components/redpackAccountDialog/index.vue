@@ -75,6 +75,9 @@
             }
           }
         )
+      },
+      goNext(){
+        this.$emit('next')
       }
     },
     mounted(){
@@ -88,22 +91,22 @@
                 this.showDailog = true
                 this.init()
               }else{
-                this.$emit('next')
+                this.goNext()
               }
             }else if(this.redPackType === 1){
               if(data.root && data.root.isAward){
                 this.showDailog = true
                 this.init()
               }else{
-                this.$emit('next')
+                this.goNext()
               }
             }
           }else{
-            this.$emit('next')
+            this.goNext()
           }
         },
         () => {
-          this.$emit('next')
+          this.goNext()
         }
       )
     },
