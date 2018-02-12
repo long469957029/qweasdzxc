@@ -52,6 +52,7 @@
 
 .fund-amount-recharge {
   padding: 0 10px;
+  border-bottom: 1px dashed #d7d7d7;
 }
 
 .fund-amount-withdraw {
@@ -61,11 +62,12 @@
 .fund-pocket {
   padding: 10px 10px 25px 10px;
   background-color: white;
-  margin-bottom: 10px;
+  margin: 10px 0;
   .pocket-title-container {
     height: 48px;
     line-height: 48px;
     padding: 0 10px;
+    border-bottom: 1px dashed #d7d7d7;
     .pocket-title, .pocket-rest {
       @include float-item(12px, $prominent-color, 50%, 35px, 10px);
     }
@@ -86,6 +88,9 @@
       text-align: right;
       cursor: pointer;
     }
+  }
+  .pocket-title-container:last-child {
+    border-bottom: 0px;
   }
 
   .pocket-rest {
@@ -130,9 +135,9 @@
     }
     .operation-title{
       font-size: 12px;
-      color: #333333;
+      color: $def-black-color;
       display: inline-block;
-      float: left;;
+      float: left;
     }
     .record-title {
       margin-bottom: 0 !important;
@@ -146,11 +151,11 @@
       margin-bottom: 0 !important;
       height: 48px !important;
       line-height: 48px !important;
-      text-decoration: underline;
+      //text-decoration: underline;
       font-size: 12px;
       text-align: right;
       float: right;
-      color: #999999;
+      color: $font-auxiliary-color;
     }
   }
 }
@@ -163,17 +168,19 @@
     border-bottom: 1px dashed $def-line-color;
     padding: 10px 0 10px 10px;
 
-    .record-action, .record-date {
-      @include float-item(12px, $new-inverse-color, 50%, 35px, 0px);
-    }
+    //.record-action, .record-date {
+    //  @include float-item(12px, $font-auxiliary-color, 50%, 35px, 0px);
+    //}
 
     .record-action {
       text-align: left;
+      @include float-item(12px, $new-inverse-color, 50%, 35px, 0px);
     }
 
     .record-date {
       margin-left: -5px;
       text-align: right;
+      @include float-item(12px, $font-auxiliary-color, 50%, 35px, 0px);
     }
 
     .record-date {
@@ -181,11 +188,15 @@
     }
 
     .record-amount, .record-progress {
-      @include float-item(12px, $prominent-color, 30%, 35px, 0px);
+      @include float-item(12px, $new-inverse-color, 30%, 35px, 0px);
     }
 
     .record-amount {
       text-align: left;
+    }
+
+    .record-remark {
+      @include float-item(12px, $font-auxiliary-color, 100%, 35px, 0px);
     }
 
     .record-progress {
