@@ -6,6 +6,13 @@ import XDialog from './components/x-dialog'
 import Popover from './components/popover'
 import TransferDom from './directives/transfer-dom'
 
+//plugins
+import BusPlugin from './plugins/bus/index.js'
+
+//filters
+import quick3Sum from './filters/quick3-sum'
+import twoSideType from './filters/two-side-type'
+import formatOpenNum from './filters/format-open-num'
 
 export {
   TransferDom,
@@ -15,4 +22,9 @@ export {
   SlotStaticGrid,
   XDialog,
   Popover,
+  BusPlugin,
+
+  formatOpenNum,
+  quick3Sum,
+  twoSideType,
 }

@@ -1,6 +1,5 @@
 import Popover    from './Popover.vue'
 import Tooltip    from './Tooltip.vue'
-import { events } from './bus'
 
 const defaultPosition = 'bottom'
 
@@ -14,10 +13,10 @@ const prepareBinding = ({ arg = '', modifiers = {}, value = {} }) => {
 
 const addClickEventListener = (target, params) => {
   const click = (srcEvent) => {
-    events.$emit('show:click', { ...params, target, srcEvent })
+    Vue.$global.bus.$emit('show:click', { ...params, target, srcEvent })
 
     let handler = (srcEvent) => {
-      events.$emit('hide:click', { ...params, target, srcEvent })
+      Vue.$global.bus.$emit('hide:click', { ...params, target, srcEvent })
       document.removeEventListener('click', handler)
     }
 
@@ -34,11 +33,11 @@ const addClickEventListener = (target, params) => {
 
 const addHoverEventListener = (target, params) => {
   const mouseenter = (srcEvent) => {
-    events.$emit('show:hover', { ...params, target, srcEvent })
+    Vue.$global.bus.$emit('show:hover', { ...params, target, srcEvent })
   }
 
   const mouseleave = (srcEvent) => {
-    events.$emit('hide:hover', { ...params, target, srcEvent })
+    Vue.$global.bus.$emit('hide:hover', { ...params, target, srcEvent })
   }
 
   target.addEventListener('mouseenter', mouseenter)
@@ -52,8 +51,9 @@ const addHoverEventListener = (target, params) => {
 
 export default {
   install (Vue, params = {}) {
+    const events = Vue.$global.bus
     document.addEventListener('resize', (event) => {
-      events.$emit('hide', { srcEvent: event })
+      Vue.$global.bus.$emit('hide', { srcEvent: event })
     })
 
     Vue.component('Popover', Popover)

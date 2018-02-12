@@ -265,6 +265,21 @@ const getVouchersApi = ({ticketId}, then) => {
     .then(then)
 }
 
+/**
+ * 撤销投注
+ * @param betId
+ * @param then
+ */
+const bettingCancelApi = ({betId}, then) => {
+  return $http({
+    url: '/ticket/bet/cancel.json',
+    data: {
+      betId
+    }
+  })
+    .then(then)
+}
+
 export {
   getTicketInfoApi,
   getTicketRulesApi,
@@ -279,4 +294,5 @@ export {
   pushMmcBettingApi,
   pushMmcSimulationBettingApi,
   getVouchersApi,
+  bettingCancelApi,
 }
