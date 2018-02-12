@@ -1,26 +1,28 @@
-import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import dashboardRouter from 'dashboard/router'
-import bettingCenterRouter from 'bettingCenter/router'
-import userCenterRouter from 'userCenter/router'
-import activityRouter from 'activity/router'
-// import vipCenterRouter from 'vipCenter/router'
-import activeCenterRouter from 'activeCenter/router'
+// import dashboardRouter from './dashboard/router'
+// import bettingCenterRouter from './bettingCenter/router'
+// import userCenterRouter from './userCenter/router'
+// import activityRouter from './activity/router'
+
+// import activeCenterRouter from './activeCenter/router'
+import pointsMallRouter from './points-mall/router'
+
 // import realCenterRouter from 'realCenter/router'
 // import slotCenterRouter from 'slotCenter/router'
 // import fishCenterRouter from 'fishCenter/router'
 // import sportCenterRouter from 'sportCenter/router'
-import agencyCenterRouter from 'agencyCenter/router'
-import newsCenterRouter from 'newsCenter/router'
-import dynamicCenterRouter from 'dynamicCenter/router'
-import fundCenterRouter from 'fundCenter/router'
-import helpCenterRouter from 'helpCenter/router'
-import gameCenterRouter from 'gameCenter/router'
-import mallCenterRouter from 'mallCenter/router'
-import analysisCenterRouter from './analysisCenter/router'
-import mobileBetCenterRouter from './mobileBetCenter/router'
-import aboutUsRouter from './aboutUs/router'
+
+// import agencyCenterRouter from './agencyCenter/router'
+// import newsCenterRouter from './newsCenter/router'
+// import dynamicCenterRouter from './dynamicCenter/router'
+// import fundCenterRouter from './fundCenter/router'
+// import helpCenterRouter from './helpCenter/router'
+// import gameCenterRouter from './gameCenter/router'
+// import mallCenterRouter from './mallCenter/router'
+// import analysisCenterRouter from './analysisCenter/router'
+// import mobileBetCenterRouter from './mobileBetCenter/router'
+// import aboutUsRouter from './aboutUs/router'
 
 Vue.use(VueRouter)
 
@@ -31,25 +33,26 @@ export const install = () => {
   return new VueRouter({
     // mode: 'history',
     routes: [
-      ...bettingCenterRouter,
-      ...userCenterRouter,
-      // ...vipCenterRouter,
-      ...activeCenterRouter,
-      ...agencyCenterRouter,
-      ...fundCenterRouter,
-      ...newsCenterRouter,
-      ...dynamicCenterRouter,
-      ...helpCenterRouter,
-      ...mallCenterRouter,
-      ...analysisCenterRouter,
-      ...dashboardRouter,
-      // 手机投注
-      ...mobileBetCenterRouter,
-      // 关于我们
-      ...aboutUsRouter,
-      // 活动
-      ...activityRouter,
-      ...gameCenterRouter
+      // ...bettingCenterRouter,
+      // ...userCenterRouter,
+      // // ...vipCenterRouter,
+      // ...activeCenterRouter,
+      // ...agencyCenterRouter,
+      // ...fundCenterRouter,
+      // ...newsCenterRouter,
+      // ...dynamicCenterRouter,
+      // ...helpCenterRouter,
+      // ...mallCenterRouter,
+      // ...analysisCenterRouter,
+      // ...dashboardRouter,
+      // // 手机投注
+      // ...mobileBetCenterRouter,
+      // // 关于我们
+      // ...aboutUsRouter,
+      // // 活动
+      // ...activityRouter,
+      // ...gameCenterRouter,
+      ...pointsMallRouter,
     ],
   })
 }

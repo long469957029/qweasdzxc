@@ -4,6 +4,7 @@ import AnimatedInteger from './components/animated-integer'
 import CustomCheckbox from './components/custom-checkbox'
 import XDialog from './components/x-dialog'
 import Popover from './components/popover'
+import PointsCard from './components/points-card'
 import TransferDom from './directives/transfer-dom'
 
 //plugins
@@ -19,6 +20,7 @@ export {
   AnimatedInteger,
   CustomCheckbox,
   StaticGrid,
+  PointsCard,
   SlotStaticGrid,
   XDialog,
   Popover,

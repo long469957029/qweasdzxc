@@ -35,6 +35,7 @@
     "sprite:normal": "gulp build.sprite --target sprites",
     "sprite:mmc": "gulp build.sprite --target spritesMMC",
     "sprite:bc": "gulp build.sprite --target spritesBC",
+    "sprite:pt": "gulp build.sprite --target spritesPT",
     "lint": "./node_modules/eslint/bin/eslint.js src/ --fix"
   },
   "lint-staged": {
