@@ -15,7 +15,7 @@
 
 <script>
   import openingDices from 'com/opening-dices'
-  import {quick3Sum} from 'filters'
+  import {quick3Sum} from 'build'
 
   export default {
     name: "opening-dices-panel",

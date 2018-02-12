@@ -74,8 +74,7 @@
 
 <script>
   import {getTwoSideApi} from 'api/analysis'
-  import {twoSideType, quick3Sum} from 'filters'
-  import {StaticGrid} from 'build'
+  import {StaticGrid, twoSideType, quick3Sum} from 'build'
 
   const GRID_OPS = {
     ssc: {

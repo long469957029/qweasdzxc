@@ -1,8 +1,15 @@
 const App = require('./app')
 const modules = require('skeleton/modules')
 
-import Vue from 'vue'
-import {Popover, SlotStaticGrid, AnimatedInteger, XDialog, CustomCheckbox} from 'build'
+import {
+  SlotStaticGrid,
+  StaticGrid,
+  AnimatedInteger,
+  XDialog,
+  BusPlugin,
+  CustomCheckbox,
+  Popover,
+} from 'build'
 import store from '../store/index'
 
 import MainHeader from 'skeleton/bases/header'
@@ -20,7 +27,9 @@ import novicePackage from 'activity/novicePackageActivity'
 Object.defineProperty(Vue.prototype, '_', {value: _})
 Object.defineProperty(Vue.prototype, '$', {value: $})
 
+Vue.use(BusPlugin)
 Vue.use(Popover)
+Vue.component('static-grid', StaticGrid)
 Vue.component('slot-static-grid', SlotStaticGrid)
 Vue.component('custom-checkbox', CustomCheckbox)
 Vue.component('animated-integer', AnimatedInteger)
@@ -145,17 +154,6 @@ Global.m.oauth.check()
   })
   .done((res) => {
     if (res && res.result === 0) {
-      // /** **************************************************************** */
-      // // appRouters.install()
-      // /** **************************************************************** */
-
-      // 开启oauth监听
-      // Global.m.oauth.start()
-
-      // 开启消息监听
-      // Global.m.news.start()
-
       window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
-
     }
   })

@@ -30,7 +30,7 @@
           <td v-html="formatStatus(row.prizeTotalMoney, row)"></td>
           <td>
             <template v-if="row.canCancel">
-              <a class="btn btn-link btn-link-inverse js-bc-records-cancel" :data-id="row.ticketTradeNo">撤单</a>
+              <a class="btn btn-link btn-link-inverse" @click="bettingCancel(row.ticketBetId)">撤单</a>
               /
             </template>
             <a class="btn btn-link btn-link-inverse js-gl-bet-detail-dialog" :data-id="row.ticketTradeNo">查看</a>
@@ -49,8 +49,8 @@
 </template>
 
 <script>
-  import {formatOpenNum} from 'filters'
-  import {StaticGrid, TransferDom} from 'build'
+  import {bettingCancelApi} from 'api/betting'
+  import {formatOpenNum, TransferDom} from 'build'
 
   export default {
     name: 'betting-records',
@@ -58,8 +58,6 @@
     directives: {
       TransferDom
     },
-
-    components: {StaticGrid},
 
     props: {
       ticketId: {
@@ -249,7 +247,23 @@
         this.type = type
         this.update()
       },
+
+      bettingCancel(betId) {
+        bettingCancelApi({betId}, ({data}) => {
+          if (data && data.result === 0) {
+            this.update()
+            Global.ui.notification.show('操作成功。')
+          } else {
+            Global.ui.notification.show('操作失败。')
+          }
+        })
+      }
     },
+    mounted() {
+      Vue.$global.bus.$on('cancel-bet', () => {
+        this.update()
+      })
+    }
   }
 </script>
 

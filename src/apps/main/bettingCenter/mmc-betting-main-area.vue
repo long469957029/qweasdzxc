@@ -266,9 +266,8 @@
 </template>
 
 <script>
-  import {formatOpenNum} from 'filters'
   import {pushMmcSimulationBettingApi} from 'api/betting'
-  import {TransferDom, CustomCheckbox} from 'build'
+  import {formatOpenNum, TransferDom, CustomCheckbox} from 'build'
   import MmcOpeningNumGroup from "bettingCenter/mmc-opening-num-group";
   import betRulesConfig from './misc/betRulesConfig'
 

@@ -191,8 +191,7 @@
 </template>
 
 <script>
-  import {formatOpenNum} from 'filters'
-  import {TransferDom} from 'build'
+  import {formatOpenNum, TransferDom} from 'build'
 
   import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
   import BettingRules from './betting-rules'
@@ -411,6 +410,7 @@
             _.each(this.$refs.lotteryGrid.getRows(), (row, index) => {
               const $row = $(row)
               const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
+              let betNumber = previewList[index].bettingNumber
 
               if ($multipleAdd.numRange('instance')) {
                 $multipleAdd.numRange('numChange', previewList[index].multiple)
