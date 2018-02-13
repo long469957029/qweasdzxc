@@ -32,7 +32,8 @@
         ticketName:'',
         validEndDate:'',
         dataIndex:0,  // 红包数据顺序
-        isFirst: true // 登录之后第一次展示完 需要调用父组件下一个弹窗
+        isFirst: true, // 登录之后第一次展示完 需要调用父组件下一个弹窗
+        timeOut: ''
       }
     },
     methods:{
@@ -78,7 +79,8 @@
         this.init()
       },
       startTimer(){
-        setTimeout(() => {
+        clearTimeout(this.timeOut)
+        this.timeOut = setTimeout(() => {
           this.isFirst = false
           this.getApi()
         },20000)
