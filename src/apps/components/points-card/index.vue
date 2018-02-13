@@ -24,7 +24,18 @@
           <div class="points-bottom" v-if="!showBtn" key="show">
             <div class="points-type">投注满5000元即返</div>
             <div class="points-bottom-inner">
-              <div v-if="isShowCountdown">1</div>
+              <div v-if="isShowCountdown" class="points-countdown-wrapper">
+                <span>距开始</span>
+                <countdown class="points-countdown" :time="1000000" :interval="100" tag="div">
+                  <template slot-scope="props">
+                    <div class="countdown-cell">{{props.totalHours}}</div>
+                    :
+                    <div class="countdown-cell">{{props.minutes}}</div>
+                    :
+                    <div class="countdown-cell">{{props.seconds}}</div>
+                  </template>
+                </countdown>
+              </div>
               <div class="points-expire" v-else>
                 {{validStartDate | toTime('MM.DD H:mm')}}-{{validEndDate | toTime('MM.DD H:mm')}}
               </div>
@@ -44,6 +55,8 @@
 </template>
 
 <script>
+  import Countdown from '../countdown/index.vue'
+
   const CARD_TYPE = {
     '1': {
       name: '充值券',
@@ -74,6 +87,10 @@
   export default {
     name: 'points-card',
 
+    components: {
+      Countdown,
+    },
+
     props: [
       'couponType',
       'useNum',
@@ -82,6 +99,7 @@
       'requireIntegral',
       'validStartDate',
       'validEndDate',
+      'leftTime',
     ],
 
     data() {
@@ -98,7 +116,8 @@
         return this.maxNum && this.maxNum - this.useNum === 0
       },
       isShowCountdown() {
-        return !!(this.currentDate > this.validStartDate && moment(this.currentDate).diff(moment(this.validStartDate), 'days'))
+        return true
+        // return !!(this.currentDate > this.validStartDate && moment(this.currentDate).diff(moment(this.validStartDate), 'days'))
       }
     },
 
@@ -192,7 +211,7 @@
 
     .points-top {
       display: flex;
-      padding-top: 15px;
+      padding-top: 13px;
       padding-bottom: 5px;
       position: relative;
       align-items: center;
@@ -216,7 +235,7 @@
     .points-type {
       font-size: 14px;
       margin-bottom: 10px;
-      height: 23px;
+      height: 20px;
     }
 
     .points-card-inner {
@@ -246,6 +265,7 @@
         box-shadow: 0px 1px 38px 0px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
         color: $new-main-deep-color;
+        font-size: 16px;
       }
       .points-bottom-btn {
         display: flex;
@@ -256,6 +276,31 @@
         top: 0;
         left: 10px;
       }
+    }
+
+    .points-countdown-wrapper {
+      display: flex;
+      flex: 1;
+      align-items: center;
+    }
+
+    .points-countdown {
+      display: flex;
+      padding-left: 5px;
+      width: 100px;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .countdown-cell {
+      width: 26px;
+      height: 28px;
+      background-color: #ffffff;
+      border-radius: 3px;
+      font-size: 16px;
+      color: $new-main-deep-color;
+      line-height: 28px;
+      text-align: center;
     }
   }
 </style>

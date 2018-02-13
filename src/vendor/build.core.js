@@ -2,7 +2,6 @@ require('./scripts/modernizr')
 require('./styles/normalize-3.0.2.css')
 require('./styles/jquery.fullPage.css')
 
-// from bower
 const s = require('underscore.string/index')
 
 _.mixin(s.exports())
