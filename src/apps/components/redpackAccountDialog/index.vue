@@ -49,9 +49,7 @@
       }
     },
     computed:{
-      openBtn: function () {
-        return this.redPackType === 0 ? this.openRedPack = !this.openRedPack : this.getAward
-      }
+
     },
     methods:{
       init(){
@@ -78,6 +76,9 @@
       },
       goNext(){
         this.$emit('next')
+      },
+      openBtn(){
+        this.redPackType === 0 ? this.openRedPack = !this.openRedPack : this.getAward
       }
     },
     mounted(){
