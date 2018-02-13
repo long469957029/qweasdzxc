@@ -55,7 +55,7 @@ const OpenAccountManageView = Base.ItemView.extend({
           self.$acAutoReBate.val(_(0).formatDiv(10, { fixed: 1 }))
           self.rebateMin = _(0).formatDiv(10, { fixed: 1 })
           self.rebateMax = _(data.maxRebateBeUse).formatDiv(10, { fixed: 1 })
-          const subRebateRangePrompt = `${'0.0～'}${_(data.maxRebateBeUse > 130 ? 130 : data.maxRebateBeUse).formatDiv(10, { fixed: 1 })}`
+          const subRebateRangePrompt = `${'0～'}${_(data.maxRebateBeUse > 130 ? 130 : data.maxRebateBeUse).formatDiv(10, { fixed: 1 })}`
           self.$acBonusRangePrompt.html(subRebateRangePrompt)
           self._parentView.renderLimit(res.root.quotaList)
         }
