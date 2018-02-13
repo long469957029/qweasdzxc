@@ -222,9 +222,12 @@
                 }else{
                   this.openActivityDialog()
                 }
+              }else{
+                this.$emit('next')
               }
             } else {
               Global.ui.notification.show(data.msg)
+              this.$emit('next')
             }
           }
         )

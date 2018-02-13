@@ -18,11 +18,11 @@ const wallet = [
     name: 'ebet',
     zhName: 'EBET钱包',
   },
-  {
-    id: 3,
-    name: 'bbin',
-    zhName: 'BBIN钱包',
-  },
+  // {
+  //   id: 3,
+  //   name: 'bbin',
+  //   zhName: 'BBIN钱包',
+  // },
   {
     id: 4,
     name: 'pt',
