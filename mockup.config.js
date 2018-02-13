@@ -28,5 +28,6 @@ module.exports = {
     // '/ticket/game/prizeList.json': 'mockup/prizeList.json',
     // '/ticket/game/sublist.json': 'mockup/subList.json',
     '/acct/smscode/val.json': 'mockup/sendval.json',
+    '/info/redpack/openRedpack.json': 'mockup/registerRed.json'
   }
 };

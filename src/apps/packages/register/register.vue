@@ -777,7 +777,7 @@
           vertical-align: top;
           border: none;
           height: 40px;
-          width: 312px;
+          width: 310px;
           &.code-input {
             width: 198px;
           }

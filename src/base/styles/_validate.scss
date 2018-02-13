@@ -32,5 +32,8 @@ input, textarea, select {
   &.filled {
     display: block !important;
     opacity: 1;
+    .sfa{
+      display: block;
+    }
   }
 }

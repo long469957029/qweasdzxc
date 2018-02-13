@@ -55,7 +55,7 @@ const FundPwdView = Base.ItemView.extend({
             // 判断是否绑定银行卡，0：银行卡与密码都未绑定，1：银行卡与密码都已绑定，2：只绑定资金密码，3：只绑定银行卡
             const preStatus = window.Global.cookieCache.get('security')
             let status = 0
-            if (preStatus === 0) {
+            if (_(preStatus).isNull() || preStatus === 0) {
               status = 2
               window.Global.cookieCache.set('security', status)
             } else if (preStatus === 3) {
