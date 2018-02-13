@@ -78,6 +78,7 @@ router.beforeEach((to, from, next) => {
       '/rc',
       '/fh',
       '/act',
+      '/hc',
       '/points',
     ]).each((bcRouter) => {
       if (to.path.indexOf(bcRouter) !== -1) {
