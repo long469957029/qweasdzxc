@@ -16,7 +16,7 @@
   @include border-box();
 
   .record-total {
-    padding: 20px 0 0 0;
+    padding: 10px 0 0 0;
     height: 125px;
     background-color: white;
   }
@@ -71,16 +71,17 @@
   padding: 0 10px;
   font-size: 14px;
   background-color: white !important;
+  margin-top: 10px;
   .recent-title {
     font-size: 12px;
-    padding: 0 10px 0 14px;
+    padding: 0 10px;
     color: $font-dark;
     height: 50px;
     line-height: 50px;
     border-bottom: 1px solid #e6e6e6;
     .recent-title-text {
+      font-size: 12px;
       color: $def-black-color;
-      font-size: 14px;
       float: left;
     }
   }
@@ -157,11 +158,11 @@
   .recent-more {
     display: block;
     cursor: pointer;
-    font-size: 14px;
-    color: $new-inverse-color;
-    margin: 17px auto;
+    font-size: 12px;
+    color: $font-auxiliary-color;
+    //margin: 17px auto;
     text-align: right;
-    text-decoration: underline;
+    //text-decoration: underline;
   }
 
 }

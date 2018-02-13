@@ -363,7 +363,7 @@ const menuConfig = [
   },
 
   {
-    router: '#/ma?type=0',
+    router: 'points',
     name: '积分商城',
     navItemType: navItemType.outerLink,
     className: 'js-nav-mall nav-right',

@@ -1,12 +1,13 @@
-import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import dashboardRouter from 'dashboard/router'
-import bettingCenterRouter from 'bettingCenter/router'
-import userCenterRouter from 'userCenter/router'
-import activityRouter from 'activity/router'
-// import vipCenterRouter from 'vipCenter/router'
-import activeCenterRouter from 'activeCenter/router'
+import dashboardRouter from './dashboard/router'
+import bettingCenterRouter from './bettingCenter/router'
+import userCenterRouter from './userCenter/router'
+import activityRouter from './activity/router'
+
+import activeCenterRouter from './activeCenter/router'
+import pointsMallRouter from './points-mall/router'
+
 // import realCenterRouter from 'realCenter/router'
 // import slotCenterRouter from 'slotCenter/router'
 // import fishCenterRouter from 'fishCenter/router'
@@ -21,6 +22,7 @@ import mallCenterRouter from 'mallCenter/router'
 import analysisCenterRouter from './analysisCenter/router'
 import mobileBetCenterRouter from './mobileBetCenter/router'
 import aboutUsRouter from './aboutUs/router'
+import helpRouter from './helpCenter/router'
 
 Vue.use(VueRouter)
 
@@ -31,6 +33,7 @@ export const install = () => {
   return new VueRouter({
     // mode: 'history',
     routes: [
+      ...pointsMallRouter,
       ...bettingCenterRouter,
       ...userCenterRouter,
       // ...vipCenterRouter,
@@ -49,7 +52,8 @@ export const install = () => {
       ...aboutUsRouter,
       // 活动
       ...activityRouter,
-      ...gameCenterRouter
+      ...gameCenterRouter,
+      ...helpRouter
     ],
   })
 }

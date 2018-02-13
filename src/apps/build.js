@@ -1,9 +1,14 @@
+//components
 import StaticGrid from './components/static-grid'
 import SlotStaticGrid from './components/static-grid/slot-index'
 import AnimatedInteger from './components/animated-integer'
 import CustomCheckbox from './components/custom-checkbox'
 import XDialog from './components/x-dialog'
 import Popover from './components/popover'
+import Countdown from './components/countdown/index.vue'
+import PointsCard from './components/points-card'
+
+//directives
 import TransferDom from './directives/transfer-dom'
 
 //plugins
@@ -15,13 +20,17 @@ import twoSideType from './filters/two-side-type'
 import formatOpenNum from './filters/format-open-num'
 
 export {
-  TransferDom,
   AnimatedInteger,
   CustomCheckbox,
   StaticGrid,
+  PointsCard,
   SlotStaticGrid,
   XDialog,
   Popover,
+  Countdown,
+
+  TransferDom,
+
   BusPlugin,
 
   formatOpenNum,

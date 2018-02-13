@@ -68,7 +68,19 @@ router.beforeEach((to, from, next) => {
   $('html').animate({scrollTop: 0})
   if (store.getters.checkPermission(to.path)) {
     let isVue = false
-    _(['/bc', '/analysis', '/i', '/aa', '/mb', '/au', '/rc', '/fh', '/act']).each((bcRouter) => {
+    _([
+      '/bc',
+      '/analysis',
+      '/i',
+      '/aa',
+      '/mb',
+      '/au',
+      '/rc',
+      '/fh',
+      '/act',
+      '/hc',
+      '/points',
+    ]).each((bcRouter) => {
       if (to.path.indexOf(bcRouter) !== -1) {
         isVue = true
       }

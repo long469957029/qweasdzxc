@@ -17,6 +17,7 @@
     "jquery-ui": "^1.12.1",
     "mathjs": "^3.20.1",
     "moment": "^2.20.1",
+    "moment-duration-format": "^2.2.1",
     "underscore": "~1.8.3",
     "underscore.string": "~3.2.2",
     "velocity-animate": "^1.5.1",
@@ -35,6 +36,7 @@
     "sprite:normal": "gulp build.sprite --target sprites",
     "sprite:mmc": "gulp build.sprite --target spritesMMC",
     "sprite:bc": "gulp build.sprite --target spritesBC",
+    "sprite:pt": "gulp build.sprite --target spritesPT",
     "lint": "./node_modules/eslint/bin/eslint.js src/ --fix"
   },
   "lint-staged": {

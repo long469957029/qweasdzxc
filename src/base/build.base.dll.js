@@ -42,6 +42,9 @@ require('./scripts/bootstrap')
 window.moment = require('moment')
 
 window.moment.locale('zh-cn')
+const momentDurationFormatSetup = require('moment-duration-format');
+
+momentDurationFormatSetup(window.moment);
 
 require('../vendor/build.core')
 

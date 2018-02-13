@@ -66,6 +66,7 @@ const FundView = Base.ItemView.extend({
       const html = []
       const createDate = _(record.date).toTime()
       const recordAmount = _(record.amount).formatDiv(10000, {fixed: 2})
+      const recordRecord = record.remark
       if (record.type === 1) {
         html.push('<div class="js-sideBar-record-item operation-record-item">')
         html.push('<div class="record-action">充值</div>')
@@ -94,7 +95,8 @@ const FundView = Base.ItemView.extend({
           html.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">未到账</span><span class="fc-rc-status-line-unPass">-</span></span>')
           html.push('<span class="fc-rc-status"><span class="fc-rc-status-button">已加款</span><span class="fc-rc-status-img"></span></span></div>')
         }
-        html.push('</div><div class="clearfix"></div></div></div>')
+        html.push('</div><div class="clearfix"></div>')
+        html.push(`<div class="record-remark ${(recordRecord === null)?'hidden':''}">备注：${recordRecord}</div><div class="clearfix"></div></div></div>`)
         itemHtml.push(html.join(''))
       } else if (record.type === 2) {
         html.push('<div class="js-sideBar-record-item operation-record-item">')
@@ -129,7 +131,8 @@ const FundView = Base.ItemView.extend({
           html.push('<span class="fc-rc-status active"><span class="fc-rc-status-button">已通过</span><span class="fc-rc-status-line-unPass">-</span></span>')
           html.push('<span class="fc-rc-status"><span class="fc-rc-status-button-unPass">出款失败</span><span class="fc-rc-status-img"></span></span></div>')
         }
-        html.push('</div><div class="clearfix"></div></div>')
+        html.push('</div><div class="clearfix"></div>')
+        html.push(`<div class="record-remark ${(recordRecord === null)?'hidden':''}">备注：${recordRecord}</div><div class="clearfix"></div></div>`)
         itemHtml.push(html.join(''))
       } else if (record.type === 3) {
         html.push('<div class="js-sideBar-record-item operation-record-item">')
@@ -147,7 +150,8 @@ const FundView = Base.ItemView.extend({
         } else if (record.status === 2) {
           html.push('<span class="fault-img"></span><span class="fault-text">转账失败</span>')
         }
-        html.push('</div><div class="clearfix"></div></div>')
+        html.push('</div><div class="clearfix"></div>')
+        html.push(`<div class="record-remark ${(recordRecord === null)?'hidden':''}">备注：${recordRecord}</div><div class="clearfix"></div></div>`)
         itemHtml.push(html.join(''))
       }
     })
