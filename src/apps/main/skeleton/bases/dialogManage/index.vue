@@ -5,7 +5,7 @@
     <keep-alive>
       <ticket-vouchers v-if="showIndex === 3" :key="showIndex" @next="showNext"></ticket-vouchers>
     </keep-alive>
-    <novice-package v-if="showIndex ===4" :key="showIndex" @next="showNext"></novice-package>
+    <novice-package v-if="showIndex === 4" :key="showIndex" :need-call-back="true" @next="showNext"></novice-package>
 
   </div>
 </template>

@@ -180,7 +180,12 @@
       }
     },
 
-    props: {},
+    props: {
+      needCallBack:{
+        type: Boolean,
+        default: false
+      }
+    },
 
     components: {},
 
@@ -216,7 +221,7 @@
                 const hasShow = this.localStorage.get(this.userId + 'NovicePackageActivity')
                 if (!hasShow) {
                   /** valid 是否首次登录,首次登录会自动弹出活动界面 */
-                 this. localStorage.set(this.userId + 'NovicePackageActivity', true)
+                  this.localStorage.set(this.userId + 'NovicePackageActivity', true)
                   this.openActivityDialog()
                 }
               }

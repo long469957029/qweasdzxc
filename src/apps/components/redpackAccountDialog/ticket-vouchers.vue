@@ -9,7 +9,7 @@
         <div class="text-right">
           <div class="text-center name">{{ticketName}}</div>
           <div class="text-center num"><span class="money">{{amount}}</span>元</div>
-          <div class="text-center time">有效期:2018-09-01 0:00:00</div>
+          <div class="text-center time">有效期:{{validEndDate}}</div>
         </div>
       </div>
       <div class="des">您可在个人中心> 优惠券页面查看代金券详情</div>
@@ -30,6 +30,8 @@
         dataList:[],
         amount:0,
         ticketName:'',
+        validEndDate:'',
+        dataIndex:0,  // 红包数据顺序
         isFirst: true // 登录之后第一次展示完 需要调用父组件下一个弹窗
       }
     },
@@ -41,7 +43,14 @@
           })
             .on('hidden.modal', () => {
               this.showDailog = false
-              this.parentNext()
+              this.dataIndex += 1
+              if(this.dataIndex < this.dataList.length){
+                this.showListNext()
+              }else{
+                this.dataIndex = 0
+                this.dataList = []
+                this.parentNext()
+              }
             })
         })
       },
@@ -50,20 +59,23 @@
           ({data}) => {
             if(data && data.result === 0 && !_(data.root.dataList).isEmpty()){
               this.dataList = data.root.dataList
-              this.amount = this.dataList[0].amount
-              this.ticketName = this.dataList[0].ticketName
-              this.showDailog = true
-              this.init()
+              this.showListNext()
             }else{
               this.parentNext()
             }
-            this.startTimer()
           },
           ({data}) => {
-            this.startTimer()
             this.parentNext()
           }
         )
+      },
+      showListNext(){  // 显示数据列表中的内容
+        this.amount = _(this.dataList[this.dataIndex].amount).convert2yuan()
+        this.ticketId = this.dataList[this.dataIndex].ticketId
+        this.ticketName = this.dataList[this.dataIndex].ticketName
+        this.validEndDate = _(this.dataList[this.dataIndex].validEndDate).toTime()
+        this.showDailog = true
+        this.init()
       },
       startTimer(){
         setTimeout(() => {
@@ -75,6 +87,7 @@
         if(this.isFirst){
           this.$emit('next')
         }
+        this.startTimer()
       },
     },
     mounted(){
@@ -112,7 +125,7 @@
       left: 83px;
     }
     .text-right{
-      width: 157px;
+      width: 158px;
       float: right;
       position: absolute;
       top: 162px;
@@ -134,6 +147,7 @@
       font-size: 10px;
       color: rgba(178, 79, 59, 0.6);
       margin-top: 5px;
+      transform: scale(.83);
     }
     .des{
       width: 241px;
