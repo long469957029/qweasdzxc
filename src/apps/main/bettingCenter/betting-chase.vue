@@ -149,8 +149,7 @@
 </template>
 
 <script>
-  import {StaticGrid} from 'build'
-  import RadioGroup from 'com/RadioGroup'
+  import {RadioGroup, StaticGrid} from 'build'
 
   export default {
     name: "betting-chase",
