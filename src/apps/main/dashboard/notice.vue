@@ -29,7 +29,7 @@
                   <div class="detail" v-html="item.content"></div>
                 </div>
               </transition-group>
-            <div class="page">
+            <div class="page" v-if="noticeList.length > 1">
               <a class="page-btn" @click="goToPage('prev')">&lt;</a>
               <span :class="[{active: detailPage === index},'page-btn-sm']" v-for="(item, index) in noticeList" @click="goToPage(index)"></span>
               <a class="page-btn" @click="goToPage('next')">&gt;</a>

@@ -104,6 +104,10 @@ const BettingRecordsView = SearchGrid.extend({
         $('.js-uc-betDetail-betNum').popover('hide')
       }
     }, false)
+
+    Vue.$global.bus.$on('cancel-bet', () => {
+      this._getGridXhr()
+    })
   },
 
   renderGrid(gridData) {
