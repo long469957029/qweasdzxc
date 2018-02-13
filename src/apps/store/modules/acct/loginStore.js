@@ -1,4 +1,5 @@
 import permissions from 'apps/main/directAccess'
+import avatarConfig from'userCenter/misc/avatarConfig'
 import login from 'api/login'
 
 const initState = () => {
@@ -59,6 +60,9 @@ const initState = () => {
 
 // getters
 const getters = {
+  userAvatar: (state) => {
+    return avatarConfig.get(_(state.headIcon).toString()).logo
+  },
   getLoginStatus: (state) => {
     return state.userId > 0
   },

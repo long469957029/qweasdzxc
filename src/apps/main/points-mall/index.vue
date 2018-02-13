@@ -1,13 +1,60 @@
 <template>
-  <div class="points-mall">12</div>
+  <div class="points-mall">
+    <div class="points-top-main-wrapper">
+      <div class="points-top-main">
+        <div class="points-top-inner">
+          <points-top></points-top>
+          <points-nav></points-nav>
+        </div>
+      </div>
+    </div>
+    <div class="points-bottom">
+      <div class="points-bottom-inner">
+        <router-view></router-view>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+
+  import PointsTop from './points-top'
+  import PointsNav from './points-nav'
+
   export default {
-    name: "points-mall"
+    name: "points-mall",
+
+    components: {
+      PointsTop,
+      PointsNav,
+    }
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  $total-width: 1200px;
+
+  .points-mall {
+    /*background: url(./misc/background.jpg);*/
+    color: $def-black-color;
+    .points-top-main-wrapper {
+      background: url(./misc/bg-top.png);
+    }
+    .points-top-main {
+      background: url(./misc/bg-top-texture.png);
+    }
+    .points-top-inner {
+      width: $total-width;
+      margin: 0 auto;
+    }
+    .points-bottom-inner {
+      width: $total-width;
+      margin: 0 auto;
+    }
+    .points-bottom {
+      background: url(./misc/bg-bottom.jpg);
+      min-height: 500px;
+    }
+  }
 
 </style>
