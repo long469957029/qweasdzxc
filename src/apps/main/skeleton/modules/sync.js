@@ -148,10 +148,10 @@ const SyncModule = Base.Module.extend({
           // // 关闭oauth轮询监听
           // window.Global.m.oauth.stop()
           window.store.commit(types.USER_CLEAR)
-          if (!window.app.$store.getters.loginDialogStatus) {
+          if (!window.store.getters.loginDialogStatus) {
             Global.ui.notification.show('您的账户已登出,请重新登录！', {
               event: function () {
-                window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+                window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
                 // window.location.href = ''
               },
               countDown: 3000
@@ -337,8 +337,8 @@ const SyncModule = Base.Module.extend({
   },
   checkTestAccountRequest(ajaxOptions){
     if (window.store.state.components.requestFormTestServer) {//
-      const changeTokenUrl = _.findWhere(needGetOfficialDataUrlConfig.getAll(), {
-        url: ajaxOptions.ajaxUrl,
+      const changeTokenUrl = _.findWhere(needGetOfficialDataUrlConfig.getAll(), (item)=>{
+        return item === ajaxOptions.url
       })
       if (changeTokenUrl !== undefined) { //试玩账户，部分接口需要获取正式数据，配置通用token
         ajaxOptions.data = _.extend({

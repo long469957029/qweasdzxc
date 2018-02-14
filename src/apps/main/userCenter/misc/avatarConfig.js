@@ -102,6 +102,11 @@ const avatars = [
     logo: require('base/images/avatar/avatar-20.png'),
     className: 'avatars20',
   },
+  {
+    id: undefined,
+    logo: require('base/images/avatar/avatar-20.png'),
+    className: 'avatars20',
+  },
 ]
 
 module.exports = {

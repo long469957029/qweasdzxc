@@ -150,10 +150,12 @@
       showFreeTrial(){
 
         loginApi.testUserReg((data)=>{
-          if(data.result===0){
+          if(data.data && data.data.result===0){
+            window.Global.cookieCache.set('token', data.data.root.token, 160)
+            window.Global.cookieCache.set('loginState', true)
             this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
             this.setRequestFromTestServer()
-            window.store.commit(types.USER_LOGIN_SUCCESS, data.root || {})
+            window.store.commit(types.USER_LOGIN_SUCCESS, data.data.root || {})
           }
         })
 
