@@ -15,6 +15,8 @@ const initState = () => {
     gameDownLoadId: '',
     openNovicePackage: false,
     userIsVip: true,
+    openDeskTopMsg:false,
+    deskTopData:{}
     // openNovicePackageType: '',
   }
 }
@@ -51,9 +53,12 @@ const getters = {
   userIsVip: (state) => {
     return state.userIsVip
   },
-  // openNovicePackageType: (state) => {
-  //   return state.openNovicePackageType
-  // }
+  openDeskTopMsgStatus: (state) => {
+    return state.openDeskTopMsg
+  },
+  openDeskTopData: (state) => {
+    return state.deskTopData
+  }
 }
 
 // actions
@@ -97,6 +102,10 @@ const mutations = {
       state.userIsVip = false
     }
   },
+  [types.TOGGLE_DESKTOP_MESSAGE](state, data) {
+    state.openDeskTopMsg = data.status
+    state.deskTopData = data.dataInfo
+  }
 }
 
 export default {
