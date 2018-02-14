@@ -38,14 +38,15 @@ const getCouponListApi = ({couponType, couponStatus, sortFlag, sortType, pageSiz
  * @param fail
  * @returns {*|Promise<T>}
  */
-const getGiftListApi = ({
-                          itemType,
-                          itemStatus,
-                          sortFlag,
-                          sortType,
-                          pageSize = 12,
-                          pageIndex = 0,
-                        }, then, fail) => {
+const getGiftListApi = (
+  {
+    itemType,
+    itemStatus,
+    sortFlag,
+    sortType,
+    pageSize = 12,
+    pageIndex = 0,
+  }, then, fail) => {
   return $http({
     url: '/mall/gift/giftList.json',
     data: {

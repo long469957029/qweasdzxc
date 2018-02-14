@@ -66,11 +66,38 @@
             获奖名单
           </div>
           <div class="lottery-divider"></div>
-          <div class="lottery-list-main">
-            <div class="lottery-list-main-inner">
-              <span class="lottery-list-left">恭喜 ***ris获得</span>
-              <span class="lottery-list-right"><span class="lottery-list-right-val">10元</span>现金券</span>
+          <transition-group class="lottery-list-main" name="ani-scroll" tag="div">
+            <div class="lottery-list-main-inner" v-for="user in recentUser" :key="user.uid">
+              <span class="lottery-list-left">恭喜 {{user.userName}}获得</span>
+              <span class="lottery-list-right"><span class="lottery-list-right-val">10元</span>{{user.bonusName}}获得</span>
             </div>
+          </transition-group>
+        </div>
+      </div>
+
+      <div class="lucky-panel">
+        <div class="lucky-title">
+          <span class="sfa sfa-pt-star"></span>
+          当前幸运值：<span class="lucky-points">56</span>
+        </div>
+        <div class="lucky-main">
+          <div class="lucky-cell" v-for="(chest, index) in chestList" :key="index">
+            <div class="cell-probability">{{chest.rate | formatDiv(10)}}%<br />概率</div>
+            <div class="lucky-prize-wrapper">
+              <div class="lucky-prize">
+                <div class="lucky-prize-inner">
+                  <div class="sfa sfa-lucky-currency">
+                    <span class="lucky-type">现金券</span>
+                    <span class="lucky-val">50</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="lucky-prize-name">积分{{chest.lucky}}</div>
+            <button class="lucky-exchange-btn btn">
+              <span class="sfa sfa-pt-lucky-star-points"></span>
+              <span class="lucky-exchange-title">10 幸运值兑换</span>
+            </button>
           </div>
         </div>
       </div>
@@ -103,15 +130,19 @@
         current: 2,
 
 
+        //夺宝列表
         awards: [],
-        cashRob: [],
-        chest: [],
+        cashRob: 0,
+        //幸运抽奖
+        chestList: [],
         integralRob: 0,
         myLucky: 9,
+        //获奖用户
         recentUser: [],
         robLucky: 0,
 
         timer: null,
+        winnerTimer: null,
       }
     },
 
@@ -126,25 +157,41 @@
 
           _.chain(this.awards).without(currentAward).sample().value().selected = true
         }, 1000)
+      },
+
+      winnerRoll() {
+        this.winnerTimer = setInterval(() => {
+          if (this.recentUser.length) {
+            const currentAward = this.recentUser.shift()
+            _.delay(() => {
+              this.recentUser.push(currentAward)
+            }, 2000)
+          }
+        }, 3000)
       }
+
     },
 
     mounted() {
       this.normalRoll()
+      this.winnerRoll()
       getTaskListApi(({data}) => {
         if (data && data.result === 0) {
-          this.awards = data.root.awards
+          this.awards = _.initial(data.root.awards, 1)
           this.awards.forEach((award) => {
             this.$set(award, 'selected', false)
           })
           this.cashRob = data.root.cashRob
-          this.chest = data.root.chest
+          this.chestList = data.root.chest
           this.integralRob = data.root.integralRob
           this.myLucky = data.root.myLucky
-          this.recentUser = data.root.recentUser
+          this.recentUser = _.map(data.root.recentUser, (user) => {
+            return {
+              uid: _.uniqueId(),
+              ...user
+            }
+          })
           this.robLucky = data.root.robLucky
-        } else {
-
         }
       })
     }
@@ -244,6 +291,7 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    height: 520px;
   }
 
   .task-cell-wrapper {
@@ -297,7 +345,10 @@
     margin: 0 auto;
   }
 
-  .lottery-list-main {}
+  .lottery-list-main {
+    height: 419px;
+    overflow: hidden;
+  }
 
   .lottery-list-main-inner {
     display: flex;
@@ -319,6 +370,39 @@
     color: #cd6d6d;
   }
 
+
+  .points-btn {
+    width: 150px;
+    height: 50px;
+    background-color: #e5a642;
+    box-shadow: 0px 2px 0px 0px    #a37731;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+
+  .currency-btn {
+    width: 150px;
+    height: 50px;
+    background-color: #14b1bb;
+    box-shadow: 0px 2px 0px 0px    #009097;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .task-button {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+
+  .task-tip {
+    font-size: 14px;
+    color: #666666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
 
 
@@ -377,6 +461,14 @@
     border-radius: 3px;
     box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
     transition: left 0.15s ease-out;
+  }
+
+  .lottery-list-main-inner {
+    transition: all 2s;
+  }
+
+  .ani-scroll-leave-active {
+    margin-top: -50px;
   }
 
 </style>
