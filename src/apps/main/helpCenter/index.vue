@@ -19,7 +19,7 @@
             <li :class="{active: currentView === 'DrawingProcess'}" @click="toggleTabs(DrawingProcess)">提款流程</li>
             <li :class="{active: currentView === 'LotteryProcess'}" @click="toggleTabs(LotteryProcess)">购彩流程</li>
             <li :class="{active: currentView === 'DwFAQ'}" @click="toggleTabs(DwFAQ)">存提款FAQ</li>
-            <li :class="{active: currentView === 'LotteryFAG'}" @click="toggleTabs(LotteryFAG)">彩票投注FAQ</li>
+            <li :class="{active: currentView === 'lotteryFAQ'}" @click="toggleTabs(lotteryFAQ)">彩票投注FAQ</li>
             <li :class="{active: currentView === 'DnsCourse'}" @click="toggleTabs(DnsCourse)">防DNS劫持教程</li>
           </ul>
         </div>
@@ -32,7 +32,7 @@
             <li :class="{active: currentView === 'SscLottery'}" @click="toggleTabs(SscLottery)">时时彩玩法</li>
             <li :class="{active: currentView === 'SyxwLottery'}" @click="toggleTabs(SyxwLottery)">11选5玩法</li>
             <li :class="{active: currentView === 'DpLottery'}" @click="toggleTabs(DpLottery)">3D/低频彩玩法</li>
-            <li :class="{active: currentView === 'PksLottery'}" @click="toggleTabs(PksLottery)">PK拾玩法</li>
+            <li :class="{active: currentView === 'Pk10Lottery'}" @click="toggleTabs(Pk10Lottery)">PK10玩法</li>
             <li :class="{active: currentView === 'KsLottery'}" @click="toggleTabs(KsLottery)">快三玩法</li>
           </ul>
         </div>
@@ -59,12 +59,12 @@
   import DrawingProcess from "./drawingProcess";//提款流程
   import LotteryProcess from "./lotteryProcess";//购彩流程
   import DwFAQ from "./dwFAQ";//存提款FAQ
-  import LotteryFAG from "./lotteryFAG";//彩票投注FAQ
+  import lotteryFAQ from "./lotteryFAQ";//彩票投注FAQ
   import DnsCourse from "./dnsCourse";//防DNS劫持教程
   import SscLottery from "./sscLottery";//时时彩玩法
   import SyxwLottery from "./syxwLottery";//11选5玩法
   import DpLottery from "./dpLottery";//3D/低频彩玩法
-  import PksLottery from "./pksLottery";//PK拾玩法
+  import Pk10Lottery from "./Pk10Lottery";//PK拾玩法
   import KsLottery from "./ksLottery";//快三玩法
   import SscPlayer from "./sscPlayer";//时时彩玩法
   import Pk10Player from "./pk10Player";//PK10玩法
@@ -79,12 +79,12 @@
         DrawingProcess: 'DrawingProcess',
         LotteryProcess: 'LotteryProcess',
         DwFAQ: 'DwFAQ',
-        LotteryFAG: 'LotteryFAG',
+        lotteryFAQ: 'lotteryFAQ',
         DnsCourse: 'DnsCourse',
         SscLottery: 'SscLottery',
         SyxwLottery: 'SyxwLottery',
         DpLottery: 'DpLottery',
-        PksLottery: 'PksLottery',
+        Pk10Lottery: 'Pk10Lottery',
         KsLottery: 'KsLottery',
         SscPlayer: 'SscPlayer',
         Pk10Player: 'Pk10Player',
@@ -101,12 +101,12 @@
       DrawingProcess,
       LotteryProcess,
       DwFAQ,
-      LotteryFAG,
+      lotteryFAQ,
       DnsCourse,
       SscLottery,
       SyxwLottery,
       DpLottery,
-      PksLottery,
+      Pk10Lottery,
       KsLottery,
       SscPlayer,
       Pk10Player,
