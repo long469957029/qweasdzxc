@@ -71,6 +71,8 @@
   import avatarConf from 'userCenter/misc/avatarConfig'
   import fundApi from 'api/fund'
   import {getAccountSafeApi} from 'api/userCenter'
+  import loginApi from 'api/login'
+
   export default{
     name: 'main-header',
 
@@ -146,7 +148,19 @@
         this.$store.commit(types.TOGGLE_LOGIN_LAUNCHER, true)
       },
       showFreeTrial(){
-        this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
+
+        loginApi.testUserReg((data)=>{
+          if(data.result===0){
+            this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
+            this.setRequestFromTestServer()
+            window.store.commit(types.USER_LOGIN_SUCCESS, data.root || {})
+          }
+        })
+
+
+      },
+      setRequestFromTestServer(){
+        window.store.commit(types.SET_REQUEST_FROM_TEST_SERVER,{requestFormTestServer:true})
       },
       renderMsgList(model){
         this.newRowCount = model.get('newRowCount')

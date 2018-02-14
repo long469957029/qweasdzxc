@@ -16,6 +16,9 @@ const initState = () => {
     openNovicePackage: false,
     userIsVip: true,
     // openNovicePackageType: '',
+    requestFormTestServer: false,
+    testServerPrefix: 'testv3',
+    universalToken: '000-000-000-000-player125',
   }
 }
 
@@ -96,6 +99,9 @@ const mutations = {
     } else if (data === 0) {
       state.userIsVip = false
     }
+  },
+  [types.SET_REQUEST_FROM_TEST_SERVER](state, data) {
+    state.requestFormTestServer = data.requestFormTestServer
   },
 }
 
