@@ -155,7 +155,7 @@
 <script>
   import activityInfo from 'api/activity'
   export default{
-    name: 'index',
+    name: 'novice-package',
 
     data () {
       return {
@@ -181,7 +181,7 @@
     },
 
     props: {
-      needCallBack:{
+      needCallBack:{   // 用户首次登录的时候  关闭弹窗 需要回调父级
         type: Boolean,
         default: false
       }
@@ -194,17 +194,9 @@
     },
 
     watch: {
-      novicePackageStatus:function () {
-        if(this.novicePackageStatus){
-          this.openActivityDialog()
-        }
-      }
     },
 
     computed: {
-      ...mapGetters([
-        'novicePackageStatus'
-      ])
     },
 
     filters: {},
@@ -218,15 +210,24 @@
               if (data.root.status === 1 || data.root.status === 0) {
                 // 活动相关，新手活动首次登录
                 this.data = data
-                const hasShow = this.localStorage.get(this.userId + 'NovicePackageActivity')
-                if (!hasShow) {
-                  /** valid 是否首次登录,首次登录会自动弹出活动界面 */
-                  this.localStorage.set(this.userId + 'NovicePackageActivity', true)
+                if(this.needCallBack){
+                  const hasShow = this.localStorage.get(this.userId + 'NovicePackageActivity')
+                  if (!hasShow) {
+                    /** valid 是否首次登录,首次登录会自动弹出活动界面 */
+                    this.localStorage.set(this.userId + 'NovicePackageActivity', true)
+                    this.openActivityDialog()
+                  }else{
+                    this.$emit('next')
+                  }
+                }else{
                   this.openActivityDialog()
                 }
+              }else{
+                this.$emit('next')
               }
             } else {
               Global.ui.notification.show(data.msg)
+              this.$emit('next')
             }
           }
         )
@@ -238,6 +239,9 @@
           })
             .on('hidden.modal', () => {
               this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, false)
+              if(this.needCallBack){
+                this.$emit('next')
+              }
             })
         })
         this.initActivityData(this.data.root)
