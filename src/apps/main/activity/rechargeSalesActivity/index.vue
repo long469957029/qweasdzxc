@@ -84,7 +84,7 @@
       activityInfo.getRechargeSalesInfo(
         ({data}) => {
           if (data && data.result === 0) {
-              if(!data.root.available){
+              if(data.root.available){
                 this.salesList = data.root.itemList
                 this.fromTime = _(data.root.fromDate).toDate('YYYY年M月D日')
                 this.endTime = _(data.root.endDate).toDate('YYYY年M月D日')
