@@ -23,7 +23,7 @@
           <div class="title">温馨提示</div>
           <div class="info">
             <div>第<span class="text-prominent">{{oldPlanId}}</span>期已结束</div>
-            <div>当前为<span class="text-prominent">{{oldPlanId}}</span>期</div>
+            <div>当前为<span class="text-prominent">{{newPlanId}}</span>期</div>
             <div>投注时请注意期号！</div>
           </div>
         </div>
@@ -48,10 +48,35 @@
         newPlanId:''
       }
     },
+    watch: {
+      openDeskTopMsgStatus:function () {
+        if(this.openDeskTopMsgStatus){
+          if(this.openDeskTopData.type === 4){
+            this.showDesktop()
+          }else{
+
+          }
+        }
+      }
+    },
     computed:{
       ...mapGetters([
+        'openDeskTopMsgStatus',
         'openDeskTopData'
       ])
+    },
+    methods:{
+      showDesktop(){
+        this.oldPlanId = this.openDeskTopData.oldPlanId
+        this.newPlanId = this.openDeskTopData.newPlanId
+        this.showTicketMsg = true
+        setTimeout(() => {
+          this.showTicketMsg = false
+          if(!showMsg){
+            this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE,{show:false,dataInfo:{}})
+          }
+        },2000)
+      }
     }
   }
 </script>

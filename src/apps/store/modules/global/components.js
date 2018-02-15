@@ -103,7 +103,7 @@ const mutations = {
     }
   },
   [types.TOGGLE_DESKTOP_MESSAGE](state, data) {
-    state.openDeskTopMsg = data.status
+    state.openDeskTopMsg = data.show
     state.deskTopData = data.dataInfo
   }
 }
