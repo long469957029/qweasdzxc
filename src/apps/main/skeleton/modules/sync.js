@@ -1,6 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import urlList from './noLoginSync'
+import needGetOfficialDataUrlConfig from './needGetOfficialDataUrlConfig'
 
 const CancelToken = axios.CancelToken
 
@@ -11,6 +12,7 @@ const SyncModule = Base.Module.extend({
   xhrList: [],
 
   login: true,
+
 
   initialize() {
     this.initAjax()
@@ -76,16 +78,16 @@ const SyncModule = Base.Module.extend({
       }
 
       // ajaxOptions.url = 'http://forehead.5x5x.com' + ajaxOptions.url;
-
+      const realToken = this.checkToken(ajaxOptions.url)
+      this.checkTestAccountRequest(ajaxOptions)
       if ((_.isEmpty(ajaxOptions.data) || _.isObject(ajaxOptions.data)) && _.isEmpty(ajaxOptions.files) && !ajaxOptions.withoutToken) {
-        const realToken = this.checkToken(ajaxOptions.url)
         ajaxOptions.data = _.extend({
           token: realToken,
         }, ajaxOptions.data)
       } else if (!ajaxOptions.withoutToken) {
-        const realToken = this.checkToken(ajaxOptions.url)
         ajaxOptions.url += `?token=${realToken}` || ''
       }
+
 
       if (ajaxOptions.localCache && ajaxOptions.cacheName) {
         sign = Global.localCache.get(ajaxOptions.cacheName)
@@ -146,10 +148,10 @@ const SyncModule = Base.Module.extend({
           // // 关闭oauth轮询监听
           // window.Global.m.oauth.stop()
           window.store.commit(types.USER_CLEAR)
-          if (!window.app.$store.getters.loginDialogStatus) {
+          if (!window.store.getters.loginDialogStatus) {
             Global.ui.notification.show('您的账户已登出,请重新登录！', {
               event: function () {
-                window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+                window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
                 // window.location.href = ''
               },
               countDown: 3000
@@ -236,15 +238,16 @@ const SyncModule = Base.Module.extend({
         // executor 函数接收一个 cancel 函数作为参数
         cancel = c
       }))
-
+      const realToken = this.checkToken(ajaxOptions.url)
+      this.checkTestAccountRequest(ajaxOptions)
       if ((_.isEmpty(ajaxOptions.data) || _.isObject(ajaxOptions.data)) && _.isEmpty(ajaxOptions.files) && !ajaxOptions.withoutToken) {
-        const realToken = this.checkToken(ajaxOptions.url)
         ajaxOptions.data = _.extend({
           token: realToken,
         }, ajaxOptions.data)
+
       } else if (!ajaxOptions.withoutToken) {
-        const realToken = this.checkToken(ajaxOptions.url)
         ajaxOptions.url += `?token=${realToken}` || ''
+
       }
 
       if (ajaxOptions.localCache && ajaxOptions.cacheName) {
@@ -321,15 +324,32 @@ const SyncModule = Base.Module.extend({
   },
 
   checkToken(ajaxUrl) {
-    const noLoginUrl = _(urlList.getAll()).findWhere({
-      url: ajaxUrl,
-    })
     let token = Global.cookieCache.get('token')
-    if (noLoginUrl !== undefined && token === null) { // 如果抓不到token,使用固定临时token
-      token = '000-000-000-000-player125'
+    if (token === null) {// 如果抓不到token,判断是否为不需要登录的接口，如果是，则使用固定临时token
+      const noLoginUrl = _(urlList.getAll()).findWhere({
+        url: ajaxUrl,
+      })
+      if (noLoginUrl !== undefined) {
+        token = window.store.state.components.universalToken
+      }
     }
     return token
   },
+  checkTestAccountRequest(ajaxOptions){
+    if (window.store.state.components.requestFormTestServer) {//
+      const changeTokenUrl = _.findWhere(needGetOfficialDataUrlConfig.getAll(), (item)=>{
+        return item === ajaxOptions.url
+      })
+      if (changeTokenUrl !== undefined) { //试玩账户，部分接口需要获取正式数据，配置通用token
+        ajaxOptions.data = _.extend({
+          token: window.store.state.components.universalToken,
+        }, ajaxOptions.data)
+      }else{
+        let host = _.getDomainWithNewPrefix(window.store.state.components.testServerPrefix)
+        ajaxOptions.url = host + ajaxOptions.url
+      }
+    }
+  }
 })
 
 export default SyncModule

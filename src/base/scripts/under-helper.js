@@ -1,6 +1,6 @@
 const core = require('mathjs/core')
 
-import { repeat, fill, chunk, cloneDeep, forEachRight, remove, slice } from 'lodash'
+import {repeat, fill, chunk, cloneDeep, forEachRight, remove, slice} from 'lodash'
 
 const math = core.create()
 
@@ -264,6 +264,16 @@ _.mixin({
     }
     return params
   },
+  getDomainWithNewPrefix(prefix){
+    let hostName = window.location.hostname
+    let port = window.location.port
+    let hostNameAttrArr = hostName.split('.')
+    let newHostNameAttrArr = []
+    newHostNameAttrArr.unshift(hostNameAttrArr.pop())//+':'+port
+    newHostNameAttrArr.unshift(hostNameAttrArr.pop())
+    newHostNameAttrArr.unshift(window.location.protocol+'//'+prefix)
+    return newHostNameAttrArr.join('.')
+  },
 
   // config文件用方法
   getConfig(config, index) {
@@ -330,7 +340,7 @@ _.mixin({
    */
   validateNumber(keyCode) {
     // 数字
-    if (keyCode >= 48 && keyCode <= 57 ) return true
+    if (keyCode >= 48 && keyCode <= 57) return true
     // 小数字键盘
     if (keyCode >= 96 && keyCode <= 105) return true
     // Backspace, del, 左右方向键
