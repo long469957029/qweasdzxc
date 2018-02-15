@@ -51,8 +51,8 @@
               </div>
             </div>
             <div class="task-button">
-              <button class="points-btn btn btn-orange">250 积分夺宝</button>
-              <button class="currency-btn btn">10元 现金夺宝</button>
+              <button class="points-btn btn btn-orange" @click="lottery(0)">250 积分夺宝</button>
+              <button class="currency-btn btn" @click="lottery(1)">10元 现金夺宝</button>
             </div>
             <div class="task-tip">
               <span class="sfa sfa-pt-task-tip"></span>
@@ -61,44 +61,48 @@
           </div>
         </div>
         <div class="lottery-list">
-          <div class="lottery-top">
-            <span class="sfa sfa-pt-task-winner-list"></span>
-            获奖名单
-          </div>
-          <div class="lottery-divider"></div>
-          <transition-group class="lottery-list-main" name="ani-scroll" tag="div">
-            <div class="lottery-list-main-inner" v-for="user in recentUser" :key="user.uid">
-              <span class="lottery-list-left">恭喜 {{user.userName}}获得</span>
-              <span class="lottery-list-right"><span class="lottery-list-right-val">10元</span>{{user.bonusName}}获得</span>
+          <div class="lottery-list-inner">
+            <div class="lottery-top">
+              <span class="sfa sfa-pt-task-winner-list"></span>
+              获奖名单
             </div>
-          </transition-group>
+            <div class="lottery-divider"></div>
+            <transition-group class="lottery-list-main" name="ani-scroll" tag="div">
+              <div class="lottery-list-main-inner" v-for="user in recentUser" :key="user.uid">
+                <span class="lottery-list-left">恭喜 {{user.userName}}获得</span>
+                <span class="lottery-list-right"><span
+                  class="lottery-list-right-val">10元</span>{{user.bonusName}}获得</span>
+              </div>
+            </transition-group>
+          </div>
         </div>
       </div>
-
-      <div class="lucky-panel">
-        <div class="lucky-title">
-          <span class="sfa sfa-pt-star"></span>
-          当前幸运值：<span class="lucky-points">56</span>
-        </div>
-        <div class="lucky-main">
-          <div class="lucky-cell" v-for="(chest, index) in chestList" :key="index">
-            <div class="cell-probability">{{chest.rate | formatDiv(10)}}%<br />概率</div>
-            <div class="lucky-prize-wrapper">
-              <div class="lucky-prize">
-                <div class="lucky-prize-inner">
-                  <div class="sfa sfa-lucky-currency">
-                    <span class="lucky-type">现金券</span>
-                    <span class="lucky-val">50</span>
-                  </div>
+      <div class="sfa-pt-hanger hanger-left"></div>
+      <div class="sfa-pt-hanger hanger-right"></div>
+    </div>
+    <div class="lucky-panel">
+      <div class="lucky-title">
+        <span class="sfa sfa-pt-lucky-star"></span>
+        当前幸运值：<span class="lucky-points">56</span>
+      </div>
+      <div class="lucky-main">
+        <div class="lucky-cell" v-for="(chest, index) in chestList" :key="index">
+          <div class="cell-probability">{{chest.rate | formatDiv(10)}}%<br/>概率</div>
+          <div class="lucky-prize-wrapper">
+            <div class="lucky-prize">
+              <div class="lucky-prize-inner">
+                <div class="sfa sfa-pt-lucky-currency">
+                  <span class="lucky-type">现金券</span>
+                  <span class="lucky-val">50</span>
                 </div>
               </div>
             </div>
-            <div class="lucky-prize-name">积分{{chest.lucky}}</div>
-            <button class="lucky-exchange-btn btn">
-              <span class="sfa sfa-pt-lucky-star-points"></span>
-              <span class="lucky-exchange-title">10 幸运值兑换</span>
-            </button>
           </div>
+          <div class="lucky-prize-name">积分{{chest.lucky}}</div>
+          <button class="lucky-exchange-btn btn">
+            <span class="sfa sfa-pt-lucky-star-points"></span>
+            <span class="lucky-exchange-title">10 幸运值兑换</span>
+          </button>
         </div>
       </div>
     </div>
@@ -106,14 +110,12 @@
 </template>
 
 <script>
-  import {getTaskListApi} from 'api/points'
+  import {getTaskListApi, lotteryApi} from 'api/points'
 
   export default {
     name: 'points-lottery',
 
-    components: {
-
-    },
+    components: {},
 
     data() {
       return {
@@ -168,6 +170,12 @@
             }, 2000)
           }
         }, 3000)
+      },
+      lottery(type) {
+        lotteryApi({
+          type,
+          lotteryType: 0
+        })
       }
 
     },
@@ -177,7 +185,7 @@
       this.winnerRoll()
       getTaskListApi(({data}) => {
         if (data && data.result === 0) {
-          this.awards = _.initial(data.root.awards, 1)
+          this.awards = data.root.awards
           this.awards.forEach((award) => {
             this.$set(award, 'selected', false)
           })
@@ -202,7 +210,10 @@
 <style lang="scss" scoped>
   .lottery-panel-inner {
     border-radius: 10px;
+    background-color: #ffffff;
     border: solid 2px #e6e6e6;
+    margin-bottom: 35px;
+    position: relative;
   }
 
   .points-lottery-panel {
@@ -210,11 +221,12 @@
   }
 
   .lottery-panel-main {
-    flex: 60%;
+    flex: 70%;
   }
 
   .lottery-panel {
     display: flex;
+    height: 780px;
   }
 
   .lottery-task {
@@ -266,6 +278,7 @@
     text-align: center;
     line-height: 35px;
   }
+
   .points-ticket {
     display: flex;
   }
@@ -314,9 +327,8 @@
     }
   }
 
-
   .lottery-list {
-    flex: 33%;
+    flex: 30%;
     /* margin-top: 115px; */
     border: solid 5px #edeef0;
     border-radius: 15px;
@@ -358,7 +370,7 @@
 
   .lottery-list-left {
     flex: 1;
-    padding-left: 60px;
+    padding-left: 55px;
     /* vertical-align: bottom; */
   }
 
@@ -370,12 +382,11 @@
     color: #cd6d6d;
   }
 
-
   .points-btn {
     width: 150px;
     height: 50px;
     background-color: #e5a642;
-    box-shadow: 0px 2px 0px 0px    #a37731;
+    box-shadow: 0px 2px 0px 0px #a37731;
     border-radius: 5px;
     font-size: 16px;
     margin-right: 10px;
@@ -385,7 +396,7 @@
     width: 150px;
     height: 50px;
     background-color: #14b1bb;
-    box-shadow: 0px 2px 0px 0px    #009097;
+    box-shadow: 0px 2px 0px 0px #009097;
     border-radius: 5px;
     font-size: 16px;
   }
@@ -395,7 +406,6 @@
     margin-bottom: 20px;
   }
 
-
   .task-tip {
     font-size: 14px;
     color: #666666;
@@ -404,63 +414,191 @@
     align-items: center;
   }
 
+  .hanger-left {
+    position: absolute;
+    bottom: -66px;
+    left: 50px;
+    z-index: 1;
+  }
 
+  .hanger-right {
+    position: absolute;
+    bottom: -66px;
+    right: 50px;
+    z-index: 1;
+  }
+
+  //lucky
+
+  .lucky-panel {
+    height: 379px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: solid 2px #e6e6e6;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 135px;
+  }
+
+  .lucky-title {
+    width: 240px;
+    height: 50px;
+    background-color: #edeef0;
+    border-radius: 25px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666666;
+    margin-top: -25px;
+  }
+
+  .lucky-points {
+    font-size: 24px;
+  }
+
+  .lucky-main {
+    display: flex;
+    width: 1040px;
+    justify-content: space-between;
+    padding-top: 40px;
+  }
+
+  .lucky-cell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cell-probability {
+    width: 52px;
+    height: 52px;
+    line-height: 14px;
+    font-size: 14px;
+    background-color: #e5a642;
+    border-radius: 50px;
+    text-align: center;
+    position: absolute;
+    top: -26px;
+    right: -26px;
+    color: #ffffff;
+    padding-top: 13px;
+    box-sizing: border-box;
+    z-index: 1;
+  }
+
+  .lucky-prize-wrapper {
+    width: 210px;
+    height: 210px;
+    background-color: #edeef0;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sfa-pt-lucky-currency {
+    /* line-height: 85px; */
+    color: #ffffff;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 10px;
+    box-sizing: border-box;
+  }
+
+  .lucky-prize {
+    width: 154px;
+    height: 154px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .lucky-prize-name {
+    font-size: 14px;
+    color: #666666;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .lucky-exchange-btn.btn {
+    width: 180px;
+    height: 42px;
+    background-color: #14b1bb;
+    border-radius: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
 
   .x-switch {
     position: relative;
-    margin: 20px auto;
-    height: 26px;
-    width: 120px;
     background: rgba(0, 0, 0, 0.25);
-    border-radius: 3px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), 0 1px rgba(255, 255, 255, 0.3);
+    width: 270px;
+    height: 50px;
+    background-color: #edeef0;
+    box-shadow: 0px 1px 0px 0px    rgba(0, 0, 0, 0.1),    inset 0px 2px 2px 0px    rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    display: flex;
+
+    margin: 34px auto;
   }
 
   .switch-label {
+    text-align: center;
+    color: #666666;
     position: relative;
     z-index: 2;
-    float: left;
-    width: 58px;
-    line-height: 26px;
+    height: 100%;
     font-size: 11px;
-    color: #888;;
     text-align: center;
-    text-shadow: 0 2px 1px rgba(0, 0, 0, 1);
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    font-size: 16px;
   }
 
-  .switch-label:hover {
-    color: #fff;
-  }
+  /*.switch-label:hover {*/
+    /*color: #fff;*/
+  /*}*/
 
   .switch-input {
     display: none;
   }
 
   .switch-input:checked + .switch-label {
-    font-weight: bold;
-    color: rgba(0, 0, 0, 1);
-    text-shadow: 0 1px 0px rgba(1, 1, 1, .1);
+    color: #ffffff;
     transition: 0.15s ease-out;
   }
 
   .switch-input:checked + .switch-label-on ~ .switch-selection {
-    left: 60px;
+    left: 50%;
   }
 
   .switch-selection {
     display: block;
     position: absolute;
     z-index: 1;
-    top: 2px;
-    left: 2px;
-    width: 58px;
-    height: 22px;
-    background: #888;
-    border-radius: 3px;
-    box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
-    transition: left 0.15s ease-out;
+    top: 0;
+    left: 0;
+    transition: left 0.45s ease-out;
+    width: 50%;
+    height: 100%;
+    background-color: #14b1bb;
+    box-shadow: 0px 0px 3px 2px    rgba(65, 210, 219, 0.31);
+    border-radius: 26px;
   }
 
   .lottery-list-main-inner {

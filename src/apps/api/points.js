@@ -76,8 +76,29 @@ const getTaskListApi = (then, fail) => {
     .catch(fail)
 }
 
+/**
+ * 2元10元抽奖接口
+ * @param type 0:积分, 1:现金
+ * @param lotteryType 0:2元抽奖 1:10元抽奖
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const lotteryApi = ({type, lotteryType = 0, }, then, fail) => {
+  return $http({
+    url: '/mall/lucky/lottery.json',
+    data: {
+      type,
+      lotteryType
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
 export {
   getCouponListApi,
   getGiftListApi,
   getTaskListApi,
+  lotteryApi,
 }

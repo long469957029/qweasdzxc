@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="points-bottom">
-      <div class="points-bottom-inner">
+      <div class="points-bottom-inner clearfix">
         <router-view></router-view>
       </div>
     </div>
@@ -38,7 +38,7 @@
     /*background: url(./misc/background.jpg);*/
     color: $def-black-color;
     .points-top-main-wrapper {
-      background: url(./misc/bg-top.png);
+      background: url(./misc/bg-top.png) no-repeat;
     }
     .points-top-main {
       background: url(./misc/bg-top-texture.png);
@@ -52,7 +52,7 @@
       margin: 0 auto;
     }
     .points-bottom {
-      background: url(./misc/bg-bottom.jpg);
+      background: url(./misc/bg-bottom.jpg) repeat-x;
       min-height: 500px;
     }
   }
