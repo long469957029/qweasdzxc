@@ -16,7 +16,7 @@ const initState = () => {
     openNovicePackage: false,
     userIsVip: true,
     openDeskTopMsg:false,
-    deskTopData:{}
+    deskTopData:''
     // openNovicePackageType: '',
   }
 }
