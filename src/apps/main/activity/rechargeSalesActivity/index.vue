@@ -109,7 +109,7 @@
       submitReceive(){
         activityInfo.doRechargeSalesPlan ({
           cycle:this.cycle
-        },(data)=>{
+        },({data})=>{
             if(data.result === 0){
               Global.ui.notification.show('奖励领取成功')
               this.cycle = -1
