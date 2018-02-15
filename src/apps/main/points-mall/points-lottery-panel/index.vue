@@ -202,8 +202,12 @@
           this.robLucky = data.root.robLucky
         }
       })
-    }
+    },
 
+    destroyed() {
+      clearInterval(this.timer)
+      clearInterval(this.winnerTimer)
+    }
   }
 </script>
 

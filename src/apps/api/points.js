@@ -96,9 +96,18 @@ const lotteryApi = ({type, lotteryType = 0, }, then, fail) => {
     .catch(fail)
 }
 
+const missonListApi = (then, fail) => {
+  return $http({
+    url: '/mall/mission/list.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
 export {
   getCouponListApi,
   getGiftListApi,
   getTaskListApi,
   lotteryApi,
+  missonListApi,
 }

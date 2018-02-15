@@ -41,6 +41,6 @@ export default [
   {
     name: 'pointsIntro',
     path: '/points/intro',
-    components: PointsIntroduction
+    component: PointsIntroduction
   }
 ]
