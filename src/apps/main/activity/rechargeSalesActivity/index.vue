@@ -84,7 +84,7 @@
       activityInfo.getRechargeSalesInfo(
         ({data}) => {
           if (data && data.result === 0) {
-              if(!available){
+              if(data.root.available){
                 this.salesList = data.root.itemList
                 this.fromTime = _(data.root.fromDate).toDate('YYYY年M月D日')
                 this.endTime = _(data.root.endDate).toDate('YYYY年M月D日')
@@ -109,9 +109,10 @@
       submitReceive(){
         activityInfo.doRechargeSalesPlan ({
           cycle:this.cycle
-        },(data)=>{
+        },({data})=>{
             if(data.result === 0){
               Global.ui.notification.show('奖励领取成功')
+              this.cycle = -1
             }else{
               Global.ui.notification.show('数据请求失败')
             }
