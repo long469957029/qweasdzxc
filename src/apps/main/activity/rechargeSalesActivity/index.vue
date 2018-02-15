@@ -112,6 +112,7 @@
         },(data)=>{
             if(data.result === 0){
               Global.ui.notification.show('奖励领取成功')
+              this.cycle = -1
             }else{
               Global.ui.notification.show('数据请求失败')
             }
