@@ -7,9 +7,12 @@
           <div :class="['icon',`icon-${type}`]"></div>
           <div class="msg-main">
             <div class="title">{{title}}</div>
-            <div class="info">
+            <div class="info" v-if="type === 2" v-html="fowmateInfo">
+            </div>
+            <div class="info" v-else>
               {{fowmateInfo}}
-              <a :href="type === 0 ? `#/uc/mg?id=${dataList[dataIndex].noticeId}` : '#/uc/fb' " class="router text-cool" v-show="info.length > 51">...【查看更多】</a>
+              <a :href="type === 0 ? `#/uc/mg?id=${dataList[this.dataIndex].noticeId}` : '#/uc/fb'"
+                 class="router text-cool" @click="closeMsg">...【查看更多】</a>
             </div>
             <div class="time">{{time}}</div>
           </div>
@@ -52,9 +55,12 @@
     watch:{
       openDeskTopData: function () {
         if(Array.isArray(this.openDeskTopData)){
-          this.dataList.push(_(this.dataList).difference(this.openDeskTopData))
+          this.dataList = [...this.dataList, ..._.filter(this.dataList, item => {
+            const isExist = _(_(this.openDeskTopData).findWhere({noticeId:item.noticeId,time:item.time})).isUndefined() ? false : true
+            return !isExist
+          })]
           this.formateMsgData()
-        }else if (this.openDeskTopData.type === 3) {
+        }else if (this.openDeskTopData.type === 3) {  // 彩种奖期提示特殊处理
           this.showTicket()
         }
       }
@@ -66,8 +72,10 @@
       ]),
       fowmateInfo:function () {
         let info = this.info
-        if(this.info.length > 51){
-          info = this.info.slice(0,51)
+        if(this.type !== 2){
+          if(this.info.length > 42){
+            info = this.info.slice(0,42)
+          }
         }
         return info
       }
@@ -91,16 +99,17 @@
           if (!this.showMsg) {
             this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE, {show: false, dataInfo: {}})
           }
-        }, 2000)
+        }, 3000)
       },
       formateMsgData(){  //  其他正常通知类信息处理
         if(_(this.dataList).isEmpty()){
-          this.dataList = [...this.openDeskTopData]
+          this.dataList = this.openDeskTopData
         }
         this.title = this.dataList[this.dataIndex].title
         this.info = this.dataList[this.dataIndex].desc
-        this.time = _(this.dataList[this.dataIndex].time).toTime()
+        this.time = _(this.dataList[this.dataIndex].time).toDate()
         this.showMsg = true
+        this.type = this.dataList[this.dataIndex].type
         this.msgTimer = setTimeout(() => {
           this.closeMsg()
         }, 10000)
@@ -147,27 +156,26 @@
 
   .desktop-main {
     position: fixed;
-    width: 380px;
-    height: 230px;
-    bottom: 25px;
-    right: 25px;
+    width: 325px;
+    height: 194px;
+    bottom: 0px;
+    right: 0px;
     z-index: 2000;
     .content {
-      width: 380px;
-      height: 230px;
+      width: 325px;
+      height: 194px;
       background-color: #ffffff;
       box-shadow: -4px 2px 24px 0px rgba(0, 0, 0, 0.1);
       border-radius: 5px;
-      border: solid 1px #cccccc;
       position: relative;
       .close-md {
         top: 10%;
       }
       .icon {
         float: left;
-        width: 30px;
-        height: 30px;
-        margin: 33px 23px 0px 23px;
+        width: 24px;
+        height: 24px;
+        margin: 33px 10px 0px 26px;
         &.icon-0 {
           background: url("./images/icon-speaker.png") no-repeat center;
         }
@@ -183,8 +191,8 @@
       }
       .msg-main {
         float: left;
-        width: 285px;
-        margin-top: 36px;
+        width: 250px;
+        margin-top: 34px;
       }
       .title {
         font-size: $font-md;
@@ -193,12 +201,15 @@
       .info {
         font-size: $font-sm;
         color: $new-inverse-color;
-        margin-top: 21px;
+        margin-top: 20px;
+        span{
+          color: $prominent-color;
+        }
       }
       .time {
         font-size: $font-sm;
         color: $font-auxiliary-color;
-        margin-top: 37px;
+        margin-top: 20px;
       }
       &.ticket-content {
         position: absolute;
@@ -207,11 +218,11 @@
         .icon {
           width: 50px;
           height: 50px;
-          margin: 62px 23px 0px 66px;
+          margin: 45px 23px 0px 36px;
         }
         .msg-main {
           width: auto;
-          margin-top: 70px;
+          margin-top: 51px;
         }
       }
     }
