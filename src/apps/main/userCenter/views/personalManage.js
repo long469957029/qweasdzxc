@@ -127,9 +127,11 @@ const PersonalManageView = Base.ItemView.extend({
   formateHeadIconList(data) {
     if (data) {
       this.$headIconList.empty()
-      _(data).each((item) => {
-        this.$headIconList.append(`<li class="icon-info js-head-icon-info ${item.id === this.iconId ? 'active' : ''}" data-id="${item.id}"><img src="${item.logo}" class="head-img"></li>`)
+      const html =  _(data).map((item) => {
+        return `<li class="icon-info js-head-icon-info ${Number(item.id) === this.iconId ? 'active' : ''}" 
+            data-id="${item.id}"><img src="${item.logo}" class="head-img"></li>`
       })
+      this.$headIconList.html(html.join(''))
     }
   },
   formateHasChooseCityList(data) {

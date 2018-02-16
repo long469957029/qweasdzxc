@@ -191,7 +191,8 @@ const MyDividView = Base.ItemView.extend({
     this.grid.addFooterRows({
       trClass: 'tr-footer',
       columnEls: [
-        '<strong>所有页总计</strong>',
+        '<strong>' +
+        '总计</strong>',
         _(pageData.betTotal || '').convert2yuan(),
         _(pageData.profitTotal || '').convert2yuan(),
       ],
