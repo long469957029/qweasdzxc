@@ -488,9 +488,9 @@
         }
         .header-announcement-num {
           margin: 5px;
-          width: 21px;
-          height: 21px;
-          line-height: 21px;
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
           display: inline-block;
           background: #e29c49;
           border-radius: 9px;

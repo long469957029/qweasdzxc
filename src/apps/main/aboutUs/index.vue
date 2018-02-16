@@ -90,107 +90,108 @@
 </script>
 
 <style lang="scss" scoped>
-  .aboutUs-body {
-    display: block;
-    min-height: 584px;
-    position: relative;
-    background-color: #f9f9f9;
-    .aboutUs-panel {
-      background-color: #ffffff;
-      font-size: 0;
-      width: 1192px;
-      margin: 0 auto;
-      height: 100%;
-      box-shadow: 0 0 5px rgba(0, 0, 0, .4);
-      .ab-select-bar {
-        float: left;
-        width: 200px;
-        min-height: 850px;
-        background-color: #ffffff;
-        .ab-select-bar-desc {
-          padding: 29px 47px;
-          border-bottom: 1px solid #e6e6e6;
-          .ab-desc-text-lg {
-            font-size: 30px;
-            color: #f0f0f0;
+.aboutUs-body {
+  display: block;
+  /*min-height: 584px;*/
+  min-height: 850px;
+  position: relative;
+  background-color: #f9f9f9;
+  .aboutUs-panel {
+    background-color: #ffffff;
+    font-size: 0;
+    width: 1192px;
+    margin: 0 auto;
+    height: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+    .ab-select-bar {
+      float: left;
+      width: 200px;
+      /*min-height: 850px;*/
+      background-color: #f8f8f8;
+      .ab-select-bar-desc {
+        padding: 45px 40px;
+        border-bottom: 1px solid #e6e6e6;
+        .ab-desc-text-lg {
+          font-size: 30px;
+          color: $im-line-color;
+        }
+        .ab-desc-text {
+          font-size: 17px;
+          color: $def-black-color;
+          margin-bottom: -9px;
+        }
+        .ab-desc-text-sm {
+          color: $im-line-color;
+          font-size: 12px;
+          margin-right: 3px;
+        }
+      }
+      .ab-select-bar-item {
+        cursor: pointer;
+        padding: 20px 45px;
+        background-color: #f8f8f8;
+        border-left: 3px solid #f8f8f8;
+        border-bottom: 1px solid #e6e6e6;
+        .item-name {
+          font-size: 14px;
+          margin-left: 8px;
+          color: #333333;
+        }
+        .item-img {
+          display: inline-block;
+          width: 18px;
+          float: left;
+          height: 18px;
+          &.ab {
+            background-image: url('./misc/au-gray.png');
           }
-          .ab-desc-text {
-            font-size: 17px;
-            color: #999999;
-            margin-bottom: -9px;
+          &.news {
+            background-image: url('./misc/au-new-gray.png');
           }
-          .ab-desc-text-sm {
-            color: #f0f0f0;
-            font-size: 12px;
-            margin-right: 3px;
+          &.rules {
+            background-image: url('./misc/au-private-gray.png');
+          }
+          &.private {
+            background-image: url('./misc/au-res-gray.png');
+          }
+          &.res {
+            background-image: url('./misc/au-rule-gray.png');
           }
         }
-        .ab-select-bar-item {
-          cursor: pointer;
-          padding: 20px 45px;
-          background-color: #f8f8f8;
-          border-left: 3px solid #f8f8f8;
-          border-bottom: 1px solid #e6e6e6;
+        &.active {
+          background-color: #ffffff;
+          border-left: 3px solid #14b1bb;
           .item-name {
-            font-size: 14px;
-            margin-left: 8px;
-            color: #333333;
+            color: #14b1bb;
           }
           .item-img {
-            display: inline-block;
-            width: 18px;
-            float: left;
-            height: 18px;
             &.ab {
-              background-image: url('./misc/au-gray.png');
+              background-image: url('./misc/au-green.png');
             }
             &.news {
-              background-image: url('./misc/au-new-gray.png');
+              background-image: url('./misc/au-new-green.png');
             }
             &.rules {
-              background-image: url('./misc/au-private-gray.png');
+              background-image: url('./misc/au-private-green.png');
             }
             &.private {
-              background-image: url('./misc/au-res-gray.png');
+              background-image: url('./misc/au-res-green.png');
             }
             &.res {
-              background-image: url('./misc/au-rule-gray.png');
-            }
-          }
-          &.active {
-            background-color: #ffffff;
-            border-left: 3px solid #14b1bb;
-            .item-name {
-              color: #14b1bb;
-            }
-            .item-img {
-              &.ab {
-                background-image: url('./misc/au-green.png');
-              }
-              &.news {
-                background-image: url('./misc/au-new-green.png');
-              }
-              &.rules {
-                background-image: url('./misc/au-private-green.png');
-              }
-              &.private {
-                background-image: url('./misc/au-res-green.png');
-              }
-              &.res {
-                background-image: url('./misc/au-rule-green.png');
-              }
+              background-image: url('./misc/au-rule-green.png');
             }
           }
         }
       }
-      .aboutUs-content {
-        background-color: #ffffff;
-        width: 951px;
-        min-height: 850px;
-        padding: 20px;
-        border-left: 1px solid #e6e6e6;
-      }
+    }
+    .aboutUs-content {
+      background-color: #ffffff;
+      width: 951px;
+      min-height: 750px;
+      padding: 20px 20px 100px 20px;
+      border-left: 1px solid #e6e6e6;
     }
   }
+}
 </style>
 

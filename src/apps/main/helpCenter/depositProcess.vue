@@ -6,9 +6,9 @@
       </div>
       <div class="res-content">
         <div class="res-desc-check">
-          <div class="res-desc-btn activity" @click.native="tType=1">银行卡转账</div>
-          <div class="res-desc-btn" @click.native="tType=2">微信转账</div>
-          <div class="res-desc-btn" @click.native="tType=3">支付宝转账</div>
+          <div @click="checkTab(1)" :class="['res-desc-btn',{'activity': tType === 1}]">银行卡转账</div>
+          <div @click="checkTab(2)" :class="['res-desc-btn',{'activity': tType === 2}]">微信转账</div>
+          <div @click="checkTab(3)" :class="['res-desc-btn',{'activity': tType === 3}]">支付宝转账</div>
         </div>
         <!--银行卡转账-->
         <div v-if="tType === 1">
@@ -161,6 +161,9 @@
     filters: {},
 
     methods: {
+      checkTab (tType){
+        this.tType = tType
+      },
       click(tType){
         console.log(tType)
       }

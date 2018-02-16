@@ -3,8 +3,9 @@
 @import "~base/styles/imports";
 
 .fc-fm-portlet {
-  height: 810px;
+  min-height: 750px;
   background: #ffffff;
+  padding-bottom: 100px;
   ul {
     background: $def-white-color;
   }

@@ -8,11 +8,13 @@
             <li><router-link :to="{path:'/au',query: { page: 'AboutUs' }}">关于我们</router-link></li>
             <li><router-link :to="{path:'/au',query: { page: 'RulesAndTerms' }}" >规则与条款</router-link></li>
             <!-- 常见问题是去帮助中心 -->
-            <li><a href="#/hc?page=newbie">常见问题</a></li>
+            <!--<li><a href="#/hc?page=newbie">常见问题</a></li>-->
+            <li><router-link :to="{path:'/hc',query: { page: 'DepositProcess' }}">常见问题</router-link></li>
             <!-- 游戏规则也是去帮助中心 -->
-            <li><a href="#/hc?page=newbie">游戏规则</a></li>
+            <li><router-link :to="{path:'/hc',query: { page: 'SscLottery' }}">游戏规则</router-link></li>
             <!--<li><router-link to="mb" >下载中心</router-link></li>-->
-            <li><a href="/index.html#nb/detail/287">防劫持教程</a></li>
+            <!--<li><a href="/index.html#nb/detail/287">防劫持教程</a></li>-->
+            <li><router-link :to="{path:'/hc',query: { page: 'DnsCourse' }}">防劫持教程</router-link></li>
           </div>
 
           <div class="download">
