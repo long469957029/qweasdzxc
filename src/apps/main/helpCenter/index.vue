@@ -9,13 +9,13 @@
             <div><span class="hc-desc-text-sm">elp</span><span class="hc-desc-text-sm">center</span></div>
           </div>
         </div>
-        <div class="hc-select-bar-item">
-          <span class="item-img ab"></span>
+        <div class="hc-select-bar-item" @click="checkTab(1)" :class="['res-desc-btn',{'active': tType === 1}]">
+          <span class="item-img new"></span>
           <span class="item-name">新手上路</span>
         </div>
-        <div class="hc-list-item">
+        <div class="hc-list-item" v-show="tType === 1">
           <ul>
-            <li class="active" :class="{active: currentView === 'DepositProcess'}" @click="toggleTabs(DepositProcess)">存款流程</li>
+            <li :class="{active: currentView === 'DepositProcess'}" @click="toggleTabs(DepositProcess)">存款流程</li>
             <li :class="{active: currentView === 'DrawingProcess'}" @click="toggleTabs(DrawingProcess)">提款流程</li>
             <li :class="{active: currentView === 'LotteryProcess'}" @click="toggleTabs(LotteryProcess)">购彩流程</li>
             <li :class="{active: currentView === 'DwFAQ'}" @click="toggleTabs(DwFAQ)">存提款FAQ</li>
@@ -23,11 +23,11 @@
             <li :class="{active: currentView === 'DnsCourse'}" @click="toggleTabs(DnsCourse)">防DNS劫持教程</li>
           </ul>
         </div>
-        <div class="hc-select-bar-item">
-          <span class="item-img news"></span>
+        <div class="hc-select-bar-item" @click="checkTab(2)" :class="['res-desc-btn',{'active': tType === 2}]">
+          <span class="item-img lottery"></span>
           <span class="item-name">彩票玩法</span>
         </div>
-        <div class="hc-list-item">
+        <div class="hc-list-item" v-show="tType === 2">
           <ul>
             <li :class="{active: currentView === 'SscLottery'}" @click="toggleTabs(SscLottery)">时时彩玩法</li>
             <li :class="{active: currentView === 'SyxwLottery'}" @click="toggleTabs(SyxwLottery)">11选5玩法</li>
@@ -36,12 +36,11 @@
             <li :class="{active: currentView === 'KsLottery'}" @click="toggleTabs(KsLottery)">快三玩法</li>
           </ul>
         </div>
-        <div class="hc-select-bar-item" :class="{active: currentView === 'RulesAndTerms'}"
-             @click="toggleTabs(RulesAndTerms)">
-          <span class="item-img rules"></span>
+        <div class="hc-select-bar-item" @click="checkTab(3)" :class="['res-desc-btn',{'active': tType === 3}]">
+          <span class="item-img lmp"></span>
           <span class="item-name">双面盘玩法</span>
         </div>
-        <div class="hc-list-item">
+        <div class="hc-list-item" v-show="tType === 3">
           <ul>
             <li :class="{active: currentView === 'SscPlayer'}" @click="toggleTabs(SscPlayer)">时时彩玩法</li>
             <li :class="{active: currentView === 'Pk10Player'}" @click="toggleTabs(Pk10Player)">PK10玩法</li>
@@ -91,6 +90,7 @@
         LhcPlayer: 'LhcPlayer',
 
         currentView: 'DepositProcess',
+        tType: 1,
       }
     },
 
@@ -131,7 +131,10 @@
     methods: {
       toggleTabs (tabText) {
         this.currentView = tabText;
-      }
+      },
+      checkTab (tType){
+        this.tType = tType
+      },
     }
   }
 </script>
@@ -139,7 +142,8 @@
 <style lang="scss" scoped>
 .helpCenter-body {
   display: block;
-  min-height: 584px;
+  /*min-height: 584px;*/
+  min-height: 850px;
   position: relative;
   background-color: #f9f9f9;
   .helpCenter-panel {
@@ -152,7 +156,7 @@
     .hc-select-bar {
       float: left;
       width: 200px;
-      min-height: 850px;
+      /*min-height: 850px;*/
       background-color: #f8f8f8;
       .hc-select-bar-desc {
         padding: 45px 40px;
@@ -187,20 +191,14 @@
           width: 18px;
           float: left;
           height: 18px;
-          &.ab {
-            background-image: url('./misc/au-gray.png');
+          &.new {
+            background-image: url('./misc/hc-new-gray.png');
           }
-          &.news {
-            background-image: url('./misc/au-new-gray.png');
+          &.lottery {
+            background-image: url('./misc/hc-lottery-gray.png');
           }
-          &.rules {
-            background-image: url('./misc/au-private-gray.png');
-          }
-          &.private {
-            background-image: url('./misc/au-res-gray.png');
-          }
-          &.res {
-            background-image: url('./misc/au-rule-gray.png');
+          &.lmp {
+            background-image: url('./misc/hc-lmp-gray.png');
           }
         }
         &.active {
@@ -210,20 +208,14 @@
             color: #14b1bb;
           }
           .item-img {
-            &.ab {
-              background-image: url('./misc/au-green.png');
+            &.new {
+              background-image: url('./misc/hc-new-green.png');
             }
-            &.news {
-              background-image: url('./misc/au-new-green.png');
+            &.lottery {
+              background-image: url('./misc/hc-lottery-green.png');
             }
-            &.rules {
-              background-image: url('./misc/au-private-green.png');
-            }
-            &.private {
-              background-image: url('./misc/au-res-green.png');
-            }
-            &.res {
-              background-image: url('./misc/au-rule-green.png');
+            &.lmp {
+              background-image: url('./misc/hc-lmp-green.png');
             }
           }
         }
@@ -270,8 +262,8 @@
     .helpCenter-content {
       background-color: #ffffff;
       width: 951px;
-      min-height: 850px;
-      padding: 20px;
+      min-height: 750px;
+      padding: 20px 20px 100px 20px;
       border-left: 1px solid #e6e6e6;
     }
   }

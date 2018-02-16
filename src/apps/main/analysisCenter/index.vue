@@ -80,7 +80,7 @@
           <th v-if="analysis.specialCode" :colspan="3">特码</th>
           <th v-if="analysis.total" :colspan="analysis.doubleHead ? 3 : 1">总和</th>
           <th v-if="analysis.longHu">万个龙虎</th>
-          <th v-if="analysis.form">形态<span class="sfa question"></span></th>
+          <th v-if="analysis.form">形态<!--<span class="sfa question"></span>--></th>
 
           <th v-if="analysis.compareLongHu" :colspan="3">
             <span class="left" @click="longHuPos = --longHuPos % analysis.compareLongHu.length < 0 ? analysis.compareLongHu.length - 1 : longHuPos"></span>
