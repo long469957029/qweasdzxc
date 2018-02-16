@@ -1,7 +1,7 @@
 <template>
-  <transition name="msg-info">
+  <transition name="desk-msg-info">
     <div class="desktop-main">
-      <transition name="msg-info">
+      <transition name="desk-msg-info">
         <div class="content clearfix" v-if="showMsg">
           <a class="close-md close-md-gray btn-close" @click="closeMsg"></a>
           <div :class="['icon',`icon-${type}`]"></div>
@@ -12,7 +12,7 @@
           </a>
         </div>
       </transition>
-      <transition name="msg-info">
+      <transition name="desk-msg-info">
         <div class="content ticket-content" v-if="showTicketMsg">
           <a class="close-md close-md-gray btn-close" @click="closeTicketMsg"></a>
           <div class="icon sfa-dialog-info-sm"></div>
@@ -68,7 +68,7 @@
         let info = this.info
         if(this.type !== 2){
           if(this.info.length > 42){
-            info = this.info.slice(0,42) + '...<span class="text-cool">【查看更多】</span>'
+            info = this.info.slice(0,42) + '<span class="text-cool">...【查看更多】</span>'
           }
         }
         return info
@@ -109,7 +109,7 @@
         this.type = this.dataList[this.dataIndex].type
         this.msgTimer = setTimeout(() => {
           this.closeMsg()
-        }, 600000)
+        }, 15000)
       },
       closeTicketMsg() {
         this.showTicketMsg = !this.showTicketMsg
@@ -135,19 +135,19 @@
     }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 
-  .msg-info-enter {
+  .desk-msg-info-enter {
     opacity: 0;
     transform: translateX(380px);
   }
 
-  .msg-info-leave-to {
+  .desk-msg-info-leave-to {
     transform: translateY(-20px);
     opacity: 0;
   }
 
-  .msg-info-enter-active, .msg-info-leave-active {
+  .desk-msg-info-enter-active, .desk-msg-info-leave-active {
     transition: all .5s;
   }
 
@@ -167,6 +167,9 @@
       position: relative;
       .close-md {
         top: 10%;
+        width: 17px;
+        height: 16px;
+        background: url("./images/close.png") no-repeat;
       }
       .icon {
         float: left;
@@ -200,8 +203,7 @@
         color: $new-inverse-color;
         margin-top: 20px;
         span{
-          display: inline-block;
-          color: $prominent-color !important;
+          color: $prominent-color;
         }
       }
       .time {
