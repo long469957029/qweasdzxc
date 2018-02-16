@@ -394,6 +394,7 @@ const SignUserView = Base.ItemView.extend({
         if (res && res.result === 0) {
           Global.ui.notification.show('操作成功！<br/>等待下级同意签约。')
           self.render()
+          Global.router.goTo('ac/sum')
         } else {
           Global.ui.notification.show(res.msg || '')
         }
