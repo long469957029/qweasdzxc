@@ -5,17 +5,11 @@
         <div class="content clearfix" v-if="showMsg">
           <a class="close-md close-md-gray btn-close" @click="closeMsg"></a>
           <div :class="['icon',`icon-${type}`]"></div>
-          <div class="msg-main">
+          <a class="msg-main" :href="formateUrl" @click="closeMsg">
             <div class="title">{{title}}</div>
-            <div class="info" v-if="type === 2" v-html="fowmateInfo">
-            </div>
-            <div class="info" v-else>
-              {{fowmateInfo}}
-              <a :href="type === 0 ? `#/uc/mg?id=${dataList[this.dataIndex].noticeId}` : '#/uc/fb'"
-                 class="router text-cool" @click="closeMsg">...【查看更多】</a>
-            </div>
+            <div class="info" v-html="formateInfo"></div>
             <div class="time">{{time}}</div>
-          </div>
+          </a>
         </div>
       </transition>
       <transition name="msg-info">
@@ -70,14 +64,17 @@
         'openDeskTopMsgStatus',
         'openDeskTopData'
       ]),
-      fowmateInfo:function () {
+      formateInfo:function () {
         let info = this.info
         if(this.type !== 2){
           if(this.info.length > 42){
-            info = this.info.slice(0,42)
+            info = this.info.slice(0,42) + '...<span class="text-cool">【查看更多】</span>'
           }
         }
         return info
+      },
+      formateUrl:function () {
+        return this.type === 0 ? `#/uc/mg?id=${this.dataList[this.dataIndex].noticeId}` : (this.type === 1 ? '#/uc/fb' : '#/fc/rd')
       }
     },
     methods: {
@@ -112,7 +109,7 @@
         this.type = this.dataList[this.dataIndex].type
         this.msgTimer = setTimeout(() => {
           this.closeMsg()
-        }, 10000)
+        }, 600000)
       },
       closeTicketMsg() {
         this.showTicketMsg = !this.showTicketMsg
@@ -158,8 +155,8 @@
     position: fixed;
     width: 325px;
     height: 194px;
-    bottom: 0px;
-    right: 0px;
+    bottom: 20px;
+    right: 20px;
     z-index: 2000;
     .content {
       width: 325px;
@@ -203,7 +200,8 @@
         color: $new-inverse-color;
         margin-top: 20px;
         span{
-          color: $prominent-color;
+          display: inline-block;
+          color: $prominent-color !important;
         }
       }
       .time {
