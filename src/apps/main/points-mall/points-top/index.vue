@@ -62,12 +62,15 @@
   import SwiperItem from './swiper-item'
   import banner from './banner.png'
 
+  import SignIn from '../points-sign-in'
+
   export default {
     name: 'points-top',
 
     components: {
       Swiper,
       SwiperItem,
+      SignIn,
     },
 
     data() {
