@@ -91,14 +91,6 @@ const PersonalManageView = Base.ItemView.extend({
           self.$receiver.val(_.isNull(res.root.receiverData) ? '' : res.root.receiverData.receiverName)
           self.$phone.val(_.isNull(res.root.receiverData) ? '' : res.root.receiverData.receivePhone)
           self.$addressDetail.val(_.isNull(res.root.receiverData) ? '' : res.root.receiverData.receiverDetailAddr)
-          // self.getHeadIconXhr()
-          //   .done((_res) => {
-          //     if (_res && _res.result === 0) {
-          //       if (_res.root && _res.root.records) {
-          //         self.formateHeadIconList(_res.root.records)
-          //       }
-          //     }
-          //   })
           self.formateHeadIconList(avatarCfg.avatars)
           self.getCityListXhr()
             .done((resp) => {
@@ -125,12 +117,14 @@ const PersonalManageView = Base.ItemView.extend({
   },
 
   formateHeadIconList(data) {
-    if (data) {
+    if ('LIST:' + data) {
+      console.log(data)
       this.$headIconList.empty()
       const html =  _(data).map((item) => {
         return `<li class="icon-info js-head-icon-info ${Number(item.id) === this.iconId ? 'active' : ''}" 
             data-id="${item.id}"><img src="${item.logo}" class="head-img"></li>`
       })
+      console.log(html)
       this.$headIconList.html(html.join(''))
     }
   },
