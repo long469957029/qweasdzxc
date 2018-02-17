@@ -306,6 +306,7 @@
           }, interval);
         } else {
           this.count = 0;
+          this.$emit('countdown-finished');
           this.stop();
         }
       },

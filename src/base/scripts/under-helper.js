@@ -351,6 +351,7 @@ _.mixin({
 
 })
 
+Vue.filter('formatDiv', _.formatDiv)
 Vue.filter('toTime', _.toTime)
 Vue.filter('fixedConvert2yuan', _.fixedConvert2yuan)
 Vue.filter('convert2yuan', _.convert2yuan)

@@ -66,7 +66,6 @@ router.onReady(() => {
 })
 //每次路由变化时调用，切换显示区域
 router.beforeEach((to, from, next) => {
-  $('html').animate({scrollTop: 0})
   if (store.getters.checkPermission(to.path)) {
     let isVue = false
     _([

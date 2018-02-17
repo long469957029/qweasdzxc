@@ -1,13 +1,16 @@
 <template>
-  <div class="points-card" :class="[cardInfo.type, {finished: isFinished}]" @mouseover="toggleBtn(true)"
+  <div class="points-card" :class="[cardInfo.type, {finished: isFinished}]"
        @mouseout="toggleBtn(false)">
-    <div class="points-card-inner">
+    <div class="points-card-inner" @mouseover="toggleBtn(true)">
       <div class="points-top">
         <div class="card-value">
           20<span class="card-unit">元</span>
         </div>
         <div class="card-badge">{{cardInfo.name}}</div>
-        <div class="card-badge" v-if="limitLevelType > 0">LV{{limitLevelType}}</div>
+        <div class="card-badge " v-if="levelLimit > 0">
+          LV{{levelLimit}}
+          <template v-if="1 === limitLevelType">以上</template>
+        </div>
         <div class="card-left" v-if="maxNum && maxNum - useNum > 0">剩{{maxNum - useNum}}张</div>
         <div v-else-if="isFinished" class="sfa-finished"></div>
       </div>
@@ -17,16 +20,16 @@
 
 
       <div class="points-bottom-wrapper">
-        <transition name="fade"
+        <transition-group name="fade"
                     enter-active-class="animated-quick fadeIn"
                     leave-active-class="animated-quick fadeOut"
         >
-          <div class="points-bottom" v-if="!showBtn" key="show">
+          <div class="points-bottom" v-show="!showBtn" key="show">
             <div class="points-type">投注满5000元即返</div>
             <div class="points-bottom-inner">
-              <div v-if="isShowCountdown" class="points-countdown-wrapper">
+              <div v-if="countdownTime > 0" class="points-countdown-wrapper">
                 <span>距开始</span>
-                <countdown class="points-countdown" :time="1000000" :interval="100" tag="div">
+                <countdown class="points-countdown" :time="countdownTime" tag="div" @countdown-finished="sysTime = validStartDate">
                   <template slot-scope="props">
                     <div class="countdown-cell">{{props.totalHours}}</div>
                     :
@@ -45,10 +48,10 @@
               </div>
             </div>
           </div>
-          <div v-else key="exchange" class="points-bottom-btn">
+          <div v-show="showBtn" key="exchange" class="points-bottom-btn">
             <button class="btn btn-white exchange-btn">立即兑换</button>
           </div>
-        </transition>
+        </transition-group>
       </div>
     </div>
   </div>
@@ -95,10 +98,12 @@
       'couponType',
       'useNum',
       'maxNum',
+      'levelLimit',
       'limitLevelType',
       'requireIntegral',
       'validStartDate',
       'validEndDate',
+      'sysTime',
       'leftTime',
     ],
 
@@ -115,15 +120,17 @@
       isFinished() {
         return this.maxNum && this.maxNum - this.useNum === 0
       },
-      isShowCountdown() {
-        return true
-        // return !!(this.currentDate > this.validStartDate && moment(this.currentDate).diff(moment(this.validStartDate), 'days'))
+      countdownTime() {
+        if (this.validStartDate > this.sysTime) {
+          return this.validStartDate - this.sysTime
+        }
+        return 0
       }
     },
 
     methods: {
       toggleBtn(flag) {
-        if (!this.isFinished) {
+        if (!this.isFinished && this.countdownTime === 0) {
           this.showBtn = flag
         }
       }
@@ -132,6 +139,12 @@
 </script>
 
 <style lang="scss" scoped>
+
+  $green: $new-main-deep-color;
+  $gold: #bb8103;
+  $red: #e84c4c;
+  $blue: #4188d3;
+
   .points-card {
     width: 310px;
     height: 195px;
@@ -144,26 +157,27 @@
 
     &.green {
       background: url(./card-green.png);
-      .card-left {
-        color: #14b1bb;
+
+      .card-left, .exchange-btn, .countdown-cell {
+        color: $green;
       }
     }
     &.gold {
       background: url(./card-gold.png);
-      .card-left {
-        color: #bb8103;
+      .card-left, .exchange-btn, .countdown-cell {
+        color: $gold;
       }
     }
     &.red {
       background: url(./card-red.png);
-      .card-left {
-        color: #e84c4c;
+      .card-left, .exchange-btn, .countdown-cell {
+        color: $red;
       }
     }
     &.blue {
       background: url(./card-blue.png);
-      .card-left {
-        color: #4188d3;
+      .card-left, .exchange-btn, .countdown-cell {
+        color: $blue;
       }
     }
 
@@ -234,7 +248,7 @@
 
     .points-type {
       font-size: 14px;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       height: 20px;
     }
 
@@ -247,6 +261,8 @@
 
       .points-bottom-inner {
         display: flex;
+        align-items: center;
+        height: 28px;
       }
 
       .points-expire {
@@ -264,7 +280,6 @@
         height: 40px;
         box-shadow: 0px 1px 38px 0px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
-        color: $new-main-deep-color;
         font-size: 16px;
       }
       .points-bottom-btn {
@@ -298,7 +313,6 @@
       background-color: #ffffff;
       border-radius: 3px;
       font-size: 16px;
-      color: $new-main-deep-color;
       line-height: 28px;
       text-align: center;
     }

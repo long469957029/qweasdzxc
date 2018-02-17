@@ -53,6 +53,13 @@
         },
         immediate: true
       }
+    },
+    beforeRouteEnter (to, from, next) {
+      Velocity(document.body, 'scroll', {
+        offset: 0,
+        mobileHA: false
+      })
+      next()
     }
   }
 </script>

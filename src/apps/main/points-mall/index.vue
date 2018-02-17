@@ -9,15 +9,18 @@
       </div>
     </div>
     <div class="points-bottom">
-      <div class="points-bottom-inner">
-        <router-view></router-view>
+      <div class="points-bottom-inner clearfix">
+        <transition mode="out-in"
+          enter-active-class="animated-quick fadeIn"
+          leave-active-class="animated-quick fadeOut">
+          <router-view></router-view>
+        </transition>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
   import PointsTop from './points-top'
   import PointsNav from './points-nav'
 
@@ -27,7 +30,7 @@
     components: {
       PointsTop,
       PointsNav,
-    }
+    },
   }
 </script>
 
@@ -38,7 +41,7 @@
     /*background: url(./misc/background.jpg);*/
     color: $def-black-color;
     .points-top-main-wrapper {
-      background: url(./misc/bg-top.png);
+      background: url(./misc/bg-top.png) no-repeat;
     }
     .points-top-main {
       background: url(./misc/bg-top-texture.png);
@@ -52,7 +55,7 @@
       margin: 0 auto;
     }
     .points-bottom {
-      background: url(./misc/bg-bottom.jpg);
+      background: url(./misc/bg-bottom.jpg) repeat-x;
       min-height: 500px;
     }
   }

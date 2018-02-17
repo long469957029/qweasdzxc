@@ -132,7 +132,7 @@ $font-colors: (
   inverse: $new-inverse-color,
   dark: $new-dark-color,
   passion: $font-passion,
-  cool: $new-main-deep-color,
+  cool: $main-deep-color,
   sunshine: $color-sunshine,
   hot: $color-hot,
   pink: $new-pink-color,
@@ -170,11 +170,11 @@ $bg-main-font-color: $font-default;
 
 $bg-colors: (
   default: (bg: $font-default, color: $new-black-color),
-  deep: (bg: $new-main-deep-color, color: $def-white-color),
+  deep: (bg: $main-deep-color, color: $def-white-color),
   hot: (bg: $new-hot-color, color: $new-light-color),
   primary: (bg: $main-light-color, color: $new-light-color),
   black: (bg: $new-light-color, color: $new-black-color),
-  cool: (bg: $new-main-deep-color, color: $new-light-color),
+  cool: (bg: $main-deep-color, color: $new-light-color),
   footer: (bg: $new-main-body-color, color: $new-black-color),
   mute: (bg: $bg-mute, color: $bg-mute-font-color),
   info: (bg: $bg-info, color: $bg-info-font-color),
@@ -377,7 +377,7 @@ $radios: (
   inverse: (
     bg-color: $font-color,
     wrapper-color: $def-gray-color,
-    inner-color: $new-main-deep-color,
+    inner-color: $main-deep-color,
 
     disabled-bg-color: #70999e,
     disabled-wrapper-color: #989898,
@@ -627,7 +627,7 @@ $tables: (
     td-color: $new-inverse-color
   ),
   deep: (
-    th-bg-color: $new-main-deep-color,
+    th-bg-color: $main-deep-color,
     th-color: $font-color,
     td-bg-color: #1daab0,
     td-color: $font-color
@@ -701,12 +701,12 @@ $carousel-indicators-margin: 0 10px;
 
 $text-circle-colors: (
   default: (
-    color: $new-main-deep-color,
+    color: $main-deep-color,
     background: $def-white-color
   ),
   cool: (
     color: $new-light-color,
-    background: $new-main-deep-color
+    background: $main-deep-color
   ),
   pleasant: (
     color: $new-light-color,
@@ -740,14 +740,14 @@ $navTabs: (
     color: $new-inverse-color,
     bg-color: $new-light-color,
     active-color: $new-dark-color,
-    active-bg-color: $new-main-deep-color
+    active-bg-color: $main-deep-color
   ),
   inverse: (
     border-color: transparent,
     color: $def-black-color,
     bg-color: $new-main-body-color,
     active-color: $def-white-color,
-    active-bg-color: $new-main-deep-color
+    active-bg-color: $main-deep-color
   )
 );
 

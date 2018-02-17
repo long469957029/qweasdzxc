@@ -5,17 +5,17 @@
       <span class="tab-title">领券中心</span>
       <div class="divider-right"></div>
     </router-link>
-    <router-link tag="div" class="points-tab" :class="{active: $route.name === 'pointsCards'}" :to="{name: 'pointsCards'}">
+    <router-link tag="div" class="points-tab" :class="{active: $route.name === 'pointsGifts'}" :to="{name: 'pointsGifts'}">
       <div class="sfa sfa-pt-gifts"></div>
       <span class="tab-title">礼物兑换</span>
       <div class="divider-right"></div>
     </router-link>
-    <router-link tag="div" class="points-tab" :class="{active: $route.name === 'pointsGifts'}" :to="{name: 'pointsGifts'}">
+    <router-link tag="div" class="points-tab" :class="{active: $route.name === 'pointsLottery'}" :to="{name: 'pointsLottery'}">
       <div class="sfa sfa-pt-lottery"></div>
       <span class="tab-title">幸运夺宝</span>
       <div class="divider-right"></div>
     </router-link>
-    <router-link tag="div" class="points-tab" :class="{active: $route.name === 'pointsLottery'}" :to="{name: 'pointsLottery'}">
+    <router-link tag="div" class="points-tab" :class="{active: $route.name === 'pointsTask'}" :to="{name: 'pointsTask'}">
       <div class="sfa sfa-pt-task"></div>
       <span class="tab-title">任务奖励</span>
       <div class="divider-right"></div>
