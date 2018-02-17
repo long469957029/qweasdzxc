@@ -44,7 +44,7 @@ const verifyUserNameXhr = ({username, verifyCode}, then, fail) => {
  */
 const getSecurityQuestionXhr = ({username, loginToken}, then, fail) => {
   return $http({
-    url: '/acct/usersecurity/getqesforloginpwd.json',
+    url: '/acct/usersecurity/getUserQesForLoginPwd.json',
     data: {
       username,
       loginToken,
