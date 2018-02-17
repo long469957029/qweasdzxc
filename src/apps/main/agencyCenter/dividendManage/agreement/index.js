@@ -17,6 +17,11 @@ const AgreementView = Base.ItemView.extend({
   events: {
     'click .js-as-approve': 'approveHandler',
   },
+  serializeData(){
+    return {
+      dividendStatus : Global.memoryCache.get('acctInfo').dividendStatus
+    }
+  },
 
   getAgreementXhr() {
     return Global.sync.ajax({

@@ -86,6 +86,7 @@ const SignUserView = Base.ItemView.extend({
     // 公共
     this.$userName = this.$('input[name=username]')
     this.$agreement = this.$('.js-ac-dm-su-agreement')
+    this.$otherAgree = this.$('.js-ac-dm-su-other-agree')
     this.$btnNext = this.$('.js-ac-dm-su-agree')
     this.$form = this.$('.js-ac-signed-form')
     this.$form.parsley()
@@ -143,7 +144,11 @@ const SignUserView = Base.ItemView.extend({
                 self._getGameTable(res.root.otherGameDividCfgList)
               }
               self._initInputStatus()
-              self.$agreement.val(res.root.agreement)
+              if(_.isNull(res.root.agreement) || res.root.agreement === ''){
+                self.$otherAgree.addClass('hidden')
+              }else{
+                self.$agreement.val(res.root.agreement)
+              }
             }
           })
         // this._initQuota();
@@ -160,7 +165,11 @@ const SignUserView = Base.ItemView.extend({
               self.$gameIndent.removeClass('hidden')
               self._getGameTable(res.root.otherGameDividCfgList)
             }
-            self.$agreement.val(res.root.agreement)
+            if(_.isNull(res.root.agreement) || res.root.agreement === ''){
+              self.$otherAgree.addClass('hidden')
+            }else{
+              self.$agreement.val(res.root.agreement)
+            }
           }
         })
         this._initInputStatus()

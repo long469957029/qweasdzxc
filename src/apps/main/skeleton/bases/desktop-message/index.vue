@@ -68,13 +68,13 @@
         let info = this.info
         if(this.type !== 2){
           if(this.info.length > 42){
-            info = this.info.slice(0,42) + '<a class="text-cool">...【查看更多】</a>'
+            info = this.info.slice(0,42) + '...<a class="text-cool">【查看更多】</a>'
           }
         }
         return info
       },
       formateUrl:function () {
-        return this.type === 0 ? `#/uc/mg?id=${this.dataList[this.dataIndex].noticeId}` : (this.type === 1 ? '#/uc/fb' : '#/fc/rd')
+        return this.type === 0 ? `#/uc/mg?id=${this.dataList[this.dataIndex].noticeId}` : (this.type === 1 ? '#/uc/fb' : '#/fc/wd')
       }
     },
     methods: {

@@ -52,12 +52,15 @@ export default [
   {
     path: '/fc/wd',
     component: function(resolve) {
-      RouterController.async(resolve, WithdrawView, {
+      RouterController.async(resolve, FundRecordsView,{
+        triggerTab: 'record-withdraw'
+      }, {
         main: {
-          title: '在线提现',
+          title: '充提记录',
+          titleDes: '充提记录只保留30天数据。',
         },
         sidebar,
-        // activeMenu: 'fc/fm'
+        activeMenu: '/fc/rd'
       })
     },
   },

@@ -274,8 +274,7 @@ const OpenAccountManageView = Base.ItemView.extend({
 
     //
     $dialog.find('.js-ac-ocm-copy').textCopy({
-      text: `账号：${data.userName
-      }\n密码：${data.loginPwd
+      text: `账号：${data.userName}\n密码：${data.loginPwd
       }\n返点：${_(data.rebate).formatDiv(10, { fixed: 1 })}`,
       notShowToolTip: true,
     })
