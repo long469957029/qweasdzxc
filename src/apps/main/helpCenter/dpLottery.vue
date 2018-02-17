@@ -1,84 +1,172 @@
 <template>
-    <div>
-      <div class="rules-text-panel">
-        <div class="res-header">
-          规则与条款
+  <div>
+    <div class="rules-text-panel">
+      <div class="res-header">
+        3D/低频彩玩法规则
+      </div>
+      <div class="res-content">
+        <div class="res-desc">
+          3D<br/>
+          中国福利彩票3D游戏（以下简称3D），是一个以3位自然数为投注号码的彩票，投注者从000-999的数字中选择一个3位数进行投注。3D在各省（区、市）保留各自奖池、单独派奖的基础上实行三统一，即统一名称标识、统一游戏规则、统一开奖号码。开奖时间是每晚21:15。<br/>
+          P3/P5<br/>
+          排列3电脑体育彩票由国家体育总局体育彩票管理中心(以下简称“中体彩中心”)统一发行。购买“排列3”时，购买者需从000-999的数字中选取1个3位数为投注号码进行投注。彩票不记名、不挂失，不返还本金，不流通使用。购买者可在本平台进行投注。投注号码可由投注机随机产生，也可通过投注单将购买者选定的号码输入确定。投注号码经系统确认后即为“排列3” 体育彩票。开奖时间是每晚20:30。<br/>
         </div>
-        <div class="res-content">
-          <div class="res-desc">
-            一、 为避免于本网站投注时之争议，所有用户请务必于进入无限娱乐网站前详阅无限娱乐所定之各项规则，客户一旦进入无限娱乐时，即被视为已接受无限娱乐的所有协议与规则。
+        <div class="res-desc">
+          <div class="res-desc-tit">3D/低频彩销售和开奖时间</div>
+          <div class="res-desc-table">
+            <table>
+              <thead>
+              <tr>
+                <td width="20%">彩种</td>
+                <td width="30%">销售时间</td>
+                <td width="25%">期数间隔</td>
+                <td width="25%">总期数</td>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>福彩3D</td>
+                <td>00:00 - 20:20</td>
+                <td>24小时</td>
+                <td>1期</td>
+              </tr>
+              <tr>
+                <td>P3/P5</td>
+                <td>00:00 - 20:20</td>
+                <td>24小时</td>
+                <td>1期</td>
+              </tr>
+              <tr>
+                <td>QQ3D分分彩</td>
+                <td>00:00 - 24:00</td>
+                <td>每期1分钟</td>
+                <td>1440期</td>
+              </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="res-desc">
-            二、 请定期修改自己的登录密码及资金密码，会员有责任确保自己的帐户以及登入资料的保密性，以会员帐号及密码进行的任何网上投注，将被视为有效。
-            敬请不定时做密码变更之动作。若帐号密码被盗用，进行的投注，无限娱乐一概不负赔偿责任。
-          </div>
-          <div class="res-desc">
-            三、 投注相关条款：<br>
-            ①网上投注如未能成功提交，投注将被视为无效。<br>
-            ②凡玩家于开奖途中且尚无结果前自动或强制断线时，并不影响开奖结算之结果。<br>
-            ③若遇官网未开奖或开奖结果错误，本平台将根据实际情况做退奖退买处理；<br>
-            ④如遇发生不可抗拒之灾害，骇客入侵，网络问题造成数据丢失的情况，以平台公告为最终方案。<br>
-            ⑤无限娱乐将会对所有的电子交易进行记录，如有任何争议，本公司将会以注单记录为准。<br>
-          </div>
-          <div class="res-desc">
-            四、 若经本公司发现会员以不正当手法<利用外挂程式>
-            进行投注或以任何非正常方式进行的个人、团体投注有损公司利益之投注情事发生，
-            本公司保留权利取消该类注单以及注单产生的收益，并停用该会员帐号。
-            无论代理还是会员，发现漏洞隐瞒不报，利用漏洞恶意刷钱、通过非法手段作弊、或造谣污蔑，攻击平台者，
-            经平台核实后一律无条件永久冻结账号处理，账号所有金钱概不退还。另外，所有会员参与平台的活动时，投注彩票类游戏时不可超过总注数的70%。
-          </div>
-          <div class="res-desc">
-            五、 若无限娱乐发现会员有重复申请帐号行为时，保留取消、收回会员所有优惠，以及优惠所产生的盈利权利。
-            每位玩家、每一住址、每一电子邮箱、每一电话号码、相同支付卡/信用卡号码，
-            以及共享电脑环境 (例如:网吧、其他公共用电脑等)只能够拥有一个会员帐号，各项优惠只适用于每位客户在本公司唯一的帐户。
-          </div>
-          <div class="res-desc">
-            六、本平台高频彩种每期最高奖金限额400000.00元，超出按400000.00元计算，超出的奖金无效并清0。
-          </div>
-          <div class="res-desc">
-            七、单挑奖金限额50,000元，超出限额的奖金不予发放。<br>
-            单挑模式说明：<br>
-            理论中奖金额大于投注本金99倍的订单即为单挑模式。<br>
-            玩法及注数包括：<br>
-            【高频时时彩以及低频彩系列】<br>
-            [五星直选]1000注包含以内，<br>
-            [四星直选]100注包含以内，<br>
-            [四星组选24]4注包含以内，<br>
-            [四星组选12]8注包含以内，<br>
-            [四星组选6]16注包含以内，<br>
-            [四星组选4]25注包含以内，<br>
-            [三星直选]10注包含以内，<br>
-            [三星直选和值]10注包含以内，<br>
-            [三星组六]1注，<br>
-            [三星组三]3注包含以内，<br>
-            [组选和值]2注包含以内，<br>
-            [二星直选]1注，<br>
-            [二星直选和值]1注。<br>
-            【高频PK10以及11选5系列】<br>
-            [前二玩法]1注，<br>
-            [前三玩法]10注包含以内，<br>
-            [任选五中五]以及[任选五中五胆拖]5注包含以内等。<br>
-            同一IP地址包括共享电脑环境(如网吧等)、多帐号投注，每期单挑盈利奖金视为同一会员投注。
-          </div>
-          <div class="res-desc">
-            八、 平台取款时间为上午10:00-凌晨02:00，其他时间提款不排除会出现延误情况，并与提款银行维护等特殊情况有关；
-            平台每日最多提款30次，单笔最低提款100元，单笔最高50000元，超过次数的提现将收取1%的手续费，最高为50元。
-          </div>
-          <div class="res-desc">
-            九、 为了防止有人恶意洗钱，会员提款必须要消费充值的20%方可进行，真人类娱乐需消费1倍流水才可出款，否则财务不予受理。
-          </div>
-          <div class="res-desc">
-            十、 平台客服没有任何QQ及其他联系方式，唯一途经点击菜单栏客服热线跳转至在线客服，其他均为假冒，请牢记，因此类问题上当受骗平台慨不负责。
-          </div>
-          <div class="res-desc">
-            十一、 银行转账或支付宝转账等充值账号会不定期更换，请每次充值前务必打开充值界面获取最新收款账号，如自己充错造成的任何损失自由承担，与平台无关。
-          </div>
-          <div class="res-desc">
-            十二、 无限娱乐保留不定时修改或增加本协定或游戏规则或保密条例等的操作权利，更改条款将从更改发生后立即生效，并保留一切有争议事项及最后的决策权。
+        </div>
+        <div class="res-desc">
+          <div class="res-desc-tit">3D/低频彩玩法说明</div>
+          <div class="res-desc-table">
+            <table>
+              <thead>
+              <tr>
+                <td width="15%">玩法群</td>
+                <td width="15%">玩法组</td>
+                <td width="15%">玩法</td>
+                <td width="30%">玩法说明</td>
+                <td width="25%">中奖示例</td>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td rowspan="7">三星</td>
+                <td rowspan="3">三星直选</td>
+                <td>直选复式</td>
+                <td style="text-align: left;">从百位、十位、个位中选择一个3位数号码组成一注，所选号码与开奖号码相同，且顺序一致，即为中奖。</td>
+                <td style="text-align: left;">如：选择123，开奖号码为是123，即为中奖。</td>
+              </tr>
+              <tr>
+                <td>直选单式</td>
+                <td style="text-align: left;">手动输入一个3位数号码组成一注，所选号码与开奖号码相同，且顺序一致，即为中奖。</td>
+                <td style="text-align: left;">如：手动输入123，开奖号码为是123，即为中奖。</td>
+              </tr>
+              <tr>
+                <td>直选和值</td>
+                <td style="text-align: left;">所选数值等于开奖号码的三个数字相加之和，即为中奖。</td>
+                <td style="text-align: left;">如：选择6，开奖号码为123、141、114、006、060等任意一个和值为6的结果，即为中奖。</td>
+              </tr>
+              <tr>
+                <td rowspan="4">三星组选</td>
+                <td>组三</td>
+                <td style="text-align: left;">从0-9中任意选择2个数字组成两注，所选号码与开奖号码相同，顺序不限，即为中奖。</td>
+                <td style="text-align: left;">如：选择12（展开为122，212，221 和 112、121、211），开奖号码为212 或 121，即为中奖。</td>
+              </tr>
+              <tr>
+                <td>组六</td>
+                <td style="text-align: left;">从0-9中任意选择3个号码组成一注，所选号码与开奖号码相同，顺序不限，即为中奖。</td>
+                <td style="text-align: left;">如：选择123（展开为123，132，231，213，312，321），开奖号码为321，即为中奖。</td>
+              </tr>
+              <tr>
+                <td>组选和值</td>
+                <td style="text-align: left;">所选数值等于开奖号码的三个数字相加之和，即为中奖。</td>
+                <td style="text-align: left;">如：选择6，开奖号码为114中组三奖，开奖号码为015中组六奖。</td>
+              </tr>
+              <tr>
+                <td>混合组选</td>
+                <td style="text-align: left;">手动输入购买号码，3个数字为一注，开奖号码符合组三或组六均为中奖。</td>
+                <td style="text-align: left;">如：选择123、455，开奖号码为321即中组六奖，开奖号码为545即中组三奖。</td>
+              </tr>
+              <tr>
+                <td rowspan="8">二星</td>
+                <td rowspan="4">二星直选</td>
+                <td>前二直选复式</td>
+                <td style="text-align: left;">从百位和十位上至少各选1个号码，所选号码与开奖号码百位、十位相同，且顺序一致，即为中奖。</td>
+                <td style="text-align: left;">如：选择号码34，开出34*即为中奖。</td>
+              </tr>
+              <tr>
+                <td>前二直选单式</td>
+                <td style="text-align: left;">手动输入一个2位数号码组成一注，所选号码与开奖号码的百位、十位相同，且顺序一致，即为中奖。</td>
+                <td style="text-align: left;">如：手动输入12，开奖号码为是12*，即为中奖。</td>
+              </tr>
+              <tr>
+                <td>后二直选复式</td>
+                <td style="text-align: left;">从十位和个位上至少各选1个号码，所选号码与开奖号码的十位、个位相同，且顺序一致，即为中奖。</td>
+                <td style="text-align: left;">如：选择号码34，开出*34，即为中奖。</td>
+              </tr>
+              <tr>
+                <td>后二直选单式</td>
+                <td style="text-align: left;">手动输入一个2位数号码组成一注，所选号码与开奖号码的十位、个位相同，且顺序一致，即为中奖。</td>
+                <td style="text-align: left;">如：手动输入12，开奖号码为是*12，即为中奖。</td>
+              </tr>
+              <tr>
+                <td rowspan="4">二星组选</td>
+                <td>前二组选复式</td>
+                <td style="text-align: left;">从0-9中选2个号码组成一注，所选号码与开奖号码的百位、十位相同，顺序不限，即为中奖。</td>
+                <td style="text-align: left;">如：百位选择7，十位选择8，开奖号码78*或87*，即为中奖。</td>
+              </tr>
+              <tr>
+                <td>前二组选单式</td>
+                <td style="text-align: left;">手动输入购买号码，2个数字为一注，所选号码与开奖号码的百位、十位相同，顺序不限，即为中奖。</td>
+                <td style="text-align: left;">如：手动输入12，开奖号码为是21*或12*，即为中奖。</td>
+              </tr>
+              <tr>
+                <td>后二组选复式</td>
+                <td style="text-align: left;">从0-9中选2个号码组成一注，所选号码与开奖号码的十位、个位相同，顺序不限，即为中奖。</td>
+                <td style="text-align: left;">如：十位选择7，个位选择8，开奖号码*78或*87，即为中奖。</td>
+              </tr>
+              <tr>
+                <td>后二组选单式</td>
+                <td style="text-align: left;">手动输入购买号码，2个数字为一注，所选号码与开奖号码的十位、个位相同，顺序不限，即为中奖。</td>
+                <td style="text-align: left;">如：手动输入12，开奖号码为是*21或者*12，即为中奖。</td>
+              </tr>
+              <tr>
+                <td>定位胆</td>
+                <td>定位胆</td>
+                <td>定位胆</td>
+                <td style="text-align: left;">从百位、十位、个位任意1个位置或多个位置上选择1个号码，所选号码与相同位置上的开奖号码一致，即为中奖。</td>
+                <td style="text-align: left;">如：定百位为3，开奖号码为3**，即为中奖。</td>
+              </tr>
+              <tr>
+                <td rowspan="2">不定位</td>
+                <td rowspan="2">不定位</td>
+                <td>一码不定位</td>
+                <td style="text-align: left;">从0-9中选择1个号码，每注由1个号码组成，只要开奖结果中包含所选号码，即为中奖。</td>
+                <td style="text-align: left;">如：选择一码不定位4，开出4**、*4*、**4，即为中奖。</td>
+              </tr>
+              <tr>
+                <td>二码不定位</td>
+                <td style="text-align: left;">从0-9中选择2个号码，每注由2个号码组成，只要开奖结果中包含所选2个号码，即为中奖。</td>
+                <td style="text-align: left;">如：选择二码不定位45，开出45*、54*、*54、*45、5*4、4*5，即为中奖。</td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 <script>
     export default{
@@ -111,17 +199,48 @@
   .rules-text-panel{
     .res-header {
       padding: 14px 20px;
-      color: #333333;
+      color: $def-black-color;
       font-weight: 600;
-      border-bottom: 1px solid #e6e6e6;
+      border-bottom: 1px solid $im-line-color;
       font-size: 14px;
     }
     .res-content{
-      color: #666666;
+      color: $def-black-color;
       padding: 10px 20px;
       font-size: 12px;
       .res-desc{
         padding: 10px 0;
+        .res-desc-tit {
+          font-size: 14px;
+          color: $main-deep-color;
+        }
+        .res-desc-second-tit {
+          font-size: 14px;
+        }
+      }
+    }
+    .res-desc-table {
+      margin-top: 10px;
+      table {
+        width: 870px;
+        border: 1px solid $im-line-color;
+        thead {
+          background-color: $sec-line-color;
+        }
+        tr,td {
+          height: 35px;
+          line-height: 35px;
+          text-align: center;
+        }
+        tr {
+          border-bottom: 1px solid $im-line-color;
+        }
+        td {
+          border-right: 1px solid $im-line-color;
+          padding: 5px 10px;
+          line-height: 20px;
+          text-align: center;
+        }
       }
     }
   }

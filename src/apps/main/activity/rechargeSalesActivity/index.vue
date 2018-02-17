@@ -81,22 +81,7 @@
     components: {},
 
     mounted () {
-      activityInfo.getRechargeSalesInfo(
-        ({data}) => {
-          if (data && data.result === 0) {
-              if(!available){
-                this.salesList = data.root.itemList
-                this.fromTime = _(data.root.fromDate).toDate('YYYY年M月D日')
-                this.endTime = _(data.root.endDate).toDate('YYYY年M月D日')
-                this.cycle = data.root.cycle
-              }else{
-                Global.ui.notification.show('您的账号暂时无法参与该活动，请与上级联系确认！')
-              }
-          }else{
-            Global.ui.notification.show('数据请求失败')
-          }
-        }
-      )
+      this.getActivityInfo()
     },
 
     watch: {},
@@ -106,12 +91,31 @@
     filters: {},
 
     methods: {
+      getActivityInfo(){
+        activityInfo.getRechargeSalesInfo(
+          ({data}) => {
+            if (data && data.result === 0) {
+              if(data.root.available){
+                this.salesList = data.root.itemList
+                this.fromTime = _(data.root.fromDate).toDate('YYYY年M月D日')
+                this.endTime = _(data.root.endDate).toDate('YYYY年M月D日')
+                this.cycle = data.root.cycle
+              }else{
+                Global.ui.notification.show('您的账号暂时无法参与该活动，请与上级联系确认！')
+              }
+            }else{
+              Global.ui.notification.show('数据请求失败')
+            }
+          }
+        )
+      },
       submitReceive(){
         activityInfo.doRechargeSalesPlan ({
           cycle:this.cycle
-        },(data)=>{
+        },({data})=>{
             if(data.result === 0){
               Global.ui.notification.show('奖励领取成功')
+              this.getActivityInfo()
             }else{
               Global.ui.notification.show('数据请求失败')
             }

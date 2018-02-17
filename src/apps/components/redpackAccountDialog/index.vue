@@ -78,7 +78,7 @@
         this.$emit('next')
       },
       openBtn(){
-        this.redPackType === 0 ? this.openRedPack = !this.openRedPack : this.getAward
+        this.redPackType === 0 ? this.openRedPack = !this.openRedPack : this.getAward()
       }
     },
     mounted(){

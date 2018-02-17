@@ -96,10 +96,11 @@
       'bettingInfo.planId': {
         handler(newPlanId, oldPlanId) {
           if (this.$el.offsetWidth && newPlanId !== '------------' && oldPlanId !== '------------' && !this.bettingInfo.pending) {
-            Global.ui.notification.show(
-              `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
-              {id: 'ticketNotice', hasFooter: false, displayTime: 800},
-            )
+            // Global.ui.notification.show(
+            //   `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
+            //   {id: 'ticketNotice', hasFooter: false, displayTime: 800},
+            // )
+            this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE,{show:true,dataInfo:{type:3, oldPlanId, newPlanId}})
           }
         }
       },

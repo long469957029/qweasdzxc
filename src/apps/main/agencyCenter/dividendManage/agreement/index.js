@@ -137,7 +137,12 @@ const AgreementView = Base.ItemView.extend({
                     Global.ui.notification.show('拒绝分红协议成功。', {
                       event() {
                         Global.m.oauth.check()
-                        Global.router.goTo('')
+                        const acctInfo = Global.memoryCache.get('acctInfo')
+                        if(acctInfo.dividendStatus === 0 || acctInfo.dividendStatus === 1){
+                          Global.router.goTo('ac/to')
+                        }else{
+                          Global.router.goTo('ac/dm')
+                        }
                       },
                     })
                   }

@@ -15,7 +15,11 @@ const initState = () => {
     gameDownLoadId: '',
     openNovicePackage: false,
     userIsVip: true,
-    // openNovicePackageType: '',
+    openDeskTopMsg:false,
+    deskTopData:{},
+    requestFormTestServer: false,
+    testServerPrefix: 'testv3',
+    universalToken: '000-000-000-000-player125',
   }
 }
 
@@ -51,9 +55,12 @@ const getters = {
   userIsVip: (state) => {
     return state.userIsVip
   },
-  // openNovicePackageType: (state) => {
-  //   return state.openNovicePackageType
-  // }
+  openDeskTopMsgStatus: (state) => {
+    return state.openDeskTopMsg
+  },
+  openDeskTopData: (state) => {
+    return state.deskTopData
+  }
 }
 
 // actions
@@ -96,6 +103,13 @@ const mutations = {
     } else if (data === 0) {
       state.userIsVip = false
     }
+  },
+  [types.TOGGLE_DESKTOP_MESSAGE](state, data) {
+    state.openDeskTopMsg = data.show
+    state.deskTopData = data.dataInfo
+  },
+  [types.SET_REQUEST_FROM_TEST_SERVER](state, data) {
+    state.requestFormTestServer = data.requestFormTestServer
   },
 }
 

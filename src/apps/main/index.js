@@ -21,6 +21,7 @@ import LoginLauncher from 'skeleton/bases/loginLauncher'
 import FreeTrial from 'skeleton/bases/freeTrial'
 import DialogManage from 'skeleton/bases/dialogManage'
 import GameDownLoad from 'gameCenter/downLoad'
+import DesktopMessage from 'skeleton/bases/desktop-message'
 // import novicePackage from 'activity/novicePackageActivity'
 
 
@@ -139,6 +140,7 @@ Global.m.oauth.check()
         FreeTrial,
         DialogManage,
         GameDownLoad,
+        DesktopMessage
         // novicePackage,
       },
       store,
@@ -152,6 +154,7 @@ Global.m.oauth.check()
           'freeTrialStatus',
           'getLoginStatus',
           'gameDownLoadStatus',
+          'openDeskTopMsgStatus'
         ]),
       },
     })

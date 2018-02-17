@@ -54,6 +54,9 @@ const NewsMediatorModule = Base.Module.extend({
           }, {
             parse: true,
           })
+          if(!_(res.root.popList).isEmpty()){
+            app.$store.commit(types.TOGGLE_DESKTOP_MESSAGE,{show:true,dataInfo:res.root.popList })
+          }
           Global.m.publish('news:updating', self.model)
         }
       })

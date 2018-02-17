@@ -1,22 +1,29 @@
 <template>
   <div>
-    <div class="new-text-panel">
+    <div class="rules-text-panel">
       <div class="res-header">
-        品牌新闻
+        提款流程
       </div>
-      <div class="new-text-title">【网易新闻】</div>
-      <div class="new-text wangyi">
-        <a class="new-text-url" href="http://sx.news.163.com/15/1204/18/BA0TKL7S033613CK.html" target="_blank">“大航海”时代 无限娱乐对游戏平台做出新诠释</a>
-      </div>
-      <div class="new-text-title">【新浪新闻】</div>
-      <div class="new-text xinlang">
-        <a class="new-text-url"
-           href="http://zj.sina.com.cn/finance/xfgz/2015-12-02/detail_finance-ifxmazmy2366325.shtml"
-           target="_blank">释放基因中的野性与热血 无限娱乐进军娱乐电游市场</a>
-      </div>
-      <div class="new-text-title">【腾讯新闻】</div>
-      <div class="new-text tengxun">
-        <a class="new-text-url" href="http://sx.news.163.com/15/1204/18/BA0TKL7S033613CK.html" target="_blank">无限娱乐：当游戏平台与互联网邂逅</a>
+      <div class="res-content">
+        <div class="res-desc">
+          第一步：点击个人头像进入个人中心里的资金总览界面，找到并点击提现。
+        </div>
+        <div class="res-desc">
+          <img src="./misc/drawing-1.png" />
+        </div>
+        <div class="res-desc">
+          第二步：在弹出的提现界面上，选择您需要提现的银行卡，输入提现的金额，以及资金密码。<br/>
+          注：未绑定过银行卡的用户需要先前往银行卡管理中先绑定提现银行卡。
+        </div>
+        <div class="res-desc">
+          <img src="./misc/drawing-2.png" />
+        </div>
+        <div class="res-desc">
+          第三步：提现申请提交后，请耐心等待系统处理，您可以在个人中心的充提记录中查看提现进度情况。
+        </div>
+        <div class="res-desc">
+          <img src="./misc/drawing-3.png" />
+        </div>
       </div>
     </div>
   </div>
@@ -49,40 +56,27 @@
 </script>
 
 <style lang="scss" scoped>
-  .new-text-panel {
+  .rules-text-panel{
     .res-header {
       padding: 14px 20px;
-      color: #333333;
+      color: $def-black-color;
       font-weight: 600;
-      border-bottom: 1px solid #e6e6e6;
+      border-bottom: 1px solid $im-line-color;
       font-size: 14px;
     }
-    .new-text-title {
-      margin-left: 10px;
-      margin-top: 20px;
-      font-size: 16px;
-      color: #333333;
-    }
-    .new-text {
-      line-height: 16px;
-      margin: 20px;
-      font-size: 16px;
-      border-bottom: 1px solid #14b1bb;
-      padding-bottom: 3px;
-      .new-text-url{
-        color: #14b1bb;
-      }
-      &.wangyi{
-        margin-left: 20px;
-        width: 342px;
-      }
-      &.xinlang{
-        width: 373px;
-        margin-left: 20px;
-      }
-      &.tengxun{
-        width: 258px;
-        margin-left: 20px;
+    .res-content{
+      color: $def-black-color;
+      padding: 10px 20px;
+      font-size: 12px;
+      .res-desc{
+        padding: 10px 0;
+        .res-desc-tit {
+          font-size: 14px;
+          color: $main-deep-color;
+        }
+        .res-desc-second-tit {
+          font-size: 14px;
+        }
       }
     }
   }
