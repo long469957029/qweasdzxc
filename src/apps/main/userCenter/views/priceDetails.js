@@ -272,7 +272,7 @@ const TrackRecordsView = TabView.extend({
           })
 
           bonusMin = bonusMinHtml
-          bonusMax = bonusMaxHtml
+          bonusMax = `<span class="text-prominent">${bonusMaxHtml}</span>`
         } else {
           const bonusMinObj = _(play.betBonus).min((bonus) => { return bonus.betMethodMin })
           const bonusMaxObj = _(play.betBonus).max((bonus) => { return bonus.betMethodMin })

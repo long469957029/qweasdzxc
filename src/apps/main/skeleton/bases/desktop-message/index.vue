@@ -19,8 +19,8 @@
           <div class="msg-main">
             <div class="title">温馨提示</div>
             <div class="info">
-              <div>第<span class="text-prominent">{{oldPlanId}}</span>期已结束</div>
-              <div>当前为<span class="text-prominent">{{newPlanId}}</span>期</div>
+              <div>第<a class="text-prominent">{{oldPlanId}}</a>期已结束</div>
+              <div>当前为<a class="text-prominent">{{newPlanId}}</a>期</div>
               <div>投注时请注意期号！</div>
             </div>
           </div>
@@ -68,7 +68,7 @@
         let info = this.info
         if(this.type !== 2){
           if(this.info.length > 42){
-            info = this.info.slice(0,42) + '<span class="text-cool">...【查看更多】</span>'
+            info = this.info.slice(0,42) + '<a class="text-cool">...【查看更多】</a>'
           }
         }
         return info
