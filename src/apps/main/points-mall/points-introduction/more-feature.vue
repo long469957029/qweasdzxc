@@ -6,7 +6,7 @@
         <transition enter-active-class="animated-slow fadeInUp">
           <timeout-cell class="feature-cell finished" :time="300">
             <div class="feature-icon">
-              <div class="sfa-pt-intro-m-task"></div>
+              <div class="sfa sfa-pt-intro-m-task"></div>
             </div>
             <div class="cell-main">
               <div class="feature-title">任务奖励</div>
@@ -19,9 +19,9 @@
         </transition>
 
         <transition enter-active-class="animated-slow fadeInUp">
-          <timeout-cell class="feature-cell finished" :time="100">
+          <timeout-cell class="feature-cell finished" :time="500">
             <div class="feature-icon">
-              <div class="sfa-pt-intro-m-lottery"></div>
+              <div class="sfa sfa-pt-intro-m-lottery"></div>
             </div>
             <div class="cell-main">
               <div class="feature-title">幸运夺宝</div>
@@ -29,43 +29,58 @@
             </div>
           </timeout-cell>
         </transition>
-        <timeout-cell class="feature-line" :time="100"></timeout-cell>
+        <transition enter-active-class="animated-slow fadeInUp">
+          <timeout-cell class="feature-line" :time="500"></timeout-cell>
+        </transition>
 
-        <timeout-cell class="feature-cell" :time="0">
-          <div class="feature-icon">
-            <div class="sfa-pt-intro-m-ticket"></div>
-          </div>
-          <div class="cell-main">
-            <div class="feature-title">优惠券秒杀</div>
-            <div class="feature-brief">每天限时推出的超值优惠券，数量有限<br>准点开杀，买到就是赚到。</div>
-          </div>
-        </timeout-cell>
-        <timeout-cell class="feature-line" :time="100"></timeout-cell>
+        <transition enter-active-class="animated-slow fadeInUp">
+          <timeout-cell class="feature-cell" :time="700">
+            <div class="feature-icon">
+              <div class="sfa sfa-pt-intro-m-ticket"></div>
+            </div>
+            <div class="cell-main">
+              <div class="feature-title">优惠券秒杀</div>
+              <div class="feature-brief">每天限时推出的超值优惠券，数量有限<br>准点开杀，买到就是赚到。</div>
+            </div>
+          </timeout-cell>
+        </transition>
+        <transition enter-active-class="animated-slow fadeInUp">
+          <timeout-cell class="feature-line" :time="700"></timeout-cell>
+        </transition>
 
-        <timeout-cell class="feature-cell" :time="0">
-          <div class="feature-icon">
-            <div class="sfa-pt-intro-m-gift"></div>
-          </div>
-          <div class="cell-main">
-            <div class="feature-title">赠送</div>
-            <div class="feature-brief">想感谢好友，兑换优惠券或者是礼物<br>平台将会帮你转交给他哦。</div>
-          </div>
-        </timeout-cell>
-        <timeout-cell class="feature-line" :time="100"></timeout-cell>
+        <transition enter-active-class="animated-slow fadeInUp">
+          <timeout-cell class="feature-cell" :time="900">
+            <div class="feature-icon">
+              <div class="sfa sfa-pt-intro-m-gift"></div>
+            </div>
+            <div class="cell-main">
+              <div class="feature-title">赠送</div>
+              <div class="feature-brief">想感谢好友，兑换优惠券或者是礼物<br>平台将会帮你转交给他哦。</div>
+            </div>
+          </timeout-cell>
+        </transition>
 
-        <timeout-cell class="feature-cell" :time="0">
-          <div class="feature-icon">
-            <div class="sfa-pt-intro-m-transaction"></div>
-          </div>
-          <div class="cell-main">
-            <div class="feature-title">交易中心</div>
-            <div class="feature-brief">有多余的券，手头有点紧，用积分兑换好礼后<br>直接放在交易中心出售，赚钱超简单！</div>
-          </div>
-        </timeout-cell>
+        <transition enter-active-class="animated-slow fadeInUp">
+          <timeout-cell class="feature-line" :time="900"></timeout-cell>
+        </transition>
+
+        <transition enter-active-class="animated-slow fadeInUp">
+          <timeout-cell class="feature-cell" :time="1100">
+            <div class="feature-icon">
+              <div class="sfa sfa-pt-intro-m-transaction"></div>
+            </div>
+            <div class="cell-main">
+              <div class="feature-title">交易中心</div>
+              <div class="feature-brief">有多余的券，手头有点紧，用积分兑换好礼后<br>直接放在交易中心出售，赚钱超简单！</div>
+            </div>
+          </timeout-cell>
+        </transition>
       </div>
-      <div class="feature-display">
-        <div class="sfa-pt-intro-m-bg"></div>
-      </div>
+      <transition enter-active-class="animated-slow fadeInRight">
+        <timeout-cell class="feature-display" :time="900">
+          <div class="sfa-pt-intro-m-bg"></div>
+        </timeout-cell>
+      </transition>
     </div>
   </div>
 </template>
@@ -124,6 +139,12 @@
     border: solid 2px #e6e6e6;
     border-radius: 50%;
     margin-right: 20px;
+
+    &:hover {
+      .sfa {
+        animation: icon-rotate 2s ease-in-out 1s infinite;
+      }
+    }
   }
 
   .feature-title {
@@ -131,6 +152,7 @@
     color: #3a7f87;
     margin-bottom: 10px;
   }
+
   .feature-brief {
     font-size: 14px;
     color: #999999;
@@ -152,4 +174,13 @@
     margin-top: 64px;
   }
 
+
+  @keyframes icon-rotate {
+    from {
+
+    }
+    to {
+      transform: rotateY(720deg);
+    }
+  }
 </style>
