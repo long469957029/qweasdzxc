@@ -10,14 +10,17 @@
     </div>
     <div class="points-bottom">
       <div class="points-bottom-inner clearfix">
-        <router-view></router-view>
+        <transition mode="out-in"
+          enter-active-class="animated-quick fadeIn"
+          leave-active-class="animated-quick fadeOut">
+          <router-view></router-view>
+        </transition>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
   import PointsTop from './points-top'
   import PointsNav from './points-nav'
 
@@ -27,7 +30,7 @@
     components: {
       PointsTop,
       PointsNav,
-    }
+    },
   }
 </script>
 
