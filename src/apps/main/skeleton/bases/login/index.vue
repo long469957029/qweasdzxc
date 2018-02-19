@@ -130,7 +130,6 @@
             // int BYSUPER = 106;// 总代开户
             const acctInfo = data.root || {}
             window.Global.cookieCache.clear('isTestUser')//登录的账户区别于试玩账户
-            this.$store.commit(types.SET_IS_TEST_USER,{'isTestUser': false})
             if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
               this.autoLogoutCountdown(acctInfo.outTime)
             }
