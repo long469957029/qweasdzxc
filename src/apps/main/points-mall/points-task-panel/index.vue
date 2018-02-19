@@ -49,7 +49,7 @@
 </template>
 
 <script>
-  import {missonListApi} from 'api/points'
+  import {missionListApi} from 'api/points'
 
   import TaskCard from './task-card'
 
@@ -154,7 +154,7 @@
     },
 
     mounted() {
-      missonListApi(({data}) => {
+      missionListApi(({data}) => {
         if (data && data.result === 0) {
           this.daily = data.root.daily
           this.week = data.root.week

@@ -96,7 +96,13 @@ const lotteryApi = ({type, lotteryType = 0, }, then, fail) => {
     .catch(fail)
 }
 
-const missonListApi = (then, fail) => {
+/**
+ * 任务列表
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const missionListApi = (then, fail) => {
   return $http({
     url: '/mall/mission/list.json',
   })
@@ -104,10 +110,26 @@ const missonListApi = (then, fail) => {
     .catch(fail)
 }
 
+/**
+ * 取得签到信息
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getSignInInfoApi = (then, fail) => {
+  return $http({
+    url: 'mall/mission/signInfo.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+
 export {
   getCouponListApi,
   getGiftListApi,
   getTaskListApi,
   lotteryApi,
-  missonListApi,
+  missionListApi,
+  getSignInInfoApi,
 }

@@ -36,10 +36,10 @@
               升级到LV4即可享受9.5折兑换特权
             </div>
           </div>
-          <div class="points-exchange-btn">
+          <router-link class="points-exchange-btn" :to="{name: 'ticketRecords'}" tag="div">
             <span class="sfa sfa-pt-my-points"></span>
             我的积分与兑换
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -49,10 +49,15 @@
           <img :src="banner"/>
         </swiper-item>
       </swiper>
-      <div class="sign-in">
+      <div class="sign-in" @click="showSignIn">
         <div class="sfa sfa-pt-sign-in"></div>
         签到
       </div>
+    </div>
+    <div v-transfer-dom>
+      <x-dialog v-if="isShowSignIn" @modal-hidden="isShowSignIn = false">
+        <sign-in slot="all"></sign-in>
+      </x-dialog>
     </div>
   </div>
 </template>
@@ -75,7 +80,8 @@
 
     data() {
       return {
-        banner
+        banner,
+        isShowSignIn: false
       }
     },
 
@@ -87,6 +93,12 @@
       ...mapGetters([
         'userAvatar'
       ])
+    },
+
+    methods: {
+      showSignIn() {
+        this.isShowSignIn = true
+      }
     }
   }
 </script>

@@ -9,7 +9,7 @@
     "backbone": "~1.2.3",
     "bxslider": "^4.2.13",
     "csshake": "^1.5.2",
-    "gsap": "^1.20.2",
+    "gsap": "^1.20.4",
     "imagemin-svgo": "^6.0.0",
     "install": "^0.10.2",
     "jquery": "1.11.2",

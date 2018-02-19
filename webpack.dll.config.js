@@ -21,6 +21,7 @@ module.exports = {
       'underscore',
       'lodash',
       'jquery-slimscroll',
+      'gsap',
       'jquery',
       'velocity-animate',
       './src/base/build.base.dll.js',

@@ -9,7 +9,9 @@ import {
   BusPlugin,
   CustomCheckbox,
   Popover,
+  TransferDom,
 } from 'build'
+
 import store from '../store/index'
 
 import MainHeader from 'skeleton/bases/header'
@@ -35,6 +37,7 @@ Vue.component('slot-static-grid', SlotStaticGrid)
 Vue.component('custom-checkbox', CustomCheckbox)
 Vue.component('animated-integer', AnimatedInteger)
 Vue.component('x-dialog', XDialog)
+Vue.directive('TransferDom', TransferDom)
 
 require('widgets')
 
