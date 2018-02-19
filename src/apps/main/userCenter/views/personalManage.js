@@ -118,13 +118,11 @@ const PersonalManageView = Base.ItemView.extend({
 
   formateHeadIconList(data) {
     if ('LIST:' + data) {
-      console.log(data)
       this.$headIconList.empty()
       const html =  _(data).map((item) => {
         return `<li class="icon-info js-head-icon-info ${Number(item.id) === this.iconId ? 'active' : ''}" 
             data-id="${item.id}"><img src="${item.logo}" class="head-img"></li>`
       })
-      console.log(html)
       this.$headIconList.html(html.join(''))
     }
   },
@@ -143,6 +141,10 @@ const PersonalManageView = Base.ItemView.extend({
     this.$province.attr('data-id', data.receiverProvinceId).html(pName)
     this.$city.attr('data-id', data.receiverCityId).html(cName)
     this.$area.attr('data-id', data.receiverAreaId).html(aName)
+   this.chooseProvince = pInfo.cityList
+    this.formateProvinceList(this.cityList,1)
+    this.formateProvinceList(pInfo.cityList,2)
+    this.formateProvinceList(cInfo.areaList,3)
   },
   formateProvinceList(data, type) {
     if (data) {

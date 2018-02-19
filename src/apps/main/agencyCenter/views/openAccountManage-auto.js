@@ -146,7 +146,7 @@ const OpenAccountManageView = Base.ItemView.extend({
   },
   inputRebateHandler(e) {
     const $target = $(e.currentTarget)
-    const rebate = $target.val()
+    const rebate = Number($target.val())
     if (rebate !== '' && _(rebate).isFinite()) {
       const myReg = /^(0|[1-9][0-9]*)(.\d{1})?$/
       const reg = myReg.test(rebate)

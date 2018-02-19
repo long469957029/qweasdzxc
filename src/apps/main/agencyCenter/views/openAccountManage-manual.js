@@ -1,5 +1,5 @@
 
-
+var Clipboard = require('clipboard')
 const OpenAccountManageView = Base.ItemView.extend({
 
   template: require('agencyCenter/templates/openAccountManage-manual.html'),
@@ -204,7 +204,7 @@ const OpenAccountManageView = Base.ItemView.extend({
   },
   inputRebateHandler(e) {
     const $target = $(e.currentTarget)
-    const rebate = $target.val()
+    const rebate = Number($target.val())
     if (rebate !== '' && _(rebate).isFinite()) {
       const myReg = /^(0|[1-9][0-9]*)(.\d{1})?$/
       const reg = myReg.test(rebate)
@@ -251,6 +251,11 @@ const OpenAccountManageView = Base.ItemView.extend({
     return isValidate
   },
   showCopyDailog(data) {
+    const copyText = '账号：'+data.userName+
+      '\n密码：'+data.loginPwd+
+      '\n返点：'+_(data.rebate).formatDiv(10,{fixed:1})+
+      '\n网址：'+_('/login.html').toLink()
+
     const $dialog = Global.ui.dialog.show({
       closeBtn: false,
       body: '<div class="js-copy-dialog"></div>',
@@ -264,7 +269,9 @@ const OpenAccountManageView = Base.ItemView.extend({
       '<div class="p-left-lg m-top-md  m-bottom-md"><label class="text-left">账号:&nbsp;&nbsp;&nbsp;&nbsp;  '}${data.userName}</label></div>` +
       `<div class="p-left-lg m-top-md  m-bottom-md"><label class="text-left">密码:&nbsp;&nbsp;&nbsp;&nbsp;  ${data.loginPwd}</label></div>` +
       `<div class="p-left-lg m-top-md  m-bottom-md"><label class="text-left">返点:&nbsp;&nbsp;&nbsp;&nbsp;  ${_(data.rebate).formatDiv(10, { fixed: 1 })}</label></div></div>` +
-      '<div class="m-top-lg m-bottom-lg text-center"><button type="button" class="js-ac-ocm-copy ac-ocm-copy btn btn-sun" data-dismiss="modal">复制并关闭</button></div></form>',
+      `<div class="m-top-lg m-bottom-lg text-center"><button type="button" class="js-ac-ocm-copy ac-ocm-copy btn btn-sun"
+          data-clipboard-text="${copyText}" data-dismiss="modal">复制并关闭</button></div></form>`,
+
       type: 3,
     }))
 
@@ -273,11 +280,20 @@ const OpenAccountManageView = Base.ItemView.extend({
     })
 
     //
-    $dialog.find('.js-ac-ocm-copy').textCopy({
-      text: `账号：${data.userName}\n密码：${data.loginPwd
-      }\n返点：${_(data.rebate).formatDiv(10, { fixed: 1 })}`,
-      notShowToolTip: true,
-    })
+    // $dialog.find('.js-ac-ocm-copy').textCopy({
+    //   text: `账号：${data.userName}\n密码：${data.loginPwd
+    //   }\n返点：${_(data.rebate).formatDiv(10, { fixed: 1 })}`,
+    //   notShowToolTip: true,
+    // })
+    const clipboard = new Clipboard('.js-ac-ocm-copy');
+    clipboard.on('success', function(e) {
+      e.clearSelection();
+    });
+
+    clipboard.on('error', function(e) {
+      console.error('Action:', e.action);
+      console.error('Trigger:', e.trigger);
+    });
   },
 
   checkUserPassword () {
