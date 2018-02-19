@@ -99,4 +99,4 @@ Base.Prefab.Timeset = Base.PrefabView.extend({
   },
 })
 
-module.exports = Base.Prefab.Timeset
+export default Base.Prefab.Timeset

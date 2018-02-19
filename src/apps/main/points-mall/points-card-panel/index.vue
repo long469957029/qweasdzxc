@@ -15,11 +15,22 @@
                    :current-date="item.currentDate"
       ></points-card>
     </div>
+    <x-pagination :page-size="12" :total-size="totalSize" @page-change="getData"></x-pagination>
+    <div class="points-tip">
+      <div class="tip-title">优惠券说明</div>
+      <ul class="tip-main">
+        <li>1、每个优惠券都相当于是一个活动，领取优惠券即表示开始参加活动，活动计算周期为券领取时间至券有效期截止时间</li>
+        <li>2、返利方式为满返类的优惠券（如投注满XX元即返），在完成返利条件后及时发放奖励至账户</li>
+        <li>3、返利方式为按比奖返的优惠券（如按投注额X%比例返），最迟会在截止日期第二天的凌晨2点统计发放奖励至账户</li>
+        <li>4、代金券在满足条件时可用于抵减对应彩种的投注额，代金券兑换成功即可在对应彩种的投注界面勾选使用</li>
+        <li>5、现金券兑换成功即直接加币至平台账户</li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-  import {PointsCard} from 'build'
+  import {PointsCard, XPagination} from 'build'
 
   import {getCouponListApi} from 'api/points'
 
@@ -27,24 +38,32 @@
     name: 'points-card-panel',
 
     components: {
-      PointsCard
+      PointsCard,
+      XPagination,
+    },
+
+    methods: {
+      getData({pageIndex = 0} = {pageIndex: 0}) {
+        getCouponListApi({
+          sortFlag: 3,
+          sortType: 1,
+          pageIndex,
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            this.cardList = data.root.records
+            this.totalSize = data.root.rowCount
+          }
+        })
+      }
     },
 
     mounted() {
-      getCouponListApi({
-        sortFlag: 3,
-        sortType: 1,
-      }, ({data}) => {
-        if (data && data.result === 0) {
-          this.cardList = data.root.records
-          this.rowCount = data.root.rowCount
-        }
-      })
+      this.getData()
     },
 
     data() {
       return {
-        rowCount: 0,
+        totalSize: 0,
         cardList: []
       }
     }
@@ -55,14 +74,47 @@
   .points-card-main {
     display: flex;
     flex-flow: row wrap;
-    align-content: space-between;
-    height: 570px;
     padding-bottom: 80px;
   }
-  .points-card {
-    padding-right: 26px;
+
+  .points-card-wrapper {
+    margin-right: 26px;
+    margin-bottom: 40px;
     &:nth-of-type(4n) {
-      padding-right: 0;
+      margin-right: 0;
+    }
+  }
+
+  .points-tip {
+    margin-top: 85px;
+  }
+
+  .tip-title {
+    font-size: 30px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    line-height: 30px;
+    position: relative;
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 51px;
+      height: 3px;
+      background-color: #14b1bb;
+    }
+  }
+
+  .tip-main {
+    margin-left: 22px;
+    margin-bottom: 80px;
+    li {
+      font-size: 14px;
+      line-height: 35px;
+      color: #666666;
     }
   }
 </style>

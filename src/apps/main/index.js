@@ -4,6 +4,7 @@ const modules = require('skeleton/modules')
 import {
   SlotStaticGrid,
   StaticGrid,
+  SearchGrid,
   AnimatedInteger,
   XDialog,
   BusPlugin,
@@ -33,6 +34,7 @@ Object.defineProperty(Vue.prototype, '$', {value: $})
 Vue.use(BusPlugin)
 Vue.use(Popover)
 Vue.component('static-grid', StaticGrid)
+Vue.component('search-grid', SearchGrid)
 Vue.component('slot-static-grid', SlotStaticGrid)
 Vue.component('custom-checkbox', CustomCheckbox)
 Vue.component('animated-integer', AnimatedInteger)

@@ -38,15 +38,14 @@ const getCouponListApi = ({couponType, couponStatus, sortFlag, sortType, pageSiz
  * @param fail
  * @returns {*|Promise<T>}
  */
-const getGiftListApi = (
-  {
-    itemType,
-    itemStatus,
-    sortFlag,
-    sortType,
-    pageSize = 12,
-    pageIndex = 0,
-  }, then, fail) => {
+const getGiftListApi = ({
+                          itemType,
+                          itemStatus,
+                          sortFlag,
+                          sortType,
+                          pageSize = 12,
+                          pageIndex = 0,
+                        }, then, fail) => {
   return $http({
     url: '/mall/gift/giftList.json',
     data: {
@@ -84,7 +83,7 @@ const getTaskListApi = (then, fail) => {
  * @param fail
  * @returns {*|Promise<T>}
  */
-const lotteryApi = ({type, lotteryType = 0, }, then, fail) => {
+const lotteryApi = ({type, lotteryType = 0,}, then, fail) => {
   return $http({
     url: '/mall/lucky/lottery.json',
     data: {
@@ -118,7 +117,34 @@ const missionListApi = (then, fail) => {
  */
 const getSignInInfoApi = (then, fail) => {
   return $http({
-    url: 'mall/mission/signInfo.json',
+    url: '/mall/mission/signInfo.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+
+/**
+ * 取得券兑换记录
+ * @param startDate
+ * @param endDate
+ * @param pageIndex
+ * @param pageSize
+ * @param couponToken
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getTicketRecordsApi = ({startDate = '', endDate = '', pageIndex = 0, pageSize = 10, couponToken = ''} = {}, then, fail) => {
+  return $http({
+    url: '/mall/coupon/myCouponAndGiveList.json',
+    data: {
+      startDate,
+      endDate,
+      pageIndex,
+      pageSize,
+      couponToken
+    }
   })
     .then(then)
     .catch(fail)
@@ -132,4 +158,5 @@ export {
   lotteryApi,
   missionListApi,
   getSignInInfoApi,
+  getTicketRecordsApi,
 }

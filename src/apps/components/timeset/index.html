@@ -1,19 +1,19 @@
 <% if(!showIcon){%>
-<span class="relative">
+<div class="relative">
   <input type="text" class="<%=prevClass %>-start-time <%=size %>" name="<%=startTime %>" placeholder="<%=startTimeHolder %>" value="<%=startDefaultDate %>">
   至
   <input type="text" class="<%=prevClass %>-end-time <%=size %>" name="<%=endTime %>" placeholder="<%=endTimeHolder %>" value="<%=endDefaultDate %>">
-</span>
+</div>
 <% }else{ %>
-<span class="relative">
-  <div class="timer-calendar-input <%=size %> clearfix">
+<div class="relative flex align-center">
+  <div class="timer-calendar-input <%=size %> clearfix" style="margin-right: 8px">
     <input type="text" class="<%=prevClass %>-start-time sfa-time-input" name="<%=startTime %>" placeholder="<%=startTimeHolder %>" value="<%=startDefaultDate %>">
     <span class="timer-calendar sfa-icon-time"></span>
   </div>
   至
-  <div class="timer-calendar-input <%=size %> clearfix">
+  <div class="timer-calendar-input <%=size %> clearfix" style="margin-left: 8px">
     <input type="text" class="<%=prevClass %>-end-time sfa-time-input" name="<%=endTime %>" placeholder="<%=endTimeHolder %>" value="<%=endDefaultDate %>">
     <span class="timer-calendar sfa-icon-time"></span>
   </div>
-</span>
+</div>
 <% } %>
