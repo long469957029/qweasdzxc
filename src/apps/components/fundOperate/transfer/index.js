@@ -405,7 +405,7 @@ const TransferView = Base.ItemView.extend({
   },
   submitPlatformTransferHandler() {
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-      Global.ui.notification.show('试玩会员无法进行充值操作，请先注册正式游戏账号')
+      Global.ui.notification.show('试玩会员无法进行充转账操作，请先注册正式游戏账号')
       return false
     }
     if (this.$('.js-tr-tradeNum').val() === '' || Number(this.$('.js-tr-tradeNum').val()) === 0) {
