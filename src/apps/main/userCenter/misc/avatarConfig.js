@@ -106,6 +106,9 @@ const avatars = [
 
 module.exports = {
   get(id) {
+    if(id === 'null' || id === null || id === 'undefined' || id === undefined ){
+      id='1'
+    }
     return _(avatars).findWhere({
       id,
     })

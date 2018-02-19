@@ -118,13 +118,13 @@ const PersonalManageView = Base.ItemView.extend({
 
   formateHeadIconList(data) {
     if ('LIST:' + data) {
-      console.log(data)
+      // console.log(data)
       this.$headIconList.empty()
       const html =  _(data).map((item) => {
         return `<li class="icon-info js-head-icon-info ${Number(item.id) === this.iconId ? 'active' : ''}" 
             data-id="${item.id}"><img src="${item.logo}" class="head-img"></li>`
       })
-      console.log(html)
+      // console.log(html)
       this.$headIconList.html(html.join(''))
     }
   },
@@ -168,6 +168,10 @@ const PersonalManageView = Base.ItemView.extend({
     }
   },
   updatePersonalInfoHandler() {
+    if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+      Global.ui.notification.show('试玩会员无法进行充值操作，请先注册正式游戏账号')
+      return false
+    }
     const self = this
     const month = this.$bday1.val()
     const day = this.$bday2.val()

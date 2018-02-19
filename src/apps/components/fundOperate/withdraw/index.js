@@ -139,6 +139,10 @@ const WithdrawView = Base.ItemView.extend({
     }
   },
   submitHandler() {
+    if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+      Global.ui.notification.show('试玩会员无法进行充值操作，请先注册正式游戏账号')
+      return false
+    }
     const self = this
     //
     // if (!this.canWithdraw) {

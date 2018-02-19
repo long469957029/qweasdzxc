@@ -485,6 +485,10 @@ export default Base.ItemView.extend({
     }
   },
   submitPlatformTransferHandler() {
+    if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+      Global.ui.notification.show('试玩会员无法进行充值操作，请先注册正式游戏账号')
+      return false
+    }
     if (this.$('.js-fm-tradeNum').val() === '' || Number(this.$('.js-fm-tradeNum').val()) === 0) {
       this.$('.js-fc-fm-error-container').html('<div class="parsley-error-line"><span class="sfa sfa-error-icon vertical-sub pull-left"></span>' +
         '<span class="parsley-error-text">可转账次数不足。</span><div>')

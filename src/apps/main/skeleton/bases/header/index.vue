@@ -121,14 +121,11 @@
       },
       imgUrl(){
         let logoId = this.$store.state.loginStore.headIcon
-        if (logoId === 'null' || logoId === undefined || logoId === null) {
-          logoId = 1
-        }
         let result = ''
         if ('png'.indexOf(logoId) !== -1) {
           result = logoId
         } else {
-          result = avatarConf.get(_(logoId).toString()).logo
+          result = avatarConf.get(logoId).logo
         }
         return result
       },
@@ -153,16 +150,13 @@
           if(data.data && data.data.result===0){
             window.Global.cookieCache.set('token', data.data.root.token, 160)
             window.Global.cookieCache.set('loginState', true)
+            window.Global.cookieCache.set('isTestUser', true)//存一份到cookie，用于应用刷新时记住试玩状态
             this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
-            this.setRequestFromTestServer()
             window.store.commit(types.USER_LOGIN_SUCCESS, data.data.root || {})
           }
         })
 
 
-      },
-      setRequestFromTestServer(){
-        window.store.commit(types.SET_REQUEST_FROM_TEST_SERVER,{requestFormTestServer:true})
       },
       renderMsgList(model){
         this.newRowCount = model.get('newRowCount')

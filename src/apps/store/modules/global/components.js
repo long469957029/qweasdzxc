@@ -15,9 +15,8 @@ const initState = () => {
     gameDownLoadId: '',
     openNovicePackage: false,
     userIsVip: true,
-    openDeskTopMsg:false,
-    deskTopData:{},
-    requestFormTestServer: false,
+    openDeskTopMsg: false,
+    deskTopData: {},
     testServerPrefix: 'testv3',
     universalToken: '000-000-000-000-player125',
   }
@@ -107,9 +106,6 @@ const mutations = {
   [types.TOGGLE_DESKTOP_MESSAGE](state, data) {
     state.openDeskTopMsg = data.show
     state.deskTopData = data.dataInfo
-  },
-  [types.SET_REQUEST_FROM_TEST_SERVER](state, data) {
-    state.requestFormTestServer = data.requestFormTestServer
   },
 }
 
