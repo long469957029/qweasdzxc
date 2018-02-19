@@ -93,17 +93,6 @@ const BettingRecordsView = SearchGrid.extend({
     }
 
     SearchGrid.prototype.onRender.apply(this, arguments)
-    // 监听click事件
-    window.addEventListener('click', (e) => {
-      const $target = $(e.target)
-      if (!$target.hasClass('popover')
-        && $target.parent('.popover-content').length === 0
-        && $target.parent('.myPopover').length === 0
-        && $target.parent('.popover-title').length === 0
-        && $target.parent('.popover').length === 0 && $target.data("id") !== "folder") {
-        $('.js-uc-betDetail-betNum').popover('hide')
-      }
-    }, false)
 
     Vue.$global.bus.$on('cancel-bet', () => {
       this._getGridXhr()
@@ -139,7 +128,7 @@ const BettingRecordsView = SearchGrid.extend({
         const placement = index < 4 ? 'bottom' : 'top'
         $('.js-uc-betDetail-betNum').eq(num).popover({
           // title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
-          trigger: 'click',
+          trigger: 'focus',
           html: true,
           content: `<span class="inline-block text-account-add m-right-sm">详细号码：</span><span class="js-pf-popover inline-block word-break ">${items.betNum}</span>`,
           placement,
@@ -179,7 +168,7 @@ const BettingRecordsView = SearchGrid.extend({
     row.push(rowInfo.ticketResult)
     // 投注内容
     if ((rowInfo.betNum).length >= 16) {
-      row.push('<a class="js-uc-betDetail-betNum btn-link btn-link-cool" data-id="folder">详细号码</a>')
+      row.push(`<a tabindex="${index}" class="js-uc-betDetail-betNum btn-link btn-link-cool" data-id="folder">详细号码</a>`)
     } else {
       row.push(rowInfo.betNum)
     }
