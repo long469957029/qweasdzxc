@@ -129,7 +129,6 @@
           if (!_.isEmpty(data.root)) {
             this.bannerList = data.root
           }
-
         }
       })
     }

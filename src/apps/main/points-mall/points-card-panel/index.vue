@@ -2,18 +2,9 @@
   <div class="points-card-panel">
     <div class="search-bar">搜索栏</div>
     <div class="points-card-main">
-      <points-card v-for="item in cardList" :key="item.couponId"
-                   :coupon-type="item.couponType"
-                   :limit-level-type="item.limitLevelType"
-                   :levelLimit="item.levelLimit"
-                   :max-num="item.maxNum"
-                   :use-num="item.useNum"
-                   :require-integral="item.requireIntegral"
-                   :sys-time="item.sysTime"
-                   :valid-start-date="item.validStartDate"
-                   :valid-end-date="item.validEndDate"
-                   :current-date="item.currentDate"
-                   @exchange="openExchangeModal(item)"
+      <points-card v-for="(item, index) in cardList" :key="index"
+                   :coupon-info="item"
+                   @exchange="openExchangeModal(arguments[0], item)"
       ></points-card>
     </div>
     <x-pagination :page-size="12" :total-size="totalSize" @page-change="getData"></x-pagination>
@@ -33,27 +24,44 @@
         <div slot="head-main">兑换确认</div>
         <div class="modal-main">
           <div class="card-info">
-            <div class="card-title">返水券</div>
-            <div class="card-cell">
+            <div class="card-title">{{formatCouponInfo.couponName}}</div>
+            <template v-if="formatCouponInfo.secondDesc">
+              <div class="card-cell">
               <span class="card-cell-title">
                 返利游戏：
               </span>
-              <span class="card-cell-val">
-                <span class="text-prominent">无限分分彩</span>
+                <span class="card-cell-val">
+                <span class="text-prominent">{{formatCouponInfo.mainDesc}}</span>
               </span>
-            </div>
-            <div class="card-cell">
+              </div>
+              <div class="card-cell">
               <span class="card-cell-title">
                 返利条件：
               </span>
-              <span class="card-cell-val">
-                投注满<span class="text-prominent">5000</span>元即返
-                <span class="text-prominent">20</span>元
+                <template v-if="formatCouponInfo.conditionType === 2">
+                <span class="card-cell-val">
+                  按{{formatCouponInfo.zhType}}额<span class="text-prominent">{{formatCouponInfo.conditionNumber}}</span>%比例返
+                </span>
+                </template>
+                <template v-else>
+                  {{formatCouponInfo.zhType}}满<span class="text-prominent">{{formatCouponInfo.conditionNumber}}</span>元即返
+                  <span class="text-prominent">{{formatCouponInfo.bigShowNum}}</span>元</span>
+                </template>
+              </div>
+            </template>
+            <template v-else>
+              <div class="card-cell">
+                <span class="card-cell-val">
+                <span class="text-prominent">{{formatCouponInfo.mainDesc}}</span>
               </span>
-            </div>
+              </div>
+            </template>
           </div>
           <div class="card-brief">
-            本次兑换将花费 <span class="text-prominent">190</span> 积分（享9.5折优惠）
+            本次兑换将花费 <span class="text-prominent">{{actualRequireIntegral}}</span> 积分
+            <template v-if="mallBasicInfo.fCurrentDiscount < 10">
+              （享{{mallBasicInfo.fCurrentDiscount}}折优惠）
+            </template>
           </div>
           <div class="btn-panel">
             <button class="btn confirm-btn" @click="exchangeCoupon">确定</button>
@@ -65,7 +73,7 @@
 </template>
 
 <script>
-  import {PointsCard, XPagination} from 'build'
+  import {PointsCard, XPagination, formatCoupon} from 'build'
 
   import {getCouponListApi, exchangeCouponListApi} from 'api/points'
 
@@ -81,9 +89,19 @@
       return {
         totalSize: 0,
         currentCardInfo: {},
+        formatCouponInfo: {},
         isShowGetCard: false,
         cardList: []
       }
+    },
+
+    computed: {
+      actualRequireIntegral() {
+        return _.chain(this.currentCardInfo.requireIntegral).mul(this.mallBasicInfo.fCurrentDiscount).formatDiv(100000, {fixed: 0}).value()
+      },
+      ...mapGetters([
+        'mallBasicInfo'
+      ])
     },
 
     methods: {
@@ -101,9 +119,10 @@
       },
       exchangeCoupon() {
         exchangeCouponListApi({
-          couponId
+          couponId: this.currentCardInfo.couponId,
         }, ({data}) => {
           if (data && data.result === 0) {
+            this.isShowGetCard = false
             Global.ui.notification.show('<div class="m-bottom-lg">兑换成功!</div>', {
               type: 'success',
               hasFooter: false,
@@ -112,11 +131,20 @@
               bodyClass: 'no-border no-padding',
               closeBtn: false,
             })
+          } else {
+            if (data.msg.includes('抢光')) {
+              Global.ui.notification.show('该优惠券已被抢光')
+            } else {
+              Global.ui.notification.show(data.msg)
+            }
           }
+        }, () => {
+          this.isShowGetCard = false
         })
       },
 
-      openExchangeModal(cardInfo) {
+      openExchangeModal(formatCouponInfo, cardInfo) {
+        this.formatCouponInfo = formatCouponInfo
         this.currentCardInfo = cardInfo
         this.isShowGetCard = true
       }
@@ -187,7 +215,7 @@
     box-sizing: border-box;
     padding: 20px 23px;
     margin-bottom: 20px;
-    width: 275px;
+    min-width: 275px;
     height: 110px;
     background-color: #f8f8f8;
     border-radius: 5px;

@@ -68,6 +68,8 @@ const exchangeCouponListApi = ({couponId}, then, fail) => {
       couponId
     }
   })
+    .then(then)
+    .catch(fail)
 }
 
 /**
@@ -133,6 +135,24 @@ const lotteryApi = ({type, lotteryType = 0,}, then, fail) => {
     data: {
       type,
       lotteryType
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
+ * 幸运抽奖
+ * @param id
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const luckyApi = ({id}, then, fail) => {
+  return $http({
+    url: '/mall/lucky/lotteryChest.json',
+    data: {
+      id
     }
   })
     .then(then)
@@ -278,6 +298,7 @@ export {
   getGiftListApi,
   getTaskListApi,
   lotteryApi,
+  luckyApi,
   missionListApi,
   getSignInInfoApi,
   getTicketRecordsApi,

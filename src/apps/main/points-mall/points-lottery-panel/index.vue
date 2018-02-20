@@ -4,39 +4,19 @@
       <div class="lottery-panel">
         <div class="lottery-panel-main">
           <div class="x-switch">
-            <input
-              type="radio"
-              class="switch-input"
-              name="view"
-              value="week"
-              id="week"
-              checked
-            >
+            <input type="radio" class="switch-input" v-model.number="currentLottery" value="0" id="week">
             <label for="week" class="switch-label switch-label-off">
-              2元夺宝
+              {{cashRob | convert2yuan}}元夺宝
             </label>
-            <input
-              type="radio"
-              class="switch-input"
-              name="view"
-              value="month"
-              id="month"
-            >
-            <label
-              for="month"
-              class="switch-label switch-label-on"
-            >
-              10元夺宝
+            <input type="radio" class="switch-input" v-model.number="currentLottery" value="1" id="month">
+            <label for="month" class="switch-label switch-label-on">
+              {{cashRob10 | convert2yuan}}元夺宝
             </label>
-            <span
-              class="switch-selection"
-            >
-        </span>
+            <span class="switch-selection"></span>
           </div>
           <div class="lottery-task">
             <div class="lottery-task-inner">
-
-              <div class="task-cell-wrapper" v-for="award in awards" :key="award.rid">
+              <div class="task-cell-wrapper" v-for="award in currentAwards" :key="award.rid">
                 <div class="task-cell" :class="{selected: award.selected}">
                   <div class="task-cell-inner">
                     <div class="task-item">
@@ -51,15 +31,20 @@
               </div>
             </div>
             <div class="task-button">
-              <button class="points-btn btn btn-orange" @click="lottery(0)">250 积分夺宝</button>
-              <button class="currency-btn btn" @click="lottery(1)">10元 现金夺宝</button>
+              <button class="points-btn btn btn-orange" @click="lottery(0)">
+                {{currentIntegralRob | convert2yuan}} 积分夺宝
+              </button>
+              <button class="currency-btn btn" @click="lottery(1)">
+                {{currentCashRob | convert2yuan}}元 现金夺宝
+              </button>
             </div>
             <div class="task-tip">
               <span class="sfa sfa-pt-task-tip"></span>
-              提示：每夺宝1次可获得1幸运值，幸运值可用于下方幸运抽奖
+              提示：每夺宝1次可获得{{currentRobLucky}}幸运值，幸运值可用于下方幸运抽奖
             </div>
           </div>
         </div>
+
         <div class="lottery-list">
           <div class="lottery-list-inner">
             <div class="lottery-top">
@@ -83,11 +68,11 @@
     <div class="lucky-panel">
       <div class="lucky-title">
         <span class="sfa sfa-pt-lucky-star"></span>
-        当前幸运值：<span class="lucky-points">56</span>
+        当前幸运值：<span class="lucky-points">{{myLucky}}</span>
       </div>
       <div class="lucky-main">
         <div class="lucky-cell" v-for="(chest, index) in chestList" :key="index">
-          <div class="cell-probability">{{chest.rate | formatDiv(10)}}%<br/>概率</div>
+          <div class="cell-probability">{{chest.rate | formatDiv(100)}}%<br/>概率</div>
           <div class="lucky-prize-wrapper">
             <div class="lucky-prize">
               <div class="lucky-prize-inner">
@@ -110,7 +95,7 @@
 </template>
 
 <script>
-  import {getTaskListApi, lotteryApi} from 'api/points'
+  import {getTaskListApi, lotteryApi, luckyApi} from 'api/points'
 
   export default {
     name: 'points-lottery',
@@ -119,6 +104,7 @@
 
     data() {
       return {
+        currentLottery: 0,
         radioList: [
           {
             title: '2元夺宝',
@@ -134,14 +120,18 @@
 
         //夺宝列表
         awards: [],
+        awards10: [],
         cashRob: 0,
+        cashRob10: 0,
         //幸运抽奖
         chestList: [],
         integralRob: 0,
-        myLucky: 9,
+        integralRob10: 0,
+        myLucky: 0,
         //获奖用户
         recentUser: [],
         robLucky: 0,
+        robLucky10: 0,
 
         timer: null,
         winnerTimer: null,
@@ -152,12 +142,12 @@
       normalRoll() {
         this.timer = setInterval(() => {
 
-          const currentAward = _.findWhere(this.awards, {selected: true})
-          this.awards.forEach((award) => {
+          const currentAward = _.findWhere(this.currentAwards, {selected: true})
+          this.currentAwards.forEach((award) => {
             award.selected = false
           })
 
-          _.chain(this.awards).without(currentAward).sample().value().selected = true
+          _.chain(this.currentAwards).without(currentAward).sample().value().selected = true
         }, 1000)
       },
 
@@ -174,10 +164,24 @@
       lottery(type) {
         lotteryApi({
           type,
-          lotteryType: 0
+          lotteryType: this.currentLottery
         })
       }
+    },
 
+    computed: {
+      currentAwards() {
+        return this.currentLottery === 0 ? this.awards : this.awards10
+      },
+      currentCashRob() {
+        return this.currentLottery === 0 ? this.cashRob : this.cashRob10
+      },
+      currentIntegralRob() {
+        return this.currentLottery === 0 ? this.integralRob : this.integralRob10
+      },
+      currentRobLucky() {
+        return this.currentLottery === 0 ? this.robLucky : this.robLucky10
+      }
     },
 
     mounted() {
@@ -189,9 +193,16 @@
           this.awards.forEach((award) => {
             this.$set(award, 'selected', false)
           })
+          this.awards10 = data.root.awards10
+          this.awards10.forEach((award) => {
+            this.$set(award, 'selected', false)
+          })
+
           this.cashRob = data.root.cashRob
-          this.chestList = data.root.chest
+          this.cashRob10 = data.root.cashRob10
           this.integralRob = data.root.integralRob
+          this.integralRob10 = data.root.integralRob10
+          this.chestList = data.root.chest
           this.myLucky = data.root.myLucky
           this.recentUser = _.map(data.root.recentUser, (user) => {
             return {
@@ -200,6 +211,7 @@
             }
           })
           this.robLucky = data.root.robLucky
+          this.robLucky10 = data.root.robLucky
         }
       })
     },
