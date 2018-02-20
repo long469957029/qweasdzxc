@@ -241,32 +241,6 @@
     @include transition-cfg;
   }
 
-  .arrow-left-enter, .arrow-left-leave-to {
-    opacity: 0;
-    transform: translateX(10px);
-  }
-
-  .arrow-right-enter, .arrow-right-leave-to {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-
-  .arrow-left-enter-active, .arrow-right-enter-active, .arrow-left-leave-active, .arrow-right-leave-active {
-    @include transition-cfg;
-  }
-
-  .ticketGroup-enter, .ticketGroup-leave-to {
-    opacity: 0;
-    transform: translateY(272px);
-  }
-
-  .ticketGroup-enter-active, .ticketGroup-leave-active {
-    @include transition-cfg;
-  }
-
-  .ticketGroup-move {
-    transition: all .5s;
-  }
 
   body, .carousel-table-content {
     background: $def-white-color;
