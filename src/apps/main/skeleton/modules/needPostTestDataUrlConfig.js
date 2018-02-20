@@ -6,6 +6,7 @@ const urlList = [
   '/acct/login/doauth.json',
   '/acct/userinfo/accountCenter.json',//账户安全状态
   '/acct/userinfo/userdetail.json',//用户详情
+  '/acct/login/dologout.json',//登出
   //下单
   // '/ticket/ticketmod/ticketinfo.json',
   // '/ticket/ticketmod/ticketplaylist.json',
