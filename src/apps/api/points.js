@@ -174,6 +174,24 @@ const missionListApi = (then, fail) => {
 }
 
 /**
+ * 领取日常周常任务奖励
+ * @param termId
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const missionReceiveApi = ({termId}, then, fail) => {
+  return $http({
+    url: '/mall/mission/receive.json',
+    data: {
+      termId,
+    },
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
  * 取得签到信息
  * @param then
  * @param fail
@@ -300,6 +318,7 @@ export {
   lotteryApi,
   luckyApi,
   missionListApi,
+  missionReceiveApi,
   getSignInInfoApi,
   getTicketRecordsApi,
   getMyGiftRecordsApi,
