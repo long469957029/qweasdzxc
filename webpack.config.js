@@ -43,7 +43,8 @@ const appConfig = {
     // update15: './src/apps/packages/update/update15.js',
     // rebateDesc: './src/apps/packages/rebateDescription/rebateDescription.js',
     logger: './src/apps/packages/logger/index.js',
-    game:'./src/apps/packages/game/index.js'
+    game:'./src/apps/packages/game/index.js',
+    game_error:'./src/apps/packages/game_error/index.js'
   },
   port: 3002,
   commonChunks: {
@@ -203,8 +204,13 @@ const appConfig = {
     },
     game: {
       title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'game']
+      template: './entry/package-game.html',
+      chunks: ['common', 'base', 'game']
+    },
+    game_error: {
+      title: '无限娱乐',
+      template: './entry/package-game.html',
+      chunks: ['common', 'base', 'game_error']
     },
   },
   output: {

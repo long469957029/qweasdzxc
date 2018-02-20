@@ -1,6 +1,5 @@
-
 require('./../misc/common-init.js')
-
+require('./index.scss')
 $.widget('gl.gameInfo', {
 
   template: require('./index.html'),
