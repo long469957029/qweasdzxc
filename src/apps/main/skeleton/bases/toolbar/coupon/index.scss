@@ -8,7 +8,8 @@
 
 .mall-coupon-container.sidebar-coupon {
   background-color: white;
-  min-height: 340px;
+  //min-height: 340px;
+  min-height: 600px;
   .coupon-outer {
     padding: 0 20px;
     height: 172px;
@@ -32,6 +33,10 @@
       font-size: 14px;
       margin-left: 5px;
       margin-top: 5px;
+      a:link{ color: #333333; text-decoration:underline;}
+      a:hover{ color: #333333; text-decoration:underline;}
+      a:active{ color: #333333; text-decoration:underline;}
+      a:visited{ color: #333333; text-decoration:underline;}
     }
   }
   .recent-more {
