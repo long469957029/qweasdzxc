@@ -7,18 +7,18 @@
     <router-link :to="ticketType === 1 ? `bc/2/${_.isEmpty(topHandicapTicket) ? 1 : topHandicapTicket.id}`
                 : `/bc/0/${_.isEmpty(topClassicalTicket) ? 1 : topClassicalTicket.id}`" class="db-ticket-more">更多彩种 >>
     </router-link>
-    <div class="ticket-game-main" @mouseover="showArrow()" @mouseout="showArrow()">
+    <div class="ticket-game-main" @mouseover="showArrow" @mouseout="showArrow">
       <transition name="arrow-left">
         <a class="db-ticket-arrow left" @click="ticketSwitch('left')"
-           v-show="ticketCount > 3 && showArrowBtn"></a>
+           v-if="ticketCount > 3"></a>
       </transition>
       <transition name="arrow-right">
         <a class="db-ticket-arrow right" @click="ticketSwitch('right')"
-           v-show="ticketCount > 3 && showArrowBtn"></a>
+           v-if="ticketCount > 3"></a>
       </transition>
-      <div class="db-ticket-game-type-container" v-show="ticketType === 1">
+      <div :class="['db-ticket-game-type-container',{'left': ticketCount > 3}]" v-show="ticketType === 1">
         <transition-group name="ticketGroup" tag="div">
-          <div class="db-ticket-item" v-for="item in handicapTicketList" :key="_.uniqueId('handicap_')">
+          <div class="db-ticket-item" v-for="item in handicapTicketList" :key="item.uid">
             <!--<div :class="`db-ticket-logo sfa-bc-new-ssc-${item.ticketId}`"></div>-->
             <router-link :to="`bc/2/${item.ticketId}`"
                          :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></router-link>
@@ -34,9 +34,9 @@
           </div>
         </transition-group>
       </div>
-      <div class="db-ticket-game-type-container" v-show="ticketType === 2">
-        <transition-group name="ticketGroup" tag="div">
-          <div class="db-ticket-item" v-for="item in classicTicketList" :key="_.uniqueId('classic_')">
+      <div :class="['db-ticket-game-type-container',{'left': ticketCount > 3}]" v-show="ticketType === 2">
+        <transition-group name="ticketGroupClassic" tag="div">
+          <div class="db-ticket-item" v-for="item in classicTicketList" :key="item.uid">
             <router-link :to="`bc/0/${item.ticketId}`"
                          :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></router-link>
             <div class="db-ticket-name">{{item.ticketName}}</div>
@@ -69,6 +69,7 @@
         ticketCount: 0,
         ticketIndex: 1,
         showArrowBtn: false,
+        canClick:true
       }
     },
     computed: {
@@ -86,17 +87,24 @@
         this.showArrowBtn = !this.showArrowBtn
       },
       ticketSwitch(type) {
-        const arr = this.ticketType === 1 ? this.handicapTicketList : this.classicTicketList
-        if (type === 'left') {
-          arr.unshift(arr.pop())
-        } else {
-          arr.push(arr.shift())
+        if(this.canClick){
+          this.canClick = !this.canClick
+          const arr = this.ticketType === 1 ? this.handicapTicketList : this.classicTicketList
+          if (type === 'left') {
+            arr.unshift(arr.pop())
+          } else {
+            arr.push(arr.shift())
+          }
+          if (this.ticketType === 1) {
+            this.handicapTicketList = arr
+          } else {
+            this.classicTicketList = arr
+          }
+          setTimeout(() => {
+            this.canClick = !this.canClick
+          },500)
         }
-        if (this.ticketType === 1) {
-          this.handicapTicketList = arr
-        } else {
-          this.classicTicketList = arr
-        }
+
       },
       progressWidth(num) {
         const width = num > 4000 ? '100%' : (num > 1000 ? `${_(num).div(4000)}%` : '25%')
@@ -112,13 +120,24 @@
         ({data}) => {
           if (data && data.result === 0) {
             if(data.root.handicapTickets && data.root.handicapTickets.length > 3 && data.root.handicapTickets.length < 5){
-              this.handicapTicketList = [...data.root.handicapTickets]
-              this.handicapTicketList.push(_.first(data.root.handicapTickets))
-              this.handicapTicketList.unshift(_.last(data.root.handicapTickets))
+              this.handicapTicketList = data.root.handicapTickets
+              this.handicapTicketList = [...this.handicapTicketList, ..._.cloneDeep(this.handicapTicketList)]
             }else{
               this.handicapTicketList = data.root.handicapTickets || this.handicapTicketList
             }
-            this.classicTicketList = data.root.classicTickets || this.classicTicketList
+            this.handicapTicketList.forEach(item => {
+              item.uid = _.uniqueId()
+            })
+
+            if(data.root.classicTickets && data.root.classicTickets.length > 3 && data.root.classicTickets.length < 5){
+              this.classicTicketList = data.root.classicTickets
+              this.classicTicketList = [...this.classicTicketList, ..._.cloneDeep(this.classicTicketList)]
+            }else{
+              this.classicTicketList = data.root.classicTickets || this.classicTicketList
+            }
+            this.classicTicketList.forEach(item => {
+              item.uid = _.uniqueId()
+            })
             this.ticketCount = this.handicapTicketList.length
           }
         }
@@ -146,7 +165,7 @@
     @include transition-cfg;
   }
 
-  .ticketGroup-move {
+  .ticketGroup-move, .ticketGroupClassic-move {
     transition: all .5s, opacity 0s;
   }
 
@@ -186,21 +205,40 @@
     width: 665px;
     height: 272px;
     position: relative;
+    &:hover{
+      .db-ticket-arrow {
+        opacity: 1;
+        &.left {
+          opacity: 1;
+          transform: translateX(0px);
+        }
+        &.right {
+          opacity: 1;
+          transform: translateX(0px);
+        }
+      }
+    }
     .db-ticket-arrow {
       position: absolute;
       display: block;
       width: 30px;
       height: 30px;
       top: 100px;
-      z-index: 2;
+      z-index: 99;
       cursor: pointer;
       &.left {
         background: url("./misc/arrow-left.png") no-repeat;
         left: 10px;
+        opacity: 0;
+        transform: translateX(10px);
+        transition: all .5s;
       }
       &.right {
         background: url("./misc/arrow-right.png") no-repeat;
         right: 10px;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all .5s;
       }
     }
   }
@@ -213,7 +251,17 @@
     > div {
       display: flex;
       position: absolute;
-      left: -444px;
+      z-index: 2;
+    }
+    &.left{
+      >div{
+        left: -444px;
+        .db-ticket-item{
+          &:first-of-type, &:last-of-type {
+            opacity: 0;
+          }
+        }
+      }
     }
   }
 
@@ -221,9 +269,6 @@
     /*display: inline-block;*/
     width: 222px;
     position: relative;
-    &:first-of-type, &:last-of-type {
-      opacity: 0;
-    }
     &:after {
       content: '';
       width: 1px;
