@@ -20,7 +20,7 @@
         <transition-group name="ticketGroup" tag="div">
           <div class="db-ticket-item" v-for="item in handicapTicketList" :key="item.ticketId">
             <!--<div :class="`db-ticket-logo sfa-bc-new-ssc-${item.ticketId}`"></div>-->
-            <router-link :to="`bc/2/${item.ticketId}`" class="db-ticket-logo sfa-bc-new-ssc-1"></router-link>
+            <router-link :to="`bc/2/${item.ticketId}`" :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></router-link>
             <div class="db-ticket-name">{{item.ticketName}}</div>
             <div class="db-ticket-num">
               <animated-integer :value="item.userBetCount"></animated-integer>
@@ -36,7 +36,7 @@
       <div class="db-ticket-game-type-container" v-show="ticketType === 2">
         <transition-group name="ticketGroup" tag="div">
           <div class="db-ticket-item" v-for="item in classicTicketLIst" :key="item.ticketId">
-            <router-link :to="`bc/0/${item.ticketId}`" class="db-ticket-logo sfa-bc-new-ssc-1"></router-link>
+            <router-link :to="`bc/0/${item.ticketId}`" :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></router-link>
             <div class="db-ticket-name">{{item.ticketName}}</div>
             <div class="db-ticket-num">
               <animated-integer :value="item.userBetCount"></animated-integer>
@@ -55,6 +55,7 @@
 
 <script>
   import { getIndexTicketApi } from 'api/dashboard'
+  import ticketCfg from 'skeleton/misc/ticketConfig'
   export default {
     name: "ticket-hot",
     data(){
@@ -71,7 +72,7 @@
       ...mapGetters([
         'topClassicalTicket',
         'topHandicapTicket'
-      ])
+      ]),
     },
     methods: {
       showTicket(type){
@@ -98,6 +99,10 @@
         const width = num > 4000 ? '100%' : (num > 1000 ? `${_(num).div(4000)}%` : '25%')
         return `width:${width}`
       },
+      getTicketLogo(id){
+        const ticketInfo = ticketCfg.getAllBy({id: id})
+        return _(ticketInfo).isEmpty() ? '' : `sfa-bc-${ticketInfo[0].type}-${ticketInfo[0].mark}-hot`
+      }
     },
     mounted() {
       getIndexTicketApi(
@@ -114,6 +119,35 @@
 </script>
 
 <style lang="scss" scoped>
+  @mixin transition-cfg {
+    transition: all .5s;
+  }
+  .arrow-left-enter, .arrow-left-leave-to {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  .arrow-right-enter, .arrow-right-leave-to {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  .arrow-left-enter-active, .arrow-right-enter-active, .arrow-left-leave-active, .arrow-right-leave-active {
+    @include transition-cfg;
+  }
+
+  .ticketGroup-enter, .ticketGroup-leave-to {
+    opacity: 0;
+    transform: translateY(272px);
+  }
+
+  .ticketGroup-enter-active, .ticketGroup-leave-active {
+    @include transition-cfg;
+  }
+
+  .ticketGroup-move {
+    transition: all .5s;
+  }
   .db-ticket-game-type {
     width: 640px;
     height: 34px;
