@@ -276,7 +276,7 @@ const oneFiveConfig = {
 }
 const threeDConfig = [
   Object.assign({
-    id: 16,
+    id: 36,
     mark: '3d-ffc',
     zhName: 'QQ3D分分彩',
     hasMargin: true,
@@ -387,7 +387,7 @@ const handicapMark6Config = [
 const handicapSscConfig = [
   Object.assign({
     id: 1,
-    mark: 'ssc',
+    mark: 'cq',
     zhName: '重庆时时彩',
     badge: 'new',
     roadBalls: true,
@@ -396,7 +396,7 @@ const handicapSscConfig = [
   }, bettingTypes.SSC),
   Object.assign({
     id: 10,
-    mark: 'ssc',
+    mark: 'ffc',
     zhName: '无限分分彩',
     badge: 'new',
     twoSide: true,
@@ -407,7 +407,7 @@ const handicapSscConfig = [
 const handicapPk10Config = [
   Object.assign({
     id: 18,
-    mark: 'ssc',
+    mark: 'pk10',
     zhName: 'PK10',
     badge: 'new',
     roadBalls: true,

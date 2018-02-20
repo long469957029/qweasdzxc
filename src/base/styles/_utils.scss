@@ -98,15 +98,15 @@
 }
 
 .text-left {
-  text-align: left;
+  text-align: left !important;
 }
 
 .text-right {
-  text-align: right;
+  text-align: right !important;
 }
 
 .text-center {
-  text-align: center;
+  text-align: center !important;
 }
 
 .text-center-vb {
@@ -120,7 +120,7 @@
 }
 
 .text-upper {
-  text-transform: uppercase
+  text-transform: uppercase;
 }
 
 .no-border {
@@ -358,13 +358,51 @@
 .sfa {
   display: inline-block;
 }
+.flex {
+  display: flex;
+}
+.align-center {
+  align-items: center;
+}
+
+.select {
+  font-size: 12px;
+  margin-bottom: 0;
+  color: #666666;
+}
+
+.control-select {
+  width: 120px;
+  height: 28px;
+  background-color: #ffffff;
+  border: solid 1px #e6e6e6;
+  border-radius: 0;
+}
+
+input.control-input {
+  width: 120px;
+  height: 28px;
+  background-color: #ffffff;
+  border: solid 1px #e6e6e6;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.control-btn {
+  width: 60px;
+  height: 28px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
 
 .timer-calendar-input {
   position: relative;
-  border: 1px solid $def-gray-color;
+  border: solid 1px #e6e6e6;
+  //border: 1px solid $def-gray-color;
   display: inline-block;
-  height: 24px;
-  top: 7px;
+  height: 26px;
+  top: 0;
   input {
     position: absolute;
     padding: 0;
@@ -376,7 +414,7 @@
   }
   .timer-calendar {
     position: absolute;
-    top: 3px;
+    top: 5px;
     right: 5px;
   }
 }
@@ -412,8 +450,6 @@
   width: 80px;
   font-size: 12px;
   appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
   background: url(~base/images/select-caret-black.png) no-repeat scroll 97% center transparent;
   text-align-last: left;
   text-align: left;
@@ -444,71 +480,6 @@
   height: 35px;
   color: $def-white-color;
   background: $new-main-deep-color;
-}
-.mall-level-0 {
-  width: 65px;
-  height: 30px;
-  background: url("~base/images/mall/mall-lv0.png") no-repeat;
-}
-
-.mall-level-1 {
-  width: 65px;
-  height: 30px;
-  background: url("~base/images/mall/mall-lv1.png") no-repeat;
-}
-
-.mall-level-2 {
-  width: 65px;
-  height: 30px;
-  background: url("~base/images/mall/mall-lv2.png") no-repeat;
-}
-
-.mall-level-3 {
-  width: 65px;
-  height: 30px;
-  background: url("~base/images/mall/mall-lv3.png") no-repeat;
-}
-
-.mall-level-4 {
-  width: 65px;
-  height: 30px;
-  background: url("~base/images/mall/mall-lv4.png") no-repeat;
-}
-
-.mall-level-5 {
-  width: 65px;
-  height: 30px;
-  background: url("~base/images/mall/mall-lv5.png") no-repeat;
-}
-
-.mall-level-6 {
-  width: 65px;
-  height: 30px;
-  background: url("~base/images/mall/mall-lv6.png") no-repeat;
-}
-
-.mall-level-7 {
-  width: 65px;
-  height: 30px;
-  background: url("~base/images/mall/mall-lv7.png") no-repeat;
-}
-
-.mall-level-8 {
-  width: 65px;
-  height: 30px;
-  background: url("~base/images/mall/mall-lv8.png") no-repeat;
-}
-
-.mall-level-9 {
-  width: 65px;
-  height: 30px;
-  background: url("~base/images/mall/mall-lv9.png") no-repeat;
-}
-
-.mall-level-10 {
-  width: 65px;
-  height: 30px;
-  background: url("~base/images/mall/mall-lv10.png") no-repeat;
 }
 
 .admin-container {

@@ -54,13 +54,14 @@ const RecordView = Base.ItemView.extend({
       } else if (game.price === 0) {
         status = '未中奖'
       } else {
-        status = `<span class="text-account-cut">${_(game.price).convert2yuan()}</span>`
+        // status = `中奖<span class="text-account-cut">${_(game.price).convert2yuan()}</span>`
+        status = `中奖<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
       }
       html.push(`<div class="js-gl-bet-detail-dialog recent-game-item " data-id="${game.ticketTradeNo}">`)
-      html.push(`<div class="game-title">${game.name}</div>`)
-      html.push(`<div class="game-date">${createTime}</div>`)
-      html.push(`<div class="game-type">${game.playName}</div>`)
+      html.push(`<div class="game-title">${game.name}-${game.playName}</div>`)
       html.push(`<div class="game-amount">${betAmount}</div>`)
+      html.push(`<div class="game-date">${createTime}</div>`)
+      // html.push(`<div class="game-type">${game.playName}</div>`)
       html.push(`<div class="game-state">${status}</div>`)
       html.push('<div class="clearfix"></div>')
       html.push('</div>')

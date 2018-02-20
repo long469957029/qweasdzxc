@@ -1,57 +1,60 @@
 <template>
-  <div class="points-card" :class="[cardInfo.type, {finished: isFinished}]"
-       @mouseout="toggleBtn(false)">
-    <div class="points-card-inner" @mouseover="toggleBtn(true)">
-      <div class="points-top">
-        <div class="card-value">
-          20<span class="card-unit">元</span>
+  <div class="points-card-wrapper">
+    <div class="points-card" :class="[cardInfo.type, {finished: isFinished}]"
+         @mouseout="toggleBtn(false)">
+      <div class="points-card-inner" @mouseover="toggleBtn(true)">
+        <div class="points-top">
+          <div class="card-value">
+            20<span class="card-unit">元</span>
+          </div>
+          <div class="card-badge">{{cardInfo.name}}</div>
+          <div class="card-badge " v-if="levelLimit > 0">
+            LV{{levelLimit}}
+            <template v-if="1 === limitLevelType">以上</template>
+          </div>
+          <div class="card-left" v-if="maxNum && maxNum - useNum > 0">剩{{maxNum - useNum}}张</div>
+          <div v-else-if="isFinished" class="sfa-finished"></div>
         </div>
-        <div class="card-badge">{{cardInfo.name}}</div>
-        <div class="card-badge " v-if="levelLimit > 0">
-          LV{{levelLimit}}
-          <template v-if="1 === limitLevelType">以上</template>
+        <div class="points-center">
+          <div class="points-range">无限分分彩</div>
         </div>
-        <div class="card-left" v-if="maxNum && maxNum - useNum > 0">剩{{maxNum - useNum}}张</div>
-        <div v-else-if="isFinished" class="sfa-finished"></div>
-      </div>
-      <div class="points-center">
-        <div class="points-range">无限分分彩</div>
-      </div>
 
 
-      <div class="points-bottom-wrapper">
-        <transition-group name="fade"
-                    enter-active-class="animated-quick fadeIn"
-                    leave-active-class="animated-quick fadeOut"
-        >
-          <div class="points-bottom" v-show="!showBtn" key="show">
-            <div class="points-type">投注满5000元即返</div>
-            <div class="points-bottom-inner">
-              <div v-if="countdownTime > 0" class="points-countdown-wrapper">
-                <span>距开始</span>
-                <countdown class="points-countdown" :time="countdownTime" tag="div" @countdown-finished="sysTime = validStartDate">
-                  <template slot-scope="props">
-                    <div class="countdown-cell">{{props.totalHours}}</div>
-                    :
-                    <div class="countdown-cell">{{props.minutes}}</div>
-                    :
-                    <div class="countdown-cell">{{props.seconds}}</div>
-                  </template>
-                </countdown>
-              </div>
-              <div class="points-expire" v-else>
-                {{validStartDate | toTime('MM.DD H:mm')}}-{{validEndDate | toTime('MM.DD H:mm')}}
-              </div>
-              <div class="points-value">
-                <span class="sfa sfa-points"></span>
-                {{requireIntegral | convert2yuan}}积分
+        <div class="points-bottom-wrapper">
+          <transition-group name="fade"
+                            enter-active-class="animated-quick fadeIn"
+                            leave-active-class="animated-quick fadeOut"
+          >
+            <div class="points-bottom" v-show="!showBtn" key="show">
+              <div class="points-type">投注满5000元即返</div>
+              <div class="points-bottom-inner">
+                <div v-if="countdownTime > 0" class="points-countdown-wrapper">
+                  <span>距开始</span>
+                  <countdown class="points-countdown" :time="countdownTime" tag="div"
+                             @countdown-finished="sysTime = validStartDate">
+                    <template slot-scope="props">
+                      <div class="countdown-cell">{{props.totalHours}}</div>
+                      :
+                      <div class="countdown-cell">{{props.minutes}}</div>
+                      :
+                      <div class="countdown-cell">{{props.seconds}}</div>
+                    </template>
+                  </countdown>
+                </div>
+                <div class="points-expire" v-else>
+                  {{validStartDate | toTime('MM.DD H:mm')}}-{{validEndDate | toTime('MM.DD H:mm')}}
+                </div>
+                <div class="points-value">
+                  <span class="sfa sfa-points"></span>
+                  {{requireIntegral | convert2yuan}}积分
+                </div>
               </div>
             </div>
-          </div>
-          <div v-show="showBtn" key="exchange" class="points-bottom-btn">
-            <button class="btn btn-white exchange-btn">立即兑换</button>
-          </div>
-        </transition-group>
+            <div v-show="showBtn" key="exchange" class="points-bottom-btn">
+              <button class="btn btn-white exchange-btn" @click="$emit('exchange')">立即兑换</button>
+            </div>
+          </transition-group>
+        </div>
       </div>
     </div>
   </div>
@@ -59,6 +62,7 @@
 
 <script>
   import Countdown from '../countdown/index.vue'
+  import {formatCoupon} from 'build'
 
   const CARD_TYPE = {
     '1': {
@@ -114,6 +118,11 @@
     },
 
     computed: {
+      formatCouponInfo() {
+        return formatCoupon({
+          type, threholdAmount, bonusPercentAmount, statType, ticketId, gameType
+        })
+      },
       cardInfo() {
         return CARD_TYPE[this.couponType]
       },
@@ -148,10 +157,10 @@
   .points-card {
     width: 310px;
     height: 195px;
-    margin: -13px -14px -35px -16px;
+    margin: -13px -14px -23px -16px;
     display: inline-block;
     .points-card-inner {
-      margin: 13px 14px 35px 16px;
+      margin: 13px 14px 23px 16px;
       padding: 10px 0 0 10px;
     }
 

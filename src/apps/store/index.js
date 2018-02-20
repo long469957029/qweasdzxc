@@ -10,13 +10,14 @@ import bettingAnalysis from './modules/tickets/bettingAnalysis'
 import bettingVouchers from './modules/tickets/bettingVouchers'
 import topTickets from './modules/tickets/topTickets'
 import loginStore from './modules/acct/loginStore'
+import mallInfo from './modules/acct/mall-info'
 import components from './modules/global/components'
 
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   actions,
   getters,
   modules: {
@@ -28,7 +29,57 @@ export default new Vuex.Store({
     bettingVouchers,
     topTickets,
     loginStore,
+    mallInfo,
     components,
   },
   strict: debug,
 })
+
+if (module.hot) {
+  module.hot.accept([
+    './actions',
+    './getters',
+    './modules/tickets/bettingInfo',
+    './modules/tickets/rulesList',
+    './modules/tickets/bettingChoice',
+    './modules/tickets/bettingChase',
+    './modules/tickets/bettingAnalysis',
+    './modules/tickets/bettingVouchers',
+    './modules/tickets/topTickets',
+    './modules/acct/loginStore',
+    './modules/acct/mall-info',
+    './modules/global/components',
+  ], () => {
+    const actions = require('./actions').default
+    const getters = require('./getters').default
+    const bettingInfo = require('./modules/tickets/bettingInfo').default
+    const rulesList = require('./modules/tickets/rulesList').default
+    const bettingChoice = require('./modules/tickets/bettingChoice').default
+    const bettingChase = require('./modules/tickets/bettingChase').default
+    const bettingAnalysis = require('./modules/tickets/bettingAnalysis').default
+    const bettingVouchers = require('./modules/tickets/bettingVouchers').default
+    const topTickets = require('./modules/tickets/topTickets').default
+    const loginStore = require('./modules/acct/loginStore').default
+    const mallInfo = require('./modules/acct/mall-info').default
+    const components = require('./modules/global/components').default
+
+    store.hotUpdate({
+      actions,
+      getters,
+      modules: {
+        bettingInfo,
+        rulesList,
+        bettingChoice,
+        bettingChase,
+        bettingAnalysis,
+        bettingVouchers,
+        topTickets,
+        loginStore,
+        mallInfo,
+        components,
+      }
+    })
+  })
+}
+
+export default store
