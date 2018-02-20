@@ -8,9 +8,6 @@ const urlList = [
   '/acct/userinfo/userdetail.json',//用户详情
   '/acct/login/dologout.json',//登出
   //下单
-  // '/ticket/ticketmod/ticketinfo.json',
-  // '/ticket/ticketmod/ticketplaylist.json',
-  // '/ticket/ticketmod/openhistory.json',
   '/ticket/bethistory/userbethistory.json',
   '/ticket/bethistory/userchasehistory.json',
   '/ticket/bet/bet.json',
@@ -25,9 +22,9 @@ const urlList = [
   '/ticket/chase/cancel.json',//
   //资金（不能 充值，提现，转账）
   '/fund/balance/summary.json',
-  '/info/gamereport/myprofit.json',//我的盈亏
+  '/info/gamereport/myprofit.json',//资金总览，个人数据总览
   '/fund/balance/gametransferinfo.json',
-  '/fund/balance/history.json',
+  '/fund/balance/history.json',//帐变明细
 ]
 module.exports = {
   get(id) {
