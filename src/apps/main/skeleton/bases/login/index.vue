@@ -129,6 +129,7 @@
             // int BYPARENT = 105;// 手工开户
             // int BYSUPER = 106;// 总代开户
             const acctInfo = data.root || {}
+            window.Global.cookieCache.clear('isTestUser')//登录的账户区别于试玩账户
             if (this.login && acctInfo.outTime && acctInfo.outTime !== 0) {
               this.autoLogoutCountdown(acctInfo.outTime)
             }

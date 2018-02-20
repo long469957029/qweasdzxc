@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import urlList from './noLoginSync'
-import needGetOfficialDataUrlConfig from './needGetOfficialDataUrlConfig'
+import needPostTestDataUrlConfig from './needPostTestDataUrlConfig'
 
 const CancelToken = axios.CancelToken
 
@@ -134,8 +134,10 @@ const SyncModule = Base.Module.extend({
                 }
               });
             } else if (ajaxOptions.autoLogout) {
+              window.store.commit(types.USER_CLEAR)
             }
           } else if (xhr.status == 401) {
+            window.store.commit(types.USER_CLEAR)
           }
         }
       });
@@ -298,6 +300,7 @@ const SyncModule = Base.Module.extend({
               }
             });
           }
+          window.store.commit(types.USER_CLEAR)
         }
       });
 
@@ -325,7 +328,7 @@ const SyncModule = Base.Module.extend({
 
   checkToken(ajaxUrl) {
     let token = Global.cookieCache.get('token')
-    if (token === null) {// 如果抓不到token,判断是否为不需要登录的接口，如果是，则使用固定临时token
+    if (!token) {// 如果抓不到token,判断是否为不需要登录的接口，如果是，则使用固定临时token
       const noLoginUrl = _(urlList.getAll()).findWhere({
         url: ajaxUrl,
       })
@@ -336,15 +339,15 @@ const SyncModule = Base.Module.extend({
     return token
   },
   checkTestAccountRequest(ajaxOptions){
-    if (window.store.state.components.requestFormTestServer) {//
-      const changeTokenUrl = _.findWhere(needGetOfficialDataUrlConfig.getAll(), (item)=>{
-        return item === ajaxOptions.url
+    if (window.Global.cookieCache.get('isTestUser')) {//
+      let changeTokenUrl = _.find(needPostTestDataUrlConfig.getAll(), (item) => {
+        return ajaxOptions.url.indexOf(item)>=0
       })
-      if (changeTokenUrl !== undefined) { //试玩账户，部分接口需要获取正式数据，配置通用token
+      if (changeTokenUrl === undefined) { //试玩账户，未特定要求的接口需要通过配置的通用token获取正式数据
         ajaxOptions.data = _.extend({
           token: window.store.state.components.universalToken,
         }, ajaxOptions.data)
-      }else{
+      } else {
         let host = _.getDomainWithNewPrefix(window.store.state.components.testServerPrefix)
         ajaxOptions.url = host + ajaxOptions.url
       }

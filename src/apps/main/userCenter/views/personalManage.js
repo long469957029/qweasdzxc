@@ -1,4 +1,3 @@
-
 const avatarCfg = require('../misc/avatarConfig')
 
 const PersonalManageView = Base.ItemView.extend({
@@ -119,7 +118,7 @@ const PersonalManageView = Base.ItemView.extend({
   formateHeadIconList(data) {
     if ('LIST:' + data) {
       this.$headIconList.empty()
-      const html =  _(data).map((item) => {
+      const html = _(data).map((item) => {
         return `<li class="icon-info js-head-icon-info ${Number(item.id) === this.iconId ? 'active' : ''}" 
             data-id="${item.id}"><img src="${item.logo}" class="head-img"></li>`
       })
@@ -127,24 +126,24 @@ const PersonalManageView = Base.ItemView.extend({
     }
   },
   formateHasChooseCityList(data) {
-    const pInfo = _(this.cityList).findWhere({ provinceId: data.receiverProvinceId })
+    const pInfo = _(this.cityList).findWhere({provinceId: data.receiverProvinceId})
     const pName = pInfo.province
-    const cInfo = _(pInfo.cityList).findWhere({ cityId: data.receiverCityId })
+    const cInfo = _(pInfo.cityList).findWhere({cityId: data.receiverCityId})
     const cName = cInfo.city
     let aName = ''
     if (data.receiverAreaId === 99999) {
       aName = '其他'
     } else {
-      const aInfo = _(cInfo.areaList).findWhere({ areaId: data.receiverAreaId })
+      const aInfo = _(cInfo.areaList).findWhere({areaId: data.receiverAreaId})
       aName = aInfo.area
     }
     this.$province.attr('data-id', data.receiverProvinceId).html(pName)
     this.$city.attr('data-id', data.receiverCityId).html(cName)
     this.$area.attr('data-id', data.receiverAreaId).html(aName)
-   this.chooseProvince = pInfo.cityList
-    this.formateProvinceList(this.cityList,1)
-    this.formateProvinceList(pInfo.cityList,2)
-    this.formateProvinceList(cInfo.areaList,3)
+    this.chooseProvince = pInfo.cityList
+    this.formateProvinceList(this.cityList, 1)
+    this.formateProvinceList(pInfo.cityList, 2)
+    this.formateProvinceList(cInfo.areaList, 3)
   },
   formateProvinceList(data, type) {
     if (data) {
@@ -170,6 +169,10 @@ const PersonalManageView = Base.ItemView.extend({
     }
   },
   updatePersonalInfoHandler() {
+    if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+      Global.ui.notification.show('试玩会员无法进行修改个人资料操作，请先注册正式游戏账号')
+      return false
+    }
     const self = this
     const month = this.$bday1.val()
     const day = this.$bday2.val()
@@ -222,12 +225,12 @@ const PersonalManageView = Base.ItemView.extend({
       this.$province.attr('data-id', id).html(name)
       this.$city.removeAttr('data-id').html('市')
       this.$area.removeAttr('data-id').html('区')
-      this.chooseProvince = _(this.cityList).findWhere({ provinceId: id }).cityList
+      this.chooseProvince = _(this.cityList).findWhere({provinceId: id}).cityList
       this.formateProvinceList(this.chooseProvince, 2)
     } else if (type === 2) {
       this.$city.attr('data-id', id).html(name)
       this.$area.removeAttr('data-id').html('区')
-      const areaInfo = _(this.chooseProvince).findWhere({ cityId: id }).areaList
+      const areaInfo = _(this.chooseProvince).findWhere({cityId: id}).areaList
       this.formateProvinceList(areaInfo, 3)
     } else if (type === 3) {
       this.$area.attr('data-id', id).html(name)

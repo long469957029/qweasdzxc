@@ -61,7 +61,8 @@ const initState = () => {
 // getters
 const getters = {
   userAvatar: (state) => {
-    return avatarConfig.get(_(state.headIcon).toString()).logo
+    let headIcon = state.headIcon?'1':state.headIcon
+    return avatarConfig.get(_(headIcon).toString()).logo
   },
   getLoginStatus: (state) => {
     return state.userId > 0
@@ -103,7 +104,7 @@ const mutations = {
   [types.USER_LOGIN_SUCCESS] (state, data) {
     this.commit(types.USER_OAUTH_SUCCESS, data)
     this.commit(types.USER_IS_VIP, data.vip)
-
+    window.Global.m.publish('acct:login', data)//todo 待确认是否可以从USER_OAUTH_SUCCESS转移到此处
     // 开启oauth监听
     window.Global.m.oauth.start()
     // 开启消息监听
@@ -118,7 +119,7 @@ const mutations = {
   [types.USER_OAUTH_SUCCESS] (state, data) {
     window.Global.memoryCache.set('acctInfo', data)
     window.Global.cookieCache.set('token', data.token, 160)
-    window.Global.m.publish('acct:login', data)
+
     window.Global.m.publish('acct:updating', data)
 
     data.fBalance = data.balance === 0 ? _(data.balance).convert2yuan({fixed:2,clear:false}) : _(data.balance).convert2yuan()
@@ -134,6 +135,7 @@ const mutations = {
     Global.cookieCache.clear('token')
     Global.cookieCache.clear('loginState')
     Global.cookieCache.clear('security')
+    Global.cookieCache.clear('isTestUser')
     window.Global.m.publish('acct:loginOut')
     // 关闭oauth轮询监听
     window.Global.m.oauth.stop()
@@ -148,6 +150,7 @@ const mutations = {
       Global.cookieCache.clear('token')
       Global.cookieCache.clear('loginState')
       Global.cookieCache.clear('security')
+      Global.cookieCache.clear('isTestUser')
       window.Global.m.publish('acct:loginOut')
       // 关闭oauth轮询监听
       window.Global.m.oauth.stop()

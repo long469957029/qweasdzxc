@@ -62,6 +62,10 @@ const NavsView = Base.ItemView.extend({
       Global.ui.notification.show('暂未开放，敬请期待！<br/><br/>', {id: 'ticketNotice', hasFooter: false, displayTime: 1000})
       return false
     }
+    if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+      Global.ui.notification.show('试玩会员无法进行充值操作，请先注册正式游戏账号')
+      return false
+    }
 
     this.getGameListXhr().done((res) => {
       if (res.result === 0) {

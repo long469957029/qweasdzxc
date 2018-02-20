@@ -404,6 +404,10 @@ const TransferView = Base.ItemView.extend({
     this.$('.js-fc-tr-change').toggleClass('sfa-icon-change-Deep', false)
   },
   submitPlatformTransferHandler() {
+    if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+      Global.ui.notification.show('试玩会员无法进行充转账操作，请先注册正式游戏账号')
+      return false
+    }
     if (this.$('.js-tr-tradeNum').val() === '' || Number(this.$('.js-tr-tradeNum').val()) === 0) {
       this.$('.js-fc-tr-error-container').html('<div class="parsley-error-line"><span class="sfa sfa-error-icon vertical-sub pull-left"></span>' +
         '<span class="parsley-error-text">可转账次数不足。</span><div>')

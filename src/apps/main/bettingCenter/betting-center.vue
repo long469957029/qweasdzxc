@@ -82,6 +82,7 @@
 
 <style lang="scss" scoped>
   .bc-main {
+    width: 1200px;
     max-width: 1200px;
     margin: 0 auto;
     background-color: $def-white-color;
