@@ -319,7 +319,7 @@ const RechargeView = TabView.extend({
           bankCode: 'ccb', bankId: 3, bankName: '建设银行', bankUrl: 'https://ibsbjstar.ccb.com.cn/CCBIS/V6/common/login.jsp',
         },
         {
-          bankCode: 'comm', bankId: 6, bankName: '交通银行', bankUrl: 'https://pbank.95559.com.cn/personbank/logon.jsp', 
+          bankCode: 'comm', bankId: 6, bankName: '交通银行', bankUrl: 'https://pbank.95559.com.cn/personbank/logon.jsp',
         },
         {
           bankCode: 'cmb', bankId: 1, bankName: '招商银行', bankUrl: 'https://pbsz.ebank.cmbchina.com/CmbBank_GenShell/UI/GenShellPC/Login/Login.aspx',
@@ -331,19 +331,19 @@ const RechargeView = TabView.extend({
           bankCode: 'cib', bankId: 12, bankName: '兴业银行', bankUrl: 'https://personalbank.cib.com.cn',
         },
         {
-          bankCode: 'spdb', bankId: 9, bankName: '浦发银行', bankUrl: 'https://ebank.spdb.com.cn/nbper/prelogin.do', 
+          bankCode: 'spdb', bankId: 9, bankName: '浦发银行', bankUrl: 'https://ebank.spdb.com.cn/nbper/prelogin.do',
         },
         {
           bankCode: 'gdb', bankId: 7, bankName: '广发银行', bankUrl: 'https://ebanks.cgbchina.com.cn/perbank/',
         },
         {
-          bankCode: 'ecitic', bankId: 13, bankName: '中信银行', bankUrl: 'https://i.bank.ecitic.com/perbank6/signIn.do', 
+          bankCode: 'ecitic', bankId: 13, bankName: '中信银行', bankUrl: 'https://i.bank.ecitic.com/perbank6/signIn.do',
         },
         {
           bankCode: 'ceb', bankId: 8, bankName: '光大银行', bankUrl: 'https://www.cebbank.com/per/prePerlogin.do?ident=gr&_locale=zh_CN',
         },
         {
-          bankCode: 'post', bankId: 14, bankName: '邮政储蓄', bankUrl: 'https://pbank.psbc.com', 
+          bankCode: 'post', bankId: 14, bankName: '邮政储蓄', bankUrl: 'https://pbank.psbc.com',
         },
         {
           bankCode: 'pingan', bankId: 11, bankName: '平安银行', bankUrl: 'https://bank.pingan.com.cn/ibp/bank/index.html#home/home/index',
@@ -673,7 +673,7 @@ const RechargeView = TabView.extend({
 
   confirmHandler() {
     if (this.nopaydetail(true)) {
-      return 
+      return
     }
     const $form = this.$('.js-fc-re-form')
     const clpValidate = $form.parsley().validate()
@@ -730,7 +730,7 @@ const RechargeView = TabView.extend({
   },
   nextHandler () {
     if (this.nopaydetail(true)) {
-      return 
+      return
     }
     const self = this
     const $form = this.$('.js-fc-re-form')

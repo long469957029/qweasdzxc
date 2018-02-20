@@ -34,7 +34,7 @@ const CouponView = Base.ItemView.extend({
   onRender() {
     const self = this
     self.$myCoupon = self.$('.js-sidebar-mycoupon')
-    self.$systemCoupon = self.$('.js-sidebar-systemCoupon')
+    // self.$systemCoupon = self.$('.js-sidebar-systemCoupon')
     self.fetchMyCoupon()
     self.fetchSystemCoupon()
   },
@@ -70,7 +70,7 @@ const CouponView = Base.ItemView.extend({
           if (data.rowCount > 0) {
             self.renderSystemCoupon(data.records)
           } else {
-            this.$('.js-sidebar-systemCoupon-empty').removeClass('hidden')
+            // this.$('.js-sidebar-systemCoupon-empty').removeClass('hidden')
           }
         } else {
           Global.ui.notification.show('加载失败，请稍后再试')
@@ -150,7 +150,7 @@ const CouponView = Base.ItemView.extend({
           _(coupon.maxNum).sub(coupon.useNum),
       })
     }).join('')
-    self.$systemCoupon.html(couponHtml)
+    // self.$systemCoupon.html(couponHtml)
   },
 })
 

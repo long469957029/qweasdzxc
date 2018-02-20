@@ -1,4 +1,3 @@
-
 import LoginPassWord from './passwordManage-loginPwd'
 import FundPassWord from './passwordManage-fundPwd'
 import QuestionPwd from './securityQuestion'
@@ -56,10 +55,10 @@ const AccountSafeView = Base.ItemView.extend({
             } else {
               self.$safeLevelText.html('高')
             }
-            self.$safeProgressInfo.css({ width: `${_(_(data.securityLevel).div(5)).mul(100)}%` })
-            self.$safeInfoDate.html(_(data.loginLogs[0].loginTime).toTime())
-            self.$safeInfoIp.html(data.loginLogs[0].ip)
-            self.$safeInfoAddress.html(data.loginLogs[0].address)
+            self.$safeProgressInfo.css({width: `${_(_(data.securityLevel).div(5)).mul(100)}%`})
+            self.$safeInfoDate.html(data.loginLogs[0] ? _(data.loginLogs[0].loginTime).toTime() : '')
+            self.$safeInfoIp.html(data.loginLogs[0] ? data.loginLogs[0].ip : '')
+            self.$safeInfoAddress.html(data.loginLogs[0] ? data.loginLogs[0].address : '')
             if (data.hasLoginPassword) {
               self.$('.js-setting-icon[data-type="login"]').addClass('active')
             }
@@ -89,16 +88,22 @@ const AccountSafeView = Base.ItemView.extend({
               self.$('.js-important-tip[data-type="mail"]').addClass('hidden')
               self.$settingMailNum.html(data.email)
             }
-            self.$fundPwd.html(new FundPassWord({ hasFundPassword: data.hasFundPassword }).on('render:true', () => {
+            self.$fundPwd.html(new FundPassWord({hasFundPassword: data.hasFundPassword}).on('render:true', () => {
               self.onRender()
             }).render().el)
-            self.$questionPwd.html(new QuestionPwd({ hasSecurityQuestion: data.hasSecurityQuestion }).on('render:true', () => {
+            self.$questionPwd.html(new QuestionPwd({hasSecurityQuestion: data.hasSecurityQuestion}).on('render:true', () => {
               self.onRender()
             }).render().el)
-            self.$phonePwd.html(new PhoneBind({ hasBindingMobile: data.hasBindingMobile, mobile: data.mobile }).on('render:true', () => {
+            self.$phonePwd.html(new PhoneBind({
+              hasBindingMobile: data.hasBindingMobile,
+              mobile: data.mobile
+            }).on('render:true', () => {
               self.onRender()
             }).render().el)
-            self.$mailPwd.html(new EmailBind({ hasBindingEmail: data.hasBindingEmail, email: data.email }).on('render:true', () => {
+            self.$mailPwd.html(new EmailBind({
+              hasBindingEmail: data.hasBindingEmail,
+              email: data.email
+            }).on('render:true', () => {
               self.onRender()
             }).render().el)
           }
@@ -111,6 +116,10 @@ const AccountSafeView = Base.ItemView.extend({
   },
 
   settingBtnHandler(e) {
+    if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+      Global.ui.notification.show('试玩会员无法进行安全设置操作，请先注册正式游戏账号')
+      return false
+    }
     const $target = $(e.currentTarget)
     $target.parents('.js-setting-info').toggleClass('active').siblings().removeClass('active')
   },

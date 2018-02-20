@@ -333,13 +333,13 @@ const MoneyTransferView = Base.ItemView.extend({
     this.$acAmount.attr('data-parsley-range', `[${valMin},${valMax}]`)
     $('.js-ac-user-transfer').html(desMin + desMax + desTradeNum)
     this.$('.js-ac-mt-tradeNum').val(valTradeNum)
-    if (valTradeNum === 0) {
-      this.$('.js-ac-btn-submit').prop('disabled', true)
-    }
+    // if (valTradeNum === 0) {
+    //   this.$('.js-ac-btn-submit').prop('disabled', true)
+    // }
   },
   getErrorTool (errorText) {
     const errorHtml =
-      `<div class="tooltip parsley-errors-list tooltip-error filled">
+      `<div class="tooltip parsley-errors-list tooltip-error filled m-top-sm">
       <span class="sfa sfa-error-icon vertical-sub pull-left"></span>
       <div class="tooltip-inner">${errorText}</div>
       </div>`
@@ -387,8 +387,9 @@ const MoneyTransferView = Base.ItemView.extend({
   submitHandler() {
     const self = this
     const sub = _(this.getAll()).pluck('id')
-    if (this.$('.js-ac-mt-tradeNum').val() === '' || Number(this.$('.js-ac-mt-tradeNum').val()) === '0') {
-      this.getErrorTool('可转账次数不足')
+    if (this.$('.js-ac-mt-tradeNum').val() === '' || Number(this.$('.js-ac-mt-tradeNum').val()) === 0) {
+      // this.getErrorTool('可转账次数不足')
+      Global.ui.notification.show('今日转账次数已用完，暂不能转账')
       return false
     }
 

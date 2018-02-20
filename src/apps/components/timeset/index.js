@@ -38,12 +38,14 @@ Base.Prefab.Timeset = Base.PrefabView.extend({
       format: 'YYYY-MM-DD H:mm:ss',
       useCurrent: false,
       maxDate: this.options.endDate.toDate(),
+      locale: moment.locale('zh-cn')
     })
 
     _.defaults(this.options.endOps, {
       format: 'YYYY-MM-DD H:mm:ss',
       useCurrent: false,
       maxDate: this.options.endDate.toDate(),
+      locale: moment.locale('zh-cn')
     })
   },
 

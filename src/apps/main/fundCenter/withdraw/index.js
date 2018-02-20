@@ -228,7 +228,6 @@ const MoneyWithdrawalView = Base.ItemView.extend({
 
   submitHandler() {
     const self = this
-
     if (!this.canWithdraw) {
       Global.ui.notification.show('您已参与呼朋唤友系列活动，在活动任务未完成前，暂不可提现！', {
         notiType: 'cloud',

@@ -23,9 +23,6 @@ const SidebarView = Base.ItemView.extend({
       sidebar = this.formatSidebar(this.options.sidebar)
     }
     let headIcon=acctInfo.headIcon
-    if(acctInfo.headIcon===null){
-      headIcon=1
-    }
     return {
       menus: sidebar,
       showUserInfo: sidebar.router === 'uc', // _(sidebar).findIndex({ router: 'uc' }) > -1,
@@ -33,7 +30,7 @@ const SidebarView = Base.ItemView.extend({
       isTeam: sidebar.router === 'ac',
       dividendStatus: acctInfo ? acctInfo.dividendStatus : 0,
       userName: acctInfo.username,
-      img: avatarCfg.get(_(headIcon).toString()).logo,
+      img: avatarCfg.get(headIcon).logo,
     }
   },
   onRender() {

@@ -1,4 +1,5 @@
 import '../index.scss'
+
 const quickPayConfig = require('com/fundOperate/quickPayConfig')
 const rechargeService = require('./rechargeService')
 const RechargeConfirmView = require('./rechargeConfirm')
@@ -17,7 +18,7 @@ const RechargeView = Base.ItemView.extend({
     'keyup .js-rc-money-input': 'amountChangeHandler',
     'click .js-fc-rc-payType-item': 'changeTypeHandler',
     'click .js-fc-rc-bank-item': 'changeBankHandler',
-    'click .jc-rc-info-copy-name': 'copyNameSuccessHandler',
+    // 'click .jc-rc-info-copy-name': 'copyNameSuccessHandler',
     'click .js-fc-rc-recharge-submit': 'confirmHandler',
     'click .js-fc-re-gotoAliPay': 'gotoAliPayHandler',
     'click .js-tips-footer-submit': 'nextStepHandler',
@@ -27,10 +28,10 @@ const RechargeView = Base.ItemView.extend({
       url: '/fund/recharge/rechargetype.json',
     })
   },
-  gotoAliPayHandler () {
+  gotoAliPayHandler() {
     window.open('https://www.alipay.com')
   },
-  getActivityInfo () {
+  getActivityInfo() {
     return Global.sync.ajax({
       url: '/info/activityCenter/fundList.json',
     })
@@ -77,7 +78,7 @@ const RechargeView = Base.ItemView.extend({
     // 初始化内容滑动效果数据
     this.conInnerConWidth = 740
     this.conSize = this.$('.jc-fc-rc-view').size()
-    if (!this.cur || this.cur>=1) {
+    if (!this.cur || this.cur >= 1) {
       this.cur = 0
     }
     this.parsley = this.$('.jc-rc-recharge-form').parsley({
@@ -214,6 +215,10 @@ const RechargeView = Base.ItemView.extend({
   },
   // 点击充值确定按钮下一步操作判断
   nextStepHandler() {
+    if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+      Global.ui.notification.show('试玩会员无法进行充值操作，请先注册正式游戏账号')
+      return false
+    }
     const paymentId = this.$('.js-fc-rc-payType-selectedItem').data('type')
     if (paymentId === 6) {
       const name = this.$('.js-rc-aliPay-name').val()
@@ -234,7 +239,7 @@ const RechargeView = Base.ItemView.extend({
     }
   },
   // 微信转账/扫码支付/支付宝/微信支付/银联扫码/QQ扫码/京东扫码增加随机减金额功能 提示框
-  openNoticeDialog(){
+  openNoticeDialog() {
     const oldAmount = this.$('.js-rc-money-input').val()
     const newAmount = _(Number(oldAmount)).sub(Math.round(Math.random() * 998 + 1) / 100).toFixed(2);
     const $dialog = Global.ui.dialog.show({
@@ -261,7 +266,7 @@ const RechargeView = Base.ItemView.extend({
     })
 
   },
-  nextStepConfirmHandler(){
+  nextStepConfirmHandler() {
     const paymentId = this.$('.js-fc-rc-payType-selectedItem').data('type')
     if (this.cur < this.conSize - 1) {
       this.slide(this.conInnerConWidth, this.cur + 1)
@@ -288,23 +293,20 @@ const RechargeView = Base.ItemView.extend({
       this.$('.jc-rc-confirm-view').html(rechargeConfirmView.render().el)
     }
   },
-  preStepHandler()
-  {
+  preStepHandler() {
     if (this.cur > 0) {
       this.slide(this.conInnerConWidth, this.cur - 1)
     }
     this.render()
   }
   ,
-  slide(conInnerConWidth, index)
-  {
+  slide(conInnerConWidth, index) {
     this.$('.jc-fc-rc-maskCon').animate({marginLeft: `${-index * conInnerConWidth}px`})
     this.cur = index
   }
   ,
 // 选择快捷金额事件
-  selectQuickSetHandler(e)
-  {
+  selectQuickSetHandler(e) {
     const $target = $(e.currentTarget)
     // 取消当前选择的快捷金额
     this.$('.js-rc-leftBar-quickPay-select').find('.active').removeClass('active')
@@ -323,8 +325,7 @@ const RechargeView = Base.ItemView.extend({
   }
   ,
 // 充值金额变动事件
-  amountChangeHandler()
-  {
+  amountChangeHandler() {
     this.$('.js-rc-leftBar-quickPay-select').find('.active').removeClass('active')
     const amount = $('.js-rc-money-input').val()
     const paymentId = this.$('.js-rc-select-quickSet').data('type')
@@ -336,8 +337,7 @@ const RechargeView = Base.ItemView.extend({
   }
   ,
 // 支付列表重新选择事件
-  changeTypeHandler(e)
-  {
+  changeTypeHandler(e) {
     const $target = $(e.currentTarget)
     const type = $target.data('type')
     this.$('.js-fc-rc-payType-select').removeClass('side-down').scrollTop(0)
@@ -346,8 +346,7 @@ const RechargeView = Base.ItemView.extend({
   }
   ,
 // 银行列表重新选择事件
-  changeBankHandler(e)
-  {
+  changeBankHandler(e) {
     const $target = $(e.currentTarget)
     const type = $target.data('type')
     const bankId = $target.data('id')
@@ -361,8 +360,7 @@ const RechargeView = Base.ItemView.extend({
   }
   ,
 // 支付列表下拉事件
-  selectTypeDownHandler()
-  {
+  selectTypeDownHandler() {
     const con = this.$('.js-fc-rc-payType-select').height()
     if (con < 100) {
       this.$('.js-fc-rc-payType-select').addClass('side-down')
@@ -376,8 +374,7 @@ const RechargeView = Base.ItemView.extend({
   }
   ,
 // 银行列表下拉事件
-  selectBankDownHandler()
-  {
+  selectBankDownHandler() {
     const con = this.$('.js-fc-re-bankList-select').height()
     if (con < 100) {
       this.$('.js-fc-re-bankList-select').addClass('side-down')
@@ -386,14 +383,12 @@ const RechargeView = Base.ItemView.extend({
       this.$('.js-fc-re-bankList-select').removeClass('side-down')
       this.$('.js-select-bank-down').removeClass('up')
     }
-  }
-  ,
-  copyNameSuccessHandler(e)
-  {
-    $(e.currentTarget).addClass('active').siblings().removeClass('active')
-    Global.ui.notification.show('复制成功！')
-  }
-  ,
+  },
+  // copyNameSuccessHandler(e)
+  // {
+  //   $(e.currentTarget).addClass('active').siblings().removeClass('active')
+  //   Global.ui.notification.show('复制成功！')
+  // }
 })
 
 export default RechargeView

@@ -1,5 +1,5 @@
 const rechargeService = require('./rechargeService')
-
+var Clipboard = require('clipboard')
 const AliAndBankTransfer = Base.ItemView.extend({
 
   template: require('./aliAndBankTransfer.html'),
@@ -36,25 +36,20 @@ const AliAndBankTransfer = Base.ItemView.extend({
           self.$('.jc-rc-info-bankAddress').html(root.bankBranchName)
           self.$('.jc-rc-info-amount').html(_(root.amount).convert2yuan())
           self.$('.jc-rc-info-keyword').html(root.keyword)
-          // if (paymentType === 11) {
-          //   self.$fcReBankTransferferPrompt.find('.js-starBank').html(selectBank.name)
-          //   if (root.bankId === selectBank.type) {
-          //     self.$fcReBankTransferferPrompt.find('.js-isSameBank').html('汇款到')
-          //   } else {
-          //     self.$fcReBankTransferferPrompt.find('.js-isSameBank').html('跨行汇款到')
-          //   }
-          //   self.$fcReBankTransferferPrompt.find('.js-endBank').html(root.bankName)
-          //   self.$fcReBankUrl.attr('href', selectBank.url).html(selectBank.url)
-          // }
-          // _(self.$('.js-fe-re-copy')).each((btn, index) => {
-          //   const $btn = $(btn)
-          //   const text = $btn.closest('div').find('span').html()
-          //   $btn.textCopy({
-          //     text,
-          //     notShowToolTip: true,
-          //   })
-          // })
-          // self.$('.js-fc-re-formArea, .js-tip-info').toggle()
+          self.$('.jc-rc-info-copy-name').attr('data-clipboard-text',root.name)
+          self.$('.jc-rc-info-copy-cardNo').attr('data-clipboard-text',root.cardNo)
+          self.$('.jc-rc-info-copy-amount').attr('data-clipboard-text',_(root.amount).convert2yuan())
+          self.$('.jc-rc-info-copy-keyword').attr('data-clipboard-text',root.keyword)
+
+          const clipboard = new Clipboard('.jc-rc-info-copy');
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+          });
+
+          clipboard.on('error', function(e) {
+            console.error('Action:', e.action);
+            console.error('Trigger:', e.trigger);
+          });
         } else {
           Global.ui.notification.show('未知错误')
         }

@@ -41,7 +41,7 @@
   </div>
 </template>
 <script>
-  import dashboard from '../../api/dashboard'
+  import { getNoticeApi } from 'api/dashboard'
   export default {
     name: 'notice',
     data() {
@@ -88,7 +88,7 @@
         this.runInv()
       },
       getNotice() {
-        dashboard.getNoticeXhr(
+        getNoticeApi(
           ({data}) => {
             if (data && data.result === 0) {
               this.noticeList = data.root || this.noticeList

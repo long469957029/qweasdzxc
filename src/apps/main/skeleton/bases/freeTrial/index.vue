@@ -7,7 +7,7 @@
         <div class="freeTrail-header-text inline-block">试玩账号创建成功！</div>
       </div>
       <div class="freeTrail-account">
-        系统已为您分配试玩账户<span class="account-name">TP3469</span>及<span class="account-amount">1000元</span>试玩体验金，
+        系统已为您分配试玩账户<span class="account-name">{{username}}</span>及<span class="account-amount">{{balance}}元</span>试玩体验金，
       </div>
       <div class="freeTrail-desc">
         您可以开始体验我们的游戏啦～
@@ -40,6 +40,7 @@
   </div>
 </template>
 <script>
+  import {mapState} from 'vuex'
   export default{
     name: 'free-trial',
 
@@ -82,6 +83,13 @@
             this.$store.commit(types.TOGGLE_FREE_TRIAL, false)
           })
       })
+    },
+    computed:{
+      ...mapState({
+          username: state => state.loginStore.username,
+          balance: state => _.convert2yuan(state.loginStore.balance),
+        }
+      )
     }
   }
 </script>

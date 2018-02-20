@@ -289,9 +289,11 @@ export default [
         main: {
           title: '我的分红',
           titleDes: '彩票分红每月1号和16号结算，游戏分红每月1号结算',
+          subReturn: Global.memoryCache.get('acctInfo').dividendStatus === 1 ? false : true,
         },
         sidebar,
         activeMenu: 'ac/dm',
+        parentRouter: 'ac/dm',
       })
     },
   },

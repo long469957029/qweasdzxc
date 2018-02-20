@@ -1,5 +1,5 @@
 require('../../../../base/scripts/jquery.qrcode.min')
-
+var Clipboard = require('clipboard')
 const SearchGrid = require('com/searchGrid')
 
 const OpenAccountManageLinkView = SearchGrid.extend({
@@ -104,12 +104,22 @@ const OpenAccountManageLinkView = SearchGrid.extend({
       pageIndex: this.filterHelper.get('pageIndex'),
       initPagination: false,
     }).hideLoading()
+    this.clipboard = new Clipboard('.js-ac-btn-link-copy');
+    this.clipboard.on('success', function(e) {
+      e.clearSelection();
+    });
+
+    this.clipboard.on('error', function(e) {
+      console.error('Action:', e.action);
+      console.error('Trigger:', e.trigger);
+    });
   },
 
   formatRowData(rowInfo) {
     const row = []
     let html = `<div class="text-left p-left-sm"><input type="text" class="js-ac-span-link input-link" value="${_(`/register.html?linkId=${rowInfo.userLinkUrl}`).toLink()}">`
-    html += '<button type="button" class="js-ac-btn-link-copy btn m-right-xs ac-btn-link-copy">复制</button>'
+    html += `<button type="button" class="js-ac-btn-link-copy btn m-right-xs ac-btn-link-copy" 
+            data-clipboard-text="${_(`/register.html?linkId=${rowInfo.userLinkUrl}`).toLink()}">复制</button>`
     html += `<button userLinkUrl="${rowInfo.userLinkUrl}" type="button" class="js-ac-btn-qr-code btn ac-btn-qr-code">二维码</button>`
     if (rowInfo.linkType === 1) {
       html += '<a class="js-ac-btn-red-detail ac-btn-red-detail"></a>'
@@ -200,12 +210,12 @@ const OpenAccountManageLinkView = SearchGrid.extend({
     this.$('.js-qr-code-div-all').hide()
   },
 
-  copyLinkHandler ($parent) {
-    $parent.find('.js-ac-btn-link-copy').textCopy({
-      textEl: $parent.find('.js-ac-span-link'),
-      toolTipDirection: 'left',
-    })
-  },
+  // copyLinkHandler ($parent) {
+  //   $parent.find('.js-ac-btn-link-copy').textCopy({
+  //     textEl: $parent.find('.js-ac-span-link'),
+  //     toolTipDirection: 'left',
+  //   })
+  // },
 
   delSubAcctHander (e) {
     const self = this

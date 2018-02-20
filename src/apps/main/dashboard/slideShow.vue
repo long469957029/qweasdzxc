@@ -26,7 +26,7 @@
 
 <script>
   import animateLoading from 'com/loading-animate'
-  import dashboard from '../../api/dashboard'
+  import { getBannerADApi } from 'api/dashboard'
   export default {
     props: {
       inv: {
@@ -95,7 +95,7 @@
       }
     },
     mounted () {
-      dashboard.getBannerADXhr(
+      getBannerADApi(
         ({data}) => {
           if (data && data.result === 0) {
             this.slides = data.root || this.slides

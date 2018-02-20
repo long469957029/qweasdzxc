@@ -20,6 +20,7 @@ $navbar-container-color: white;
 .main-top{
   position: relative;
   z-index: 1040;
+  min-width: 1200px;
 }
 .navbar-container {
   background-color: $navbar-container-color;

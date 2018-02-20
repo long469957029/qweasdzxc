@@ -129,6 +129,19 @@ const sscConfig = {
       isOfficial: true,
     }, bettingTypes.SSC),
     Object.assign({
+      id: 37,
+      mark: 'tx',
+      zhName: '腾讯分分彩',
+      badge: 'new',
+      showNumberDetail: false,
+      trendOps: {
+        distribution: true,
+        periods: trendPeriods,
+        split: 1,
+      },
+      isOfficial: true,
+    }, bettingTypes.SSC),
+    Object.assign({
       id: 21,
       mark: 'hg',
       zhName: '韩国乐透1.5',
@@ -263,7 +276,7 @@ const oneFiveConfig = {
 }
 const threeDConfig = [
   Object.assign({
-    id: 16,
+    id: 36,
     mark: '3d-ffc',
     zhName: 'QQ3D分分彩',
     hasMargin: true,

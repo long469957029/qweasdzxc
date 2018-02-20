@@ -72,6 +72,7 @@
   import fundApi from 'api/fund'
   import {getAccountSafeApi} from 'api/userCenter'
   import loginApi from 'api/login'
+  import Fingerprint2 from 'fingerprintjs2'
 
   export default{
     name: 'main-header',
@@ -121,14 +122,11 @@
       },
       imgUrl(){
         let logoId = this.$store.state.loginStore.headIcon
-        if (logoId === 'null' || logoId === undefined || logoId === null) {
-          logoId = 1
-        }
         let result = ''
         if ('png'.indexOf(logoId) !== -1) {
           result = logoId
         } else {
-          result = avatarConf.get(_(logoId).toString()).logo
+          result = avatarConf.get(logoId).logo
         }
         return result
       },
@@ -149,20 +147,38 @@
       },
       showFreeTrial(){
 
-        loginApi.testUserReg((data)=>{
-          if(data.data && data.data.result===0){
-            window.Global.cookieCache.set('token', data.data.root.token, 160)
-            window.Global.cookieCache.set('loginState', true)
-            this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
-            this.setRequestFromTestServer()
-            window.store.commit(types.USER_LOGIN_SUCCESS, data.data.root || {})
-          }
+        this.getUUID().then(({uuid}) => {
+
+          loginApi.testUserReg({uuid}, (data) => {
+            if (data.data && data.data.result === 0) {
+              window.Global.cookieCache.set('token', data.data.root.token, 160)
+              window.Global.cookieCache.set('loginState', true)
+              window.Global.cookieCache.set('isTestUser', true)//存一份到cookie，用于应用刷新时记住试玩状态
+              this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
+              window.store.commit(types.USER_LOGIN_SUCCESS, data.data.root || {})
+            }
+          })
         })
 
 
       },
-      setRequestFromTestServer(){
-        window.store.commit(types.SET_REQUEST_FROM_TEST_SERVER,{requestFormTestServer:true})
+      getUUID(){
+        return new Promise((resolve) => {
+          var uuid = Global.cookieCache.get('testUserUUID')
+          if (!uuid) {
+            new Fingerprint2().get(function (result, components) {
+//              console.log(result) // a hash, representing your device fingerprint
+//              console.log(components) // an array of FP components
+              if(!result){
+                result = new Date().getMilliseconds()
+              }
+              Global.cookieCache.set('testUserUUID',result)
+              resolve({uuid: result})
+            })
+          } else {
+            resolve({uuid: uuid})
+          }
+        })
       },
       renderMsgList(model){
         this.newRowCount = model.get('newRowCount')

@@ -98,7 +98,6 @@ const teamBettingRecordView = SearchGrid.extend({
     })
 
     SearchGrid.prototype.onRender.apply(this, arguments)
-    // this.subUserHandler(e);
   },
 
   renderGrid(gridData) {
@@ -117,23 +116,14 @@ const teamBettingRecordView = SearchGrid.extend({
       .hideLoading()
     _(gridData.betList).each((items, index) => {
       if ((items.betNum).length >= 16) {
-        if (index === 0 || index === 1) {
-          $('.js-uc-betDetail-betNum').eq(num).popover({
-            title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
-            trigger: 'click',
-            html: true,
-            content: `<div class="js-pf-popover"><span class="word-break">${items.betNum}</span></div>`,
-            placement: 'bottom',
-          })
-        } else {
-          $('.js-uc-betDetail-betNum').eq(num).popover({
-            title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
-            trigger: 'click',
-            html: true,
-            content: `<div class="js-pf-popover"><span class="word-break">${items.betNum}</span></div>`,
-            placement: 'top',
-          })
-        }
+        const placement = index < 4 ? 'bottom' : 'top'
+        $('.js-uc-betDetail-betNum').eq(num).popover({
+          // title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
+          trigger: 'focus',
+          html: true,
+          content: `<span class="inline-block text-account-add">详细号码：</span><span class="js-pf-popover inline-block word-break ">${items.betNum}</span>`,
+          placement,
+        })
         num += 1
       }
     })
@@ -157,7 +147,7 @@ const teamBettingRecordView = SearchGrid.extend({
   offbBetDetailHandler () {
     $('.js-uc-betDetail-betNum').popover('hide')
   },
-  formatRowData(rowInfo) {
+  formatRowData(rowInfo,index) {
     const row = []
     row.push(`<a class="btn-link js-gl-bet-detail-dialog" data-id="${rowInfo.ticketTradeNo}">${_(rowInfo.betTime).toTime()}</a>`)
     row.push(rowInfo.userName)
@@ -167,7 +157,7 @@ const teamBettingRecordView = SearchGrid.extend({
     row.push(rowInfo.ticketResult)
     // row.push(rowInfo.betNum);
     if ((rowInfo.betNum).length >= 16) {
-      row.push('<a class="js-uc-betDetail-betNum btn-link btn-link-cool">详细号码</a>')
+      row.push(`<a tabindex="${index}" class="js-uc-betDetail-betNum btn-link btn-link-cool">详细号码</a>`)
     } else {
       row.push(rowInfo.betNum)
     }

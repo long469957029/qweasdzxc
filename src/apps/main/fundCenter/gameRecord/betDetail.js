@@ -26,7 +26,7 @@ const BetDetailView = Base.ItemView.extend({
       self.loadingFinish()
     }).done((res) => {
       if (res && res.result === 0) {
-        self.isSelf = !(!_(self.options.userId).isUndefined() && (`${Global.memoryCache.get('acctInfo').userId}` !== `${self.options.userId}`))
+        self.isSelf = Global.memoryCache.get('acctInfo').username === res.root.username
         self.$('.jc-gr-bet-type-name').html(res.root.ticketName)
         if (res.root.ticketPlanId !== 'mmc') {
           self.$('.jc-gr-bet-type-no-panel').html('第<span class="jc-gr-bet-type-no fc-gr-bet-type-no">' + res.root.ticketPlanId + '</span>期')
