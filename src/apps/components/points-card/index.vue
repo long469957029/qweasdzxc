@@ -62,6 +62,7 @@
 
 <script>
   import Countdown from '../countdown/index.vue'
+  import {formatCoupon} from 'build'
 
   const CARD_TYPE = {
     '1': {
@@ -117,6 +118,11 @@
     },
 
     computed: {
+      formatCouponInfo() {
+        return formatCoupon({
+          type, threholdAmount, bonusPercentAmount, statType, ticketId, gameType
+        })
+      },
       cardInfo() {
         return CARD_TYPE[this.couponType]
       },

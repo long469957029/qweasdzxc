@@ -25,6 +25,7 @@ import quick3Sum from './filters/quick3-sum'
 import twoSideType from './filters/two-side-type'
 import formatOpenNum from './filters/format-open-num'
 import formatCouponType from './filters/format-coupon-type'
+import formatCoupon from './filters/format-coupon'
 
 export {
   AnimatedInteger,
@@ -51,4 +52,5 @@ export {
   formatOpenNum,
   quick3Sum,
   twoSideType,
+  formatCoupon,
 }
