@@ -13,53 +13,63 @@
         <div class="left-profile">
           <div class="profile">
             <img :src="userAvatar" class="avatar" />
-            您好！{{uName}}
+            您好！{{username}}
             <div class="level">
-              <span class="sfa" :class="`sfa-pt-level-${mallMemberLevel}`"></span>
+              <span class="sfa" :class="`sfa-pt-level-${mallBasicInfo.levelId}`"></span>
             </div>
           </div>
           <div class="current-points">
             当前积分值：
-            <span class="points-val">25320</span>
+            <span class="points-val">{{mallBasicInfo.fIntegral}}</span>
           </div>
           <div class="level-up">
             <div class="level-up-top">
-              距离晋升还需：22046
+              距离晋升还需：{{mallBasicInfo.fNextLevelIntegral}}
             </div>
             <div class="left-ball">
               <div class="bar">
-                <div class="current" style="width: 50%"></div>
+                <div class="current" :style="`width: ${mallBasicInfo.nextPercent}%`"></div>
               </div>
-              LV4
+              {{mallBasicInfo.nextLevelName}}
             </div>
             <div class="level-tip">
-              升级到LV4即可享受9.5折兑换特权
+              升级到{{mallBasicInfo.nextLevelName}}即可享受{{mallBasicInfo.fNextDiscount}}折兑换特权
             </div>
           </div>
-          <div class="points-exchange-btn">
+          <router-link class="points-exchange-btn" :to="{name: 'ticketRecords'}" tag="div">
             <span class="sfa sfa-pt-my-points"></span>
             我的积分与兑换
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
     <div class="right-banner-wrapper">
-      <swiper>
-        <swiper-item>
-          <img :src="banner"/>
-        </swiper-item>
+      <swiper :options="swiperOption">
+        <swiper-slide v-for="(item, i) in bannerList" :key="i">
+          <a :href="item.advUrl" v-if="item.advUrl" target="_blank">
+            <img :src="item.picUrl"/>
+          </a>
+          <img v-else :src="item.picUrl"/>
+        </swiper-slide>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
-      <div class="sign-in">
+      <div class="sign-in" @click="showSignIn">
         <div class="sfa sfa-pt-sign-in"></div>
         签到
       </div>
+    </div>
+    <div v-transfer-dom>
+      <x-dialog v-if="isShowSignIn" @modal-hidden="isShowSignIn = false">
+        <sign-in slot="all"></sign-in>
+      </x-dialog>
     </div>
   </div>
 </template>
 
 <script>
-  import Swiper from './swiper'
-  import SwiperItem from './swiper-item'
+  import {Swiper, SwiperSlide} from 'build'
+  import {getMallBannerApi} from 'api/points'
   import banner from './banner.png'
 
   import SignIn from '../points-sign-in'
@@ -69,24 +79,59 @@
 
     components: {
       Swiper,
-      SwiperItem,
+      SwiperSlide,
       SignIn,
     },
 
     data() {
       return {
-        banner
+        bannerList: [
+          {
+            advId: 0,
+            advName: '',
+            advUrl: '',
+            picUrl: banner
+          },
+        ],
+        swiperOption: {
+          loop: true,
+          centeredSlides: true,
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }
+        },
+        isShowSignIn: false
       }
     },
 
     computed: {
-      ...mapState({
-        'uName': state => state.loginStore.uName,
-        'mallMemberLevel': state => state.loginStore.mallMemberLevel,
-      }),
       ...mapGetters([
-        'userAvatar'
+        'username',
+        'userAvatar',
+        'mallBasicInfo'
       ])
+    },
+
+    methods: {
+      showSignIn() {
+        this.isShowSignIn = true
+      }
+    },
+
+    mounted() {
+      getMallBannerApi(({data}) => {
+        if (data && data.result === 0) {
+          if (!_.isEmpty(data.root)) {
+            this.bannerList = data.root
+          }
+
+        }
+      })
     }
   }
 </script>
@@ -223,6 +268,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 1;
       .sfa-pt-my-points {
         margin-right: 5px;
       }
@@ -233,7 +279,10 @@
   .right-banner-wrapper {
     position: relative;
     margin-top: 23px;
-    margin-left: -7px;
+    margin-right: 8px;
+    height: 450px;
+    width: 870px;
+    flex: 1 0 auto;
 
     .sign-in {
       background-color: #e84c4c;
@@ -251,6 +300,39 @@
       justify-content: center;
       align-items: center;
       color: #ffffff;
+      z-index: 1;
+    }
+
+    .swiper-button-prev {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'%3E%3Cpath d='M0 22L22 0l2.1 2.1L4.2 22l19.9 19.9L22 44 0 22z' fill='%23ffffff'/%3E%3C/svg%3E");
+      left: -30px;
+      right: auto;
+      background-color: rgba(0, 0, 0, 0.2);
+      width: 60px;
+      height: 60px;
+      border-radius: 50px;
+      background-position: 75% 50%;
+      background-size: 10px 20px;
+      margin-top: -30px;
+      transition: background-color .5s;
+    }
+    .swiper-button-next {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'%3E%3Cpath d='M27 22L5 44l-2.1-2.1L22.8 22 2.9 2.1 5 0l22 22z' fill='%23ffffff'/%3E%3C/svg%3E");
+      right: -30px;
+      left: auto;
+      background-color: rgba(0, 0, 0, 0.2);
+      width: 60px;
+      height: 60px;
+      border-radius: 50px;
+      background-position: 25% 50%;
+      background-size: 10px 20px;
+      margin-top: -30px;
+      transition: background-color .5s;
+    }
+    .swiper-button-next,.swiper-button-prev {
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
     }
   }
 </style>

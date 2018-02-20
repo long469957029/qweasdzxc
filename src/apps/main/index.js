@@ -4,13 +4,16 @@ const modules = require('skeleton/modules')
 import {
   SlotStaticGrid,
   StaticGrid,
+  SearchGrid,
   AnimatedInteger,
   XDialog,
   BusPlugin,
   CustomCheckbox,
   Popover,
+  TransferDom,
 } from 'build'
-import store from '../store/index'
+
+import store from '../store'
 
 import MainHeader from 'skeleton/bases/header'
 import Login from 'skeleton/bases/login'
@@ -31,10 +34,12 @@ Object.defineProperty(Vue.prototype, '$', {value: $})
 Vue.use(BusPlugin)
 Vue.use(Popover)
 Vue.component('static-grid', StaticGrid)
+Vue.component('search-grid', SearchGrid)
 Vue.component('slot-static-grid', SlotStaticGrid)
 Vue.component('custom-checkbox', CustomCheckbox)
 Vue.component('animated-integer', AnimatedInteger)
 Vue.component('x-dialog', XDialog)
+Vue.directive('TransferDom', TransferDom)
 
 require('widgets')
 

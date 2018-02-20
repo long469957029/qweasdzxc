@@ -208,6 +208,10 @@
   top:13px;
   right: 13px;
   z-index: 2;
+
+  &.close-white {
+    color: #ffffff;
+  }
 }
 .close-md{
   width: 19px;
