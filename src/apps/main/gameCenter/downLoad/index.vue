@@ -27,6 +27,7 @@
           <div class="text-default">下载方式二</div>
           <div class="text-inverse">手机浏览器打开网址：<span class="text-cool">{{linkUrl}}</span></div>
         </div>
+        <div class="show-user-pwd" @click="triggerShow" v-if="haveUserInfo">手机版专属账号>></div>
         <div class="tip">
           <span class="tip-icon"></span>
           建议使用浏览器扫码功能或专业二维码扫描工具，不建议使用微信、QQ扫码功能。
@@ -74,6 +75,7 @@
       linkUrl:'app.5x5x.vip/gg'
     }
     ]
+  import { getDownGameUserInfo } from 'api/other'
   export default{
     name: 'game-down-load',
     data(){
@@ -82,20 +84,19 @@
         qrCode: '',
         linkUrl: '',
         phoneIndex: 1,
+        haveUserInfo:false,
         showUserInfo:false
-      }
-    },
-    watch:{
-      gameDownLoadGameId:function () {
-        if(this.gameDownLoadGameId === 2 || this.gameDownLoadGameId === 6){
-
-        }
       }
     },
     computed:{
       ...mapGetters([
         'gameDownLoadGameId'
       ])
+    },
+    methods: {
+      triggerShow(){
+        this.showUserInfo = !this.showUserInfo
+      }
     },
     mounted(){
       this.title =  _(config).find({gameId: this.gameDownLoadGameId}).title
@@ -108,6 +109,14 @@
           .on('hidden.modal', () => {
             this.$store.commit(types.TOGGLE_GMAE_DOWN_LOAD, {showDialog:false})
           })
+      })
+      getDownGameUserInfo({channelId: this.gameDownLoadGameId},
+        ({data}) => {
+        if(data && data.result === 0){
+          if(!_.isNull(data.root)){
+           this.haveUserInfo = true
+          }
+        }
       })
     }
   }
@@ -215,6 +224,15 @@
           vertical-align: middle;
           transform: translateY(-2px);
         }
+      }
+      .show-user-pwd{
+        position: absolute;
+        text-align: center;
+        font-size: $font-sm;
+        text-decoration: underline;
+        cursor: pointer;
+        width: 100%;
+        bottom: 70px;
       }
     }
   }
