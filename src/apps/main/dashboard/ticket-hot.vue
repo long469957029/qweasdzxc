@@ -140,14 +140,9 @@
     opacity: 0;
     transform: translateY(272px);
   }
-
-  .ticketGroup-enter-active, .ticketGroup-leave-active {
-    @include transition-cfg;
-  }
-
-  .ticketGroup-move {
-    transition: all .5s;
-  }
+  /*.ticketGroup-move {*/
+    /*transition: all .5s;*/
+  /*}*/
   .db-ticket-game-type {
     width: 640px;
     height: 34px;
