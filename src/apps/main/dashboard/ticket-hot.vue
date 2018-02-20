@@ -18,9 +18,10 @@
       </transition>
       <div class="db-ticket-game-type-container" v-show="ticketType === 1">
         <transition-group name="ticketGroup" tag="div">
-          <div class="db-ticket-item" v-for="item in handicapTicketList" :key="item.ticketId">
+          <div class="db-ticket-item" v-for="item in handicapTicketList" :key="_.uniqueId('handicap_')">
             <!--<div :class="`db-ticket-logo sfa-bc-new-ssc-${item.ticketId}`"></div>-->
-            <router-link :to="`bc/2/${item.ticketId}`" :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></router-link>
+            <router-link :to="`bc/2/${item.ticketId}`"
+                         :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></router-link>
             <div class="db-ticket-name">{{item.ticketName}}</div>
             <div class="db-ticket-num">
               <animated-integer :value="item.userBetCount"></animated-integer>
@@ -35,8 +36,9 @@
       </div>
       <div class="db-ticket-game-type-container" v-show="ticketType === 2">
         <transition-group name="ticketGroup" tag="div">
-          <div class="db-ticket-item" v-for="item in classicTicketLIst" :key="item.ticketId">
-            <router-link :to="`bc/0/${item.ticketId}`" :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></router-link>
+          <div class="db-ticket-item" v-for="item in classicTicketList" :key="_.uniqueId('classic_')">
+            <router-link :to="`bc/0/${item.ticketId}`"
+                         :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></router-link>
             <div class="db-ticket-name">{{item.ticketName}}</div>
             <div class="db-ticket-num">
               <animated-integer :value="item.userBetCount"></animated-integer>
@@ -54,14 +56,15 @@
 </template>
 
 <script>
-  import { getIndexTicketApi } from 'api/dashboard'
+  import {getIndexTicketApi} from 'api/dashboard'
   import ticketCfg from 'skeleton/misc/ticketConfig'
+
   export default {
     name: "ticket-hot",
-    data(){
-      return{
+    data() {
+      return {
         handicapTicketList: [],
-        classicTicketLIst: [],
+        classicTicketList: [],
         ticketType: 1,
         ticketCount: 0,
         ticketIndex: 1,
@@ -75,15 +78,15 @@
       ]),
     },
     methods: {
-      showTicket(type){
-        this.ticketCount = type === 1 ? this.handicapTicketList.length : this.classicTicketLIst.length
+      showTicket(type) {
+        this.ticketCount = type === 1 ? this.handicapTicketList.length : this.classicTicketList.length
         this.ticketType = type
       },
-      showArrow(){
+      showArrow() {
         this.showArrowBtn = !this.showArrowBtn
       },
-      ticketSwitch(type){
-        const arr = this.ticketType === 1 ? this.handicapTicketList : this.classicTicketLIst
+      ticketSwitch(type) {
+        const arr = this.ticketType === 1 ? this.handicapTicketList : this.classicTicketList
         if (type === 'left') {
           arr.unshift(arr.pop())
         } else {
@@ -92,14 +95,14 @@
         if (this.ticketType === 1) {
           this.handicapTicketList = arr
         } else {
-          this.classicTicketLIst = arr
+          this.classicTicketList = arr
         }
       },
-      progressWidth(num){
+      progressWidth(num) {
         const width = num > 4000 ? '100%' : (num > 1000 ? `${_(num).div(4000)}%` : '25%')
         return `width:${width}`
       },
-      getTicketLogo(id){
+      getTicketLogo(id) {
         const ticketInfo = ticketCfg.getAllBy({id: id})
         return _(ticketInfo).isEmpty() ? '' : `sfa-bc-${ticketInfo[0].type}-${ticketInfo[0].mark}-hot`
       }
@@ -108,8 +111,14 @@
       getIndexTicketApi(
         ({data}) => {
           if (data && data.result === 0) {
-            this.handicapTicketList = data.root.handicapTickets || this.handicapTicketList
-            this.classicTicketLIst = data.root.classicTickets || this.classicTicketLIst
+            if(data.root.handicapTickets && data.root.handicapTickets.length > 3 && data.root.handicapTickets.length < 5){
+              this.handicapTicketList = [...data.root.handicapTickets]
+              this.handicapTicketList.push(_.first(data.root.handicapTickets))
+              this.handicapTicketList.unshift(_.last(data.root.handicapTickets))
+            }else{
+              this.handicapTicketList = data.root.handicapTickets || this.handicapTicketList
+            }
+            this.classicTicketList = data.root.classicTickets || this.classicTicketList
             this.ticketCount = this.handicapTicketList.length
           }
         }
@@ -122,6 +131,7 @@
   @mixin transition-cfg {
     transition: all .5s;
   }
+
   .arrow-left-enter, .arrow-left-leave-to {
     opacity: 0;
     transform: translateX(10px);
@@ -136,19 +146,17 @@
     @include transition-cfg;
   }
 
-  .ticketGroup-enter, .ticketGroup-leave-to {
-    opacity: 0;
-    transform: translateY(272px);
+  .ticketGroup-move {
+    transition: all .5s, opacity 0s;
   }
-  /*.ticketGroup-move {*/
-    /*transition: all .5s;*/
-  /*}*/
+
   .db-ticket-game-type {
     width: 640px;
     height: 34px;
     padding: 0 12px;
     border-bottom: 1px solid $def-line-color;
   }
+
   .db-ticket-game-type-item {
     height: 34px;
     display: inline-block;
@@ -159,11 +167,12 @@
     line-height: 34px;
     color: #000;
     cursor: pointer;
-  &.active {
-     color: $new-main-deep-color;
-     border-bottom: 2px solid $new-main-deep-color;
-   }
+    &.active {
+      color: $new-main-deep-color;
+      border-bottom: 2px solid $new-main-deep-color;
+    }
   }
+
   .db-ticket-more {
     position: absolute;
     right: 20px;
@@ -172,53 +181,63 @@
     font-size: 14px;
     cursor: pointer;
   }
+
   .ticket-game-main {
     width: 665px;
     height: 272px;
     position: relative;
-  .db-ticket-arrow {
-    position: absolute;
-    display: block;
-    width: 30px;
-    height: 30px;
-    top: 100px;
-    z-index: 2;
-    cursor: pointer;
-  &.left {
-     background: url("./misc/arrow-left.png") no-repeat;
-     left: 10px;
-   }
-  &.right {
-     background: url("./misc/arrow-right.png") no-repeat;
-     right: 10px;
-   }
+    .db-ticket-arrow {
+      position: absolute;
+      display: block;
+      width: 30px;
+      height: 30px;
+      top: 100px;
+      z-index: 2;
+      cursor: pointer;
+      &.left {
+        background: url("./misc/arrow-left.png") no-repeat;
+        left: 10px;
+      }
+      &.right {
+        background: url("./misc/arrow-right.png") no-repeat;
+        right: 10px;
+      }
+    }
   }
-  }
+
   .db-ticket-game-type-container {
     width: 665px;
     height: 272px;
     overflow: hidden;
-  > div {
-    display: flex;
+    position: relative;
+    > div {
+      display: flex;
+      position: absolute;
+      left: -444px;
+    }
   }
-  }
+
   .db-ticket-item {
-    display: inline-block;
+    /*display: inline-block;*/
     width: 222px;
     position: relative;
-  &:after {
-     content: '';
-     width: 1px;
-     height: 114px;
-     position: absolute;
-     right: 0;
-     top: 35px;
-     background-color: $sec-line-color;
-   }
-  &:last-child:after {
-     width: 0;
-   }
+    &:first-of-type, &:last-of-type {
+      opacity: 0;
+    }
+    &:after {
+      content: '';
+      width: 1px;
+      height: 114px;
+      position: absolute;
+      right: 0;
+      top: 35px;
+      background-color: $sec-line-color;
+    }
+    &:last-child:after {
+      width: 0;
+    }
   }
+
   .db-ticket-logo {
     width: 155px;
     height: 160px;
@@ -226,6 +245,7 @@
     cursor: pointer;
     display: block;
   }
+
   .db-ticket-name {
     height: 20px;
     line-height: 20px;
@@ -233,6 +253,7 @@
     text-align: center;
     color: $def-black-color;
   }
+
   .db-ticket-num {
     height: 22px;
     font-size: 12px;
@@ -240,6 +261,7 @@
     line-height: 22px;
     text-align: center;
   }
+
   .db-ticket-progress-bg {
     position: relative;
     width: 161px;
@@ -249,6 +271,7 @@
     border: 1px solid #e2e2e2;
     border-radius: 3px;
   }
+
   .db-ticket-progress {
     position: absolute;
     top: -1px;

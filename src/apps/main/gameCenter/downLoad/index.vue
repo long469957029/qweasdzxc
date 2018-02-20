@@ -81,7 +81,15 @@
         title: '',
         qrCode: '',
         linkUrl: '',
-        phoneIndex: 1
+        phoneIndex: 1,
+        showUserInfo:false
+      }
+    },
+    watch:{
+      gameDownLoadGameId:function () {
+        if(this.gameDownLoadGameId === 2 || this.gameDownLoadGameId === 6){
+
+        }
       }
     },
     computed:{
