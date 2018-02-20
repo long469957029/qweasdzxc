@@ -1,4 +1,32 @@
 /**
+ * 商城首页banner list
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getMallBannerApi = (then, fail) => {
+  return $http({
+    url: '/acct/usernotice/getMallAdvertise.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
+ * 取得用户积分商城信息
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getUserMallInfoApi = (then, fail) => {
+  return $http({
+    url: '/mall/integral/info.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
  * 取得优惠券
  * @param couponType
  * @param couponStatus
@@ -27,6 +55,22 @@ const getCouponListApi = ({couponType, couponStatus, sortFlag, sortType, pageSiz
 }
 
 /**
+ * 兑换券
+ * @param couponId - 券id
+ * @param then
+ * @param fail
+ * @returns {*}
+ */
+const exchangeCouponListApi = ({couponId}, then, fail) => {
+  return $http({
+    url: '/mall/coupon/exchange.json',
+    data: {
+      couponId
+    }
+  })
+}
+
+/**
  * @brief 积分商城 礼物兑换
  * @param itemType
  * @param itemStatus
@@ -38,15 +82,14 @@ const getCouponListApi = ({couponType, couponStatus, sortFlag, sortType, pageSiz
  * @param fail
  * @returns {*|Promise<T>}
  */
-const getGiftListApi = (
-  {
-    itemType,
-    itemStatus,
-    sortFlag,
-    sortType,
-    pageSize = 12,
-    pageIndex = 0,
-  }, then, fail) => {
+const getGiftListApi = ({
+                          itemType,
+                          itemStatus,
+                          sortFlag,
+                          sortType,
+                          pageSize = 12,
+                          pageIndex = 0,
+                        }, then, fail) => {
   return $http({
     url: '/mall/gift/giftList.json',
     data: {
@@ -84,7 +127,7 @@ const getTaskListApi = (then, fail) => {
  * @param fail
  * @returns {*|Promise<T>}
  */
-const lotteryApi = ({type, lotteryType = 0, }, then, fail) => {
+const lotteryApi = ({type, lotteryType = 0,}, then, fail) => {
   return $http({
     url: '/mall/lucky/lottery.json',
     data: {
@@ -96,7 +139,13 @@ const lotteryApi = ({type, lotteryType = 0, }, then, fail) => {
     .catch(fail)
 }
 
-const missonListApi = (then, fail) => {
+/**
+ * 任务列表
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const missionListApi = (then, fail) => {
   return $http({
     url: '/mall/mission/list.json',
   })
@@ -104,10 +153,135 @@ const missonListApi = (then, fail) => {
     .catch(fail)
 }
 
+/**
+ * 取得签到信息
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getSignInInfoApi = (then, fail) => {
+  return $http({
+    url: '/mall/mission/signInfo.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+
+/**
+ * 签到 仅当签到信息中isReceiveToday = false时，调用
+ * @param then
+ * @param fail
+ * @returns {*}
+ */
+const signInApi = (then, fail) => {
+  return $http({
+    url: '/mall/mission/sign.json'
+  })
+    .then(then)
+    .catch(fail)
+}
+
+
+/**
+ * 取得券兑换记录
+ * @param startDate
+ * @param endDate
+ * @param pageIndex
+ * @param pageSize
+ * @param couponToken
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getTicketRecordsApi = ({startDate = '', endDate = '', pageIndex = 0, pageSize = 10, couponToken = ''} = {}, then, fail) => {
+  return $http({
+    url: '/mall/coupon/myCouponAndGiveList.json',
+    data: {
+      startDate,
+      endDate,
+      pageIndex,
+      pageSize,
+      couponToken
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
+ * 取得礼物兑换记录
+ * @param startDate
+ * @param endDate
+ * @param pageIndex
+ * @param pageSize
+ * @param itemName
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getMyGiftRecordsApi = ({
+                               startDate = '',
+                               endDate = '',
+                               pageIndex = 0,
+                               pageSize = 10,
+                               itemName = '',
+                             }, then, fail) => {
+  return $http({
+    url: '/mall/gift/myGiftList.json',
+    data: {
+      startDate,
+      endDate,
+      pageIndex,
+      pageSize,
+      itemName,
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
+ * 积分明细列表
+ * @param startDate
+ * @param endDate
+ * @param pageIndex
+ * @param pageSize
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getIntegralRecordsApi = ({
+                               startDate = '',
+                               endDate = '',
+                               pageIndex = 0,
+                               pageSize = 10,
+                             }, then, fail) => {
+  return $http({
+    url: '/mall/integral/detailList.json',
+    data: {
+      startDate,
+      endDate,
+      pageIndex,
+      pageSize,
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
 export {
+  getMallBannerApi,
+  getUserMallInfoApi,
   getCouponListApi,
+  exchangeCouponListApi,
   getGiftListApi,
   getTaskListApi,
   lotteryApi,
-  missonListApi,
+  missionListApi,
+  getSignInInfoApi,
+  getTicketRecordsApi,
+  getMyGiftRecordsApi,
+  getIntegralRecordsApi,
+  signInApi,
 }

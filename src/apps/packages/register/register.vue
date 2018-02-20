@@ -357,15 +357,14 @@
     recieveRedpackApi
   } from 'api/register'
   import {valCodeXhr} from 'api/resetPwd'
-  import 'swiper/dist/css/swiper.css'
-  import {swiper, swiperSlide} from 'vue-awesome-swiper'
+  import {Swiper, SwiperSlide} from 'build'
   import FooterCopyright from "../../components/footer/index.vue";
   export default {
     name: 'register',
     components: {
       FooterCopyright,
-      swiper,
-      swiperSlide
+      Swiper,
+      SwiperSlide
     },
     data(){
       return {

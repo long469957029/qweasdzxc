@@ -1,6 +1,5 @@
 
 
-require('./index.scss')
 const couponToolbarConfig = require('./couponToolbarConfig.js')
 const myCouponToolbarConfig = require('./myCouponToolbarConfig.js')
 const couponConfig = require('./couponConfig.js')
@@ -36,24 +35,6 @@ const CouponCenterView = Base.ItemView.extend({
     })
   },
 
-  // 获取优惠券列表
-  getCouponListXhr (data) {
-    return Global.sync.ajax({
-      url: '/mall/coupon/couponList.json',
-      data,
-    })
-  },
-  getMyCouponListXhr (data) {
-    return Global.sync.ajax({
-      url: '/mall/coupon/myCouponList.json',
-      data,
-    })
-  },
-  serializeData() {
-    return {
-      loading: Global.ui.loader.get(),
-    }
-  },
   onRender () {
     const self = this
 

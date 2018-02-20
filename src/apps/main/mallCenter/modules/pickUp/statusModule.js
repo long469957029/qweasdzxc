@@ -3,7 +3,6 @@
  */
 
 
-require('./index.scss')
 
 const statusModuleView = Base.ItemView.extend({
   template: require('./index.html'),

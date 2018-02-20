@@ -64,6 +64,9 @@ const getters = {
     let headIcon = state.headIcon?'1':state.headIcon
     return avatarConfig.get(_(headIcon).toString()).logo
   },
+  username: (state) => {
+    return state.uName ? state.uName : state.username
+  },
   getLoginStatus: (state) => {
     return state.userId > 0
   },
