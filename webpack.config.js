@@ -209,7 +209,7 @@ const appConfig = {
     },
     game_error: {
       title: '无限娱乐',
-      template: './entry/package.html',
+      template: './entry/package-game.html',
       chunks: ['common', 'base', 'game_error']
     },
   },
