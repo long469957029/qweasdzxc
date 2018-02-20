@@ -13,7 +13,7 @@ import {
   TransferDom,
 } from 'build'
 
-import store from '../store/index'
+import store from '../store'
 
 import MainHeader from 'skeleton/bases/header'
 import Login from 'skeleton/bases/login'

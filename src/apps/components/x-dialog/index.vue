@@ -1,5 +1,5 @@
 <template>
-  <div class="x-modal hide fade" ref="modal">
+  <div class="x-modal hide fade" ref="modal" :style="`width: ${width}`">
     <slot name="all">
       <slot name="head">
         <div class="x-modal-header">
@@ -13,7 +13,7 @@
         </div>
       </slot>
 
-      <slot name="footer">
+      <slot name="footer" v-if="showFooter">
         <div class="x-modal-footer">
           <slot name="footer-main"></slot>
         </div>
@@ -26,6 +26,17 @@
   export default {
     name: 'x-dialog',
 
+    props: {
+      width: {
+        type: String,
+        default: 'auto'
+      },
+      showFooter: {
+        type: Boolean,
+        default: false
+      }
+    },
+
     mounted() {
       $(this.$refs.modal).modal()
         .on('hidden.modal', () => {
@@ -36,13 +47,6 @@
 </script>
 
 <style lang="scss" scoped>
-  .modal-x-body {
-    position: relative;
-    max-height: 400px;
-    padding: 15px;
-    overflow-y: auto;
-  }
-
   .x-modal {
     position: fixed;
     top: 10%;
@@ -66,8 +70,15 @@
   }
 
   .x-modal-header {
-    padding: 9px 15px;
+    padding: 0 15px;
     border-bottom: 1px solid #eee;
+    color: #333333;
+    font-size: 16px;
+    text-align: center;
+    background-color: #f0f0f0;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 6px 6px 0 0;
 
     .close {
       margin-top: 2px;
@@ -77,7 +88,6 @@
   .x-modal-body {
     position: relative;
     max-height: 400px;
-    padding: 15px;
     overflow-y: auto;
   }
 

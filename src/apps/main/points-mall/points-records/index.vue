@@ -20,7 +20,11 @@
         </router-link>
       </div>
 
-      <router-view class="main-content"></router-view>
+      <transition mode="out-in"
+                  enter-active-class="animated-quick fadeIn"
+                  leave-active-class="animated-quick fadeOut">
+        <router-view class="main-content"></router-view>
+      </transition>
     </div>
   </div>
 </template>

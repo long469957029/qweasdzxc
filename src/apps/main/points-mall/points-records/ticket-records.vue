@@ -39,7 +39,7 @@
         <td>{{row.couponToken}}</td>
         <td>{{row.requireIntegral | convert2yuan}}</td>
         <td>{{row.validEndDate | toTime}}</td>
-        <td>{{row.status === 0 ? '统计中' : (row.status === 2 ? '已过期' : _.convert2yuan(row.bonusAmount))}}</td>
+        <td>{{row.status === 0 ? '未使用' : row.status === 2 ? '已过期' : '已使用'}}</td>
       </tr>
 
       <tr slot="tfoot" slot-scope="{resData}">
@@ -49,7 +49,7 @@
         <td></td>
         <td>{{resData.dataTotal && resData.dataTotal.totalIntegral | convert2yuan}}</td>
         <td></td>
-        <td>{{resData.dataTotal && resData.dataTotal.totalBonus | convert2yuan}}</td>
+        <td></td>
       </tr>
     </search-grid>
   </div>
@@ -74,8 +74,8 @@
 
     data() {
       return {
-        getTicketRecordsApi,
         searchForm: {},
+        getTicketRecordsApi,
       }
     },
 
@@ -99,6 +99,6 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

@@ -51,7 +51,7 @@
               </div>
             </div>
             <div v-show="showBtn" key="exchange" class="points-bottom-btn">
-              <button class="btn btn-white exchange-btn">立即兑换</button>
+              <button class="btn btn-white exchange-btn" @click="$emit('exchange')">立即兑换</button>
             </div>
           </transition-group>
         </div>

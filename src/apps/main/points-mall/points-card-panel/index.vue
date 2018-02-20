@@ -13,6 +13,7 @@
                    :valid-start-date="item.validStartDate"
                    :valid-end-date="item.validEndDate"
                    :current-date="item.currentDate"
+                   @exchange="openExchangeModal(item)"
       ></points-card>
     </div>
     <x-pagination :page-size="12" :total-size="totalSize" @page-change="getData"></x-pagination>
@@ -26,13 +27,47 @@
         <li>5、现金券兑换成功即直接加币至平台账户</li>
       </ul>
     </div>
+
+    <div v-transfer-dom>
+      <x-dialog v-if="isShowGetCard" @modal-hidden="isShowGetCard = false" width="482px">
+        <div slot="head-main">兑换确认</div>
+        <div class="modal-main">
+          <div class="card-info">
+            <div class="card-title">返水券</div>
+            <div class="card-cell">
+              <span class="card-cell-title">
+                返利游戏：
+              </span>
+              <span class="card-cell-val">
+                <span class="text-prominent">无限分分彩</span>
+              </span>
+            </div>
+            <div class="card-cell">
+              <span class="card-cell-title">
+                返利条件：
+              </span>
+              <span class="card-cell-val">
+                投注满<span class="text-prominent">5000</span>元即返
+                <span class="text-prominent">20</span>元
+              </span>
+            </div>
+          </div>
+          <div class="card-brief">
+            本次兑换将花费 <span class="text-prominent">190</span> 积分（享9.5折优惠）
+          </div>
+          <div class="btn-panel">
+            <button class="btn confirm-btn" @click="exchangeCoupon">确定</button>
+          </div>
+        </div>
+      </x-dialog>
+    </div>
   </div>
 </template>
 
 <script>
   import {PointsCard, XPagination} from 'build'
 
-  import {getCouponListApi} from 'api/points'
+  import {getCouponListApi, exchangeCouponListApi} from 'api/points'
 
   export default {
     name: 'points-card-panel',
@@ -40,6 +75,15 @@
     components: {
       PointsCard,
       XPagination,
+    },
+
+    data() {
+      return {
+        totalSize: 0,
+        currentCardInfo: {},
+        isShowGetCard: false,
+        cardList: []
+      }
     },
 
     methods: {
@@ -54,19 +98,33 @@
             this.totalSize = data.root.rowCount
           }
         })
+      },
+      exchangeCoupon() {
+        exchangeCouponListApi({
+          couponId
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            Global.ui.notification.show('<div class="m-bottom-lg">兑换成功!</div>', {
+              type: 'success',
+              hasFooter: false,
+              displayTime: 1000,
+              size: 'modal-xs',
+              bodyClass: 'no-border no-padding',
+              closeBtn: false,
+            })
+          }
+        })
+      },
+
+      openExchangeModal(cardInfo) {
+        this.currentCardInfo = cardInfo
+        this.isShowGetCard = true
       }
     },
 
     mounted() {
       this.getData()
     },
-
-    data() {
-      return {
-        totalSize: 0,
-        cardList: []
-      }
-    }
   }
 </script>
 
@@ -116,5 +174,50 @@
       line-height: 35px;
       color: #666666;
     }
+  }
+
+  .modal-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+  }
+
+  .card-info {
+    box-sizing: border-box;
+    padding: 20px 23px;
+    margin-bottom: 20px;
+    width: 275px;
+    height: 110px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+  }
+
+  .card-title {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333333;
+  }
+
+  .card-cell-title {
+    line-height: 25px;
+  }
+
+  .card-brief {
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  button.btn.confirm-btn {
+    width: 108px;
+    height: 36px;
+    background-color: #14b1bb;
+    border-radius: 3px;
+    border: solid 1px #13a6af;
+  }
+
+  .card-cell {
+    font-size: 14px;
   }
 </style>

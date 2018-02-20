@@ -98,15 +98,15 @@
 }
 
 .text-left {
-  text-align: left;
+  text-align: left !important;
 }
 
 .text-right {
-  text-align: right;
+  text-align: right !important;
 }
 
 .text-center {
-  text-align: center;
+  text-align: center !important;
 }
 
 .text-center-vb {
@@ -120,7 +120,7 @@
 }
 
 .text-upper {
-  text-transform: uppercase
+  text-transform: uppercase;
 }
 
 .no-border {

@@ -4,8 +4,8 @@
     <div class="pagination inline-block">
       <ul>
         <li class="pagination-pre" :class="{disabled: pageIndex === 1}" @click="goToPrev"><span>&lt;</span></li>
-        <li v-if="maxSphere - minSphere > 0" v-for="i in (maxSphere - minSphere)" :class="{active: i === pageIndex}" @click="goToPage(i)">
-          <span>{{i}}</span>
+        <li v-if="maxSphere - minSphere > 0" v-for="i in (maxSphere - minSphere)" :class="{active: (i + minSphere) === pageIndex}" @click="goToPage(minSphere + i)">
+          <span>{{minSphere + i}}</span>
         </li>
         <template v-if="totalPage - 2 > maxSphere">
           …
@@ -97,6 +97,11 @@
         }
       },
 
+      resetIndex() {
+        this.pageIndex = 1
+        this.goToIndex = 1
+      },
+
       $_gotoPage(gotoPageIndex) {
         // 如果输入 非法字符，负值或大于最大值的数值 还原之前的值 并阻止刷新
         if (!gotoPageIndex || gotoPageIndex < 0) {
@@ -146,7 +151,10 @@
             > {
               span {
                 padding: 7px 10px;
+                min-width: 30px;
+                box-sizing: border-box;
                 line-height: 14px;
+                text-align: center;
                 display: inline-block;
                 cursor: pointer;
                 border: 1px solid #cccccc;
@@ -205,7 +213,7 @@
 
       .pagination-go-to {
         padding: 7px 5px;
-        margin-left: -4px;
+        margin-left: -5px;
         vertical-align: initial;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;

@@ -5,7 +5,9 @@
       <div class="sign-state-wrapper">
         <div class="sign-state circle-ripple">
           <div class="sign-state-inner">
-            <div class="state-top">已签到</div>
+            <div class="state-top">
+              {{checking ? '检查中' : isReceiveToday ? '已签到' : '签到中'}}
+            </div>
             <div class="state-bottom">
               <span class="state-points-val">+{{integral | convert2yuan}}</span> 积分
             </div>
@@ -86,7 +88,7 @@
 </template>
 
 <script>
-  import {getSignInInfoApi} from 'api/points'
+  import {getSignInInfoApi, signInApi} from 'api/points'
   import {TimelineMax} from 'gsap'
 
   export default {
@@ -106,6 +108,7 @@
         isShowDetail: false,
         mainTl: null,
         currentStep: 0,
+        checking: true,
       }
     },
 
@@ -164,20 +167,38 @@
 
         return _.convert2yuan(integral)
       },
+
+      getSignInInfo() {
+        getSignInInfoApi(({data}) => {
+          if (data && data.result === 0) {
+            const resData = data.root
+            this.cfgs = [...this.cfgs, ...resData.cfgs]
+            this.combo = resData.combo
+            this.currentDate = resData.currentDate
+            this.integral = resData.integral
+            this.isReceiveToday = resData.isReceiveToday
+            this.signDate = resData.signDate
+
+            //如果isReceiveToday = false 进行签到
+            if (!this.isReceiveToday) {
+              this.signIn()
+            }
+            this.checking = false
+          }
+        })
+      },
+
+      signIn() {
+        signInApi(({data}) => {
+          if (data && data.result === 0) {
+            this.getSignInInfo()
+          }
+        })
+      }
     },
 
     mounted() {
-      getSignInInfoApi(({data}) => {
-        if (data && data.result === 0) {
-          const resData = data.root
-          this.cfgs = [...this.cfgs, ...resData.cfgs]
-          this.combo = resData.combo
-          this.currentDate = resData.currentDate
-          this.integral = resData.integral
-          this.isReceiveToday = resData.isReceiveToday
-          this.signDate = resData.signDate
-        }
-      })
+      this.getSignInInfo()
 
 
       const fill_rotation = 180;
@@ -428,7 +449,6 @@
         right: 0;
         border-radius: 50%;
         transform: rotate(-90deg);
-        cursor: pointer;
 
         .circle {
           .mask, .fill, .shadow {
@@ -511,6 +531,7 @@
   .main {
     padding: 40px;
     color: #666666;
+    height: 344px;
     p {
       font-size: 14px;
     }
