@@ -169,10 +169,10 @@
             new Fingerprint2().get(function (result, components) {
 //              console.log(result) // a hash, representing your device fingerprint
 //              console.log(components) // an array of FP components
-              if(!uuid){
-                uuid = new Date()
+              if(!result){
+                result = new Date().getMilliseconds()
               }
-              Global.cookieCache.set('testUserUUID',uuid)
+              Global.cookieCache.set('testUserUUID',result)
               resolve({uuid: result})
             })
           } else {
