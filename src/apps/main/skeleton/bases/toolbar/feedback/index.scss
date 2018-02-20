@@ -6,9 +6,9 @@
   padding: 0 !important;
   border-radius: 4px;
   .btn-close{
-    color: #ffffff;
+    color: #a1a1a1;
     &.active,&:hover{
-      color: #ffffff;
+      color: #a1a1a1;
     }
   }
   .feedback-dialog-container {
@@ -36,11 +36,11 @@
       .feedback-title-img {
         width: 38px;
         margin-left: 12px;
-        margin-right: 5px;
+        //margin-right: 5px;
         height: 30px;
         display: inline-block;
         float: left;
-        background: url("~base/images/v2/icon-feedback.png");
+        background: url("~base/images/v2/icon-feedback.png") no-repeat center;
       }
       .feedback-title-text {
         height: 46px;
@@ -64,7 +64,7 @@
     .feedback-select-container {
       vertical-align: top;
       .feedback-select {
-        width: 150px;
+        width: 155px;
         background-color: white;
         border: 1px solid $def-gray-color;
         height: 40px;
@@ -73,6 +73,7 @@
         font-size: 14px;
         color: #666;
         margin-bottom: 0;
+        margin-right: 7px;
         &:hover, &:active, &:focus {
           border: 1px solid $new-main-deep-color;
         }
@@ -86,7 +87,7 @@
         line-height: 40px;
         padding: 0px 15px;
         font-size: 14px;
-        width: 342px;
+        width: 330px;
         &:hover, &:active, &:focus {
           border: 1px solid $new-main-deep-color;
         }
@@ -102,6 +103,7 @@
       margin-top: 24px;
       height: 170px;
       border: 1px solid $def-gray-color;
+      border-radius: 3px;
       &:hover, &:active, &:focus {
         border: 1px solid $new-main-deep-color;
       }
