@@ -203,8 +203,8 @@ const appConfig = {
     },
     game: {
       title: '无限娱乐',
-      template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'game']
+      template: './entry/package-game.html',
+      chunks: ['common', 'base', 'game']
     },
   },
   output: {
