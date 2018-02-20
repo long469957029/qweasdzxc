@@ -115,7 +115,7 @@
 
 <style lang="scss" scoped>
   .db-ticket-game-type {
-    width: 666px;
+    width: 640px;
     height: 34px;
     padding: 0 12px;
     border-bottom: 1px solid $def-line-color;
