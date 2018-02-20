@@ -134,15 +134,16 @@
                   <div class="control-group">
                     <label class="control-label">问题一：</label>
                     <div class="controls">
-                      <select class="select-qes" v-model="questionFirst" @change="changeQes(1)">
-                        <option v-for="item in qesFirstList" :value="item">
-                          {{item.question}}
-                        </option>
-                      </select>
+                      <!--<select class="select-qes" v-model="questionFirst" @change="changeQes(1)">-->
+                        <!--<option v-for="item in qesFirstList" :value="item">-->
+                          <!--{{item.question}}-->
+                        <!--</option>-->
+                      <!--</select>-->
+                      <span class="font-sm">{{questionFirst.question}}</span>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label">答案：</label>
+                    <label class="control-label p-top-sm">答案：</label>
                     <div class="controls">
                       <input type="text" class="qes-input" v-model="answerFirst" autocomplete="off" required>
                     </div>
@@ -150,15 +151,16 @@
                   <div class="control-group">
                     <label class="control-label">问题二：</label>
                     <div class="controls">
-                      <select class="select-qes" v-model="questionSecond" @change="changeQes(2)">
-                        <option v-for="item in qesSecondList" :value="item">
-                          {{item.question}}
-                        </option>
-                      </select>
+                      <!--<select class="select-qes" v-model="questionSecond" @change="changeQes(2)">-->
+                        <!--<option v-for="item in qesSecondList" :value="item">-->
+                          <!--{{item.question}}-->
+                        <!--</option>-->
+                      <!--</select>-->
+                      <span class="font-sm">{{questionSecond.question}}</span>
                     </div>
                   </div>
                   <div class="control-group">
-                    <label class="control-label">答案：</label>
+                    <label class="control-label p-top-sm">答案：</label>
                     <div class="controls">
                       <input type="text" class="qes-input" v-model="answerSecond" autocomplete="off" required>
                     </div>
@@ -171,7 +173,7 @@
                     <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyQes">提交</button>
                   </div>
                   <div class="text-center">
-                    <button type="button" class="btn btn-link font-sm m-top-sm" data-loading-text="校验中" @click="goPrev">
+                    <button type="button" class="btn btn-link font-sm m-TB-sm" data-loading-text="校验中" @click="goPrev">
                       返回上一步
                     </button>
                   </div>
@@ -233,8 +235,8 @@
       findTypeNum: 0, // 选择找回密码方式id
       loginToken: '',
       questionList: [],
-      qesFirstList: [],
-      qesSecondList: [],
+      // qesFirstList: [],
+      // qesSecondList: [],
       questionFirst: {},
       answerFirst: '',
       questionSecond: {},
@@ -312,6 +314,7 @@
           if (_.isEmpty(this.questionList)) {
             this.getQeqList()
           } else {
+            this.randomQeqList()
             this.findTypeNum = type
           }
         } else {
@@ -323,16 +326,13 @@
           ({data}) => {
             if (data && data.result === 0) {
               this.questionList = [...data.root]
-              const arr1 = _(data.root).clone()
-              const arr2 = _(data.root).clone()
-              this.questionFirst = data.root[0]
-              this.questionSecond = _(arr1).rest()[0]
-              this.qesFirstList = _(arr1).remove((n,index) => {
-                return index !== 1
-              })
-              this.qesSecondList = _(arr2).remove((n ,index) => {
-                return index !== 0
-              })
+              this.randomQeqList()
+              // this.qesFirstList = _(arr1).remove((n,index) => {
+              //   return index !== 1
+              // })
+              // this.qesSecondList = _(arr2).remove((n ,index) => {
+              //   return index !== 0
+              // })
               this.findTypeNum = 1
             } else {
               Global.ui.notification.show(data.msg === 'fail' ? '密保问题获取请求服务失败' : data.msg)
@@ -342,6 +342,11 @@
             Global.ui.notification.show(data.msg === 'fail' ? '密保问题获取请求服务失败' : data.msg)
           }
         )
+      },
+      randomQeqList(){
+        const arr1 = _(this.questionList).shuffle()
+        this.questionFirst = arr1[0]
+        this.questionSecond = arr1[1]
       },
       changeQes(num){
         const arr = [...this.questionList]
@@ -494,10 +499,14 @@
         @include input-def;
       }
       .control-label {
-        padding-top: 10px;
+        margin-top: 0px;
+        padding: 0;
       }
       .controls {
         margin-left: 130px;
+        span{
+          margin-top: 0;
+        }
       }
       .re-btn {
         width: 340px;

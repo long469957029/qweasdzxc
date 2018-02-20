@@ -2,7 +2,7 @@
   <div class="bc-main-area bg-deep clearfix">
     <div class="stop-selling" v-if="!bettingInfo.sale"></div>
     <div class="bc-area-ticket-info pull-left">
-      <div class="sfa sfa-bc-ssc-cq"></div>
+      <div :class="['sfa',`sfa-bc-${ticketInfo.type}-${ticketInfo.mark}`]"></div>
       <div class="ticket-info">10:00-20:00/共130期</div>
     </div>
     <div class="bc-curt-plan-main pull-left">
