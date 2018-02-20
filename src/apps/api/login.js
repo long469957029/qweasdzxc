@@ -54,10 +54,13 @@ export default {
       .then(then)
       .catch(fail)
   },
-  testUserReg(then,fail){
+  testUserReg({uuid},then,fail){
     let host = _.getDomainWithNewPrefix(window.store.state.components.testServerPrefix)
     return $http({
       url: host+'/acct/reg/doRegForTestUser.json',
+      data: {
+        uuid: uuid
+      }
     }).then(then).catch(fail)
   }
 }
