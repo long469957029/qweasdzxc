@@ -276,7 +276,7 @@ const oneFiveConfig = {
 }
 const threeDConfig = [
   Object.assign({
-    id: 16,
+    id: 36,
     mark: '3d-ffc',
     zhName: 'QQ3D分分彩',
     hasMargin: true,
