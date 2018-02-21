@@ -2,7 +2,7 @@
 
 const SearchGrid = require('com/searchGrid')
 
-const Timeset = require('com/timeset')
+import Timeset from 'com/timeset'
 const statusModule = require('../modules/pickUp/statusModule')
 
 const MyGiftExchangeView = SearchGrid.extend({

@@ -4,7 +4,7 @@ const SearchGrid = require('com/searchGrid')
 
 const TicketSelectGroup = require('com/ticketSelectGroup')
 
-const Timeset = require('com/timeset')
+import Timeset from 'com/timeset'
 
 
 const DividendReportMeView = SearchGrid.extend({
@@ -17,7 +17,7 @@ const DividendReportMeView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
-    	
+
       height: 245,
       title: '报表查询',
       columns: [
@@ -27,32 +27,32 @@ const DividendReportMeView = SearchGrid.extend({
         },
         {
           name: '下级直属号月度总分红',
-          width: '18%', 
+          width: '18%',
         },
         {
           name: '我的月度返点总额',
-          width: '15%', 
+          width: '15%',
         },
         {
           name: '我的分红比例',
-          width: '12%', 
+          width: '12%',
         },
         {
           name: '我的分红金额',
-          width: '12%', 
+          width: '12%',
         },
         {
           name: '结算日期',
-          width: '11%', 
+          width: '11%',
         },
         {
           name: '状态',
-          width: '8%', 
-        }, 
+          width: '8%',
+        },
       ],
-      tip: '<button type="button" class="js-ac-application btn ac-open-account-manual-button" data-loading-text="提交中">申请发放</button></br></br></br>' +  
-    	  '<div class="tip-hot"><span>提示</span>  月度分红 = （下级团队的月度总盈亏 - 下级直属号的月度总分红 - 我的月度返点总额 ）* 我的分红比例。</div>' + 
-      		
+      tip: '<button type="button" class="js-ac-application btn ac-open-account-manual-button" data-loading-text="提交中">申请发放</button></br></br></br>' +
+    	  '<div class="tip-hot"><span>提示</span>  月度分红 = （下级团队的月度总盈亏 - 下级直属号的月度总分红 - 我的月度返点总额 ）* 我的分红比例。</div>' +
+
       		'',
       gridOps: {
         emptyTip: '没有资金变更记录',
@@ -75,7 +75,7 @@ const DividendReportMeView = SearchGrid.extend({
       defaultDate: _(moment().add('days', -1)).toDate(),
       minDate: moment().add('days', -330),
     })
-	  
+
     // 初始化彩种
     SearchGrid.prototype.onRender.apply(this, arguments)
   },
@@ -83,7 +83,7 @@ const DividendReportMeView = SearchGrid.extend({
   renderGrid(gridData) {
     const dataList = []
     dataList.push(gridData)
-	  
+
     const rowsData = _(dataList).map(function(fundTrace, index, betList) {
       return {
         columnEls: this.formatRowData(fundTrace, index, betList),
@@ -107,12 +107,12 @@ const DividendReportMeView = SearchGrid.extend({
     //      });
     //      this.renderBread();
     //    }
-     
+
     this.grid.hideLoading()
   },
 
   formatRowData(rowInfo) {
-    this.$('.js-ac-dividId').val(rowInfo.dividId) 
+    this.$('.js-ac-dividId').val(rowInfo.dividId)
     const row = []
     row.push(rowInfo.profitTotal / 10000)
     row.push(rowInfo.dividTotal / 10000)
@@ -125,16 +125,16 @@ const DividendReportMeView = SearchGrid.extend({
     	$('.js-ac-application').show()
     } else {
     	$('.js-ac-application').hide()
-    } 
+    }
     return row
   },
-  
+
   applicationInfoHandler (e) {
       	const self = this
     Global.sync.ajax({
       url: '/fund/merchantBonus/get.json',
       data: {
-        	 dividId: this.$('.js-ac-dividId').val(), 
+        	 dividId: this.$('.js-ac-dividId').val(),
       },
     })
       .done((res) => {

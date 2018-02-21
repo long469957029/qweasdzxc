@@ -1,6 +1,6 @@
 const SearchGrid = require('com/searchGrid')
 
-const Timeset = require('com/timeset')
+import Timeset from 'com/timeset'
 
 const TicketSelectGroup = require('com/ticketSelectGroup')
 // const BetDetailView = require('fundCenter/gameRecord/betDetail')

@@ -1,7 +1,7 @@
 require('../index.scss')
 const SearchGrid = require('com/searchGrid')
 
-const Timeset = require('com/timeset')
+import Timeset from 'com/timeset'
 
 // var betStatusConfig = require('userCenter/misc/betStatusConfig');
 

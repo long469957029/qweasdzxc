@@ -395,7 +395,10 @@ input.control-input {
   font-size: 12px;
 }
 
-
+.input-date-sm{
+  display: inline-block;
+  vertical-align: bottom;
+}
 .timer-calendar-input {
   position: relative;
   border: solid 1px #e6e6e6;
@@ -424,7 +427,7 @@ input.control-input {
   font-size: 12px;
   color: #666666;
   width: 160px !important;
-  top: 7px;
+  //top: 7px;
   position: relative;
   .sfa-time-input {
     font-size: 12px;

@@ -2,7 +2,7 @@
 
 const SearchGrid = require('com/searchGrid')
 
-const Timeset = require('com/timeset')
+import Timeset from 'com/timeset'
 
 const tradingStatusConfig = require('fundCenter/misc/tradingStatusConfig')
 

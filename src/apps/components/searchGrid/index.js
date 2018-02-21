@@ -1,6 +1,4 @@
-
-
-const FilterHelper = require('skeleton/misc/filterHelper')
+import FilterHelper  from 'skeleton/misc/filterHelper'
 
 const SearchGrid = Base.PrefabView.extend({
 

@@ -2,7 +2,7 @@
 
 let Chart
 
-const Timeset = require('com/timeset')
+import Timeset from 'com/timeset'
 const BtnGroup = require('com/btnGroup')
 
 const LowLevelDynamicView = Base.ItemView.extend({
@@ -288,7 +288,7 @@ const LowLevelDynamicView = Base.ItemView.extend({
             label: '名次',
             name: 'index',
             formatter(val, index) {
-              let css = '' 
+              let css = ''
               if (order) {
                 if (index === 0) {
                   css = 'ac-tm-oa-order1'
@@ -300,7 +300,7 @@ const LowLevelDynamicView = Base.ItemView.extend({
               }
               return `<span class="${css} pull-left"></span>${index + 1}`
             },
-            width: 200, 
+            width: 200,
           },
           { label: secondColTitle, name: 'count', width: 200 },
           { label: '直属用户名', name: 'userName', width: 300 },
@@ -475,7 +475,8 @@ const LowLevelDynamicView = Base.ItemView.extend({
         //    }
         //  }
         // }
-      ],      
+      ],
+
       series: [
         {
           name: '玩彩人数',
