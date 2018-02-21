@@ -84,8 +84,8 @@
         require: false
       },
       height: {
-        type: Number,
-        default: 400,
+        type: String,
+        default: '400px',
       },
       pageSize: {
         type: Number,

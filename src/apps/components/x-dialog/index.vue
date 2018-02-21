@@ -42,6 +42,9 @@
         .on('hidden.modal', () => {
           this.$emit('modal-hidden')
         })
+    },
+    beforeDestroy() {
+      $(this.$refs.modal).modal('hide')
     }
   }
 </script>
@@ -87,7 +90,7 @@
 
   .x-modal-body {
     position: relative;
-    max-height: 400px;
+    /*max-height: 400px;*/
     overflow-y: auto;
   }
 

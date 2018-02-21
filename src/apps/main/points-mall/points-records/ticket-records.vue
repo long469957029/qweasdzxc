@@ -35,7 +35,7 @@
       <tr slot="tbody" slot-scope="{row, index}" :key="index">
         <td>{{row.exchangeDate | toTime}}</td>
         <td>{{row.couponType | formatCouponType}}</td>
-        <td>{{row.couponDesc}}</td>
+        <td v-html="formatCouponDesc(row)"></td>
         <td>{{row.couponToken}}</td>
         <td>{{row.requireIntegral | convert2yuan}}</td>
         <td>{{row.validEndDate | toTime}}</td>
@@ -57,7 +57,7 @@
 
 <script>
   import {getTicketRecordsApi} from 'api/points'
-  import {formatCouponType, ControlGroup, ControlCell} from 'build'
+  import {formatCouponType, formatCoupon, ControlGroup, ControlCell} from 'build'
   import Timeset from 'com/timeset'
 
   export default {
@@ -76,6 +76,25 @@
       return {
         searchForm: {},
         getTicketRecordsApi,
+      }
+    },
+
+    methods: {
+      formatCouponDesc(couponInfo) {
+        const formatCouponInfo = formatCoupon({
+          bigShowNum: couponInfo.bigShowNum,
+          type: couponInfo.type,
+          threholdAmount: couponInfo.threholdAmount,
+          bonusPercentAmount: couponInfo.bonusPercentAmount,
+          statType: couponInfo.statType,
+          ticketId: couponInfo.statTicketId,
+          gameType: couponInfo.gameType
+        })
+        let html = `${formatCouponInfo.mainDesc}`
+        if (formatCouponInfo.secondDesc) {
+           html += `<br/> ${formatCouponInfo.secondDesc}`
+        }
+        return html
       }
     },
 

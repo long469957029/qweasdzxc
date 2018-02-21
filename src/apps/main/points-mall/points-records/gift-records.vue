@@ -1,7 +1,7 @@
 <template>
   <div class="ticket-records">
     <search-grid :search-api="getMyGiftRecordsApi" :search-form="searchForm" data-prop="root.records"
-                 :colgroup="[185, 140, 185, 175, 130, 190]" ref="searchGrid" :page-size="10"
+                 :colgroup="[160, 290, 130, 330, 130, 160]" ref="searchGrid" :page-size="10"
     >
       <form class="m-TB-lg" slot="search-panel" ref="searchForm">
         <control-group>

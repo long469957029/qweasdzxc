@@ -2,6 +2,15 @@
  * Created by steven on 2018/1/15.
  */
 export default {
+
+  oauthCheckApi(then, fail) {
+    return $http({
+      url: '/acct/login/doauth.json',
+    })
+      .then(then)
+      .catch(fail)
+  },
+
   // 获得登入二维码token
   valCodeXhr ({code}, then, fail) {
     return $http({

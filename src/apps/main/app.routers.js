@@ -7,7 +7,7 @@ import activityRouter from './activity/router'
 
 import activeCenterRouter from './activeCenter/router'
 import pointsMallRouter from './points-mall/router'
-//
+
 // import realCenterRouter from 'realCenter/router'
 // import slotCenterRouter from 'slotCenter/router'
 // import fishCenterRouter from 'fishCenter/router'
