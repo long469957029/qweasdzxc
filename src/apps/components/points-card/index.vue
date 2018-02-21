@@ -1,5 +1,5 @@
 <template>
-  <div class="points-card-wrapper">
+  <div class="points-card-wrapper" :class="displayType">
     <div class="points-card" :class="[cardInfo.type, {finished: isFinished}]"
          @mouseout="toggleBtn(false)">
       <div class="points-card-inner" @mouseover="toggleBtn(true)">
@@ -46,7 +46,7 @@
                 <div class="points-expire" v-else>
                   {{couponInfo.validStartDate | toTime('MM.DD H:mm')}}-{{couponInfo.validEndDate | toTime('MM.DD H:mm')}}
                 </div>
-                <div class="points-value">
+                <div class="points-value" v-if="displayType === 'mall'">
                   <span class="sfa sfa-points"></span>
                   {{couponInfo.requireIntegral | convert2yuan}}积分
                 </div>
@@ -101,10 +101,15 @@
       Countdown,
     },
 
-    props: [
-      'couponInfo',
-    ],
-
+    props: {
+      couponInfo: {
+        type: Object
+      },
+      displayType: {
+        type: String,
+        default: 'mall'
+      }
+    },
     data() {
       return {
         showBtn: false
@@ -140,8 +145,10 @@
 
     methods: {
       toggleBtn(flag) {
-        if (!this.isFinished && this.countdownTime === 0) {
-          this.showBtn = flag
+        if (this.displayType === 'mall'){
+          if (!this.isFinished && this.countdownTime === 0) {
+            this.showBtn = flag
+          }
         }
       }
     },
@@ -325,6 +332,57 @@
       font-size: 16px;
       line-height: 28px;
       text-align: center;
+    }
+  }
+  .show {
+    width: 270px;
+    height: 150px;
+    overflow: hidden;
+    .points-card {
+      width: 255px;
+      height: 150px;
+      margin: 0;
+      display: inline-block;
+      overflow: hidden;
+      .points-card-inner {
+        width: 255px;
+        height: 150px;
+        margin: 0px;
+        padding: 20px 0 10px 30px;
+        .points-top {
+          padding-top: 10px;
+          padding-bottom: 0px;
+          .card-value {
+            font-size: 30px;
+            line-height: 30px;
+            .card-unit {
+
+            }
+          }
+          .card-badge {
+
+          }
+        }
+        .points-center {
+          .points-range {
+            font-size: 14px;
+            padding-bottom: 0px;
+            padding-top: 5px;
+          }
+        }
+        .points-bottom-wrapper {
+          .points-bottom {
+            .points-type {
+
+            }
+            .points-bottom-inner {
+              .points-expire {
+
+              }
+            }
+          }
+        }
+      }
     }
   }
 </style>

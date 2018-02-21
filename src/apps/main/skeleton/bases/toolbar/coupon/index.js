@@ -82,7 +82,7 @@ const CouponView = Base.ItemView.extend({
   renderMyCoupon(couponList) {
     const self = this
     this.app = new Vue({
-      template: `<div><points-card v-for="(item, index) in cardList" :key="index" :coupon-info="item"></points-card></div>`,
+      template: `<div><points-card v-for="(item, index) in cardList" :key="index" :coupon-info="item" display-type="show"></points-card></div>`,
       components: {
         PointsCard
       },
