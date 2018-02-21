@@ -387,7 +387,7 @@
     }
 
     .header-customer-entry {
-      padding: 0 15px;
+      padding: 0 12px;
       height: 40px;
       width: 57px;
       line-height: 40px;
@@ -418,14 +418,15 @@
       .header-menu {
         position: relative;
         display: inline-block;
-        max-width: 125px;
+        max-width: 131px;
         height: 40px;
-        padding: 0 14px 0 14px;
+        padding: 0 12px;
         border-left: 1px solid #41a6ad;
         vertical-align: top;
         font-size: 13px;
+        text-align: center;
         cursor: pointer;
-        min-width: 85px;
+        min-width: 111px;
         .test-marking {
           position: absolute;
           top: 0;
@@ -446,7 +447,7 @@
           height: 32px;
           margin: 4px 0 0;
           vertical-align: top;
-          float: left;
+          /*float: left;*/
           > img {
             vertical-align: top;
           }
@@ -459,16 +460,16 @@
           text-overflow: ellipsis;
           font-size: 13px;
           line-height: 40px;
-          vertical-align: middle;
-          float: left;
-          min-width: 35px;
+          vertical-align: top;
+          /*float: left;*/
+          min-width: 38px;
           text-align: center;
           padding: 0 5px;
         }
         .fa-angle-down {
           margin: 14px 0;
           /*vertical-align: middle;*/
-          float: right;
+          /*float: right;*/
         }
         &:hover {
           background: $new-main-deep-hover-color;
@@ -482,7 +483,7 @@
           left: 0;
           top: 0;
           height: 41px;
-          width: 180px;
+          width: 149px;
         }
         .header-menu-body {
           position: absolute;
@@ -493,10 +494,22 @@
           background: #ffffff;
           color: #666666;
           border: 1px solid #d8eeef;
-          width: 153px;
+          width: 100%;
           height: 188px;
           left: 64px;
           margin-left: -65px;
+          &:after{
+            content:'';
+            width: 0;
+            height: 0;
+            border-bottom: 5px;
+            border-style: solid;
+            border-color: #fff;
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: rotate(45deg)
+          }
           .header-menu-item {
             display: block;
             height: 35px;
@@ -522,7 +535,7 @@
               .header-menu-item-img {
                 color: $font-auxiliary-color;
                 font-size: 16px;
-                vertical-align: middle;
+                vertical-align: text-bottom;
               }
             }
           }
@@ -596,7 +609,7 @@
             .header-menu-item-img {
               color: $font-auxiliary-color;
               font-size: 16px;
-              vertical-align: middle;
+              vertical-align: text-bottom;
             }
           }
         }
@@ -604,7 +617,8 @@
       .header-amount-panel {
         display: inline-block;
         border-left: 1px solid #41a6ad;
-        max-width: 186px;
+        max-width: 172px;
+        padding: 0 12px;
         /*.header-amount-img {*/
         /*float: right;*/
         /*display: inline-block;*/
@@ -620,8 +634,8 @@
           line-height: 40px;
           text-align: center;
           vertical-align: top;
-          padding-left: 13px;
-          max-width: 92px;
+          max-width:104px;
+          min-width: 44px;
           overflow: hidden;
           text-overflow: ellipsis;
         }
@@ -630,7 +644,7 @@
           display: inline-block;
           width: 56px;
           height: 26px;
-          margin: 7px 13px 7px 10px;
+          margin: 7px 0 7px 12px;
           background: #d0e9ea;
           border-radius: 13px;
           font-size: 13px;
@@ -648,7 +662,7 @@
       .header-announcement {
         position: relative;
         display: inline-block;
-        max-width: 72px;
+        width: 71px;
         height: 40px;
         border-left: 1px solid #41a6ad;
         font-size: 13px;
@@ -671,7 +685,7 @@
           background: #e29c49;
           border-radius: 3px;
           text-align: center;
-          text-indent: -3px;
+          text-indent: 0px;
         }
         .header-announcement-place {
           position: absolute;
@@ -690,7 +704,7 @@
           background: #ffffff;
           color: #666666;
           border: 1px solid $def-line-color;
-          right: -89px;
+          right: -83px;
           margin-left: -183px;
           //display: block;
           width: 348px;
