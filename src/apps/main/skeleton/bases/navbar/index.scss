@@ -26,6 +26,7 @@ $navbar-container-color: white;
   background-color: $navbar-container-color;
   box-shadow: 0 0 5px rgba(0, 0, 0, .4);
 }
+
 .nav {
   position: relative;
   .navbar-logo-li {
@@ -89,25 +90,7 @@ $navbar-container-color: white;
       }
     }
 
-    &.nav-right {
-      float: right;
-      width: 179px;
-      border-left: 1px solid #e5e5e5;
-      border-right: 1px solid #e5e5e5;
-      text-align: center;
-      position: absolute;
-      right: 0;
-      z-index: 12;
 
-      .navbar-mall-icon {
-        background: url('./images/navbar-mall-icon.png');
-        width: 22px;
-        height: 23px;
-        display: block;
-        transform: translate(35px, 24px);
-        position: absolute;
-      }
-    }
   }
 
   @keyframes fadeInDown {

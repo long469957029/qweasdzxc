@@ -68,10 +68,6 @@
 @mixin inline-block-list {
   display: inline-block;
   vertical-align: top;
-  &:nth-child(1) {
-    margin-left: 0;
-  }
-  margin-left: -4px;
 }
 
 // 垂直置中

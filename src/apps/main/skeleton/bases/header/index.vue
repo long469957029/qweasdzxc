@@ -1,6 +1,6 @@
 <template>
   <div class="top-nav">
-    <div class="back-to-old" @click="backToOldVersion"><i class="fa fa-exchange"></i>&nbsp;返回旧版</div>
+    <div class="back-to-old"  v-if="!isTestUser" @click="backToOldVersion"><i class="fa fa-exchange"></i>&nbsp;返回旧版</div>
     <div class="header-main ">
       <div class="header-assist">
         <a class="header-left-link" href="/change.html">线路中心</a>
@@ -21,7 +21,7 @@
         <div class="header-has-logined  pull-right" key="logined"
              v-else>
           <div class="header-menu">
-            <div class="test-marking" v-if="doesTestMarkingShow"><p>试</p></div>
+            <div class="test-marking" v-if="isTestUser"><p>试</p></div>
             <span class="sfa header-headshot "><img :src="imgUrl"/></span>
             <span class="header-name">{{username}}</span>
             <i class="fa fa-angle-down "></i>
@@ -138,7 +138,7 @@
       isAgent(){
         return this.$store.state.loginStore.userType === 0
       },
-      doesTestMarkingShow(){
+      isTestUser(){
         return Global.cookieCache.get('isTestUser')
       },
       amount(){
@@ -553,6 +553,18 @@
           height: 222px;
           left: 64px;
           margin-left: -65px;
+          &:after{
+            content:'';
+            width: 0;
+            height: 0;
+            border-bottom: 5px;
+            border-style: solid;
+            border-color: #fff;
+            position: absolute;
+            top: -5px;
+            left: 25%;
+            transform: rotate(45deg)
+          }
           .header-menu-body-agent-item {
             display: inline-block;
             width: 110px;
@@ -709,6 +721,18 @@
           //display: block;
           width: 348px;
           height: 367px;
+          &:after{
+            content:'';
+            width: 0;
+            height: 0;
+            border-bottom: 5px;
+            border-style: solid;
+            border-color: #fff;
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: rotate(45deg)
+          }
 
           .header-announcement-content {
             height: 318px;
