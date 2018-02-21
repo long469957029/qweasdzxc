@@ -461,7 +461,7 @@
           line-height: 40px;
           vertical-align: middle;
           float: left;
-          min-width: 65px;
+          min-width: 35px;
           text-align: center;
           padding: 0 5px;
         }
@@ -481,7 +481,7 @@
           position: absolute;
           left: 0;
           top: 0;
-          height: 51px;
+          height: 41px;
           width: 180px;
         }
         .header-menu-body {
@@ -648,7 +648,7 @@
       .header-announcement {
         position: relative;
         display: inline-block;
-        max-width: 65px;
+        max-width: 72px;
         height: 40px;
         border-left: 1px solid #41a6ad;
         font-size: 13px;
@@ -677,7 +677,7 @@
           position: absolute;
           left: 0;
           top: 0;
-          height: 51px;
+          height: 41px;
           width: 100px;
         }
         .header-announcement-body {
