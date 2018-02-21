@@ -418,14 +418,14 @@
       .header-menu {
         position: relative;
         display: inline-block;
-        width: 125px;
+        max-width: 125px;
         height: 40px;
         padding: 0 14px 0 14px;
         border-left: 1px solid #41a6ad;
         vertical-align: top;
         font-size: 13px;
         cursor: pointer;
-        min-width: 120px;
+        min-width: 85px;
         .test-marking {
           position: absolute;
           top: 0;
@@ -453,7 +453,7 @@
         }
         .header-name {
           display: inline-block;
-          width: 72px;
+          max-width: 72px;
           height: 40px;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -604,7 +604,7 @@
       .header-amount-panel {
         display: inline-block;
         border-left: 1px solid #41a6ad;
-        width: 170px;
+        max-width: 186px;
         /*.header-amount-img {*/
         /*float: right;*/
         /*display: inline-block;*/
@@ -615,14 +615,13 @@
         .header-amount {
           float: right;
           display: inline-block;
-          width: 115px;
           height: 40px;
           font-size: 13px;
           line-height: 40px;
           text-align: center;
           vertical-align: top;
-          padding: 0 0 0 2px;
-          max-width: 86px;
+          padding-left: 13px;
+          max-width: 92px;
           overflow: hidden;
           text-overflow: ellipsis;
         }
@@ -649,7 +648,7 @@
       .header-announcement {
         position: relative;
         display: inline-block;
-        max-width: 89px;
+        max-width: 65px;
         height: 40px;
         border-left: 1px solid #41a6ad;
         font-size: 13px;
@@ -657,18 +656,16 @@
         cursor: pointer;
         text-align: center;
         vertical-align: top;
+        padding: 0 12px;
         .sfa-announcement {
-          margin: -5px 6px 0 3px;
+          margin: -5px 5px 0 0;
           vertical-align: middle;
         }
-        .header-announcement-title {
-          margin-right: 3px;
-        }
+
         .header-announcement-num {
-          margin: 1px;
+          margin-left: 2px;
           width: 16px;
           height: 16px;
-          margin-right: 3px;
           line-height: 16px;
           display: inline-block;
           background: #e29c49;
@@ -693,7 +690,7 @@
           background: #ffffff;
           color: #666666;
           border: 1px solid $def-line-color;
-          left: 11px;
+          right: -89px;
           margin-left: -183px;
           //display: block;
           width: 348px;

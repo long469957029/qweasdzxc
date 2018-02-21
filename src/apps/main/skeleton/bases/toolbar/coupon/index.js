@@ -1,6 +1,6 @@
 import './index.scss'
 
-import couponConfig from './couponConfig'
+import * as couponConfig from './couponConfig'
 
 const CouponView = Base.ItemView.extend({
 
@@ -118,37 +118,42 @@ const CouponView = Base.ItemView.extend({
   renderSystemCoupon(couponList) {
     const self = this
     const couponHtml = _.map(couponList, (coupon) => {
-      return self.couponTpl({
-        from: 1, // 1 我的优惠券 0 优惠券兑换
-        couponStatus: coupon.couponStatus || coupon.status || 0, // 0:未使用, 1:已使用, 2:已过
-        couponId: coupon.couponId,
-        couponType: coupon.couponType,
-        // 1充值 blue-green 2加奖 green 3补贴 purple 4返水 blue 5代金 yellow 6现金 red
-        couponName: _.findWhere(couponConfig, {
+      if(coupon.couponType===0){
+        return ''
+      }else{
+        return self.couponTpl({
+          from: 1, // 1 我的优惠券 0 优惠券兑换
+          couponStatus: coupon.couponStatus || coupon.status || 0, // 0:未使用, 1:已使用, 2:已过
+          couponId: coupon.couponId,
           couponType: coupon.couponType,
-        }).name,
-        couponToken: coupon.couponToken,
-        couponDesc: coupon.couponDesc,
-        couponDetailDesc: coupon.couponDetailDesc.replace('\n', '<br>'),
-        requireIntegral: _(coupon.requireIntegral).formatDiv(10000, {
-          fixed: 2,
-          clear: true,
-        }),
-        validStartDate: _(coupon.validStartDate).toTime('YYYY.MM.DD HH:mm'),
-        validEndDate: _(coupon.validEndDate).toTime('YYYY.MM.DD HH:mm'),
-        bigShowNum: _(coupon.bigShowNum).formatDiv(coupon.couponBonusType === 1 ? 10000 : 100),
-        couponBonusType: coupon.couponBonusType, // 返利类型 (1:直接是元, 2:%)
-        levelLimit: coupon.levelLimit, // Lv. 以上
-        limitLevelType: coupon.limitLevelType,
-        limitRange: coupon.limitRange, // 0: 新手, 1:老手
-        styleClass: (coupon.couponStatus === 0 ? 'no' : _.findWhere(couponConfig, {
-          couponType: coupon.couponType,
-        }).styleClass),
-        lastNum: (_.isNull(coupon.maxNum) ||
-        _.isUndefined(coupon.maxNum)) ?
-          null :
-          _(coupon.maxNum).sub(coupon.useNum),
-      })
+          // 1充值 blue-green 2加奖 green 3补贴 purple 4返水 blue 5代金 yellow 6现金 red
+          couponName: _.findWhere(couponConfig, {
+            couponType: coupon.couponType,
+          }).name,
+          couponToken: coupon.couponToken,
+          couponDesc: coupon.couponDesc,
+          couponDetailDesc: coupon.couponDetailDesc.replace('\n', '<br>'),
+          requireIntegral: _(coupon.requireIntegral).formatDiv(10000, {
+            fixed: 2,
+            clear: true,
+          }),
+          validStartDate: _(coupon.validStartDate).toTime('YYYY.MM.DD HH:mm'),
+          validEndDate: _(coupon.validEndDate).toTime('YYYY.MM.DD HH:mm'),
+          bigShowNum: _(coupon.bigShowNum).formatDiv(coupon.couponBonusType === 1 ? 10000 : 100),
+          couponBonusType: coupon.couponBonusType, // 返利类型 (1:直接是元, 2:%)
+          levelLimit: coupon.levelLimit, // Lv. 以上
+          limitLevelType: coupon.limitLevelType,
+          limitRange: coupon.limitRange, // 0: 新手, 1:老手
+          styleClass: (coupon.couponStatus === 0 ? 'no' : _.findWhere(couponConfig, {
+            couponType: coupon.couponType,
+          }).styleClass),
+          lastNum: (_.isNull(coupon.maxNum) ||
+          _.isUndefined(coupon.maxNum)) ?
+            null :
+            _(coupon.maxNum).sub(coupon.useNum),
+        })
+      }
+
     }).join('')
     // self.$systemCoupon.html(couponHtml)
   },
