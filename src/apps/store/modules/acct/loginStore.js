@@ -99,6 +99,19 @@ const actions = {
       return commit(types.USER_LOGOUT_SUCCESS, data)
     })
   },
+
+  [types.CHECK_LOGIN_STATUS] ({commit}) {
+    return new Promise((resolve, reject) => {
+      login.oauthCheckApi(({data}) => {
+        resolve(data)
+        if (data && data.result === 0) {
+          return commit(types.USER_OAUTH_SUCCESS, data.root)
+        }
+      }, () => {
+        reject()
+      })
+    })
+  },
 }
 
 // mutations

@@ -74,22 +74,36 @@
         </div>
       </div>
 
-      <div class="address-add">
+      <div class="address-add cursor-pointer" @click="isShowAddressModal = true">
         <div class="add-icon"></div>
         <div class="add-brief">添加收货地址</div>
       </div>
+    </div>
+    <div v-transfer-dom>
+      <points-address v-if="isShowAddressModal" @modal-hidden="isShowAddressModal = false"></points-address>
     </div>
   </div>
 </template>
 
 <script>
+  import PointsAddress from '../points-address'
+
   export default {
     name: 'address-manage',
 
+    components: {
+      PointsAddress
+    },
+
     data() {
       return {
+        isShowAddressModal: false
       }
     },
+
+    methods: {
+
+    }
   }
 </script>
 

@@ -4,7 +4,7 @@
       <router-link :to="{name: 'pointsMall'}" class="return-to-mall"><span class="return-mall"></span> 返回商城首页
       </router-link>
       <div class="my-points">我的积分与兑换</div>
-      <div class="my-history-points"><span class="top-star"></span> 历史获取积分值：256</div>
+      <div class="my-history-points"><span class="top-star"></span> 历史获取积分值：{{mallBasicInfo.fTotalIntegral}}</div>
     </div>
 
     <div class="points-records-main">
@@ -57,6 +57,12 @@
       return {
         tabs
       }
+    },
+
+    computed: {
+      ...mapGetters([
+        'mallBasicInfo'
+      ])
     },
 
     watch: {
@@ -147,7 +153,9 @@
     }
 
     .my-history-points {
-      width: 210px;
+      min-width: 210px;
+      padding: 0 10px;
+      box-sizing: border-box;
       height: 38px;
       border-radius: 19px;
       border: solid 1px #b2b9c2;
@@ -238,6 +246,7 @@
       font-size: 14px;
       display: flex;
       align-items: center;
+      cursor: pointer;
 
       &.router-link-exact-active {
         .location-icon {

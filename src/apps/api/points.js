@@ -68,6 +68,8 @@ const exchangeCouponListApi = ({couponId}, then, fail) => {
       couponId
     }
   })
+    .then(then)
+    .catch(fail)
 }
 
 /**
@@ -140,6 +142,24 @@ const lotteryApi = ({type, lotteryType = 0,}, then, fail) => {
 }
 
 /**
+ * 幸运抽奖
+ * @param id
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const luckyApi = ({id}, then, fail) => {
+  return $http({
+    url: '/mall/lucky/lotteryChest.json',
+    data: {
+      id
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
  * 任务列表
  * @param then
  * @param fail
@@ -148,6 +168,24 @@ const lotteryApi = ({type, lotteryType = 0,}, then, fail) => {
 const missionListApi = (then, fail) => {
   return $http({
     url: '/mall/mission/list.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
+ * 领取日常周常任务奖励
+ * @param termId
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const missionReceiveApi = ({termId}, then, fail) => {
+  return $http({
+    url: '/mall/mission/receive.json',
+    data: {
+      termId,
+    },
   })
     .then(then)
     .catch(fail)
@@ -270,6 +308,100 @@ const getIntegralRecordsApi = ({
     .catch(fail)
 }
 
+/**
+ * 地址列表
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getAdressListApi = (then, fail) => {
+  return $http({
+    url: '/mall/gift/getUserAddressList.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+
+/**
+ * 新增用户名地址
+ * @param name
+ * @param phone
+ * @param province
+ * @param city
+ * @param area
+ * @param address
+ * @param isDef
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const adressPushApi = (
+  {
+    rid = null,
+    name,
+    phone,
+    province,
+    city,
+    area,
+    address,
+    isDef = 0,
+  }, then, fail) => {
+  return $http({
+    url: rid ? '/mall/gift/updateUserAddress.json' : '/mall/gift/createUserAddress.json',
+    data: {
+      name,
+      phone,
+      province,
+      city,
+      area,
+      address,
+      isDef,
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
+ * 查询用户地址单笔
+ * @param rid
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getAdressDetailApi = ({rid}, then, fail) => {
+  return $http({
+    url: '/mall/gift/getUserAddress.json',
+    data: {
+      rid
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+
+/**
+ * 地址删除
+ * @param rid
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const adressDeleteApi = ({rid}, then, fail) => {
+  return $http({
+    url: '/mall/gift/delUserAddress.json',
+    data: {
+      rid
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+
+
 export {
   getMallBannerApi,
   getUserMallInfoApi,
@@ -278,10 +410,16 @@ export {
   getGiftListApi,
   getTaskListApi,
   lotteryApi,
+  luckyApi,
   missionListApi,
+  missionReceiveApi,
   getSignInInfoApi,
   getTicketRecordsApi,
   getMyGiftRecordsApi,
   getIntegralRecordsApi,
   signInApi,
+  adressPushApi,
+  getAdressListApi,
+  getAdressDetailApi,
+  adressDeleteApi,
 }
