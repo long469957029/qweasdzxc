@@ -64,7 +64,7 @@
             <div class="header-amount-img"></div>
           </div>
           <div class="js-header-announcement header-announcement active">
-            <span class="sfa sfa-announcement "></span><span>消息</span>
+            <span class="sfa sfa-announcement "></span><span class="header-announcement-title ">消息</span>
             <span class="js-header-announcement-num header-announcement-num"
                   v-if="newRowCount > 0">{{newRowCount}}</span>
             <div class="header-announcement-place" @click="goToAnnouncement"></div>
@@ -170,7 +170,7 @@
 
     methods: {
       backToOldVersion(){
-        window.location.href= '/v2/index.html'
+        window.location.href = '/v2/index.html'
       },
       showLogin() {
         this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
@@ -188,7 +188,7 @@
               window.Global.cookieCache.set('token', data.data.root.token, 160)
               window.Global.cookieCache.set('loginState', true)
               window.Global.cookieCache.set('isTestUser', true)//存一份到cookie，用于应用刷新时记住试玩状态
-              if(data.data.balance<10000000){
+              if (data.data.balance < 10000000) {
                 this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
               }
               window.store.commit(types.USER_LOGIN_SUCCESS, data.data.root || {})
@@ -298,7 +298,7 @@
     position: relative;
     vertical-align: middle;
 
-    .back-to-old{
+    .back-to-old {
       /*position: absolute;*/
       /*left: 0;*/
       /*top: 0;*/
@@ -318,22 +318,22 @@
       height: 40px;
       margin: 0 auto;
     }
-    @media screen and (max-width:1200px){
-      .header-assist{
+    @media screen and (max-width: 1200px) {
+      .header-assist {
         position: absolute;
         left: 136px;
       }
     }
-    @media screen and (max-width:1471px){
-      .header-assist{
+    @media screen and (max-width: 1471px) {
+      .header-assist {
         /*position: absolute;*/
         /*left: 136px;*/
         float: left;
         margin-left: 20px;
       }
     }
-    @media screen and (min-width:1472px){
-      .header-assist{
+    @media screen and (min-width: 1472px) {
+      .header-assist {
         position: absolute;
         left: 0px;
       }
@@ -472,7 +472,7 @@
         }
         &:hover {
           background: $new-main-deep-hover-color;
-          .header-menu-body,.header-menu-body-agent {
+          .header-menu-body, .header-menu-body-agent {
             display: block;
           }
 
@@ -484,7 +484,7 @@
           height: 51px;
           width: 180px;
         }
-        .header-menu-body{
+        .header-menu-body {
           position: absolute;
           display: none;
           top: 40px;
@@ -541,14 +541,14 @@
           height: 222px;
           left: 64px;
           margin-left: -65px;
-          .header-menu-body-agent-item{
+          .header-menu-body-agent-item {
             display: inline-block;
             width: 110px;
             margin: 20px 0 12px 0;
-            &:first-child{
+            &:first-child {
               border-right: 1px solid $sec-line-color;
             }
-            .header-menu-title{
+            .header-menu-title {
               position: relative;
               font-size: 13px;
               color: #000;
@@ -557,17 +557,16 @@
               width: 110px;
               margin-bottom: 7px;
               text-align: center;
-              &:after{
+              &:after {
                 position: absolute;
-                left:44px;
+                left: 44px;
                 bottom: 0px;
-                content:'';
+                content: '';
                 width: 24px;
-                height:0;
+                height: 0;
                 border-bottom: 2px solid #15b0bb;
               }
             }
-
 
             .header-menu-item {
               display: block;
@@ -589,10 +588,10 @@
               }
             }
           }
-          .header-menu-body-agent-logout{
+          .header-menu-body-agent-logout {
             border-top: 1px dashed $sec-line-color;
             text-align: center;
-            height:38px;
+            height: 38px;
             line-height: 38px;
             .header-menu-item-img {
               color: $font-auxiliary-color;
@@ -607,11 +606,11 @@
         border-left: 1px solid #41a6ad;
         width: 170px;
         /*.header-amount-img {*/
-          /*float: right;*/
-          /*display: inline-block;*/
-          /*height: 40px;*/
-          /*color: #ffffff;*/
-          /*font-size: 13px;*/
+        /*float: right;*/
+        /*display: inline-block;*/
+        /*height: 40px;*/
+        /*color: #ffffff;*/
+        /*font-size: 13px;*/
         /*}*/
         .header-amount {
           float: right;
@@ -648,28 +647,34 @@
         }
       }
       .header-announcement {
-        display: inline-block;
-        width: 89px;
-        height: 40px;
-        line-height: 40px;
-        border-left: 1px solid #41a6ad;
-        cursor: pointer;
-        vertical-align: top;
-        font-size: 13px;
         position: relative;
+        display: inline-block;
+        max-width: 89px;
+        height: 40px;
+        border-left: 1px solid #41a6ad;
+        font-size: 13px;
+        line-height: 40px;
+        cursor: pointer;
+        text-align: center;
+        vertical-align: top;
         .sfa-announcement {
-          margin: -5px 6px 0 12px;
+          margin: -5px 6px 0 3px;
           vertical-align: middle;
+        }
+        .header-announcement-title {
+          margin-right: 3px;
         }
         .header-announcement-num {
           margin: 1px;
           width: 16px;
           height: 16px;
+          margin-right: 3px;
           line-height: 16px;
           display: inline-block;
           background: #e29c49;
           border-radius: 3px;
           text-align: center;
+          text-indent: -3px;
         }
         .header-announcement-place {
           position: absolute;
@@ -699,10 +704,15 @@
             .content-item {
               display: block;
               height: 79px;
-              padding: 24px 24px 0 24px;
+              padding: 24px 9px 0 12px;
               transition: all .5s;
+
               .content-item-panel {
+                padding: 0 12px 0 24px;
                 border-bottom: 1px solid $def-line-color;
+                &:last-child {
+                  border-bottom: 1px dashed $def-line-color;
+                }
               }
               .content-item-title-panel {
                 color: $font-auxiliary-color;
@@ -721,7 +731,7 @@
                   position: absolute;
                 }
                 .content-item-title {
-                  width: 255px;
+                  width: 242px;
                   height: 20px;
                   overflow: hidden;
                   text-overflow: ellipsis;
@@ -729,6 +739,7 @@
                   white-space: nowrap;
                   color: $new-inverse-color;
                   font-size: 13px;
+                  text-align: left;
                 }
                 .content-item-date {
                   font-size: 13px;
