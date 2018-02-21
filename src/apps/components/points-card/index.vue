@@ -12,9 +12,10 @@
             LV{{couponInfo.levelLimit}}
             <template v-if="1 === couponInfo.limitLevelType">以上</template>
           </div>
-          <div class="card-left" v-if="couponInfo.maxNum && couponInfo.maxNum - couponInfo.useNum > 0">
+          <div class="card-left" v-if="couponInfo.maxNum && couponInfo.maxNum - couponInfo.useNum > 0 && displayType === 'mall'"><!--displayType:mall 只在积分商城显示，侧边栏不显示-->
             剩{{couponInfo.maxNum - couponInfo.useNum}}张
           </div>
+          <div class="card-time-end" v-if="displayType === 'show' && (couponInfo.validEndDate-couponInfo.sysTime)<10800000"></div><!--即将到期-->
           <div v-else-if="isFinished" class="sfa-finished"></div>
         </div>
         <div class="points-center">
@@ -349,6 +350,14 @@
         height: 150px;
         margin: 0px;
         padding: 20px 0 10px 30px;
+        .card-time-end {
+          background: url(./card-time-end.png);
+          width: 57px;
+          height: 53px;
+          position: absolute;
+          top: -7px;
+          right: 0;
+        }
         .points-top {
           padding-top: 10px;
           padding-bottom: 0px;
@@ -360,7 +369,16 @@
             }
           }
           .card-badge {
-
+            height: 24px;
+            line-height: 22px;
+            background-color: rgba(184, 184, 186, .07);
+            border-radius: 12px;
+            border: solid 1px #ffffff;
+            font-size: 12px;
+            color: #fff;
+            display: inline-block;
+            padding: 0 5px;
+            margin-right: 10px;
           }
         }
         .points-center {
