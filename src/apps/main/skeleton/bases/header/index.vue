@@ -1,13 +1,14 @@
 <template>
   <div class="top-nav">
+    <div class="back-to-old" @click="backToOldVersion"><i class="fa fa-exchange"></i>&nbsp;返回旧版</div>
     <div class="header-main ">
-      <div class="pull-left">
+      <div class="header-assist">
         <a class="header-left-link" href="/change.html">线路中心</a>
         <a class="header-left-link" @click="showLoginLauncher">极速登录器</a>
         <a class="header-left-link" @click="clearCache">清理缓存</a>
       </div>
       <div class="js-gl-service header-customer-entry  pull-right overflow-hidden">
-        <span class="sfa sfa-customer-service"></span><span class="header-customer-text">在线客服</span>
+        <span class="sfa sfa-customer-service"></span><span class="header-customer-text">客服</span>
       </div>
       <transition mode="out-in"
                   enter-active-class="animated-general fadeInRightBig"
@@ -20,27 +21,50 @@
         <div class="header-has-logined  pull-right" key="logined"
              v-else>
           <div class="header-menu">
+            <div class="test-marking" v-if="doesTestMarkingShow"><p>试</p></div>
             <span class="sfa header-headshot "><img :src="imgUrl"/></span>
             <span class="header-name">{{username}}</span>
             <i class="fa fa-angle-down "></i>
             <div class="header-menu-place" @click="goToPersonCenter"></div>
-            <div class="header-menu-body">
+            <div class="header-menu-body" v-if="!isAgent">
               <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
               <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
+              <a href="#/fc/rd" class="header-menu-item"><span class="header-menu-item-text">充提记录</span></a>
               <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
-              <div class="header-menu-item" @click="logout"><i
-                class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
-                <span class="header-menu-item-text inline-block">退出</span></div>
+              <div class="header-menu-item" @click="logout">
+                <i class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
+                <span class="header-menu-item-text inline-block">安全退出</span>
+              </div>
+            </div>
+            <div class="header-menu-body-agent" v-if="isAgent">
+              <div class="header-menu-body-agent-item">
+                <div class="header-menu-title">个人中心</div>
+                <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
+                <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
+                <a href="#/fc/rd" class="header-menu-item"><span class="header-menu-item-text">充提记录</span></a>
+                <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
+              </div>
+              <div class="header-menu-body-agent-item">
+                <div class="header-menu-title">团队中心</div>
+                <a href="#/ac/to" class="header-menu-item"><span class="header-menu-item-text">团队总览</span></a>
+                <a href="#/ac/spl" class="header-menu-item"><span class="header-menu-item-text">团队盈亏</span></a>
+                <a href="#/ac/llm" class="header-menu-item"><span class="header-menu-item-text">下级管理</span></a>
+                <a href="#/ac/oam" class="header-menu-item"><span class="header-menu-item-text">开户管理</span></a>
+              </div>
+              <div class="header-menu-body-agent-logout" @click="logout">
+                <i class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
+                <span class="header-menu-item-text inline-block">安全退出</span>
+              </div>
             </div>
           </div>
 
           <div class="header-amount-panel">
-            <div class="header-amount-img">￥</div>
-            <div class=" header-amount">{{amount}}</div>
             <div class="js-header-recharge header-recharge" data-name="jsFcRecharge">充值</div>
+            <div class=" header-amount">￥&nbsp;{{amount}}</div>
+            <div class="header-amount-img"></div>
           </div>
           <div class="js-header-announcement header-announcement active">
-            <span class="sfa sfa-announcement "></span><span>消息</span>
+            <span class="sfa sfa-announcement "></span><span class="header-announcement-title ">消息</span>
             <span class="js-header-announcement-num header-announcement-num"
                   v-if="newRowCount > 0">{{newRowCount}}</span>
             <div class="header-announcement-place" @click="goToAnnouncement"></div>
@@ -52,13 +76,13 @@
                     <div class="content-item-title-panel">
                       <div class="content-item-img inline-block"></div>
                       <div class="content-item-title inline-block">{{item.title}}</div>
-                      <div class="content-item-date pull-right inline-block">{{_(item.time).toDate()}}</div>
+                      <div class="content-item-date pull-right inline-block">{{_(item.time).toDate('MM/DD')}}</div>
                     </div>
                     <div class="content-item-text" v-html="formatDesc(item.desc)">}</div>
                   </div>
                 </a>
               </div>
-              <router-link to="/uc/mg" class="header-announcement-showMore">查看更多</router-link>
+              <router-link to="/uc/mg" class="header-announcement-showMore">查看全部信息</router-link>
             </div>
           </div>
         </div>
@@ -91,6 +115,7 @@
         newRowCount: 0,
         newList: [],
         loginLauncherDialog: false,
+
       }
     },
 
@@ -110,6 +135,12 @@
     },
 
     computed: {
+      isAgent(){
+        return this.$store.state.loginStore.userType === 0
+      },
+      doesTestMarkingShow(){
+        return Global.cookieCache.get('isTestUser')
+      },
       amount(){
         return this.$store.getters.getUserInfo.fBalance
       },
@@ -138,6 +169,9 @@
     filters: {},
 
     methods: {
+      backToOldVersion(){
+        window.location.href = '/v2/index.html'
+      },
       showLogin() {
         this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
 //        this.openLoginDialog()
@@ -154,7 +188,9 @@
               window.Global.cookieCache.set('token', data.data.root.token, 160)
               window.Global.cookieCache.set('loginState', true)
               window.Global.cookieCache.set('isTestUser', true)//存一份到cookie，用于应用刷新时记住试玩状态
-              this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
+              if (data.data.balance < 10000000) {
+                this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
+              }
               window.store.commit(types.USER_LOGIN_SUCCESS, data.data.root || {})
             }
           })
@@ -169,10 +205,10 @@
             new Fingerprint2().get(function (result, components) {
 //              console.log(result) // a hash, representing your device fingerprint
 //              console.log(components) // an array of FP components
-              if(!result){
+              if (!result) {
                 result = new Date().getMilliseconds()
               }
-              Global.cookieCache.set('testUserUUID',result)
+              Global.cookieCache.set('testUserUUID', result)
               resolve({uuid: result})
             })
           } else {
@@ -262,11 +298,47 @@
     position: relative;
     vertical-align: middle;
 
+    .back-to-old {
+      /*position: absolute;*/
+      /*left: 0;*/
+      /*top: 0;*/
+      float: left;
+      display: inline-block;
+      width: 136px;
+      background: #108189;
+      font-size: 12px;
+      color: #fff;
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer;
+    }
     .header-main {
+      position: relative;
       width: 1200px;
       height: 40px;
       margin: 0 auto;
     }
+    @media screen and (max-width: 1200px) {
+      .header-assist {
+        position: absolute;
+        left: 136px;
+      }
+    }
+    @media screen and (max-width: 1471px) {
+      .header-assist {
+        /*position: absolute;*/
+        /*left: 136px;*/
+        float: left;
+        margin-left: 20px;
+      }
+    }
+    @media screen and (min-width: 1472px) {
+      .header-assist {
+        position: absolute;
+        left: 0px;
+      }
+    }
+
     .header-left-link {
       display: inline-block;
       font-size: 12px;
@@ -302,7 +374,7 @@
       margin: 6px 20px;
       border: 0;
       border-radius: 3px;
-      font-size: 14px;
+      font-size: 13px;
       color: #fff;
       text-align: center;
       vertical-align: middle;
@@ -315,20 +387,21 @@
     }
 
     .header-customer-entry {
-      padding: 0 15px;
+      padding: 0 12px;
       height: 40px;
+      width: 57px;
       line-height: 40px;
-      font-size: 14px;
+      font-size: 13px;
       text-align: center;
-      border-left: 2px solid #41a6ad;
-      border-right: 2px solid #41a6ad;
+      border-left: 1px solid #41a6ad;
+      border-right: 1px solid #41a6ad;
       vertical-align: middle;
       cursor: pointer;
       .sfa-customer-service {
         vertical-align: text-bottom;
       }
       .header-customer-text {
-        margin-left: 5px;
+        margin-left: 4px;
         display: inline-block;
       }
       &:hover {
@@ -345,138 +418,236 @@
       .header-menu {
         position: relative;
         display: inline-block;
+        max-width: 131px;
         height: 40px;
-        padding: 0 14px;
-        border-left: 2px solid #41a6ad;
+        padding: 0 12px;
+        border-left: 1px solid #41a6ad;
         vertical-align: top;
-        font-size: 14px;
+        font-size: 13px;
+        text-align: center;
         cursor: pointer;
-        min-width: 120px;
+        min-width: 111px;
+        .test-marking {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 0;
+          height: 0;
+          border: 13px solid;
+          border-color: #0a585d transparent transparent #0a585d;
+          > p {
+            margin-top: -26px;
+            margin-left: -11px;
+            font-size: 10px;
+          }
+        }
         .header-headshot {
           display: inline-block;
           width: 32px;
           height: 32px;
-          /*margin: 4px 0;*/
-          vertical-align: middle;
-          float: left;
+          margin: 4px 0 0;
+          vertical-align: top;
+          /*float: left;*/
+          > img {
+            vertical-align: top;
+          }
         }
         .header-name {
           display: inline-block;
+          max-width: 72px;
           height: 40px;
-          font-size: 14px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 13px;
           line-height: 40px;
-          vertical-align: middle;
-          float: left;
-          min-width: 65px;
+          vertical-align: top;
+          /*float: left;*/
+          min-width: 38px;
           text-align: center;
-          padding: 0 8px 0 5px;
+          padding: 0 5px;
         }
-        .sfa-angle {
-          margin: 15px 0;
-          vertical-align: middle;
-          float: left;
+        .fa-angle-down {
+          margin: 14px 0;
+          /*vertical-align: middle;*/
+          /*float: right;*/
         }
         &:hover {
           background: $new-main-deep-hover-color;
-          .header-menu-body {
+          .header-menu-body, .header-menu-body-agent {
             display: block;
           }
+
         }
         .header-menu-place {
           position: absolute;
           left: 0;
           top: 0;
-          height: 51px;
-          width: 180px;
+          height: 41px;
+          width: 149px;
         }
         .header-menu-body {
           position: absolute;
           display: none;
-          top: 50px;
+          top: 40px;
           background: $new-main-deep-color;
-          border-radius: 5px;
           z-index: 10;
           background: #ffffff;
           color: #666666;
-          border: 1px solid $def-line-color;
-          width: 133px;
-          height: 193px;
-          left: 50%;
+          border: 1px solid #d8eeef;
+          width: 100%;
+          height: 188px;
+          left: 64px;
           margin-left: -65px;
-          &:before {
-            content: "";
+          &:after{
+            content:'';
+            width: 0;
+            height: 0;
+            border-bottom: 5px;
+            border-style: solid;
+            border-color: #fff;
             position: absolute;
-            width: 12px;
-            height: 12px;
-            background: white;
-            transform: translateX(-50%) translateY(-50%) rotate(45deg);
-            top: -1px;
-            border-top: 1px solid $def-gray-color;
-            border-left: 1px solid $def-gray-color;
-            right: 39%;
-            border-top-left-radius: 4px;
+            top: -5px;
+            left: 50%;
+            transform: rotate(45deg)
           }
           .header-menu-item {
             display: block;
-            height: 49px;
-
+            height: 35px;
+            pading: 0 10px;
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             color: $new-inverse-color;
-            line-height: 49px;
+            line-height: 35px;
             //padding: 0 25px;
             .header-menu-item-text {
               display: block;
-              height: 49px;
+              height: 35px;
               margin: 0 7px;
-              border-bottom: 1px solid $sec-line-color;
             }
-
             &:hover {
               color: $new-main-deep-color;
               border-radius: 5px;
             }
-            &:nth-child(4) {
-              .header-menu-item-text {
-                color: $font-auxiliary-color;
-                border-bottom: 0;
-              }
+            &:nth-child(5) {
+              line-height: 48px;
+              margin: 0 6px;
+              border-top: 1px dashed $sec-line-color;
               .header-menu-item-img {
                 color: $font-auxiliary-color;
+                font-size: 16px;
+                vertical-align: text-bottom;
               }
+            }
+          }
+        }
+        .header-menu-body-agent {
+          position: absolute;
+          display: none;
+          top: 40px;
+          background: $new-main-deep-color;
+          z-index: 10;
+          background: #ffffff;
+          color: #666666;
+          border: 1px solid #d8eeef;
+          width: 225px;
+          height: 222px;
+          left: 64px;
+          margin-left: -65px;
+          .header-menu-body-agent-item {
+            display: inline-block;
+            width: 110px;
+            margin: 20px 0 12px 0;
+            &:first-child {
+              border-right: 1px solid $sec-line-color;
+            }
+            .header-menu-title {
+              position: relative;
+              font-size: 13px;
+              color: #000;
+              height: 24px;
+              line-height: 13px;
+              width: 110px;
+              margin-bottom: 7px;
+              text-align: center;
+              &:after {
+                position: absolute;
+                left: 44px;
+                bottom: 0px;
+                content: '';
+                width: 24px;
+                height: 0;
+                border-bottom: 2px solid #15b0bb;
+              }
+            }
+
+            .header-menu-item {
+              display: block;
+              height: 30px;
+              pading: 0 10px;
+              text-align: center;
+              font-size: 13px;
+              color: $new-inverse-color;
+              line-height: 30px;
+              //padding: 0 25px;
+              .header-menu-item-text {
+                display: block;
+                height: 35px;
+                margin: 0 7px;
+              }
+              &:hover {
+                color: $new-main-deep-color;
+                border-radius: 5px;
+              }
+            }
+          }
+          .header-menu-body-agent-logout {
+            height: 38px;
+            margin: 0 6px;
+            text-align: center;
+            line-height: 38px;
+            border-top: 1px dashed $sec-line-color;
+            .header-menu-item-img {
+              color: $font-auxiliary-color;
+              font-size: 16px;
+              vertical-align: text-bottom;
             }
           }
         }
       }
       .header-amount-panel {
         display: inline-block;
-        .header-amount-img {
-          display: inline-block;
-          height: 40px;
-          color: #ffffff;
-          font-size: 14px;
-          position: absolute;
-          margin-left: 12px;
-        }
+        border-left: 1px solid #41a6ad;
+        max-width: 172px;
+        padding: 0 12px;
+        /*.header-amount-img {*/
+        /*float: right;*/
+        /*display: inline-block;*/
+        /*height: 40px;*/
+        /*color: #ffffff;*/
+        /*font-size: 13px;*/
+        /*}*/
         .header-amount {
+          float: right;
           display: inline-block;
-          //width: 106px;
           height: 40px;
-          font-size: 14px;
+          font-size: 13px;
           line-height: 40px;
-          text-align: right;
-          border-left: 2px solid #41a6ad;
+          text-align: center;
           vertical-align: top;
-          padding: 0 4px 0 28px;
+          max-width:104px;
+          min-width: 44px;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         .header-recharge {
+          float: right;
           display: inline-block;
           width: 56px;
           height: 26px;
-          margin: 7px 14px;
+          margin: 7px 0 7px 12px;
           background: #d0e9ea;
           border-radius: 13px;
-          font-size: 14px;
+          font-size: 13px;
           color: #14b1bb;
           line-height: 26px;
           text-align: center;
@@ -489,85 +660,77 @@
         }
       }
       .header-announcement {
-        display: inline-block;
-        width: 100px;
-        height: 40px;
-        line-height: 40px;
-        border-left: 2px solid #41a6ad;
-        cursor: pointer;
-        vertical-align: top;
-        font-size: 14px;
         position: relative;
+        display: inline-block;
+        width: 71px;
+        height: 40px;
+        border-left: 1px solid #41a6ad;
+        font-size: 13px;
+        line-height: 40px;
+        cursor: pointer;
+        text-align: center;
+        vertical-align: top;
+        padding: 0 12px;
         .sfa-announcement {
-          margin: -5px 6px 0 12px;
+          margin: -5px 5px 0 0;
           vertical-align: middle;
         }
+
         .header-announcement-num {
-          margin: 5px;
-          width: 20px;
-          height: 20px;
-          line-height: 20px;
+          margin-left: 2px;
+          width: 16px;
+          height: 16px;
+          line-height: 16px;
           display: inline-block;
           background: #e29c49;
-          border-radius: 9px;
+          border-radius: 3px;
           text-align: center;
+          text-indent: 0px;
         }
         .header-announcement-place {
           position: absolute;
           left: 0;
           top: 0;
-          height: 51px;
+          height: 41px;
           width: 100px;
         }
         .header-announcement-body {
           position: absolute;
           display: none;
-          top: 50px;
+          top: 40px;
           background: $new-main-deep-color;
-          border-radius: 5px;
+          /*border-radius: 5px;*/
           z-index: 10;
           background: #ffffff;
           color: #666666;
           border: 1px solid $def-line-color;
-          left: 50%;
+          right: -83px;
           margin-left: -183px;
           //display: block;
-          width: 340px;
-          height: 370px;
-          &:before {
-            content: "";
-            position: absolute;
-            width: 0px;
-            height: 0px;
-            border: 6px solid transparent;
-            top: -12px;
-            left: 50%;
-            border-bottom-color: $def-line-color;
-          }
-          &:after {
-            content: "";
-            position: absolute;
-            width: 0px;
-            height: 0px;
-            border: 5px solid transparent;
-            border-bottom-color: $def-white-color;
-            top: -10px;
-            left: 50.5%;
-          }
+          width: 348px;
+          height: 367px;
+
           .header-announcement-content {
             height: 318px;
+
             .content-item {
               display: block;
-              height: 80px;
-              padding: 26px 20px 0 26px;
+              height: 82px;
+              padding: 24px 9px 0 12px;
               transition: all .5s;
+              &:last-child {
+                .content-item-panel {
+                  border-bottom: 1px dashed $def-line-color;
+                }
+              }
               .content-item-panel {
-                border-bottom: 1px dashed $def-line-color;
+                padding: 0 12px 0 24px;
+                border-bottom: 1px solid $def-line-color;
               }
               .content-item-title-panel {
                 color: $font-auxiliary-color;
-                height: 14px;
-                line-height: 14px;
+                height: 13px;
+                line-height: 13px;
                 margin-bottom: 10px;
                 .content-item-img {
                   width: 6px;
@@ -581,24 +744,29 @@
                   position: absolute;
                 }
                 .content-item-title {
+                  width: 242px;
+                  height: 20px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  word-break: keep-all;
+                  white-space: nowrap;
                   color: $new-inverse-color;
-                  font-size: 14px;
+                  font-size: 13px;
+                  text-align: left;
                 }
                 .content-item-date {
-                  font-size: 12px;
+                  font-size: 13px;
                 }
               }
               .content-item-text {
+                position: relative;
+                width: 294px;
+                height: 53px;
+                margin-bottom: 5px;
+                font-size: 12px;
                 color: $font-auxiliary-color;
                 text-align: left;
                 line-height: 20px;
-                margin-bottom: 5px;
-                width: 294px;
-                height: 50px;
-                position: relative;
-                overflow: hidden;
-                /*text-overflow: ellipsis;*/
-                /*white-space: nowrap;*/
               }
               &:hover {
                 .content-item-title-panel {
@@ -615,13 +783,11 @@
           }
           .header-announcement-showMore {
             color: $font-auxiliary-color;
-            background: $sec-line-color;
-            font-size: 14px;
+            font-size: 13px;
             width: 100%;
-            height: 56px;
-            line-height: 56px;
+            height: 50px;
+            line-height: 50px;
             text-align: center;
-            margin-top: -4px;
             display: block;
             border-bottom-left-radius: 5px;
             border-bottom-right-radius: 5px;

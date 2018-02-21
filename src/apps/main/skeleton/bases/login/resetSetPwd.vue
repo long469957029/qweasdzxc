@@ -6,7 +6,7 @@
         <label class="control-label">新密码：</label>
         <div class="controls">
           <input type="password" class="reset-input" id="jsRPLoginPwd1"  data-parsley-length="[6, 20]"
-                 v-model="pwdOne" value="" placeholder="6-20为字符组成，区分大小写，不能使用特殊字符" autocomplete="off"/>
+                 v-model="pwdOne" value="" placeholder="6-20位字符组成（不含空格），区分大小写" autocomplete="off"/><!--6-20位字符组成，区分大小写，不能使用特殊字符-->
         </div>
       </div>
       <div class="control-group">

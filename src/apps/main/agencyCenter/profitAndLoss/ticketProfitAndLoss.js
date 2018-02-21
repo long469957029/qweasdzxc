@@ -4,7 +4,8 @@ const SearchGrid = require('com/searchGrid')
 
 const TicketSelectGroup = require('com/ticketSelectGroup')
 
-const Timeset = require('com/timeset')
+import Timeset from 'com/timeset'
+
 
 const ReportManageView = SearchGrid.extend({
 

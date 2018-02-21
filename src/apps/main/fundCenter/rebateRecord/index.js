@@ -2,7 +2,7 @@
 
 const SearchGrid = require('com/searchGrid')
 
-const Timeset = require('com/timeset')
+import Timeset from 'com/timeset'
 
 // var betStatusConfig = require('userCenter/misc/betStatusConfig');
 
@@ -24,9 +24,9 @@ const PersonalView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
-    	
+
 	  height: '370',
-	 
+
       columns: [
         {
           name: '交易流水号',

@@ -208,15 +208,6 @@
           }
         }
       )
-      // dashboard.getIndexTicketXhr(
-      //   ({data}) => {
-      //     if (data && data.result === 0) {
-      //       this.handicapTicketList = data.root.handicapTickets || this.handicapTicketList
-      //       this.classicTicketLIst = data.root.classicTickets || this.classicTicketLIst
-      //       this.ticketCount = this.handicapTicketList.length
-      //     }
-      //   }
-      // )
     },
     destroyed() {
       this.clearGameInv()

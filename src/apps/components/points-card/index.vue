@@ -1,5 +1,5 @@
 <template>
-  <div class="points-card-wrapper">
+  <div class="points-card-wrapper" :class="displayType">
     <div class="points-card" :class="[cardInfo.type, {finished: isFinished}]"
          @mouseout="toggleBtn(false)">
       <div class="points-card-inner" @mouseover="toggleBtn(true)">
@@ -12,9 +12,10 @@
             LV{{couponInfo.levelLimit}}
             <template v-if="1 === couponInfo.limitLevelType">以上</template>
           </div>
-          <div class="card-left" v-if="couponInfo.maxNum && couponInfo.maxNum - couponInfo.useNum > 0">
+          <div class="card-left" v-if="couponInfo.maxNum && couponInfo.maxNum - couponInfo.useNum > 0 && displayType === 'mall'"><!--displayType:mall 只在积分商城显示，侧边栏不显示-->
             剩{{couponInfo.maxNum - couponInfo.useNum}}张
           </div>
+          <div class="card-time-end" v-if="displayType === 'show' && (couponInfo.validEndDate-couponInfo.sysTime)<10800000"></div><!--即将到期-->
           <div v-else-if="isFinished" class="sfa-finished"></div>
         </div>
         <div class="points-center">
@@ -46,7 +47,7 @@
                 <div class="points-expire" v-else>
                   {{couponInfo.validStartDate | toTime('MM.DD H:mm')}}-{{couponInfo.validEndDate | toTime('MM.DD H:mm')}}
                 </div>
-                <div class="points-value">
+                <div class="points-value" v-if="displayType === 'mall'">
                   <span class="sfa sfa-points"></span>
                   {{couponInfo.requireIntegral | convert2yuan}}积分
                 </div>
@@ -101,10 +102,15 @@
       Countdown,
     },
 
-    props: [
-      'couponInfo',
-    ],
-
+    props: {
+      couponInfo: {
+        type: Object
+      },
+      displayType: {
+        type: String,
+        default: 'mall'
+      }
+    },
     data() {
       return {
         showBtn: false
@@ -140,8 +146,10 @@
 
     methods: {
       toggleBtn(flag) {
-        if (!this.isFinished && this.countdownTime === 0) {
-          this.showBtn = flag
+        if (this.displayType === 'mall'){
+          if (!this.isFinished && this.countdownTime === 0) {
+            this.showBtn = flag
+          }
         }
       }
     },
@@ -325,6 +333,74 @@
       font-size: 16px;
       line-height: 28px;
       text-align: center;
+    }
+  }
+  .show {
+    width: 270px;
+    height: 150px;
+    overflow: hidden;
+    .points-card {
+      width: 255px;
+      height: 150px;
+      margin: 0;
+      display: inline-block;
+      overflow: hidden;
+      .points-card-inner {
+        width: 255px;
+        height: 150px;
+        margin: 0px;
+        padding: 20px 0 10px 30px;
+        .card-time-end {
+          background: url(./card-time-end.png);
+          width: 57px;
+          height: 53px;
+          position: absolute;
+          top: -7px;
+          right: 0;
+        }
+        .points-top {
+          padding-top: 10px;
+          padding-bottom: 0px;
+          .card-value {
+            font-size: 30px;
+            line-height: 30px;
+            .card-unit {
+
+            }
+          }
+          .card-badge {
+            height: 24px;
+            line-height: 22px;
+            background-color: rgba(184, 184, 186, .07);
+            border-radius: 12px;
+            border: solid 1px #ffffff;
+            font-size: 12px;
+            color: #fff;
+            display: inline-block;
+            padding: 0 5px;
+            margin-right: 10px;
+          }
+        }
+        .points-center {
+          .points-range {
+            font-size: 14px;
+            padding-bottom: 0px;
+            padding-top: 5px;
+          }
+        }
+        .points-bottom-wrapper {
+          .points-bottom {
+            .points-type {
+
+            }
+            .points-bottom-inner {
+              .points-expire {
+
+              }
+            }
+          }
+        }
+      }
     }
   }
 </style>

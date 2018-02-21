@@ -19,6 +19,15 @@ const urlList = [
   },
   {
     url: '/ticket/game/prizeList.json',//前台 - 中奖记录
+  },
+  {
+    url: '/mall/coupon/newItemList.json',
+  },
+  {
+    url: '/ticket/game/prizeList.json',
+  },
+  {
+    url:'/info/game/userInfo.json'
   }
 ]
 module.exports = {

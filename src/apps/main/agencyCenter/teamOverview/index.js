@@ -2,7 +2,7 @@
 
 let Chart
 
-const Timeset = require('com/timeset')
+import Timeset from 'com/timeset'
 const BtnGroup = require('com/btnGroup')
 require('./index.scss')
 
