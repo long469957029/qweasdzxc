@@ -122,7 +122,7 @@
         }else {
           this.detailPage = index
         }
-      }
+      },
     },
     mounted() {
       this.getNotice()

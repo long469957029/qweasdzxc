@@ -516,7 +516,7 @@
 
     .dashboard-mall-content {
       margin: 0px 20px;
-      padding: 28px 10px;
+      padding: 21px 10px;
       border-bottom: 1px solid $sec-line-color;
 
       &:nth-child(3) {
