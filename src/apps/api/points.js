@@ -314,7 +314,7 @@ const getIntegralRecordsApi = ({
  * @param fail
  * @returns {*|Promise<T>}
  */
-const getAdressListApi = (then, fail) => {
+const getAddressListApi = (then, fail) => {
   return $http({
     url: '/mall/gift/getUserAddressList.json',
   })
@@ -336,7 +336,7 @@ const getAdressListApi = (then, fail) => {
  * @param fail
  * @returns {*|Promise<T>}
  */
-const adressPushApi = (
+const addressPushApi = (
   {
     rid = null,
     name,
@@ -357,6 +357,7 @@ const adressPushApi = (
       area,
       address,
       isDef,
+      rid,
     }
   })
     .then(then)
@@ -370,7 +371,7 @@ const adressPushApi = (
  * @param fail
  * @returns {*|Promise<T>}
  */
-const getAdressDetailApi = ({rid}, then, fail) => {
+const getAddressDetailApi = ({rid}, then, fail) => {
   return $http({
     url: '/mall/gift/getUserAddress.json',
     data: {
@@ -389,7 +390,7 @@ const getAdressDetailApi = ({rid}, then, fail) => {
  * @param fail
  * @returns {*|Promise<T>}
  */
-const adressDeleteApi = ({rid}, then, fail) => {
+const addressDeleteApi = ({rid}, then, fail) => {
   return $http({
     url: '/mall/gift/delUserAddress.json',
     data: {
@@ -400,6 +401,23 @@ const adressDeleteApi = ({rid}, then, fail) => {
     .catch(fail)
 }
 
+/**
+ * 设置默认接口
+ * @param rid
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const setDefaultAddressApi = ({rid}, then, fail) => {
+  return $http({
+    url: '/mall/gift/setdefault.json',
+    data: {
+      rid
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
 
 
 export {
@@ -418,8 +436,9 @@ export {
   getMyGiftRecordsApi,
   getIntegralRecordsApi,
   signInApi,
-  adressPushApi,
-  getAdressListApi,
-  getAdressDetailApi,
-  adressDeleteApi,
+  addressPushApi,
+  getAddressListApi,
+  getAddressDetailApi,
+  setDefaultAddressApi,
+  addressDeleteApi,
 }
