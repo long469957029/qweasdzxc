@@ -1,105 +1,56 @@
 <template>
-  <div class="top-nav">
-    <div class="back-to-old" @click="backToOldVersion"><i class="fa fa-exchange"></i>&nbsp;返回旧版</div>
-    <div class="header-main ">
-      <div class="header-assist">
-        <a class="header-left-link" href="/change.html">线路中心</a>
-        <a class="header-left-link" @click="showLoginLauncher">极速登录器</a>
-        <a class="header-left-link" @click="clearCache">清理缓存</a>
-      </div>
-      <div class="js-gl-service header-customer-entry  pull-right overflow-hidden">
-        <span class="sfa sfa-customer-service"></span><span class="header-customer-text">客服</span>
-      </div>
-      <transition mode="out-in"
-                  enter-active-class="animated-general fadeInRightBig"
-                  leave-active-class="animated-general fadeOutRightBig"
-      >
-        <div class="header-not-login pull-right" v-if="!loginStatus" key="login">
-          <button type="button" class="header-login " @click="showFreeTrial">免费试玩</button>
-          <button type="button" class="header-login " @click="showLogin">登录</button>
+  <div>
+    <div class="js-gl-main-navbar">
+      <ul class="nav js-navbar-nav">
+        <li data-index="0" class="navbar-logo-li">
+          <a href="#/?dashboard=1" class="navbar-logo"></a>
+        </li>
+        <li data-index="1">
+          <a href="#/bc/0/10" class="js-navbar-tab js-nav-ticket">彩票
+            <div class="navbar-down-icon"></div>
+          </a>
+        </li>
+        <li data-index="18">
+          <a href="#/bc/2/1" class="js-navbar-tab js-nav-ticket">盘口
+            <div class="navbar-down-icon"></div>
+          </a>
+        </li>
+        <li data-index="2">
+          <a href="#/rc" class="js-navbar-tab ">娱乐场
+            <div class="navbar-down-icon"></div>
+          </a>
+        </li>
+        <li data-index="3">
+          <a href="#/sc" class="js-navbar-tab ">老虎机
+            <div class="navbar-down-icon"></div>
+          </a>
+        </li>
+        <li data-index="4">
+          <a href="#/fh" class="js-navbar-tab ">捕鱼
+            <div class="navbar-down-icon"></div>
+          </a>
+        </li>
+        <li data-index="5"><a href="#/aa" class="js-navbar-tab">优惠活动</a></li>
+        <li data-index="6"><a href="#/mb" class="js-navbar-tab">手机投注</a></li>
+        <li data-index="7" class="js-nav-mall nav-right">
+          <span class="navbar-mall-icon"></span>
+          <a href="#/points" class="js-navbar-tab">积分商城</a>
+        </li>
+        <div class="navbar-slide-underline js-navbar-slide-underline"></div>
+      </ul>
+      <div class="nav-mall-sub js-nav-mall-sub hidden"><i class="sfa-up_icon"></i>
+        <div class="mall-sub-title"><span class="sfa sfa-mall-entry-rec"></span> 商城最新推荐
         </div>
-        <div class="header-has-logined  pull-right" key="logined"
-             v-else>
-          <div class="header-menu">
-            <div class="test-marking" v-if="doesTestMarkingShow"><p>试</p></div>
-            <span class="sfa header-headshot "><img :src="imgUrl"/></span>
-            <span class="header-name">{{username}}</span>
-            <i class="fa fa-angle-down "></i>
-            <div class="header-menu-place" @click="goToPersonCenter"></div>
-            <div class="header-menu-body" v-if="!isAgent">
-              <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
-              <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
-              <a href="#/fc/rd" class="header-menu-item"><span class="header-menu-item-text">充提记录</span></a>
-              <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
-              <div class="header-menu-item" @click="logout">
-                <i class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
-                <span class="header-menu-item-text inline-block">安全退出</span>
-              </div>
-            </div>
-            <div class="header-menu-body-agent" v-if="isAgent">
-              <div class="header-menu-body-agent-item">
-                <div class="header-menu-title">个人中心</div>
-                <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
-                <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
-                <a href="#/fc/rd" class="header-menu-item"><span class="header-menu-item-text">充提记录</span></a>
-                <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
-              </div>
-              <div class="header-menu-body-agent-item">
-                <div class="header-menu-title">团队中心</div>
-                <a href="#/ac/to" class="header-menu-item"><span class="header-menu-item-text">团队总览</span></a>
-                <a href="#/ac/spl" class="header-menu-item"><span class="header-menu-item-text">团队盈亏</span></a>
-                <a href="#/ac/llm" class="header-menu-item"><span class="header-menu-item-text">下级管理</span></a>
-                <a href="#/ac/oam" class="header-menu-item"><span class="header-menu-item-text">开户管理</span></a>
-              </div>
-              <div class="header-menu-body-agent-logout" @click="logout">
-                <i class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
-                <span class="header-menu-item-text inline-block">安全退出</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="header-amount-panel">
-            <div class="js-header-recharge header-recharge" data-name="jsFcRecharge">充值</div>
-            <div class=" header-amount">￥&nbsp;{{amount}}</div>
-            <div class="header-amount-img"></div>
-          </div>
-          <div class="js-header-announcement header-announcement active">
-            <span class="sfa sfa-announcement "></span><span class="header-announcement-title ">消息</span>
-            <span class="js-header-announcement-num header-announcement-num"
-                  v-if="newRowCount > 0">{{newRowCount}}</span>
-            <div class="header-announcement-place" @click="goToAnnouncement"></div>
-            <div class="js-header-announcement-body header-announcement-body">
-              <div class="header-announcement-content">
-                <a :href="messageLink(item.type,item.noticeId)" class="content-item" v-for="item in newList"
-                   :key="_(item.time).add(_.random(10000))">
-                  <div class="content-item-panel">
-                    <div class="content-item-title-panel">
-                      <div class="content-item-img inline-block"></div>
-                      <div class="content-item-title inline-block">{{item.title}}</div>
-                      <div class="content-item-date pull-right inline-block">{{_(item.time).toDate('MM/DD')}}</div>
-                    </div>
-                    <div class="content-item-text" v-html="formatDesc(item.desc)">}</div>
-                  </div>
-                </a>
-              </div>
-              <router-link to="/uc/mg" class="header-announcement-showMore">查看全部信息</router-link>
-            </div>
-          </div>
-        </div>
-      </transition>
+        <ul class="js-nav-mall-sub-list"></ul>
+        <div class="mall-more"><a href="#/ma" target="_blank">查看更多&gt;&gt;</a></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import avatarConf from 'userCenter/misc/avatarConfig'
-  import fundApi from 'api/fund'
-  import {getAccountSafeApi} from 'api/userCenter'
-  import loginApi from 'api/login'
-  import Fingerprint2 from 'fingerprintjs2'
-
   export default{
-    name: 'main-header',
+    name: 'nav-bar',
 
     data () {
       return {
@@ -694,24 +645,22 @@
           margin-left: -183px;
           //display: block;
           width: 348px;
-          height: 367px;
+          height: 358px;
 
           .header-announcement-content {
-            height: 318px;
-
+            height: 309px;
             .content-item {
               display: block;
-              height: 82px;
+              height: 79px;
               padding: 24px 9px 0 12px;
               transition: all .5s;
-              &:last-child {
-                .content-item-panel {
-                  border-bottom: 1px dashed $def-line-color;
-                }
-              }
+
               .content-item-panel {
                 padding: 0 12px 0 24px;
                 border-bottom: 1px solid $def-line-color;
+                &:last-child {
+                  border-bottom: 1px dashed $def-line-color;
+                }
               }
               .content-item-title-panel {
                 color: $font-auxiliary-color;
@@ -747,7 +696,7 @@
               .content-item-text {
                 position: relative;
                 width: 294px;
-                height: 53px;
+                height: 50px;
                 margin-bottom: 5px;
                 font-size: 12px;
                 color: $font-auxiliary-color;

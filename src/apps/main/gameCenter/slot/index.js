@@ -297,9 +297,9 @@ const SlotCenterView = Base.ItemView.extend({
     const self = this
     const $target = $(e.currentTarget)
     const type = $target.data('type')
-    if(type === 1){ // 需要调用免费试玩的接口   暂时还没有  先这么写
-      Global.ui.notification.show('免费试玩的接口还木有`别着急！')
-    }else{
+    // if(type === 1){ // 需要调用免费试玩的接口   暂时还没有  先这么写
+    //   Global.ui.notification.show('免费试玩的接口还木有`别着急！')
+    // }else{
       if(this.checkLoginStatus()){
         const acctInfo = Global.memoryCache.get('acctInfo')
         if(acctInfo.userType === 2){
@@ -324,7 +324,7 @@ const SlotCenterView = Base.ItemView.extend({
       }else{
         this.showLoginHandler()
       }
-    }
+    // }
   },
 
   loadMoreHandler() {
