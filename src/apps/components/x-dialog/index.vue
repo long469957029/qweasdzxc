@@ -73,11 +73,10 @@
   }
 
   .x-modal-header {
-    padding: 0 15px;
+    padding: 0 45px;
     border-bottom: 1px solid #eee;
     color: #333333;
     font-size: 16px;
-    text-align: center;
     background-color: #f0f0f0;
     height: 50px;
     line-height: 50px;
