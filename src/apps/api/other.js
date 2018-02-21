@@ -32,7 +32,27 @@ const getDownGameUserInfo = ({channelId},then,fail) => {
     .then(then)
     .catch(fail)
 }
+/**
+ * 保存第三方账号密码，需要传游戏id（channelId）
+ * @param channelId
+ * @param pwd
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const saveDownGamePwd = ({channelId,password}, then, fail) => {
+  return $http({
+    url: '/info/game/changePassword.json',
+    data:{
+      channelId,
+      password
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
 export {
   getServerListApi,
-  getDownGameUserInfo
+  getDownGameUserInfo,
+  saveDownGamePwd
 }

@@ -2,10 +2,11 @@
   <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="gameDownLoad">
     <div class="modal-dialog modal-gameDownLoad">
       <div class="game-header">
+        <a class="go-back" v-show="showUserInfo" @click="goBack">返回</a>
         {{title}}手机版下载
         <a class="close-md btn-close" data-dismiss="modal"></a>
       </div>
-      <div class="game-body">
+      <div class="game-body" v-show="!showUserInfo">
         <div class="tab">
           <div class="tab-main">
             <div :class="['tab-info',{'active': phoneIndex === 1}]" @click="phoneIndex = 1">
@@ -32,6 +33,21 @@
           <span class="tip-icon"></span>
           建议使用浏览器扫码功能或专业二维码扫描工具，不建议使用微信、QQ扫码功能。
         </div>
+      </div>
+      <div class="user-body" v-show="showUserInfo">
+        <div class="user-input">
+          <label>账号：</label>
+          <input type="text" disabled :value="userName"/>
+        </div>
+        <div class="user-input">
+          <label>密码：</label>
+          <input type="text" :disabled="!changePwd" v-model.trim="passWord" ref="pwdInput"/>
+        </div>
+        <div :class="['error-tip',{'text-hot': errorShow}]" v-show="changePwd">
+          <span :class="['sfa',{'sfa-error-icon': errorShow,'sfa-error-gray-icon': !errorShow}]"></span>
+          {{errorText}}
+        </div>
+        <div class="user-btn" @click="btnClick">{{changePwd ? '保存密码' : '修改密码'}}</div>
       </div>
     </div>
   </div>
@@ -75,7 +91,10 @@
       linkUrl:'app.5x5x.vip/gg'
     }
     ]
-  import { getDownGameUserInfo } from 'api/other'
+  import {
+    getDownGameUserInfo,
+    saveDownGamePwd
+  } from 'api/other'
   export default{
     name: 'game-down-load',
     data(){
@@ -85,17 +104,71 @@
         linkUrl: '',
         phoneIndex: 1,
         haveUserInfo:false,
-        showUserInfo:false
+        showUserInfo:false,
+        userName:'',
+        passWord:'',
+        oldPwd:'',  // 用户点击返回时  将密码输入框内容重置为保存成功的密码
+        changePwd:false,
+        errorShow:false,
+        errorText:'密码为6~12位字母或数字'
       }
     },
     computed:{
       ...mapGetters([
         'gameDownLoadGameId'
-      ])
+      ]),
     },
     methods: {
       triggerShow(){
         this.showUserInfo = !this.showUserInfo
+      },
+      btnClick(){
+        if(this.changePwd){
+          this.savePwd()
+        }else{
+          this.changePwd = !this.changePwd
+          setTimeout(() => {
+            this.$refs.pwdInput.focus()
+          },300)
+        }
+      },
+      goBack(){
+        this.showUserInfo = !this.showUserInfo
+        this.passWord = this.oldPwd
+        this.changePwd = false
+      },
+      savePwd(){
+        const passwordReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,12}$/
+        if(this.passWord === ''){
+          this.showError('新密码不可为空')
+          return false
+        } else if (!passwordReg.test(this.passWord)) {
+          this.showError('您填写的密码不符合要求，请重新填写')
+          return false
+        } else{
+          this.errorShow = false,
+          this.errorText = '密码为6~12位字母或数字'
+          saveDownGamePwd({channelId: this.gameDownLoadGameId,password:this.passWord},
+            ({data}) => {
+              if(data && data.result === 0){
+                Global.ui.notification.show('修改密码成功', {
+                  type: 'success',
+                })
+                this.changePwd = false
+                this.oldPwd = this.passWord
+              }else{
+                this.showError(data.msg === 'fail' ? '验证失败，请稍后重试！' : data.msg)
+              }
+            },
+            ({data}) => {
+              this.showError(data.msg === 'fail' ? '验证失败，请稍后重试！' : data.msg)
+            }
+          )
+        }
+      },
+      showError(text){
+        this.errorShow = true
+        this.errorText = text
       }
     },
     mounted(){
@@ -114,7 +187,10 @@
         ({data}) => {
         if(data && data.result === 0){
           if(!_.isNull(data.root)){
-           this.haveUserInfo = true
+            this.haveUserInfo = true
+            this.userName = data.root.gameUserName
+            this.passWord = data.root.gameUserPassword
+            this.oldPwd = data.root.gameUserPassword
           }
         }
       })
@@ -138,6 +214,19 @@
       line-height: 56px;
       font-size: 18px;
       color: $def-white-color;
+      .go-back{
+        width: 50px;
+        height: 18px;
+        cursor: pointer;
+        color: $def-white-color;
+        text-align: right;
+        font-size: $font-sm;
+        position: absolute;
+        left: 21px;
+        line-height: 18px;
+        background: url("./images/arrow.png") no-repeat left;
+        top: 19px;
+      }
     }
     .game-body{
       width: 96%;
@@ -233,6 +322,46 @@
         cursor: pointer;
         width: 100%;
         bottom: 70px;
+      }
+    }
+    .user-body{
+      width: 380px;
+      margin: 0 auto;
+      padding-top: 35px;
+      .user-input{
+        margin-top: 25px;
+        label{
+          font-size: $font-sm;
+          color: $def-black-color;
+        }
+        input{
+          width: 306px;
+          height: 40px;
+          background-color: #f9f9f9;
+          border-radius: 3px;
+          border: solid 1px $def-gray-color;
+        }
+      }
+      .error-tip{
+        margin-top: 10px;
+        margin-left: 46px;
+        font-size: $font-xs;
+        color: $font-auxiliary-color;
+        .sfa{
+          transform: translateY(3px);
+        }
+      }
+      .user-btn{
+        width: 320px;
+        height: 54px;
+        background-color: $new-main-deep-color;
+        border-radius: 3px;
+        margin-left: 45px;
+        margin-top: 31px;
+        text-align: center;
+        line-height: 54px;
+        color: $def-white-color;
+        cursor: pointer;
       }
     }
   }
