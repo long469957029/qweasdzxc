@@ -22,8 +22,8 @@
       </tr>
       <tr slot="tbody" slot-scope="{row, index}" :key="index">
         <td>{{row.exchangeDate | toTime}}</td>
-        <td>
-          <div class="text-left"><img :src="row.picUrl" class="gift-img">
+        <td style="padding-left: 40px;">
+          <div class="text-left"><img :src="row.picUrl" class="gift-img" width="62" height="62">&nbsp;&nbsp;
             <span class="inline-block">{{row.itemName}}</span>
           </div>
         </td>
@@ -32,7 +32,7 @@
             {{row.refPrice | convert2yuan}}
           </template>
         </td>
-        <td class="text-left">
+        <td class="text-left" style="padding-left: 40px;">
           <div>收货人：{{row.exName ? row.exName : '暂无'}}</div>
           <div>联系电话：{{row.exPhone ? row.exPhone : '暂无'}}</div>
           <div>收货地址：{{row.exAddr ? row.exAddr : '暂无'}}</div>
@@ -109,5 +109,10 @@
 </script>
 
 <style lang="scss" scoped>
-
+/*.ticket-records {*/
+  /*.gift-img {*/
+    /*width: 62px;*/
+    /*height: 62px;*/
+  /*}*/
+/*}*/
 </style>
