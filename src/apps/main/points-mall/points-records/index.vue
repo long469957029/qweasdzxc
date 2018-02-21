@@ -103,6 +103,10 @@
         immediate: true
       }
     },
+
+    mounted() {
+      this.$store.dispatch(types.GET_USER_MALL_INFO)
+    }
   }
 </script>
 

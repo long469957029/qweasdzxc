@@ -117,21 +117,29 @@
 
 .sc-navbar-select-container {
   @include inline-block();
-  line-height: 50px;
+  line-height: 56px;
+  padding-left: 20px;
   span {
     color: white;
     font-size: 16px;
   }
-
+  .square{
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: url("./images/square.png") no-repeat;
+  }
   .sc-navbar-select {
-    width: 130px;
+    width: 100px;
     height: 30px;
     line-height: 30px;
-    //margin-top: -6px;
-    font-size: 14px;
+    margin-top: 3px;
+    font-size: $font-sm;
     margin-left: 6px;
-    background: white;
-    color: #333;
+    background: $new-main-deep-color;
+    color: $def-white-color;
+    border: none;
+    background: url("./images/select-arrow.png") no-repeat scroll 90% center transparent;
   }
 }
 
@@ -139,11 +147,12 @@
   width: 760px;
   height: 50px;
   line-height: 50px;
+  margin-left: 60px;
   @include inline-block();
   .sc-navbar-option {
-    padding: 0px 13px;
+    padding: 0px 22px;
     color: white;
-    font-size: 16px;
+    font-size: $font-sm;
     float: left;
     cursor: pointer;
 
@@ -556,7 +565,7 @@
   }
 
   .sc-game-btn {
-    width: 120px;
+    width: 100px;
     height: 30px;
     line-height: 30px;
     margin: 0 auto;
@@ -564,7 +573,7 @@
     border: none;
     color: white;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 14px;
     cursor: pointer;
     opacity: 0;

@@ -5,37 +5,38 @@
         已保存的收货地址
       </span>
       <span class="detail">
-        您已经创建<span class="text-cool">4</span>个收货地址，最多可创建<span class="text-cool">10</span>个
+        您已经创建<span class="text-cool">{{addressList.length}}</span>个收货地址，最多可创建<span class="text-cool">10</span>个
       </span>
     </div>
 
     <div class="address-main">
-      <div class="address-cell" v-for="i in 3">
+      <div class="address-cell" :class="{'address-cell-default': !!address.isDef}" v-for="address in addressList" :key="address.rid">
+        <div class="default-address">默认地址</div>
         <div class="cell-top">
           <div class="top-left">
             <span class="user-avatar"></span>
-            张三
+            {{address.name}}
           </div>
-          <div class="top-right">设为默认地址</div>
+          <div class="top-right" @click="setDefault(address)">设为默认地址</div>
         </div>
         <div class="cell-main">
           <span class="location-icon"></span>
           <span class="location-detail">
-          北京市   昌平区  东小口地区  清水园
-          7号楼2-501
+            {{address.provinceName}} {{address.cityName}} {{address.areaName}}
+            {{address.address}}
           </span>
         </div>
         <div class="cell-bottom">
           <div class="bottom-left">
             <span class="phone-icon"></span>
-            <span class="phone-detail">185****520</span>
+            <span class="phone-detail">{{address.phone}}</span>
           </div>
           <div class="bottom-right">
-            <div class="address-edit">
+            <div class="address-edit" @click="edit(address)">
               <span class="address-edit-icon"></span>
               修改
             </div>
-            <div class="address-delete">
+            <div class="address-delete" @click="deleteAddress(address)">
               <span class="address-delete-icon"></span>
               删除
             </div>
@@ -43,49 +44,19 @@
         </div>
       </div>
 
-      <div class="address-cell address-cell-default">
-        <div class="default-address">默认地址</div>
-        <div class="cell-top">
-          <span class="user-avatar"></span>
-          张三
-        </div>
-        <div class="cell-main">
-          <span class="location-icon"></span>
-          <span class="location-detail">
-          北京市   昌平区  东小口地区  清水园
-          7号楼2-501
-          </span>
-        </div>
-        <div class="cell-bottom">
-          <div class="bottom-left">
-            <span class="phone-icon"></span>
-            <span class="phone-detail">185****520</span>
-          </div>
-          <div class="bottom-right">
-            <div class="address-edit">
-              <span class="address-edit-icon"></span>
-              修改
-            </div>
-            <div class="address-delete">
-              <span class="address-delete-icon"></span>
-              删除
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="address-add cursor-pointer" @click="isShowAddressModal = true">
+      <div class="address-add cursor-pointer" @click="add">
         <div class="add-icon"></div>
         <div class="add-brief">添加收货地址</div>
       </div>
     </div>
     <div v-transfer-dom>
-      <points-address v-if="isShowAddressModal" @modal-hidden="isShowAddressModal = false"></points-address>
+      <points-address v-if="isShowAddressModal" :current-address="address" @operate-complete="refresh" @modal-hidden="isShowAddressModal = false"></points-address>
     </div>
   </div>
 </template>
 
 <script>
+  import {getAddressListApi, addressDeleteApi, setDefaultAddressApi} from 'api/points'
   import PointsAddress from '../points-address'
 
   export default {
@@ -97,12 +68,89 @@
 
     data() {
       return {
-        isShowAddressModal: false
+        isShowAddressModal: false,
+        addressList: [],
+        address: {},
+        maxCount: 10,
       }
     },
 
     methods: {
+      getList() {
+        getAddressListApi(({data}) => {
+          if (data && data.result === 0) {
+            this.addressList = data.root
+          }
+        })
+      },
 
+      refresh() {
+        this.isShowAddressModal = false
+        this.getList()
+      },
+
+      add() {
+        if (this.addressList.length > this.maxCount) {
+          Global.ui.notification.show(`<div class="m-bottom-lg">地址已经达到最大数量!</div>`, {
+            type: 'success',
+            hasFooter: false,
+            displayTime: 1000,
+            size: 'modal-xs',
+            bodyClass: 'no-border no-padding',
+            closeBtn: false,
+          })
+
+          return false
+        }
+        this.address = {}
+        this.isShowAddressModal = true
+      },
+
+      edit(address) {
+        this.address = address
+        this.isShowAddressModal = true
+      },
+
+      setDefault(address) {
+        setDefaultAddressApi({
+          rid: address.rid
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            Global.ui.notification.show(`<div class="m-bottom-lg">设置默认地址成功!</div>`, {
+              type: 'success',
+              hasFooter: false,
+              displayTime: 1000,
+              size: 'modal-xs',
+              bodyClass: 'no-border no-padding',
+              closeBtn: false,
+            })
+
+            this.refresh()
+          }
+        })
+      },
+
+      deleteAddress(address) {
+        addressDeleteApi({
+          rid: address.rid
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            Global.ui.notification.show(`<div class="m-bottom-lg">删除地址成功!</div>`, {
+              type: 'success',
+              hasFooter: false,
+              displayTime: 1000,
+              size: 'modal-xs',
+              bodyClass: 'no-border no-padding',
+              closeBtn: false,
+            })
+            this.refresh()
+          }
+        })
+      }
+    },
+
+    mounted() {
+      this.getList()
     }
   }
 </script>
@@ -125,8 +173,18 @@
         margin-right: 0;
       }
 
+      .default-address {
+        display: none;
+      }
+
       &.address-cell-default {
         background-image: url(./misc/address-border-selected.png);
+        .top-right {
+          display: none;
+        }
+        .default-address {
+          display: flex;
+        }
       }
     }
 
@@ -149,6 +207,7 @@
       width: 17px;
       height: 23px;
       display: inline-block;
+      flex: 0 0 auto;
     }
 
     .add-icon {
@@ -223,6 +282,8 @@
 
   .top-left {
     flex: 1;
+    align-items: center;
+    display: flex;
   }
 
   .top-right {
@@ -234,7 +295,9 @@
   .cell-main {
     display: flex;
     align-items: flex-start;
-    padding: 22px 0;
+    padding: 22px 0 0;
+    height: 85px;
+    box-sizing: border-box;
     border-bottom: dotted 1px #e5e5e5;
   }
 

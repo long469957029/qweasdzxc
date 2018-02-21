@@ -17,7 +17,7 @@ const CouponView = Base.ItemView.extend({
   // 获取我的优惠券列表
   getMyCouponListXhr (data) {
     return Global.sync.ajax({
-      url: '/mall/coupon/myCouponList.json',
+      url: '/mall/coupon/couponList.json',
       data,
     })
   },
