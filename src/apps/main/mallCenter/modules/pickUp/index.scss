@@ -1,0 +1,390 @@
+
+$black: #333;
+$gray: #999;
+$red: #f28880;
+$light: rgba(153, 153, 153, .7);
+
+.mc-pick-up-module-body {
+  padding: 0!important;
+  border-radius: 10px !important;
+}
+
+.mc-pk-moll {
+  &>div {
+    height: 300px;
+  }
+}
+
+.mc-pu-content {
+  position: relative;
+  width: 500px;
+  height: 100%;
+  background: linear-gradient(to bottom, #fff, #e7e7e7);
+  .mc-close-btn {
+    color: #ffffff;
+    float: right;
+    font-size: 30px;
+    font-weight: normal;
+    outline: 0;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-right: 5px;
+  }
+  .mc-top-content-ok {
+    width: 500px;
+    height: 115px;
+    .mc-status {
+      width: 500px;
+      display: inline-block;
+      font-size: 22px;
+      color: #ffffff;
+      margin-top: 20px;
+      text-align: center;
+      padding-left: 10px;
+    }
+  }
+  .mc-img-type-m-ok {
+    background: url("./images/exchange-ok-m.png") no-repeat bottom;
+  }
+  .mc-img-type-n-ok {
+    background: url("./images/exchange-ok.png") no-repeat bottom;
+  }
+  .mc-img-type-m-no {
+    background: url("./images/exchange-no-m.png") no-repeat bottom;
+  }
+  .mc-img-type-n-no {
+    background: url("./images/exchange-no.png") no-repeat bottom;
+  }
+  .mc-top-content-no {
+    width: 500px;
+    height: 115px;
+    .mc-status {
+      width: 500px;
+      display: inline-block;
+      font-size: 22px;
+      color: #ffffff;
+      margin-top: 20px;
+      text-align: center;
+      padding-left: 10px;
+    }
+  }
+  .mc-mid-content {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 0 20px;
+    .mc-mid-title {
+      font-size: 20px;
+      text-align: center;
+      color: #ff878b;
+      margin-top: 10px;
+    }
+    .mc-fail-title {
+      font-size: 20px;
+      text-align: center;
+      color: #999999;
+      margin-top: 10px;
+    }
+    .mc-mid-text {
+      font-size: 14px;
+      text-align: center;
+      color: #999999;
+      margin-top: 15px;
+    }
+  }
+  .mc-bottom-content {
+    text-align: center;
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    button {
+      width: 180px;
+      height: 40px;
+      background: #53d2d7;
+      border-radius: 5px;
+      color: #ffffff;
+      outline: none;
+      font-size: 16px;
+    }
+  }
+  .ms-seal-pic {
+    position: absolute;
+    top: 115px;
+    left: 30px;
+  }
+  .mall-form-header {
+    background: url('./images/mall-form-header.png');
+    width: 500px;
+    height: 63px;
+    text-align: center;
+    .title {
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 60px;
+    }
+  }
+  .mall-form-content {
+    padding: 15px 25px;
+    .control-group {
+      margin-left: -17px;
+    }
+    .control-label {
+      color: #666;
+      font-size: 16px;
+      transform: translateY(5px);
+    }
+    input,
+    textarea {
+      box-sizing: border-box;
+      background: white;
+      color: #666;
+      font-size: 12px;
+      border: 1px solid #c9c9c9;
+      border-radius: 5px;
+      box-shadow: inset 0 1px 5px 0px #c9c9c9;
+    }
+     ::-webkit-input-placeholder {
+      /* Chrome/Opera/Safari */
+      color: #a7a7a7;
+    }
+     ::-moz-placeholder {
+      /* Firefox 19+ */
+      color: #a7a7a7;
+    }
+     :-ms-input-placeholder {
+      /* IE 10+ */
+      color: #a7a7a7;
+    }
+     :-moz-placeholder {
+      /* Firefox 18- */
+      color: #a7a7a7;
+    }
+    input {
+      width: 315px;
+      height: 45px;
+      line-height: 45px;
+      padding: 10px 15px;
+    }
+    textarea {
+      padding: 10px 15px;
+      width: 315px;
+      height: 95px;
+    }
+  }
+  .warning {
+    color: #ff7f88;
+    font-size: 12px;
+    margin-bottom: 25px;
+  }
+}
+
+
+.treasure-content {
+  box-shadow: 0 2px 3px 0 #666;
+  height: 336px;
+  background: white;
+  text-align: center;
+  * {
+    box-sizing: border-box;
+  }
+
+  .close-btn {
+    margin: 0;
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 22px;
+    height: 22px;
+    background: url('../../misc/dialog/close.png');
+    z-index: 1;
+  }
+
+  .desc, .itemName, .statName, .integral, .validEndDate, .validDay, .button, .title, .rob-integral, .rob-thanks, .fail, .msg, .scratch-integral {
+    font-size: 16px;
+    color: $gray;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  .title {
+    color: #333;
+    font-size: 20px;
+    top: 19px;
+  }
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-72%);
+    margin: 0 auto;
+    height: 125px;
+    width: auto;
+  }
+
+  .scratch-coupon {
+    width: 127px;
+    height: 131px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    bottom: 154px;
+
+    .validDay {
+      font-size: 12px;
+      color: white;
+      bottom: 18px;
+    }
+
+    &.coupon-1 {
+      background: url('../../misc/dialog/scratch-coupon-1.png');
+    }
+
+    &.coupon-2 {
+      background: url('../../misc/dialog/scratch-coupon-3.png');
+    }
+
+    &.coupon-3 {
+      background: url('../../misc/dialog/scratch-coupon-4.png');
+    }
+
+    &.coupon-4 {
+      background: url('../../misc/dialog/scratch-coupon-2.png');
+    }
+
+    &.coupon-5 {
+      background: url('../../misc/dialog/scratch-coupon-5.png');
+    }
+
+    &.coupon-6 {
+      background: url('../../misc/dialog/scratch-coupon-6.png');
+    }
+  }
+
+  .rob-coupon {
+    width: 139px;
+    height: 72px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 101px;
+
+    .validDay {
+      font-size: 12px;
+      color: white;
+      bottom: 2px;
+    }
+
+    &.coupon-1 {
+      background: url('../../misc/dialog/rob-coupon-1.png');
+    }
+
+    &.coupon-2 {
+      background: url('../../misc/dialog/rob-coupon-3.png');
+    }
+
+    &.coupon-3 {
+      background: url('../../misc/dialog/rob-coupon-4.png');
+    }
+
+    &.coupon-4 {
+      background: url('../../misc/dialog/rob-coupon-2.png');
+    }
+
+    &.coupon-5 {
+      background: url('../../misc/dialog/rob-coupon-5.png');
+    }
+
+    &.coupon-6 {
+      background: url('../../misc/dialog/rob-coupon-6.png');
+    }
+  }
+
+  .rob-integral {
+    background: url('../../misc/dialog/rob-integral.png');
+    width: 100px;
+    height: 100px;
+    bottom: 143px;
+  }
+
+  .scratch-integral {
+    background: url('../../misc/dialog/scratch-integral.png');
+    width: 116px;
+    height: 148px;
+    bottom: 120px;
+  }
+
+  .rob-thanks {
+    background: url('../../misc/dialog/rob-thanks.png');
+    width: 124px;
+    height: 124px;
+    bottom: 101px;
+  }
+
+  .fail {
+    background: url('../../misc/dialog/fail.png');
+    width: 137px;
+    height: 121px;
+    bottom: 133px;
+  }
+
+  .msg {
+    bottom: 82px;
+    font-size: 14px;
+    color: $gray;
+  }
+
+  .desc {
+    bottom: 99px;
+  }
+
+  .itemName {
+    bottom: 79px;
+  }
+
+  .statName {
+    bottom: 125px;
+  }
+
+  .integral {
+    bottom: 80px;
+    .red {
+      color: #f28880;
+    }
+  }
+
+  .validEndDate {
+    color: $light;
+    font-size: 13px;
+    bottom: 75px;
+  }
+
+  .button {
+    cursor: pointer;
+    width: 144px;
+    height: 36px;
+    line-height: 36px;
+    bottom: 17px;
+    background: $red;
+    border-radius: 18px / 18px;
+    color: white;
+    font-size: 16px;
+    transition: all .3s;
+    text-align: center;
+
+    &:hover, &:active, &:focus {
+      box-shadow: 1px 1px 3px 0 #666
+    }
+  }
+}

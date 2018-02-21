@@ -9,13 +9,19 @@
         </div>
       </div>
       <div class="point-nav-panel">
-        <task-card v-for="task in fDaily" :key="task.termId" :max="task.fTermThrehold" :value="task.fCurrentAmount" title="累计充值">
+        <task-card v-for="task in fDaily" :key="task.termId" :max="task.fTermThrehold" :value="task.fCurrentAmount" :title="task.termName">
           <span slot="brief" class="card-brief">
-            当天累计充值达<span class="text-val">{{task.fTermThrehold}}</span>元，奖励积分<span class="text-val">{{task.fTermBonus}}</span>
+            当天{{task.termName}}达<span class="text-val">{{task.fTermThrehold}}</span>元，
+            <template v-if="task.termBonusType === 1">
+            奖励积分<span class="text-val">{{task.fTermBonus}}</span>
+            </template>
+            <template v-else>
+            奖励现金<span class="text-val">{{task.fTermBonus}}元</span>
+            </template>
           </span>
           <span slot="icon" class="sfa" :class="`sfa-pt-${task.icon}`"></span>
           <button slot="btn" class="receive-btn btn"
-                  :class="{'received-btn': task.receiveState === ReceiveState.RECEIVED}"
+                  :class="{'received-btn': task.receiveState === ReceiveState.RECEIVED}" @click="receive($event, task)"
                   :disabled="task.receiveState === ReceiveState.RECEIVED || task.receiveState === ReceiveState.CANT_RECEIVE">
             {{task.receiveState === ReceiveState.RECEIVED ? '已领取' : '立即领取'}}
           </button>
@@ -31,13 +37,19 @@
         </div>
       </div>
       <div class="point-nav-panel">
-        <task-card v-for="task in fWeek" card-type="prominent" :key="task.termId" :max="task.fTermThrehold" :value="task.fCurrentAmount" title="累计充值">
+        <task-card v-for="task in fWeek" card-type="prominent" :key="task.termId" :max="task.fTermThrehold" :value="task.fCurrentAmount" :title="task.termName">
           <span slot="brief" class="card-brief">
-            当天累计充值达<span class="text-val">{{task.fTermThrehold}}</span>元，奖励积分<span class="text-val">{{task.fTermBonus}}</span>
+            当周{{task.termName}}达<span class="text-val">{{task.fTermThrehold}}</span>元，
+            <template v-if="task.termBonusType === 1">
+            奖励积分<span class="text-val">{{task.fTermBonus}}</span>
+            </template>
+            <template v-else>
+            奖励现金<span class="text-val">{{task.fTermBonus}}元</span>
+            </template>
           </span>
           <span slot="icon" class="sfa" :class="`sfa-pt-${task.icon}`"></span>
           <button slot="btn" class="receive-btn btn"
-                  :class="{'received-btn': task.receiveState === ReceiveState.RECEIVED}"
+                  :class="{'received-btn': task.receiveState === ReceiveState.RECEIVED}" @click="receive($event, task)"
                   :disabled="task.receiveState === ReceiveState.RECEIVED || task.receiveState === ReceiveState.CANT_RECEIVE">
             {{task.receiveState === ReceiveState.RECEIVED ? '已领取' : '立即领取'}}
           </button>
@@ -49,7 +61,7 @@
 </template>
 
 <script>
-  import {missionListApi} from 'api/points'
+  import {missionListApi, missionReceiveApi} from 'api/points'
 
   import TaskCard from './task-card'
 
@@ -127,6 +139,43 @@
     },
 
     methods: {
+      getData() {
+        missionListApi(({data}) => {
+          if (data && data.result === 0) {
+            this.daily = data.root.daily
+            this.week = data.root.week
+          }
+        })
+      },
+      receive($event, {termId, termBonusType}) {
+        let html = '恭喜您成功领取积分'
+        let unit = ''
+        if (termBonusType == 2) {
+          html = '恭喜您成功领取现金'
+          unit = '元'
+        }
+
+        missionReceiveApi({
+          termId,
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            Global.ui.notification.show(`<div class="m-bottom-lg">${html}${_.convert2yuan(data.root.reveiveIntegral)}${unit}</div>`, {
+              type: 'success',
+              hasFooter: false,
+              displayTime: 2000,
+              size: 'modal-xs',
+              bodyClass: 'no-border no-padding',
+              closeBtn: false,
+            })
+
+            this.getData()
+            this.$store.dispatch(types.CHECK_LOGIN_STATUS)
+          } else {
+            Global.ui.notification.show(res.msg)
+          }
+        })
+      },
+
       $_taskFormatter(daily) {
         return _.map(daily, (task) => {
           //
@@ -154,12 +203,7 @@
     },
 
     mounted() {
-      missionListApi(({data}) => {
-        if (data && data.result === 0) {
-          this.daily = data.root.daily
-          this.week = data.root.week
-        }
-      })
+      this.getData()
     }
   }
 </script>

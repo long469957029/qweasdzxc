@@ -1,22 +1,24 @@
 <template>
-  <div class="points-card-wrapper">
+  <div class="points-card-wrapper" :class="displayType">
     <div class="points-card" :class="[cardInfo.type, {finished: isFinished}]"
          @mouseout="toggleBtn(false)">
       <div class="points-card-inner" @mouseover="toggleBtn(true)">
         <div class="points-top">
           <div class="card-value">
-            20<span class="card-unit">元</span>
+            {{formatCouponInfo.bigShowNum}}<span class="card-unit">{{formatCouponInfo.conditionType === 2 ? '%' : '元'}}</span>
           </div>
-          <div class="card-badge">{{cardInfo.name}}</div>
-          <div class="card-badge " v-if="levelLimit > 0">
-            LV{{levelLimit}}
-            <template v-if="1 === limitLevelType">以上</template>
+          <div class="card-badge">{{formatCouponInfo.couponName}}</div>
+          <div class="card-badge " v-if="couponInfo.levelLimit > 0">
+            LV{{couponInfo.levelLimit}}
+            <template v-if="1 === couponInfo.limitLevelType">以上</template>
           </div>
-          <div class="card-left" v-if="maxNum && maxNum - useNum > 0">剩{{maxNum - useNum}}张</div>
+          <div class="card-left" v-if="couponInfo.maxNum && couponInfo.maxNum - couponInfo.useNum > 0">
+            剩{{couponInfo.maxNum - couponInfo.useNum}}张
+          </div>
           <div v-else-if="isFinished" class="sfa-finished"></div>
         </div>
         <div class="points-center">
-          <div class="points-range">无限分分彩</div>
+          <div class="points-range">{{formatCouponInfo.mainDesc}}</div>
         </div>
 
 
@@ -26,12 +28,12 @@
                             leave-active-class="animated-quick fadeOut"
           >
             <div class="points-bottom" v-show="!showBtn" key="show">
-              <div class="points-type">投注满5000元即返</div>
+              <div class="points-type">{{formatCouponInfo.secondDesc}}</div>
               <div class="points-bottom-inner">
                 <div v-if="countdownTime > 0" class="points-countdown-wrapper">
                   <span>距开始</span>
                   <countdown class="points-countdown" :time="countdownTime" tag="div"
-                             @countdown-finished="sysTime = validStartDate">
+                             @countdown-finished="couponInfo.sysTime = couponInfo.validStartDate">
                     <template slot-scope="props">
                       <div class="countdown-cell">{{props.totalHours}}</div>
                       :
@@ -42,16 +44,17 @@
                   </countdown>
                 </div>
                 <div class="points-expire" v-else>
-                  {{validStartDate | toTime('MM.DD H:mm')}}-{{validEndDate | toTime('MM.DD H:mm')}}
+                  {{couponInfo.validStartDate | toTime('MM.DD H:mm')}}-{{couponInfo.validEndDate | toTime('MM.DD H:mm')}}
                 </div>
-                <div class="points-value">
+                <div class="points-value" v-if="displayType === 'mall'">
                   <span class="sfa sfa-points"></span>
-                  {{requireIntegral | convert2yuan}}积分
+                  {{couponInfo.requireIntegral | convert2yuan}}积分
                 </div>
               </div>
             </div>
             <div v-show="showBtn" key="exchange" class="points-bottom-btn">
-              <button class="btn btn-white exchange-btn" @click="$emit('exchange')">立即兑换</button>
+              <button class="btn btn-white exchange-btn" v-if="couponInfo.couponStatus === 1" @click="$emit('exchange', formatCouponInfo)">立即兑换</button>
+              <button class="btn btn-white exchange-btn disabled" v-else>已兑换</button>
             </div>
           </transition-group>
         </div>
@@ -98,19 +101,15 @@
       Countdown,
     },
 
-    props: [
-      'couponType',
-      'useNum',
-      'maxNum',
-      'levelLimit',
-      'limitLevelType',
-      'requireIntegral',
-      'validStartDate',
-      'validEndDate',
-      'sysTime',
-      'leftTime',
-    ],
-
+    props: {
+      couponInfo: {
+        type: Object
+      },
+      displayType: {
+        type: String,
+        default: 'mall'
+      }
+    },
     data() {
       return {
         showBtn: false
@@ -120,18 +119,25 @@
     computed: {
       formatCouponInfo() {
         return formatCoupon({
-          type, threholdAmount, bonusPercentAmount, statType, ticketId, gameType
+          bigShowNum: this.couponInfo.bigShowNum,
+          type: this.couponInfo.type,
+          threholdAmount: this.couponInfo.threholdAmount,
+          bonusPercentAmount: this.couponInfo.bonusPercentAmount,
+          statType: this.couponInfo.statType,
+          ticketId: this.couponInfo.statTicketId,
+          gameType: this.couponInfo.gameType
         })
       },
       cardInfo() {
-        return CARD_TYPE[this.couponType]
+        return CARD_TYPE[this.couponInfo.couponType]
       },
       isFinished() {
-        return this.maxNum && this.maxNum - this.useNum === 0
+        return this.couponInfo.couponStatus === 3
+        // return this.couponInfo.maxNum && this.couponInfo.maxNum - this.couponInfo.useNum === 0
       },
       countdownTime() {
-        if (this.validStartDate > this.sysTime) {
-          return this.validStartDate - this.sysTime
+        if (this.couponInfo.validStartDate > this.couponInfo.sysTime) {
+          return this.couponInfo.validStartDate - this.couponInfo.sysTime
         }
         return 0
       }
@@ -139,8 +145,10 @@
 
     methods: {
       toggleBtn(flag) {
-        if (!this.isFinished && this.countdownTime === 0) {
-          this.showBtn = flag
+        if (this.displayType === 'mall'){
+          if (!this.isFinished && this.countdownTime === 0) {
+            this.showBtn = flag
+          }
         }
       }
     },
@@ -252,7 +260,7 @@
     .points-range {
       font-size: 16px;
       color: #ffffff;
-      margin-bottom: 5px;
+      padding-bottom: 5px;
     }
 
     .points-type {
@@ -324,6 +332,57 @@
       font-size: 16px;
       line-height: 28px;
       text-align: center;
+    }
+  }
+  .show {
+    width: 270px;
+    height: 150px;
+    overflow: hidden;
+    .points-card {
+      width: 255px;
+      height: 150px;
+      margin: 0;
+      display: inline-block;
+      overflow: hidden;
+      .points-card-inner {
+        width: 255px;
+        height: 150px;
+        margin: 0px;
+        padding: 20px 0 10px 30px;
+        .points-top {
+          padding-top: 10px;
+          padding-bottom: 0px;
+          .card-value {
+            font-size: 30px;
+            line-height: 30px;
+            .card-unit {
+
+            }
+          }
+          .card-badge {
+
+          }
+        }
+        .points-center {
+          .points-range {
+            font-size: 14px;
+            padding-bottom: 0px;
+            padding-top: 5px;
+          }
+        }
+        .points-bottom-wrapper {
+          .points-bottom {
+            .points-type {
+
+            }
+            .points-bottom-inner {
+              .points-expire {
+
+              }
+            }
+          }
+        }
+      }
     }
   }
 </style>

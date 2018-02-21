@@ -1,7 +1,7 @@
 //充值券 返水券 嘉奖券 补贴券 代金券 现金券
 //满xx元  %
 //使用范围 彩种，真人游戏 老虎机游戏 捕鱼游戏 彩票投注 彩票外游戏
-export default ({type, threholdAmount, bonusPercentAmount, statType, ticketId, gameType}) => {
+export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType, ticketId, gameType}) => {
   /**
    *
    * couponType 券类型id
@@ -16,72 +16,103 @@ export default ({type, threholdAmount, bonusPercentAmount, statType, ticketId, g
     ticketId: -1,
     mainDesc: '',
     secondDesc: '',
+    conditionNumber: 0,
+    zhType: '',
+    bigShowNum: 0,
   }
 
   switch (type) {
     //充值券
     case 101:
+      couponInfo.bigShowNum = _.convert2yuan(bigShowNum)
       couponInfo.couponType = 1
       couponInfo.couponName = '充值券'
       couponInfo.conditionType = threholdAmount !== 0 ? 1 : 3
-      couponInfo.mainDesc = `充值满${_.convert2yuan(threholdAmount)}元即返`
+      couponInfo.conditionNumber = _.convert2yuan(threholdAmount)
+      couponInfo.zhType = '充值'
+      couponInfo.mainDesc = `${couponInfo.zhType}满${couponInfo.conditionNumber}元即返`
       break;
     case 102:
+      couponInfo.bigShowNum = _.formatDiv(bonusPercentAmount, 100, {fixed: 0})
       couponInfo.couponType = 1
       couponInfo.couponName = '充值券'
       couponInfo.conditionType = 2
-      couponInfo.mainDesc = `按充值额${_.convert2yuan(bonusPercentAmount)}比例返`
+      couponInfo.conditionNumber = _.formatDiv(bonusPercentAmount, 100, {fixed: 0})
+      couponInfo.zhType = '充值'
+      couponInfo.mainDesc = `按${couponInfo.zhType}额${couponInfo.conditionNumber}%比例返`
       break;
     case 201:
+      couponInfo.bigShowNum = _.convert2yuan(bigShowNum)
       couponInfo.couponType = 2
       couponInfo.couponName = '加奖卡'
       couponInfo.conditionType = 1
+      couponInfo.conditionNumber = _.convert2yuan(threholdAmount)
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
-      couponInfo.secondDesc = `中奖满${_.convert2yuan(threholdAmount)}元即返`
+      couponInfo.zhType = '中奖'
+      couponInfo.secondDesc = `${couponInfo.zhType}满${couponInfo.conditionNumber}元即返`
       break;
     case 202:
+      couponInfo.bigShowNum = _.formatDiv(bonusPercentAmount, 100, {fixed: 0})
       couponInfo.couponType = 2
       couponInfo.couponName = '加奖卡'
       couponInfo.conditionType = 2
+      couponInfo.conditionNumber = _.formatDiv(bonusPercentAmount, 100, {fixed: 0})
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
-      couponInfo.secondDesc = `按中奖额${_.convert2yuan(bonusPercentAmount)}比例返`
+      couponInfo.zhType = '中奖'
+      couponInfo.secondDesc = `按${couponInfo.zhType}额${couponInfo.conditionNumber}%比例返`
       break;
     case 301:
+      couponInfo.bigShowNum = _.convert2yuan(bigShowNum)
       couponInfo.couponType = 3
       couponInfo.couponName = '补贴卡'
       couponInfo.conditionType = 1
+      couponInfo.conditionNumber = _.convert2yuan(threholdAmount)
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
-      couponInfo.secondDesc = `亏损满${_.convert2yuan(threholdAmount)}元即返`
+      couponInfo.zhType = '亏损'
+      couponInfo.secondDesc = `${couponInfo.zhType}满${couponInfo.conditionNumber}元即返`
       break;
     case 302:
+      couponInfo.bigShowNum = _.formatDiv(bonusPercentAmount, 100, {fixed: 0})
       couponInfo.couponType = 3
       couponInfo.couponName = '补贴卡'
       couponInfo.conditionType = 2
+      couponInfo.conditionNumber = _.formatDiv(bonusPercentAmount, 100, {fixed: 0})
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
-      couponInfo.secondDesc = `按亏损额${_.convert2yuan(bonusPercentAmount)}比例返`
+      couponInfo.zhType = '亏损'
+      couponInfo.secondDesc = `按${couponInfo.zhType}额${couponInfo.conditionNumber}%比例返`
       break;
     case 401:
+      couponInfo.bigShowNum = _.convert2yuan(bigShowNum)
       couponInfo.couponType = 4
       couponInfo.couponName = '返水卡'
       couponInfo.conditionType = 1
+      couponInfo.conditionNumber = _.convert2yuan(threholdAmount)
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
-      couponInfo.secondDesc = `投注满${_.convert2yuan(threholdAmount)}元即返`
+      couponInfo.zhType = '投注'
+      couponInfo.secondDesc = `${couponInfo.zhType}满${couponInfo.conditionNumber}元即返`
       break;
     case 402:
+      couponInfo.bigShowNum = _.formatDiv(bonusPercentAmount, 100, {fixed: 0})
       couponInfo.couponType = 4
       couponInfo.couponName = '返水卡'
       couponInfo.conditionType = 2
+      couponInfo.conditionNumber = _.formatDiv(bonusPercentAmount, 100, {fixed: 0})
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
-      couponInfo.secondDesc = `按投注额${_.convert2yuan(bonusPercentAmount)}比例返`
+      couponInfo.zhType = '投注'
+      couponInfo.secondDesc = `按${couponInfo.zhType}额${couponInfo.conditionNumber}%比例返`
       break;
     case 501:
+      couponInfo.bigShowNum = _.convert2yuan(bigShowNum)
       couponInfo.couponType = 5
       couponInfo.couponName = '代金券'
       couponInfo.ticketId = ticketId
+      couponInfo.conditionNumber = _.convert2yuan(threholdAmount)
       // return "返利游戏：" + ticketNameMap.get(this.getStatTicketId()) + "\n返利范围：全平台";
-      couponInfo.secondDesc = `单笔投注满${_.convert2yuan(threholdAmount)}元即可用`
+      couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
+      couponInfo.secondDesc = `单笔投注满${couponInfo.conditionNumber}元即可用`
       break;
     case 601:
+      couponInfo.bigShowNum = _.convert2yuan(bigShowNum)
       couponInfo.couponType = 6
       couponInfo.couponName = '现金券'
       couponInfo.mainDesc = `领取即加币至账户余额`
@@ -95,8 +126,12 @@ export default ({type, threholdAmount, bonusPercentAmount, statType, ticketId, g
 
 const formatRange = ({statType, ticketId, gameType}) => {
   let range = ''
-  if(statType === 0) {
-    range = ticketId == null ? '彩票投注' : ticketConfig.getById(ticketId).zhName
+  if(statType === 0 || !statType) {
+    try {
+      range = ticketId == null ? '彩票投注' : ticketConfig.getById(ticketId).zhName
+    } catch (e) {
+      range = ticketId
+    }
   } else if (statType === 1) {
     if (!gameType) {
       range = '彩票外游戏'

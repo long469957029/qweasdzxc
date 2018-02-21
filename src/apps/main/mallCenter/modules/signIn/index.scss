@@ -1,0 +1,178 @@
+.mc-sign-modal-body{
+  padding: 20px 0 0 0!important;
+  background: rgba(0,0,0,0);
+  .mc-sg-content{
+    width:618px;
+    height: 390px;
+    position: relative;
+    background: url("./images/sign-bg.png") no-repeat;
+    .sg-date-box{
+      width: 450px;
+      text-align: center;
+      color:#ffffff;
+      padding-top: 12px;
+    }
+    .sg-month-date{
+      width: 350px;
+      height: 300px;
+      position: absolute;
+      left: 22px;
+      top: 80px;
+      .month-content-body{
+        width: 350px;
+        height: 300px;
+        /*background: url("./images/all-day.png") no-repeat;*/
+        ul{
+          width: 350px;
+          height: 300px;
+          .day-icon{
+            float: left;
+            height: 48px;
+            width: 48px;
+            text-align: center;
+            line-height: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #77cfd5;
+            border: 1px solid #77cfd5;
+            background: #e4f9fb;
+            border-radius: 5px;
+          }
+          .today-icon{
+            float: left;
+            height: 48px;
+            width: 48px;
+            text-align: center;
+            line-height: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #77cfd5;
+            border: 1px solid #77cfd5;
+            background: #ffffff;
+            border-radius: 5px;
+          }
+          .mc-all-ready{
+            background: url("./images/sign-icon.png") no-repeat center #e4f9fb;
+          }
+          .mc-today-all-ready{
+            background: url("./images/sign-icon.png") no-repeat center #ffffff;
+          }
+        }
+      }
+    }
+    .sg-cancel-btn{
+      position: absolute;
+      right: -40px;
+      top:-15px;
+      cursor: pointer;
+    }
+    .sg-top-right-content{
+      width: 209px;
+      height: 86px;
+      position: absolute;
+      right: 2px;
+      top:25px;
+      font-size: 12px;
+      .sg-sign-up-btn{
+        display: block;
+        width: 100px;
+        height: 30px;
+        background: #e8675d;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 4px;
+        margin: 17px auto 0;
+        color: #ffffff;
+      }
+      .sg-sign-up-icon{
+        transform: translateY(2px);
+      }
+      .sg-already-sign-up-btn{
+        background: #ef948d !important;
+      }
+      .sg-sign-up-text{
+        width: 209px;
+        text-align: center;
+        color: #333333;
+        margin-top: 10px;
+        span{
+          color: #ff5144;
+          font-size: 14px;
+        }
+      }
+    }
+    .sg-bottom-right-content{
+      width: 208px;
+      height: 240px;
+      position: absolute;
+      right: 2px;
+      top:140px;
+      font-size: 12px;
+      color: #333333;
+      .sg-sign-up-role{
+        margin-top: 25px;
+      }
+      .sg-sign-up-instruction{
+        margin-top: 25px;
+      }
+      strong {
+        color: #333;
+        padding-left: 5px;
+      }
+      p{
+        margin: 0;
+        padding-left: 5px;
+        color: #666;
+      }
+    }
+  }
+  .sg-success-sign-up{
+    display: none;
+    position: fixed;
+    width: 365px;
+    height: 255px;
+    background: #ffffff;
+    z-index: 1000;
+    border:5px solid #0ea8b5;
+    text-align: center;
+    .sg-success-top-content{
+      margin-top: 20px;
+      height: 40px;
+      position: relative;
+      .sg-title-color-img{
+        position: absolute;
+        left: 110px;
+        top: 4px;
+      }
+      .sg-title-color-sm{
+        position: absolute;
+        left: 230px;
+        bottom: 5px;
+      }
+      .sg-title-color-bg{
+        font-size: 24px;
+        color: #0ea8b5;
+        line-height:40px;
+      }
+    }
+    .sg-success-mid-content{
+      margin-top: 40px;
+      font-size: 14px;
+      .get-integral-value{
+        color: #e8675d;
+      }
+    }
+    .sg-success-bottom-content{
+      margin-top: 30px;
+      .sg-sure-btn{
+        width: 140px;
+        height: 30px;
+        border-radius: 35px;
+        background: #30b4bf;
+        color: #ffffff;
+        outline: none;
+        font-size: 14px;
+      }
+    }
+  }
+}

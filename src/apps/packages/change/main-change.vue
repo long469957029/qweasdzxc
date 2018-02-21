@@ -134,7 +134,7 @@
   </div>
 </template>
 <script>
-  import otherRequest from '../../api/other'
+  import {getServerListApi} from 'api/other'
   export default{
     name: 'main-change',
 
@@ -225,7 +225,7 @@
         })
       },
       refreshUrlList(){
-        otherRequest.getServerListXhr(
+        getServerListApi(
           ({data}) => {
             if (data && data.result === 0) {
               this.serverList = []

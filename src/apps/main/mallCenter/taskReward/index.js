@@ -142,22 +142,6 @@ const TaskCenterView = Base.ItemView.extend({
           Global.ui.notification.show(res.msg)
         }
       })
-      .fail(() => {
-
-      })
-    /* var $pickDialog = Global.ui.dialog.show({
-     anySize: '500',
-     body: '<div class="mc-pk-moll"></div>',
-     bodyClass:'mc-pick-up-module-body',
-     });
-     var $pickUpStatus =$pickDialog.find('.mc-pk-moll');
-     $pickUpStatus.html(new statusModule({
-     status:'0',
-     moneyImg:false,
-     seal:false,
-     msg:'本次兑换已花费积分2000',
-     text:'原积分20000，已享Lv.4等级9.5折兑换特权'
-     }).render().el); */
   },
 })
 
