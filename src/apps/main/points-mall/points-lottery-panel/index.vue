@@ -16,7 +16,7 @@
           </div>
           <div class="lottery-task">
             <div class="lottery-task-inner">
-              <div class="task-cell-wrapper" v-for="award in currentAwards" :key="award.rid">
+              <div class="task-cell-wrapper" v-for="(award, index) in currentAwards" :key="index" ref="awards">
                 <div class="task-cell" :class="{selected: award.selected}">
                   <div class="task-cell-inner">
                     <div class="task-item">
@@ -135,6 +135,21 @@
 
         timer: null,
         winnerTimer: null,
+      }
+    },
+
+    watch: {
+      currentLottery() {
+        Velocity(this.$refs.awards, {
+          rotateY: 0
+        }, {
+          duration: 0
+        })
+        Velocity(this.$refs.awards, {
+          rotateY: 720
+        }, {
+          duration: 1000
+        })
       }
     },
 
@@ -546,7 +561,7 @@
     padding: 10px 0;
   }
 
-  .lucky-exchange-btn.btn {
+  .lucky-exchange-btn {
     width: 180px;
     height: 42px;
     background-color: #14b1bb;
@@ -554,6 +569,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .sfa-pt-lucky-star-points {
+    margin-top: -3px;
+  }
+  .lucky-exchange-title {
+    margin-left: -14px;
   }
 
 

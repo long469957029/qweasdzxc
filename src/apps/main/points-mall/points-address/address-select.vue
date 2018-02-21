@@ -63,6 +63,16 @@
       }
     },
 
+    watch: {
+      addressList() {
+        if (!this.selectedAddress) {
+          this.selectedAddress = _.findWhere(this.addressList, {
+            isDef: 1
+          })
+        }
+      }
+    },
+
     methods: {
       edit(address) {
         this.$emit('edit', address)
