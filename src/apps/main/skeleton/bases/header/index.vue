@@ -511,15 +511,14 @@
               height: 35px;
               margin: 0 7px;
             }
-            &:nth-child(4) {
-              border-bottom: 1px dashed $sec-line-color;
-            }
             &:hover {
               color: $new-main-deep-color;
               border-radius: 5px;
             }
             &:nth-child(5) {
               line-height: 48px;
+              margin: 0 6px;
+              border-top: 1px dashed $sec-line-color;
               .header-menu-item-img {
                 color: $font-auxiliary-color;
                 font-size: 16px;
@@ -589,10 +588,11 @@
             }
           }
           .header-menu-body-agent-logout {
-            border-top: 1px dashed $sec-line-color;
-            text-align: center;
             height: 38px;
+            margin: 0 6px;
+            text-align: center;
             line-height: 38px;
+            border-top: 1px dashed $sec-line-color;
             .header-menu-item-img {
               color: $font-auxiliary-color;
               font-size: 16px;
