@@ -1,7 +1,3 @@
-
-
-const FilterHelper = require('skeleton/misc/filterHelper')
-
 const NoticeBoardView = Base.ItemView.extend({
 
   template: '<div class="js-nc-board nc-board"></div><div class="nc-board-bottom"></div>',

@@ -1,8 +1,7 @@
 require('./index.scss')
 const transferService = require('com/fundOperate/transfer/transferService')
-
-const Timeset = require('com/timeset')
-const BtnGroup = require('com/btnGroup')
+import Timeset from 'com/timeset'
+import BtnGroup from 'com/btnGroup'
 
 export default Base.ItemView.extend({
 

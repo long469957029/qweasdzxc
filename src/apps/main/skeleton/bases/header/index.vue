@@ -46,10 +46,10 @@
               </div>
               <div class="header-menu-body-agent-item">
                 <div class="header-menu-title">团队中心</div>
-                <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
-                <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
-                <a href="#/fc/rd" class="header-menu-item"><span class="header-menu-item-text">充提记录</span></a>
-                <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
+                <a href="#/ac/to" class="header-menu-item"><span class="header-menu-item-text">团队总览</span></a>
+                <a href="#/ac/spl" class="header-menu-item"><span class="header-menu-item-text">团队盈亏</span></a>
+                <a href="#/ac/llm" class="header-menu-item"><span class="header-menu-item-text">下级管理</span></a>
+                <a href="#/ac/oam" class="header-menu-item"><span class="header-menu-item-text">开户管理</span></a>
               </div>
               <div class="header-menu-body-agent-logout" @click="logout">
                 <i class="fa fa-power-off header-menu-item-img inline-block" aria-hidden="true"></i>
@@ -60,8 +60,8 @@
 
           <div class="header-amount-panel">
             <div class="js-header-recharge header-recharge" data-name="jsFcRecharge">充值</div>
-            <div class=" header-amount">{{amount}}</div>
-            <div class="header-amount-img">￥</div>
+            <div class=" header-amount">￥&nbsp;{{amount}}</div>
+            <div class="header-amount-img"></div>
           </div>
           <div class="js-header-announcement header-announcement active">
             <span class="sfa sfa-announcement "></span><span>消息</span>
@@ -76,7 +76,7 @@
                     <div class="content-item-title-panel">
                       <div class="content-item-img inline-block"></div>
                       <div class="content-item-title inline-block">{{item.title}}</div>
-                      <div class="content-item-date pull-right inline-block">{{_(item.time).toDate()}}</div>
+                      <div class="content-item-date pull-right inline-block">{{_(item.time).toDate('MM/DD')}}</div>
                     </div>
                     <div class="content-item-text" v-html="formatDesc(item.desc)">}</div>
                   </div>
@@ -188,7 +188,9 @@
               window.Global.cookieCache.set('token', data.data.root.token, 160)
               window.Global.cookieCache.set('loginState', true)
               window.Global.cookieCache.set('isTestUser', true)//存一份到cookie，用于应用刷新时记住试玩状态
-              this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
+              if(data.data.balance<10000000){
+                this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
+              }
               window.store.commit(types.USER_LOGIN_SUCCESS, data.data.root || {})
             }
           })
@@ -372,7 +374,7 @@
       margin: 6px 20px;
       border: 0;
       border-radius: 3px;
-      font-size: 12px;
+      font-size: 13px;
       color: #fff;
       text-align: center;
       vertical-align: middle;
@@ -389,7 +391,7 @@
       height: 40px;
       width: 57px;
       line-height: 40px;
-      font-size: 12px;
+      font-size: 13px;
       text-align: center;
       border-left: 1px solid #41a6ad;
       border-right: 1px solid #41a6ad;
@@ -421,7 +423,7 @@
         padding: 0 14px 0 14px;
         border-left: 1px solid #41a6ad;
         vertical-align: top;
-        font-size: 12px;
+        font-size: 13px;
         cursor: pointer;
         min-width: 120px;
         .test-marking {
@@ -455,7 +457,7 @@
           height: 40px;
           overflow: hidden;
           text-overflow: ellipsis;
-          font-size: 12px;
+          font-size: 13px;
           line-height: 40px;
           vertical-align: middle;
           float: left;
@@ -604,23 +606,24 @@
         display: inline-block;
         border-left: 1px solid #41a6ad;
         width: 170px;
-        .header-amount-img {
-          float: right;
-          display: inline-block;
-          height: 40px;
-          color: #ffffff;
-          font-size: 12px;
-        }
+        /*.header-amount-img {*/
+          /*float: right;*/
+          /*display: inline-block;*/
+          /*height: 40px;*/
+          /*color: #ffffff;*/
+          /*font-size: 13px;*/
+        /*}*/
         .header-amount {
           float: right;
           display: inline-block;
+          width: 115px;
           height: 40px;
-          font-size: 12px;
+          font-size: 13px;
           line-height: 40px;
-          text-align: right;
+          text-align: center;
           vertical-align: top;
           padding: 0 0 0 2px;
-          max-width: 75px;
+          max-width: 86px;
           overflow: hidden;
           text-overflow: ellipsis;
         }
@@ -629,10 +632,10 @@
           display: inline-block;
           width: 56px;
           height: 26px;
-          margin: 7px 12px;
+          margin: 7px 13px 7px 10px;
           background: #d0e9ea;
           border-radius: 13px;
-          font-size: 12px;
+          font-size: 13px;
           color: #14b1bb;
           line-height: 26px;
           text-align: center;
@@ -652,7 +655,7 @@
         border-left: 1px solid #41a6ad;
         cursor: pointer;
         vertical-align: top;
-        font-size: 12px;
+        font-size: 13px;
         position: relative;
         .sfa-announcement {
           margin: -5px 6px 0 12px;
@@ -692,10 +695,10 @@
           height: 358px;
 
           .header-announcement-content {
-            height: 306px;
+            height: 309px;
             .content-item {
               display: block;
-              height: 78px;
+              height: 79px;
               padding: 24px 24px 0 24px;
               transition: all .5s;
               .content-item-panel {
@@ -703,8 +706,8 @@
               }
               .content-item-title-panel {
                 color: $font-auxiliary-color;
-                height: 12px;
-                line-height: 12px;
+                height: 13px;
+                line-height: 13px;
                 margin-bottom: 10px;
                 .content-item-img {
                   width: 6px;
@@ -718,27 +721,28 @@
                   position: absolute;
                 }
                 .content-item-title {
-                  color: $new-inverse-color;
-                  font-size: 12px;
-                  width: 220px;
+                  width: 255px;
                   height: 20px;
                   overflow: hidden;
                   text-overflow: ellipsis;
                   word-break: keep-all;
                   white-space: nowrap;
+                  color: $new-inverse-color;
+                  font-size: 13px;
                 }
                 .content-item-date {
-                  font-size: 12px;
+                  font-size: 13px;
                 }
               }
               .content-item-text {
+                position: relative;
+                width: 294px;
+                height: 50px;
+                margin-bottom: 5px;
+                font-size: 12px;
                 color: $font-auxiliary-color;
                 text-align: left;
                 line-height: 20px;
-                margin-bottom: 5px;
-                width: 294px;
-                height: 50px;
-                position: relative;
               }
               &:hover {
                 .content-item-title-panel {
@@ -755,12 +759,11 @@
           }
           .header-announcement-showMore {
             color: $font-auxiliary-color;
-            font-size: 12px;
+            font-size: 13px;
             width: 100%;
             height: 50px;
             line-height: 50px;
             text-align: center;
-            margin-top: -4px;
             display: block;
             border-bottom-left-radius: 5px;
             border-bottom-right-radius: 5px;

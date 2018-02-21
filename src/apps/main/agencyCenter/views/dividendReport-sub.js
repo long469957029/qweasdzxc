@@ -4,7 +4,7 @@ const SearchGrid = require('com/searchGrid')
 
 const TicketSelectGroup = require('com/ticketSelectGroup')
 
-const Timeset = require('com/timeset')
+import Timeset from 'com/timeset'
 
 
 const DividendReportSubView = SearchGrid.extend({
@@ -15,7 +15,7 @@ const DividendReportSubView = SearchGrid.extend({
 
   initialize () {
     _(this.options).extend({
-    	
+
       height: 305,
       title: '报表查询',
       columns: [
@@ -25,27 +25,27 @@ const DividendReportSubView = SearchGrid.extend({
         },
         {
           name: '上半月团队总盈亏',
-          width: '20%', 
+          width: '20%',
         },
         {
           name: '上半月分红',
-          width: '15%', 
+          width: '15%',
         },
         {
           name: '下半月团队总盈亏',
-          width: '20%', 
+          width: '20%',
         },
         {
           name: '下半月分红',
-          width: '15%', 
+          width: '15%',
         },
         {
           name: '全月分红',
-          width: '15%', 
-        }, 
+          width: '15%',
+        },
       ],
       // tip: '<div class="tip-hot"><span>提示</span>报表只保留最近35天的数据。</div>',
-     
+
       ajaxOps: {
         url: '/fund/merchantBonus/dividsubinfo.json',
       },
@@ -95,7 +95,7 @@ const DividendReportSubView = SearchGrid.extend({
     //      });
     //      this.renderBread();
     //    }
-    
+
     this.grid.addFooterRows({
       trClass: 'tr-footer',
       columnEls: [
