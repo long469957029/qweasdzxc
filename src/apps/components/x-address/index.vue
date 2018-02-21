@@ -2,19 +2,19 @@
   <div class="x-address">
     <div class="cell">
       <select class="input-select" v-model.number="iProvince" required>
-        <option disabled selected value="">省</option>
+        <option disabled selected value="0">省</option>
         <option v-for="province in provinceList" :key="province.provinceId" :value="province.provinceId">{{province.province}}</option>
       </select>
     </div>
     <div class="cell">
     <select class="input-select" v-model.number="iCity" required>
-      <option disabled selected value="">市</option>
+      <option disabled selected value="0">市</option>
       <option v-for="city in cityList" :key="city.cityId" :value="city.cityId">{{city.city}}</option>
     </select>
     </div>
     <div class="cell">
       <select class="input-select" v-model.number="iArea" required>
-        <option disabled selected value="">区</option>
+        <option disabled selected value="0">区</option>
         <option v-for="area in areaList" :key="area.areaId" :value="area.areaId">{{area.area}}</option>
       </select>
     </div>
@@ -49,9 +49,9 @@
       return {
         requestPromise: this.getAddress(),
         provinceList: [],
-        iProvince: '',
-        iCity: '',
-        iArea: '',
+        iProvince: 0,
+        iCity: 0,
+        iArea: 0,
         iAddress: {}
       }
     },
@@ -86,7 +86,7 @@
         if (this.iProvince) {
           const current = _.findWhere(this.provinceList, {provinceId: this.iProvince})
 
-          this.iCity = this.iArea = ''
+          this.iCity = this.iArea = 0
           this.iAddress.province = {title: current.province, id: current.provinceId}
           this.iAddress.city = {}
           this.iAddress.area = {}
@@ -101,7 +101,7 @@
         if (this.iCity) {
           const current = _.findWhere(this.cityList, {cityId: this.iCity})
 
-          this.iArea = ''
+          this.iArea = 0
           this.iAddress.city = {title: current.city, id: current.cityId}
           this.iAddress.area = {}
           this.$emit('change', this.iAddress)

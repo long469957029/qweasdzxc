@@ -21,7 +21,7 @@
 
     <div v-transfer-dom>
       <x-dialog v-if="isShowGetCard" @modal-hidden="isShowGetCard = false" width="482px">
-        <div slot="head-main">兑换确认</div>
+        <div slot="head-main" class="text-center">兑换确认</div>
         <div class="modal-main">
           <div class="card-info">
             <div class="card-title">{{formatCouponInfo.couponName}}</div>
@@ -131,6 +131,8 @@
               bodyClass: 'no-border no-padding',
               closeBtn: false,
             })
+
+            this.$store.dispatch(types.GET_USER_MALL_INFO)
           } else {
             if (data.msg.includes('抢光')) {
               Global.ui.notification.show('该优惠券已被抢光')

@@ -280,6 +280,48 @@ const getMyGiftRecordsApi = ({
 }
 
 /**
+ * 礼物兑换前确认
+ * @param itemId
+ * @param count
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const giftExchangeConfirmApi = ({itemId, count}, then, fail) => {
+  return $http({
+    url: 'mall/gift/confirm.json',
+    data: {
+      itemId,
+      count
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
+ * 礼物兑换
+ * @param itemId
+ * @param count 兑换数量
+ * @param address
+ * @param then
+ * @param fail
+ * @returns {* | Promise<T>}
+ */
+const giftExchangeApi = ({itemId, count, address}, then, fail) => {
+  return $http({
+    url: 'mall/gift/exchange.json',
+    data: {
+      itemId,
+      count,
+      address,
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
  * 积分明细列表
  * @param startDate
  * @param endDate
@@ -334,7 +376,8 @@ const getAddressListApi = (then, fail) => {
  * @param isDef
  * @param then
  * @param fail
- * @returns {*|Promise<T>}
+ * @returns {* | Promise<T>}
+ * @param rid
  */
 const addressPushApi = (
   {
@@ -441,4 +484,6 @@ export {
   getAddressDetailApi,
   setDefaultAddressApi,
   addressDeleteApi,
+  giftExchangeApi,
+  giftExchangeConfirmApi,
 }

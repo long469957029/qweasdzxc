@@ -1,79 +1,105 @@
 <template>
   <x-dialog @modal-hidden="$emit('modal-hidden')" width="610px">
-    <div slot="head-main">添加收货地址</div>
+    <div slot="head-main">
+      <template v-if="currentModal === 'select'">
+        <div class="address-select-title">
+          <div class="select-title">收货地址</div>
+          <button class="btn-address-add btn" @click="currentModal = 'have-select'">+收货地址</button>
+        </div>
+      </template>
+      <template v-else>
+        {{title}}
+      </template>
+    </div>
     <div class="modal-main">
-      <div class="address-tip">
-        <span class="tip-icon"></span>
-        <span class="tip-main">温馨提示：请准确提供您的收货信息以便我们发货，在我们发货前您可以在礼物兑换列表修改您的收货信息</span>
-      </div>
-      <form class="address-add" action="javascript:void(0)" @submit="addressPush" ref="form">
-        <div class="cell">
-          <div class="address-title">收货人：</div>
-          <div class="address-val">
-            <input class="input-val" v-model="name" autocomplete="off" placeholder="收货人姓名" required />
-          </div>
+      <!--选择收货地址-->
+      <template v-if="currentModal === 'select'">
+        <address-select :address-list="addressList"
+                        @refresh="getList" @edit="edit"
+                        @address-selected="addressSelected"
+        ></address-select>
+      </template>
+      <!--新增修改-->
+      <template v-else>
+        <div class="address-tip">
+          <span class="tip-icon"></span>
+          <span class="tip-main">温馨提示：请准确提供您的收货信息以便我们发货</span>
         </div>
-        <div class="cell">
-          <div class="address-title">收货手机：</div>
-          <div class="address-val">
-            <input class="input-val" v-model="phone" autocomplete="off" placeholder="请填写手机号码" required data-parsley-phone />
+        <form class="address-add" action="javascript:void(0)" @submit="addressPush" ref="form">
+          <div class="cell">
+            <div class="address-title">收货人：</div>
+            <div class="address-val">
+              <input class="input-val" v-model="name" autocomplete="off" placeholder="收货人姓名" required/>
+            </div>
           </div>
-        </div>
-        <div class="cell">
-          <div class="address-title">省市区：</div>
-          <div class="address-val">
-            <x-address v-model="addressInfo"
-            :province="province"
-            :city="city"
-            :area="area"
-            ></x-address>
+          <div class="cell">
+            <div class="address-title">收货手机：</div>
+            <div class="address-val">
+              <input class="input-val" v-model="phone" autocomplete="off" placeholder="请填写手机号码" required
+                     data-parsley-phone/>
+            </div>
           </div>
-        </div>
-        <div class="cell address-top">
-          <div class="address-title">详细地址：</div>
-          <div class="address-val">
-            <textarea class="input-val" autocomplete="off" placeholder="请填写地址" v-model="address" required data-parsley-length="[0, 100]"></textarea>
+          <div class="cell">
+            <div class="address-title">省市区：</div>
+            <div class="address-val">
+              <x-address v-model="addressInfo"
+                         :province="province"
+                         :city="city"
+                         :area="area"
+              ></x-address>
+            </div>
           </div>
-        </div>
-        <div class="cell">
-          <div class="address-title"></div>
-          <div class="address-val">
-            <button type="submit" class="btn address-confirm-btn">确定</button>
-            <div class="address-return" v-if="type === 'have-select'">返回上一步</div>
+          <div class="cell address-top">
+            <div class="address-title">详细地址：</div>
+            <div class="address-val">
+              <textarea class="input-val" autocomplete="off" placeholder="请填写地址" v-model="address" required
+                        data-parsley-length="[0, 100]"></textarea>
+            </div>
           </div>
-        </div>
-      </form>
+          <div class="cell">
+            <div class="address-title"></div>
+            <div class="address-val">
+              <button type="submit" class="btn address-confirm-btn">确定</button>
+              <div class="address-return" v-if="currentModal === 'have-select' && !_.isEmpty(addressList)"
+                   @click="currentModal = 'select';clearModifyAddress()">返回上一步</div>
+            </div>
+          </div>
+        </form>
+      </template>
     </div>
   </x-dialog>
 </template>
 
 <script>
   import {XAddress} from 'build'
-  import {addressPushApi} from 'api/points'
+  import {addressPushApi, getAddressListApi} from 'api/points'
+  import AddressSelect from "./address-select";
 
   export default {
     name: 'points-address',
 
     components: {
+      AddressSelect,
       XAddress
     },
 
     props: {
-      type: {
-        default: 'add'
-      },
       currentAddress: {
         type: Object,
         default() {
           return {}
         }
+      },
+
+      type: {
+        type: String,
+        default: 'add'
       }
     },
 
     data() {
       return {
-        addressInfo: {
-        },
+        addressInfo: {},
         name: this.currentAddress.name,
         phone: this.currentAddress.phone,
         province: this.currentAddress.province,
@@ -81,7 +107,44 @@
         area: this.currentAddress.area,
         address: this.currentAddress.address,
         rid: this.currentAddress.rid,
+        isDef: this.currentAddress.isDef,
         parsley: null,
+        currentModal: !_.isEmpty(this.addressList) ? 'select' : 'add',
+        addressList: [],
+      }
+    },
+
+    watch: {
+      type: {
+        handler(currentType) {
+          if (currentType === 'select') {
+            this.getList()
+
+          }
+        },
+        immediate: true
+      },
+
+      currentModal: {
+        handler() {
+          if (this.currentModal !== 'select') {
+
+            this.$nextTick(() => {
+              this.parsley = $(this.$refs.form).parsley({
+                trigger: 'change',
+              })
+            })
+          }
+        },
+        immediate: true
+      }
+    },
+
+    computed: {
+      title() {
+        if (this.currentModal !== 'select') {
+          return !this.rid ? '添加收货地址' : '修改收货地址'
+        }
       }
     },
 
@@ -98,7 +161,8 @@
           province: this.addressInfo.province.id,
           city: this.addressInfo.city.id,
           area: this.addressInfo.area.id,
-          address: this.address
+          address: this.address,
+          isDef: this.isDef
         }, ({data}) => {
           if (data && data.result === 0) {
             Global.ui.notification.show(`<div class="m-bottom-lg">${this.rid ? '修改' : '添加'}地址成功!</div>`, {
@@ -109,26 +173,65 @@
               bodyClass: 'no-border no-padding',
               closeBtn: false,
             })
-            if (this.type === 'add') {
+
+            if (this.currentModal === 'add') {
               this.$emit('operate-complete')
+            } else if (this.currentModal === 'have-select') {
+              this.currentModal = 'select'
+              this.getList()
             }
+            this.clearModifyAddress()
           }
         })
+      },
+
+      addressSelected(selectedAddress) {
+        this.$emit('address-selected', selectedAddress)
+      },
+
+      getList() {
+        getAddressListApi(({data}) => {
+          if (data && data.result === 0) {
+            this.addressList = data.root
+          }
+
+          this.currentModal = _.isEmpty(this.addressList) ? 'have-select' : 'select'
+        })
+      },
+      edit(address) {
+        this.name = address.name
+        this.phone = address.phone
+        this.province = address.province
+        this.city = address.city
+        this.area = address.area
+        this.address = address.address
+        this.rid = address.rid
+        this.isDef = address.isDef
+        this.currentModal = 'have-select'
+      },
+
+      clearModifyAddress() {
+        this.name = ''
+        this.phone = null
+        this.province = null
+        this.city = null
+        this.area = null
+        this.address = null
+        this.rid = null
+        this.isDef = null
       }
     },
 
     mounted() {
-      this.parsley = $(this.$refs.form).parsley({
-        trigger: 'change',
-      })
     }
   }
 </script>
 
 <style lang="scss" scoped>
   .modal-main {
-    padding: 22px 33px;
+    padding: 22px 20px;
   }
+
   .tip-icon {
     background-image: url(./tip-icon.png);
     width: 21px;
@@ -186,6 +289,7 @@
     box-sizing: border-box;
     padding: 10px 10px 10px 22px;
   }
+
   .address-val {
     flex: 1 0 0;
   }
@@ -212,4 +316,20 @@
     cursor: pointer;
   }
 
+
+  .address-select-title {
+    display: flex;
+    align-items: center;
+  }
+
+  .select-title {
+    padding-left: 20px;
+    padding-right: 30px;
+  }
+  .btn-address-add.btn {
+    width: 80px;
+    height: 26px;
+    font-size: 14px;
+    padding: 4px 0;
+  }
 </style>
