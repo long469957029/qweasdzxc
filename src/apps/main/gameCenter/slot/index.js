@@ -68,6 +68,14 @@ const SlotCenterView = Base.ItemView.extend({
     })
   },
 
+  getGameUrlXhr(data) {
+    return Global.sync.ajax({
+      url: '/info/game/jumpInfo.json',
+      data,
+      async: false,
+    })
+  },
+
   initialize() {
     this.throttleQuery = _.throttle(this.searchHandler.bind(this), 1000, true)
   },
@@ -79,7 +87,7 @@ const SlotCenterView = Base.ItemView.extend({
     self.$mgBalance = self.$('.js-mgBalance')
     self.$hotGames = self.$('.js-hotGames')
     self.$rewardList = self.$('.js-rewardList')
-    self.$slotForm = self.$('.js-sc-slot-form')
+    // self.$slotForm = self.$('.js-sc-slot-form')
     self.$tabContainer = self.$('.js-type-option-container')
     self.$search = self.$('.js-sc-search')
     self.$tab = self.$('.js-type-option')
@@ -313,13 +321,22 @@ const SlotCenterView = Base.ItemView.extend({
             return false
           }
 
-          const gameId = $target.data('game-id')
-
-          this.$('.js-sc-gameId').val(gameId)
-          this.$('.js-sc-token').val(Global.cookieCache.get('token'))
-          this.$('.js-sc-type').val(type)
-
-          self.$slotForm.submit()
+          const data = {
+            token: Global.cookieCache.get('token'),
+            gameId: $target.data('game-id'),
+            type: $target.data('type'),
+            device: 0,
+          }
+          let resRoot = ''
+          this.getGameUrlXhr(data)
+            .done((res) => {
+              if (res.result === 0) {
+                if (res.root && res.root.url && !_.isEmpty(res.root.url)) {
+                  resRoot = res.root.url
+                }
+              }
+            })
+          window.open(`./game.html?type=${this.options.channelId === 4 ? 3 : 6}&src=${resRoot}`)
         }
       }else{
         this.showLoginHandler()
