@@ -90,7 +90,7 @@
 
   .x-modal-body {
     position: relative;
-    max-height: 400px;
+    /*max-height: 400px;*/
     overflow-y: auto;
   }
 

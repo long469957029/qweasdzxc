@@ -246,6 +246,7 @@
       font-size: 14px;
       display: flex;
       align-items: center;
+      cursor: pointer;
 
       &.router-link-exact-active {
         .location-icon {

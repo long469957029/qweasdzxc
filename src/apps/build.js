@@ -12,6 +12,7 @@ import SearchGrid from './components/search-grid'
 import XPagination from './components/x-pagination'
 import ControlGroup from './components/control-group'
 import ControlCell from './components/control-cell'
+import XAddress from './components/x-address'
 import {Swiper, SwiperSlide} from './components/swiper'
 
 //directives
@@ -43,6 +44,7 @@ export {
   ControlCell,
   Swiper,
   SwiperSlide,
+  XAddress,
 
   TransferDom,
 
