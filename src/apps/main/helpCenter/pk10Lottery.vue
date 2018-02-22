@@ -193,8 +193,8 @@
           background-color: $sec-line-color;
         }
         tr,td {
-          height: 35px;
-          line-height: 35px;
+          height: 25px;
+          line-height: 25px;
           text-align: center;
         }
         tr {

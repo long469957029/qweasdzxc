@@ -24,7 +24,7 @@
           <img src="./misc/lottery-3.png" />
         </div>
         <div class="res-desc">
-          4）再点击“添加号码”，最后点“确认投注”，投注成功。或在您选择号码和模式之后输入倍数，点击“快捷投注”。
+          4）再点击“添加号码”，最后点“确认投注”，投注成功。或者您也可以选择“快捷投注”直接投注，无须添加至号码栏，简单快捷。
         </div>
         <div class="res-desc">
           <img src="./misc/lottery-4.png" />

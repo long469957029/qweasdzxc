@@ -58,19 +58,19 @@
               </tr>
               <tr>
                 <td>QQ30秒彩</td>
-                <td>00:01 - 00:00</td>
+                <td>00:01 - 24:00</td>
                 <td>每期30秒</td>
                 <td>2880期</td>
               </tr>
               <tr>
                 <td>无限分分彩</td>
-                <td>00:01 - 00:00</td>
+                <td>00:01 - 24:00</td>
                 <td>每期1分钟</td>
                 <td>1440期</td>
               </tr>
               <tr>
                 <td>无限三分彩</td>
-                <td>00:01 - 00:00</td>
+                <td>00:01 - 24:00</td>
                 <td>每期3分钟</td>
                 <td>480期</td>
               </tr>
@@ -94,19 +94,19 @@
               </tr>
               <tr>
                 <td>腾讯分分彩</td>
-                <td>00:01 - 00:00</td>
+                <td>00:01 - 24:00</td>
                 <td>每期1分钟</td>
                 <td>1440期</td>
               </tr>
               <tr>
                 <td>QQ分分彩</td>
-                <td>00:01 - 00:00</td>
+                <td>00:01 - 24:00</td>
                 <td>每期1分钟</td>
                 <td>1440期</td>
               </tr>
               <tr>
                 <td>QQ3D分分彩</td>
-                <td>00:01 - 00:00</td>
+                <td>00:01 - 24:00</td>
                 <td>每期1分钟</td>
                 <td>1440期</td>
               </tr>
@@ -655,8 +655,8 @@
           background-color: $sec-line-color;
         }
         tr,td {
-          height: 35px;
-          line-height: 35px;
+          height: 25px;
+          line-height: 25px;
           text-align: center;
         }
         tr {
