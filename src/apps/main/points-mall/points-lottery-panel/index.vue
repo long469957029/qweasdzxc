@@ -76,26 +76,73 @@
           <div class="lucky-prize-wrapper">
             <div class="lucky-prize">
               <div class="lucky-prize-inner">
-                <div class="sfa sfa-pt-lucky-currency">
+                <!-- 券 -->
+                <div class="sfa sfa-pt-lucky-currency" v-if="chest.awardTypeId === 1">
                   <span class="lucky-type">现金券</span>
                   <span class="lucky-val">50</span>
                 </div>
+                <!-- 商品 -->
+                <img :src="chest.picUrl" class="gift-pic" v-else-if="chest.awardTypeId === 2" />
+                <!--<div class="sfa-pt-task-points" ></div>-->
+                <!-- 积分 -->
+                <div class="sfa-pt-task-points" v-else-if="chest.awardTypeId === 3"></div>
               </div>
             </div>
           </div>
-          <div class="lucky-prize-name">积分{{chest.lucky}}</div>
-          <button class="lucky-exchange-btn btn">
+          <div class="lucky-prize-name" v-if="chest.awardTypeId === 1">积分{{chest.integral | convert2yuan}}</div>
+          <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 2">{{chest.itemName}}</div>
+          <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 3">积分{{chest.integral | convert2yuan}}</div>
+          <button class="lucky-exchange-btn btn" @click="luckChest(chest)">
             <span class="sfa sfa-pt-lucky-star-points"></span>
-            <span class="lucky-exchange-title">10 幸运值兑换</span>
+            <span class="lucky-exchange-title">{{chest.lucky}} 幸运值{{chest.rate === 10000 ? '兑换' : '碰运气'}}</span>
           </button>
         </div>
       </div>
+    </div>
+
+    <div v-transfer-dom>
+      <x-dialog v-if="isShowPrized" @modal-hidden="isShowPrized = false" type="arc">
+        <div slot="head-main">恭喜您成功获得！</div>
+        <div class="prize-main">
+          <div class="prize-pic">
+            <div class="sfa sfa-pt-lucky-currency">
+              <span class="lucky-type">现金券</span>
+              <span class="lucky-val">50</span>
+            </div>
+          </div>
+          <div class="lucky-brief">充值1000返20元</div>
+          <div class="lucky-expire">有效期至：2017-09-08    17:22:51</div>
+        </div>
+        <div class="btn-panel">
+          <button class="btn btn-modal-confirm">确定</button>
+        </div>
+      </x-dialog>
     </div>
   </div>
 </template>
 
 <script>
   import {getTaskListApi, lotteryApi, luckyApi} from 'api/points'
+  import {formatCoupon} from 'build'
+
+  const awardType = [
+    {
+      //谢谢惠顾
+      id: 0,
+    },
+    {
+      //优惠券
+      id: 1
+    },
+    {
+      //实体兑换
+      id: 2,
+    },
+    {
+      //积分
+      id: 3,
+    }
+  ]
 
   export default {
     name: 'points-lottery',
@@ -135,6 +182,10 @@
 
         timer: null,
         winnerTimer: null,
+
+
+        //弹窗
+        isShowPrized: false
       }
     },
 
@@ -154,6 +205,50 @@
     },
 
     methods: {
+      getData() {
+        getTaskListApi(({data}) => {
+          if (data && data.result === 0) {
+            this.awards = data.root.awards
+            this.awards.forEach((award) => {
+              this.$set(award, 'selected', false)
+            })
+            this.awards10 = data.root.awards10
+            this.awards10.forEach((award) => {
+              this.$set(award, 'selected', false)
+            })
+
+            this.cashRob = data.root.cashRob
+            this.cashRob10 = data.root.cashRob10
+            this.integralRob = data.root.integralRob
+            this.integralRob10 = data.root.integralRob10
+            this.chestList = data.root.chest
+            this.myLucky = data.root.myLucky
+            this.recentUser = _.map(data.root.recentUser, (user) => {
+              return {
+                uid: _.uniqueId(),
+                ...user
+              }
+            })
+            this.robLucky = data.root.robLucky
+            this.robLucky10 = data.root.robLucky10
+
+
+            _.each(this.chestList, (chest) => {
+              if (chest.awardTypeId === 1) {
+                formatCoupon({
+                  bigShowNum: chest.bigShowNum,
+                  type: chest.type,
+                  threholdAmount: chest.threholdAmount,
+                  bonusPercentAmount: chest.bonusPercentAmount,
+                  statType: chest.statType,
+                  ticketId: chest.ticketId,
+                  gameType: chest.gameType,
+                })
+              }
+            })
+          }
+        })
+      },
       normalRoll() {
         this.timer = setInterval(() => {
 
@@ -180,6 +275,20 @@
         lotteryApi({
           type,
           lotteryType: this.currentLottery
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            this.getData()
+          }
+        })
+      },
+      luckChest(chestInfo) {
+        luckyApi({
+          id: chestInfo.id
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            this.getData()
+            this.isShowPrized = true
+          }
         })
       }
     },
@@ -202,33 +311,7 @@
     mounted() {
       this.normalRoll()
       this.winnerRoll()
-      getTaskListApi(({data}) => {
-        if (data && data.result === 0) {
-          this.awards = data.root.awards
-          this.awards.forEach((award) => {
-            this.$set(award, 'selected', false)
-          })
-          this.awards10 = data.root.awards10
-          this.awards10.forEach((award) => {
-            this.$set(award, 'selected', false)
-          })
-
-          this.cashRob = data.root.cashRob
-          this.cashRob10 = data.root.cashRob10
-          this.integralRob = data.root.integralRob
-          this.integralRob10 = data.root.integralRob10
-          this.chestList = data.root.chest
-          this.myLucky = data.root.myLucky
-          this.recentUser = _.map(data.root.recentUser, (user) => {
-            return {
-              uid: _.uniqueId(),
-              ...user
-            }
-          })
-          this.robLucky = data.root.robLucky
-          this.robLucky10 = data.root.robLucky
-        }
-      })
+      this.getData()
     },
 
     destroyed() {
@@ -644,6 +727,49 @@
 
   .ani-scroll-leave-active {
     margin-top: -50px;
+  }
+
+  .gift-pic {
+    width: 110px;
+    height: 110px;
+  }
+
+  .arc {
+    .prize-main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      margin-top: 40px;
+    }
+
+    .prize-pic {
+      padding-bottom: 15px;
+    }
+
+    .lucky-brief {
+      font-size: 16px;
+      color: #333333;
+    }
+
+    .lucky-expire {
+      color: #999999;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    .btn-modal-confirm {
+      width: 200px;
+      height: 42px;
+      background-color: #14b1bb;
+      border-radius: 21px;
+      border: solid 1px #13a6af;
+    }
+
+    .btn-panel {
+      text-align: center;
+      margin: 30px;
+    }
   }
 
 </style>

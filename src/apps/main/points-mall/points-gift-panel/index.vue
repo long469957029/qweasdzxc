@@ -53,8 +53,8 @@
 
     <div v-transfer-dom>
       <points-address v-if="isShowAddressModal" type="select"
-                      @operate-complete="refresh" @modal-hidden="isShowAddressModal = false"
-                      @address-selected="exchangeCoupon"
+                      @modal-hidden="isShowAddressModal = false"
+                      @address-selected="exchange"
       ></points-address>
     </div>
   </div>
@@ -230,7 +230,7 @@
         })
       },
 
-      exchangeCoupon(addressInfo) {
+      exchange(addressInfo) {
         giftExchangeApi({
           itemId: this.currentGift.itemId,
           count: this.count,
@@ -256,10 +256,6 @@
           }
         })
       },
-
-      refresh() {
-
-      }
     },
 
     mounted() {
@@ -344,6 +340,6 @@
   }
 
   .x-toolbar {
-    padding: 40px 30px 60px;
+    padding: 30px 30px 40px;
   }
 </style>

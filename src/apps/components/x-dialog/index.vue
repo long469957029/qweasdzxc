@@ -1,5 +1,5 @@
 <template>
-  <div class="x-modal hide fade" ref="modal" :style="`width: ${width}`">
+  <div class="x-modal hide fade" :class="type" ref="modal" :style="`width: ${width}`">
     <slot name="all">
       <slot name="head">
         <div class="x-modal-header">
@@ -34,6 +34,10 @@
       showFooter: {
         type: Boolean,
         default: false
+      },
+      type: {
+        type: String,
+        default: ''
       }
     },
 
@@ -69,6 +73,21 @@
       &.in {
         top: 10%;
       }
+    }
+
+    &.arc {
+      .x-modal-header {
+        background: url(./arc-header.png) no-repeat;
+        width: 480px;
+        height: 67px;
+        padding: 0;
+        border-bottom: 0;
+        text-align: center;
+        font-size: 20px;
+        color: #ffffff;
+        line-height: 65px;
+      }
+
     }
   }
 
@@ -115,5 +134,6 @@
       clear: both;
     }
   }
+
 
 </style>
