@@ -123,12 +123,16 @@
       font-size: 12px;
       .res-desc{
         padding: 10px 0;
+        line-height: 25px;
         .res-desc-tit {
           font-size: 14px;
           color: $main-deep-color;
+          font-weight: 600;
         }
         .res-desc-second-tit {
           font-size: 14px;
+          font-weight: 600;
+          margin-top: 10px;
         }
       }
     }
