@@ -16,7 +16,6 @@ $nav-height: 70px;
         color: $font-dark;
         padding: 0px 20px;
         line-height: $nav-height;
-        z-index: 12;
         background-color: transparent;
         text-align: center;
         transition: background 0.3s ease;
@@ -134,8 +133,8 @@ $nav-height: 70px;
       line-height: 45px!important;
       > a {
         //margin-bottom: -1px;
-        padding-top: 8px;
-        padding-bottom: 8px;
+        //padding-top: 8px;
+        //padding-bottom: 8px;
         background: transparent;
         line-height: 44px!important;
         span{
