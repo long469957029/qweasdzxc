@@ -275,7 +275,7 @@
   .points-card-main {
     display: flex;
     flex-flow: row wrap;
-    padding-bottom: 80px;
+    padding-bottom: 40px;
   }
 
   .points-card-wrapper {
@@ -365,7 +365,7 @@
   }
 
   .x-toolbar {
-    padding: 40px 30px 60px;
+    padding: 30px 30px 40px;
   }
 
 </style>

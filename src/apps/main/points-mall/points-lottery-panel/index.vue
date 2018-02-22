@@ -89,7 +89,9 @@
               </div>
             </div>
           </div>
-          <div class="lucky-prize-name">积分{{chest.integral | convert2yuan}}</div>
+          <div class="lucky-prize-name" v-if="chest.awardTypeId === 1">积分{{chest.integral | convert2yuan}}</div>
+          <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 2">{{chest.itemName}}</div>
+          <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 3">积分{{chest.integral | convert2yuan}}</div>
           <button class="lucky-exchange-btn btn" @click="luckChest(chest)">
             <span class="sfa sfa-pt-lucky-star-points"></span>
             <span class="lucky-exchange-title">{{chest.lucky}} 幸运值{{chest.rate === 10000 ? '兑换' : '碰运气'}}</span>
@@ -97,11 +99,31 @@
         </div>
       </div>
     </div>
+
+    <div v-transfer-dom>
+      <x-dialog v-if="isShowPrized" @modal-hidden="isShowPrized = false" type="arc">
+        <div slot="head-main">恭喜您成功获得！</div>
+        <div class="prize-main">
+          <div class="prize-pic">
+            <div class="sfa sfa-pt-lucky-currency">
+              <span class="lucky-type">现金券</span>
+              <span class="lucky-val">50</span>
+            </div>
+          </div>
+          <div class="lucky-brief">充值1000返20元</div>
+          <div class="lucky-expire">有效期至：2017-09-08    17:22:51</div>
+        </div>
+        <div class="btn-panel">
+          <button class="btn btn-modal-confirm">确定</button>
+        </div>
+      </x-dialog>
+    </div>
   </div>
 </template>
 
 <script>
   import {getTaskListApi, lotteryApi, luckyApi} from 'api/points'
+  import {formatCoupon} from 'build'
 
   const awardType = [
     {
@@ -160,6 +182,10 @@
 
         timer: null,
         winnerTimer: null,
+
+
+        //弹窗
+        isShowPrized: false
       }
     },
 
@@ -205,6 +231,21 @@
             })
             this.robLucky = data.root.robLucky
             this.robLucky10 = data.root.robLucky10
+
+
+            _.each(this.chestList, (chest) => {
+              if (chest.awardTypeId === 1) {
+                formatCoupon({
+                  bigShowNum: chest.bigShowNum,
+                  type: chest.type,
+                  threholdAmount: chest.threholdAmount,
+                  bonusPercentAmount: chest.bonusPercentAmount,
+                  statType: chest.statType,
+                  ticketId: chest.ticketId,
+                  gameType: chest.gameType,
+                })
+              }
+            })
           }
         })
       },
@@ -246,6 +287,7 @@
         }, ({data}) => {
           if (data && data.result === 0) {
             this.getData()
+            this.isShowPrized = true
           }
         })
       }
@@ -690,6 +732,44 @@
   .gift-pic {
     width: 110px;
     height: 110px;
+  }
+
+  .arc {
+    .prize-main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      margin-top: 40px;
+    }
+
+    .prize-pic {
+      padding-bottom: 15px;
+    }
+
+    .lucky-brief {
+      font-size: 16px;
+      color: #333333;
+    }
+
+    .lucky-expire {
+      color: #999999;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    .btn-modal-confirm {
+      width: 200px;
+      height: 42px;
+      background-color: #14b1bb;
+      border-radius: 21px;
+      border: solid 1px #13a6af;
+    }
+
+    .btn-panel {
+      text-align: center;
+      margin: 30px;
+    }
   }
 
 </style>
