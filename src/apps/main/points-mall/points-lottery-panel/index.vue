@@ -76,17 +76,23 @@
           <div class="lucky-prize-wrapper">
             <div class="lucky-prize">
               <div class="lucky-prize-inner">
-                <div class="sfa sfa-pt-lucky-currency">
+                <!-- 券 -->
+                <div class="sfa sfa-pt-lucky-currency" v-if="chest.awardTypeId === 1">
                   <span class="lucky-type">现金券</span>
                   <span class="lucky-val">50</span>
                 </div>
+                <!-- 商品 -->
+                <img :src="chest.picUrl" class="gift-pic" v-else-if="chest.awardTypeId === 2" />
+                <!--<div class="sfa-pt-task-points" ></div>-->
+                <!-- 积分 -->
+                <div class="sfa-pt-task-points" v-else-if="chest.awardTypeId === 3"></div>
               </div>
             </div>
           </div>
-          <div class="lucky-prize-name">积分{{chest.lucky}}</div>
-          <button class="lucky-exchange-btn btn">
+          <div class="lucky-prize-name">积分{{chest.integral | convert2yuan}}</div>
+          <button class="lucky-exchange-btn btn" @click="luckChest(chest)">
             <span class="sfa sfa-pt-lucky-star-points"></span>
-            <span class="lucky-exchange-title">10 幸运值兑换</span>
+            <span class="lucky-exchange-title">{{chest.lucky}} 幸运值{{chest.rate === 10000 ? '兑换' : '碰运气'}}</span>
           </button>
         </div>
       </div>
@@ -96,6 +102,25 @@
 
 <script>
   import {getTaskListApi, lotteryApi, luckyApi} from 'api/points'
+
+  const awardType = [
+    {
+      //谢谢惠顾
+      id: 0,
+    },
+    {
+      //优惠券
+      id: 1
+    },
+    {
+      //实体兑换
+      id: 2,
+    },
+    {
+      //积分
+      id: 3,
+    }
+  ]
 
   export default {
     name: 'points-lottery',
@@ -154,6 +179,35 @@
     },
 
     methods: {
+      getData() {
+        getTaskListApi(({data}) => {
+          if (data && data.result === 0) {
+            this.awards = data.root.awards
+            this.awards.forEach((award) => {
+              this.$set(award, 'selected', false)
+            })
+            this.awards10 = data.root.awards10
+            this.awards10.forEach((award) => {
+              this.$set(award, 'selected', false)
+            })
+
+            this.cashRob = data.root.cashRob
+            this.cashRob10 = data.root.cashRob10
+            this.integralRob = data.root.integralRob
+            this.integralRob10 = data.root.integralRob10
+            this.chestList = data.root.chest
+            this.myLucky = data.root.myLucky
+            this.recentUser = _.map(data.root.recentUser, (user) => {
+              return {
+                uid: _.uniqueId(),
+                ...user
+              }
+            })
+            this.robLucky = data.root.robLucky
+            this.robLucky10 = data.root.robLucky10
+          }
+        })
+      },
       normalRoll() {
         this.timer = setInterval(() => {
 
@@ -180,6 +234,19 @@
         lotteryApi({
           type,
           lotteryType: this.currentLottery
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            this.getData()
+          }
+        })
+      },
+      luckChest(chestInfo) {
+        luckyApi({
+          id: chestInfo.id
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            this.getData()
+          }
         })
       }
     },
@@ -202,33 +269,7 @@
     mounted() {
       this.normalRoll()
       this.winnerRoll()
-      getTaskListApi(({data}) => {
-        if (data && data.result === 0) {
-          this.awards = data.root.awards
-          this.awards.forEach((award) => {
-            this.$set(award, 'selected', false)
-          })
-          this.awards10 = data.root.awards10
-          this.awards10.forEach((award) => {
-            this.$set(award, 'selected', false)
-          })
-
-          this.cashRob = data.root.cashRob
-          this.cashRob10 = data.root.cashRob10
-          this.integralRob = data.root.integralRob
-          this.integralRob10 = data.root.integralRob10
-          this.chestList = data.root.chest
-          this.myLucky = data.root.myLucky
-          this.recentUser = _.map(data.root.recentUser, (user) => {
-            return {
-              uid: _.uniqueId(),
-              ...user
-            }
-          })
-          this.robLucky = data.root.robLucky
-          this.robLucky10 = data.root.robLucky
-        }
-      })
+      this.getData()
     },
 
     destroyed() {
@@ -644,6 +685,11 @@
 
   .ani-scroll-leave-active {
     margin-top: -50px;
+  }
+
+  .gift-pic {
+    width: 110px;
+    height: 110px;
   }
 
 </style>
