@@ -16,6 +16,7 @@ import {
 import store from '../store'
 
 import MainHeader from 'skeleton/bases/header'
+import NavBar from 'skeleton/bases/navbar'
 import Login from 'skeleton/bases/login'
 import Logout from 'skeleton/bases/login/logout'
 import MainFooter from 'skeleton/bases/footer'
@@ -137,6 +138,7 @@ Global.m.oauth.check()
       el: '#main-wrapper',
       components: {
         MainHeader,
+        NavBar,
         MainFooter,
         Login,
         Logout,

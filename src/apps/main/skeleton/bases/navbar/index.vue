@@ -1,235 +1,113 @@
 <template>
   <div>
-    <div class="js-gl-main-navbar">
-      <ul class="nav js-navbar-nav">
-        <li data-index="0" class="navbar-logo-li">
-          <a href="#/?dashboard=1" class="navbar-logo"></a>
-        </li>
-        <li data-index="1">
-          <a href="#/bc/0/10" class="js-navbar-tab js-nav-ticket">彩票
-            <div class="navbar-down-icon"></div>
-          </a>
-        </li>
-        <li data-index="18">
-          <a href="#/bc/2/1" class="js-navbar-tab js-nav-ticket">盘口
-            <div class="navbar-down-icon"></div>
-          </a>
-        </li>
-        <li data-index="2">
-          <a href="#/rc" class="js-navbar-tab ">娱乐场
-            <div class="navbar-down-icon"></div>
-          </a>
-        </li>
-        <li data-index="3">
-          <a href="#/sc" class="js-navbar-tab ">老虎机
-            <div class="navbar-down-icon"></div>
-          </a>
-        </li>
-        <li data-index="4">
-          <a href="#/fh" class="js-navbar-tab ">捕鱼
-            <div class="navbar-down-icon"></div>
-          </a>
-        </li>
-        <li data-index="5"><a href="#/aa" class="js-navbar-tab">优惠活动</a></li>
-        <li data-index="6"><a href="#/mb" class="js-navbar-tab">手机投注</a></li>
-        <li data-index="7" class="js-nav-mall nav-right">
-          <span class="navbar-mall-icon"></span>
-          <a href="#/points" class="js-navbar-tab">积分商城</a>
-        </li>
-        <div class="navbar-slide-underline js-navbar-slide-underline"></div>
-      </ul>
-      <div class="nav-mall-sub js-nav-mall-sub hidden"><i class="sfa-up_icon"></i>
-        <div class="mall-sub-title"><span class="sfa sfa-mall-entry-rec"></span> 商城最新推荐
+    <div class="main-display">
+      <!--<span class="js-db-nav-scroll scroll-btn"></span>-->
+      <div class="js-db-nav-main nav-main">
+        <div class="">
+          <div class="gl-main-navbar">
+            <ul class="nav js-navbar-nav">
+              <li data-index="0" class="navbar-logo-li" >
+                <a href="#/?dashboard=1" class="navbar-logo"></a>
+              </li>
+              <li data-index="1">
+                <a href="#/bc/0/10" class="js-navbar-tab js-nav-ticket">彩票
+                  <!--<div class="navbar-down-icon"></div>-->
+                </a>
+                <ticket-menu></ticket-menu>
+              </li>
+              <li data-index="18">
+                <a href="#/bc/2/1" class="js-navbar-tab js-nav-ticket">盘口
+                  <!--<div class="navbar-down-icon"></div>-->
+                </a>
+              </li>
+              <li data-index="2">
+                <a href="#/rc" class="js-navbar-tab ">娱乐场
+                  <!--<div class="navbar-down-icon"></div>-->
+                </a>
+                <casino-menu></casino-menu>
+              </li>
+              <li data-index="3">
+                <a href="#/sc" class="js-navbar-tab ">老虎机
+                  <!--<div class="navbar-down-icon"></div>-->
+                </a>
+                <slot-menu></slot-menu>
+              </li>
+              <li data-index="4">
+                <a href="#/fh" class="js-navbar-tab ">捕鱼
+                  <!--<div class="navbar-down-icon"></div>-->
+                </a>
+                <fish-menu></fish-menu>
+              </li>
+              <li data-index="5"><a href="#/aa" class="js-navbar-tab">优惠活动</a></li>
+              <li data-index="7"><a href="#/points" class="js-navbar-tab">积分商城<span class="nav-hot-icon"></span></a>
+              </li>
+              <li data-index="6"><a href="#/mb" class="js-navbar-tab">手机投注</a></li>
+              <div class="navbar-slide-underline js-navbar-slide-underline"></div>
+            </ul>
+            <div class="nav-mall-sub js-nav-mall-sub hidden"><i class="sfa-up_icon"></i>
+              <div class="mall-sub-title"><span class="sfa sfa-mall-entry-rec"></span> 商城最新推荐
+              </div>
+              <ul class="js-nav-mall-sub-list"></ul>
+              <div class="mall-more"><a href="#/ma" target="_blank">查看更多&gt;&gt;</a></div>
+            </div>
+          </div>
         </div>
-        <ul class="js-nav-mall-sub-list"></ul>
-        <div class="mall-more"><a href="#/ma" target="_blank">查看更多&gt;&gt;</a></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import TicketMenu from "./ticket-menu";
+  import CasinoMenu from "./casino-menu";
+  import SlotMenu from "./slot-menu";
+  import FishMenu from "./fish-menu";
+
   export default{
     name: 'nav-bar',
-
+    components: {
+      TicketMenu,
+      CasinoMenu,
+      SlotMenu,
+      FishMenu,
+    },
     data () {
-      return {
-        //提交中，禁用按钮
-        pushing: false,
-        // 默认显示登录
-        loginPanel: true,
-        // 默认隐藏用户界面
-        userPanel: false,
-//        amount: 0.00,
-//        username: '',
-        userAvatar: '',
-        newRowCount: 0,
-        newList: [],
-        loginLauncherDialog: false,
-
-      }
+      return {}
     },
 
     props: {},
 
-    components: {},
+    watch: {},
 
-    watch: {
-      userInfo(userInfo) {
-        this.showUserInfo(userInfo)
-      },
-      loginStatus(loginStatus){
-        if (loginStatus) {
-          this.getUserSecurityInfo()
-        }
-      }
-    },
-
-    computed: {
-      isAgent(){
-        return this.$store.state.loginStore.userType === 0
-      },
-      doesTestMarkingShow(){
-        return Global.cookieCache.get('isTestUser')
-      },
-      amount(){
-        return this.$store.getters.getUserInfo.fBalance
-      },
-      username(){
-        if (this.$store.getters.getUserInfo.uName === '' || this.$store.getters.getUserInfo.uName === null) {
-          return this.$store.getters.getUserInfo.username
-        } else {
-          return this.$store.getters.getUserInfo.uName
-        }
-      },
-      imgUrl(){
-        let logoId = this.$store.state.loginStore.headIcon
-        let result = ''
-        if ('png'.indexOf(logoId) !== -1) {
-          result = logoId
-        } else {
-          result = avatarConf.get(logoId).logo
-        }
-        return result
-      },
-      loginStatus(){
-        return this.$store.getters.getLoginStatus
-      },
-    },
+    computed: {},
 
     filters: {},
 
     methods: {
-      backToOldVersion(){
-        window.location.href = '/v2/index.html'
-      },
-      showLogin() {
-        this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-//        this.openLoginDialog()
-      },
-      showLoginLauncher(){
-        this.$store.commit(types.TOGGLE_LOGIN_LAUNCHER, true)
-      },
-      showFreeTrial(){
-
-        this.getUUID().then(({uuid}) => {
-
-          loginApi.testUserReg({uuid}, (data) => {
-            if (data.data && data.data.result === 0) {
-              window.Global.cookieCache.set('token', data.data.root.token, 160)
-              window.Global.cookieCache.set('loginState', true)
-              window.Global.cookieCache.set('isTestUser', true)//存一份到cookie，用于应用刷新时记住试玩状态
-              if (data.data.balance < 10000000) {
-                this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
-              }
-              window.store.commit(types.USER_LOGIN_SUCCESS, data.data.root || {})
-            }
-          })
-        })
-
-
-      },
-      getUUID(){
-        return new Promise((resolve) => {
-          var uuid = Global.cookieCache.get('testUserUUID')
-          if (!uuid) {
-            new Fingerprint2().get(function (result, components) {
-//              console.log(result) // a hash, representing your device fingerprint
-//              console.log(components) // an array of FP components
-              if (!result) {
-                result = new Date().getMilliseconds()
-              }
-              Global.cookieCache.set('testUserUUID', result)
-              resolve({uuid: result})
-            })
-          } else {
-            resolve({uuid: uuid})
-          }
-        })
-      },
-      renderMsgList(model){
-        this.newRowCount = model.get('newRowCount')
-        this.newList = model.get('newList')
-      },
-      messageLink(type, id){
-        let url = type === 0 ? '#/uc/mg' : '#/uc/fb'
-        if (type === 0) {
-          url = url + `?id=${id}`
-        }
-        return url
-      },
-      formatDesc(text){
-        if (text.length > 42) {
-          text = text.slice(0, 41) + '...'
-        }
-        return text
-      },
-      logout(){
-        this.$store.commit(types.TOGGLE_LOGOUT_DIALOG, true)
-      },
-      getAccountSafe(){
-        getAccountSafeApi(
-          ({data}) => {
-            if (data && data.result === 0) {
-              Global.memoryCache.set('accountSafe', data.root)
-              Global.m.publish('safe:updating', data.root)
-            }
-          }
-        )
-      },
-      getUserSecurityInfo(){
-        fundApi.userSecurityInfo(({data}) => {
-          if (data.result === 0) {
-            // 判断是否绑定银行卡，0：银行卡与密码都未绑定，1：银行卡与密码都已绑定，2：只绑定资金密码，3：只绑定银行卡
-            let status = 0
-            if (data.root.hasBankCard && data.root.hasMoneyPwd) {
-              status = 1
-            } else if (!data.root.hasBankCard && data.root.hasMoneyPwd) {
-              status = 2
-            } else if (data.root.hasBankCard && !data.root.hasMoneyPwd) {
-              status = 3
-            }
-            window.Global.cookieCache.set('security', status)
-          }
-        })
-        this.getAccountSafe()
-      },
-      goToPersonCenter(){
-        window.Global.router.goTo('fc/fm')
-      },
-      goToAnnouncement(){
-        window.Global.router.goTo('uc/mg')
-      },
-      clearCache(){
-        Global.ui.notification.show('请按Ctrl+Shift+Delete进行浏览器缓存清理')
-      }
+//      navItemHover(e){
+//        const self = this
+//        const $target = $(e.currentTarget)
+//
+//        self.$('.js-navbar-nav').find('.js-navbar-tab').each((index, tab) => {
+//          $(tab).removeClass('active')
+//        })
+//        $target.addClass('active')
+//
+//        const tabIndex = parseInt($target.closest('li').data('index'), 10)
+//
+//        if (tabIndex === 0) {
+//          this.$underLine.addClass('hidden')
+//        } else {
+//          this.$underLine.removeClass('hidden')
+//          this.$underLine.animate({
+//            left: `${196 + (tabIndex - 1) * 99}px`,
+//          })
+//        }
+//      },
     },
 
     mounted(){
-      window.Global.m.subscribe('news', 'news:updating', this.renderMsgList)
-      if (this.loginStatus) {  //登陆状态下 获取用户安全设置信息
-        this.getAccountSafe()
-      }
+
     }
   }
 </script>
@@ -237,507 +115,437 @@
 <style lang="scss" scoped>
   @import "~base/styles/imports";
 
-  //top-nav entry/index.html中定义
-  .top-nav {
-    //position: absolute;
-    background-color: $header-color;
-    height: $header-height;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 1000;
+  $nav-height: 70px;
+  $nav-item-horizontal-padding: 20px;
+  $nav-item-vertical-padding: 5px;
+  $navbar-container-color: white;
+
+  .nav {
     position: relative;
-    vertical-align: middle;
-
-    .back-to-old {
-      /*position: absolute;*/
-      /*left: 0;*/
-      /*top: 0;*/
-      float: left;
-      display: inline-block;
-      width: 136px;
-      background: #108189;
-      font-size: 12px;
-      color: #fff;
-      line-height: 40px;
-      text-align: center;
-      cursor: pointer;
+    .navbar-logo-li {
+      margin-right: 15px;
+      &:hover, &:active {
+        border-bottom: 3px solid transparent;
+      }
     }
-    .header-main {
+
+    .navbar-logo {
+      height: 47px;
+      width: 141px;
+      background: url('./images/navbar-logo.png') no-repeat left/contain;
+      margin-top: 5px;
+      float: left;
       position: relative;
-      width: 1200px;
-      height: 40px;
-      margin: 0 auto;
-    }
-    @media screen and (max-width: 1200px) {
-      .header-assist {
-        position: absolute;
-        left: 136px;
-      }
-    }
-    @media screen and (max-width: 1471px) {
-      .header-assist {
-        /*position: absolute;*/
-        /*left: 136px;*/
-        float: left;
-        margin-left: 20px;
-      }
-    }
-    @media screen and (min-width: 1472px) {
-      .header-assist {
-        position: absolute;
-        left: 0px;
-      }
+      z-index: 12;
+      margin-left: 0px;
     }
 
-    .header-left-link {
-      display: inline-block;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.5);
-      margin-right: 24px;
-      line-height: 40px;
-      cursor: pointer;
-    }
-    .header-try {
-      display: inline-block;
+    > li {
       float: left;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.5);
-      vertical-align: middle;
-      margin: 6px 0px;
-      width: 90px;
-      height: 27px;
-      border-radius: 3px;
+      height: 67px;
+      line-height: $nav-height;
+      min-width: 99px;
       text-align: center;
-      line-height: 27px;
-      border: 0;
-      &.active, &:hover {
-        background: #237477;
-        color: #fff;
-      }
-    }
-    .header-login {
-      display: inline-block;
-      float: left;
-      width: 90px;
-      height: 27px;
-      line-height: 25px;
-      margin: 6px 20px;
-      border: 0;
-      border-radius: 3px;
-      font-size: 13px;
-      color: #fff;
-      text-align: center;
-      vertical-align: middle;
-      color: rgba(255, 255, 255, 0.5);
-      background: transparent;
-      &.active, &:hover {
-        background: #237477;
-        color: #fff;
-      }
-    }
-
-    .header-customer-entry {
-      padding: 0 15px;
-      height: 40px;
-      width: 57px;
-      line-height: 40px;
-      font-size: 13px;
-      text-align: center;
-      border-left: 1px solid #41a6ad;
-      border-right: 1px solid #41a6ad;
-      vertical-align: middle;
-      cursor: pointer;
-      .sfa-customer-service {
-        vertical-align: text-bottom;
-      }
-      .header-customer-text {
-        margin-left: 4px;
+      border-bottom: 3px solid transparent;
+      .navbar-down-icon {
+        background: url('./images/navbar-down-icon.png') no-repeat left;
+        width: 11px;
+        height: 7px;
         display: inline-block;
+        transform: translate(4px, -1px);
+        transition: opacity .3s;
       }
-      &:hover {
-        background: $new-main-deep-hover-color;
-      }
-    }
 
-    .header-has-logined {
-      height: 40px;
-      padding-left: 20px;
-      font-size: 0;
-      line-height: 40px;
-      vertical-align: middle;
-      .header-menu {
+      > a {
+        display: inline-block;
         position: relative;
-        display: inline-block;
-        max-width: 125px;
-        height: 40px;
-        padding: 0 14px 0 14px;
-        border-left: 1px solid #41a6ad;
-        vertical-align: top;
-        font-size: 13px;
-        cursor: pointer;
-        min-width: 85px;
-        .test-marking {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 0;
-          height: 0;
-          border: 13px solid;
-          border-color: #0a585d transparent transparent #0a585d;
-          > p {
-            margin-top: -26px;
-            margin-left: -11px;
-            font-size: 10px;
-          }
-        }
-        .header-headshot {
-          display: inline-block;
-          width: 32px;
-          height: 32px;
-          margin: 4px 0 0;
-          vertical-align: top;
-          float: left;
-          > img {
-            vertical-align: top;
-          }
-        }
-        .header-name {
-          display: inline-block;
-          max-width: 72px;
-          height: 40px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          font-size: 13px;
-          line-height: 40px;
-          vertical-align: middle;
-          float: left;
-          min-width: 35px;
-          text-align: center;
-          padding: 0 5px;
-        }
-        .fa-angle-down {
-          margin: 14px 0;
-          /*vertical-align: middle;*/
-          float: right;
-        }
-        &:hover {
-          background: $new-main-deep-hover-color;
-          .header-menu-body, .header-menu-body-agent {
-            display: block;
-          }
-
-        }
-        .header-menu-place {
-          position: absolute;
-          left: 0;
-          top: 0;
-          height: 41px;
-          width: 180px;
-        }
-        .header-menu-body {
-          position: absolute;
-          display: none;
-          top: 40px;
-          background: $new-main-deep-color;
-          z-index: 10;
-          background: #ffffff;
-          color: #666666;
-          border: 1px solid #d8eeef;
-          width: 153px;
-          height: 188px;
-          left: 64px;
-          margin-left: -65px;
-          .header-menu-item {
-            display: block;
-            height: 35px;
-            pading: 0 10px;
-            text-align: center;
-            font-size: 13px;
-            color: $new-inverse-color;
-            line-height: 35px;
-            //padding: 0 25px;
-            .header-menu-item-text {
-              display: block;
-              height: 35px;
-              margin: 0 7px;
-            }
-            &:hover {
-              color: $new-main-deep-color;
-              border-radius: 5px;
-            }
-            &:nth-child(5) {
-              line-height: 48px;
-              margin: 0 6px;
-              border-top: 1px dashed $sec-line-color;
-              .header-menu-item-img {
-                color: $font-auxiliary-color;
-                font-size: 16px;
-                vertical-align: middle;
-              }
-            }
-          }
-        }
-        .header-menu-body-agent {
-          position: absolute;
-          display: none;
-          top: 40px;
-          background: $new-main-deep-color;
-          z-index: 10;
-          background: #ffffff;
-          color: #666666;
-          border: 1px solid #d8eeef;
-          width: 225px;
-          height: 222px;
-          left: 64px;
-          margin-left: -65px;
-          .header-menu-body-agent-item {
-            display: inline-block;
-            width: 110px;
-            margin: 20px 0 12px 0;
-            &:first-child {
-              border-right: 1px solid $sec-line-color;
-            }
-            .header-menu-title {
-              position: relative;
-              font-size: 13px;
-              color: #000;
-              height: 24px;
-              line-height: 13px;
-              width: 110px;
-              margin-bottom: 7px;
-              text-align: center;
-              &:after {
-                position: absolute;
-                left: 44px;
-                bottom: 0px;
-                content: '';
-                width: 24px;
-                height: 0;
-                border-bottom: 2px solid #15b0bb;
-              }
-            }
-
-            .header-menu-item {
-              display: block;
-              height: 30px;
-              pading: 0 10px;
-              text-align: center;
-              font-size: 13px;
-              color: $new-inverse-color;
-              line-height: 30px;
-              //padding: 0 25px;
-              .header-menu-item-text {
-                display: block;
-                height: 35px;
-                margin: 0 7px;
-              }
-              &:hover {
-                color: $new-main-deep-color;
-                border-radius: 5px;
-              }
-            }
-          }
-          .header-menu-body-agent-logout {
-            height: 38px;
-            margin: 0 6px;
-            text-align: center;
-            line-height: 38px;
-            border-top: 1px dashed $sec-line-color;
-            .header-menu-item-img {
-              color: $font-auxiliary-color;
-              font-size: 16px;
-              vertical-align: middle;
-            }
-          }
-        }
-      }
-      .header-amount-panel {
-        display: inline-block;
-        border-left: 1px solid #41a6ad;
-        max-width: 186px;
-        /*.header-amount-img {*/
-        /*float: right;*/
-        /*display: inline-block;*/
-        /*height: 40px;*/
-        /*color: #ffffff;*/
-        /*font-size: 13px;*/
-        /*}*/
-        .header-amount {
-          float: right;
-          display: inline-block;
-          height: 40px;
-          font-size: 13px;
-          line-height: 40px;
-          text-align: center;
-          vertical-align: top;
-          padding-left: 13px;
-          max-width: 92px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .header-recharge {
-          float: right;
-          display: inline-block;
-          width: 56px;
-          height: 26px;
-          margin: 7px 13px 7px 10px;
-          background: #d0e9ea;
-          border-radius: 13px;
-          font-size: 13px;
-          color: #14b1bb;
-          line-height: 26px;
-          text-align: center;
-          outline: none;
-          vertical-align: top;
-          cursor: pointer;
-        }
-        &:hover {
-          background: $new-main-deep-hover-color;
-        }
-      }
-      .header-announcement {
-        position: relative;
-        display: inline-block;
-        max-width: 72px;
-        height: 40px;
-        border-left: 1px solid #41a6ad;
-        font-size: 13px;
-        line-height: 40px;
-        cursor: pointer;
+        font-size: 14px;
+        color: $font-dark;
+        padding: 0px 20px;
+        line-height: $nav-height;
+        z-index: 12;
+        background-color: transparent;
         text-align: center;
-        vertical-align: top;
-        padding: 0 12px;
-        .sfa-announcement {
-          margin: -5px 5px 0 0;
-          vertical-align: middle;
+        transition: background 0.3s ease;
+        cursor: pointer;
+        &:after {
+          content: "";
+          transition: background 0.3s ease;
+        }
+        .nav-hot-icon {
+          background: url('./images/nav-hot-icon.png');
+          width: 20px;
+          height: 26px;
+          display: block;
+          /*transform: translate(35px, 24px);*/
+          position: absolute;
+          right: -4px;
+          top: 15px;
+        }
+      }
+
+      &:hover, &:active {
+        > a {
+          color: $new-main-deep-color;
+
+        }
+        border-bottom: 3px solid $new-main-deep-hover-color;
+      }
+
+    }
+
+  /*  .navbar-slide-underline {
+      background: $new-main-deep-hover-color;
+      width: 96px;
+      height: 3px;
+      position: absolute;
+      top: 67px;
+      left: 196px;
+      z-index: 11;
+    }*/
+  }
+</style>
+
+<style lang="scss">
+  @import '../../../gameCenter/misc/mixin';
+  //公共样式 begin
+  .gl-main-navbar {
+
+    .nav {
+      > li {
+        &:hover, &.active {
+          .nav-channel-container {
+            animation-name: fadeInDown;
+            animation-timing-function: ease;
+            animation-duration: .5s;
+            animation-fill-mode: forwards;
+          }
+          @keyframes fadeInDown {
+            from {
+              opacity: 0;
+              transform: translate(-50%, -25%) scaleY(1);
+            }
+
+            to {
+              opacity: 1;
+              transform: translate(-50%, 0px) scaleY(1);
+            }
+          }
+        }
+      }
+    }
+
+    .nav-channel-container {
+      position: absolute;
+      background: $def-white-color;
+      height: 180px;
+      z-index: 12;
+      left: 50%;
+      top: 70px;
+      transform: scaleY(0) translateX(-50%);
+      width: 100vw;
+      margin: 0 auto;
+
+      .nav-channel-content {
+        width: 1200px;
+        margin: 0 auto;
+        font-size: 0;
+      }
+
+      .nav-channel-banner {
+        @include inline-block-list();
+        width: 238px;
+        height: 180px;
+        background-size: cover;
+
+        &.slotPic {
+          background: url('./images/banner-slot.png') no-repeat left/contain;
         }
 
-        .header-announcement-num {
-          margin-left: 2px;
-          width: 16px;
-          height: 16px;
-          line-height: 16px;
-          display: inline-block;
-          background: #e29c49;
-          border-radius: 3px;
-          text-align: center;
-          text-indent: -3px;
+        &.fishPic {
+          background: url('./images/banner-fish.png') no-repeat left/contain;
         }
-        .header-announcement-place {
-          position: absolute;
-          left: 0;
-          top: 0;
-          height: 41px;
+
+        &.realPic {
+          background: url('./images/banner-real.png') no-repeat left/contain;
+        }
+
+        &.ticketPic {
+          background: url('./images/banner-ticket.png') no-repeat left/contain;
+        }
+      }
+      //公共样式 end
+
+      //彩票菜单-特有 begin
+      .nav-channel-main {
+        position: relative;
+        width: 961px;
+        height: 162px;
+        display: inline-block;
+        padding: 18px 0 0;
+        border-right: 1px solid #f0f0f0;
+      }
+      .nav-channel-list-container {
+        @include inline-block-list();
+        width: 610px;
+        height: 196px;
+        padding: 30px;
+      }
+      .classic-title {
+        position: relative;
+        float: left;
+        width: 22px;
+        height: 80px;
+        padding: 10px 19px;
+        z-index: 14;
+        font-size: 16px;
+        line-height: 17px;
+        color: $new-inverse-color;
+        text-align: center;
+        word-wrap: break-word;
+      }
+
+      .container-list {
+        position: relative;
+        float: left;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        &.constantly {
+          width: 400px;
+        }
+        &.eleven {
           width: 100px;
         }
-        .header-announcement-body {
-          position: absolute;
-          display: none;
-          top: 40px;
-          background: $new-main-deep-color;
-          /*border-radius: 5px;*/
-          z-index: 10;
-          background: #ffffff;
-          color: #666666;
-          border: 1px solid $def-line-color;
-          right: -89px;
-          margin-left: -183px;
-          //display: block;
-          width: 348px;
-          height: 358px;
+        &.3d {
+          width: 100px;
+        }
+        &.happy {
+          width: 100px;
+        }
+        li {
+          display: inline-block;
+          vertical-align: middle;
+          list-style-type: none;
+          width: 105px;
+          height: 34px;
+          position: relative;
+          line-height: 34px;
 
-          .header-announcement-content {
-            height: 309px;
-            .content-item {
-              display: block;
-              height: 79px;
-              padding: 24px 9px 0 12px;
-              transition: all .5s;
-
-              .content-item-panel {
-                padding: 0 12px 0 24px;
-                border-bottom: 1px solid $def-line-color;
-                &:last-child {
-                  border-bottom: 1px dashed $def-line-color;
-                }
-              }
-              .content-item-title-panel {
-                color: $font-auxiliary-color;
-                height: 13px;
-                line-height: 13px;
-                margin-bottom: 10px;
-                .content-item-img {
-                  width: 6px;
-                  height: 6px;
-                  display: inline-block;
-                  background: $font-auxiliary-color;
-                  border-radius: 9px;
-                  text-align: center;
-                  margin-top: 5px;
-                  margin-left: -12px;
-                  position: absolute;
-                }
-                .content-item-title {
-                  width: 242px;
-                  height: 20px;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  word-break: keep-all;
-                  white-space: nowrap;
-                  color: $new-inverse-color;
-                  font-size: 13px;
-                  text-align: left;
-                }
-                .content-item-date {
-                  font-size: 13px;
-                }
-              }
-              .content-item-text {
-                position: relative;
-                width: 294px;
-                height: 50px;
-                margin-bottom: 5px;
-                font-size: 12px;
-                color: $font-auxiliary-color;
-                text-align: left;
-                line-height: 20px;
-              }
-              &:hover {
-                .content-item-title-panel {
-                  .content-item-img {
-                    background: $new-main-deep-color;
-                  }
-                  .content-item-title {
-                    color: $new-main-deep-color;
-                  }
-                }
-                background-color: $sec-line-color;
-              }
-            }
+          .navbar-ticket-chavon {
+            background: url('./images/navbar-ticket-chavon.png');
+            width: 4px;
+            height: 7px;
+            display: inline-block;
+            margin-right: 10px;
+            transition: background .3s;
           }
-          .header-announcement-showMore {
-            color: $font-auxiliary-color;
-            font-size: 13px;
-            width: 100%;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            display: block;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-            &:hover {
+
+          a {
+            font-size: 12px;
+            color: $new-inverse-color;
+            transition: color .3s;
+          }
+          &:hover, &:active {
+            .navbar-ticket-chavon {
+              background: url('./images/navbar-ticket-chavon-active.png');
+            }
+            a {
               color: $new-main-deep-color;
             }
           }
         }
-        &:hover {
-          background: $new-main-deep-hover-color;
-          .header-announcement-body {
-            display: block;
-          }
+      }
+      .navbar-ticket-icon-hot {
+        position: absolute;
+        top: 9px;
+        width: 9px;
+        height: 9px;
+        background: url('./images/navbar-ticket-icon-hot.png');
+        margin-left: 3px;
+      }
+      .navbar-ticket-icon-new {
+        position: absolute;
+        top: 9px;
+        width: 9px;
+        height: 9px;
+        background: url('./images/navbar-ticket-icon-new.png');
+        margin-left: 3px;
+      }
+      //彩票菜单-特有 end
+
+      //体育菜单-特有
+ /*     .list-item {
+        display: inline-block;
+        vertical-align: top;
+        color: $font-dark;
+        font-size: 14px;
+        margin-right: 55px;
+        margin-bottom: 20px;
+
+        .sfa-mall-sport-icon {
+          width: 25px;
+          height: 25px;
+          background: darken($font-auxiliary-color, 50%);;
+          border-radius: 20px;
+          margin-right: 20px;
+        }
+        .list-item-title {
+          background: transparent;
+          color: $font-dark;
+          line-height: 25px;
+          vertical-align: top;
+        }
+      }*/
+      //体育菜单-特有 end
+
+      //真人菜单,老虎机，捕鱼,-特有 begin
+      .nav-channel-entry-container {
+        @include inline-block-list();
+        width: 961px;
+        height: 180px;
+        display: inline-block;
+        border-right: 1px solid #f0f0f0;
+      }
+      .entry-item {
+        @include inline-block-list();
+        position: relative;
+        width: 284px;
+        height: 140px;
+        border-right: 1px solid #f0f0f0;
+        padding: 40px 0 0 35px;
+        text-align: left;
+        &:last-child{
+          border-right: 0;
+        }
+        &.slot{
+          width: 430px;
+          height: 149px;
+          padding: 31px 0 0 50px;
+        }
+        &.fish{
+          width: 392px;
+          height: 155px;
+          padding: 25px 0 0 88px;
+        }
+        > div {
+          @include inline-block-list();
+        }
+        .entry-coming-soon{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 73px;
+          height: 68px;
+          background: url(./images/entry-coming-soon.png);
+        }
+
+
+      }
+
+      .entry-item-img {
+        width: 97px;
+        height: 93px;
+        margin-right: 15px;
+        background-position: center bottom;
+        background-repeat: no-repeat;
+
+        &.icon-real-ag {
+          background-image: url('./images/icon-real-ag.png')  ;
+        }
+        &.icon-real-ebet {
+          background-image: url('./images/icon-real-ebet.png');
+        }
+        &.icon-real-bbin {
+          background-image: url('./images/icon-real-bbin.png');
+        }
+
+        &.icon-slot-pt {
+          background-image: url('./images/icon-slot-pt.png');
+          width: 227px;
+          height: 119px;
+        }
+
+        &.icon-slot-mg {
+          background-image: url('./images/icon-slot-mg.png');
+          width: 223px;
+          height: 139px;
+        }
+
+        &.icon-fish-ag {
+          background-image: url('./images/icon-fish-ag.png');
+          width: 130px;
+          height: 137px;
+          margin-right: 40px;
+        }
+
+        &.icon-fish-gg {
+          background-image: url('./images/icon-fish-gg.png');
+          width: 155px;
+          height: 137px;
+          margin-right: 40px;
         }
       }
+
+      .entry-down{
+        font-size: 12px;
+        color: #4dafb9;
+        .entry-qrcode{
+          display: inline-block;
+          width: 16px;
+          height:15px;
+          margin: 0 5px 0 5px;
+          background: url(./images/entry-qrcode.png) ;
+          vertical-align: middle;
+        }
+      }
+
+      .entry-item-content {
+        position: absolute;
+        top: 34px;
+        margin-left: 10px !important;
+      }
+
+      .entry-item-title {
+        font-size: 16px;
+        color: $new-inverse-color;
+        margin-bottom: 5px
+      }
+
+      .entry-item-desc {
+        font-size: 14px;
+        color: $def-gray-color;
+        margin-bottom: 14px
+      }
+
+      .entry-item-btn {
+        width: 90px;
+        height: 28px;
+        border-radius: 14px / 14px;
+        border: none;
+        color: $def-black-color !important;
+        font-size: 14px !important;
+        line-height: 28px;
+        border: 1px solid $def-gray-color;
+        background: $def-white-color;
+        padding: 0;
+        display: block;
+        //margin: 0 auto 10px;
+        margin-bottom: 15px;
+
+        &:hover, &:active {
+          background: $new-main-deep-color;
+          color: white !important;
+        }
+      }
+
+
+      //真人菜单,老虎机，捕鱼,-特有 begin
+
     }
+
   }
+
+
 </style>
