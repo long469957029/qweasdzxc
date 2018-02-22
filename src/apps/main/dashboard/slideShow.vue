@@ -1,5 +1,6 @@
 <template>
-  <div class="slide-show" v-if="!bannerLoading" @mouseover="clearInv" @mouseout="runInv">
+  <status-cell class="slide-show" :status="bannerLoading" :has-data="slides.length" loading-tip="" @mouseover="clearInv"
+               @mouseout="runInv">
     <div class="slide-img">
       <a :href="slides[nowIndex].advUrl">
         <transition name="slide-trans">
@@ -14,19 +15,18 @@
     <ul class="slide-pages" v-show="isPage">
       <!--<li @click="goto(prevIndex)">&lt;</li>-->
       <li v-for="(item, index) in slides"
-          @click="goto(index)"
-      >
+          @click="goto(index)">
         <a :class="{on: index === nowIndex}"></a>
       </li>
       <!--<li @click="goto(nextIndex)">&gt;</li>-->
     </ul>
-  </div>
-  <animateLoading v-else></animateLoading>
+  </status-cell>
 </template>
 
 <script>
   import animateLoading from 'com/loading-animate'
-  import { getBannerADApi } from 'api/dashboard'
+  import {getBannerADApi} from 'api/dashboard'
+
   export default {
     props: {
       inv: {
@@ -37,9 +37,9 @@
     components: {
       animateLoading
     },
-    data () {
+    data() {
       return {
-        slides:[
+        slides: [
           {
             picUrl: require('./misc/banner-1.png'),
           },
@@ -53,12 +53,12 @@
         nowIndex: 0,
         isShow: true,
         isPage: false,
-        bannerLoading:true,
+        bannerLoading: 'loading',
         locUrl: 'http://' + window.location.host,
       }
     },
     computed: {
-      prevIndex () {
+      prevIndex() {
         if (this.nowIndex === 0) {
           return this.slides.length - 1
         }
@@ -66,7 +66,7 @@
           return this.nowIndex - 1
         }
       },
-      nextIndex () {
+      nextIndex() {
         if (this.nowIndex === this.slides.length - 1) {
           return 0
         }
@@ -76,32 +76,36 @@
       }
     },
     methods: {
-      goto (index) {
+      goto(index) {
         this.isShow = false
         setTimeout(() => {
           this.isShow = true
           this.nowIndex = index
         }, 10)
       },
-      runInv () {
+      runInv() {
         if (this.slides.length > 1) {
           this.invId = setInterval(() => {
             this.goto(this.nextIndex)
           }, this.inv)
         }
       },
-      clearInv () {
+      clearInv() {
         clearInterval(this.invId)
       }
     },
-    mounted () {
+    mounted() {
+      this.bannerLoading = 'loading'
       getBannerADApi(
         ({data}) => {
           if (data && data.result === 0) {
             this.slides = data.root || this.slides
-            this.bannerLoading = false
+            this.bannerLoading = 'completed'
             this.isPage = this.slides.length > 1
           }
+        })
+        .finally(() => {
+          this.loadingStatus = 'completed'
         })
       this.runInv();
     }
