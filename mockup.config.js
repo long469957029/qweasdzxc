@@ -25,10 +25,10 @@ module.exports = {
     // '/mall/coupon/couponList.json': 'mockup/couponList.json',
     // '/mall/integral/detailList.json':'mockup/integral.json',
     // '/mall/gift/myGiftList.json':'mockup/gifExchange.json',
-    // '/ticket/game/prizeList.json': 'mockup/prizeList.json',
+    '/ticket/game/prizeList.json': 'mockup/prizeList.json',
     // '/ticket/game/sublist.json': 'mockup/subList.json',
     // '/acct/smscode/val.json': 'mockup/sendval.json',
     // '/info/redpack/openRedpack.json': 'mockup/registerRed.json'
-    '/info/feedback/stat.json': 'mockup/state.json'
+    // '/info/feedback/stat.json': 'mockup/state.json'
   }
 };

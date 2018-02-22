@@ -14,31 +14,13 @@
             <span>{{_(agAmount).formatDiv(10000, { fixed: 2 })}}</span>
           </div>
           <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
-          <div class="rc-item-hint-btn">进入大厅<span class="rc-double-right"></span></div>
-          <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,1,1)">立即游戏 <span class="rc-double-right"></span></div>
+          <div class="rc-item-hint-btn">GO<span class="go-arrow"></span></div>
+          <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,1,1)">立即游戏</div>
           <div class="rc-item-secondary-btn ripple-btn" @click="showDownLoad(1)">手机版</div>
           <div class="rc-item-mask"></div>
         </div>
       </div>
       <div :class="['rc-main-item', {active: activeIndex === 2}]" @mouseenter="activeIndex = 2">
-        <div class="bbin">
-          <div class="rc-item-title">BBIN娱乐厅</div>
-          <div class="rc-item-subtitle">
-            亚洲老牌娱乐场，超高限额，自有非凡之处
-          </div>
-          <div class="rc-item-hr"></div>
-          <div class="rc-item-amount">
-            BBIN余额：
-            <span>{{_(bbinAmount).formatDiv(10000, { fixed: 2 })}}</span>
-          </div>
-          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
-          <div class="rc-item-hint-btn">进入大厅<span class="rc-double-right"></span></div>
-          <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,3,3)">立即游戏 <span class="rc-double-right"></span></div>
-          <div class="rc-item-secondary-btn ripple-btn" @click="showDownLoad(3)">手机版</div>
-          <div class="rc-item-mask"></div>
-        </div>
-      </div>
-      <div :class="['rc-main-item', {active: activeIndex === 3}]" @mouseenter="activeIndex = 3">
         <div class="ebet">
           <div class="rc-item-title">EBET娱乐厅</div>
           <div class="rc-item-subtitle">
@@ -50,9 +32,30 @@
             <span>{{_(ebetAmount).formatDiv(10000, { fixed: 2 })}}</span>
           </div>
           <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
-          <div class="rc-item-hint-btn">进入大厅<span class="rc-double-right"></span></div>
-          <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,2,2)">立即游戏 <span class="rc-double-right"></span></div>
+          <div class="rc-item-hint-btn">GO<span class="go-arrow"></span></div>
+          <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,2,2)">立即游戏</div>
           <div class="rc-item-secondary-btn ripple-btn" @click="showDownLoad(2)">手机版</div>
+          <div class="rc-item-mask"></div>
+        </div>
+      </div>
+      <div :class="['rc-main-item', {active: activeIndex === 3}]" @mouseenter="activeIndex = 3">
+        <div class="tip-info">
+          <span class="text">即将上线</span>
+        </div>
+        <div class="bbin">
+          <div class="rc-item-title">BBIN娱乐厅</div>
+          <div class="rc-item-subtitle">
+            亚洲老牌娱乐场，超高限额，自有非凡之处
+          </div>
+          <div class="rc-item-hr"></div>
+          <div class="rc-item-amount">
+            BBIN余额：
+            <span>{{_(bbinAmount).formatDiv(10000, { fixed: 2 })}}</span>
+          </div>
+          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
+          <div class="rc-item-hint-btn">GO<span class="go-arrow"></span></div>
+          <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,3,3)">立即游戏</div>
+          <div class="rc-item-secondary-btn ripple-btn" @click="showDownLoad(3)">手机版</div>
           <div class="rc-item-mask"></div>
         </div>
       </div>
@@ -60,11 +63,9 @@
       <div class="rc-reward-container">
         <div class="rc-reward-icon"></div>
         <div class="rc-reward-title">最新中奖信息：</div>
-        <ul class="rc-reward-list">
-          <li>
-            恭喜***RIS 在AG百家乐中奖<span class="amount">50</span>元
-          </li>
-        </ul>
+        <div class="rc-reward-list">
+          <marquee :content="formatePrizeList" :speed="20000" :scollWidth="975"></marquee>
+        </div>
       </div>
     </div>
   </div>
@@ -73,16 +74,22 @@
   import {
     getGameListApi,
     getSummaryApi,
-    getGameUrlApi
+    getGameUrlApi,
+    getPrizeListApi
   } from 'api/gameCenter'
-  export default{
+  import Marquee from 'com/vue-marquee'
+  export default {
     name:'real-center',
+    components:{
+      Marquee
+    },
     data(){
       return{
         agAmount:0,
         bbinAmount:0,
         ebetAmount:0,
-        activeIndex:1
+        activeIndex:1,
+        prizeList:[]
       }
     },
     watch: {
@@ -95,7 +102,15 @@
     computed: {
       ...mapGetters([
         'getLoginStatus'
-      ])
+      ]),
+      formatePrizeList() {
+        let list = ''
+        this.prizeList.forEach((item,index) => {
+          list += `恭喜${item.userName}在${item.gameName}中奖<span class="text-prominent">${_(item.prize).convert2yuan()}</span>元
+              ${index === this.prizeList.length -1 ? '' : '<span class="m-LR-sm">/</span>'}`
+        })
+        return list
+      }
     },
     methods:{
       getGameList(){
@@ -162,7 +177,27 @@
         }else{
           this.$store.commit(types.TOGGLE_GMAE_DOWN_LOAD,{showDialog:true,gameId})
         }
+      },
+      getPrizeList(){
+        getPrizeListApi({ gameType:1 },
+          ({data}) => {
+            if(data && data.result === 0){
+              this.prizeList = [...data.root.records]
+            }
+          },
+          ({data}) => {
+          }
+        )
+        setTimeout(() => {
+          this.getPrizeList()
+        },3000)
       }
+    },
+    mounted(){
+      if(this.getLoginStatus){
+        this.getGameList()
+      }
+      this.getPrizeList()
     }
   }
 </script>
@@ -194,7 +229,22 @@
       float: left;
       position: relative;
       overflow: hidden;
-
+      .tip-info{
+        width: 88px;
+        height: 82px;
+        background: url("./images/tip-bg.png") no-repeat;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        .text{
+          color: $def-white-color;
+          font-size: $font-sm;
+          transform: rotate(-44deg);
+          display: block;
+          margin-top: 12px;
+        }
+      }
       > div > div {
         position: relative;
         z-index: 1;
@@ -260,14 +310,21 @@
       }
 
       .rc-item-hint-btn {
-        width: 130px;
+        width: 110px;
         height: 40px;
         border-radius: 20px / 20px;
         border: 1px solid #939292;
-        font-size: 14px;
+        font-size: 18px;
         color: rgba(255, 255, 255, .5);
         text-align: center;
         line-height: 40px;
+        .go-arrow{
+          width: 18px;
+          height: 13px;
+          display: inline-block;
+          background: url("./images/go-arrow.png") no-repeat;
+          margin-left: 10px;
+        }
       }
 
       .rc-item-primary-btn, .rc-item-secondary-btn {
@@ -403,13 +460,7 @@
         height: 50px;
         float: left;
         line-height: 50px;
-        padding-left: 16px;
-
-        li {
-          display: inline-block;
-          font-size: 14px;
-          color: white;
-        }
+        /*padding-left: 16px;*/
 
         .amount {
           color: $prominent-color;

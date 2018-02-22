@@ -47,9 +47,26 @@ const getGameUrlApi = ({gameId,type = 0 ,device = 0}) => {
     async: false,
   })
 }
-
+/**
+ * 获取第三方游戏中奖名单， gameType（ 1:真人, 2:体育, 3:老虎机,  4:捕鱼）
+ * @param gameType
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getPrizeListApi = ({gameType},then,fail) => {
+  return $http({
+    url: '/ticket/game/prizeList.json',
+    data:{
+      gameType
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
 export {
   getGameListApi,
   getSummaryApi,
-  getGameUrlApi
+  getGameUrlApi,
+  getPrizeListApi
 }
