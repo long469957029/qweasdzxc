@@ -138,7 +138,7 @@
     height: 49px;
     width: 186px;
     background: url('./images/navbar-logo.png') no-repeat left/contain;
-    margin-top: 10px;
+    margin-top: 5px;
     float: left;
     position: relative;
     z-index: 12;
@@ -379,6 +379,11 @@
         width: 9px;
         height: 9px;
         background: url('./images/navbar-ticket-icon-new.png');
+        margin-left: 3px;
+      }
+      .sfa-badge-new {
+        position: absolute;
+        top: 9px;
         margin-left: 3px;
       }
       //彩票菜单-特有 end
