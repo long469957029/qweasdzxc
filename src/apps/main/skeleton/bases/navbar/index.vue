@@ -306,8 +306,8 @@
         padding: 10px 19px;
         z-index: 14;
         font-size: 14px;
-        line-height: 17px;
-        color: $new-inverse-color;
+        line-height: 15px;
+        color: #323232;
         text-align: center;
         word-wrap: break-word;
       }
@@ -352,7 +352,7 @@
 
           a {
             font-size: 12px;
-            color: $new-inverse-color;
+            color: #858585;
             transition: color .3s;
           }
           &:hover, &:active {
