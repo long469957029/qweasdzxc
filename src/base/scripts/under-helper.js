@@ -347,8 +347,25 @@ _.mixin({
     if (keyCode === 8 || keyCode === 46 || keyCode === 37 || keyCode === 39) return true
 
     return false
-  }
+  },
 
+  getV2Domain() {//game.hr4g.com  => gamev2.hr4g.com; hr4g.com  => v2.hr4g.com
+    let hostName = window.location.hostname
+    let hostNameAttrArr = hostName.split('.')
+    let newHostNameAttrArr = []
+    newHostNameAttrArr.unshift(hostNameAttrArr.pop())
+    newHostNameAttrArr.unshift(hostNameAttrArr.pop())
+    let secondDomain = hostNameAttrArr.pop()
+    if (secondDomain === 'www') {
+      secondDomain = 'v2'
+    } else if (secondDomain) {
+      secondDomain += 'v2'
+    } else {
+      secondDomain = 'v2'
+    }
+    newHostNameAttrArr.unshift(secondDomain)
+    return 'http://'+ newHostNameAttrArr.join('.')
+  },
 })
 
 Vue.filter('formatDiv', _.formatDiv)

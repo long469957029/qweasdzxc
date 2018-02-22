@@ -170,7 +170,7 @@
 
     methods: {
       backToOldVersion(){
-        window.location.href = '/v2/index.html'
+        window.location.href = _.getV2Domain()
       },
       showLogin() {
         this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
