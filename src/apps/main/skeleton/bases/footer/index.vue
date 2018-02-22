@@ -74,14 +74,14 @@ export default {
   name: "main-footer",
   mounted() {
     const vm = this
-    vm.rotateCooperatorList()
-    vm.rotateDutyList()
-    setInterval(function() {
-      vm.rotateCooperatorList()
-    }, 6000)
-    setInterval(function() {
-      vm.rotateDutyList()
-    }, 4000)
+    // vm.rotateCooperatorList()
+    // vm.rotateDutyList()
+    // setInterval(function() {
+    //   vm.rotateCooperatorList()
+    // }, 6000)
+    // setInterval(function() {
+    //   vm.rotateDutyList()
+    // }, 4000)
   },
   data() {
     return {
