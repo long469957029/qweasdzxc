@@ -132,6 +132,11 @@
       showDownLoad(gameId){
         this.$store.commit(types.TOGGLE_GMAE_DOWN_LOAD,{showDialog:true,gameId})
       }
+    },
+    mounted() {
+      if(this.getLoginStatus){
+        this.getGameList()
+      }
     }
   }
 </script>
