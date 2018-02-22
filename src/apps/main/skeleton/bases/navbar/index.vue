@@ -5,18 +5,22 @@
       <div class="js-db-nav-main nav-main">
         <div class="">
           <div class="gl-main-navbar">
+            <a href="#/?dashboard=1" class="navbar-logo"></a>
             <ul class="nav js-navbar-nav">
-              <li data-index="0" class="navbar-logo-li" >
-                <a href="#/?dashboard=1" class="navbar-logo"></a>
+
+              <li data-index="1">
+                <a href="#/?dashboard=1">首页
+                  <!--<div class="navbar-down-icon"></div>-->
+                </a>
               </li>
               <li data-index="1">
-                <a href="#/bc/0/10" class="js-navbar-tab js-nav-ticket">彩票
+                <a href="#/bc/0/10">彩票
                   <!--<div class="navbar-down-icon"></div>-->
                 </a>
                 <ticket-menu></ticket-menu>
               </li>
               <li data-index="18">
-                <a href="#/bc/2/1" class="js-navbar-tab js-nav-ticket">盘口
+                <a href="#/bc/2/1">两面盘
                   <!--<div class="navbar-down-icon"></div>-->
                 </a>
               </li>
@@ -63,7 +67,7 @@
   import SlotMenu from "./slot-menu";
   import FishMenu from "./fish-menu";
 
-  export default{
+  export default {
     name: 'nav-bar',
     components: {
       TicketMenu,
@@ -71,7 +75,7 @@
       SlotMenu,
       FishMenu,
     },
-    data () {
+    data() {
       return {}
     },
 
@@ -106,7 +110,7 @@
 //      },
     },
 
-    mounted(){
+    mounted() {
 
     }
   }
@@ -120,33 +124,37 @@
   $nav-item-vertical-padding: 5px;
   $navbar-container-color: white;
 
+  .nav-main {
+    height: $nav-height;
+    transition: height 0.5s ease-in-out;
+
+    * {
+      box-sizing: border-box;
+    }
+
+  }
+
+  .navbar-logo {
+    height: 49px;
+    width: 186px;
+    background: url('./images/navbar-logo.png') no-repeat left/contain;
+    margin-top: 5px;
+    float: left;
+    position: relative;
+    z-index: 12;
+    margin-left: 0px;
+  }
+
   .nav {
     position: relative;
-    .navbar-logo-li {
-      margin-right: 15px;
-      &:hover, &:active {
-        border-bottom: 3px solid transparent;
-      }
-    }
-
-    .navbar-logo {
-      height: 47px;
-      width: 141px;
-      background: url('./images/navbar-logo.png') no-repeat left/contain;
-      margin-top: 5px;
-      float: left;
-      position: relative;
-      z-index: 12;
-      margin-left: 0px;
-    }
-
+    float: right;
     > li {
       float: left;
-      height: 67px;
+      height: 70px;
+      min-width: 60px;
       line-height: $nav-height;
-      min-width: 99px;
       text-align: center;
-      border-bottom: 3px solid transparent;
+      padding: 0 10px;
       .navbar-down-icon {
         background: url('./images/navbar-down-icon.png') no-repeat left;
         width: 11px;
@@ -161,13 +169,15 @@
         position: relative;
         font-size: 14px;
         color: $font-dark;
-        padding: 0px 20px;
+        padding: 0px 15px;
         line-height: $nav-height;
         z-index: 12;
         background-color: transparent;
         text-align: center;
         transition: background 0.3s ease;
         cursor: pointer;
+        height: 70px;
+        box-sizing: border-box;
         &:after {
           content: "";
           transition: background 0.3s ease;
@@ -176,33 +186,30 @@
           background: url('./images/nav-hot-icon.png');
           width: 20px;
           height: 26px;
-          display: block;
+          display: inline-block;
           /*transform: translate(35px, 24px);*/
-          position: absolute;
-          right: -4px;
-          top: 15px;
+          position: relative;
         }
       }
 
       &:hover, &:active {
         > a {
           color: $new-main-deep-color;
-
+          border-bottom: 3px solid $new-main-deep-hover-color;
         }
-        border-bottom: 3px solid $new-main-deep-hover-color;
       }
 
     }
 
-  /*  .navbar-slide-underline {
-      background: $new-main-deep-hover-color;
-      width: 96px;
-      height: 3px;
-      position: absolute;
-      top: 67px;
-      left: 196px;
-      z-index: 11;
-    }*/
+    /*  .navbar-slide-underline {
+        background: $new-main-deep-hover-color;
+        width: 96px;
+        height: 3px;
+        position: absolute;
+        top: 67px;
+        left: 196px;
+        z-index: 11;
+      }*/
   }
 </style>
 
@@ -210,7 +217,6 @@
   @import '../../../gameCenter/misc/mixin';
   //公共样式 begin
   .gl-main-navbar {
-
     .nav {
       > li {
         &:hover, &.active {
@@ -237,14 +243,15 @@
 
     .nav-channel-container {
       position: absolute;
-      background: $def-white-color;
+      background: #fcfcfc;
       height: 180px;
       z-index: 12;
-      left: 50%;
+      left:29.2%;
       top: 70px;
       transform: scaleY(0) translateX(-50%);
       width: 100vw;
       margin: 0 auto;
+      box-shadow: 0 1px 5px #ddd inset;
 
       .nav-channel-content {
         width: 1200px;
@@ -294,13 +301,13 @@
       .classic-title {
         position: relative;
         float: left;
-        width: 22px;
+        width: 19px;
         height: 80px;
         padding: 10px 19px;
         z-index: 14;
-        font-size: 16px;
-        line-height: 17px;
-        color: $new-inverse-color;
+        font-size: 14px;
+        line-height: 15px;
+        color: #323232;
         text-align: center;
         word-wrap: break-word;
       }
@@ -313,25 +320,26 @@
         flex-direction: column;
         flex-wrap: wrap;
         &.constantly {
-          width: 400px;
+          width: 404px;
         }
         &.eleven {
-          width: 100px;
+          width: 101px;
         }
         &.3d {
-          width: 100px;
+          width: 101px;
         }
         &.happy {
-          width: 100px;
+          width: 101px;
         }
         li {
           display: inline-block;
           vertical-align: middle;
           list-style-type: none;
-          width: 105px;
+          width: 101px;
           height: 34px;
           position: relative;
           line-height: 34px;
+          text-align: left;
 
           .navbar-ticket-chavon {
             background: url('./images/navbar-ticket-chavon.png');
@@ -344,7 +352,7 @@
 
           a {
             font-size: 12px;
-            color: $new-inverse-color;
+            color: #858585;
             transition: color .3s;
           }
           &:hover, &:active {
@@ -373,31 +381,36 @@
         background: url('./images/navbar-ticket-icon-new.png');
         margin-left: 3px;
       }
+      .sfa-badge-new {
+        position: absolute;
+        top: 9px;
+        margin-left: 3px;
+      }
       //彩票菜单-特有 end
 
       //体育菜单-特有
- /*     .list-item {
-        display: inline-block;
-        vertical-align: top;
-        color: $font-dark;
-        font-size: 14px;
-        margin-right: 55px;
-        margin-bottom: 20px;
+      /*     .list-item {
+           display: inline-block;
+           vertical-align: top;
+           color: $font-dark;
+           font-size: 14px;
+           margin-right: 55px;
+           margin-bottom: 20px;
 
-        .sfa-mall-sport-icon {
-          width: 25px;
-          height: 25px;
-          background: darken($font-auxiliary-color, 50%);;
-          border-radius: 20px;
-          margin-right: 20px;
-        }
-        .list-item-title {
-          background: transparent;
-          color: $font-dark;
-          line-height: 25px;
-          vertical-align: top;
-        }
-      }*/
+           .sfa-mall-sport-icon {
+             width: 25px;
+             height: 25px;
+             background: darken($font-auxiliary-color, 50%);;
+             border-radius: 20px;
+             margin-right: 20px;
+           }
+           .list-item-title {
+             background: transparent;
+             color: $font-dark;
+             line-height: 25px;
+             vertical-align: top;
+           }
+         }*/
       //体育菜单-特有 end
 
       //真人菜单,老虎机，捕鱼,-特有 begin
@@ -416,15 +429,15 @@
         border-right: 1px solid #f0f0f0;
         padding: 40px 0 0 35px;
         text-align: left;
-        &:last-child{
+        &:last-child {
           border-right: 0;
         }
-        &.slot{
+        &.slot {
           width: 430px;
           height: 149px;
           padding: 31px 0 0 50px;
         }
-        &.fish{
+        &.fish {
           width: 392px;
           height: 155px;
           padding: 25px 0 0 88px;
@@ -432,7 +445,7 @@
         > div {
           @include inline-block-list();
         }
-        .entry-coming-soon{
+        .entry-coming-soon {
           position: absolute;
           top: 0;
           left: 0;
@@ -440,7 +453,6 @@
           height: 68px;
           background: url(./images/entry-coming-soon.png);
         }
-
 
       }
 
@@ -452,7 +464,7 @@
         background-repeat: no-repeat;
 
         &.icon-real-ag {
-          background-image: url('./images/icon-real-ag.png')  ;
+          background-image: url('./images/icon-real-ag.png');
         }
         &.icon-real-ebet {
           background-image: url('./images/icon-real-ebet.png');
@@ -488,17 +500,30 @@
         }
       }
 
-      .entry-down{
+      .entry-down {
         font-size: 12px;
         color: #4dafb9;
-        .entry-qrcode{
+        .entry-qrcode {
           display: inline-block;
           width: 16px;
-          height:15px;
+          height: 15px;
           margin: 0 5px 0 5px;
-          background: url(./images/entry-qrcode.png) ;
+          background: url(./images/entry-qrcode.png);
           vertical-align: middle;
         }
+        &.disabled {
+          color: #999;
+          cursor: default;
+          .entry-qrcode {
+            display: inline-block;
+            width: 16px;
+            height: 15px;
+            margin: 0 5px 0 5px;
+            background: url(./images/entry-qrcode-disabled.png);
+            vertical-align: middle;
+          }
+        }
+
       }
 
       .entry-item-content {
@@ -538,13 +563,17 @@
           background: $new-main-deep-color;
           color: white !important;
         }
+        &.disabled {
+          &:hover, &:active {
+            background: $def-white-color;
+            color: $def-black-color !important;
+          }
+        }
       }
-
 
       //真人菜单,老虎机，捕鱼,-特有 begin
 
     }
-
   }
 
 

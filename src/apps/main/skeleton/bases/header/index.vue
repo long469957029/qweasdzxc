@@ -65,7 +65,7 @@
           </div>
           <div class="js-header-announcement header-announcement active">
             <span class="sfa sfa-announcement "></span><span class="header-announcement-title ">消息</span>
-            <span class="js-header-announcement-num header-announcement-num"
+            <span :class="'js-header-announcement-num header-announcement-num '+ (newRowCount>9?'header-announcement-num-two':'')"
                   v-if="newRowCount > 0">{{newRowCount}}</span>
             <div class="header-announcement-place" @click="goToAnnouncement"></div>
             <div class="js-header-announcement-body header-announcement-body">
@@ -389,7 +389,7 @@
     .header-customer-entry {
       padding: 0 12px;
       height: 40px;
-      width: 57px;
+      width: 71px;
       line-height: 40px;
       font-size: 13px;
       text-align: center;
@@ -553,16 +553,17 @@
           height: 222px;
           left: 64px;
           margin-left: -65px;
+          font-size: 0;
           &:after{
             content:'';
             width: 0;
             height: 0;
-            border-bottom: 5px;
+            border-bottom: 3px;
             border-style: solid;
             border-color: #fff;
             position: absolute;
-            top: -5px;
-            left: 25%;
+            top: -4px;
+            left: 23.5%;
             transform: rotate(45deg)
           }
           .header-menu-body-agent-item {
@@ -605,6 +606,7 @@
                 display: block;
                 height: 35px;
                 margin: 0 7px;
+                font-size: 12px;
               }
               &:hover {
                 color: $new-main-deep-color;
@@ -621,7 +623,14 @@
             .header-menu-item-img {
               color: $font-auxiliary-color;
               font-size: 16px;
-              vertical-align: text-bottom;
+              vertical-align: baseline;
+            }
+            .header-menu-item-text {
+              display: block;
+              height: 39px;
+              line-height: 39px;
+              margin-left: 5px;
+              font-size: 12px;
             }
           }
         }
@@ -699,6 +708,9 @@
           text-align: center;
           text-indent: 0px;
         }
+        .header-announcement-num-two{
+          text-indent: -3px;
+        }
         .header-announcement-place {
           position: absolute;
           left: 0;
@@ -725,12 +737,12 @@
             content:'';
             width: 0;
             height: 0;
-            border-bottom: 5px;
+            border-bottom: 3px;
             border-style: solid;
             border-color: #fff;
             position: absolute;
-            top: -5px;
-            left: 50%;
+            top: -4px;
+            left: 62%;
             transform: rotate(45deg)
           }
 

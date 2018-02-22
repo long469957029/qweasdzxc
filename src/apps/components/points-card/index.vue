@@ -337,19 +337,20 @@
   }
   .show {
     width: 270px;
-    height: 150px;
+    height: 140px;
     overflow: hidden;
+    margin-top: 10px;
     .points-card {
       width: 255px;
-      height: 150px;
+      height: 140px;
       margin: 0;
       display: inline-block;
       overflow: hidden;
       .points-card-inner {
         width: 255px;
-        height: 150px;
+        height: 140px;
         margin: 0px;
-        padding: 20px 0 10px 30px;
+        padding: 20px 0 10px 27px;
         .card-time-end {
           background: url(./card-time-end.png);
           width: 57px;
@@ -359,7 +360,7 @@
           right: 0;
         }
         .points-top {
-          padding-top: 10px;
+          padding-top: 8px;
           padding-bottom: 0px;
           .card-value {
             font-size: 30px;
@@ -369,8 +370,8 @@
             }
           }
           .card-badge {
-            height: 24px;
-            line-height: 22px;
+            height: 22px;
+            line-height: 20px;
             background-color: rgba(184, 184, 186, .07);
             border-radius: 12px;
             border: solid 1px #ffffff;
@@ -379,21 +380,26 @@
             display: inline-block;
             padding: 0 5px;
             margin-right: 10px;
+            opacity:0.8;
           }
         }
         .points-center {
           .points-range {
             font-size: 14px;
             padding-bottom: 0px;
-            padding-top: 5px;
+            padding-top: 2px;
           }
         }
         .points-bottom-wrapper {
           .points-bottom {
             .points-type {
-
+              font-size: 12px;
+              margin-bottom: 0px;
+              opacity:0.8;
             }
             .points-bottom-inner {
+              height: 26px;
+              opacity:0.8;
               .points-expire {
 
               }

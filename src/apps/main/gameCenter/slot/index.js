@@ -98,6 +98,8 @@ const SlotCenterView = Base.ItemView.extend({
 
     self.$gameList = self.$('.js-sc-content-container')
 
+    self.$('.js-channel-select').find('option[value="'+(_.getUrlParam('channelId')||'')+'"]').prop('selected',true)
+
     self.renderHotGame()
     self.renderRewardList()
     self.renderGameList()
@@ -302,7 +304,10 @@ const SlotCenterView = Base.ItemView.extend({
   },
 
   jumpIntoGameHandler(e) {
-    const self = this
+    if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+      Global.ui.notification.show('试玩会员无法进行转账操作，请先注册正式游戏账号')
+      return false
+    }
     const $target = $(e.currentTarget)
     const type = $target.data('type')
     // if(type === 1){ // 需要调用免费试玩的接口   暂时还没有  先这么写
@@ -324,7 +329,7 @@ const SlotCenterView = Base.ItemView.extend({
           const data = {
             token: Global.cookieCache.get('token'),
             gameId: $target.data('game-id'),
-            type: $target.data('type'),
+            type: type,
             device: 0,
           }
           let resRoot = ''
