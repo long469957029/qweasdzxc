@@ -20,10 +20,18 @@
                 <div class="task-cell" :class="{selected: award.selected}">
                   <div class="task-cell-inner">
                     <div class="task-item">
-                      <div class="points-ticket sfa sfa-pt-task-allowance">
-                        <span class="task-item-title">现金券</span>
-                        <span class="task-item-val"><span class="">¥</span>20</span>
+                      <!-- 谢谢惠顾 -->
+                      <div v-if="award.awardTypeId === 0"></div>
+                      <!-- 券 -->
+                      <div class="points-ticket sfa" :class="`sfa-pt-${chest.style1}`" v-else-if="award.awardTypeId === 1">
+                        <span class="task-item-title">{{award.couponName}}</span>
+                        <span class="task-item-val" v-if="award.conditionType === 2">{{award.conditionNumber}}%</span>
+                        <span class="task-item-val" v-else><span class="task-item-unit">¥</span>{{award.conditionNumber}}</span>
                       </div>
+                      <!-- 商品 -->
+                      <img :src="award.picUrl" class="gift-pic" v-else-if="award.awardTypeId === 2" />
+                      <!-- 积分 -->
+                      <div class="sfa-pt-task-points" v-else-if="award.awardTypeId === 3"></div>
                     </div>
                     <div class="task-badge">{{award.desc}}</div>
                   </div>
@@ -31,10 +39,10 @@
               </div>
             </div>
             <div class="task-button">
-              <button class="points-btn btn btn-orange" @click="lottery(0)">
+              <button class="points-btn btn btn-orange" @click="lottery(0)" :disabled="pushing">
                 {{currentIntegralRob | convert2yuan}} 积分夺宝
               </button>
-              <button class="currency-btn btn" @click="lottery(1)">
+              <button class="currency-btn btn" @click="lottery(1)" :disabled="pushing">
                 {{currentCashRob | convert2yuan}}元 现金夺宝
               </button>
             </div>
@@ -77,9 +85,9 @@
             <div class="lucky-prize">
               <div class="lucky-prize-inner">
                 <!-- 券 -->
-                <div class="sfa sfa-pt-lucky-currency" v-if="chest.awardTypeId === 1">
-                  <span class="lucky-type">现金券</span>
-                  <span class="lucky-val">50</span>
+                <div class="sfa" :class="`sfa-pt-${chest.style2}`" v-if="chest.awardTypeId === 1">
+                  <span class="lucky-type">{{chest.couponName}}</span>
+                  <!--<span class="lucky-val" >{{chest.conditionNumber}}{{chest.conditionUnit}}</span>-->
                 </div>
                 <!-- 商品 -->
                 <img :src="chest.picUrl" class="gift-pic" v-else-if="chest.awardTypeId === 2" />
@@ -91,8 +99,10 @@
           </div>
           <div class="lucky-prize-name" v-if="chest.awardTypeId === 1">积分{{chest.integral | convert2yuan}}</div>
           <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 2">{{chest.itemName}}</div>
-          <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 3">积分{{chest.integral | convert2yuan}}</div>
-          <button class="lucky-exchange-btn btn" @click="luckChest(chest)">
+          <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 3">
+            {{chest.mainDesc}} {{chest.conditionNumber}}{{chest.conditionUnit}}
+          </div>
+          <button class="lucky-exchange-btn btn" @click="luckChest(chest)" :disabled="pushing">
             <span class="sfa sfa-pt-lucky-star-points"></span>
             <span class="lucky-exchange-title">{{chest.lucky}} 幸运值{{chest.rate === 10000 ? '兑换' : '碰运气'}}</span>
           </button>
@@ -101,29 +111,85 @@
     </div>
 
     <div v-transfer-dom>
+      <!-- 抽奖结果 中 -->
       <x-dialog v-if="isShowPrized" @modal-hidden="isShowPrized = false" type="arc">
         <div slot="head-main">恭喜您成功获得！</div>
         <div class="prize-main">
-          <div class="prize-pic">
-            <div class="sfa sfa-pt-lucky-currency">
-              <span class="lucky-type">现金券</span>
-              <span class="lucky-val">50</span>
-            </div>
+          <div class="prize-pic-wrapper">
+            <!-- 券 -->
+            <template v-if="lotteryResult.awardTypeId === 1">
+              <div class="points-ticket sfa" :class="`sfa-pt-${chest.style1}`" v-if="currentLotteryType === 0">
+                <span class="task-item-title">{{lotteryResult.couponName}}</span>
+                <span class="task-item-val" v-if="lotteryResult.conditionType === 2">{{lotteryResult.conditionNumber}}%</span>
+                <span class="task-item-val" v-else><span class="task-item-unit">¥</span>{{lotteryResult.conditionNumber}}</span>
+              </div>
+              <div class="sfa" :class="`sfa-pt-${chest.style2}`" v-else>
+                <span class="lucky-type">{{lotteryResult.couponName}}</span>
+              </div>
+            </template>
+            <!-- 商品 -->
+            <img :src="lotteryResult.picUrl" class="prize-pic" v-else-if="lotteryResult.awardTypeId === 2" />
+            <!-- 积分 -->
+            <div class="icon-points" v-else="lotteryResult.awardTypeId === 3"></div>
+
           </div>
-          <div class="lucky-brief">充值1000返20元</div>
-          <div class="lucky-expire">有效期至：2017-09-08    17:22:51</div>
+          <div class="lucky-brief" v-if="lotteryResult.awardTypeId === 1">{{lotteryResult.mainDesc}}</div>
+          <div class="lucky-brief" v-if="lotteryResult.brief">{{lotteryResult.brief}}</div>
+          <div class="lucky-expire" v-if="lotteryResult.validEndDate">有效期至：{{lotteryResult.validEndDate | toTime}}</div>
+          <div class="lucky-points-prize" v-if="lotteryResult.integral">
+            <div class="icon-points-title"></div>
+            <div class="">积分{{lotteryResult.integral | convert2yuan}}</div>
+          </div>
         </div>
         <div class="btn-panel">
-          <button class="btn btn-modal-confirm">确定</button>
+          <button class="btn btn-modal-confirm" @click="prizeConfirm">确定</button>
         </div>
       </x-dialog>
+
+      <x-dialog v-if="isShowLose" @modal-hidden="isShowLose = false">
+        <div slot="all" class="lose-main">
+          <a data-dismiss="modal" class="close btn-close">×</a>
+          <div class="icon-smiley"></div>
+          <div class="lose-brief">谢谢您的参与！</div>
+          <div class="btn-panel">
+            <button class="btn btn-lose-confirm" @click="isShowLose = false">确认</button>
+          </div>
+        </div>
+      </x-dialog>
+
+      <!-- 抽奖条件不满足 -->
+      <x-dialog v-if="isShowFailed" @modal-hidden="isShowFailed = false" type="arc">
+        <div slot="head-main">夺宝失败</div>
+        <div class="fail-main">
+          <div class="icon-chest"></div>
+          <div class="lucky-points-prize" v-if="currentType === 0">
+            <div class="icon-points-title"></div>
+            您的积分不足以本次夺宝！
+          </div>
+          <div class="lucky-points-prize" v-else>
+            <div class="icon-balance-not-enough"></div>
+            您的积分不足以本次夺宝！
+          </div>
+        </div>
+        <div class="btn-panel">
+          <button class="btn btn-modal-confirm" @click="isShowFailed = false">确定</button>
+        </div>
+      </x-dialog>
+
+      <points-address v-if="isShowAddressModal" type="select"
+                      @modal-hidden="isShowAddressModal = false"
+                      @address-selected="addAddress"
+      ></points-address>
+
+
     </div>
   </div>
 </template>
 
 <script>
-  import {getTaskListApi, lotteryApi, luckyApi} from 'api/points'
+  import {getTaskListApi, lotteryApi, luckyApi, addAddressToGiftApi} from 'api/points'
   import {formatCoupon} from 'build'
+  import PointsAddress from '../points-address'
 
   const awardType = [
     {
@@ -147,7 +213,9 @@
   export default {
     name: 'points-lottery',
 
-    components: {},
+    components: {
+      PointsAddress
+    },
 
     data() {
       return {
@@ -184,8 +252,18 @@
         winnerTimer: null,
 
 
+        //currentType 当前玩法 积分、元
+        currentType: 0,
         //弹窗
-        isShowPrized: false
+        isShowPrized: false,
+        isShowLose: false,
+        isShowAddressModal: false,
+        isShowFailed: false,
+
+        lotteryResult: {},
+        currentLotteryType: 0,
+
+        pushing: false,
       }
     },
 
@@ -209,12 +287,32 @@
         getTaskListApi(({data}) => {
           if (data && data.result === 0) {
             this.awards = data.root.awards
-            this.awards.forEach((award) => {
-              this.$set(award, 'selected', false)
+
+            this.awards.push({
+              awardTypeId: 0,
+              desc: '谢谢惠顾'
             })
-            this.awards10 = data.root.awards10
-            this.awards10.forEach((award) => {
+            _.each(this.awards, (award) => {
               this.$set(award, 'selected', false)
+
+              if (award.awardTypeId === 1) {
+                Object.assign(award, this.couponFormat(award))
+              }
+            })
+
+            this.awards10 = data.root.awards10
+
+            this.awards10.push({
+              awardTypeId: 0,
+              desc: '谢谢惠顾'
+            })
+
+            _.each(this.awards10, (award) => {
+              this.$set(award, 'selected', false)
+
+              if (award.awardTypeId === 1) {
+                Object.assign(award, this.couponFormat(award))
+              }
             })
 
             this.cashRob = data.root.cashRob
@@ -235,20 +333,25 @@
 
             _.each(this.chestList, (chest) => {
               if (chest.awardTypeId === 1) {
-                formatCoupon({
-                  bigShowNum: chest.bigShowNum,
-                  type: chest.type,
-                  threholdAmount: chest.threholdAmount,
-                  bonusPercentAmount: chest.bonusPercentAmount,
-                  statType: chest.statType,
-                  ticketId: chest.ticketId,
-                  gameType: chest.gameType,
-                })
+                Object.assign(chest, this.couponFormat(chest))
               }
             })
           }
         })
       },
+
+      couponFormat(couponInfo) {
+        return formatCoupon({
+          bigShowNum: couponInfo.bigShowNum,
+          type: couponInfo.type,
+          threholdAmount: couponInfo.threholdAmount,
+          bonusPercentAmount: couponInfo.bonusPercentAmount,
+          statType: couponInfo.statType,
+          ticketId: couponInfo.ticketId,
+          gameType: couponInfo.gameType,
+        })
+      },
+
       normalRoll() {
         this.timer = setInterval(() => {
 
@@ -272,25 +375,157 @@
         }, 3000)
       },
       lottery(type) {
+        this.pushing = true
+        this.currentType = type
+        this.currentLotteryType = 0
         lotteryApi({
           type,
           lotteryType: this.currentLottery
         }, ({data}) => {
           if (data && data.result === 0) {
-            this.getData()
+            //进行动画
+
+            this.startLotteryAnimation(data.root, () => {
+              this.lotteryResult = data.root
+
+              switch (data.root.awardTypeId) {
+                case 0:
+                  //谢谢惠顾
+                  this.isShowLose = true
+                  break;
+                //券
+                case 1:
+                  this.isShowPrized = true
+
+                  this.lotteryResult = {
+                    ...this.lotteryResult,
+                    ...formatCoupon({
+                      bigShowNum: this.lotteryResult.bigShowNum,
+                      type: this.lotteryResult.type,
+                      threholdAmount: this.lotteryResult.threholdAmount,
+                      bonusPercentAmount: this.lotteryResult.bonusPercentAmount,
+                      statType: this.lotteryResult.statType,
+                      ticketId: this.lotteryResult.ticketId,
+                      gameType: this.lotteryResult.gameType,
+                    })
+                  }
+                  break;
+                //实体
+                case 2:
+                  this.isShowPrized = true
+                  this.lotteryResult.brief = this.lotteryResult.itemName
+                  break;
+                //积分
+                case 3:
+                  this.isShowPrized = true
+                  break;
+                default:
+                  break;
+              }
+              this.getData()
+              this.$store.dispatch(types.CHECK_LOGIN_STATUS)
+              this.$store.dispatch(types.GET_USER_MALL_INFO)
+            })
+
+          } else {
+            if (data.msg.includes('不足')) {
+              this.isShowFailed = true
+            } else {
+              Global.ui.notification.show(data.msg || '')
+            }
           }
         })
+          .finally(() => {
+            this.pushing = false
+          })
       },
+
+      startLotteryAnimation(lotteryResult, completed) {
+        //todo
+        completed()
+      },
+
       luckChest(chestInfo) {
+        this.pushing = true
+        this.currentLotteryType = 1
         luckyApi({
           id: chestInfo.id
         }, ({data}) => {
           if (data && data.result === 0) {
+            this.lotteryResult = data.root
+
+            switch (data.root.awardTypeId) {
+              case 0:
+                //谢谢惠顾
+                this.isShowLose = true
+                break;
+              //券
+              case 1:
+                this.isShowPrized = true
+
+                this.lotteryResult = {
+                  ...this.lotteryResult,
+                  ...formatCoupon({
+                    bigShowNum: this.lotteryResult.bigShowNum,
+                    type: this.lotteryResult.type,
+                    threholdAmount: this.lotteryResult.threholdAmount,
+                    bonusPercentAmount: this.lotteryResult.bonusPercentAmount,
+                    statType: this.lotteryResult.statType,
+                    ticketId: this.lotteryResult.ticketId,
+                    gameType: this.lotteryResult.gameType,
+                  })
+                }
+                break;
+              //实体
+              case 2:
+                this.isShowPrized = true
+                this.lotteryResult.brief = this.lotteryResult.itemName
+                break;
+              //积分
+              case 3:
+                this.isShowPrized = true
+                break;
+              default:
+                break;
+            }
+
             this.getData()
-            this.isShowPrized = true
+            this.$store.dispatch(types.GET_USER_MALL_INFO)
           }
         })
-      }
+          .finally(() => {
+            this.pushing = false
+          })
+      },
+      prizeConfirm() {
+        this.isShowPrized = false
+        if (this.lotteryResult.awardTypeId === 2) {
+          this.isShowAddressModal = true
+        }
+      },
+
+      addAddress(addressInfo) {
+        addAddressToGiftApi({
+          itemId: this.lotteryResult.rid,
+          addressId: addressInfo.rid,
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            this.isShowAddressModal = false
+            this.$store.dispatch(types.GET_USER_MALL_INFO)
+
+            Global.ui.notification.show(`<div class="m-bottom-lg">添加地址成功!</div>`, {
+              type: 'success',
+              hasFooter: false,
+              displayTime: 1000,
+              size: 'modal-xs',
+              bodyClass: 'no-border no-padding',
+              closeBtn: false,
+            })
+          } else {
+            Global.ui.notification.show(data.msg)
+          }
+        })
+      },
     },
 
     computed: {
@@ -485,7 +720,6 @@
   .lottery-list-left {
     flex: 1;
     padding-left: 55px;
-    /* vertical-align: bottom; */
   }
 
   .lottery-list-right {
@@ -616,7 +850,6 @@
   }
 
   .sfa-pt-lucky-currency {
-    /* line-height: 85px; */
     color: #ffffff;
     font-size: 14px;
     display: flex;
@@ -690,10 +923,6 @@
     font-size: 16px;
   }
 
-  /*.switch-label:hover {*/
-    /*color: #fff;*/
-  /*}*/
-
   .switch-input {
     display: none;
   }
@@ -729,6 +958,14 @@
     margin-top: -50px;
   }
 
+  .icon-chest {
+    background-image: url(./misc/icon-chest.png);
+    width: 154px;
+    height: 132px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
   .gift-pic {
     width: 110px;
     height: 110px;
@@ -743,8 +980,13 @@
       margin-top: 40px;
     }
 
-    .prize-pic {
+    .prize-pic-wrapper {
       padding-bottom: 15px;
+    }
+
+    .prize-pic {
+      width: 120px;
+      height: 120px;
     }
 
     .lucky-brief {
@@ -768,8 +1010,75 @@
 
     .btn-panel {
       text-align: center;
-      margin: 30px;
+      margin: 30px 0;
+    }
+
+    .icon-points {
+      background: url(./misc/icon-points.jpg);
+      width: 134px;
+      height: 98px;
+    }
+  }
+  .lucky-points-prize {
+    display: flex;
+    font-size: 16px;
+    color: #666666;
+    align-items: center;
+  }
+  //积分不足
+  .icon-points-title {
+    background-image: url(./misc/icon-points-title.png);
+    width: 23px;
+    height: 23px;
+    margin-right: 5px;
+  }
+  //余额不足
+  .icon-balance-not-enough {
+    background-image: url(./misc/icon-balance-not-enough.png);
+    width: 25px;
+    height: 27px;
+  }
+
+  //谢谢惠顾
+  .icon-smiley {
+    background: url(./misc/icon-smiley.png);
+    width: 64px;
+    height: 65px;
+    margin-bottom: 22px;
+  }
+
+  .lose-main {
+    width: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 46px;
+
+    .btn-panel {
+      width: 100%;
+      text-align: center;
+      padding: 17px 0 24px;
+      border-top: 1px solid #e6e6e6;
+    }
+    .lose-brief {
+      font-size: 14px;
+      letter-spacing: 0px;
+      margin-bottom: 30px;
+      color: #666666;
+    }
+
+    .btn-lose-confirm {
+      width: 108px;
+      height: 36px;
+      background-color: #14b1bb;
+      border-radius: 3px;
     }
   }
 
+  .fail-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 </style>

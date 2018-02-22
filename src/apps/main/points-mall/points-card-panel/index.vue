@@ -242,7 +242,6 @@
               closeBtn: false,
             })
 
-            //todo 在当前页刷新
             this.getData()
 
             this.$store.dispatch(types.GET_USER_MALL_INFO)

@@ -240,7 +240,7 @@
             this.isShowAddressModal = false
             this.isShowExchangeModal = false
             this.$store.dispatch(types.GET_USER_MALL_INFO)
-            //todo 在当前页刷新
+
             this.getData()
 
             Global.ui.notification.show(`<div class="m-bottom-lg">兑换成功!</div>`, {
