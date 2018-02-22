@@ -42,7 +42,8 @@ export const SSC = {
   positions: ['万位', '千位', '百位', '十位', '个位'],
   trend: true,
   abbreviated: true,
-  playSeriesIdList: sccPlaySeriesIdList
+  playSeriesIdList: sccPlaySeriesIdList,
+  helpRutter: 'DnsCourse',
 }
 
 export const CHOOSE15 = {

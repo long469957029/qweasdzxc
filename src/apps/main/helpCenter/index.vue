@@ -3,11 +3,11 @@
     <div class="helpCenter-panel">
       <div class="hc-select-bar inline-block">
         <div class="hc-select-bar-desc">
-          <div class="hc-desc-text-lg inline-block">H</div>
-          <div class="inline-block">
-            <div class="hc-desc-text">帮助中心</div>
-            <div><span class="hc-desc-text-sm">elp</span><span class="hc-desc-text-sm">center</span></div>
-          </div>
+          <!--<div class="hc-desc-text-lg inline-block">H</div>-->
+          <!--<div class="inline-block">-->
+            <!--<div class="hc-desc-text">帮助中心</div>-->
+            <!--<div><span class="hc-desc-text-sm">elp</span><span class="hc-desc-text-sm">center</span></div>-->
+          <!--</div>-->
         </div>
         <div class="hc-select-bar-item" @click="checkTab(1)" :class="['res-desc-btn',{'active': tType === 1}]">
           <span class="item-img new"></span>
@@ -158,7 +158,7 @@
       width: 200px;
       /*min-height: 850px;*/
       background-color: #f8f8f8;
-      .hc-select-bar-desc {
+      /*.hc-select-bar-desc {
         padding: 45px 40px;
         border-bottom: 1px solid #e6e6e6;
         .hc-desc-text-lg {
@@ -175,6 +175,11 @@
           font-size: 12px;
           margin-right: 3px;
         }
+      }*/
+      .hc-select-bar-desc {
+        width: 200px;
+        height: 132px;
+        background: url('./misc/help-center-title.png') no-repeat center;
       }
       .hc-select-bar-item {
         cursor: pointer;

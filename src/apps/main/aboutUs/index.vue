@@ -3,11 +3,11 @@
     <div class="aboutUs-panel">
       <div class="ab-select-bar inline-block">
         <div class="ab-select-bar-desc">
-          <div class="ab-desc-text-lg inline-block">A</div>
-          <div class="inline-block">
-            <div class="ab-desc-text">关于我们</div>
-            <div><span class="ab-desc-text-sm">bout</span><span class="ab-desc-text-sm">us</span></div>
-          </div>
+          <!--<div class="ab-desc-text-lg inline-block">A</div>-->
+          <!--<div class="inline-block">-->
+            <!--<div class="ab-desc-text">关于我们</div>-->
+            <!--<div><span class="ab-desc-text-sm">bout</span><span class="ab-desc-text-sm">us</span></div>-->
+          <!--</div>-->
         </div>
         <div class="ab-select-bar-item" :class="{active: currentView === 'AboutUs'}" @click="toggleTabs(AboutUs)">
           <span class="item-img ab"></span>
@@ -108,7 +108,7 @@
       width: 200px;
       /*min-height: 850px;*/
       background-color: #f8f8f8;
-      .ab-select-bar-desc {
+      /*.ab-select-bar-desc {
         padding: 45px 40px;
         border-bottom: 1px solid #e6e6e6;
         .ab-desc-text-lg {
@@ -125,6 +125,11 @@
           font-size: 12px;
           margin-right: 3px;
         }
+      }*/
+      .ab-select-bar-desc {
+        width: 200px;
+        height: 132px;
+        background: url('./misc/about-us-title.png') no-repeat center;
       }
       .ab-select-bar-item {
         cursor: pointer;
