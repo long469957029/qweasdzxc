@@ -43,7 +43,7 @@
     props: {
       hasData: {
         Type: Boolean,
-        default: false,
+        default: true,
       },
       //loading completed
       status: {
@@ -61,7 +61,7 @@
       },
       height: {
         type: String,
-        default: 'auto'
+        default: ''
       }
     }
   }

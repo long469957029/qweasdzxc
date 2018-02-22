@@ -30,16 +30,28 @@
                 <router-link to="rc" class="db-game-ad db-ah-ad"></router-link>
                 <div class="carousel-table-content">
                   <div class="dashboard-row-inner">
-                    <div class=" content-item-2x db-ah-bjl clearfix">
+                    <div class="content-item-2x db-ah-bjl clearfix">
+                      <div class="content-text">
+                        <div>百家乐游戏规则简单，是世界各地赌场中受欢迎</div>
+                        <div>的扑克游戏</div>
+                      </div>
                       <router-link to="rc" class="db-ah-play-btn db-ah-play-btn-blue">立即游戏</router-link>
                     </div>
                     <div class="clearfix"></div>
                   </div>
                   <div class="dashboard-row-inner">
                     <div class="db-ah-sb clearfix">
+                      <div class="content-text">
+                        <div>游戏节奏明快，投注组合丰富</div>
+                        <div>深受亚洲人喜爱</div>
+                      </div>
                       <router-link to="rc" class="db-ah-play-btn db-ah-play-btn-green ">立即游戏</router-link>
                     </div>
                     <div class="db-ah-lp clearfix">
+                      <div class="content-text">
+                        <div>游戏规则简单，投注方式多样</div>
+                        <div>趣味十足</div>
+                      </div>
                       <router-link to="rc" class="db-ah-play-btn db-ah-play-btn-purple ">立即游戏</router-link>
                     </div>
                     <div class="clearfix"></div>
@@ -180,13 +192,6 @@
           }
         }
       )
-      // getMallHotListApi(
-      //   ({data}) => {
-      //     if (data && data.result === 0) {
-      //       this.mallList = data.root.records || this.mallList
-      //     }
-      //   }
-      // )
     },
     destroyed() {
       this.clearGameInv()
@@ -433,11 +438,19 @@
       width: 295px;
       height: 197px;
     }
+    .content-text{
+      display: block;
+      font-size: $font-xs;
+      color: $new-inverse-color;
+      margin-top: 60px;
+      margin-left: 29px;
+      line-height: 18px;
+    }
     .db-ah-play-btn {
       position: relative;
       width: 120px;
       height: 38px;
-      margin-top: 140px;
+      margin-top: 45px;
       margin-left: 27px;
       border: 1px solid #fff;
       border-radius: 19px;

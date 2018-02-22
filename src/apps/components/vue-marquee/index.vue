@@ -8,9 +8,10 @@
   export default {
     name: "vue-marquee",
     props:{
-      speed:{  // 速度 毫秒
+      // 速度 1:1px
+      speed:{
         type: Number,
-        default:60000
+        default: 50
       },
       scollWidth:{
         type: Number,
@@ -23,7 +24,9 @@
     },
     data(){
       return{
+        //总长度
         initialLeft: 0,
+        //当前长度
         currentLeft: 0
       }
     },
@@ -32,10 +35,17 @@
         if(this.content !== ''){
           this.$nextTick(() => {
             this.currentLeft = this.initialLeft = this.$refs.container.offsetWidth
+            this.stopScoll()
             this.startScoll()
           })
         }
       }
+    },
+
+    computed: {
+      duration() {
+        return (this.initialLeft * 2 - (this.initialLeft - this.currentLeft)) / this.speed * 1000000
+      },
     },
     methods:{
       startScoll(){
@@ -48,15 +58,17 @@
           left: -this.initialLeft
         }, {
           easing: 'linear',
-          duration: this.speed,
+          duration: this.duration,
           complete: () => {
+            this.currentLeft = this.scollWidth
             this.startScoll()
           }
         })
       },
       stopScoll(){
-        this.currentLeft = this.$refs.container.style.left
-        Velocity(this.$refs.container, 'stop')
+        console.log(this.$refs.container.offsetLeft)
+        this.currentLeft = this.$refs.container.offsetLeft
+        Velocity(this.$refs.container, 'stop', true)
       }
     },
   }
@@ -73,6 +85,7 @@
       left: 100%;
       /*min-width: 100%;*/
       height: 100%;
+      white-space: nowrap;
     }
   }
 </style>
