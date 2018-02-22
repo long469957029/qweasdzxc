@@ -64,10 +64,7 @@
         <div class="rc-reward-icon"></div>
         <div class="rc-reward-title">最新中奖信息：</div>
         <div class="rc-reward-list">
-          <!--<li v-for="(item,index) in prizeList" :key="index">-->
-            <!--恭喜{{item.userName}}在{{item.gameName}}中奖<span class="amount">{{_(item.prize).convert2yuan()}}</span>元-->
-          <!--</li>-->
-          <marquee :content="formatePrizeList"></marquee>
+          <marquee :content="formatePrizeList" :speed="20000" :scollWidth="975"></marquee>
         </div>
       </div>
     </div>
@@ -106,10 +103,11 @@
       ...mapGetters([
         'getLoginStatus'
       ]),
-      formatePrizeList:function () {
+      formatePrizeList() {
         let list = ''
-        this.prizeList.forEach((item) => {
-          list += `恭喜${item.userName}在${item.gameName}中奖<span class="amount">${_(item.prize).convert2yuan()}</span>元 /`
+        this.prizeList.forEach((item,index) => {
+          list += `恭喜${item.userName}在${item.gameName}中奖<span class="text-prominent">${_(item.prize).convert2yuan()}</span>元
+              ${index === this.prizeList.length -1 ? '' : '<span class="m-LR-sm">/</span>'}`
         })
         return list
       }
@@ -184,16 +182,15 @@
         getPrizeListApi({ gameType:1 },
           ({data}) => {
             if(data && data.result === 0){
-              this.prizeList = [...this.prizeList, ...data.root.records]
+              this.prizeList = [...data.root.records]
             }
           },
           ({data}) => {
-
           }
         )
         setTimeout(() => {
           this.getPrizeList()
-        },300000)
+        },3000)
       }
     },
     mounted(){
@@ -463,13 +460,7 @@
         height: 50px;
         float: left;
         line-height: 50px;
-        padding-left: 16px;
-
-        li {
-          display: inline-block;
-          font-size: 14px;
-          color: white;
-        }
+        /*padding-left: 16px;*/
 
         .amount {
           color: $prominent-color;
