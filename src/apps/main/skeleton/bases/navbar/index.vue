@@ -120,6 +120,16 @@
   $nav-item-vertical-padding: 5px;
   $navbar-container-color: white;
 
+  .nav-main {
+    height: $nav-height;
+    transition: height 0.5s ease-in-out;
+
+    * {
+      box-sizing: border-box;
+    }
+
+  }
+
   .nav {
     position: relative;
     .navbar-logo-li {
@@ -142,7 +152,7 @@
 
     > li {
       float: left;
-      height: 67px;
+      height: 70px;
       line-height: $nav-height;
       min-width: 99px;
       text-align: center;
@@ -210,7 +220,6 @@
   @import '../../../gameCenter/misc/mixin';
   //公共样式 begin
   .gl-main-navbar {
-
     .nav {
       > li {
         &:hover, &.active {
@@ -237,7 +246,7 @@
 
     .nav-channel-container {
       position: absolute;
-      background: $def-white-color;
+      background: #fcfcfc;
       height: 180px;
       z-index: 12;
       left: 50%;
@@ -245,6 +254,7 @@
       transform: scaleY(0) translateX(-50%);
       width: 100vw;
       margin: 0 auto;
+      box-shadow: 0 1px 5px #ddd inset;
 
       .nav-channel-content {
         width: 1200px;
@@ -332,6 +342,7 @@
           height: 34px;
           position: relative;
           line-height: 34px;
+          text-align: left;
 
           .navbar-ticket-chavon {
             background: url('./images/navbar-ticket-chavon.png');
@@ -499,6 +510,19 @@
           background: url(./images/entry-qrcode.png) ;
           vertical-align: middle;
         }
+        &.disabled{
+          color: #999;
+          cursor: default;
+          .entry-qrcode{
+            display: inline-block;
+            width: 16px;
+            height:15px;
+            margin: 0 5px 0 5px;
+            background: url(./images/entry-qrcode-disabled.png) ;
+            vertical-align: middle;
+          }
+        }
+
       }
 
       .entry-item-content {
@@ -537,6 +561,12 @@
         &:hover, &:active {
           background: $new-main-deep-color;
           color: white !important;
+        }
+        &.disabled{
+          &:hover, &:active {
+            background: $def-white-color;
+            color: $def-black-color !important;
+          }
         }
       }
 

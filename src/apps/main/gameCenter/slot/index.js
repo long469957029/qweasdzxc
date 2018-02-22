@@ -98,6 +98,8 @@ const SlotCenterView = Base.ItemView.extend({
 
     self.$gameList = self.$('.js-sc-content-container')
 
+    self.$('.js-channel-select').find('option[value="'+(_.getUrlParam('channelId')||'')+'"]').prop('selected',true)
+
     self.renderHotGame()
     self.renderRewardList()
     self.renderGameList()
