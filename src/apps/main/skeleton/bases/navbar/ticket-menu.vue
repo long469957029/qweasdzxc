@@ -21,11 +21,11 @@
           <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/21">韩国乐透1.5</a></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/27">东京1.5分彩</a></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/25">新加坡2分彩</a></li>
+          <li></li>
 
-          <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/31">QQ分分彩</a> <span
-            class="navbar-ticket-icon-new"></span></li>
-          <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/37">腾讯分分彩</a> <span
-            class="navbar-ticket-icon-new"></span></li>
+          <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/31">QQ分分彩</a><i class="sfa sfa-badge-new"></i>
+          </li>
+          <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/37">腾讯分分彩</a><i class="sfa sfa-badge-new"></i></li>
 
         </ul>
         <div class="classic-title">十一选五</div>
@@ -38,8 +38,7 @@
 
         <div class="classic-title">3D/低频</div>
         <ul class="container-list 3d">
-          <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/36">QQ3D分分彩</a> <span
-            class="navbar-ticket-icon-new"></span></li>
+          <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/36">QQ3D分分彩</a><i class="sfa sfa-badge-new"></i></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/6">3D</a></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/7">P3/P5</a></li>
         </ul>
@@ -56,10 +55,10 @@
 </template>
 
 <script>
-  export default{
+  export default {
     name: 'ticket-menu',
 
-    data () {
+    data() {
       return {}
     },
 
@@ -75,7 +74,7 @@
 
     methods: {},
 
-    mounted(){
+    mounted() {
 
     }
   }

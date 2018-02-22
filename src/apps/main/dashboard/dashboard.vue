@@ -71,30 +71,7 @@
           </div>
         </div>
         <div class="col-md-3">
-          <div class="dashboard-mall db-shadow">
-            <div class="db-block-border"></div>
-            <div class="dashboard-mall-header">
-              <div class="db-mall-title"></div>
-            </div>
-            <div class="js-db-mall-content">
-              <div class="dashboard-mall-content" v-for="item in mallList">
-                <div class="title">
-                  {{item.name}}
-                  <span class="badge" v-if="!_.isNull(item.levelLimit)
-                && item.limitRange !== 0
-                && item.limitRange !== 1
-                && item.limitRange !== 2">{{item.limitLevelType === 0 ? `Lv.${item.levelLimit}用户专享` : `Lv.${item.levelLimit}用户以上`}}</span>
-                  <span v-else-if="!_.isNull(item.limitRange)">
-                  {{item.limitRange === 0 ? '新用户专享' : (item.limitRange === 1 ? '老用户专享' : '总代专享')}}
-                </span>
-                </div>
-                <div class="desc">{{item.couponDesc}}</div>
-                <a :href="`#/ma?type=${item.couponType === 0 ? 1 : 0}`" class="btn-mall-exchange"
-                   target="_blank">立即兑换</a>
-                <div class="image"></div>
-              </div>
-            </div>
-          </div>
+          <dashboard-mall></dashboard-mall>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -126,12 +103,14 @@
   import slideShow from './slideShow'
   import notice from './notice'
   import ticketHot from './ticket-hot'
+  import dashboardMall from './dashboard-mall'
   export default {
     name: "dashboard",
     components: {
       slideShow,
       notice,
-      ticketHot
+      ticketHot,
+      dashboardMall
     },
     data () {
       return {
@@ -201,13 +180,13 @@
           }
         }
       )
-      getMallHotListApi(
-        ({data}) => {
-          if (data && data.result === 0) {
-            this.mallList = data.root.records || this.mallList
-          }
-        }
-      )
+      // getMallHotListApi(
+      //   ({data}) => {
+      //     if (data && data.result === 0) {
+      //       this.mallList = data.root.records || this.mallList
+      //     }
+      //   }
+      // )
     },
     destroyed() {
       this.clearGameInv()
@@ -491,71 +470,6 @@
       border: 1px solid #9f6ec5;
       &:hover {
         background: #9f6ec5;
-      }
-    }
-  }
-
-  .dashboard-mall {
-    width: 288px;
-    height: 458px;
-    margin-left: 12px;
-    background: #fff;
-
-    .dashboard-mall-header {
-      text-align: center;
-      width: 268px;
-      height: 49px;
-      margin: 0 10px;
-      .db-mall-title {
-        background: url('./misc/db-mall-title.png') no-repeat center;
-        width: 268px;
-        height: 49px;
-        border-bottom: 1px solid $def-line-color;
-      }
-    }
-
-    .dashboard-mall-content {
-      margin: 0px 20px;
-      padding: 28px 10px;
-      border-bottom: 1px solid $sec-line-color;
-
-      &:nth-child(3) {
-        border-bottom: none;
-      }
-
-      .title {
-        font-size: 14px;
-        color: $font-dark;
-        line-height: 16px;
-      }
-
-      .desc {
-        font-size: 12px;
-        color: $new-inverse-color;
-        line-height: 30px;
-      }
-
-      .badge {
-        background: $font-auxiliary-color;
-      }
-
-      .btn-mall-exchange {
-        width: 100px;
-        height: 28px;
-        text-align: center;
-        display: block;
-        line-height: 26px;
-        margin-top: 17px;
-        color: $new-main-deep-color;
-        background: transparent;
-        border: 1px solid $new-main-deep-color;
-        border-radius: 20px / 20px;
-        transition: color, background .5s;
-        cursor: pointer;
-        &:hover {
-          color: $def-white-color;
-          background: $new-main-deep-color;
-        }
       }
     }
   }

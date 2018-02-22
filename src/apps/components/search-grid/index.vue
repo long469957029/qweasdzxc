@@ -9,7 +9,7 @@
       <slot name="thead"></slot>
       </thead>
     </table>
-    <template v-if="showRows.length">
+    <status-cell :has-data="showRows.length" :status="loadingStatus" :height="height">
       <div class="grid-tbody">
         <table class="x-table no-margin">
           <colgroup v-if="colgroup">
@@ -29,16 +29,8 @@
         <slot name="tfoot" :res-data="resData"></slot>
         </tfoot>
       </table>
-      <x-pagination :page-size="pageSize" :total-size="totalSize" @page-change="search" ref="xPage"></x-pagination>
-    </template>
-    <template v-else>
-      <slot name="empty-tip">
-        <div class="empty-container" :style="`height: ${height}`">
-          <div class="empty-icon"></div>
-          <p>{{emptyTip}}</p>
-        </div>
-      </slot>
-    </template>
+      <x-pagination :page-size="pageSize" :total-size="totalSize" v-model="pageIndex" ref="xPage"></x-pagination>
+    </status-cell>
   </div>
 </template>
 
@@ -98,26 +90,40 @@
         showRows: [],
         resData: {},
         totalSize: 0,
+        pageIndex: 0,
+        loadingStatus: 'loading',
         loading: Global.ui.loader.get(),
       }
     },
 
+    watch: {
+      pageIndex() {
+        this.$_search()
+      }
+    },
+
     methods: {
-      search({pageIndex = 0} = {pageIndex: 0}) {
+      search() {
+        this.pageIndex = 0
+        this.$_search()
+      },
+      $_search() {
         this.filterHelper.serializeObject({
           reset: true,
         })
 
         const filters = this.filterHelper.get()
 
-        if (pageIndex === 0 && this.$refs.xPage) {
+        if (this.pageIndex === 0 && this.$refs.xPage) {
           this.$refs.xPage.resetIndex()
         }
+
+        this.loadingStatus = 'loading'
 
         this.searchApi({
           ..._.chain(filters).pick(_.identity).defaults(this.reqData).value(),
           pageSize: this.pageSize,
-          pageIndex,
+          pageIndex: this.pageIndex,
         },
           ({data}) => {
             if (data && data.result === 0) {
@@ -136,6 +142,9 @@
             //   this.$refs.xPage.resetIndex()
             // }
           })
+          .finally(() => {
+            this.loadingStatus = 'completed'
+          })
 
         return false
       },
@@ -146,13 +155,13 @@
         this.filterHelper = new FilterHelper()
         this.filterHelper.setForm(this.searchForm)
 
-        this.search()
+        this.$_search()
       })
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   $border: #e6e6e6;
 
   .x-table {
@@ -200,21 +209,5 @@
     }
   }
 
-  .empty-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    .empty-icon {
-      background-image: url(./empty.png);
-      width: 204px;
-      height: 174px;
-      margin-bottom: 15px;
-    }
-    p {
-      font-size: 14px;
-      color: #666666;
-    }
-  }
 
 </style>

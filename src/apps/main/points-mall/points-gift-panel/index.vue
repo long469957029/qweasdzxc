@@ -1,7 +1,11 @@
 <template>
   <div class="points-gift-panel">
-    <div class="search-bar">搜索栏</div>
-    <div class="points-gift-main">
+    <x-toolbar>
+      <tool-cell type="dropdown" v-model="itemType" :options="itemTypeOps"></tool-cell>
+      <tool-cell type="select-group" v-model="itemStatus" :options="itemStatusOps" title="兑换状态"></tool-cell>
+      <tool-cell type="sort" v-model="sort" :options="sortOps" title="排序"></tool-cell>
+    </x-toolbar>
+    <status-cell class="points-gift-main" :has-data="giftList.length" :status="loadingStatus">
       <gift-card v-for="(gift, index) in giftList" :key="index"
                  :itemDesc="gift.itemDesc"
                  :itemName="gift.itemName"
@@ -14,8 +18,8 @@
                  :maxNum="gift.maxNum"
                  @exchange="openExchangeModal(gift)"
       ></gift-card>
-    </div>
-    <x-pagination :page-size="12" :total-size="totalSize" @page-change="getData"></x-pagination>
+    </status-cell>
+    <x-pagination :page-size="12" :total-size="totalSize" v-model="pageIndex"></x-pagination>
 
     <div v-transfer-dom>
       <x-dialog v-if="isShowExchangeModal" @modal-hidden="isShowExchangeModal = false">
@@ -59,7 +63,7 @@
 <script>
   import {getGiftListApi, giftExchangeConfirmApi, giftExchangeApi} from 'api/points'
 
-  import {XPagination} from 'build'
+  import {XPagination, XToolbar, ToolCell} from 'build'
 
   import PointsAddress from '../points-address'
   import GiftCard from './gift-card'
@@ -71,18 +75,79 @@
       GiftCard,
       PointsAddress,
       XPagination,
+      XToolbar,
+      ToolCell
     },
 
     data() {
       return {
+        itemType: '',
+        itemTypeOps: [{
+          id: '',
+          name: '全部类型',
+        }, {
+          id: 1,
+          name: '电子产品',
+        }, {
+          id: 2,
+          name: '汽车',
+        }, {
+          id: 3,
+          name: '生活用品',
+        }, {
+          id: 4,
+          name: '定制珍藏品',
+        }],
+        itemStatus: '',
+        itemStatusOps: [
+          {
+            id: '',
+            name: '全部',
+          },
+          {
+            id: 1,
+            name: '有货',
+          },
+          {
+            id: 2,
+            name: '我可兑换的',
+          },
+        ],
+
+        sort: {
+          sortFlag:1,
+          sortType:0,
+        },
+        sortOps: [
+          {
+            sortFlag: 1,
+            name: '热门',
+            sortType: 0,
+            type: 'arrow',
+          },
+          {
+            sortFlag: 2,
+            name: '所需积分',
+            type: 'sort',
+          },
+          {
+            sortFlag: 3,
+            name: '上架时间',
+            sortType: 0,
+            type: 'arrow',
+          },
+        ],
+
         totalSize: 0,
+        pageIndex: 0,
+        loadingStatus: 'loading',
         giftList: [],
         isShowExchangeModal: false,
         isShowAddressModal: false,
         currentGift: {},
         //兑换数量
         count: 1,
-        addressModalType: 'select'
+        addressModalType: 'select',
       }
     },
 
@@ -95,18 +160,42 @@
       ])
     },
 
+    watch: {
+      sort() {
+        this.pageIndex = 0
+        this.getData()
+      },
+      itemType() {
+        this.pageIndex = 0
+        this.getData()
+      },
+      itemStatus() {
+        this.pageIndex = 0
+        this.getData()
+      },
+      pageIndex() {
+        this.getData()
+      }
+    },
+
     methods: {
-      getData({pageIndex = 0} = {pageIndex: 0}) {
+      getData() {
+        this.loadingStatus = 'loading'
         getGiftListApi({
-          sortFlag: 3,
-          sortType: 1,
-          pageIndex,
+          sortFlag: this.sort.sortFlag,
+          sortType: this.sort.sortType,
+          itemType: this.itemType,
+          itemStatus: this.itemStatus,
+          pageIndex: this.pageIndex,
         }, ({data}) => {
           if (data && data.result === 0) {
             this.giftList = data.root.records
             this.totalSize = data.root.rowCount
           }
         })
+          .finally(() => {
+            this.loadingStatus = 'completed'
+          })
       },
 
       openExchangeModal(giftInfo) {
@@ -145,12 +234,14 @@
         giftExchangeApi({
           itemId: this.currentGift.itemId,
           count: this.count,
-          address: addressInfo,
+          addressId: addressInfo.rid,
         }, ({data}) => {
           if (data && data.result === 0) {
             this.isShowAddressModal = false
             this.isShowExchangeModal = false
             this.$store.dispatch(types.GET_USER_MALL_INFO)
+            //todo 在当前页刷新
+            this.getData()
 
             Global.ui.notification.show(`<div class="m-bottom-lg">兑换成功!</div>`, {
               type: 'success',
@@ -185,7 +276,7 @@
     display: flex;
     flex-flow: row wrap;
     align-content: space-between;
-    min-height: 570px;
+    /*min-height: 570px;*/
     padding-bottom: 80px;
   }
 
@@ -250,5 +341,9 @@
   .btn-panel {
     text-align: center;
     margin-bottom: 30px;
+  }
+
+  .x-toolbar {
+    padding: 40px 30px 60px;
   }
 </style>

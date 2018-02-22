@@ -1,14 +1,39 @@
+$nav-height: 70px;
 .nav {
+  position: relative;
   margin-left: 0;
   list-style: none;
   > {
-    li > a {
-      display: block;
-      &:hover, &:focus {
-        text-decoration: none;
-      }
-      > img {
-        max-width: none;
+    li{
+      float: left;
+      height: $nav-height;
+      line-height: $nav-height;
+      min-width: 99px;
+      > a {
+        display: inline-block;
+        position: relative;
+        font-size: 14px;
+        color: $font-dark;
+        padding: 0px 20px;
+        line-height: $nav-height;
+        z-index: 12;
+        background-color: transparent;
+        text-align: center;
+        transition: background 0.3s ease;
+        cursor: pointer;
+        &:hover, &:focus ,&:active{
+          text-decoration: none;
+          > a {
+            color: $new-main-deep-color;
+          }
+        }
+        &:after {
+          content: "";
+          transition: background 0.3s ease;
+        }
+        > img {
+          max-width: none;
+        }
       }
     }
     .disabled {
