@@ -86,6 +86,7 @@
     max-width: 1200px;
     margin: 0 auto;
     background-color: $def-white-color;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    border-top: 2px solid rgba(0,0,0,0.15);
   }
 </style>

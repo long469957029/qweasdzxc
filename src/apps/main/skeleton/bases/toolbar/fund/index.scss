@@ -14,6 +14,7 @@
 
 .sidebar-fund-container {
   @include border-box();
+  border-top: 2px solid #f5f5f5;
 }
 
 .fund-amount {
@@ -62,7 +63,9 @@
 .fund-pocket {
   padding: 10px 10px 25px 10px;
   background-color: white;
-  margin: 10px 0;
+  //margin: 10px 0;
+  margin: 0;
+  border-top: 10px solid #f5f5f5;
   .pocket-title-container {
     height: 48px;
     line-height: 48px;
@@ -124,6 +127,7 @@
 .fund-operation-record-container {
   padding: 0 10px;
   background-color: white;
+  border-top: 10px solid #f5f5f5;
   .fund-operation-record {
     padding: 0 10px;
     border-bottom: 1px solid $def-line-color;

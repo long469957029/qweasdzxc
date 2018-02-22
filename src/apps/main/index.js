@@ -7,6 +7,7 @@ import {
   SearchGrid,
   AnimatedInteger,
   XDialog,
+  StatusCell,
   BusPlugin,
   CustomCheckbox,
   Popover,
@@ -16,6 +17,7 @@ import {
 import store from '../store'
 
 import MainHeader from 'skeleton/bases/header'
+import NavBar from 'skeleton/bases/navbar'
 import Login from 'skeleton/bases/login'
 import Logout from 'skeleton/bases/login/logout'
 import MainFooter from 'skeleton/bases/footer'
@@ -39,6 +41,7 @@ Vue.component('slot-static-grid', SlotStaticGrid)
 Vue.component('custom-checkbox', CustomCheckbox)
 Vue.component('animated-integer', AnimatedInteger)
 Vue.component('x-dialog', XDialog)
+Vue.component('status-cell', StatusCell)
 Vue.directive('TransferDom', TransferDom)
 
 require('widgets')
@@ -137,6 +140,7 @@ Global.m.oauth.check()
       el: '#main-wrapper',
       components: {
         MainHeader,
+        NavBar,
         MainFooter,
         Login,
         Logout,

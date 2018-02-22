@@ -28,7 +28,7 @@
         兑换积分：
         <span class="card-points-val">{{requireIntegral | convert2yuan}}</span>
       </div>
-      <button class="btn btn-exchange-btn">立即兑换</button>
+      <button class="btn btn-exchange-btn" v-if="!isFinished" @click="$emit('exchange')">立即兑换</button>
     </div>
   </div>
 </template>

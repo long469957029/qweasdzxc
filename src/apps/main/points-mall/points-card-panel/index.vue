@@ -1,13 +1,17 @@
 <template>
   <div class="points-card-panel">
-    <div class="search-bar">搜索栏</div>
-    <div class="points-card-main">
+    <x-toolbar>
+      <tool-cell type="dropdown" v-model="couponType" :options="typeOps"></tool-cell>
+      <tool-cell type="select-group" v-model="couponStatus" :options="statusOps" title="兑换状态"></tool-cell>
+      <tool-cell type="sort" v-model="sort" :options="sortOps" title="排序"></tool-cell>
+    </x-toolbar>
+    <status-cell class="points-card-main" :has-data="cardList.length" :status="loadingStatus">
       <points-card v-for="(item, index) in cardList" :key="index"
                    :coupon-info="item"
                    @exchange="openExchangeModal(arguments[0], item)"
       ></points-card>
-    </div>
-    <x-pagination :page-size="12" :total-size="totalSize" @page-change="getData"></x-pagination>
+    </status-cell>
+    <x-pagination :page-size="12" :total-size="totalSize" v-model="pageIndex"></x-pagination>
     <div class="points-tip">
       <div class="tip-title">优惠券说明</div>
       <ul class="tip-main">
@@ -21,7 +25,7 @@
 
     <div v-transfer-dom>
       <x-dialog v-if="isShowGetCard" @modal-hidden="isShowGetCard = false" width="482px">
-        <div slot="head-main">兑换确认</div>
+        <div slot="head-main" class="text-center">兑换确认</div>
         <div class="modal-main">
           <div class="card-info">
             <div class="card-title">{{formatCouponInfo.couponName}}</div>
@@ -73,20 +77,102 @@
 </template>
 
 <script>
-  import {PointsCard, XPagination, formatCoupon} from 'build'
+  import {PointsCard, XPagination, XToolbar, ToolCell} from 'build'
 
   import {getCouponListApi, exchangeCouponListApi} from 'api/points'
+
+  const CARD_TYPE = [
+    {
+      id: '',
+      name: '全部券类型',
+    },
+    {
+      id: 1,
+      name: '充值券',
+      type: 'blue'
+    },
+    {
+      id: 2,
+      name: '加奖卡',
+      type: 'green'
+    },
+    {
+      id: 3,
+      name: '补贴卡',
+      type: 'green'
+    },
+    {
+      id: 4,
+      name: '返水卡',
+      type: 'green'
+    },
+    {
+      id: 5,
+      name: '代金券',
+      type: 'gold'
+    },
+    {
+      id: 6,
+      name: '现金券',
+      type: 'red'
+    },
+  ]
 
   export default {
     name: 'points-card-panel',
 
     components: {
+      ToolCell,
+      XToolbar,
       PointsCard,
       XPagination,
     },
 
     data() {
       return {
+        couponType: '',
+        typeOps: CARD_TYPE,
+        couponStatus: '',
+        statusOps: [
+          {
+            id: '',
+            name: '全部',
+          },
+          {
+            id: 1,
+            name: '有货',
+          },
+          {
+            id: 2,
+            name: '我可兑换的',
+          },
+        ],
+        sort: {
+          sortFlag: 1,
+          sortType: 0
+        },
+        sortOps: [
+          {
+            sortFlag: 1,
+            name: '热门',
+            sortType: 0,
+            type: 'arrow',
+          },
+          {
+            sortFlag: 2,
+            name: '所需积分',
+            type: 'sort',
+          },
+          {
+            sortFlag: 3,
+            name: '上架时间',
+            sortType: 0,
+            type: 'arrow',
+          },
+        ],
+        pageIndex: 0,
+        loadingStatus: 'loading',
+
         totalSize: 0,
         currentCardInfo: {},
         formatCouponInfo: {},
@@ -104,18 +190,42 @@
       ])
     },
 
+    watch: {
+      sort() {
+        this.pageIndex = 0
+        this.getData()
+      },
+      couponType() {
+        this.pageIndex = 0
+        this.getData()
+      },
+      couponStatus() {
+        this.pageIndex = 0
+        this.getData()
+      },
+      pageIndex() {
+        this.getData()
+      }
+    },
+
     methods: {
-      getData({pageIndex = 0} = {pageIndex: 0}) {
+      getData() {
+        this.loadingStatus = 'loading'
         getCouponListApi({
-          sortFlag: 3,
-          sortType: 1,
-          pageIndex,
+          sortFlag: this.sort.sortFlag,
+          sortType: this.sort.sortType,
+          couponType: this.couponType,
+          couponStatus: this.couponStatus,
+          pageIndex: this.pageIndex,
         }, ({data}) => {
           if (data && data.result === 0) {
             this.cardList = data.root.records
             this.totalSize = data.root.rowCount
           }
         })
+          .finally(() => {
+            this.loadingStatus = 'completed'
+          })
       },
       exchangeCoupon() {
         exchangeCouponListApi({
@@ -131,6 +241,11 @@
               bodyClass: 'no-border no-padding',
               closeBtn: false,
             })
+
+            //todo 在当前页刷新
+            this.getData()
+
+            this.$store.dispatch(types.GET_USER_MALL_INFO)
           } else {
             if (data.msg.includes('抢光')) {
               Global.ui.notification.show('该优惠券已被抢光')
@@ -248,4 +363,9 @@
   .card-cell {
     font-size: 14px;
   }
+
+  .x-toolbar {
+    padding: 40px 30px 60px;
+  }
+
 </style>

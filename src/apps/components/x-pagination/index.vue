@@ -23,6 +23,10 @@
   export default {
     name: 'x-pagination',
 
+    model: {
+      event: 'change'
+    },
+
     props: {
       pageSize: {
         type: Number,
@@ -31,18 +35,29 @@
       totalSize: {
         type: Number,
         default: 0,
-      }
+      },
+      value: {
+        type: Number,
+        default: 1
+      },
     },
 
     data() {
       return {
-        pageIndex: 1,
         maxPaginationNum: 6,
         goToIndex: 1,
       }
     },
 
     computed: {
+      pageIndex: {
+        get() {
+          return this.value + 1
+        },
+        set(pageIndex) {
+          this.$emit('change', pageIndex - 1)
+        }
+      },
 
       totalPage() {
          return Math.ceil(this.totalSize / this.pageSize)

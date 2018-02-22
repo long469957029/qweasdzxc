@@ -12,9 +12,10 @@
             LV{{couponInfo.levelLimit}}
             <template v-if="1 === couponInfo.limitLevelType">以上</template>
           </div>
-          <div class="card-left" v-if="couponInfo.maxNum && couponInfo.maxNum - couponInfo.useNum > 0">
+          <div class="card-left" v-if="couponInfo.maxNum && couponInfo.maxNum - couponInfo.useNum > 0 && displayType === 'mall'"><!--displayType:mall 只在积分商城显示，侧边栏不显示-->
             剩{{couponInfo.maxNum - couponInfo.useNum}}张
           </div>
+          <div class="card-time-end" v-if="displayType === 'show' && (couponInfo.validEndDate-couponInfo.sysTime)<10800000"></div><!--即将到期-->
           <div v-else-if="isFinished" class="sfa-finished"></div>
         </div>
         <div class="points-center">
@@ -336,21 +337,30 @@
   }
   .show {
     width: 270px;
-    height: 150px;
+    height: 140px;
     overflow: hidden;
+    margin-top: 10px;
     .points-card {
       width: 255px;
-      height: 150px;
+      height: 140px;
       margin: 0;
       display: inline-block;
       overflow: hidden;
       .points-card-inner {
         width: 255px;
-        height: 150px;
+        height: 140px;
         margin: 0px;
-        padding: 20px 0 10px 30px;
+        padding: 20px 0 10px 27px;
+        .card-time-end {
+          background: url(./card-time-end.png);
+          width: 57px;
+          height: 53px;
+          position: absolute;
+          top: -7px;
+          right: 0;
+        }
         .points-top {
-          padding-top: 10px;
+          padding-top: 8px;
           padding-bottom: 0px;
           .card-value {
             font-size: 30px;
@@ -360,22 +370,36 @@
             }
           }
           .card-badge {
-
+            height: 22px;
+            line-height: 20px;
+            background-color: rgba(184, 184, 186, .07);
+            border-radius: 12px;
+            border: solid 1px #ffffff;
+            font-size: 12px;
+            color: #fff;
+            display: inline-block;
+            padding: 0 5px;
+            margin-right: 10px;
+            opacity:0.8;
           }
         }
         .points-center {
           .points-range {
             font-size: 14px;
             padding-bottom: 0px;
-            padding-top: 5px;
+            padding-top: 2px;
           }
         }
         .points-bottom-wrapper {
           .points-bottom {
             .points-type {
-
+              font-size: 12px;
+              margin-bottom: 0px;
+              opacity:0.8;
             }
             .points-bottom-inner {
+              height: 26px;
+              opacity:0.8;
               .points-expire {
 
               }

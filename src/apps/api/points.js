@@ -280,6 +280,52 @@ const getMyGiftRecordsApi = ({
 }
 
 /**
+ * 礼物兑换前确认
+ * @param itemId
+ * @param count
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const giftExchangeConfirmApi = ({itemId, count}, then, fail) => {
+  return $http({
+    url: 'mall/gift/confirm.json',
+    data: {
+      itemId,
+      count
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
+ * 礼物兑换
+ * @param itemId
+ * @param count 兑换数量
+ * @param addressId
+ * @param then
+ * @param fail
+ * @returns {* | Promise<T>}
+ */
+const giftExchangeApi = ({
+                           itemId,
+                           count,
+                           addressId,
+                         }, then, fail) => {
+  return $http({
+    url: 'mall/gift/exchange.json',
+    data: {
+      itemId,
+      count,
+      addressId,
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
  * 积分明细列表
  * @param startDate
  * @param endDate
@@ -290,11 +336,11 @@ const getMyGiftRecordsApi = ({
  * @returns {*|Promise<T>}
  */
 const getIntegralRecordsApi = ({
-                               startDate = '',
-                               endDate = '',
-                               pageIndex = 0,
-                               pageSize = 10,
-                             }, then, fail) => {
+                                 startDate = '',
+                                 endDate = '',
+                                 pageIndex = 0,
+                                 pageSize = 10,
+                               }, then, fail) => {
   return $http({
     url: '/mall/integral/detailList.json',
     data: {
@@ -314,7 +360,7 @@ const getIntegralRecordsApi = ({
  * @param fail
  * @returns {*|Promise<T>}
  */
-const getAdressListApi = (then, fail) => {
+const getAddressListApi = (then, fail) => {
   return $http({
     url: '/mall/gift/getUserAddressList.json',
   })
@@ -334,19 +380,19 @@ const getAdressListApi = (then, fail) => {
  * @param isDef
  * @param then
  * @param fail
- * @returns {*|Promise<T>}
+ * @returns {* | Promise<T>}
+ * @param rid
  */
-const adressPushApi = (
-  {
-    rid = null,
-    name,
-    phone,
-    province,
-    city,
-    area,
-    address,
-    isDef = 0,
-  }, then, fail) => {
+const addressPushApi = ({
+                          rid = null,
+                          name,
+                          phone,
+                          province,
+                          city,
+                          area,
+                          address,
+                          isDef = 0,
+                        }, then, fail) => {
   return $http({
     url: rid ? '/mall/gift/updateUserAddress.json' : '/mall/gift/createUserAddress.json',
     data: {
@@ -357,6 +403,7 @@ const adressPushApi = (
       area,
       address,
       isDef,
+      rid,
     }
   })
     .then(then)
@@ -370,7 +417,7 @@ const adressPushApi = (
  * @param fail
  * @returns {*|Promise<T>}
  */
-const getAdressDetailApi = ({rid}, then, fail) => {
+const getAddressDetailApi = ({rid}, then, fail) => {
   return $http({
     url: '/mall/gift/getUserAddress.json',
     data: {
@@ -389,7 +436,7 @@ const getAdressDetailApi = ({rid}, then, fail) => {
  * @param fail
  * @returns {*|Promise<T>}
  */
-const adressDeleteApi = ({rid}, then, fail) => {
+const addressDeleteApi = ({rid}, then, fail) => {
   return $http({
     url: '/mall/gift/delUserAddress.json',
     data: {
@@ -400,6 +447,23 @@ const adressDeleteApi = ({rid}, then, fail) => {
     .catch(fail)
 }
 
+/**
+ * 设置默认接口
+ * @param rid
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const setDefaultAddressApi = ({rid}, then, fail) => {
+  return $http({
+    url: '/mall/gift/setdefault.json',
+    data: {
+      rid
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
 
 
 export {
@@ -418,8 +482,11 @@ export {
   getMyGiftRecordsApi,
   getIntegralRecordsApi,
   signInApi,
-  adressPushApi,
-  getAdressListApi,
-  getAdressDetailApi,
-  adressDeleteApi,
+  addressPushApi,
+  getAddressListApi,
+  getAddressDetailApi,
+  setDefaultAddressApi,
+  addressDeleteApi,
+  giftExchangeApi,
+  giftExchangeConfirmApi,
 }

@@ -1,4 +1,3 @@
-import NavbarView from 'skeleton/bases/navbar'
 
 import ToolbarView from 'skeleton/bases/toolbar'
 
@@ -15,7 +14,6 @@ const ChaseDetailView = require('fundCenter/gameRecord/chaseDetail')
 const App = new window.Base.Application()
 
 App.addRegions({
-  navbarRegin: '#navbar',
   toolbarRegin: '#toolbar',
   mainRegin: '#main',
 })
@@ -231,9 +229,9 @@ const _bindImDialogHandler = () => {
   })
 }
 App.addInitializer(() => {
-  App.navbarRegin.show(new NavbarView({
-    navbar: Global.ui.menu.getNav(),
-  }))
+  // App.navbarRegin.show(new NavbarView({
+  //   navbar: Global.ui.menu.getNav(),
+  // }))
 
   App.toolbarRegin.show(new ToolbarView())
 
