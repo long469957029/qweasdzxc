@@ -7,6 +7,7 @@ import {
   SearchGrid,
   AnimatedInteger,
   XDialog,
+  StatusCell,
   BusPlugin,
   CustomCheckbox,
   Popover,
@@ -40,6 +41,7 @@ Vue.component('slot-static-grid', SlotStaticGrid)
 Vue.component('custom-checkbox', CustomCheckbox)
 Vue.component('animated-integer', AnimatedInteger)
 Vue.component('x-dialog', XDialog)
+Vue.component('status-cell', StatusCell)
 Vue.directive('TransferDom', TransferDom)
 
 require('widgets')

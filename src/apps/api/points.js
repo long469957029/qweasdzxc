@@ -303,18 +303,22 @@ const giftExchangeConfirmApi = ({itemId, count}, then, fail) => {
  * 礼物兑换
  * @param itemId
  * @param count 兑换数量
- * @param address
+ * @param addressId
  * @param then
  * @param fail
  * @returns {* | Promise<T>}
  */
-const giftExchangeApi = ({itemId, count, address}, then, fail) => {
+const giftExchangeApi = ({
+                           itemId,
+                           count,
+                           addressId,
+                         }, then, fail) => {
   return $http({
     url: 'mall/gift/exchange.json',
     data: {
       itemId,
       count,
-      address,
+      addressId,
     }
   })
     .then(then)
@@ -332,11 +336,11 @@ const giftExchangeApi = ({itemId, count, address}, then, fail) => {
  * @returns {*|Promise<T>}
  */
 const getIntegralRecordsApi = ({
-                               startDate = '',
-                               endDate = '',
-                               pageIndex = 0,
-                               pageSize = 10,
-                             }, then, fail) => {
+                                 startDate = '',
+                                 endDate = '',
+                                 pageIndex = 0,
+                                 pageSize = 10,
+                               }, then, fail) => {
   return $http({
     url: '/mall/integral/detailList.json',
     data: {
@@ -379,17 +383,16 @@ const getAddressListApi = (then, fail) => {
  * @returns {* | Promise<T>}
  * @param rid
  */
-const addressPushApi = (
-  {
-    rid = null,
-    name,
-    phone,
-    province,
-    city,
-    area,
-    address,
-    isDef = 0,
-  }, then, fail) => {
+const addressPushApi = ({
+                          rid = null,
+                          name,
+                          phone,
+                          province,
+                          city,
+                          area,
+                          address,
+                          isDef = 0,
+                        }, then, fail) => {
   return $http({
     url: rid ? '/mall/gift/updateUserAddress.json' : '/mall/gift/createUserAddress.json',
     data: {

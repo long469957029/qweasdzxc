@@ -266,6 +266,11 @@
 .transition {
   transition: all .3s ease-out;
 }
+.animated-02s {
+  animation-duration: 0.2s;
+  animation-fill-mode: both
+}
+
 .animated-quick {
   animation-duration: 0.3s;
   animation-fill-mode: both
@@ -421,6 +426,25 @@ input.control-input {
     right: 5px;
   }
 }
+
+//空表单页面
+.empty-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .empty-icon {
+    background-image: url(../images/empty.png);
+    width: 204px;
+    height: 174px;
+    margin-bottom: 15px;
+  }
+  p {
+    font-size: 14px;
+    color: #666666;
+  }
+}
+
 //记录相关组件
 .timer-record-input {
   border: 1px solid #cccccc;

@@ -14,6 +14,12 @@ import ControlGroup from './components/control-group'
 import ControlCell from './components/control-cell'
 import XAddress from './components/x-address'
 import {Swiper, SwiperSlide} from './components/swiper'
+import XToolbar from './components/x-toolbar'
+import ToolCell from './components/x-toolbar/tool-cell'
+import SelectGroup from './components/select-group'
+import SortGroup from './components/sort-group'
+import Dropdown from './components/dropdown'
+import StatusCell from './components/status-cell'
 
 //directives
 import TransferDom from './directives/transfer-dom'
@@ -29,6 +35,9 @@ import formatCouponType from './filters/format-coupon-type'
 import formatCoupon from './filters/format-coupon'
 
 export {
+  /**
+   * components
+   */
   AnimatedInteger,
   CustomCheckbox,
   StaticGrid,
@@ -45,11 +54,26 @@ export {
   Swiper,
   SwiperSlide,
   XAddress,
+  XToolbar,
+  ToolCell,
+  SelectGroup,
+  SortGroup,
+  Dropdown,
+  StatusCell,
 
+  /**
+   * directives
+   */
   TransferDom,
 
+  /**
+   * plugins
+   */
   BusPlugin,
 
+  /**
+   * filter
+   */
   formatCouponType,
   formatOpenNum,
   quick3Sum,
