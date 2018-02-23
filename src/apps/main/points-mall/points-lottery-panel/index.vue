@@ -1,7 +1,7 @@
 <template>
   <div class="points-lottery-panel">
     <div class="lottery-panel-inner">
-      <div class="lottery-panel">
+      <status-cell class="lottery-panel" :has-data="currentAwards.length" :status="loadingStatus">
         <div class="lottery-panel-main">
           <div class="x-switch">
             <input type="radio" class="switch-input" v-model.number="currentLottery" value="0" id="week">
@@ -25,8 +25,8 @@
                       <!-- 券 -->
                       <div class="points-ticket sfa" :class="`sfa-pt-${award.style1}`" v-else-if="award.awardTypeId === 1">
                         <span class="task-item-title">{{award.couponName}}</span>
-                        <span class="task-item-val" v-if="award.conditionType === 2">{{award.conditionNumber}}%</span>
-                        <span class="task-item-val" v-else><span class="task-item-unit">¥</span>{{award.conditionNumber}}</span>
+                        <span class="task-item-val" v-if="award.conditionType === 2">{{award.bigShowNum}}%</span>
+                        <span class="task-item-val" v-else><span class="task-item-unit">¥</span>{{award.bigShowNum}}</span>
                       </div>
                       <!-- 商品 -->
                       <img :src="award.picUrl" class="task-gift-pic" v-else-if="award.awardTypeId === 2" />
@@ -35,7 +35,7 @@
                     </div>
                     <div class="task-badge" v-if="award.awardTypeId === 1">
                       <template v-if="award.type === 601">
-                        现金{{award.conditionNumber}}{{award.conditionUnit}}
+                        现金{{award.bigShowNum}}{{award.conditionUnit}}
                       </template>
                       <template v-else>
                         {{award.mainDesc}}
@@ -75,7 +75,7 @@
               <div class="lottery-list-main-inner" v-for="user in recentUser" :key="user.uid">
                 <span class="lottery-list-left">恭喜 {{user.userName}}获得</span>
                 <span class="lottery-list-right" v-if="user.awardTypeId === 1">
-                  <span class="lottery-list-right-val">{{user.conditionNumber}}{{user.conditionUnit}}</span>{{user.couponName}}
+                  <span class="lottery-list-right-val">{{user.bigShowNum}}{{user.conditionUnit}}</span>{{user.couponName}}
                 </span>
                 <span class="lottery-list-right" v-if="user.awardTypeId === 2">
                   {{user.bonusName}}
@@ -93,8 +93,7 @@
             </transition-group>
           </div>
         </div>
-
-      </div>
+      </status-cell>
       <div class="sfa-pt-hanger hanger-left"></div>
       <div class="sfa-pt-hanger hanger-right"></div>
     </div>
@@ -124,10 +123,10 @@
           </div>
           <div class="lucky-prize-name" v-if="chest.awardTypeId === 1">
             <template v-if="chest.type === 601">
-              现金{{chest.conditionNumber}}{{chest.conditionUnit}}
+              现金{{chest.bigShowNum}}{{chest.conditionUnit}}
             </template>
             <template v-else-if="chest.secondDesc">
-              {{chest.mainDesc}} {{chest.conditionNumber}}{{chest.conditionUnit}}
+              {{chest.mainDesc}} {{chest.bigShowNum}}{{chest.conditionUnit}}
             </template>
             <template v-else>
               {{chest.mainDesc}}
@@ -155,8 +154,8 @@
             <template v-if="lotteryResult.awardTypeId === 1">
               <div class="points-ticket sfa" :class="`sfa-pt-${lotteryResult.style1}`" v-if="currentLotteryType === 0">
                 <span class="task-item-title">{{lotteryResult.couponName}}</span>
-                <span class="task-item-val" v-if="lotteryResult.conditionType === 2">{{lotteryResult.conditionNumber}}%</span>
-                <span class="task-item-val" v-else><span class="task-item-unit">¥</span>{{lotteryResult.conditionNumber}}</span>
+                <span class="task-item-val" v-if="lotteryResult.conditionType === 2">{{lotteryResult.bigShowNum}}%</span>
+                <span class="task-item-val" v-else><span class="task-item-unit">¥</span>{{lotteryResult.bigShowNum}}</span>
               </div>
               <div class="sfa lucky-container" :class="`sfa-pt-${lotteryResult.style2}`" v-else>
                 <span class="lucky-type">{{lotteryResult.couponName}}</span>
@@ -170,10 +169,10 @@
           </div>
           <div class="lucky-brief" v-if="lotteryResult.awardTypeId === 1">
             <template v-if="lotteryResult.type === 601">
-              现金{{lotteryResult.conditionNumber}}{{lotteryResult.conditionUnit}}
+              现金{{lotteryResult.bigShowNum}}{{lotteryResult.conditionUnit}}
             </template>
             <template v-else-if="lotteryResult.secondDesc">
-              {{lotteryResult.mainDesc}} {{lotteryResult.conditionNumber}}{{lotteryResult.conditionUnit}}
+              {{lotteryResult.mainDesc}} {{lotteryResult.bigShowNum}}{{lotteryResult.conditionUnit}}
             </template>
             <template v-else>
               {{lotteryResult.mainDesc}}
@@ -307,6 +306,7 @@
 
         lotteryResult: {},
         currentLotteryType: 0,
+        loadingStatus: 'loading',
 
         pushing: false,
       }
@@ -328,7 +328,10 @@
     },
 
     methods: {
-      getData() {
+      getData({loading = true} = {loading: true}) {
+        if (loading) {
+          this.loadingStatus = 'loading'
+        }
         getTaskListApi(({data}) => {
           if (data && data.result === 0) {
             this.awards = data.root.awards
@@ -344,9 +347,9 @@
               if (award.awardTypeId === 1) {
                 Object.assign(award, this.couponFormat({
                   type: award.type,
-                  threholdAmount: award.bonusAmount,
+                  threholdAmount: award.threholdAmount,
                   bonusPercentAmount: award.bonusPercentAmount,
-                  bigShowNum: award.bigShowNum,
+                  bigShowNum: award.bonusAmount,
                   statType: award.statType,
                   ticketId: award.statTicketId,
                   gameType: award.gameType
@@ -368,9 +371,9 @@
               if (award.awardTypeId === 1) {
                 Object.assign(award, this.couponFormat({
                   type: award.type,
-                  threholdAmount: award.bonusAmount,
+                  threholdAmount: award.threholdAmount,
                   bonusPercentAmount: award.bonusPercentAmount,
-                  bigShowNum: award.bigShowNum,
+                  bigShowNum: award.bonusAmount,
                   statType: award.statType,
                   ticketId: award.statTicketId,
                   gameType: award.gameType
@@ -391,7 +394,7 @@
                   uid: _.uniqueId(),
                   ...(user.awardTypeId === 1 ? this.couponFormat({
                     type: user.subType,
-                    threholdAmount: user.bonusAmount,
+                    bigShowNum: user.bonusAmount,
                     bonusPercentAmount: user.bonusPercentAmount,
                   }) : {}),
                   ...user
@@ -407,9 +410,9 @@
               if (chest.awardTypeId === 1) {
                 Object.assign(chest, this.couponFormat({
                   type: chest.type,
-                  threholdAmount: chest.bonusAmount,
+                  threholdAmount: chest.threholdAmount,
                   bonusPercentAmount: chest.bonusPercentAmount,
-                  bigShowNum: chest.bigShowNum,
+                  bigShowNum: chest.bonusAmount,
                   statType: chest.statType,
                   ticketId: chest.statTicketId,
                   gameType: chest.gameType
@@ -418,6 +421,11 @@
             })
           }
         })
+          .finally(() => {
+            if (loading) {
+              this.loadingStatus = 'completed'
+            }
+          })
       },
 
       couponFormat({type, threholdAmount, bonusPercentAmount, bigShowNum = null, statType = null, ticketId = null, gameType = null}) {
@@ -523,9 +531,9 @@
                   this.lotteryResult = {
                     ...this.lotteryResult,
                     ...formatCoupon({
-                      bigShowNum: this.lotteryResult.bigShowNum,
+                      bigShowNum: this.lotteryResult.bonusAmount,
                       type: this.lotteryResult.type,
-                      threholdAmount: this.lotteryResult.bonusAmount,
+                      threholdAmount: this.lotteryResult.threholdAmount,
                       bonusPercentAmount: this.lotteryResult.bonusPercentAmount,
                       statType: this.lotteryResult.statType,
                       ticketId: this.lotteryResult.statTicketId,
@@ -545,7 +553,7 @@
                 default:
                   break;
               }
-              this.getData()
+              this.getData({loading: false})
               this.$store.dispatch(types.CHECK_LOGIN_STATUS)
               this.$store.dispatch(types.GET_USER_MALL_INFO)
             })
@@ -584,9 +592,9 @@
                 this.lotteryResult = {
                   ...this.lotteryResult,
                   ...formatCoupon({
-                    bigShowNum: this.lotteryResult.bigShowNum,
+                    bigShowNum: this.lotteryResult.bonusAmount,
                     type: this.lotteryResult.type,
-                    threholdAmount: this.lotteryResult.bonusAmount,
+                    threholdAmount: this.lotteryResult.threholdAmount,
                     bonusPercentAmount: this.lotteryResult.bonusPercentAmount,
                     statType: this.lotteryResult.statType,
                     ticketId: this.lotteryResult.statTicketId,
@@ -607,8 +615,10 @@
                 break;
             }
 
-            this.getData()
+            this.getData({loading: false})
             this.$store.dispatch(types.GET_USER_MALL_INFO)
+          } else {
+            Global.ui.notification.show(data.msg || '')
           }
         })
           .finally(() => {

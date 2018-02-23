@@ -8,7 +8,7 @@
           </div>
         </div>
       </div>
-      <div class="point-nav-panel">
+      <status-cell class="point-nav-panel" :status="loadingStatus">
         <task-card v-for="task in fDaily" :key="task.termId" :max="task.fTermThrehold" :value="task.fCurrentAmount" :title="task.termName">
           <span slot="brief" class="card-brief">
             当天{{task.termName}}达<span class="text-val">{{task.fTermThrehold}}</span>元，
@@ -26,7 +26,7 @@
             {{task.receiveState === ReceiveState.RECEIVED ? '已领取' : '立即领取'}}
           </button>
         </task-card>
-      </div>
+      </status-cell>
     </div>
     <div class="point-task-cell">
       <div class="daily-prize">
@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-      <div class="point-nav-panel">
+      <status-cell class="point-nav-panel" :status="loadingStatus">
         <task-card v-for="task in fWeek" card-type="prominent" :key="task.termId" :max="task.fTermThrehold" :value="task.fCurrentAmount" :title="task.termName">
           <span slot="brief" class="card-brief">
             当周{{task.termName}}达<span class="text-val">{{task.fTermThrehold}}</span>元，
@@ -54,7 +54,7 @@
             {{task.receiveState === ReceiveState.RECEIVED ? '已领取' : '立即领取'}}
           </button>
         </task-card>
-      </div>
+      </status-cell>
     </div>
 
   </div>
@@ -116,6 +116,7 @@
         fDaily: [],
         fWeek: [],
         ReceiveState,
+        loadingStatus: 'loading',
       }
     },
 
@@ -139,13 +140,22 @@
     },
 
     methods: {
-      getData() {
-        missionListApi(({data}) => {
+      getData({loading = true} = {loading: true}) {
+        if (loading) {
+          this.loadingStatus = 'loading'
+        }
+
+        window.abc = missionListApi(({data}) => {
           if (data && data.result === 0) {
             this.daily = data.root.daily
             this.week = data.root.week
           }
         })
+          .finally(() => {
+            if (loading) {
+              this.loadingStatus = 'completed'
+            }
+          })
       },
       receive($event, {termId, termBonusType}) {
         let html = '恭喜您成功领取积分'
@@ -168,7 +178,7 @@
               closeBtn: false,
             })
 
-            this.getData()
+            this.getData({loading: false})
             this.$store.dispatch(types.CHECK_LOGIN_STATUS)
           } else {
             Global.ui.notification.show(res.msg)
@@ -275,6 +285,11 @@
       border-radius: 15px;
       cursor: not-allowed;
     }
+  }
+  .status-cell {
+    justify-content: center;
+    align-items: center;
+    align-content: center;
   }
 
 </style>

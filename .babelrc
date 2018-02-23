@@ -2,7 +2,7 @@
   "presets": [
     ["@babel/preset-env", {
       "targets": {
-        "browsers": ["> 2%", "ie 11", "safari >= 7"]
+        "browsers": ["> 2%", "ie 11", "safari >= 7", "firefox > 50"]
       },
       "useBuiltIns": "usage"
     }]
