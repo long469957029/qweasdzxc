@@ -64,7 +64,7 @@
         <div class="rc-reward-icon"></div>
         <div class="rc-reward-title">最新中奖信息：</div>
         <div class="rc-reward-list">
-          <marquee :content="formatePrizeList" :speed="50000" :scollWidth="975"></marquee>
+          <marquee :content="formatePrizeList" :speed="50000" :scroll-width="975" :is-html="true"></marquee>
         </div>
       </div>
     </div>
