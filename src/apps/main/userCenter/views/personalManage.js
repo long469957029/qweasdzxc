@@ -117,9 +117,10 @@ const PersonalManageView = Base.ItemView.extend({
 
   formateHeadIconList(data) {
     if ('LIST:' + data) {
+      const self = this
       this.$headIconList.empty()
       const html = _(data).map((item) => {
-        return `<li class="icon-info js-head-icon-info ${Number(item.id) === this.iconId ? 'active' : ''}" 
+        return `<li class="icon-info js-head-icon-info ${Number(item.id) === self.iconId ? 'active' : ''}" 
             data-id="${item.id}"><img src="${item.logo}" class="head-img"></li>`
       })
       this.$headIconList.html(html.join(''))

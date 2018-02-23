@@ -10,12 +10,12 @@
         <div class="tab">
           <div class="tab-main">
             <div :class="['tab-info',{'active': phoneIndex === 1}]" @click="phoneIndex = 1">
-              <span class="icon ios"></span>
-              IOS版本
-            </div>
-            <div :class="['tab-info',{'active': phoneIndex === 2}]" @click="phoneIndex = 2">
               <span class="icon android"></span>
               安卓版本
+            </div>
+            <div :class="['tab-info',{'active': phoneIndex === 2}]" @click="gameDownLoadGameId === 6 ? '' : phoneIndex = 2">
+              <span class="icon ios"></span>
+              IOS版本{{gameDownLoadGameId === 6 ? '（未开放）' : ''}}
             </div>
           </div>
         </div>
@@ -237,7 +237,7 @@
         border-bottom: 2px solid #e9e9e9;
       }
       .tab-main{
-        width: 70%;
+        width: 75%;
         margin: 0 auto;
       }
       .tab-info{
@@ -267,7 +267,7 @@
             background: url("./images/ios-active.png") no-repeat;
           }
           .android{
-            background: url("./images/ios-active.png") no-repeat;
+            background: url("./images/android-active.png") no-repeat;
           }
         }
       }

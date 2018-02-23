@@ -23,7 +23,7 @@ const TeamBettingRecordView = TabView.extend({
           id: 'jsGcGrTr',
           router: 'fc/td',
           view: TicketRecordView,
-          options: { type: 0 },
+          options: { type: 0,ticketType:2 },
         },
         {
           label: '彩票追号',
@@ -37,7 +37,7 @@ const TeamBettingRecordView = TabView.extend({
           name: 'jsDoubleSided',
           id: 'jsDoubleSided',
           view: TicketRecordView,
-          options: { type: 1 },
+          options: { type: 1,ticketType:1 },
         },
         {
           label: 'AG',

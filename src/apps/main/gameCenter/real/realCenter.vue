@@ -147,6 +147,10 @@
           this.showLogin()
         } else {
           let flag = false
+          if(channelId === 3){
+            Global.ui.notification.show('暂未开放，敬请期待')
+            return false
+          }
           getGameListApi()
             .done((data) => {
                 if (data && data.result === 0) {
