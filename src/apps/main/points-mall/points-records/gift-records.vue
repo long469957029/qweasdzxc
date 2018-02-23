@@ -6,7 +6,7 @@
       <form class="m-TB-lg" slot="search-panel" ref="searchForm">
         <control-group>
           <control-cell title="时间"><div ref="timeset"></div></control-cell>
-          <control-cell title="券编号">
+          <control-cell title="礼物名称">
             <input type="text" name="itemName" class="control-input">
           </control-cell>
           <button type="submit" class="btn control-btn" @click.prevent="$refs.searchGrid.search()">查询</button>
