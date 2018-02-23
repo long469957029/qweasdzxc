@@ -177,6 +177,7 @@
         transition: background 0.3s ease;
         cursor: pointer;
         height: 70px;
+        min-width: 68px;
         box-sizing: border-box;
         &:after {
           content: "";
@@ -246,7 +247,7 @@
       background: #fcfcfc;
       height: 180px;
       z-index: 12;
-      left:29.2%;
+      left: 31.7%;
       top: 70px;
       transform: scaleY(0) translateX(-50%);
       width: 100vw;
