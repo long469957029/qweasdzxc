@@ -1,6 +1,9 @@
 <template>
   <div class="marquee" @mouseover="stopScoll" @mouseout="startScoll">
-    <div class="content" v-html="content" ref="container"></div>
+    <div class="content" v-html="content" ref="container" v-if="isHtml"></div>
+    <div class="content" ref="container" v-else>
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -13,13 +16,17 @@
         type: Number,
         default: 50
       },
-      scollWidth:{
+      scrollWidth:{
         type: Number,
         required: true
       },
       content:{
         type:String,
-        required: true
+        // required: true
+      },
+      isHtml:{  // 内容显示方式
+        type:Boolean,
+        default: true
       }
     },
     data(){
@@ -60,17 +67,23 @@
           easing: 'linear',
           duration: this.duration,
           complete: () => {
-            this.currentLeft = this.scollWidth
+            this.currentLeft = this.scrollWidth
             this.startScoll()
           }
         })
       },
       stopScoll(){
-        console.log(this.$refs.container.offsetLeft)
         this.currentLeft = this.$refs.container.offsetLeft
         Velocity(this.$refs.container, 'stop', true)
       }
     },
+    mounted(){
+      this.$nextTick(() => {
+        this.currentLeft = this.initialLeft = this.$refs.container.offsetWidth
+        this.stopScoll()
+        this.startScoll()
+      })
+    }
   }
 </script>
 
