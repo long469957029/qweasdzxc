@@ -191,6 +191,7 @@
       signIn() {
         signInApi(({data}) => {
           if (data && data.result === 0) {
+            this.$store.dispatch(types.GET_USER_MALL_INFO)
             this.getSignInInfo()
           }
         })

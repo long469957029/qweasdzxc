@@ -6,7 +6,7 @@
       <form class="m-TB-lg" slot="search-panel" ref="searchForm">
         <control-group>
           <control-cell title="时间"><div ref="timeset"></div></control-cell>
-          <control-cell title="券编号">
+          <control-cell title="礼物名称">
             <input type="text" name="itemName" class="control-input">
           </control-cell>
           <button type="submit" class="btn control-btn" @click.prevent="$refs.searchGrid.search()">查询</button>
@@ -30,7 +30,7 @@
         </td>
         <td>
           <template v-if="row.refPrice">
-            {{row.refPrice | convert2yuan}}
+            {{row.refPrice | convert2yuan}}元
           </template>
         </td>
         <td class="text-left location-td">
@@ -157,16 +157,18 @@
 <style lang="scss" scoped>
   .location-td {
     padding-left: 40px;
-    display: flex;
-    align-items: center;
   }
   .location-edit {
     background-image: url(./misc/gift-records-edit.png);
     width: 21px;
     height: 20px;
     cursor: pointer;
+    display: inline-block;
+    float: right;
+    margin-top: 20px;
+    margin-right: 40px;
   }
   .location {
-    flex: 1;
+    display: inline-block;
   }
 </style>

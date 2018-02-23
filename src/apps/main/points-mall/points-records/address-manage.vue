@@ -1,11 +1,11 @@
 <template>
-  <div class="address-manage-panel">
+  <status-cell class="address-manage-panel" :status="loadingStatus">
     <div class="address-top">
       <span class="title">
         已保存的收货地址
       </span>
       <span class="detail">
-        您已经创建<span class="text-cool">{{addressList.length}}</span>个收货地址，最多可创建<span class="text-cool">10</span>个
+        您已经创建<span class="text-cool">{{addressList.length}}</span>个收货地址，最多可创建<span class="text-cool">{{maxCount}}</span>个
       </span>
     </div>
 
@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <div class="address-add cursor-pointer" @click="add">
+      <div class="address-add cursor-pointer" @click="add" v-if="maxCount > addressList.length">
         <div class="add-icon"></div>
         <div class="add-brief">添加收货地址</div>
       </div>
@@ -52,7 +52,7 @@
     <div v-transfer-dom>
       <points-address v-if="isShowAddressModal" :current-address="address" @operate-complete="refresh" @modal-hidden="isShowAddressModal = false"></points-address>
     </div>
-  </div>
+  </status-cell>
 </template>
 
 <script>
@@ -72,16 +72,21 @@
         addressList: [],
         address: {},
         maxCount: 10,
+        loadingStatus: 'loading',
       }
     },
 
     methods: {
       getList() {
+        this.loadingStatus = 'loading'
         getAddressListApi(({data}) => {
           if (data && data.result === 0) {
             this.addressList = data.root
           }
         })
+          .finally(() => {
+            this.loadingStatus = 'completed'
+          })
       },
 
       refresh() {
