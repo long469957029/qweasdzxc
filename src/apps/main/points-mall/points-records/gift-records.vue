@@ -30,7 +30,7 @@
         </td>
         <td>
           <template v-if="row.refPrice">
-            {{row.refPrice | convert2yuan}}
+            {{row.refPrice | convert2yuan}}元
           </template>
         </td>
         <td class="text-left location-td">
@@ -157,16 +157,18 @@
 <style lang="scss" scoped>
   .location-td {
     padding-left: 40px;
-    display: flex;
-    align-items: center;
   }
   .location-edit {
     background-image: url(./misc/gift-records-edit.png);
     width: 21px;
     height: 20px;
     cursor: pointer;
+    display: inline-block;
+    float: right;
+    margin-top: 20px;
+    margin-right: 40px;
   }
   .location {
-    flex: 1;
+    display: inline-block;
   }
 </style>
