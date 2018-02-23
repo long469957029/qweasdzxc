@@ -175,16 +175,18 @@
       },
       verifyUserName(){
         if (this.username === '') {
-          this.usernameError = false
-          this.showErrorMsg = false
+          this.usernameError = true
+          this.showErrorMsg = true
           this.usernameSuccess = false
+          this.errorMsg = '请输入用户名'
+          return false
         } else {
           const myReg = /^[A-Za-z][A-Za-z0-9]{3,15}$/
           if (!myReg.test(this.username)) {
-//            this.showErrorMsg = true
-//            this.errorMsg = ''
             this.usernameError = true
+            this.showErrorMsg = true
             this.usernameSuccess = false
+            this.errorMsg = '用户名或密码错误'
             return false
           } else {
             this.usernameError = false
@@ -197,22 +199,24 @@
       },
       verifyPwd(){
         if (this.password === '') {
-          this.passwordError = false
-          this.showErrorMsg = false
+          this.passwordError = true
+          this.showErrorMsg = true
           this.pwdSuccess = false
+          this.errorMsg = '请输入密码'
+          return false
         } else {
           const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
           if (this.password.length < 9 && this.strBetweenIsNumber(this.password, 0, 7)) {
             this.passwordError = true
-//            this.showErrorMsg = true
+           this.showErrorMsg = true
             this.pwdSuccess = false
-//            this.errorMsg = ''
+            this.errorMsg = '用户名或密码错误'
             return false
           } else if (!pwReg.test(this.password)) {
             this.passwordError = true
-//            this.showErrorMsg = true
+           this.showErrorMsg = true
             this.pwdSuccess = false
-//            this.errorMsg = ''
+            this.errorMsg = '用户名或密码错误'
             return false
           }
         }
@@ -220,14 +224,16 @@
       },
       verifyCode(){
         if (this.code === '') {
-          this.codeError = false
-          this.showErrorMsg = false
+          this.codeError = true
+          this.showErrorMsg = true
           this.codeSuccess = false
+          this.errorMsg = '请输入验证码'
+          return false
         } else if (this.code.length !== 4) {
           this.codeError = true
           this.showErrorMsg = true
           this.pwdSuccess = false
-          this.errorMsg = '验证码错误,请重新输入'
+          this.errorMsg = '验证码错误'
           return false
         } else {
           loginApi.valCodeXhr({

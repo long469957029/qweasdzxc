@@ -465,6 +465,28 @@ const setDefaultAddressApi = ({rid}, then, fail) => {
     .catch(fail)
 }
 
+/**
+ * 添加地址给抽奖实体礼物和后补地址
+ * @param itemId
+ * @param addressId
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const addAddressToGiftApi = ({
+                               itemId,
+                               addressId
+                             }, then, fail) => {
+  return $http({
+    url: 'mall/gift/editExInfo.json',
+    data: {
+      itemId,
+      addressId
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
 
 export {
   getMallBannerApi,
@@ -485,6 +507,7 @@ export {
   addressPushApi,
   getAddressListApi,
   getAddressDetailApi,
+  addAddressToGiftApi,
   setDefaultAddressApi,
   addressDeleteApi,
   giftExchangeApi,
