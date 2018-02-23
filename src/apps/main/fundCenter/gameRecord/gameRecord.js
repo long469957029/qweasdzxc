@@ -26,11 +26,11 @@ const fishBetRecordView = SearchGrid.extend({
       columns: [
         {
           name: '注单编号',
-          width: '14%',
+          width: '20%',
         },
         {
           name: '投注时间',
-          width: '16%',
+          width: '15%',
         },
 
         {
@@ -39,23 +39,23 @@ const fishBetRecordView = SearchGrid.extend({
         },
         {
           name: '游戏',
-          width: '10%',
+          width: '11%',
         },
         {
           name: '真实投注',
-          width: '10%',
+          width: '11%',
         },
         {
           name: '有效投注',
-          width: '10%',
+          width: '11%',
         },
         {
           name: '派奖',
-          width: '10%',
+          width: '11%',
         },
         {
           name: '盈亏',
-          width: '10%',
+          width: '11%',
         },
       ],
       gridOps: {
