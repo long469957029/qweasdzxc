@@ -141,6 +141,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
     case 601:
       couponInfo.bigShowNum = _.convert2yuan(bigShowNum)
       couponInfo.couponType = 6
+      couponInfo.conditionNumber = _.convert2yuan(threholdAmount)
       couponInfo.conditionUnit = '元'
       couponInfo.couponName = '现金券'
       couponInfo.mainDesc = `领取即加币至账户余额`

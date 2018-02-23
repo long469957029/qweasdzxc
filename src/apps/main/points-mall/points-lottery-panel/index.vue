@@ -33,7 +33,14 @@
                       <!-- 积分 -->
                       <div class="sfa-pt-task-points" v-else-if="award.awardTypeId === 3"></div>
                     </div>
-                    <div class="task-badge" v-if="award.awardTypeId === 1">{{award.statName}}</div>
+                    <div class="task-badge" v-if="award.awardTypeId === 1">
+                      <template v-if="award.type === 601">
+                        现金{{award.conditionNumber}}{{award.conditionUnit}}
+                      </template>
+                      <template v-else>
+                        {{award.mainDesc}}
+                      </template>
+                    </div>
                     <div class="task-badge" v-else-if="award.awardTypeId === 2">{{award.itemName}}</div>
                     <div class="task-badge" v-else-if="award.awardTypeId === 3">积分 {{award.integral | convert2yuan}}</div>
                     <div class="task-badge" v-else>{{award.desc}}</div>
@@ -116,7 +123,10 @@
             </div>
           </div>
           <div class="lucky-prize-name" v-if="chest.awardTypeId === 1">
-            <template v-if="chest.secondDesc">
+            <template v-if="chest.type === 601">
+              现金{{chest.conditionNumber}}{{chest.conditionUnit}}
+            </template>
+            <template v-else-if="chest.secondDesc">
               {{chest.mainDesc}} {{chest.conditionNumber}}{{chest.conditionUnit}}
             </template>
             <template v-else>
@@ -159,7 +169,10 @@
 
           </div>
           <div class="lucky-brief" v-if="lotteryResult.awardTypeId === 1">
-            <template v-if="lotteryResult.secondDesc">
+            <template v-if="lotteryResult.type === 601">
+              现金{{lotteryResult.conditionNumber}}{{lotteryResult.conditionUnit}}
+            </template>
+            <template v-else-if="lotteryResult.secondDesc">
               {{lotteryResult.mainDesc}} {{lotteryResult.conditionNumber}}{{lotteryResult.conditionUnit}}
             </template>
             <template v-else>
@@ -329,7 +342,15 @@
               this.$set(award, 'selected', false)
 
               if (award.awardTypeId === 1) {
-                Object.assign(award, this.couponFormat(award))
+                Object.assign(award, this.couponFormat({
+                  type: award.type,
+                  threholdAmount: award.bonusAmount,
+                  bonusPercentAmount: award.bonusPercentAmount,
+                  bigShowNum: award.bigShowNum,
+                  statType: award.statType,
+                  ticketId: award.statTicketId,
+                  gameType: award.gameType
+                }))
               }
             })
 
@@ -345,7 +366,15 @@
               this.$set(award, 'selected', false)
 
               if (award.awardTypeId === 1) {
-                Object.assign(award, this.couponFormat(award))
+                Object.assign(award, this.couponFormat({
+                  type: award.type,
+                  threholdAmount: award.bonusAmount,
+                  bonusPercentAmount: award.bonusPercentAmount,
+                  bigShowNum: award.bigShowNum,
+                  statType: award.statType,
+                  ticketId: award.statTicketId,
+                  gameType: award.gameType
+                }))
               }
             })
 
@@ -376,7 +405,15 @@
 
             _.each(this.chestList, (chest) => {
               if (chest.awardTypeId === 1) {
-                Object.assign(chest, this.couponFormat(chest))
+                Object.assign(chest, this.couponFormat({
+                  type: chest.type,
+                  threholdAmount: chest.bonusAmount,
+                  bonusPercentAmount: chest.bonusPercentAmount,
+                  bigShowNum: chest.bigShowNum,
+                  statType: chest.statType,
+                  ticketId: chest.statTicketId,
+                  gameType: chest.gameType
+                }))
               }
             })
           }
@@ -488,10 +525,10 @@
                     ...formatCoupon({
                       bigShowNum: this.lotteryResult.bigShowNum,
                       type: this.lotteryResult.type,
-                      threholdAmount: this.lotteryResult.threholdAmount,
+                      threholdAmount: this.lotteryResult.bonusAmount,
                       bonusPercentAmount: this.lotteryResult.bonusPercentAmount,
                       statType: this.lotteryResult.statType,
-                      ticketId: this.lotteryResult.ticketId,
+                      ticketId: this.lotteryResult.statTicketId,
                       gameType: this.lotteryResult.gameType,
                     })
                   }
@@ -549,10 +586,10 @@
                   ...formatCoupon({
                     bigShowNum: this.lotteryResult.bigShowNum,
                     type: this.lotteryResult.type,
-                    threholdAmount: this.lotteryResult.threholdAmount,
+                    threholdAmount: this.lotteryResult.bonusAmount,
                     bonusPercentAmount: this.lotteryResult.bonusPercentAmount,
                     statType: this.lotteryResult.statType,
-                    ticketId: this.lotteryResult.ticketId,
+                    ticketId: this.lotteryResult.statTicketId,
                     gameType: this.lotteryResult.gameType,
                   })
                 }
