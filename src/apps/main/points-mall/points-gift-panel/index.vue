@@ -53,8 +53,8 @@
 
     <div v-transfer-dom>
       <points-address v-if="isShowAddressModal" type="select"
-                      @operate-complete="refresh" @modal-hidden="isShowAddressModal = false"
-                      @address-selected="exchangeCoupon"
+                      @modal-hidden="isShowAddressModal = false"
+                      @address-selected="exchange"
       ></points-address>
     </div>
   </div>
@@ -230,7 +230,7 @@
         })
       },
 
-      exchangeCoupon(addressInfo) {
+      exchange(addressInfo) {
         giftExchangeApi({
           itemId: this.currentGift.itemId,
           count: this.count,
@@ -240,7 +240,7 @@
             this.isShowAddressModal = false
             this.isShowExchangeModal = false
             this.$store.dispatch(types.GET_USER_MALL_INFO)
-            //todo 在当前页刷新
+
             this.getData()
 
             Global.ui.notification.show(`<div class="m-bottom-lg">兑换成功!</div>`, {
@@ -256,10 +256,6 @@
           }
         })
       },
-
-      refresh() {
-
-      }
     },
 
     mounted() {
@@ -344,6 +340,6 @@
   }
 
   .x-toolbar {
-    padding: 40px 30px 60px;
+    padding: 30px 30px 40px;
   }
 </style>

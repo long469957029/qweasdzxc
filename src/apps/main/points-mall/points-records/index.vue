@@ -174,7 +174,7 @@
 
     .points-records-main {
       background-color: #ffffff;
-      height: 930px;
+      min-height: 930px;
       box-sizing: border-box;
       padding: 30px 34px;
     }
