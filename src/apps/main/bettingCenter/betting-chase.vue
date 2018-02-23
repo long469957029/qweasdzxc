@@ -521,6 +521,10 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
       },
 
       chaseConfirm() {
+        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+          Global.ui.notification.show('试玩会员无法进行充值操作，请先注册正式游戏账号')
+          return false
+        }
         // 腾讯分分彩，金额限制1000元
         if (this.ticketId === 31) {
           const chasePlan = _(this.selectedChaseList).find((item) => {
