@@ -174,7 +174,7 @@
     height: 180px;
     right: 0;
     box-sizing: border-box;
-    padding: 30px 55px;
+    padding: 30px 28px;
     z-index: 2;
     display: flex;
     background-color: $new-main-deep-color;

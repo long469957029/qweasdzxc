@@ -145,7 +145,7 @@
           this.loadingStatus = 'loading'
         }
 
-        missionListApi(({data}) => {
+        window.abc = missionListApi(({data}) => {
           if (data && data.result === 0) {
             this.daily = data.root.daily
             this.week = data.root.week
@@ -288,6 +288,8 @@
   }
   .status-cell {
     justify-content: center;
+    align-items: center;
+    align-content: center;
   }
 
 </style>
