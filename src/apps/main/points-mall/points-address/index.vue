@@ -14,10 +14,12 @@
     <div class="modal-main">
       <!--选择收货地址-->
       <template v-if="currentModal === 'select'">
-        <address-select :address-list="addressList"
-                        @refresh="getList" @edit="edit"
-                        @address-selected="addressSelected"
-        ></address-select>
+        <status-cell :has-data="addressList.length" :status="loadingStatus" height="440px">
+          <address-select :address-list="addressList"
+                          @refresh="getList" @edit="edit"
+                          @address-selected="addressSelected"
+          ></address-select>
+        </status-cell>
       </template>
       <!--新增修改-->
       <template v-else>
@@ -111,6 +113,7 @@
         parsley: null,
         currentModal: !_.isEmpty(this.addressList) ? 'select' : 'add',
         addressList: [],
+        loadingStatus: 'loading'
       }
     },
 
@@ -190,6 +193,8 @@
       },
 
       getList() {
+        this.loadingStatus = 'loading'
+
         getAddressListApi(({data}) => {
           if (data && data.result === 0) {
             this.addressList = data.root
@@ -197,6 +202,9 @@
 
           this.currentModal = _.isEmpty(this.addressList) ? 'have-select' : 'select'
         })
+          .finally(() => {
+            this.loadingStatus = 'completed'
+          })
       },
       edit(address) {
         this.name = address.name

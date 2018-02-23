@@ -23,7 +23,8 @@
       <tr slot="tbody" slot-scope="{row, index}" :key="index">
         <td>{{row.exchangeDate | toTime}}</td>
         <td style="padding-left: 40px;">
-          <div class="text-left"><img :src="row.picUrl" class="gift-img" width="62" height="62">&nbsp;&nbsp;
+          <div class="text-left">
+            <img :src="row.picUrl" class="gift-img" width="62" height="62">&nbsp;&nbsp;
             <span class="inline-block">{{row.itemName}}</span>
           </div>
         </td>
@@ -32,10 +33,13 @@
             {{row.refPrice | convert2yuan}}
           </template>
         </td>
-        <td class="text-left" style="padding-left: 40px;">
-          <div>收货人：{{row.exName ? row.exName : '暂无'}}</div>
-          <div>联系电话：{{row.exPhone ? row.exPhone : '暂无'}}</div>
-          <div>收货地址：{{row.exAddr ? row.exAddr : '暂无'}}</div>
+        <td class="text-left location-td">
+          <div class="location">
+            <div>收货人：{{row.exName ? row.exName : '暂无'}}</div>
+            <div>联系电话：{{row.exPhone ? row.exPhone : '暂无'}}</div>
+            <div>收货地址：{{row.exAddr ? row.exAddr : '暂无'}}</div>
+          </div>
+          <div class="location-edit" v-if="!row.exAddr" @click="addAddressOpen(row)"></div>
         </td>
         <td>
           {{row.requireIntegral | convert2yuan}}
@@ -62,12 +66,20 @@
         <td></td>
       </tr>
     </search-grid>
+
+    <div v-transfer-dom>
+      <points-address v-if="isShowAddressModal" type="select"
+                      @modal-hidden="isShowAddressModal = false"
+                      @address-selected="addAddress"
+      ></points-address>
+    </div>
   </div>
 </template>
 
 <script>
-  import {getMyGiftRecordsApi} from 'api/points'
+  import {getMyGiftRecordsApi, addAddressToGiftApi} from 'api/points'
   import {ControlGroup, ControlCell} from 'build'
+  import PointsAddress from '../points-address'
   import Timeset from 'com/timeset'
 
   export default {
@@ -78,14 +90,48 @@
 
     components: {
       ControlGroup,
-      ControlCell
+      ControlCell,
+      PointsAddress,
     },
 
     data() {
       return {
         searchForm: {},
+        itemInfo: {},
         getMyGiftRecordsApi,
+        isShowAddressModal: false,
       }
+    },
+
+    methods: {
+      addAddressOpen(itemInfo) {
+        this.itemInfo = itemInfo
+        this.isShowAddressModal = true
+      },
+      addAddress(addressInfo) {
+        addAddressToGiftApi({
+          itemId: this.itemInfo.itemId,
+          addressId: addressInfo.rid,
+        }, ({data}) => {
+          if (data && data.result === 0) {
+            this.isShowAddressModal = false
+            this.$store.dispatch(types.GET_USER_MALL_INFO)
+
+            this.$refs.searchGrid.search()
+
+            Global.ui.notification.show(`<div class="m-bottom-lg">添加地址成功!</div>`, {
+              type: 'success',
+              hasFooter: false,
+              displayTime: 1000,
+              size: 'modal-xs',
+              bodyClass: 'no-border no-padding',
+              closeBtn: false,
+            })
+          } else {
+            Global.ui.notification.show(data.msg)
+          }
+        })
+      },
     },
 
     mounted() {
@@ -109,10 +155,18 @@
 </script>
 
 <style lang="scss" scoped>
-/*.ticket-records {*/
-  /*.gift-img {*/
-    /*width: 62px;*/
-    /*height: 62px;*/
-  /*}*/
-/*}*/
+  .location-td {
+    padding-left: 40px;
+    display: flex;
+    align-items: center;
+  }
+  .location-edit {
+    background-image: url(./misc/gift-records-edit.png);
+    width: 21px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .location {
+    flex: 1;
+  }
 </style>
