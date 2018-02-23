@@ -14,9 +14,11 @@
     <!--<span class="js-wt-pn-down cursor-pointer" @click="goClick('next')">&gt;</span>-->
     <!--</div>-->
     <div class="notice-content inline-block">
-      <vue-marquee :speed="50000" :scroll-width="1055" :is-html="false">
-        <a v-for="(item,index) in noticeList" @click="showNoticeDialog(index)">【{{item.title}}】{{item.desc}}
-          <span class="m-LR-sm" v-if="index < noticeList.length -1">/</span></a>
+      <vue-marquee :speed="50000" :scroll-width="1055" :content="noticeList">
+        <template slot-scope="props">
+          <a v-for="(item,index) in props.content" @click="showNoticeDialog(index)" :key="index">【{{item.title}}】{{item.desc}}
+            <span class="m-LR-sm" v-if="index < props.content.length -1">/</span></a>
+        </template>
       </vue-marquee>
     </div>
     <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="noticeModal"
@@ -127,15 +129,15 @@
             })
         })
       },
-      // goToPage(index){
-      //   if(index === 'prev'){
-      //     this.detailPage = this.detailPage === 0 ? this.noticeList.length -1 : this.detailPage - 1
-      //   }else if(index === 'next'){
-      //     this.detailPage = this.detailPage === this.noticeList.length -1 ? 0 : this.detailPage + 1
-      //   }else {
-      //     this.detailPage = index
-      //   }
-      // },
+      goToPage(index){
+        if(index === 'prev'){
+          this.detailPage = this.detailPage === 0 ? this.noticeList.length -1 : this.detailPage - 1
+        }else if(index === 'next'){
+          this.detailPage = this.detailPage === this.noticeList.length -1 ? 0 : this.detailPage + 1
+        }else {
+          this.detailPage = index
+        }
+      },
     },
     mounted() {
       this.getNotice()
@@ -191,14 +193,11 @@
     height: 50px;
     overflow: hidden;
     position: relative;
-    cursor: pointer;
     a {
+      display: inline-block;
       height: 50px;
       line-height: 50px;
-      padding-left: 30px;
-      position: relative;
       color: #333333;
-      display: block;
       cursor: pointer;
       /*width: 930px;*/
       /*overflow: -webkit-marquee;*/

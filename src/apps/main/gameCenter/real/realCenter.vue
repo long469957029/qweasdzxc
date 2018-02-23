@@ -13,7 +13,9 @@
             AG余额：
             <span>{{_(agAmount).formatDiv(10000, { fixed: 2 })}}</span>
           </div>
-          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
+          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer"
+               @click="showLogin">余额转帐>
+          </div>
           <div class="rc-item-hint-btn">GO<span class="go-arrow"></span></div>
           <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,1,1)">立即游戏</div>
           <div class="rc-item-secondary-btn ripple-btn" @click="showDownLoad(1)">手机版</div>
@@ -31,7 +33,9 @@
             EBET余额：
             <span>{{_(ebetAmount).formatDiv(10000, { fixed: 2 })}}</span>
           </div>
-          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
+          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer"
+               @click="showLogin">余额转帐>
+          </div>
           <div class="rc-item-hint-btn">GO<span class="go-arrow"></span></div>
           <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,2,2)">立即游戏</div>
           <div class="rc-item-secondary-btn ripple-btn" @click="showDownLoad(2)">手机版</div>
@@ -52,7 +56,9 @@
             BBIN余额：
             <span>{{_(bbinAmount).formatDiv(10000, { fixed: 2 })}}</span>
           </div>
-          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">余额转帐></div>
+          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer"
+               @click="showLogin">余额转帐>
+          </div>
           <div class="rc-item-hint-btn">GO<span class="go-arrow"></span></div>
           <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,3,3)">立即游戏</div>
           <div class="rc-item-secondary-btn ripple-btn" @click="showDownLoad(3)">手机版</div>
@@ -64,7 +70,15 @@
         <div class="rc-reward-icon"></div>
         <div class="rc-reward-title">最新中奖信息：</div>
         <div class="rc-reward-list">
-          <marquee :content="formatePrizeList" :speed="50000" :scroll-width="975" :is-html="true"></marquee>
+          <marquee :speed="50000" :scroll-width="975" v-if="prizeList.length" :content="prizeList">
+            <template slot-scope="props">
+              <a v-for="(item, index) in props.content" :key="index">
+                恭喜{{item.userName}}在{{item.gameName}}中奖<span
+                class="text-prominent">{{_(item.prize).convert2yuan()}}</span>元
+                <span class="m-LR-sm" v-if="index <  props.content.length -1">/</span>
+              </a>
+            </template>
+          </marquee>
         </div>
       </div>
     </div>
@@ -78,23 +92,24 @@
     getPrizeListApi
   } from 'api/gameCenter'
   import Marquee from 'com/vue-marquee'
+
   export default {
-    name:'real-center',
-    components:{
+    name: 'real-center',
+    components: {
       Marquee
     },
-    data(){
-      return{
-        agAmount:0,
-        bbinAmount:0,
-        ebetAmount:0,
-        activeIndex:1,
-        prizeList:[]
+    data() {
+      return {
+        agAmount: 0,
+        bbinAmount: 0,
+        ebetAmount: 0,
+        activeIndex: 1,
+        prizeList: []
       }
     },
     watch: {
       getLoginStatus: function () {
-        if(this.getLoginStatus){
+        if (this.getLoginStatus) {
           this.getGameList()
         }
       }
@@ -105,54 +120,54 @@
       ]),
       formatePrizeList() {
         let list = ''
-        this.prizeList.forEach((item,index) => {
+        this.prizeList.forEach((item, index) => {
           list += `恭喜${item.userName}在${item.gameName}中奖<span class="text-prominent">${_(item.prize).convert2yuan()}</span>元
-              ${index === this.prizeList.length -1 ? '' : '<span class="m-LR-sm">/</span>'}`
+              ${index === this.prizeList.length - 1 ? '' : '<span class="m-LR-sm">/</span>'}`
         })
         return list
       }
     },
-    methods:{
-      getGameList(){
+    methods: {
+      getGameList() {
         getSummaryApi(
           ({data}) => {
-            if(data && data.result === 0){
-              const { gameBalance } = data.root
-              this.agAmount = _.find(gameBalance, { channelId: 1 }).balance
-              this.bbinAmount = _.find(gameBalance, { channelId: 3 }).balance
-              this.ebetAmount = _.find(gameBalance, { channelId: 2 }).balance
-            }else{
+            if (data && data.result === 0) {
+              const {gameBalance} = data.root
+              this.agAmount = _.find(gameBalance, {channelId: 1}).balance
+              this.bbinAmount = _.find(gameBalance, {channelId: 3}).balance
+              this.ebetAmount = _.find(gameBalance, {channelId: 2}).balance
+            } else {
               Global.ui.notification.show('获取资金余额失败')
             }
           }
         )
       },
-      startGame(type,channelId,gameId){
-        if(!this.getLoginStatus){
+      startGame(type, channelId, gameId) {
+        if (!this.getLoginStatus) {
           this.showLogin()
-        }else{
+        } else {
           let flag = false
           getGameListApi()
             .done((data) => {
-              if (data && data.result === 0) {
-                _(data.root).find((item) => {
-                  if (item.channelId === channelId && item.type === type) {
-                    if (item.status === 0) {
-                      flag = true
-                      return true
-                    } else if (item.status === 1) {
-                      Global.ui.notification.show('当前游戏处于关闭状态，您可以尝试其他游戏！')
-                    } else if (item.status === 2) {
-                      Global.ui.notification.show(`平台官方维护中，维护时间：${
-                        _(item.mStart).toTime()}至${_(item.mEnd).toTime()}`)// ,{displayTime:2000}
+                if (data && data.result === 0) {
+                  _(data.root).find((item) => {
+                    if (item.channelId === channelId && item.type === type) {
+                      if (item.status === 0) {
+                        flag = true
+                        return true
+                      } else if (item.status === 1) {
+                        Global.ui.notification.show('当前游戏处于关闭状态，您可以尝试其他游戏！')
+                      } else if (item.status === 2) {
+                        Global.ui.notification.show(`平台官方维护中，维护时间：${
+                          _(item.mStart).toTime()}至${_(item.mEnd).toTime()}`)// ,{displayTime:2000}
+                      }
+                      return false
                     }
-                    return false
-                  }
-                })
+                  })
+                }
               }
-            }
-           )
-          if(flag){
+            )
+          if (flag) {
             let url = ''
             getGameUrlApi({gameId})
               .done((data) => {
@@ -166,22 +181,22 @@
           }
         }
       },
-      showLogin(){
-        if(!this.getLoginStatus){
-          this.$store.commit(types.TOGGLE_LOGIN_DIALOG,true)
+      showLogin() {
+        if (!this.getLoginStatus) {
+          this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
         }
       },
-      showDownLoad(gameId){
-        if(gameId === 3){
+      showDownLoad(gameId) {
+        if (gameId === 3) {
           Global.ui.notification.show('暂未开放，敬请期待')
-        }else{
-          this.$store.commit(types.TOGGLE_GMAE_DOWN_LOAD,{showDialog:true,gameId})
+        } else {
+          this.$store.commit(types.TOGGLE_GMAE_DOWN_LOAD, {showDialog: true, gameId})
         }
       },
-      getPrizeList(){
-        getPrizeListApi({ gameType:1 },
+      getPrizeList() {
+        getPrizeListApi({gameType: 1},
           ({data}) => {
-            if(data && data.result === 0){
+            if (data && data.result === 0) {
               this.prizeList = [...data.root.records]
             }
           },
@@ -190,11 +205,11 @@
         )
         setTimeout(() => {
           this.getPrizeList()
-        },3000)
+        }, 30000)
       }
     },
-    mounted(){
-      if(this.getLoginStatus){
+    mounted() {
+      if (this.getLoginStatus) {
         this.getGameList()
       }
       this.getPrizeList()
@@ -229,7 +244,7 @@
       float: left;
       position: relative;
       overflow: hidden;
-      .tip-info{
+      .tip-info {
         width: 88px;
         height: 82px;
         background: url("./images/tip-bg.png") no-repeat;
@@ -237,7 +252,7 @@
         left: 0;
         top: 0;
         z-index: 2;
-        .text{
+        .text {
           color: $def-white-color;
           font-size: $font-sm;
           transform: rotate(-44deg);
@@ -268,7 +283,6 @@
         height: 1px;
         opacity: 0;
       }
-
 
       .rc-item-title {
         font-size: 24px;
@@ -318,7 +332,7 @@
         color: rgba(255, 255, 255, .5);
         text-align: center;
         line-height: 40px;
-        .go-arrow{
+        .go-arrow {
           width: 18px;
           height: 13px;
           display: inline-block;
@@ -358,7 +372,6 @@
           background: $new-main-deep-hover-color;
         }
       }
-
 
       & .ag {
         background: url('./images/rc-item-ag.png');
