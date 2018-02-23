@@ -21,19 +21,22 @@
                   <div class="task-cell-inner">
                     <div class="task-item">
                       <!-- 谢谢惠顾 -->
-                      <div v-if="award.awardTypeId === 0"></div>
+                      <div class="icon-task-smiley" v-if="award.awardTypeId === 0"></div>
                       <!-- 券 -->
-                      <div class="points-ticket sfa" :class="`sfa-pt-${chest.style1}`" v-else-if="award.awardTypeId === 1">
+                      <div class="points-ticket sfa" :class="`sfa-pt-${award.style1}`" v-else-if="award.awardTypeId === 1">
                         <span class="task-item-title">{{award.couponName}}</span>
                         <span class="task-item-val" v-if="award.conditionType === 2">{{award.conditionNumber}}%</span>
                         <span class="task-item-val" v-else><span class="task-item-unit">¥</span>{{award.conditionNumber}}</span>
                       </div>
                       <!-- 商品 -->
-                      <img :src="award.picUrl" class="gift-pic" v-else-if="award.awardTypeId === 2" />
+                      <img :src="award.picUrl" class="task-gift-pic" v-else-if="award.awardTypeId === 2" />
                       <!-- 积分 -->
                       <div class="sfa-pt-task-points" v-else-if="award.awardTypeId === 3"></div>
                     </div>
-                    <div class="task-badge">{{award.desc}}</div>
+                    <div class="task-badge" v-if="award.awardTypeId === 1">{{award.statName}}</div>
+                    <div class="task-badge" v-else-if="award.awardTypeId === 2">{{award.itemName}}</div>
+                    <div class="task-badge" v-else-if="award.awardTypeId === 3">积分 {{award.integral | convert2yuan}}</div>
+                    <div class="task-badge" v-else>{{award.desc}}</div>
                   </div>
                 </div>
               </div>
@@ -53,6 +56,7 @@
           </div>
         </div>
 
+        <!-- 获奖名单 -->
         <div class="lottery-list">
           <div class="lottery-list-inner">
             <div class="lottery-top">
@@ -63,12 +67,26 @@
             <transition-group class="lottery-list-main" name="ani-scroll" tag="div">
               <div class="lottery-list-main-inner" v-for="user in recentUser" :key="user.uid">
                 <span class="lottery-list-left">恭喜 {{user.userName}}获得</span>
-                <span class="lottery-list-right"><span
-                  class="lottery-list-right-val">10元</span>{{user.bonusName}}获得</span>
+                <span class="lottery-list-right" v-if="user.awardTypeId === 1">
+                  <span class="lottery-list-right-val">{{user.conditionNumber}}{{user.conditionUnit}}</span>{{user.couponName}}
+                </span>
+                <span class="lottery-list-right" v-if="user.awardTypeId === 2">
+                  {{user.bonusName}}
+                </span>
+                <span class="lottery-list-right" v-if="user.awardTypeId === 3">
+                  <!-- 旧资料 -->
+                  <template v-if="user.subType === 0">
+                    {{user.bonusName}}
+                  </template>
+                  <template v-else>
+                    <span class="lottery-list-right-val">{{user.bonusAmount | convert2yuan}}</span>积分
+                  </template>
+                </span>
               </div>
             </transition-group>
           </div>
         </div>
+
       </div>
       <div class="sfa-pt-hanger hanger-left"></div>
       <div class="sfa-pt-hanger hanger-right"></div>
@@ -85,7 +103,7 @@
             <div class="lucky-prize">
               <div class="lucky-prize-inner">
                 <!-- 券 -->
-                <div class="sfa" :class="`sfa-pt-${chest.style2}`" v-if="chest.awardTypeId === 1">
+                <div class="sfa lucky-container" :class="`sfa-pt-${chest.style2}`" v-if="chest.awardTypeId === 1">
                   <span class="lucky-type">{{chest.couponName}}</span>
                   <!--<span class="lucky-val" >{{chest.conditionNumber}}{{chest.conditionUnit}}</span>-->
                 </div>
@@ -97,10 +115,17 @@
               </div>
             </div>
           </div>
-          <div class="lucky-prize-name" v-if="chest.awardTypeId === 1">积分{{chest.integral | convert2yuan}}</div>
+          <div class="lucky-prize-name" v-if="chest.awardTypeId === 1">
+            <template v-if="chest.secondDesc">
+              {{chest.mainDesc}} {{chest.conditionNumber}}{{chest.conditionUnit}}
+            </template>
+            <template v-else>
+              {{chest.mainDesc}}
+            </template>
+          </div>
           <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 2">{{chest.itemName}}</div>
           <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 3">
-            {{chest.mainDesc}} {{chest.conditionNumber}}{{chest.conditionUnit}}
+            积分{{chest.integral | convert2yuan}}
           </div>
           <button class="lucky-exchange-btn btn" @click="luckChest(chest)" :disabled="pushing">
             <span class="sfa sfa-pt-lucky-star-points"></span>
@@ -118,12 +143,12 @@
           <div class="prize-pic-wrapper">
             <!-- 券 -->
             <template v-if="lotteryResult.awardTypeId === 1">
-              <div class="points-ticket sfa" :class="`sfa-pt-${chest.style1}`" v-if="currentLotteryType === 0">
+              <div class="points-ticket sfa" :class="`sfa-pt-${lotteryResult.style1}`" v-if="currentLotteryType === 0">
                 <span class="task-item-title">{{lotteryResult.couponName}}</span>
                 <span class="task-item-val" v-if="lotteryResult.conditionType === 2">{{lotteryResult.conditionNumber}}%</span>
                 <span class="task-item-val" v-else><span class="task-item-unit">¥</span>{{lotteryResult.conditionNumber}}</span>
               </div>
-              <div class="sfa" :class="`sfa-pt-${chest.style2}`" v-else>
+              <div class="sfa lucky-container" :class="`sfa-pt-${lotteryResult.style2}`" v-else>
                 <span class="lucky-type">{{lotteryResult.couponName}}</span>
               </div>
             </template>
@@ -133,7 +158,14 @@
             <div class="icon-points" v-else="lotteryResult.awardTypeId === 3"></div>
 
           </div>
-          <div class="lucky-brief" v-if="lotteryResult.awardTypeId === 1">{{lotteryResult.mainDesc}}</div>
+          <div class="lucky-brief" v-if="lotteryResult.awardTypeId === 1">
+            <template v-if="lotteryResult.secondDesc">
+              {{lotteryResult.mainDesc}} {{lotteryResult.conditionNumber}}{{lotteryResult.conditionUnit}}
+            </template>
+            <template v-else>
+              {{lotteryResult.mainDesc}}
+            </template>
+          </div>
           <div class="lucky-brief" v-if="lotteryResult.brief">{{lotteryResult.brief}}</div>
           <div class="lucky-expire" v-if="lotteryResult.validEndDate">有效期至：{{lotteryResult.validEndDate | toTime}}</div>
           <div class="lucky-points-prize" v-if="lotteryResult.integral">
@@ -290,6 +322,7 @@
 
             this.awards.push({
               awardTypeId: 0,
+              id: -1,
               desc: '谢谢惠顾'
             })
             _.each(this.awards, (award) => {
@@ -304,6 +337,7 @@
 
             this.awards10.push({
               awardTypeId: 0,
+              id: -1,
               desc: '谢谢惠顾'
             })
 
@@ -321,12 +355,21 @@
             this.integralRob10 = data.root.integralRob10
             this.chestList = data.root.chest
             this.myLucky = data.root.myLucky
-            this.recentUser = _.map(data.root.recentUser, (user) => {
-              return {
-                uid: _.uniqueId(),
-                ...user
-              }
-            })
+
+            if (_.isEmpty(this.recentUser)) {
+              this.recentUser = _.map(data.root.recentUser, (user) => {
+                return {
+                  uid: _.uniqueId(),
+                  ...(user.awardTypeId === 1 ? this.couponFormat({
+                    type: user.subType,
+                    threholdAmount: user.bonusAmount,
+                    bonusPercentAmount: user.bonusPercentAmount,
+                  }) : {}),
+                  ...user
+                }
+              })
+            }
+
             this.robLucky = data.root.robLucky
             this.robLucky10 = data.root.robLucky10
 
@@ -340,28 +383,71 @@
         })
       },
 
-      couponFormat(couponInfo) {
+      couponFormat({type, threholdAmount, bonusPercentAmount, bigShowNum = null, statType = null, ticketId = null, gameType = null}) {
         return formatCoupon({
-          bigShowNum: couponInfo.bigShowNum,
-          type: couponInfo.type,
-          threholdAmount: couponInfo.threholdAmount,
-          bonusPercentAmount: couponInfo.bonusPercentAmount,
-          statType: couponInfo.statType,
-          ticketId: couponInfo.ticketId,
-          gameType: couponInfo.gameType,
+          bigShowNum,
+          type,
+          threholdAmount,
+          bonusPercentAmount,
+          statType,
+          ticketId,
+          gameType,
         })
       },
 
-      normalRoll() {
+      normalRoll({speed = 1000} = {speed: 1000}) {
+        clearInterval(this.timer)
         this.timer = setInterval(() => {
 
-          const currentAward = _.findWhere(this.currentAwards, {selected: true})
-          this.currentAwards.forEach((award) => {
-            award.selected = false
-          })
+          this.changeActiveAward()
+        }, speed)
+      },
 
-          _.chain(this.currentAwards).without(currentAward).sample().value().selected = true
-        }, 1000)
+      changeActiveAward() {
+        const currentAward = _.findWhere(this.currentAwards, {selected: true})
+        this.currentAwards.forEach((award) => {
+          award.selected = false
+        })
+
+        _.chain(this.currentAwards).without(currentAward).sample().value().selected = true
+      },
+
+      lotteryRoll({times} = {times: 30}, completeCallback) {
+        if (times === 0) {
+          completeCallback()
+          return
+        }
+
+        this.$_roll(() => {
+          this.lotteryRoll({times: --times}, completeCallback)
+        })
+
+      },
+
+      $_roll(callback) {
+        this.timer = setTimeout(() => {
+          this.changeActiveAward()
+          callback()
+        }, 100)
+      },
+
+      startLotteryAnimation(lotteryResult, completed) {
+        clearInterval(this.timer)
+        this.lotteryRoll({
+          times: 30
+        }, () => {
+          const currentAward = _.findWhere(this.currentAwards, {selected: true})
+          currentAward.selected = false
+
+          _.findWhere(this.currentAwards, {
+            id: lotteryResult.id || -1
+          }).selected = true
+
+          setTimeout(() => {
+            this.normalRoll()
+            completed()
+          }, 1000)
+        })
       },
 
       winnerRoll() {
@@ -438,11 +524,6 @@
           .finally(() => {
             this.pushing = false
           })
-      },
-
-      startLotteryAnimation(lotteryResult, completed) {
-        //todo
-        completed()
       },
 
       luckChest(chestInfo) {
@@ -620,12 +701,18 @@
     padding-top: 60px;
   }
 
+  .task-gift-pic {
+    width: 100px;
+    height: 100px;
+  }
   .task-badge {
     height: 35px;
     background-color: #6d7a8f;
     color: #ffffff;
     text-align: center;
     line-height: 35px;
+    position: relative;
+    z-index: 1,
   }
 
   .points-ticket {
@@ -776,6 +863,12 @@
     z-index: 1;
   }
 
+  .icon-task-smiley {
+    background: url(./misc/icon-task-smiley.png);
+    width: 45px;
+    height: 45px;
+  }
+
   //lucky
 
   .lucky-panel {
@@ -849,7 +942,7 @@
     align-items: center;
   }
 
-  .sfa-pt-lucky-currency {
+  .lucky-container {
     color: #ffffff;
     font-size: 14px;
     display: flex;
