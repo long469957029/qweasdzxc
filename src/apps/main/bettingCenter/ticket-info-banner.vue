@@ -2,8 +2,12 @@
   <div class="bc-main-area bg-deep clearfix">
     <div class="stop-selling" v-if="!bettingInfo.sale"></div>
     <div class="bc-area-ticket-info pull-left">
-      <div :class="['sfa',`sfa-bc-${ticketInfo.type}-${ticketInfo.mark}`]"></div>
-      <div class="ticket-info">10:00-20:00/共130期</div>
+      <transition mode="out-in"
+                  enter-active-class="animated-quick fadeIn"
+                  leave-active-class="animated-quick fadeOut"
+      >
+        <div :class="['sfa',`sfa-bc-${ticketInfo.type}-${ticketInfo.mark}`]" :key="`${ticketInfo.type}-${ticketInfo.mark}`"></div>
+      </transition>
     </div>
     <div class="bc-curt-plan-main pull-left">
       <div class="clearfix">
@@ -300,15 +304,6 @@
     .bc-area-ticket-info {
       width: 180px;
       margin: 15px 40px 0;
-      .ticket-info {
-        width: 100%;
-        height: 27px;
-        background-color: #129fa8;
-        color: $def-white-color;
-        line-height: 27px;
-        font-size: 12px;
-        text-align: center;
-      }
     }
     .bc-curt-plan-main {
       margin-top: 40px;

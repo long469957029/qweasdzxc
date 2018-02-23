@@ -4,7 +4,7 @@
       <div class="left-top-inner">
         <div class="left-title">
           <div class="left-title-main">积分商城</div>
-          <router-link class="intro-link" :to="{name: 'pointsIntro'}">
+          <router-link class="intro-link" :to="{name: 'pointsIntro'}" target="_blank">
             了解积分商城
             <span class="sfa sfa-pt-intro"></span>
           </router-link>

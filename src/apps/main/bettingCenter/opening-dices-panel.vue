@@ -51,7 +51,7 @@
 
 
   .dice-statistic {
-    width: 100px;
+    max-width: 100px;
     display: inline-block;
     vertical-align: top;
   }
