@@ -1,14 +1,14 @@
 <div class="sidebar">
   <% if(showTeamEntry){ %>
-  <a href="#<%=(!isTeam ? '/ac/to' : '/fc/fm')%>" class="team-entry"><%=(!isTeam ? '团队中心' : '个人中心')%> &raquo;</a>
+  <a href="#<%=(!isTeam ? '/ac/to' : '/fc/fm')%>" class="team-entry"><%=(!isTeam ? '切换团队中心' : '切换个人中心')%> <span class="sfa sfa-icon-arrow-down"></span></a>
   <%}%>
   <% if(showUserInfo){ %>
   <div class="sidebar-user-info clearfix">
     <div class="user-info-photo">
       <img src="<%=img%>"  />
     </div>
-    <div class="user-info-name text-inverse text-center m-top-smd font-sm">您好，<span class="js-user-name"><%=userName%></span></div>
-    <div class="m-top-sm text-center">
+    <div class="user-info-name text-inverse text-center m-top-sm font-sm">您好，<span class="js-user-name"><%=userName%></span></div>
+    <div class="m-top-smd text-center">
       <a href="#/uc/pl" class="sfa js-sfa-icon-lock m-right-xs"></a>
       <a href="#/uc/pl" class="sfa js-sfa-icon-light-bulb m-right-xs"></a>
       <a href="#/uc/pl" class="sfa js-sfa-icon-mobile m-right-xs"></a>

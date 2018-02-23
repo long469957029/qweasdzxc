@@ -264,6 +264,17 @@
       line-height: 50px;
       text-align: right;
       background: url('./misc/db-notice.png') no-repeat center;
+      position: relative;
+      &:after{
+        content: '';
+        display: block;
+        height: 100%;
+        width: 40px;
+        position: absolute;
+        background: linear-gradient(to right, $def-white-color, transparent);
+        right: -44px;
+        z-index: 2;
+      }
     }
 
     .bulletin-content {
