@@ -1,8 +1,8 @@
 <template>
   <div class="marquee" @mouseover="stopScoll" @mouseout="startScoll">
-    <div class="content" v-html="content" ref="container" v-if="isHtml"></div>
-    <div class="content" ref="container" v-else>
-      <slot></slot>
+    <!--<div class="content" v-html="content" ref="container" v-if="isHtml"></div>-->
+    <div class="content" ref="container">
+      <slot :content="content"></slot>
     </div>
   </div>
 </template>
@@ -21,13 +21,12 @@
         required: true
       },
       content:{
-        type:String,
-        // required: true
+        required: true
       },
-      isHtml:{  // 内容显示方式
-        type:Boolean,
-        default: true
-      }
+      // isHtml:{  // 内容显示方式
+      //   type:Boolean,
+      //   default: true
+      // }
     },
     data(){
       return{
@@ -38,14 +37,17 @@
       }
     },
     watch:{
-      content:function () {
-        if(this.content !== ''){
-          this.$nextTick(() => {
-            this.currentLeft = this.initialLeft = this.$refs.container.offsetWidth
-            this.stopScoll()
-            this.startScoll()
-          })
-        }
+      content: {
+        handler() {
+          if(this.content !== ''){
+            this.$nextTick(() => {
+              this.currentLeft = this.initialLeft = this.$refs.container.offsetWidth
+              this.stopScoll()
+              this.startScoll()
+            })
+          }
+        },
+        immediate: true
       }
     },
 
@@ -77,13 +79,13 @@
         Velocity(this.$refs.container, 'stop', true)
       }
     },
-    mounted(){
-      this.$nextTick(() => {
-        this.currentLeft = this.initialLeft = this.$refs.container.offsetWidth
-        this.stopScoll()
-        this.startScoll()
-      })
-    }
+    // mounted(){
+    //   this.$nextTick(() => {
+    //     this.currentLeft = this.initialLeft = this.$refs.container.offsetWidth
+    //     this.stopScoll()
+    //     this.startScoll()
+    //   })
+    // }
   }
 </script>
 
