@@ -24,7 +24,7 @@
                  @blur="verifyPwd" @keyup.enter="userLogin"
                  placeholder="请输入您的密码" v-model="password"
                  autocomplete="off" required></div>
-        <div class="login-input-item" :class="{'hidden':showCodeItem}">
+        <div class="login-input-item" :class="{'hidden':!showCodeItem}">
           <div class="login-verity-img sfa sfa-icon-verify">
           </div>
           <input class="login-verity" :class="{'parsley-error': codeError,'parsley-success':codeSuccess}"
@@ -69,7 +69,7 @@
         pwdSuccess: false,
         codeError: false,
         codeSuccess: false,
-        showCodeItem: true,
+        showCodeItem: false,
         toCircle: false,
         codeUrl: 'http://forehead.5x5x.com/acct/imgcode/code?_t=1515997888887',
         pushing: false,
@@ -158,7 +158,7 @@
               window.location.href = 'index.html'
             }
           } else if (data.msg.indexOf('验证码') !== -1) {
-            this.showCodeItem = false
+            this.showCodeItem = true
             this.codeError = true
             this.showErrorMsg = true
             this.codeSuccess = false
