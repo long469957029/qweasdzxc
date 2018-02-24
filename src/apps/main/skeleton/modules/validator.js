@@ -104,7 +104,7 @@ var ValidatorModule = Base.Module.extend({
         return false;
       }
     }, 42)
-      .addMessage('zh_cn', 'zhandldbmaxlen', '只能输入中文、字母、点和空格,不能以空格和点开头或结尾，不能出现连续的点或空格,不能超过%s个字');
+      .addMessage('zh_cn', 'zhandldbmaxlen', '请填写有效的开户人姓名');//只能输入中文、字母、点和空格,不能以空格和点开头或结尾，不能出现连续的点或空格,不能超过%s个字
 
     ParsleyValidator.addValidator('phone', function (value) {
       var myReg = /^[0-9]{11,11}$/;

@@ -79,6 +79,7 @@ define((require, exports, module) => {
       this.$lastCardNo = this.$('.js-uc-last-cardNo')
       this.$lastCardError = this.$('.js-last-card-error')
       this.$pwdToken = this.$('.js-uc-pwdToken')
+      this.$addressListError = this.$('.js-uc-cm-provence-error')
       this.getBankListXhr().done((res) => {
         if (res.result === 0) {
           const bankOptions = []
@@ -200,6 +201,19 @@ define((require, exports, module) => {
       const $target = $(e.currentTarget)
       const $cardBindingForm = this.$bindForm
       const clpValidate = $cardBindingForm.parsley().validate()
+      const pid = this.$province.val()
+      const cid = this.$city.val()
+      if (pid==='' || cid==='' || pid===undefined || cid===undefined) {
+        const data = {
+          el: this.$addressListError,
+          errorText: '省市填写不完整',
+        }
+        this.$('.select2').toggleClass('faild',true)
+        this.formateError(data)
+        return false
+      }else{
+        this.$('.select2').toggleClass('faild',false)
+      }
       if (clpValidate) {
         $target.button('loading')
 
@@ -241,7 +255,12 @@ define((require, exports, module) => {
                 window.Global.cookieCache.set('security', status)
               }
             } else {
-              Global.ui.notification.show(`绑定失败，${res.msg}`)
+              const data2 = {
+                el: this.$('.js-uc-cm-error'),
+                errorText: res.msg,
+              }
+              this.formateError(data2)
+              // Global.ui.notification.show(`绑定失败，${res.msg}`)
             }
           })
       }
@@ -320,6 +339,10 @@ define((require, exports, module) => {
             // Global.ui.notification.show(res.msg === 'fail' ? '银行卡信息校验失败' : res.msg)
           })
       }
+    },
+    formateError(data) {
+      const errorTpl = `<span class="text-hot" style="margin-left: -17px;"><i class="sfa sfa-error-icon m-right-xs vertical-middle"></i>${data.errorText}</span>`
+      data.el.html(errorTpl)
     },
   })
 

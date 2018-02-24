@@ -2,10 +2,11 @@
   <% if(isFirstBind){ %>
   <h3>1.验证资金密码</h3>
   <form class="js-uc-steps js-uc-cb-fund-form uc-cb-fund-form form-horizontal">
-    <div class="text-black font-sm text-center m-top-lg">请输入资金密码</div>
-    <div class="text-center m-top-md m-bottom-md">
+    <div class="text-black font-sm text-center m-top-lg" style="margin-left: -200px">请输入资金密码</div>
+    <div class="text-center m-top-md m-bottom-md" style="margin-left: -200px">
       <div>
-        <input type="password" name="fundPwd" class="js-uc-cb-fundPwd uc-cb-fundPwd" data-parsley-error-message="请输入资金密码" required>
+        <input type="password" name="fundPwd" class="js-uc-cb-fundPwd uc-cb-fundPwd"
+               data-parsley-error-message="请输入资金密码" required>
       </div>
     </div>
     <div class="js-fundPwd-error text-center"></div>
@@ -17,18 +18,22 @@
   <% } else { %>
   <h3>1.验证老银行卡</h3>
   <form class="js-uc-steps js-uc-cb-last-form uc-cb-last-form form-horizontal">
-    <div class="font-sm text-center text-cool m-top-lg m-bottom-md">·请提供最近绑定银行卡的信息</div>
+    <div class="font-sm text-center text-cool m-top-lg m-bottom-md" style="margin-left: -200px;">·请提供最近绑定银行卡的信息</div>
     <div class="control-group">
       <label class="control-label">开户人姓名：</label>
       <div class="controls">
-        <input type="text" class="js-uc-last-userName input1" required>
+        <input type="text" class="js-uc-last-userName input1" data-parsley-errors-container=".js-uc-vcm-name-error"
+               required>
+        <div class="js-uc-vcm-name-error parsley-error-container inline-block" style="max-width: 350px"></div>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label">银行卡号：</label>
       <div class="controls">
-        <input type="text" class="js-uc-last-cardNo input1" data-parsley-num data-parsley-length="[13,19]"
+        <input type="text" class="js-uc-last-cardNo input1" data-parsley-errors-container=".js-uc-vcm-card-error"
+               data-parsley-num data-parsley-length="[13,19]"
                required>
+        <div class="js-uc-vcm-card-error parsley-error-container inline-block" style="max-width: 350px"></div>
       </div>
     </div>
     <div class="js-last-card-error text-center"></div>
@@ -43,9 +48,10 @@
       <label class="control-label">开户行：</label>
 
       <div class="controls">
-        <select class="js-uc-cbBankId select1" required>
+        <select class="js-uc-cbBankId select1" data-parsley-errors-container=".js-uc-cm-bank-error" required>
           <option value="">请选择</option>
         </select>
+        <div class="js-uc-cm-bank-error parsley-error-container inline-block" style="max-width: 350px"></div>
       </div>
     </div>
     <div class="control-group">
@@ -53,7 +59,9 @@
 
       <div class="controls">
         <input type="text" class="js-uc-cbCardNo uc-lg-input input1" data-parsley-num data-parsley-length="[16,19]"
-               data-parsley-error-message="银行卡号由16或19位数字组成" required>
+               data-parsley-errors-container=".js-uc-cm-card-error" data-parsley-error-message="银行卡号由16或19位数字组成"
+               required>
+        <div class="js-uc-cm-card-error parsley-error-container inline-block" style="max-width: 350px"></div>
       </div>
 
     </div>
@@ -62,7 +70,8 @@
 
       <div class="controls">
         <input type="text" class="js-uc-cbAccountName input1" data-parsley-length="[2,50]"
-               data-parsley-zhAndLDBMaxLen="20" required>
+               data-parsley-errors-container=".js-uc-cm-name-error" data-parsley-zhAndLDBMaxLen="20" required>
+        <div class="js-uc-cm-name-error parsley-error-container inline-block" style="max-width: 350px"></div>
       </div>
     </div>
     <div class="control-group">
@@ -70,30 +79,32 @@
 
       <div class="controls">
         <div class="inline-block">
-          <select class="js-uc-cbProvince select2" required>
+          <select class="js-uc-cbProvince select2">
             <option value="">省份</option>
           </select>
         </div>
         <div class="inline-block">
-          <select class="js-uc-cbCity select2" required>
+          <select class="js-uc-cbCity select2">
             <option value="">城市</option>
           </select>
         </div>
+        <div class="js-uc-cm-provence-error parsley-error-container inline-block" style="max-width: 350px"></div>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label">支行名称：</label>
-
       <div class="controls">
         <!--<input type="text" class="js-uc-cbBankBranch input1" data-parsley-length="[2,100]"-->
-               <!--data-parsley-zhAndLDBMaxLen="20" required>-->
-        <select class="js-uc-cbBankBranch select1" required>
+        <!--data-parsley-zhAndLDBMaxLen="20" required>-->
+        <select class="js-uc-cbBankBranch select1" data-parsley-errors-container=".js-uc-cm-branch-error" required>
           <option value="">请选择</option>
         </select>
+        <div class="js-uc-cm-branch-error parsley-error-container inline-block" style="max-width: 350px"></div>
       </div>
     </div>
     <div class="control-group text-center">
-        <button type="button" class="js-uc-cbCardBinding-check btn uc-cm-lg-btn" data-loading-text="绑定中">绑定银行卡</button>
+      <div class="js-uc-cm-error"></div>
+      <button type="button" class="js-uc-cbCardBinding-check btn uc-cm-lg-btn" data-loading-text="绑定中">绑定银行卡</button>
     </div>
 
   </form>
