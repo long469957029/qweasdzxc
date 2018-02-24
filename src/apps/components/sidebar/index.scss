@@ -11,19 +11,22 @@ $boder-def-color: #e6e6e6;
   position: relative;
   .team-entry {
     position: absolute;
-    width: 116px;
-    height: 30px;
+    width: 18px;
+    //height: 130px;
     background-color: $new-main-deep-color;
     color: $def-white-color;
     font-size: $font-sm;
-    line-height: 30px;
-    top: 0;
-    left: 50%;
-    margin-left: -58px;
-    text-align: center;
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
+    //line-height: 30px;
+    top: 18px;
+    left: -33px;
+    //text-align: center;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
     cursor: pointer;
+    padding: 15px 7.5px;
+    writing-mode: vertical-lr;
+    -webkit-writing-mode: vertical-lr;
+    -ms-writing-mode: vertical-lr;
   }
   .sidebar-user-info {
     width: 100%;
@@ -39,7 +42,10 @@ $boder-def-color: #e6e6e6;
       background-color: $def-white-color;
       padding: 5px;
       box-shadow: 0 0 5px #cbcbcb;
-      margin-top: 45px;
+      margin-top: 27px;
+    }
+    .user-info-safe{
+      margin-top: 10px;
     }
     .user-info-safe-up {
       cursor: pointer;

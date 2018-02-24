@@ -178,6 +178,7 @@ const CardManageView = Base.ItemView.extend({
       '</li>'
 
     if (size === 0) {
+      this.$('.js-uc-cmLockCard-btn').addClass('hidden')
       return cardAdd
     }
 

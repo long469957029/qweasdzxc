@@ -22,8 +22,8 @@ const FundView = Base.ItemView.extend({
     const self = this
     $.when(this.AccountXhr).done((res) => {
       if (res.result === 0) {
-        self.$('.jc-sidebar-amount-total').html(_(res.root.total).convert2yuan().toFixed(2))// 总余额
-        self.$('.jc-sidebar-amount-enable').html(_(res.root.validBalance).convert2yuan().toFixed(2))// 可用余额
+        self.$('.jc-sidebar-amount-total').html(res.root.total === 0 ? '0.00' : _(res.root.total).convert2yuan())// 总余额
+        self.$('.jc-sidebar-amount-enable').html(res.root.validBalance === 0 ? '0.00' : _(res.root.validBalance).convert2yuan())// 可用余额
         this.renderGeneralData(res.root.gameBalance)
         if (res.root.optRecords.length > 0) {
           this.renderRecordData(res.root.optRecords)
@@ -38,21 +38,19 @@ const FundView = Base.ItemView.extend({
     _(data).each((game) => {
       const channelId = game.channelId
       if (channelId === 0) {
-        self.$('.jc-sidebar-center').html(_(game.balance).convert2yuan().toFixed(2)) //  总钱包余额
+        self.$('.jc-sidebar-center').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) //  总钱包余额
       } else if (channelId === 1) {
-        self.$('.jc-sidebar-ag').html(_(game.balance).convert2yuan().toFixed(2)) // ag余额
+        self.$('.jc-sidebar-ag').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // ag余额
       } else if (channelId === 2) {
-        self.$('.jc-sidebar-ebet').html(_(game.balance).convert2yuan().toFixed(2)) // ebet余额
+        self.$('.jc-sidebar-ebet').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // ebet余额
       } else if (channelId === 3) {
-        self.$('.jc-sidebar-bbin').html(_(game.balance).convert2yuan().toFixed(2)) // bbin
+        self.$('.jc-sidebar-bbin').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // bbin
       } else if (channelId === 4) {
-        self.$('.jc-sidebar-pt').html(_(game.balance).convert2yuan().toFixed(2)) // pt余额
+        self.$('.jc-sidebar-pt').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // pt余额
       } else if (channelId === 5) {
-        self.$('.jc-sidebar-mg').html(_(game.balance).convert2yuan().toFixed(2)) // mg余额
+        self.$('.jc-sidebar-mg').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // mg余额
       } else if (channelId === 6) {
-        self.$('.jc-sidebar-gg').html(_(game.balance).convert2yuan().toFixed(2)) // gg余额
-      } else if (channelId === 7) {
-        self.$('.jc-sidebar-188').html(_(game.balance).convert2yuan().toFixed(2)) // 188余额
+        self.$('.jc-sidebar-gg').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // gg余额
       }
     })
   },
@@ -136,19 +134,19 @@ const FundView = Base.ItemView.extend({
         itemHtml.push(html.join(''))
       } else if (record.type === 3) {
         html.push('<div class="js-sideBar-record-item operation-record-item">')
-        const formName = walletConf.getId(record.fromChannelId).zhName
-        const toName = walletConf.getId(record.toChannelId).zhName
+        const formName = walletConf.get(record.fromChannelId).zhName
+        const toName = walletConf.get(record.toChannelId).zhName
         html.push(`<div class="record-action">${formName}转入${toName}</div>`)
         html.push(`<div class="record-date">${createDate}</div>`)
         html.push('<div class="clearfix"></div>')
         html.push(`<div class="record-amount">${recordAmount}</div>`)
         html.push('<div class="record-progress">')
         if (record.status === 0) {
-          html.push('<span class="process-img"></span><span class="process-text">转账中</span>')
+          html.push('<span class="process-text">转账中</span><span class="process-img"></span>')
         } else if (record.status === 1) {
-          html.push('<span class="success-img"></span><span class="success-text">转账成功</span>')
+          html.push('<span class="success-text">转账成功</span><span class="success-img"></span>')
         } else if (record.status === 2) {
-          html.push('<span class="fault-img"></span><span class="fault-text">转账失败</span>')
+          html.push('<span class="fault-text">转账失败</span><span class="fault-img"></span>')
         }
         html.push('</div><div class="clearfix"></div>')
         html.push(`<div class="record-remark ${(recordRecord === null)?'hidden':''}">备注：${recordRecord}</div><div class="clearfix"></div></div>`)

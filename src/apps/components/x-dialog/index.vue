@@ -38,11 +38,19 @@
       type: {
         type: String,
         default: ''
+      },
+      options: {
+        type: Object,
+        default() {
+          return {
+
+          }
+        }
       }
     },
 
     mounted() {
-      $(this.$refs.modal).modal()
+      $(this.$refs.modal).modal(this.options)
         .on('hidden.modal', () => {
           this.$emit('modal-hidden')
         })
@@ -59,7 +67,7 @@
     top: 10%;
     left: 50%;
     z-index: 1050;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 0) translateZ(0);
     background-color: #fff;
     border-radius: 6px;
     outline: 0;

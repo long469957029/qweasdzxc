@@ -7,7 +7,7 @@
         <li v-if="maxSphere - minSphere > 0" v-for="i in (maxSphere - minSphere)" :class="{active: (i + minSphere) === pageIndex}" @click="goToPage(minSphere + i)">
           <span>{{minSphere + i}}</span>
         </li>
-        <template v-if="totalPage - 2 > maxSphere">
+        <template v-if="totalPage > maxSphere">
           …
           <li><span>{{totalPage}}</span></li>
         </template>

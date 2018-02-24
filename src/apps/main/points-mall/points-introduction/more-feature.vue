@@ -86,7 +86,7 @@
 </template>
 
 <script>
-  import TimeoutCell from './timeout-cell'
+  import {TimeoutCell} from 'build'
 
   export default {
     name: 'more-feature',

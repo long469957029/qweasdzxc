@@ -1,8 +1,11 @@
 import axios from 'axios'
+
+import {shim} from 'promise.prototype.finally'
 import qs from 'qs'
 import urlList from './noLoginSync'
 import needPostTestDataUrlConfig from './needPostTestDataUrlConfig'
 
+shim()
 const CancelToken = axios.CancelToken
 
 const SyncModule = Base.Module.extend({

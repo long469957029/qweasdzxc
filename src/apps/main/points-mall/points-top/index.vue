@@ -4,7 +4,7 @@
       <div class="left-top-inner">
         <div class="left-title">
           <div class="left-title-main">积分商城</div>
-          <router-link class="intro-link" :to="{name: 'pointsIntro'}">
+          <router-link class="intro-link" :to="{name: 'pointsIntro'}" target="_blank">
             了解积分商城
             <span class="sfa sfa-pt-intro"></span>
           </router-link>
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <div class="right-banner-wrapper">
+    <status-cell class="right-banner-wrapper" loading-tip="" :status="bannerStatus">
       <swiper :options="swiperOption">
         <swiper-slide v-for="(item, i) in bannerList" :key="i">
           <a :href="item.advUrl" v-if="item.advUrl" target="_blank">
@@ -51,14 +51,16 @@
           </a>
           <img v-else :src="item.picUrl"/>
         </swiper-slide>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
+        <template v-if="bannerList.length > 1">
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+        </template>
       </swiper>
       <div class="sign-in" @click="showSignIn">
         <div class="sfa sfa-pt-sign-in"></div>
         签到
       </div>
-    </div>
+    </status-cell>
     <div v-transfer-dom>
       <x-dialog v-if="isShowSignIn" @modal-hidden="isShowSignIn = false">
         <sign-in slot="all"></sign-in>
@@ -93,23 +95,32 @@
             picUrl: banner
           },
         ],
-        swiperOption: {
+        bannerStatus: 'loading',
+        isShowSignIn: false
+      }
+    },
+
+    computed: {
+      swiperOption() {
+        let swiperOption = {
           loop: true,
           centeredSlides: true,
           autoplay: {
             delay: 2500,
             disableOnInteraction: false
           },
+          height: 450,
+          width: 870,
           navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
           }
-        },
-        isShowSignIn: false
-      }
-    },
-
-    computed: {
+        }
+        if (this.bannerList.length <= 1) {
+          swiperOption.autoplay = false
+        }
+        return swiperOption
+      },
       ...mapGetters([
         'username',
         'userAvatar',
@@ -131,6 +142,9 @@
           }
         }
       })
+        .finally(() => {
+          this.bannerStatus = 'completed'
+        })
     }
   }
 </script>
@@ -142,7 +156,7 @@
       background: url('left-top.png');
       width: 350px;
       height: 479px;
-      margin-left: -20px;
+      margin-left: -15px;
       margin-top: 9px;
     }
     .left-top-inner {
@@ -278,10 +292,11 @@
   .right-banner-wrapper {
     position: relative;
     margin-top: 23px;
-    margin-right: 8px;
+    margin-right: 1px;
     height: 450px;
     width: 870px;
     flex: 1 0 auto;
+    overflow: hidden;
 
     .sign-in {
       background-color: #e84c4c;

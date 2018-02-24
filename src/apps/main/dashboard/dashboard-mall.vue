@@ -9,13 +9,6 @@
         <div class="info">
           <div class="title">
             {{item.name}}
-            <span class="badge" v-if="!_.isNull(item.levelLimit)
-                && item.limitRange !== 0
-                && item.limitRange !== 1
-                && item.limitRange !== 2">{{item.limitLevelType === 0 ? `Lv.${item.levelLimit}用户专享` : `Lv.${item.levelLimit}用户以上`}}</span>
-            <span v-else-if="!_.isNull(item.limitRange)">
-                  {{item.limitRange === 0 ? '新用户专享' : (item.limitRange === 1 ? '老用户专享' : '总代专享')}}
-                </span>
           </div>
           <div class="desc">{{item.couponDesc}}</div>
           <a :href="`#/${item.couponType === 0 ? 'points/gifts' : 'points'}`" class="btn-mall-exchange">立即兑换</a>

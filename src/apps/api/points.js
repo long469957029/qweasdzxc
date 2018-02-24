@@ -230,9 +230,10 @@ const signInApi = (then, fail) => {
  * @param couponToken
  * @param then
  * @param fail
- * @returns {*|Promise<T>}
+ * @returns {* | Promise<T>}
+ * @param couponType
  */
-const getTicketRecordsApi = ({startDate = '', endDate = '', pageIndex = 0, pageSize = 10, couponToken = ''} = {}, then, fail) => {
+const getTicketRecordsApi = ({startDate = '', endDate = '', pageIndex = 0, pageSize = 10, couponType = '', couponToken = ''} = {}, then, fail) => {
   return $http({
     url: '/mall/coupon/myCouponAndGiveList.json',
     data: {
@@ -240,6 +241,7 @@ const getTicketRecordsApi = ({startDate = '', endDate = '', pageIndex = 0, pageS
       endDate,
       pageIndex,
       pageSize,
+      couponType,
       couponToken
     }
   })
@@ -488,6 +490,26 @@ const addAddressToGiftApi = ({
     .catch(fail)
 }
 
+const levelIntroduceApi = (then, fail) => {
+  return $http({
+    url: '/mall/conf/IntegrallevelConf.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+const actionIntroduceApi = (then, fail) => {
+  return $http({
+    url: '/mall/conf/actionConf.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+
+
+
+
 export {
   getMallBannerApi,
   getUserMallInfoApi,
@@ -512,4 +534,6 @@ export {
   addressDeleteApi,
   giftExchangeApi,
   giftExchangeConfirmApi,
+  levelIntroduceApi,
+  actionIntroduceApi,
 }

@@ -251,6 +251,7 @@
             } else {
               Global.ui.notification.show(data.msg)
             }
+            this.isShowGetCard = false
           }
         }, () => {
           this.isShowGetCard = false

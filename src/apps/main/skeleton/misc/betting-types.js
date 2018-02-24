@@ -43,7 +43,7 @@ export const SSC = {
   trend: true,
   abbreviated: true,
   playSeriesIdList: sccPlaySeriesIdList,
-  helpRutter: 'DnsCourse',
+  helpPage: 'SscLottery',
 }
 
 export const CHOOSE15 = {
@@ -56,6 +56,7 @@ export const CHOOSE15 = {
   positions: ['第一位', '第二位', '第三位', '第四位', '第五位'],
   abbreviated: true,
   trend: true,
+  helpPage: 'SyxwLottery',
 }
 
 export const THREED = {
@@ -67,7 +68,8 @@ export const THREED = {
   type: 'threeD',
   positions: ['百位', '十位', '个位'],
   trend: true,
-  playSeriesIdList: threeDPlaySeriesIdList
+  playSeriesIdList: threeDPlaySeriesIdList,
+  helpPage: 'DpLottery',
 }
 
 export const P5P3 = {
@@ -79,6 +81,7 @@ export const P5P3 = {
   type: 'p5p3',
   positions: ['万位', '千位', '百位', '十位', '个位'],
   trend: true,
+  helpPage: 'DpLottery',
 }
 
 export const PK10 = {
@@ -90,6 +93,7 @@ export const PK10 = {
   type: 'pk10',
   positions: ['冠军', '亚军', '季军', '第四名', '第五名', '第六名', '第七名', '第八名', '第九名', '第十名'],
   trend: true,
+  helpPage: 'Pk10Lottery',
 }
 
 export const QUICK3 = {
@@ -102,6 +106,7 @@ export const QUICK3 = {
   positions: ['万位', '千位', '百位'],
   abbreviated: true,
   trend: true,
+  helpPage: 'KsLottery',
 }
 
 

@@ -110,12 +110,16 @@ const MessageView = Base.ItemView.extend({
   // 公共显示方法
   // 触发查询联系人接口
   renderGetContactInfoXhr() {
+    const self = this
     this.getChatTotalXhr()
       .done((res) => {
         if (res.result === 0) {
           this.renderContactData(res.root)
           this.parentId = res.root.parent.userId
           this.userList = imService.getUserList(res.root, this.parentId)
+          if(self.options.userId){
+            self.$(`.js-contact-onePerson[data-id=${self.options.userId}]`).trigger('click')
+          }
         } else {
           Global.ui.notification.show('未知错误')
         }

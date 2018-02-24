@@ -17,7 +17,7 @@ const CouponView = Base.ItemView.extend({
   // 获取我的优惠券列表
   getMyCouponListXhr (data) {
     return Global.sync.ajax({
-      url: '/mall/coupon/couponList.json',
+      url: '/mall/coupon/myCouponList.json',
       data,
     })
   },
@@ -45,7 +45,7 @@ const CouponView = Base.ItemView.extend({
 
   fetchMyCoupon() {
     const self = this
-    self.getMyCouponListXhr()
+    self.getMyCouponListXhr({couponStatus:0, pageSize:9, pageIndex:0})
       .always(() => {
         self.loadingFinish()
       })

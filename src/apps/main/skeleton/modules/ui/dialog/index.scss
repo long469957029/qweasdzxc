@@ -32,6 +32,7 @@
   z-index: 1050;
   outline: 0;
   color: $new-inverse-color;
+  transform: translateZ(0);
 
   &.fade {
     top: -25%;

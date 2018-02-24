@@ -642,6 +642,8 @@
 }
 
 .open-confirm-main {
+  width: 480px;
+  height: 310px;
   border-radius: 5px;
   .confim-title {
     width: 480px;
@@ -657,14 +659,22 @@
       font-size: 30px;
     }
   }
-  .contant-info {
-    width: 275px;
-    height: 70px;
-    margin: 0 auto;
-    margin-top: 22px;
-    background-color: #f8f8f8;
-    border-radius: 10px;
-    padding-top: 15px;
+  .confirm-password{
+    margin-top: 30px;
+    text-align: center;
+    label{
+      color: $def-black-color;
+    }
+    .pwd-input{
+      width: 244px;
+      height: 30px;
+      background-color: #f9f9f9;
+      border-radius: 3px;
+    }
+  }
+  .error-info{
+    margin-top: 10px;
+    margin-left: 148px;
   }
   .open-confirm-btn {
     width: 108px;
