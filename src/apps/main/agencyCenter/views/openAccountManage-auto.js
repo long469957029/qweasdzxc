@@ -87,7 +87,17 @@ const OpenAccountManageView = Base.ItemView.extend({
           redpackType,
           redpackNum: this.$acRedNum.val(),
         })
-        this.saveConfirmDialog(data)
+        const preStatus = window.Global.cookieCache.get('security')
+        if(preStatus === 1 || preStatus === 2){
+          this.saveConfirmDialog(data)
+        }else{
+          $(document).securityTip({
+            content: '资金密码未设置，请先设置资金密码后再进行红包开户',
+            hasMoneyPwd: false,
+            hasBankCard: false,
+            showBankCard: false,
+          })
+        }
       }
     } else {
       this.saveHandler(1, data)
@@ -102,19 +112,37 @@ const OpenAccountManageView = Base.ItemView.extend({
     } else {
       url = '/acct/subaccount/createSubRedpackAcctlink.json'
     }
-    this.$acAddLink.button('loading')
+    this.$('.js-confrim-btn').button('loading')
     Global.sync.ajax({
       url,
       data,
     }).always(() => {
-      self.$acAddLink.button('reset')
+      self.$('.js-confrim-btn').button('reset')
     })
       .done((res) => {
         if (res.result === 0) {
+          if(urlType === 2){
+            this.$dialog.modal('hide')
+          }
           Global.ui.notification.show('开户链接已生成！', { type: 'success' })
           self.render()
         } else {
-          Global.ui.notification.show(res.msg === 'fail' ? '链接生成失败' : res.msg)
+          if(urlType === 2){
+            self.$confirmError.removeClass('hidden')
+            let errorText= ''
+            if (res.root != null && _(res.root).isNumber()) {
+              if (res.root > 0) {
+                errorText = `验证失败,剩余${res.root}次机会。`
+              } else {
+                errorText = '验证失败,请一个小时后再验证！'
+              }
+              self.$confirmErrorText.html(errorText)
+            }else{
+              self.$confirmErrorText.html(res.msg === 'fail' ? '资金密码错误' : res.msg)
+            }
+          }else{
+            Global.ui.notification.show(res.msg === 'fail' ? '链接生成失败' : res.msg)
+          }
         }
       })
       .fail((res) => {
@@ -124,23 +152,34 @@ const OpenAccountManageView = Base.ItemView.extend({
 
   saveConfirmDialog(data) {
     const self = this
-    const $dialog = Global.ui.dialog.show({
+    this.$dialog = Global.ui.dialog.show({
       closeBtn: false,
       body: '<div class="js-confirm-dialog"></div>',
       anySize: '480',
       bodyClass: 'no-padding',
     })
-    const $confirmDialog = $dialog.find('.js-confirm-dialog')
+    const $confirmDialog = this.$dialog.find('.js-confirm-dialog')
     $confirmDialog.html(this.confirmTpl({
       data,
       type: 2, // 1代表手动开户  2代表链接开户  3代表手动开户成功
       title: '红包开户确认',
     }))
-    $dialog.off('click.save').on('click.save', '.js-confrim-btn', () => {
-      $dialog.modal('hide')
-      self.saveHandler(2, data)
+    const $pwdInput = this.$dialog.find('.js-pwd-input')
+    this.$confirmError = this.$dialog.find('.js-error-info')
+    this.$confirmErrorText = this.$dialog.find('.js-error-text')
+    this.$dialog.off('click.save').on('click.save', '.js-confrim-btn', () => {
+      // $dialog.modal('hide')
+      if($pwdInput.val() === ''){
+        self.$confirmError.removeClass('hidden')
+        self.$confirmErrorText.html('请输入资金密码')
+      }else{
+        _(data).extend({
+          moneyPwd: $pwdInput.val()
+        })
+        self.saveHandler(2, data)
+      }
     })
-    $dialog.on('hidden.modal', function () {
+    this.$dialog.on('hidden.modal', function () {
       $(this).remove()
     })
   },
