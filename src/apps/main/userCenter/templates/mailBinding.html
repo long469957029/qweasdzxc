@@ -5,16 +5,20 @@
       <div class="control-group">
         <label class="control-label">电子邮箱：</label>
         <div class="controls">
-          <input type="text" class="js-uc-email-num input1" placeholder="请输入电子邮箱" data-parsley-email required>
+          <input type="text" class="js-uc-email-num input1" placeholder="请输入电子邮箱"
+                 data-parsley-errors-container=".js-uc-mb-mail-error" data-parsley-email data-parsley-email-message="电子邮箱格式不正确"  required>
+          <div class="js-uc-mb-mail-error parsley-error-container inline-block" style="max-width: 144px"></div>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label">验证码：</label>
         <div class="controls">
           <div class="inline-block">
-            <input type="text" class="js-uc-email-verification-code input2" placeholder="请输入邮箱验证码" data-parsley-length="[6,6]" required>
+            <input type="text" class="js-uc-email-verification-code input2" placeholder="请输入邮箱验证码"
+                   data-parsley-errors-container=".js-uc-mb-code-error"  data-parsley-length="[6,6]" data-parsley-type="number" required>
           </div>
           <a type="button" class="js-uc-email-reSend uc-conde-reSend" data-status="0" data-type="add"  data-loading="发送中">获取验证码</a>
+          <div class="js-uc-mb-code-error parsley-error-container inline-block" style="max-width: 144px"></div>
         </div>
         <div class="js-bind-error-text error-text m-top-sm"></div>
       </div>
@@ -30,16 +34,18 @@
       <div class="control-group">
         <label class="control-label">电子邮箱：</label>
         <div class="controls">
-          <input type="text" class="js-uc-last-email-num input1 input-disable" value="<%=(_.isNull(email) ? '' : email)%>" placeholder="请输入电子邮箱" disabled>
+          <input type="text" class="js-uc-last-email-num input1 input-disable" value="<%=(_.isNull(email) ? '' : email)%>" placeholder="请输入电子邮箱"  disabled>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label">验证码：</label>
         <div class="controls">
           <div class="inline-block">
-            <input type="text" class="js-uc-last-verification-code input2" placeholder="请输入邮箱验证码" data-parsley-length="[6,6]" required>
+            <input type="text" class="js-uc-last-verification-code input2" placeholder="请输入邮箱验证码"
+                   data-parsley-errors-container=".js-uc-umb-code-error"  data-parsley-length="[6,6]" data-parsley-type="number" required>
           </div>
           <a type="button" class="js-uc-email-reSend uc-conde-reSend" data-status="0" data-type="change"  data-loading="发送中">获取验证码</a>
+          <div class="js-uc-umb-code-error parsley-error-container inline-block" style="max-width: 144px"></div>
         </div>
         <div class="js-change-error-text error-text m-top-sm"></div>
       </div>
@@ -53,16 +59,20 @@
       <div class="control-group">
         <label class="control-label">电子邮箱：</label>
         <div class="controls">
-          <input type="text" class="js-uc-email-num input1" placeholder="请输入电子邮箱" data-parsley-email required>
+          <input type="text" class="js-uc-email-num input1" placeholder="请输入电子邮箱"
+                 data-parsley-errors-container=".js-uc-nmb-mail-error" data-parsley-email  data-parsley-email-message="电子邮箱格式不正确"  required>
+          <div class="js-uc-nmb-mail-error parsley-error-container inline-block" style="max-width: 144px"></div>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label">验证码：</label>
         <div class="controls">
           <div class="inline-block">
-            <input type="text" class="js-uc-email-verification-code input2" placeholder="请输入邮箱验证码" data-parsley-length="[6,6]" data-parsley-type="number" required>
+            <input type="text" class="js-uc-email-verification-code input2" placeholder="请输入邮箱验证码"
+                   data-parsley-errors-container=".js-uc-nmb-code-error" data-parsley-length="[6,6]" data-parsley-type="number"  required>
           </div>
           <a type="button" class="js-uc-email-reSend uc-conde-reSend" data-status="0" data-type="add"  data-loading="发送中">获取验证码</a>
+          <div class="js-uc-nmb-code-error parsley-error-container inline-block" style="max-width: 144px"></div>
         </div>
         <div class="js-bind-error-text error-text m-top-sm"></div>
       </div>

@@ -5,15 +5,19 @@
       <div class="control-group">
         <label class="control-label">新密码：</label>
         <div class="controls">
-          <input type="password" class="reset-input" id="jsRPLoginPwd1"  data-parsley-length="[6, 20]"
+          <input type="password" class="reset-input" id="jsRPLoginPwd1" data-parsley-password data-parsley-length="[6, 20]" required
+                 data-parsley-errors-container=".js-rp-password1-error"
                  v-model="pwdOne" value="" placeholder="6-20位字符组成（不含空格），区分大小写" autocomplete="off"/><!--6-20位字符组成，区分大小写，不能使用特殊字符-->
+          <div class="js-rp-password1-error parsley-error-container inline-block" style="max-width: 144px"></div>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label">确认密码：</label>
         <div class="controls">
-          <input type="password" class="reset-input" data-parsley-length="[6, 20]"
+          <input type="password" class="reset-input"  data-parsley-password  data-parsley-length="[6, 20]" required
+                 data-parsley-errors-container=".js-rp-password2-error"
                  data-parsley-equalto="#jsRPLoginPwd1" value="" autocomplete="off"/>
+          <div class="js-rp-password2-error parsley-error-container inline-block" style="max-width: 144px"></div>
         </div>
       </div>
       <div class="error-container text-center" v-show="error">

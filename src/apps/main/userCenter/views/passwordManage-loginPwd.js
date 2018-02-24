@@ -10,9 +10,9 @@ const LoginPwdView = Base.ItemView.extend({
   events: {
     // 修改登陆密码
     'click .js-changeLoginPassword-submit': 'changeLoginPasswordHandler',
-    'blur #oldLoginPassword': 'checkOldLoginPassword',
-    'blur #newLoginPassword': 'checkNewLoginPassword',
-    'blur #newLoginPassword1': 'checkNewLoginPassword1',
+    // 'blur #oldLoginPassword': 'checkOldLoginPassword',
+    // 'blur #newLoginPassword': 'checkNewLoginPassword',
+    // 'blur #newLoginPassword1': 'checkNewLoginPassword1',
   },
 
   onRender () {
@@ -25,8 +25,9 @@ const LoginPwdView = Base.ItemView.extend({
   changeLoginPasswordHandler(e) {
     const self = this
     const $target = $(e.currentTarget)
-    // var clpValidate = this.$changeLoginPasswordForm.parsley().validate();
-    if (this.checkOldLoginPassword() && this.checkNewLoginPassword() && this.checkNewLoginPassword1()) {
+    var clpValidate = this.$changeLoginPasswordForm.parsley().validate();
+    // this.checkOldLoginPassword() && this.checkNewLoginPassword() && this.checkNewLoginPassword1()
+    if (clpValidate) {
       $target.button('loading')
 
       Global.sync.ajax({
