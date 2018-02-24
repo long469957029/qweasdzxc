@@ -60,6 +60,7 @@
     }
     .points-bottom {
       background: url(./misc/bg-bottom.jpg) repeat-x;
+      background-size: cover;
       min-height: 500px;
     }
   }

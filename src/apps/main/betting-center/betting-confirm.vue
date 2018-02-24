@@ -126,9 +126,8 @@
       .bc-betDetail-text {
         position: relative;
         word-wrap: break-word;
-        padding-left: 20px;
-        padding-top: 5px;
-        padding-bottom: 10px;
+        padding: 5px 10px 10px 20px;
+        display: flex;
         &:before {
           content: '•';
           color: $def-gray-color;
@@ -138,6 +137,14 @@
           top: 5px;
           left: 4px;
         }
+      }
+
+      .confirm-title {
+        white-space: nowrap;
+      }
+      .confirm-content {
+        display: inline-block;
+        padding-left: 5px;
       }
     }
 
@@ -155,14 +162,5 @@
       font-size: 14px;
     }
 
-    .confirm-title {
-      float: left;
-    }
-    .confirm-content {
-      display: inline-block;
-      float: left;
-      width: 375px;
-      padding-left: 5px;
-    }
   }
 </style>

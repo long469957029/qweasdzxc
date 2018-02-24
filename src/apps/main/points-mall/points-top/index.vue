@@ -109,8 +109,6 @@
             delay: 2500,
             disableOnInteraction: false
           },
-          height: 450,
-          width: 870,
           navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
@@ -296,7 +294,12 @@
     height: 450px;
     width: 870px;
     flex: 1 0 auto;
-    overflow: hidden;
+
+    .swiper-container {
+      height: 450px;
+      width: 870px;
+      overflow: hidden;
+    }
 
     .sign-in {
       background-color: #e84c4c;
