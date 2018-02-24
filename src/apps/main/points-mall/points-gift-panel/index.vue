@@ -230,6 +230,7 @@
             this.isShowAddressModal = true
           } else {
             Global.ui.notification.show(data.msg)
+            this.isShowExchangeModal = false
           }
         })
       },
@@ -257,6 +258,8 @@
             })
           } else {
             Global.ui.notification.show(data.msg)
+            this.isShowAddressModal = false
+            this.isShowExchangeModal = false
           }
         })
       },
