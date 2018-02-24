@@ -66,6 +66,9 @@
     position: relative;
     &:hover {
       box-shadow: 0px 1px 20px 0px    rgba(0, 0, 0, 0.1);
+      .card-brief {
+        white-space: normal;
+      }
     }
 
     &.finished {
@@ -74,6 +77,7 @@
         border-bottom: 1px solid #c7c7c7;
       }
     }
+
   }
 
   .sfa-points {
@@ -114,6 +118,8 @@
   .gift-card-main {
     width: 280px;
     text-align: center;
+    height: 300px;
+    position: relative;
   }
 
   .card-left {
@@ -140,10 +146,15 @@
   .card-intro {
     display: flex;
     flex-flow: row wrap;
-    padding: 0 15px 0 12px;
-    height: 71px;
+    padding: 5px 15px 0 12px;
+    min-height: 75px;
     border-bottom: 1px solid #e6e6e6;
     align-content: baseline;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background: #ffffff;
   }
 
   .card-price {
@@ -157,12 +168,17 @@
 
   .card-brief {
     color: #999999;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: left;
   }
 
   .gift-card-op {
     display: flex;
     padding: 10px;
     align-items: center;
+    background: #ffffff;
   }
 
   .card-points {
@@ -170,6 +186,7 @@
     display: flex;
     align-items: center;
     font-size: 14px;
+    height: 31px;
     color: #999999;
   }
 

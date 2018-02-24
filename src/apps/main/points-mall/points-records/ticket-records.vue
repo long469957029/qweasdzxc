@@ -39,7 +39,7 @@
         <td>{{row.couponToken}}</td>
         <td>{{row.requireIntegral | convert2yuan}}</td>
         <td>{{row.validEndDate | toTime}}</td>
-        <td>{{row.status === 0 ? '未使用' : row.status === 2 ? '已过期' : '已使用'}}</td>
+        <td>{{row.status | formatCouponStatus}}</td>
       </tr>
 
       <tr slot="tfoot" slot-scope="{resData}">
@@ -57,7 +57,7 @@
 
 <script>
   import {getTicketRecordsApi} from 'api/points'
-  import {formatCouponType, formatCoupon, ControlGroup, ControlCell} from 'build'
+  import {formatCouponType, formatCoupon, ControlGroup, ControlCell, formatCouponStatus} from 'build'
   import Timeset from 'com/timeset'
 
   export default {
@@ -65,6 +65,7 @@
 
     filters: {
       formatCouponType,
+      formatCouponStatus,
     },
 
     components: {

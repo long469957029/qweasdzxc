@@ -179,8 +179,10 @@
     },
 
     methods: {
-      getData() {
-        this.loadingStatus = 'loading'
+      getData({loading = true} = {loading: true}) {
+        if (loading) {
+          this.loadingStatus = 'loading'
+        }
         getGiftListApi({
           sortFlag: this.sort.sortFlag,
           sortType: this.sort.sortType,
@@ -194,7 +196,9 @@
           }
         })
           .finally(() => {
-            this.loadingStatus = 'completed'
+            if (loading) {
+              this.loadingStatus = 'completed'
+            }
           })
       },
 
@@ -230,6 +234,7 @@
             this.isShowAddressModal = true
           } else {
             Global.ui.notification.show(data.msg)
+            this.isShowExchangeModal = false
           }
         })
       },
@@ -245,7 +250,7 @@
             this.isShowExchangeModal = false
             this.$store.dispatch(types.GET_USER_MALL_INFO)
 
-            this.getData()
+            this.getData({loading: false})
 
             Global.ui.notification.show(`<div class="m-bottom-lg">兑换成功!</div>`, {
               type: 'success',
@@ -257,6 +262,8 @@
             })
           } else {
             Global.ui.notification.show(data.msg)
+            this.isShowAddressModal = false
+            this.isShowExchangeModal = false
           }
         })
       },

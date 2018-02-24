@@ -8,9 +8,10 @@ const FundPwdView = Base.ItemView.extend({
 
   events: {
     'click .js-uc-setFundPassword-submit': 'setFundPasswordHandler',
-    // 'blur #oldFundPassword': 'checkOldFundPassword',
-    // 'blur #newUpdateFundPassword': 'checkNewUpdateFundPassword',
-    // 'blur #newUpdateFundPassword1': 'checkNewUpdateFundPassword1',
+    'blur #oldFundPassword': 'checkOldFundPassword',
+    'blur #newUpdateFundPassword': 'checkNewUpdateFundPassword',
+    'blur #newUpdateFundPassword1': 'checkNewUpdateFundPassword1',
+    'blur .js-login-pwd': 'checkLoginPassword',
   },
 
   serializeData() {
@@ -27,6 +28,7 @@ const FundPwdView = Base.ItemView.extend({
     this.$oldFundPassword = this.$('#oldFundPassword')
     this.$newUpdateFundPassword = this.$('#newUpdateFundPassword')
     this.$newUpdateFundPassword1 = this.$('#newUpdateFundPassword1')
+    this.$loginPwd = this.$('.js-login-pwd')
   },
 
   setFundPasswordHandler (e) {
@@ -42,6 +44,7 @@ const FundPwdView = Base.ItemView.extend({
 
         data: {
           payPwd: this.$('#newUpdateFundPassword').val(),
+          loginPwd:this.$('.js-login-pwd').val()
         },
       })
         .always(() => {
@@ -111,7 +114,29 @@ const FundPwdView = Base.ItemView.extend({
     }
     return isValidate
   },
+  checkLoginPassword () {
+    const loginPwdVal = this.$loginPwd.val()
+    const $parentDiv = this.$loginPwd.parent()
+    const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
+    let isValidate = false
 
+    $parentDiv.find('.js-errorTooltip').remove()
+    if (loginPwdVal === '') {
+      this.changeEleClass(this.$loginPwd, 'error')
+      $parentDiv.append(this.getErrorTooltip('登录密码不能为空'))
+    } else if (loginPwdVal.length < 9 && this.strBetweenIsNumber(loginPwdVal, 0, 7)) {
+      this.changeEleClass(this.$loginPwd, 'error')
+      $parentDiv.append(this.getErrorTooltip('您填写的登录密码不符合要求，请重新填写'))
+    } else if (!pwReg.test(loginPwdVal)) {
+      this.changeEleClass(this.$loginPwd, 'error')
+      $parentDiv.append(this.getErrorTooltip('您填写的登录密码不符合要求，请重新填写'))
+    } else {
+      this.changeEleClass(this.$loginPwd, 'success')
+      $parentDiv.find('.js-errorTooltip').remove()
+      isValidate = true
+    }
+    return isValidate
+  },
   checkNewUpdateFundPassword () {
     const newUpdateFundPwVal = this.$newUpdateFundPassword.val()
     const $parentDiv = this.$newUpdateFundPassword.parent()
