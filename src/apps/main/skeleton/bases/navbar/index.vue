@@ -146,7 +146,7 @@
   }
 
   .nav {
-    position: relative;
+    position: static;
     float: right;
     > li {
       float: left;

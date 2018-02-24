@@ -30,10 +30,26 @@ input, textarea, select {
   //@include transition(all .3s ease-in);
 
   &.filled {
-    display: block !important;
+    display: block ;
     opacity: 1;
     .sfa{
       display: block;
     }
+  }
+}
+
+//项目默认展示位置为bottom,此样式用于指定错误展示位置时使用,避免
+.parsley-error-container{
+  padding: 1px;
+  vertical-align: top;
+  //.tooltip.bottom{
+  //  margin: 0 ;
+  //  padding: 0;
+  //}
+  .tooltip{
+    display: inline-block;
+  }
+  .parsley-errors-list{
+
   }
 }

@@ -7,7 +7,7 @@ const PersonalManageView = Base.ItemView.extend({
   template: require('../templates/personalManage.html'),
 
   events: {
-    'submit .js-uc-personalManage-form': 'updatePersonalInfoHandler',
+    'click .js-uc-confirm': 'updatePersonalInfoHandler',
     'click .js-uc-reset': 'resetPageHandler',
     'click .js-uc-address-info': 'addressInfoHandler',
     'click .js-head-icon-info': 'headIconHandler',
@@ -169,6 +169,7 @@ const PersonalManageView = Base.ItemView.extend({
     }
   },
   updatePersonalInfoHandler() {
+    let validate  = this.$form.parsley().validate();
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
       Global.ui.notification.show('试玩会员无法进行修改个人资料操作，请先注册正式游戏账号')
       return false
@@ -182,9 +183,16 @@ const PersonalManageView = Base.ItemView.extend({
     if (_.isUndefined(pid) || _.isUndefined(cid) || _.isUndefined(aid)) {
       const data = {
         el: this.$addressListError,
-        errorText: '*请选择正确的省市区',
+        errorText: '省市区填写不完整',
       }
+      this.$('.select-address').toggleClass('faild',true)
       this.formateError(data)
+      return false
+    }else{
+      this.$('.select-address').toggleClass('faild',false)
+    }
+
+    if(!validate){
       return false
     }
     this.$btnConfirm.button('loading')
