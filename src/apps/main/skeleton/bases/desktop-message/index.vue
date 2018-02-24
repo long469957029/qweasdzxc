@@ -158,6 +158,7 @@
     bottom: 20px;
     right: 20px;
     z-index: 2000;
+    transform: translateZ(0);
     .content {
       width: 325px;
       height: 194px;

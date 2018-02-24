@@ -16,6 +16,7 @@ $toolbar-option-width: 36px;
   background: white;
   overflow: visible;
   transition: all .4s ease-in;
+  transform: translateZ(0);
   //box-shadow: -1px 0px 10px -2px #14b1bb, 0 0 3px 0 #ffffff;
 
   &.open {
