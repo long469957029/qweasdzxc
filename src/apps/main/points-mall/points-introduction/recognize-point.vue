@@ -54,78 +54,78 @@
       <tr>
         <td>注册</td>
         <td>注册</td>
-        <td>5</td>
+        <td>{{actionList[0]}}</td>
         <td>1次性奖励</td>
       </tr>
       <tr>
         <td rowspan="2">登录</td>
         <td>pc端登录</td>
-        <td>3</td>
+        <td>{{actionList[1]}}</td>
         <td rowspan="2">每天奖励1次，以第1次登录端为准</td>
       </tr>
       <tr>
         <td>移动端登录</td>
-        <td>5</td>
+        <td>{{actionList[2]}}</td>
       </tr>
       <tr>
         <td rowspan="5">签到</td>
         <td>pc端签到</td>
-        <td>5</td>
+        <td>{{actionList[3]}}</td>
         <td rowspan="5">每天奖励1次，以第1次签到端为准</td>
       </tr>
       <tr>
         <td>移动端签到</td>
-        <td>8</td>
+        <td>{{actionList[4]}}</td>
       </tr>
       <tr>
         <td>连签≥5天</td>
-        <td>10</td>
+        <td>{{actionList[5]}}</td>
       </tr>
       <tr>
         <td>连签≥10天</td>
-        <td>15</td>
+        <td>{{actionList[6]}}</td>
       </tr>
       <tr>
         <td>连签≥15天</td>
-        <td>20</td>
+        <td>{{actionList[7]}}</td>
       </tr>
 
       <tr>
         <td rowspan="3">完善资料</td>
         <td>填写QQ</td>
-        <td>10</td>
+        <td>{{actionList[8]}}</td>
         <td rowspan="3">1次性奖励</td>
       </tr>
       <tr>
         <td>填写邮箱</td>
-        <td>10</td>
+        <td>{{actionList[9]}}</td>
       </tr>
       <tr>
         <td>填写生日</td>
-        <td>10</td>
+        <td>{{actionList[10]}}</td>
       </tr>
 
       <tr>
         <td rowspan="2">充值</td>
         <td>首次充值</td>
-        <td>10</td>
+        <td>{{actionList[11]}}</td>
         <td>1次性奖励</td>
       </tr>
       <tr>
         <td>日常充值</td>
-        <td>充值积分比约为：10000: 1</td>
+        <td>充值积分比约为：{{actionList[12]}}</td>
         <td>无限制</td>
       </tr>
 
       <tr>
         <td rowspan="2">投注</td>
         <td>彩票投注</td>
-        <td>充值积分比约为：27: 1</td>
+        <td>充值积分比约为：{{actionList[13]}}</td>
         <td>无限制</td>
       </tr>
       <tr>
         <td>真人投注</td>
-        <td>充值积分比约为：70: 1"</td>
+        <td>充值积分比约为：{{actionList[14]}}</td>
         <td>无限制</td>
       </tr>
 
@@ -149,60 +149,17 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td><span class="sfa sfa-pt-level-0"></span></td>
-        <td><450</td>
-        <td>无折扣</td>
-      </tr>
-      <tr>
-        <td><span class="sfa sfa-pt-level-1"></span></td>
-        <td>≥450</td>
-        <td>无折扣</td>
-      </tr>
-      <tr>
-        <td><span class="sfa sfa-pt-level-2"></span></td>
-        <td>≥2250</td>
-        <td>9.97折</td>
-      </tr>
-      <tr>
-        <td><span class="sfa sfa-pt-level-3"></span></td>
-        <td>≥11250</td>
-        <td>9.97折</td>
-      </tr>
-      <tr>
-        <td><span class="sfa sfa-pt-level-4"></span></td>
-        <td>≥56250</td>
-        <td>9.97折</td>
-      </tr>
-      <tr>
-        <td><span class="sfa sfa-pt-level-5"></span></td>
-        <td>≥281250</td>
-        <td>9.97折</td>
-      </tr>
-      <tr>
-        <td><span class="sfa sfa-pt-level-6"></span></td>
-        <td>≥1406250</td>
-        <td>9.97折</td>
-      </tr>
-      <tr>
-        <td><span class="sfa sfa-pt-level-7"></span></td>
-        <td>≥7031250</td>
-        <td>9.97折</td>
-      </tr>
-      <tr>
-        <td><span class="sfa sfa-pt-level-8"></span></td>
-        <td>≥35156250</td>
-        <td>9.97折</td>
-      </tr>
-      <tr>
-        <td><span class="sfa sfa-pt-level-9"></span></td>
-        <td>≥175781250</td>
-        <td>9.97折</td>
-      </tr>
-      <tr>
-        <td><span class="sfa sfa-pt-level-10"></span></td>
-        <td>≥878906250</td>
-        <td>9.97折</td>
+      <tr v-for="level in levelList">
+        <td><span class="sfa" :class="`sfa-pt-level-${level.levelId}`"></span></td>
+        <td>{{level.levelId === 0 ? '<' : '≥'}}{{level.integral | convert2yuan}}</td>
+        <td>
+          <template v-if="level.discount === 10000">
+            无折扣
+          </template>
+          <template v-else>
+            {{_.formatDiv(level.discount, 1000)}}折
+          </template>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -211,8 +168,31 @@
 </template>
 
 <script>
+  import {actionIntroduceApi, levelIntroduceApi} from 'api/points'
+
   export default {
-    name: 'recognize-point'
+    name: 'recognize-point',
+
+    data() {
+      return {
+        levelList: [],
+        actionList: []
+      }
+    },
+
+    mounted() {
+      actionIntroduceApi(({data}) => {
+        if (data && data.result === 0) {
+          this.actionList = data.root.result
+        }
+      })
+
+      levelIntroduceApi(({data}) => {
+        if (data && data.result === 0) {
+          this.levelList = data.root.confs
+        }
+      })
+    }
   }
 </script>
 

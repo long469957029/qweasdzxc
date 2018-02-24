@@ -20,6 +20,7 @@ import SelectGroup from './components/select-group'
 import SortGroup from './components/sort-group'
 import Dropdown from './components/dropdown'
 import StatusCell from './components/status-cell'
+import TimeoutCell from './components/timeout-cell'
 
 //directives
 import TransferDom from './directives/transfer-dom'
@@ -33,6 +34,7 @@ import twoSideType from './filters/two-side-type'
 import formatOpenNum from './filters/format-open-num'
 import formatCouponType from './filters/format-coupon-type'
 import formatCoupon from './filters/format-coupon'
+import formatCouponStatus from './filters/format-coupon-status'
 
 export {
   /**
@@ -60,6 +62,7 @@ export {
   SortGroup,
   Dropdown,
   StatusCell,
+  TimeoutCell,
 
   /**
    * directives
@@ -76,6 +79,7 @@ export {
    */
   formatCouponType,
   formatOpenNum,
+  formatCouponStatus,
   quick3Sum,
   twoSideType,
   formatCoupon,

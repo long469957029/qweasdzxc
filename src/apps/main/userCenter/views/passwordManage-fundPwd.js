@@ -35,9 +35,9 @@ const FundPwdView = Base.ItemView.extend({
     const $target = $(e.currentTarget)
     const self = this
     const type = $target.data('type')
-    // var clpValidate = this.$setFundPasswordForm.parsley().validate();
-
-    if (type === 'add' && this.checkLoginPassword() && this.checkNewUpdateFundPassword() && this.checkNewUpdateFundPassword1()) {
+    var clpValidate = this.$setFundPasswordForm.parsley().validate();
+    //this.checkNewUpdateFundPassword() && this.checkNewUpdateFundPassword1()
+    if (type === 'add' && clpValidate) {
       $target.button('loading')
       Global.sync.ajax({
         url: '/fund/moneypd/savepaypwd.json',
@@ -70,7 +70,7 @@ const FundPwdView = Base.ItemView.extend({
             Global.ui.notification.show(res.msg)
           }
         })
-    } else if (type === 'update' && this.checkOldFundPassword() && this.checkNewUpdateFundPassword() && this.checkNewUpdateFundPassword1()) {
+    } else if (type === 'update' && clpValidate ) {
       $target.button('loading')
       Global.sync.ajax({
         url: '/acct/userinfo/updatepaypwd.json',

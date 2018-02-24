@@ -61,17 +61,18 @@
                   <label class="control-label">用户名：</label>
                   <div class="controls">
                     <input type="text" id="jsRPUserName" class="reset-input" v-model="userName" data-parsley-username
-                           placeholder="输入用户名" autocomplete="off" required/>
+                           data-parsley-errors-container=".js-rp-user-error" placeholder="输入用户名" autocomplete="off" required/>
+                    <div class="js-rp-user-error rp-user-error parsley-error-container inline-block" style="max-width: 144px"></div>
                   </div>
                 </div>
                 <div class="control-group">
                   <label class="control-label">验证码：</label>
                   <div class="controls">
-                    <input type="text" class="input-varCode" @keyup="valCode" v-model="codeVal" name=""
-                           placeholder="输入验证码" autocomplete="off">
+                    <input type="text" class="input-varCode" @keyup="valCode" v-model="codeVal" name=""  maxlength="4"
+                           data-parsley-errors-container=".js-rp-code-error"  placeholder="输入验证码" autocomplete="off">
                     <img class="var-code" :src="codeSrc" @click="refreshValCode">
-                    <div class="text-hot m-top-xs" v-if="codeError">
-                      <span class="sfa sfa-error-icon vertical-middle"></span>
+                    <div class="text-hot m-top-xs inline-block" v-if="codeError"  style="max-width: 144px">
+                      <span class="sfa sfa-error-icon vertical-middle m-right-xs"></span>
                       {{codeErrorText}}
                     </div>
                   </div>
@@ -145,7 +146,8 @@
                   <div class="control-group">
                     <label class="control-label p-top-sm">答案：</label>
                     <div class="controls">
-                      <input type="text" class="qes-input" v-model="answerFirst" autocomplete="off" required>
+                      <input type="text" class="qes-input" v-model="answerFirst" autocomplete="off" data-parsley-errors-container=".js-rp-answer1-error" required>
+                      <div class="js-rp-answer1-error  parsley-error-container inline-block" style="max-width: 144px"></div>
                     </div>
                   </div>
                   <div class="control-group">
@@ -162,7 +164,8 @@
                   <div class="control-group">
                     <label class="control-label p-top-sm">答案：</label>
                     <div class="controls">
-                      <input type="text" class="qes-input" v-model="answerSecond" autocomplete="off" required>
+                      <input type="text" class="qes-input" v-model="answerSecond" autocomplete="off" data-parsley-errors-container=".js-rp-answer2-error" required>
+                      <div class="js-rp-answer2-error parsley-error-container inline-block" style="max-width: 144px"></div>
                     </div>
                   </div>
                   <div class="text-hot text-center m-TB-xs" v-if="qesError">
@@ -300,7 +303,7 @@
                 this.stepsIndex += 1
               } else {
                 this.codeError = true
-                this.codeErrorText = '用户名验证失败'
+                this.codeErrorText = data.msg
               }
             },
             ({data}) => {
@@ -514,7 +517,7 @@
         font-size: $font-sm;
       }
       .rp-step-div {
-        width: 600px;
+        width: 690px;
         /*position: relative;*/
         background-color: $def-white-color;
         margin-left: 40px;

@@ -1,5 +1,5 @@
 <template>
-  <x-dialog @modal-hidden="$emit('modal-hidden')" width="610px">
+  <x-dialog @modal-hidden="$emit('modal-hidden')" width="610px" :options="modalOptions">
     <div slot="head-main">
       <template v-if="currentModal === 'select'">
         <div class="address-select-title">
@@ -13,6 +13,9 @@
     </div>
     <div class="modal-main">
       <!--选择收货地址-->
+      <transition mode="out-in"
+                  enter-active-class="animated-02s fadeIn"
+                  leave-active-class="animated-02s fadeOut">
       <template v-if="currentModal === 'select'">
         <status-cell :has-data="addressList.length" :status="loadingStatus" height="440px">
           <address-select :address-list="addressList"
@@ -23,51 +26,54 @@
       </template>
       <!--新增修改-->
       <template v-else>
-        <div class="address-tip">
-          <span class="tip-icon"></span>
-          <span class="tip-main">温馨提示：请准确提供您的收货信息以便我们发货</span>
-        </div>
-        <form class="address-add" action="javascript:void(0)" @submit="addressPush" ref="form">
-          <div class="cell">
-            <div class="address-title">收货人：</div>
-            <div class="address-val">
-              <input class="input-val" v-model="name" autocomplete="off" placeholder="收货人姓名" required/>
-            </div>
+        <div>
+          <div class="address-tip">
+            <span class="tip-icon"></span>
+            <span class="tip-main">温馨提示：请准确提供您的收货信息以便我们发货</span>
           </div>
-          <div class="cell">
-            <div class="address-title">收货手机：</div>
-            <div class="address-val">
-              <input class="input-val" v-model="phone" autocomplete="off" placeholder="请填写手机号码" required
-                     data-parsley-phone/>
+          <form class="address-add" action="javascript:void(0)" @submit="addressPush" ref="form">
+            <div class="cell">
+              <div class="address-title">收货人：</div>
+              <div class="address-val">
+                <input class="input-val" v-model="name" autocomplete="off" placeholder="收货人姓名" required/>
+              </div>
             </div>
-          </div>
-          <div class="cell">
-            <div class="address-title">省市区：</div>
-            <div class="address-val">
-              <x-address v-model="addressInfo"
-                         :province="province"
-                         :city="city"
-                         :area="area"
-              ></x-address>
+            <div class="cell">
+              <div class="address-title">收货手机：</div>
+              <div class="address-val">
+                <input class="input-val" v-model="phone" autocomplete="off" placeholder="请填写手机号码" required
+                       data-parsley-phone/>
+              </div>
             </div>
-          </div>
-          <div class="cell address-top">
-            <div class="address-title">详细地址：</div>
-            <div class="address-val">
+            <div class="cell">
+              <div class="address-title">省市区：</div>
+              <div class="address-val">
+                <x-address v-model="addressInfo"
+                           :province="province"
+                           :city="city"
+                           :area="area"
+                ></x-address>
+              </div>
+            </div>
+            <div class="cell address-top">
+              <div class="address-title">详细地址：</div>
+              <div class="address-val">
               <textarea class="input-val" autocomplete="off" placeholder="请填写地址" v-model="address" required
                         data-parsley-length="[0, 100]"></textarea>
+              </div>
             </div>
-          </div>
-          <div class="cell">
-            <div class="address-title"></div>
-            <div class="address-val">
-              <button type="submit" class="btn address-confirm-btn">确定</button>
-              <div class="address-return" v-if="currentModal === 'have-select' && !_.isEmpty(addressList)"
-                   @click="currentModal = 'select';clearModifyAddress()">返回上一步</div>
+            <div class="cell">
+              <div class="address-title"></div>
+              <div class="address-val">
+                <button type="submit" class="btn address-confirm-btn">确定</button>
+                <div class="address-return" v-if="currentModal === 'have-select' && !_.isEmpty(addressList)"
+                     @click="currentModal = 'select';clearModifyAddress()">返回上一步</div>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </template>
+      </transition>
     </div>
   </x-dialog>
 </template>
@@ -101,6 +107,9 @@
 
     data() {
       return {
+        modalOptions: {
+          backdrop: 'static'
+        },
         addressInfo: {},
         name: this.currentAddress.name,
         phone: this.currentAddress.phone,
@@ -127,20 +136,6 @@
         },
         immediate: true
       },
-
-      currentModal: {
-        handler() {
-          if (this.currentModal !== 'select') {
-
-            this.$nextTick(() => {
-              this.parsley = $(this.$refs.form).parsley({
-                trigger: 'change',
-              })
-            })
-          }
-        },
-        immediate: true
-      }
     },
 
     computed: {
@@ -153,6 +148,9 @@
 
     methods: {
       addressPush() {
+        this.parsley = $(this.$refs.form).parsley({
+          trigger: 'change',
+        })
         if (!this.parsley.validate()) {
           return
         }
@@ -168,22 +166,31 @@
           isDef: this.isDef
         }, ({data}) => {
           if (data && data.result === 0) {
-            Global.ui.notification.show(`<div class="m-bottom-lg">${this.rid ? '修改' : '添加'}地址成功!</div>`, {
-              type: 'success',
-              hasFooter: false,
-              displayTime: 1000,
-              size: 'modal-xs',
-              bodyClass: 'no-border no-padding',
-              closeBtn: false,
-            })
-
             if (this.currentModal === 'add') {
               this.$emit('operate-complete')
+              this.clearModifyAddress()
+
+              Global.ui.notification.show(`<div class="m-bottom-lg">${this.rid ? '修改' : '添加'}地址成功!</div>`, {
+                type: 'success',
+                hasFooter: false,
+                displayTime: 1000,
+                size: 'modal-xs',
+                bodyClass: 'no-border no-padding',
+                closeBtn: false,
+              })
+
             } else if (this.currentModal === 'have-select') {
-              this.currentModal = 'select'
-              this.getList()
+              this.$_getList()
+                .then(() => {
+                  //只有一个地址,并且是新增时时直接传数据
+                  if (this.addressList.length === 1 && !this.rid) {
+                    this.addressSelected(this.addressList[0])
+                  } else {
+                    this.clearModifyAddress()
+                    this.currentModal = 'select'
+                  }
+                })
             }
-            this.clearModifyAddress()
           }
         })
       },
@@ -192,16 +199,24 @@
         this.$emit('address-selected', selectedAddress)
       },
 
-      getList() {
-        this.loadingStatus = 'loading'
-
-        getAddressListApi(({data}) => {
+      $_getList() {
+        return getAddressListApi(({data}) => {
           if (data && data.result === 0) {
             this.addressList = data.root
           }
-
-          this.currentModal = _.isEmpty(this.addressList) ? 'have-select' : 'select'
+          return data
         })
+      },
+
+      getList() {
+        this.loadingStatus = 'loading'
+
+        this.$_getList()
+          .then((data) => {
+            if (data && data.result === 0) {
+              this.currentModal = _.isEmpty(this.addressList) ? 'have-select' : 'select'
+            }
+          })
           .finally(() => {
             this.loadingStatus = 'completed'
           })
@@ -254,6 +269,7 @@
     padding: 5px;
     color: #666666;
     display: flex;
+    align-items: center;
   }
 
   .address-add {

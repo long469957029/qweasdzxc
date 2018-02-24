@@ -18,12 +18,14 @@
         <label class="control-label p-top-xs">昵称：</label>
         <div class="controls">
           <input type="text" class="js-uc-uName input4 font-sm" name="uname"
+                 data-parsley-errors-container=".js-uc-pm-uname-error"
                  data-parsley-zhLength="[4,16]" data-parsley-userUName
                  data-parsley-remote data-parsley-remote-validator="checkusername"
                  data-parsley-remote-options='{"type": "POST"}'
                  data-parsley-remote-message="昵称已被使用" required />
           <!--<span class="help-inline">4-16个字符，支持中英文和数字，不能以数字开头</span>-->
           <input type="hidden" class="js-uc-userUName-val-res" value="1">
+          <div class="js-uc-pm-uname-error parsley-error-container inline-block" style="max-width: 350px"></div>
         </div>
       </div>
       <div class="control-group">
@@ -43,61 +45,63 @@
             </span>
             <span class="vertical-middle">女</span>
           </div>
+
         </div>
       </div>
       <div class="control-group">
         <label class="control-label">生日：</label>
         <div class="controls">
-          <select name="bday1" class="js-bday1 basic-arrow input1 font-sm" style="width: 81px" required>
+          <select name="bday1" class="js-bday1 basic-arrow input1 font-sm" style="width: 81px"  data-parsley-errors-container=".js-uc-pm-birthday-error" required>
             <option value="" selected>月
-            <option value="01">1月
-            <option value="02">2月
-            <option value="03">3月
-            <option value="04">4月
-            <option value="05">5月
-            <option value="06">6月
-            <option value="07">7月
-            <option value="08">8月
-            <option value="09">9月
-            <option value="10">10月
-            <option value="11">11月
-            <option value="12">12月
+            <option value="01">1月</option>
+            <option value="02">2月</option>
+            <option value="03">3月</option>
+            <option value="04">4月</option>
+            <option value="05">5月</option>
+            <option value="06">6月</option>
+            <option value="07">7月</option>
+            <option value="08">8月</option>
+            <option value="09">9月</option>
+            <option value="10">10月</option>
+            <option value="11">11月</option>
+            <option value="12">12月</option>
           </select>
-          <select name="bday2" class="js-bday2 basic-arrow input1 font-sm" style="width: 81px" required>
-            <option value="" selected>日
-            <option value="01">1日
-            <option value="02">2日
-            <option value="03">3日
-            <option value="04">4日
-            <option value="05">5日
-            <option value="06">6日
-            <option value="07">7日
-            <option value="08">8日
-            <option value="09">9日
-            <option value="10">10日
-            <option value="11">11日
-            <option value="12">12日
-            <option value="13">13日
-            <option value="14">14日
-            <option value="15">15日
-            <option value="16">16日
-            <option value="17">17日
-            <option value="18">18日
-            <option value="19">19日
-            <option value="20">20日
-            <option value="21">21日
-            <option value="22">22日
-            <option value="23">23日
-            <option value="24">24日
-            <option value="25">25日
-            <option value="26">26日
-            <option value="27">27日
-            <option value="28">28日
-            <option value="29">29日
-            <option value="30">30日
-            <option value="31">31日
+          <select name="bday1" class="js-bday2 basic-arrow input1 font-sm" style="width: 81px"  required>
+            <!--<option value="" selected>日-->
+            <option value="01">1日</option>
+            <option value="02">2日</option>
+            <option value="03">3日</option>
+            <option value="04">4日</option>
+            <option value="05">5日</option>
+            <option value="06">6日</option>
+            <option value="07">7日</option>
+            <option value="08">8日</option>
+            <option value="09">9日</option>
+            <option value="10">10日</option>
+            <option value="11">11日</option>
+            <option value="12">12日</option>
+            <option value="13">13日</option>
+            <option value="14">14日</option>
+            <option value="15">15日</option>
+            <option value="16">16日</option>
+            <option value="17">17日</option>
+            <option value="18">18日</option>
+            <option value="19">19日</option>
+            <option value="20">20日</option>
+            <option value="21">21日</option>
+            <option value="22">22日</option>
+            <option value="23">23日</option>
+            <option value="24">24日</option>
+            <option value="25">25日</option>
+            <option value="26">26日</option>
+            <option value="27">27日</option>
+            <option value="28">28日</option>
+            <option value="29">29日</option>
+            <option value="30">30日</option>
+            <option value="31">31日</option>
           </select>
           <span class="help-inline "> * 生日信息设置后不可修改</span>
+          <div class="js-uc-pm-birthday-error parsley-error-container inline-block" style="max-width: 350px"></div>
         </div>
       </div>
       <div class="control-group">
@@ -117,14 +121,16 @@
         <label class="control-label p-top-xs">收货人：</label>
         <div class="controls">
           <input type="text" class="font-sm input4 input-address js-uc-receiver" name="exName"
-                 data-parsley-range="[2,10]" required />
+                 data-parsley-errors-container=".js-uc-pm-exName-error" data-parsley-range="[2,10]" required />
+          <div class="js-uc-pm-exName-error parsley-error-container inline-block" style="max-width: 350px"></div>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label p-top-xs">收货手机：</label>
         <div class="controls">
           <input type="text" class="font-sm input4 input-address js-uc-phone" name="exPhone"
-                 data-parsley-phone required />
+                 data-parsley-errors-container=".js-uc-pm-exPhone-error" data-parsley-phone required />
+          <div class="js-uc-pm-exPhone-error parsley-error-container inline-block" style="max-width: 350px"></div>
         </div>
       </div>
       <div class="control-group">
@@ -151,17 +157,18 @@
             </div>
             <ul class="choose-list js-area-list dropdown-menu"></ul>
           </div>
-          <div class="js-address-list-error pull-right m-top-xs m-left-sm"></div>
+          <div class="js-address-list-error pull-right m-top-xs" style="margin-left: -7px;"></div>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label p-top-xs">详细地址：</label>
         <div class="controls">
-          <textarea class="address-detail js-uc-address-detail" required></textarea>
+          <textarea class="address-detail js-uc-address-detail" data-parsley-errors-container=".js-uc-pm-address-detail-error" required></textarea>
+          <div class="js-uc-pm-address-detail-error parsley-error-container inline-block" style="max-width: 350px"></div>
         </div>
       </div>
       <div class="controls">
-        <button type="submit" class="js-uc-confirm btn btn-cool font-md" data-loading-text="保存中">保存资料</button>
+        <button type="button" class="js-uc-confirm btn btn-cool font-md" data-loading-text="保存中">保存资料</button>
       </div>
     </div>
   </div>

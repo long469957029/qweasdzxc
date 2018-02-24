@@ -45,7 +45,6 @@
                                :opening-num="bettingInfo.lastOpenNum" :ticket-info="ticketInfo"
           ></opening-dices-panel>
           <opening-mark6-balls :counts="ticketInfo.counts" :range="ticketInfo.range"
-                               :opening-balls="bettingInfo.lastOpenNum" :default-opening="ticketInfo.defaultOpening"
                                v-else-if="ticketInfo.openingType === 'mark-balls'"
           ></opening-mark6-balls>
         </keep-alive>

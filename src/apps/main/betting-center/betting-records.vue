@@ -43,7 +43,7 @@
                    ref="chaseGrid"></static-grid>
     </div>
     <div class="text-center font-sm m-top-sm">
-      <router-link to="/fc/td" class="btn btn-link text-auxiliary">更多记录>></router-link>
+      <router-link :to="type === 'betting' ? '/fc/td' : '/fc/cr'" class="btn btn-link text-auxiliary">更多记录>></router-link>
     </div>
   </div>
 </template>

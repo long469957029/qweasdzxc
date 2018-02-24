@@ -183,6 +183,8 @@
             errorText = '密码不能是9位以下的纯数字！'
           } else if (!pwReg.test(this.passwordModel)) {
             errorText = '密码为6-20位字符组成（不含空格），区分大小写！'
+          }else if(this.passwordcheckModel!==this.passwordModel){
+            errorText = '两次密码输入不一致'
           } else {
             errorText = ''
           }
@@ -206,6 +208,7 @@
             return false
           }
         }
+
       },
       showDesc(){
         this.errorIcon = 1
