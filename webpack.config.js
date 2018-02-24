@@ -502,12 +502,10 @@ module.exports = {
       fundCenter: 'apps/main/fundCenter',
       accountCenter: 'apps/main/accountCenter',
       activeCenter: 'apps/main/activeCenter',
-      bettingCenter: 'apps/main/bettingCenter',
       newsCenter: 'apps/main/newsCenter',
       dynamicCenter: 'apps/main/dynamicCenter',
       helpCenter: 'apps/main/helpCenter',
       gameCenter: 'apps/main/gameCenter',
-      mallCenter: 'apps/main/mallCenter',
       activity: 'apps/main/activity',
 
       bootstrap: 'vendor/scripts/bootstrap',

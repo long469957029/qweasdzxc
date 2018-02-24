@@ -149,7 +149,7 @@ const LowLevelManageView = SearchGrid.extend({
       row.push(`${freeze}<a class="js-pf-sub js-low-sub btn-link ${textClass}" data-label="${rowInfo.userName}" data-user-parent-id="${rowInfo.userId}" href="javascript:void(0)">${
         rowInfo.userName}(${rowInfo.userSubAcctNum})</a>${online} `)
     } else {
-      row.push(`${freeze}<span class="${textClass}">${rowInfo.userName}</span>`)
+      row.push(`${freeze}<span class="${textClass}">${rowInfo.userName}</span>${online}`)
     }
     row.push(`<span class="${textClass}">${rowInfo.userType === 0 ? '代理' : '会员'}</span>`)
     row.push(`<span class="${textClass}">${_(rowInfo.rebate).formatDiv(10, {fixed: 1})}%</span>`)

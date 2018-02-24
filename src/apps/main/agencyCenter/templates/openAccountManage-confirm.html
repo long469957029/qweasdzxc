@@ -7,18 +7,25 @@
     <%=container%>
   <% } else { %>
   <div class="confirm-contant m-top-md p-top-sm">
-    <div class="contant-title text-center font-sm text-auxiliary">您正在使用红包开户</div>
     <% if(type === 1){ %>
     <div class="m-top-md text-center font-sm text-auxiliary">红包金额<span class="text-prominent"><%=data.redpackAmount%></span>元，确认后该金额将从账户扣除</div>
     <% } else {%>
-    <div class="contant-info">
-      <div class="font-sm text-black text-center"><%if(data.redpackType === 2){%>单个红包金额<% } else {%>红包总额<%}%>：<span class="text-prominent"><%=data.redpackAmount%></span></div>
-      <div class="font-sm text-black text-center m-top-smd">红包个数：<span class="text-prominent"><%=data.redpackNum%></span></div>
+    <div class="contant-info font-sm text-inverse text-center">
+      <%if(data.redpackType === 2){%>单个红包金额<% } else {%>红包总额<%}%>：<span class="text-prominent"><%=data.redpackAmount%></span> /
+      红包个数：<span class="text-prominent"><%=data.redpackNum%></span>
     </div>
-    <div class="m-top-md text-center font-sm text-auxiliary">总计<span class="text-prominent">
+    <div class="text-center font-sm text-auxiliary">总计<span class="text-prominent">
       <%if(data.redpackType === 2){%> <%=_(data.redpackAmount).mul(data.redpackNum)%> <%} else {%> <%=data.redpackAmount%> <% }%></span>元，确认后该金额将从账户扣除</div>
     <% }%>
-    <div class="text-center m-TB-md">
+    <div class="confirm-password">
+      <label>资金密码：</label>
+      <input type="password" class="pwd-input js-pwd-input" placeholder="请输入资金密码" autocomplete="new-password">
+    </div>
+    <div class="error-info js-error-info hidden">
+      <span class="sfa sfa-error-icon v-middle"></span>
+      <span class="js-error-text text-hot v-middle">啦啦啦</span>
+    </div>
+    <div class="text-center m-top-md p-top-sm">
       <button type="button" class="btn btn-cool open-confirm-btn js-confrim-btn">确定</button>
     </div>
   </div>
