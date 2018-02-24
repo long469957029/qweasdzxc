@@ -12,7 +12,7 @@ const MoneyTransferView = Base.ItemView.extend({
 
   events: {
     'click .js-ac-btn-submit': 'submitHandler',
-    'click .js-transfer-type': 'renderTransferTypeLimit',
+    'change .js-transfer-type': 'renderTransferTypeLimit',
     'keyup .js-ac-input-search-user': 'searchHandler',
     'click .js-ac-selected-user': 'cancelSelectHandler',
     'click .js-user-select-all': 'selectAllHandler',
@@ -87,8 +87,8 @@ const MoneyTransferView = Base.ItemView.extend({
         self.loadingFinish()
       })
       .done((res) => {
-        self.data = res.root || {}
         if (res && res.result === 0) {
+          self.data = res.root || {}
           if (self.renderBasicInfo(self.data)) {
             self.initUserList()
             // self.parsley = self.$form.parsley({
@@ -297,7 +297,7 @@ const MoneyTransferView = Base.ItemView.extend({
 
   renderTransferTypeLimit() {
     const data = this.data
-    const type = this.$('.js-transfer-type').val()
+    const type = Number(this.$('.js-transfer-type').val())
     let valMin = _(data.minMoney).convert2yuan()
     let valMax = _(data.maxMoney).convert2yuan()
     let valTradeNum = data.tradeNum

@@ -81,7 +81,7 @@ const BettingRecordsView = SearchGrid.extend({
     // 初始化彩种选择
     new TicketSelectGroup({
       el: this.$('.js-uc-ticket-select-group'),
-      type: this.options.type,
+      type: this.options.ticketType,
     })
 
     this.$('select[name=betStatus]').html(_(betStatusConfig.get()).map((betStatus) => {
