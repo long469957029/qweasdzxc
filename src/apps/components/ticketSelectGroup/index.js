@@ -5,7 +5,7 @@ const TicketSelectGroup = Base.PrefabView.extend({
     listClass: 'js-pf-select-ticket-list',
     levelClass: 'js-pf-select-ticket-level',
     playClass: 'js-pf-select-ticket-play',
-    type: 0, // 0代表普通彩票  1代表盘口玩法
+    type: 2, // 2代表普通彩票  1代表盘口玩法
     defaultList: {
       list: {
         label: '彩种',
@@ -82,7 +82,7 @@ const TicketSelectGroup = Base.PrefabView.extend({
       })
 
     this.$(`.${self.options.listClass}`).html(html.join(''))
-    if(this.options.type === 0){
+    if(this.options.type === 2){
       this.$(`.${self.options.levelClass}`).html(`<option value="${this.options.defaultList.level.value}">${this.options.defaultList.level.label}</option>`)
     }
     this.$(`.${self.options.playClass}`).html(`<option value="${this.options.defaultList.play.value}">${this.options.defaultList.play.label}</option>`)
@@ -127,7 +127,7 @@ const TicketSelectGroup = Base.PrefabView.extend({
         version:1,
         type: this.options.type,
       }
-      if(this.options.type === 0){
+      if(this.options.type === 2){
         data.ticketLevelId = ticketLevelId
       }else{
         data.ticketId = ticketLevelId
@@ -157,7 +157,7 @@ const TicketSelectGroup = Base.PrefabView.extend({
   listChangeHandler(e) {
     const $target = $(e.currentTarget)
 
-    if(this.options.type === 0){
+    if(this.options.type === 2){
       if (this.$el.find(`.${this.options.levelClass}`).length) {
         this.trigger('list:change', $target.val())
       }

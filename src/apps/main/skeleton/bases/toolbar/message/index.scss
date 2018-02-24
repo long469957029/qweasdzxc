@@ -170,7 +170,7 @@
             background-color: $new-main-body-color;
             border-bottom: 1px solid $def-line-color;
             .person-sub-container{
-              height: 300px;
+              max-height: 300px;
             }
             .person-item {
               cursor: pointer;
