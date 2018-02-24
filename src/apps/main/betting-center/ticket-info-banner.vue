@@ -13,7 +13,7 @@
       <div class="clearfix">
         <div class="bc-plan-title text-right m-right-sm pull-left" v-if="!bettingInfo.pending">
           第
-          <span>{{bettingInfo.planId}}</span>
+          <span class="font-bold">{{bettingInfo.planId}}</span>
           期
           <div>
             <span
@@ -31,7 +31,7 @@
     <div class="bc-plan-main pull-left m-left-md">
       <div class="bc-plan-inner relative clearfix">
         <div class="bc-plan-title pull-left">
-          第 <span>{{bettingInfo.pending ? Number(bettingInfo.lastOpenId) + 1 : bettingInfo.lastOpenId}}</span> 期
+          第 <span class="font-bold">{{bettingInfo.pending ? Number(bettingInfo.lastOpenId) + 1 : bettingInfo.lastOpenId}}</span> 期
           <div>开奖号码</div>
         </div>
 
@@ -69,7 +69,7 @@
         <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
         号码走势
       </a>
-      <router-link :to="`#hc?page=${ticketInfo.type}`" class="router entry-list-des">
+      <router-link :to="{name: 'help', query: {page: ticketInfo.helpPage, tType: 2}}" class="router entry-list-des" target="_blank">
         <span class="sfa sfa-bc-icon-des vertical-middle"></span>
         游戏说明
       </router-link>
@@ -307,9 +307,6 @@
     }
     .bc-curt-plan-main {
       margin-top: 40px;
-      .bc-plan-title {
-        // padding-top: 3px;
-      }
     }
     .bc-entry-list {
       padding-top: 10px;
@@ -341,8 +338,7 @@
   .bc-plan-main {
     margin-top: 40px;
     .bc-plan-title {
-      margin-right: 20px;
-      font-weight: bold;
+      margin-right: 18px;
       text-align: right;
       display: inline-block;
       margin-bottom: 25px;

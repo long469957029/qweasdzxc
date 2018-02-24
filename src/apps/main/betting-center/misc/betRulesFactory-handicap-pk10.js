@@ -1,4 +1,4 @@
-import factory from 'bettingCenter/misc/betRulesFactory'
+import factory from './betRulesFactory'
 
 const fifty = _.range(1, 51)
 const oneHundred = _.range(51, 101)

@@ -198,7 +198,7 @@
 <script>
   import {formatOpenNum, TransferDom} from 'build'
 
-  import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
+  import betRulesConfig from './misc/betRulesConfig'
   import BettingRules from './betting-rules'
   import BettingAdvanceRules from './betting-advance-rules'
   import BettingPlayAreaSelect from './betting-play-area-select'
@@ -246,7 +246,7 @@
         pushing: false,
 
         lotteryGridOps: {
-          wrapperClass: 'bc-lottery-preview table table-dashed',
+          wrapperClass: 'bc-lottery-preview table',
           colModel: [
             {
               label: '玩法', width: '15%',

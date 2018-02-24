@@ -1,6 +1,6 @@
-import factory from 'bettingCenter/misc/betRulesFactory'
+import factory from './betRulesFactory'
 
-const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
+const algorithm = require('./betRulesAlgorithm')
 
 const ten = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
 

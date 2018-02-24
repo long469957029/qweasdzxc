@@ -41,7 +41,7 @@
 </template>
 
 <script>
-  import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
+  import betRulesAlgorithm from './misc/betRulesAlgorithm'
   import BettingPlayAreaPosition from "./betting-play-area-position"
 
   export default {

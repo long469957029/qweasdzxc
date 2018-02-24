@@ -281,6 +281,7 @@ const threeDConfig = [
     zhName: 'QQ3D分分彩',
     hasMargin: true,
     badge: 'new',
+    abbreviated: true,
     trendOps: {
       distribution: true,
       periods: trendPeriods,

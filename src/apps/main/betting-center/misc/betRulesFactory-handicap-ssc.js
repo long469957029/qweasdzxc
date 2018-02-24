@@ -1,5 +1,4 @@
-import betFormat from './betFormat'
-import factory from 'bettingCenter/misc/betRulesFactory'
+import factory from './betRulesFactory'
 
 const fifty = _.range(0, 50)
 

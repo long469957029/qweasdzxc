@@ -39,7 +39,7 @@ const getters = {
       fTotalIntegral: _.convert2yuan(state.totalIntegral),
       fCurrentDiscount: _.formatDiv(state.currentDiscount, 1000),
       fNextDiscount: _.formatDiv(state.nextDiscount, 1000),
-      nextPercent: _(_(state.currentLevelintegral).div(state.nexTLevelintegral)).mul(100)
+      nextPercent: _(_(state.totalIntegral - state.currentLevelintegral).div(state.nexTLevelintegral - state.currentLevelintegral)).mul(100)
     }
   }
 }

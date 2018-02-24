@@ -1,18 +1,18 @@
-import factory from 'bettingCenter/misc/betRulesFactory'
+import factory from './betRulesFactory'
 
 
-const SscFactory = require('bettingCenter/misc/betRulesFactory-ssc')
-const ChooseFactory = require('bettingCenter/misc/betRulesFactory-choose5')
-const ThreeDFactory = require('bettingCenter/misc/betRulesFactory-3d')
-const P5P3Factory = require('bettingCenter/misc/betRulesFactory-p5p3')
+const SscFactory = require('./betRulesFactory-ssc')
+const ChooseFactory = require('./betRulesFactory-choose5')
+const ThreeDFactory = require('./betRulesFactory-3d')
+const P5P3Factory = require('./betRulesFactory-p5p3')
 
-const BjPKFactory = require('bettingCenter/misc/betRulesFactory-bjpk')
-const Quick3Factory = require('bettingCenter/misc/betRulesFactory-quick3')
+const BjPKFactory = require('./betRulesFactory-bjpk')
+const Quick3Factory = require('./betRulesFactory-quick3')
 
 // 盘口
-const Mark6Factory = require('bettingCenter/misc/betRulesFactory-handicap-mark6')
-const HandicapSccFactory = require('bettingCenter/misc/betRulesFactory-handicap-ssc')
-const HandicapPk10Factory = require('bettingCenter/misc/betRulesFactory-handicap-pk10')
+const Mark6Factory = require('./betRulesFactory-handicap-mark6')
+const HandicapSccFactory = require('./betRulesFactory-handicap-ssc')
+const HandicapPk10Factory = require('./betRulesFactory-handicap-pk10')
 
 const sscList = ticketConfig.getSccList()
 _(sscList).each((ssc) => {

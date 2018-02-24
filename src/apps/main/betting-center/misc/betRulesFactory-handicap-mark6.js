@@ -1,7 +1,7 @@
-import factory from 'bettingCenter/misc/betRulesFactory'
+import factory from './betRulesFactory'
 import betFormat from './betFormat'
 
-const algorithm = require('bettingCenter/misc/betRulesAlgorithm')
+const algorithm = require('./betRulesAlgorithm')
 
 const getSpecialFortyNine = () => {
   return _.chain(bettingTypes.MARK6.getNum()).groupBy((item) => {
