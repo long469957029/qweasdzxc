@@ -232,6 +232,7 @@
         display: inline-block;
         margin: 6px;
         background: url("~base/images/v2/icon-leftBar-success.png") no-repeat;
+        float: right;
       }
       .fault-img {
         width: 20px;
@@ -239,6 +240,7 @@
         display: inline-block;
         margin: 6px;
         background: url("~base/images/v2/icon-leftBar-fault.png") no-repeat;
+        float: right;
       }
       .process-img {
         width: 20px;
@@ -246,6 +248,7 @@
         margin: 6px;
         display: inline-block;
         background: url("~base/images/v2/icon-leftBar-process.png") no-repeat;
+        float: right;
       }
       .success-text {
         display: inline-block;

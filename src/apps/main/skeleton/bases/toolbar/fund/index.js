@@ -136,19 +136,19 @@ const FundView = Base.ItemView.extend({
         itemHtml.push(html.join(''))
       } else if (record.type === 3) {
         html.push('<div class="js-sideBar-record-item operation-record-item">')
-        const formName = walletConf.getId(record.fromChannelId).zhName
-        const toName = walletConf.getId(record.toChannelId).zhName
+        const formName = walletConf.get(record.fromChannelId).zhName
+        const toName = walletConf.get(record.toChannelId).zhName
         html.push(`<div class="record-action">${formName}转入${toName}</div>`)
         html.push(`<div class="record-date">${createDate}</div>`)
         html.push('<div class="clearfix"></div>')
         html.push(`<div class="record-amount">${recordAmount}</div>`)
         html.push('<div class="record-progress">')
         if (record.status === 0) {
-          html.push('<span class="process-img"></span><span class="process-text">转账中</span>')
+          html.push('<span class="process-text">转账中</span><span class="process-img"></span>')
         } else if (record.status === 1) {
-          html.push('<span class="success-img"></span><span class="success-text">转账成功</span>')
+          html.push('<span class="success-text">转账成功</span><span class="success-img"></span>')
         } else if (record.status === 2) {
-          html.push('<span class="fault-img"></span><span class="fault-text">转账失败</span>')
+          html.push('<span class="fault-text">转账失败</span><span class="fault-img"></span>')
         }
         html.push('</div><div class="clearfix"></div>')
         html.push(`<div class="record-remark ${(recordRecord === null)?'hidden':''}">备注：${recordRecord}</div><div class="clearfix"></div></div>`)
