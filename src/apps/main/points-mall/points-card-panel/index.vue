@@ -259,6 +259,10 @@
       },
 
       openExchangeModal(formatCouponInfo, cardInfo) {
+        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
+          return false
+        }
         this.formatCouponInfo = formatCouponInfo
         this.currentCardInfo = cardInfo
         this.isShowGetCard = true

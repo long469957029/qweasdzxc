@@ -277,6 +277,7 @@ define((require, exports, module) => {
             self.renderError(errorData)
           })
           .fail((res) => {
+            var data =
             Global.ui.notification.show(res.msg === 'fail' ? '资金密码校验失败' : res.msg)
           })
       }
@@ -316,7 +317,7 @@ define((require, exports, module) => {
             }
           })
           .fail((res) => {
-            Global.ui.notification.show(res.msg === 'fail' ? '银行卡信息校验失败' : res.msg)
+            // Global.ui.notification.show(res.msg === 'fail' ? '银行卡信息校验失败' : res.msg)
           })
       }
     },
