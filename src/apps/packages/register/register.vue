@@ -735,6 +735,7 @@
     border-radius: 3px;
     position: relative;
     top: 140px;
+    z-index: 1;
 
     .ac-reg-body {
 
