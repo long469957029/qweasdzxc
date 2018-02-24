@@ -65,6 +65,7 @@ const MoneyDetailView = SearchGrid.extend({
       showIcon: true,
     }).render()
 
+
     // this.$('select[name=tradeType]').html(_(tradingStatusConfig.get()).map(function(status) {
     //   return '<option value="' + status.id + '">' + status.searchName + '</option>';
     // }).join(''));
