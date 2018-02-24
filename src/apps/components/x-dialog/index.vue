@@ -38,11 +38,19 @@
       type: {
         type: String,
         default: ''
+      },
+      options: {
+        type: Object,
+        default() {
+          return {
+
+          }
+        }
       }
     },
 
     mounted() {
-      $(this.$refs.modal).modal()
+      $(this.$refs.modal).modal(this.options)
         .on('hidden.modal', () => {
           this.$emit('modal-hidden')
         })

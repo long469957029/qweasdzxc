@@ -1,5 +1,5 @@
 <template>
-  <x-dialog @modal-hidden="$emit('modal-hidden')" width="610px">
+  <x-dialog @modal-hidden="$emit('modal-hidden')" width="610px" :options="modalOptions">
     <div slot="head-main">
       <template v-if="currentModal === 'select'">
         <div class="address-select-title">
@@ -101,6 +101,9 @@
 
     data() {
       return {
+        modalOptions: {
+          backdrop: 'static'
+        },
         addressInfo: {},
         name: this.currentAddress.name,
         phone: this.currentAddress.phone,

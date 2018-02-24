@@ -490,6 +490,26 @@ const addAddressToGiftApi = ({
     .catch(fail)
 }
 
+const levelIntroduceApi = (then, fail) => {
+  return $http({
+    url: '/mall/conf/IntegrallevelConf.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+const actionIntroduceApi = (then, fail) => {
+  return $http({
+    url: '/mall/conf/actionConf.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+
+
+
+
 export {
   getMallBannerApi,
   getUserMallInfoApi,
@@ -514,4 +534,6 @@ export {
   addressDeleteApi,
   giftExchangeApi,
   giftExchangeConfirmApi,
+  levelIntroduceApi,
+  actionIntroduceApi,
 }
