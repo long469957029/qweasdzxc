@@ -212,6 +212,8 @@ const PersonalManageView = Base.ItemView.extend({
           Global.ui.notification.show('修改个人信息成功', {
             type: 'success',
           })
+
+          window.app.$store.dispatch(types.CHECK_LOGIN_STATUS)
         } else {
           Global.ui.notification.show('修改个人信息失败')
         }

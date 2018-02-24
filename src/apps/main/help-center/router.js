@@ -2,6 +2,7 @@ const HelpCenterView = () => import(/* webpackChunkName: "help-center" */ './ind
 
 export default [
   {
+    name: 'help',
     path: '/hc',
     component: HelpCenterView,
   },

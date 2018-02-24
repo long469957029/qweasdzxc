@@ -61,8 +61,8 @@ const initState = () => {
 // getters
 const getters = {
   userAvatar: (state) => {
-    let headIcon = state.headIcon?'1':state.headIcon
-    return avatarConfig.get(_(headIcon).toString()).logo
+    let headIcon = state.headIcon ? state.headIcon : '1'
+    return avatarConfig.get(headIcon.toString()).logo
   },
   username: (state) => {
     return state.uName ? state.uName : state.username

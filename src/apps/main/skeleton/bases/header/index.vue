@@ -22,7 +22,7 @@
              v-else>
           <div class="header-menu">
             <div class="test-marking" v-if="isTestUser"><p>试</p></div>
-            <span class="sfa header-headshot "><img :src="imgUrl"/></span>
+            <span class="sfa header-headshot "><img :src="userAvatar"/></span>
             <span class="header-name">{{username}}</span>
             <i class="fa fa-angle-down "></i>
             <div class="header-menu-place" @click="goToPersonCenter"></div>
@@ -111,7 +111,6 @@
         userPanel: false,
 //        amount: 0.00,
 //        username: '',
-        userAvatar: '',
         newRowCount: 0,
         newList: [],
         loginLauncherDialog: false,
@@ -151,16 +150,9 @@
           return this.$store.getters.getUserInfo.uName
         }
       },
-      imgUrl(){
-        let logoId = this.$store.state.loginStore.headIcon
-        let result = ''
-        if ('png'.indexOf(logoId) !== -1) {
-          result = logoId
-        } else {
-          result = avatarConf.get(logoId).logo
-        }
-        return result
-      },
+      ...mapGetters([
+        'userAvatar'
+      ]),
       loginStatus(){
         return this.$store.getters.getLoginStatus
       },

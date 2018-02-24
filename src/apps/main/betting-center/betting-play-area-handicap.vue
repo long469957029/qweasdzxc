@@ -136,7 +136,7 @@
 
 <script>
   import BettingChipsSetting from './betting-chips-setting'
-  import betRulesAlgorithm from 'bettingCenter/misc/betRulesAlgorithm'
+  import betRulesAlgorithm from './misc/betRulesAlgorithm'
 
   export default {
     name: "betting-play-area-handicap",

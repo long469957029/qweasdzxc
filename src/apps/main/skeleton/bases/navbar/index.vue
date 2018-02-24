@@ -6,7 +6,7 @@
         <div class="">
           <div class="gl-main-navbar">
             <a href="#/?dashboard=1" class="navbar-logo"></a>
-            <ul class="nav js-navbar-nav">
+            <ul class="nav js-navbar-nav" style="position: static">
 
               <li data-index="1">
                 <a href="#/?dashboard=1">首页
@@ -247,10 +247,10 @@
       background: #fcfcfc;
       height: 180px;
       z-index: 12;
-      left: 31.7%;
+      left: 50%;
       top: 70px;
       transform: scaleY(0) translateX(-50%);
-      width: 100vw;
+      width: 100%;
       margin: 0 auto;
       box-shadow: 0 1px 5px #ddd inset;
 

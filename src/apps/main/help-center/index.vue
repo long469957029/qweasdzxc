@@ -15,12 +15,12 @@
         </div>
         <div class="hc-list-item" v-show="tType === 1">
           <ul>
-            <li :class="{active: currentView === 'DepositProcess'}" @click="toggleTabs(DepositProcess)">存款流程</li>
-            <li :class="{active: currentView === 'DrawingProcess'}" @click="toggleTabs(DrawingProcess)">提款流程</li>
-            <li :class="{active: currentView === 'LotteryProcess'}" @click="toggleTabs(LotteryProcess)">购彩流程</li>
-            <li :class="{active: currentView === 'DwFAQ'}" @click="toggleTabs(DwFAQ)">存提款FAQ</li>
-            <li :class="{active: currentView === 'lotteryFAQ'}" @click="toggleTabs(lotteryFAQ)">彩票投注FAQ</li>
-            <li :class="{active: currentView === 'DnsCourse'}" @click="toggleTabs(DnsCourse)">防DNS劫持教程</li>
+            <router-link :class="{active: currentView === 'DepositProcess'}" tag="li" :to="{name: 'help', query: {page: 'DepositProcess'}}">存款流程</router-link>
+            <router-link :class="{active: currentView === 'DrawingProcess'}" tag="li" :to="{name: 'help', query: {page: 'DrawingProcess'}}">提款流程</router-link>
+            <router-link :class="{active: currentView === 'LotteryProcess'}" tag="li" :to="{name: 'help', query: {page: 'LotteryProcess'}}">购彩流程</router-link>
+            <router-link :class="{active: currentView === 'DwFAQ'}" tag="li" :to="{name: 'help', query: {page: 'DwFAQ'}}">存提款FAQ</router-link>
+            <router-link :class="{active: currentView === 'lotteryFAQ'}" tag="li" :to="{name: 'help', query: {page: 'lotteryFAQ'}}">彩票投注FAQ</router-link>
+            <router-link :class="{active: currentView === 'DnsCourse'}" tag="li" :to="{name: 'help', query: {page: 'DnsCourse'}}">防DNS劫持教程</router-link>
           </ul>
         </div>
         <div class="hc-select-bar-item" @click="checkTab(2)" :class="['res-desc-btn',{'active': tType === 2}]">
@@ -29,11 +29,11 @@
         </div>
         <div class="hc-list-item" v-show="tType === 2">
           <ul>
-            <li :class="{active: currentView === 'SscLottery'}" @click="toggleTabs(SscLottery)">时时彩玩法</li>
-            <li :class="{active: currentView === 'SyxwLottery'}" @click="toggleTabs(SyxwLottery)">11选5玩法</li>
-            <li :class="{active: currentView === 'DpLottery'}" @click="toggleTabs(DpLottery)">3D/低频彩玩法</li>
-            <li :class="{active: currentView === 'Pk10Lottery'}" @click="toggleTabs(Pk10Lottery)">PK10玩法</li>
-            <li :class="{active: currentView === 'KsLottery'}" @click="toggleTabs(KsLottery)">快三玩法</li>
+            <router-link :class="{active: currentView === 'SscLottery'}" tag="li" :to="{name: 'help', query: {page: 'SscLottery'}}">时时彩玩法</router-link>
+            <router-link :class="{active: currentView === 'SyxwLottery'}" tag="li" :to="{name: 'help', query: {page: 'SyxwLottery'}}">11选5玩法</router-link>
+            <router-link :class="{active: currentView === 'DpLottery'}" tag="li" :to="{name: 'help', query: {page: 'DpLottery'}}">3D/低频彩玩法</router-link>
+            <router-link :class="{active: currentView === 'Pk10Lottery'}" tag="li" :to="{name: 'help', query: {page: 'Pk10Lottery'}}">PK10玩法</router-link>
+            <router-link :class="{active: currentView === 'KsLottery'}" tag="li" :to="{name: 'help', query: {page: 'KsLottery'}}">快三玩法</router-link>
           </ul>
         </div>
         <div class="hc-select-bar-item" @click="checkTab(3)" :class="['res-desc-btn',{'active': tType === 3}]">
@@ -42,13 +42,13 @@
         </div>
         <div class="hc-list-item" v-show="tType === 3">
           <ul>
-            <li :class="{active: currentView === 'SscPlayer'}" @click="toggleTabs(SscPlayer)">时时彩玩法</li>
-            <li :class="{active: currentView === 'Pk10Player'}" @click="toggleTabs(Pk10Player)">PK10玩法</li>
-            <li :class="{active: currentView === 'LhcPlayer'}" @click="toggleTabs(LhcPlayer)">六合彩玩法</li>
+            <router-link :class="{active: currentView === 'SscPlayer'}" tag="li" :to="{name: 'help', query: {page: 'SscPlayer'}}">时时彩玩法</router-link>
+            <router-link :class="{active: currentView === 'Pk10Player'}" tag="li" :to="{name: 'help', query: {page: 'Pk10Player'}}">PK10玩法</router-link>
+            <router-link :class="{active: currentView === 'LhcPlayer'}" tag="li" :to="{name: 'help', query: {page: 'LhcPlayer'}}">六合彩玩法</router-link>
           </ul>
         </div>
       </div>
-      <div class="helpCenter-content inline-block" :is="currentView" keep-alive>
+      <div class="helpCenter-content inline-block" :is="currentView">
       </div>
     </div>
   </div>
@@ -114,13 +114,17 @@
     },
 
     mounted () {
-        this.$nextTick(() => {
-        })
     },
 
     watch: {
-      '$route'(to) {
-        this.currentView = to.query.page
+      '$route': {
+        handler(to) {
+          this.currentView = to.query.page
+          if (to.query.tType) {
+            this.checkTab(Number(to.query.tType))
+          }
+        },
+        immediate: true
       }
     },
 
@@ -129,10 +133,7 @@
     filters: {},
 
     methods: {
-      toggleTabs (tabText) {
-        this.currentView = tabText;
-      },
-      checkTab (tType){
+      checkTab (tType) {
         this.tType = tType
       },
     }

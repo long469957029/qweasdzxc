@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog modal-chase">
+  <div class="modal-chase">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">
         <span aria-hidden="true">×</span>
@@ -590,6 +590,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
         this.chaseList[$(e.currentTarget).closest('tr').index()].selected = e.target.checked
       })
 
+      this.init()
     },
 
     destroyed() {
@@ -606,6 +607,8 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
     width: 850px;
     height: 550px;
     background-color: #ffffff;
+
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     .modal-header {
@@ -614,6 +617,8 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
       padding: 10px 0 10px 20px;
       font-size: 16px;
       border-bottom: 1px solid #d7d7d7;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
     }
     .setting-icon {
       background: url(misc/chips-setting.png);

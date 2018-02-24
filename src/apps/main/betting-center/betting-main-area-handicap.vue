@@ -30,7 +30,7 @@
   </div>
 </template>
 <script>
-  import betRulesConfig from 'bettingCenter/misc/betRulesConfig'
+  import betRulesConfig from './misc/betRulesConfig'
   import RoadBallsAnalysis from './road-balls-analysis'
   import BettingRules from './betting-rules'
   import BettingAdvanceRules from './betting-advance-rules'

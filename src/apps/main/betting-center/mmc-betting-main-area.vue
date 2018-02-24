@@ -24,7 +24,7 @@
             <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
             号码走势
           </a>
-          <router-link :to="`#hc?page=${ticketInfo.type}`" class="router entry-list-des">
+          <router-link :to="{name: 'help', query: {page: ticketInfo.helpPage, tType: 2}}" class="router entry-list-des" target="_blank">
             <span class="sfa sfa-bc-icon-des vertical-middle"></span>
             游戏说明
           </router-link>
@@ -268,7 +268,7 @@
 <script>
   import {pushMmcSimulationBettingApi} from 'api/betting'
   import {formatOpenNum, TransferDom, CustomCheckbox} from 'build'
-  import MmcOpeningNumGroup from "bettingCenter/mmc-opening-num-group";
+  import MmcOpeningNumGroup from './mmc-opening-num-group'
   import betRulesConfig from './misc/betRulesConfig'
 
 
@@ -410,7 +410,7 @@
         }
       },
       'bettingChoice.playId': {
-        handler: function (playId) {
+        handler(playId) {
           if (playId === -1) {
             return
           }
@@ -459,17 +459,30 @@
         },
       },
       unit: {
-        handler: function (newVal) {
+        handler(newVal) {
           this.$store.commit(types.SET_UNIT, newVal)
         }
       },
+
+      openingCount: {
+        handler() {
+          const totalMoney = _.reduce(this.bettingChoice.previewList, (total, previewInfo) => {
+            total += previewInfo.prefabMoney
+
+            return total
+          }, 0)
+
+          this.fTotalMoney = _.convert2yuan(totalMoney * this.openingCount)
+        }
+      },
+
       'bettingChoice.formatMaxMultiple': {
-        handler: function (newVal) {
+        handler(newVal) {
           $(this.$refs.multiRange).numRange('setRange', 1, newVal)
         }
       },
       'bettingChoice.previewList': {
-        handler: function (previewList) {
+        handler(previewList) {
           let totalMoney = 0
           this.fPreviewList = _(previewList).map(function (previewInfo, index) {
             const title = `${previewInfo.levelName}_${previewInfo.playName}`

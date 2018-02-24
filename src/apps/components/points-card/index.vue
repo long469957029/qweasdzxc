@@ -8,7 +8,7 @@
             {{formatCouponInfo.bigShowNum}}<span class="card-unit">{{formatCouponInfo.conditionType === 2 ? '%' : '元'}}</span>
           </div>
           <div class="card-badge">{{formatCouponInfo.couponName}}</div>
-          <div class="card-badge " v-if="couponInfo.levelLimit > 0">
+          <div class="card-badge " v-if="_.isNumber(couponInfo.levelLimit) && couponInfo.levelLimit >= 0">
             LV{{couponInfo.levelLimit}}
             <template v-if="1 === couponInfo.limitLevelType">以上</template>
           </div>

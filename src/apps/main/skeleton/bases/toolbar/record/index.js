@@ -39,24 +39,33 @@ const RecordView = Base.ItemView.extend({
       // 0:未中奖，1：已中奖，2：用户撤单，3：系统撤单,ticketResult,prizeTotalMoney
       // 状态
       let status = ''
-      if (game.status === 2) {
-        status = '用户撤单'
-      } else if (game.status === 3) {
-        status = '系统撤单'
-      } else if (game.hasException) {
-        status = '等待开奖'
-      } else if (game.ticketResult === null) {
-        if (game.status > 0) {
+      if (game.type === 1){
+        if (game.status === 2) {
+          status = '用户撤单'
+        } else if (game.status === 3) {
+          status = '系统撤单'
+        } else if (game.hasException) {
+          status = '等待开奖'
+        } else if (game.ticketResult === null) {
+          if (game.status > 0) {
+            status = '未中奖'
+          } else {
+            status = '等待开奖'
+          }
+        } else if (game.price === 0) {
           status = '未中奖'
         } else {
-          status = '等待开奖'
+          // status = `中奖<span class="text-account-cut">${_(game.price).convert2yuan()}</span>`
+          status = `中奖<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
         }
-      } else if (game.price === 0) {
-        status = '未中奖'
-      } else {
-        // status = `中奖<span class="text-account-cut">${_(game.price).convert2yuan()}</span>`
-        status = `中奖<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
+      }else {
+        if (game.price === 0){
+          status = '未中奖'
+        } else {
+          status = `中奖<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
+        }
       }
+
       html.push(`<div class="js-gl-bet-detail-dialog recent-game-item " data-id="${game.ticketTradeNo}">`)
       html.push(`<div class="game-title">${game.name}-${game.playName}</div>`)
       html.push(`<div class="game-amount">${betAmount}</div>`)
