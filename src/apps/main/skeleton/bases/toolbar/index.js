@@ -55,7 +55,7 @@ const ToolbarView = Base.ItemView.extend({
     self.$sidebar = self.$('.js-toolbar-sidebar')
     self.$closeMask = self.$('.js-sidebar-close')
     self.$container = self.$('.js-toolbar-option-container')
-    self.$option = self.$('.js-toolbar-option')
+    self.$toption = self.$('.toolbar-option')
 
   },
 
@@ -72,7 +72,7 @@ const ToolbarView = Base.ItemView.extend({
       Global.router.goTo(path)
     }
     self.$container.css('margin-left','-51px')
-    self.$option.css('border-radius','3px')
+    self.$toption.css('border-radius','3px')
   },
 
   openSidebarHandler(e) {
@@ -90,8 +90,8 @@ const ToolbarView = Base.ItemView.extend({
     self.renderSidebarViewHandler(option)
 
     self.$container.css('margin-left','-36px')
-    self.$option.css('border-top-right-radius','0px')
-    self.$option.css('border-bottom-right-radius','0px')
+    self.$toption.css('border-top-right-radius','0px')
+    self.$toption.css('border-bottom-right-radius','0px')
   },
 
   renderSidebarViewHandler(option) {
