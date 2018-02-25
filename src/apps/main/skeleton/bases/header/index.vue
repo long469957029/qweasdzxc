@@ -276,6 +276,9 @@
         this.getAccountSafe()
       }
       this.judgeIsTestUser()
+      Vue.$global.bus.$on('update:newRowCount',()=>{
+        this.newRowCount = 0
+      })
     }
   }
 </script>

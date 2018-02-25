@@ -16,3 +16,4 @@ require('parsleyjs')
 require('parsleyjs/dist/parsley.remote')
 require('parsleyjs/src/i18n/zh_cn')
 
+Vue.config.productionTip = false

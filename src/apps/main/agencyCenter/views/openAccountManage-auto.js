@@ -289,8 +289,13 @@ const OpenAccountManageView = Base.ItemView.extend({
   checkboxHandler(e) {
     const $target = $(e.currentTarget)
     if ($target.is(':checked')) {
-      this.$acRedTypeTab.removeClass('hidden')
-      this.$acAutoRedInfo.removeClass('hidden')
+      if(Global.memoryCache.get('acctInfo').foundsLock){
+        Global.ui.notification.show('资金已锁定，暂不能进行红包开户操作')
+        $target.removeAttr('checked')
+      }else{
+        this.$acRedTypeTab.removeClass('hidden')
+        this.$acAutoRedInfo.removeClass('hidden')
+      }
     } else {
       this.$acRedTypeTab.addClass('hidden')
       this.$acAutoRedInfo.addClass('hidden')

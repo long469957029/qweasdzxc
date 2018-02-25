@@ -209,6 +209,7 @@ const SecurityQuestionView = Base.ItemView.extend({
           $currentContainer.steps('next')
           setTimeout(() => {
             self.trigger('render:true')
+            Global.m.publish('safe:updating')
           }, 1000)
         } else {
           Global.ui.notification.show(`设置密保问题请求失败${res.msg}`)
@@ -318,6 +319,7 @@ const SecurityQuestionView = Base.ItemView.extend({
           if (res && res.result === 0) {
             Global.ui.notification.show('您已成功设置密保问题！')
             self.trigger('render:true')
+            Global.m.publish('safe:updating')
           } else {
             Global.ui.notification.show(`设置密保问题请求失败${res.msg}`)
           }
