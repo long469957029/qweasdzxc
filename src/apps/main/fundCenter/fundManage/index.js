@@ -36,8 +36,8 @@ export default Base.ItemView.extend({
       $target.data('time', moment().valueOf())
       this.getFundSummaryXhr().done((res) => {
         if (res.result === 0) {
-          this.$('.js-fc-fm-to-mb').html(_(res.root.total).convert2yuan()) // 总余额
-          this.$('.js-fc-fm-wv-mb').html(_(res.root.validBalance).convert2yuan()) // 可用余额
+          this.$('.js-fc-fm-to-mb').html(_(res.root.total).format2yuan()) // 总余额
+          this.$('.js-fc-fm-wv-mb').html(_(res.root.validBalance).format2yuan()) // 可用余额
           $target.removeClass('fa-spin')
         }
       })
@@ -212,24 +212,24 @@ export default Base.ItemView.extend({
     const self = this
     $.when(this.AccountXhr).done((res) => {
       if (res.result === 0) {
-        self.$('.js-fc-fm-to-mb').html(_(res.root.total).convert2yuan().toFixed(2))// 总余额
-        self.$('.js-fc-fm-wv-mb').html(_(res.root.validBalance).convert2yuan().toFixed(2))// 可用余额
+        self.$('.js-fc-fm-to-mb').html(_(res.root.total).format2yuan())// 总余额
+        self.$('.js-fc-fm-wv-mb').html(_(res.root.validBalance).format2yuan())// 可用余额
         _(res.root.gameBalance).each((game) => {
           const channelId = game.channelId
           if (channelId === 0) {
-            self.$('.js-fc-fm-mb-ce').find('.js-fc-fm-channel-amount').html(_(game.balance).convert2yuan().toFixed(2)) //  总钱包余额
+            self.$('.js-fc-fm-mb-ce').find('.js-fc-fm-channel-amount').html(_(game.balance).format2yuan()) //  总钱包余额
           } else if (channelId === 1) {
-            self.$('.js-fc-fm-mb-ag').find('.js-fc-fm-channel-amount').html(_(game.balance).convert2yuan().toFixed(2)) // ag余额
+            self.$('.js-fc-fm-mb-ag').find('.js-fc-fm-channel-amount').html(_(game.balance).format2yuan()) // ag余额
           } else if (channelId === 2) {
-            self.$('.js-fc-fm-mb-ebet').find('.js-fc-fm-channel-amount').html(_(game.balance).convert2yuan().toFixed(2)) // ebet余额
+            self.$('.js-fc-fm-mb-ebet').find('.js-fc-fm-channel-amount').html(_(game.balance).format2yuan()) // ebet余额
           } else if (channelId === 3) {
-            self.$('.js-fc-fm-mb-bbin').find('.js-fc-fm-channel-amount').html(_(game.balance).convert2yuan().toFixed(2)) // bbin
+            self.$('.js-fc-fm-mb-bbin').find('.js-fc-fm-channel-amount').html(_(game.balance).format2yuan()) // bbin
           } else if (channelId === 4) {
-            self.$('.js-fc-fm-mb-pt').find('.js-fc-fm-channel-amount').html(_(game.balance).convert2yuan().toFixed(2)) // pt余额
+            self.$('.js-fc-fm-mb-pt').find('.js-fc-fm-channel-amount').html(_(game.balance).format2yuan()) // pt余额
           } else if (channelId === 5) {
-            self.$('.js-fc-fm-mb-mg').find('.js-fc-fm-channel-amount').html(_(game.balance).convert2yuan().toFixed(2)) // mg余额
+            self.$('.js-fc-fm-mb-mg').find('.js-fc-fm-channel-amount').html(_(game.balance).format2yuan()) // mg余额
           } else if (channelId === 6) {
-            self.$('.js-fc-fm-mb-gg').find('.js-fc-fm-channel-amount').html(_(game.balance).convert2yuan().toFixed(2)) // gg余额
+            self.$('.js-fc-fm-mb-gg').find('.js-fc-fm-channel-amount').html(_(game.balance).format2yuan()) // gg余额
           }
         })
       }
@@ -239,18 +239,18 @@ export default Base.ItemView.extend({
     const self = this
     this.getRechargeWithdrawlXhr(reqData).done((res) => {
       if (res.result === 0) {
-        self.$Recharge.html(_(res.root.recharge).convert2yuan().toFixed(2))
-        self.$Withdraw.html(_(res.root.withdraw).convert2yuan().toFixed(2))
+        self.$Recharge.html(_(res.root.recharge).format2yuan())
+        self.$Withdraw.html(_(res.root.withdraw).format2yuan())
       }
     })
     this.getProfitXhr(reqData).done((res) => {
       if (res.result === 0) {
-        self.$Bet.html(_(res.root.bet).convert2yuan().toFixed(2))
-        self.$Bonus.html(_(res.root.prize).convert2yuan().toFixed(2))
-        self.$Rebate.html(_(res.root.rebate).convert2yuan().toFixed(2))
-        self.$back.html(_(res.root.gameRebate).convert2yuan().toFixed(2))
-        self.$Activity.html(_(res.root.activity).convert2yuan().toFixed(2))
-        self.$Profit.html(_(res.root.profit).convert2yuan().toFixed(2))
+        self.$Bet.html(_(res.root.bet).format2yuan())
+        self.$Bonus.html(_(res.root.prize).format2yuan())
+        self.$Rebate.html(_(res.root.rebate).format2yuan())
+        self.$back.html(_(res.root.gameRebate).format2yuan())
+        self.$Activity.html(_(res.root.activity).format2yuan())
+        self.$Profit.html(_(res.root.profit).format2yuan())
       }
     })
   },
@@ -475,7 +475,7 @@ export default Base.ItemView.extend({
     this.$('.js-fm-out-money').val(amountList.amount)
     //  遍历取快捷金额配置
     this.$('.js-fm-out-money').attr('data-parsley-range', `[${valMin},${valMax}]`)
-    this.$('.js-fm-out-money').attr('data-parsley-max', _(data.validBalance).convert2yuan())
+    this.$('.js-fm-out-money').attr('data-parsley-max', _(data.validBalance).format2yuan())
     this.$('.js-fm-tradeNum').val(valTradeNum)
     if (valTradeNum === 0) {
       this.$('.js-fc-tf-button').prop('disabled', true)

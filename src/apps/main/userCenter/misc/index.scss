@@ -187,11 +187,10 @@
   }
   .uc-personalManage-info{
     width: 100%;
-    padding-bottom: 20px;
-    border-bottom: 1px solid $third-line-color;
+    border-top: 1px solid $third-line-color;
     color: $inverse-color;
     &:last-child{
-      border-bottom: none;
+      border-top: none;
     }
     .uc-personal-title{
       font-size: $font-md;
@@ -217,6 +216,12 @@
         color: $def-black-color;
       }
     }
+  }
+  .uc-personalManage-line{
+    width: 96%;
+    height: 1px;
+    margin: 0 auto;
+    background-color: $third-line-color;
   }
   .uc-head-icon-list{
     width: 610px;
@@ -251,12 +256,18 @@
     }
   }
   //特定长度输入框
+  .input1{
+    width: 80px;
+    height: 28px;
+  }
   .input4 {
     width: 148px;
     padding: 8px 15px;
+    background-color: #f9f9f9 !important;
   }
   .input-address{
     width: 240px;
+    background-color: #f9f9f9 !important;
   }
   .address-choose{
     position: relative;
@@ -269,6 +280,7 @@
       border-radius: $globalInputRadius;
       margin-right: 10px;
       cursor: pointer;
+      background-color: #f9f9f9;
       &.faild{
         border-color: #e84c4c;
       }
