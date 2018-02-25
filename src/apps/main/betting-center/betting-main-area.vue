@@ -79,10 +79,6 @@
               <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
               <span>元</span>
             </div>
-            <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
-                              :betting-money="bettingChoice.prefabMoney"
-                              v-model="prevVoucher" ref="preBettingVouchers"
-            ></betting-vouchers>
             <div class="pull-right m-right-sm">
               <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                       :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
@@ -272,8 +268,6 @@
 
         showChaseModal: false,
 
-        //快捷投注代金券
-        prevVoucher: {},
         //总投注代金券
         totalVoucher: {},
       }
@@ -511,15 +505,8 @@
 
         this.pushing = true
 
-        if (this.$refs.preBettingVouchers) {
-          this.$refs.preBettingVouchers.togglePopover({toggle: false})
-        }
-
-        const useVoucher = !_.isEmpty(this.prevVoucher)
-
         this.$store.dispatch(types.PUSH_BETTING, {
           planId,
-          prevVoucher: this.prevVoucher,
           type: 'buyList'
         })
           .catch(() => {

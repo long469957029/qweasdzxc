@@ -24,7 +24,8 @@
             <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
             号码走势
           </a>
-          <router-link :to="{name: 'help', query: {page: ticketInfo.helpPage, tType: 2}}" class="router entry-list-des" target="_blank">
+          <router-link :to="{name: 'help', query: {page: ticketInfo.helpPage, tType: 2}}" class="router entry-list-des"
+                       target="_blank">
             <span class="sfa sfa-bc-icon-des vertical-middle"></span>
             游戏说明
           </router-link>
@@ -66,7 +67,8 @@
 
                 <div class="opening-right">{{preview.bettingMoney}}</div>
                 <div class="opening-operate">
-                  <span class="sfa sfa-mmc-delete cursor-pointer" v-show="!opening" @click="lotteryDelete(index)"></span>
+                  <span class="sfa sfa-mmc-delete cursor-pointer" v-show="!opening"
+                        @click="lotteryDelete(index)"></span>
                 </div>
               </div>
             </div>
@@ -89,7 +91,8 @@
                   --------- 正在开奖 ---------
                 </div>
                 <div class="opening-center" v-else>
-                  <span class="text-circle text-circle-xs" :class="{'circle-winning': (!opening && i === 0) || (opening && i === 1)}"
+                  <span class="text-circle text-circle-xs"
+                        :class="{'circle-winning': (!opening && i === 0) || (opening && i === 1)}"
                         v-for="num in openingResult.fOpenCode">{{num}}</span>
                 </div>
                 <div class="opening-right text-prominent " v-if="openingResult.completed && openingResult.winPrize">
@@ -133,7 +136,8 @@
             </div>
             <div class="bc-line"></div>
             <div class="m-LR-smd">
-              <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'" loading-tip="">
+              <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'"
+                           loading-tip="">
                 <transition name="fade" mode="out-in"
                             enter-active-class="animated-quick fadeIn"
                             leave-active-class="animated-quick fadeOut"
@@ -149,20 +153,21 @@
             </div>
           </div>
 
-          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="430" title="最近开奖号码"
+          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="403"
+                           title="最近开奖号码"
                            ref="bettingHisotry"></betting-history>
         </div>
         <div class="div-line"></div>
 
-        <div class="bottom-panel text-inverse m-LR-smd m-TB-md">
-          <div class="bottom-panel-top form-inline text-center">
+        <div class="bottom-panel text-inverse">
+          <div class="bottom-panel-top form-inline">
             <select name="unit" class="select-default bc-unit-select" v-model="unit">
               <option value="10000">元</option>
               <option value="1000">角</option>
               <option value="100">分</option>
               <option value="10">厘</option>
             </select>
-            <div class="inline-block m-LR-smd">
+            <div class="inline-block m-LR-sm">
               <span class="vertical-middle bc-multi-range inline-block" ref="multiRange"></span>
               <label class="m-left-xs">倍</label>
             </div>
@@ -175,13 +180,9 @@
               <span>元</span>
             </div>
 
-            <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
-                              :betting-money="bettingChoice.prefabMoney"
-                              v-model="totalVoucher" ref="totalBettingVouchers"
-            ></betting-vouchers>
             连续开奖
             <select class="bc-m-select" v-model="openingCount">
-              <option v-for="openNum in continuousOpenSelectList" :key="openNum">{{openNum}}</option>
+              <option v-for="openNum in continuousOpenSelectList" :key="openNum" :value="openNum">{{openNum}}期</option>
             </select>
             <label class="stop-checkbox">
               <custom-checkbox v-model="stopWhenWinning"></custom-checkbox>
@@ -225,6 +226,38 @@
                 <td v-html="row.operate"></td>
               </tr>
             </slot-static-grid>
+          </div>
+        </div>
+
+        <div class="bottom-panel text-inverse">
+          <div class="total-panel font-sm">
+            <span>
+            <span>预期奖金</span>
+            <animated-integer class="text-prominent"
+                              :value="bettingChoice.totalInfo.fTotalBetBonus"></animated-integer>
+            <span>元，</span>
+            </span>
+            <span>总投注 【</span>
+            <span class="text-pleasant">{{bettingChoice.totalInfo.totalLottery}}</span>
+            <span>】 注， </span>
+            <span>总金额</span>
+            <animated-integer class="text-prominent m-left-xs m-right-xs"
+                              :value="bettingChoice.totalInfo.fTotalMoney"></animated-integer>
+            <span>元</span>
+            <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
+                              :betting-money="bettingChoice.totalInfo.totalMoney"
+                              v-model="totalVoucher" ref="totalBettingVouchers"
+            ></betting-vouchers>
+          </div>
+          <div class="">
+            连续开奖
+            <select class="bc-m-select" v-model="allOpeningCount">
+              <option v-for="openNum in continuousOpenSelectList" :key="openNum" :value="openNum">{{openNum}}期</option>
+            </select>
+            <label class="stop-checkbox">
+              <custom-checkbox v-model="allStopWhenWinning"></custom-checkbox>
+              中奖即停止
+            </label>
           </div>
         </div>
       </div>
@@ -320,6 +353,11 @@
         totalOpeningCount: 0,
         //当前正在开奖期数
         currentOpeningCount: 1,
+
+        //总
+        allOpeningCount: 1,
+        allStopWhenWinning: false,
+
         //手动停止
         stopping: false,
         playRule: {},
@@ -357,7 +395,7 @@
               width: '8%'
             },
           ],
-          height: 192,
+          height: 140,
           showEmpty: true,
           emptyTip: '<div class="sfa sfa-bc-empty vertical-middle"></div> 暂未添加选号',
         },
@@ -670,6 +708,91 @@
         this.lotteryConfirm()
       },
 
+      lotteryBuy() {
+        if (!this.bettingChoice.multiple) {
+          Global.ui.notification.show('倍数为0，不能投注')
+          return false
+        }
+
+        if (this.playRule.type === 'select') {
+          this.$_addSelectLottery({type: 'buy'})
+        } else {
+          this.$_addInputLottery({type: 'buy'})
+        }
+
+        //do save
+        let planId = this.bettingInfo.planId
+        const inputCount = _(this.bettingChoice.buyList).reduce((_inputCount, previewInfo) => {
+          if (previewInfo.type === 'input') {
+            _inputCount += previewInfo.statistics
+          }
+          return _inputCount
+        }, 0)
+
+        if (inputCount > 100000) {
+          Global.ui.notification.show('非常抱歉，目前平台单式投注只支持最多10万注单。')
+          return false
+        }
+        if (_.isEmpty(this.bettingChoice.buyList)) {
+          Global.ui.notification.show('请至少选择一注投注号码！')
+          return false
+        }
+
+        if (Global.memoryCache.get('acctInfo').foundsLock) {
+          Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
+          return false
+        }
+        const maxBetNums = this.bettingChoice.playInfo.maxBetNums
+        if (maxBetNums && !_.isNull(maxBetNums) && Number(this.bettingChoice.buyList[0].statistics) > maxBetNums) {
+          Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${maxBetNums} 注，请重新选择  `)
+          this.$store.commit(types.EMPTY_BUY_BETTING)
+          return false
+        }
+
+        this.pushing = true
+
+        this.$store.dispatch(types.PUSH_BETTING, {
+          planId,
+          type: 'buyList'
+        })
+          .catch(() => {
+            this.pushing = false
+          })
+          .then((res) => {
+            this.pushing = false
+            if (res && res.result === 0) {
+              this.$refs.bettingRecords.update()
+
+              Global.m.oauth.check()
+
+              if (useVoucher) {
+                this.$store.dispatch(types.GET_VOUCHERS, {
+                  ticketId: this.ticketId,
+                })
+              }
+
+              Global.ui.notification.show('投注成功！', {
+                type: 'success',
+                hasFooter: false,
+                displayTime: 800,
+              })
+            } else {
+              if (res.msg.indexOf('余额不足') > -1) {
+                Global.ui.notification.show(res.msg || '', {
+                  btnContent: '充值',
+                  event: () => {
+                    $('.header-main .js-header-recharge').trigger('click.fundDialog')
+                  }
+                })
+              } else {
+                Global.ui.notification.show(res.msg || '')
+              }
+            }
+
+            this.$_emptySelect();
+          })
+      },
+
       lotteryConfirm() {
         if (this.opening || this.pushing) {
           return
@@ -941,11 +1064,18 @@
     left: 33px;
     width: 1190px;
     background: url(./misc/mmc-content-slice.png) repeat-y center center;
-    overflow: hidden;
+    /*overflow: hidden;*/
+  }
+
+  .bottom-panel {
+    padding: 20px 70px 20px 60px;
+    display: flex;
+    flex: 1;
+    align-items: center;
   }
 
   .bottom-panel-top {
-    margin-bottom: 28px;
+    flex: 1;
   }
 
   .sfa-mmc-outer-border {
@@ -987,6 +1117,7 @@
     width: 1100px;
     position: relative;
     left: 28px;
+    z-index: 1;
   }
 
   .mmc-lottery-main-open {
@@ -1052,7 +1183,7 @@
     }
     .bc-side-area {
       width: 250px;
-      min-height: 556px;
+      min-height: 545px;
     }
     .bc-basic-rules {
       .tab-toolbar {
@@ -1066,10 +1197,7 @@
     }
     .bc-play-area {
       position: relative;
-      height: 100px;
-      &.loaded {
-        height: auto;
-      }
+      min-height: 350px;
     }
 
     .bc-unit-select-add {
@@ -1189,15 +1317,15 @@
     width: 70px;
     height: 30px;
     padding-left: 12px;
-    margin-left: 5px;
     @include select-def;
   }
 
   .bc-m-select {
-    width: 106px;
+    width: 86px;
     height: 30px;
     font-size: 12px;
-    margin-right: 20px;
+    margin-right: 15px;
+    margin-bottom: 0;
     @include select-def;
   }
 
@@ -1318,6 +1446,12 @@
     outline: 0;
   }
 
+  .total-panel {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
   .text-circle {
     color: $new-inverse-color;
     background-color: rgba(117, 117, 117, 0.18);
@@ -1397,6 +1531,7 @@
       right: 12px !important;;
     }
   }
+
   .bc-play-container.clearfix {
     display: flex;
   }
