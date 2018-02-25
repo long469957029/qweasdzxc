@@ -178,7 +178,6 @@ const CardManageView = Base.ItemView.extend({
       '</li>'
 
     if (size === 0) {
-      this.$('.js-uc-cmLockCard-btn').addClass('hidden')
       return cardAdd
     }
 
@@ -190,7 +189,7 @@ const CardManageView = Base.ItemView.extend({
         bankInfo,
       })
     }, this)
-
+    this.$('.js-uc-cmLockCard-btn').removeClass('hidden')
     if (size < 5) {
       cardInfoHtmlArr.push(cardAdd)
     }
