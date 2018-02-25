@@ -793,7 +793,7 @@
         }
       }
       .error-text {
-        width: 378px;
+        width: 439px;
         height: 40px;
         line-height: 40px;
         .sfa {

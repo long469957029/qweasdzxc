@@ -114,7 +114,7 @@
         newRowCount: 0,
         newList: [],
         loginLauncherDialog: false,
-
+        isTestUser: false,
       }
     },
 
@@ -137,9 +137,9 @@
       isAgent(){
         return this.$store.state.loginStore.userType === 0
       },
-      isTestUser(){
-        return Global.cookieCache.get('isTestUser')
-      },
+      // isTestUser(){
+      //   return Global.cookieCache.get('isTestUser')
+      // },
       amount(){
         return this.$store.getters.getUserInfo.fBalance
       },
@@ -164,6 +164,9 @@
       backToOldVersion(){
         window.location.href = _.getV2Domain()
       },
+      judgeIsTestUser(){
+        this.isTestUser = Global.cookieCache.get('isTestUser')
+      },
       showLogin() {
         this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
 //        this.openLoginDialog()
@@ -183,6 +186,7 @@
               if (data.data.balance < 10000000) {
                 this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
               }
+              this.judgeIsTestUser()
               window.store.commit(types.USER_LOGIN_SUCCESS, data.data.root || {})
             }
           })
@@ -271,6 +275,7 @@
       if (this.loginStatus) {  //登陆状态下 获取用户安全设置信息
         this.getAccountSafe()
       }
+      this.judgeIsTestUser()
     }
   }
 </script>
@@ -720,7 +725,7 @@
           background: #ffffff;
           color: #666666;
           border: 1px solid $def-line-color;
-          right: -83px;
+          right: -97px;
           margin-left: -183px;
           //display: block;
           width: 348px;

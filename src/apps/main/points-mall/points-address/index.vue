@@ -148,6 +148,10 @@
 
     methods: {
       addressPush() {
+        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
+          return false
+        }
         this.parsley = $(this.$refs.form).parsley({
           trigger: 'change',
         })

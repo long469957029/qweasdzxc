@@ -158,6 +158,10 @@
           })
       },
       receive($event, {termId, termBonusType}) {
+        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
+          return false
+        }
         let html = '恭喜您成功领取积分'
         let unit = ''
         if (termBonusType == 2) {
