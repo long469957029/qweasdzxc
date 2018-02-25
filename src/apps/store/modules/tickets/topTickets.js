@@ -91,7 +91,7 @@ const mutations = {
     }
 
     state[type] = _.chain(data).map((id) => {
-      const ticket = ticketConfig.getById(id)
+      const ticket = _.cloneDeep(ticketConfig.getById(id))
       if (ticket) {
         ticket.active = false
       }

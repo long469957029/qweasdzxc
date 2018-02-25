@@ -153,6 +153,7 @@ const SignUserView = Base.ItemView.extend({
           })
         // this._initQuota();
         this.$('.js-ac-dm-su-confirm-dev').addClass('hidden')
+        this.$agreement.attr("disabled",true);
         break
       case '3': // 查看自己
         this._getMyAgreementXhr().done((res) => {
@@ -233,8 +234,7 @@ const SignUserView = Base.ItemView.extend({
     if (this.TicketGrid) {
       this.TicketGrid.destroy()
     }
-    // const labelText = this.operationStatus === 3 && this.merchant ? '团队日均销量' : '日量标准'
-    const labelText = '团队日均销量'
+    const labelText = this.operationStatus === 3 && this.merchant ? '团队日均销量' : '日量标准'
     this.TicketGrid = this.$ticketGrid.staticGrid({
       startOnLoading: false,
       // height: 80,
@@ -295,8 +295,7 @@ const SignUserView = Base.ItemView.extend({
     const colModel = [
       { label: '序号', name: 'no', width: 90 },
       { label: '亏损要求', name: 'profitTotal', width: 310 },
-      // { label: '活跃要求', name: 'activeUser', width: 264 },
-      { label: '团队月亏损量', name: 'activeUser', width: 264 },
+      { label: '活跃要求', name: 'activeUser', width: 264 },
       { label: '分红比例', name: 'divid', width: 224 },
     ]
     if(this.operationStatus === '3' && this.merchant){
