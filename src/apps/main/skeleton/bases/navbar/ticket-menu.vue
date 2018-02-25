@@ -45,7 +45,7 @@
 
         <div class="classic-title">快乐彩</div>
         <ul class="container-list happy">
-          <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/18">北京PK10</a> <span
+          <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/18">PK10</a> <span
             class="navbar-ticket-icon-hot"></span></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="#/bc/0/29">江苏快三</a></li>
         </ul>

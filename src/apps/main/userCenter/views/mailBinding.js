@@ -137,6 +137,7 @@ const MailBindingView = Base.ItemView.extend({
                 self.trigger('render:true')
                 Global.m.publish('safe:updating')
               } else {
+                self.$email.removeAttr('disabled')
                 const num = $target.data('num')
                 self.$changeContainer.steps('goTo', num)
                 if (num === 2) {

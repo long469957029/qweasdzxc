@@ -22,7 +22,7 @@
             注：充值多少填写多少，切记不要在这里填写50，然后转账时转100，这样是会导致充值不成功。
           </div>
           <div class="res-desc">
-            <img src="./misc/bank-1.png" />
+            <img src="./misc/bank-1.png" width="60%" />
           </div>
           <div class="res-desc res-desc-weight">
             第二步：点击“确定”获取平台的转账银行卡信息，请认准平台的收款银行和账号信息，另外，每次银行卡转账时平台每次都会给您一个“附言”信息，在银行操作转账时，一定要填写该附言信息。
@@ -31,7 +31,7 @@
             <span class="res-desc-hot res-desc-weight">特别注意：该收款信息为一次性使用，下次充值时请重复以上步骤获取新的收款银行信息，因为平台会不定期的更换收款银行。</span>
           </div>
           <div class="res-desc">
-            <img src="./misc/bank-2.png" />
+            <img src="./misc/bank-2.png" width="60%" />
           </div>
           <div class="res-desc res-desc-weight">
             第三步：打开自己的网上银行或是手机银行，进入转账界面，根据刚刚平台给予的转账信息输入，并仔细核对无误后进行转账操作。
@@ -40,7 +40,7 @@
             <span class="res-desc-hot res-desc-weight">特别注意：转账金额一定要与在平台填写的充值金额一致，并且一定要在银行转账时的附言栏填写平台给出的“附言”信息。（下图以工商银行转账界面为例）</span>
           </div>
           <div class="res-desc">
-            <img src="./misc/bank-3.png" />
+            <img src="./misc/bank-3.png" width="60%" />
           </div>
           <div class="res-desc res-desc-weight">
             第四步：银行卡转账成功后，如果您选择的是实时汇款，一般静等5分钟左右即可充值成功；如超过10分钟以上，可以提供转账截图至在线客服为您查询到账情况。
@@ -65,7 +65,7 @@
             注：为避免微信官方支付限额，系统会对您填写的充值金额进行随机减少，请按调整后的充值金额进行充值。
           </div>
           <div class="res-desc">
-            <img src="./misc/wechat-1.png" />
+            <img src="./misc/wechat-1.png" width="60%" />
           </div>
           <div class="res-desc res-desc-weight">
             第二步：提交充值请求后，系统会提供转账的银行、开户行、收款姓名、卡号、充值金额、附言信息等，请复制这些信息前往微信进行转账操作。
@@ -74,31 +74,31 @@
             注：收款卡会不定期更换，请您每次充值时务必通过充值通道获取最新收款信息。
           </div>
           <div class="res-desc">
-            <img src="./misc/wechat-2.png" />
+            <img src="./misc/wechat-2.png" width="60%" />
           </div>
           <div class="res-desc res-desc-weight">
             第三步：依次打开<span class="res-desc-hot">【微信】</span>—<span class="res-desc-hot">【钱包】</span>—<span class="res-desc-hot">【收付款】</span>下拉找到“转账到银行卡”的选项。
           </div>
           <div class="res-desc">
-            <img src="./misc/wechat-3.png" />
+            <img src="./misc/wechat-3.png" width="60%" />
           </div>
           <div class="res-desc res-desc-weight">
             第四步：将第二步获取的姓名、卡号、银行卡，正确填写至转账信息栏目中，点击下一步
           </div>
           <div class="res-desc">
-            <img src="./misc/wechat-4.png" />
+            <img src="./misc/wechat-4.png" width="60%" />
           </div>
           <div class="res-desc res-desc-weight">
             第五步：点击<span class="res-desc-hot">【转账说明】</span>，将第二步的<span class="res-desc-hot">【附言】</span>填写至转账说明中，点击<span class="res-desc-hot">【转账】</span>
           </div>
           <div class="res-desc">
-            <img src="./misc/wechat-5.png" />
+            <img src="./misc/wechat-5.png" width="60%" />
           </div>
           <div class="res-desc res-desc-weight">
             第六步：选择转账时间为<span class="res-desc-hot">“两小时到账”</span>，点击【下一步】支付后等待约三分钟即可成功到账。
           </div>
           <div class="res-desc">
-            <img src="./misc/wechat-6.png" />
+            <img src="./misc/wechat-6.png" width="60%" />
           </div>
           <div class="res-desc">
             如您在充值过程中需要帮助，欢迎咨询在线客服。
@@ -116,7 +116,7 @@
             特别注意：充值多少填写多少，切记不要在这里填写100，然后转账时又转200，这样是会导致充值不成功的。
           </div>
           <div class="res-desc">
-            <img src="./misc/ali-1.png" />
+            <img src="./misc/ali-1.png" width="60%" />
           </div>
           <div class="res-desc res-desc-weight">
             第二步：填写完姓名和充值金额后，点击“确定”，获取平台提供的转账银行信息。
@@ -125,13 +125,13 @@
             特别注意：该收款信息为一次性使用，下次充值时请重复以上三步获取新的收款银行信息，因为平台会不定期的更换收款银行。
           </div>
           <div class="res-desc">
-            <img src="./misc/ali-2.png" />
+            <img src="./misc/ali-2.png" width="60%" />
           </div>
           <div class="res-desc res-desc-weight">
             第三步：点击“登录支付宝”进入网页版的支付宝，或是直接打开手机版的支付宝，选择“转账到银行卡”进入转账界面，填写刚刚获取的收款银行信息进行转账，转账金额一定要与在平台上填写的相符合，并选择转账时间为2小时内到账。
           </div>
           <div class="res-desc">
-            <img src="./misc/ali-3.png" />
+            <img src="./misc/ali-3.png" width="60%" />
           </div>
           <div class="res-desc res-desc-weight">
             第四步：在支付宝转账成功后，请静等5分钟即可到账成功，如果超过10分钟仍然未到账，可将转账成功的截图提交给平台客服查询到账情况。

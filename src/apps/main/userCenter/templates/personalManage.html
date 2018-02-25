@@ -51,7 +51,7 @@
       <div class="control-group">
         <label class="control-label">生日：</label>
         <div class="controls">
-          <select name="bday1" class="js-bday1 basic-arrow input1 font-sm" style="width: 81px"  data-parsley-errors-container=".js-uc-pm-birthday-error" required>
+          <select name="bday1" class="js-bday1 basic-arrow input1 font-sm"  data-parsley-errors-container=".js-uc-pm-birthday-error">
             <option value="" selected>月
             <option value="01">1月</option>
             <option value="02">2月</option>
@@ -66,8 +66,8 @@
             <option value="11">11月</option>
             <option value="12">12月</option>
           </select>
-          <select name="bday1" class="js-bday2 basic-arrow input1 font-sm" style="width: 81px"  required>
-            <!--<option value="" selected>日-->
+          <select name="bday1" class="js-bday2 basic-arrow input1 font-sm"  >
+            <option value="" selected>日
             <option value="01">1日</option>
             <option value="02">2日</option>
             <option value="03">3日</option>
@@ -113,7 +113,7 @@
       </div>
     </div>
   </div>
-
+  <div class="uc-personalManage-line"></div>
   <div class="uc-personalManage-info  p-top-sm clearfix">
     <div class="uc-personal-title pull-left">收货地址</div>
     <div class="uc-personal-container pull-left">
@@ -121,7 +121,7 @@
         <label class="control-label p-top-xs">收货人：</label>
         <div class="controls">
           <input type="text" class="font-sm input4 input-address js-uc-receiver" name="exName"
-                 data-parsley-errors-container=".js-uc-pm-exName-error" data-parsley-range="[2,10]" required />
+                 data-parsley-errors-container=".js-uc-pm-exName-error" data-parsley-range="[2,10]"  />
           <div class="js-uc-pm-exName-error parsley-error-container inline-block" style="max-width: 350px"></div>
         </div>
       </div>
@@ -129,7 +129,7 @@
         <label class="control-label p-top-xs">收货手机：</label>
         <div class="controls">
           <input type="text" class="font-sm input4 input-address js-uc-phone" name="exPhone"
-                 data-parsley-errors-container=".js-uc-pm-exPhone-error" data-parsley-phone required />
+                 data-parsley-errors-container=".js-uc-pm-exPhone-error" data-parsley-phone  />
           <div class="js-uc-pm-exPhone-error parsley-error-container inline-block" style="max-width: 350px"></div>
         </div>
       </div>
@@ -163,7 +163,7 @@
       <div class="control-group">
         <label class="control-label p-top-xs">详细地址：</label>
         <div class="controls">
-          <textarea class="address-detail js-uc-address-detail" data-parsley-errors-container=".js-uc-pm-address-detail-error" required></textarea>
+          <textarea class="address-detail js-uc-address-detail" data-parsley-errors-container=".js-uc-pm-address-detail-error" ></textarea>
           <div class="js-uc-pm-address-detail-error parsley-error-container inline-block" style="max-width: 350px"></div>
         </div>
       </div>

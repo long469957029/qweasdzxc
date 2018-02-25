@@ -11,8 +11,9 @@
       <div class="control-group">
         <label class="control-label">验证码：</label>
         <div class="controls">
-          <input type="text" class="input-varCode" autocomplete="off" v-model="code" required/>
+          <input type="text" class="input-varCode" autocomplete="off" v-model="code" required  data-parsley-errors-container=".js-rp-code-error" />
           <a class="set-code-btn" @click="sendCode" :disabled="time > 0">{{text}}</a>
+          <div class="js-rp-code-error parsley-error-container inline-block" style="max-width: 144px"></div>
         </div>
       </div>
       <div class="error-container text-center" v-show="error">

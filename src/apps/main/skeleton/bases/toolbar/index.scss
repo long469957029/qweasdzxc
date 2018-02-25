@@ -31,7 +31,7 @@ $toolbar-option-width: 36px;
 .toolbar-option-container {
   position: absolute;
   //margin-left: -($space + $toolbar-option-width);
-  margin-left: -51px;
+  margin-left: -48px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 13;
@@ -119,11 +119,12 @@ $toolbar-option-width: 36px;
 
 .mask-for-close {
   position: fixed;
-  z-index: 12;
+  //z-index: 12;
   width: 103vw;
   height: 100vh;
   left: -10px;
   margin-left: -$sidebar-width;
+  z-index: 1;
 }
 
 .toolbar-sidebar-container {
@@ -135,6 +136,7 @@ $toolbar-option-width: 36px;
   overflow-x: hidden;
   overflow-y: scroll;
   border-left: 5px solid #14b1bb;
+  z-index: 2;
   .sidebar-title {
     width: 100%;
     height: 60px;
