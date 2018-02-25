@@ -118,9 +118,9 @@ Base.Application = Base.BaseObject.extend({
     for (let i = 0; i < optionCacheTypes.length; i++) {
       const optionCacheType = optionCacheTypes[i]
       this[`${optionCacheType}Cache`] = new Base.Storage({
-        name: 'appstorage',
+        name: 'newappstorage',
         type: optionCacheType,
-        domain: window.location.hostname.indexOf('localhost') > -1 ? '' : `.${_.last(window.location.hostname.split('.'), 2).join('.')}`
+        domain: window.location.hostname.indexOf('localhost') > -1 ? '' : _.last(window.location.hostname.split('.'), 2).join('.')
       })
     }
   },
