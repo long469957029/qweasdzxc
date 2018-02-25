@@ -77,16 +77,13 @@ const actions = {
       return list
     }, [])
 
-    return new Promise((resolve, reject) => {
-      pushBettingApi(
-        { planId, bet, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
-        ({ data }) => {
-          resolve(data)
-          return commit(types.PUSH_BETTING_SUCCESS, { res: data, type })
-        },
-        reject,
-      )
-    })
+    return pushBettingApi(
+      { planId, bet, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
+      ({ data }) => {
+        commit(types.PUSH_BETTING_SUCCESS, { res: data, type })
+        return data
+      }
+    )
   },
 
   [types.PUSH_CHASE] ({ state, commit }, {
@@ -106,18 +103,17 @@ const actions = {
       return list
     }, [])
 
-    return new Promise((resolve, reject) => {
-      pushChaseApi(
-        {
-          plan, play, suspend, usePack: state.usePack, amount,
-        },
-        ({ data }) => {
-          resolve(data)
-          return commit(types.PUSH_CHASE_SUCCESS, data)
-        },
-        reject,
-      )
-    })
+    return pushChaseApi(
+      {
+        plan, play, suspend, usePack: state.usePack, amount,
+      },
+      ({ data }) => {
+        commit(types.PUSH_CHASE_SUCCESS, data)
+
+        return data
+      },
+      reject,
+    )
   },
 
   [types.PUSH_MMC_BETTING] ({ state, commit }, {
@@ -584,9 +580,10 @@ const $_calculateByPrefab = (data) => {
 
 
   if (data.multiple) {
-    data.formatMaxBonus = _.chain(data.maxBonus)
-      .div(10000).mul(data.unit)
+    data.formatMaxBonus = _.chain(data.betBonus)
+      .mul(data.unit)
       .mul(data.multiple)
+      .convert2yuan()
       .value()
   }
 
@@ -599,7 +596,7 @@ const $_calculateByPrefab = (data) => {
     .convert2yuan()
     .value()
 
-  data.fTotalBetBonus = _.mul(data.fBetBonus, data.multiple)
+  data.fTotalBetBonus = _.formatMul(data.fBetBonus, data.multiple)
 }
 
 

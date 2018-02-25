@@ -39,7 +39,7 @@
         </div>
         <div class="bc-line"></div>
         <div class="m-LR-smd">
-          <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
+          <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'" loading-tip="">
             <transition name="fade" mode="out-in"
                         enter-active-class="animated-quick fadeIn"
                         leave-active-class="animated-quick fadeOut"
@@ -52,10 +52,9 @@
                 </betting-play-area-select>
                 <betting-play-area-input :play-rule="playRule" ref="areaInput"
                                          v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
-                <div class="height-100" v-html="loading" v-else></div>
               </keep-alive>
             </transition>
-          </div>
+          </status-cell>
         </div>
 
         <div class="div-line"></div>
@@ -238,7 +237,6 @@
 
     data() {
       return {
-        loading: Global.ui.loader.get(),
         unit: 10000,
         playRule: {},
         playInfo: {},

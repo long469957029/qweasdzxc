@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="current-points">
-            当前积分值：
+            可用积分值：
             <span class="points-val">{{mallBasicInfo.fIntegral}}</span>
           </div>
           <div class="level-up">

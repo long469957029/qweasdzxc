@@ -270,6 +270,7 @@
     width: 94px;
     height: 30px;
     font-size: 12px;
+    border: 1px solid #808da6;
     background-color: #808da6;
     border-radius: 15px;
     &[disabled] {
