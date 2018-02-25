@@ -33,8 +33,6 @@ import DesktopMessage from 'skeleton/bases/desktop-message'
 Object.defineProperty(Vue.prototype, '_', {value: _})
 Object.defineProperty(Vue.prototype, '$', {value: $})
 
-Vue.config.productionTip = DEBUG
-
 Vue.use(BusPlugin)
 Vue.use(Popover)
 Vue.component('static-grid', StaticGrid)

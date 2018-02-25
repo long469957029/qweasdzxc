@@ -324,9 +324,6 @@ if (DEV) {
       warnings: false
     }
   }));
-  plugins.push(new webpack.LoaderOptionsPlugin({
-    minimize: true
-  }));
 }
 
 // 生成静态入口html，插件存在bug，无法根据chunks的顺序插入，而是按照了entry的id的顺序，不可控
