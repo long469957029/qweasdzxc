@@ -144,7 +144,6 @@
                   </betting-play-area-select>
                   <betting-play-area-input :component-type="componentType" :play-rule="playRule" ref="areaInput"
                                            v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
-                  <div class="height-100" v-html="loading" v-else></div>
                 </transition>
               </status-cell>
             </div>
@@ -177,7 +176,7 @@
             </div>
 
             <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
-                              :betting-money="bettingChoice.totalInfo.totalMoney"
+                              :betting-money="bettingChoice.prefabMoney"
                               v-model="totalVoucher" ref="totalBettingVouchers"
             ></betting-vouchers>
             连续开奖
@@ -369,11 +368,16 @@
         showChaseModal: false,
 
         lastOpening: ['0', '0', '0', '0', '0'],
-        fOpeningResultList: []
+        fOpeningResultList: [],
+
+        //总投注代金券
+        totalVoucher: {},
       }
     },
     computed: {
       ...mapState({
+        bettingVouchers: 'bettingVouchers',
+
         playLevels() {
           return this.$store.getters.playLevels
         },
@@ -692,6 +696,11 @@
         if (Global.memoryCache.get('acctInfo').foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
+        }
+
+        //优惠券
+        if (this.$refs.totalBettingVouchers) {
+          this.$refs.totalBettingVouchers.togglePopover({toggle: false})
         }
 
         this.$_pushBetting({init: true})
