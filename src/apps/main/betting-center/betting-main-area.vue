@@ -368,7 +368,7 @@
       },
       'bettingInfo.lastOpenId': {
         handler(current, prev) {
-          if (prev !== '-' && current !== '-') {
+          if (current !== '-') {
             this.$refs.bettingHisotry.update()
             this.$refs.bettingRecords.update()
           }

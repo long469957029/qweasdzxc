@@ -124,6 +124,7 @@ export const quick3 = {
   doubleHead: false,
   numCol: {
     num: 'dices',
+    singleAndDouble: checkSingleAndDouble,
   },
   total: _.partial(total, 10),
 }

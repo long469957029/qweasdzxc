@@ -91,7 +91,7 @@ const TeamOverviewView = Base.ItemView.extend({
     this.getBalanceXhr().done((res) => {
       if (res.result === 0) {
         self.$Count.html(res.root.count)
-        self.$Balance.html(_(res.root.balance).convert2yuan().toFixed(2))
+        self.$Balance.html(_(res.root.balance).format2yuan())
       }
     })
   },
@@ -107,19 +107,19 @@ const TeamOverviewView = Base.ItemView.extend({
     })
     this.getRechargeWithdrawlXhr(reqData).done((res) => {
       if (res.result === 0) {
-        self.$Recharge.html(_(res.root.recharge).convert2yuan().toFixed(2))
-        self.$Withdraw.html(_(res.root.withdraw).convert2yuan().toFixed(2))
+        self.$Recharge.html(_(res.root.recharge).format2yuan())
+        self.$Withdraw.html(_(res.root.withdraw).format2yuan())
       }
     })
     this.getProfitXhr(reqData).done((res) => {
       if (res.result === 0) {
-        self.$Bet.html(_(res.root.bet).convert2yuan().toFixed(2))
-        self.$Bonus.html(_(res.root.prize).convert2yuan().toFixed(2))
-        self.$Rebate.html(_(res.root.rebate).convert2yuan().toFixed(2))
-        self.$Activity.html(_(res.root.activity).convert2yuan().toFixed(2))
-        self.$Profit.html(_(res.root.profit).convert2yuan().toFixed(2))
-        self.$Water.html(_(res.root.gameRebate).convert2yuan().toFixed(2))
-        self.$Commission.html(_(res.root.commission).convert2yuan().toFixed(2))
+        self.$Bet.html(_(res.root.bet).format2yuan())
+        self.$Bonus.html(_(res.root.prize).format2yuan())
+        self.$Rebate.html(_(res.root.rebate).format2yuan())
+        self.$Activity.html(_(res.root.activity).format2yuan())
+        self.$Profit.html(_(res.root.profit).format2yuan())
+        self.$Water.html(_(res.root.gameRebate).format2yuan())
+        self.$Commission.html(_(res.root.commission).format2yuan())
       }
     })
   },
