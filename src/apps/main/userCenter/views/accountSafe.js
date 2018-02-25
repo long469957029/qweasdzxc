@@ -22,6 +22,11 @@ const AccountSafeView = Base.ItemView.extend({
       url: '/acct/userinfo/accountCenter.json',
     })
   },
+  getBindInfoXhr(){
+    return Global.sync.ajax({
+      url: '/info/newpack/bindinfo.json',
+    })
+  },
 
   onRender() {
     const self = this
@@ -111,6 +116,18 @@ const AccountSafeView = Base.ItemView.extend({
         } else {
           Global.ui.notification.show(res.msg === 'fail' ? '获取账户安全信息失败！' : res.msg)
           self.loadingFinish()
+        }
+      })
+    this.getBindInfoXhr()
+      .done((res) => {  // 获取首次绑定手机和邮箱的奖励
+        if(res && res.result === 0 && !_(res.root).isNull()){
+          const data = res.root
+          if(data.phoneStatus === 0){
+            self.$('.js-reward[data-type="phone"]').html(`（<span class="text-prominent">+${_(data.bindPhoneBonus).convert2yuan()}</span>元奖励）`)
+          }
+          if(data.mailStatus === 0){
+            self.$('.js-reward[data-type="mail"]').html(`（<span class="text-prominent">+${_(data.bindMailBonus).convert2yuan()}</span>元奖励）`)
+          }
         }
       })
   },
