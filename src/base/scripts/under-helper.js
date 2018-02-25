@@ -107,18 +107,18 @@ _.mixin({
     return format
   },
 
-  formatMul(money, ratio, options) {
+  formatMul(money, ratio, {clear = true, fixed = 0} = {clear: true, fixed: 4}) {
     let format
-
-    options = _.extend({}, {
-      fixed: 0,
-    }, options)
 
     if (!_.isUndefined(money)) {
       format = _(money).mul(ratio)
 
-      if (options.fixed) {
-        format = format.toFixed(options.fixed)
+      if (fixed) {
+        format = format.toFixed(fixed)
+      }
+
+      if (clear) {
+        format = math.add(format, 0)
       }
     }
 

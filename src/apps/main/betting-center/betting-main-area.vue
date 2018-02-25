@@ -39,7 +39,7 @@
         </div>
         <div class="bc-line"></div>
         <div class="m-LR-smd">
-          <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
+          <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'" loading-tip="">
             <transition name="fade" mode="out-in"
                         enter-active-class="animated-quick fadeIn"
                         leave-active-class="animated-quick fadeOut"
@@ -52,10 +52,9 @@
                 </betting-play-area-select>
                 <betting-play-area-input :play-rule="playRule" ref="areaInput"
                                          v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
-                <div class="height-100" v-html="loading" v-else></div>
               </keep-alive>
             </transition>
-          </div>
+          </status-cell>
         </div>
 
         <div class="div-line"></div>
@@ -238,7 +237,6 @@
 
     data() {
       return {
-        loading: Global.ui.loader.get(),
         unit: 10000,
         playRule: {},
         playInfo: {},
@@ -370,7 +368,7 @@
       },
       'bettingInfo.lastOpenId': {
         handler(current, prev) {
-          if (prev !== '-' && current !== '-') {
+          if (current !== '-') {
             this.$refs.bettingHisotry.update()
             this.$refs.bettingRecords.update()
           }
@@ -501,8 +499,7 @@
         }
 
         if (Global.memoryCache.get('acctInfo').foundsLock) {
-          Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
-            'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
+          Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
         }
         const maxBetNums = this.bettingChoice.playInfo.maxBetNums
@@ -589,8 +586,7 @@
         }
 
         if (Global.memoryCache.get('acctInfo').foundsLock) {
-          Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
-            'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
+          Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
         }
 
@@ -670,8 +666,7 @@
         }
 
         if (Global.memoryCache.get('acctInfo').foundsLock) {
-          Global.ui.notification.show('资金已锁定，请先<a id="js-open-fc-unlock" href="javascript:void(0);" ' +
-            'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
+          Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
         }
 

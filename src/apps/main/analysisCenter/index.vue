@@ -22,14 +22,16 @@
             </div>
           </transition-group>
           <div class="btn-group">
-            <button class="btn btn-lg font-xs" :class="{'btn-white': date !== _.toDate(Date.now())}" @click="setToday">今天</button>
+            <button class="btn btn-lg font-xs" :class="{'btn-white': date !== _.toDate(Date.now())}" @click="setToday">
+              今天
+            </button>
           </div>
         </div>
         <span class="date-title inline-block">
           按日期
         </span>
         <div class="date-panel timer-calendar-input timer-record-input">
-          <input type="text" ref="date" v-model="date" />
+          <input type="text" ref="date" v-model="date"/>
           <span class="timer-calendar sfa-icon-time" @click="$($refs.date).data('DateTimePicker').show()"></span>
         </div>
       </div>
@@ -65,7 +67,8 @@
           <th :rowspan="analysis.doubleHead ? 2 : 1">开奖时间</th>
           <th v-if="analysis.numCol.num === 'balls' || analysis.numCol.num === 'square'">
             <button class="btn num-btn" :class="{'btn-white': showNumType !== 1}" @click="showNumType = 1">号码</button>
-            <button class="btn num-btn m-LR-sm" :class="{'btn-white': showNumType !== 2}" @click="showNumType = 2">大小</button>
+            <button class="btn num-btn m-LR-sm" :class="{'btn-white': showNumType !== 2}" @click="showNumType = 2">大小
+            </button>
             <button class="btn num-btn" :class="{'btn-white': showNumType !== 3}" @click="showNumType = 3">单双</button>
           </th>
           <th v-else-if="analysis.doubleHead">
@@ -83,7 +86,8 @@
           <th v-if="analysis.form">形态<!--<span class="sfa question"></span>--></th>
 
           <th v-if="analysis.compareLongHu" :colspan="3">
-            <span class="left" @click="longHuPos = --longHuPos % analysis.compareLongHu.length < 0 ? analysis.compareLongHu.length - 1 : longHuPos"></span>
+            <span class="left"
+                  @click="longHuPos = --longHuPos % analysis.compareLongHu.length < 0 ? analysis.compareLongHu.length - 1 : longHuPos"></span>
             <span v-for="(position, i) in analysis.compareLongHu" v-show="longHuPos === i">{{position.title}}</span>
             <span class="right" @click="longHuPos = Math.abs(++longHuPos % analysis.compareLongHu.length)"></span>
           </th>
@@ -115,80 +119,91 @@
         </tr>
         </thead>
       </table>
-      <transition
-        enter-active-class="animated fadeIn"
-        leave-active-class="animated fadeOut"
-      >
-        <div ref="body" v-show="!loading">
-          <table class="table table-border no-margin">
-            <colgroup>
-              <col width="168">
-              <col width="168">
-              <col width="300">
-              <template v-if="analysis.doubleHead">
-                <col width="70">
-                <col width="70">
-                <col width="70">
-                <col width="70">
-                <col width="70">
-                <col width="70">
+      <status-cell :has-data="openedList.length" :status="loadingStatus" height="850px">
+        <table class="table table-border no-margin">
+          <colgroup>
+            <col width="168">
+            <col width="168">
+            <col width="300">
+            <template v-if="analysis.doubleHead">
+              <col width="70">
+              <col width="70">
+              <col width="70">
+              <col width="70">
+              <col width="70">
+              <col width="70">
+            </template>
+            <template v-else>
+              <col width="100">
+              <col width="100">
+              <col width="100">
+              <col width="167">
+            </template>
+          </colgroup>
+          <tbody>
+          <tr v-for="opening in openedList">
+            <td>{{opening.ticketPlanId}}</td>
+            <td>{{opening.openDate | toTime('YYYY-MM-DD H:mm')}}</td>
+            <td>
+              <template v-for="(item, i) in opening.showTicketOpenNum">
+                  <span v-if="analysis.numCol.num === 'balls'" :key="i" class="item blue circle m-right-xs"
+                        :class="item.style">{{item.title}}</span>
+                <dice v-else-if="analysis.numCol.num === 'dices'" :key="i" class="dice-sm m-right-xs"
+                      :class="item.style" :value="item.title"></dice>
+                <span v-else-if="analysis.numCol.num === 'square'" :key="i" class="item blue square m-right-xs"
+                      :class="item.style">{{item.title}}</span>
               </template>
-              <template v-else>
-                <col width="100">
-                <col width="100">
-                <col width="100">
-                <col width="167">
-              </template>
-            </colgroup>
-            <tbody>
-            <tr v-for="opening in openedList">
-              <td>{{opening.ticketPlanId}}</td>
-              <td>{{opening.openDate | toTime('YYYY-MM-DD H:mm')}}</td>
-              <td>
-                <template v-for="(item, i) in opening.showTicketOpenNum">
-                  <span v-if="analysis.numCol.num === 'balls'" :key="i" class="item blue circle m-right-xs" :class="item.style">{{item.title}}</span>
-                  <dice v-else-if="analysis.numCol.num === 'dices'" :key="i" class="dice-sm m-right-xs" :class="item.style" :value="item.title"></dice>
-                  <span v-else-if="analysis.numCol.num === 'square'" :key="i" class="item blue square m-right-xs" :class="item.style">{{item.title}}</span>
-                </template>
-                <opening-mark6-balls v-if="analysis.numCol.num === 'mark6'" class="opening-mark6-balls-sm no-shadow"
-                                     :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="opening.fTicketOpenNum" :default-opening="ticketInfo.defaultOpening"
-                ></opening-mark6-balls>
+              <opening-mark6-balls v-if="analysis.numCol.num === 'mark6'" class="opening-mark6-balls-sm no-shadow"
+                                   :counts="ticketInfo.counts" :range="ticketInfo.range"
+                                   :opening-balls="opening.fTicketOpenNum"
+                                   :default-opening="ticketInfo.defaultOpening"
+              ></opening-mark6-balls>
+            </td>
+
+            <template v-if="analysis.championAndRunnerUp">
+              <td><span
+                :class="opening.fChampionAndRunnerUp.total.style">{{opening.fChampionAndRunnerUp.total.title}}</span>
               </td>
+              <td><span :class="opening.fChampionAndRunnerUp.singleAndDouble.style">{{opening.fChampionAndRunnerUp.singleAndDouble.title}}</span>
+              </td>
+              <td><span
+                :class="opening.fChampionAndRunnerUp.size.style">{{opening.fChampionAndRunnerUp.size.title}}</span>
+              </td>
+            </template>
 
-              <template v-if="analysis.championAndRunnerUp">
-                <td><span :class="opening.fChampionAndRunnerUp.total.style">{{opening.fChampionAndRunnerUp.total.title}}</span></td>
-                <td><span :class="opening.fChampionAndRunnerUp.singleAndDouble.style">{{opening.fChampionAndRunnerUp.singleAndDouble.title}}</span></td>
-                <td><span :class="opening.fChampionAndRunnerUp.size.style">{{opening.fChampionAndRunnerUp.size.title}}</span></td>
-              </template>
+            <template v-if="analysis.specialCode">
+              <td><span :class="opening.fSpecialCode.size.style">{{opening.fSpecialCode.size.title}}</span></td>
+              <td><span :class="opening.fSpecialCode.singleAndDouble.style">{{opening.fSpecialCode.singleAndDouble.title}}</span>
+              </td>
+              <td><span
+                :class="opening.fSpecialCode.total.style">{{opening.fSpecialCode.total.title.toString()[1]}}</span>
+              </td>
+            </template>
 
-              <template v-if="analysis.specialCode">
-                <td><span :class="opening.fSpecialCode.size.style">{{opening.fSpecialCode.size.title}}</span></td>
-                <td><span :class="opening.fSpecialCode.singleAndDouble.style">{{opening.fSpecialCode.singleAndDouble.title}}</span></td>
-                <td><span :class="opening.fSpecialCode.total.style">{{opening.fSpecialCode.total.title.toString()[1]}}</span></td>
-              </template>
+            <template v-if="analysis.total">
+              <td><span :class="opening.fTotal.total.style">{{opening.fTotal.total.title}}</span></td>
+              <td><span :class="opening.fTotal.size.style">{{opening.fTotal.size.title}}</span></td>
+              <td><span :class="opening.fTotal.singleAndDouble.style">{{opening.fTotal.singleAndDouble.title}}</span>
+              </td>
+            </template>
 
-              <template v-if="analysis.total">
-                <td><span :class="opening.fTotal.total.style">{{opening.fTotal.total.title}}</span></td>
-                <td><span :class="opening.fTotal.size.style">{{opening.fTotal.size.title}}</span></td>
-                <td><span :class="opening.fTotal.singleAndDouble.style">{{opening.fTotal.singleAndDouble.title}}</span></td>
-              </template>
+            <!--龙虎-->
+            <td v-if="analysis.longHu"><span :class="opening.fLongHu.style">{{opening.fLongHu.title}}</span></td>
+            <!--形态-->
+            <td v-if="analysis.form"><span :class="opening.fForm.style">{{opening.fForm.title}}</span></td>
 
-              <!--龙虎-->
-              <td v-if="analysis.longHu"><span :class="opening.fLongHu.style">{{opening.fLongHu.title}}</span></td>
-              <!--形态-->
-              <td v-if="analysis.form"><span :class="opening.fForm.style">{{opening.fForm.title}}</span></td>
-
-              <!--pk10龙虎-->
-              <template v-if="analysis.compareLongHu">
-                <td><span :class="opening.fCompareLongHu.singleAndDouble.style">{{opening.fCompareLongHu.singleAndDouble.title}}</span></td>
-                <td><span :class="opening.fCompareLongHu.size.style">{{opening.fCompareLongHu.size.title}}</span></td>
-                <td><span :class="opening.fCompareLongHu.longHu.style">{{opening.fCompareLongHu.longHu.title}}</span></td>
-              </template>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </transition>
+            <!--pk10龙虎-->
+            <template v-if="analysis.compareLongHu">
+              <td><span :class="opening.fCompareLongHu.singleAndDouble.style">{{opening.fCompareLongHu.singleAndDouble.title}}</span>
+              </td>
+              <td><span :class="opening.fCompareLongHu.size.style">{{opening.fCompareLongHu.size.title}}</span></td>
+              <td><span :class="opening.fCompareLongHu.longHu.style">{{opening.fCompareLongHu.longHu.title}}</span>
+              </td>
+            </template>
+          </tr>
+          </tbody>
+        </table>
+      </status-cell>
     </div>
   </div>
 </template>
@@ -237,7 +252,7 @@
         analysis: {},
         fTicketId: this.ticketId,
         longHuPos: 0, //pk10龙虎位置
-        loading: true
+        loadingStatus: 'loading'
       }
     },
 
@@ -277,6 +292,7 @@
       },
 
       resetData() {
+        this.loadingStatus = 'loading'
         this.openedList = []
         tickets.getTicketOpeningList({
             ticketId: this.fTicketId,
@@ -295,6 +311,9 @@
             }
           }
         )
+          .finally(() => {
+            this.loadingStatus = 'completed'
+          })
       },
       formatData() {
         this.$_formatNumByType(this.showNumType)
@@ -363,8 +382,8 @@
           _.each(this.openedList, item => {
             item.longHu = this.analysis.longHu(item.fTicketOpenNum)
             item.fLongHu = {
-                title: item.longHu,
-                style: item.longHu === '龙' ? 'text-yellow' : item.longHu === '和' ? 'text-blue' : ''
+              title: item.longHu,
+              style: item.longHu === '龙' ? 'text-yellow' : item.longHu === '和' ? 'text-blue' : ''
             }
           })
         }
@@ -447,16 +466,12 @@
 
     mounted() {
       tickets.getTicketList(
-        ({ data }) => {
+        ({data}) => {
           if (data && data.result === 0) {
             this.ticketList = data.root
           }
         }
       )
-
-      // $(this.$refs.body).slimScroll({
-      //   height: 1000,
-      // })
 
       $(this.$refs.date).datetimepicker({
         format: 'YYYY-MM-DD',
@@ -513,10 +528,12 @@
     border: solid 1px #e6e6e6;
     box-sizing: border-box;
   }
+
   .main {
-    margin: 20px auto;
+    margin: 20px auto 80px;
     box-sizing: border-box;
     width: 1100px;
+    min-height: 860px;
   }
 
   .btn-toolbar {
@@ -526,10 +543,12 @@
     display: inline-block;
     vertical-align: bottom;
   }
+
   .top-right {
     color: $def-black-color;
     float: right;
   }
+
   .date-panel {
     color: #333;
     display: inline-block;
@@ -537,15 +556,18 @@
     border-radius: 5px;
     top: 0;
   }
+
   .date-title {
     position: relative;
     bottom: 13px;
     margin: 0 10px 0 30px;
   }
+
   .sfa-icon-time {
-    margin-top: 9px;
+    margin-top: 6px;
     margin-right: 10px;
   }
+
   .btn-group {
     .btn {
       width: 70px;
@@ -553,9 +575,11 @@
       padding-right: 0;
     }
   }
+
   .num-btn {
     width: 62px;
   }
+
   .question {
     width: 16px;
     height: 17px;
@@ -568,21 +592,26 @@
     background-color: $red;
     color: $def-white-color;
   }
+
   .green {
     background-color: $green;
     color: $def-white-color;
   }
+
   .blue {
-    background-color: $blue;
+    background-color: $main-deep-color;
     color: $def-white-color;
   }
+
   .gray {
     background-color: #f0f0f0;
     color: $new-inverse-color;
   }
+
   .text-yellow {
     color: #f09932;
   }
+
   .text-blue {
     color: $new-main-deep-color;
   }
@@ -590,30 +619,39 @@
   .yellow {
     background-color: #e8e048;
   }
+
   .deep-blue {
     background-color: #4b91cd;
   }
+
   .dark {
     background-color: #4f4f4f;
   }
+
   .orange {
     background-color: #ee8036;
   }
+
   .light-blue {
     background-color: #68dfe3;
   }
+
   .purple {
     background-color: #8d89bd;
   }
+
   .light-gray {
     background-color: #c1c1c1;
   }
+
   .amber {
     background-color: #dc6c68;
   }
+
   .dark-brown {
     background-color: #7b3d33;
   }
+
   .green {
     background-color: #8cc782;
   }
@@ -628,8 +666,6 @@
     font-size: 12px;
     transition: background-color 0.5s, color 0.5s;
   }
-
-
 
   .circle {
     display: inline-block;
@@ -660,10 +696,12 @@
     transform: rotate(180deg);
     cursor: pointer;
   }
+
   .title-pk10 {
     white-space: pre;
     letter-spacing: 1.7px;
   }
+
   .title-mark6 {
     white-space: pre;
   }

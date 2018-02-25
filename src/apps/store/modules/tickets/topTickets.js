@@ -2,8 +2,8 @@ import {setTopCurrentTicketApi, getTopTicketsApi} from 'api/betting'
 
 const initState = () => {
   return {
-    [consts.TICKET_NORMAL_TYPE]: [],
-    [consts.TICKET_HANDICAP_TYPE]: [],
+    [consts.TICKET_NORMAL_TYPE]: [ticketConfig.getById(10)],
+    [consts.TICKET_HANDICAP_TYPE]: [ticketConfig.getById(1)],
     normalPromise: null,
     handicapPromise: null,
     type: 0,
@@ -30,7 +30,7 @@ const actions = {
     type
   }) {
     return new Promise((resolve) => {
-      if (!_.isEmpty(state[type])) {
+      if (state[type].length > 1) {
         resolve()
         return
       }
@@ -91,7 +91,7 @@ const mutations = {
     }
 
     state[type] = _.chain(data).map((id) => {
-      const ticket = ticketConfig.getById(id)
+      const ticket = _.cloneDeep(ticketConfig.getById(id))
       if (ticket) {
         ticket.active = false
       }

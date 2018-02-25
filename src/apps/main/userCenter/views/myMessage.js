@@ -33,6 +33,7 @@ const MyMessageView = TabView.extend({
 
     this.$unReadNotice = this.$('.js-uc-sys-unRead-main')
     this.$unReadFeed = this.$('.js-uc-feed-unRead-main')
+    Vue.$global.bus.$emit('update:newRowCount')
   },
 
   renderUnread(data) {

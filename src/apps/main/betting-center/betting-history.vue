@@ -323,7 +323,6 @@
     data() {
       return {
         tableClass: 'table table-center table-default',
-        gridOps: {},
         currentPanel: this.ticketInfo.twoSide ? 'twoSide' : 'record',
         twoSideList: []
       }
@@ -351,19 +350,16 @@
         },
         immediate: true
       },
-      playRule: {
-        handler() {
-          this.gridOps = this.generateGridOptions(GRID_OPS[this.ticketInfo.type])
-
-          this.$nextTick(() => {
-            this.update()
-          })
-        },
-      },
       currentPanel: {
         handler() {
           this.update()
         },
+      }
+    },
+
+    computed: {
+      gridOps() {
+        return this.generateGridOptions(GRID_OPS[this.ticketInfo.type])
       }
     },
 

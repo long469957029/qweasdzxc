@@ -220,8 +220,8 @@ const PersonalManageView = Base.ItemView.extend({
           Global.ui.notification.show('修改个人信息成功', {
             type: 'success',
           })
-
           window.app.$store.dispatch(types.CHECK_LOGIN_STATUS)
+          Vue.$global.bus.$emit('update:userInfo',{uName: self.$('.js-uc-uName').val(),headIconId: self.iconId})
         } else {
           Global.ui.notification.show('修改个人信息失败')
         }

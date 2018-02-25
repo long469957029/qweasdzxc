@@ -22,14 +22,14 @@ const SidebarView = Base.ItemView.extend({
     } else {
       sidebar = this.formatSidebar(this.options.sidebar)
     }
-    let headIcon=acctInfo.headIcon
+    let headIcon = acctInfo.headIcon
     return {
       menus: sidebar,
       showUserInfo: sidebar.router === 'uc', // _(sidebar).findIndex({ router: 'uc' }) > -1,
       showTeamEntry: acctInfo ? acctInfo.userType === 0 : false,
       isTeam: sidebar.router === 'ac',
       dividendStatus: acctInfo ? acctInfo.dividendStatus : 0,
-      userName: acctInfo.username,
+      userName: acctInfo.uName || acctInfo.username,
       img: avatarCfg.get(headIcon).logo,
     }
   },
@@ -41,9 +41,15 @@ const SidebarView = Base.ItemView.extend({
     this.$iconMail = this.$('.js-sfa-icon-mail')
     this.$safeLevel = this.$('.js-user-info-safe-level')
     this.$progressBar = this.$('.js-safe-progress-bar')
+    this.$userName = this.$('.js-user-name')
+    this.$userAvatar = this.$('.js-user-avatar')
     this._onRender()
     this.subscribe('safe', 'safe:updating', () => {
       self._onRender()
+    })
+    Vue.$global.bus.$on('update:userInfo',(data)=>{
+      this.$userName.html(data.uName)
+      this.$userAvatar.attr('src',avatarCfg.get(data.headIconId.toString()).logo)
     })
   },
   _onRender() {
