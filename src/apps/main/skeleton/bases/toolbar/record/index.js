@@ -18,8 +18,8 @@ const RecordView = Base.ItemView.extend({
     const self = this
     $.when(this.GameXhr).done((res) => {
       if (res.result === 0) {
-        self.$('.js-sideBar-Bet-Today').html(res.root.dataTotal.betTotal === 0 ? '0.00' : _(res.root.dataTotal.betTotal).convert2yuan())// 总余额
-        self.$('.js-sideBar-Profit-Today').html(res.root.dataTotal.profitTotal === 0 ? '0.00' : _(res.root.dataTotal.profitTotal).convert2yuan())// 可用余额
+        self.$('.js-sideBar-Bet-Today').html(_(res.root.dataTotal.betTotal).format2yuan())// 总余额
+        self.$('.js-sideBar-Profit-Today').html(_(res.root.dataTotal.profitTotal).format2yuan())// 可用余额
         if (res.root.records.length > 0) {
           this.renderData(res.root.records)
         } else {
@@ -56,13 +56,13 @@ const RecordView = Base.ItemView.extend({
           status = '未中奖'
         } else {
           // status = `中奖<span class="text-account-cut">${_(game.price).convert2yuan()}</span>`
-          status = `中奖<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
+          status = `中奖&nbsp;<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
         }
       }else {
         if (game.price === 0){
           status = '未中奖'
         } else {
-          status = `中奖<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
+          status = `中奖&nbsp;<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
         }
       }
 

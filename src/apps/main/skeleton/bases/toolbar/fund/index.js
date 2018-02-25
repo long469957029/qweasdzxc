@@ -22,8 +22,8 @@ const FundView = Base.ItemView.extend({
     const self = this
     $.when(this.AccountXhr).done((res) => {
       if (res.result === 0) {
-        self.$('.jc-sidebar-amount-total').html(res.root.total === 0 ? '0.00' : _(res.root.total).convert2yuan())// 总余额
-        self.$('.jc-sidebar-amount-enable').html(res.root.validBalance === 0 ? '0.00' : _(res.root.validBalance).convert2yuan())// 可用余额
+        self.$('.jc-sidebar-amount-total').html(_(res.root.total).format2yuan())// 总余额
+        self.$('.jc-sidebar-amount-enable').html(_(res.root.validBalance).format2yuan())// 可用余额
         this.renderGeneralData(res.root.gameBalance)
         if (res.root.optRecords.length > 0) {
           this.renderRecordData(res.root.optRecords)
@@ -38,19 +38,19 @@ const FundView = Base.ItemView.extend({
     _(data).each((game) => {
       const channelId = game.channelId
       if (channelId === 0) {
-        self.$('.jc-sidebar-center').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) //  总钱包余额
+        self.$('.jc-sidebar-center').html(_(game.balance).format2yuan()) //  总钱包余额
       } else if (channelId === 1) {
-        self.$('.jc-sidebar-ag').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // ag余额
+        self.$('.jc-sidebar-ag').html(_(game.balance).format2yuan()) // ag余额
       } else if (channelId === 2) {
-        self.$('.jc-sidebar-ebet').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // ebet余额
+        self.$('.jc-sidebar-ebet').html(_(game.balance).format2yuan()) // ebet余额
       } else if (channelId === 3) {
-        self.$('.jc-sidebar-bbin').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // bbin
+        self.$('.jc-sidebar-bbin').html(_(game.balance).format2yuan()) // bbin
       } else if (channelId === 4) {
-        self.$('.jc-sidebar-pt').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // pt余额
+        self.$('.jc-sidebar-pt').html(_(game.balance).format2yuan()) // pt余额
       } else if (channelId === 5) {
-        self.$('.jc-sidebar-mg').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // mg余额
+        self.$('.jc-sidebar-mg').html(_(game.balance).format2yuan()) // mg余额
       } else if (channelId === 6) {
-        self.$('.jc-sidebar-gg').html(game.balance === 0 ? '0.00' : _(game.balance).convert2yuan()) // gg余额
+        self.$('.jc-sidebar-gg').html(_(game.balance).format2yuan()) // gg余额
       }
     })
   },

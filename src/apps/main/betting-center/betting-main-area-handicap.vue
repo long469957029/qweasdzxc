@@ -105,8 +105,10 @@
         }
       },
       'bettingInfo.lastOpenId': {
-        handler() {
-          this.$refs.bettingHisotry.update()
+        handler(current, prev) {
+          if (current !== '-') {
+            this.$refs.bettingHisotry.update()
+          }
         }
       },
     },

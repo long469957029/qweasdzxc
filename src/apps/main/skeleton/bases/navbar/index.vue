@@ -14,15 +14,15 @@
                 </a>
               </li>
               <li data-index="1">
-                <a href="#/bc/0/10">彩票
+                <router-link :to="`/bc/0/${topClassicalTicket.id}`">彩票
                   <!--<div class="navbar-down-icon"></div>-->
-                </a>
+                </router-link>
                 <ticket-menu></ticket-menu>
               </li>
               <li data-index="18">
-                <a href="#/bc/2/1">两面盘
+                <router-link :to="`/bc/2/${topHandicapTicket.id}`">两面盘
                   <!--<div class="navbar-down-icon"></div>-->
-                </a>
+                </router-link>
               </li>
               <li data-index="2">
                 <a href="#/rc" class="js-navbar-tab ">娱乐场
@@ -83,7 +83,12 @@
 
     watch: {},
 
-    computed: {},
+    computed: {
+      ...mapGetters([
+        'topClassicalTicket',
+        'topHandicapTicket'
+      ]),
+    },
 
     filters: {},
 
@@ -109,10 +114,6 @@
 //        }
 //      },
     },
-
-    mounted() {
-
-    }
   }
 </script>
 

@@ -153,6 +153,7 @@ const SignUserView = Base.ItemView.extend({
           })
         // this._initQuota();
         this.$('.js-ac-dm-su-confirm-dev').addClass('hidden')
+        this.$agreement.attr("disabled",true);
         break
       case '3': // 查看自己
         this._getMyAgreementXhr().done((res) => {

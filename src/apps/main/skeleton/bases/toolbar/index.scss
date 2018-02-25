@@ -30,7 +30,8 @@ $toolbar-option-width: 36px;
 
 .toolbar-option-container {
   position: absolute;
-  margin-left: -($space + $toolbar-option-width);
+  //margin-left: -($space + $toolbar-option-width);
+  margin-left: -51px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 13;
@@ -38,11 +39,13 @@ $toolbar-option-width: 36px;
   .toolbar-option {
     width: $toolbar-option-width;
     height: $toolbar-option-width;
-    background: #9b9fa8;
-    color: white;
+    background: #aeb1ba;
+    //color: white;
+    //border-top-left-radius: 3px;
+    //border-bottom-left-radius: 3px;
     border-radius: 3px;
     margin-bottom: 2px;
-    text-align: center;
+    //text-align: center;
     color: transparent;
     cursor: pointer;
     font-size: 12px;
@@ -59,42 +62,42 @@ $toolbar-option-width: 36px;
 
     .money {
       background: url('./images/money-icon.png');
-      width: 20px;
-      height: 24px;
-      transform: translate(8px, 5px);
-      right: 16px;
+      width: 36px;
+      height: 36px;
+      //transform: translate(8px, 5px);
+      right: 0px;
     }
 
     .record {
       background: url('./images/record-icon.png');
-      width: 18px;
-      height: 18px;
-      transform: translate(9px, 9px);
-      right: 17px;
+      width: 36px;
+      height: 36px;
+      //transform: translate(8px, 5px);
+      right: 0px;
     }
 
     .ticket {
       background: url('./images/ticket-icon.png');
-      width: 20px;
-      height: 14px;
-      transform: translate(8px, 11px);
-      right: 16px;
+      width: 36px;
+      height: 36px;
+      //transform: translate(8px, 5px);
+      right: 0px;
     }
 
     .chat {
       background: url('./images/chat-icon.png');
-      width: 20px;
-      height: 18px;
-      transform: translate(8px, 11px);
-      right: 16px;
+      width: 36px;
+      height: 36px;
+      //transform: translate(8px, 5px);
+      right: 0px;
     }
 
     .feedback {
       background: url('./images/feedback-icon.png');
-      width: 19px;
-      height: 18px;
-      transform: translate(10px, 9px);
-      right: 17px;
+      width: 36px;
+      height: 36px;
+      //transform: translate(8px, 5px);
+      right: 0px;
     }
 
     .up {

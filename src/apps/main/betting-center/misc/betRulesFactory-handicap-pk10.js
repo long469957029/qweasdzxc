@@ -5,7 +5,7 @@ const oneHundred = _.range(51, 101)
 
 const getFifty = (numList) => {
   return _.map(numList, (num, index) => {
-    const fMum = `${(num !== 0 && num % 10 === 0 ? 10 : (num % 10)) + (100 * Math.ceil((num + 1) / 10))}`
+    const fMum = `${(num !== 0 && num % 10 === 0 ? 10 : (num % 10)) + (100 * Math.ceil(num / 10))}`
     return {
       num: fMum,
       title: num !== 0 && num % 10 === 0 ? 10 : (num % 10),

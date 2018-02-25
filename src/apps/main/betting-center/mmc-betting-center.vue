@@ -50,6 +50,11 @@
             ticketId: this.ticketId,
             type: this.ticketType,
           })
+
+          //取得彩票代金券数据
+          this.$store.dispatch(types.GET_VOUCHERS, {
+            ticketId: this.ticketId,
+          })
         },
         immediate: true
       }

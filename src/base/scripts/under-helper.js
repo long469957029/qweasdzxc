@@ -85,6 +85,17 @@ _.mixin({
     return _.formatDiv(money, options.ratio, options)
   },
 
+  format2yuan(money, options){  //临时方法 处理金额类数据，0的收显示0.00  其他情况正常除以10000，保留4位小数
+    if(money === 0){
+      options = _.extend({}, {
+        fixed: 2,
+        ratio: 10000,
+        clear: false,
+      }, options)
+    }
+    return _.convert2yuan(money, options)
+  },
+
   formatDiv(money, ratio, options) {
     let format
 
@@ -107,18 +118,18 @@ _.mixin({
     return format
   },
 
-  formatMul(money, ratio, options) {
+  formatMul(money, ratio, {clear = true, fixed = 0} = {clear: true, fixed: 4}) {
     let format
-
-    options = _.extend({}, {
-      fixed: 0,
-    }, options)
 
     if (!_.isUndefined(money)) {
       format = _(money).mul(ratio)
 
-      if (options.fixed) {
-        format = format.toFixed(options.fixed)
+      if (fixed) {
+        format = format.toFixed(fixed)
+      }
+
+      if (clear) {
+        format = math.add(format, 0)
       }
     }
 
