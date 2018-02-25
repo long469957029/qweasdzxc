@@ -433,7 +433,7 @@ const TransferView = Base.ItemView.extend({
           setInterval(this.redirect())
         } else {
           this.$('.js-fc-tr-error-container').html('<div class="parsley-error-line"><span class="sfa sfa-error-icon vertical-sub pull-left"></span>' +
-            `<span class="parsley-error-text">${res.msg}</span><div>`)
+            `<span class="parsley-error-text text-hot">${res.msg}</span><div>`)
         }
       })
   },

@@ -135,6 +135,7 @@ const MailBindingView = Base.ItemView.extend({
               if (type === 'add') {
                 Global.ui.notification.show('恭喜您，邮箱绑定成功！')
                 self.trigger('render:true')
+                Global.m.publish('safe:updating')
               } else {
                 const num = $target.data('num')
                 self.$changeContainer.steps('goTo', num)
