@@ -221,7 +221,9 @@ const WithdrawView = Base.ItemView.extend({
           // self.render()
           // Global.m.oauth.check()
         } else {
-          Global.ui.notification.show(res.msg)
+          //Global.ui.notification.show(res.msg)
+          this.$('.js-fc-wd-error-container').html('<div class="parsley-error-line"><span class="sfa sfa-error-icon vertical-sub pull-left"></span>' +
+            `<span class="parsley-error-text text-hot">${res.msg}</span><div>`)
         }
       })
   },
