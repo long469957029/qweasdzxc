@@ -181,7 +181,7 @@ const PersonalManageView = Base.ItemView.extend({
     const pid = this.$province.data('id')
     const cid = this.$city.data('id')
     const aid = this.$area.data('id')
-    if (_.isUndefined(pid) || _.isUndefined(cid) || _.isUndefined(aid)) {
+    if ((!_.isUndefined(pid) || !_.isUndefined(cid) || !_.isUndefined(aid)) && (_.isUndefined(pid) || _.isUndefined(cid) || _.isUndefined(aid))) {
       const data = {
         el: this.$addressListError,
         errorText: '省市区填写不完整',

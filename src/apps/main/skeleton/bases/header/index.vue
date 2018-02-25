@@ -742,7 +742,7 @@
             border-color: #fff;
             position: absolute;
             top: -4px;
-            left: 62%;
+            left: 58%;
             transform: rotate(45deg)
           }
 
