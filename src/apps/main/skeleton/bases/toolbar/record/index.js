@@ -56,13 +56,13 @@ const RecordView = Base.ItemView.extend({
           status = '未中奖'
         } else {
           // status = `中奖<span class="text-account-cut">${_(game.price).convert2yuan()}</span>`
-          status = `中奖<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
+          status = `中奖&nbsp;<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
         }
       }else {
         if (game.price === 0){
           status = '未中奖'
         } else {
-          status = `中奖<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
+          status = `中奖&nbsp;<span style="color:#f09932;">${_(game.price).convert2yuan()}</span>`
         }
       }
 
