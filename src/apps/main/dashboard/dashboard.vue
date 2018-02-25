@@ -32,7 +32,7 @@
                   <div class="dashboard-row-inner">
                     <div class="content-item-2x db-ah-bjl clearfix">
                       <div class="content-text">
-                        <div>百家乐游戏规则简单，是世界各地赌场中受欢迎</div>
+                        <div>百家乐游戏规则简单，是世界各地赌场中最受欢迎</div>
                         <div>的扑克游戏</div>
                       </div>
                       <router-link to="rc" class="db-ah-play-btn db-ah-play-btn-blue">立即游戏</router-link>
