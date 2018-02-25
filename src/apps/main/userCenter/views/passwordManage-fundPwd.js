@@ -65,6 +65,7 @@ const FundPwdView = Base.ItemView.extend({
               status = 1
               window.Global.cookieCache.set('security', status)
             }
+            Global.m.publish('safe:updating')
           } else {
             // fail
             Global.ui.notification.show(res.msg)
@@ -89,6 +90,7 @@ const FundPwdView = Base.ItemView.extend({
               type: 'success',
             })
             self.trigger('render:true')
+            Global.m.publish('safe:updating')
           } else if (_(res.root).isNumber && res.root > 0) {
             Global.ui.notification.show(`验证失败，剩余&nbsp;${res.root}&nbsp;次机会`)
           } else {

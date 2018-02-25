@@ -319,10 +319,7 @@ const SlotCenterView = Base.ItemView.extend({
           Global.ui.notification.show('试玩账号无法进入该游戏，请先注册正式游戏账号')
         } else{
           if (acctInfo.foundsLock) {
-            Global.ui.notification.show('资金已锁定，请先' +
-              '<a href="javascript:void(0);" ' +
-              'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" ' +
-              'class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
+            Global.ui.notification.show('资金已锁定，暂不能进入游戏')
             return false
           }
 
