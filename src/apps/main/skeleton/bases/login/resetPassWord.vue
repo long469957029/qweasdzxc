@@ -95,7 +95,7 @@
                   </div>
                   <div class="text-center m-top-md">
                     <button type="button" :class="['btn', 'find-btn', {disable: !hasBindQes}]" :disabled="!hasBindQes"
-                            @click="findType(1)">{{(hasBindMoblie) ? "立即找回" : "未设置"}}
+                            @click="findType(1)">{{(hasBindQes) ? "立即找回" : "未设置"}}
                     </button>
                   </div>
                 </div>
@@ -117,7 +117,7 @@
                   </div>
                   <div class="text-center m-top-md">
                     <button type="button" :class="['btn', 'find-btn', {disable: !hasBindMail}]" :disabled="!hasBindMail"
-                            @click="findType(3)">{{(hasBindMoblie) ? "立即找回" : "未绑定"}}
+                            @click="findType(3)">{{(hasBindMail) ? "立即找回" : "未绑定"}}
                     </button>
                   </div>
                 </div>
