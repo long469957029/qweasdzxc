@@ -71,7 +71,8 @@ const ToolbarView = Base.ItemView.extend({
     if (path !== undefined) {
       Global.router.goTo(path)
     }
-    self.$container.css('margin-left','-51px')
+
+    self.$container.css('margin-left','-48px')
     self.$toption.css('border-radius','3px')
   },
 
