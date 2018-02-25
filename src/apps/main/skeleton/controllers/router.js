@@ -12,13 +12,19 @@ export default {
       config = _.isUndefined(params) ? {} : params
       params = {}
     }
-    viewPromise().then((view) => {
-      if (config.parentRouter) {
-        this.changeSubReginView(view.default ? new view.default(params) : new view(params), config)
-      } else {
-        this.changeMainReginView(view.default ? new view.default(params) : new view(params), config)
+
+    return resolve({
+      name: `temp${_.uniqueId()}`,
+      template: `<div></div>`,
+      mounted:() => {
+        viewPromise().then((view) => {
+          if (config.parentRouter) {
+            this.changeSubReginView(view.default ? new view.default(params) : new view(params), config)
+          } else {
+            this.changeMainReginView(view.default ? new view.default(params) : new view(params), config)
+          }
+        })
       }
-      // resolve()
     })
   },
 

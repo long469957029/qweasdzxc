@@ -5,7 +5,7 @@ const RealCenterView = () => import(/* webpackChunkName: "outer-center" */ './re
 export default [
   {
     path: '/sc',
-    component: function(resolve) {
+    component: (resolve) => {
       RouterController.async(resolve, SlotCenterView)
     }
   },

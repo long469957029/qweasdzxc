@@ -60,10 +60,6 @@ const appRouters = require('./app.routers')
 // 配置初始化路由（按功能模块）
 const router = appRouters.install()
 
-let desHash = window.location.hash
-
-window.location.hash = '#/i'
-
 window.store = store
 window.router = router
 
@@ -79,7 +75,6 @@ router.beforeEach((to, from, next) => {
     _([
       '/bc',
       '/analysis',
-      '/i',
       '/aa',
       '/mb',
       '/au',
@@ -96,20 +91,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/') {
       isVue = true
     }
-    if (to.path === '/bc/19') {
-      isVue = false
-    }
-    if (!isVue && to.path !== '/i') {
-      desHash = window.location.hash
-      next()
-      window.location.hash = '#/i'
-      Global.appRouter.navigate(desHash.substring(1), {trigger: false, replace: true})
-      $('#main').toggle(!isVue)
-      $('#main-vue').toggle(isVue)
-      return
-    } else if (!isVue) {
-      window.location.hash = desHash
-    }
+
     $('#main').toggle(!isVue)
     $('#main-vue').toggle(isVue)
     next()
@@ -170,9 +152,6 @@ Global.m.oauth.check()
 
     window.$route = app.$route
 
-    _.delay(() => {
-      window.location.hash = desHash === '#/i' ? '#/' : desHash
-    }, 0)
   })
   .done((res) => {
     if (res && res.result === 0) {
