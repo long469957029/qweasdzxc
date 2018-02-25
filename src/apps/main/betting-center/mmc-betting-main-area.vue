@@ -133,7 +133,7 @@
             </div>
             <div class="bc-line"></div>
             <div class="m-LR-smd">
-              <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
+              <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'" loading-tip="">
                 <transition name="fade" mode="out-in"
                             enter-active-class="animated-quick fadeIn"
                             leave-active-class="animated-quick fadeOut"
@@ -146,7 +146,7 @@
                                            v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
                   <div class="height-100" v-html="loading" v-else></div>
                 </transition>
-              </div>
+              </status-cell>
             </div>
           </div>
 
@@ -175,9 +175,11 @@
               <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
               <span>元</span>
             </div>
-            <select class="bc-m-select">
-              <option value="">使用代金券</option>
-            </select>
+
+            <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
+                              :betting-money="bettingChoice.totalInfo.totalMoney"
+                              v-model="totalVoucher" ref="totalBettingVouchers"
+            ></betting-vouchers>
             连续开奖
             <select class="bc-m-select" v-model="openingCount">
               <option v-for="openNum in continuousOpenSelectList" :key="openNum">{{openNum}}</option>
@@ -268,6 +270,7 @@
 <script>
   import {pushMmcSimulationBettingApi} from 'api/betting'
   import {formatOpenNum, TransferDom, CustomCheckbox} from 'build'
+  import BettingVouchers from './betting-vouchers'
   import MmcOpeningNumGroup from './mmc-opening-num-group'
   import betRulesConfig from './misc/betRulesConfig'
 
@@ -291,6 +294,7 @@
       BettingHistory,
       BettingPlayAreaSelect,
       BettingPlayAreaInput,
+      BettingVouchers,
     },
 
     filters: {
@@ -305,7 +309,6 @@
     data() {
       return {
         lever: false,
-        loading: Global.ui.loader.get(),
         unit: 10000,
         continuousOpenSelectList: [1, 5, 10, 15, 20, 25],
         //开奖次数
@@ -1367,15 +1370,15 @@
     top: 15% !important;
   }
 
-  /*@keyframes opacity {*/
-  /*from {*/
-  /*opacity: 0.6;*/
-  /*}*/
-
-  /*to {*/
-  /*opacity: 1;*/
-  /*}*/
-  /*}*/
+  .bc-vouchers-select {
+    width: 106px;
+    color: $new-inverse-color;
+    border-radius: 5px;
+    vertical-align: bottom;
+    top: 2px;
+    position: relative;
+    left: 10px;
+  }
 </style>
 
 <style lang="scss">

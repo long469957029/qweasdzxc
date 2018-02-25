@@ -319,9 +319,13 @@ if (DEV) {
   plugins.push(new ExtractTextPlugin('[name].[hash].styles.css'));
   plugins.push(new AssetsPlugin());
   plugins.push(new UglifyJsPlugin({
+    sourceMap: true,
     compress: {
       warnings: false
     }
+  }));
+  plugins.push(new webpack.LoaderOptionsPlugin({
+    minimize: true
   }));
 }
 
@@ -510,7 +514,7 @@ module.exports = {
 
       bootstrap: 'vendor/scripts/bootstrap',
       modernizr: 'vendor/scripts/modernizr',
-      vue: 'vue/dist/vue.esm.js',
+      'vue$': 'vue/dist/vue.esm.js',
       api: 'apps/api',
       filters: 'apps/filters',
       consts: 'apps/store/consts',
