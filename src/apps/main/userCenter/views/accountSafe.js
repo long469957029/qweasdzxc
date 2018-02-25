@@ -89,22 +89,22 @@ const AccountSafeView = Base.ItemView.extend({
               self.$settingMailNum.html(data.email)
             }
             self.$fundPwd.html(new FundPassWord({hasFundPassword: data.hasFundPassword}).on('render:true', () => {
-              self.onRender()
+              self.render()
             }).render().el)
             self.$questionPwd.html(new QuestionPwd({hasSecurityQuestion: data.hasSecurityQuestion}).on('render:true', () => {
-              self.onRender()
+              self.render()
             }).render().el)
             self.$phonePwd.html(new PhoneBind({
               hasBindingMobile: data.hasBindingMobile,
               mobile: data.mobile
             }).on('render:true', () => {
-              self.onRender()
+              self.render()
             }).render().el)
             self.$mailPwd.html(new EmailBind({
               hasBindingEmail: data.hasBindingEmail,
               email: data.email
             }).on('render:true', () => {
-              self.onRender()
+              self.render()
             }).render().el)
           }
           self.loadingFinish()

@@ -269,6 +269,9 @@
       border-radius: $globalInputRadius;
       margin-right: 10px;
       cursor: pointer;
+      &.faild{
+        border-color: #e84c4c;
+      }
       .select-icon{
         display: inline-block;
         width: 8px;
@@ -555,8 +558,9 @@
 
 //绑定页
 .uc-cbCardBinding-container{
-  width: 520px;
+  width: 720px;
   margin: 0 auto;
+  padding-left: 100px;
   &.uc-cbCardBinding-dialog{
     width: 480px;
   }
@@ -566,6 +570,7 @@
   }
   .btn{
     @include btnDef;
+    margin-left: -200px;
   }
   .uc-cbCardBindingForm {
     padding: 20px 0 0 11px;
@@ -876,9 +881,10 @@
     }
   }
   .uc-change-pwd-view{
-    width: 56%;
+    width: 700px;
     margin: 0 auto;
     padding-top: 20px;
+    padding-left: 200px;
   }
   //.security-main{
   //  min-height: 650px;
@@ -926,6 +932,7 @@
   }
   .btn{
     @include btnDef;
+    margin-left: -170px;
   }
   .input-disable{
     background-color: $third-line-color;

@@ -179,8 +179,10 @@
     },
 
     methods: {
-      getData() {
-        this.loadingStatus = 'loading'
+      getData({loading = true} = {loading: true}) {
+        if (loading) {
+          this.loadingStatus = 'loading'
+        }
         getGiftListApi({
           sortFlag: this.sort.sortFlag,
           sortType: this.sort.sortType,
@@ -194,11 +196,17 @@
           }
         })
           .finally(() => {
-            this.loadingStatus = 'completed'
+            if (loading) {
+              this.loadingStatus = 'completed'
+            }
           })
       },
 
       openExchangeModal(giftInfo) {
+        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
+          return false
+        }
         this.currentGift = giftInfo
         this.isShowExchangeModal = true
         this.count = 1
@@ -226,6 +234,7 @@
             this.isShowAddressModal = true
           } else {
             Global.ui.notification.show(data.msg)
+            this.isShowExchangeModal = false
           }
         })
       },
@@ -241,7 +250,7 @@
             this.isShowExchangeModal = false
             this.$store.dispatch(types.GET_USER_MALL_INFO)
 
-            this.getData()
+            this.getData({loading: false})
 
             Global.ui.notification.show(`<div class="m-bottom-lg">兑换成功!</div>`, {
               type: 'success',
@@ -253,6 +262,8 @@
             })
           } else {
             Global.ui.notification.show(data.msg)
+            this.isShowAddressModal = false
+            this.isShowExchangeModal = false
           }
         })
       },

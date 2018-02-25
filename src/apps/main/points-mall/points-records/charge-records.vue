@@ -24,6 +24,7 @@
     align-items: center;
     flex-direction: column;
     margin-bottom: 160px;
+    background: #ffffff;
   }
   .text-wait {
     margin: 10px 12px 10px 0;

@@ -34,6 +34,7 @@ import twoSideType from './filters/two-side-type'
 import formatOpenNum from './filters/format-open-num'
 import formatCouponType from './filters/format-coupon-type'
 import formatCoupon from './filters/format-coupon'
+import formatCouponStatus from './filters/format-coupon-status'
 
 export {
   /**
@@ -78,6 +79,7 @@ export {
    */
   formatCouponType,
   formatOpenNum,
+  formatCouponStatus,
   quick3Sum,
   twoSideType,
   formatCoupon,

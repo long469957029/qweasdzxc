@@ -109,8 +109,6 @@
             delay: 2500,
             disableOnInteraction: false
           },
-          height: 450,
-          width: 870,
           navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
@@ -130,6 +128,10 @@
 
     methods: {
       showSignIn() {
+        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
+          return false
+        }
         this.isShowSignIn = true
       }
     },
@@ -296,7 +298,12 @@
     height: 450px;
     width: 870px;
     flex: 1 0 auto;
-    overflow: hidden;
+
+    .swiper-container {
+      height: 450px;
+      width: 870px;
+      overflow: hidden;
+    }
 
     .sign-in {
       background-color: #e84c4c;
