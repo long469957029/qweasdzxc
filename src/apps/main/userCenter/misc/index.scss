@@ -442,6 +442,9 @@
       margin: 0 auto;
       margin-bottom: 15px;
     }
+    .reward{
+      color: $def-black-color;
+    }
     &:hover{
       border-color: transparent;
       color: $new-main-deep-color;
@@ -449,6 +452,9 @@
       .add-icon{
         background: url('./images/btn-card-add-hover.png') no-repeat;
         animation: flipInY 1s;
+      }
+      .reward{
+        color: $new-main-deep-color;
       }
     }
   }

@@ -24,7 +24,7 @@
       <div class="reset-panel">
         <div class="reset-panel-title">
           <span class="title-img"></span>
-          <span>提示：您的登录密码已被重置，请重新设置新密码！</span>
+          <span>提示：{{type === 1 ? "此账户由上级开户生成，为保障您的账户安全，请修改初始密码！" : "您的登录密码已被重置，请重新设置新密码！"}}</span>
         </div>
         <div class="pwd-input-panel">
           <span class="pwd-desc">新登录密码：</span>
@@ -81,7 +81,8 @@
         errorIcon: 0,
         checkErrorIcon: 0,
         pwdTips: false,
-        userToken: ''
+        userToken: '',
+        type:1 // 重置密码类型  1代表开户  2代表后台重置
       }
     },
 
@@ -90,8 +91,7 @@
     components: {FooterCopyright},
 
     mounted () {
-      this.$nextTick(() => {
-      })
+      this.type = Number(_.getUrlParam('type'))
     },
 
     watch: {},
