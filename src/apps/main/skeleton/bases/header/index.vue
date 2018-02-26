@@ -309,7 +309,7 @@
     vertical-align: middle;
 
     .back-to-old {
-      /*position: absolute;*/
+      position: absolute;
       /*left: 0;*/
       /*top: 0;*/
       float: left;
@@ -321,6 +321,7 @@
       line-height: 40px;
       text-align: center;
       cursor: pointer;
+      z-index: 1;
     }
     .header-main {
       position: relative;

@@ -267,7 +267,7 @@
         width: 238px;
         height: 180px;
         background-size: cover;
-
+        float: left;
         &.slotPic {
           background: url('./images/banner-slot.png') no-repeat left/contain;
         }
@@ -290,6 +290,7 @@
       .nav-channel-main {
         position: relative;
         width: 961px;
+        float: left;
         height: 162px;
         display: inline-block;
         padding: 18px 0 0;
