@@ -71,34 +71,9 @@ router.onReady(() => {
 //每次路由变化时调用，切换显示区域
 router.beforeEach((to, from, next) => {
   if (store.getters.checkPermission(to.path)) {
-    let isVue = false
-    _([
-      '/bc',
-      '/analysis',
-      '/aa',
-      '/mb',
-      '/au',
-      '/rc',
-      '/fh',
-      '/act',
-      '/hc',
-      '/points',
-    ]).each((bcRouter) => {
-      if (to.path.indexOf(bcRouter) !== -1) {
-        isVue = true
-      }
-    })
-    if (to.path === '/') {
-      isVue = true
-    }
-
-    $('#main').toggle(!isVue)
-    $('#main-vue').toggle(isVue)
     next()
   } else {
     store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-    $('#main').toggle(false)
-    $('#main-vue').toggle(true)
     next('/') // 否则全部重定向到首页
   }
 })
