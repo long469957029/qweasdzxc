@@ -1066,7 +1066,7 @@
           .fc-bank-select-select {
             overflow: hidden;
             width: 320px;
-            height: 50px;
+            //height: 50px;
             background: #ffffff;
             border: 1px solid #cccccc;
             line-height: 50px;
@@ -1115,8 +1115,11 @@
             }
             &.side-down {
               border: 1px solid $new-main-deep-color;
-              height: 320px;
+              //height: 320px;
               overflow: auto;
+            }
+            &.shrink{
+              height: 50px;
             }
           }
 
