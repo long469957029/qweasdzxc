@@ -237,7 +237,7 @@ const SignUserView = Base.ItemView.extend({
     this.TicketGrid = this.$ticketGrid.staticGrid({
       startOnLoading: false,
       // height: 80,
-      tableClass: 'table table-bordered table-center',
+      tableClass: 'table table-bordered table-center border-bottom',
       colModel: [
         { label: '序号', name: 'no', width: 90 },
         { label: '团队日均销量', name: 'betTotal', width: 399 },

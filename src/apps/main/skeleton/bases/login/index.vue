@@ -139,13 +139,10 @@
             if (status === 0 || status === 100 || status === 102) {
               this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
               this.closeDialog()
-            } else if (status === 104 || status === 105 || status === 106) {
-//              const ur = `userName=${data.root.username}${data.root.uName ? `&uName=${data.root.uName}` : ''}&status=${status}`
-//              window.location.href = `resetInitPwd.html?${encodeURI(ur)}`
-//              this.$store.commit(types.TOGGLE_RESET_INIT_PWD, true)
-//              this.$store.commit(types.COMMIT_USER_TOKEN, acctInfo.token)
+            } else if (status === 104 || status === 105 || status === 106) { // 104 重置密码 105 手工开户 106 后台开户
+              const type = status === 104 ? 2 : 1
               $(this.$refs.loginModal).modal('hide')
-              window.location.href = 'resetInitPwd.html'
+              window.location.href = 'resetInitPwd.html?type=' + type
             } else if (status === 101) {
               this.showErrorMsg = true
               this.errorMsg = '完全冻结的用户无法登录！'
