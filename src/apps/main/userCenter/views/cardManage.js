@@ -72,6 +72,8 @@ const CardManageView = Base.ItemView.extend({
     this.$addCardContainer = this.$('.js-uc-cmContainer-add-card')
     this.$addCardMain = this.$('.js-uc-add-card-main')
 
+    this.userBindInfo = Global.cookieCache.get('userBindInfo')
+
     this.initializeCardManagePage()
     this.loadingFinish()
   },
@@ -172,10 +174,11 @@ const CardManageView = Base.ItemView.extend({
 
     this.$('.js-uc-cmCardNum').val(size)
 
-    const cardAdd = '<li class="js-uc-cmBindCard-btn uc-cmCard-add" data-type="addBankCard">' +
-      '<span class="add-icon"></span>' +
-      '添加银行卡' +
-      '</li>'
+    let rewardHtml = ''
+    if(this.userBindInfo && this.userBindInfo.cardStatus === 0){
+      rewardHtml = `（<span class="text-prominent">+${_(this.userBindInfo.bindBankCardBonus).convert2yuan()}</span>元奖励）`
+    }
+    const cardAdd = `<li class="js-uc-cmBindCard-btn uc-cmCard-add" data-type="addBankCard"><span class="add-icon"></span>添加银行卡${rewardHtml}</li>`
 
     if (size === 0) {
       return cardAdd
@@ -234,6 +237,10 @@ const CardManageView = Base.ItemView.extend({
   showAddCard(data) { // data判断是否为第一次绑定银行卡
     this.$addCardContainer.removeClass('hidden')
     this.cardBindView = new CardBind(data).off('bind:success').on('bind:success', () => {
+      if(this.userBindInfo && this.userBindInfo.cardStatus === 0){
+        this.userBindInfo.cardStatus = 1
+        Global.cookieCache.set('userBindInfo',this.userBindInfo)
+      }
       this.render()
     })
     this.$addCardMain.html(this.cardBindView.render().el)

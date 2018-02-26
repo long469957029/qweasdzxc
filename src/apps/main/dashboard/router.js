@@ -3,9 +3,6 @@ import DashboardView from './dashboard.vue'
 
 const NoticeDetailView = require('dynamicCenter/views/noticeDetail')
 
-const Init = {
-  template: `<div style="height: 1000px"></div>`
-}
 export default [
   {
     path: '/',
@@ -24,10 +21,6 @@ export default [
         parentRouter: '#',
       })
     }
-  },
-  {
-    path: '/i',
-    component: Init,
   },
   {
     path: ':anything',

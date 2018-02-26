@@ -72,9 +72,16 @@
     }
 
     &.finished {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: #e5e5e5;
+      /*background-color: rgba(0, 0, 0, 0.1);*/
       .card-intro {
         border-bottom: 1px solid #c7c7c7;
+        /*background-color: rgba(0, 0, 0, 0.1);*/
+        background-color: #e5e5e5;
+      }
+      .gift-card-op {
+        background-color: #e5e5e5;
+        /*background-color: rgba(0, 0, 0, 0.1);*/
       }
     }
 
@@ -154,7 +161,6 @@
     bottom: 0;
     width: 100%;
     box-sizing: border-box;
-    background: #ffffff;
   }
 
   .card-price {
@@ -178,7 +184,6 @@
     display: flex;
     padding: 10px;
     align-items: center;
-    background: #ffffff;
   }
 
   .card-points {

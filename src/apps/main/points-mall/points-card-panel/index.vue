@@ -149,13 +149,13 @@
         ],
         sort: {
           sortFlag: 1,
-          sortType: 0
+          sortType: 1
         },
         sortOps: [
           {
             sortFlag: 1,
             name: '热门',
-            sortType: 0,
+            sortType: 1,
             type: 'arrow',
           },
           {
@@ -166,7 +166,7 @@
           {
             sortFlag: 3,
             name: '上架时间',
-            sortType: 0,
+            sortType: 1,
             type: 'arrow',
           },
         ],

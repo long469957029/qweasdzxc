@@ -79,14 +79,17 @@
                 if (data && data.result === 0) {
                   _(data.root).find((item) => {
                     if (item.fundLock) {
-                      Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
-                        'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" ' +
-                        'class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
+                      Global.ui.notification.show('资金已锁定，请先资金解锁')
                       return false
                     }
                     if (item.channelId === channelId && item.type === type) {
                       if (item.status === 0) {
-                        this.$router.push({path: 'sc', query: {channelId}})
+                        this.$router.push({
+                          path: '/sc',
+                          query: {
+                            channelId
+                          }
+                        })
                       } else if (item.status === 1) {
                         Global.ui.notification.show('当前游戏处于关闭状态，您可以尝试其他游戏！')
                       } else if (item.status === 2) {

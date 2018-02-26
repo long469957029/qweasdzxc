@@ -285,11 +285,12 @@ export default Base.ItemView.extend({
   },
   // 选择转出钱包
   selectFromGameHandler(e) {
+    var self = this;
     const $target = $(e.currentTarget)
     this.$('.js-fm-out-select').removeClass('side-down').scrollTop(0)
     this.$('.js-fm-select-out-down').removeClass('up')
     const selectId = $target.data('id')
-    const toId = this.$('.js-fm-out-item').data('id')
+    let toId = this.$('.js-fm-in-item').data('id')
     if (selectId === 0) {
       // 重新初始化转出钱包框
       const fromData = transferService.getFundFromData(0)
@@ -314,19 +315,22 @@ export default Base.ItemView.extend({
       this.$('.js-fm-in-selected').html(toData.toSelected)
       this.$('.js-fm-in-items').html(toData.toItems)
     }
-    this.getPlatformInfoXhr({channelId: Number(toId) || Number(selectId) || '1'}).done((res) => {
+    toId = this.$('.js-fm-in-item').data('id')
+    this.getPlatformInfoXhr({channelId: Number(selectId) || Number(toId) || '1'}).done((res) => {
       if (res.result === 0) {
+        self.plaftfromData = res.root
         this.renderPlatformTransferTypeLimit()
       }
     })
   },
   // 选择转入钱包
   selectInGameHandler(e) {
+    var self = this;
     const $target = $(e.currentTarget)
     this.$('.js-fm-in-select').removeClass('side-down').scrollTop(0)
     this.$('.js-fm-select-in-down').removeClass('up')
     const selectId = $target.data('id')
-    const fromId = this.$('.js-fm-out-selectedItem').data('id')
+    let fromId = this.$('.js-fm-out-selectedItem').data('id')
     if (selectId === 0) {
       // 重新初始化转出钱包框
       const toData = transferService.getFundToData(0)
@@ -351,14 +355,17 @@ export default Base.ItemView.extend({
       this.$('.js-fm-in-selected').html(toData.toSelected)
       this.$('.js-fm-in-items').html(toData.toItems)
     }
+    fromId = this.$('.js-fm-out-selectedItem').data('id')
     this.getPlatformInfoXhr({channelId: Number(selectId) || Number(fromId) || '1'}).done((res) => {
       if (res.result === 0) {
+        self.plaftfromData = res.root
         this.renderPlatformTransferTypeLimit()
       }
     })
   },
 
   changeInOutStatusHandler(e) {
+    var self = this;
     this.$('.js-fc-fm-change').toggleClass('sfa-icon-change-Deep', true)
     this.$('.js-fc-fm-change').toggleClass('sfa-icon-change', false)
     if (this.getInOutDataFlag) {
@@ -381,6 +388,7 @@ export default Base.ItemView.extend({
     this.$('.js-fm-in-items').html(toData.toItems)
     this.getPlatformInfoXhr({channelId: Number(toChannel) || Number(fromChannel) || '1'}).done((res) => {
       if (res.result === 0) {
+        self.plaftfromData = res.root
         this.renderPlatformTransferTypeLimit()
       }
     })
@@ -505,6 +513,7 @@ export default Base.ItemView.extend({
     })
       .done((res) => {
         if (res && res.result === 0) {
+          this.render()
           Global.ui.notification.show('转账成功。', {
             type: 'success',
           })
@@ -514,14 +523,14 @@ export default Base.ItemView.extend({
         }
       })
   },
-  searchPeopleInfoHandler(){
+  searchPeopleInfoHandler() {
     const reqData = {
       startTime: this.timeset.$startDate.val(),
       endTime: this.timeset.$endDate.val(),
     }
     this.renderOtherData(reqData)
   },
-  changeUrlHandler(){
+  changeUrlHandler() {
     Global.router.goTo('uc/cm')
   }
 })

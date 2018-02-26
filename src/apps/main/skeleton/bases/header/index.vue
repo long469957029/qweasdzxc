@@ -94,7 +94,7 @@
 <script>
   import avatarConf from 'userCenter/misc/avatarConfig'
   import fundApi from 'api/fund'
-  import {getAccountSafeApi} from 'api/userCenter'
+  import { getAccountSafeApi, getBindInfoApi } from 'api/userCenter'
   import loginApi from 'api/login'
   import Fingerprint2 from 'fingerprintjs2'
 
@@ -242,6 +242,15 @@
           }
         )
       },
+      getUserBindInfo(){
+        getBindInfoApi(
+          ({data}) => {
+            if(data && data.result === 0 && !_(data.root).isNull()){
+              Global.cookieCache.set('userBindInfo', data.root)
+            }
+          }
+        )
+      },
       getUserSecurityInfo(){
         fundApi.userSecurityInfo(({data}) => {
           if (data.result === 0) {
@@ -274,6 +283,7 @@
       window.Global.m.subscribe('news', 'news:updating', this.renderMsgList)
       if (this.loginStatus) {  //登陆状态下 获取用户安全设置信息
         this.getAccountSafe()
+        this.getUserBindInfo()
       }
       this.judgeIsTestUser()
       Vue.$global.bus.$on('update:newRowCount',()=>{

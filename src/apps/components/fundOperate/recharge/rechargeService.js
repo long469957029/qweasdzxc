@@ -36,8 +36,8 @@ module.exports = {
     html.push('1.')
     html.push(`<span>${tip1Html.join('')}</span></br>`)
     if (id === 6) {
-      html.push('<span>2.平台账户会不定时更换，请在获得最新信息后充值，否则损失自负</span></br>')
-      html.push('<span>3.晚上23:30-01:00，使用支付宝转账到银行卡时如果提示第二天到账，请勿付款</span>')
+      html.push('<span>2.晚上23:30-01:00，使用支付宝转账到银行卡时如果提示第二天到账，请勿付款</span></br>')
+      html.push('<span>3.平台账户会不定时更换，请在获得最新信息后充值，否则损失自负</span>')
     } else if (id === 11) {
       html.push('<span>2.平台账户会不定时更换，请在获得最新信息后充值，否则损失自负</span></br>')
     }else if(id===16){
@@ -149,7 +149,7 @@ module.exports = {
     selected.push(`<div class="js-fc-rc-payType-selectedItem" data-type="${selectedData.paymentType}" data-name="${name}"  data-id="${selectedData.paymentId}">`)
     selected.push(`<span class="js-rc-type-icon rc-icon ${logo}"></span>`)
     selected.push(`<span class="js-rc-type-name rc-name">${name}</span>`)
-    selected.push('<span class="js-rc-type-desc rc-desc">其他支付方式</span>')
+    selected.push('<span class="js-rc-type-desc rc-desc"></span>')//其他支付方式
     selected.push('<span class="select-down js-select-type-down"></span></div>')
 
     // 取未选中的支付方式信息并赋值
@@ -223,7 +223,7 @@ module.exports = {
     }
     selected.push(`<span class="js-rc-type-icon rc-icon ${logo}"></span>`)
     selected.push(`<span class="js-rc-type-name rc-name">${name}</span>`)
-    selected.push('<span class="js-rc-type-desc rc-desc">其他支付银行</span>')
+    selected.push('<span class="js-rc-type-desc rc-desc"></span>')//其他支付银行
     selected.push('<span class="select-down js-select-bank-down"></span></div>')
 
     // 取未选中的支付方式信息并赋值

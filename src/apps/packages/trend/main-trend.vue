@@ -12,8 +12,10 @@
         leave-active-class="animated-quick fadeOut"
       >
         <div class="distribution-change-panel btn-toolbar" v-if="ticketInfo.trendOps.splitTrend">
-          <div class="btn-group" v-for="(split, i) in ticketInfo.trendOps.splitTrend" :key="i">
-            <button class="btn btn-lg font-xs m-right-xs" :class="{'btn-white': currentSplit === split}" @click="changeShowPos(split)">{{split.title}}</button>
+          <div class="span-btn" v-for="(split, i) in ticketInfo.trendOps.splitTrend" :key="i"
+               :class="{'active': currentSplit === split}" @click="changeShowPos(split)"
+          >
+            {{split.title}}
           </div>
         </div>
       </transition>
@@ -49,11 +51,11 @@
     <table id="trend-table" class="table table-border no-margin">
       <colgroup>
         <col width="150">
-        <col width="90">
+        <col width="90" v-if="showPlanId">
       </colgroup>
       <thead>
       <tr>
-        <th rowspan="2">
+        <th rowspan="2" v-if="showPlanId">
           期号
         </th>
         <th rowspan="2">
@@ -77,7 +79,7 @@
       </thead>
       <tbody>
       <tr v-for="item in fTrendsList">
-        <td class="title-deep">{{item.ticketPlanId}}</td>
+        <td class="title-deep" v-if="showPlanId">{{item.ticketPlanId}}</td>
         <td class="title-deep">
           <template v-for="num in item.openNums">
             {{num}}
@@ -106,7 +108,7 @@
       <thead class="bottom-head">
       <tr>
         <th>出现总次数</th>
-        <th></th>
+        <th v-if="showPlanId"></th>
         <template v-for="hotNums in hotNumList">
           <template v-for="hotNum in hotNums">
             <th>{{hotNum}}</th>
@@ -117,8 +119,8 @@
         </template>
       </tr>
       <tr>
-        <th>平均遗漏值</thj>
-        <th></th>
+        <th>平均遗漏值</th>
+        <th v-if="showPlanId"></th>
         <template v-for="missings in averageMissingList">
           <template v-for="num in missings">
             <th>{{num}}</th>
@@ -127,7 +129,7 @@
       </tr>
       <tr>
         <th>最大遗漏值</th>
-        <th></th>
+        <th v-if="showPlanId"></th>
         <template v-for="missings in maxMissingList">
           <template v-for="num in missings">
             <th>{{num}}</th>
@@ -136,7 +138,7 @@
       </tr>
       <tr>
         <th>最大连出值</th>
-        <th></th>
+        <th v-if="showPlanId"></th>
         <template v-for="maxContinuous in maxContinuousList">
           <template v-for="numItem in maxContinuous">
             <th>{{numItem.maxCount}}</th>
@@ -147,7 +149,7 @@
         <th rowspan="2">
           期号
         </th>
-        <th rowspan="2">
+        <th rowspan="2" v-if="showPlanId">
           开奖号码
         </th>
         <template v-for="position in fPositions">
@@ -233,7 +235,8 @@
         currentSearch: 'pageSize',
         currentSearchIndex: 0,
         currentSplit: {},
-        fPositions: []
+        fPositions: [],
+        showPlanId: this.ticketId !== 19
       }
     },
 
@@ -601,7 +604,7 @@
 
         _(this.ticketInfo.counts).times((index) => {
           Draw.DrawLine.color(colors);
-          Draw.DrawLine.add((parseInt(index) * num + 2), 2, num, 0);
+          Draw.DrawLine.add((parseInt(index) * num + 2), this.showPlanId ? 2 : 1, num, 0);
         })
 
         Draw.DrawLine.draw(Draw.Chart.ini.default_has_line);
@@ -711,8 +714,10 @@
     th, td {
       padding: 5px 0;
       white-space: nowrap;
+      font-weight: 300;
       &.title-deep {
         color: $new-inverse-color;
+        font-weight: 300;
       }
     }
     tr {
@@ -774,7 +779,24 @@
     display: inline-block;
     position: relative;
     margin-left: 30px;
-    bottom: 10px;
+    bottom: 4px;
+  }
+
+  .span-btn {
+    color: #ffffff;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 15px;
+    min-width: 90px;
+    height: 36px;
+    line-height: 36px;
+    cursor: pointer;
+    transition: all .3s;
+    border-radius: 18px;
+    &.active {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
   }
 
 </style>

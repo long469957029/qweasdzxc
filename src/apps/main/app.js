@@ -64,6 +64,7 @@ const _bindFundOperatorDialogHandler = () => {
   $(document).off('click.fundDialog').on('click.fundDialog', '.js-header-recharge', (e) => {
     const $target = $(e.currentTarget)
     const tabName = $target.data('name')
+    const toId = $target.data('toid')
     const acctInfo = Global.memoryCache.get('acctInfo')
     if (!acctInfo || acctInfo.userStatus === 100) {
       Global.ui.notification.show('用户已被冻结，无法进行资金操作')
@@ -78,7 +79,8 @@ const _bindFundOperatorDialogHandler = () => {
       body: '<div class="js-fund-operate-container"></div>',
     })
     const rechargeView = new RechargeView({
-      triggerTab: tabName
+      triggerTab: tabName,
+      toId: toId,
     })
 
     $fundOperateDialog.find('.js-fund-operate').html(rechargeView.render().el)

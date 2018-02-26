@@ -60,13 +60,13 @@
         })
       },
       currentSortIcon() {
-        return this.value.sortType === 0 ? this.selected.sortIcons.down : this.selected.sortIcons.up
+        return this.value.sortType === 1 ? this.selected.sortIcons.down : this.selected.sortIcons.up
       },
     },
 
     methods: {
       select(option) {
-        //第多次点击
+        //第n次点击
         let sortType
         if (this.selected === option) {
           if (!_.isUndefined(option.sortType)) {
@@ -75,7 +75,7 @@
             sortType = this.value.sortType === 0 ? 1: 0
           }
         } else {
-          sortType = 0
+          sortType = 1
         }
 
         this.$emit('change', {
