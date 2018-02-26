@@ -24,7 +24,11 @@ const FundOperateView = TabView.extend({
             name: 'jsFcTransfer',
             id: 'transfer',
             view: TransferView,
-            options: {cur: cursize},
+            options: {
+              cur: cursize,
+              fromId: this.options.fromId,
+              toId: this.options.toId,
+            },
           },
           {
             label: '提现',

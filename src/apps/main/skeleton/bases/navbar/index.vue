@@ -231,12 +231,12 @@
           @keyframes fadeInDown {
             from {
               opacity: 0;
-              transform: translate(-50%, -25%) scaleY(1);
+              transform: translate(-50%, -25%) ;//scaleY(1)
             }
 
             to {
               opacity: 1;
-              transform: translate(-50%, 0px) scaleY(1);
+              transform: translate(-50%, 0px) ;//scaleY(1)
             }
           }
         }
@@ -247,10 +247,11 @@
       position: absolute;
       background: #fcfcfc;
       height: 180px;
-      z-index: 12;
+      z-index: -1;
       left: 50%;
       top: 70px;
-      transform: scaleY(0) translateX(-50%);
+      transform:  translate(-50%, -100%) ;//scaleY(0)
+      opacity: 0;
       width: 100%;
       margin: 0 auto;
       box-shadow: 0 1px 5px #ddd inset;

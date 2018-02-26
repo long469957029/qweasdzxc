@@ -105,8 +105,8 @@
                     <div class="moblie"></div>
                   </div>
                   <div class="text-center m-top-md">
-                    <button type="button" :class="['btn', 'find-btn', {disable: !hasBindMoblie}]"
-                            :disabled="!hasBindMoblie" @click="findType(2)">{{(hasBindMoblie) ? "立即找回" : "未绑定"}}
+                    <button type="button" :class="['btn', 'find-btn', {disable: !hasBindMoblie}]" :disabled="!hasBindMoblie"
+                            @click="findType(2)">{{(hasBindMoblie) ? "立即找回" : "未绑定"}}
                     </button>
                   </div>
                 </div>

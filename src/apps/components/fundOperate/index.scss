@@ -1066,7 +1066,9 @@
           .fc-bank-select-select {
             overflow: hidden;
             width: 320px;
-            height: 50px;
+            max-height: 251px;
+            transition: all .6s ease-out;
+            //height: 50px;
             background: #ffffff;
             border: 1px solid #cccccc;
             line-height: 50px;
@@ -1075,7 +1077,7 @@
             position: relative;
             text-align: left;
             cursor: pointer;
-            transition: height 0.5s;
+            //transition: height 0.5s;
             padding: 0 20px;
             .js-wd-bank-selected {
               height: 50px !important;
@@ -1115,8 +1117,12 @@
             }
             &.side-down {
               border: 1px solid $new-main-deep-color;
-              height: 320px;
+              //height: 320px;
               overflow: auto;
+            }
+            &.shrink{
+              max-height: 50px;
+              transition-timing-function: ease-out;
             }
           }
 

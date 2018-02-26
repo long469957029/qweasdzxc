@@ -387,6 +387,7 @@ function _create(ticketId) {
 
   // 生肖
   factory.addHandicapRule([ticketId, '220101'], {
+    keyPosition,
     list: factory.createHandicapList([
       {
         title: '特肖',
@@ -410,6 +411,7 @@ function _create(ticketId) {
 
   // 五不中
   factory.addHandicapRule([ticketId, '230101'], {
+    keyPosition,
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -433,6 +435,7 @@ function _create(ticketId) {
 
   // 六不中
   factory.addHandicapRule([ticketId, '230102'], {
+    keyPosition,
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -456,6 +459,7 @@ function _create(ticketId) {
 
   // 七不中
   factory.addHandicapRule([ticketId, '230103'], {
+    keyPosition,
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -479,6 +483,7 @@ function _create(ticketId) {
 
   // 八不中
   factory.addHandicapRule([ticketId, '230104'], {
+    keyPosition,
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -502,6 +507,7 @@ function _create(ticketId) {
 
   // 九不中
   factory.addHandicapRule([ticketId, '230105'], {
+    keyPosition,
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -525,6 +531,7 @@ function _create(ticketId) {
 
   // 十不中
   factory.addHandicapRule([ticketId, '230106'], {
+    keyPosition,
     algorithm: algorithm.group,
     algorithmProps: {
       mainRow: 0,
@@ -548,6 +555,7 @@ function _create(ticketId) {
 
   // 总和
   factory.addHandicapRule([ticketId, '240101'], {
+    keyPosition,
     list: factory.createHandicapList([
       {
         title: '总和',

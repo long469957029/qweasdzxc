@@ -26,6 +26,7 @@
     border: 1px solid #e6e6e6;
     margin-top: 30px;
     margin-bottom: 160px;
+    background: #ffffff;
   }
   .text-wait {
     margin: 10px 12px 10px 0;

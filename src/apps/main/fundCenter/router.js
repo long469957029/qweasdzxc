@@ -14,18 +14,6 @@ require('./misc/index.scss')
 const menuConfig = Global.ui.menu.get('uc')
 const sidebar = Global.ui.menu.get('uc')
 
-
-  // // 'fc/tr/detail/:betId': 'bettingDetail', // 投注详情
-  // // 'fc/cr/detail/:tradeNo/id/:chaseFormId': 'trackDetail', // 追号记录
-  // // 'fc/cr/detail/:chaseTradeNo/detail/:tradeNo': 'trackBetDetail', // 追号投注记录
-
-// 0是代理，1是玩家，玩家不显示平台转账
-//TODO 暂时隐藏 权限相关不应该在此处处理
-// const acctInfo = Global.memoryCache.get('acctInfo')
-// if (acctInfo.userType === 1) {
-//   delete fundRouter['fc/pt']
-// }
-
 export default [
   {
     path: '/fc/fm',

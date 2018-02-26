@@ -285,6 +285,7 @@ export default Base.ItemView.extend({
   },
   // 选择转出钱包
   selectFromGameHandler(e) {
+    var self = this;
     const $target = $(e.currentTarget)
     this.$('.js-fm-out-select').removeClass('side-down').scrollTop(0)
     this.$('.js-fm-select-out-down').removeClass('up')
@@ -324,6 +325,7 @@ export default Base.ItemView.extend({
   },
   // 选择转入钱包
   selectInGameHandler(e) {
+    var self = this;
     const $target = $(e.currentTarget)
     this.$('.js-fm-in-select').removeClass('side-down').scrollTop(0)
     this.$('.js-fm-select-in-down').removeClass('up')
@@ -363,6 +365,7 @@ export default Base.ItemView.extend({
   },
 
   changeInOutStatusHandler(e) {
+    var self = this;
     this.$('.js-fc-fm-change').toggleClass('sfa-icon-change-Deep', true)
     this.$('.js-fc-fm-change').toggleClass('sfa-icon-change', false)
     if (this.getInOutDataFlag) {
@@ -510,6 +513,7 @@ export default Base.ItemView.extend({
     })
       .done((res) => {
         if (res && res.result === 0) {
+          this.render()
           Global.ui.notification.show('转账成功。', {
             type: 'success',
           })
