@@ -519,12 +519,6 @@
 
               Global.m.oauth.check()
 
-              if (useVoucher) {
-                this.$store.dispatch(types.GET_VOUCHERS, {
-                  ticketId: this.ticketId,
-                })
-              }
-
               Global.ui.notification.show('投注成功！', {
                 type: 'success',
                 hasFooter: false,
