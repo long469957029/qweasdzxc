@@ -183,17 +183,19 @@
             this.$store.commit(types.TOGGLE_GMAE_DOWN_LOAD, {showDialog:false})
           })
       })
-      getDownGameUserInfo({channelId: this.gameDownLoadGameId},
-        ({data}) => {
-        if(data && data.result === 0){
-          if(!_.isNull(data.root)){
-            this.haveUserInfo = true
-            this.userName = data.root.gameUserName
-            this.passWord = data.root.gameUserPassword
-            this.oldPwd = data.root.gameUserPassword
-          }
-        }
-      })
+      if(this.gameDownLoadGameId ===2 || this.gameDownLoadGameId === 6){
+        getDownGameUserInfo({channelId: this.gameDownLoadGameId},
+          ({data}) => {
+            if(data && data.result === 0){
+              if(!_.isNull(data.root)){
+                this.haveUserInfo = true
+                this.userName = data.root.gameUserName
+                this.passWord = data.root.gameUserPassword
+                this.oldPwd = data.root.gameUserPassword
+              }
+            }
+          })
+      }
     }
   }
 </script>

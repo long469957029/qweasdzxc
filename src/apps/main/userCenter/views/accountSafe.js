@@ -22,11 +22,11 @@ const AccountSafeView = Base.ItemView.extend({
       url: '/acct/userinfo/accountCenter.json',
     })
   },
-  getBindInfoXhr(){
-    return Global.sync.ajax({
-      url: '/info/newpack/bindinfo.json',
-    })
-  },
+  // getBindInfoXhr(){
+  //   return Global.sync.ajax({
+  //     url: '/info/newpack/bindinfo.json',
+  //   })
+  // },
 
   onRender() {
     const self = this
@@ -45,7 +45,7 @@ const AccountSafeView = Base.ItemView.extend({
     this.$loginPwd.html(new LoginPassWord().on('render:true', () => {
       self.onRender()
     }).render().el)
-
+    const bindInfo = Global.cookieCache.get('userBindInfo')
     this.getAccountSafeXhr()
       .done((res) => {
         if (res.result === 0) {
@@ -93,6 +93,14 @@ const AccountSafeView = Base.ItemView.extend({
               self.$('.js-important-tip[data-type="mail"]').addClass('hidden')
               self.$settingMailNum.html(data.email)
             }
+            if(!_(bindInfo).isUndefined()){
+              if(bindInfo.phoneStatus === 0){
+                self.$('.js-reward[data-type="phone"]').html(`（<span class="text-prominent">+${_(bindInfo.bindPhoneBonus).convert2yuan()}</span>元奖励）`)
+              }
+              if(bindInfo.mailStatus === 0){
+                self.$('.js-reward[data-type="mail"]').html(`（<span class="text-prominent">+${_(bindInfo.bindMailBonus).convert2yuan()}</span>元奖励）`)
+              }
+            }
             self.$fundPwd.html(new FundPassWord({hasFundPassword: data.hasFundPassword}).on('render:true', () => {
               self.render()
             }).render().el)
@@ -103,12 +111,20 @@ const AccountSafeView = Base.ItemView.extend({
               hasBindingMobile: data.hasBindingMobile,
               mobile: data.mobile
             }).on('render:true', () => {
+              if(!_(bindInfo).isUndefined() && bindInfo.phoneStatus === 0){
+                bindInfo.phoneStatus = 1
+                Global.cookieCache.set('userBindInfo', bindInfo)
+              }
               self.render()
             }).render().el)
             self.$mailPwd.html(new EmailBind({
               hasBindingEmail: data.hasBindingEmail,
               email: data.email
             }).on('render:true', () => {
+              if(!_(bindInfo).isUndefined() && bindInfo.mailStatus === 0){
+                bindInfo.mailStatus = 1
+                Global.cookieCache.set('userBindInfo', bindInfo)
+              }
               self.render()
             }).render().el)
           }
@@ -118,18 +134,18 @@ const AccountSafeView = Base.ItemView.extend({
           self.loadingFinish()
         }
       })
-    this.getBindInfoXhr()
-      .done((res) => {  // 获取首次绑定手机和邮箱的奖励
-        if(res && res.result === 0 && !_(res.root).isNull()){
-          const data = res.root
-          if(data.phoneStatus === 0){
-            self.$('.js-reward[data-type="phone"]').html(`（<span class="text-prominent">+${_(data.bindPhoneBonus).convert2yuan()}</span>元奖励）`)
-          }
-          if(data.mailStatus === 0){
-            self.$('.js-reward[data-type="mail"]').html(`（<span class="text-prominent">+${_(data.bindMailBonus).convert2yuan()}</span>元奖励）`)
-          }
-        }
-      })
+    // this.getBindInfoXhr()
+    //   .done((res) => {  // 获取首次绑定手机和邮箱的奖励
+    //     if(res && res.result === 0 && !_(res.root).isNull()){
+    //       const data = res.root
+    //       if(data.phoneStatus === 0){
+    //         self.$('.js-reward[data-type="phone"]').html(`（<span class="text-prominent">+${_(data.bindPhoneBonus).convert2yuan()}</span>元奖励）`)
+    //       }
+    //       if(data.mailStatus === 0){
+    //         self.$('.js-reward[data-type="mail"]').html(`（<span class="text-prominent">+${_(data.bindMailBonus).convert2yuan()}</span>元奖励）`)
+    //       }
+    //     }
+    //   })
   },
 
   settingBtnHandler(e) {
