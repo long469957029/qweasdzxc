@@ -60,10 +60,6 @@ const appRouters = require('./app.routers')
 // 配置初始化路由（按功能模块）
 const router = appRouters.install()
 
-let desHash = window.location.hash
-
-window.location.hash = '#/i'
-
 window.store = store
 window.router = router
 
@@ -75,48 +71,9 @@ router.onReady(() => {
 //每次路由变化时调用，切换显示区域
 router.beforeEach((to, from, next) => {
   if (store.getters.checkPermission(to.path)) {
-    let isVue = false
-    _([
-      '/bc',
-      '/analysis',
-      '/i',
-      '/aa',
-      '/mb',
-      '/au',
-      '/rc',
-      '/fh',
-      '/act',
-      '/hc',
-      '/points',
-    ]).each((bcRouter) => {
-      if (to.path.indexOf(bcRouter) !== -1) {
-        isVue = true
-      }
-    })
-    if (to.path === '/') {
-      isVue = true
-    }
-    if (to.path === '/bc/19') {
-      isVue = false
-    }
-    if (!isVue && to.path !== '/i') {
-      desHash = window.location.hash
-      next()
-      window.location.hash = '#/i'
-      Global.appRouter.navigate(desHash.substring(1), {trigger: false, replace: true})
-      $('#main').toggle(!isVue)
-      $('#main-vue').toggle(isVue)
-      return
-    } else if (!isVue) {
-      window.location.hash = desHash
-    }
-    $('#main').toggle(!isVue)
-    $('#main-vue').toggle(isVue)
     next()
   } else {
     store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-    $('#main').toggle(false)
-    $('#main-vue').toggle(true)
     next('/') // 否则全部重定向到首页
   }
 })
@@ -170,9 +127,6 @@ Global.m.oauth.check()
 
     window.$route = app.$route
 
-    _.delay(() => {
-      window.location.hash = desHash === '#/i' ? '#/' : desHash
-    }, 0)
   })
   .done((res) => {
     if (res && res.result === 0) {

@@ -466,7 +466,7 @@
   }
 
   .bc-select-item {
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
     display: inline-block;
   }
 
@@ -568,6 +568,12 @@
       > div {
         min-width: 45px;
       }
+    }
+    .bc-playArea-items {
+      margin: 20px auto 0;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
     }
   }
 </style>

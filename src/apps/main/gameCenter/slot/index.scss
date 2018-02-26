@@ -8,7 +8,7 @@
 
 .sc-banner {
   @include border-box();
-  @include banner-background('./images/sc-banner.png');
+  @include banner-background('./images/sc-banner.jpg');
   width: 100%;
   height: 540px;
 

@@ -12,13 +12,26 @@ export default {
       config = _.isUndefined(params) ? {} : params
       params = {}
     }
-    viewPromise().then((view) => {
-      if (config.parentRouter) {
-        this.changeSubReginView(view.default ? new view.default(params) : new view(params), config)
-      } else {
-        this.changeMainReginView(view.default ? new view.default(params) : new view(params), config)
+
+    return resolve({
+      name: `temp${_.uniqueId()}`,
+      template: `<div></div>`,
+      mounted:() => {
+        $('#main').toggle(true)
+        $('#main-vue').toggle(false)
+
+        viewPromise().then((view) => {
+          if (config.parentRouter) {
+            this.changeSubReginView(view.default ? new view.default(params) : new view(params), config)
+          } else {
+            this.changeMainReginView(view.default ? new view.default(params) : new view(params), config)
+          }
+        })
+      },
+      destroyed() {
+        $('#main').toggle(false)
+        $('#main-vue').toggle(true)
       }
-      // resolve()
     })
   },
 
@@ -34,10 +47,8 @@ export default {
     })
     if (config.hideHeaderRight) {
       $('#navbar,#quickEntry,#footer').addClass('hidden')
-      // $('#footer').addClass('mark6-footer');
     } else {
       $('#navbar,#quickEntry,#footer').removeClass('hidden')
-      // $('#footer').removeClass('mark6-footer');
     }
 
     if (config.sidebar) {

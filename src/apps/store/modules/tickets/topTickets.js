@@ -3,7 +3,7 @@ import {setTopCurrentTicketApi, getTopTicketsApi} from 'api/betting'
 const initState = () => {
   return {
     [consts.TICKET_NORMAL_TYPE]: [ticketConfig.getById(10)],
-    [consts.TICKET_HANDICAP_TYPE]: [ticketConfig.getById(1)],
+    [consts.TICKET_HANDICAP_TYPE]: [{...ticketConfig.getById(1), ...{active: true}}],
     normalPromise: null,
     handicapPromise: null,
     type: 0,
@@ -20,7 +20,9 @@ const getters = {
     return _.first(state[consts.TICKET_NORMAL_TYPE])
   },
   topHandicapTicket: (state) => {
-    return _.first(state[consts.TICKET_HANDICAP_TYPE])
+    return _.findWhere(state[consts.TICKET_HANDICAP_TYPE], {
+      active: true
+    })
   }
 }
 
@@ -53,14 +55,12 @@ const actions = {
     ticketId,
     type,
   }) {
-    return new Promise((resolve) => {
-      setTopCurrentTicketApi(
-        { ticketId, type },
-        ({ data }) => {
-          resolve(data)
-        },
-      )
-    })
+    return setTopCurrentTicketApi(
+      {
+        ticketId,
+        type
+      },
+    )
   },
 }
 
@@ -97,6 +97,18 @@ const mutations = {
       }
       return ticket
     }).compact().value()
+
+    //盘口暂时一直保持此顺序
+
+    if (type === consts.TICKET_HANDICAP_TYPE) {
+      state[type] = _.sortBy(state[type], (ticketInfo, index) => {
+        if (index === 0) {
+          ticketInfo.active = true
+        }
+        return ticketInfo.id
+      })
+
+    }
   },
 
   [types.GET_TOP_TICKETS_FAILURE] (state) {
