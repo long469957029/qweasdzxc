@@ -63,9 +63,9 @@ const TransferView = Base.ItemView.extend({
     } else {
       this.$('.jc-rc-activity').html(rechargeService.getFunActivity(Global.memoryCache.get('rechargeAc')))
     }
-    this.subscribe('acct', 'acct:updating', (acctInfo) => {
-      this.updateBalance(acctInfo)
-    })
+    // this.subscribe('acct', 'acct:updating', (acctInfo) => {
+    //   this.updateBalance(acctInfo)
+    // })
 
 
     // 初始化转出钱包选择框
@@ -119,9 +119,9 @@ const TransferView = Base.ItemView.extend({
       }
     }, false)
   },
-  updateBalance(acctInfo) {
-    this.$('.js-tr-balance').html(_(acctInfo.balance).convert2yuan())
-  },
+  // updateBalance(acctInfo) {
+  //   this.$('.js-tr-balance').html(_(acctInfo.balance).convert2yuan())
+  // },
   // 初始化转账面板数据
   initTransferData() {
     const self = this
