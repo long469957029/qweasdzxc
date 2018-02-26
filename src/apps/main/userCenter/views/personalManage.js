@@ -128,6 +128,9 @@ const PersonalManageView = Base.ItemView.extend({
   },
   formateHasChooseCityList(data) {
     const pInfo = _(this.cityList).findWhere({provinceId: data.receiverProvinceId})
+    if(!pInfo){
+      return false;
+    }
     const pName = pInfo.province
     const cInfo = _(pInfo.cityList).findWhere({cityId: data.receiverCityId})
     const cName = cInfo.city
@@ -217,6 +220,7 @@ const PersonalManageView = Base.ItemView.extend({
       })
       .done((res) => {
         if (res && res.result === 0) {
+          self.refresh()
           Global.ui.notification.show('修改个人信息成功', {
             type: 'success',
           })

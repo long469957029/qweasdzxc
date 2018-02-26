@@ -17,6 +17,9 @@ export default {
       name: `temp${_.uniqueId()}`,
       template: `<div></div>`,
       mounted:() => {
+        $('#main').toggle(true)
+        $('#main-vue').toggle(false)
+
         viewPromise().then((view) => {
           if (config.parentRouter) {
             this.changeSubReginView(view.default ? new view.default(params) : new view(params), config)
@@ -24,6 +27,10 @@ export default {
             this.changeMainReginView(view.default ? new view.default(params) : new view(params), config)
           }
         })
+      },
+      destroyed() {
+        $('#main').toggle(false)
+        $('#main-vue').toggle(true)
       }
     })
   },
@@ -40,10 +47,8 @@ export default {
     })
     if (config.hideHeaderRight) {
       $('#navbar,#quickEntry,#footer').addClass('hidden')
-      // $('#footer').addClass('mark6-footer');
     } else {
       $('#navbar,#quickEntry,#footer').removeClass('hidden')
-      // $('#footer').removeClass('mark6-footer');
     }
 
     if (config.sidebar) {
