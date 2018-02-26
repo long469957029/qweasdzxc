@@ -230,6 +230,18 @@ const _bindImDialogHandler = () => {
     })
   })
 }
+//侧边栏关闭
+const _bindToolBarCloseHandler = () => {
+  $(document).off('click.toolbar').on('click.toolbar','.js-wrapper',(e)=>{
+    let $container = $('.js-toolbar-container')
+    $container.find('.js-toolbar-option').each((index, dom) => {
+      $(dom).removeClass('active')
+    })
+    $container.removeClass('open')
+    $container.find('.js-toolbar-option-container').css('margin-left','-48px')
+    $container.find('.toolbar-option').css('border-radius','3px')
+  })
+}
 App.addInitializer(() => {
   // App.navbarRegin.show(new NavbarView({
   //   navbar: Global.ui.menu.getNav(),
@@ -246,6 +258,7 @@ App.addInitializer(() => {
   _bindBetDetailHandler() // 全局投注详情弹窗
   _bindChaseDetailHandler()
   _bindImDialogHandler() // 站内信弹窗
+  _bindToolBarCloseHandler()//侧边栏
   // _bindCloseTablePopoverHandler()
 })
 

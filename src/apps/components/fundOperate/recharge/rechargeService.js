@@ -23,7 +23,7 @@ module.exports = {
     const feeTips = `收取<span class="text-account-fund">${fee}%</span>手续费，`
     const maxFeeTips = `最高不超过<span class="text-account-fund">${maxFee}</span>元`
     let feeTotalTips = ''
-    if (fee === 0 && maxFee === 0) {
+    if (fee === 0 ) {
       feeTotalTips = '免手续费'
     } else {
       feeTotalTips = `${feeTips}${maxFeeTips}`
