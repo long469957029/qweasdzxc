@@ -79,9 +79,7 @@
                 if (data && data.result === 0) {
                   _(data.root).find((item) => {
                     if (item.fundLock) {
-                      Global.ui.notification.show('资金已锁定，请先<a href="javascript:void(0);" ' +
-                        'onclick="document.querySelector(\'.js-gl-hd-lock\').click();" ' +
-                        'class="btn-link btn-link-pleasant"  data-dismiss="modal">资金解锁</a>。')
+                      Global.ui.notification.show('资金已锁定，请先资金解锁')
                       return false
                     }
                     if (item.channelId === channelId && item.type === type) {

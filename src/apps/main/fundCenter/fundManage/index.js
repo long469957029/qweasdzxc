@@ -289,7 +289,7 @@ export default Base.ItemView.extend({
     this.$('.js-fm-out-select').removeClass('side-down').scrollTop(0)
     this.$('.js-fm-select-out-down').removeClass('up')
     const selectId = $target.data('id')
-    const toId = this.$('.js-fm-out-item').data('id')
+    let toId = this.$('.js-fm-in-item').data('id')
     if (selectId === 0) {
       // 重新初始化转出钱包框
       const fromData = transferService.getFundFromData(0)
@@ -314,8 +314,10 @@ export default Base.ItemView.extend({
       this.$('.js-fm-in-selected').html(toData.toSelected)
       this.$('.js-fm-in-items').html(toData.toItems)
     }
-    this.getPlatformInfoXhr({channelId: Number(toId) || Number(selectId) || '1'}).done((res) => {
+    toId = this.$('.js-fm-in-item').data('id')
+    this.getPlatformInfoXhr({channelId: Number(selectId) || Number(toId) || '1'}).done((res) => {
       if (res.result === 0) {
+        self.plaftfromData = res.root
         this.renderPlatformTransferTypeLimit()
       }
     })
@@ -326,7 +328,7 @@ export default Base.ItemView.extend({
     this.$('.js-fm-in-select').removeClass('side-down').scrollTop(0)
     this.$('.js-fm-select-in-down').removeClass('up')
     const selectId = $target.data('id')
-    const fromId = this.$('.js-fm-out-selectedItem').data('id')
+    let fromId = this.$('.js-fm-out-selectedItem').data('id')
     if (selectId === 0) {
       // 重新初始化转出钱包框
       const toData = transferService.getFundToData(0)
@@ -351,8 +353,10 @@ export default Base.ItemView.extend({
       this.$('.js-fm-in-selected').html(toData.toSelected)
       this.$('.js-fm-in-items').html(toData.toItems)
     }
+    fromId = this.$('.js-fm-out-selectedItem').data('id')
     this.getPlatformInfoXhr({channelId: Number(selectId) || Number(fromId) || '1'}).done((res) => {
       if (res.result === 0) {
+        self.plaftfromData = res.root
         this.renderPlatformTransferTypeLimit()
       }
     })
@@ -381,6 +385,7 @@ export default Base.ItemView.extend({
     this.$('.js-fm-in-items').html(toData.toItems)
     this.getPlatformInfoXhr({channelId: Number(toChannel) || Number(fromChannel) || '1'}).done((res) => {
       if (res.result === 0) {
+        self.plaftfromData = res.root
         this.renderPlatformTransferTypeLimit()
       }
     })
@@ -514,14 +519,14 @@ export default Base.ItemView.extend({
         }
       })
   },
-  searchPeopleInfoHandler(){
+  searchPeopleInfoHandler() {
     const reqData = {
       startTime: this.timeset.$startDate.val(),
       endTime: this.timeset.$endDate.val(),
     }
     this.renderOtherData(reqData)
   },
-  changeUrlHandler(){
+  changeUrlHandler() {
     Global.router.goTo('uc/cm')
   }
 })

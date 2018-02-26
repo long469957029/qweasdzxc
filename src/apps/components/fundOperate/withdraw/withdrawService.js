@@ -26,7 +26,7 @@ module.exports = {
     selected.push(`<span class="js-wd-bank-icon rc-icon ${logo}"></span>`)
     selected.push(`<span class="js-wd-bank-name rc-name">${name}（${cardNo}）</span>`)
     if (cardList.length >= 2) {
-      selected.push('<span class="js-wd-bank-desc rc-desc">其他银行</span>')
+      selected.push('<span class="js-wd-bank-desc rc-desc"></span>')//其他银行
       selected.push('<span class="select-down js-select-bank-down"></span></div>')
     }
 
