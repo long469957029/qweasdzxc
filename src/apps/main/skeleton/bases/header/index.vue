@@ -693,7 +693,7 @@
       .header-announcement {
         position: relative;
         display: inline-block;
-        width: 71px;
+        width: 72px;
         height: 40px;
         border-left: 1px solid #41a6ad;
         font-size: 13px;
@@ -716,10 +716,10 @@
           background: #e29c49;
           border-radius: 3px;
           text-align: center;
-          text-indent: 0px;
+          text-indent: -2px;
         }
         .header-announcement-num-two{
-          text-indent: -3px;
+          text-indent: -1px;
         }
         .header-announcement-place {
           position: absolute;
