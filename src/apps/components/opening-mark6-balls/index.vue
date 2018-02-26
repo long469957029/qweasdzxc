@@ -64,9 +64,7 @@
                 sx: bettingTypes.MARK6.sx[ball]
               }
             })
-            this.$nextTick(() => {
-              this.rolling()
-            })
+            this.rolling()
           }
         },
         immediate: true
@@ -86,8 +84,7 @@
             this.$refs.balls[i].style.top = `${this.$_getDes(i)}px`
           } else {
             _.delay(() => {
-              this.$set(this.rollingStatus, i, true)
-              // this.rollingStatus[i] = true
+              this.rollingStatus[i] = true
               this._rolling(this.$refs.balls[i], i, true)
             }, 500 * i)
 
@@ -106,7 +103,7 @@
                 duration: 1500,
                 easing: 'ease-out',
                 complete: () => {
-                  this.$set(this.rollingStatus, i, false)
+                  this.rollingStatus[i] = false
                   // this.rollingStatus[i] = false
                 }
               })
