@@ -253,9 +253,11 @@ const WithdrawView = Base.ItemView.extend({
     const con = this.$('.js-wd-bank-select').height()
     if (con < 100) {
       this.$('.js-wd-bank-select').addClass('side-down')
+      this.$('.js-wd-bank-select').removeClass('shrink')
       this.$('.js-select-bank-down').addClass('up')
     } else {
       this.$('.js-wd-bank-select').removeClass('side-down')
+      this.$('.js-wd-bank-select').addClass('shrink')
       this.$('.js-select-bank-down').removeClass('up')
     }
   },
