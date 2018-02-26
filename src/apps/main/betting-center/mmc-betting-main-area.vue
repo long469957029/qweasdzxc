@@ -67,7 +67,7 @@
                   </div>
                 </div>
 
-                <div class="opening-right">{{preview.bettingMoney}}</div>
+                <div class="opening-right">{{preview.fPrefabMoney}}元</div>
                 <div class="opening-operate">
                   <span class="sfa sfa-mmc-delete cursor-pointer" v-show="!opening"
                         @click="lotteryDelete(index)"></span>
@@ -1374,7 +1374,7 @@
   }
 
   .opening-left {
-    width: 121px;
+    min-width: 121px;
   }
 
   .opening-center {
