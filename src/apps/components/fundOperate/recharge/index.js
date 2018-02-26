@@ -42,6 +42,7 @@ const RechargeView = Base.ItemView.extend({
 
   onRender() {
     const self = this
+    this.$feeContainer = this.$('.js-rc-leftBar-payMoney-fee')
     if (!Global.memoryCache.get('rechargeAc')) { //如果缓存里面没有活动数据就调用接口查询
       $.when(this.getActivityInfo(), this.getRechargeBaseInfoXhr()).done(function (res1, res2) {
         if (res1[0] && res1[0].result === 0) {
@@ -186,7 +187,9 @@ const RechargeView = Base.ItemView.extend({
     // 5 遍历取快捷金额配置
     this.$('.js-rc-leftBar-quickPay-select').html(amountList.setHtml)
     // 6 返回手续费与到账金额
+    this.$feeContainer.toggleClass('hidden', !feeData.limit > 0)
     const feeList = rechargeService.getFee(amountList.amount, feeData.charge, feeData.limit, feeData.maxLimit, type)
+
     this.$('.js-payMoney-feeLimit-value').html(feeList.fareValue)
     this.$('.js-payMoney-feeAccount-value').html(feeList.amountValue)
     // 7 返回温馨提示

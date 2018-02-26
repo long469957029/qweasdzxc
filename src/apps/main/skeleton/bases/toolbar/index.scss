@@ -123,7 +123,9 @@ $toolbar-option-width: 36px;
   width: 103vw;
   height: 100vh;
   left: -10px;
-  margin-left: -$sidebar-width;
+  margin-left: -2000px;
+  padding-left: 2000px;
+
   z-index: 1;
 }
 
