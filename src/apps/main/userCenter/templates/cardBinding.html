@@ -1,24 +1,24 @@
-<div class="js-uc-cbCardBinding-container uc-cbCardBinding-container wizard-long clearfix">
+<div class="js-uc-cbCardBinding-container uc-cbCardBinding-container wizard-long clearfix p-left-100">
   <% if(isFirstBind){ %>
   <h3>1.验证资金密码</h3>
   <form class="js-uc-steps js-uc-cb-fund-form uc-cb-fund-form form-horizontal">
-    <div class="text-black font-sm text-center m-top-lg" style="margin-left: -200px">请输入资金密码</div>
-    <div class="text-center m-top-md m-bottom-md" style="margin-left: -200px">
+    <div class="text-black font-sm text-center m-top-lg m-left--200" >请输入资金密码</div>
+    <div class="text-center m-top-md m-bottom-md m-left--200">
       <div>
         <input type="password" name="fundPwd" class="js-uc-cb-fundPwd uc-cb-fundPwd"
                data-parsley-error-message="请输入资金密码" required>
       </div>
     </div>
-    <div class="js-fundPwd-error text-center"></div>
+    <div class="js-fundPwd-error text-center m-left--200"></div>
     <div class="text-center m-top-lg">
-      <button type="button" class="js-uc-cb-btn btn btn-cool font-md" data-loading-text="校验中">确定</button>
+      <button type="button" class="js-uc-cb-btn btn btn-cool font-md m-left--200" data-loading-text="校验中">确定</button>
     </div>
   </form>
 
   <% } else { %>
   <h3>1.验证老银行卡</h3>
   <form class="js-uc-steps js-uc-cb-last-form uc-cb-last-form form-horizontal">
-    <div class="font-sm text-center text-cool m-top-lg m-bottom-md" style="margin-left: -200px;">·请提供最近绑定银行卡的信息</div>
+    <div class="font-sm text-center text-cool m-top-lg m-bottom-md m-left--200" >·请提供最近绑定银行卡的信息</div>
     <div class="control-group">
       <label class="control-label">开户人姓名：</label>
       <div class="controls">
@@ -36,9 +36,9 @@
         <div class="js-uc-vcm-card-error parsley-error-container inline-block" style="max-width: 350px"></div>
       </div>
     </div>
-    <div class="js-last-card-error text-center" style="margin-left: -180px;"></div>
+    <div class="js-last-card-error text-center m-left--200" ></div>
     <div class="text-center m-top-lg">
-      <button type="button" class="js-uc-cb-last-btn btn btn-cool font-md" data-loading-text="校验中">确定</button>
+      <button type="button" class="js-uc-cb-last-btn btn btn-cool font-md m-left--200" data-loading-text="校验中">确定</button>
     </div>
   </form>
   <% }%>
@@ -103,15 +103,15 @@
       </div>
     </div>
     <div class="control-group text-center">
-      <div class="js-uc-cm-error" style="margin-left: -180px;"></div>
-      <button type="button" class="js-uc-cbCardBinding-check btn uc-cm-lg-btn" data-loading-text="绑定中">绑定银行卡</button>
+      <div class="js-uc-cm-error m-left--200"></div>
+      <button type="button" class="js-uc-cbCardBinding-check btn uc-cm-lg-btn m-left--200" data-loading-text="绑定中">绑定银行卡</button>
     </div>
 
   </form>
 
   <h3>3.绑定成功！</h3>
   <div class="js-uc-steps text-cool font-md">
-    <div class="text-center m-top-md" style="margin-left: -180px;">
+    <div class="text-center m-top-md m-left--180">
       <span class="sfa sfa-checkmark-blue m-right-sm vertical-middle"></span>
       <span>您的银行卡已绑定成功！</span>
     </div>

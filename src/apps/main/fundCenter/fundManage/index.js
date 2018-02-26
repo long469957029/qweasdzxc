@@ -480,7 +480,7 @@ export default Base.ItemView.extend({
     // }
     // 获取充值初始化金额
     const amountList = transferService.getQuickAmountHtml(data.amount)
-    this.$('.js-fm-out-money').val(amountList.amount)
+    // this.$('.js-fm-out-money').val(amountList.amount)
     //  遍历取快捷金额配置
     this.$('.js-fm-out-money').attr('data-parsley-range', `[${valMin},${valMax}]`)
     this.$('.js-fm-out-money').attr('data-parsley-max', _(data.validBalance).format2yuan())

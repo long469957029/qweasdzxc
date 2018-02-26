@@ -187,7 +187,7 @@ const RechargeView = Base.ItemView.extend({
     // 5 遍历取快捷金额配置
     this.$('.js-rc-leftBar-quickPay-select').html(amountList.setHtml)
     // 6 返回手续费与到账金额
-    this.$feeContainer.toggleClass('hidden', !feeData.limit > 0)
+    this.$feeContainer.toggleClass('hidden', !(feeData.limit > 0))
     const feeList = rechargeService.getFee(amountList.amount, feeData.charge, feeData.limit, feeData.maxLimit, type)
 
     this.$('.js-payMoney-feeLimit-value').html(feeList.fareValue)

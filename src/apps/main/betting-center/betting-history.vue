@@ -7,7 +7,7 @@
       </div>
       <div class="his-draw" ref="history">
         <div ref="historyInner">
-          <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height"
+          <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height" table-class="table"
                        :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
                        :emptyTip="gridOps.emptyTip"
                        ref="historyGrid"></static-grid>
@@ -33,7 +33,7 @@
       </div>
       <div class="his-draw" ref="history">
         <div ref="historyInner">
-          <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height"
+          <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height" table-class="table"
                        :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
                        :emptyTip="gridOps.emptyTip"
                        ref="historyGrid"></static-grid>

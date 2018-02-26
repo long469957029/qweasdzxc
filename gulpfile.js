@@ -238,6 +238,7 @@ gulp.task('build.sprite', (callback) => {
           cssName: `_${info.name}.scss`,
           cssFormat: 'scss',
           imgPath: `~base/images/${info.name}.png`,
+          imgOpts: {quality: 75},
           algorithm: 'binary-tree',
           cssSpritesheetName: info.name,
           cssVarMap (sprite) {
@@ -248,15 +249,7 @@ gulp.task('build.sprite', (callback) => {
     const imgStream = spriteData.img
       .pipe(buffer())
       .pipe(imagemin([
-        imagemin.gifsicle({interlaced: true}),
-        imagemin.jpegtran({progressive: true}),
         imagemin.optipng({optimizationLevel: 5}),
-        imagemin.svgo({
-          plugins: [
-            {removeViewBox: true},
-            {cleanupIDs: false}
-          ]
-        })
       ]))
       .pipe(gulp.dest('./src/base/images'))
     spriteData.css

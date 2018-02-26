@@ -112,15 +112,13 @@ const actions = {
 
         return data
       },
-      reject,
     )
   },
 
   [types.PUSH_MMC_BETTING] ({ state, commit }, {
-    planId,
-    type = 'previewList',
+    bettingList,
+    prevVoucher,
   }) {
-    const bettingList = state[type]
     const bet = _(bettingList).reduce((list, item) => {
       list.push({
         betNum: item.bettingNumber,
@@ -136,7 +134,7 @@ const actions = {
 
     return new Promise((resolve) => {
       pushMmcBettingApi(
-        { planId, bet, usePack: state.usePack },
+        { bet, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
         ({ data }) => {
           resolve(data)
         },

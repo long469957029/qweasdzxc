@@ -24,6 +24,7 @@ import TimeoutCell from './components/timeout-cell'
 
 //directives
 import TransferDom from './directives/transfer-dom'
+import ClickOutside from './directives/click-outside'
 
 //plugins
 import BusPlugin from './plugins/bus/index.js'
@@ -68,6 +69,7 @@ export {
    * directives
    */
   TransferDom,
+  ClickOutside,
 
   /**
    * plugins

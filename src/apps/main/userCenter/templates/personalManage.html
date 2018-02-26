@@ -5,13 +5,13 @@
       <div class="control-group">
         <label class="control-label">用户名：</label>
         <div class="controls">
-          <span class="js-uc-userName font-sm" ></span>
+          <span class="js-uc-userName font-sm"></span>
         </div>
       </div>
       <div class="control-group">
         <label class="control-label">注册日期：</label>
         <div class="controls">
-          <span class="js-uc-regTime font-sm" ></span>
+          <span class="js-uc-regTime font-sm"></span>
         </div>
       </div>
       <div class="control-group">
@@ -20,9 +20,10 @@
           <input type="text" class="js-uc-uName input4 font-sm" name="uname"
                  data-parsley-errors-container=".js-uc-pm-uname-error"
                  data-parsley-zhLength="[4,16]" data-parsley-userUName
-                 data-parsley-remote data-parsley-remote-validator="checkusername"
-                 data-parsley-remote-options='{"type": "POST"}'
-                 data-parsley-remote-message="昵称已被使用" required />
+                 required/>
+          <!--data-parsley-remote data-parsley-remote-validator="checkusername"-->
+          <!--data-parsley-remote-options='{"type": "POST"}'-->
+          <!--data-parsley-remote-message="昵称已被使用" -->
           <!--<span class="help-inline">4-16个字符，支持中英文和数字，不能以数字开头</span>-->
           <input type="hidden" class="js-uc-userUName-val-res" value="1">
           <div class="js-uc-pm-uname-error parsley-error-container inline-block" style="max-width: 350px"></div>
@@ -51,7 +52,8 @@
       <div class="control-group">
         <label class="control-label">生日：</label>
         <div class="controls">
-          <select name="bday1" class="js-bday1 basic-arrow input1 font-sm"  data-parsley-errors-container=".js-uc-pm-birthday-error" required>
+          <select name="bday1" class="js-bday1 basic-arrow input1 font-sm"
+                  data-parsley-errors-container=".js-uc-pm-birthday-error" required>
             <option value="" selected>月
             <option value="01">1月</option>
             <option value="02">2月</option>
@@ -66,7 +68,7 @@
             <option value="11">11月</option>
             <option value="12">12月</option>
           </select>
-          <select name="bday1" class="js-bday2 basic-arrow input1 font-sm"  >
+          <select name="bday1" class="js-bday2 basic-arrow input1 font-sm">
             <!--<option value="" selected>日-->
             <option value="01">1日</option>
             <option value="02">2日</option>
@@ -121,7 +123,7 @@
         <label class="control-label p-top-xs">收货人：</label>
         <div class="controls">
           <input type="text" class="font-sm input4 input-address js-uc-receiver" name="exName"
-                 data-parsley-errors-container=".js-uc-pm-exName-error" data-parsley-range="[2,10]"  />
+                 data-parsley-errors-container=".js-uc-pm-exName-error" data-parsley-range="[2,10]"/>
           <div class="js-uc-pm-exName-error parsley-error-container inline-block" style="max-width: 350px"></div>
         </div>
       </div>
@@ -129,7 +131,8 @@
         <label class="control-label p-top-xs">收货手机：</label>
         <div class="controls">
           <input type="text" class="font-sm input4 input-address js-uc-phone" name="exPhone"
-                 data-parsley-errors-container=".js-uc-pm-exPhone-error" data-parsley-phone  />
+                 data-parsley-errors-container=".js-uc-pm-exPhone-error" data-parsley-phone
+                 data-payslety-phone-message="手机号码格式不正确"/>
           <div class="js-uc-pm-exPhone-error parsley-error-container inline-block" style="max-width: 350px"></div>
         </div>
       </div>
@@ -163,8 +166,10 @@
       <div class="control-group">
         <label class="control-label p-top-xs">详细地址：</label>
         <div class="controls">
-          <textarea class="address-detail js-uc-address-detail" data-parsley-errors-container=".js-uc-pm-address-detail-error" ></textarea>
-          <div class="js-uc-pm-address-detail-error parsley-error-container inline-block" style="max-width: 350px"></div>
+          <textarea class="address-detail js-uc-address-detail"
+                    data-parsley-errors-container=".js-uc-pm-address-detail-error"></textarea>
+          <div class="js-uc-pm-address-detail-error parsley-error-container inline-block"
+               style="max-width: 350px"></div>
         </div>
       </div>
       <div class="controls">
