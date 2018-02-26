@@ -127,7 +127,7 @@ const TransferView = Base.ItemView.extend({
     const self = this
     const $from = this.$('.js-tr-out-selectedItem').data('id')
     const $to = this.$('.js-tr-in-selectedItem').data('id')
-    if (!Global.memoryCache.get('platformInfo')) {
+    // if (!Global.memoryCache.get('platformInfo')) {
       this.getPlatformInfoXhr({channelId: Number($to) || Number($from) || '1'}).always(() => {
         this.loadingFinish()
       }).done((res) => {
@@ -135,16 +135,16 @@ const TransferView = Base.ItemView.extend({
           self.plaftfromData = res.root
           this.$('.fc-tr-amount-tips').toggleClass('hidden', false)
           this.$('.fc-rc-leftBar-bottom-area').css('top', '235px')
-          Global.memoryCache.set('platformInfo', res.root)
+          // Global.memoryCache.set('platformInfo', res.root)
           self.renderPlatformTransferTypeLimit()
         }
       })
-    } else {
-      self.plaftfromData = Global.memoryCache.get('platformInfo')
-      this.$('.fc-tr-amount-tips').toggleClass('hidden', false)
-      this.$('.fc-rc-leftBar-bottom-area').css('top', '235px')
-      self.renderPlatformTransferTypeLimit()
-    }
+    // } else {
+    //   self.plaftfromData = Global.memoryCache.get('platformInfo')
+    //   this.$('.fc-tr-amount-tips').toggleClass('hidden', false)
+    //   this.$('.fc-rc-leftBar-bottom-area').css('top', '235px')
+    //   self.renderPlatformTransferTypeLimit()
+    // }
   },
   // 修改面板规则及展示数据
   renderPlatformTransferTypeLimit() {
@@ -201,7 +201,7 @@ const TransferView = Base.ItemView.extend({
     // }
     // 获取充值初始化金额
     const amountList = transferService.getQuickAmountHtml(data.amount)
-    this.$('.js-tr-amount-input').val(amountList.amount)
+    // this.$('.js-tr-amount-input').val(amountList.amount)
     //  遍历取快捷金额配置
     this.$('.js-tr-quickPay-select').html(amountList.setHtml)
     this.$('.js-tr-balance').html(_(data.validBalance).convert2yuan())
@@ -244,7 +244,7 @@ const TransferView = Base.ItemView.extend({
     this.$('.js-tr-out-select').removeClass('side-down').scrollTop(0)
     this.$('.js-tr-select-out-down').removeClass('up')
     const selectId = $target.data('id')
-    const toId = this.$('.js-tr-in-selectedItem').data('id')
+    let toId = this.$('.js-tr-in-selectedItem').data('id')
     if (selectId === 0) {
       // 重新初始化转出钱包框
       const fromData = transferService.getFromData(0)
@@ -269,8 +269,10 @@ const TransferView = Base.ItemView.extend({
       this.$('.js-tr-in-selected').html(toData.toSelected)
       this.$('.js-tr-in-items').html(toData.toItems)
     }
+    toId = this.$('.js-tr-in-selectedItem').data('id')
     this.getPlatformInfoXhr({channelId: Number(toId) || Number(selectId) || '1'}).done((res) => {
       if (res.result === 0) {
+        self.plaftfromData = res.root
         this.renderPlatformTransferTypeLimit()
       }
     })
@@ -281,7 +283,7 @@ const TransferView = Base.ItemView.extend({
     this.$('.js-tr-in-select').removeClass('side-down').scrollTop(0)
     this.$('.js-tr-select-in-down').removeClass('up')
     const selectId = $target.data('id')
-    const fromId = this.$('.js-tr-out-selectedItem').data('id')
+    let fromId = this.$('.js-tr-out-selectedItem').data('id')
     if (selectId === 0) {
       // 重新初始化转出钱包框
       const toData = transferService.getToData(0)
@@ -306,8 +308,10 @@ const TransferView = Base.ItemView.extend({
       this.$('.js-tr-in-selected').html(toData.toSelected)
       this.$('.js-tr-in-items').html(toData.toItems)
     }
+    fromId = this.$('.js-tr-out-selectedItem').data('id')
     this.getPlatformInfoXhr({channelId: Number(selectId) || Number(fromId) || '1'}).done((res) => {
       if (res.result === 0) {
+        self.plaftfromData = res.root
         this.renderPlatformTransferTypeLimit()
       }
     })
@@ -374,6 +378,7 @@ const TransferView = Base.ItemView.extend({
     this.$('.js-tr-in-items').html(toData.toItems)
     this.getPlatformInfoXhr({channelId: Number(toChannel) || Number(fromChannel) || '1'}).done((res) => {
       if (res.result === 0) {
+        self.plaftfromData = res.root
         this.renderPlatformTransferTypeLimit()
       }
     })
