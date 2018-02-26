@@ -1,21 +1,20 @@
 <template>
   <div class="bc-main-wrapper clearfix">
     <div class="bc-main">
-      <betting-quick-nav :key="'quick-nav'" :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType" :component-type="componentType"></betting-quick-nav>
+      <!--<betting-quick-nav :key="'quick-nav'" :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType" :component-type="componentType"></betting-quick-nav>-->
       <mmc-betting-main-area :ticket-info="ticketInfo" :ticket-id="ticketId" :component-type="componentType"></mmc-betting-main-area>
     </div>
   </div>
 </template>
 
 <script>
-  import BettingQuickNav from './betting-quick-nav'
+  // import BettingQuickNav from './betting-quick-nav'
   import MmcBettingMainArea from './mmc-betting-main-area'
 
   export default {
     name: "mmc-betting-center",
 
     components: {
-      BettingQuickNav,
       MmcBettingMainArea
     },
 

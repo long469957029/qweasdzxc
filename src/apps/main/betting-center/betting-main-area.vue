@@ -78,7 +78,7 @@
               <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
               <span>元</span>
             </div>
-            <div class="pull-right m-right-sm">
+            <div class="pull-right">
               <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                       :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                 <span class="sfa sfa-btn-icon-bolt vertical-middle"></span>
@@ -139,18 +139,17 @@
                                     :value="bettingChoice.totalInfo.fTotalMoney"></animated-integer>
                   <span>元</span>
                 </span>
+                <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
+                                  :betting-money="bettingChoice.totalInfo.totalMoney"
+                                  v-model="totalVoucher" ref="totalBettingVouchers"
+                ></betting-vouchers>
               </div>
-
-              <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
-                                :betting-money="bettingChoice.totalInfo.totalMoney"
-                                v-model="totalVoucher" ref="totalBettingVouchers"
-              ></betting-vouchers>
 
               <button class="bc-chase btn-link inline-block cursor-pointer m-left-md relative" @click="bettingChase"
                       :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                 <span class="sfa sfa-checkmark vertical-middle"></span>
                 我要追号
-                <span class="ba-chase-tip">追号能提高中奖率</span>
+                <span class="ba-chase-tip">可提高中奖率</span>
               </button>
             </div>
             <div class="m-top-md p-top-sm text-center m-bottom-md">
@@ -777,6 +776,8 @@
     text-decoration: none;
     font-size: 12px;
     color: #666666;
+    float: right;
+    margin-right: 86px;
   }
 
   .advance-play-des {
@@ -873,14 +874,14 @@
 
   .ba-chase-tip {
     position: absolute;
-    width: 120px;
+    width: 93px;
     height: 19px;
     line-height: 19px;
     color: $def-white-color;
     background-color: $main-deep-color;
     text-align: center;
     font-size: $font-xs;
-    top: 3px;
+    top: 1px;
     left: 80px;
     border-radius: 3px;
     &:before {
@@ -891,7 +892,7 @@
       border: 5px transparent solid;
       border-right-color: $main-deep-color;
       left: -9px;
-      top: 3px;
+      top: 4px;
     }
   }
 
@@ -905,8 +906,7 @@
   }
 
   .bc-lottery-preview {
-    width: 878px;
-    margin-right: 10px;
+    width: 883px;
     border-radius: $globalBtnRadius;
     border: 1px solid $def-gray-color;
   }
@@ -917,6 +917,7 @@
 
   .total-panel {
     min-width: 450px;
+    margin-left: 180px;
   }
 
   .bc-play-container.clearfix {

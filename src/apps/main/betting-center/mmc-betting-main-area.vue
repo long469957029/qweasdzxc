@@ -36,7 +36,7 @@
     </div>
     <div class="mmc-lottery-main" ref="main">
       <div class="mmc-lottery-main-open" ref="mainOpen">
-        <div class="opening-title" v-if="opening">第<span class="opening-title-inner">{{currentOpeningCount}}</span>/{{openingCount}}期
+        <div class="opening-title" v-if="opening">第<span class="opening-title-inner">{{currentOpeningCount}}</span>/{{currentBettingList.openingCount}}期
           正在开奖
         </div>
         <div class="opening-title cursor-pointer" v-else @click="reSelect">重新选号</div>
@@ -47,20 +47,22 @@
                 投注内容
               </span>
               <span class="font-sm m-left-sm">
-                投注<span class="text-cool">{{openingCount}}</span>次，共<span class="text-prominent">{{fTotalMoney}}</span>元
+                投注<span class="text-cool">{{currentBettingList.openingCount}}</span>次，共<span class="text-prominent">{{fTotalMoney}}</span>元
               </span>
             </div>
             <div class="opening-group" ref="previewGroup">
-              <div class="opening-cell" v-for="(preview, index) in fPreviewList">
-                <div class="opening-left">【{{preview.title}}】</div>
+              <div class="opening-cell" v-for="(preview, index) in currentBettingList.bettingList">
+                <div class="opening-left">
+                  【{{preview.levelName}}_{{preview.playName}}】
+                </div>
 
-                <div class="opening-center" v-if="preview.formatBetNum.length <= 20">{{preview.formatBetNum}}</div>
+                <div class="opening-center" v-if="preview.formatBettingNumber.length <= 20">{{preview.formatBettingNumber}}</div>
                 <div class="opening-center" v-else v-popover.right="{name: `open${index}`}">
-                  <a href="javascript:void(0)" class="btn-link">{{preview.formatBetNum | formatOpenNum}}</a>
+                  <a href="javascript:void(0)" class="btn-link">{{preview.formatBettingNumber | formatOpenNum}}</a>
                   <div v-transfer-dom>
                     <popover :name="`open${index}`">
                       <div class="title">详细号码</div>
-                      <div class="">{{preview.betNum}}</div>
+                      <div class="">{{preview.bettingNumber}}</div>
                     </popover>
                   </div>
                 </div>
@@ -166,7 +168,7 @@
               <option value="100">分</option>
               <option value="10">厘</option>
             </select>
-            <div class="inline-block m-LR-sm">
+            <div class="inline-block">
               <span class="vertical-middle bc-multi-range inline-block" ref="multiRange"></span>
               <label class="m-left-xs">倍</label>
             </div>
@@ -229,7 +231,8 @@
         </div>
 
         <div class="bottom-panel text-inverse">
-          <div class="total-panel font-sm">
+          <div class="total-panel">
+            <span class="font-sm">
             <span>
             <span>预期奖金</span>
             <animated-integer class="text-prominent"
@@ -243,6 +246,7 @@
             <animated-integer class="text-prominent m-left-xs m-right-xs"
                               :value="bettingChoice.totalInfo.fTotalMoney"></animated-integer>
             <span>元</span>
+            </span>
             <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
                               :betting-money="bettingChoice.totalInfo.totalMoney"
                               v-model="totalVoucher"
@@ -456,6 +460,10 @@
             })
             Velocity(this.$refs.mainInner, {
               opacity: 0,
+            }, {
+              complete: () => {
+                this.$refs.mainInner.style.visibility = 'hidden'
+              }
             })
             Velocity(this.$refs.mainOpen, {
               opacity: 1,
@@ -467,10 +475,13 @@
         if (selectStatus) {
 
           Velocity(this.$refs.main, {
-            height: 1005
+            height: 1005,
           })
           Velocity(this.$refs.mainInner, {
             opacity: 1,
+            complete: () => {
+              this.$refs.mainInner.style.visibility = 'initial'
+            }
           })
           Velocity(this.$refs.mainOpen, {
             opacity: 0,
@@ -626,7 +637,8 @@
         this.fOpeningResultList[0].completed = true
         this.totalWinPrize += this.fOpeningResultList[0].winPrize
         this.fTotalWinPrize = _.convert2yuan(this.totalWinPrize)
-        if (this.currentOpeningCount < this.totalOpeningCount && !this.stopping && !(this.stopWhenWinning && this.fOpeningResultList[0].winPrize)) {
+        if (this.currentOpeningCount < this.totalOpeningCount && !this.stopping &&
+          !(this.currentBettingList.stopWhenWinning && this.fOpeningResultList[0].winPrize)) {
           ++this.currentOpeningCount
           this.$_pushBetting()
         } else {
@@ -653,7 +665,7 @@
         this.opening = true
         this.pushing = true
         this.selectStatus = false
-        this.totalOpeningCount = this.openingCount
+        this.totalOpeningCount = this.currentBettingList.openingCount
         this.currentOpeningCount = 1
         this.totalWinPrize = 0
         this.fTotalWinPrize = 0
@@ -755,8 +767,10 @@
 
         Global.m.oauth.check()
 
+        const useVoucher = !_.isEmpty(this.totalVoucher)
+
         this.$store.dispatch(types.PUSH_MMC_BETTING, {
-          bettingList: this.bettingList,
+          bettingList: this.currentBettingList.bettingList,
           prevVoucher: this.totalVoucher,
         })
           .then((res) => {
@@ -765,6 +779,12 @@
 
               if (init) {
                 this.$_prepareOpening()
+
+                if (useVoucher) {
+                  this.$store.dispatch(types.GET_VOUCHERS, {
+                    ticketId: this.ticketId,
+                  })
+                }
               }
 
               const fOpeningResult = this.$_formatOpeningResult(res.root, this.currentOpeningCount)
@@ -996,7 +1016,6 @@
     left: 33px;
     width: 1190px;
     background: url(./misc/mmc-content-slice.png) repeat-y center center;
-    /*overflow: hidden;*/
   }
 
   .bottom-panel {
@@ -1049,7 +1068,7 @@
     width: 1100px;
     position: relative;
     left: 28px;
-    z-index: 1;
+    z-index: 4;
   }
 
   .mmc-lottery-main-open {
@@ -1104,6 +1123,8 @@
 
   .bc-play-main {
     user-select: none;
+    padding-top: 40px;
+
     .bc-play-left {
       width: 849px;
       border-right: 1px solid $def-line-color;
@@ -1246,6 +1267,7 @@
     height: 30px;
     padding-left: 12px;
     @include select-def;
+    margin-right: 5px;
   }
 
   .bc-m-select {
@@ -1262,6 +1284,7 @@
     top: 260px;
     left: 338px;
     background-color: transparent;
+    z-index: 3;
   }
 
   .bc-md-btn {
@@ -1375,8 +1398,6 @@
   }
 
   .total-panel {
-    display: flex;
-    align-items: center;
     flex: 1;
   }
 

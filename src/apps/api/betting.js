@@ -198,12 +198,14 @@ const setTopCurrentTicketApi = ({ticketId, type = 0}) => {
 /**
  * 秒秒彩开奖
  * @param bet
- * @param usePack
+ * @param couponRid
  * @param then
  * @param fail
- * @returns {*|Promise<T>}
+ * @returns {* | Promise<T>}
  */
-const pushMmcBettingApi = ({bet, usePack = 0 }, then, fail) => {
+const pushMmcBettingApi = ({bet, couponRid = 0}, then, fail) => {
+  const usePack = !!couponRid ? 1 : 0
+
   return $http({
     url: '/ticket/bet/betMmc.json',
     tradition: true,
@@ -211,6 +213,7 @@ const pushMmcBettingApi = ({bet, usePack = 0 }, then, fail) => {
       planId: 'mmc',
       bet,
       usePack,
+      couponRid
     }
   })
     .then(then)

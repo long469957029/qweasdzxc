@@ -565,9 +565,6 @@
     }
     .select-item-title {
       margin-left: 10px;
-      > div {
-        min-width: 45px;
-      }
     }
     .bc-playArea-items {
       margin: 20px auto 0;

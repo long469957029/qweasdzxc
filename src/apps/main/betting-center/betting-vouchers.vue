@@ -1,6 +1,6 @@
 <template>
   <div class="betting-vouchers" v-click-outside="hidePopover">
-    <span class="sfa sfa-bc-vouchers" @click.stop.prevent="togglePopover"></span>
+    <div class="sfa-bc-vouchers" @click.stop.prevent="togglePopover"></div>
     <div class="vouchers-popover" :class="{in: show}">
       <div class="arrow"></div>
       <div class="popover-content">
@@ -34,13 +34,14 @@
 
 <script>
 
-  import {ClickOutside} from 'build'
+  import {ClickOutside, TransferDom} from 'build'
 
   export default {
     name: "betting-vouchers",
 
     directives: {
-      ClickOutside
+      ClickOutside,
+      TransferDom
     },
 
     props: {
@@ -62,6 +63,7 @@
       list: {
         handler() {
           this.fList = this.list
+          this.$emit('input', {})
         },
         immediate: true
       },
@@ -176,6 +178,10 @@
           }).value()
         }
       })
+    },
+
+    beforeDestroy() {
+      this.$emit('input', {})
     }
   }
 </script>
@@ -200,10 +206,11 @@
       border-radius: 6px;
       box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
       background: #ffffff;
-      width: 355px;
+      width: 324px;
       height: 220px;
       transform-origin: top left;
       animation: q cubic-bezier(.22,.58,.12,.98) .4s;
+      box-sizing: border-box;
 
       &.in {
         display: block;
@@ -231,7 +238,7 @@
 
     .vouchers-main {
       overflow: auto;
-      height: 160px;
+      height: 140px;
     }
 
     .vouchers-title {
@@ -258,6 +265,10 @@
       color: #108f97;
       margin-right: 15px;
       cursor: pointer;
+    }
+
+    .unit-right {
+      line-height: 17px;
     }
 
     .vouchers-unit {
