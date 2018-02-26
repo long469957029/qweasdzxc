@@ -64,6 +64,7 @@ const _bindFundOperatorDialogHandler = () => {
   $(document).off('click.fundDialog').on('click.fundDialog', '.js-header-recharge', (e) => {
     const $target = $(e.currentTarget)
     const tabName = $target.data('name')
+    const toId = $target.data('toid')
     const acctInfo = Global.memoryCache.get('acctInfo')
     if (!acctInfo || acctInfo.userStatus === 100) {
       Global.ui.notification.show('用户已被冻结，无法进行资金操作')
@@ -78,7 +79,8 @@ const _bindFundOperatorDialogHandler = () => {
       body: '<div class="js-fund-operate-container"></div>',
     })
     const rechargeView = new RechargeView({
-      triggerTab: tabName
+      triggerTab: tabName,
+      toId: toId,
     })
 
     $fundOperateDialog.find('.js-fund-operate').html(rechargeView.render().el)
@@ -228,6 +230,18 @@ const _bindImDialogHandler = () => {
     })
   })
 }
+//侧边栏关闭
+const _bindToolBarCloseHandler = () => {
+  $(document).off('click.toolbar').on('click.toolbar','.js-wrapper',(e)=>{
+    let $container = $('.js-toolbar-container')
+    $container.find('.js-toolbar-option').each((index, dom) => {
+      $(dom).removeClass('active')
+    })
+    $container.removeClass('open')
+    $container.find('.js-toolbar-option-container').css('margin-left','-48px')
+    $container.find('.toolbar-option').css('border-radius','3px')
+  })
+}
 App.addInitializer(() => {
   // App.navbarRegin.show(new NavbarView({
   //   navbar: Global.ui.menu.getNav(),
@@ -244,6 +258,7 @@ App.addInitializer(() => {
   _bindBetDetailHandler() // 全局投注详情弹窗
   _bindChaseDetailHandler()
   _bindImDialogHandler() // 站内信弹窗
+  _bindToolBarCloseHandler()//侧边栏
   // _bindCloseTablePopoverHandler()
 })
 

@@ -84,6 +84,12 @@
                 position: absolute;
                 left: 230px;
               }
+              .rc-desc-more {
+                display: inline-block;
+                color: #999999;
+                position: absolute;
+                left: 230px;
+              }
               .select-down {
                 width: 18px;
                 height: 10px;
@@ -100,6 +106,9 @@
                 border: 1px solid $new-main-deep-color;
                 height: 320px;
                 overflow: auto;
+                .rc-desc-more {
+                  display: none;
+                }
               }
             }
             .fc-rc-payType-item {
@@ -158,6 +167,12 @@
                 position: absolute;
                 left: 230px;
               }
+              .rc-desc-more {
+                display: inline-block;
+                color: #999999;
+                position: absolute;
+                left: 230px;
+              }
               .select-down {
                 width: 18px;
                 height: 10px;
@@ -174,6 +189,9 @@
                 border: 1px solid $new-main-deep-color;
                 height: 320px;
                 overflow: auto;
+                .rc-desc-more {
+                  display: none;
+                }
               }
               .fc-rc-bank-item {
                 border-top: 1px solid #e6e6e6;
@@ -773,6 +791,12 @@
               position: absolute;
               left: 255px;
             }
+            .rc-desc-more {
+              display: inline-block;
+              color: #999999;
+              position: absolute;
+              left: 255px;
+            }
             .select-down {
               width: 18px;
               height: 10px;
@@ -789,6 +813,9 @@
               border: 1px solid $new-main-deep-color;
               height: 320px;
               overflow: auto;
+              .rc-desc-more {
+                display: none;
+              }
             }
           }
 
@@ -837,6 +864,12 @@
               position: absolute;
               left: 255px;
             }
+            .rc-desc-more {
+              display: inline-block;
+              color: #999999;
+              position: absolute;
+              left: 255px;
+            }
             .select-down {
               width: 18px;
               height: 10px;
@@ -853,6 +886,9 @@
               border: 1px solid $new-main-deep-color;
               height: 320px;
               overflow: auto;
+              .rc-desc-more {
+                display: none;
+              }
             }
           }
 
@@ -1067,7 +1103,7 @@
             overflow: hidden;
             width: 320px;
             max-height: 251px;
-            transition-timing-function: ease-out;
+            transition: all .6s ease-out;
             //height: 50px;
             background: #ffffff;
             border: 1px solid #cccccc;
@@ -1077,7 +1113,7 @@
             position: relative;
             text-align: left;
             cursor: pointer;
-            transition: height 0.5s;
+            //transition: height 0.5s;
             padding: 0 20px;
             .js-wd-bank-selected {
               height: 50px !important;
@@ -1103,6 +1139,12 @@
               position: absolute;
               left: 255px;
             }
+            .rc-desc-more {
+              display: none;
+              color: #999999;
+              position: absolute;
+              left: 255px;
+            }
             .select-down {
               width: 18px;
               height: 10px;
@@ -1122,7 +1164,14 @@
             }
             &.shrink{
               max-height: 50px;
-              transition: all .6s ease-out;
+              transition-timing-function: ease-out;
+              .rc-desc-more {
+
+                display: inline-block;
+                color: #999999;
+                position: absolute;
+                left: 255px;
+              }
             }
           }
 

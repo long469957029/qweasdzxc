@@ -23,7 +23,7 @@ module.exports = {
     const feeTips = `收取<span class="text-account-fund">${fee}%</span>手续费，`
     const maxFeeTips = `最高不超过<span class="text-account-fund">${maxFee}</span>元`
     let feeTotalTips = ''
-    if (fee === 0 && maxFee === 0) {
+    if (fee === 0 ) {
       feeTotalTips = '免手续费'
     } else {
       feeTotalTips = `${feeTips}${maxFeeTips}`
@@ -149,7 +149,7 @@ module.exports = {
     selected.push(`<div class="js-fc-rc-payType-selectedItem" data-type="${selectedData.paymentType}" data-name="${name}"  data-id="${selectedData.paymentId}">`)
     selected.push(`<span class="js-rc-type-icon rc-icon ${logo}"></span>`)
     selected.push(`<span class="js-rc-type-name rc-name">${name}</span>`)
-    selected.push('<span class="js-rc-type-desc rc-desc"></span>')//其他支付方式
+    selected.push('<span class="js-rc-type-desc rc-desc-more">其他支付方式</span>')//其他支付方式
     selected.push('<span class="select-down js-select-type-down"></span></div>')
 
     // 取未选中的支付方式信息并赋值
@@ -223,7 +223,7 @@ module.exports = {
     }
     selected.push(`<span class="js-rc-type-icon rc-icon ${logo}"></span>`)
     selected.push(`<span class="js-rc-type-name rc-name">${name}</span>`)
-    selected.push('<span class="js-rc-type-desc rc-desc"></span>')//其他支付银行
+    selected.push('<span class="js-rc-type-desc rc-desc-more">其他支付银行</span>')//其他支付银行
     selected.push('<span class="select-down js-select-bank-down"></span></div>')
 
     // 取未选中的支付方式信息并赋值

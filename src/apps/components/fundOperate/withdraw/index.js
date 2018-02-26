@@ -229,7 +229,7 @@ const WithdrawView = Base.ItemView.extend({
   },
   amountChangeHandler() {
     const data = this.withdrawData
-    if (data.remainTimes <= 0) {
+    if (data && data.remainTimes <= 0) {
       const selectedBankId = this.$('.js-wd-bank-selectedItem')
       const amount = this.$('.js-wd-amount-input')
       const feeData = withdrawService.getFeeData(data, amount, selectedBankId)

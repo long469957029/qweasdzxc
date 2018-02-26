@@ -1,6 +1,10 @@
 <div class="sidebar">
   <% if(showTeamEntry){ %>
-  <a href="#<%=(!isTeam ? '/ac/to' : '/fc/fm')%>" class="team-entry"><%=(!isTeam ? '切换团队中心' : '切换个人中心')%> <span class="sfa sfa-icon-arrow-down"></span></a>
+  <a href="#<%=(!isTeam ? '/ac/to' : '/fc/fm')%>" class="team-entry">
+    <%=(!isTeam ? '切换团队中心' : '切换个人中心')%>
+    <span class="sfa sfa-icon-arrow-down"></span>
+    <span class="sfa sfa-icon-arrow-down"></span>
+  </a>
   <%}%>
   <% if(showUserInfo){ %>
   <div class="sidebar-user-info clearfix">
