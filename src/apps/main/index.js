@@ -65,7 +65,10 @@ window.router = router
 
 
 router.onReady(() => {
-  $('body').addClass('loaded')
+  $('body').addClass('wm-loaded')
+  _.delay(() => {
+    $('html').css('overflow', '')
+  }, 1000)
   // $('.js-wrapper').removeClass('hide')
 })
 //每次路由变化时调用，切换显示区域
