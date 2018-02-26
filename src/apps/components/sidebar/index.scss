@@ -27,6 +27,20 @@ $boder-def-color: #e6e6e6;
     writing-mode: vertical-lr;
     -webkit-writing-mode: vertical-lr;
     -ms-writing-mode: vertical-lr;
+    .sfa{
+      &:first-child{
+        position: relative;
+        top: 5px;
+        animation: arrow-down .8s infinite;
+        opacity: 0;
+      }
+      &:last-child{
+        position: relative;
+        top: -3px;
+        opacity: 0;
+        animation: arrow-down .8s .4s infinite;
+      }
+    }
   }
   .sidebar-user-info {
     width: 100%;
@@ -153,4 +167,12 @@ $boder-def-color: #e6e6e6;
   line-height: 18px;
   border-radius: 3px;
   color: $def-white-color;
+}
+@keyframes arrow-down {
+  0%,100%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
 }

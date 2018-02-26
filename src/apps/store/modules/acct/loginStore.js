@@ -152,6 +152,7 @@ const mutations = {
     Global.cookieCache.clear('loginState')
     Global.cookieCache.clear('security')
     Global.cookieCache.clear('isTestUser')
+    Global.cookieCache.clear('userBindInfo')
     window.Global.m.publish('acct:loginOut')
     // 关闭oauth轮询监听
     window.Global.m.oauth.stop()
@@ -167,6 +168,7 @@ const mutations = {
       Global.cookieCache.clear('loginState')
       Global.cookieCache.clear('security')
       Global.cookieCache.clear('isTestUser')
+      Global.cookieCache.clear('userBindInfo')
       window.Global.m.publish('acct:loginOut')
       // 关闭oauth轮询监听
       window.Global.m.oauth.stop()
