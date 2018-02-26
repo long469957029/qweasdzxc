@@ -332,16 +332,20 @@
     @media screen and (max-width: 1200px) {
       .header-assist {
         position: absolute;
-        left: 136px;
+        left: 140px;
       }
     }
     @media screen and (max-width: 1471px) {
       .header-assist {
-        /*position: absolute;*/
-        /*left: 136px;*/
-        float: left;
-        margin-left: 20px;
+        position: absolute;
+        left: 140px;
       }
+      /*.header-assist {*/
+        /*!*position: absolute;*!*/
+        /*!*left: 136px;*!*/
+        /*float: left;*/
+        /*margin-left: 20px;*/
+      /*}*/
     }
     @media screen and (min-width: 1472px) {
       .header-assist {
