@@ -134,7 +134,6 @@
                 </a>
               </div>
             </div>
-            <div class="bc-line"></div>
             <div class="m-LR-smd">
               <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'"
                            loading-tip="">
@@ -246,7 +245,7 @@
             <span>元</span>
             <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
                               :betting-money="bettingChoice.totalInfo.totalMoney"
-                              v-model="totalVoucher" ref="totalBettingVouchers"
+                              v-model="totalVoucher"
             ></betting-vouchers>
           </div>
           <div class="">
@@ -264,7 +263,7 @@
     </div>
     <div class="sfa-mmc-content-bottom">
       <button class="bottom-lg-btn sfa sfa-mmc-start-lg-btn no-border"
-              v-if="selectStatus" @click="lotteryConfirm"
+              v-if="selectStatus" @click="lotteryTotalConfirm"
               :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
       </button>
       <button class="bottom-lg-btn sfa sfa-mmc-stopping-btn no-border" v-else-if="stopping"
@@ -345,8 +344,6 @@
         continuousOpenSelectList: [1, 5, 10, 15, 20, 25],
         //开奖次数
         openingCount: 1,
-        //总投注金额
-        fTotalMoney: 0,
         //总中奖金额
         totalWinPrize: 0,
         fTotalWinPrize: 0,
@@ -354,9 +351,15 @@
         //当前正在开奖期数
         currentOpeningCount: 1,
 
-        //总
+        //中奖时停止
+        stopWhenWinning: false,
+        //总 开奖次数
         allOpeningCount: 1,
+        //总 中奖时停止
         allStopWhenWinning: false,
+
+        //用于当前投注模式 分为 快速开奖和最底部的总和开奖
+        currentBettingMode: '',
 
         //手动停止
         stopping: false,
@@ -367,8 +370,6 @@
         simulationOpen: false,
         //开奖中
         opening: false,
-        //中奖时停止
-        stopWhenWinning: false,
         selectStatus: true,
         flashIndex: 0,
         //最后开奖结果
@@ -408,20 +409,42 @@
         lastOpening: ['0', '0', '0', '0', '0'],
         fOpeningResultList: [],
 
-        //总投注代金券
+        //投注代金券
         totalVoucher: {},
       }
     },
     computed: {
+      currentBettingList() {
+        return this.currentBettingMode === 'buyList' ? {
+          bettingList: this.bettingChoice.buyList,
+          openingCount: this.openingCount,
+          stopWhenWinning: this.stopWhenWinning,
+        } : {
+          bettingList: this.bettingChoice.previewList,
+          openingCount: this.allOpeningCount,
+          stopWhenWinning: this.allStopWhenWinning,
+        }
+      },
+      //总投注金额
+      fTotalMoney() {
+        const totalMoney = _.reduce(this.currentBettingList.bettingList, (total, previewInfo) => {
+          total += previewInfo.prefabMoney
+
+          return total
+        }, 0)
+
+        return _.convert2yuan(totalMoney * this.currentBettingList.openingCount)
+      },
+
       ...mapState({
         bettingVouchers: 'bettingVouchers',
-
-        playLevels() {
-          return this.$store.getters.playLevels
-        },
+        foundsLock: state => state.loginStore.foundsLock,
         bettingChoice: 'bettingChoice',
         bettingInfo: 'bettingInfo',
-      })
+      }),
+      ...mapGetters([
+        'playLevels',
+      ])
     },
 
     watch: {
@@ -509,18 +532,6 @@
         }
       },
 
-      openingCount: {
-        handler() {
-          const totalMoney = _.reduce(this.bettingChoice.previewList, (total, previewInfo) => {
-            total += previewInfo.prefabMoney
-
-            return total
-          }, 0)
-
-          this.fTotalMoney = _.convert2yuan(totalMoney * this.openingCount)
-        }
-      },
-
       'bettingChoice.formatMaxMultiple': {
         handler(newVal) {
           $(this.$refs.multiRange).numRange('setRange', 1, newVal)
@@ -554,7 +565,7 @@
             }
           }, this)
 
-          this.fTotalMoney = _.convert2yuan(totalMoney * this.openingCount)
+          // this.fTotalMoney = _.convert2yuan(totalMoney * this.openingCount)
 
           this.$nextTick(() => {
             _.each(this.$refs.lotteryGrid.getRows(), (row, index) => {
@@ -708,97 +719,12 @@
         this.lotteryConfirm()
       },
 
-      lotteryBuy() {
-        if (!this.bettingChoice.multiple) {
-          Global.ui.notification.show('倍数为0，不能投注')
-          return false
-        }
-
-        if (this.playRule.type === 'select') {
-          this.$_addSelectLottery({type: 'buy'})
-        } else {
-          this.$_addInputLottery({type: 'buy'})
-        }
-
-        //do save
-        let planId = this.bettingInfo.planId
-        const inputCount = _(this.bettingChoice.buyList).reduce((_inputCount, previewInfo) => {
-          if (previewInfo.type === 'input') {
-            _inputCount += previewInfo.statistics
-          }
-          return _inputCount
-        }, 0)
-
-        if (inputCount > 100000) {
-          Global.ui.notification.show('非常抱歉，目前平台单式投注只支持最多10万注单。')
-          return false
-        }
-        if (_.isEmpty(this.bettingChoice.buyList)) {
-          Global.ui.notification.show('请至少选择一注投注号码！')
-          return false
-        }
-
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
-          Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
-          return false
-        }
-        const maxBetNums = this.bettingChoice.playInfo.maxBetNums
-        if (maxBetNums && !_.isNull(maxBetNums) && Number(this.bettingChoice.buyList[0].statistics) > maxBetNums) {
-          Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${maxBetNums} 注，请重新选择  `)
-          this.$store.commit(types.EMPTY_BUY_BETTING)
-          return false
-        }
-
-        this.pushing = true
-
-        this.$store.dispatch(types.PUSH_BETTING, {
-          planId,
-          type: 'buyList'
-        })
-          .catch(() => {
-            this.pushing = false
-          })
-          .then((res) => {
-            this.pushing = false
-            if (res && res.result === 0) {
-              this.$refs.bettingRecords.update()
-
-              Global.m.oauth.check()
-
-              if (useVoucher) {
-                this.$store.dispatch(types.GET_VOUCHERS, {
-                  ticketId: this.ticketId,
-                })
-              }
-
-              Global.ui.notification.show('投注成功！', {
-                type: 'success',
-                hasFooter: false,
-                displayTime: 800,
-              })
-            } else {
-              if (res.msg.indexOf('余额不足') > -1) {
-                Global.ui.notification.show(res.msg || '', {
-                  btnContent: '充值',
-                  event: () => {
-                    $('.header-main .js-header-recharge').trigger('click.fundDialog')
-                  }
-                })
-              } else {
-                Global.ui.notification.show(res.msg || '')
-              }
-            }
-
-            this.$_emptySelect();
-          })
-      },
-
       lotteryConfirm() {
         if (this.opening || this.pushing) {
           return
         }
 
-        const inputCount = _(this.bettingChoice.previewList).reduce((_inputCount, previewInfo) => {
+        const inputCount = _(this.currentBettingList.bettingList).reduce((_inputCount, previewInfo) => {
           if (previewInfo.type === 'input') {
             _inputCount += previewInfo.statistics
           }
@@ -810,20 +736,15 @@
           return false
         }
 
-        if (_.isEmpty(this.bettingChoice.previewList)) {
+        if (_.isEmpty(this.currentBettingList.bettingList)) {
           Global.ui.notification.show('请至少选择一注投注号码！')
           return false
         }
 
 
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
+        if (this.foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
-        }
-
-        //优惠券
-        if (this.$refs.totalBettingVouchers) {
-          this.$refs.totalBettingVouchers.togglePopover({toggle: false})
         }
 
         this.$_pushBetting({init: true})
@@ -835,13 +756,10 @@
         Global.m.oauth.check()
 
         this.$store.dispatch(types.PUSH_MMC_BETTING, {
-          type: 'previewList'
+          bettingList: this.bettingList,
+          prevVoucher: this.totalVoucher,
         })
-          .catch(() => {
-            this.pushing = false
-          })
           .then((res) => {
-            this.pushing = false
 
             if (res && res.result === 0) {
 
@@ -849,9 +767,9 @@
                 this.$_prepareOpening()
               }
 
-              const fOpeningReuslt = this.$_formatOpeningResult(res.root, this.currentOpeningCount)
-              this.fOpeningResultList.unshift(fOpeningReuslt)
-              this.lastOpening = fOpeningReuslt.fOpenCode
+              const fOpeningResult = this.$_formatOpeningResult(res.root, this.currentOpeningCount)
+              this.fOpeningResultList.unshift(fOpeningResult)
+              this.lastOpening = fOpeningResult.fOpenCode
 
             } else {
               this.opening = false
@@ -866,6 +784,9 @@
                 Global.ui.notification.show(res.msg || '')
               }
             }
+          })
+          .finally(() => {
+            this.pushing = false
           })
       },
 
@@ -958,23 +879,34 @@
         }
       },
 
-      lotteryAdd() {
+      lotteryAdd(type = 'preview') {
         if (!this.bettingChoice.multiple) {
           Global.ui.notification.show('倍数为0，不能投注')
           return false
         }
 
         if (this.playRule.type === 'select') {
-          return this.$_addSelectLottery()
+          return this.$_addSelectLottery({type})
         } else {
-          return this.$_addInputLottery()
+          return this.$_addInputLottery({type})
         }
       },
 
       lotteryAddAndConfirm() {
-        if (this.lotteryAdd()) {
-          this.lotteryConfirm()
+        if (this.lotteryAdd('buy')) {
+          this.currentBettingMode = 'buyList'
+
+          this.$nextTick(() => {
+            this.lotteryConfirm()
+          })
         }
+      },
+      lotteryTotalConfirm() {
+        this.currentBettingMode = 'prevList'
+
+        this.$nextTick(() => {
+          this.lotteryConfirm()
+        })
       }
     },
 
@@ -1175,11 +1107,6 @@
     .bc-play-left {
       width: 849px;
       border-right: 1px solid $def-line-color;
-      .bc-line {
-        width: 100%;
-        height: 3px;
-        background: linear-gradient(to bottom, #dcdcdc, #f0f0f0);
-      }
     }
     .bc-side-area {
       width: 250px;
@@ -1282,6 +1209,7 @@
   .bc-play-select-area {
     min-height: 70px;
     display: flex;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
 
     .bc-advance-rules {
       color: #666666;
