@@ -65,8 +65,8 @@ window.router = router
 
 
 router.onReady(() => {
-  $('body').addClass('loaded').find('.wm-loader-wrapper').remove()
-  $('.js-wrapper').removeClass('hide')
+  $('body').addClass('loaded')
+  // $('.js-wrapper').removeClass('hide')
 })
 //每次路由变化时调用，切换显示区域
 router.beforeEach((to, from, next) => {
