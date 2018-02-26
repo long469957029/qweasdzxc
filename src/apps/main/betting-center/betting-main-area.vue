@@ -37,7 +37,6 @@
             </a>
           </div>
         </div>
-        <div class="bc-line"></div>
         <div class="m-LR-smd">
           <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'" loading-tip="">
             <transition name="fade" mode="out-in"
@@ -582,10 +581,6 @@
 
         $(this.$refs.confirm).modal('hide')
 
-        if (this.$refs.totalBettingVouchers) {
-          this.$refs.totalBettingVouchers.togglePopover({toggle: false})
-        }
-
         const useVoucher = !_.isEmpty(this.totalVoucher)
 
         this.$store.dispatch(types.PUSH_BETTING, {
@@ -825,6 +820,7 @@
   .bc-play-select-area {
     min-height: 70px;
     display: flex;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
 
     .bc-advance-rules {
       color: #666666;

@@ -1,6 +1,6 @@
 <template>
-  <div class="betting-vouchers">
-    <span class="sfa sfa-bc-vouchers" @click="togglePopover"></span>
+  <div class="betting-vouchers" v-click-outside="hidePopover">
+    <span class="sfa sfa-bc-vouchers" @click.stop.prevent="togglePopover"></span>
     <div class="vouchers-popover" :class="{in: show}">
       <div class="arrow"></div>
       <div class="popover-content">
@@ -34,8 +34,14 @@
 
 <script>
 
+  import {ClickOutside} from 'build'
+
   export default {
     name: "betting-vouchers",
+
+    directives: {
+      ClickOutside
+    },
 
     props: {
       bettingMoney: {
@@ -105,6 +111,9 @@
     },
 
     methods: {
+      hidePopover() {
+        this.togglePopover({toggle: false})
+      },
       togglePopover({toggle} = {}) {
         this.show = !_.isUndefined(toggle) ? toggle : !this.show
       },
