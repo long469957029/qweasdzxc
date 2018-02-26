@@ -39,7 +39,7 @@ const TransferView = Base.ItemView.extend({
       tradition: true,
     })
   },
-  getActivityInfo () {
+  getActivityInfo() {
     return Global.sync.ajax({
       url: '/info/activityCenter/fundList.json',
     })
@@ -63,17 +63,20 @@ const TransferView = Base.ItemView.extend({
     } else {
       this.$('.jc-rc-activity').html(rechargeService.getFunActivity(Global.memoryCache.get('rechargeAc')))
     }
-    this.subscribe('acct','acct:updating',(acctInfo)=>{
+    this.subscribe('acct', 'acct:updating', (acctInfo) => {
       this.updateBalance(acctInfo)
     })
+    //传入转账参数时，需要传入非中心钱包外的平台id值即可,均未传
+    let fromId = this.options.fromId || 0
+    let toId = (_.isUndefined(this.options.fromId) && _.isUndefined(this.options.toId)) ? fromData.fromSelected.id : (this.options.toId || 0)
 
     // 初始化转出钱包选择框
-    const fromData = transferService.getFromData()
+    const fromData = transferService.getFromData(fromId)
     this.$('.js-tr-out-selected').html(fromData.fromSelected)
     this.$('.js-tr-out-items').html(fromData.fromItems)
 
     // 初始化转入钱包选择框
-    const toData = transferService.getToData(fromData.fromSelected.id)
+    const toData = transferService.getToData(toId)
     this.$('.js-tr-in-selected').html(toData.toSelected)
     this.$('.js-tr-in-items').html(toData.toItems)
     // 初始化面板数据
@@ -84,7 +87,7 @@ const TransferView = Base.ItemView.extend({
     this.conInnerConWidth = 740
     this.conSize = this.$('.jc-fc-rc-view').size()
     this.cur = this.options.cur
-    if (!this.cur || this.cur>=1) {
+    if (!this.cur || this.cur >= 1) {
       this.cur = 0
     }
     this.platformParsley = this.$('.js-fc-tr-form').parsley({
@@ -123,7 +126,7 @@ const TransferView = Base.ItemView.extend({
     const self = this
     const $from = this.$('.js-tr-out-selectedItem').data('id')
     const $to = this.$('.js-tr-in-selectedItem').data('id')
-    if(!Global.memoryCache.get('platformInfo')){
+    if (!Global.memoryCache.get('platformInfo')) {
       this.getPlatformInfoXhr({channelId: Number($to) || Number($from) || '1'}).always(() => {
         this.loadingFinish()
       }).done((res) => {
@@ -135,7 +138,7 @@ const TransferView = Base.ItemView.extend({
           self.renderPlatformTransferTypeLimit()
         }
       })
-    }else{
+    } else {
       self.plaftfromData = Global.memoryCache.get('platformInfo')
       this.$('.fc-tr-amount-tips').toggleClass('hidden', false)
       this.$('.fc-rc-leftBar-bottom-area').css('top', '235px')
