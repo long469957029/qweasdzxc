@@ -112,7 +112,6 @@ const actions = {
 
         return data
       },
-      reject,
     )
   },
 
