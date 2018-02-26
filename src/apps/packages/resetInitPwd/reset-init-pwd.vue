@@ -30,7 +30,7 @@
           <span class="pwd-desc">新登录密码：</span>
           <input type="password" class="pwd-input" v-model="passwordModel" @focus="showDesc"
                  @blur="verifyPwd" @keyup.enter="resetInitPwd"
-                 autocomplete="off" required></div>
+                 autocomplete="new-password" required></div>
 
         <div class="message-container">
           <span class="sfa sfa-error-gray-icon" v-if="errorIcon===1"></span>
@@ -43,7 +43,7 @@
           <span class="pwd-desc-confirm">确认密码：</span>
           <input type="password" class="pwd-input" v-model="passwordcheckModel" @focus="showConfirmDesc"
                  @blur="verifyConfirmPwd" @keyup.enter="resetInitPwd"
-                 autocomplete="off" required></div>
+                 autocomplete="new-password" required></div>
 
         <div class="message-container confirm">
           <span class="sfa sfa-error-gray-icon" v-if="checkErrorIcon===1"></span>

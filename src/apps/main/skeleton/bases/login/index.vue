@@ -71,7 +71,7 @@
         codeSuccess: false,
         showCodeItem: false,
         toCircle: false,
-        codeUrl: 'http://forehead.5x5x.com/acct/imgcode/code?_t=1515997888887',
+        codeUrl: '/acct/imgcode/code?_t=1515997888887',
         pushing: false,
         errorMsg: '',
         username: '',
@@ -266,7 +266,7 @@
       refreshValCode () {
 //        const url = window.self.location.toString()
 //        const codeChangeUrl = `${url.substring(0, url.indexOf('/', url.indexOf('://', 0) + 3))}/acct/imgcode/code`
-        const codeChangeUrl = 'http://forehead.5x5x.com/acct/imgcode/code'
+        const codeChangeUrl = '/acct/imgcode/code'
         this.codeUrl = ''
         // 验证码
         this.codeUrl = `${codeChangeUrl}?_t=${_.now()}`
