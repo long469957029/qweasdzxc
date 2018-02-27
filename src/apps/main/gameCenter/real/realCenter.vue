@@ -13,7 +13,7 @@
             AG余额：
             <span>{{_(agAmount).formatDiv(10000, { fixed: 2 })}}</span>
           </div>
-          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer"
+          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer"  data-toid="1"
                @click="showLogin">余额转帐>
           </div>
           <div class="rc-item-hint-btn">GO<span class="go-arrow"></span></div>
@@ -33,7 +33,7 @@
             EBET余额：
             <span>{{_(ebetAmount).formatDiv(10000, { fixed: 2 })}}</span>
           </div>
-          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer"
+          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer"  data-toid="2"
                @click="showLogin">余额转帐>
           </div>
           <div class="rc-item-hint-btn">GO<span class="go-arrow"></span></div>
@@ -56,8 +56,8 @@
             BBIN余额：
             <span>{{_(bbinAmount).formatDiv(10000, { fixed: 2 })}}</span>
           </div>
-          <div :class="['rc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer"
-               @click="showLogin">余额转帐>
+          <div :class="['rc-item-link']" data-name="jsFcTransfer"
+               @click="showLogin(3)">余额转帐>
           </div>
           <div class="rc-item-hint-btn">GO<span class="go-arrow"></span></div>
           <div class="rc-item-primary-btn ripple-btn" @click="startGame(1,3,3)">立即游戏</div>
@@ -185,9 +185,13 @@
           }
         }
       },
-      showLogin() {
+      showLogin(gameId) {
         if (!this.getLoginStatus) {
           this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+        }else {
+          if (gameId === 3) {
+            Global.ui.notification.show('暂未开放，敬请期待')
+          }
         }
       },
       showDownLoad(gameId) {

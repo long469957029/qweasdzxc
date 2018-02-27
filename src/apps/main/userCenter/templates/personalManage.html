@@ -52,9 +52,9 @@
       <div class="control-group">
         <label class="control-label">生日：</label>
         <div class="controls">
-          <select name="bday1" class="js-bday1 basic-arrow input1 font-sm"
-                  data-parsley-errors-container=".js-uc-pm-birthday-error" required>
-            <option value="" selected>月
+          <select name="bday1" class="js-bday1 js-uc-pl-birthday basic-arrow input1 font-sm"
+                  data-parsley-errors-container=".js-uc-pm-birthday-error-hidden" required>
+            <option value="" selected>月</option>
             <option value="01">1月</option>
             <option value="02">2月</option>
             <option value="03">3月</option>
@@ -68,8 +68,8 @@
             <option value="11">11月</option>
             <option value="12">12月</option>
           </select>
-          <select name="bday1" class="js-bday2 basic-arrow input1 font-sm">
-            <!--<option value="" selected>日-->
+          <select name="bday1" class="js-bday2 js-uc-pl-birthday basic-arrow input1 font-sm" data-parsley-errors-container=".js-uc-pm-birthday-error-hidden" required>
+            <option value="" selected>日</option>
             <option value="01">1日</option>
             <option value="02">2日</option>
             <option value="03">3日</option>
@@ -103,7 +103,8 @@
             <option value="31">31日</option>
           </select>
           <span class="help-inline "> * 生日信息设置后不可修改</span>
-          <div class="js-uc-pm-birthday-error parsley-error-container inline-block" style="max-width: 350px"></div>
+          <div class="js-uc-pm-birthday-error-hidden parsley-error-container inline-block hidden"></div>
+          <div class="js-uc-pm-birthday-error inline-block"  style="max-width: 350px"></div>
         </div>
       </div>
       <div class="control-group">

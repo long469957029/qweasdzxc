@@ -210,8 +210,10 @@ const RechargeView = Base.ItemView.extend({
     this.$('input[name="bankId"]').val(this.$('.js-fc-rc-bank-selectedItem').data('id'))
     this.$('input[name="bankCode"]').val(this.$('.js-fc-rc-bank-selectedItem').data('code'))
     this.$('input[name="token"]').val(Global.cookieCache.get('token'))
+    this.$('.js-rc-money-input').removeAttr('data-parsley-type')
     if (this.parsley.validate()) {
       $form.submit()
+      this.$('.js-rc-money-input').attr('data-parsley-type','integer')
     } else {
       return false
     }

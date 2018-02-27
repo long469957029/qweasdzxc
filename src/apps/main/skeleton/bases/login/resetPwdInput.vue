@@ -16,15 +16,15 @@
           <div class="js-rp-code-error parsley-error-container inline-block" style="max-width: 144px"></div>
         </div>
       </div>
-      <div class="error-container text-center" v-show="error">
+      <div class="error-container " v-show="error">
         <span class="sfa sfa-error-icon vertical-middle"></span>
         {{errorText}}
       </div>
-      <div class="text-center m-top-md">
+      <div class=" m-top-md">
         <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyPhoneOrMail">提交</button>
       </div>
-      <div class="text-center">
-        <button type="button" class="btn btn-link font-sm m-top-sm" @click="goParentPrev">返回上一步</button>
+      <div class="">
+        <button type="button" class="btn btn-link re-btn font-sm m-top-sm" @click="goParentPrev">返回上一步</button>
       </div>
     </form>
   </div>
@@ -103,9 +103,16 @@
         )
       },
       verifyPhoneOrMail(){
-        if(this.code === ''){
-          this.error = true
-          this.errorText = '请输入验证码'
+        const status = $(this.$refs.verifyPhoneOrMail).parsley().validate()
+
+        // if(this.code === ''){
+        //   this.error = true
+        //   this.errorText = '请输入验证码'
+        //   return false
+        // }
+        this.error = false
+        this.errorText = ''
+        if(!status){
           return false
         }
         const url = this.findType === 2 ? '/acct/smscode/val.json' : '/acct/smtpCode/val.json'
@@ -163,5 +170,7 @@
     cursor: pointer;
     margin-left: 10px;
   }
-
+  .error-container{
+    margin-left: 130px;
+  }
 </style>

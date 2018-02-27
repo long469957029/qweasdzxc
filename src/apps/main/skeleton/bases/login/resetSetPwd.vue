@@ -20,11 +20,11 @@
           <div class="js-rp-password2-error parsley-error-container inline-block" style="max-width: 144px"></div>
         </div>
       </div>
-      <div class="error-container text-center" v-show="error">
+      <div class="error-container " v-show="error">
         <span class="sfa sfa-error-icon vertical-middle"></span>
         {{errorText}}
       </div>
-      <div class="text-center m-top-lg">
+      <div class=" m-top-lg">
         <button type="button" class="btn re-btn" data-loading-text="校验中" @click="setLoginPwd">提交</button>
       </div>
     </form>
@@ -75,5 +75,7 @@
   }
 </script>
 <style lang="scss" scoped>
-
+.error-container{
+  margin-left: 130px;
+}
 </style>

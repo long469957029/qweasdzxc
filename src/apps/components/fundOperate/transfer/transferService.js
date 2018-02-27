@@ -78,7 +78,7 @@ module.exports = {
     _(amountList).each((amount, index) => {
       setList.push('<li class="js-tr-select-quickSet')
       if (index === 0) { // 默认选择第一个配置，并初始化充值金额的值
-        setList.push(' active')
+        // setList.push(' active')//取消默认选中
         initAmount = amount
       }
       setList.push(`"data-value='${amount}'>${amount}</li>`)

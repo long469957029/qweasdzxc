@@ -341,7 +341,7 @@ define((require, exports, module) => {
       }
     },
     formateError(data) {
-      const errorTpl = `<span class="text-hot inline-block m-top-xs" style="margin-left: -17px;"><i class="sfa sfa-error-icon vertical-middle"></i>${data.errorText}</span>`
+      const errorTpl = `<span class="text-hot inline-block" style="margin-left: -17px;"><i class="sfa sfa-error-icon vertical-middle"></i>${data.errorText}</span>`
       data.el.html(errorTpl)
     },
   })

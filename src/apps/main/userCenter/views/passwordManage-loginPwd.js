@@ -47,9 +47,18 @@ const LoginPwdView = Base.ItemView.extend({
             })
             self.trigger('render:true')
           } else if (res.msg === 'fail' && (res.root !== null)) {
-            Global.ui.notification.show(`验证失败，${res.root}`)
+            // Global.ui.notification.show(`验证失败，${res.root}`)
+            const errorData = {
+              el: this.$('.js-uc-pl-lp-error'),
+              errorText: `验证失败，${res.root}`,
+            }
+            this.formateError(errorData)
           } else {
-            Global.ui.notification.show(`验证失败，${res.msg}`)
+            const errorData = {
+              el: this.$('.js-uc-pl-lp-error'),
+              errorText: `验证失败，${res.msg}`,
+            }
+            this.formateError(errorData)
           }
         })
     }
@@ -142,7 +151,10 @@ const LoginPwdView = Base.ItemView.extend({
       $ele.addClass('parsley-error').removeClass('parsley-success')
     }
   },
-
+  formateError(data) {
+    const errorTpl = `<span class="text-hot inline-block" style="margin-left: -17px;"><i class="sfa sfa-error-icon vertical-middle"></i>${data.errorText}</span>`
+    data.el.html(errorTpl)
+  },
 })
 
 module.exports = LoginPwdView

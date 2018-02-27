@@ -7,7 +7,7 @@
             <div class="fc-item-amount">
               AG余额：<span class="js-fc-agAmount">{{_(agAmount).formatDiv(10000, { fixed: 2 })}}</span>
             </div>
-            <div :class="['fc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">
+            <div :class="['fc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" data-toid="1" @click="showLogin">
               余额转帐
               <span class="fc-right-icon"></span>
             </div>
@@ -20,7 +20,7 @@
             <div class="fc-item-amount">
               GG余额：<span class="js-fc-ggAmount">{{_(ggAmount).formatDiv(10000, { fixed: 2 })}}</span>
             </div>
-            <div :class="['fc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">
+            <div :class="['fc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" data-toid="6" @click="showLogin">
               余额转帐
               <span class="fc-right-icon"></span>
             </div>

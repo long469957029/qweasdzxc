@@ -8,10 +8,10 @@ const FundPwdView = Base.ItemView.extend({
 
   events: {
     'click .js-uc-setFundPassword-submit': 'setFundPasswordHandler',
-    'blur #oldFundPassword': 'checkOldFundPassword',
-    'blur #newUpdateFundPassword': 'checkNewUpdateFundPassword',
-    'blur #newUpdateFundPassword1': 'checkNewUpdateFundPassword1',
-    'blur .js-login-pwd': 'checkLoginPassword',
+    // 'blur #oldFundPassword': 'checkOldFundPassword',
+    // 'blur #newUpdateFundPassword': 'checkNewUpdateFundPassword',
+    // 'blur #newUpdateFundPassword1': 'checkNewUpdateFundPassword1',
+    // 'blur .js-login-pwd': 'checkLoginPassword',
   },
 
   serializeData() {
@@ -68,7 +68,11 @@ const FundPwdView = Base.ItemView.extend({
             Global.m.publish('safe:updating')
           } else {
             // fail
-            Global.ui.notification.show(res.msg)
+            const errorData = {
+              el: this.$('.js-uc-pl-fp-error'),
+              errorText: res.msg,
+            }
+            this.formateError(errorData)
           }
         })
     } else if (type === 'update' && clpValidate ) {
@@ -209,7 +213,10 @@ const FundPwdView = Base.ItemView.extend({
       $ele.addClass('parsley-error').removeClass('parsley-success')
     }
   },
-
+  formateError(data) {
+    const errorTpl = `<span class="text-hot inline-block" style="margin-left: -17px;"><i class="sfa sfa-error-icon vertical-middle"></i>${data.errorText}</span>`
+    data.el.html(errorTpl)
+  },
 
 })
 
