@@ -87,7 +87,7 @@ const WithdrawView = Base.ItemView.extend({
       if (!$target.hasClass('.js-wd-bank-select')) {
         const height =  this.$('.js-wd-bank-select').height()
         if (height > 100) {
-          this.$('.js-wd-bank-select').removeClass('side-down')
+          this.$('.js-wd-bank-select').removeClass('side-down').scrollTop(0)
           this.$('.js-select-bank-down').removeClass('up')
         }
       }
@@ -256,7 +256,7 @@ const WithdrawView = Base.ItemView.extend({
       this.$('.js-wd-bank-select').removeClass('shrink')
       this.$('.js-select-bank-down').addClass('up')
     } else {
-      this.$('.js-wd-bank-select').removeClass('side-down')
+      this.$('.js-wd-bank-select').removeClass('side-down').scrollTop(0)
       this.$('.js-wd-bank-select').addClass('shrink')
       this.$('.js-select-bank-down').removeClass('up')
     }
