@@ -329,7 +329,7 @@
           line-height: 25px;
           width: 498px;
           font-size: 12px;
-          color: #666666;
+          color: $font-auxiliary-color;
           background-color: #fffcee;
           border: 1px solid #edd28b;
           margin-bottom: 45px;
@@ -343,7 +343,7 @@
         }
         .pwd-input-panel {
           font-size: 14px;
-          margin-top: 20px;
+          margin-top: 27px;
           .pwd-desc {
             color: #666666;
             width: 80px;
@@ -370,7 +370,7 @@
           }
         }
         .message-container {
-          margin: 10px 88px;
+          margin: 17px 88px;
           height: 14px;
           line-height: 14px;
           color: #999999;
@@ -384,13 +384,13 @@
           }
           &.confirm {
             position: absolute;
-            top: 237px;
+            top: 246px;
           }
         }
         .reset-submit-container {
           padding: 30px 88px;
           position: absolute;
-          top: 250px;
+          top: 276px;
           .reset-submit {
             padding: 10px 80px;
             background-color: #14b1bb;
