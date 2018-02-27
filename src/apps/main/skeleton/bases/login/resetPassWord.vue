@@ -62,7 +62,7 @@
                   <div class="controls">
                     <input type="text" id="jsRPUserName" class="reset-input" v-model="userName" data-parsley-username
                            data-parsley-errors-container=".js-rp-user-error" placeholder="输入用户名" autocomplete="off" required/>
-                    <div class="js-rp-user-error rp-user-error parsley-error-container inline-block" style="max-width: 144px"></div>
+                    <div class="js-rp-user-error rp-user-error parsley-error-container inline-block" style="max-width: 140px"></div>
                   </div>
                 </div>
                 <div class="control-group">
@@ -71,7 +71,7 @@
                     <input type="text" class="input-varCode" @keyup="valCode" v-model="codeVal" name=""  maxlength="4"
                            data-parsley-errors-container=".js-rp-code-error"  placeholder="输入验证码" autocomplete="off">
                     <img class="var-code" :src="codeSrc" @click="refreshValCode">
-                    <div class="text-hot m-top-xs inline-block" v-if="codeError"  style="max-width: 144px">
+                    <div class="text-hot m-top-xs inline-block" v-if="codeError"  style="max-width: 140px">
                       <span class="sfa sfa-error-icon vertical-middle"></span>
                       {{codeErrorText}}
                     </div>

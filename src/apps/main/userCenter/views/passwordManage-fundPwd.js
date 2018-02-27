@@ -94,9 +94,18 @@ const FundPwdView = Base.ItemView.extend({
             self.trigger('render:true')
             Global.m.publish('safe:updating')
           } else if (_(res.root).isNumber && res.root > 0) {
-            Global.ui.notification.show(`验证失败，剩余&nbsp;${res.root}&nbsp;次机会`)
+            // Global.ui.notification.show(`验证失败，剩余&nbsp;${res.root}&nbsp;次机会`)
+            const errorData = {
+              el: this.$('.js-uc-pl-fp-error'),
+              errorText: `验证失败，剩余&nbsp;${res.root}&nbsp;次机会`,
+            }
+            this.formateError(errorData)
           } else {
-            Global.ui.notification.show(res.msg)
+            const errorData = {
+              el: this.$('.js-uc-pl-fp-error'),
+              errorText: res.msg,
+            }
+            this.formateError(errorData)
           }
         })
     }
@@ -188,7 +197,7 @@ const FundPwdView = Base.ItemView.extend({
   getErrorTooltip (errorText) {
     const errorHtml =
       `${'<div class="js-errorTooltip tooltip bottom parsley-errors-list filled">' +
-      '<div class="tooltip-inner"><span class="sfa sfa-error-icon vertical-middle "></span>'}${errorText}</div>` +
+      '<div class="tooltip-inner"><span class="sfa sfa-error-icon vertical-middle m-right-xs"  style="margin-top: -3px;"></span>'}${errorText}</div>` +
       '</div>'
     return errorHtml
   },
@@ -212,7 +221,7 @@ const FundPwdView = Base.ItemView.extend({
     }
   },
   formateError(data) {
-    const errorTpl = `<span class="text-hot inline-block"><i class="sfa sfa-error-icon vertical-middle m-right-xs"></i>${data.errorText}</span>`
+    const errorTpl = `<span class="text-hot inline-block"><i class="sfa sfa-error-icon vertical-middle m-right-xs"  style="margin-top: -3px;"></i>${data.errorText}</span>`
     data.el.html(errorTpl)
   },
 
