@@ -525,7 +525,6 @@ const mutations = {
 
       if (bettingInfo.calculateType === 'separate') {
         item.prefabMoney = _.chain(bettingInfo.lotteryList).reduce((total, item) => { return total + item.betMoney }, 0)
-          .mul(item.statistics)
           .mul(item.unit)
           .value()
       } else if (bettingInfo.calculateType === 'unite') {

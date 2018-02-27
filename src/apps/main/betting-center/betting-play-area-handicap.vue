@@ -6,7 +6,8 @@
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" @keydown="inputValidate" @blur="isInputing = false">
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney"
+               @keydown="inputValidate" @blur="isInputing = false">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                 :disabled="!canBet || pushing || !sale || pending">
           投注
@@ -26,7 +27,9 @@
           <div class="main-title" v-if="!playRule.showItemOddsAtTitle">{{rule.title}}</div>
           <div class="main-title main-title-odds" v-else="playRule.showItemOddsAtTitle">
             {{rule.title}}
-            （ 赔率：<animated-integer :value="_.convert2yuan(playInfo.betBonus[0].betMethodMin)"></animated-integer> ）
+            （ 赔率：
+            <animated-integer :value="_.convert2yuan(playInfo.betBonus[0].betMethodMin)"></animated-integer>
+            ）
           </div>
         </div>
 
@@ -55,7 +58,8 @@
               </div>
             </div>
 
-            <div class="main-item" v-else :class="{selected: item.selected, empty: _.isEmpty(item)}" @click="select(item)">
+            <div class="main-item" v-else :class="{selected: item.selected, empty: _.isEmpty(item)}"
+                 @click="select(item)">
               <div :class="rule.showItemOdds ? 'main-item-left' : 'main-item-center'" v-if="!_.isEmpty(item)">
                 <span class="item" :class="item.style">{{item.title}}</span>
                 <span class="item odds" v-if="rule.showItemOdds">{{item.odds}}</span>
@@ -127,7 +131,8 @@
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" @keydown="inputValidate" @blur="isInputing = false">
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney"
+               @keydown="inputValidate" @blur="isInputing = false">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                 :disabled="!canBet || pushing || !sale || pending">
           投注
@@ -169,6 +174,7 @@
         betMoney: null,
         canBet: false,
         isInputing: false,
+        showOverflow: false
       }
     },
 
@@ -177,14 +183,15 @@
         handler(list) {
           _.chain(list).pluck('items').each((itemGroup, index) => {
             _.each(itemGroup, (itemList) => {
-              if (list[index].showItemOdds) {
-                _.each(itemList, (item) => {
-                  const betBonus = _.findWhere(this.playInfo.betBonus, {betType: Number(item.num)})
-                  if (betBonus) {
+              _.each(itemList, (item) => {
+                const betBonus = _.findWhere(this.playInfo.betBonus, {betType: Number(item.num)})
+                if (betBonus) {
+                  if (list[index].showItemOdds) {
                     item.odds = _.convert2yuan(betBonus.betMethodMin)
                   }
-                })
-              }
+                  item.maxMultiple = betBonus.betMultiLimitMin
+                }
+              })
             })
           })
 
@@ -196,7 +203,7 @@
           _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
             if (item.selected && (!item.betMoney || this.isInputing) || this.playRule.calculateType === 'unite') {
               this.isInputing = true
-              item.betMoney = this.betMoney
+              this.$_setBetMoney(item, this.betMoney)
             }
           })
         }
@@ -212,7 +219,7 @@
            * 1 每个格子独立计算
            * 2 所有选中的格子统一计算 calculateType区分
            */
-          switch(this.playRule.calculateType) {
+          switch (this.playRule.calculateType) {
             case 'unite':
               this.formatRuleListByUnite()
               break;
@@ -229,6 +236,12 @@
           }
         },
         deep: true
+      },
+      showOverflow(isOverflow) {
+        if (isOverflow) {
+          Global.ui.notification.show('填写金额超过最大限额，已调整为最大投注额')
+          this.showOverflow = false
+        }
       }
     },
 
@@ -244,12 +257,6 @@
             this.lotteryList.push(item)
           }
         })
-
-        // this.lotteryList.push({
-        //   title: lotteryNumList.join(' '),
-        //   num: lotteryNumList.join(' '),
-        //   betMoney: this.betMoney,
-        // })
       },
 
       formatRuleListBySeparate() {
@@ -264,7 +271,19 @@
       select(item) {
         if (!_.isEmpty(item)) {
           item.selected = !item.selected
-          item.betMoney = item.selected ? this.betMoney : null
+          this.$_setBetMoney(item, item.selected ? this.betMoney : null)
+        }
+      },
+
+      $_setBetMoney(item, betMoney) {
+        if (betMoney > item.maxMultiple) {
+          item.betMoney = item.maxMultiple
+          this.showOverflow = true
+          if (this.playRule.calculateType) {
+            this.betMoney = item.maxMultiple
+          }
+        } else {
+          item.betMoney = betMoney
         }
       },
 
@@ -273,6 +292,7 @@
           item.betMoney = null
         } else {
           item.selected = true
+          this.$_setBetMoney(item, item.betMoney)
         }
 
         this.$_clearNotBetSelect()
@@ -516,6 +536,10 @@
         this.$store.commit(types.SET_STATISTICS, count)
       },
     },
+
+    beforeDestroy() {
+      this.clearAll()
+    }
   }
 </script>
 
@@ -696,6 +720,7 @@
   .side-operate {
     cursor: pointer;
   }
+
   .main-item-right {
     display: flex;
     .item {
