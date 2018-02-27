@@ -1,4 +1,5 @@
 const avatarCfg = require('../misc/avatarConfig')
+// const Parsley = require('parsleyjs')
 
 const PersonalManageView = Base.ItemView.extend({
 
@@ -11,8 +12,8 @@ const PersonalManageView = Base.ItemView.extend({
     'click .js-uc-reset': 'resetPageHandler',
     'click .js-uc-address-info': 'addressInfoHandler',
     'click .js-head-icon-info': 'headIconHandler',
+    'blur .js-uc-pl-birthday': 'checkBirthday',
   },
-
   getHeadIconXhr() {
     return Global.sync.ajax({
       url: '/acct/userinfo/headIconList.json',
@@ -174,6 +175,9 @@ const PersonalManageView = Base.ItemView.extend({
   },
   updatePersonalInfoHandler() {
     let validate  = this.$form.parsley().validate();
+    if(!this.checkBirthday()){
+      return false
+    }
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
       Global.ui.notification.show('试玩会员无法进行修改个人资料操作，请先注册正式游戏账号')
       return false
@@ -258,6 +262,27 @@ const PersonalManageView = Base.ItemView.extend({
   },
   formateError(data) {
     const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon vertical-middle"></i>${data.errorText}</span>`
+    data.el.html(errorTpl)
+  },
+
+  checkBirthday() {
+    let month = this.$('.js-bday1').parsley('destroy')
+    let day = this.$('.js-bday2').parsley('destroy')
+    if(month.isValid() && day.isValid()){
+      this.birthday = true
+      this.$('.js-uc-pm-birthday-error').html('')
+    }else{
+      this.birthday = false
+      const errorData = {
+        el: this.$('.js-uc-pm-birthday-error'),
+        errorText: '生日填写不完整',
+      }
+      this.formateError(errorData)
+    }
+    return this.birthday
+  },
+  formateError(data) {
+    const errorTpl = `<span class="text-hot inline-block" ><i class="sfa sfa-error-icon vertical-middle"></i>${data.errorText}</span>`
     data.el.html(errorTpl)
   },
 })

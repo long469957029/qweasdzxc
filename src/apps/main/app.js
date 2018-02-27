@@ -164,7 +164,7 @@ const _bindBetDetailHandler = () => {
               Global.ui.notification.show('操作成功。')
               $dialog.modal('hide')
             } else {
-              Global.ui.notification.show('操作失败。')
+              Global.ui.notification.show(res.msg)
             }
           })
         }

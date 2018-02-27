@@ -95,17 +95,17 @@
     },
     {
       id: 2,
-      name: '加奖卡',
+      name: '加奖券',
       type: 'green'
     },
     {
       id: 3,
-      name: '补贴卡',
+      name: '补贴券',
       type: 'green'
     },
     {
       id: 4,
-      name: '返水卡',
+      name: '返水券',
       type: 'green'
     },
     {

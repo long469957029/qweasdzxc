@@ -44,18 +44,27 @@ const LoginPwdView = Base.ItemView.extend({
         })
         .done((res) => {
           if (res && res.result === 0) {
-            // Global.ui.notification.show('修改密码成功', {
-            //   type: 'success',
-            // })
-            self.$formContainer.addClass('hidden')
-            self.$successTip.removeClass('hidden')
+            Global.ui.notification.show('修改密码成功', {
+              type: 'success',
+            })
+            // self.$formContainer.addClass('hidden')
+            // self.$successTip.removeClass('hidden')
             setTimeout(() => {
               self.trigger('render:true')
             }, 2000)
           } else if (res.msg === 'fail' && (res.root !== null)) {
-            Global.ui.notification.show(`验证失败，${res.root}`)
+            // Global.ui.notification.show(`验证失败，${res.root}`)
+            const errorData = {
+              el: this.$('.js-uc-pl-lp-error'),
+              errorText: `验证失败，${res.root}`,
+            }
+            this.formateError(errorData)
           } else {
-            Global.ui.notification.show(`验证失败，${res.msg}`)
+            const errorData = {
+              el: this.$('.js-uc-pl-lp-error'),
+              errorText: `验证失败，${res.msg}`,
+            }
+            this.formateError(errorData)
           }
         })
     }
@@ -148,7 +157,10 @@ const LoginPwdView = Base.ItemView.extend({
       $ele.addClass('parsley-error').removeClass('parsley-success')
     }
   },
-
+  formateError(data) {
+    const errorTpl = `<span class="text-hot inline-block" style="margin-left: -17px;"><i class="sfa sfa-error-icon vertical-middle"></i>${data.errorText}</span>`
+    data.el.html(errorTpl)
+  },
 })
 
 module.exports = LoginPwdView

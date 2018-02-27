@@ -1,6 +1,6 @@
 <template>
   <div class="points-card-wrapper" :class="displayType">
-    <div class="points-card" :class="[cardInfo.type, {finished: isFinished}]"
+    <div class="points-card" :class="[cardInfo.type, style]"
          @mouseout="toggleBtn(false)">
       <div class="points-card-inner" @mouseover="toggleBtn(true)">
         <div class="points-top">
@@ -16,7 +16,8 @@
             剩{{couponInfo.maxNum - couponInfo.useNum}}张
           </div>
           <div class="card-time-end" v-if="displayType === 'show' && (couponInfo.validEndDate-couponInfo.sysTime)<10800000"></div><!--即将到期-->
-          <div v-else-if="isFinished" class="sfa-finished"></div>
+          <div class="sfa-finished"></div>
+          <div class="sfa-grab-finished"></div>
         </div>
         <div class="points-center">
           <div class="points-range">{{formatCouponInfo.mainDesc}}</div>
@@ -55,7 +56,6 @@
             </div>
             <div v-show="showBtn" key="exchange" class="points-bottom-btn">
               <button class="btn btn-white exchange-btn" v-if="couponInfo.couponStatus === 1" @click="$emit('exchange', formatCouponInfo)">立即兑换</button>
-              <button class="btn btn-white exchange-btn disabled" v-else>已兑换</button>
             </div>
           </transition-group>
         </div>
@@ -70,27 +70,21 @@
 
   const CARD_TYPE = {
     '1': {
-      name: '充值券',
       type: 'blue'
     },
     '2': {
-      name: '加奖卡',
       type: 'green'
     },
     '3': {
-      name: '补贴卡',
       type: 'green'
     },
     '4': {
-      name: '返水卡',
       type: 'green'
     },
     '5': {
-      name: '代金券',
       type: 'gold'
     },
     '6': {
-      name: '现金券',
       type: 'red'
     },
   }
@@ -133,8 +127,14 @@
         return CARD_TYPE[this.couponInfo.couponType]
       },
       isFinished() {
-        return this.couponInfo.couponStatus === 3
+        //true代表已抢完或已兑换
+        return this.couponInfo.couponStatus !== 1
         // return this.couponInfo.maxNum && this.couponInfo.maxNum - this.couponInfo.useNum === 0
+      },
+      style() {
+        return this.couponInfo.couponStatus === 3 ? 'finished' :
+          this.couponInfo.couponStatus === 2 ? 'grab-finished' : ''
+
       },
       countdownTime() {
         if (this.couponInfo.validStartDate > this.couponInfo.sysTime) {
@@ -200,7 +200,16 @@
     }
 
     &.finished {
-      opacity: .4;
+      opacity: .65;
+      .sfa-finished {
+        display: block;
+      }
+    }
+    &.grab-finished {
+      opacity: .65;
+      .sfa-grab-finished {
+        display: block;
+      }
     }
 
     .sfa-points {
@@ -210,11 +219,21 @@
     }
     .sfa-finished {
       background: url(./finished.png);
-      width: 97px;
-      height: 90px;
+      width: 106px;
+      height: 106px;
       position: absolute;
       right: 13px;
-      top: 20px;
+      top: 10px;
+      display: none;
+    }
+    .sfa-grab-finished {
+      background: url(./grab-finished.png);
+      width: 106px;
+      height: 106px;
+      position: absolute;
+      right: 13px;
+      top: 10px;
+      display: none;
     }
 
     .card-value {

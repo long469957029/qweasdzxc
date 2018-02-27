@@ -28,8 +28,9 @@
         兑换积分：
         <span class="card-points-val">{{requireIntegral | convert2yuan}}</span>
       </div>
-      <button class="btn btn-exchange-btn" v-if="!isFinished" @click="$emit('exchange')">立即兑换</button>
+      <button class="btn btn-exchange-btn" @click="$emit('exchange')">立即兑换</button>
     </div>
+    <div class="gift-masking" :class="{finished: isFinished}"></div>
   </div>
 </template>
 
@@ -71,17 +72,22 @@
       }
     }
 
+    .gift-masking {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, .09);
+      display: none;
+    }
+
     &.finished {
-      background-color: #e5e5e5;
-      /*background-color: rgba(0, 0, 0, 0.1);*/
-      .card-intro {
-        border-bottom: 1px solid #c7c7c7;
-        /*background-color: rgba(0, 0, 0, 0.1);*/
-        background-color: #e5e5e5;
+      .gift-masking {
+        display: block;
       }
-      .gift-card-op {
-        background-color: #e5e5e5;
-        /*background-color: rgba(0, 0, 0, 0.1);*/
+      .card-brief {
+        white-space: initial;
       }
     }
 
@@ -103,6 +109,7 @@
     position: absolute;
     left: 43%;
     top: 60px;
+    z-index: 2;
   }
 
   .sfa-gift-level {
@@ -161,6 +168,7 @@
     bottom: 0;
     width: 100%;
     box-sizing: border-box;
+    background-color: #ffffff;
   }
 
   .card-price {

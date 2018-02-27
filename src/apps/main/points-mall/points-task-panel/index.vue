@@ -283,6 +283,7 @@
       border-radius: 15px;
       color: #ffffff;
       cursor: not-allowed;
+      opacity: 1;
     }
 
     &.received-btn {
