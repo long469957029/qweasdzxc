@@ -64,11 +64,14 @@
       'bettingInfo.leftSecond': {
         handler(newVal, oldVal) {
           if (newVal) {
-            $(this.$refs.confirmCountdown).countdown(this.bettingInfo.leftTime + _.now(), function (event) {
-              $(this).html(event.strftime('%H:%M:%S'));
-            });
+            this.$nextTick(() => {
+              $(this.$refs.confirmCountdown).countdown(this.bettingInfo.leftTime + _.now(), function (event) {
+                $(this).html(event.strftime('%I:%M:%S'));
+              })
+            })
           }
-        }
+        },
+        immediate: true
       },
     },
 

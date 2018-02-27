@@ -87,7 +87,7 @@
         display: block;
       }
       .card-brief {
-        white-space: initial;
+        white-space: nowrap;
       }
     }
 
