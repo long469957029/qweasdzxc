@@ -355,7 +355,7 @@
           }
           .pwd-input {
             background-color: #f9f9f9;
-            padding: 11px 10px;
+            padding: 11.5px 10px;
             border: 1px solid #cccccc;
             border-radius: 4px;
             outline-width: 0;
@@ -392,7 +392,7 @@
           position: absolute;
           top: 276px;
           .reset-submit {
-            padding: 10px 80px;
+            padding: 10.5px 81px;
             background-color: #14b1bb;
             color: #ffffff;
             font-size: 14px;

@@ -8,13 +8,13 @@
   <% } else { %>
   <div class="confirm-contant m-top-md p-top-sm">
     <% if(type === 1){ %>
-    <div class="m-top-md text-center font-sm text-auxiliary">红包金额<span class="text-prominent"><%=data.redpackAmount%></span>元，确认后该金额将从账户扣除</div>
+    <div class="m-top-md text-center font-sm text-inverse">红包金额<span class="text-prominent"><%=data.redpackAmount%></span>元，确认后该金额将从账户扣除</div>
     <% } else {%>
     <div class="contant-info font-sm text-inverse text-center">
       <%if(data.redpackType === 2){%>单个红包金额<% } else {%>红包总额<%}%>：<span class="text-prominent"><%=data.redpackAmount%></span> /
       红包个数：<span class="text-prominent"><%=data.redpackNum%></span>
     </div>
-    <div class="text-center font-sm text-auxiliary">总计<span class="text-prominent">
+    <div class="text-center font-sm text-inverse m-top-smd">总计<span class="text-prominent">
       <%if(data.redpackType === 2){%> <%=_(data.redpackAmount).mul(data.redpackNum)%> <%} else {%> <%=data.redpackAmount%> <% }%></span>元，确认后该金额将从账户扣除</div>
     <% }%>
     <div class="confirm-password">
@@ -27,6 +27,7 @@
     </div>
     <div class="text-center m-top-md p-top-sm">
       <button type="button" class="btn btn-cool open-confirm-btn js-confrim-btn">确定</button>
+      <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
     </div>
   </div>
   <% }%>
