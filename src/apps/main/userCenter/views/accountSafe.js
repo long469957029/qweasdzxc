@@ -93,7 +93,7 @@ const AccountSafeView = Base.ItemView.extend({
               self.$('.js-important-tip[data-type="mail"]').addClass('hidden')
               self.$settingMailNum.html(data.email)
             }
-            if(!_(bindInfo).isUndefined()){
+            if(bindInfo){
               if(bindInfo.phoneStatus === 0){
                 self.$('.js-reward[data-type="phone"]').html(`（<span class="text-prominent">+${_(bindInfo.bindPhoneBonus).convert2yuan()}</span>元奖励）`)
               }

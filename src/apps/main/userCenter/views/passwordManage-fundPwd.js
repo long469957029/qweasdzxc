@@ -21,8 +21,6 @@ const FundPwdView = Base.ItemView.extend({
   },
 
   onRender() {
-    // const self = this
-
     this.$setFundPasswordForm = this.$('.js-uc-setFundPassword-form')
 
     this.$oldFundPassword = this.$('#oldFundPassword')
@@ -44,7 +42,7 @@ const FundPwdView = Base.ItemView.extend({
 
         data: {
           payPwd: this.$('#newUpdateFundPassword').val(),
-          loginPwd:this.$('.js-login-pwd').val()
+          loginPwd:this.$loginPwd.val()
         },
       })
         .always(() => {
@@ -214,7 +212,7 @@ const FundPwdView = Base.ItemView.extend({
     }
   },
   formateError(data) {
-    const errorTpl = `<span class="text-hot inline-block" style="margin-left: -17px;"><i class="sfa sfa-error-icon vertical-middle"></i>${data.errorText}</span>`
+    const errorTpl = `<span class="text-hot inline-block"><i class="sfa sfa-error-icon vertical-middle m-right-xs"></i>${data.errorText}</span>`
     data.el.html(errorTpl)
   },
 

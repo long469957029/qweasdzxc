@@ -266,7 +266,7 @@ define((require, exports, module) => {
       }
     },
     renderError(data) {
-      const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon vertical-sub"></i>${data.errorText}</span>`
+      const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon vertical-sub m-right-xs"></i>${data.errorText}</span>`
       data.el.html(errorTpl)
     },
     fundCheckHandler() {

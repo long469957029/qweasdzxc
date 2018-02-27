@@ -152,7 +152,7 @@ const LoginPwdView = Base.ItemView.extend({
     }
   },
   formateError(data) {
-    const errorTpl = `<span class="text-hot inline-block" style="margin-left: -17px;"><i class="sfa sfa-error-icon vertical-middle"></i>${data.errorText}</span>`
+    const errorTpl = `<span class="text-hot inline-block" ><i class="sfa sfa-error-icon vertical-middle m-right-xs"  style="margin-top: -3px;"></i>${data.errorText}</span>`
     data.el.html(errorTpl)
   },
 })

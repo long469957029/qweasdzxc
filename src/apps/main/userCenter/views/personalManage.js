@@ -261,7 +261,7 @@ const PersonalManageView = Base.ItemView.extend({
     this.iconId = $target.data('id')
   },
   formateError(data) {
-    const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon vertical-middle"></i>${data.errorText}</span>`
+    const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon vertical-middle" style="margin-top: -3px;"></i>${data.errorText}</span>`
     data.el.html(errorTpl)
   },
 
