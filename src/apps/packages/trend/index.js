@@ -9,6 +9,7 @@ import MediatorModule from 'skeleton/modules/mediator'
 import UIModule from 'skeleton/modules/ui'
 import NotificationModule from 'skeleton/modules/ui/notification'
 import DialogModule from 'skeleton/modules/ui/dialog'
+import '../misc/common.scss'
 
 window.Global = new window.Base.Application()
 window.store = store
@@ -27,7 +28,7 @@ Global.m.oauth.checkLogin().done(() => {
   Vue.component('custom-checkbox', CustomCheckbox)
 
   window.app = new Vue({
-    template: `<div><main-trend></main-trend></div>`,
+    template: `<main-trend></main-trend>`,
     components: {
       MainTrend
     },
