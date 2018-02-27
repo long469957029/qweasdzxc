@@ -327,7 +327,7 @@ const CardManageView = Base.ItemView.extend({
       })
   },
   _getErrorEl (text) {
-    return `<span class="text-hot"><i class="sfa sfa-error-icon  vertical-sub"></i>${text}</span>`
+    return `<span class="text-hot"><i class="sfa sfa-error-icon  vertical-sub m-right-xs"></i>${text}</span>`
   },
   addCloseHandler() {
     this.$addCardContainer.addClass('hidden')

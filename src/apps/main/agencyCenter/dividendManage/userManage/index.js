@@ -362,7 +362,7 @@ const ReportManageView = SearchGrid.extend({
       startOnLoading: false,
       height: 128,
       showHeader: false,
-      tableClass: 'table table-bordered table-center',
+      tableClass: 'table table-center',
       hasBorder: false,
       colModel: [
         {

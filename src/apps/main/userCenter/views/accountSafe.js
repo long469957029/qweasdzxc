@@ -43,6 +43,7 @@ const AccountSafeView = Base.ItemView.extend({
     this.$settingPhoneNum = this.$('.js-setting-phone-num')
     this.$settingMailNum = this.$('.js-setting-mail-num')
     this.$loginPwd.html(new LoginPassWord().on('render:true', () => {
+      self.$('.js-setting-info').removeClass('active')
       self.onRender()
     }).render().el)
     const bindInfo = Global.cookieCache.get('userBindInfo')
@@ -93,7 +94,7 @@ const AccountSafeView = Base.ItemView.extend({
               self.$('.js-important-tip[data-type="mail"]').addClass('hidden')
               self.$settingMailNum.html(data.email)
             }
-            if(!_(bindInfo).isUndefined()){
+            if(bindInfo){
               if(bindInfo.phoneStatus === 0){
                 self.$('.js-reward[data-type="phone"]').html(`（<span class="text-prominent">+${_(bindInfo.bindPhoneBonus).convert2yuan()}</span>元奖励）`)
               }
@@ -102,6 +103,7 @@ const AccountSafeView = Base.ItemView.extend({
               }
             }
             self.$fundPwd.html(new FundPassWord({hasFundPassword: data.hasFundPassword}).on('render:true', () => {
+              self.$('.js-setting-info').removeClass('active')
               self.render()
             }).render().el)
             self.$questionPwd.html(new QuestionPwd({hasSecurityQuestion: data.hasSecurityQuestion}).on('render:true', () => {
