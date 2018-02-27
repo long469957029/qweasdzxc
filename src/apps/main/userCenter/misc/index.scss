@@ -913,7 +913,10 @@
     width: 700px;
     margin: 0 auto;
     padding-top: 20px;
-    padding-left: 200px;
+    //padding-left: 200px;
+  }
+  .uc-changeLoginPassword-form{
+    padding-left: 80px;
   }
   //.security-main{
   //  min-height: 650px;
@@ -961,7 +964,7 @@
   }
   .btn{
     @include btnDef;
-    margin-left: -170px;
+    margin-left: -110px;
   }
   .input-disable{
     background-color: $third-line-color;
