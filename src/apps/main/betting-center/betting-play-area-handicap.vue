@@ -55,7 +55,7 @@
               </div>
             </div>
 
-            <div class="main-item" v-else :class="{selected: item.selected}" @click="select(item)">
+            <div class="main-item" v-else :class="{selected: item.selected, empty: _.isEmpty(item)}" @click="select(item)">
               <div :class="rule.showItemOdds ? 'main-item-left' : 'main-item-center'" v-if="!_.isEmpty(item)">
                 <span class="item" :class="item.style">{{item.title}}</span>
                 <span class="item odds" v-if="rule.showItemOdds">{{item.odds}}</span>
@@ -262,8 +262,10 @@
       },
 
       select(item) {
-        item.selected = !item.selected
-        item.betMoney = item.selected ? this.betMoney : null
+        if (!_.isEmpty(item)) {
+          item.selected = !item.selected
+          item.betMoney = item.selected ? this.betMoney : null
+        }
       },
 
       inputBetMoney(item) {
@@ -587,6 +589,9 @@
 
         &.selected {
           background-color: #fceed6;
+        }
+        &.empty {
+          cursor: default;
         }
         .main-item-left {
           width: 60%;

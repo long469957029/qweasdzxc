@@ -15,9 +15,8 @@
           </div>
         </div>
         <transition-group name="flip-list" tag="div" class="vouchers-main">
-          <div class="vouchers-unit" v-for="item in fList" :key="item.rid">
+          <div class="vouchers-unit" v-for="item in fList" :key="item.rid" @click="select(item)">
             <div class="unit-left" :class="[item.available ? 'sfa-bc-vouchers-usable' : 'sfa-bc-vouchers-disabled', {selected: item.selected}]"
-                 @click="select(item)"
             >
               ¥{{item.bonus | convert2yuan}}
             </div>
@@ -261,20 +260,24 @@
     .unit-left {
       font-size: 14px;
       text-align: center;
-      line-height: 37px;
+      line-height: 32px;
       color: #108f97;
       margin-right: 15px;
-      cursor: pointer;
     }
 
     .unit-right {
-      line-height: 17px;
+      line-height: 16px;
+    }
+
+    .unit-comment {
+      color: #484848;
     }
 
     .vouchers-unit {
       display: flex;
       flex-direction: row;
       margin-bottom: 20px;
+      cursor: pointer;
       &:last-of-type {
         margin-bottom: 0;
       }

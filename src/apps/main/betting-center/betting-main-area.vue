@@ -120,8 +120,9 @@
                 <td v-html="row.operate"></td>
               </tr>
             </slot-static-grid>
-            <div class="font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
+            <div class="m-top-md p-top-sm text-center bc-operate-section clearfix">
               <div class="total-panel inline-block">
+                <span class="font-sm">
                 <span>
                   <span>预期奖金</span>
                   <animated-integer class="text-prominent"
@@ -138,6 +139,7 @@
                   <animated-integer class="text-prominent m-left-xs m-right-xs"
                                     :value="bettingChoice.totalInfo.fTotalMoney"></animated-integer>
                   <span>元</span>
+                </span>
                 </span>
                 <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
                                   :betting-money="bettingChoice.totalInfo.totalMoney"

@@ -5,13 +5,15 @@
       <tool-cell type="select-group" v-model="couponStatus" :options="statusOps" title="兑换状态"></tool-cell>
       <tool-cell type="sort" v-model="sort" :options="sortOps" title="排序"></tool-cell>
     </x-toolbar>
-    <status-cell class="points-card-main" :has-data="cardList.length" :status="loadingStatus">
-      <points-card v-for="(item, index) in cardList" :key="index"
-                   :coupon-info="item"
-                   @exchange="openExchangeModal(arguments[0], item)"
-      ></points-card>
+    <status-cell :has-data="cardList.length" :status="loadingStatus">
+      <div class="points-card-main">
+        <points-card v-for="(item, index) in cardList" :key="index"
+                     :coupon-info="item"
+                     @exchange="openExchangeModal(arguments[0], item)"
+        ></points-card>
+      </div>
+      <x-pagination :page-size="12" :total-size="totalSize" v-model="pageIndex"></x-pagination>
     </status-cell>
-    <x-pagination :page-size="12" :total-size="totalSize" v-model="pageIndex"></x-pagination>
     <div class="points-tip">
       <div class="tip-title">优惠券说明</div>
       <ul class="tip-main">
@@ -148,7 +150,7 @@
           },
         ],
         sort: {
-          sortFlag: 1,
+          sortFlag: 3,
           sortType: 1
         },
         sortOps: [
@@ -209,8 +211,10 @@
     },
 
     methods: {
-      getData() {
-        this.loadingStatus = 'loading'
+      getData({loading = true} = {loading: true}) {
+        if (loading) {
+          this.loadingStatus = 'loading'
+        }
         getCouponListApi({
           sortFlag: this.sort.sortFlag,
           sortType: this.sort.sortType,
@@ -224,7 +228,9 @@
           }
         })
           .finally(() => {
-            this.loadingStatus = 'completed'
+            if (loading) {
+              this.loadingStatus = 'completed'
+            }
           })
       },
       exchangeCoupon() {
@@ -242,7 +248,7 @@
               closeBtn: false,
             })
 
-            this.getData()
+            this.getData({loading: false})
 
             this.$store.dispatch(types.GET_USER_MALL_INFO)
           } else {

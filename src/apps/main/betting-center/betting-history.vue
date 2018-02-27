@@ -650,7 +650,7 @@
       position: relative;
       float: right;
       margin-top: 8px;
-      transition: all .5s;
+      transition: transform .5s;
       &.up {
         transform: rotateX(180deg);
       }
@@ -667,7 +667,7 @@
         background-color: $def-line-color;
         display: block;
         position: absolute;
-        right: 0px;
+        right: 0;
         top: 11px;
       }
       &:last-child {
