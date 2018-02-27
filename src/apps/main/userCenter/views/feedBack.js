@@ -168,7 +168,7 @@ const FeedBackView = Base.ItemView.extend({
   },
 
   setError(data) {
-    const errorTpl = `<span class="text-hot"><span class="sfa sfa-error-icon vertical-sub m-right-sm"></span>${data}</span>`
+    const errorTpl = `<span class="text-hot"><span class="sfa sfa-error-icon vertical-sub"></span>${data}</span>`
     this.$feedError.html(errorTpl)
   },
   antiSqlValid(value) {

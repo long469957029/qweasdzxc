@@ -363,13 +363,13 @@
 .fc-re-banktransfer {
   width: 25px;
   height: 16px;
-  background-image: url('~base/images/v2/bank-creditCard.png');
+  background-image: url('~base/images/v2/bank-transferPay.png');
 }
 
 .fc-re-scancode {
   width: 22px;
   height: 23px;
-  background-image: url('~base/images/v2/bank-saoPay.png');
+  background-image: url('~base/images/v2/bank-scanCodePay.png');
 }
 
 .fc-re-qqscancode {
@@ -377,11 +377,6 @@
   height: 22px;
   background-image: url('~base/images/v2/bank-qqPay.png');
 }
-
-.fc-re-scancode {
-  background-image: url('~base/images/v2/bank-UnionPay.png');
-}
-
 .fc-re-jdPay {
   width: 22px;
   height: 23px;
@@ -677,7 +672,7 @@
   float: right;
   .fc-rc-rightBar-tips {
     margin-top: 18px;
-    height: 150px;
+    //height: 150px;
     border-bottom: 1px solid #e6e6e6;
     .fc-rc-rightBar-tips-img {
       float: left;
@@ -689,7 +684,7 @@
     .fc-rc-rightBar-tips-content {
       color: $font-auxiliary-color;
       display: block;
-      padding: 5px 0;
+      padding: 5px 0 10px;
     }
   }
   .fc-rc-rightBar-activity {
