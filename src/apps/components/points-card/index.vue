@@ -200,13 +200,13 @@
     }
 
     &.finished {
-      opacity: .4;
+      opacity: .65;
       .sfa-finished {
         display: block;
       }
     }
     &.grab-finished {
-      opacity: .4;
+      opacity: .65;
       .sfa-grab-finished {
         display: block;
       }
@@ -222,7 +222,7 @@
       width: 106px;
       height: 106px;
       position: absolute;
-      right: 6px;
+      right: 13px;
       top: 10px;
       display: none;
     }
@@ -231,7 +231,7 @@
       width: 106px;
       height: 106px;
       position: absolute;
-      right: 6px;
+      right: 13px;
       top: 10px;
       display: none;
     }

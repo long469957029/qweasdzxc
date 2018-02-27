@@ -377,7 +377,7 @@
           font-size: 12px;
           .message-text {
             vertical-align: top;
-            color: #cccccc;
+            color: #999999;
             &.error {
               color: #e84c4c;
             }

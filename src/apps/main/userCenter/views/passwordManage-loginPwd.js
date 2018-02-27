@@ -20,6 +20,8 @@ const LoginPwdView = Base.ItemView.extend({
     this.$oldLoginPassword = this.$('#oldLoginPassword')
     this.$newLoginPassword = this.$('#newLoginPassword')
     this.$newLoginPassword1 = this.$('#newLoginPassword1')
+    this.$formContainer = this.$('.js-uc-changePwd-container')
+    this.$successTip = this.$('.js-uc-changeLpwd-success')
   },
 
   changeLoginPasswordHandler(e) {
@@ -45,7 +47,11 @@ const LoginPwdView = Base.ItemView.extend({
             Global.ui.notification.show('修改密码成功', {
               type: 'success',
             })
-            self.trigger('render:true')
+            // self.$formContainer.addClass('hidden')
+            // self.$successTip.removeClass('hidden')
+            setTimeout(() => {
+              self.trigger('render:true')
+            }, 2000)
           } else if (res.msg === 'fail' && (res.root !== null)) {
             // Global.ui.notification.show(`验证失败，${res.root}`)
             const errorData = {

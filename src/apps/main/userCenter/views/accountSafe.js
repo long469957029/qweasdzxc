@@ -43,6 +43,7 @@ const AccountSafeView = Base.ItemView.extend({
     this.$settingPhoneNum = this.$('.js-setting-phone-num')
     this.$settingMailNum = this.$('.js-setting-mail-num')
     this.$loginPwd.html(new LoginPassWord().on('render:true', () => {
+      self.$('.js-setting-info').removeClass('active')
       self.onRender()
     }).render().el)
     const bindInfo = Global.cookieCache.get('userBindInfo')
@@ -102,6 +103,7 @@ const AccountSafeView = Base.ItemView.extend({
               }
             }
             self.$fundPwd.html(new FundPassWord({hasFundPassword: data.hasFundPassword}).on('render:true', () => {
+              self.$('.js-setting-info').removeClass('active')
               self.render()
             }).render().el)
             self.$questionPwd.html(new QuestionPwd({hasSecurityQuestion: data.hasSecurityQuestion}).on('render:true', () => {
