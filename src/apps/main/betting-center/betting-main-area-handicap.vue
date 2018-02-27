@@ -22,10 +22,12 @@
     </div>
 
     <!-- 确认投注 -->
-    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="confirm">
-      <betting-confirm :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
-                       :betting-list="bettingChoice.buyList" :type="`handicap`"
-                       @bettingConfirm="bettingConfirm"></betting-confirm>
+    <div v-transfer-dom>
+      <x-dialog v-if="showConfirmModal" @modal-hidden="showConfirmModal = false">
+        <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
+                         :betting-list="bettingChoice.buyList" :type="`handicap`"
+                         @bettingConfirm="bettingConfirm"></betting-confirm>
+      </x-dialog>
     </div>
   </div>
 </template>
@@ -54,24 +56,26 @@
     },
     data() {
       return {
-        loading: Global.ui.loader.get(),
         unit: 10000,
         playRule: {},
         playInfo: {},
         //提交中，禁用按钮
         pushing: false,
-        fPreviewList: [],
 
         advanceShowMode: 'none', //classic | single
+        showConfirmModal: false,
       }
     },
-    computed: mapState({
-      playLevels() {
-        return this.$store.getters.playLevels
-      },
-      bettingChoice: 'bettingChoice',
-      bettingInfo: 'bettingInfo',
-    }),
+    computed: {
+      ...mapState({
+        foundsLock: state => state.loginStore.foundsLock,
+        bettingChoice: 'bettingChoice',
+        bettingInfo: 'bettingInfo',
+      }),
+      ...mapGetters([
+        'playLevels',
+      ])
+    },
 
     watch: {
       'bettingChoice.playId': {
@@ -96,11 +100,14 @@
       'bettingInfo.planId': {
         handler(newPlanId, oldPlanId) {
           if (this.$el.offsetWidth && newPlanId !== '------------' && oldPlanId !== '------------' && !this.bettingInfo.pending) {
-            // Global.ui.notification.show(
-            //   `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
-            //   {id: 'ticketNotice', hasFooter: false, displayTime: 800},
-            // )
-            this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE,{show:true,dataInfo:{type:3, oldPlanId, newPlanId}})
+            this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE, {
+              show: true,
+              dataInfo: {
+                type: 3,
+                oldPlanId,
+                newPlanId
+              }
+            })
           }
         }
       },
@@ -138,20 +145,19 @@
         }
 
         //do save
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
+        if (this.foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
         }
 
-        $(this.$refs.confirm).modal({
-          backdrop: 'static',
-        })
+
+        this.showConfirmModal = true
       },
 
       bettingConfirm() {
         this.pushing = true
 
-        $(this.$refs.confirm).modal('hide')
+        this.showConfirmModal = false
 
         this.$store.dispatch(types.PUSH_BETTING, {
           planId: this.bettingInfo.planId,
@@ -198,6 +204,7 @@
     width: 278px;
     min-height: 845px;
   }
+
   .bc-play-container.clearfix {
     display: flex;
   }

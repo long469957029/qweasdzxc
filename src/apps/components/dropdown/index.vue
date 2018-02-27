@@ -66,10 +66,10 @@
         background: rgba(0, 0, 0, 0);
         white-space: nowrap;
         color: rgba(51, 51, 51, 1);
-        transition: 0.5s height cubic-bezier(0.73, 0.32, 0.34, 1.5),
-        0.5s padding cubic-bezier(0.73, 0.32, 0.34, 1.5),
-        0.5s margin cubic-bezier(0.73, 0.32, 0.34, 1.5),
-        0.5s 0.2s color, 0.2s background-color;
+        /*transition: 0.5s height cubic-bezier(0.73, 0.32, 0.34, 1.5),*/
+        /*0.5s padding cubic-bezier(0.73, 0.32, 0.34, 1.5),*/
+        /*0.5s margin cubic-bezier(0.73, 0.32, 0.34, 1.5),*/
+        /*0.5s 0.2s color, 0.2s background-color;*/
 
         visibility: visible;
       }
@@ -78,6 +78,7 @@
     .title {
       height: 18px;
       width: 100px;
+      text-align: center;
     }
     .dropdown {
       min-width: 100%;
@@ -87,8 +88,7 @@
       border-radius: 4px;
       border: 0 solid transparent;
       list-style: none;
-      transition: 0.5s padding, 0.5s border cubic-bezier(0.73, 0.32, 0.34, 1.5);
-      left: -20%;
+      /*transition: 0.5s padding, 0.5s border cubic-bezier(0.73, 0.32, 0.34, 1.5);*/
       top: 105%;
     }
     .dropdown-item {
@@ -98,7 +98,7 @@
       padding-bottom: 0;
       margin: 0;
       color: rgba(51, 51, 51, 0);
-      transition: 0.5s 0.1s height, 0.5s 0.1s padding, 0.5s 0.1s margin, 0.3s color, 0.6s visibility;
+      /*transition: 0.5s 0.1s height, 0.5s 0.1s padding, 0.5s 0.1s margin, 0.3s color, 0.6s visibility;*/
       z-index: 99;
       cursor: pointer;
 

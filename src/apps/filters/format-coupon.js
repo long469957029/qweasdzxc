@@ -50,7 +50,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
     case 201:
       couponInfo.bigShowNum = _.convert2yuan(bigShowNum)
       couponInfo.couponType = 2
-      couponInfo.couponName = '加奖卡'
+      couponInfo.couponName = '加奖券'
       couponInfo.conditionType = 1
       couponInfo.conditionUnit = '元'
       couponInfo.conditionNumber = _.convert2yuan(threholdAmount)
@@ -63,7 +63,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
     case 202:
       couponInfo.bigShowNum = _.formatDiv(bonusPercentAmount, 100)
       couponInfo.couponType = 2
-      couponInfo.couponName = '加奖卡'
+      couponInfo.couponName = '加奖券'
       couponInfo.conditionType = 2
       couponInfo.conditionUnit = '%'
       couponInfo.conditionNumber = _.formatDiv(bonusPercentAmount, 100)
@@ -76,7 +76,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
     case 301:
       couponInfo.bigShowNum = _.convert2yuan(bigShowNum)
       couponInfo.couponType = 3
-      couponInfo.couponName = '补贴卡'
+      couponInfo.couponName = '补贴券'
       couponInfo.conditionType = 1
       couponInfo.conditionUnit = '元'
       couponInfo.conditionNumber = _.convert2yuan(threholdAmount)
@@ -89,7 +89,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
     case 302:
       couponInfo.bigShowNum = _.formatDiv(bonusPercentAmount, 100)
       couponInfo.couponType = 3
-      couponInfo.couponName = '补贴卡'
+      couponInfo.couponName = '补贴券'
       couponInfo.conditionType = 2
       couponInfo.conditionUnit = '%'
       couponInfo.conditionNumber = _.formatDiv(bonusPercentAmount, 100)
@@ -102,7 +102,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
     case 401:
       couponInfo.bigShowNum = _.convert2yuan(bigShowNum)
       couponInfo.couponType = 4
-      couponInfo.couponName = '返水卡'
+      couponInfo.couponName = '返水券'
       couponInfo.conditionType = 1
       couponInfo.conditionUnit = '元'
       couponInfo.conditionNumber = _.convert2yuan(threholdAmount)
@@ -115,7 +115,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
     case 402:
       couponInfo.bigShowNum = _.formatDiv(bonusPercentAmount, 100)
       couponInfo.couponType = 4
-      couponInfo.couponName = '返水卡'
+      couponInfo.couponName = '返水券'
       couponInfo.conditionType = 2
       couponInfo.conditionUnit = '%'
       couponInfo.conditionNumber = _.formatDiv(bonusPercentAmount, 100)

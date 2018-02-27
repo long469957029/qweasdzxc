@@ -34,12 +34,13 @@
       padding: 8px;
       border-bottom: 1px solid #cccccc;
       .feedback-title-img {
-        width: 38px;
+        width: 21px;
         margin-left: 12px;
         //margin-right: 5px;
-        height: 30px;
+        height: 20px;
         display: inline-block;
-        float: left;
+        vertical-align: middle;
+        margin-right: 10px;
         background: url("~base/images/v2/icon-feedback.png") no-repeat center;
       }
       .feedback-title-text {
@@ -71,7 +72,7 @@
         line-height: 40px;
         padding: 0px 15px;
         font-size: 14px;
-        color: #666;
+        color: $new-inverse-color;
         margin-bottom: 0;
         margin-right: 7px;
         &:hover, &:active, &:focus {
@@ -91,6 +92,18 @@
         &:hover, &:active, &:focus {
           border: 1px solid $new-main-deep-color;
         }
+        &::-webkit-input-placeholder { /* WebKit browsers */
+          color:#b0b0b0;
+        }
+        &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+          color:#b0b0b0;
+        }
+        &::-moz-placeholder { /* Mozilla Firefox 19+ */
+          color:#b0b0b0;
+        }
+        &:-ms-input-placeholder { /* Internet Explorer 10+ */
+          color:#b0b0b0;
+        }
       }
     }
     .feedback-textarea {
@@ -101,11 +114,25 @@
       font-size: 14px;
       color: $new-inverse-color;
       margin-top: 24px;
-      height: 170px;
+      min-height: 170px;
+      max-height: 250px;
       border: 1px solid $def-gray-color;
       border-radius: 3px;
+      resize: vertical;
       &:hover, &:active, &:focus {
         border: 1px solid $new-main-deep-color;
+      }
+      &::-webkit-input-placeholder { /* WebKit browsers */
+        color:#b0b0b0;
+      }
+      &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color:#b0b0b0;
+      }
+      &::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color:#b0b0b0;
+      }
+      &:-ms-input-placeholder { /* Internet Explorer 10+ */
+        color:#b0b0b0;
       }
     }
 

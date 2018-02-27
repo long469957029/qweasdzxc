@@ -54,6 +54,10 @@ function addAll(rowsResult) {
   }, 0, this)
 }
 
+function handicapAddAll(rowsResult) {
+  return rowsResult[0].length
+}
+
 function _group(n, cTimes, factor) {
   let total = 1
 
@@ -481,6 +485,7 @@ module.exports = {
   mulAllNotRepeat,
 
   addAll,
+  handicapAddAll,
 
   // 组选 不定位
   group,

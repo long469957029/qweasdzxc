@@ -132,9 +132,9 @@ const MoneyDetailView = SearchGrid.extend({
     // row.push(tradingStatusConfig.toZh(info.tradeType));
     row.push(info.tradeType)
     if (info.amount >= 0) {
-      row.push(`<span class="text-prominent">${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-prominent">+${_(info.amount).convert2yuan()}</span>`)
     } else {
-      row.push(`<span class="">${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-cool">${_(info.amount).convert2yuan()}</span>`)
     }
 
     row.push(_(info.balance).convert2yuan())

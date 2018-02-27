@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog modal-confirm">
+  <div class="modal-confirm">
     <a class="close btn-close" data-dismiss="modal">×</a>
     <div class="modal-header">
       <span class="confirm-icon"></span>
@@ -94,6 +94,8 @@
       padding: 20px 0 0 20px;
       font-size: 16px;
       border-bottom: 1px solid #d7d7d7;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
     }
     .confirm-icon {
       background: url(misc/exclamation.png);
