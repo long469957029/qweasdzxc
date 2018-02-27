@@ -14,6 +14,7 @@ const WithdrawView = SearchGrid.extend({
   initialize () {
     _(this.options).extend({
       title: '报表查询',
+      tableClass: 'table table-bordered table-center border-bottom',
       columns: [
         {
           name: '交易流水号',
