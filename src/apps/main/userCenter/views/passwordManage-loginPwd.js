@@ -119,7 +119,7 @@ const LoginPwdView = Base.ItemView.extend({
   getErrorTooltip (errorText) {
     const errorHtml =
       `${'<div class="js-errorTooltip tooltip bottom parsley-errors-list filled">' +
-          '<div class="tooltip-inner"><span class="sfa sfa-error-icon vertical-middle m-right-xs"></span>'}${errorText}</div>` +
+          '<div class="tooltip-inner"><span class="sfa sfa-error-icon vertical-middle "></span>'}${errorText}</div>` +
       '</div>'
     return errorHtml
   },

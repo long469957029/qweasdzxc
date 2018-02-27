@@ -171,7 +171,7 @@ const PhoneBindingView = Base.ItemView.extend({
     }
   },
   getErrorEl (data) {
-    const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon m-right-xs vertical-sub"></i>${data.text}</span>`
+    const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon vertical-sub"></i>${data.text}</span>`
     data.el.html(errorTpl)
   },
 })
