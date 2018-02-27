@@ -72,9 +72,13 @@
                            data-parsley-errors-container=".js-rp-code-error"  placeholder="输入验证码" autocomplete="off">
                     <img class="var-code" :src="codeSrc" @click="refreshValCode">
                     <div class="text-hot m-top-xs inline-block" v-if="codeError"  style="max-width: 144px">
-                      <span class="sfa sfa-error-icon vertical-middle m-right-xs"></span>
+                      <span class="sfa sfa-error-icon vertical-middle"></span>
                       {{codeErrorText}}
                     </div>
+                  </div>
+                  <div class="text-hot m-top-xs text-left" v-if="errorText"  style="max-width: 144px">
+                    <span class="sfa sfa-error-icon vertical-middle"></span>
+                    {{errorText}}
                   </div>
                 </div>
                 <div class="text-center m-top-lg">
@@ -230,6 +234,7 @@
       stepsIndex: 0,  //当前步骤数
       codeError: false,
       codeErrorText: '',
+      errorText:'',
       hasBindQes: false,
       hasBindMoblie: false,
       hasBindMail: false,
@@ -294,6 +299,8 @@
           verifyUserNameXhr({username: this.userName, verifyCode: this.codeVal},
             ({data}) => {
               if (data && data.result === 0) {
+                this.codeError = false
+                this.codeErrorText = ''
                 this.hasBindQes = data.root.qesStatus === 1
                 this.hasBindMoblie = !_.isNull(data.root.mobile)
                 this.hasBindMail = !_.isNull(data.root.email)
@@ -301,14 +308,15 @@
                 this.mobile = data.root.mobile
                 this.loginToken = data.root.pwdToken
                 this.stepsIndex += 1
+                this.errorText = ''
               } else {
-                this.codeError = true
-                this.codeErrorText = data.msg
+                // this.codeError = true
+                this.errorText = data.msg
               }
             },
             ({data}) => {
-              this.codeError = true
-              this.codeErrorText = '验证用户名请求失败'
+              // this.codeError = true
+              this.errorText = '验证用户名请求失败'
             })
         }
       },

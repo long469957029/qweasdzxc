@@ -175,21 +175,19 @@
                        :total-lottery="bettingChoice.totalLottery" ref="bettingChase"
                        @chaseComplete="chaseComplete"></betting-chase>
       </x-dialog>
-    </div>
-    <!--<div class="modal hide `" tabindex="-1" role="dialog" aria-hidden="false" ref="chaseModal" v-if="showChaseModal">-->
-    <!--</div>-->
 
-    <!-- 确认投注 -->
-    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="confirm">
-      <betting-confirm :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
-                       :betting-list="bettingChoice.previewList" :type="`normal`"
-                       @bettingConfirm="bettingConfirm"></betting-confirm>
+      <!-- 确认投注 -->
+      <x-dialog v-if="showConfirmModal" @modal-hidden="showConfirmModal = false">
+        <betting-confirm :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
+                         :betting-list="bettingChoice.previewList" :type="`normal`"
+                         @bettingConfirm="bettingConfirm"></betting-confirm>
+      </x-dialog>
     </div>
   </div>
 </template>
 
 <script>
-  import {formatOpenNum, TransferDom} from 'build'
+  import {formatOpenNum} from 'build'
 
   import betRulesConfig from './misc/betRulesConfig'
   import BettingRules from './betting-rules'
@@ -204,10 +202,6 @@
 
   export default {
     name: "betting-main-area",
-
-    directives: {
-      TransferDom
-    },
 
     props: {
       ticketInfo: Object,
@@ -265,6 +259,7 @@
         advanceShowMode: 'classic', //classic | single
 
         showChaseModal: false,
+        showConfirmModal: false,
 
         //总投注代金券
         totalVoucher: {},
@@ -275,6 +270,7 @@
         'playLevels'
       ]),
       ...mapState({
+        foundsLock: state => state.loginStore.foundsLock,
         bettingVouchers: 'bettingVouchers',
         bettingChoice: 'bettingChoice',
         bettingInfo: 'bettingInfo',
@@ -490,7 +486,7 @@
           return false
         }
 
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
+        if (this.foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
         }
@@ -564,21 +560,19 @@
           return false
         }
 
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
+        if (this.foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
         }
 
-        $(this.$refs.confirm).modal({
-          backdrop: 'static',
-        })
+        this.showConfirmModal = true
       },
 
       bettingConfirm() {
         this.pushing = true
 
 
-        $(this.$refs.confirm).modal('hide')
+        this.showConfirmModal = false
 
         const useVoucher = !_.isEmpty(this.totalVoucher)
 
@@ -640,7 +634,7 @@
           return false
         }
 
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
+        if (this.foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
         }
@@ -746,7 +740,7 @@
       },
     },
 
-    mounted: function () {
+    mounted() {
       $(this.$refs.multiRange).numRange({
         onChange: (num) => {
           this.$store.commit(types.SET_MULTIPLE, num)

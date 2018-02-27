@@ -370,7 +370,7 @@
           isOfficial: this.ticketInfo.isOfficial
         }, (data) => {
           if (data && data.result === 0) {
-            this.twoSideList = data.root
+            this.twoSideList = data.root.slice(0, 10)
           }
         })
       },
