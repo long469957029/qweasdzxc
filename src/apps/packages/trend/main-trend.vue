@@ -605,7 +605,7 @@
 
         _(this.ticketInfo.counts).times((index) => {
           Draw.DrawLine.color(colors);
-          Draw.DrawLine.add((parseInt(index) * num + 2), this.showPlanId ? 2 : 1, num, 0);
+          Draw.DrawLine.add((parseInt(index) * num + (this.showPlanId ? 2 : 1)), 2, num, 0);
         })
 
         Draw.DrawLine.draw(Draw.Chart.ini.default_has_line);
