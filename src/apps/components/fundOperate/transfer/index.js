@@ -109,11 +109,11 @@ const TransferView = Base.ItemView.extend({
         const outHeight = this.$('.js-tr-out-select').height()
         const inHeight = this.$('.js-tr-in-select').height()
         if (outHeight > 100) {
-          this.$('.js-tr-out-select').removeClass('side-down')
+          this.$('.js-tr-out-select').removeClass('side-down').scrollTop(0)
           this.$('.js-tr-select-out-down').removeClass('up')
         }
         if (inHeight > 100) {
-          this.$('.js-tr-in-select').removeClass('side-down')
+          this.$('.js-tr-in-select').removeClass('side-down').scrollTop(0)
           this.$('.js-tr-select-in-down').removeClass('up')
         }
       }
@@ -223,7 +223,7 @@ const TransferView = Base.ItemView.extend({
       this.$('.js-tr-out-select').addClass('side-down')
       this.$('.js-tr-select-out-down').addClass('up')
     } else {
-      this.$('.js-tr-out-select').removeClass('side-down')
+      this.$('.js-tr-out-select').removeClass('side-down').scrollTop(0)
       this.$('.js-tr-select-out-down').removeClass('up')
     }
   },
@@ -234,7 +234,7 @@ const TransferView = Base.ItemView.extend({
       this.$('.js-tr-in-select').addClass('side-down')
       this.$('.js-tr-select-in-down').addClass('up')
     } else {
-      this.$('.js-tr-in-select').removeClass('side-down')
+      this.$('.js-tr-in-select').removeClass('side-down').scrollTop(0)
       this.$('.js-tr-select-in-down').removeClass('up')
     }
   },

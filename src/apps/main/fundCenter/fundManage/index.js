@@ -198,11 +198,11 @@ export default Base.ItemView.extend({
         const outHeight = this.$('.js-fm-out-select').height()
         const inHeight = this.$('.js-fm-in-select').height()
         if (outHeight > 100) {
-          this.$('.js-fm-out-select').removeClass('side-down')
+          this.$('.js-fm-out-select').removeClass('side-down').scrollTop(0)
           this.$('.js-fm-select-out-down').removeClass('up')
         }
         if (inHeight > 100) {
-          this.$('.js-fm-in-select').removeClass('side-down')
+          this.$('.js-fm-in-select').removeClass('side-down').scrollTop(0)
           this.$('.js-fm-select-in-down').removeClass('up')
         }
       }
@@ -268,7 +268,7 @@ export default Base.ItemView.extend({
       this.$('.js-fm-out-select').addClass('side-down')
       this.$('.js-fm-select-out-down').addClass('up')
     } else {
-      this.$('.js-fm-out-select').removeClass('side-down')
+      this.$('.js-fm-out-select').removeClass('side-down').scrollTop(0)
       this.$('.js-fm-select-out-down').removeClass('up')
     }
   },
@@ -279,7 +279,7 @@ export default Base.ItemView.extend({
       this.$('.js-fm-in-select').addClass('side-down')
       this.$('.js-fm-select-in-down').addClass('up')
     } else {
-      this.$('.js-fm-in-select').removeClass('side-down')
+      this.$('.js-fm-in-select').removeClass('side-down').scrollTop(0)
       this.$('.js-fm-select-in-down').removeClass('up')
     }
   },

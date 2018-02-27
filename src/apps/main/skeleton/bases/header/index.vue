@@ -329,21 +329,22 @@
       height: 40px;
       margin: 0 auto;
     }
-    @media screen and (max-width: 1200px) {
-      .header-assist {
-        position: absolute;
-        left: 136px;
-      }
-    }
-    @media screen and (max-width: 1471px) {
+    /*@media screen and (max-width: 1200px) {*/
+      /*.header-assist {*/
+        /*!*position: absolute;*!*/
+        /*float: left;*/
+        /*left: 136px;*/
+      /*}*/
+    /*}*/
+    @media screen and (max-width: 1481px) {
       .header-assist {
         /*position: absolute;*/
         /*left: 136px;*/
         float: left;
-        margin-left: 20px;
+        margin-left: 140px;
       }
     }
-    @media screen and (min-width: 1472px) {
+    @media screen and (min-width: 1482px) {
       .header-assist {
         position: absolute;
         left: 0px;
