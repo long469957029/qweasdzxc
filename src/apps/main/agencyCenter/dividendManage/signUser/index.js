@@ -303,7 +303,7 @@ const SignUserView = Base.ItemView.extend({
     this.GameGrid = this.$gameGrid.staticGrid({
       startOnLoading: false,
       // height: 80,
-      tableClass: 'table table-bordered table-center',
+      tableClass: 'table table-bordered table-center border-bottom',
       colModel,
       emptyTip: false,
       row: this._formatGameData(rebateList || []),

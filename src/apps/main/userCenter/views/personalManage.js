@@ -72,7 +72,7 @@ const PersonalManageView = Base.ItemView.extend({
         if (res && res.result === 0) {
           self.$('.js-uc-userName').html(res.root.userName)
           self.$('.js-uc-uName').val(res.root.uName)
-          self.iconId = res.root.headIconId
+          self.iconId = res.root.headIconId || Global.memoryCache.get('acctInfo').headIcon
           self.$('.js-uc-regTime').html(_(res.root.userRegTime).toTime())
           if (!_.isNull(res.root.gender)) {
             self.$(`input[name="ucSex"][value=${res.root.gender}]`).attr('checked', true)
@@ -120,7 +120,7 @@ const PersonalManageView = Base.ItemView.extend({
       const self = this
       this.$headIconList.empty()
       const html = _(data).map((item) => {
-        return `<li class="icon-info js-head-icon-info ${Number(item.id) === self.iconId ? 'active' : ''}" 
+        return `<li class="icon-info js-head-icon-info ${Number(item.id) === Number(self.iconId) ? 'active' : ''}" 
             data-id="${item.id}"><img src="${item.logo}" class="head-img"></li>`
       })
       this.$headIconList.html(html.join(''))
@@ -220,12 +220,12 @@ const PersonalManageView = Base.ItemView.extend({
       })
       .done((res) => {
         if (res && res.result === 0) {
+          Vue.$global.bus.$emit('update:userInfo',{uName: self.$('.js-uc-uName').val(),headIconId: self.iconId})
           self.refresh()
           Global.ui.notification.show('修改个人信息成功', {
             type: 'success',
           })
           window.app.$store.dispatch(types.CHECK_LOGIN_STATUS)
-          Vue.$global.bus.$emit('update:userInfo',{uName: self.$('.js-uc-uName').val(),headIconId: self.iconId})
         } else {
           Global.ui.notification.show('修改个人信息失败')
         }
