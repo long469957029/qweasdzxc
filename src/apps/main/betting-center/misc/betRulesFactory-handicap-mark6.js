@@ -356,6 +356,7 @@ function _create(ticketId) {
   // 特码
   factory.addHandicapRule([ticketId, '210101'], {
     keyPosition,
+    algorithm: algorithm.handicapAddAll,
     list: factory.createHandicapList([
       {
         title: '特码',
@@ -429,6 +430,8 @@ function _create(ticketId) {
     showItemOdds: false,
     showMoneyInput: false,
     bettingArea: ['bottom'],
+    showItemOddsAtTitle: true,
+    calculateType: 'unite',
     format: betFormat.multiFirst,
     showFormat: betFormat.handicapSpecial,
   })
@@ -453,6 +456,8 @@ function _create(ticketId) {
     showItemOdds: false,
     showMoneyInput: false,
     bettingArea: ['bottom'],
+    showItemOddsAtTitle: true,
+    calculateType: 'unite',
     format: betFormat.multiFirst,
     showFormat: betFormat.handicapSpecial,
   })
@@ -477,6 +482,8 @@ function _create(ticketId) {
     showItemOdds: false,
     showMoneyInput: false,
     bettingArea: ['bottom'],
+    showItemOddsAtTitle: true,
+    calculateType: 'unite',
     format: betFormat.multiFirst,
     showFormat: betFormat.handicapSpecial,
   })
@@ -501,6 +508,8 @@ function _create(ticketId) {
     showItemOdds: false,
     showMoneyInput: false,
     bettingArea: ['bottom'],
+    showItemOddsAtTitle: true,
+    calculateType: 'unite',
     format: betFormat.multiFirst,
     showFormat: betFormat.handicapSpecial,
   })
@@ -525,6 +534,8 @@ function _create(ticketId) {
     showItemOdds: false,
     showMoneyInput: false,
     bettingArea: ['bottom'],
+    showItemOddsAtTitle: true,
+    calculateType: 'unite',
     format: betFormat.multiFirst,
     showFormat: betFormat.handicapSpecial,
   })
@@ -549,6 +560,8 @@ function _create(ticketId) {
     showItemOdds: false,
     showMoneyInput: false,
     bettingArea: ['bottom'],
+    showItemOddsAtTitle: true,
+    calculateType: 'unite',
     format: betFormat.multiFirst,
     showFormat: betFormat.handicapSpecial,
   })

@@ -23,7 +23,11 @@
           <div class="main-title" v-for="title in rule.title">{{title}}</div>
         </div>
         <div class="main" v-else>
-          <div class="main-title">{{rule.title}}</div>
+          <div class="main-title" v-if="!playRule.showItemOddsAtTitle">{{rule.title}}</div>
+          <div class="main-title main-title-odds" v-else="playRule.showItemOddsAtTitle">
+            {{rule.title}}
+            （ 赔率：<animated-integer :value="_.convert2yuan(playInfo.betBonus[0].betMethodMin)"></animated-integer> ）
+          </div>
         </div>
 
         <div class="side" v-if="rule.op.full">快捷组选</div>
@@ -36,7 +40,9 @@
             <div class="main-item" v-for="item in rowItem" v-if="item.row" :class="{selected: item.selected}"
                  @click="select(item)">
               <div class="main-item-left" v-if="!_.isEmpty(item)">
-                <span class="item" :class="item.style">{{item.title}}</span>
+                <span class="item" :class="item.style">
+                  {{item.title}}
+                </span>
 
                 <span class="item" v-if="item.row" v-for="num in item.row">
                     <span :class="num.style">{{num.title}}</span>
@@ -154,7 +160,7 @@
       pending: Boolean,
     },
 
-    data: function () {
+    data() {
       return {
         chips: [5, 10, 200, 5000, 10000],
         lotteryList: [],
@@ -188,7 +194,7 @@
       'betMoney': {
         handler() {
           _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
-            if (item.selected && (!item.betMoney || this.isInputing)) {
+            if (item.selected && (!item.betMoney || this.isInputing) || this.playRule.calculateType === 'unite') {
               this.isInputing = true
               item.betMoney = this.betMoney
             }
@@ -200,12 +206,23 @@
           // let prevCanBet = this.canBet
           this.lotteryList = []
           this.canBet = false
-          _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
-            if (item.selected && item.betMoney) {
-              this.canBet = true
-              this.lotteryList.push(item)
-            }
-          })
+
+          /**
+           * 盘口有两种计算方式
+           * 1 每个格子独立计算
+           * 2 所有选中的格子统一计算 calculateType区分
+           */
+          switch(this.playRule.calculateType) {
+            case 'unite':
+              this.formatRuleListByUnite()
+              break;
+            case 'separate':
+              this.formatRuleListBySeparate()
+              break;
+            default:
+              console.error(`没有找到合适的格式化方法:${this.playRule.calculateType}`)
+              break;
+          }
 
           if (this.playRule.algorithm !== _.noop) {
             this.$_statisticsLottery()
@@ -216,6 +233,33 @@
     },
 
     methods: {
+      formatRuleListByUnite() {
+        // let lotteryNumList = []
+        if (!this.betMoney) {
+          return
+        }
+        _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
+          if (item.selected) {
+            this.canBet = true
+            this.lotteryList.push(item)
+          }
+        })
+
+        // this.lotteryList.push({
+        //   title: lotteryNumList.join(' '),
+        //   num: lotteryNumList.join(' '),
+        //   betMoney: this.betMoney,
+        // })
+      },
+
+      formatRuleListBySeparate() {
+        _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
+          if (item.selected && item.betMoney) {
+            this.canBet = true
+            this.lotteryList.push(item)
+          }
+        })
+      },
 
       select(item) {
         item.selected = !item.selected
@@ -453,6 +497,7 @@
             lotteryList: this.lotteryList,
             format: this.playRule.format,
             showFormat: this.playRule.showFormat,
+            calculateType: this.playRule.calculateType,
           }
         })
 
@@ -492,6 +537,9 @@
         border-right: 1px solid #e6e6e6;
         width: 0;
         white-space: pre;
+        &.main-title-odds {
+          white-space: initial;
+        }
 
         &:last-child {
           border-right: none;
