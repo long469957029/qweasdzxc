@@ -48,12 +48,13 @@ const getTicketRulesApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
  * 提交投注
  * @param planId
  * @param bet
+ * @param amount - 由前端算出的投注总而 用于给后端验证优惠券使用条件是否满足 传格式化后的价格
  * @param then
  * @param fail
  * @returns {* | Promise<T>}
  * @param couponRid
  */
-const pushBettingApi = ({ planId, bet, couponRid = 0 }, then, fail) => {
+const pushBettingApi = ({ planId, bet, amount, couponRid = 0 }, then, fail) => {
   const usePack = !!couponRid ? 1 : 0
   return $http({
     url: '/ticket/bet/bet.json',
@@ -61,6 +62,7 @@ const pushBettingApi = ({ planId, bet, couponRid = 0 }, then, fail) => {
     data: {
       planId,
       bet,
+      amount,
       usePack,
       couponRid
     },
@@ -199,11 +201,12 @@ const setTopCurrentTicketApi = ({ticketId, type = 0}) => {
  * 秒秒彩开奖
  * @param bet
  * @param couponRid
+ * @param amount - 由前端算出的投注总而 用于给后端验证优惠券使用条件是否满足 传格式化后的价格
  * @param then
  * @param fail
  * @returns {* | Promise<T>}
  */
-const pushMmcBettingApi = ({bet, couponRid = 0}, then, fail) => {
+const pushMmcBettingApi = ({bet, amount, couponRid = 0}, then, fail) => {
   const usePack = !!couponRid ? 1 : 0
 
   return $http({
@@ -212,6 +215,7 @@ const pushMmcBettingApi = ({bet, couponRid = 0}, then, fail) => {
     data: {
       planId: 'mmc',
       bet,
+      amount,
       usePack,
       couponRid
     }

@@ -466,7 +466,7 @@
   }
 
   .bc-select-item {
-    /*margin-bottom: 10px;*/
+    margin-bottom: 10px;
     display: inline-block;
   }
 

@@ -5,21 +5,23 @@
       <tool-cell type="select-group" v-model="itemStatus" :options="itemStatusOps" title="兑换状态"></tool-cell>
       <tool-cell type="sort" v-model="sort" :options="sortOps" title="排序"></tool-cell>
     </x-toolbar>
-    <status-cell class="points-gift-main" :has-data="giftList.length" :status="loadingStatus">
-      <gift-card v-for="(gift, index) in giftList" :key="index"
-                 :itemDesc="gift.itemDesc"
-                 :itemName="gift.itemName"
-                 :limit-level-type="gift.limitLevelType"
-                 :levelLimit="gift.levelLimit"
-                 :picUrl="gift.picUrl"
-                 :refPrice="gift.refPrice"
-                 :requireIntegral="gift.requireIntegral"
-                 :useNum="gift.useNum"
-                 :maxNum="gift.maxNum"
-                 @exchange="openExchangeModal(gift)"
-      ></gift-card>
+    <status-cell :has-data="giftList.length" :status="loadingStatus">
+      <div class="points-gift-main">
+        <gift-card v-for="(gift, index) in giftList" :key="index"
+                   :itemDesc="gift.itemDesc"
+                   :itemName="gift.itemName"
+                   :limit-level-type="gift.limitLevelType"
+                   :levelLimit="gift.levelLimit"
+                   :picUrl="gift.picUrl"
+                   :refPrice="gift.refPrice"
+                   :requireIntegral="gift.requireIntegral"
+                   :useNum="gift.useNum"
+                   :maxNum="gift.maxNum"
+                   @exchange="openExchangeModal(gift)"
+        ></gift-card>
+      </div>
+      <x-pagination :page-size="12" :total-size="totalSize" v-model="pageIndex"></x-pagination>
     </status-cell>
-    <x-pagination :page-size="12" :total-size="totalSize" v-model="pageIndex"></x-pagination>
 
     <div v-transfer-dom>
       <x-dialog v-if="isShowExchangeModal" @modal-hidden="isShowExchangeModal = false">
@@ -115,7 +117,7 @@
         ],
 
         sort: {
-          sortFlag: 1,
+          sortFlag: 3,
           sortType: 1,
         },
         sortOps: [

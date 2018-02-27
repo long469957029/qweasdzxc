@@ -64,6 +64,7 @@ const actions = {
     type = 'previewList',
   }) {
     const bettingList = state[type]
+    let amount = 0
     const bet = _(bettingList).reduce((list, item) => {
       list.push({
         betNum: item.bettingNumber,
@@ -74,11 +75,13 @@ const actions = {
         betMethod: item.betMethod,
       })
 
+      amount += item.fPrefabMoney
+
       return list
     }, [])
 
     return pushBettingApi(
-      { planId, bet, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
+      { planId, bet, amount, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
       ({ data }) => {
         commit(types.PUSH_BETTING_SUCCESS, { res: data, type })
         return data
@@ -119,6 +122,8 @@ const actions = {
     bettingList,
     prevVoucher,
   }) {
+    let amount = 0
+
     const bet = _(bettingList).reduce((list, item) => {
       list.push({
         betNum: item.bettingNumber,
@@ -129,12 +134,15 @@ const actions = {
         betMethod: item.betMethod,
       })
 
+      amount += item.fPrefabMoney
+
       return list
     }, [])
 
+
     return new Promise((resolve) => {
       pushMmcBettingApi(
-        { bet, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
+        { bet, amount, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
         ({ data }) => {
           resolve(data)
         },
@@ -515,10 +523,18 @@ const mutations = {
 
       // 计算prefabMoney 和 rebateMoney
 
-      item.prefabMoney = _.chain(bettingInfo.lotteryList).reduce((total, item) => { return total + item.betMoney }, 0)
-        .mul(item.statistics)
-        .mul(item.unit)
-        .value()
+      if (bettingInfo.calculateType === 'separate') {
+        item.prefabMoney = _.chain(bettingInfo.lotteryList).reduce((total, item) => { return total + item.betMoney }, 0)
+          .mul(item.statistics)
+          .mul(item.unit)
+          .value()
+      } else if (bettingInfo.calculateType === 'unite') {
+        //只取一个价格
+        item.prefabMoney = _.chain(bettingInfo.lotteryList[0].betMoney)
+          .mul(item.statistics)
+          .mul(item.unit)
+          .value()
+      }
     })
 
     state.buyList = items.concat(state.buyList)

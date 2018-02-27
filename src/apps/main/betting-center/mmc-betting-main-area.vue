@@ -415,6 +415,8 @@
 
         //投注代金券
         totalVoucher: {},
+
+        mainHeight: 0,
       }
     },
     computed: {
@@ -455,6 +457,8 @@
       opening: {
         handler(current) {
           if (current) {
+            this.mainHeight = this.$refs.main.offsetHeight
+
             Velocity(this.$refs.main, {
               height: 500
             })
@@ -475,7 +479,7 @@
         if (selectStatus) {
 
           Velocity(this.$refs.main, {
-            height: 1005,
+            height: this.mainHeight,
           })
           Velocity(this.$refs.mainInner, {
             opacity: 1,

@@ -1,25 +1,29 @@
 <template>
-  <div class="x-modal hide fade" :class="type" ref="modal" :style="`width: ${width}`">
-    <slot name="all">
-      <slot name="head">
-        <div class="x-modal-header">
-          <a data-dismiss="modal" class="close btn-close">×</a>
-          <slot name="head-main"></slot>
-        </div>
-      </slot>
-      <slot name="body">
-        <div class="x-modal-body">
-          <slot></slot>
-        </div>
-      </slot>
+  <transition
+    leave-active-class="out"
+  >
+    <div class="x-modal hide fade in" :class="type" ref="modal" :style="`width: ${width}`">
+      <slot name="all">
+        <slot name="head">
+          <div class="x-modal-header">
+            <a data-dismiss="modal" class="close btn-close">×</a>
+            <slot name="head-main"></slot>
+          </div>
+        </slot>
+        <slot name="body">
+          <div class="x-modal-body">
+            <slot></slot>
+          </div>
+        </slot>
 
-      <slot name="footer" v-if="showFooter">
-        <div class="x-modal-footer">
-          <slot name="footer-main"></slot>
-        </div>
+        <slot name="footer" v-if="showFooter">
+          <div class="x-modal-footer">
+            <slot name="footer-main"></slot>
+          </div>
+        </slot>
       </slot>
-    </slot>
-  </div>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -80,6 +84,10 @@
       transition: opacity .3s linear,top .3s ease-out;
       &.in {
         top: 10%;
+      }
+      &.out {
+        top: -25%;
+        opacity: 0;
       }
     }
 
