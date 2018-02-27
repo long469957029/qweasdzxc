@@ -236,13 +236,14 @@
         currentSearchIndex: 0,
         currentSplit: {},
         fPositions: [],
-        showPlanId: this.ticketId !== 19
+        showPlanId: true
       }
     },
 
     watch: {
       ticketId: {
         handler(ticketId) {
+          this.showPlanId = this.ticketId !== 19
           this.ticketInfo = ticketConfig.getById(ticketId)
           this.currentSplit = _.first(this.ticketInfo.trendOps.splitTrend)
           if (this.currentSplit) {
