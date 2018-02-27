@@ -76,12 +76,12 @@
                       {{codeErrorText}}
                     </div>
                   </div>
-                  <div class="text-hot m-top-xs text-left" v-if="errorText"  style="max-width: 144px">
+                  <div class="text-hot m-top-xs text-left" v-if="errorText"  style="margin-left: 130px">
                     <span class="sfa sfa-error-icon vertical-middle"></span>
                     {{errorText}}
                   </div>
                 </div>
-                <div class="text-center m-top-lg">
+                <div class="text-left m-top-lg">
                   <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyUsetName">提交</button>
                 </div>
               </form>
@@ -176,11 +176,11 @@
                     <span class="sfa sfa-error-icon vertical-middle"></span>
                     {{qesErrorText}}
                   </div>
-                  <div class="text-center m-top-lg">
+                  <div class=" m-top-lg">
                     <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyQes">提交</button>
                   </div>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-link font-sm m-TB-sm" data-loading-text="校验中" @click="goPrev">
+                  <div class="">
+                    <button type="button" class="btn btn-link re-btn font-sm m-TB-sm" data-loading-text="校验中" @click="goPrev">
                       返回上一步
                     </button>
                   </div>
@@ -520,7 +520,8 @@
         }
       }
       .re-btn {
-        width: 340px;
+        margin-left: 130px;
+        width: 360px;
         height: 46px;
         font-size: $font-sm;
       }

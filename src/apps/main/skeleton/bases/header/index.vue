@@ -10,10 +10,10 @@
       <div class="js-gl-service header-customer-entry  pull-right overflow-hidden">
         <span class="sfa sfa-customer-service"></span><span class="header-customer-text">客服</span>
       </div>
-      <transition mode="out-in"
-                  enter-active-class="animated-general fadeInRightBig"
-                  leave-active-class="animated-general fadeOutRightBig"
-      >
+      <!--<transition mode="out-in"-->
+                  <!--enter-active-class="animated-general fadeInRightBig"-->
+                  <!--leave-active-class="animated-general fadeOutRightBig"-->
+      <!--&gt;-->
         <div class="header-not-login pull-right" v-if="!loginStatus" key="login">
           <button type="button" class="header-login " @click="showFreeTrial">免费试玩</button>
           <button type="button" class="header-login " @click="showLogin">登录</button>
@@ -86,7 +86,7 @@
             </div>
           </div>
         </div>
-      </transition>
+      <!--</transition>-->
     </div>
   </div>
 </template>
@@ -184,7 +184,7 @@
               window.Global.cookieCache.set('token', data.data.root.token, 160)
               window.Global.cookieCache.set('loginState', true)
               window.Global.cookieCache.set('isTestUser', true)//存一份到cookie，用于应用刷新时记住试玩状态
-              if (data.data.balance < 10000000) {
+              if (data.data.root &&data.data.root.balance === 10000000) {
                 this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
               }
               this.judgeIsTestUser()
