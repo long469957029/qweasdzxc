@@ -16,6 +16,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
     ticketId: -1,
     mainDesc: '',
     secondDesc: '',
+    records: '',
     conditionNumber: 0,
     zhType: '',
     bigShowNum: 0,
@@ -32,6 +33,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
       couponInfo.conditionNumber = _.convert2yuan(threholdAmount)
       couponInfo.zhType = '充值'
       couponInfo.mainDesc = `${couponInfo.zhType}满${couponInfo.conditionNumber}元即返`
+      couponInfo.records = `${couponInfo.zhType}满${couponInfo.conditionNumber}元返${couponInfo.bigShowNum}元`
       couponInfo.style1 = 'task-charge'
       couponInfo.style2 = 'lucky-charge'
       break;
@@ -43,7 +45,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
       couponInfo.conditionUnit = '%'
       couponInfo.conditionNumber = _.formatDiv(bonusPercentAmount, 100)
       couponInfo.zhType = '充值'
-      couponInfo.mainDesc = `按${couponInfo.zhType}额${couponInfo.conditionNumber}%比例返`
+      couponInfo.records = couponInfo.mainDesc = `按${couponInfo.zhType}额${couponInfo.conditionNumber}%比例返`
       couponInfo.style1 = 'task-charge'
       couponInfo.style2 = 'lucky-charge'
       break;
@@ -57,6 +59,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
       couponInfo.zhType = '中奖'
       couponInfo.secondDesc = `${couponInfo.zhType}满${couponInfo.conditionNumber}元即返`
+      couponInfo.records = `${couponInfo.mainDesc}<br />${couponInfo.zhType}满${couponInfo.conditionNumber}元返${couponInfo.bigShowNum}元`
       couponInfo.style1 = 'task-plus'
       couponInfo.style2 = 'lucky-plus'
       break;
@@ -70,6 +73,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
       couponInfo.zhType = '中奖'
       couponInfo.secondDesc = `按${couponInfo.zhType}额${couponInfo.conditionNumber}%比例返`
+      couponInfo.records = `${couponInfo.mainDesc}<br />${couponInfo.secondDesc}`
       couponInfo.style1 = 'task-plus'
       couponInfo.style2 = 'lucky-plus'
       break;
@@ -83,6 +87,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
       couponInfo.zhType = '亏损'
       couponInfo.secondDesc = `${couponInfo.zhType}满${couponInfo.conditionNumber}元即返`
+      couponInfo.records = `${couponInfo.mainDesc}<br />${couponInfo.zhType}满${couponInfo.conditionNumber}元返${couponInfo.bigShowNum}元`
       couponInfo.style1 = 'task-allowance'
       couponInfo.style2 = 'lucky-allowance'
       break;
@@ -96,6 +101,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
       couponInfo.zhType = '亏损'
       couponInfo.secondDesc = `按${couponInfo.zhType}额${couponInfo.conditionNumber}%比例返`
+      couponInfo.records = `${couponInfo.mainDesc}<br />${couponInfo.secondDesc}`
       couponInfo.style1 = 'task-allowance'
       couponInfo.style2 = 'lucky-allowance'
       break;
@@ -109,6 +115,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
       couponInfo.zhType = '投注'
       couponInfo.secondDesc = `${couponInfo.zhType}满${couponInfo.conditionNumber}元即返`
+      couponInfo.records = `${couponInfo.mainDesc}<br />${couponInfo.zhType}满${couponInfo.conditionNumber}元返${couponInfo.bigShowNum}元`
       couponInfo.style1 = 'task-rebate'
       couponInfo.style2 = 'lucky-rebate'
       break;
@@ -121,7 +128,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
       couponInfo.conditionNumber = _.formatDiv(bonusPercentAmount, 100)
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
       couponInfo.zhType = '投注'
-      couponInfo.secondDesc = `按${couponInfo.zhType}额${couponInfo.conditionNumber}%比例返`
+      couponInfo.records = `${couponInfo.mainDesc}<br />${couponInfo.secondDesc}`
       couponInfo.style1 = 'task-rebate'
       couponInfo.style2 = 'lucky-rebate'
       break;
@@ -135,6 +142,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
       // return "返利游戏：" + ticketNameMap.get(this.getStatTicketId()) + "\n返利范围：全平台";
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
       couponInfo.secondDesc = `单笔投注满${couponInfo.conditionNumber}元即可用`
+      couponInfo.records = `${couponInfo.mainDesc}<br />单笔投注满${couponInfo.conditionNumber}元返${couponInfo.bigShowNum}元`
       couponInfo.style1 = 'task-equivalent'
       couponInfo.style2 = 'lucky-equivalent'
       break;
@@ -144,6 +152,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
       couponInfo.conditionUnit = '元'
       couponInfo.couponName = '现金券'
       couponInfo.mainDesc = `领取即加币至账户余额`
+      couponInfo.records = `现金${couponInfo.bigShowNum}元`
       couponInfo.style1 = 'task-currency'
       couponInfo.style2 = 'lucky-currency'
       break;

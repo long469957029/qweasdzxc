@@ -38,7 +38,8 @@
           </div>
         </div>
         <div class="m-LR-smd">
-          <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'" loading-tip="">
+          <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'"
+                       loading-tip="">
             <transition name="fade" mode="out-in"
                         enter-active-class="animated-quick fadeIn"
                         leave-active-class="animated-quick fadeOut"
@@ -147,7 +148,7 @@
                 ></betting-vouchers>
               </div>
 
-              <button class="bc-chase btn-link inline-block cursor-pointer m-left-md relative" @click="bettingChase"
+              <button class="bc-chase btn-link inline-block cursor-pointer relative" @click="bettingChase"
                       :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                 <span class="sfa sfa-checkmark vertical-middle"></span>
                 我要追号
@@ -172,7 +173,8 @@
 
     <div v-transfer-dom>
       <x-dialog v-if="showChaseModal" @modal-hidden="showChaseModal = false">
-        <betting-chase slot="all" :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney" :ticket-info="ticketInfo"
+        <betting-chase slot="all" :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney"
+                       :ticket-info="ticketInfo"
                        :planId="bettingInfo.planId" :preview-list="bettingChoice.previewList"
                        :total-lottery="bettingChoice.totalLottery" ref="bettingChase"
                        @chaseComplete="chaseComplete"></betting-chase>
@@ -180,7 +182,7 @@
 
       <!-- 确认投注 -->
       <x-dialog v-if="showConfirmModal" @modal-hidden="showConfirmModal = false">
-        <betting-confirm :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
+        <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
                          :betting-list="bettingChoice.previewList" :type="`normal`"
                          @bettingConfirm="bettingConfirm"></betting-confirm>
       </x-dialog>
@@ -352,7 +354,7 @@
             //   `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
             //   {id: 'ticketNotice', hasFooter: false, displayTime: 800},
             // )
-            this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE,{show:true,dataInfo:{type:3, oldPlanId, newPlanId}})
+            this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE, {show: true, dataInfo: {type: 3, oldPlanId, newPlanId}})
           }
         }
       },
@@ -859,13 +861,21 @@
   }
 
   .bc-vouchers-select {
-    width: 106px;
     color: $new-inverse-color;
     border-radius: 5px;
     vertical-align: bottom;
     top: 2px;
     position: relative;
     left: 10px;
+  }
+
+  .bc-operate-section {
+    width: 878px;
+    //border: 1px solid $table-border-color;
+    border-top: 0;
+    padding: 5px 0;
+    margin-bottom: 4px;
+    display: flex;
   }
 
   .ba-chase-tip {
@@ -913,7 +923,8 @@
 
   .total-panel {
     min-width: 450px;
-    margin-left: 180px;
+    margin-left: 165px;
+    flex: 1;
   }
 
   .bc-play-container.clearfix {
