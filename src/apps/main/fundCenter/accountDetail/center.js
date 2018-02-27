@@ -114,7 +114,7 @@ const MoneyDetailView = SearchGrid.extend({
     if (info.amount >= 0) {
       row.push(`<span class="text-prominent">+${_(info.amount).convert2yuan()}</span>`)
     } else {
-      row.push(`<span class="text-prominent">${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-cool">${_(info.amount).convert2yuan()}</span>`)
     }
 
     row.push(`<span class="">${_(info.balance).convert2yuan()}</span>`)

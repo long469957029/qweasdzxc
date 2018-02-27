@@ -151,6 +151,10 @@
             Global.ui.notification.show('暂未开放，敬请期待')
             return false
           }
+          if (Global.memoryCache.get('acctInfo').foundsLock) {
+            Global.ui.notification.show('资金已锁定，暂不能进入游戏')
+            return false
+          }
           getGameListApi()
             .done((data) => {
                 if (data && data.result === 0) {

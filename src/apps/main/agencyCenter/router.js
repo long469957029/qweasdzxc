@@ -338,6 +338,10 @@ export default [
         sidebar,
       })
     },
+    meta: {
+      keepAlive: true,
+      subRouter: ['/ac/sum/am']
+    }
   },
   {
     path: '/ac/su',
