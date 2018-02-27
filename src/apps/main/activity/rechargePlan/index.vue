@@ -56,7 +56,7 @@
                :class="{one:index===0,two:index===1,three:index===2,four:index===3,five:index===4}"></div>
           <div class="item-text-container inline-block">
             <div class="item-text"><span class="item-text-value">{{item.betMulti}}</span>倍流水返<span
-              class="item-text-value">{{_(item.bonusRate).formatDiv(100)}}%</span>充值额（不超过<span class="item-text-value">{{_(item.maxBonus).formatDiv(10000)}}</span>元)
+              class="item-text-value">{{_(item.bonusRate).formatDiv(100)}}%</span>充值额（最高<span class="item-text-value">{{_(item.maxBonus).formatDiv(10000)}}</span>元)
               +{{item.ticketCoupon.ticketName}}<span
                 class="item-text-value">{{_(item.ticketCoupon.amount).formatDiv(10000)}}</span>元代金券
             </div>

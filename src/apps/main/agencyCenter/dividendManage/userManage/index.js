@@ -87,6 +87,7 @@ const ReportManageView = SearchGrid.extend({
     _(this.options).extend({
       height: 552,
       title: '签约用户管理',
+      tableClass: 'table table-bordered table-center border-bottom',
       columns: [
         {
           name: '签约用户',
