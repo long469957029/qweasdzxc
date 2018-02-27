@@ -281,6 +281,10 @@ export default [
         activeMenu: 'ac/dm',
       })
     },
+    meta: {
+      keepAlive: true,
+      subRouter: ['/ac/sum/am']
+    }
   },
   {
     path: '/ac/ag',

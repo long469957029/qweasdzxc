@@ -625,6 +625,7 @@
   .trend-center {
     background-color: #ffffff;
     min-width: 1366px;
+    min-height: 100%;
   }
   .trend-panel {
     height: 80px;

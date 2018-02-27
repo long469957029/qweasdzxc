@@ -12,10 +12,18 @@ export default {
       config = _.isUndefined(params) ? {} : params
       params = {}
     }
+    const self = this
 
     return resolve({
       name: `temp${_.uniqueId()}`,
       template: `<div></div>`,
+
+      data() {
+        return {
+          prevRouter: '',
+          preventKeepLiveConflictRender: this.$route.meta && this.$route.meta.keepAlive
+        }
+      },
       mounted:() => {
         $('#main').toggle(true)
         $('#main-vue').toggle(false)
@@ -27,6 +35,40 @@ export default {
             this.changeMainReginView(view.default ? new view.default(params) : new view(params), config)
           }
         })
+      },
+
+      beforeRouteLeave(to, from, next) {
+        this.prevRouter = to.path
+        next()
+      },
+
+      activated() {
+        $('#main').toggle(true)
+        $('#main-vue').toggle(false)
+
+
+        //2 在非子页面进入时重新render
+
+        if (this.preventKeepLiveConflictRender) {
+          this.preventKeepLiveConflictRender = false
+          return
+        }
+
+        if (this.$route.meta && this.$route.meta.subRouter && _.contains(this.$route.meta.subRouter, this.prevRouter)) {
+          return
+        }
+
+        viewPromise().then((view) => {
+          if (config.parentRouter) {
+            self.changeSubReginView(view.default ? new view.default(params) : new view(params), config)
+          } else {
+            self.changeMainReginView(view.default ? new view.default(params) : new view(params), config)
+          }
+        })
+      },
+      deactivated() {
+        // $('#main').toggle(false)
+        // $('#main-vue').toggle(true)
       },
       destroyed() {
         $('#main').toggle(false)
@@ -95,7 +137,8 @@ export default {
     if (currentView) {
       this._changeReginView(currentView, view, config)
     } else {
-      Global.appRouter.navigate(_(config.parentRouter).addHrefArgs('_t', _.now()), {trigger: true, replace: false})
+      window.router.push(`/${config.parentRouter}`)
+      // Global.appRouter.navigate(_(config.parentRouter).addHrefArgs('_t', _.now()), {trigger: true, replace: false})
     }
   },
 

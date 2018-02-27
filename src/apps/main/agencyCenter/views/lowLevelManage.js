@@ -22,6 +22,7 @@ const LowLevelManageView = SearchGrid.extend({
       footerClass: 'border-cool-top',
       height: 552,
       title: '下级管理',
+      tableClass: 'table table-bordered table-center border-bottom',
       columns: [
         {
           name: '用户名',

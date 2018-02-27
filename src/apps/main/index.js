@@ -1,4 +1,5 @@
-const App = require('./app')
+import App from './App.vue'
+const OldApp = require('./app.js')
 const modules = require('skeleton/modules')
 
 import {
@@ -15,19 +16,6 @@ import {
 } from 'build'
 
 import store from '../store'
-
-import MainHeader from 'skeleton/bases/header'
-import NavBar from 'skeleton/bases/navbar'
-import Login from 'skeleton/bases/login'
-import Logout from 'skeleton/bases/login/logout'
-import MainFooter from 'skeleton/bases/footer'
-import ResetPwd from 'skeleton/bases/login/resetPassWord'
-import LoginLauncher from 'skeleton/bases/loginLauncher'
-import FreeTrial from 'skeleton/bases/freeTrial'
-import DialogManage from 'skeleton/bases/dialogManage'
-import GameDownLoad from 'gameCenter/downLoad'
-import DesktopMessage from 'skeleton/bases/desktop-message'
-// import novicePackage from 'activity/novicePackageActivity'
 
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -46,7 +34,7 @@ Vue.directive('TransferDom', TransferDom)
 
 require('widgets')
 
-window.Global = App
+window.Global = OldApp
 window.Global.Prefab = Base.Prefab
 window.Global.appRouter = new Base.AppRouter()
 
@@ -85,8 +73,6 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-App.start()
-
 // 开启菜单权限监听
 Global.ui.menu.start()
 
@@ -96,38 +82,15 @@ Global.ui.menu.start()
 Global.m.oauth.check()
   .complete(() => {
     window.app = new Vue({
-      el: '#main-wrapper',
-      components: {
-        MainHeader,
-        NavBar,
-        MainFooter,
-        Login,
-        Logout,
-        ResetPwd,
-        LoginLauncher,
-        FreeTrial,
-        DialogManage,
-        GameDownLoad,
-        DesktopMessage
-        // novicePackage,
-      },
+      el: '#app',
+      render: h => h(App),
       store,
       router,
-      computed: {
-        ...mapGetters([
-          'loginDialogStatus',
-          'logoutDialogStatus',
-          'resetPassWordDialogStatus',
-          'loginLauncherStatus',
-          'freeTrialStatus',
-          'getLoginStatus',
-          'gameDownLoadStatus',
-          'openDeskTopMsgStatus'
-        ]),
-      },
     })
 
     window.$route = app.$route
+
+    OldApp.start()
 
   })
   .done((res) => {
