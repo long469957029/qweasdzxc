@@ -137,7 +137,8 @@ export default {
     if (currentView) {
       this._changeReginView(currentView, view, config)
     } else {
-      Global.appRouter.navigate(_(config.parentRouter).addHrefArgs('_t', _.now()), {trigger: true, replace: false})
+      window.router.push(`/${config.parentRouter}`)
+      // Global.appRouter.navigate(_(config.parentRouter).addHrefArgs('_t', _.now()), {trigger: true, replace: false})
     }
   },
 
