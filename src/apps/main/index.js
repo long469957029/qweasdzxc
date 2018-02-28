@@ -91,6 +91,9 @@ Global.m.oauth.check()
       router,
     })
 
+    /**
+     * @deprecated do not use it
+     */
     window.$route = app.$route
 
     OldApp.start()
