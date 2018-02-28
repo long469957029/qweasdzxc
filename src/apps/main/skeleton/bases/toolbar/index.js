@@ -102,7 +102,7 @@ const ToolbarView = Base.ItemView.extend({
     self.getRecentChatStatXhr()
       .done(function (res) {
         if (res && res.result == 0) {
-          if (!_(res.root.records).isNull() && !_(res.root.records).isEmpty()) {
+          if (!_(res.root.records[0].lastMessage).isNull() && !_(res.root.records[0].lastMessage).isEmpty()) {
             self.$('.js-news-remind').removeClass('hidden');
             self.$('.js-news-remind').html(res.root.records[0].lastMessage);
           }else {
