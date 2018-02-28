@@ -46,6 +46,7 @@ export default [
           titleDes: '充提记录只保留30天数据。',
         },
         sidebar,
+        activeMenu: '/fc/rd',
       })
     },
   },
@@ -60,6 +61,7 @@ export default [
           titleDes: '充提记录只保留30天数据。',
         },
         sidebar,
+        activeMenu: '/fc/rd',
       })
     },
   },

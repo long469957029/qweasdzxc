@@ -95,7 +95,7 @@ const sscConfig = {
     Object.assign({
       id: 13,
       mark: 'sfc',
-      zhName: '无限三分彩',
+      zhName: '无限3分彩',
       badge: '',
       trendOps: {
         distribution: true,
@@ -357,7 +357,7 @@ const quickConfig = [
   Object.assign({
     id: 29,
     mark: 'jsk3',
-    zhName: '江苏快三',
+    zhName: '江苏快3',
     hasMargin: true,
     trendOps: {
       periods: trendLowPeriods,
