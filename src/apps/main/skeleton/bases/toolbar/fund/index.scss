@@ -179,12 +179,14 @@
     .record-action {
       text-align: left;
       @include float-item(12px, $new-inverse-color, 45%, 35px, 0px);
+      overflow: hidden;
     }
 
     .record-date {
       margin-left: -5px;
       text-align: right;
       @include float-item(12px, $font-auxiliary-color, 55%, 35px, 0px);
+      overflow: hidden;
     }
 
     .record-date {
@@ -193,6 +195,7 @@
 
     .record-amount, .record-progress {
       @include float-item(12px, $new-inverse-color, 31%, 35px, 0px);
+      overflow: hidden;
     }
 
     .record-amount {
@@ -201,6 +204,7 @@
 
     .record-remark {
       @include float-item(12px, $font-auxiliary-color, 100%, 35px, 0px);
+      overflow: hidden;
     }
 
     .record-progress {

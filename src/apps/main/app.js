@@ -77,6 +77,7 @@ const _bindFundOperatorDialogHandler = () => {
       bStyle: 'width: 740px;height:680px;',
       bodyClass: 'js-fund-operate fund-operate',
       body: '<div class="js-fund-operate-container"></div>',
+      specialClose: '<a class="fund-operate-close btn-close" data-dismiss="modal"><span class="sfa sfa-dialog-close"></span></a>'
     })
     const rechargeView = new RechargeView({
       triggerTab: tabName,
