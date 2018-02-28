@@ -10,7 +10,6 @@ const BjPKFactory = require('./betRulesFactory-bjpk')
 const Quick3Factory = require('./betRulesFactory-quick3')
 
 // 盘口
-const Mark6Factory = require('./betRulesFactory-handicap-mark6')
 const HandicapSccFactory = require('./betRulesFactory-handicap-ssc')
 const HandicapPk10Factory = require('./betRulesFactory-handicap-pk10')
 
@@ -44,10 +43,12 @@ _(quick3List).each((quick) => {
   Quick3Factory.install(quick.id)
 })
 
+const Mark6Factory = require('./betRulesFactory-handicap-mark6')
 const mark6List = ticketConfig.getMark6List()
 _(mark6List).each((six) => {
   Mark6Factory.install(six.id)
 })
+
 
 const handicapSscList = ticketConfig.getHandicapSscList()
 _(handicapSscList).each((six) => {

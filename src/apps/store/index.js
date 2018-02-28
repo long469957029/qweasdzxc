@@ -1,7 +1,7 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
 import * as actions from './actions'
 import * as getters from './getters'
+import mark6 from './modules/tickets/mark6'
 import bettingInfo from './modules/tickets/bettingInfo'
 import rulesList from './modules/tickets/rulesList'
 import bettingChoice from './modules/tickets/bettingChoice'
@@ -29,6 +29,7 @@ const store = new Vuex.Store({
     bettingVouchers,
     topTickets,
     loginStore,
+    mark6,
     mallInfo,
     components,
   },
@@ -46,6 +47,7 @@ if (module.hot) {
     './modules/tickets/bettingAnalysis',
     './modules/tickets/bettingVouchers',
     './modules/tickets/topTickets',
+    './modules/tickets/mark6',
     './modules/acct/loginStore',
     './modules/acct/mall-info',
     './modules/global/components',
@@ -59,6 +61,7 @@ if (module.hot) {
     const bettingAnalysis = require('./modules/tickets/bettingAnalysis').default
     const bettingVouchers = require('./modules/tickets/bettingVouchers').default
     const topTickets = require('./modules/tickets/topTickets').default
+    const mark6 = require('./modules/tickets/mark6').default
     const loginStore = require('./modules/acct/loginStore').default
     const mallInfo = require('./modules/acct/mall-info').default
     const components = require('./modules/global/components').default
@@ -74,6 +77,7 @@ if (module.hot) {
         bettingAnalysis,
         bettingVouchers,
         topTickets,
+        mark6,
         loginStore,
         mallInfo,
         components,

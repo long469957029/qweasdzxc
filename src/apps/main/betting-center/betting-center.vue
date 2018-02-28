@@ -1,6 +1,6 @@
 <template>
   <div id="js-bc-main" class="bc-main">
-      <betting-quick-nav :key="'quick-nav'" :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType" :componentType="''"></betting-quick-nav>
+    <betting-quick-nav :key="'quick-nav'" :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType" :componentType="''"></betting-quick-nav>
     <ticket-info-banner :ticket-info="ticketInfo" :betting-type="ticketType"></ticket-info-banner>
     <betting-main-area-handicap :ticket-info="ticketInfo" :ticket-id="ticketId"
                                 v-if="ticketType === 2"></betting-main-area-handicap>
@@ -13,9 +13,6 @@
   import TicketInfoBanner from './ticket-info-banner'
   import BettingMainArea from './betting-main-area'
   import BettingMainAreaHandicap from './betting-main-area-handicap'
-
-  //api
-  import {getVouchersApi} from 'api/betting'
 
   export default {
     name: "betting-center",
@@ -65,6 +62,7 @@
           this.$store.dispatch(types.GET_VOUCHERS, {
             ticketId: this.ticketId,
           })
+
         },
         immediate: true
       }
@@ -75,6 +73,7 @@
         offset: 0,
         mobileHA: false
       })
+
       next()
     }
   }
