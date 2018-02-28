@@ -75,6 +75,7 @@
                       <span class="sfa sfa-error-icon vertical-middle"></span>
                       {{codeErrorText}}
                     </div>
+                    <span class="code-check" v-if="codeRes === 0"></span>
                   </div>
                   <div class="text-hot m-top-xs text-left" v-if="errorText"  style="margin-left: 130px">
                     <span class="sfa sfa-error-icon vertical-middle"></span>
@@ -234,6 +235,7 @@
       stepsIndex: 0,  //当前步骤数
       codeError: false,
       codeErrorText: '',
+      sendCode:true,
       errorText:'',
       hasBindQes: false,
       hasBindMoblie: false,
@@ -265,27 +267,33 @@
         this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
       },
       valCode(){
-        if (this.codeVal && this.codeVal !== '' && this.codeVal.length === 4) {
-          valCodeXhr({
-              code: this.codeVal
-            },
-            ({data}) => {
-              if (data && data.result === 0) {
-                this.codeError = false
-                this.codeErrorText = ''
-                this.codeRes = 0
-              } else {
+        if(this.sendCode){
+          if (this.codeVal && this.codeVal !== '' && this.codeVal.length === 4) {
+            this.sendCode = false
+            valCodeXhr({
+                code: this.codeVal
+              },
+              ({data}) => {
+                if (data && data.result === 0) {
+                  this.codeError = false
+                  this.codeErrorText = ''
+                  this.codeRes = 0
+                } else {
+                  this.codeError = true
+                  this.codeErrorText = '验证码错误'
+                  this.refreshValCode()
+                }
+              },
+              ({data}) => {
                 this.codeError = true
                 this.codeErrorText = '验证码错误'
                 this.refreshValCode()
               }
-            },
-            ({data}) => {
-              this.codeError = true
-              this.codeErrorText = '验证码错误'
-              this.refreshValCode()
-            }
-          )
+            )
+              .finally(() => {
+                this.sendCode = true
+              })
+          }
         }
       },
       verifyUsetName(){
@@ -535,6 +543,12 @@
         width: 110px;
         height: 44px;
         margin-left: 10px;
+      }
+      .code-check{
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        background: url("~base/images/register-check.png") no-repeat;
       }
       .find-type {
         width: 100%;

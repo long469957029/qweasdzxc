@@ -242,10 +242,7 @@ const LowLevelManageView = SearchGrid.extend({
         if (res && res.result === 0) {
           // 设置了则弹出验证框
           // $(document).verifyFundPwd({parentView:self});
-          Global.router.goTo(`ac/tr/${rowInfo.userId}?name=${rowInfo.userName}`, {
-            trigger: true,
-            replace: false,
-          })
+          Global.router.goTo(`ac/tr/${rowInfo.userId}?name=${rowInfo.userName}`)
         } else if (res && res.result === 1) {
           // 未设置则弹出链接到资金密码设置页面的提示框
           $(document).securityTip({

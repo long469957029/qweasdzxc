@@ -786,7 +786,7 @@
           display: block;
           width: 18px;
           height: 18px;
-          background: url("./images/register-check.png") no-repeat;
+          background: url("~base/images/register-check.png") no-repeat;
           position: absolute;
           right: -25px;
           top: 15px;
