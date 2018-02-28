@@ -112,7 +112,7 @@
         },
         addressInfo: {},
         name: this.currentAddress.name,
-        phone: this.currentAddress.phone,
+        phone: this.currentAddress.orgPhone,
         province: this.currentAddress.province,
         city: this.currentAddress.city,
         area: this.currentAddress.area,
@@ -227,7 +227,7 @@
       },
       edit(address) {
         this.name = address.name
-        this.phone = address.phone
+        this.phone = address.orgPhone
         this.province = address.province
         this.city = address.city
         this.area = address.area
