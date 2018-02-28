@@ -1,5 +1,3 @@
-
-
 const LoginPwdView = Base.ItemView.extend({
 
   template: require('userCenter/templates/passwordManage-login.html'),
@@ -15,7 +13,7 @@ const LoginPwdView = Base.ItemView.extend({
     // 'blur #newLoginPassword1': 'checkNewLoginPassword1',
   },
 
-  onRender () {
+  onRender() {
     this.$changeLoginPasswordForm = this.$('.js-uc-changeLoginPassword-form')
     this.$oldLoginPassword = this.$('#oldLoginPassword')
     this.$newLoginPassword = this.$('#newLoginPassword')
@@ -70,7 +68,7 @@ const LoginPwdView = Base.ItemView.extend({
     }
   },
 
-  checkOldLoginPassword () {
+  checkOldLoginPassword() {
     const oldLoginPwVal = this.$oldLoginPassword.val()
     const $parentDiv = this.$oldLoginPassword.parent()
     let isValidate = false
@@ -87,7 +85,7 @@ const LoginPwdView = Base.ItemView.extend({
     return isValidate
   },
 
-  checkNewLoginPassword () {
+  checkNewLoginPassword() {
     const newLoginPwVal = this.$newLoginPassword.val()
     const $parentDiv = this.$newLoginPassword.parent()
     const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
@@ -110,7 +108,7 @@ const LoginPwdView = Base.ItemView.extend({
     }
     return isValidate
   },
-  checkNewLoginPassword1 () {
+  checkNewLoginPassword1() {
     const newLoginPwVal = this.$newLoginPassword.val()
     const newLoginPw1Val = this.$newLoginPassword1.val()
     const $parentDiv = this.$newLoginPassword1.parent()
@@ -131,15 +129,12 @@ const LoginPwdView = Base.ItemView.extend({
     return isValidate
   },
 
-  getErrorTooltip (errorText) {
-    const errorHtml =
-      `${'<div class="js-errorTooltip tooltip bottom parsley-errors-list filled">' +
-          '<div class="tooltip-inner"><span class="sfa sfa-error-icon vertical-middle m-right-xs"  style="margin-top: -3px;"></span>'}${errorText}</div>` +
-      '</div>'
+  getErrorTooltip(errorText) {
+    const errorHtml =`<div class="js-errorTooltip tooltip bottom parsley-errors-list filled"><span class="sfa sfa-error-icon vertical-middle tooltip-icon"></span><div class="tooltip-inner">${errorText}</div></div>`
     return errorHtml
   },
 
-  strBetweenIsNumber (str, star, end) {
+  strBetweenIsNumber(str, star, end) {
     const strArr = str.split('').slice(star, end)
     let isHasNumber = true
     $.each(strArr, (index, item) => {
@@ -150,7 +145,7 @@ const LoginPwdView = Base.ItemView.extend({
     return isHasNumber
   },
 
-  changeEleClass ($ele, status) {
+  changeEleClass($ele, status) {
     if (status === 'success') {
       $ele.addClass('parsley-success').removeClass('parsley-error')
     } else if (status === 'error') {
@@ -158,7 +153,7 @@ const LoginPwdView = Base.ItemView.extend({
     }
   },
   formateError(data) {
-    const errorTpl = `<span class="text-hot inline-block" ><i class="sfa sfa-error-icon vertical-middle m-right-xs"  style="margin-top: -3px;"></i>${data.errorText}</span>`
+    const errorTpl = `<div class="m-top-sm"><span class="sfa sfa-error-icon vertical-middle tooltip-icon"></span><div class="tooltip-inner">${data.errorText}</div></div>`
     data.el.html(errorTpl)
   },
 })

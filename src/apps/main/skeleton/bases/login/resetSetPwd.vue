@@ -19,8 +19,8 @@
                  data-parsley-equalto="#jsRPLoginPwd1" value="" autocomplete="off"/>
           <div class="js-rp-password2-error parsley-error-container inline-block" style="max-width: 141px"></div>
           <div class="text-hot text-left m-top-sm" v-if="error">
-            <span class="sfa sfa-error-icon vertical-middle pull-left"></span>
-            <div>{{errorText}}</div>
+            <span class="sfa sfa-error-icon vertical-middle tooltip-icon"></span>
+            <div class="tooltip-inner">{{errorText}}</div>
           </div>
         </div>
       </div>

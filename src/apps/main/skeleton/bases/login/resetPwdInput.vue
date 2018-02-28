@@ -14,7 +14,7 @@
           <input type="text" class="input-varCode" autocomplete="off" v-model="code" required  data-parsley-errors-container=".js-rp-code-error" />
           <a class="set-code-btn" @click="sendCode" :disabled="time > 0">{{text}}</a>
           <div class="js-rp-code-error parsley-error-container inline-block" style="max-width: 144px"></div>
-          <div class="text-hot " v-show="error">
+          <div class="text-hot m-top-sm" v-show="error">
             <span class="sfa sfa-error-icon tooltip-icon vertical-middle"></span>
             <div class="tooltip-inner">{{errorText}}</div>
           </div>
