@@ -45,7 +45,9 @@ const DialogModule = Base.Module.extend({
 
     html.push(`<div class="modal-dialog ${options.size}" style="${dStyle}${pStyle}${options.bStyle}"`)
     html.push('<div class="modal-content">')
-    if (options.closeBtn) {
+    if(options.specialClose){
+      html.push(options.specialClose)
+    }else if (options.closeBtn) {
       html.push('<a class="close btn-close" data-dismiss="modal">&times;</a>')
     }
     if (options.title) {

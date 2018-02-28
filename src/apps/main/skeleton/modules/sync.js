@@ -128,19 +128,15 @@ const SyncModule = Base.Module.extend({
       // 因应二号改版偷跑 先忽略验证接口的错误
       currentXhr.fail(function (xhr, resType, type) {
         if (resType === 'error') {
-          if (type === 'Unauthorized') {
-            if (!_(ajaxOptions.data.token).isEmpty()) {
-              this.login = false;
-              Global.ui.notification.show('网络不给力，请稍后再试。', {
-                event: function () {
-                  // window.location.href = 'index.html';
-                }
-              });
-            } else if (ajaxOptions.autoLogout) {
-              window.store.commit(types.USER_CLEAR)
-            }
-          } else if (xhr.status == 401) {
+          if (xhr.status == 401) {
             window.store.commit(types.USER_CLEAR)
+            // if (!window.store.getters.loginDialogStatus) {
+            //   Global.ui.notification.show('您的账户已登出,请重新登录！', {
+            //     event: function () {
+            //       window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+            //     }
+            //   });
+            // }
           }
         }
       });
@@ -157,9 +153,7 @@ const SyncModule = Base.Module.extend({
             Global.ui.notification.show('您的账户已登出,请重新登录！', {
               event: function () {
                 window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-                // window.location.href = ''
-              },
-              countDown: 3000
+              }
             });
           }
           // setTimeout(function(){
@@ -296,10 +290,10 @@ const SyncModule = Base.Module.extend({
       // }
       promise.catch(({message}) => {
         if (message.indexOf('401') > -1) {
-          if (!window.app.$store.getters.loginDialogStatus) {
+          if (!window.store.getters.loginDialogStatus) {
             Global.ui.notification.show('您的账户已登出,请重新登录！', {
               event: function () {
-                window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+                window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
               }
             });
           }
@@ -318,7 +312,7 @@ const SyncModule = Base.Module.extend({
   setLogout() {
     this.login = false
     // Global.cookieCache.clear('token')
-    window.app.$store.dispatch(types.DO_LOGOUT)
+    window.store.dispatch(types.DO_LOGOUT)
   },
 
   ajax() {
@@ -341,10 +335,10 @@ const SyncModule = Base.Module.extend({
     }
     return token
   },
-  checkTestAccountRequest(ajaxOptions){
+  checkTestAccountRequest(ajaxOptions) {
     if (window.Global.cookieCache.get('isTestUser')) {//
       let changeTokenUrl = _.find(needPostTestDataUrlConfig.getAll(), (item) => {
-        return ajaxOptions.url.indexOf(item)>=0
+        return ajaxOptions.url.indexOf(item) >= 0
       })
       if (changeTokenUrl === undefined) { //试玩账户，未特定要求的接口需要通过配置的通用token获取正式数据
         ajaxOptions.data = _.extend({

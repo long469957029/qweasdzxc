@@ -107,11 +107,56 @@ $toolbar-option-width: 36px;
       right: 18px;
     }
 
-    &:hover, &:active, &.active {
+    //&:hover, &:active, &.active {
+    //  width: 105px;
+    //  margin-left: -69px;
+    //  background: $new-main-deep-color;
+    //  color: white;
+    //}
+
+    &:hover {
       width: 105px;
       margin-left: -69px;
       background: $new-main-deep-color;
       color: white;
+    }
+
+    &.active {
+      width: 36px;
+      background: $new-main-deep-color;
+      &:hover {
+        width: 105px;
+        margin-left: -69px;
+        background: $new-main-deep-color;
+        color: white;
+      }
+    }
+
+    .coupon-remind {
+      width: 7px;
+      height: 7px;
+      display: inline-block;
+      background-color: #e64c4a;
+      border-radius: 3.5px;
+      position: relative;
+      left: 4px;
+      top: -10px;
+    }
+
+    .news-remind {
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+      text-align: center;
+      color: #ffffff;
+      display: inline-block;
+      background: #e64c4a;
+      border-radius: 8px;
+      text-indent: -1px;
+      position: relative;
+      left: -6px;
+      top: -10px;
+      overflow: hidden;
     }
   }
 }
@@ -135,7 +180,8 @@ $toolbar-option-width: 36px;
   width: 280px;
   height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  //overflow-y: scroll;
+  overflow-y: auto;
   border-left: 5px solid #14b1bb;
   z-index: 2;
   .sidebar-title {
@@ -222,7 +268,8 @@ $toolbar-option-width: 36px;
     height: 110px;
     display: block;
     position: absolute;
-    right: -2px;
+    //right: -2px;
+    right: 0px;
     top: -118px;
     cursor: pointer;
   }

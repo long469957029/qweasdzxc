@@ -662,6 +662,9 @@
   .confirm-password{
     margin-top: 30px;
     text-align: center;
+    display: inline-block;
+    margin-left: 70px;
+    margin-bottom: 10px;
     label{
       color: $def-black-color;
     }
@@ -673,7 +676,7 @@
     }
   }
   .error-info{
-    margin-top: 10px;
+    //margin-top: 10px;
     margin-left: 148px;
   }
   .open-confirm-btn {

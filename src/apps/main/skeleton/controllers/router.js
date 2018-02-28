@@ -29,10 +29,11 @@ export default {
         $('#main-vue').toggle(false)
 
         viewPromise().then((view) => {
+          let _params = _.isFunction(params) ? params() : params
           if (config.parentRouter) {
-            this.changeSubReginView(view.default ? new view.default(params) : new view(params), config)
+            this.changeSubReginView(view.default ? new view.default(_params) : new view(_params), config)
           } else {
-            this.changeMainReginView(view.default ? new view.default(params) : new view(params), config)
+            this.changeMainReginView(view.default ? new view.default(_params) : new view(_params), config)
           }
         })
       },
@@ -59,10 +60,11 @@ export default {
         }
 
         viewPromise().then((view) => {
+          let _params = _.isFunction(params) ? params() : params
           if (config.parentRouter) {
-            self.changeSubReginView(view.default ? new view.default(params) : new view(params), config)
+            self.changeSubReginView(view.default ? new view.default(_params) : new view(_params), config)
           } else {
-            self.changeMainReginView(view.default ? new view.default(params) : new view(params), config)
+            self.changeMainReginView(view.default ? new view.default(_params) : new view(_params), config)
           }
         })
       },

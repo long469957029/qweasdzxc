@@ -19,7 +19,7 @@ export default [
     path: '/nc/nb/detail/:noticeId',
     component: function(resolve) {
       RouterController.async(resolve, NoticeDetailView, {
-        noticeId: $route.params.noticeId,
+        noticeId: store.state.route.params.noticeId,
       }, {
         main: {
           title: '平台动态',

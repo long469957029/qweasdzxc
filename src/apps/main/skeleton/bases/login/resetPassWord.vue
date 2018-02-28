@@ -68,13 +68,14 @@
                 <div class="control-group">
                   <label class="control-label">验证码：</label>
                   <div class="controls">
-                    <input type="text" class="input-varCode" @keyup="valCode" v-model="codeVal" name=""  maxlength="4"
+                    <input type="text" class="input-varCode" @input="valCode" v-model="codeVal" name=""  maxlength="4"
                            data-parsley-errors-container=".js-rp-code-error"  placeholder="输入验证码" autocomplete="off">
                     <img class="var-code" :src="codeSrc" @click="refreshValCode">
                     <div class="text-hot m-top-xs inline-block" v-if="codeError"  style="max-width: 140px">
                       <span class="sfa sfa-error-icon vertical-middle"></span>
                       {{codeErrorText}}
                     </div>
+                    <span class="code-check" v-if="codeRes === 0"></span>
                   </div>
                   <div class="text-hot m-top-xs text-left" v-if="errorText"  style="margin-left: 130px">
                     <span class="sfa sfa-error-icon vertical-middle"></span>
@@ -170,13 +171,14 @@
                     <div class="controls">
                       <input type="text" class="qes-input" v-model="answerSecond" autocomplete="off" data-parsley-errors-container=".js-rp-answer2-error" required>
                       <div class="js-rp-answer2-error parsley-error-container inline-block" style="max-width: 144px"></div>
+                      <div class="text-hot text-left m-top-sm" v-if="qesError">
+                        <span class="sfa sfa-error-icon tooltip-icon vertical-middle pull-left"></span>
+                        <div class="tooltip-inner">{{qesErrorText}}</div>
+                      </div>
                     </div>
                   </div>
-                  <div class="text-hot text-center m-TB-xs" v-if="qesError">
-                    <span class="sfa sfa-error-icon vertical-middle"></span>
-                    {{qesErrorText}}
-                  </div>
                   <div class=" m-top-lg">
+
                     <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyQes">提交</button>
                   </div>
                   <div class="">
@@ -234,6 +236,7 @@
       stepsIndex: 0,  //当前步骤数
       codeError: false,
       codeErrorText: '',
+      sendCode:true,
       errorText:'',
       hasBindQes: false,
       hasBindMoblie: false,
@@ -263,29 +266,37 @@
     methods: {
       refreshValCode(){
         this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
+        this.codeRes = 1
       },
       valCode(){
-        if (this.codeVal && this.codeVal !== '' && this.codeVal.length === 4) {
-          valCodeXhr({
-              code: this.codeVal
-            },
-            ({data}) => {
-              if (data && data.result === 0) {
-                this.codeError = false
-                this.codeErrorText = ''
-                this.codeRes = 0
-              } else {
+        if(this.sendCode){
+          console.log( 'val:'+this.codeVal)
+          if (this.codeVal && this.codeVal !== '' && this.codeVal.length === 4) {
+            this.sendCode = false
+            valCodeXhr({
+                code: this.codeVal
+              },
+              ({data}) => {
+                if (data && data.result === 0) {
+                  this.codeError = false
+                  this.codeErrorText = ''
+                  this.codeRes = 0
+                } else {
+                  this.codeError = true
+                  this.codeErrorText = '验证码错误'
+                  this.refreshValCode()
+                }
+              },
+              ({data}) => {
                 this.codeError = true
                 this.codeErrorText = '验证码错误'
                 this.refreshValCode()
               }
-            },
-            ({data}) => {
-              this.codeError = true
-              this.codeErrorText = '验证码错误'
-              this.refreshValCode()
-            }
-          )
+            )
+              .finally(() => {
+                this.sendCode = true
+              })
+          }
         }
       },
       verifyUsetName(){
@@ -497,7 +508,7 @@
         display: flex;
       }
       .steps {
-        margin-top: 60px;
+        margin-top: 40px;
       }
       .reset-input {
         width: 348px;
@@ -534,6 +545,14 @@
       .var-code {
         width: 110px;
         height: 44px;
+        margin-left: 10px;
+      }
+      .code-check{
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        background: url("~base/images/register-check.png") no-repeat;
+        vertical-align: middle;
         margin-left: 10px;
       }
       .find-type {

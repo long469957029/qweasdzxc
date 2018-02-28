@@ -1,27 +1,27 @@
 
 import DashboardView from './dashboard.vue'
 
-const NoticeDetailView = require('dynamicCenter/views/noticeDetail')
+// const NoticeDetailView = require('dynamicCenter/views/noticeDetail')
 
 export default [
   {
     path: '/',
     component: DashboardView,
   },
-  {
-    path: '/nb/detail/:noticeId',
-    component() {
-      RouterController.changeMainReginView(new NoticeDetailView({
-        noticeId: $route.params.noticeId,
-      }), {
-        main: {
-          title: '平台动态',
-          subReturn: true,
-        },
-        parentRouter: '#',
-      })
-    }
-  },
+  // {
+  //   path: '/nb/detail/:noticeId',
+  //   component() {
+  //     RouterController.changeMainReginView(new NoticeDetailView({
+  //       noticeId: store.state.route.params.noticeId,
+  //     }), {
+  //       main: {
+  //         title: '平台动态',
+  //         subReturn: true,
+  //       },
+  //       parentRouter: '#',
+  //     })
+  //   }
+  // },
   {
     path: ':anything',
     component: DashboardView,
