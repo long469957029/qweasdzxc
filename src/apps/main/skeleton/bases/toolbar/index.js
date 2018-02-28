@@ -32,6 +32,22 @@ const ToolbarView = Base.ItemView.extend({
       data,
     })
   },
+  // 获取我的优惠券列表
+  getMyCouponListXhr (data) {
+    return Global.sync.ajax({
+      url: '/mall/coupon/myCouponList.json',
+      data,
+      abort: false
+    })
+  },
+  // 获取未读消息数目接口
+  getRecentChatStatXhr (data) {
+    return Global.sync.ajax({
+      url: '/acct/userChat/recentChatStat.json',
+      data,
+      abort: false
+    })
+  },
   onRender() {
     const self = this
     this.subscribe('acct', 'acct:login', () => {
@@ -57,6 +73,46 @@ const ToolbarView = Base.ItemView.extend({
     self.$container = self.$('.js-toolbar-option-container')
     self.$toption = self.$('.toolbar-option')
 
+
+    // 定时器
+    self.timerHandler()
+    setInterval(function () {
+      // 获取定时更新数据列表
+      self.timerHandler()
+    },600000);
+  },
+
+  timerHandler() {
+    var self = this;
+    // 获取未使用优惠券
+    self.getMyCouponListXhr()
+      .done(function (res) {
+        if (res && res.result == 0) {
+          if (!_(res.root.records).isNull() && !_(res.root.records).isEmpty()) {
+            self.$('.js-coupon-remind').removeClass('hidden');
+          }else {
+            self.$('.js-coupon-remind').addClass('hidden');
+          }
+        }else {
+          // Global.ui.notification.show(res.msg);
+          self.$('.js-coupon-remind').addClass('hidden');
+        }
+      });
+    // 获取未读消息
+    self.getRecentChatStatXhr()
+      .done(function (res) {
+        if (res && res.result == 0) {
+          if (!_(res.root.records).isNull() && !_(res.root.records).isEmpty()) {
+            self.$('.js-news-remind').removeClass('hidden');
+            self.$('.js-news-remind').html(res.root.records[0].lastMessage);
+          }else {
+            self.$('.js-news-remind').addClass('hidden');
+          }
+        }else {
+          // Global.ui.notification.show(res.msg);
+          self.$('.js-news-remind').addClass('hidden');
+        }
+      });
   },
 
   closeSidebarHandler(e) {

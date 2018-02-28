@@ -11,12 +11,12 @@ const wallet = [
   {
     id: 1,
     name: 'ag',
-    zhName: 'AG钱包',
+    zhName: 'AG',
   },
   {
     id: 2,
     name: 'ebet',
-    zhName: 'EBET钱包',
+    zhName: 'EBET',
   },
   // {
   //   id: 3,
@@ -26,17 +26,17 @@ const wallet = [
   {
     id: 4,
     name: 'pt',
-    zhName: 'PT钱包',
+    zhName: 'PT',
   },
   {
     id: 5,
     name: 'mg',
-    zhName: 'MG钱包',
+    zhName: 'MG',
   },
   {
     id: 6,
     name: 'gg',
-    zhName: 'GG钱包',
+    zhName: 'GG',
   },
   // {
   //   id: 7,
