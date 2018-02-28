@@ -17,33 +17,33 @@ define((require, exports, module) => {
       }
     },
 
-    initialize () {
+    initialize() {
     },
 
-    saveCardBindingInfoXhr (data) {
+    saveCardBindingInfoXhr(data) {
       return Global.sync.ajax({
         url: '/fund/bankcard/savecard.json',
         data,
       })
     },
 
-    getBankListXhr () {
+    getBankListXhr() {
       return Global.sync.ajax({
         url: '/fund/bankcard/banklist.json',
       })
     },
-    getProvinceListXhr () {
+    getProvinceListXhr() {
       return Global.sync.ajax({
         url: '/info/city/provincelist.json',
       })
     },
-    getCityListXhr (data) {
+    getCityListXhr(data) {
       return Global.sync.ajax({
         url: '/info/city/citylist.json',
         data,
       })
     },
-    getBranchListXhr (data) {
+    getBranchListXhr(data) {
       return Global.sync.ajax({
         url: '/fund/bankcard/branchlist.json',
         data,
@@ -61,7 +61,7 @@ define((require, exports, module) => {
         data,
       })
     },
-    onRender () {
+    onRender() {
       const self = this
       this.$CardBindContainer = this.$('.js-uc-cbCardBinding-container')
       this._initSteps()
@@ -73,7 +73,7 @@ define((require, exports, module) => {
       this.$bindForm = this.$('.js-uc-cbCardBindingForm')
       this.$cardNo = this.$('.js-uc-cbCardNo')
       this.$fundForm = this.$('.js-uc-cb-fund-form')
-      this.$fundPwdError = this.$('.js-fundPwd-error')
+      this.$fundPwdError = this.$('.js-uc-cb-vf-fundPwd-error')
       this.$lastForm = this.$('.js-uc-cb-last-form')
       this.$lastUserName = this.$('.js-uc-last-userName')
       this.$lastCardNo = this.$('.js-uc-last-cardNo')
@@ -116,7 +116,7 @@ define((require, exports, module) => {
         },
       })
     },
-    selectProvinceHandler (e) {
+    selectProvinceHandler(e) {
       const self = this
       const $target = $(e.currentTarget)
       const province = $target.find('option:checked').html()
@@ -165,7 +165,7 @@ define((require, exports, module) => {
         })
     },
 
-    checkCardBindingInfoHandler () {
+    checkCardBindingInfoHandler() {
       // const $target = $(e.currentTarget)
       const $form = this.$bindForm
       const clpValidate = $form.parsley().validate()
@@ -190,29 +190,29 @@ define((require, exports, module) => {
         content: html,
         btnLeftText: '立即绑定',
         btnRightText: '返回',
-        agreeCallback (e) {
+        agreeCallback(e) {
           self.submitBankCard(e)
         },
       })
     },
 
-    submitBankCard (e) {
+    submitBankCard(e) {
       const self = this
       const $target = $(e.currentTarget)
       const $cardBindingForm = this.$bindForm
       const clpValidate = $cardBindingForm.parsley().validate()
       const pid = this.$province.val()
       const cid = this.$city.val()
-      if (pid==='' || cid==='' || pid===undefined || cid===undefined) {
+      if (pid === '' || cid === '' || pid === undefined || cid === undefined) {
         const data = {
           el: this.$addressListError,
           errorText: '省市填写不完整',
         }
-        this.$('.select2').toggleClass('faild',true)
+        this.$('.select2').toggleClass('faild', true)
         this.formateError(data)
         return false
-      }else{
-        this.$('.select2').toggleClass('faild',false)
+      } else {
+        this.$('.select2').toggleClass('faild', false)
       }
       if (clpValidate) {
         $target.button('loading')
@@ -271,35 +271,46 @@ define((require, exports, module) => {
     },
     fundCheckHandler() {
       const self = this
-      const fundStatus = this.$fundForm.parsley().validate()
-      if (fundStatus) {
-        const payPwd = this.$('.js-uc-cb-fundPwd').val()
-        const data = {
-          payPwd,
-          type: '1',
+      const payPwd = this.$('.js-uc-cb-fundPwd').val()
+      if (payPwd === '') {
+        const errorData1 = {
+          el: this.$fundPwdError,
+          errorText: '请输入资金密码',
         }
-        this.verifyPayPwdXhr(data)
-          .done((res) => {
-            const errorData = {
-              el: this.$fundPwdError,
-              errorText: '',
-            }
-            if (res.result === 0) {
-              self.$CardBindContainer.steps('goTo', 1)
-            } else if (_(res.root).isNull()) {
-              errorData.errorText = `验证失败，${res.msg}`
-            } else if (res.root > 0) {
-              errorData.errorText = `验证失败，剩余${res.root}次机会`
-            } else {
-              errorData.errorText = '验证失败，请一个小时后在验证！'
-            }
-            self.renderError(errorData)
-          })
-          .fail((res) => {
-            var data =
-            Global.ui.notification.show(res.msg === 'fail' ? '资金密码校验失败' : res.msg)
-          })
+        self.renderError(errorData1)
+        return false
+      } else {
+        const errorData2 = {
+          el: this.$fundPwdError,
+          errorText: '',
+        }
+        self.renderError(errorData2)
       }
+      const data = {
+        payPwd,
+        type: '1',
+      }
+      this.verifyPayPwdXhr(data)
+        .done((res) => {
+          const errorData = {
+            el: this.$fundPwdError,
+            errorText: '',
+          }
+          if (res.result === 0) {
+            self.$CardBindContainer.steps('goTo', 1)
+          } else if (_(res.root).isNull()) {
+            errorData.errorText = `验证失败，${res.msg}`
+          } else if (res.root > 0) {
+            errorData.errorText = `验证失败，剩余${res.root}次机会`
+          } else {
+            errorData.errorText = '验证失败，请一个小时后在验证！'
+          }
+          self.renderError(errorData)
+        })
+        .fail((res) => {
+          var data =
+            Global.ui.notification.show(res.msg === 'fail' ? '资金密码校验失败' : res.msg)
+        })
     },
     checkLastHandler() {
       const self = this
