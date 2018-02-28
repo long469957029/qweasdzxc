@@ -130,20 +130,20 @@ const SyncModule = Base.Module.extend({
         if (resType === 'error') {
           if (type === 'Unauthorized') {
             window.store.commit(types.USER_CLEAR)
-            if (!window.app.$store.getters.loginDialogStatus) {
+            if (!window.store.getters.loginDialogStatus) {
               Global.ui.notification.show('您的账户已登出,请重新登录！', {
                 event: function () {
-                  window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+                  window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
                 }
               });
             }
 
           } else if (xhr.status == 401) {
             window.store.commit(types.USER_CLEAR)
-            if (!window.app.$store.getters.loginDialogStatus) {
+            if (!window.store.getters.loginDialogStatus) {
               Global.ui.notification.show('您的账户已登出,请重新登录！', {
                 event: function () {
-                  window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+                  window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
                 }
               });
             }
@@ -159,10 +159,10 @@ const SyncModule = Base.Module.extend({
           // // 关闭oauth轮询监听
           // window.Global.m.oauth.stop()
           window.store.commit(types.USER_CLEAR)
-          if (!window.app.$store.getters.loginDialogStatus) {
+          if (!window.store.getters.loginDialogStatus) {
             Global.ui.notification.show('您的账户已登出,请重新登录！', {
               event: function () {
-                window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+                window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
               }
             });
           }
@@ -300,10 +300,10 @@ const SyncModule = Base.Module.extend({
       // }
       promise.catch(({message}) => {
         if (message.indexOf('401') > -1) {
-          if (!window.app.$store.getters.loginDialogStatus) {
+          if (!window.store.getters.loginDialogStatus) {
             Global.ui.notification.show('您的账户已登出,请重新登录！', {
               event: function () {
-                window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+                window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
               }
             });
           }
@@ -322,7 +322,7 @@ const SyncModule = Base.Module.extend({
   setLogout() {
     this.login = false
     // Global.cookieCache.clear('token')
-    window.app.$store.dispatch(types.DO_LOGOUT)
+    window.store.dispatch(types.DO_LOGOUT)
   },
 
   ajax() {
