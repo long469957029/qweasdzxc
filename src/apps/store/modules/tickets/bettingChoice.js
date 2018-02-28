@@ -251,7 +251,11 @@ const mutations = {
 
     state.betBonus = state.fBetBonus = 0
   },
-  // indexs 被选中号码的索引
+  /**
+   * 更新奖金以及最大投注限制
+   * @param state
+   * @param indexs - 被选中号码们的索引
+   */
   [types.UPDATE_BONUS] (state, indexs) {
     const playInfo = state.playInfo
 

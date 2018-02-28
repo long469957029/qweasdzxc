@@ -293,7 +293,7 @@
       },
 
       'bettingChoice.playId': {
-        handler: function (playId) {
+        handler(playId) {
           if (playId === -1) {
             return
           }
@@ -350,11 +350,14 @@
       'bettingInfo.planId': {
         handler: function (newPlanId, oldPlanId) {
           if (this.$el.offsetWidth && newPlanId !== '------------' && oldPlanId !== '------------' && !this.bettingInfo.pending) {
-            // Global.ui.notification.show(
-            //   `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
-            //   {id: 'ticketNotice', hasFooter: false, displayTime: 800},
-            // )
-            this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE, {show: true, dataInfo: {type: 3, oldPlanId, newPlanId}})
+            this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE, {
+              show: true,
+              dataInfo: {
+                type: 3,
+                oldPlanId,
+                newPlanId
+              }
+            })
           }
         }
       },
@@ -367,18 +370,18 @@
         }
       },
       unit: {
-        handler: function (newVal) {
+        handler(newVal) {
           this.$store.commit(types.SET_UNIT, newVal)
         }
       },
       'bettingChoice.formatMaxMultiple': {
-        handler: function (newVal) {
+        handler(newVal) {
           $(this.$refs.multiRange).numRange('setRange', 1, newVal)
         }
       },
       'bettingChoice.previewList': {
-        handler(previewList) {
-          this.fPreviewList = _(previewList).map((previewInfo, index) => {
+        handler(currentPreviewList, prevPreviewList) {
+          this.fPreviewList = _(currentPreviewList).map((previewInfo, index) => {
             const title = `${previewInfo.levelName}_${previewInfo.playName}`
             const multipleDiv = `<div class="js-bc-preview-multiple-${index} p-top-xs"></div>`
             const modeSelect = `<select name="" class="js-bc-preview-unit select-default bc-unit-select-add">
@@ -394,7 +397,6 @@
               betNum: previewInfo.bettingNumber,
               note: `${previewInfo.statistics}注`,
               multiple: multipleDiv,
-              // multiple: previewInfo.multiple,
               mode: modeSelect,
               bettingMoney: `${previewInfo.fPrefabMoney}元`,
               bonus: `${previewInfo.fTotalBetBonus}元`,
@@ -403,29 +405,31 @@
           })
 
           this.$nextTick(() => {
-            _.each(this.$refs.lotteryGrid.getRows(), (row, index) => {
-              const $row = $(row)
-              const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
-              let betNumber = previewList[index].bettingNumber
+            if (currentPreviewList.length !== prevPreviewList.length) {
+              _.each(this.$refs.lotteryGrid.getRows(), (row, index) => {
+                const $row = $(row)
+                const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
 
-              if ($multipleAdd.numRange('instance')) {
-                $multipleAdd.numRange('numChange', previewList[index].multiple)
-              } else {
-                $multipleAdd.numRange({
-                  defaultValue: previewList[index].multiple,
-                  size: 'md',
-                  max: previewList[index].formatMaxMultiple,
-                  onChange: (num) => {
-                    this.$store.commit(types.SET_PREVIEW_MULTIPLE, {num, index})
-                  },
-                  onOverMax: (maxNum) => {
-                    //奖金限额一致
-                    Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
+                if ($multipleAdd.numRange('instance')) {
+                  $multipleAdd.numRange('setRange', 1, currentPreviewList[index].formatMaxMultiple)
+                  $multipleAdd.numRange('numChange', currentPreviewList[index].multiple)
+                } else {
+                  $multipleAdd.numRange({
+                    defaultValue: currentPreviewList[index].multiple,
+                    size: 'md',
+                    max: currentPreviewList[index].formatMaxMultiple,
+                    onChange: (num) => {
+                      this.$store.commit(types.SET_PREVIEW_MULTIPLE, {num, index})
+                    },
+                    onOverMax: (maxNum) => {
+                      //奖金限额一致
+                      Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
                   ${_(this.bettingChoice.limitMoney).convert2yuan()}</span>元，已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
-                  },
-                })
-              }
-            });
+                    },
+                  })
+                }
+              });
+            }
           })
 
           this.$store.commit(types.CALCULATE_TOTAL)
