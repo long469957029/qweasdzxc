@@ -56,13 +56,13 @@ const LoginPwdView = Base.ItemView.extend({
               el: this.$('.js-uc-pl-lp-error'),
               errorText: `验证失败，${res.root}`,
             }
-            this.formateError(errorData)
+            _.formatError(errorData)
           } else {
             const errorData = {
               el: this.$('.js-uc-pl-lp-error'),
               errorText: `验证失败，${res.msg}`,
             }
-            this.formateError(errorData)
+            _.formatError(errorData)
           }
         })
     }
@@ -152,10 +152,7 @@ const LoginPwdView = Base.ItemView.extend({
       $ele.addClass('parsley-error').removeClass('parsley-success')
     }
   },
-  formateError(data) {
-    const errorTpl = `<div class="m-top-sm"><span class="sfa sfa-error-icon vertical-middle tooltip-icon"></span><div class="tooltip-inner">${data.errorText}</div></div>`
-    data.el.html(errorTpl)
-  },
+
 })
 
 module.exports = LoginPwdView

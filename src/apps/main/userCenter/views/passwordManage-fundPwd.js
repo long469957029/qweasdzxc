@@ -70,7 +70,7 @@ const FundPwdView = Base.ItemView.extend({
               el: this.$('.js-uc-pl-fp-error'),
               errorText: res.msg,
             }
-            this.formateError(errorData)
+            _.formatError(errorData)
           }
         })
     } else if (type === 'update' && clpValidate ) {
@@ -99,13 +99,13 @@ const FundPwdView = Base.ItemView.extend({
               el: this.$('.js-uc-pl-fp-error'),
               errorText: `验证失败，剩余&nbsp;${res.root}&nbsp;次机会`,
             }
-            this.formateError(errorData)
+            _.formatError(errorData)
           } else {
             const errorData = {
               el: this.$('.js-uc-pl-fp-error'),
               errorText: res.msg,
             }
-            this.formateError(errorData)
+            _.formatError(errorData)
           }
         })
     }
@@ -220,10 +220,7 @@ const FundPwdView = Base.ItemView.extend({
       $ele.addClass('parsley-error').removeClass('parsley-success')
     }
   },
-  formateError(data) {
-    const errorTpl = `<span class="text-hot inline-block"><i class="sfa sfa-error-icon vertical-middle m-right-xs"  style="margin-top: -3px;"></i>${data.errorText}</span>`
-    data.el.html(errorTpl)
-  },
+
 
 })
 

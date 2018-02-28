@@ -142,6 +142,7 @@ define((require, exports, module) => {
       const self = this
       const cityId = this.$city.val()
       const bankId = this.$bankId.val()
+      this.valBankCard()
       if (cityId === '' || bankId === '') {
         return
       }
@@ -209,9 +210,10 @@ define((require, exports, module) => {
           errorText: '省市填写不完整',
         }
         this.$('.select2').toggleClass('faild', true)
-        this.formateError(data)
+        _.formatError(data)
         return false
       } else {
+        this.$addressListError.html('')
         this.$('.select2').toggleClass('faild', false)
       }
       if (clpValidate) {
@@ -259,14 +261,30 @@ define((require, exports, module) => {
                 el: this.$('.js-uc-cm-error'),
                 errorText: res.msg,
               }
-              this.formateError(data2)
+              this.renderError(data2)
               // Global.ui.notification.show(`绑定失败，${res.msg}`)
             }
           })
       }
     },
+    valBankCard(){
+      const pid = this.$province.val()
+      const cid = this.$city.val()
+      if (pid === '' || cid === '' || pid === undefined || cid === undefined) {
+        const data = {
+          el: this.$addressListError,
+          errorText: '省市填写不完整',
+        }
+        this.$('.select2').toggleClass('faild', true)
+        _.formatError(data)
+        return false
+      } else {
+        this.$addressListError.html('')
+        this.$('.select2').toggleClass('faild', false)
+      }
+    },
     renderError(data) {
-      const errorTpl = `<div class="m-top-sm"><i class="sfa sfa-error-icon vertical-sub tooltip-icon"></i><div class="tooltip-inner">${data.errorText}</div></div>`
+      const errorTpl = `<div class="m-top-sm text-center inline-block"><i class="sfa sfa-error-icon vertical-sub tooltip-icon"></i><div class="tooltip-inner">${data.errorText}</div></div>`
       data.el.html(errorTpl)
     },
     fundCheckHandler() {
@@ -280,11 +298,7 @@ define((require, exports, module) => {
         self.renderError(errorData1)
         return false
       } else {
-        const errorData2 = {
-          el: this.$fundPwdError,
-          errorText: '',
-        }
-        self.renderError(errorData2)
+        this.$fundPwdError.html('')
       }
       const data = {
         payPwd,
@@ -308,8 +322,11 @@ define((require, exports, module) => {
           self.renderError(errorData)
         })
         .fail((res) => {
-          var data =
-            Global.ui.notification.show(res.msg === 'fail' ? '资金密码校验失败' : res.msg)
+          const errorData = {
+            el: this.$fundPwdError,
+            errorText: res.msg === 'fail' ? '资金密码校验失败' : res.msg,
+          }
+          self.renderError(errorData)
         })
     },
     checkLastHandler() {
@@ -351,10 +368,7 @@ define((require, exports, module) => {
           })
       }
     },
-    formateError(data) {
-      const errorTpl = `<div class="m-top-sm"><i class="sfa sfa-error-icon vertical-sub tooltip-icon"></i><div class="tooltip-inner">${data.errorText}</div></div>`
-      data.el.html(errorTpl)
-    },
+
   })
 
 

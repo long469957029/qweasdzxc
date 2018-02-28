@@ -204,6 +204,8 @@ const ToolbarView = Base.ItemView.extend({
               subject: $feedbackDialog.find('.js-feedback-title').val(),
               content: $feedbackDialog.find('.js-feedback-content').val(),
             },
+          }).always(() => {
+            $target2.button('reset')
           }).done((res) => {
             if (res && res.result === 0) {
               Global.ui.notification.show('提交成功。')

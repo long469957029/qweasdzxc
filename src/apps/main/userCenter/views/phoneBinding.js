@@ -99,7 +99,7 @@ const PhoneBindingView = Base.ItemView.extend({
           self.$changeError.html('')
         } else {
           $target.html('重新发送')
-          self.getErrorEl({ text: res.msg === 'fail' ? '验证码发送失败' : res.msg, el: type === 'add' ? self.$bindError : self.$changeError })
+          _.formatError({ errorText: res.msg === 'fail' ? '验证码发送失败' : res.msg, el: type === 'add' ? self.$bindError : self.$changeError })
         }
       })
     }
@@ -152,7 +152,7 @@ const PhoneBindingView = Base.ItemView.extend({
                 self.$lastVerificationCode.focus()
                 dataError.el = self.$changeError
               }
-              self.getErrorEl(dataError)
+              _.formatError(dataError)
               // Global.ui.notification.show('您的验证码有误，请输入正确的验证码！', { displayTime: 2000 })// (res.msg === 'fail' || res.msg === 'ok') ? '' : res.msg
             }
           } else {
@@ -164,16 +164,12 @@ const PhoneBindingView = Base.ItemView.extend({
             } else {
               dataError.el = self.$changeError
             }
-            self.getErrorEl(dataError)
+            _.formatError(dataError)
             // Global.ui.notification.show(`绑定失败！${res.msg === 'fail' ? '' : res.msg}`, { displayTime: 2000 })
           }
         })
     }
-  },
-  getErrorEl (data) {
-    const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon vertical-sub"></i>${data.text}</span>`
-    data.el.html(errorTpl)
-  },
+  }
 })
 
 module.exports = PhoneBindingView
