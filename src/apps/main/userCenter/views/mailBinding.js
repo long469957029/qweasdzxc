@@ -48,8 +48,8 @@ const MailBindingView = Base.ItemView.extend({
     this.$lastEmailForm = this.$('.js-uc-last-email-form')
     this.$lastEmailNum = this.$('.js-uc-last-email-num')
     this.$lastVerificationCode = this.$('.js-uc-last-verification-code')
-    this.$bindError = this.$('.js-bind-error-text')
-    this.$changeError = this.$('.js-change-error-text')
+    this.$bindError = this.$('.js-uc-pl-mail-bind-error-text')
+    this.$changeError = this.$('.js-uc-pl-mail-change-error-text')
   },
 
   sendCodeCountdown ($reSend, $countdown) {
@@ -100,8 +100,8 @@ const MailBindingView = Base.ItemView.extend({
           self.$changeError.html('')
         } else {
           $target.html('重新发送')
-          self.getErrorEl({
-            text: res.msg === 'fail' ? '验证码发送失败' : res.msg,
+          _.formatError({
+            errotText: res.msg === 'fail' ? '验证码发送失败' : res.msg,
             el: type === 'add' ? self.$bindError : self.$changeError,
           })
         }
@@ -148,7 +148,7 @@ const MailBindingView = Base.ItemView.extend({
               }
             } else {
               const data = {
-                text: '您的验证码有误，请输入正确的验证码！',
+                errorText: '您的验证码有误，请输入正确的验证码！',
               }
               if (type === 'add') {
                 self.$verificationCode.focus()
@@ -157,27 +157,23 @@ const MailBindingView = Base.ItemView.extend({
                 self.$lastVerificationCode.focus()
                 data.el = self.$changeError
               }
-              self.getErrorEl(data)
+              _.formatError(data)
               // Global.ui.notification.show('您的验证码有误，请输入正确的验证码！', { displayTime: 2000 })// (res.msg === 'fail' || res.msg === 'ok') ? '' : res.msg
             }
           } else {
             const data = {
-              text: `绑定失败！${res.msg === 'fail' ? '' : res.msg}`,
+              errorText: `绑定失败！${res.msg === 'fail' ? '' : res.msg}`,
             }
             if (type === 'add') {
               data.el = self.$bindError
             } else {
               data.el = self.$changeError
             }
-            self.getErrorEl(data)
+            _.formatError(data)
             // Global.ui.notification.show(`绑定失败！${res.msg === 'fail' ? '' : res.msg}`, { displayTime: 2000 })
           }
         })
     }
-  },
-  getErrorEl (data) {
-    const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon vertical-sub"></i>${data.text}</span>`
-    data.el.html(errorTpl)
   },
 })
 

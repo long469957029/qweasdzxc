@@ -44,8 +44,8 @@
           <input type="text" :disabled="!changePwd" v-model.trim="passWord" ref="pwdInput"/>
         </div>
         <div :class="['error-tip',{'text-hot': errorShow}]" v-show="changePwd">
-          <span :class="['sfa',{'sfa-error-icon': errorShow,'sfa-error-gray-icon': !errorShow}]"></span>
-          {{errorText}}
+          <span :class="['sfa','tooltip-icon',{'sfa-error-icon': errorShow,'sfa-error-gray-icon': !errorShow}]"></span>
+          <div class="tooltip-inner">{{errorText}}</div>
         </div>
         <div class="user-btn" @click="btnClick">{{changePwd ? '保存密码' : '修改密码'}}</div>
       </div>

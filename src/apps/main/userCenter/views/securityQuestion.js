@@ -1,5 +1,3 @@
-
-
 const SecurityQuestionView = Base.ItemView.extend({
 
   template: '',
@@ -13,7 +11,7 @@ const SecurityQuestionView = Base.ItemView.extend({
 
   events: {
     // 1 添加密保问题
-    'click .js-uc-inputSecurityQuestion-submit': 'inputSecurityQuestionHandler', // 输入密保问题(与修改页面共用)
+    // 'click .js-uc-inputSecurityQuestion-submit': 'inputSecurityQuestionHandler', // 输入密保问题(与修改页面共用)
     'click .js-uc-confirmSecurityQuestion-submit': 'confirmSecurityQuestionHandler', // 确认密保问题（与修改页面共用）
     'click .js-uc-SecurityQuestion-return': 'securityQuestionGoStepHandler', // 返回按钮（修改页面共用）
     'change .js-uc-questionSelect': 'questionSelectChangeHandler', // 控制三个下拉框的值不能重复选择
@@ -86,7 +84,7 @@ const SecurityQuestionView = Base.ItemView.extend({
   },
 
   // PubFun 初始化指定分步操作模型
-  _initSteps ($Container, changingFunc) {
+  _initSteps($Container, changingFunc) {
     $Container.steps({
       headerTag: 'h3',
       bodyTag: '.js-uc-step-from',
@@ -98,7 +96,7 @@ const SecurityQuestionView = Base.ItemView.extend({
   },
 
   // 下拉框选择的事件,用于控制不会重复选择
-  questionSelectChangeHandler (e) {
+  questionSelectChangeHandler(e) {
     const $target = $(e.currentTarget)
     const $option = $target.find('option:selected')
 
@@ -112,7 +110,7 @@ const SecurityQuestionView = Base.ItemView.extend({
     $option.addClass('selected')
   },
   // 下拉框选择的事件,用于控制不会重复选择
-  userQuestionSelectChangeHandler (e) {
+  userQuestionSelectChangeHandler(e) {
     const $target = $(e.currentTarget)
     const $option = $target.find('option:selected')
 
@@ -127,7 +125,7 @@ const SecurityQuestionView = Base.ItemView.extend({
   },
 
   // 1.3初始化 设置密保问题页面 1.3.1初始化 添加密保问题
-  _initAddSQPage1 (type) {
+  _initAddSQPage1(type) {
     const self = this
 
     Global.sync.ajax({
@@ -155,7 +153,7 @@ const SecurityQuestionView = Base.ItemView.extend({
   },
 
   // TODO录入的密保问题完成 1.3.2初始化 确认密保问题页面
-  inputSecurityQuestionHandler (e) {
+  inputSecurityQuestionHandler(e) {
     const $target = $(e.currentTarget)
     const $currContainer = this.$('.js-uc-inputSQForm')
     const clpValidate = $currContainer.parsley().validate()
@@ -178,7 +176,7 @@ const SecurityQuestionView = Base.ItemView.extend({
   },
 
   // TODO 确认提交密保问题 1.3.3初始化 成功页面
-  confirmSecurityQuestionHandler (e) {
+  confirmSecurityQuestionHandler(e) {
     const self = this
     const $target = $(e.currentTarget)
     // 设置按钮为处理中状态
@@ -199,11 +197,11 @@ const SecurityQuestionView = Base.ItemView.extend({
       },
     })
       .always(() => {
-      // 恢复确认按钮的状态
+        // 恢复确认按钮的状态
         $target.button('reset')
       })
       .done((res) => {
-      // 成功后
+        // 成功后
         if (res && res.result === 0) {
           const $currentContainer = $target.closest('.js-uc-stepContainer')// 找到最近的该class节点
           $currentContainer.steps('next')
@@ -212,14 +210,19 @@ const SecurityQuestionView = Base.ItemView.extend({
             Global.m.publish('safe:updating')
           }, 1000)
         } else {
-          Global.ui.notification.show(`设置密保问题请求失败${res.msg}`)
+          // Global.ui.notification.show(`设置密保问题请求失败${res.msg}`)
+          const errorData = {
+            el: this.$('.js-uc-pl-squ1-error'),
+            errorText: `设置密保问题请求失败,${res.msg}`,
+          }
+          _.formatError(errorData)
         }
       })
     //  }
   },
 
   // TODO 2.3初始化修改密保问题页面 2.3.1初始化 验证密保问题
-  _initUpdateSQPage1 () {
+  _initUpdateSQPage1() {
     const self = this
     // const $currContainer = this.$('.js-uc-verifySQForm')
     // 设置按钮为处理中状态
@@ -245,7 +248,7 @@ const SecurityQuestionView = Base.ItemView.extend({
   },
 
   // TODO 验证密保问题 2.3.2初始化 输入新密保问题
-  verifySecurityQuestionHandler (e) {
+  verifySecurityQuestionHandler(e) {
     const self = this
     const $target = $(e.currentTarget)
     const $currContainer = this.$('.js-uc-verifySQForm')
@@ -277,13 +280,25 @@ const SecurityQuestionView = Base.ItemView.extend({
           if (res && res.result === 0) {
             self._initAddSQPage1('update')
             self.security_queToken = res.root
-          } else if (res.msg === 'fail') { Global.ui.notification.show('提交密保答案错误') } else { Global.ui.notification.show(res.msg) }
+          } else if (res.msg === 'fail') {
+            const errorData = {
+              el: this.$('.js-uc-pl-squ1-error'),
+              errorText: `提交密保答案错误`,
+            }
+            _.formatError(errorData)
+          } else {
+            const errorData = {
+              el: this.$('.js-uc-pl-squ1-error'),
+              errorText: res.msg,
+            }
+            _.formatError(errorData)
+          }
         })
     }
   },
 
   // pubFun 返回按钮事件
-  securityQuestionGoStepHandler (e) {
+  securityQuestionGoStepHandler(e) {
     const $target = $(e.currentTarget)
     const type = $target.data('type')// 需要返回的步骤记录在此
     const $currentContainer = $target.closest('.js-uc-stepContainer')// 找到最近的该class节点
@@ -321,7 +336,11 @@ const SecurityQuestionView = Base.ItemView.extend({
             self.trigger('render:true')
             Global.m.publish('safe:updating')
           } else {
-            Global.ui.notification.show(`设置密保问题请求失败${res.msg}`)
+            const errorData = {
+              el: this.$('.js-uc-pl-sqa-error'),
+              errorText: `设置密保问题请求失败${res.msg}`,
+            }
+            _.formatError(errorData)
           }
         })
     }

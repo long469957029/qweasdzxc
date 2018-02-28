@@ -50,6 +50,20 @@ export default [
     },
   },
   {
+    path: '/fc/wd',
+    component: function(resolve) {
+      RouterController.async(resolve, FundRecordsView, {
+        triggerTab: 'record-withdraw'
+      },{
+        main: {
+          title: '充提记录',
+          titleDes: '充提记录只保留30天数据。',
+        },
+        sidebar,
+      })
+    },
+  },
+  {
     path: '/fc/rb',
     component: function(resolve) {
       RouterController.async(resolve, RebateRecordsView, {

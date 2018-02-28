@@ -172,13 +172,12 @@
                       <input type="text" class="qes-input" v-model="answerSecond" autocomplete="off" data-parsley-errors-container=".js-rp-answer2-error" required>
                       <div class="js-rp-answer2-error parsley-error-container inline-block" style="max-width: 144px"></div>
                       <div class="text-hot text-left m-top-sm" v-if="qesError">
-                        <span class="sfa sfa-error-icon tooltip-icon vertical-middle pull-left"></span>
+                        <span class="sfa sfa-error-icon tooltip-icon vertical-middle"></span>
                         <div class="tooltip-inner">{{qesErrorText}}</div>
                       </div>
                     </div>
                   </div>
                   <div class=" m-top-lg">
-
                     <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyQes">提交</button>
                   </div>
                   <div class="">

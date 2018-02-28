@@ -95,8 +95,8 @@ _.mixin({
     return _.formatDiv(money, options.ratio, options)
   },
 
-  format2yuan(money, options){  //临时方法 处理金额类数据，0的收显示0.00  其他情况正常除以10000，保留4位小数
-    if(money === 0){
+  format2yuan(money, options) {  //临时方法 处理金额类数据，0的收显示0.00  其他情况正常除以10000，保留4位小数
+    if (money === 0) {
       options = _.extend({}, {
         fixed: 2,
         ratio: 10000,
@@ -285,14 +285,14 @@ _.mixin({
     }
     return params
   },
-  getDomainWithNewPrefix(prefix){
+  getDomainWithNewPrefix(prefix) {
     let hostName = window.location.hostname
     let port = window.location.port
     let hostNameAttrArr = hostName.split('.')
     let newHostNameAttrArr = []
     newHostNameAttrArr.unshift(hostNameAttrArr.pop())//+':'+port
     newHostNameAttrArr.unshift(hostNameAttrArr.pop())
-    newHostNameAttrArr.unshift(window.location.protocol+'//'+prefix)
+    newHostNameAttrArr.unshift(window.location.protocol + '//' + prefix)
     return newHostNameAttrArr.join('.')
   },
 
@@ -308,8 +308,8 @@ _.mixin({
 
   getConfigById(config, id) {
     return (_(config).findWhere({
-        id,
-      }) || {}).zhName || id
+      id,
+    }) || {}).zhName || id
   },
 
   getCustomerServiceUrl() {
@@ -385,7 +385,11 @@ _.mixin({
       secondDomain = 'v2'
     }
     newHostNameAttrArr.unshift(secondDomain)
-    return 'http://'+ newHostNameAttrArr.join('.')
+    return 'http://' + newHostNameAttrArr.join('.')
+  },
+  formatError(data) {
+    const errorTpl = `<div class="m-top-sm"><span class="sfa sfa-error-icon vertical-middle tooltip-icon"></span><div class="tooltip-inner">${data.errorText}</div></div>`
+    data.el.html(errorTpl)
   },
 })
 

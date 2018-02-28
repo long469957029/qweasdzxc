@@ -194,7 +194,7 @@ const PersonalManageView = Base.ItemView.extend({
         errorText: '省市区填写不完整',
       }
       this.$('.select-address').toggleClass('faild',true)
-      this.formateError(data)
+      _.formatError(data)
       return false
     }else{
       this.$('.select-address').toggleClass('faild',false)
@@ -260,10 +260,7 @@ const PersonalManageView = Base.ItemView.extend({
     $target.addClass('active').siblings().removeClass('active')
     this.iconId = $target.data('id')
   },
-  formateError(data) {
-    const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon vertical-middle m-right-xs" style="margin-top: -3px;"></i>${data.errorText}</span>`
-    data.el.html(errorTpl)
-  },
+
 
   checkBirthday() {
     let month = this.$('.js-bday1').parsley('destroy')
@@ -277,14 +274,11 @@ const PersonalManageView = Base.ItemView.extend({
         el: this.$('.js-uc-pm-birthday-error'),
         errorText: '生日填写不完整',
       }
-      this.formateError(errorData)
+      _.formatError(errorData)
     }
     return this.birthday
   },
-  formateError(data) {
-    const errorTpl = `<span class="text-hot inline-block" ><i class="sfa sfa-error-icon vertical-middle m-right-xs"  style="margin-top: -3px;"></i>${data.errorText}</span>`
-    data.el.html(errorTpl)
-  },
+
 })
 
 module.exports = PersonalManageView
