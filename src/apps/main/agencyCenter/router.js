@@ -111,22 +111,6 @@ export default [
     },
   },
   {
-    path: '/ac/tr/:userId',
-    component: function(resolve) {
-      RouterController.async(resolve, TransferView, {
-        userId: $route.params.userId,
-        username: _.getUrlParam('name'),
-      }, {
-        main: {
-          title: '平台转账',
-          titleDes: '<div class="js-ac-user-transfer"></div>',
-        },
-        sidebar,
-        activeMenu: 'ac/tr',
-      })
-    },
-  },
-  {
     path: '/ac/oam',
     component: function(resolve) {
       RouterController.async(resolve, OpenAccountManageView, {
@@ -397,9 +381,10 @@ export default [
     },
   },
   {
-    path: '/ac/tr',
+    path: '/ac/tr/:userId?',
     component: function(resolve) {
       RouterController.async(resolve, TransferView, {
+        userId: $route.params.userId,
         username: _.getUrlParam('name'),
       }, {
         main: {
@@ -425,4 +410,20 @@ export default [
       }
     }
   },
+  // {
+  //   path: '/ac/tr/:userId?',
+  //   component: function(resolve) {
+  //     RouterController.async(resolve, TransferView, {
+  //       userId: $route.params.userId,
+  //       username: _.getUrlParam('name'),
+  //     }, {
+  //       main: {
+  //         title: '平台转账',
+  //         titleDes: '<div class="js-ac-user-transfer"></div>',
+  //       },
+  //       sidebar,
+  //       activeMenu: 'ac/tr',
+  //     })
+  //   },
+  // },
 ]
