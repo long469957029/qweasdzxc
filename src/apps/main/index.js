@@ -1,4 +1,5 @@
 import App from './App.vue'
+import {sync} from 'vuex-router-sync'
 const OldApp = require('./app.js')
 const modules = require('skeleton/modules')
 
@@ -51,6 +52,8 @@ const router = appRouters.install()
 window.store = store
 window.router = router
 
+sync(store, router)
+
 
 router.onReady(() => {
   $('body').addClass('wm-loaded')
@@ -88,6 +91,9 @@ Global.m.oauth.check()
       router,
     })
 
+    /**
+     * @deprecated do not use it
+     */
     window.$route = app.$route
 
     OldApp.start()

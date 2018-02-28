@@ -185,7 +185,7 @@
 
     computed: {
       actualRequireIntegral() {
-        return _.chain(this.currentCardInfo.requireIntegral).mul(this.mallBasicInfo.fCurrentDiscount).formatDiv(100000, {fixed: 0}).value()
+        return _.chain(this.currentCardInfo.requireIntegral).mul(this.mallBasicInfo.fCurrentDiscount).convert2Point().value()
       },
       ...mapGetters([
         'mallBasicInfo'

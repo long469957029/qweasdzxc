@@ -161,7 +161,7 @@ const ToolbarView = Base.ItemView.extend({
   },
 
   scrollHandler() {
-    $('html').animate({scrollTop: 0}, 'slow')
+    $('html,body').animate({scrollTop: 0}, 'slow')
   },
   logoutHandler() {
     Global.ui.loader.show()

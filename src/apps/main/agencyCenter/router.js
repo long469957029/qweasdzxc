@@ -101,7 +101,7 @@ export default [
     path: '/ac/llm/detail/:userId',
     component: function(resolve) {
       RouterController.async(resolve, LowLevelDetailView, {
-        userId: $route.params.userId,
+        userId: store.route.params.userId,
       }, {
         main: {
           title: `查看${_.getUrlParam('name')}的详情`,
