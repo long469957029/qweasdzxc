@@ -171,13 +171,14 @@
                     <div class="controls">
                       <input type="text" class="qes-input" v-model="answerSecond" autocomplete="off" data-parsley-errors-container=".js-rp-answer2-error" required>
                       <div class="js-rp-answer2-error parsley-error-container inline-block" style="max-width: 144px"></div>
+                      <div class="text-hot text-left m-top-sm" v-if="qesError">
+                        <span class="sfa sfa-error-icon tooltip-icon vertical-middle pull-left"></span>
+                        <div class="tooltip-inner">{{qesErrorText}}</div>
+                      </div>
                     </div>
                   </div>
-                  <div class="text-hot text-center m-TB-xs" v-if="qesError">
-                    <span class="sfa sfa-error-icon vertical-middle"></span>
-                    {{qesErrorText}}
-                  </div>
                   <div class=" m-top-lg">
+
                     <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyQes">提交</button>
                   </div>
                   <div class="">
@@ -505,7 +506,7 @@
         display: flex;
       }
       .steps {
-        margin-top: 60px;
+        margin-top: 40px;
       }
       .reset-input {
         width: 348px;

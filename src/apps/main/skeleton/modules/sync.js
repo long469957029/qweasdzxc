@@ -128,25 +128,15 @@ const SyncModule = Base.Module.extend({
       // 因应二号改版偷跑 先忽略验证接口的错误
       currentXhr.fail(function (xhr, resType, type) {
         if (resType === 'error') {
-          if (type === 'Unauthorized') {
+          if (xhr.status == 401) {
             window.store.commit(types.USER_CLEAR)
-            if (!window.store.getters.loginDialogStatus) {
-              Global.ui.notification.show('您的账户已登出,请重新登录！', {
-                event: function () {
-                  window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-                }
-              });
-            }
-
-          } else if (xhr.status == 401) {
-            window.store.commit(types.USER_CLEAR)
-            if (!window.store.getters.loginDialogStatus) {
-              Global.ui.notification.show('您的账户已登出,请重新登录！', {
-                event: function () {
-                  window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-                }
-              });
-            }
+            // if (!window.store.getters.loginDialogStatus) {
+            //   Global.ui.notification.show('您的账户已登出,请重新登录！', {
+            //     event: function () {
+            //       window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+            //     }
+            //   });
+            // }
           }
         }
       });
