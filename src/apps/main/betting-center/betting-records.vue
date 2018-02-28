@@ -20,8 +20,10 @@
             <a href="javascript:void(0)" class="btn-link">{{row.betNum | formatOpenNum}}</a>
             <div v-transfer-dom>
               <popover :name="row.ticketTradeNo">
-                <div class="title">详细号码</div>
-                <div class="">{{row.betNum}}</div>
+                <div class="detail-popover">
+                  <div class="title">详细号码：</div>
+                  <div class="content">{{row.betNum}}</div>
+                </div>
               </popover>
             </div>
           </td>
@@ -311,6 +313,21 @@
       tr {
         border-bottom: 1px dashed $sec-line-color;
       }
+    }
+  }
+  .detail-popover {
+    max-width: 350px;
+    max-height: 90px;
+    overflow-y: auto;
+    padding: 4px 0 4px 2px;
+
+    .title {
+      color: #14b1bb;
+      float: left;
+      margin-right: 5px;
+    }
+    .content {
+      word-wrap: break-word;
     }
   }
 </style>

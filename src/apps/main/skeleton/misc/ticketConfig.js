@@ -388,7 +388,7 @@ const handicapMark6Config = [
 ]
 
 const handicapSscConfig = [
-  Object.assign({
+  Object.assign(bettingTypes.SSC, {
     id: 1,
     mark: 'cq',
     zhName: '重庆时时彩',
@@ -396,19 +396,21 @@ const handicapSscConfig = [
     roadBalls: true,
     twoSide: true,
     isOfficial: true,
-  }, bettingTypes.SSC),
-  Object.assign({
+    helpPage: 'SscPlayer',
+  }),
+  Object.assign(bettingTypes.SSC, {
     id: 10,
     mark: 'ffc',
     zhName: '无限分分彩',
     badge: 'new',
     twoSide: true,
     roadBalls: true,
-  }, bettingTypes.SSC),
+    helpPage: 'SscPlayer',
+  }),
 ]
 
 const handicapPk10Config = [
-  Object.assign({
+  Object.assign(bettingTypes.PK10, {
     id: 18,
     mark: 'pk10',
     zhName: 'PK10',
@@ -416,7 +418,8 @@ const handicapPk10Config = [
     roadBalls: true,
     twoSide: true,
     isOfficial: true,
-  }, bettingTypes.PK10),
+    helpPage: 'Pk10Player',
+  }),
 ]
 
 const lowConfig = {

@@ -143,6 +143,8 @@
         }
 
         this.$_statisticsLottery()
+
+        return html.length <= 2
       },
 
       empty() {

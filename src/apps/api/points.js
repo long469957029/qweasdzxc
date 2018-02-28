@@ -414,6 +414,7 @@ const addressPushApi = ({
 
 /**
  * 查询用户地址单笔
+ * @deprecated
  * @param rid
  * @param then
  * @param fail

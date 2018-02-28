@@ -69,6 +69,67 @@
   import Pk10Player from "./pk10Player";//PK10玩法
   import LhcPlayer from "./lhcPlayer";//六合彩玩法
 
+  const helpList = [
+    {
+      tType: 1,
+      view: 'DepositProcess',
+    },
+    {
+      tType: 1,
+      view: 'DrawingProcess',
+    },
+    {
+      tType: 1,
+      view: 'LotteryProcess',
+    },
+    {
+      tType: 1,
+      view: 'DwFAQ',
+    },
+    {
+      tType: 1,
+      view: 'lotteryFAQ',
+    },
+    {
+      tType: 1,
+      view: 'DnsCourse',
+    },
+
+    {
+      tType: 2,
+      view: 'SscLottery',
+    },
+    {
+      tType: 2,
+      view: 'SyxwLottery',
+    },
+    {
+      tType: 2,
+      view: 'DpLottery',
+    },
+    {
+      tType: 2,
+      view: 'Pk10Lottery',
+    },
+    {
+      tType: 2,
+      view: 'KsLottery',
+    },
+    {
+      tType: 2,
+      view: 'SscPlayer',
+    },
+    {
+      tType: 2,
+      view: 'Pk10Player',
+    },
+    {
+      tType: 2,
+      view: 'LhcPlayer',
+    },
+  ]
+
+
   export default{
     name: 'index',
 
@@ -120,9 +181,8 @@
       '$route': {
         handler(to) {
           this.currentView = to.query.page
-          if (to.query.tType) {
-            this.checkTab(Number(to.query.tType))
-          }
+
+          this.checkTab(Number(this.$_getTType(this.currentView)))
         },
         immediate: true
       }
@@ -133,6 +193,10 @@
     filters: {},
 
     methods: {
+      $_getTType(currentView) {
+        return _.findWhere(helpList, {view: currentView}).tType
+      },
+
       checkTab (tType) {
         this.tType = tType
       },

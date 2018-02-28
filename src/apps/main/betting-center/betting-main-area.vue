@@ -107,8 +107,10 @@
                   <a href="javascript:void(0)" class="btn-link">{{row.formatBetNum | formatOpenNum}}</a>
                   <div v-transfer-dom>
                     <popover :name="`bet${index}`">
-                      <div class="title">详细号码</div>
-                      <div class="">{{row.betNum}}</div>
+                      <div class="detail-popover">
+                        <div class="title">详细号码：</div>
+                        <div class="content">{{row.betNum}}</div>
+                      </div>
                     </popover>
                   </div>
                 </td>
@@ -466,7 +468,10 @@
         if (this.playRule.type === 'select') {
           this.$_addSelectLottery({type: 'buy'})
         } else {
-          this.$_addInputLottery({type: 'buy'})
+          const result = this.$_addInputLottery({type: 'buy'})
+          if (!result) {
+            return false
+          }
         }
 
         //do save
@@ -693,6 +698,7 @@
               Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择  `)
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
+
               this.$refs.areaSelect.empty()
             }
           } else {
@@ -703,34 +709,35 @@
         }
       },
 
-      $_addInputLottery(opt) {
-        const bettingInfo = this.$refs.areaInput.addBetting(opt)
+      $_addInputLottery({type} = {}) {
+        const checkResult = this.$refs.areaInput.delRepeat()
 
-        const result = this.bettingChoice.addPrevBetResult
-        if (result) {
-          if (!_.isEmpty(result)) {
-            if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
-              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择`)
-            } else {
-              Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
-            }
-          }
-          const html = ['<div class=" max-height-smd overflow-auto">']
-          if (!_.isEmpty(bettingInfo.repeatNumbers)) {
-            html.push(`<p class="word-break">以下号码重复，已进行自动过滤<br />${bettingInfo.repeatNumbers.join(',')}</p>`)
-          }
-          if (!_.isEmpty(bettingInfo.errorNumbers)) {
-            html.push(`<p class="word-break">以下号码错误，已进行自动过滤<br />${bettingInfo.errorNumbers.join(',')}</p>`)
-          }
-          html.push('</div>')
-
-          if (html.length > 2) {
-            Global.ui.notification.show(html.join(''))
-          }
-
-          this.$refs.areaInput.empty()
+        //如果是快捷投注不满足条件 则格式化数据
+        //满足则不作处理
+        if (type === 'buy' && !checkResult) {
+          return false
         } else {
-          Global.ui.notification.show('号码选择不完整，请重新选择！')
+          this.$refs.areaInput.addBetting({type})
+
+          const result = this.bettingChoice.addPrevBetResult
+          if (result) {
+            if (!_.isEmpty(result)) {
+              if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
+                Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择`)
+              } else {
+                Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
+              }
+            }
+
+            this.$refs.areaInput.empty()
+
+            if (type === 'buy') {
+              return true
+            }
+          } else {
+            Global.ui.notification.show('号码选择不完整，请重新选择！')
+            return false
+          }
         }
       },
 
@@ -934,5 +941,22 @@
   .bc-play-container.clearfix {
     display: flex;
   }
+
+  .detail-popover {
+    max-width: 350px;
+    max-height: 90px;
+    overflow-y: auto;
+    padding: 4px 0 4px 2px;
+
+    .title {
+      color: #14b1bb;
+      float: left;
+      margin-right: 5px;
+    }
+    .content {
+      word-wrap: break-word;
+    }
+  }
+
 
 </style>

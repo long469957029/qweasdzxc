@@ -125,8 +125,9 @@
   }
 
   .gift-card-img {
-    height: 220px;
-    margin-bottom: 5px;
+    max-width: 100%;
+    max-height: 100%;
+    /*margin-bottom: 5px;*/
   }
 
   .gift-card-main {
@@ -134,6 +135,11 @@
     text-align: center;
     height: 300px;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding-bottom: 75px;
   }
 
   .card-left {

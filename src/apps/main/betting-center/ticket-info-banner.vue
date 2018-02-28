@@ -69,7 +69,7 @@
         <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
         号码走势
       </a>
-      <router-link :to="{name: 'help', query: {page: ticketInfo.helpPage, tType: 2}}" class="router entry-list-des" target="_blank">
+      <router-link :to="{name: 'help', query: {page: ticketInfo.helpPage}}" class="router entry-list-des" target="_blank">
         <span class="sfa sfa-bc-icon-des vertical-middle"></span>
         游戏说明
       </router-link>

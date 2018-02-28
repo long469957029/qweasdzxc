@@ -153,6 +153,7 @@ export const MARK6 = {
   getNum: getFortyNine,
   type: 'mark6',
   trend: false,
+  helpPage: 'LhcPlayer',
 }
 
 /** @typedef {Object} bettingTypes */
