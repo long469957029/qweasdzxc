@@ -1535,3 +1535,28 @@
 .text-account-fund {
   color: #f09932;
 }
+
+.fund-operate-close{
+  font-size: 25px;
+  font-weight: normal;
+  line-height: 17px;
+  color: $def-line-color;
+  outline: 0;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+  cursor: pointer;
+  &:hover, &:focus {
+    color: $def-line-color;
+    text-decoration: none;
+    outline: 0;
+  }
+  position: absolute;
+  top:13px;
+  right: 13px;
+  z-index: 2;
+
+  &.close-white {
+    color: #ffffff;
+  }
+}

@@ -503,8 +503,6 @@ module.exports = {
       fundCenter: 'apps/main/fundCenter',
       accountCenter: 'apps/main/accountCenter',
       activeCenter: 'apps/main/activeCenter',
-      newsCenter: 'apps/main/newsCenter',
-      dynamicCenter: 'apps/main/dynamicCenter',
       helpCenter: 'apps/main/helpCenter',
       gameCenter: 'apps/main/gameCenter',
       activity: 'apps/main/activity',
