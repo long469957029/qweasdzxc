@@ -46,7 +46,7 @@ const DialogModule = Base.Module.extend({
     html.push(`<div class="modal-dialog ${options.size}" style="${dStyle}${pStyle}${options.bStyle}"`)
     html.push('<div class="modal-content">')
     if (options.closeBtn) {
-      html.push('<a class="close btn-close" data-dismiss="modal">&times;</a>')
+      html.push('<a class="close btn-close" data-dismiss="modal"><span class="sfa sfa-dialog-close"></span></a>')
     }
     if (options.title) {
       let marginClass = ''

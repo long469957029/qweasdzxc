@@ -79,13 +79,13 @@ module.exports = {
         maxFee = _(item.maxMoneyLimit).formatDiv(10000)
       }
     })
-    firstHtml.push(`<span>1.单笔最低提现金额<span class="text-account-cut">${minFee}</span>元，最高提现限额<span class="text-account-cut">${maxFee}</span>元，`)
-    firstHtml.push(`今日还可以免费提现<span class="text-account-cut">${data.remainTimes}</span>次。`)
+    firstHtml.push(`<span>1.单笔最低提现金额<span class="text-account-fund">${minFee}</span>元，最高提现限额<span class="text-account-fund">${maxFee}</span>元，`)
+    firstHtml.push(`今日还可以免费提现<span class="text-account-fund">${data.remainTimes}</span>次。`)
     if (data.feeType === 'percent') {
-      firstHtml.push(`超过次数按 <span class="text-account-cut">${_(data.fee).formatDiv(100)}%</span>收取手续费。</div>`)
+      firstHtml.push(`超过次数按 <span class="text-account-fund">${_(data.fee).formatDiv(100)}%</span>收取手续费。</div>`)
     }
     if (data.feeType === 'fix') {
-      firstHtml.push(`超过次数按每笔<span class="text-account-cut">${_(data.fee).formatDiv(10000)}元</span>收取手续费</div>`)
+      firstHtml.push(`超过次数按每笔<span class="text-account-fund">${_(data.fee).formatDiv(10000)}元</span>收取手续费</div>`)
     }
     html.push(firstHtml.join(''))
     html.push('<div>2.新绑定的提款银行卡需要3小时后才能发起提款</div>')
