@@ -266,7 +266,7 @@ define((require, exports, module) => {
       }
     },
     renderError(data) {
-      const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon vertical-sub m-right-xs"></i>${data.errorText}</span>`
+      const errorTpl = `<div class="m-top-sm"><i class="sfa sfa-error-icon vertical-sub tooltip-icon"></i><div class="tooltip-inner">${data.errorText}</div></div>`
       data.el.html(errorTpl)
     },
     fundCheckHandler() {
@@ -352,7 +352,7 @@ define((require, exports, module) => {
       }
     },
     formateError(data) {
-      const errorTpl = `<span class="text-hot inline-block"><i class="sfa sfa-error-icon vertical-middle m-right-xs"  style="margin-top: -3px;"></i>${data.errorText}</span>`
+      const errorTpl = `<div class="m-top-sm"><i class="sfa sfa-error-icon vertical-sub tooltip-icon"></i><div class="tooltip-inner">${data.errorText}</div></div>`
       data.el.html(errorTpl)
     },
   })

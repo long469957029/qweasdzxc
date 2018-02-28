@@ -14,11 +14,11 @@
           <input type="text" class="input-varCode" autocomplete="off" v-model="code" required  data-parsley-errors-container=".js-rp-code-error" />
           <a class="set-code-btn" @click="sendCode" :disabled="time > 0">{{text}}</a>
           <div class="js-rp-code-error parsley-error-container inline-block" style="max-width: 144px"></div>
+          <div class="text-hot m-top-sm" v-show="error">
+            <span class="sfa sfa-error-icon tooltip-icon vertical-middle"></span>
+            <div class="tooltip-inner">{{errorText}}</div>
+          </div>
         </div>
-      </div>
-      <div class="error-container " v-show="error">
-        <span class="sfa sfa-error-icon vertical-middle"></span>
-        {{errorText}}
       </div>
       <div class=" m-top-md">
         <button type="button" class="btn re-btn" data-loading-text="校验中" @click="verifyPhoneOrMail">提交</button>

@@ -34,7 +34,9 @@
       },
       range: {
         type: Array,
-        required: true
+        default() {
+          return bettingTypes.MARK6.range()
+        }
       },
       defaultOpening: {
         type: Array,
@@ -61,7 +63,7 @@
             this.fOpeningBalls = _.map(newOpeningBalls, ball => {
               return {
                 num: ball,
-                sx: bettingTypes.MARK6.sx[ball]
+                sx: this.sxNameByNum(ball)
               }
             })
             this.rolling()
@@ -75,6 +77,12 @@
           this.init = true
         }
       }
+    },
+
+    computed: {
+      ...mapGetters([
+        'sxNameByNum'
+      ])
     },
 
     methods: {

@@ -1,3 +1,4 @@
+import store from '../store'
 import App from './App.vue'
 import {sync} from 'vuex-router-sync'
 const OldApp = require('./app.js')
@@ -9,15 +10,13 @@ import {
   SearchGrid,
   AnimatedInteger,
   XDialog,
+  XSelect,
   StatusCell,
   BusPlugin,
   CustomCheckbox,
   Popover,
   TransferDom,
 } from 'build'
-
-import store from '../store'
-
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
 Object.defineProperty(Vue.prototype, '$', {value: $})
@@ -29,6 +28,7 @@ Vue.component('search-grid', SearchGrid)
 Vue.component('slot-static-grid', SlotStaticGrid)
 Vue.component('custom-checkbox', CustomCheckbox)
 Vue.component('animated-integer', AnimatedInteger)
+Vue.component('x-select', XSelect)
 Vue.component('x-dialog', XDialog)
 Vue.component('status-cell', StatusCell)
 Vue.directive('TransferDom', TransferDom)
@@ -82,25 +82,30 @@ Global.ui.menu.start()
 
 // 进行系统OAuth校验
 
-Global.m.oauth.check()
-  .complete(() => {
-    window.app = new Vue({
-      el: '#app',
-      render: h => h(App),
-      store,
-      router,
-    })
 
-    /**
-     * @deprecated do not use it
-     */
-    window.$route = app.$route
+store.dispatch(types.GET_MARK6_SX)
+  .then(() => {
 
-    OldApp.start()
+    Global.m.oauth.check()
+      .complete(() => {
+        window.app = new Vue({
+          el: '#app',
+          render: h => h(App),
+          store,
+          router,
+        })
 
-  })
-  .done((res) => {
-    if (res && res.result === 0) {
-      window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
-    }
+        /**
+         * @deprecated do not use it
+         */
+        window.$route = app.$route
+
+        OldApp.start()
+
+      })
+      .done((res) => {
+        if (res && res.result === 0) {
+          window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
+        }
+      })
   })

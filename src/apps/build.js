@@ -21,6 +21,7 @@ import SortGroup from './components/sort-group'
 import Dropdown from './components/dropdown'
 import StatusCell from './components/status-cell'
 import TimeoutCell from './components/timeout-cell'
+import XSelect from './components/x-select'
 
 //directives
 import TransferDom from './directives/transfer-dom'
@@ -64,6 +65,7 @@ export {
   Dropdown,
   StatusCell,
   TimeoutCell,
+  XSelect,
 
   /**
    * directives

@@ -8,7 +8,7 @@
           <input type="password" class="reset-input" id="jsRPLoginPwd1" data-parsley-password data-parsley-length="[6, 20]" required
                  data-parsley-errors-container=".js-rp-password1-error"
                  v-model="pwdOne" value="" placeholder="6-20位字符组成（不含空格），区分大小写" autocomplete="off"/><!--6-20位字符组成，区分大小写，不能使用特殊字符-->
-          <div class="js-rp-password1-error parsley-error-container inline-block" style="max-width: 144px"></div>
+          <div class="js-rp-password1-error parsley-error-container inline-block" style="max-width: 141px"></div>
         </div>
       </div>
       <div class="control-group">
@@ -17,13 +17,14 @@
           <input type="password" class="reset-input"  data-parsley-password  data-parsley-length="[6, 20]" required
                  data-parsley-errors-container=".js-rp-password2-error"
                  data-parsley-equalto="#jsRPLoginPwd1" value="" autocomplete="off"/>
-          <div class="js-rp-password2-error parsley-error-container inline-block" style="max-width: 144px"></div>
+          <div class="js-rp-password2-error parsley-error-container inline-block" style="max-width: 141px"></div>
+          <div class="text-hot text-left m-top-sm" v-if="error">
+            <span class="sfa sfa-error-icon vertical-middle tooltip-icon"></span>
+            <div class="tooltip-inner">{{errorText}}</div>
+          </div>
         </div>
       </div>
-      <div class="error-container " v-show="error">
-        <span class="sfa sfa-error-icon vertical-middle"></span>
-        {{errorText}}
-      </div>
+
       <div class=" m-top-lg">
         <button type="button" class="btn re-btn" data-loading-text="校验中" @click="setLoginPwd">提交</button>
       </div>
