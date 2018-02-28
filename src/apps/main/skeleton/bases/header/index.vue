@@ -180,13 +180,15 @@
         this.getUUID().then(({uuid}) => {
 
           loginApi.testUserReg({uuid}, (data) => {
-            if (data.data && data.data.result === 0) {
+            if (data.data && data.data.result === 0 && data.data.root) {
               window.Global.cookieCache.set('token', data.data.root.token, 160)
               window.Global.cookieCache.set('loginState', true)
               window.Global.cookieCache.set('isTestUser', true)//存一份到cookie，用于应用刷新时记住试玩状态
-              if (data.data.root &&data.data.root.balance === 10000000) {
+              let testUsername = window.Global.cookieCache.get('testUsername')
+              if(!testUsername || (testUsername && testUsername!==data.data.root.username && data.data.root.balance === 10000000)) {
                 this.$store.commit(types.TOGGLE_FREE_TRIAL, true)
               }
+              window.Global.cookieCache.set('testUsername',data.data.root.username)
               this.judgeIsTestUser()
               window.store.commit(types.USER_LOGIN_SUCCESS, data.data.root || {})
             }

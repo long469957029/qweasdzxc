@@ -196,8 +196,8 @@
   line-height: 17px;
   color: $def-line-color;
   outline: 0;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   text-align: center;
   cursor: pointer;
   &:hover, &:focus {
@@ -214,6 +214,7 @@
     color: #ffffff;
   }
 }
+
 .close-md{
   width: 19px;
   height: 19px;
