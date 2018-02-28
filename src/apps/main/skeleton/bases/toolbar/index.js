@@ -81,7 +81,7 @@ const ToolbarView = Base.ItemView.extend({
       // 获取定时更新数据列表
       clearInterval(timmer);
       self.timerHandler()
-    },600000);
+    },60000);
   },
 
   timerHandler() {
@@ -104,7 +104,7 @@ const ToolbarView = Base.ItemView.extend({
     self.getRecentChatStatXhr()
       .done(function (res) {
         if (res && res.result == 0) {
-          if (!_(res.root.records[0].newMsgNum).isNull() && !_(res.root.records[0].newMsgNum).isEmpty()) {
+          if (!_(res.root.records[0].newMsgNum).isNull() && res.root.records[0].newMsgNum != 0) {
             self.$('.js-news-remind').removeClass('hidden');
             self.$('.js-news-remind').html(res.root.records[0].newMsgNum);
           }else {
