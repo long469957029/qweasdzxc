@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="js-app-container">
     <div class="main-top">
       <main-header></main-header>
       <div id="notice" class="notice-container"></div>

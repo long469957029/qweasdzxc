@@ -232,7 +232,7 @@ const _bindImDialogHandler = () => {
 }
 //侧边栏关闭
 const _bindToolBarCloseHandler = () => {
-  $(document).off('click.toolbar').on('click.toolbar','.js-wrapper',(e)=>{
+  $(document).off('click.toolbar').on('click.toolbar','.js-app-container',(e)=>{
     let $container = $('.js-toolbar-container')
     $container.find('.js-toolbar-option').each((index, dom) => {
       $(dom).removeClass('active')

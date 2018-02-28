@@ -286,7 +286,8 @@ const threeDConfig = [
       distribution: true,
       periods: trendPeriods,
       split: 1,
-    }
+    },
+    isOfficial: true,
   }, bettingTypes.THREED),
   Object.assign({
     id: 6,
