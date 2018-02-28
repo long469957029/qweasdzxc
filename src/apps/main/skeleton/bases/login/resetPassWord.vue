@@ -68,7 +68,7 @@
                 <div class="control-group">
                   <label class="control-label">验证码：</label>
                   <div class="controls">
-                    <input type="text" class="input-varCode" @keyup="valCode" v-model="codeVal" name=""  maxlength="4"
+                    <input type="text" class="input-varCode" @input="valCode" v-model="codeVal" name=""  maxlength="4"
                            data-parsley-errors-container=".js-rp-code-error"  placeholder="输入验证码" autocomplete="off">
                     <img class="var-code" :src="codeSrc" @click="refreshValCode">
                     <div class="text-hot m-top-xs inline-block" v-if="codeError"  style="max-width: 140px">
@@ -266,9 +266,11 @@
     methods: {
       refreshValCode(){
         this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
+        this.codeRes = 1
       },
       valCode(){
         if(this.sendCode){
+          console.log( 'val:'+this.codeVal)
           if (this.codeVal && this.codeVal !== '' && this.codeVal.length === 4) {
             this.sendCode = false
             valCodeXhr({
@@ -550,6 +552,8 @@
         width: 18px;
         height: 18px;
         background: url("~base/images/register-check.png") no-repeat;
+        vertical-align: middle;
+        margin-left: 10px;
       }
       .find-type {
         width: 100%;
