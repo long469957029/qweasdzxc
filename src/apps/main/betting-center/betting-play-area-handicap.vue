@@ -448,6 +448,7 @@
 
       //父组件调用
       lotteryBuy() {
+
         this.$store.commit(types.ADD_HANDICAP_BET, {
           bettingInfo: {
             lotteryList: this.lotteryList,
