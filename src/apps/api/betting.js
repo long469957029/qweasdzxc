@@ -287,6 +287,24 @@ const bettingCancelApi = ({betId}, then) => {
     .then(then)
 }
 
+/**
+ * 取得当前生肖
+ * @param ticketId
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getHandicapSpNumApi = ({ticketId}, then, fail) => {
+  return $http({
+    url: '/ticket/ticketmod/spNum.json',
+    data: {
+      ticketId
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
 export {
   getTicketInfoApi,
   getTicketRulesApi,
@@ -302,4 +320,5 @@ export {
   pushMmcSimulationBettingApi,
   getVouchersApi,
   bettingCancelApi,
+  getHandicapSpNumApi,
 }

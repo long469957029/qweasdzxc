@@ -88,7 +88,7 @@ _.mixin({
   convert2Point(money, options) {
     options = _.extend({}, {
       fixed: 2,
-      ratio: 1000000,
+      ratio: 100000,
       clear: true,
     }, options)
 

@@ -74,14 +74,47 @@
     justify-content: center;
   }
 
+  .partial-loader {
+    overflow: hidden;
+    font-size: 90px;
+    width: 1em;
+    height: 1em;
+    margin: 40% auto;
+    border-radius: 50%;
+    animation: loadingA 1.7s infinite ease;
+  }
+
+  $color: #c4c4c4;
   .ring {
     width: 10px;
     height: 10px;
     margin: 15px auto;
     padding: 10px;
-    border: 7px dashed #4b9cdb;
+    border: 7px dashed $color;
     border-radius: 100%;
     animation: loadingD 1.5s cubic-bezier(.17, .37, .43, .67) infinite;
+  }
+
+
+  @keyframes loadingA {
+    0% {
+      transform: rotate(0deg);
+      box-shadow: -0.11em -0.83em 0 -0.4em $color, -0.11em -0.83em 0 -0.42em $color, -0.11em -0.83em 0 -0.44em $color, -0.11em -0.83em 0 -0.46em $color, -0.11em -0.83em 0 -0.477em $color;
+    }
+    5%,
+    95% {
+      box-shadow: -0.11em -0.83em 0 -0.4em $color, -0.11em -0.83em 0 -0.42em $color, -0.11em -0.83em 0 -0.44em $color, -0.11em -0.83em 0 -0.46em $color, -0.11em -0.83em 0 -0.477em $color;
+    }
+    30% {
+      box-shadow: -0.11em -0.83em 0 -0.4em $color, -0.51em -0.66em 0 -0.42em $color, -0.75em -0.36em 0 -0.44em $color, -0.83em -0.03em 0 -0.46em $color, -0.81em 0.21em 0 -0.477em $color;
+    }
+    55% {
+      box-shadow: -0.11em -0.83em 0 -0.4em $color, -0.29em -0.78em 0 -0.42em $color, -0.43em -0.72em 0 -0.44em $color, -0.52em -0.65em 0 -0.46em $color, -0.57em -0.61em 0 -0.477em $color;
+    }
+    100% {
+      transform: rotate(360deg);
+      box-shadow: -0.11em -0.83em 0 -0.4em $color, -0.11em -0.83em 0 -0.42em $color, -0.11em -0.83em 0 -0.44em $color, -0.11em -0.83em 0 -0.46em $color, -0.11em -0.83em 0 -0.477em $color;
+    }
   }
 
   @keyframes loadingD {

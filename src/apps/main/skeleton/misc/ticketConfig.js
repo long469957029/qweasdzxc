@@ -383,6 +383,7 @@ const handicapMark6Config = [
     zhName: '香港六合彩',
     badge: 'new',
     isOfficial: true,
+    needSx: true
   }, bettingTypes.MARK6),
 ]
 

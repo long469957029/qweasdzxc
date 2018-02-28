@@ -42,6 +42,7 @@
 
   export default {
     name: "betting-main-area-handicap",
+
     props: {
       ticketInfo: Object,
       ticketId: Number,

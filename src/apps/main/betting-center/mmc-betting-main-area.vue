@@ -189,9 +189,7 @@
             </div>
 
             连续开奖
-            <select class="bc-m-select" v-model="openingCount">
-              <option v-for="openNum in continuousOpenSelectList" :key="openNum" :value="openNum">{{openNum}}期</option>
-            </select>
+            <x-select class="bc-m-select" v-model.number="openingCount" :options="continuousOpenSelectList"></x-select>
             <label class="stop-checkbox">
               <custom-checkbox v-model="stopWhenWinning"></custom-checkbox>
               中奖即停止
@@ -261,9 +259,7 @@
           </div>
           <div class="">
             连续开奖
-            <select class="bc-m-select" v-model="allOpeningCount">
-              <option v-for="openNum in continuousOpenSelectList" :key="openNum" :value="openNum">{{openNum}}期</option>
-            </select>
+            <x-select class="bc-m-select" v-model.number="allOpeningCount" :options="continuousOpenSelectList"></x-select>
             <label class="stop-checkbox">
               <custom-checkbox v-model="allStopWhenWinning"></custom-checkbox>
               中奖即停止
@@ -352,7 +348,32 @@
       return {
         lever: false,
         unit: 10000,
-        continuousOpenSelectList: [1, 5, 10, 15, 20, 25],
+        continuousOpenSelectList: [
+          {
+            text: '1期',
+            value: 1,
+          },
+          {
+            text: '5期',
+            value: 5,
+          },
+          {
+            text: '10期',
+            value: 10,
+          },
+          {
+            text: '15期',
+            value: 15,
+          },
+          {
+            text: '20期',
+            value: 20,
+          },
+          {
+            text: '25期',
+            value: 25
+          }
+        ],
         //开奖次数
         openingCount: 1,
         //总中奖金额
@@ -555,8 +576,8 @@
       },
 
       'bettingChoice.formatMaxMultiple': {
-        handler(maxMultiple) {
-          $(this.$refs.multiRange).numRange('setRange', 1, maxMultiple)
+        handler(MaxMultipl) {
+          $(this.$refs.multiRange).numRange('setRange', 1, MaxMultipl)
         }
       },
       'bettingChoice.previewList': {

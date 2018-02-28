@@ -424,85 +424,19 @@
             })
             break
           case 'mouse':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['10', '22', '34', '46'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'cow':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['09', '21', '33', '45'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'tiger':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['08', '20', '32', '44'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'rabbit':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['07', '19', '31', '43'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'dragon':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['06', '18', '30', '42'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'snack':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['05', '17', '29', '41'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'horse':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['04', '16', '28', '40'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'sheep':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['03', '15', '27', '39'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'monkey':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['02', '14', '26', '38'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'chicken':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['01', '13', '25', '37', '49'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'dog':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['12', '24', '36', '48'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'pig':
             _.filter(fItems, (num) => {
-              flag = _.indexOf(['11', '23', '35', '47'], num.num) > -1
+              flag = _.indexOf(this.numBySx(op).nums, num.num) > -1
               num.betMoney = flag ? this.betMoney : null
               num.selected = flag
             })
@@ -535,6 +469,12 @@
         this.canBet = !!count
         this.$store.commit(types.SET_STATISTICS, count)
       },
+    },
+
+    computed: {
+      ...mapGetters([
+        'numBySx'
+      ])
     },
 
     beforeDestroy() {
