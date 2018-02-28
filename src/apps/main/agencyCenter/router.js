@@ -125,9 +125,10 @@ export default [
   {
     path: '/ac/tbr',
     component: function(resolve) {
-      RouterController.async(resolve, teamBettingRecordView, {
-        triggerTab: 'jsAcBrTr',
-        userName: _.getUrlParam('name'),
+      RouterController.async(resolve, teamBettingRecordView, () => {
+        return {
+          userName: _.getUrlParam('name')
+        }
       }, {
         main: {
           title: '团队投注',
@@ -141,7 +142,7 @@ export default [
     path: '/ac/oam/pd/:ticket',
     component: function(resolve) {
       RouterController.async(resolve, OpenAccountManagePriceView, {
-        triggerTab: $route.params.ticket,
+        triggerTab: store.state.route.params.ticket,
         rebate: _.getUrlParam('rebate'),
       }, {
         main: {
@@ -357,8 +358,10 @@ export default [
   {
     path: '/ac/tad',
     component: function(resolve) {
-      RouterController.async(resolve, TeamAccountDetailView, {
-        userName: _.getUrlParam('name') || '',
+      RouterController.async(resolve, TeamAccountDetailView, () => {
+        return{
+          userName: _.getUrlParam('name') || '',
+        }
       }, {
         main: {
           title: '团队账变',
@@ -383,9 +386,11 @@ export default [
   {
     path: '/ac/tr/:userId?',
     component: function(resolve) {
-      RouterController.async(resolve, TransferView, {
-        userId: $route.params.userId,
-        username: _.getUrlParam('name'),
+      RouterController.async(resolve, TransferView, () => {
+        return {
+          userId: store.state.route.params.userId,
+          username: _.getUrlParam('name'),
+        }
       }, {
         main: {
           title: '平台转账',
@@ -410,20 +415,4 @@ export default [
       }
     }
   },
-  // {
-  //   path: '/ac/tr/:userId?',
-  //   component: function(resolve) {
-  //     RouterController.async(resolve, TransferView, {
-  //       userId: $route.params.userId,
-  //       username: _.getUrlParam('name'),
-  //     }, {
-  //       main: {
-  //         title: '平台转账',
-  //         titleDes: '<div class="js-ac-user-transfer"></div>',
-  //       },
-  //       sidebar,
-  //       activeMenu: 'ac/tr',
-  //     })
-  //   },
-  // },
 ]
