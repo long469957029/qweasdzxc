@@ -32,11 +32,12 @@
         mallList: [],
       }
     },
+
     mounted() {
       getMallHotListApi(
         ({data}) => {
           if (data && data.result === 0) {
-            this.mallList = data.root.records || this.mallList
+            this.mallList = _(data.root.records).reverse() || this.mallList
           }
         }
       )
