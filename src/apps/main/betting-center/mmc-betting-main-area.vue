@@ -127,7 +127,14 @@
               <div class="bc-advance-mode-main">
                 <div :class="advanceShowMode === 'single' ? 'advance-bonus-single' : 'advance-bonus'">
                   单注奖金：
-                  <animated-integer class="text-prominent font-sm" :value="bettingChoice.fBetBonus"></animated-integer>
+                  <template v-if="bettingChoice.fBetBonus">
+                    <animated-integer class="text-prominent font-sm" :value="bettingChoice.fBetBonus"></animated-integer>
+                  </template>
+                  <template v-else>
+                    <animated-integer class="text-prominent font-sm" :value="bettingChoice.fMinBetBonus"></animated-integer>
+                    ~
+                    <animated-integer class="text-prominent font-sm" :value="bettingChoice.fMaxBetBonus"></animated-integer>
+                  </template>
                   元
                 </div>
                 <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic'">
@@ -548,8 +555,8 @@
       },
 
       'bettingChoice.formatMaxMultiple': {
-        handler(newVal) {
-          $(this.$refs.multiRange).numRange('setRange', 1, newVal)
+        handler(maxMultiple) {
+          $(this.$refs.multiRange).numRange('setRange', 1, maxMultiple)
         }
       },
       'bettingChoice.previewList': {
@@ -935,7 +942,6 @@
     },
 
     mounted() {
-
       $(this.$refs.multiRange).numRange({
         onChange: (num) => {
           this.$store.commit(types.SET_MULTIPLE, num)

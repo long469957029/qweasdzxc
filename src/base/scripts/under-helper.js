@@ -85,6 +85,16 @@ _.mixin({
     return _.formatDiv(money, options.ratio, options)
   },
 
+  convert2Point(money, options) {
+    options = _.extend({}, {
+      fixed: 2,
+      ratio: 1000000,
+      clear: true,
+    }, options)
+
+    return _.formatDiv(money, options.ratio, options)
+  },
+
   format2yuan(money, options){  //临时方法 处理金额类数据，0的收显示0.00  其他情况正常除以10000，保留4位小数
     if(money === 0){
       options = _.extend({}, {
