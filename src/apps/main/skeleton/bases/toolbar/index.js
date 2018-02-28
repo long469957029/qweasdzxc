@@ -12,7 +12,7 @@ const ToolbarView = Base.ItemView.extend({
 
   events: {
     'click .js-toolbar-option': 'openSidebarHandler', // 展开侧边栏
-    // 'click .js-sidebar-close': 'closeSidebarHandler', // 收起侧边栏
+    'click .js-sidebar-close': 'closeSidebarHandler', // 收起侧边栏
     'click .js-toolbar-scroll-to-top': 'scrollHandler', // 回滚到顶部
     'click .js-toolbar-feedback-dialog': 'feedbackDialogHandler', // 意见反馈弹窗
     // 'click .js-toolbar-im-dialog': 'imDialogHandler', // 站内信弹窗
@@ -58,23 +58,23 @@ const ToolbarView = Base.ItemView.extend({
     self.$toption = self.$('.toolbar-option')
 
   },
-  //
-  // closeSidebarHandler(e) {
-  //   const $target = $(e.currentTarget)
-  //   const path = $target.data('id')
-  //   const self = this
-  //   self.$sidebar.closest('.js-toolbar-container').find('.js-toolbar-option').each((index, dom) => {
-  //     $(dom).removeClass('active')
-  //   })
-  //   self.$sidebar.closest('.js-toolbar-container').removeClass('open')
-  //   self.$closeMask.addClass('hidden')
-  //   if (path !== undefined) {
-  //     Global.router.goTo(path)
-  //   }
-  //
-  //   self.$container.css('margin-left','-48px')
-  //   self.$toption.css('border-radius','3px')
-  // },
+
+  closeSidebarHandler(e) {
+    const $target = $(e.currentTarget)
+    const path = $target.data('id')
+    const self = this
+    self.$sidebar.closest('.js-toolbar-container').find('.js-toolbar-option').each((index, dom) => {
+      $(dom).removeClass('active')
+    })
+    self.$sidebar.closest('.js-toolbar-container').removeClass('open')
+    // self.$closeMask.addClass('hidden')
+    if (path !== undefined) {
+      Global.router.goTo(path)
+    }
+
+    self.$container.css('margin-left','-48px')
+    self.$toption.css('border-radius','3px')
+  },
 
   openSidebarHandler(e) {
     const self = this
