@@ -55,7 +55,8 @@
               </div>
             </div>
             <div v-show="showBtn" key="exchange" class="points-bottom-btn">
-              <button class="btn btn-white exchange-btn" v-if="couponInfo.couponStatus === 1" @click="$emit('exchange', formatCouponInfo)">立即兑换</button>
+              <button class="btn btn-white exchange-btn" v-if="couponInfo.couponStatus === 1"
+                      @click="isLogin ? $emit('exchange', formatCouponInfo) : login()">立即兑换</button>
             </div>
           </transition-group>
         </div>
@@ -66,6 +67,7 @@
 
 <script>
   import Countdown from '../countdown/index.vue'
+  import checkLogin from '../../mixins/check-login'
   import {formatCoupon} from 'build'
 
   const CARD_TYPE = {
@@ -91,6 +93,8 @@
 
   export default {
     name: 'points-card',
+
+    mixins: [checkLogin],
 
     components: {
       Countdown,

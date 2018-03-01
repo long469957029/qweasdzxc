@@ -117,7 +117,8 @@
         audio: {countdown, prize, openBall},
         timer: null,
         goToNextTimer: null,
-        nextTimer: null
+        nextTimer: null,
+        playCountdownTimer: null
       }
     },
 
@@ -138,6 +139,7 @@
         clearInterval(this.timer)
         clearInterval(this.goToNextTimer)
         clearInterval(this.nextTimer)
+        this.stopCountdownAudio()
       },
       'bettingInfo.lastOpenId'(current, prev) {
         if (this.musicStatus) {
@@ -219,16 +221,28 @@
           const leftTime = moment.duration(e.finalDate.getTime() - new Date().getTime()).asSeconds()
 
           if (this.musicStatus) {
-            if (parseInt(leftTime, 10) <= 5) { // 虽然是倒数5秒的声音，但是判断为3才能吻合
-              _.delay(() => {
-                this.$refs.countdownAudio.play()
-              }, 1000)
+            if (Math.floor(leftTime) <= 4) { // 虽然是倒数5秒的声音，但是判断为3才能吻合
+              this.playCountdownAudio(Math.floor(leftTime))
             }
           }
         })
       },
 
-      //TODO 倒计时逻辑里面包含了开奖音效逻辑
+      playCountdownAudio(countdown) {
+        this.playCountdownTimer = _.delay(() => {
+          if (countdown >= 0) {
+            this.$refs.countdownAudio.play()
+            this.playCountdownAudio(--countdown)
+          } else {
+            this.stopCountdownAudio()
+          }
+        }, 1000)
+      },
+
+      stopCountdownAudio() {
+        clearInterval(this.playCountdownTimer)
+      },
+
       $_updateCountdown() {
         const leftSecond = this.bettingInfo.leftSecond
         const sale = this.bettingInfo.sale
