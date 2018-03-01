@@ -131,7 +131,8 @@
           this.getUserSecurityInfo()
           this.getUserBindInfo()
         }
-      }
+        this.judgeIsTestUser()
+      },
     },
 
     computed: {

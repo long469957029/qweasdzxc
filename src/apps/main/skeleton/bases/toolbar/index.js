@@ -73,17 +73,22 @@ const ToolbarView = Base.ItemView.extend({
     self.$container = self.$('.js-toolbar-option-container')
     self.$toption = self.$('.toolbar-option')
 
+    var timer;
 
-    // 定时器
-    self.timerHandler()
-    var timmer;
-    timmer = setInterval(function () {
-      // 获取定时更新数据列表
-      clearInterval(timmer);
-      self.timerHandler()
-    },600000);
     Vue.$global.bus.$on('message-update', () => {
       this.messageUpate()
+    })
+    window.Global.m.subscribe('acct', 'acct:login', () => {
+      // 定时器
+      self.timerHandler()
+      timer = setInterval(function () {
+        // 获取定时更新数据列表
+        clearInterval(timer);
+        self.timerHandler()
+      },600000);
+    })
+    window.Global.m.subscribe('acct', 'acct:loginOut', () => {
+      clearInterval(timer);
     })
   },
 
