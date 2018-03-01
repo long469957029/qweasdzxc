@@ -33,7 +33,8 @@
         validEndDate:'',
         dataIndex:0,  // 红包数据顺序
         isFirst: true, // 登录之后第一次展示完 需要调用父组件下一个弹窗
-        timeOut: ''
+        timeOut: '',
+        polling: true
       }
     },
     methods:{
@@ -80,10 +81,12 @@
       },
       startTimer(){
         clearTimeout(this.timeOut)
-        this.timeOut = setTimeout(() => {
-          this.isFirst = false
-          this.getApi()
-        },20000)
+        if(this.polling){
+          this.timeOut = setTimeout(() => {
+            this.isFirst = false
+            this.getApi()
+          },20000)
+        }
       },
       parentNext(){
         if(this.isFirst){
@@ -94,7 +97,10 @@
     },
     mounted(){
       this.getApi()
-    }
+    },
+    beforeDestroy(){
+      this.polling = false
+    },
   }
 </script>
 
