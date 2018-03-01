@@ -392,6 +392,7 @@
       vertical-align: middle;
       color: rgba(255, 255, 255, 0.5);
       background: transparent;
+      outline: none;
       &.active, &:hover {
         color: #fff;
         text-decoration: underline;
@@ -411,6 +412,7 @@
       text-align: center;
       vertical-align: middle;
       background-color: rgba(0, 0, 0, 0.2);
+      outline: none;
       &.active, &:hover {
         background-color: rgba(0, 0, 0, 0.3);
         color: #fff;
