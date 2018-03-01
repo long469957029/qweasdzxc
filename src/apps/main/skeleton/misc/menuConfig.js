@@ -96,6 +96,12 @@ const menuConfig = [
             name: '我的消息',
             quickShowName: '我的<br/>消息',
           },
+          {
+            id: 307,
+            router: '/uc/cp',
+            name: '优惠券',
+            quickShowName: '优惠券',
+          },
         ],
       },
     ],
