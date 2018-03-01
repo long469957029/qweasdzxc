@@ -161,7 +161,7 @@
       .gr-bet-detail-value {
         color: $new-inverse-color;
         padding: 0 15px;
-        overflow-y:  auto;
+        overflow-y: auto;
         overflow-x: hidden;
       }
 
@@ -182,7 +182,7 @@
           //height: 80px;
           padding-top: 7px;
           line-height: 22px;
-          overflow-y:  auto;
+          overflow-y: auto;
           overflow-x: hidden;
         }
       }
@@ -199,9 +199,11 @@
     }
   }
 }
-.fc-gr-chase-detail{
+
+.fc-gr-chase-detail {
   background: url(~base/images/dailog-chase-detail.png) no-repeat;
 }
+
 .fc-cd-chase-detail-form {
   width: 760px;
   height: 540px;
@@ -211,7 +213,7 @@
     height: 151px;
     padding: 15px 0px 5px 15px;
     color: $def-black-color;
-    .betDetail-close{
+    .betDetail-close {
       margin-top: 10px;
       margin-right: 10px;
     }
@@ -227,12 +229,14 @@
       margin: 15px 0px;
       .table-bordered {
         border: 1px solid $def-gray-color;
+
         tr {
           width: 190px;
           height: 75px;
           td {
             border: 1px solid #cccccc;
             text-align: left;
+            border-image: none;
           }
         }
       }
@@ -346,7 +350,37 @@
     border: 0
   }
 }
-.btn-link-betRecord{
+
+.btn-link-betRecord {
   font-size: 12px;
   color: #666666;
+}
+
+.fc-cd-chase-no-table-header {
+  padding: 0 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.fc-cd-chase-no-table-body {
+  padding: 0 20px;
+}
+
+.fc-cd-chase-no-table {
+
+  th {
+    border-bottom: 0 !important;
+  }
+
+  tbody {
+    tr {
+      //border-bottom: 1px dotted #ccc;
+      background-image: linear-gradient(to right, $im-line-color 0%, $im-line-color 50%, transparent 50%);
+      background-size: 3px 1px;
+      background-repeat: repeat-x;
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+
 }
