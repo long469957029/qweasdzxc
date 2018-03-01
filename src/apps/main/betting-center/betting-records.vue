@@ -138,7 +138,7 @@
               name: 'chasePrizeMoney',
               width: '12%',
               formatter(val) {
-                return val === 0 ? '—' : _(val).fixedConvert2yuan()
+                return val === 0 ? '未中奖' : _(val).fixedConvert2yuan()
               },
             },
             {
