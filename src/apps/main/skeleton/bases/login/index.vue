@@ -23,7 +23,7 @@
                  :class="{'parsley-error': passwordError,'parsley-success':pwdSuccess}"
                  @blur="verifyPwd" @keyup.enter="userLogin"
                  placeholder="请输入您的密码" v-model="password"
-                 autocomplete="off" required></div>
+                 autocomplete="off"  required></div>
         <div class="login-input-item" :class="{'hidden':!showCodeItem}">
           <div class="login-verity-img sfa sfa-icon-verify">
           </div>

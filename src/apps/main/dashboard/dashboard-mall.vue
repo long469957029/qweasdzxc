@@ -13,7 +13,7 @@
               </span>
               {{item.name}}
             </div>
-            <div class="ticket-name" v-if="!_.isNull(item.statTicketId)">{{formatDesc(item).mainDesc}}</div>
+            <div class="ticket-name">{{formatDesc(item).mainDesc}}</div>
             <div class="desc">{{(item.couponType === 0 ? formatGiftDesc(item.couponDesc) : formatDesc(item).secondDesc)}}</div>
           </div>
           <div class="image-info">
@@ -40,7 +40,7 @@
         return text.length > 23 ? text.slice(0,23) + '...' : text
       },
       formatDesc(item){
-        return formatCoupon({
+        const info = formatCoupon({
             bigShowNum: item.bigShowNum,
             type: item.type,
             threholdAmount: item.threholdAmount,
@@ -49,6 +49,7 @@
             ticketId: item.statTicketId,
             gameType: item.gameType
           })
+        return info
       }
     },
     mounted() {
@@ -133,7 +134,7 @@
         font-size: 14px;
         color: $font-dark;
         line-height: 16px;
-        margin-bottom: 17px;
+        margin-bottom: 15px;
         .num{
           font-size: 20px;
           color: $new-main-deep-color;
