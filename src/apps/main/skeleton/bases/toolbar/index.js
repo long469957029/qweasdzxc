@@ -112,9 +112,13 @@ const ToolbarView = Base.ItemView.extend({
     self.getRecentChatStatXhr()
       .done(function (res) {
         if (res && res.result == 0) {
-          if (!_(res.root.records[0].newMsgNum).isNull() && res.root.records[0].newMsgNum != 0) {
-            self.$('.js-news-remind').removeClass('hidden');
-            self.$('.js-news-remind').html(res.root.records[0].newMsgNum);
+          if (res.root.records.length>0){
+            if (!_(res.root.records[0].newMsgNum).isNull() && res.root.records[0].newMsgNum != 0) {
+              self.$('.js-news-remind').removeClass('hidden');
+              self.$('.js-news-remind').html(res.root.records[0].newMsgNum);
+            }else {
+              self.$('.js-news-remind').addClass('hidden');
+            }
           }else {
             self.$('.js-news-remind').addClass('hidden');
           }
