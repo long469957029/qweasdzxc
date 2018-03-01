@@ -67,7 +67,7 @@ const FeedBackView = Base.ItemView.extend({
 
   checkFormHandler() {
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-      Global.ui.notification.show('试玩会员无法进行建议反馈，请先注册正式游戏账号',{bStyle:'box-shadow: 0px 0px 6px 3px #ccc'})
+      Global.ui.notification.show('试玩会员无法进行建议反馈，请先注册正式游戏账号',{bStyle:'box-shadow: -4px 2px 24px 0px rgba(0, 0, 0, 0.1)'})
       return false
     }
     const self = this
