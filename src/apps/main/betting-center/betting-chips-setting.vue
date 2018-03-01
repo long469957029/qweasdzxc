@@ -10,7 +10,7 @@
         <span class="setting-title setting-title-setting">筹码设置</span>
         <div class="setting-group">
           <select class="chip-setting" v-for="i in 5" v-model="chips[i - 1]">
-            <option v-for="n in 10" :value="n * Math.pow(10, i - 1)">{{n * Math.pow(10, i - 1)}}</option>
+            <option v-for="n in 9" :value="n * Math.pow(10, i - 1)">{{n * Math.pow(10, i - 1)}}</option>
           </select>
         </div>
         <button class="btn btn-cool save-btn" @click="fadeSetting">
@@ -34,7 +34,7 @@
       chips: Array,
     },
 
-    data: function () {
+    data() {
       return {
         fChips: [5, 10, 200, 5000, 10000],
         show: false

@@ -9,7 +9,7 @@
                    :url="bettingOps.url" :reqData="bettingOps.data" :abort="false" :data-prop="bettingOps.dataProp"
                    :emptyTip="bettingOps.emptyTip"
                    ref="bettingGrid">
-        <betting-records-row slot="row" slot-scope="{row, index}" :key="index" :row="row"></betting-records-row>
+        <betting-records-row slot="row" slot-scope="{row, index}" :key="index" :row="row" @update="update"></betting-records-row>
       </slot-static-grid>
       <static-grid v-show="type === 'chase'" :table-class="tableClass" :col-model="chaseOps.colModel" :height="height"
                    :url="chaseOps.url" :reqData="chaseOps.data" :abort="false" :data-prop="chaseOps.dataProp"
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-  import {bettingCancelApi} from 'api/betting'
   import BettingRecordsRow from './betting-records-row'
 
   export default {
@@ -201,16 +200,6 @@
         this.update()
       },
 
-      bettingCancel(betId) {
-        bettingCancelApi({betId}, ({data}) => {
-          if (data && data.result === 0) {
-            this.update()
-            Global.ui.notification.show('操作成功。')
-          } else {
-            Global.ui.notification.show('操作失败。')
-          }
-        })
-      }
     },
     mounted() {
       Vue.$global.bus.$on('cancel-bet', () => {
