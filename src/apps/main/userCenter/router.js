@@ -8,7 +8,7 @@ const PersonalManageView = () => import(/* webpackChunkName: "user-center" */ '.
 const CardManageView = () => import(/* webpackChunkName: "user-center" */ './views/cardManage')
 const PriceDetailsView = () => import(/* webpackChunkName: "user-center" */ './views/priceDetails')
 const AccountSafeViewInfo = () => import(/* webpackChunkName: "user-center" */ './views/accountSafe')
-const MyPointsCardView = () => import(/* webpackChunkName: "user-center" */ './my-points-card')
+const MyPointsCardView = () => import(/* webpackChunkName: "user-center" */ './myPointsCard')
 
 // 'uc/pm': 'personalManage',
 // 'uc/cm': 'cardManage', // 银行卡管理

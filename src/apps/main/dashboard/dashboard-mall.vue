@@ -134,7 +134,7 @@
         font-size: 14px;
         color: $font-dark;
         line-height: 16px;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         .num{
           font-size: 20px;
           color: $new-main-deep-color;
