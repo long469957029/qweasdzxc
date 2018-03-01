@@ -81,7 +81,10 @@ const ToolbarView = Base.ItemView.extend({
       // 获取定时更新数据列表
       clearInterval(timmer);
       self.timerHandler()
-    },60000);
+    },600000);
+    Vue.$global.bus.$on('message-update', () => {
+      this.messageUpate()
+    })
   },
 
   timerHandler() {
@@ -100,13 +103,29 @@ const ToolbarView = Base.ItemView.extend({
           self.$('.js-coupon-remind').addClass('hidden');
         }
       });
+    this.messageUpate()
+  },
+
+  messageUpate() {
+    var self = this
     // 获取未读消息
     self.getRecentChatStatXhr()
       .done(function (res) {
         if (res && res.result == 0) {
-          if (!_(res.root.records[0].newMsgNum).isNull() && res.root.records[0].newMsgNum != 0) {
-            self.$('.js-news-remind').removeClass('hidden');
-            self.$('.js-news-remind').html(res.root.records[0].newMsgNum);
+          if (res.root.records.length>0){
+            if (!_(res.root.records[0].newMsgNum).isNull() && res.root.records[0].newMsgNum != 0) {
+              self.$('.js-news-remind').removeClass('hidden');
+              var newMsgNum = '';
+              if (res.root.records[0].newMsgNum>99){
+                newMsgNum = 99;
+              }else {
+                newMsgNum = res.root.records[0].newMsgNum;
+              }
+              self.$('.js-news-remind').html(newMsgNum);
+              // self.$('.js-news-remind').html(res.root.records[0].newMsgNum);
+            }else {
+              self.$('.js-news-remind').addClass('hidden');
+            }
           }else {
             self.$('.js-news-remind').addClass('hidden');
           }

@@ -149,17 +149,18 @@
     margin-top: 4px;
     .gr-bet-detail-item {
       height: 36px;
-      line-height: 10px;
+      line-height: 35px;
       border-bottom: 1px dotted #cccccc;
 
       .gr-bet-detail-name {
         width: 80px;
         color: $def-black-color;
         text-align: right;
+        vertical-align: top;
       }
       .gr-bet-detail-value {
         color: $new-inverse-color;
-        padding: 13px 15px;
+        padding: 0 15px;
         overflow-y:  auto;
         overflow-x: hidden;
       }
@@ -169,7 +170,7 @@
       height: 75px !important;
       .gr-bet-detail-name {
         float: left;
-        margin-top: 13px;
+        //margin-top: 13px;
       }
       .gr-bet-content-container {
         width: 382px;

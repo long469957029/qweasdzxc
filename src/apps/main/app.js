@@ -220,6 +220,7 @@ const _bindImDialogHandler = () => {
     $dialogContainer.html(messageView.render().el)
 
     $imDialog.on('hidden.modal', function () {
+      Vue.$global.bus.$emit('message-update')
       $(this).remove()
       messageView.destroy()
     })
