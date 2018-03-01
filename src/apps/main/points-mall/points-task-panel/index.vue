@@ -48,7 +48,7 @@
             </template>
           </span>
           <span slot="icon" class="sfa" :class="`sfa-pt-${task.icon}`"></span>
-          <button slot="btn" class="receive-btn btn"
+          <button slot="btn" class="receive-btn btn week"
                   :class="{'received-btn': task.receiveState === ReceiveState.RECEIVED}" @click="receive($event, task)"
                   :disabled="task.receiveState === ReceiveState.RECEIVED || task.receiveState === ReceiveState.CANT_RECEIVE">
             {{task.receiveState === ReceiveState.RECEIVED ? '已领取' : '立即领取'}}
@@ -277,6 +277,8 @@
     border: 1px solid #808da6;
     background-color: #808da6;
     border-radius: 15px;
+
+
     &[disabled] {
       background-color: #ced7ea;
       border: 1px solid #ced7ea;
@@ -285,11 +287,19 @@
       cursor: not-allowed;
       opacity: 1;
     }
+    &.week {
+      border: 1px solid #eedcc7;
+      background-color: #eedcc7;
+    }
 
     &.received-btn {
       background-color: #b8b8ba;
       border-radius: 15px;
       cursor: not-allowed;
+      &.week {
+        border: 1px solid #d9a262;
+        background-color: #d9a262;
+      }
     }
   }
   .status-cell {

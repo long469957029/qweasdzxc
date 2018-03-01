@@ -31,6 +31,8 @@
 </template>
 
 <script>
+  import {bettingCancelApi} from 'api/betting'
+
   import {formatOpenNum, formatOptionals} from 'build'
 
   export default {
@@ -43,6 +45,19 @@
     props: {
       row: {
         required: true
+      }
+    },
+
+    methods: {
+      bettingCancel(betId) {
+        bettingCancelApi({betId}, ({data}) => {
+          if (data && data.result === 0) {
+            this.$emit('update')
+            Global.ui.notification.show('操作成功。')
+          } else {
+            Global.ui.notification.show('操作失败。')
+          }
+        })
       }
     },
 
