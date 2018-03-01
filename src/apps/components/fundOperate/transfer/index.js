@@ -84,7 +84,7 @@ const TransferView = Base.ItemView.extend({
     // 初始化面板数据
     this.initTransferData()
     // 生成充值页广告
-    this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
+    // this.$('.jc-rc-activity').html(rechargeService.getFunActivity(this.options.ac))
     // 初始化内容滑动效果数据
     this.conInnerConWidth = 740
     this.conSize = this.$('.jc-fc-rc-view').size()
