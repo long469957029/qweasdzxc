@@ -5,11 +5,12 @@
       <div class="db-mall-title"></div>
     </div>
     <div class="js-db-mall-content">
-      <router-link v-for="item in mallList" :to="`#/${item.couponType === 0 ? 'points/gifts' : 'points'}`" >
-        <div class="dashboard-mall-content clearfix" >
+        <router-link :class="`dashboard-mall-content clearfix`" v-for="(item, index) in mallList" :to="`/${item.couponType === 0 ? 'points/gifts' : 'points'}`" tag="div" :key="index">
           <div class="info">
             <div class="title">
-              <span class="num" v-if="!_.isNull(item.bigShowNum)">{{(item.couponBonusType === 1 ? `${_(item.bigShowNum).convert2yuan()}元` : `${_(item.bigShowNum).div(100)}%`)}}</span>
+              <span class="num" v-if="!_.isNull(item.bigShowNum)" v-html="(item.couponBonusType === 1 ? `${_(item.bigShowNum).convert2yuan()}<span class='font-sm'>元</span>`
+                    : `${_(item.bigShowNum).div(100)}<span class='font-sm'>%</span>`)">
+              </span>
               {{item.name}}
             </div>
             <div class="ticket-name" v-if="!_.isNull(item.ticketName)">{{item.ticketName}}</div>
@@ -19,8 +20,7 @@
             <img :src="item.itemPicUrl" v-if="item.couponType === 0"/>
             <span :class="`coupont-img coupont-${item.couponType}`" v-else></span>
           </div>
-        </div>
-      </router-link>
+        </router-link>
     </div>
   </div>
 </template>
@@ -83,6 +83,7 @@
       margin-right: 10px;
       height: 134px;
       border-bottom: 1px solid $sec-line-color;
+      cursor: pointer;
 
       &:last-child {
         border-bottom: none;
@@ -121,6 +122,7 @@
         font-size: 14px;
         color: $font-dark;
         line-height: 16px;
+        margin-bottom: 17px;
         .num{
           font-size: 20px;
           color: $new-main-deep-color;
@@ -134,13 +136,11 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         color: $new-inverse-color;
-        margin-top: 17px;
       }
       .desc {
         font-size: 12px;
         width: 100%;
         color: $new-inverse-color;
-        margin-top: 8px;
       }
 
       .badge {
