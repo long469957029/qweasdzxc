@@ -236,7 +236,7 @@
           td {
             border: 1px solid #cccccc;
             text-align: left;
-            border-image: none;
+            background-image: none;
           }
         }
       }
@@ -369,6 +369,7 @@
 
   th {
     border-bottom: 0 !important;
+    background-color: #fff !important;
   }
 
   tbody {
@@ -377,10 +378,9 @@
       background-image: linear-gradient(to right, $im-line-color 0%, $im-line-color 50%, transparent 50%);
       background-size: 3px 1px;
       background-repeat: repeat-x;
-      &:last-child {
-        border-bottom: 0;
+      &:first-child {
+        background-image: none;
       }
     }
   }
-
 }
