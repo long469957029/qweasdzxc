@@ -37,18 +37,6 @@
         polling: true
       }
     },
-    watch:{
-      getLoginStatus(){
-        if(!this.getLoginStatus){
-          this.polling = false
-        }
-      }
-    },
-    computed:{
-      ...mapGetters([
-        'getLoginStatus'
-      ])
-    },
     methods:{
       init(){
         this.$nextTick(() => {
@@ -109,7 +97,10 @@
     },
     mounted(){
       this.getApi()
-    }
+    },
+    beforeDestroy(){
+      this.polling = false
+    },
   }
 </script>
 
