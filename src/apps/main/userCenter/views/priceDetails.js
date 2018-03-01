@@ -37,7 +37,7 @@ const TrackRecordsView = TabView.extend({
           template: '<div class="js-uc-happyContainer"><div class="js-uc-happyNotice"></div><div class="js-uc-happyGrid portlet-filter uc-prize"></div></div>',
         },
         {
-          label: '江苏快三',
+          label: '江苏快3',
           name: 'QSan',
           id: 'jsUCQSanTab',
           template: '<div class="js-uc-QSanContainer"><div class="js-uc-QSanNotice"></div><div class="js-uc-QSanGrid portlet-filter uc-prize"></div></div>',

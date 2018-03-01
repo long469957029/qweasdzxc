@@ -81,6 +81,21 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
+  .detail-popover {
+    max-width: 350px;
+    max-height: 90px;
+    overflow-y: auto;
+    padding: 4px 0 4px 2px;
+
+    .title {
+      color: #14b1bb;
+      float: left;
+      margin-right: 5px;
+    }
+    .content {
+      word-wrap: break-word;
+    }
+  }
 </style>

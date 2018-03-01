@@ -178,6 +178,12 @@
         }
       }
     },
+    watch: {
+      ticketId() {
+        this.bettingOps.data.ticketId = this.ticketId
+        this.chaseOps.data.ticketId = this.ticketId
+      }
+    },
     methods: {
       /**
        * 更新当前tab
