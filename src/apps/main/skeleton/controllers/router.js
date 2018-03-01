@@ -38,6 +38,20 @@ export default {
         })
       },
 
+      beforeRouteUpdate: (to, from, next) => {
+        if (to.path === from.path) {
+          viewPromise().then((view) => {
+            let _params = _.isFunction(params) ? params() : params
+            if (config.parentRouter) {
+              this.changeSubReginView(view.default ? new view.default(_params) : new view(_params), config)
+            } else {
+              this.changeMainReginView(view.default ? new view.default(_params) : new view(_params), config)
+            }
+          })
+        }
+        next()
+      },
+
       beforeRouteLeave(to, from, next) {
         this.prevRouter = to.path
         next()
