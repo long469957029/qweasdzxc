@@ -421,7 +421,10 @@ function getValidateFunc(length, options) {
 
       // 长度验证
       if (numbers.length !== length) {
-        result.errorNumbers.push(number)
+        if (number) {
+          result.errorNumbers.push(number)
+        }
+
         return
       }
 

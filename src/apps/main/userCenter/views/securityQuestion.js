@@ -290,7 +290,7 @@ const SecurityQuestionView = Base.ItemView.extend({
 
             const errorData = {
               el: this.$('.js-uc-pl-squ1-error'),
-              errorText: (res.root===null)?'验证不通过，请1个小时后再验证':`验证不通过，剩余${res.root+1}次机会`,
+              errorText: (res.root>0)?`验证不通过，剩余${res.root}次机会`:'验证不通过，请1个小时后再验证',
             }
             _.formatError(errorData)
           }

@@ -49,10 +49,10 @@
               </div>
             </div>
             <div class="task-button">
-              <button class="points-btn btn btn-orange" @click="lottery(0)" :disabled="pushing">
+              <button class="points-btn btn btn-orange" @click="isLogin ? lottery(0) : login()" :disabled="pushing">
                 {{currentIntegralRob | convert2yuan}} 积分夺宝
               </button>
-              <button class="currency-btn btn" @click="lottery(1)" :disabled="pushing">
+              <button class="currency-btn btn" @click="isLogin ? lottery(1) : login()" :disabled="pushing">
                 {{currentCashRob | convert2yuan}}元 现金夺宝
               </button>
             </div>
@@ -136,7 +136,7 @@
           <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 3">
             积分{{chest.integral | convert2yuan}}
           </div>
-          <button class="lucky-exchange-btn btn" @click="luckChest(chest)" :disabled="pushing">
+          <button class="lucky-exchange-btn btn" @click="isLogin ? luckChest(chest) : login()" :disabled="pushing">
             <span class="sfa sfa-pt-lucky-star-points"></span>
             <span class="lucky-exchange-title">{{chest.lucky}} 幸运值{{chest.rate === 10000 ? '兑换' : '碰运气'}}</span>
           </button>
@@ -232,7 +232,7 @@
 
 <script>
   import {getTaskListApi, lotteryApi, luckyApi, addAddressToGiftApi} from 'api/points'
-  import {formatCoupon} from 'build'
+  import {formatCoupon, checkLogin} from 'build'
   import PointsAddress from '../points-address'
 
   const awardType = [
@@ -256,6 +256,8 @@
 
   export default {
     name: 'points-lottery',
+
+    mixins: [checkLogin],
 
     components: {
       PointsAddress
@@ -507,7 +509,7 @@
       },
       lottery(type) {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{bStyle:'box-shadow: 0px 0px 6px 3px #ccc'})
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
           return false
         }
         this.pushing = true
@@ -577,7 +579,7 @@
 
       luckChest(chestInfo) {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{bStyle:'box-shadow: 0px 0px 6px 3px #ccc'})
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
           return false
         }
         this.pushing = true
