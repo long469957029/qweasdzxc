@@ -129,37 +129,25 @@ const SyncModule = Base.Module.extend({
       currentXhr.fail(function (xhr, resType, type) {
         if (resType === 'error') {
           if (xhr.status == 401) {
-            window.store.commit(types.USER_CLEAR)
-            // if (!window.store.getters.loginDialogStatus) {
-            //   Global.ui.notification.show('您的账户已登出,请重新登录！', {
-            //     event: function () {
-            //       window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-            //     }
-            //   });
-            // }
+            if (!window.store.getters.loginDialogStatus) {
+              Global.ui.notification.show('您的账户已登出,请重新登录！', {
+                event: function () {
+                  window.store.commit(types.USER_LOGOUT_SUCCESS)
+                }
+              });
+            }
           }
         }
       });
       currentXhr.success(function (xhr, resType, type) {
         if (xhr && xhr.result == -1) {
-          // Global.cookieCache.clear('token')
-          // Global.cookieCache.clear('loginState')
-          // Global.cookieCache.clear('security')
-          // window.Global.m.publish('acct:loginOut')
-          // // 关闭oauth轮询监听
-          // window.Global.m.oauth.stop()
-          window.store.commit(types.USER_CLEAR)
           if (!window.store.getters.loginDialogStatus) {
             Global.ui.notification.show('您的账户已登出,请重新登录！', {
               event: function () {
-                window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+                window.store.commit(types.USER_LOGOUT_SUCCESS)
               }
             });
           }
-          // setTimeout(function(){
-          //   // window.location.href = 'login.html';
-          //   window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-          // },3000);
         }
       });
       if (!this.login) {
@@ -293,17 +281,28 @@ const SyncModule = Base.Module.extend({
           if (!window.store.getters.loginDialogStatus) {
             Global.ui.notification.show('您的账户已登出,请重新登录！', {
               event: function () {
-                window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+                window.store.commit(types.USER_LOGOUT_SUCCESS)
               }
             });
           }
-          window.store.commit(types.USER_CLEAR)
+        }
+      });
+      promise.then(function (data) {
+        if (data && data.data && data.data.result == -1) {
+          if (!window.store.getters.loginDialogStatus) {
+            Global.ui.notification.show('您的账户已登出,请重新登录！', {
+              event: function () {
+                window.store.commit(types.USER_LOGOUT_SUCCESS)
+              }
+            });
+          }
         }
       });
 
       if (!this.login) {
         cancel()
       }
+
 
       return promise
     }

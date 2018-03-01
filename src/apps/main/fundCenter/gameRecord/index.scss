@@ -176,7 +176,8 @@
         width: 382px;
         word-wrap: break-word;
         height: 73px;
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
         .gr-bet-detail-value {
           width: 345px;
           //height: 80px;
