@@ -158,7 +158,7 @@
 
         this.$_statisticsLottery()
 
-        const hasError = this.repeatNumbers || this.errorNumbers
+        const hasError = this.repeatNumbers.length || this.errorNumbers.length
 
         this.showCheckModal = hasError
 
