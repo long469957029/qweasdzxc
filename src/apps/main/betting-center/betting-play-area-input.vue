@@ -48,7 +48,7 @@
               <div class="check-content">{{repeatNumbers.join(',')}}</div>
             </li>
             <li class="check-cell" v-if="errorNumbers.length">
-              <div class="check-title">以下号码错误，已进行自动去重</div>
+              <div class="check-title">以下号码错误，已进行自动过滤</div>
               <div class="check-content">{{errorNumbers.join(',')}}</div>
             </li>
           </ul>

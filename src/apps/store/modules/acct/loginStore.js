@@ -70,6 +70,9 @@ const getters = {
   getLoginStatus: (state) => {
     return state.userId > 0
   },
+  isLogin: (state) => {
+    return state.userId > 0
+  },
   getUserInfo: (state) => {
     return state
   },
