@@ -99,6 +99,10 @@
       },
 
       add() {
+        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
+          return false
+        }
         if (this.addressList.length > this.maxCount) {
           Global.ui.notification.show(`<div class="m-bottom-lg">地址已经达到最大数量!</div>`, {
             type: 'success',
