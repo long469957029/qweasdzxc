@@ -334,7 +334,7 @@ const SyncModule = Base.Module.extend({
       if (!window.store.getters.loginDialogStatus && !authorizeChecking ) {
         Global.memoryCache.set('authorizeChecking', true)
         Global.ui.notification.show('您的账户已登出,请重新登录！', {
-          bStyle:'box-shadow: 0px 0px 6px 3px #ccc',
+          modalDialogShadow:'modal-dialog-shadow',
           event: function () {
             window.store.commit(types.USER_LOGOUT_SUCCESS,{result:0})
             Global.memoryCache.set('authorizeChecking', false)
