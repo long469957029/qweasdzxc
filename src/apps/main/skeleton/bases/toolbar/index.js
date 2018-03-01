@@ -115,7 +115,14 @@ const ToolbarView = Base.ItemView.extend({
           if (res.root.records.length>0){
             if (!_(res.root.records[0].newMsgNum).isNull() && res.root.records[0].newMsgNum != 0) {
               self.$('.js-news-remind').removeClass('hidden');
-              self.$('.js-news-remind').html(res.root.records[0].newMsgNum);
+              var newMsgNum = '';
+              if (res.root.records[0].newMsgNum>99){
+                newMsgNum = 99;
+              }else {
+                newMsgNum = res.root.records[0].newMsgNum;
+              }
+              self.$('.js-news-remind').html(newMsgNum);
+              // self.$('.js-news-remind').html(res.root.records[0].newMsgNum);
             }else {
               self.$('.js-news-remind').addClass('hidden');
             }

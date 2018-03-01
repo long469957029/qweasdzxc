@@ -1,7 +1,7 @@
 <template>
-  <status-cell class="slide-show" :status="bannerLoading" :has-data="slides.length" loading-tip="" @mouseover="clearInv"
-               @mouseout="runInv">
-    <div class="slide-img">
+  <status-cell class="slide-show" :status="bannerLoading" :has-data="slides.length" loading-tip="">
+    <div class="slide-img" @mouseover="clearInv"
+         @mouseout="runInv">
       <a :href="slides[nowIndex].advUrl">
         <transition name="slide-trans">
           <img v-if="isShow" :src="locUrl + slides[nowIndex].picUrl">
