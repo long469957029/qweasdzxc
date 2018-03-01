@@ -28,6 +28,9 @@ const urlList = [
   },
   {
     url:'/info/game/userInfo.json'
+  },
+  {
+    url:'/info/game/userInfo.json'
   }
 ]
 module.exports = {

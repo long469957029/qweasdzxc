@@ -44,6 +44,7 @@ const AccountSafeView = Base.ItemView.extend({
     this.$settingMailNum = this.$('.js-setting-mail-num')
     this.$loginPwd.html(new LoginPassWord().on('render:true', () => {
       self.$('.js-setting-info').removeClass('active')
+      self.$('#setting-login-pwd').collapse('hide')
       self.onRender()
     }).render().el)
     const bindInfo = Global.cookieCache.get('userBindInfo')
@@ -104,9 +105,11 @@ const AccountSafeView = Base.ItemView.extend({
             }
             self.$fundPwd.html(new FundPassWord({hasFundPassword: data.hasFundPassword}).on('render:true', () => {
               self.$('.js-setting-info').removeClass('active')
+              self.$('#setting-fund-pwd').collapse('hide')
               self.render()
             }).render().el)
             self.$questionPwd.html(new QuestionPwd({hasSecurityQuestion: data.hasSecurityQuestion}).on('render:true', () => {
+              self.$('#setting-question-pwd').collapse('hide')
               self.render()
             }).render().el)
             self.$phonePwd.html(new PhoneBind({
@@ -117,6 +120,7 @@ const AccountSafeView = Base.ItemView.extend({
                 bindInfo.phoneStatus = 1
                 Global.cookieCache.set('userBindInfo', bindInfo)
               }
+              self.$('#setting-phone-pwd').collapse('hide')
               self.render()
             }).render().el)
             self.$mailPwd.html(new EmailBind({
@@ -127,6 +131,7 @@ const AccountSafeView = Base.ItemView.extend({
                 bindInfo.mailStatus = 1
                 Global.cookieCache.set('userBindInfo', bindInfo)
               }
+              self.$('#setting-mail-pwd').collapse('hide')
               self.render()
             }).render().el)
           }
@@ -152,7 +157,7 @@ const AccountSafeView = Base.ItemView.extend({
 
   settingBtnHandler(e) {
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-      Global.ui.notification.show('试玩会员无法进行安全设置操作，请先注册正式游戏账号',{bStyle:'box-shadow: 0px 0px 6px 3px #ccc'})
+      Global.ui.notification.show('试玩会员无法进行安全设置，请先注册正式游戏账号',{bStyle:'box-shadow: 0px 0px 6px 3px #ccc'})
       return false
     }
     const $target = $(e.currentTarget)

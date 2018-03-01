@@ -15,7 +15,7 @@
                   <!--leave-active-class="animated-general fadeOutRightBig"-->
       <!--&gt;-->
         <div class="header-not-login pull-right" v-if="!loginStatus" key="login">
-          <button type="button" class="header-login " @click="showFreeTrial">免费试玩</button>
+          <button type="button" class="header-game " @click="showFreeTrial">免费试玩</button>
           <button type="button" class="header-login " @click="showLogin">登录</button>
         </div>
         <div class="header-has-logined  pull-right" key="logined"
@@ -379,26 +379,63 @@
         color: #fff;
       }
     }
+    .header-game {
+      display: inline-block;
+      float: left;
+      width: 74px;
+      height: 27px;
+      line-height: 25px;
+      margin: 6px 0px;
+      border: 0;
+      font-size: 13px;
+      text-align: center;
+      vertical-align: middle;
+      color: rgba(255, 255, 255, 0.5);
+      background: transparent;
+      &.active, &:hover {
+        color: #fff;
+        text-decoration: underline;
+      }
+    }
     .header-login {
       display: inline-block;
       float: left;
-      width: 90px;
+      width: 74px;
       height: 27px;
       line-height: 25px;
-      margin: 6px 20px;
+      margin: 6px 28px 6px 22px;
       border: 0;
       border-radius: 3px;
       font-size: 13px;
       color: #fff;
       text-align: center;
       vertical-align: middle;
-      color: rgba(255, 255, 255, 0.5);
-      background: transparent;
+      background-color: rgba(0, 0, 0, 0.2);
       &.active, &:hover {
-        background: #237477;
+        background-color: rgba(0, 0, 0, 0.3);
         color: #fff;
       }
     }
+    /*.header-login {*/
+      /*display: inline-block;*/
+      /*float: left;*/
+      /*width: 74px;*/
+      /*height: 27px;*/
+      /*line-height: 25px;*/
+      /*margin: 6px 28px;*/
+      /*border: 0;*/
+      /*border-radius: 3px;*/
+      /*font-size: 13px;*/
+      /*color: #fff;*/
+      /*text-align: center;*/
+      /*vertical-align: middle;*/
+      /*color: rgba(255, 255, 255, 0.5);*/
+      /*background: transparent;*/
+      /*&.active, &:hover {*/
+        /*background: #237477;*/
+        /*color: #fff;*/
+      /*}*/
+    /*}*/
 
     .header-customer-entry {
       padding: 0 12px;

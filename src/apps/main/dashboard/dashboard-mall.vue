@@ -5,19 +5,22 @@
       <div class="db-mall-title"></div>
     </div>
     <div class="js-db-mall-content">
-      <div class="dashboard-mall-content clearfix" v-for="item in mallList">
-        <div class="info">
-          <div class="title">
-            {{item.name}}
+        <router-link :class="`dashboard-mall-content clearfix`" v-for="(item, index) in mallList" :to="`/${item.couponType === 0 ? 'points/gifts' : 'points'}`" tag="div" :key="index">
+          <div class="info">
+            <div class="title">
+              <span class="num" v-if="!_.isNull(item.bigShowNum)" v-html="(item.couponBonusType === 1 ? `${_(item.bigShowNum).convert2yuan()}<span class='font-sm'>元</span>`
+                    : `${_(item.bigShowNum).div(100)}<span class='font-sm'>%</span>`)">
+              </span>
+              {{item.name}}
+            </div>
+            <div class="ticket-name" v-if="!_.isNull(item.ticketName)">{{item.ticketName}}</div>
+            <div class="desc">{{formatDesc(item.couponDesc)}}</div>
           </div>
-          <div class="desc">{{item.couponDesc}}</div>
-          <a :href="`#/${item.couponType === 0 ? 'points/gifts' : 'points'}`" class="btn-mall-exchange">立即兑换</a>
-        </div>
-        <div class="image-info">
-          <img :src="item.itemPicUrl" v-if="item.couponType === 0"/>
-          <span :class="`coupont-${item.couponType}`" v-else></span>
-        </div>
-      </div>
+          <div class="image-info">
+            <img :src="item.itemPicUrl" v-if="item.couponType === 0"/>
+            <span :class="`coupont-img coupont-${item.couponType}`" v-else></span>
+          </div>
+        </router-link>
     </div>
   </div>
 </template>
@@ -32,7 +35,11 @@
         mallList: [],
       }
     },
-
+    methods:{
+      formatDesc(text){
+        return text.length > 23 ? text.slice(0,23) + '...' : text
+      }
+    },
     mounted() {
       getMallHotListApi(
         ({data}) => {
@@ -72,26 +79,38 @@
     }
 
     .dashboard-mall-content {
-      margin: 0px 20px;
-      padding: 21px 0px 21px 10px;
+      margin-left: 21px;
+      margin-right: 10px;
+      height: 134px;
       border-bottom: 1px solid $sec-line-color;
+      cursor: pointer;
 
-      &:nth-child(3) {
+      &:last-child {
         border-bottom: none;
       }
       .info{
+        margin-top: 34px;
         float: left;
-        width: 60%;
+        width: 160px;
       }
       .image-info{
-        width: 40%;
+        width: 96px;
+        height: 96px;
         float: right;
+        margin-top: 19px;
+        position: relative;
+        .coupont-img{
+          width: 111px;
+          height: 83px;
+          position: absolute;
+          left: -7.5px;
+          top: 6.5px;
+        }
         @for $i from 1 through 6 {
           .coupont-#{$i}{
             display: block;
-            background: url("./misc/coupon-#{$i}.png");
-            width: 111px;
-            height: 83px;
+            background: url("./misc/coupon-#{$i}.png") no-repeat;
+
           }
         }
       }
@@ -103,16 +122,25 @@
         font-size: 14px;
         color: $font-dark;
         line-height: 16px;
+        margin-bottom: 17px;
+        .num{
+          font-size: 20px;
+          color: $new-main-deep-color;
+          margin-right: 5px;
+        }
       }
-
-      .desc {
+      .ticket-name{
         font-size: 12px;
         width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         color: $new-inverse-color;
-        line-height: 30px;
+      }
+      .desc {
+        font-size: 12px;
+        width: 100%;
+        color: $new-inverse-color;
       }
 
       .badge {

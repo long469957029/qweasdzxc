@@ -126,40 +126,16 @@ const SyncModule = Base.Module.extend({
       }
 
       // 因应二号改版偷跑 先忽略验证接口的错误
-      currentXhr.fail(function (xhr, resType, type) {
+      currentXhr.fail((xhr, resType, type) => {
         if (resType === 'error') {
           if (xhr.status == 401) {
-            window.store.commit(types.USER_CLEAR)
-            // if (!window.store.getters.loginDialogStatus) {
-            //   Global.ui.notification.show('您的账户已登出,请重新登录！', {
-            //     event: function () {
-            //       window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-            //     }
-            //   });
-            // }
+            this.reLogin(url)
           }
         }
       });
-      currentXhr.success(function (xhr, resType, type) {
+      currentXhr.success((xhr, resType, type) => {
         if (xhr && xhr.result == -1) {
-          // Global.cookieCache.clear('token')
-          // Global.cookieCache.clear('loginState')
-          // Global.cookieCache.clear('security')
-          // window.Global.m.publish('acct:loginOut')
-          // // 关闭oauth轮询监听
-          // window.Global.m.oauth.stop()
-          window.store.commit(types.USER_CLEAR)
-          if (!window.store.getters.loginDialogStatus) {
-            Global.ui.notification.show('您的账户已登出,请重新登录！', {
-              event: function () {
-                window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-              }
-            });
-          }
-          // setTimeout(function(){
-          //   // window.location.href = 'login.html';
-          //   window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-          // },3000);
+          this.reLogin(url)
         }
       });
       if (!this.login) {
@@ -290,20 +266,19 @@ const SyncModule = Base.Module.extend({
       // }
       promise.catch(({message}) => {
         if (message.indexOf('401') > -1) {
-          if (!window.store.getters.loginDialogStatus) {
-            Global.ui.notification.show('您的账户已登出,请重新登录！', {
-              event: function () {
-                window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-              }
-            });
-          }
-          window.store.commit(types.USER_CLEAR)
+          this.reLogin(url)
+        }
+      });
+      promise.then((data) => {
+        if (data && data.data && data.data.result == -1) {
+          this.reLogin(url)
         }
       });
 
       if (!this.login) {
         cancel()
       }
+
 
       return promise
     }
@@ -350,6 +325,24 @@ const SyncModule = Base.Module.extend({
         ajaxOptions.url = host + ajaxOptions.url
       }
     }
+  },
+  reLogin(ajaxOption) {
+    window.store.commit(types.USER_CLEAR)
+    if(ajaxOption && ajaxOption.url && !(ajaxOption.url.indexOf('acct/login/doauth.json')>=0)){
+      //if 不是 oauth 接口，那么
+      let authorizeChecking = Global.memoryCache.get('authorizeChecking')
+      if (!window.store.getters.loginDialogStatus && !authorizeChecking ) {
+        Global.memoryCache.set('authorizeChecking', true)
+        Global.ui.notification.show('您的账户已登出,请重新登录！', {
+          event: function () {
+            window.store.commit(types.USER_LOGOUT_SUCCESS,{result:0})
+            Global.memoryCache.set('authorizeChecking', false)
+            window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+          }
+        });
+      }
+    }
+
   }
 })
 

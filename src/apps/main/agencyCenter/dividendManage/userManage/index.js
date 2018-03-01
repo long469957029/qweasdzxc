@@ -136,6 +136,9 @@ const ReportManageView = SearchGrid.extend({
         }
       })
     SearchGrid.prototype.onRender.apply(this, arguments)
+    Vue.$global.bus.$on('sign:update',() => {
+      this._getGridXhr()
+    })
   },
 
   renderGrid(gridData) {
