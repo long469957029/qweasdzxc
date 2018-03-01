@@ -1,5 +1,5 @@
 <template>
-  <div class="width-100 bc-play-main">
+  <div class="width-100 bc-play-main" ref="openingArea">
     <div class="relative">
       <div class="sfa sfa-mmc-outer-border"></div>
       <div class="opening-panel-inner" :class="!selectStatus ? 'sfa-mmc-content-opening' : 'sfa-mmc-content-top'">
@@ -275,17 +275,17 @@
     <div class="sfa-mmc-content-bottom">
       <button class="bottom-lg-btn sfa sfa-mmc-start-lg-btn no-border"
               v-if="selectStatus" @click="lotteryTotalConfirm"
-              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending || simulationOpen">
       </button>
       <button class="bottom-lg-btn sfa sfa-mmc-stopping-btn no-border" v-else-if="stopping"
-              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending || simulationOpen">
       </button>
       <button class="bottom-lg-btn sfa sfa-mmc-stop-btn no-border"
               v-else-if="opening" @click="lotteryStop"
-              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending || simulationOpen">
       </button>
       <button class="bottom-lg-btn sfa sfa-mmc-again-btn no-border" v-else @click="lotteryConfirmAgain"
-              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending || simulationOpen">
       </button>
     </div>
 
@@ -486,7 +486,16 @@
       opening: {
         handler(current) {
           if (current) {
-            this.mainHeight = this.$refs.main.offsetHeight
+
+            if (!this.mainHeight) {
+              this.mainHeight = this.$refs.main.offsetHeight
+            }
+
+
+            Velocity(document.body, 'scroll', {
+              offset: this.$refs.openingArea.getBoundingClientRect().top - document.documentElement.getBoundingClientRect().top,
+              mobileHA: false
+            })
 
             Velocity(this.$refs.main, {
               height: 500
@@ -509,6 +518,9 @@
 
           Velocity(this.$refs.main, {
             height: this.mainHeight,
+            complete: () => {
+              this.$refs.main.style.height = 'auto'
+            }
           })
           Velocity(this.$refs.mainInner, {
             opacity: 1,

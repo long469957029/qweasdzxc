@@ -13,33 +13,50 @@
         <div class="left-profile">
           <div class="profile">
             <img :src="userAvatar" class="avatar" />
-            您好！{{username}}
-            <div class="level">
+            <template v-if="isLogin">
+              您好！{{username}}
+            </template>
+            <template v-else>
+              您好！请先登录~
+            </template>
+            <div class="level" v-if="isLogin">
               <span class="sfa" :class="`sfa-pt-level-${mallBasicInfo.levelId}`"></span>
             </div>
           </div>
           <div class="current-points">
             可用积分值：
-            <span class="points-val">{{mallBasicInfo.fIntegral}}</span>
+            <span class="points-val" :class="{'letter-spacing': !isLogin}">
+              {{isLogin ? mallBasicInfo.fIntegral : '--'}}
+            </span>
           </div>
           <div class="level-up">
             <div class="level-up-top">
-              距离晋升还需：{{mallBasicInfo.fNextLevelIntegral}}
+              距离晋升还需：{{isLogin ? mallBasicInfo.fNextLevelIntegral : '--'}}
             </div>
             <div class="left-ball">
               <div class="bar">
                 <div class="current" :style="`width: ${mallBasicInfo.nextPercent}%`"></div>
               </div>
-              {{mallBasicInfo.nextLevelName}}
+              <template v-if="isLogin">
+                {{mallBasicInfo.nextLevelName}}
+              </template>
             </div>
             <div class="level-tip">
-              升级到{{mallBasicInfo.nextLevelName}}即可享受{{mallBasicInfo.fNextDiscount}}折兑换特权
+              <template v-if="isLogin">
+                升级到{{mallBasicInfo.nextLevelName}}即可享受{{mallBasicInfo.fNextDiscount}}折兑换特权
+              </template>
+              <template v-else>
+                升级后可享受更多的兑换特权
+              </template>
             </div>
           </div>
-          <router-link class="points-exchange-btn" :to="{name: 'ticketRecords'}" tag="div">
+          <router-link class="points-exchange-btn" :to="{name: 'ticketRecords'}" tag="div" v-if="isLogin">
             <span class="sfa sfa-pt-my-points"></span>
             我的积分与兑换
           </router-link>
+          <div class="points-exchange-btn" @click="login" v-else>
+            立即登录
+          </div>
         </div>
       </div>
     </div>
@@ -56,7 +73,7 @@
           <div class="swiper-button-next" slot="button-next"></div>
         </template>
       </swiper>
-      <div class="sign-in" @click="showSignIn">
+      <div class="sign-in" @click="isLogin ? showSignIn() : login()">
         <div class="sfa sfa-pt-sign-in"></div>
         签到
       </div>
@@ -70,7 +87,7 @@
 </template>
 
 <script>
-  import {Swiper, SwiperSlide} from 'build'
+  import {Swiper, SwiperSlide, checkLogin} from 'build'
   import {getMallBannerApi} from 'api/points'
   import banner from './banner.png'
 
@@ -84,6 +101,8 @@
       SwiperSlide,
       SignIn,
     },
+
+    mixins: [checkLogin],
 
     data() {
       return {
@@ -127,6 +146,9 @@
     },
 
     methods: {
+      login() {
+        this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+      },
       showSignIn() {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
           Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{bStyle:'box-shadow: 0px 0px 6px 3px #ccc'})
@@ -230,6 +252,9 @@
       font-size: 24px;
       line-height: 30px;
       margin-left: 10px;
+      &.letter-spacing {
+       letter-spacing: 4px;
+      }
     }
 
     .current-points {

@@ -13,8 +13,8 @@
               </span>
               {{item.name}}
             </div>
-            <div class="ticket-name" v-if="!_.isNull(item.ticketName)">{{item.ticketName}}</div>
-            <div class="desc">{{formatDesc(item.couponDesc)}}</div>
+            <div class="ticket-name" v-if="!_.isNull(item.statTicketId)">{{formatDesc(item).mainDesc}}</div>
+            <div class="desc">{{(item.couponType === 0 ? formatGiftDesc(item.couponDesc) : formatDesc(item).secondDesc)}}</div>
           </div>
           <div class="image-info">
             <img :src="item.itemPicUrl" v-if="item.couponType === 0"/>
@@ -27,7 +27,7 @@
 
 <script>
   import {getMallHotListApi} from 'api/dashboard'
-
+  import {formatCoupon} from 'build'
   export default {
     name: "dashboard-mall",
     data() {
@@ -36,8 +36,19 @@
       }
     },
     methods:{
-      formatDesc(text){
+      formatGiftDesc(text){
         return text.length > 23 ? text.slice(0,23) + '...' : text
+      },
+      formatDesc(item){
+        return formatCoupon({
+            bigShowNum: item.bigShowNum,
+            type: item.type,
+            threholdAmount: item.threholdAmount,
+            bonusPercentAmount: item.bonusPercentAmount,
+            statType: item.statType,
+            ticketId: item.statTicketId,
+            gameType: item.gameType
+          })
       }
     },
     mounted() {

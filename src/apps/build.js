@@ -30,6 +30,9 @@ import ClickOutside from './directives/click-outside'
 //plugins
 import BusPlugin from './plugins/bus/index.js'
 
+//mixins
+import checkLogin from './mixins/check-login'
+
 //filters
 import quick3Sum from './filters/quick3-sum'
 import twoSideType from './filters/two-side-type'
@@ -43,7 +46,7 @@ export {
   /**
    * components
    */
-  AnimatedInteger,
+    AnimatedInteger,
   CustomCheckbox,
   StaticGrid,
   PointsCard,
@@ -68,20 +71,18 @@ export {
   TimeoutCell,
   XSelect,
 
-  /**
-   * directives
-   */
+
+  //directives
   TransferDom,
   ClickOutside,
 
-  /**
-   * plugins
-   */
+  //plugins
   BusPlugin,
 
-  /**
-   * filter
-   */
+  //mixins
+  checkLogin,
+
+  //filters
   formatCouponType,
   formatOpenNum,
   formatCouponStatus,
@@ -89,4 +90,5 @@ export {
   twoSideType,
   formatCoupon,
   formatOptionals,
+
 }
