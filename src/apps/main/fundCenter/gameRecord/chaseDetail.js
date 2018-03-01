@@ -107,8 +107,10 @@ const BetDetailView = Base.ItemView.extend({
   renderPlanGrid(row) {
     const self = this
     this.$('.js-cd-no-container').staticGrid({
-      tableClass: 'table table-bordered table-hover table-center',
+      tableClass: 'table  table-hover table-center fc-cd-chase-no-table',
       height: 230,
+      tableHeaderClass: 'fc-cd-chase-no-table-header',
+      tableBodyClass: 'fc-cd-chase-no-table-body',
       colModel: [
         {label: '', name: '', width: '2%'},
         {label: '奖期', name: 'ticketPlanId', width: '15%'},
@@ -126,7 +128,7 @@ const BetDetailView = Base.ItemView.extend({
           name: 'amount',
           width: '15%',
           formatter(val) {
-            return `<span class="text-bold-cool">${_(val).fixedConvert2yuan()}</span>`
+            return _(val).fixedConvert2yuan()
           },
         },
         {
@@ -152,7 +154,7 @@ const BetDetailView = Base.ItemView.extend({
             } else if (val === 0) {
               status = '未中奖'
             } else {
-              status = `<span class="text-bold-pleasant">${_(val).convert2yuan()}</span>`
+              status = `<span class="text-account-fund">${_(val).convert2yuan()}</span>`
             }
             return status
           },

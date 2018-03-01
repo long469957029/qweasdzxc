@@ -176,7 +176,8 @@ const mutations = {
       window.Global.m.news.stop()
       this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
       this.commit(types.USER_IS_VIP, 0)
-      window.location.href = ''
+      // window.location.href = ''
+      window.router.push('/')
     }
   },
   [types.TOGGLE_DO_LOGOUT] (state, data) {

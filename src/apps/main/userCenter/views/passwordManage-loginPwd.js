@@ -49,7 +49,8 @@ const LoginPwdView = Base.ItemView.extend({
             // self.$successTip.removeClass('hidden')
             setTimeout(() => {
               self.trigger('render:true')
-            }, 2000)
+              Global.m.publish('safe:updating')
+            }, 1000)
           } else if (res.msg === 'fail' && (res.root !== null)) {
             // Global.ui.notification.show(`验证失败，${res.root}`)
             const errorData = {

@@ -70,7 +70,8 @@ const TransferView = Base.ItemView.extend({
 
     // 初始化转出钱包选择框
     //传入转账参数时，需要传入非中心钱包外的平台id值即可,均未传
-    let fromId = this.options.fromId || 0
+    let fromId = this.options.fromId || (this.options.toId===0?1:0)
+
     const fromData = transferService.getFromData(fromId)
     let toId = (_.isUndefined(this.options.fromId) && _.isUndefined(this.options.toId)) ? fromData.fromSelected.id : (this.options.toId || 0)
     this.$('.js-tr-out-selected').html(fromData.fromSelected)

@@ -1,6 +1,6 @@
 <div class="<%=obj.wrapperClass %>">
   <% if (showHeader) { %>
-  <div>
+  <div class="<%=tableHeaderClass%>">
     <table class="<%=tableClass %> no-margin <% if (hasBorder) { %>no-b-bottom<% } %>">
       <colgroup>
         <% _(colModel).each(function(headInfo) { %>
@@ -20,7 +20,7 @@
   <% } %>
 
 
-  <div class="js-wt-body-main relative">
+  <div class="js-wt-body-main relative <%=tableBodyClass%>">
     <table class="<%=tableClass %> no-margin <% if (hasBorder) { %>no-b-top no-b-bottom<% } %>">
       <colgroup>
         <% _(colModel).each(function(headInfo) { %>
