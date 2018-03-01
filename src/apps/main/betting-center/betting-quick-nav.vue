@@ -17,7 +17,7 @@
       <div class="quick-split"></div>
       <div class="quick-ticket-nav quick-ticket-main" ref="nav">
         <div class="quick-list" v-for="(ticketInfo, i) in ticketList">
-          <div class="quick-ticket-type-name">{{ticketInfo.title}}</div>
+          <div class="quick-ticket-type-name" v-html="ticketInfo.title"></div>
           <div class="ticket-inner-list clearfix">
             <router-link :to="`/bc/${item.id}`" v-for="(item, i) in ticketInfo.list" :key="i" class="ticket-info">
               {{item.zhName}}
@@ -189,10 +189,11 @@
     .quick-ticket-type-name {
       font-size: $font-md;
       color: $def-white-color;
-      writing-mode: vertical-lr;
       display: inline-block;
       margin-top: 10px;
       width: 20px;
+      line-height: 18px;
+      text-align: center;
     }
     .ticket-inner-list {
       display: flex;
@@ -202,7 +203,7 @@
       flex-grow: 1;
     }
     .ticket-info {
-      margin-left: 15px;
+      margin-left: 13px;
       padding: 5px 15px 5px 30px;
       border-radius: 20px;
       position: relative;
@@ -211,6 +212,10 @@
       font-size: 12px;
       color: $def-white-color;
       cursor: pointer;
+
+      &:nth-of-type(11) {
+        margin-bottom: 20px;
+      }
       &:before {
         content: ' ';
         width: 0;
@@ -236,7 +241,7 @@
       height: 100px;
       background-color: $def-white-color;
       opacity: .5;
-      margin: 10px 30px;
+      margin: 10px 25px;
     }
   }
 
@@ -290,6 +295,7 @@
     }
     .ticket-info {
       color: #9faeb3;
+
       &:hover {
         color: #ffffff;
       }

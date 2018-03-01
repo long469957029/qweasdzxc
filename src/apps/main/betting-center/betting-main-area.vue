@@ -109,7 +109,7 @@
                     <popover :name="`bet${index}`">
                       <div class="detail-popover">
                         <div class="title">详细号码：</div>
-                        <div class="content">{{row.betNum}}</div>
+                        <div class="content">{{row.formatBetNum}}</div>
                       </div>
                     </popover>
                   </div>

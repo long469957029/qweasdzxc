@@ -63,7 +63,7 @@
                     <popover :name="`open${index}`">
                       <div class="detail-popover">
                         <div class="title">详细号码：</div>
-                        <div class="content">{{preview.bettingNumber}}</div>
+                        <div class="content">{{preview.formatBettingNumber}}</div>
                       </div>
                     </popover>
                   </div>
@@ -222,7 +222,7 @@
                     <popover :name="`bet${index}`">
                       <div class="detail-popover">
                         <div class="title">详细号码：</div>
-                        <div class="content">{{row.betNum}}</div>
+                        <div class="content">{{row.formatBetNum}}</div>
                       </div>
                     </popover>
                   </div>
@@ -311,7 +311,7 @@
 
 <script>
   import {pushMmcSimulationBettingApi} from 'api/betting'
-  import {formatOpenNum, TransferDom, CustomCheckbox} from 'build'
+  import {formatOpenNum, CustomCheckbox} from 'build'
   import BettingVouchers from './betting-vouchers'
   import MmcOpeningNumGroup from './mmc-opening-num-group'
   import betRulesConfig from './misc/betRulesConfig'
@@ -324,10 +324,7 @@
   import BettingHistory from './betting-history'
 
   export default {
-    name: "mmc-betting-main-area",
-    directives: {
-      TransferDom
-    },
+    name: 'mmc-betting-main-area',
     components: {
       MmcOpeningNumGroup,
       CustomCheckbox,

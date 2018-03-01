@@ -2,7 +2,7 @@
   <transition
     leave-active-class="out"
   >
-    <div class="x-modal hide fade in" :class="type" ref="modal" :style="`width: ${width}`">
+    <div class="x-modal hide fade" :class="type" ref="modal" :style="`width: ${width}`">
       <slot name="all">
         <slot name="head">
           <div class="x-modal-header">

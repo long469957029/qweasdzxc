@@ -1,4 +1,5 @@
 import {pushBettingApi, pushChaseApi, pushMmcBettingApi} from 'api/betting'
+import {formatOptionals} from 'build'
 
 const initState = () => {
   return {
@@ -553,7 +554,11 @@ const formatBettingNumber = (bettingNumber, options) => {
   })
 
   if (!_.isEmpty(options.selectOptionals)) {
-    number += `${options.selectOptionals.join(',')}|`
+    if (options.type === 'display') {
+      number += `${formatOptionals(options.selectOptionals).join(',')}|`
+    } else {
+      number += `${options.selectOptionals.join(',')}|`
+    }
   }
 
   if (bettingNumber.length === 1) {
