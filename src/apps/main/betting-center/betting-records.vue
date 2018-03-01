@@ -9,35 +9,7 @@
                    :url="bettingOps.url" :reqData="bettingOps.data" :abort="false" :data-prop="bettingOps.dataProp"
                    :emptyTip="bettingOps.emptyTip"
                    ref="bettingGrid">
-        <tr slot="row" slot-scope="{row, index}" :key="index">
-          <td>{{row.betTime | toTime}}</td>
-          <td>{{row.playName}}</td>
-          <td>{{row.ticketPlanId}}</td>
-          <td>{{row.ticketResult}}</td>
-
-          <td v-if="row.betNum.length <= 20">{{row.betNum}}</td>
-          <td v-else v-popover.right="{name: row.ticketTradeNo}">
-            <a href="javascript:void(0)" class="btn-link">{{row.betNum | formatOpenNum}}</a>
-            <div v-transfer-dom>
-              <popover :name="row.ticketTradeNo">
-                <div class="detail-popover">
-                  <div class="title">详细号码：</div>
-                  <div class="content">{{row.betNum}}</div>
-                </div>
-              </popover>
-            </div>
-          </td>
-
-          <td>{{row.betTotalMoney | fixedConvert2yuan}}</td>
-          <td v-html="formatStatus(row.prizeTotalMoney, row)"></td>
-          <td>
-            <template v-if="row.canCancel">
-              <a class="btn btn-link btn-link-inverse" @click="bettingCancel(row.ticketBetId)">撤单</a>
-              /
-            </template>
-            <a class="btn btn-link btn-link-inverse js-gl-bet-detail-dialog" :data-id="row.ticketTradeNo">查看</a>
-          </td>
-        </tr>
+        <betting-records-row slot="row" slot-scope="{row, index}" :key="index" :row="row"></betting-records-row>
       </slot-static-grid>
       <static-grid v-show="type === 'chase'" :table-class="tableClass" :col-model="chaseOps.colModel" :height="height"
                    :url="chaseOps.url" :reqData="chaseOps.data" :abort="false" :data-prop="chaseOps.dataProp"
@@ -52,14 +24,10 @@
 
 <script>
   import {bettingCancelApi} from 'api/betting'
-  import {formatOpenNum, TransferDom} from 'build'
+  import BettingRecordsRow from './betting-records-row'
 
   export default {
     name: 'betting-records',
-
-    directives: {
-      TransferDom
-    },
 
     props: {
       ticketId: {
@@ -68,8 +36,8 @@
       }
     },
 
-    filters: {
-      formatOpenNum,
+    components: {
+      BettingRecordsRow
     },
 
     data() {
@@ -77,29 +45,6 @@
         height: 125,
         type: 'betting',
         tableClass: 'table table-similar table-center no-margin',
-
-        formatStatus(val, bet) {
-          // 0:未中奖，1：已中奖，2：用户撤单，3：系统撤单,ticketResult,prizeTotalMoney
-          let status = ''
-          if (bet.ticketBetStatus === 2) {
-            status = '用户撤单'
-          } else if (bet.ticketBetStatus === 3) {
-            status = '系统撤单'
-          } else if (bet.hasException) {
-            status = '等待开奖'
-          } else if (bet.ticketResult === null) {
-            if (bet.ticketOpenStatus > 0) {
-              status = '未中奖'
-            } else {
-              status = '等待开奖'
-            }
-          } else if (bet.prizeTotalMoney === 0) {
-            status = '未中奖'
-          } else {
-            status = `<span class="text-pink">${_(bet.prizeTotalMoney).convert2yuan()}</span>`
-          }
-          return status
-        },
 
         bettingOps: {
           colModel: [
