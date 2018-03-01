@@ -72,16 +72,16 @@ module.exports = {
     if (lastPayInfo !== undefined) {
       _(lastPayInfo.keyAmount).each((amount, index) => {
         setList.push('<li class="js-rc-select-quickSet')
-        if (index === 0) { // 默认选择第一个配置，并初始化充值金额的值
-          setList.push(' active')
-          initAmount = amount
-        }
+        // if (index === 0) { // 默认选择第一个配置，并初始化充值金额的值
+        //   setList.push(' active')
+        //   initAmount = amount
+        // }
         setList.push(`" data-type='${type}' data-value='${amount}'>${amount}</li>`)
       })
     }
     return {
       setHtml: setList.join(''),
-      amount: initAmount,
+      amount: '',
     }
   },
   // 获取充值页广告

@@ -112,7 +112,7 @@
         },
         addressInfo: {},
         name: this.currentAddress.name,
-        phone: this.currentAddress.phone,
+        phone: this.currentAddress.orgPhone,
         province: this.currentAddress.province,
         city: this.currentAddress.city,
         area: this.currentAddress.area,
@@ -149,7 +149,7 @@
     methods: {
       addressPush() {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{bStyle:'box-shadow: 0px 0px 6px 3px #ccc'})
           return false
         }
         this.parsley = $(this.$refs.form).parsley({
@@ -227,7 +227,7 @@
       },
       edit(address) {
         this.name = address.name
-        this.phone = address.phone
+        this.phone = address.orgPhone
         this.province = address.province
         this.city = address.city
         this.area = address.area

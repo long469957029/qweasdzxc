@@ -95,7 +95,7 @@ const sscConfig = {
     Object.assign({
       id: 13,
       mark: 'sfc',
-      zhName: '无限三分彩',
+      zhName: '无限3分彩',
       badge: '',
       trendOps: {
         distribution: true,
@@ -357,7 +357,7 @@ const quickConfig = [
   Object.assign({
     id: 29,
     mark: 'jsk3',
-    zhName: '江苏快三',
+    zhName: '江苏快3',
     hasMargin: true,
     trendOps: {
       periods: trendLowPeriods,
@@ -388,38 +388,47 @@ const handicapMark6Config = [
 ]
 
 const handicapSscConfig = [
-  Object.assign(bettingTypes.SSC, {
-    id: 1,
-    mark: 'cq',
-    zhName: '重庆时时彩',
-    badge: 'new',
-    roadBalls: true,
-    twoSide: true,
-    isOfficial: true,
-    helpPage: 'SscPlayer',
-  }),
-  Object.assign(bettingTypes.SSC, {
-    id: 10,
-    mark: 'ffc',
-    zhName: '无限分分彩',
-    badge: 'new',
-    twoSide: true,
-    roadBalls: true,
-    helpPage: 'SscPlayer',
-  }),
+  {
+    ...bettingTypes.SSC,
+    ...{
+      id: 1,
+      mark: 'cq',
+      zhName: '重庆时时彩',
+      badge: 'new',
+      roadBalls: true,
+      twoSide: true,
+      isOfficial: true,
+      helpPage: 'SscPlayer',
+    },
+  },
+  {
+    ...bettingTypes.SSC,
+    ...{
+      id: 10,
+      mark: 'ffc',
+      zhName: '无限分分彩',
+      badge: 'new',
+      twoSide: true,
+      roadBalls: true,
+      helpPage: 'SscPlayer',
+    }
+  },
 ]
 
 const handicapPk10Config = [
-  Object.assign(bettingTypes.PK10, {
-    id: 18,
-    mark: 'pk10',
-    zhName: 'PK10',
-    badge: 'new',
-    roadBalls: true,
-    twoSide: true,
-    isOfficial: true,
-    helpPage: 'Pk10Player',
-  }),
+  {
+    ...bettingTypes.PK10,
+    ...{
+      id: 18,
+      mark: 'pk10',
+      zhName: 'PK10',
+      badge: 'new',
+      roadBalls: true,
+      twoSide: true,
+      isOfficial: true,
+      helpPage: 'Pk10Player',
+    }
+  }
 ]
 
 const lowConfig = {
@@ -547,7 +556,9 @@ export default {
       handicap: {
         // 重庆时时彩  无限秒秒彩  无限分分彩  北京赛车/PK拾  香港六合彩
         list: [
-          ..._.filter(sscConfig.list, (item) => { return item.id === 1 || item.id === 10}),
+          ..._.filter(sscConfig.list, (item) => {
+            return item.id === 1 || item.id === 10
+          }),
           ...bjPKConfig.concat(this.getById(34)),
         ],
       },

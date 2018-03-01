@@ -160,6 +160,8 @@
       .gr-bet-detail-value {
         color: $new-inverse-color;
         padding: 13px 15px;
+        overflow-y:  auto;
+        overflow-x: hidden;
       }
 
     }
@@ -179,6 +181,8 @@
           //height: 80px;
           padding-top: 7px;
           line-height: 22px;
+          overflow-y:  auto;
+          overflow-x: hidden;
         }
       }
     }

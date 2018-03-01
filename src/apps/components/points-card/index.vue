@@ -12,7 +12,7 @@
             LV{{couponInfo.levelLimit}}
             <template v-if="1 === couponInfo.limitLevelType">以上</template>
           </div>
-          <div class="card-left" v-if="displayType === 'mall' && couponInfo.couponStatus === 1"><!--displayType:mall 只在积分商城可兑换时显示，侧边栏不显示-->
+          <div class="card-left" v-if="displayType === 'mall' && couponInfo.couponStatus === 1 && couponInfo.maxNum"><!--displayType:mall 只在积分商城可兑换时显示，侧边栏不显示-->
             剩{{couponInfo.maxNum - couponInfo.useNum}}张
           </div>
           <div class="card-time-end" v-if="displayType === 'show' && (couponInfo.validEndDate-couponInfo.sysTime)<10800000"></div><!--即将到期-->

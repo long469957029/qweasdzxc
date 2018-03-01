@@ -37,7 +37,7 @@ const BetDetailView = Base.ItemView.extend({
           openNum = '用,户,撤,单'
         } else if (res.root.ticketBetStatus === 3) {
           openNum = '系,统,撤,单'
-        }else{
+        } else {
           openNum = res.root.openNum ? res.root.openNum : '等,待,开,奖'
         }
 
@@ -94,11 +94,10 @@ const BetDetailView = Base.ItemView.extend({
         }
         self.$('.js-gr-ticketBetId').val(res.root.ticketBetId)
         let betMoneyDesc = ''
-        if (res.root.handicap) {
-          const betMoneyDesc = '（${betMethod}*${info.betMultiple}倍*${info.betNum}注）'
+        if (!res.root.handicap) {
+          betMoneyDesc = `<span class="m-left-md">(${_.convert2yuan(res.root.chaseTicketPlayDetail[0].moneyMethod * 2)}*${res.root.chaseTicketPlayDetail[0].betMultiple}倍*${res.root.chaseTicketPlayDetail[0].betNum}注)</span>`
         }
-        self.$('.js-gr-bet-money').html(`${_(res.root.betAllMoney).formatDiv(10000)}元${betMoneyDesc}
-<span class="m-left-md">(${_.convert2yuan(res.root.chaseTicketPlayDetail[0].moneyMethod*2)}*${res.root.chaseTicketPlayDetail[0].betMultiple}倍*${res.root.chaseTicketPlayDetail[0].betNum}注)</span>`
+        self.$('.js-gr-bet-money').html(`${_(res.root.betAllMoney).formatDiv(10000)}元${betMoneyDesc}`
         )
         if (res.root.canCancel && this.isSelf) {
           // self.$('.js-gr-bet-detail-win').addClass('hidden')
@@ -115,7 +114,7 @@ const BetDetailView = Base.ItemView.extend({
             self.$('.js-gr-bet-win').html(
               `<span class="text-account-cut">${_(res.root.money).formatDiv(10000)}</span>`
             )
-          } else if(openNum!=='等,待,开,奖'){
+          } else if (openNum !== '等,待,开,奖') {
             self.$('.js-gr-bet-win').html(
               `<span>${_(res.root.money).formatDiv(10000)}</span>`
             )
@@ -129,11 +128,11 @@ const BetDetailView = Base.ItemView.extend({
             self.$('.js-gr-bet-profit').html(
               `<span class="text-account-cut">${profit}</span>`
             )
-          } else if (profit === 0 &&  openNum!=='等,待,开,奖') {
+          } else if (profit === 0 && openNum !== '等,待,开,奖') {
             self.$('.js-gr-bet-profit').html(
               `<span>${profit}</span>`
             )
-          } else  if(openNum!=='等,待,开,奖'){
+          } else if (openNum !== '等,待,开,奖') {
             self.$('.js-gr-bet-profit').html(
               `<span class="text-account-add">${profit}</span>`
             )
