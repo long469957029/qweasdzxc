@@ -37,6 +37,7 @@ import formatOpenNum from './filters/format-open-num'
 import formatCouponType from './filters/format-coupon-type'
 import formatCoupon from './filters/format-coupon'
 import formatCouponStatus from './filters/format-coupon-status'
+import formatOptionals from './filters/format-optionals'
 
 export {
   /**
@@ -87,4 +88,5 @@ export {
   quick3Sum,
   twoSideType,
   formatCoupon,
+  formatOptionals,
 }

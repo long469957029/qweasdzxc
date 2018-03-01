@@ -128,6 +128,7 @@ export default ({bigShowNum, type, threholdAmount, bonusPercentAmount, statType,
       couponInfo.conditionNumber = _.formatDiv(bonusPercentAmount, 100)
       couponInfo.mainDesc = formatRange({statType, ticketId, gameType})
       couponInfo.zhType = '投注'
+      couponInfo.secondDesc = `按${couponInfo.zhType}额${couponInfo.conditionNumber}%比例返`
       couponInfo.records = `${couponInfo.mainDesc}<br />${couponInfo.secondDesc}`
       couponInfo.style1 = 'task-rebate'
       couponInfo.style2 = 'lucky-rebate'

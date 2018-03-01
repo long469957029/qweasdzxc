@@ -90,6 +90,7 @@
   .modal-confirm {
     width: 540px;
     height: 460px;
+    border-radius: 5px;
     background-color: #ffffff;
     .modal-header {
       height: 40px;
