@@ -116,15 +116,15 @@
       view: 'KsLottery',
     },
     {
-      tType: 2,
+      tType: 3,
       view: 'SscPlayer',
     },
     {
-      tType: 2,
+      tType: 3,
       view: 'Pk10Player',
     },
     {
-      tType: 2,
+      tType: 3,
       view: 'LhcPlayer',
     },
   ]

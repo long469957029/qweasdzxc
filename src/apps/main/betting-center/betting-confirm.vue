@@ -150,6 +150,7 @@
       .confirm-content {
         display: inline-block;
         padding-left: 5px;
+        width: 377px;
       }
     }
 
