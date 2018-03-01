@@ -9,7 +9,7 @@
     background: $prominent-dialog-body;
     .nav-tabs {
       height: 54px;
-      padding: 0 177px;
+      padding: 0 200px;
       background: $new-main-deep-color;
       li {
         margin: 0 5px;
@@ -281,6 +281,7 @@
               }
             }
             .fc-rc-leftBar-payMoney-fee {
+              margin: 25px 0;
               li {
                 list-style: none;
                 display: inline-block;
@@ -924,7 +925,7 @@
           }
           .fc-tr-quickPay-select {
             width: 360px;
-            height: 170px;
+            //height: 170px;
             li {
               cursor: pointer;
               line-height: 85px;

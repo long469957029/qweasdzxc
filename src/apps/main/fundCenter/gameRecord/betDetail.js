@@ -1,6 +1,9 @@
 /**
  * Created by steven on 2017/12/18.
  */
+
+import {formatOptionals} from 'build'
+
 require('./index.scss')
 
 const BetDetailView = Base.ItemView.extend({
@@ -65,10 +68,24 @@ const BetDetailView = Base.ItemView.extend({
         self.$('.js-gr-bet-username').html(res.root.username)
         self.$('.js-gr-bet-tradeNo').html(res.root.ticketBetNo)
         self.$('.js-gr-time').html(_(res.root.betTime).toTime())
+
+        let playDesc = `${res.root.ticketName} - ${res.root.chaseTicketPlayDetail[0].playName}`
+
+        //增加任选处理逻辑
+        //如果是任选号码 将号码格式化，去除位数，并将位数接在玩法后
+        let splitNum = info.betNums.split('|')
+        let fotmattedNum = ''
+        if (splitNum.length > 1) {
+          playDesc += ` ${formatOptionals(splitNum[0]).join(',')}`
+          fotmattedNum = splitNum[1]
+        } else {
+          fotmattedNum = info.betNums
+        }
+
         // if (!res.root.handicap) {
         //   self.$('.js-gr-bet-play').html(`${res.root.ticketName}-${info.ticketLevelName}-${info.ticketPlayName}`)
         // } else {
-        self.$('.js-gr-bet-play').html(`${res.root.ticketName}- ${res.root.chaseTicketPlayDetail[0].playName}`)
+        self.$('.js-gr-bet-play').html(playDesc)
         // }
 
 
@@ -81,7 +98,7 @@ const BetDetailView = Base.ItemView.extend({
         self.$('.js-gr-bet-method').html(cell)
 
 
-        self.$('.js-gr-bet-content').html(info.betNums)
+        self.$('.js-gr-bet-content').html(fotmattedNum)
         let betMethod = ''
         if (info.moneyMethod === 10000) {
           betMethod = 2
