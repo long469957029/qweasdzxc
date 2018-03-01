@@ -81,7 +81,10 @@ const ToolbarView = Base.ItemView.extend({
       // 获取定时更新数据列表
       clearInterval(timmer);
       self.timerHandler()
-    },60000);
+    },600000);
+    Vue.$global.bus.$on('message-update', () => {
+      this.messageUpate()
+    })
   },
 
   timerHandler() {
@@ -100,6 +103,11 @@ const ToolbarView = Base.ItemView.extend({
           self.$('.js-coupon-remind').addClass('hidden');
         }
       });
+    this.messageUpate()
+  },
+
+  messageUpate() {
+    var self = this
     // 获取未读消息
     self.getRecentChatStatXhr()
       .done(function (res) {
