@@ -25,7 +25,7 @@
     <div v-transfer-dom>
       <x-dialog v-if="showConfirmModal" @modal-hidden="showConfirmModal = false">
         <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
-                         :betting-list="bettingChoice.buyList" :type="`handicap`"
+                         :betting-list="bettingChoice.buyList[0].formattedList" :type="`handicap`"
                          @bettingConfirm="bettingConfirm"></betting-confirm>
       </x-dialog>
     </div>
@@ -181,6 +181,7 @@
                 type: 'success',
                 hasFooter: false,
                 displayTime: 800,
+                size: 'modal-xs',
               })
             } else {
               if (res.msg.indexOf('余额不足') > -1) {

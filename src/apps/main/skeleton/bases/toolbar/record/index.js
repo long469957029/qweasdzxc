@@ -66,14 +66,15 @@ const RecordView = Base.ItemView.extend({
         }
       }
 
-      html.push(`<div class="js-gl-bet-detail-dialog recent-game-item " data-id="${game.ticketTradeNo}">`)
+      // html.push(`<div class="recent-game-item-list"><div class="js-gl-bet-detail-dialog recent-game-item " data-id="${game.ticketTradeNo}"></div></div>`)
+      html.push(`<div class="recent-game-item-list"><div class="js-gl-bet-detail-dialog recent-game-item " data-id="${game.ticketTradeNo}">`)
       html.push(`<div class="game-title">${game.name}-${game.playName}</div>`)
       html.push(`<div class="game-amount">${betAmount}</div>`)
       html.push(`<div class="game-date">${createTime}</div>`)
       // html.push(`<div class="game-type">${game.playName}</div>`)
       html.push(`<div class="game-state">${status}</div>`)
       html.push('<div class="clearfix"></div>')
-      html.push('</div>')
+      html.push('</div></div>')
       itemHtml.push(html.join(''))
     })
     this.$('.js-recent-game-items').html(itemHtml.join(''))
