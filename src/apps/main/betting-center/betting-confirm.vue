@@ -127,7 +127,8 @@
     .bc-confirm-list {
       width: 488px;
       height: 150px;
-      overflow: auto;
+      overflow-y: auto;
+      overflow-x: hidden;
       background-color: #f5f5f5;
       .bc-betDetail-text {
         position: relative;
@@ -152,6 +153,7 @@
         display: inline-block;
         padding-left: 5px;
         width: 377px;
+        word-wrap: break-word;
       }
     }
 

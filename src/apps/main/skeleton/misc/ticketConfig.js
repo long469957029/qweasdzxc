@@ -159,6 +159,7 @@ const sscConfig = {
         periods: trendLowPeriods,
         split: 1,
       },
+      abbreviated: true,
       isOfficial: true,
     }, bettingTypes.SSC),
     Object.assign({

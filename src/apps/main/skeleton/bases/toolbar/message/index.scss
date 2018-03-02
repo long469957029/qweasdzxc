@@ -199,6 +199,9 @@
                 .contact-name {
                   color: $def-white-color;
                 }
+                &:hover {
+                  background-color: #afbbc6;
+                }
               }
               &:hover {
                 background-color: #e9e9e9;
@@ -268,9 +271,12 @@
               }
               .recently-message-close {
                 vertical-align: top;
-                margin-top: 11px;
+                margin-top: 13px;
                 margin-left: -11px;
                 display: none;
+                &.parents{
+                  margin-left: 58px;
+                }
               }
               .recently-item-info-num {
                 border-radius: 40px;
@@ -298,12 +304,18 @@
                 .recently-name {
                   color: $def-white-color;
                 }
-                .recently-message-close {
-                  display: inline-block;
+                //.recently-message-close {
+                //  display: inline-block;
+                //}
+                &:hover {
+                  background-color: #afbbc6;
                 }
               }
               &:hover {
                 background-color: #e9e9e9;
+                .recently-message-close {
+                  display: inline-block;
+                }
               }
             }
           }
@@ -662,7 +674,7 @@
     width: 420px;
     overflow: auto;
     position: relative;
-    height: 23px;
+    //height: 23px;
     .chat-input {
       border: 0;
       outline-width: 0;
