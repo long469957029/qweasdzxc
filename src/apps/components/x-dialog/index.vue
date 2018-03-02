@@ -59,10 +59,12 @@
 
     methods: {
       afterEnter() {
-        $(this.$refs.modal).modal(this.options)
-          .on('hidden.modal', () => {
-            this.$emit('modal-hidden')
-          })
+        this.$nextTick(() => {
+          $(this.$refs.modal).modal(this.options)
+            .on('hidden.modal', () => {
+              this.$emit('modal-hidden')
+            })
+        })
       },
     },
 
@@ -93,7 +95,7 @@
       &.in {
         top: 10%;
       }
-      &.out {
+      &.v-out {
         top: -25%;
         opacity: 0;
       }
