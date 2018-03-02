@@ -50,7 +50,8 @@ $.widget('gl.confirm', {
         modalClass: 'modal-notification',
         id: this.uuid,
         body: body.join(''),
-        closeBtn: this.options.closeBtn
+        closeBtn: this.options.closeBtn,
+        modalDialogShadow: this.options.closeBtn,
       }
     }
 
