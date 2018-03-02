@@ -138,10 +138,10 @@ module.exports = {
           } else {
             onlineCircle = ''
           }
-
+          let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close parents"></span>'
           const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
           itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="我的上级">` +
-            `<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
+            `<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span>${cancel}</div>`)
         } else {
           let status = ''
           if (active.type === 'user' && active.id === item.userId) {
@@ -159,7 +159,7 @@ module.exports = {
           const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
           itemHtml.push(`<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}`)
 
-          let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-close recently-message-close"></span>'
+          let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close"></span>'
           if (item.newMsgNum > 0) {
             cancel = ''
             itemHtml.push('<div class="recently-item-info inline-block">')
@@ -183,7 +183,7 @@ module.exports = {
         itemHtml.push('<span class="sfa sfa-avata-persons inline-block"></span>')
         itemHtml.push('<div class="recently-item-info inline-block no">')
         itemHtml.push('<div class="recently-name">群消息</div>')
-        itemHtml.push('</div><span class="js-recently-message-close sfa sfa-icon-im-close recently-message-close"></span></div></div>')
+        itemHtml.push('</div><span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close"></span></div></div>')
         html.push(itemHtml.join(''))
       }
       // html.push(itemsHtml.join(''))

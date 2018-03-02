@@ -141,11 +141,12 @@ const MessageView = Base.ItemView.extend({
   renderRecentlyData() {
     const recentlyResult = imService.getRecentlyItemHtml(this.recentlyList, this.parentId, this.activePerson)
     this.newMessageNum = recentlyResult.num
-    if (this.newMessageNum > 0) {
+    if (recentlyResult.num > 0) {
       this.$('.js-recently-newMessage-num').addClass('hasNum')
       this.$('.js-recently-newMessage-num').html(imService.getNewMessageNumHtml(this.newMessageNum))
     } else if (this.$('.js-recently-newMessage-num').hasClass('hasNum')) {
       this.$('.js-recently-newMessage-num').removeClass('hasNum')
+      this.$('.js-recently-newMessage-num').addClass('hidden')
     }
     this.$('.js-recently-container').html(recentlyResult.result)
   },
@@ -163,8 +164,11 @@ const MessageView = Base.ItemView.extend({
     this.$('.js-contact-admin').html(imService.getAdmin(acPerson))
     // 显示上级状态
     this.$('.js-contact-superior').html(imService.getSuperior(data.parent, acPerson))
-    // 显示下级列表
-    this.$('.js-person-sub-container').html(imService.getItemsHtml(data.subList, this.parentId, acPerson))
+    // 显示下级列表，如果不是玩家用户，显示我的下级列表
+    if(window.store.getters.getUserType){
+      this.$('.js-person-sub-title').removeClass('hidden')
+      this.$('.js-person-sub-container').html(imService.getItemsHtml(data.subList, this.parentId, acPerson))
+    }
   },
 
   // 私聊涉及方法
