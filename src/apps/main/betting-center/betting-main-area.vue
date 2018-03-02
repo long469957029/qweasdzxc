@@ -492,12 +492,12 @@
           return false
         }
 
-        // 腾讯分分彩，金额限制1000元
-        if (this.ticketId === 31 && _(this.bettingChoice.buyInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
-          Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-          this.$store.commit(types.EMPTY_BUY_BETTING)
-          return false
-        }
+        // // 腾讯分分彩，金额限制1000元
+        // if (this.ticketId === 31 && _(this.bettingChoice.buyInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
+        //   Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
+        //   this.$store.commit(types.EMPTY_BUY_BETTING)
+        //   return false
+        // }
 
         if (this.foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
@@ -530,6 +530,7 @@
                 type: 'success',
                 hasFooter: false,
                 displayTime: 800,
+                size: 'modal-xs',
               })
             } else {
               if (res.msg.indexOf('余额不足') > -1) {
@@ -567,11 +568,11 @@
         }
 
 
-        // 腾讯分分彩，金额限制1000元
-        if (this.ticketId === 31 && this.bettingChoice.totalInfo.fTotalMoney > ticketConfig.getComplete(31).info.betAmountLimit) {
-          Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-          return false
-        }
+        // // 腾讯分分彩，金额限制1000元
+        // if (this.ticketId === 31 && this.bettingChoice.totalInfo.fTotalMoney > ticketConfig.getComplete(31).info.betAmountLimit) {
+        //   Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
+        //   return false
+        // }
 
         if (this.foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
@@ -617,6 +618,7 @@
                 type: 'success',
                 hasFooter: false,
                 displayTime: 800,
+                size: 'modal-xs',
               })
             } else {
               if (res.msg.indexOf('余额不足') > -1) {
@@ -641,11 +643,11 @@
           return
         }
 
-        // 腾讯分分彩，金额限制1000元
-        if (this.ticketId === 31 && this.bettingChoice.totalInfo.fTotalMoney > ticketConfig.getComplete(31).info.betAmountLimit) {
-          Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-          return false
-        }
+        // // 腾讯分分彩，金额限制1000元
+        // if (this.ticketId === 31 && this.bettingChoice.totalInfo.fTotalMoney > ticketConfig.getComplete(31).info.betAmountLimit) {
+        //   Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
+        //   return false
+        // }
 
         if (this.foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
@@ -735,7 +737,9 @@
               return true
             }
           } else {
-            Global.ui.notification.show('号码选择不完整，请重新选择！')
+            if (checkResult) {
+              Global.ui.notification.show('号码选择不完整，请重新选择！')
+            }
             return false
           }
         }

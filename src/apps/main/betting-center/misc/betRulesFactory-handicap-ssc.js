@@ -4,15 +4,30 @@ const fifty = _.range(0, 50)
 
 const getFifty = () => {
   return _.map(fifty, (num, index) => {
-    // const fMum = `${(num !== 0 && num % 10 === 0 ? 10 : (num % 10)) + (100 * Math.ceil((index + 1) / 10)) - 1}`
-    const fMum = `${(num % 10 + (100 * Math.ceil((index + 1) / 10)))}`
+    const fNum = `${(num % 10 + (100 * Math.ceil((index + 1) / 10)))}`
     return {
-      num: fMum,
+      num: fNum,
       title:  num % 10,
+      posName: getPosName(fNum),
       // title: num !== 0 && num % 10 === 0 ? 10 : (num % 10),
       style: 'gray circle',
     }
   })
+}
+
+const getPosName = (fNum) => {
+  switch (fNum[0]) {
+    case '1':
+      return '万位'
+    case '2':
+      return '千位'
+    case '3':
+      return '百位'
+    case '4':
+      return '十位'
+    case '5':
+      return '个位'
+  }
 }
 
 const getBalls = () => {
@@ -25,8 +40,8 @@ const getBalls = () => {
         showOdds: true,
       },
       {
-        num: '1',
-        title: '1',
+        num: '5',
+        title: '5',
         style: 'gray circle',
         showOdds: true,
       },
@@ -38,14 +53,14 @@ const getBalls = () => {
     ],
     [
       {
-        num: '2',
-        title: '2',
+        num: '1',
+        title: '1',
         style: 'gray circle',
         showOdds: true,
       },
       {
-        num: '3',
-        title: '3',
+        num: '6',
+        title: '6',
         style: 'gray circle',
         showOdds: true,
       },
@@ -57,14 +72,14 @@ const getBalls = () => {
     ],
     [
       {
-        num: '4',
-        title: '4',
+        num: '2',
+        title: '2',
         style: 'gray circle',
         showOdds: true,
       },
       {
-        num: '5',
-        title: '5',
+        num: '7',
+        title: '7',
         style: 'gray circle',
         showOdds: true,
       },
@@ -76,14 +91,14 @@ const getBalls = () => {
     ],
     [
       {
-        num: '6',
-        title: '6',
+        num: '3',
+        title: '3',
         style: 'gray circle',
         showOdds: true,
       },
       {
-        num: '7',
-        title: '7',
+        num: '8',
+        title: '8',
         style: 'gray circle',
         showOdds: true,
       },
@@ -95,8 +110,8 @@ const getBalls = () => {
     ],
     [
       {
-        num: '8',
-        title: '8',
+        num: '4',
+        title: '4',
         style: 'gray circle',
         showOdds: true,
       },
@@ -122,21 +137,29 @@ function _create(ticketId) {
             {
               num: '1',
               title: '大',
+              playName: '大小',
+              posName: '万位',
               showOdds: true,
             },
             {
               num: '2',
               title: '小',
+              playName: '大小',
+              posName: '万位',
               showOdds: true,
             },
             {
               num: '3',
               title: '单',
+              playName: '单双',
+              posName: '万位',
               showOdds: true,
             },
             {
               num: '4',
               title: '双',
+              playName: '单双',
+              posName: '万位',
               showOdds: true,
             },
           ],
@@ -144,21 +167,29 @@ function _create(ticketId) {
             {
               num: '11',
               title: '大',
+              playName: '大小',
+              posName: '千位',
               showOdds: true,
             },
             {
               num: '12',
               title: '小',
+              playName: '大小',
+              posName: '千位',
               showOdds: true,
             },
             {
               num: '13',
               title: '单',
+              playName: '单双',
+              posName: '千位',
               showOdds: true,
             },
             {
               num: '14',
               title: '双',
+              playName: '单双',
+              posName: '千位',
               showOdds: true,
             },
           ],
@@ -166,21 +197,29 @@ function _create(ticketId) {
             {
               num: '21',
               title: '大',
+              playName: '大小',
+              posName: '百位',
               showOdds: true,
             },
             {
               num: '22',
               title: '小',
+              playName: '大小',
+              posName: '百位',
               showOdds: true,
             },
             {
               num: '23',
               title: '单',
+              playName: '单双',
+              posName: '百位',
               showOdds: true,
             },
             {
               num: '24',
               title: '双',
+              playName: '单双',
+              posName: '百位',
               showOdds: true,
             },
           ],
@@ -188,21 +227,29 @@ function _create(ticketId) {
             {
               num: '31',
               title: '大',
+              playName: '大小',
+              posName: '十位',
               showOdds: true,
             },
             {
               num: '32',
               title: '小',
+              playName: '大小',
+              posName: '十位',
               showOdds: true,
             },
             {
               num: '33',
               title: '单',
+              playName: '单双',
+              posName: '十位',
               showOdds: true,
             },
             {
               num: '34',
               title: '双',
+              playName: '单双',
+              posName: '十位',
               showOdds: true,
             },
           ],
@@ -210,21 +257,29 @@ function _create(ticketId) {
             {
               num: '41',
               title: '大',
+              playName: '大小',
+              posName: '个位',
               showOdds: true,
             },
             {
               num: '42',
               title: '小',
+              playName: '大小',
+              posName: '个位',
               showOdds: true,
             },
             {
               num: '43',
               title: '单',
+              playName: '单双',
+              posName: '个位',
               showOdds: true,
             },
             {
               num: '44',
               title: '双',
+              playName: '单双',
+              posName: '个位',
               showOdds: true,
             },
           ],
@@ -240,11 +295,13 @@ function _create(ticketId) {
             {
               num: '1001',
               title: '总和大',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1097',
               title: '龙',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -252,11 +309,13 @@ function _create(ticketId) {
             {
               num: '1002',
               title: '总和小',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1098',
               title: '虎',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -264,11 +323,13 @@ function _create(ticketId) {
             {
               num: '1003',
               title: '总和单',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1099',
               title: '和',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -276,6 +337,7 @@ function _create(ticketId) {
             {
               num: '1004',
               title: '总和双',
+              playName: '总和',
               showOdds: true,
             },
           ],
@@ -299,6 +361,7 @@ function _create(ticketId) {
             {
               num: '1',
               title: '豹子',
+              posName: '前三码',
               showOdds: true,
             },
           ],
@@ -306,6 +369,7 @@ function _create(ticketId) {
             {
               num: '2',
               title: '顺子',
+              posName: '前三码',
               showOdds: true,
             },
           ],
@@ -313,6 +377,7 @@ function _create(ticketId) {
             {
               num: '3',
               title: '对子',
+              posName: '前三码',
               showOdds: true,
             },
           ],
@@ -320,6 +385,7 @@ function _create(ticketId) {
             {
               num: '4',
               title: '杂六',
+              posName: '前三码',
               showOdds: true,
             },
           ],
@@ -335,6 +401,7 @@ function _create(ticketId) {
             {
               num: '11',
               title: '豹子',
+              posName: '中三码',
               showOdds: true,
             },
           ],
@@ -342,6 +409,7 @@ function _create(ticketId) {
             {
               num: '12',
               title: '顺子',
+              posName: '中三码',
               showOdds: true,
             },
           ],
@@ -349,6 +417,7 @@ function _create(ticketId) {
             {
               num: '13',
               title: '对子',
+              posName: '中三码',
               showOdds: true,
             },
           ],
@@ -356,6 +425,7 @@ function _create(ticketId) {
             {
               num: '14',
               title: '杂六',
+              posName: '中三码',
               showOdds: true,
             },
           ],
@@ -371,6 +441,7 @@ function _create(ticketId) {
             {
               num: '21',
               title: '豹子',
+              posName: '后三码',
               showOdds: true,
             },
           ],
@@ -378,6 +449,7 @@ function _create(ticketId) {
             {
               num: '22',
               title: '顺子',
+              posName: '后三码',
               showOdds: true,
             },
           ],
@@ -385,6 +457,7 @@ function _create(ticketId) {
             {
               num: '23',
               title: '对子',
+              posName: '后三码',
               showOdds: true,
             },
           ],
@@ -392,6 +465,7 @@ function _create(ticketId) {
             {
               num: '24',
               title: '杂六',
+              posName: '后三码',
               showOdds: true,
             },
           ],
@@ -435,11 +509,15 @@ function _create(ticketId) {
             {
               num: '1001',
               title: '总和大',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1097',
               title: '龙',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -447,11 +525,15 @@ function _create(ticketId) {
             {
               num: '1002',
               title: '总和小',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1098',
               title: '虎',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -459,11 +541,15 @@ function _create(ticketId) {
             {
               num: '1003',
               title: '总和单',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1099',
               title: '和',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -471,6 +557,8 @@ function _create(ticketId) {
             {
               num: '1004',
               title: '总和双',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
           ],
@@ -501,11 +589,15 @@ function _create(ticketId) {
             {
               num: '1001',
               title: '总和大',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1097',
               title: '龙',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -513,11 +605,15 @@ function _create(ticketId) {
             {
               num: '1002',
               title: '总和小',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1098',
               title: '虎',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -525,11 +621,15 @@ function _create(ticketId) {
             {
               num: '1003',
               title: '总和单',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1099',
               title: '和',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -537,6 +637,8 @@ function _create(ticketId) {
             {
               num: '1004',
               title: '总和双',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
           ],
@@ -567,11 +669,15 @@ function _create(ticketId) {
             {
               num: '1001',
               title: '总和大',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1097',
               title: '龙',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -579,11 +685,15 @@ function _create(ticketId) {
             {
               num: '1002',
               title: '总和小',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1098',
               title: '虎',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -591,11 +701,15 @@ function _create(ticketId) {
             {
               num: '1003',
               title: '总和单',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1099',
               title: '和',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -603,6 +717,8 @@ function _create(ticketId) {
             {
               num: '1004',
               title: '总和双',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
           ],
@@ -633,11 +749,15 @@ function _create(ticketId) {
             {
               num: '1001',
               title: '总和大',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1097',
               title: '龙',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -645,11 +765,15 @@ function _create(ticketId) {
             {
               num: '1002',
               title: '总和小',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1098',
               title: '虎',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -657,11 +781,15 @@ function _create(ticketId) {
             {
               num: '1003',
               title: '总和单',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1099',
               title: '和',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -669,6 +797,8 @@ function _create(ticketId) {
             {
               num: '1004',
               title: '总和双',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
           ],
@@ -699,11 +829,15 @@ function _create(ticketId) {
             {
               num: '1001',
               title: '总和大',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1097',
               title: '龙',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -711,11 +845,15 @@ function _create(ticketId) {
             {
               num: '1002',
               title: '总和小',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1098',
               title: '虎',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -723,11 +861,15 @@ function _create(ticketId) {
             {
               num: '1003',
               title: '总和单',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
             {
               num: '1099',
               title: '和',
+              levelName: '双面盘',
+              playName: '龙虎',
               showOdds: true,
             },
           ],
@@ -735,6 +877,8 @@ function _create(ticketId) {
             {
               num: '1004',
               title: '总和双',
+              levelName: '双面盘',
+              playName: '总和',
               showOdds: true,
             },
           ],
@@ -758,16 +902,19 @@ function _create(ticketId) {
             {
               num: '241',
               title: '龙',
+              posName: '万VS千',
               showOdds: true,
             },
             {
               num: '242',
               title: '虎',
+              posName: '万VS千',
               showOdds: true,
             },
             {
               num: '243',
               title: '和',
+              posName: '万VS千',
               showOdds: true,
             },
           ],
@@ -775,16 +922,19 @@ function _create(ticketId) {
             {
               num: '201',
               title: '龙',
+              posName: '万VS百',
               showOdds: true,
             },
             {
               num: '202',
               title: '虎',
+              posName: '万VS百',
               showOdds: true,
             },
             {
               num: '203',
               title: '和',
+              posName: '万VS百',
               showOdds: true,
             },
           ],
@@ -792,16 +942,19 @@ function _create(ticketId) {
             {
               num: '181',
               title: '龙',
+              posName: '万VS十',
               showOdds: true,
             },
             {
               num: '182',
               title: '虎',
+              posName: '万VS十',
               showOdds: true,
             },
             {
               num: '183',
               title: '和',
+              posName: '万VS十',
               showOdds: true,
             },
           ],
@@ -809,16 +962,19 @@ function _create(ticketId) {
             {
               num: '171',
               title: '龙',
+              posName: '万VS个',
               showOdds: true,
             },
             {
               num: '172',
               title: '虎',
+              posName: '万VS个',
               showOdds: true,
             },
             {
               num: '173',
               title: '和',
+              posName: '万VS个',
               showOdds: true,
             },
           ],
@@ -834,16 +990,19 @@ function _create(ticketId) {
             {
               num: '121',
               title: '龙',
+              posName: '千VS百',
               showOdds: true,
             },
             {
               num: '122',
               title: '虎',
+              posName: '千VS百',
               showOdds: true,
             },
             {
               num: '123',
               title: '和',
+              posName: '千VS百',
               showOdds: true,
             },
           ],
@@ -851,16 +1010,19 @@ function _create(ticketId) {
             {
               num: '101',
               title: '龙',
+              posName: '千VS十',
               showOdds: true,
             },
             {
               num: '102',
               title: '虎',
+              posName: '千VS十',
               showOdds: true,
             },
             {
               num: '103',
               title: '和',
+              posName: '千VS十',
               showOdds: true,
             },
           ],
@@ -868,16 +1030,19 @@ function _create(ticketId) {
             {
               num: '91',
               title: '龙',
+              posName: '千VS个',
               showOdds: true,
             },
             {
               num: '92',
               title: '虎',
+              posName: '千VS个',
               showOdds: true,
             },
             {
               num: '93',
               title: '和',
+              posName: '千VS个',
               showOdds: true,
             },
           ],
@@ -895,16 +1060,19 @@ function _create(ticketId) {
             {
               num: '61',
               title: '龙',
+              posName: '百VS十',
               showOdds: true,
             },
             {
               num: '62',
               title: '虎',
+              posName: '百VS十',
               showOdds: true,
             },
             {
               num: '63',
               title: '和',
+              posName: '百VS十',
               showOdds: true,
             },
           ],
@@ -912,16 +1080,19 @@ function _create(ticketId) {
             {
               num: '51',
               title: '龙',
+              posName: '百VS个',
               showOdds: true,
             },
             {
               num: '52',
               title: '虎',
+              posName: '百VS个',
               showOdds: true,
             },
             {
               num: '53',
               title: '和',
+              posName: '百VS个',
               showOdds: true,
             },
           ],
@@ -929,16 +1100,19 @@ function _create(ticketId) {
             {
               num: '31',
               title: '龙',
+              posName: '十VS个',
               showOdds: true,
             },
             {
               num: '32',
               title: '虎',
+              posName: '十VS个',
               showOdds: true,
             },
             {
               num: '33',
               title: '和',
+              posName: '十VS个',
               showOdds: true,
             },
           ],

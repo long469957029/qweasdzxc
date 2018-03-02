@@ -239,14 +239,18 @@ const BetDetailView = Base.ItemView.extend({
       .done((res) => {
         if (res.result === 0) {
           Global.ui.notification.show('撤销追号成功', {
-            type: 'success',
+            type: 'success', modalDialogShadow: 'modal-dialog-shadow'
           })
           self.render()
           self.selectNoHandle()
         } else if (res.msg.indexOf('fail') !== -1) {
-          Global.ui.notification.show('撤销追号失败!')
+          Global.ui.notification.show('撤销追号失败!',{
+            modalDialogShadow: 'modal-dialog-shadow'
+          })
         } else {
-          Global.ui.notification.show(`撤销追号失败：${res.msg}`)
+          Global.ui.notification.show(`撤销追号失败：${res.msg}`,{
+            modalDialogShadow: 'modal-dialog-shadow'
+          })
         }
       })
   },

@@ -102,7 +102,7 @@
     width: 1192px;
     margin: 0 auto;
     height: 100%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+    box-shadow: 0 0 4px rgba(0, 0, 0, .15);
     .ab-select-bar {
       float: left;
       width: 200px;

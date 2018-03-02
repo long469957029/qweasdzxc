@@ -492,8 +492,9 @@
     width: 1200px;
     margin: 0 auto;
     background: #ffffff;
-    border-left: 1px solid $def-gray-color;
-    border-right: 1px solid $def-gray-color;
+    /*border-left: 1px solid $def-gray-color;*/
+    /*border-right: 1px solid $def-gray-color;*/
+    box-shadow: 0 0 4px rgba(0, 0, 0, .15);
     overflow: hidden;
   }
 

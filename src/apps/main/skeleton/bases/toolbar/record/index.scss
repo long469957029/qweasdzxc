@@ -95,7 +95,7 @@
 }
 
 .record-recent-container {
-  padding: 0 10px;
+  //padding: 0 10px;
   font-size: 14px;
   background-color: white !important;
   //margin-top: 10px;
@@ -107,6 +107,7 @@
     height: 50px;
     line-height: 50px;
     border-bottom: 1px solid #e6e6e6;
+    margin: 0 10px;
     .recent-title-text {
       font-size: 12px;
       color: $def-black-color;
@@ -115,58 +116,65 @@
   }
   .recent-game-items {
     min-height: 340px;
-    .recent-game-item {
-      cursor: pointer;
-      border-bottom: 1px dashed #e6e6e6;
-      padding: 20px 0px 18px 10px;
+    .recent-game-item-list {
+      padding: 0 10px;
       height: 76px;
+      .recent-game-item {
+        cursor: pointer;
+        border-bottom: 1px dashed #e6e6e6;
+        padding: 20px 0px 18px 10px;
+        height: 76px;
 
-      .game-date, .game-title {
-        @include float-item(14px, $font-auxiliary-color, 60%, 25px, 0);
-        font-size: 12px;
-      }
+        .game-date, .game-title {
+          @include float-item(14px, $font-auxiliary-color, 60%, 25px, 0);
+          font-size: 12px;
+        }
 
-      .game-title {
-        text-align: left;
-        color: #666;
-        height: 25px;
-        line-height: 1;
-        margin-bottom: 0;
-        float: left;
-        width: 70%;
-        font-size: 12px;
-      }
+        .game-title {
+          text-align: left;
+          color: #666;
+          height: 25px;
+          line-height: 1;
+          margin-bottom: 0;
+          float: left;
+          width: 70%;
+          font-size: 12px;
+        }
 
-      .game-date {
-        //text-align: right;
-        text-align: left;
-        line-height: 1;
-      }
+        .game-date {
+          //text-align: right;
+          text-align: left;
+          line-height: 1;
+        }
 
-      .game-type, .game-amount, .game-state {
-        @include float-item(12px, $font-dark, 33%, 25px, 0);
-      }
+        .game-type, .game-amount, .game-state {
+          @include float-item(12px, $font-dark, 33%, 25px, 0);
+        }
 
-      .game-type {
-        color: $def-black-color;
-        text-align: left;
-        line-height: 1;
-        width: 100px;
-      }
+        .game-type {
+          color: $def-black-color;
+          text-align: left;
+          line-height: 1;
+          width: 100px;
+        }
 
-      .game-amount {
-        color: $def-black-color;
-        text-align: right;
-        line-height: 1;
-        width: 65px;
-      }
+        .game-amount {
+          color: $def-black-color;
+          text-align: right;
+          line-height: 1;
+          width: 65px;
+        }
 
-      .game-state {
-        color: $def-black-color;
-        text-align: right;
-        line-height: 1;
-        width: 89px;
+        .game-state {
+          color: $def-black-color;
+          text-align: right;
+          line-height: 1;
+          width: 89px;
+        }
       }
+    }
+    .recent-game-item-list:hover {
+      background-color: #f5f5f5;
     }
     .recent-game-items-empty {
       text-align: center;

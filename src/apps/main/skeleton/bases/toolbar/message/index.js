@@ -30,16 +30,18 @@ const MessageView = Base.ItemView.extend({
     'blur .js-chat-input': 'outInputHandler',
     'click .js-im-mass-message': 'messMessageHandle',
     'click .js-select-panel-hidden': 'hiddenSelectPanelHandle',
-    'click .js-select-panel-show': 'showSelectPanelHandle',
+    'click .js-select-panel-show': 'showSelectPanelHandle', // 打开群发联系人界面
+    'click .js-select-panel-edit': 'showSelectPanelHandle', // 打开群发联系人界面
     'focus .js-im-contact-search': 'searchPanelChangeHandle',
     'click .js-search-input-cancel': 'cancelSearchInputHandle',
     'keydown .js-chat-input': 'sendChatHandle',
     'click .js-chat-footer-send': 'sendPrivateMessageHandle',
     'click .js-chat-more-content': 'showMoreChatHandler',
-    'click .js-mess-select-contact': 'selectMessContactHandler',
-    'click .selected-sub-item-cancel': 'cancelMessContactHandler',
+    'click .js-select-sub-item': 'selectMessContactHandler',
+    'click .js-mess-contact-add': 'selectAllMessContactHandler', // 在侧边栏中添加联系人
+    'click .js-mess-contact-cancel': 'cancelMessContactHandler',
     'click .js-mess-select-allContact': 'selectAllContactHandler',
-    'click .js-mess-clear-allContact': 'clearAllContactHandler',
+    'click .js-mess-selected-allContact': 'clearAllContactHandler',
     'keyup .js-mess-search-panel-search': 'searchMessContactHandler',
     'keydown .js-mess-input': 'sendChatHandle',
     'keyup .js-mess-input': 'messInputChangeHandler',
@@ -112,6 +114,7 @@ const MessageView = Base.ItemView.extend({
     this.lastRecordsHeight = ''
   },
   onRender() {
+    const self = this
     const acctInfo = Global.memoryCache.get('acctInfo')
     this.username = acctInfo.username
     this.contactUser = this.options.userId
@@ -130,6 +133,14 @@ const MessageView = Base.ItemView.extend({
     this.renderGetContactInfoXhr()
     this.renderGetRecentlyInfoXhr()
     this.pollingContactInfoHandler()
+    // 监听click事件,监听群发消息选择侧边栏
+    window.addEventListener('click', (e) => {
+      const $target = $(e.target)
+      const messBarWidth = self.$('.chat-select-container').hasClass('sideLeft')
+      if (messBarWidth && !$target.hasClass('.chat-select-container')) {
+        this.cancelMessContactHandler()
+      }
+    }, false)
   },
   // 公共显示方法
   // 触发查询联系人接口
@@ -141,7 +152,7 @@ const MessageView = Base.ItemView.extend({
           this.renderContactData(res.root)
           this.parentId = res.root.parent.userId
           this.userList = imService.getUserList(res.root, this.parentId)
-          if(self.options.userId){
+          if (self.options.userId) {
             self.$(`.js-contact-onePerson[data-id=${self.options.userId}]`).trigger('click')
           }
         } else {
@@ -165,11 +176,12 @@ const MessageView = Base.ItemView.extend({
   renderRecentlyData() {
     const recentlyResult = imService.getRecentlyItemHtml(this.recentlyList, this.parentId, this.activePerson)
     this.newMessageNum = recentlyResult.num
-    if (this.newMessageNum > 0) {
+    if (recentlyResult.num > 0) {
       this.$('.js-recently-newMessage-num').addClass('hasNum')
       this.$('.js-recently-newMessage-num').html(imService.getNewMessageNumHtml(this.newMessageNum))
     } else if (this.$('.js-recently-newMessage-num').hasClass('hasNum')) {
       this.$('.js-recently-newMessage-num').removeClass('hasNum')
+      this.$('.js-recently-newMessage-num').addClass('hidden')
     }
     this.$('.js-recently-container').html(recentlyResult.result)
   },
@@ -188,9 +200,13 @@ const MessageView = Base.ItemView.extend({
     // 显示上级状态
     this.$('.js-contact-superior').html(imService.getSuperior(data.parent, acPerson))
     // 显示下级列表，如果不是玩家用户，显示我的下级列表
-    if(window.store.getters.getUserType){
+    if (window.store.getters.getUserType) {
       this.$('.js-person-sub-title').removeClass('hidden')
       this.$('.js-person-sub-container').html(imService.getItemsHtml(data.subList, this.parentId, acPerson))
+    } else {
+      // 如果是玩家用户，隐藏群发消息按钮
+      this.$('.js-contact-mass-message').addClass('hidden')
+      this.$('.js-im-mass-message').addClass('player')
     }
   },
 
@@ -452,14 +468,17 @@ const MessageView = Base.ItemView.extend({
           this.initMessChatList(res.root.messages, gId)
           this.$('.js-content-rightBar').html(this.massMessageTpl)
           if (res.root.prepareReveicer.length === 0) {
-            this.$('.js-mess-select-container').html(imService.getMessContact(this.userList, res.root.prepareReveicer))
-            this.$('.js-selected-sub-items').html('')
+            this.$('.js-select-panel-show').removeClass('hidden')
+            this.$('.js-select-panel-edit').addClass('hidden')
+            this.$('.js-mess-select-container').html(imService.getMessContact(res.root.prepareReveicer))
           } else {
-            this.$('.js-mess-select-container').html(imService.getSelectMessContact(this.userList, res.root.prepareReveicer))
-            this.$('.js-selected-sub-items').html(imService.getMessSelectedHtml(res.root.prepareReveicer, this.activePerson.id))
+            this.$('.js-select-panel-show').addClass('hidden')
+            this.$('.js-select-panel-edit').removeClass('hidden')
+            this.$('.js-select-panel-edit-num').html(res.root.prepareReveicer.length)
+            this.$('.js-mess-contact-num').html(res.root.prepareReveicer.length)
+            this.$('.js-select-panel-edit').addClass('edit')
+            this.$('.js-mess-select-container').html(imService.getMessContact(res.root.prepareReveicer, 'edit'))
           }
-          this.$('.js-mess-select-allContact').addClass('hidden')
-          this.$('.js-mess-clear-allContact').addClass('hidden')
           this.$('.js-mess-message-content').html(imService.getChatMessageByDateHtml(this.chatList.chatData, 'mess', res.root.messages.length, this.pageIndex, res.root.messageCount))
           const $div = this.$('.js-mess-message-content')
           $div.scrollTop($div[0].scrollHeight)
@@ -476,13 +495,14 @@ const MessageView = Base.ItemView.extend({
   // 群发消息
   sendMessMessageHandle() {
     const typeContent = this.$('.js-mess-input').val()
-    const userContainer = this.$('.js-selected-sub-item')
+    // const userContainer = this.$('.js-selected-sub-item')
+    const userContainer = this.messContactSelectedList
     const userList = []
     if (userContainer.length === 0) {
       if (this.$('.js-select-panel-hidden').is(':hidden')) {
         this.$('.js-select-panel-hidden').removeClass('hidden')
         this.$('.js-select-panel-show').addClass('hidden')
-        this.$('.chat-select-container').removeClass('sideUp')
+        this.$('.chat-select-container').removeClass('sideLeft')
       }
       this.$('.js-selected-sub-items').html('<div class="tooltip parsley-errors-list filled" id="parsley-id-4"><span class="sfa sfa-error-icon vertical-sub pull-left">' +
         '</span><div class="tooltip-inner parsley-required">请选择要发送的用户</div></div>')
@@ -490,7 +510,7 @@ const MessageView = Base.ItemView.extend({
     }
 
     _(userContainer).each((item) => {
-      userList.push(item.dataset.id)
+      userList.push(item.userId)
     })
     const userString = userList.join(',')
     const data = {
@@ -516,8 +536,9 @@ const MessageView = Base.ItemView.extend({
               this.clearContainerActiveHandle()
               this.renderRecentlyData()
               this.$('.js-recently-mass-message[data-id="' + gId + '"]').addClass('active')
-              this.$('.js-mess-select-container').html(imService.getSelectMessContact(this.userList, res.root.prepareReveicer))
-              this.$('.js-selected-sub-items').html(imService.getMessSelectedHtml(res.root.prepareReveicer, this.activePerson.id))
+              // this.$('.js-mess-select-container').html(imService.getSelectMessContact(this.userList, res.root.prepareReveicer))
+              // this.$('.js-selected-sub-items').html(imService.getMessSelectedHtml(res.root.prepareReveicer, this.activePerson.id))
+              this.$('.js-mess-select-container').html(imService.getMessContact(this.userList, res.root.prepareReveicer))
               this.$('.js-mess-select-allContact').addClass('hidden')
               this.$('.js-mess-clear-allContact').addClass('hidden')
               // 将获取的消息数据排序
@@ -688,39 +709,55 @@ const MessageView = Base.ItemView.extend({
   },
   // 群发消息选择全部联系人
   selectAllContactHandler() {
-    this.$('.js-mess-select-contact').addClass('active')
+    // this.$('.js-mess-select-allContact').addClass('active')
+    this.$('.js-mess-select-allContact').toggleClass('hidden', true)
+    this.$('.js-mess-selected-allContact').toggleClass('hidden', false)
     this.messContactSelectedList = this.userList
-    this.$('.js-selected-sub-items').html(imService.getMessSelectedHtml(this.messContactSelectedList))
+    this.$('.js-mess-select-container').html(imService.getMessContact(this.userList, this.messContactSelectedList))
   },
   // 清除群发消息全部选中联系人
   clearAllContactHandler() {
     this.$('.js-mess-select-contact').removeClass('active')
+    this.$('.js-mess-select-allContact').toggleClass('hidden', false)
+    this.$('.js-mess-selected-allContact').toggleClass('hidden', true)
     this.messContactSelectedList = []
-    this.$('.js-selected-sub-items').html(imService.getMessSelectedHtml(this.messContactSelectedList))
+    this.$('.js-mess-select-container').html(imService.getMessContact(this.userList, this.messContactSelectedList))
   },
   // 群发消息联系人选择
   selectMessContactHandler(e) {
     const $target = $(e.currentTarget)
     const id = $target.data('id')
-    if (!$target.hasClass('active') && this.activePerson.type !== 'group') {
-      $target.addClass('active')
+    const type = $target.data('type')
+    if (type === 'selected') {
+      const cancelItem = _(this.messContactSelectedList).find({
+        userId: id,
+      })
+      this.messContactSelectedList = _(this.messContactSelectedList).without(cancelItem)
+      $target.find('.js-mess-select-contact').removeClass('hidden')
+      $target.find('.js-mess-selected-contact').addClass('hidden')
+      $target.data('type', '')
+    } else {
       const selectedItem = _(this.userList).findWhere({
         userId: id,
       })
       this.messContactSelectedList.push(selectedItem)
-      this.$('.js-selected-sub-items').html(imService.getMessSelectedHtml(this.messContactSelectedList))
+      $target.find('.js-mess-select-contact').addClass('hidden')
+      $target.find('.js-mess-selected-contact').removeClass('hidden')
+      $target.data('type', 'selected')
+      // this.$('.js-selected-sub-items').html(imService.getMessContact(this.userList,this.messContactSelectedList))
     }
   },
+  // 侧边栏添加所有选择联系人
+  selectAllMessContactHandler(){
+    this.$('.chat-select-container').removeClass('sideLeft')
+    this.$('.js-select-panel-edit-num').html(this.messContactSelectedList.length)
+    this.$('.js-select-panel-show').addClass('hidden')
+    this.$('.js-select-panel-edit').removeClass('hidden')
+  },
   // 群发消息取消选中联系人
-  cancelMessContactHandler(e) {
-    const $target = $(e.currentTarget)
-    const id = $target.closest('.js-selected-sub-item').data('id')
-    this.$('.js-mess-select-contact[data-id="' + id + '"]').removeClass('active')
-    const cancelItem = _(this.messContactSelectedList).find({
-      userId: id,
-    })
-    this.messContactSelectedList = _(this.messContactSelectedList).without(cancelItem)
-    this.$('.js-selected-sub-items').html(imService.getMessSelectedHtml(this.messContactSelectedList))
+  cancelMessContactHandler() {
+    this.$('.chat-select-container').removeClass('sideLeft')
+    this.$('.js-select-panel-show').removeClass('hidden')
   },
   // 当点击用户时，取消当前选择的用户
   clearContainerActiveHandle() {
@@ -834,15 +871,24 @@ const MessageView = Base.ItemView.extend({
   },
   hiddenSelectPanelHandle(e) {
     const $target = $(e.currentTarget)
-    this.$('.chat-select-container').addClass('sideUp')
+    this.$('.chat-select-container').addClass('sideLeft')
     $target.addClass('hidden')
     this.$('.js-select-panel-show').removeClass('hidden')
   },
   showSelectPanelHandle(e) {
     const $target = $(e.currentTarget)
-    this.$('.chat-select-container').removeClass('sideUp')
+    this.$('.chat-select-container').addClass('sideLeft')
     $target.addClass('hidden')
-    this.$('.js-select-panel-hidden').removeClass('hidden')
+    if ($target.hasClass('edit')) {
+      this.$('.js-chat-person-panel-title').addClass('hidden')
+      this.$('.js-search-panel').addClass('hidden')
+      this.$('.js-mess-select-container-footer').addClass('hidden')
+      this.$('.js-chat-person-panel-title-edit').removeClass('hidden')
+    }
+    e.preventDefault()
+    e.stopPropagation()
+
+    // this.$('.js-select-panel-hidden').removeClass('hidden')
   },
   // 滚动条固定在最底部
   scrollbarBottomHandler() {
