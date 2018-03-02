@@ -49,10 +49,10 @@
               </div>
             </div>
             <div class="task-button">
-              <button class="points-btn btn btn-orange" @click="isLogin ? lottery(0) : login()" :disabled="pushing">
+              <button class="points-btn btn btn-orange" @click="isLogin ? lottery(0) : login()" :disabled="pushing || running">
                 {{currentIntegralRob | convert2yuan}} 积分夺宝
               </button>
-              <button class="currency-btn btn" @click="isLogin ? lottery(1) : login()" :disabled="pushing">
+              <button class="currency-btn btn" @click="isLogin ? lottery(1) : login()" :disabled="pushing || running">
                 {{currentCashRob | convert2yuan}}元 现金夺宝
               </button>
             </div>
@@ -136,7 +136,7 @@
           <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 3">
             积分{{chest.integral | convert2yuan}}
           </div>
-          <button class="lucky-exchange-btn btn" @click="isLogin ? luckChest(chest) : login()" :disabled="pushing">
+          <button class="lucky-exchange-btn btn" @click="isLogin ? luckChest(chest) : login()" :disabled="pushing || running">
             <span class="sfa sfa-pt-lucky-star-points"></span>
             <span class="lucky-exchange-title">{{chest.lucky}} 幸运值{{chest.rate === 10000 ? '兑换' : '碰运气'}}</span>
           </button>
@@ -309,6 +309,7 @@
         lotteryResult: {},
         currentLotteryType: 0,
         loadingStatus: 'loading',
+        running: false,
 
         pushing: false,
       }
@@ -480,6 +481,7 @@
 
       startLotteryAnimation(lotteryResult, completed) {
         clearInterval(this.timer)
+        this.running = true
         this.lotteryRoll({
           times: 30
         }, () => {
@@ -492,6 +494,7 @@
 
           setTimeout(() => {
             this.normalRoll()
+            this.running = false
             completed()
           }, 1000)
         })

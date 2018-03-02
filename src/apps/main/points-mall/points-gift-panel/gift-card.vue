@@ -177,6 +177,7 @@
     align-content: baseline;
     position: absolute;
     bottom: 0;
+    left: 0;
     width: 100%;
     box-sizing: border-box;
     background-color: #ffffff;

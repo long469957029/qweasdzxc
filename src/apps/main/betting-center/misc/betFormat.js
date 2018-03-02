@@ -15,7 +15,12 @@ export default {
   handicapNormal(itemList, {levelName}) {
     return _.map(itemList, (item) => {
       let formatInfo = {}
-      formatInfo.playName = `${levelName}`
+
+      if (item.levelName) {
+        formatInfo.playName = item.levelName
+      } else {
+        formatInfo.playName = `${levelName}`
+      }
       if (item.playName) {
         formatInfo.playName += `-${item.playName}`
       }
@@ -37,7 +42,7 @@ export default {
     })
   },
 
-  handicapSpecial(itemList, {levelName, playName, statistics, unit}) {
+  handicapSpecial(itemList, {levelName, playName, statistics}) {
     let formatInfo = {}
     formatInfo.playName = `${levelName}`
     if (playName) {

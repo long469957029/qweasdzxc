@@ -39,7 +39,7 @@
 
         <keep-alive>
           <opening-balls :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="bettingInfo.lastOpenNum"
-                         ref="openingArea"
+                         ref="openingArea" :size="ticketInfo.ballSize"
                          :default-opening="ticketInfo.defaultOpening" :auto-stop-rolling="!ticketInfo.openWhenTimeout"
                          v-if="ticketInfo.openingType === 'balls'" @mouseover.native="calculateStatus = true"
                          @mouseout.native="calculateStatus = false"

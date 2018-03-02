@@ -36,7 +36,7 @@
     </div>
     <div class="mmc-lottery-main" ref="main">
       <div class="mmc-lottery-main-open" ref="mainOpen">
-        <div class="opening-title" v-if="opening">第<span class="opening-title-inner">{{currentOpeningCount + 1}}</span>/{{currentBettingList.openingCount}}期
+        <div class="opening-title" v-if="opening">第<span class="opening-title-inner">{{currentOpeningCount}}</span>/{{currentBettingList.openingCount}}期
           正在开奖
         </div>
         <div class="opening-title cursor-pointer" v-else @click="reSelect">重新选号</div>
@@ -47,7 +47,7 @@
                 投注内容
               </span>
               <span class="font-sm m-left-sm">
-                投注<span class="text-cool">{{currentBettingList.openingCount}}</span>次，共<span class="text-prominent">{{fTotalMoney}}</span>元
+                投注<span class="text-cool">{{currentOpeningCount}}</span>次，共<span class="text-prominent">{{fTotalMoney}}</span>元
               </span>
             </div>
             <div class="opening-group" ref="previewGroup">
@@ -84,7 +84,7 @@
                 开奖结果
               </span>
               <span class="font-sm m-left-sm">
-                开奖<span class="text-cool">{{currentOpeningCount}}</span>次，中奖<animated-integer class="text-prominent"
+                开奖<span class="text-cool">{{currentOpenedCount}}</span>次，中奖<animated-integer class="text-prominent"
                                                                                               :value="fTotalWinPrize"></animated-integer>元
               </span>
             </div>
@@ -290,21 +290,21 @@
     </div>
 
     <!-- 最后开奖结果 -->
-    <div class="modal-result modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="finalResult">
-      <div class="final-result-wrapper">
-        <div class="final-result-inner sfa-mmc-winning" v-if="totalWinPrize">
-          <span class="final-result-close sfa sfa-mmc-result-close" data-dismiss="modal"></span>
-          <div class="winning-result">总计中奖金额为<br/>
-            <span class="winning-prize">{{fTotalWinPrize}}</span> 元
+    <div v-transfer-dom>
+      <x-dialog class="final-result" v-if="showFinalResult" styles="" @modal-hidden="showFinalResult = false">
+        <div slot="all" class="final-result-wrapper">
+          <div class="final-result-inner sfa-mmc-win" v-if="totalWinPrize">
+            <span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>
+            <div class="winning-result">总计中奖金额为：<span class="winning-prize">{{fTotalWinPrize}}</span> 元</div>
+          </div>
+          <div class="final-result-inner sfa-mmc-lose" v-else>
+            <span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>
+            <!--<div class="lose-result">-->
+            <!--祝您下次好运！-->
+            <!--</div>-->
           </div>
         </div>
-        <div class="final-result-inner sfa-mmc-lose" v-else>
-          <span class="final-result-close sfa sfa-mmc-result-close" data-dismiss="modal"></span>
-          <div class="lose-result">
-            祝您下次好运！
-          </div>
-        </div>
-      </div>
+      </x-dialog>
     </div>
   </div>
 </template>
@@ -382,7 +382,9 @@
         fTotalWinPrize: 0,
         totalOpeningCount: 0,
         //当前正在开奖期数
-        currentOpeningCount: 0,
+        currentOpeningCount: 1,
+        //已开奖期数
+        currentOpenedCount: 0,
 
         //中奖时停止
         stopWhenWinning: false,
@@ -406,7 +408,7 @@
         selectStatus: true,
         flashIndex: 0,
         //最后开奖结果
-        showFinalResult: true,
+        showFinalResult: false,
         //记录初始化
         recordInit: true,
 
@@ -463,12 +465,12 @@
       //总投注金额
       fTotalMoney() {
         const totalMoney = _.reduce(this.currentBettingList.bettingList, (total, previewInfo) => {
-          total += previewInfo.prefabMoney
+          total = _.add(total, previewInfo.prefabMoney)
 
           return total
         }, 0)
 
-        return _.convert2yuan(totalMoney * this.currentBettingList.openingCount)
+        return _.convert2yuan(totalMoney * (this.currentOpeningCount))
       },
 
       ...mapState({
@@ -682,25 +684,21 @@
         this.fOpeningResultList[0].completed = true
         this.totalWinPrize += this.fOpeningResultList[0].winPrize
         this.fTotalWinPrize = _.convert2yuan(this.totalWinPrize)
-        if (this.currentOpeningCount < this.totalOpeningCount - 1 && !this.stopping &&
+        if (this.currentOpeningCount < this.totalOpeningCount && !this.stopping &&
           !(this.currentBettingList.stopWhenWinning && this.fOpeningResultList[0].winPrize)) {
           ++this.currentOpeningCount
+          ++this.currentOpenedCount
           this.$_pushBetting()
         } else {
-          ++this.currentOpeningCount
+          ++this.currentOpenedCount
           this.pushing = false
           this.stopping = false
           this.opening = false
           this.$refs.bettingHisotry.update()
           Global.m.oauth.check()
 
-          this.toggleFinalResult(true)
+          this.showFinalResult = true
         }
-      },
-
-      toggleFinalResult(flag = true) {
-        $(this.$refs.finalResult).modal()
-        this.showFinalResult = flag
       },
 
       lotteryStop() {
@@ -712,7 +710,8 @@
         this.pushing = true
         this.selectStatus = false
         this.totalOpeningCount = this.currentBettingList.openingCount
-        this.currentOpeningCount = 0
+        this.currentOpeningCount = 1
+        this.currentOpenedCount = 0
         this.totalWinPrize = 0
         this.fTotalWinPrize = 0
       },
@@ -765,7 +764,7 @@
       $_formatOpeningResult(openingResult, index) {
         return Object.assign({
           index: index,
-          title: `【第${index + 1}次开奖】`,
+          title: `【第${index}次开奖】`,
           completed: false,
           fOpenCode: openingResult.openCode.split(','),
           fWinPrize: _.convert2yuan(openingResult.winPrize),
@@ -1470,32 +1469,25 @@
 
   .winning-result {
     position: relative;
-    top: 140px;
-    font-size: 18px;
+    top: 200px;
+    font-size: 16px;
     line-height: 30px;
     color: #f09932;
-    width: 130px;
-    text-align: center;
-    margin: 0 auto;
+    width: 250px;
+    margin-left: 120px;
     .winning-prize {
-      font-size: 24px;
+      font-size: 20px;
     }
   }
 
-  .lose-result {
-    color: $new-inverse-color;
-    font-size: 18px;
-    position: relative;
-    width: 139px;
-    margin: 0 auto;
-    text-align: center;
-    top: 164px;
+  .final-result {
+    background: transparent;
   }
 
   .final-result-close {
     cursor: pointer;
     position: absolute;
-    top: -23px;
+    top: 0;
     right: -10px;
   }
 

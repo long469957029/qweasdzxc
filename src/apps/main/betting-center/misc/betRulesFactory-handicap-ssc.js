@@ -509,12 +509,14 @@ function _create(ticketId) {
             {
               num: '1001',
               title: '总和大',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1097',
               title: '龙',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -523,12 +525,14 @@ function _create(ticketId) {
             {
               num: '1002',
               title: '总和小',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1098',
               title: '虎',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -537,12 +541,14 @@ function _create(ticketId) {
             {
               num: '1003',
               title: '总和单',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1099',
               title: '和',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -551,6 +557,7 @@ function _create(ticketId) {
             {
               num: '1004',
               title: '总和双',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
@@ -582,12 +589,14 @@ function _create(ticketId) {
             {
               num: '1001',
               title: '总和大',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1097',
               title: '龙',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -596,12 +605,14 @@ function _create(ticketId) {
             {
               num: '1002',
               title: '总和小',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1098',
               title: '虎',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -610,12 +621,14 @@ function _create(ticketId) {
             {
               num: '1003',
               title: '总和单',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1099',
               title: '和',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -624,6 +637,7 @@ function _create(ticketId) {
             {
               num: '1004',
               title: '总和双',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
@@ -655,12 +669,14 @@ function _create(ticketId) {
             {
               num: '1001',
               title: '总和大',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1097',
               title: '龙',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -669,12 +685,14 @@ function _create(ticketId) {
             {
               num: '1002',
               title: '总和小',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1098',
               title: '虎',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -683,12 +701,14 @@ function _create(ticketId) {
             {
               num: '1003',
               title: '总和单',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1099',
               title: '和',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -697,6 +717,7 @@ function _create(ticketId) {
             {
               num: '1004',
               title: '总和双',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
@@ -728,12 +749,14 @@ function _create(ticketId) {
             {
               num: '1001',
               title: '总和大',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1097',
               title: '龙',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -742,12 +765,14 @@ function _create(ticketId) {
             {
               num: '1002',
               title: '总和小',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1098',
               title: '虎',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -756,12 +781,14 @@ function _create(ticketId) {
             {
               num: '1003',
               title: '总和单',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1099',
               title: '和',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -770,6 +797,7 @@ function _create(ticketId) {
             {
               num: '1004',
               title: '总和双',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
@@ -801,12 +829,14 @@ function _create(ticketId) {
             {
               num: '1001',
               title: '总和大',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1097',
               title: '龙',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -815,12 +845,14 @@ function _create(ticketId) {
             {
               num: '1002',
               title: '总和小',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1098',
               title: '虎',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -829,12 +861,14 @@ function _create(ticketId) {
             {
               num: '1003',
               title: '总和单',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },
             {
               num: '1099',
               title: '和',
+              levelName: '双面盘',
               playName: '龙虎',
               showOdds: true,
             },
@@ -843,6 +877,7 @@ function _create(ticketId) {
             {
               num: '1004',
               title: '总和双',
+              levelName: '双面盘',
               playName: '总和',
               showOdds: true,
             },

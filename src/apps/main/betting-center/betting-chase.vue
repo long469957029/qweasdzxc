@@ -168,7 +168,7 @@
       totalLottery: Object
     },
 
-    data: function () {
+    data() {
       return {
         fPreviewList: [],
         singleType: true,
@@ -525,16 +525,16 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
           Global.ui.notification.show('试玩会员无法进行追号操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
           return false
         }
-        // 腾讯分分彩，金额限制1000元
-        if (this.ticketId === 31) {
-          const chasePlan = _(this.selectedChaseList).find((item) => {
-            return _(item.betMoney).formatDiv(10000) > this.ticketInfo.betAmountLimit
-          })
-          if (chasePlan) {
-            Global.ui.notification.show(`试运行期间，每期单笔投注不超过${this.ticketInfo.betAmountLimit}元。`)
-            return false
-          }
-        }
+        // // 腾讯分分彩，金额限制1000元
+        // if (this.ticketId === 31) {
+        //   const chasePlan = _(this.selectedChaseList).find((item) => {
+        //     return _(item.betMoney).formatDiv(10000) > this.ticketInfo.betAmountLimit
+        //   })
+        //   if (chasePlan) {
+        //     Global.ui.notification.show(`试运行期间，每期单笔投注不超过${this.ticketInfo.betAmountLimit}元。`)
+        //     return false
+        //   }
+        // }
 
         this.pushing = true
 
