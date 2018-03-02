@@ -880,3 +880,13 @@
     }
   }
 }
+
+.chat-emoji-container{
+  position: absolute;
+  right: 10px;
+  bottom: 40px;
+  width:100px;
+  height: 150px;
+  overflow: hidden;
+  background: gray;
+}
