@@ -1,6 +1,6 @@
 <template>
   <transition
-    @after-enter="afterEnter" :duration="{enter: 1, leave: 350}"
+    @after-enter="afterEnter"
     leave-active-class="out"
   >
     <div class="x-modal fade hide" :class="[type, styles]" ref="modal" :style="`width: ${width}`" role="dialog"
@@ -59,7 +59,6 @@
 
     methods: {
       afterEnter() {
-        console.log($(this.$refs.modal).data().modal)
         $(this.$refs.modal).modal(this.options)
           .on('hidden.modal', () => {
             this.$emit('modal-hidden')
