@@ -59,6 +59,7 @@
         height: 56px;
         position: absolute;
         right: 0;
+        top: 26px;
       }
 
       &:first-of-type {
@@ -74,6 +75,7 @@
         width: 100%;
         border-radius: 10px 10px 0 0;
         top: -3px;
+        left: 0;
         transition: height .2s, color .3s, border-radius .2s;
       }
       &:after {
@@ -82,6 +84,7 @@
         width: 100%;
         border-radius: 10px 10px 0 0;
         top: 0;
+        left: 0;
         transition: height .2s, color .3s, border-radius .2s;
       }
 

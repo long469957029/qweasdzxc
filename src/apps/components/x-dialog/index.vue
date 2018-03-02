@@ -1,9 +1,10 @@
 <template>
   <transition
-    @after-enter="afterEnter" :duration="{enter: 0}"
+    @after-enter="afterEnter" :duration="{enter: 1}"
     leave-active-class="out"
   >
-    <div class="x-modal fade hide" :class="type" ref="modal" :style="`width: ${width}`" role="dialog" aria-hidden="true">
+    <div class="x-modal fade hide" :class="[type, styles]" ref="modal" :style="`width: ${width}`" role="dialog"
+         aria-hidden="true">
       <slot name="all">
         <slot name="head">
           <div class="x-modal-header">
@@ -44,12 +45,14 @@
         type: String,
         default: ''
       },
+      styles: {
+        type: String,
+        default: 'x-modal-default'
+      },
       options: {
         type: Object,
         default() {
-          return {
-
-          }
+          return {}
         }
       }
     },
@@ -75,16 +78,18 @@
     left: 50%;
     z-index: 1050;
     transform: translate(-50%, 0) translateZ(0);
-    background-color: #fff;
-    border-radius: 6px;
     outline: 0;
-    box-shadow: 0 3px 7px rgba(0,0,0,0.3);
     background-clip: padding-box;
     color: #333333;
+    &.x-modal-default {
+      background-color: #fff;
+      border-radius: 6px;
+      box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    }
 
     &.fade {
       top: -25%;
-      transition: opacity .3s linear,top .3s ease-out;
+      transition: opacity .3s linear, top .3s ease-out;
       &.in {
         top: 10%;
       }
@@ -144,7 +149,7 @@
     border-radius: 0 0 6px 6px;
     box-shadow: inset 0 1px 0 #fff;
 
-    &:before,&:after {
+    &:before, &:after {
       display: table;
       line-height: 0;
       content: "";
