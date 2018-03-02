@@ -735,7 +735,9 @@
               return true
             }
           } else {
-            Global.ui.notification.show('号码选择不完整，请重新选择！')
+            if (checkResult) {
+              Global.ui.notification.show('号码选择不完整，请重新选择！')
+            }
             return false
           }
         }

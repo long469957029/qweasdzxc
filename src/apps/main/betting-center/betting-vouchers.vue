@@ -68,7 +68,7 @@
       },
       bettingMoney() {
         this.fList = _.chain(this.fList).each((item) => {
-          item.available = this.bettingMoney > item.betAmount
+          item.available = this.bettingMoney >= item.betAmount
           if (item.selected && !item.available) {
             item.selected = false
             this.$emit('input', {})

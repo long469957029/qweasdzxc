@@ -47,7 +47,7 @@
                 投注内容
               </span>
               <span class="font-sm m-left-sm">
-                投注<span class="text-cool">{{currentBettingList.openingCount}}</span>次，共<span class="text-prominent">{{fTotalMoney}}</span>元
+                投注<span class="text-cool">{{currentOpeningCount + 1}}</span>次，共<span class="text-prominent">{{fTotalMoney}}</span>元
               </span>
             </div>
             <div class="opening-group" ref="previewGroup">
@@ -463,12 +463,12 @@
       //总投注金额
       fTotalMoney() {
         const totalMoney = _.reduce(this.currentBettingList.bettingList, (total, previewInfo) => {
-          total += previewInfo.prefabMoney
+          total = _.add(total, previewInfo.prefabMoney)
 
           return total
         }, 0)
 
-        return _.convert2yuan(totalMoney * this.currentBettingList.openingCount)
+        return _.convert2yuan(totalMoney * (this.currentOpeningCount + 1))
       },
 
       ...mapState({

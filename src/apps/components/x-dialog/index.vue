@@ -1,8 +1,9 @@
 <template>
   <transition
+    @after-enter="afterEnter" :duration="{enter: 0}"
     leave-active-class="out"
   >
-    <div class="x-modal hide fade" :class="type" ref="modal" :style="`width: ${width}`">
+    <div class="x-modal fade hide" :class="type" ref="modal" :style="`width: ${width}`" role="dialog" aria-hidden="true">
       <slot name="all">
         <slot name="head">
           <div class="x-modal-header">
@@ -53,12 +54,15 @@
       }
     },
 
-    mounted() {
-      $(this.$refs.modal).modal(this.options)
-        .on('hidden.modal', () => {
-          this.$emit('modal-hidden')
-        })
+    methods: {
+      afterEnter() {
+        $(this.$refs.modal).modal(this.options)
+          .on('hidden.modal', () => {
+            this.$emit('modal-hidden')
+          })
+      },
     },
+
     beforeDestroy() {
       $(this.$refs.modal).modal('hide')
     }
@@ -68,7 +72,6 @@
 <style lang="scss" scoped>
   .x-modal {
     position: fixed;
-    top: 10%;
     left: 50%;
     z-index: 1050;
     transform: translate(-50%, 0) translateZ(0);
