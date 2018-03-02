@@ -111,8 +111,14 @@
       return {
         showDoingTask: false,
         planList: '',
-        minRecharge: 0,
-        curItem: '',
+        minRecharge: 0.00,
+        curItem: {
+          betMulti: 0,
+          bonusRate: 0,
+          index: 0,
+          maxBonus: 0,
+          status: 0,
+        },
         betTotal: 0,
         rechargeTotal: 0,
         rechargeExp: 10000,
@@ -193,7 +199,7 @@
         this.planList = data.root.itemList
         this.rechargeTotal = data.root.rechargeTotal === 0 ? '0.00' : _(data.root.rechargeTotal).convert2yuan()
         this.betTotal = data.root.betTotal ? '0.00' : _(data.root.betTotal).convert2yuan()
-        this.minRecharge = data.root.recharge ? '0.00' : _(data.root.recharge).convert2yuan()
+        this.minRecharge = _(data.root.recharge).convert2yuan()
         this.fromTime = _(data.root.fromDate).toDate('M月D日')
         this.endTime = _(data.root.endDate).toDate('M月D日')
 

@@ -676,6 +676,7 @@
             .select-sub-item {
               padding: 7px 0;
               cursor: pointer;
+              position: relative;
               .select-sub-item-isSelect {
                 margin-right: 20px;
                 color: #999999;
@@ -692,21 +693,21 @@
                 width: 14px;
                 height: 14px;
                 vertical-align: middle;
-                margin-left: 52px;
-                position: relative;
-                margin-top: 2px;
                 border: 1px solid #e6e6e6;
+                right: 10px;
+                position: absolute;
+                margin-top: 10px;
               }
               .sub-item-checkbox {
                 border-radius: 50px;
                 width: 14px;
                 height: 14px;
                 vertical-align: middle;
-                margin-left: 52px;
-                position: relative;
-                margin-top: 2px;
                 background: #14b1bb;
                 border: 1px solid #129ea7;
+                right: 10px;
+                position: absolute;
+                margin-top: 10px;
               }
               .sub-item-checkbox:after {
                 content: '\A0';
