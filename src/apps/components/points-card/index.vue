@@ -15,8 +15,9 @@
           <div class="card-left" v-if="formateCardLeft"><!--displayType:mall 只在积分商城可兑换时显示，侧边栏不显示-->
             剩{{couponInfo.maxNum - couponInfo.useNum}}张
           </div>
-          <div class="card-time-end" v-if="formateCardTimeEnd"><div class="card-time-end-txt" :class="['card-time-end-'+cardInfo.type, style]">即将到期</div></div><!--即将到期-->
-
+          <div :class="['card-time-end',{'lg': isMyCoupon}]" v-if="formateCardTimeEnd">
+            <div class="card-time-end-txt" :class="['card-time-end-'+cardInfo.type, style]">即将到期</div>
+          </div><!--即将到期-->
           <div class="sfa-finished"></div>
           <div class="sfa-grab-finished"></div>
         </div>
@@ -53,8 +54,9 @@
                   <span class="sfa sfa-points"></span>
                   {{couponInfo.requireIntegral | convert2yuan}}积分
                 </div>
-                <div class="points-value" v-else="displayType === 'mall' && isMyCoupon">
-                  <span class="m-right-xs">编号</span>{{couponInfo.couponToken}}
+                <div class="points-value" v-else-if="displayType === 'mall' && isMyCoupon">
+                  <span class="cursor-pointer" :data-clipboard-text="couponInfo.couponToken"
+                        ref="couponCopy">复制编号</span>
                 </div>
               </div>
             </div>
@@ -72,6 +74,7 @@
 <script>
   import Countdown from '../countdown/index.vue'
   import checkLogin from '../../mixins/check-login'
+  const Clipboard = require('clipboard')
   import {formatCoupon} from 'build'
 
   const CARD_TYPE = {
@@ -128,7 +131,8 @@
         return this.displayType === 'mall' && this.couponInfo.couponStatus === 1 && this.couponInfo.maxNum && !this.isMyCoupon
       },
       formateCardTimeEnd(){
-        return this.couponInfo.status === 0 && (this.displayType === 'show' || this.isMyCoupon) && (_(this.couponInfo.validEndDate).sub(this.couponInfo.sysTime) < 10800000)
+        return this.couponInfo.status === 0 && (this.displayType === 'show' || this.isMyCoupon)
+          && (_(this.couponInfo.validEndDate).sub(this.couponInfo.sysTime) < 10800000)
       },
       formatCouponInfo() {
         return formatCoupon({
@@ -169,8 +173,16 @@
             this.showBtn = flag
           }
         }
-      }
+      },
     },
+    mounted(){
+      if(this.isMyCoupon){
+        const clipboard = new Clipboard(this.$refs.couponCopy);
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        });
+      }
+    }
   }
 </script>
 
@@ -372,12 +384,49 @@
       text-align: center;
     }
     .card-time-end {
-      background: url(./card-time-end-lg.png);
-      width: 70px;
-      height: 66px;
+      background: url(./card-time-end.png) no-repeat;
+      width: 57px;
+      height: 53px;
       position: absolute;
-      top: -16px;
-      right: -7px;
+      top: -7px;
+      right: 0;
+      overflow: hidden;
+      &.lg{
+        background: url(./card-time-end-lg.png) no-repeat;
+        width: 70px;
+        height: 66px;
+        top: -16px;
+        right: -7px;
+        .card-time-end-txt {
+          margin-left: 8px;
+          margin-top: 16px;
+          transform: rotate(43deg);
+        }
+      }
+      .card-time-end-txt {
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        transform: rotate(45deg);
+        margin-left: 9px;
+        margin-top: 10px;
+      }
+      .card-time-end-green {
+        /*color: #12bebe;*/
+        color: $green;
+      }
+      .card-time-end-gold {
+        /*color: #4182d4;*/
+        color: $gold;
+      }
+      .card-time-end-red {
+        /*color: #d25c5c;*/
+        color: $red;
+      }
+      .card-time-end-blue {
+        /*color: #cc985c;*/
+        color: $blue;
+      }
     }
   }
   .show {
@@ -396,39 +445,6 @@
         height: 140px;
         margin: 0px;
         padding: 20px 0 10px 27px;
-        .card-time-end {
-          background: url(./card-time-end.png);
-          width: 57px;
-          height: 53px;
-          position: absolute;
-          top: -7px;
-          right: 0;
-          overflow: hidden;
-          .card-time-end-txt {
-            width: 100%;
-            text-align: center;
-            font-size: 12px;
-            transform: rotate(45deg);
-            margin-left: 9px;
-            margin-top: 10px;
-          }
-          .card-time-end-green {
-            /*color: #12bebe;*/
-            color: $green;
-          }
-          .card-time-end-gold {
-            /*color: #4182d4;*/
-            color: $gold;
-          }
-          .card-time-end-red {
-            /*color: #d25c5c;*/
-            color: $red;
-          }
-          .card-time-end-blue {
-            /*color: #cc985c;*/
-            color: $blue;
-          }
-        }
         .points-top {
           padding-top: 8px;
           padding-bottom: 0px;

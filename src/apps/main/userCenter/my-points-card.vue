@@ -129,6 +129,7 @@
       searchCoupon(){
         if(this.couponToken !== ''){
           this.pageIndex = 0
+          this.couponStatus = -1
           this.getCouponList()
         }else{
           this.$refs.searchInput.focus()
