@@ -316,10 +316,15 @@ const SyncModule = Base.Module.extend({
         return ajaxOptions.url.indexOf(item) >= 0
       })
       if (changeTokenUrl === undefined) { //试玩账户，未特定要求的接口需要通过配置的通用token获取正式数据
-        ajaxOptions.data = _.extend({
-          token: window.store.state.components.universalToken,
-          tpName: window.store.state.loginStore.username,//试玩用户调用正式接口时，传递试玩用户名
-        }, ajaxOptions.data)
+        if (ajaxOptions.data instanceof FormData) {
+          ajaxOptions.data.append('token', window.store.state.components.universalToken)
+          ajaxOptions.data.append('tpName', window.store.state.loginStore.username)
+        } else {
+          ajaxOptions.data = _.extend({
+            token: window.store.state.components.universalToken,
+            tpName: window.store.state.loginStore.username,//试玩用户调用正式接口时，传递试玩用户名
+          }, ajaxOptions.data)
+        }
       } else {
         let host = _.getDomainWithNewPrefix(window.store.state.components.testServerPrefix)
         ajaxOptions.url = host + ajaxOptions.url
@@ -334,7 +339,7 @@ const SyncModule = Base.Module.extend({
       if (!window.store.getters.loginDialogStatus && !authorizeChecking ) {
         Global.memoryCache.set('authorizeChecking', true)
         Global.ui.notification.show('您的账户已登出,请重新登录！', {
-          bStyle:'box-shadow: 0px 0px 6px 3px #ccc',
+          modalDialogShadow:'modal-dialog-shadow',
           event: function () {
             window.store.commit(types.USER_LOGOUT_SUCCESS,{result:0})
             Global.memoryCache.set('authorizeChecking', false)

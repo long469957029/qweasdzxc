@@ -15,7 +15,8 @@
           <div class="card-left" v-if="formateCardLeft"><!--displayType:mall 只在积分商城可兑换时显示，侧边栏不显示-->
             剩{{couponInfo.maxNum - couponInfo.useNum}}张
           </div>
-          <div class="card-time-end" v-if="formateCardTimeEnd"></div><!--即将到期-->
+          <div class="card-time-end" v-if="formateCardTimeEnd"><div class="card-time-end-txt" :class="['card-time-end-'+cardInfo.type, style]">即将到期</div></div><!--即将到期-->
+
           <div class="sfa-finished"></div>
           <div class="sfa-grab-finished"></div>
         </div>
@@ -58,7 +59,8 @@
               </div>
             </div>
             <div v-show="showBtn" key="exchange" class="points-bottom-btn">
-              <button class="btn btn-white exchange-btn" v-if="couponInfo.couponStatus === 1" @click="$emit('exchange', formatCouponInfo)">立即兑换</button>
+              <button class="btn btn-white exchange-btn" v-if="couponInfo.couponStatus === 1"
+                      @click="isLogin ? $emit('exchange', formatCouponInfo) : login()">立即兑换</button>
             </div>
           </transition-group>
         </div>
@@ -69,6 +71,7 @@
 
 <script>
   import Countdown from '../countdown/index.vue'
+  import checkLogin from '../../mixins/check-login'
   import {formatCoupon} from 'build'
 
   const CARD_TYPE = {
@@ -94,6 +97,8 @@
 
   export default {
     name: 'points-card',
+
+    mixins: [checkLogin],
 
     components: {
       Countdown,
@@ -398,6 +403,31 @@
           position: absolute;
           top: -7px;
           right: 0;
+          overflow: hidden;
+          .card-time-end-txt {
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            transform: rotate(45deg);
+            margin-left: 9px;
+            margin-top: 10px;
+          }
+          .card-time-end-green {
+            /*color: #12bebe;*/
+            color: $green;
+          }
+          .card-time-end-gold {
+            /*color: #4182d4;*/
+            color: $gold;
+          }
+          .card-time-end-red {
+            /*color: #d25c5c;*/
+            color: $red;
+          }
+          .card-time-end-blue {
+            /*color: #cc985c;*/
+            color: $blue;
+          }
         }
         .points-top {
           padding-top: 8px;

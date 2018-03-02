@@ -15,6 +15,7 @@ const DialogModule = Base.Module.extend({
       size: '',
       closeBtn: true,
       bStyle: '',
+      modalDialogShadow: '',
     })
 
     if (!options.id) {
@@ -43,7 +44,7 @@ const DialogModule = Base.Module.extend({
     html.push(id)
     html.push(`" tabindex="-1" role="dialog" aria-labelledby="${id}Label" aria-hidden="true">`)
 
-    html.push(`<div class="modal-dialog ${options.size}" style="${dStyle}${pStyle}${options.bStyle}"`)
+    html.push(`<div class="modal-dialog ${options.size} ${options.modalDialogShadow}" style="${dStyle}${pStyle}${options.bStyle}"`)
     html.push('<div class="modal-content">')
     if(options.specialClose){
       html.push(options.specialClose)

@@ -28,15 +28,20 @@
         兑换积分：
         <span class="card-points-val">{{requireIntegral | convert2yuan}}</span>
       </div>
-      <button class="btn btn-exchange-btn" @click="$emit('exchange')">立即兑换</button>
+      <button class="btn btn-exchange-btn" @click="isLogin ? $emit('exchange') : login()">立即兑换</button>
     </div>
     <div class="gift-masking" :class="{finished: isFinished}"></div>
   </div>
 </template>
 
 <script>
+
+  import {checkLogin} from 'build'
+
   export default {
     name: 'gift-card',
+
+    mixins: [checkLogin],
 
     props: [
       'itemDesc',

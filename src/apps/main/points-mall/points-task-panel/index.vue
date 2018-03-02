@@ -48,7 +48,7 @@
             </template>
           </span>
           <span slot="icon" class="sfa" :class="`sfa-pt-${task.icon}`"></span>
-          <button slot="btn" class="receive-btn btn"
+          <button slot="btn" class="receive-btn btn week"
                   :class="{'received-btn': task.receiveState === ReceiveState.RECEIVED}" @click="receive($event, task)"
                   :disabled="task.receiveState === ReceiveState.RECEIVED || task.receiveState === ReceiveState.CANT_RECEIVE">
             {{task.receiveState === ReceiveState.RECEIVED ? '已领取' : '立即领取'}}
@@ -159,7 +159,7 @@
       },
       receive($event, {termId, termBonusType}) {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{bStyle:'box-shadow: 0px 0px 6px 3px #ccc'})
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
           return false
         }
         let html = '恭喜您成功领取积分'
@@ -277,6 +277,8 @@
     border: 1px solid #808da6;
     background-color: #808da6;
     border-radius: 15px;
+
+
     &[disabled] {
       background-color: #ced7ea;
       border: 1px solid #ced7ea;
@@ -284,6 +286,14 @@
       color: #ffffff;
       cursor: not-allowed;
       opacity: 1;
+      &.week {
+        border: 1px solid #eedcc7;
+        background-color: #eedcc7;
+      }
+    }
+    &.week {
+      border: 1px solid #d9a262;
+      background-color: #d9a262;
     }
 
     &.received-btn {

@@ -281,7 +281,7 @@
               }
             }
             .fc-rc-leftBar-payMoney-fee {
-              margin: 25px 0;
+              margin: 42px 0 -26px;
               li {
                 list-style: none;
                 display: inline-block;
@@ -291,7 +291,7 @@
             }
 
             .fc-rc-leftBar-submit {
-              margin-top: 25px;
+              margin-top: 60px;
               .btn-fc-submit {
                 width: 360px;
                 height: 55px;
@@ -945,7 +945,7 @@
             }
           }
           .fc-rc-leftBar-submit {
-            margin-top: 25px;
+            margin-top: 60px;
           }
         }
         .fc-tr-amount-tips {
@@ -1114,6 +1114,9 @@
             .js-wd-bank-selected {
               height: 50px !important;
             }
+            .wd-bank-selectedItem{
+              height: 50px;
+            }
             .js-wd-bank-items {
               border-top: 1px solid #e6e6e6;
             }
@@ -1265,7 +1268,7 @@
             color: #999999;
           }
           .fc-wd-submit {
-            margin-top: 25px;
+            margin-top: 60px;
           }
 
         }

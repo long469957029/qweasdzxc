@@ -1,47 +1,63 @@
 <div class="chat-massMessageChat">
   <div class="chat-massMessageChat-panel">
-  <div class="chat-title">
-    <span class="chat-title-lg">群发消息</span>
-    <input class="js-mess-groupId hidden">
-    <button class="btn js-select-panel-hidden btn-chat-hidden pull-right">隐藏联系人</button>
-    <button class="btn js-select-panel-show btn-chat-hidden pull-right hidden">查看联系人</button>
+    <div class="chat-title">
+      <span class="chat-title-lg">群发消息</span>
+      <input class="js-mess-groupId hidden">
+      <!--<button class="btn js-select-panel-hidden btn-chat-hidden pull-right">隐藏联系人</button>-->
+      <div class="js-select-panel-show chat-mess-add pull-right">
+        <span class="btn-chat-hidden-logo sfa sfa-icon-mess-contacts"></span>
+        <span class="btn-chat-hidden">添加联系人</span>
+      </div>
+      <div class="js-select-panel-edit chat-mess-edit pull-right hidden">
+        <span class="btn-chat-edit-logo sfa sfa-icon-mess-add"></span>
+        <span class="btn-chat-edit"><span class="js-select-panel-edit-num btn-chat-edit-num">0</span>个联系人</span>
+        <span class="btn-chat-edit-img">
+                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="chat-message-content">
+      <div class="js-mess-message-content chat-message-content-panel">
+      </div>
+    </div>
+    <div class="chat-message-footer">
+      <div class="chat-footer-input ">
+        <div class="js-content-editable content-editable" contenteditable="true"></div>
+        <textarea v-model="deliveryLocation" class="js-mess-input chat-input" placeholder="请输入要发送的信息"
+                  data-type="mass"></textarea>
+      </div>
+      <div class="sfa sfa-icon-smile-gray chat-footer-smile inline-block"></div>
+      <div class="sfa sfa-icon-send-gray js-mess-footer-send chat-footer-send inline-block"></div>
+    </div>
   </div>
   <div class="chat-select-container">
     <div class="chat-person-panel chat-select-panel inline-block">
-      <div class="chat-person-panel-title">
-        <span class="panel-title-text">选择发送人</span>
-        <button class="js-mess-select-allContact btn btn-panel-title pull-right">全选</button>
+      <div class="js-chat-person-panel-title chat-person-panel-title">
+        <span class="panel-title-text">+</span>
+        <span class="panel-title-text">添加联系人</span>
+        <label class="js-mess-select-allContact panel-title-checkbox-panel"></label>
+        <label class="js-mess-selected-allContact panel-title-checkbox inline-block hidden">
+          <checkbox></checkbox>
+        </label>
+        <span>全选</span>
       </div>
-      <div class="search-panel">
-        <span class="sfa sfa-icon-search-sm search-panel-img"></span>
+      <div class="js-chat-person-panel-title-edit chat-person-panel-title edit hidden">
+        <span class="panel-title-text">联系人</span>
+        <span class="js-mess-contact-num panel-title-text">0</span>
+        <span class="panel-title-text">个</span>
+        <span class="close btn-close panel-title-close js-mess-contact-cancel">×</span>
+      </div>
+      <div class="js-search-panel search-panel">
+        <span class="sfa sfa-icon-search-lg search-panel-img"></span>
         <input class="js-mess-search-panel-search search-panel-input" placeholder="搜索">
       </div>
       <div class="js-mess-select-container select-container">
       </div>
     </div>
-    <div class="chat-select-img  inline-block"><span class="sfa sfa-icon-sub-right chat-select-img-area"></span></div>
-    <div class="chat-person-panel chat-selected-panel inline-block">
-      <div class="chat-person-panel-title">
-        <span class="chat-person-panel-title">已添加</span>
-        <button class="js-mess-clear-allContact btn btn-panel-title pull-right">全清</button>
-      </div>
-      <div class="selected-sub-container">
-        <div class="js-selected-sub-items selected-sub-items">
-        </div>
-      </div>
+    <div class="js-mess-select-container-footer select-container-footer">
+      <div class="js-mess-contact-add mess-contact-add inline-block">添加</div>
+      <div class="js-mess-contact-cancel mess-contact-cancel inline-block">取消</div>
     </div>
   </div>
-  <div class="chat-message-content">
-    <div class="js-mess-message-content chat-message-content-panel">
-    </div>
-  </div>
-  <div class="chat-message-footer">
-    <div class="chat-footer-input ">
-      <div class="js-content-editable content-editable" contenteditable="true"></div>
-      <textarea v-model="deliveryLocation" class="js-mess-input chat-input" placeholder="请输入要发送的信息" data-type="mass"></textarea>
-    </div>
-    <div class="sfa sfa-icon-smile-gray chat-footer-smile inline-block"></div>
-    <div class="sfa sfa-icon-send-gray js-mess-footer-send chat-footer-send inline-block"></div>
-  </div>
-</div>
 </div>

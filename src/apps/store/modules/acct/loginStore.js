@@ -70,8 +70,14 @@ const getters = {
   getLoginStatus: (state) => {
     return state.userId > 0
   },
+  isLogin: (state) => {
+    return state.userId > 0
+  },
   getUserInfo: (state) => {
     return state
+  },
+  getUserType: (state) => {
+    return state.userType === 0
   },
   checkPermission: (state) => (path) => {
     let isPass = true
@@ -138,7 +144,10 @@ const mutations = {
 
     window.Global.m.publish('acct:updating', data)
 
-    data.fBalance = data.balance === 0 ? _(data.balance).convert2yuan({fixed:2,clear:false}) : _(data.balance).convert2yuan()
+    data.fBalance = data.balance === 0 ? _(data.balance).convert2yuan({
+      fixed: 2,
+      clear: false
+    }) : _(data.balance).convert2yuan()
     data.fLastLoginTime = _(data.lastLoginTime).toTime()
     data.fLoginTime = _(data.loginTime).toTime()
     data.headIcon = _(data.headIcon).toString()

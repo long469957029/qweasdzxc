@@ -86,7 +86,7 @@ const BetDetailView = Base.ItemView.extend({
     this.$('.js-cd-info-total-no').html(info.chaseAllPeriods)
     this.$('.js-cd-info-isStop').html(Number(info.suspend) ? '是' : '否')
     const playData = info.chaseTicketPlayDetail[0]
-    this.$('.js-cd-content-play').html(`${playData.ticketLevelName}-${playData.ticketGroupName}-${playData.ticketPlayName}`)
+    this.$('.js-cd-content-play').html(playData.playName)
     let betMethod = ''
     if (info.chaseTicketPlayDetail[0].moneyMethod === 10000) {
       betMethod = 2

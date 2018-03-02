@@ -1,5 +1,5 @@
 <template>
-  <div class="width-100 bc-play-main">
+  <div class="width-100 bc-play-main" ref="openingArea">
     <div class="relative">
       <div class="sfa sfa-mmc-outer-border"></div>
       <div class="opening-panel-inner" :class="!selectStatus ? 'sfa-mmc-content-opening' : 'sfa-mmc-content-top'">
@@ -47,7 +47,7 @@
                 投注内容
               </span>
               <span class="font-sm m-left-sm">
-                投注<span class="text-cool">{{currentBettingList.openingCount}}</span>次，共<span class="text-prominent">{{fTotalMoney}}</span>元
+                投注<span class="text-cool">{{currentOpeningCount}}</span>次，共<span class="text-prominent">{{fTotalMoney}}</span>元
               </span>
             </div>
             <div class="opening-group" ref="previewGroup">
@@ -84,7 +84,7 @@
                 开奖结果
               </span>
               <span class="font-sm m-left-sm">
-                开奖<span class="text-cool">{{currentOpeningCount}}</span>次，中奖<animated-integer class="text-prominent"
+                开奖<span class="text-cool">{{currentOpenedCount}}</span>次，中奖<animated-integer class="text-prominent"
                                                                                               :value="fTotalWinPrize"></animated-integer>元
               </span>
             </div>
@@ -275,36 +275,36 @@
     <div class="sfa-mmc-content-bottom">
       <button class="bottom-lg-btn sfa sfa-mmc-start-lg-btn no-border"
               v-if="selectStatus" @click="lotteryTotalConfirm"
-              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending || simulationOpen">
       </button>
       <button class="bottom-lg-btn sfa sfa-mmc-stopping-btn no-border" v-else-if="stopping"
-              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending || simulationOpen">
       </button>
       <button class="bottom-lg-btn sfa sfa-mmc-stop-btn no-border"
               v-else-if="opening" @click="lotteryStop"
-              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending || simulationOpen">
       </button>
       <button class="bottom-lg-btn sfa sfa-mmc-again-btn no-border" v-else @click="lotteryConfirmAgain"
-              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+              :disabled="pushing || !bettingInfo.sale || bettingInfo.pending || simulationOpen">
       </button>
     </div>
 
     <!-- 最后开奖结果 -->
-    <div class="modal-result modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="finalResult">
-      <div class="final-result-wrapper">
-        <div class="final-result-inner sfa-mmc-winning" v-if="totalWinPrize">
-          <span class="final-result-close sfa sfa-mmc-result-close" data-dismiss="modal"></span>
-          <div class="winning-result">总计中奖金额为<br/>
-            <span class="winning-prize">{{fTotalWinPrize}}</span> 元
+    <div v-transfer-dom>
+      <x-dialog class="final-result" v-if="showFinalResult" styles="" @modal-hidden="showFinalResult = false">
+        <div slot="all" class="final-result-wrapper">
+          <div class="final-result-inner sfa-mmc-win" v-if="totalWinPrize">
+            <span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>
+            <div class="winning-result">总计中奖金额为：<span class="winning-prize">{{fTotalWinPrize}}</span> 元</div>
+          </div>
+          <div class="final-result-inner sfa-mmc-lose" v-else>
+            <span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>
+            <!--<div class="lose-result">-->
+            <!--祝您下次好运！-->
+            <!--</div>-->
           </div>
         </div>
-        <div class="final-result-inner sfa-mmc-lose" v-else>
-          <span class="final-result-close sfa sfa-mmc-result-close" data-dismiss="modal"></span>
-          <div class="lose-result">
-            祝您下次好运！
-          </div>
-        </div>
-      </div>
+      </x-dialog>
     </div>
   </div>
 </template>
@@ -383,6 +383,8 @@
         totalOpeningCount: 0,
         //当前正在开奖期数
         currentOpeningCount: 1,
+        //已开奖期数
+        currentOpenedCount: 0,
 
         //中奖时停止
         stopWhenWinning: false,
@@ -406,7 +408,7 @@
         selectStatus: true,
         flashIndex: 0,
         //最后开奖结果
-        showFinalResult: true,
+        showFinalResult: false,
         //记录初始化
         recordInit: true,
 
@@ -463,12 +465,12 @@
       //总投注金额
       fTotalMoney() {
         const totalMoney = _.reduce(this.currentBettingList.bettingList, (total, previewInfo) => {
-          total += previewInfo.prefabMoney
+          total = _.add(total, previewInfo.prefabMoney)
 
           return total
         }, 0)
 
-        return _.convert2yuan(totalMoney * this.currentBettingList.openingCount)
+        return _.convert2yuan(totalMoney * (this.currentOpeningCount))
       },
 
       ...mapState({
@@ -486,7 +488,16 @@
       opening: {
         handler(current) {
           if (current) {
-            this.mainHeight = this.$refs.main.offsetHeight
+
+            if (!this.mainHeight) {
+              this.mainHeight = this.$refs.main.offsetHeight
+            }
+
+
+            Velocity(document.body, 'scroll', {
+              offset: this.$refs.openingArea.getBoundingClientRect().top - document.documentElement.getBoundingClientRect().top,
+              mobileHA: false
+            })
 
             Velocity(this.$refs.main, {
               height: 500
@@ -509,6 +520,9 @@
 
           Velocity(this.$refs.main, {
             height: this.mainHeight,
+            complete: () => {
+              this.$refs.main.style.height = 'auto'
+            }
           })
           Velocity(this.$refs.mainInner, {
             opacity: 1,
@@ -673,21 +687,18 @@
         if (this.currentOpeningCount < this.totalOpeningCount && !this.stopping &&
           !(this.currentBettingList.stopWhenWinning && this.fOpeningResultList[0].winPrize)) {
           ++this.currentOpeningCount
+          ++this.currentOpenedCount
           this.$_pushBetting()
         } else {
+          ++this.currentOpenedCount
           this.pushing = false
           this.stopping = false
           this.opening = false
           this.$refs.bettingHisotry.update()
           Global.m.oauth.check()
 
-          this.toggleFinalResult(true)
+          this.showFinalResult = true
         }
-      },
-
-      toggleFinalResult(flag = true) {
-        $(this.$refs.finalResult).modal()
-        this.showFinalResult = flag
       },
 
       lotteryStop() {
@@ -700,6 +711,7 @@
         this.selectStatus = false
         this.totalOpeningCount = this.currentBettingList.openingCount
         this.currentOpeningCount = 1
+        this.currentOpenedCount = 0
         this.totalWinPrize = 0
         this.fTotalWinPrize = 0
       },
@@ -1457,32 +1469,25 @@
 
   .winning-result {
     position: relative;
-    top: 140px;
-    font-size: 18px;
+    top: 200px;
+    font-size: 16px;
     line-height: 30px;
     color: #f09932;
-    width: 130px;
-    text-align: center;
-    margin: 0 auto;
+    width: 250px;
+    margin-left: 120px;
     .winning-prize {
-      font-size: 24px;
+      font-size: 20px;
     }
   }
 
-  .lose-result {
-    color: $new-inverse-color;
-    font-size: 18px;
-    position: relative;
-    width: 139px;
-    margin: 0 auto;
-    text-align: center;
-    top: 164px;
+  .final-result {
+    background: transparent;
   }
 
   .final-result-close {
     cursor: pointer;
     position: absolute;
-    top: -23px;
+    top: 0;
     right: -10px;
   }
 

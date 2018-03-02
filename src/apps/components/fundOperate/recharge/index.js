@@ -221,7 +221,7 @@ const RechargeView = Base.ItemView.extend({
   // 点击充值确定按钮下一步操作判断
   nextStepHandler() {
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-      Global.ui.notification.show('试玩会员无法进行充值操作，请先注册正式游戏账号',{bStyle:'box-shadow: 0px 0px 6px 3px #ccc'})
+      Global.ui.notification.show('试玩会员无法进行充值操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
       return false
     }
     const paymentId = this.$('.js-fc-rc-payType-selectedItem').data('type')
