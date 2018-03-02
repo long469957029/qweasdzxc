@@ -47,10 +47,11 @@ $.widget('gl.confirm', {
 
       data = {
         size: 'modal-sm',
-        modalClass: 'modal-notification',
+        modalClass: 'modal-notification modal-dialog-shadow ',
         id: this.uuid,
         body: body.join(''),
-        closeBtn: this.options.closeBtn
+        closeBtn: this.options.closeBtn,
+        modalDialogShadow: this.options.closeBtn,
       }
     }
 

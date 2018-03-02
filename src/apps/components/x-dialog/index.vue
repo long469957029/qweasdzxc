@@ -1,6 +1,6 @@
 <template>
   <transition
-    @after-enter="afterEnter" :duration="{enter: 1}"
+    @after-enter="afterEnter"
     leave-active-class="out"
   >
     <div class="x-modal fade hide" :class="[type, styles]" ref="modal" :style="`width: ${width}`" role="dialog"
@@ -63,6 +63,13 @@
           .on('hidden.modal', () => {
             this.$emit('modal-hidden')
           })
+          .on('show', () => {
+            $(this.$refs.modal).addClass('in')
+          })
+          .on('shown', () => {
+            $(this.$refs.modal).addClass('in')
+          })
+
       },
     },
 
@@ -93,7 +100,7 @@
       &.in {
         top: 10%;
       }
-      &.out {
+      &.v-out {
         top: -25%;
         opacity: 0;
       }

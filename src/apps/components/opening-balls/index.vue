@@ -1,5 +1,5 @@
 <template>
-  <div class="opening-balls">
+  <div class="opening-balls" :class="sizeStyle">
     <div class="ball-item-wrapper" v-for="i in counts" :key="i">
       <div class="text-circle">
         <div class="ball-item" ref="balls">
@@ -39,6 +39,10 @@
       autoStopRolling: {
         type: Boolean,
         default: true
+      },
+      size: {
+        type: String,
+        default: 'normal'
       }
     },
     data() {
@@ -47,6 +51,12 @@
         init: true,
         totalHeight: 0,
         perHeight: 0,
+      }
+    },
+
+    computed: {
+      sizeStyle() {
+        return this.size === 'normal' ? '' : 'sm'
       }
     },
 
@@ -76,10 +86,17 @@
       },
       '$route': {
         handler() {
-          this.totalHeight = this.$refs.balls[0].offsetHeight / 2
-          this.perHeight = this.totalHeight / this.range.length
           this.rollingStatus = R.repeat(false, this.counts)
           this.init = true
+        }
+      },
+      sizeStyle: {
+        handler() {
+          this.$nextTick(() => {
+            this.$_updateSize()
+            this.$_setInit()
+            this.init = true
+          })
         }
       }
     },
@@ -132,7 +149,7 @@
       },
 
       $_getDes(i) {
-        return -this.perHeight * _.indexOf(this.range, this.openingBalls[i])
+        return -this.perHeight * _.indexOf(this.range, this.openingBalls[i] ? this.openingBalls[i] : this.defaultOpening[i])
       },
 
       _rolling(ball, i, init = false) {
@@ -147,12 +164,15 @@
             }
           }
         })
+      },
+      $_updateSize() {
+        this.totalHeight = this.$refs.balls[0].offsetHeight / 2
+        this.perHeight = this.totalHeight / this.range.length
       }
     },
 
     mounted() {
-      this.totalHeight = this.$refs.balls[0].offsetHeight / 2
-      this.perHeight = this.totalHeight / this.range.length
+      this.$_updateSize()
     }
   }
 </script>
@@ -175,15 +195,15 @@
         background: rgba(0, 0, 0, 0.15);
         box-shadow: 0 0 20px rgba(0, 0, 0, 1);
         position: absolute;
-        top: 45px;
-        left: 11px;
-        transform: rotateX(65deg);
+        bottom: 5px;
+        left: 0;
+        transform: rotateX(65deg) translateX(50%);
       }
-      &:nth-of-type(n + 6) {
-        .text-circle {
-          margin-bottom: 0;
-        }
-      }
+      /*&:nth-of-type(n + 6) {*/
+        /*.text-circle {*/
+          /*margin-bottom: 0;*/
+        /*}*/
+      /*}*/
     }
 
     .ball-item {
@@ -200,6 +220,21 @@
       height: 40px;
       line-height: 40px;
       text-align: center;
+    }
+
+    &.sm {
+      .text-circle {
+        margin-right: 14px;
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
+        line-height: 36px;
+      }
+
+      .text-circle-num {
+        height: 36px;
+        width: 36px;
+      }
     }
   }
 
