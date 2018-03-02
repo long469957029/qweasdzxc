@@ -162,6 +162,8 @@
 
         this.showCheckModal = hasError
 
+        this.blurInput()
+
         return !hasError
       },
 
