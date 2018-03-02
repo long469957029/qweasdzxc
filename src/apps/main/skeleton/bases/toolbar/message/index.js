@@ -163,8 +163,11 @@ const MessageView = Base.ItemView.extend({
     this.$('.js-contact-admin').html(imService.getAdmin(acPerson))
     // 显示上级状态
     this.$('.js-contact-superior').html(imService.getSuperior(data.parent, acPerson))
-    // 显示下级列表
-    this.$('.js-person-sub-container').html(imService.getItemsHtml(data.subList, this.parentId, acPerson))
+    // 显示下级列表，如果不是玩家用户，显示我的下级列表
+    if(window.store.getters.getUserType){
+      this.$('.js-person-sub-title').removeClass('hidden')
+      this.$('.js-person-sub-container').html(imService.getItemsHtml(data.subList, this.parentId, acPerson))
+    }
   },
 
   // 私聊涉及方法
