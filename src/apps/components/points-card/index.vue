@@ -12,10 +12,10 @@
             LV{{couponInfo.levelLimit}}
             <template v-if="1 === couponInfo.limitLevelType">以上</template>
           </div>
-          <div class="card-left" v-if="displayType === 'mall' && couponInfo.couponStatus === 1 && couponInfo.maxNum"><!--displayType:mall 只在积分商城可兑换时显示，侧边栏不显示-->
+          <div class="card-left" v-if="formateCardLeft"><!--displayType:mall 只在积分商城可兑换时显示，侧边栏不显示-->
             剩{{couponInfo.maxNum - couponInfo.useNum}}张
           </div>
-          <div class="card-time-end" v-if="displayType === 'show' && (couponInfo.validEndDate-couponInfo.sysTime)<10800000"></div><!--即将到期-->
+          <div class="card-time-end" v-if="formateCardTimeEnd"></div><!--即将到期-->
           <div class="sfa-finished"></div>
           <div class="sfa-grab-finished"></div>
         </div>
@@ -48,9 +48,12 @@
                 <div class="points-expire" v-else>
                   {{couponInfo.validStartDate | toTime('MM.DD H:mm')}}-{{couponInfo.validEndDate | toTime('MM.DD H:mm')}}
                 </div>
-                <div class="points-value" v-if="displayType === 'mall'">
+                <div class="points-value" v-if="displayType === 'mall' && !isMyCoupon">
                   <span class="sfa sfa-points"></span>
                   {{couponInfo.requireIntegral | convert2yuan}}积分
+                </div>
+                <div class="points-value" v-else="displayType === 'mall' && isMyCoupon">
+                  <span class="m-right-xs">编号</span>{{couponInfo.couponToken}}
                 </div>
               </div>
             </div>
@@ -103,6 +106,10 @@
       displayType: {
         type: String,
         default: 'mall'
+      },
+      isMyCoupon:{
+        type:Boolean,
+        default: false
       }
     },
     data() {
@@ -112,6 +119,12 @@
     },
 
     computed: {
+      formateCardLeft(){
+        return this.displayType === 'mall' && this.couponInfo.couponStatus === 1 && this.couponInfo.maxNum && !this.isMyCoupon
+      },
+      formateCardTimeEnd(){
+        return this.couponInfo.status === 0 && (this.displayType === 'show' || this.isMyCoupon) && (_(this.couponInfo.validEndDate).sub(this.couponInfo.sysTime) < 10800000)
+      },
       formatCouponInfo() {
         return formatCoupon({
           bigShowNum: this.couponInfo.bigShowNum,
@@ -352,6 +365,14 @@
       font-size: 16px;
       line-height: 28px;
       text-align: center;
+    }
+    .card-time-end {
+      background: url(./card-time-end-lg.png);
+      width: 70px;
+      height: 66px;
+      position: absolute;
+      top: -16px;
+      right: -7px;
     }
   }
   .show {

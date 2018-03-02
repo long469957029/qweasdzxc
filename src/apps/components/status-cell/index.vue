@@ -10,8 +10,10 @@
     </div>
     <div class="status-cell" v-else-if="!hasData" key="status-empty" :style="`height: ${height}`">
       <div class="empty-container">
-        <div class="empty-icon"></div>
-        <p>{{emptyTip}}</p>
+        <slot name="empty-tip">
+          <div class="empty-icon"></div>
+          <p>{{emptyTip}}</p>
+        </slot>
       </div>
     </div>
     <component :is="tag" v-else>

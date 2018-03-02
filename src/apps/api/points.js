@@ -516,13 +516,15 @@ const actionIntroduceApi = (then, fail) => {
  * @param fail
  * @returns {*|Promise<T>}
  */
-const getUserCouponListApi = ({couponType,couponStatus,couponToken}, then, fail) => {
+const getUserCouponListApi = ({couponType,couponStatus,couponToken,pageSize = 12,pageIndex}, then, fail) => {
   return $http({
     url: '/mall/coupon/myCouponList.json',
     data:{
       couponType,
       couponStatus,
-      couponToken
+      couponToken,
+      pageSize,
+      pageIndex
     }
   })
     .then(then)
