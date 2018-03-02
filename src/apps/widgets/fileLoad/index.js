@@ -24,7 +24,7 @@ $.widget('gl.fileLoad', {
   },
 
   _create() {
-    if (!window.Modernizr.filesystem) {
+    if (window.Modernizr.filesystem) {
       // 使用File API
       this.element.html(_(this.template).template()(_(this.options).pick('title', 'accept', 'btnClass')))
 
