@@ -290,9 +290,9 @@
   .check-modal {
     .check-list {
       width: 450px;
-      margin: 40px 10px 40px 20px;
+      margin: 20px 10px 20px 20px;
       box-sizing: border-box;
-      max-height: 110px;
+      max-height: 153px;
       overflow: auto;
       list-style: none;
     }
@@ -300,7 +300,7 @@
     .check-cell {
       padding-left: 20px;
       position: relative;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       &:before {
         content: '';
         display: block;

@@ -286,20 +286,20 @@
       color: #ffffff;
       cursor: not-allowed;
       opacity: 1;
+      &.week {
+        border: 1px solid #eedcc7;
+        background-color: #eedcc7;
+      }
     }
     &.week {
-      border: 1px solid #eedcc7;
-      background-color: #eedcc7;
+      border: 1px solid #d9a262;
+      background-color: #d9a262;
     }
 
     &.received-btn {
       background-color: #b8b8ba;
       border-radius: 15px;
       cursor: not-allowed;
-      &.week {
-        border: 1px solid #d9a262;
-        background-color: #d9a262;
-      }
     }
   }
   .status-cell {
