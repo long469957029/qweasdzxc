@@ -181,6 +181,7 @@
                 type: 'success',
                 hasFooter: false,
                 displayTime: 800,
+                size: 'modal-xs',
               })
             } else {
               if (res.msg.indexOf('余额不足') > -1) {
