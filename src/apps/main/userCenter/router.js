@@ -8,7 +8,7 @@ const PersonalManageView = () => import(/* webpackChunkName: "user-center" */ '.
 const CardManageView = () => import(/* webpackChunkName: "user-center" */ './views/cardManage')
 const PriceDetailsView = () => import(/* webpackChunkName: "user-center" */ './views/priceDetails')
 const AccountSafeViewInfo = () => import(/* webpackChunkName: "user-center" */ './views/accountSafe')
-const MyPointsCardView = () => import(/* webpackChunkName: "user-center" */ './myPointsCard')
+const MyPointsCardView = () => import(/* webpackChunkName: "user-center" */ './views/myPointsCard')
 
 // 'uc/pm': 'personalManage',
 // 'uc/cm': 'cardManage', // 银行卡管理
@@ -105,15 +105,15 @@ export default [
       })
     }
   },
-  // {
-  //   path: '/uc/cp',
-  //   component: function(resolve) {
-  //     RouterController.async(resolve, MyPointsCardView, {
-  //       main: {
-  //         title: '我的优惠券',
-  //       },
-  //       sidebar,
-  //     })
-  //   }
-  // },
+  {
+    path: '/uc/cp',
+    component: function(resolve) {
+      RouterController.async(resolve, MyPointsCardView, {
+        main: {
+          title: '我的优惠券',
+        },
+        sidebar,
+      })
+    }
+  },
 ]

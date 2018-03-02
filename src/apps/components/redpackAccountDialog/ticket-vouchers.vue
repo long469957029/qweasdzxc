@@ -57,19 +57,21 @@
         })
       },
       getApi(){
-        getRedPackInfoApi(
-          ({data}) => {
-            if(data && data.result === 0 && !_(data.root.dataList).isEmpty()){
-              this.dataList = data.root.dataList
-              this.showListNext()
-            }else{
+        if(this.polling){
+          getRedPackInfoApi(
+            ({data}) => {
+              if(data && data.result === 0 && !_(data.root.dataList).isEmpty()){
+                this.dataList = data.root.dataList
+                this.showListNext()
+              }else{
+                this.parentNext()
+              }
+            },
+            ({data}) => {
               this.parentNext()
             }
-          },
-          ({data}) => {
-            this.parentNext()
-          }
-        )
+          )
+        }
       },
       showListNext(){  // 显示数据列表中的内容
         this.amount = _(this.dataList[this.dataIndex].amount).convert2yuan()

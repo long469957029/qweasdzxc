@@ -2,7 +2,7 @@
   <div class="dashboard-mall db-shadow">
     <div class="db-block-border"></div>
     <div class="dashboard-mall-header">
-      <div class="db-mall-title"></div>
+      <router-link to="points" class="db-mall-title" tag="div"></router-link>
     </div>
     <div class="js-db-mall-content">
         <router-link :class="`dashboard-mall-content clearfix`" v-for="(item, index) in mallList" :to="`/${item.couponType === 0 ? 'points/gifts' : 'points'}`" tag="div" :key="index">
@@ -87,6 +87,7 @@
         width: 268px;
         height: 49px;
         border-bottom: 1px solid $def-line-color;
+        cursor: pointer;
       }
     }
 
