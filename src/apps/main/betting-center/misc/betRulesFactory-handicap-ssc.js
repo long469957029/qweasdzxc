@@ -40,8 +40,8 @@ const getBalls = () => {
         showOdds: true,
       },
       {
-        num: '1',
-        title: '1',
+        num: '5',
+        title: '5',
         style: 'gray circle',
         showOdds: true,
       },
@@ -53,14 +53,14 @@ const getBalls = () => {
     ],
     [
       {
-        num: '2',
-        title: '2',
+        num: '1',
+        title: '1',
         style: 'gray circle',
         showOdds: true,
       },
       {
-        num: '3',
-        title: '3',
+        num: '6',
+        title: '6',
         style: 'gray circle',
         showOdds: true,
       },
@@ -72,14 +72,14 @@ const getBalls = () => {
     ],
     [
       {
-        num: '4',
-        title: '4',
+        num: '2',
+        title: '2',
         style: 'gray circle',
         showOdds: true,
       },
       {
-        num: '5',
-        title: '5',
+        num: '7',
+        title: '7',
         style: 'gray circle',
         showOdds: true,
       },
@@ -91,14 +91,14 @@ const getBalls = () => {
     ],
     [
       {
-        num: '6',
-        title: '6',
+        num: '3',
+        title: '3',
         style: 'gray circle',
         showOdds: true,
       },
       {
-        num: '7',
-        title: '7',
+        num: '8',
+        title: '8',
         style: 'gray circle',
         showOdds: true,
       },
@@ -110,8 +110,8 @@ const getBalls = () => {
     ],
     [
       {
-        num: '8',
-        title: '8',
+        num: '4',
+        title: '4',
         style: 'gray circle',
         showOdds: true,
       },
