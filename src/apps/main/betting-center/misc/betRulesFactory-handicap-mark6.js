@@ -19,11 +19,13 @@ const shuangMian = [
     {
       title: '特大',
       num: '100',
+      playName: '双面',
       showOdds: true,
     },
     {
       title: '特小',
       num: '101',
+      playName: '双面',
       showOdds: true,
     },
   ],
@@ -31,11 +33,13 @@ const shuangMian = [
     {
       title: '特单',
       num: '104',
+      playName: '双面',
       showOdds: true,
     },
     {
       title: '特双',
       num: '105',
+      playName: '双面',
       showOdds: true,
     },
   ],
@@ -43,11 +47,13 @@ const shuangMian = [
     {
       title: '和大',
       num: '102',
+      playName: '双面',
       showOdds: true,
     },
     {
       title: '和小',
       num: '103',
+      playName: '双面',
       showOdds: true,
     },
   ],
@@ -55,11 +61,13 @@ const shuangMian = [
     {
       title: '和单',
       num: '106',
+      playName: '双面',
       showOdds: true,
     },
     {
       title: '和双',
       num: '107',
+      playName: '双面',
       showOdds: true,
     },
   ],
@@ -67,11 +75,13 @@ const shuangMian = [
     {
       title: '尾大',
       num: '110',
+      playName: '双面',
       showOdds: true,
     },
     {
       title: '尾小',
       num: '111',
+      playName: '双面',
       showOdds: true,
     },
   ],
@@ -82,11 +92,13 @@ const teMaWeiShu = [
     {
       title: '尾0',
       num: '205',
+      playName: '尾数',
       showOdds: true,
     },
     {
       title: '尾5',
       num: '210',
+      playName: '尾数',
       showOdds: true,
     },
   ],
@@ -94,11 +106,13 @@ const teMaWeiShu = [
     {
       title: '尾1',
       num: '206',
+      playName: '尾数',
       showOdds: true,
     },
     {
       title: '尾6',
       num: '211',
+      playName: '尾数',
       showOdds: true,
     },
   ],
@@ -106,11 +120,13 @@ const teMaWeiShu = [
     {
       title: '尾2',
       num: '207',
+      playName: '尾数',
       showOdds: true,
     },
     {
       title: '尾7',
       num: '212',
+      playName: '尾数',
       showOdds: true,
     },
   ],
@@ -118,11 +134,13 @@ const teMaWeiShu = [
     {
       title: '尾3',
       num: '208',
+      playName: '尾数',
       showOdds: true,
     },
     {
       title: '尾8',
       num: '213',
+      playName: '尾数',
       showOdds: true,
     },
   ],
@@ -130,11 +148,13 @@ const teMaWeiShu = [
     {
       title: '尾4',
       num: '209',
+      playName: '尾数',
       showOdds: true,
     },
     {
       title: '尾9',
       num: '214',
+      playName: '尾数',
       showOdds: true,
     },
   ],
@@ -392,14 +412,24 @@ function _create(ticketId) {
     list: factory.createHandicapList([
       {
         title: '特肖',
-        items: teXiao,
+        items: _.map(_.cloneDeep(teXiao), list => {
+          return _.map(list, item => {
+            item.playName = '特肖'
+            return item
+          })
+        }),
         showItemOdds: true,
         showMoneyInput: true,
         operate: 'none',
       },
       {
         title: '一肖',
-        items: yiXiao,
+        items: _.map(_.cloneDeep(yiXiao), list => {
+          return _.map(list, item => {
+            item.playName = '一肖'
+            return item
+          })
+        }),
         showItemOdds: true,
         showMoneyInput: true,
         operate: 'none',

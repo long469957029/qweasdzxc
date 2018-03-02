@@ -22,7 +22,7 @@ module.exports = {
     const cardId = selectedData.cardId
     const cardNo = selectedData.cardNo
     const logo = bankConfig.get(bankId).className
-    selected.push(`<div class="js-wd-bank-selectedItem" data-bankid="${bankId}" data-cardid="${cardId}">`)
+    selected.push(`<div class="js-wd-bank-selectedItem wd-bank-selectedItem" data-bankid="${bankId}" data-cardid="${cardId}">`)
     selected.push(`<span class="js-wd-bank-icon rc-icon ${logo}"></span>`)
     selected.push(`<span class="js-wd-bank-name rc-name">${name}（${cardNo}）</span>`)
     if (cardList.length >= 2) {

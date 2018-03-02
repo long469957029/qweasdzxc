@@ -199,6 +199,9 @@
                 .contact-name {
                   color: $def-white-color;
                 }
+                &:hover {
+                  background-color: #afbbc6;
+                }
               }
               &:hover {
                 background-color: #e9e9e9;
@@ -260,6 +263,10 @@
                 }
                 .recently-desc {
                   color: $font-auxiliary-color;
+                  width: 131px;
+                  text-overflow: ellipsis;
+                  white-space:nowrap;
+                  overflow:hidden;
                 }
                 &.no {
                   vertical-align: top;
@@ -268,9 +275,12 @@
               }
               .recently-message-close {
                 vertical-align: top;
-                margin-top: 11px;
+                margin-top: 13px;
                 margin-left: -11px;
                 display: none;
+                &.parents{
+                  margin-left: 58px;
+                }
               }
               .recently-item-info-num {
                 border-radius: 40px;
@@ -282,8 +292,10 @@
                 font-size: 10px;
                 line-height: 12px;
                 text-align: center;
-                right: 27px;
-                margin-top: -28px;
+                //right: 27px;
+                //margin-top: -28px;
+                right: 10px;
+                margin-top: -42px;
                 .recently-newMessage-num-text {
                   transform: scale(0.8);
                   line-height: 14px;
@@ -298,12 +310,18 @@
                 .recently-name {
                   color: $def-white-color;
                 }
-                .recently-message-close {
-                  display: inline-block;
+                //.recently-message-close {
+                //  display: inline-block;
+                //}
+                &:hover {
+                  background-color: #afbbc6;
                 }
               }
               &:hover {
                 background-color: #e9e9e9;
+                .recently-message-close {
+                  display: inline-block;
+                }
               }
             }
           }
@@ -662,7 +680,7 @@
     width: 420px;
     overflow: auto;
     position: relative;
-    height: 23px;
+    //height: 23px;
     .chat-input {
       border: 0;
       outline-width: 0;
@@ -879,4 +897,14 @@
       }
     }
   }
+}
+
+.chat-emoji-container{
+  position: absolute;
+  right: 10px;
+  bottom: 40px;
+  width:100px;
+  height: 150px;
+  overflow: hidden;
+  background: gray;
 }

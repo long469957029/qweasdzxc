@@ -36,7 +36,7 @@
     </div>
     <div class="mmc-lottery-main" ref="main">
       <div class="mmc-lottery-main-open" ref="mainOpen">
-        <div class="opening-title" v-if="opening">第<span class="opening-title-inner">{{currentOpeningCount}}</span>/{{currentBettingList.openingCount}}期
+        <div class="opening-title" v-if="opening">第<span class="opening-title-inner">{{currentOpeningCount + 1}}</span>/{{currentBettingList.openingCount}}期
           正在开奖
         </div>
         <div class="opening-title cursor-pointer" v-else @click="reSelect">重新选号</div>
@@ -382,7 +382,7 @@
         fTotalWinPrize: 0,
         totalOpeningCount: 0,
         //当前正在开奖期数
-        currentOpeningCount: 1,
+        currentOpeningCount: 0,
 
         //中奖时停止
         stopWhenWinning: false,
@@ -682,11 +682,12 @@
         this.fOpeningResultList[0].completed = true
         this.totalWinPrize += this.fOpeningResultList[0].winPrize
         this.fTotalWinPrize = _.convert2yuan(this.totalWinPrize)
-        if (this.currentOpeningCount < this.totalOpeningCount && !this.stopping &&
+        if (this.currentOpeningCount < this.totalOpeningCount - 1 && !this.stopping &&
           !(this.currentBettingList.stopWhenWinning && this.fOpeningResultList[0].winPrize)) {
           ++this.currentOpeningCount
           this.$_pushBetting()
         } else {
+          ++this.currentOpeningCount
           this.pushing = false
           this.stopping = false
           this.opening = false
@@ -711,7 +712,7 @@
         this.pushing = true
         this.selectStatus = false
         this.totalOpeningCount = this.currentBettingList.openingCount
-        this.currentOpeningCount = 1
+        this.currentOpeningCount = 0
         this.totalWinPrize = 0
         this.fTotalWinPrize = 0
       },
@@ -764,7 +765,7 @@
       $_formatOpeningResult(openingResult, index) {
         return Object.assign({
           index: index,
-          title: `【第${index}次开奖】`,
+          title: `【第${index + 1}次开奖】`,
           completed: false,
           fOpenCode: openingResult.openCode.split(','),
           fWinPrize: _.convert2yuan(openingResult.winPrize),
