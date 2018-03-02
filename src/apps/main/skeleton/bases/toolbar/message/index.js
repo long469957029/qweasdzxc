@@ -141,11 +141,12 @@ const MessageView = Base.ItemView.extend({
   renderRecentlyData() {
     const recentlyResult = imService.getRecentlyItemHtml(this.recentlyList, this.parentId, this.activePerson)
     this.newMessageNum = recentlyResult.num
-    if (this.newMessageNum > 0) {
+    if (recentlyResult.num > 0) {
       this.$('.js-recently-newMessage-num').addClass('hasNum')
       this.$('.js-recently-newMessage-num').html(imService.getNewMessageNumHtml(this.newMessageNum))
     } else if (this.$('.js-recently-newMessage-num').hasClass('hasNum')) {
       this.$('.js-recently-newMessage-num').removeClass('hasNum')
+      this.$('.js-recently-newMessage-num').addClass('hidden')
     }
     this.$('.js-recently-container').html(recentlyResult.result)
   },
