@@ -28,7 +28,12 @@
           </li>
         </ul>
         <ul class="" v-else>
-          <li class="bc-betDetail-text" v-for="item in bettingList">{{item.playName}} | {{item.formatBettingNumber}}
+          <li class="bc-betDetail-text" v-for="item in bettingList">
+            {{item.playName}} &nbsp;| &nbsp;{{item.formatBettingNumber}} &nbsp;| &nbsp;
+            <template v-if="item.odds">
+              @{{item.odds}} &nbsp;| &nbsp;
+            </template>
+            {{item.fPrefabMoney}}元
           </li>
         </ul>
       </div>
@@ -127,8 +132,7 @@
     .bc-confirm-list {
       width: 488px;
       height: 150px;
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: auto;
       background-color: #f5f5f5;
       .bc-betDetail-text {
         position: relative;
@@ -153,7 +157,6 @@
         display: inline-block;
         padding-left: 5px;
         width: 377px;
-        word-wrap: break-word;
       }
     }
 

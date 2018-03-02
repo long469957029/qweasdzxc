@@ -496,16 +496,19 @@ const mutations = {
       if (state.statistics && state.statistics !== 0) {
         statistics = state.statistics
       } else {
-        statistics = 1
+        statistics = bettingInfo.lotteryList.length
       }
 
+      //盘口的显示和普通玩法不一致 采用的格式化后的formattedList来显示
+      //并取消原先的formatBettingNumber参数
       const item = {
         levelName: state.levelName,
         playId: state.playId,
         playName: state.playName,
         bettingNumber: bettingInfo.format(bettingInfo.lotteryList),
         // 显示用
-        formatBettingNumber: bettingInfo.showFormat(bettingInfo.lotteryList),
+        formattedList: bettingInfo.showFormat(bettingInfo.lotteryList, state),
+        // formatBettingNumber: bettingInfo.showFormat(bettingInfo.lotteryList),
         type: bettingInfo.type,
         formatBonusMode: state.formatBonusMode,
         multiple: state.multiple,
