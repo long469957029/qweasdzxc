@@ -18,8 +18,10 @@
           <div :class="['card-time-end',{'lg': isMyCoupon}]" v-if="formateCardTimeEnd">
             <div class="card-time-end-txt" :class="['card-time-end-'+cardInfo.type, style]">即将到期</div>
           </div><!--即将到期-->
-          <div class="sfa-finished"></div>
-          <div class="sfa-grab-finished"></div>
+          <div class="sfa-icon sfa-finished"></div>
+          <div class="sfa-icon sfa-grab-finished"></div>
+          <div class="sfa-icon sfa-has-use"></div>
+          <div class="sfa-icon sfa-has-expire"></div>
         </div>
         <div class="points-center">
           <div class="points-range">{{formatCouponInfo.mainDesc}}</div>
@@ -56,9 +58,12 @@
                 </div>
                 <div class="points-value" v-else-if="displayType === 'mall' && isMyCoupon">
                   <span class="cursor-pointer" :data-clipboard-text="couponInfo.couponToken"
-                        ref="couponCopy">复制编号</span>
+                        ref="couponCopy"><span class="sfa sfa-mall-copy vertical-bottom m-right-xs"></span>券编号</span>
                 </div>
               </div>
+            </div>
+            <div :class="`points-way way-${couponInfo.wayId}`" key="way" v-if="isMyCoupon && couponInfo.status === 0 && !_(couponInfo.wayId).isNull()">
+              <div :class="['points-way-detail',cardInfo.type]">{{formatCouponWay.text}}</div>
             </div>
             <div v-show="showBtn" key="exchange" class="points-bottom-btn">
               <button class="btn btn-white exchange-btn" v-if="couponInfo.couponStatus === 1"
@@ -97,7 +102,20 @@
       type: 'red'
     },
   }
-
+  const CARD_WAY = {
+    '0': {
+      text:'积分商城兑换'
+    },
+    '1': {
+      text:'幸运夺宝中奖'
+    },
+    '2': {
+      text:'活动奖励'
+    },
+    '3': {
+      text:'平台赠送'
+    }
+  }
   export default {
     name: 'points-card',
 
@@ -145,6 +163,9 @@
           gameType: this.couponInfo.gameType
         })
       },
+      formatCouponWay(){
+        return CARD_WAY[this.couponInfo.wayId]
+      },
       cardInfo() {
         return CARD_TYPE[this.couponInfo.couponType]
       },
@@ -154,8 +175,15 @@
         // return this.couponInfo.maxNum && this.couponInfo.maxNum - this.couponInfo.useNum === 0
       },
       style() {
-        return this.couponInfo.couponStatus === 3 ? 'finished' :
-          this.couponInfo.couponStatus === 2 ? 'grab-finished' : ''
+        let className = ''
+        if(this.isMyCoupon){
+          className = this.couponInfo.status === 1 ? 'has-use' :
+            this.couponInfo.status === 2 ? 'has-expire' : ''
+        }else{
+          className = this.couponInfo.couponStatus === 3 ? 'finished' :
+            this.couponInfo.couponStatus === 2 ? 'grab-finished' : ''
+        }
+        return className
 
       },
       countdownTime() {
@@ -241,31 +269,44 @@
         display: block;
       }
     }
+    &.has-use {
+      opacity: .65;
+      .sfa-has-use {
+        display: block;
+      }
+    }
+    &.has-expire {
+      opacity: .65;
+      .sfa-has-expire {
+        display: block;
+      }
+    }
 
     .sfa-points {
       background: url(./points.png);
       height: 23px;
       width: 23px;
     }
-    .sfa-finished {
-      background: url(./finished.png);
+    .sfa-icon{
       width: 106px;
       height: 106px;
       position: absolute;
       right: 13px;
       top: 10px;
       display: none;
+      &.sfa-finished {
+         background: url(./finished.png) no-repeat;
+       }
+      &.sfa-grab-finished {
+        background: url(./grab-finished.png) no-repeat;
+      }
+      &.sfa-has-use {
+        background: url(./has-use.png) no-repeat;
+      }
+      &.sfa-has-expire {
+        background: url(./has-expire.png) no-repeat;
+      }
     }
-    .sfa-grab-finished {
-      background: url(./grab-finished.png);
-      width: 106px;
-      height: 106px;
-      position: absolute;
-      right: 13px;
-      top: 10px;
-      display: none;
-    }
-
     .card-value {
       font-size: 44px;
       color: #ffffff;
@@ -357,6 +398,61 @@
         position: absolute;
         top: 0;
         left: 10px;
+      }
+      .points-way{
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        top: -3px;
+        right: 13px;
+        cursor: pointer;
+        z-index: 1;
+        &.way-0{
+          background: url('./icon-way-0.png') no-repeat;
+        }
+        &.way-1{
+          background: url('./icon-way-1.png') no-repeat;
+        }
+        &.way-2{
+          background: url('./icon-way-2.png') no-repeat;
+        }
+        &.way-3{
+          background: url('./icon-way-3.png') no-repeat;
+        }
+        .points-way-detail{
+          position: absolute;
+          width: 22px;
+          height: 27px;
+          background-color: #fafafa;
+          border-radius: 13px;
+          opacity: 0;
+          transition: width .5s;
+          top: -4px;
+          right: 0px;
+          z-index: 2;
+          font-size: $font-xs;
+          text-align: center;
+          line-height: 27px;
+          overflow: hidden;
+          &.green {
+            color: $green;
+          }
+          &.gold {
+            color: $gold;
+          }
+          &.red {
+            color: $red;
+          }
+          &.blue {
+            color: $blue;
+          }
+        }
+        &:hover{
+          .points-way-detail{
+            opacity: 1;
+            width: 120px;
+          }
+        }
       }
     }
 

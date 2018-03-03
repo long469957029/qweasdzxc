@@ -96,7 +96,7 @@
                     <div class="panel-content-text">自首次登录之日起<span class="panel-content-text red">3天</span>内的投注</div>
                     <div class="panel-content-text">额，平台将按<span class="panel-content-text red">{{betLimit}}%</span>的比例
                     </div>
-                    <div class="panel-content-text">结算返水奖励</div>
+                    <div class="panel-content-text">结算奖励（仅计算彩票投注）</div>
                   </div>
                 </div>
                 <div class="panel-footer"><a href="#/bc/0/19" @click="closeDialog">立即投注</a></div>

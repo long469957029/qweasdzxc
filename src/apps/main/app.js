@@ -1,4 +1,3 @@
-
 import ToolbarView from 'skeleton/bases/toolbar'
 
 import RechargeView from 'com/fundOperate'
@@ -85,9 +84,9 @@ const _bindFundOperatorDialogHandler = () => {
     })
 
     $fundOperateDialog.find('.js-fund-operate').html(rechargeView.render().el)
-    if(window.store.getters.userIsVip){
-    $fundOperateDialog.find('.js-fund-operate-dialog').after('<div class="js-fund-vip-panel fund-vip-panel">' +
-      '<div class="js-fund-vip fund-vip"></div><div class="js-fund-vip-tips fund-vip-tips"></div></div><input class="js-vip-tips-active" type="hidden">')
+    if (window.store.getters.userIsVip) {
+      $fundOperateDialog.find('.js-fund-operate-dialog').after('<div class="js-fund-vip-panel fund-vip-panel">' +
+        '<div class="js-fund-vip fund-vip"></div><div class="js-fund-vip-tips fund-vip-tips"></div></div><input class="js-vip-tips-active" type="hidden">')
     }
     $fundOperateDialog.on('hidden.modal', () => {
       $(this).remove()
@@ -117,7 +116,7 @@ const _bindFundOperatorDialogHandler = () => {
       if (status === '' || status === undefined || status === 'hide') {
         $fundOperateDialog.find('.js-fund-vip-tips').append(rechargeVipView)
         $fundOperateDialog.find('.js-vip-tips-active').val('show')
-      }else if(status==='show'){
+      } else if (status === 'show') {
         $fundOperateDialog.find('.js-fund-vip-tips-container').remove()
         $fundOperateDialog.find('.js-vip-tips-active').val('hide')
       }
@@ -148,27 +147,51 @@ const _bindBetDetailHandler = () => {
     })
     $dialog.off('click.cancelBet')
       .on('click.cancelBet', '.js-gr-submitBtn', (ev) => {
-        const $currContainer = $dialog.find('.fc-gr-bet-detail-form')
-        const clpValidate = $currContainer.parsley().validate()
-        if (clpValidate) {
-          const $target2 = $(ev.currentTarget)
-          $target2.button('loading')
-          return Global.sync.ajax({
-            url: '/ticket/bet/cancel.json',
-            data: {
-              betId: $dialog.find('.js-gr-ticketBetId').val(),
-            },
-          }).done((res) => {
-            if (res && res.result === 0) {
-              window.Global.m.publish('acct:cancelBet')
-              Vue.$global.bus.$emit('cancel-bet')
-              Global.ui.notification.show('操作成功。')
-              $dialog.modal('hide')
-            } else {
-              Global.ui.notification.show(res.msg)
+        const html = '<p>此操作将撤销当前投注单，是否继续？</p>'
+        $(document).confirm({
+          content: html,
+          size: 'modal-dialog-shadow',
+          title: '温馨提示',
+          footer: '<div class="text-center control-confirm-special m-top-md">' +
+          `<button type="button" class="btn btn-left confirm-agree btn-chase-confirm-agree" data-loading-text="保存中">确定</button>` +
+          `<button type="button" class="btn btn-link btn-right confirm-reject btn-chase-confirm-reject" data-dismiss="modal">取消</button></div>`,
+          agreeCallback() {
+            const $currContainer = $dialog.find('.fc-gr-bet-detail-form')
+            const clpValidate = $currContainer.parsley().validate()
+            if (clpValidate) {
+              const $target2 = $(ev.currentTarget)
+              $target2.button('loading')
+              return Global.sync.ajax({
+                url: '/ticket/bet/cancel.json',
+                data: {
+                  betId: $dialog.find('.js-gr-ticketBetId').val(),
+                },
+              }).done((res) => {
+                if (res && res.result === 0) {
+                  window.Global.m.publish('acct:cancelBet')
+                  Vue.$global.bus.$emit('cancel-bet')
+                  Global.ui.notification.show('撤单成功！',{
+                    type: 'success',
+                    hasFooter: false,
+                    displayTime: 1000,
+                    closeBtn: false,
+                    size: 'modal-xs',
+                  })
+                  $dialog.modal('hide')
+                } else {
+                  Global.ui.notification.show('撤单失败！'+res.msg,{
+                    type: 'success',
+                    hasFooter: false,
+                    displayTime: 1000,
+                    closeBtn: false,
+                    size: 'modal-xs',
+                  })
+                }
+              })
             }
-          })
-        }
+          },
+        })
+
       })
   })
 }
@@ -234,14 +257,14 @@ const _bindImDialogHandler = () => {
 }
 //侧边栏关闭
 const _bindToolBarCloseHandler = () => {
-  $(document).off('click.toolbar').on('click.toolbar','.js-app-container',(e)=>{
+  $(document).off('click.toolbar').on('click.toolbar', '.js-app-container', (e) => {
     let $container = $('.js-toolbar-container')
     $container.find('.js-toolbar-option').each((index, dom) => {
       $(dom).removeClass('active')
     })
     $container.removeClass('open')
-    $container.find('.js-toolbar-option-container').css('margin-left','-48px')
-    $container.find('.toolbar-option').css('border-radius','3px')
+    $container.find('.js-toolbar-option-container').css('margin-left', '-48px')
+    $container.find('.toolbar-option').css('border-radius', '3px')
   })
 }
 App.addInitializer(() => {
