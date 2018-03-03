@@ -4,13 +4,13 @@
     <div class="nav clearfix">
       <div class="status">
         <span class="text-default">状态：</span>
-        <span :class="['status-btn',{'active': couponStatus === 0}]" @click="couponStatus = 0">未使用({{dataTotal.noUseCount}})</span>
-        <span :class="['status-btn',{'active': couponStatus === 1}]" @click="couponStatus = 1">已使用({{dataTotal.useCount}})</span>
-        <span :class="['status-btn',{'active': couponStatus === 2}]" @click="couponStatus = 2">已过期({{dataTotal.expireCount}})</span>
+        <span :class="['status-btn',{'active': couponStatus === 0}]" @click="changeStatus(0)">未使用({{dataTotal.noUseCount}})</span>
+        <span :class="['status-btn',{'active': couponStatus === 1}]" @click="changeStatus(1)">已使用({{dataTotal.useCount}})</span>
+        <span :class="['status-btn',{'active': couponStatus === 2}]" @click="changeStatus(2)">已过期({{dataTotal.expireCount}})</span>
       </div>
       <div class="type">
         <span class="text-default v-top">券类型：</span>
-        <select class="type-select" v-model="couponType">
+        <select class="type-select" @change="changeType" v-model="couponType">
           <option v-for="item in typeOps" :value="item.id">{{item.name}}</option>
         </select>
       </div>
@@ -91,16 +91,6 @@
       }
     },
     watch:{
-      couponStatus(){
-        this.pageIndex = 0
-        this.couponToken = ''
-        this.getCouponList()
-      },
-      couponType(){
-        this.pageIndex = 0
-        this.couponToken = ''
-        this.getCouponList()
-      },
       pageIndex() {
         this.getCouponList()
       }
@@ -128,13 +118,27 @@
           }
         )
       },
+      changeStatus(id){
+        this.pageIndex = 0
+        this.couponToken = ''
+        this.couponStatus = id
+        this.getCouponList()
+      },
+      changeType(){
+        this.pageIndex = 0
+        this.couponToken = ''
+        this.getCouponList()
+      },
       searchCoupon(){
         if(this.couponToken !== ''){
           this.pageIndex = 0
-          this.getCouponList()
+          this.couponStatus = -1
+          this.couponType = ''
         }else{
-          this.$refs.searchInput.focus()
+          this.couponStatus = 0
+          this.couponType = ''
         }
+        this.getCouponList()
       }
     },
     mounted(){
@@ -145,7 +149,7 @@
 <style lang="scss" scoped>
   .main{
     width: 100%;
-    min-height: 500px;
+    min-height: 700px;
     border-top: 1px solid $third-line-color;
     position: relative;
     .go-point{

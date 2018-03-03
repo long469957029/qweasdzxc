@@ -1032,6 +1032,8 @@
 <style lang="scss" scoped>
   @import '~base/styles/_spritesMMC';
 
+  $main-play-area-margin: 30px;
+
   .opening-panel-inner {
     top: 30px;
     position: relative;
@@ -1241,9 +1243,10 @@
     line-height: 23px;
     color: #8094A6;
     text-align: center;
-    margin: 5px 40px 0 0;
+    margin-top: 8px;
     position: relative;
     vertical-align: top;
+    float: right;
   }
 
   .bc-advance-mode-single {
@@ -1278,6 +1281,7 @@
     .bc-advance-rules {
       color: #666666;
       max-width: 80%;
+      margin-left: $main-play-area-margin;
       flex: 1;
       .tab-toolbar {
         &:last-of-type {
@@ -1336,7 +1340,7 @@
     padding: 5px 10px;
     font-weight: 600;
     transform: translateY(-5px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
   }
 
   .opening-title {

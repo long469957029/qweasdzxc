@@ -15,30 +15,24 @@
     </div>
 
     <div class="relative" ref="body">
-      <table class="no-margin" :class="[tableClass, {'no-b-bottom': hasBorder}]">
-        <colgroup>
-          <col :width="col.width" v-for="col in colModel">
-        </colgroup>
-        <!--<transition-group-->
+      <status-cell :status="loading" :has-data="showRows.length" :loading-tip="loadingTip" :transition="transition">
+        <table class="no-margin" :class="[tableClass, {'no-b-bottom': hasBorder}]">
+          <colgroup>
+            <col :width="col.width" v-for="col in colModel">
+          </colgroup>
+          <!--<transition-group-->
           <!--enter-active-class="animated-quick fadeIn"-->
           <!--leave-active-class="animated-quick fadeOut"-->
           <!--tag="tbody"-->
-        <!--&gt;-->
-        <tbody ref="tbody">
-        <slot name="row" v-for="(row, index) in showRows" :row="row" :rows="showRows" :index="index"></slot>
-        </tbody>
-        <!--</transition-group>-->
-
-      </table>
-
-      <div class="height-100" v-html="loading" v-show="_.isEmpty(showRows) && showLoading"></div>
-
-      <div class="empty-container text-center" v-show="_.isEmpty(showRows) && showEmpty">
-        <div class="empty-container-main" v-html="emptyTip">
-        </div>
-      </div>
+          <!--&gt;-->
+          <tbody ref="tbody">
+          <slot name="row" v-for="(row, index) in showRows" :row="row" :rows="showRows" :index="index"></slot>
+          </tbody>
+          <!--</transition-group>-->
+        </table>
+        <div slot="empty-tip" v-if="emptyTip" v-html="emptyTip"></div>
+      </status-cell>
     </div>
-
     <div class="js-wt-footer-main relative">
       <table class="no-margin" :class="tableClass">
         <colgroup>
@@ -61,6 +55,11 @@
         default: 'table table-bordered '
       },
       wrapperClass: {
+        type: String,
+        default: ''
+      },
+
+      loadingTip: {
         type: String,
         default: ''
       },
@@ -107,6 +106,14 @@
         type: Boolean,
         default: true
       },
+      scroll: {
+        type: Boolean,
+        default: true
+      },
+      transition: {
+        type: Boolean,
+        default: true
+      }
     },
 
     data() {
@@ -118,7 +125,7 @@
         showRows: [],
         innerRows: [],
         hasBorder: _.isUndefined(this.hasBorder) ? this.tableClass.indexOf('table-bordered') > -1 : this.hasBorder,
-        loading: Global.ui.loader.get(),
+        loading: this.initRemote ? 'loading' : 'completed'
       }
     },
 
@@ -144,9 +151,12 @@
 
     mounted() {
       if (this.height > 0) {
-        $(this.$refs.body).slimScroll({
-          height: this.height,
-        })
+        if (this.scroll) {
+          $(this.$refs.body).slimScroll({
+            height: this.height,
+          })
+        }
+        this.$refs.body.style.height = `${this.height}px`
       }
 
 
@@ -177,6 +187,7 @@
       $_getDataXhr() {
         this.clean()
         // this.renderLoading()
+        this.loading = 'loading'
 
         $http({
           url: this.url,
@@ -184,13 +195,11 @@
           data: this.reqData,
         })
           .catch((xhr, type) => {
-            this.hideLoading()
             if (type !== 'abort') {
               this.renderFail()
             }
           })
           .then(({data}) => {
-            this.hideLoading()
             if (data && data.result === 0) {
               this.innerRows = _(this.dataProp.split('.')).reduce((_res, prop) => {
                 let data = _res[prop]
@@ -203,6 +212,9 @@
             } else {
               this.renderFail()
             }
+          })
+          .finally(() => {
+            this.loading = 'completed'
           })
       },
 
@@ -229,19 +241,11 @@
       },
 
       getRows() {
-        return this.$refs.tbody.children|| []
+        return this.$refs.tbody.children || []
       },
 
       toggleEmpty(flag) {
         this.showEmpty = flag
-      },
-
-      renderLoading() {
-        this.showLoading = true
-      },
-
-      hideLoading() {
-        this.showLoading = false
       },
 
       renderFail() {

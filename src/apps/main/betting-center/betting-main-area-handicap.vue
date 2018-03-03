@@ -16,7 +16,7 @@
         <!-- 路珠 -->
         <road-balls-analysis :ticket-info="ticketInfo" v-if="ticketInfo.roadBalls"></road-balls-analysis>
       </div>
-      <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule"
+      <betting-history class="bc-side-area" :ticket-info="ticketInfo" :play-rule="playRule" :height="660"
                        :last-open-id="bettingInfo.lastOpenId"
                        ref="bettingHisotry"></betting-history>
     </div>
@@ -25,7 +25,7 @@
     <div v-transfer-dom>
       <x-dialog v-model="showConfirmModal">
         <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
-                         :betting-list="bettingChoice.buyList[0].formattedList" :type="`handicap`"
+                         :betting-list="bettingChoice.buyList.length ? bettingChoice.buyList[0].formattedList : []" :type="`handicap`"
                          @bettingConfirm="bettingConfirm"></betting-confirm>
       </x-dialog>
     </div>
@@ -180,6 +180,7 @@
               Global.ui.notification.show('投注成功！', {
                 type: 'success',
                 hasFooter: false,
+                closeBtn: false,
                 displayTime: 800,
                 size: 'modal-xs',
               })
@@ -202,12 +203,8 @@
 </script>
 
 <style lang="scss" scoped>
-  .bc-play-main .bc-side-area {
-    width: 278px;
-    min-height: 845px;
-  }
 
-  .bc-play-container.clearfix {
+  .bc-play-container {
     display: flex;
   }
 </style>

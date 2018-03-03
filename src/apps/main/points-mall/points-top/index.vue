@@ -80,7 +80,7 @@
     </status-cell>
     <div v-transfer-dom>
       <x-dialog v-model="isShowSignIn">
-        <sign-in slot="all"></sign-in>
+        <sign-in slot="all" v-if="isShowSignIn"></sign-in>
       </x-dialog>
     </div>
   </div>

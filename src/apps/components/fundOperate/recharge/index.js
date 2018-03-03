@@ -48,6 +48,8 @@ const RechargeView = Base.ItemView.extend({
         if (res1[0] && res1[0].result === 0) {
           // 生成充值页广告
           Global.memoryCache.set('rechargeAc', res1[0].root.records)
+          // 生成充值页广告
+          self.$('.jc-rc-activity').html(rechargeService.getFunActivity(Global.memoryCache.get('rechargeAc')))
         } else {
           Global.ui.notification.show('服务器异常')
         }
@@ -73,9 +75,10 @@ const RechargeView = Base.ItemView.extend({
         const data = Global.memoryCache.get('rechargeList')
         self.initPaymentData(data.lastPaymentType, data.paymentList, data.vip)
       }
+      // 生成充值页广告
+      this.$('.jc-rc-activity').html(rechargeService.getFunActivity(Global.memoryCache.get('rechargeAc')))
     }
-    // 生成充值页广告
-    this.$('.jc-rc-activity').html(rechargeService.getFunActivity(Global.memoryCache.get('rechargeAc')))
+
     // 初始化内容滑动效果数据
     this.conInnerConWidth = 740
     this.conSize = this.$('.jc-fc-rc-view').size()

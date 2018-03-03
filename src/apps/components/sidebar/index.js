@@ -17,6 +17,7 @@ const SidebarView = Base.ItemView.extend({
   serializeData() {
     let sidebar = ''
     const acctInfo = Global.memoryCache.get('acctInfo')
+    const myPointsNoUse = Global.memoryCache.get('myPointsNoUse')
     if (_(this.options.sidebar).isArray()) {
       sidebar = _(this.options.sidebar).map(this.formatSidebar.bind(this))
     } else {
@@ -31,6 +32,7 @@ const SidebarView = Base.ItemView.extend({
       dividendStatus: acctInfo ? acctInfo.dividendStatus : 0,
       userName: acctInfo.uName || acctInfo.username,
       img: avatarCfg.get(headIcon).logo,
+      myPointsNoUse: (_(myPointsNoUse).isUndefined() || myPointsNoUse === 0) ? '' : `(${myPointsNoUse})`
     }
   },
   onRender() {
@@ -43,6 +45,7 @@ const SidebarView = Base.ItemView.extend({
     this.$progressBar = this.$('.js-safe-progress-bar')
     this.$userName = this.$('.js-user-name')
     this.$userAvatar = this.$('.js-user-avatar')
+    this.$myPoints = this.$('.js-my-points')
     this._onRender()
     this.subscribe('safe', 'safe:updating', () => {
       self._onRender()
@@ -50,6 +53,9 @@ const SidebarView = Base.ItemView.extend({
     Vue.$global.bus.$on('update:userInfo',(data)=>{
       this.$userName.html(data.uName)
       this.$userAvatar.attr('src',avatarCfg.get(data.headIconId.toString()).logo)
+    })
+    Vue.$global.bus.$on('myPointsNoUse',(data)=>{
+      this.$myPoints.html((_(data).isUndefined() || data === 0) ? '' : `(${data})`)
     })
   },
   _onRender() {

@@ -200,6 +200,7 @@
     .tab-group {
       flex: 1;
       position: relative;
+      margin-left: 0;
     }
 
     .router-link-exact-active {

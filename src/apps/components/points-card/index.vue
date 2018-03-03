@@ -58,12 +58,16 @@
                 </div>
                 <div class="points-value" v-else-if="displayType === 'mall' && isMyCoupon">
                   <span class="cursor-pointer" :data-clipboard-text="couponInfo.couponToken"
-                        ref="couponCopy"><span class="sfa sfa-mall-copy vertical-bottom m-right-xs"></span>券编号</span>
+                        ref="couponCopy" title="复制到剪切板">
+                    <span class="sfa sfa-mall-copy vertical-bottom m-right-xs"></span>
+                    券编号
+                    <span class="copy-status" v-show="copyTip">{{copyTipText}}</span>
+                  </span>
                 </div>
               </div>
             </div>
-            <div :class="`points-way way-${couponInfo.wayId}`" key="way" v-if="isMyCoupon && couponInfo.status === 0 && !_(couponInfo.wayId).isNull()">
-              <div :class="['points-way-detail',cardInfo.type]">{{formatCouponWay.text}}</div>
+            <div :class="`points-way way-${couponInfo.wayId > 3 ? 3 : couponInfo.wayId}`" key="way" v-if="isMyCoupon && couponInfo.status === 0 && !_(couponInfo.wayId).isNull()">
+              <div :class="['points-way-detail',cardInfo.type]">{{formatCouponWay}}</div>
             </div>
             <div v-show="showBtn" key="exchange" class="points-bottom-btn">
               <button class="btn btn-white exchange-btn" v-if="couponInfo.couponStatus === 1"
@@ -140,7 +144,9 @@
     },
     data() {
       return {
-        showBtn: false
+        showBtn: false,
+        copyTip:false,
+        copyTipText:'复制成功'
       }
     },
 
@@ -163,8 +169,8 @@
           gameType: this.couponInfo.gameType
         })
       },
-      formatCouponWay(){
-        return CARD_WAY[this.couponInfo.wayId]
+      formatCouponWay(){  // 目前后台返回的获取方式 种类太多 如果id大于3  默认显示为平台赠送
+        return _(CARD_WAY[this.couponInfo.wayId]).isUndefined() ? '平台赠送' : CARD_WAY[this.couponInfo.wayId].text
       },
       cardInfo() {
         return CARD_TYPE[this.couponInfo.couponType]
@@ -206,8 +212,19 @@
     mounted(){
       if(this.isMyCoupon){
         const clipboard = new Clipboard(this.$refs.couponCopy);
-        clipboard.on('success', function(e) {
+        clipboard.on('success', (e) => {
+          this.copyTip = true
           e.clearSelection();
+          setTimeout(() => {
+            this.copyTip = false
+          },1000)
+        });
+        clipboard.on('error', (e) => {
+          this.copyTip = true
+          this.copyTipText = '复制失败'
+          setTimeout(() => {
+            this.copyTip = false
+          },1000)
         });
       }
     }
@@ -382,6 +399,28 @@
         display: flex;
         align-items: flex-end;
         line-height: 13px;
+      }
+      .copy-status{
+        position: absolute;
+        padding: 3px 5px;
+        background: $def-white-color;
+        border-radius: 3px;
+        font-size: $font-xs;
+        color: $new-inverse-color;
+        right: 5px;
+        top: 52px;
+        &:before{
+          content: '';
+          width: 0px;
+          height: 0px;
+          border: 5px solid transparent;
+          border-bottom-color: $def-white-color;
+          display: block;
+          position: absolute;
+          top: -10px;
+          left:50%;
+          margin-left: -2.5px;
+        }
       }
       .exchange-btn {
         width: 240px;
