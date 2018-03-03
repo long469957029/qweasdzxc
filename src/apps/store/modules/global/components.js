@@ -7,10 +7,12 @@ const initState = () => {
     // 定义全局显示弹窗属性
     openLoginDialog: false,
     openLogoutDialog: false,
+    openLogoutNotice: false,
     openResetPassWordDialog: false,
     openLoginLauncher: false,
     openFreeTrialDialog: false,
     openGameDownLoadDialog: false,
+
     token: '',
     gameDownLoadId: '',
     openNovicePackage: false,
@@ -26,6 +28,9 @@ const initState = () => {
 const getters = {
   loginDialogStatus: (state) => {
     return state.openLoginDialog
+  },
+  logoutNoticeStatus: (state) => {
+    return state.openLogoutNotice
   },
   logoutDialogStatus: (state) => {
     return state.openLogoutDialog
@@ -70,9 +75,11 @@ const mutations = {
   [types.TOGGLE_LOGIN_DIALOG](state, data) {
     state.openLoginDialog = data
   },
-
   [types.TOGGLE_LOGOUT_DIALOG](state, data) {
     state.openLogoutDialog = data
+  },
+  [types.TOGGLE_LOGOUT_NOTICE](state, data) {
+    state.openLogoutNotice = data
   },
   [types.TOGGLE_RESET_PASSWORD_DIALOG](state, data) {
     state.openResetPassWordDialog = data
@@ -107,6 +114,7 @@ const mutations = {
     state.openDeskTopMsg = data.show
     state.deskTopData = data.dataInfo
   },
+
 }
 
 export default {

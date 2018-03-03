@@ -174,7 +174,7 @@
     <!-- 追号 -->
 
     <div v-transfer-dom>
-      <x-dialog v-if="showChaseModal" @modal-hidden="showChaseModal = false">
+      <x-dialog v-model="showChaseModal">
         <betting-chase slot="all" :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney"
                        :ticket-info="ticketInfo"
                        :planId="bettingInfo.planId" :preview-list="bettingChoice.previewList"
@@ -183,7 +183,7 @@
       </x-dialog>
 
       <!-- 确认投注 -->
-      <x-dialog v-if="showConfirmModal" @modal-hidden="showConfirmModal = false">
+      <x-dialog v-model="showConfirmModal">
         <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
                          :betting-list="bettingChoice.previewList" :type="`normal`"
                          @bettingConfirm="bettingConfirm"></betting-confirm>

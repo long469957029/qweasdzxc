@@ -61,7 +61,7 @@
     </div>
 
     <div v-transfer-dom>
-      <x-dialog v-if="isShowDetail" @modal-hidden="isShowDetail = false">
+      <x-dialog v-model="isShowDetail">
         <div slot="all">
           <a data-dismiss="modal" class="close close-white btn-close">×</a>
           <div class="detail-header">

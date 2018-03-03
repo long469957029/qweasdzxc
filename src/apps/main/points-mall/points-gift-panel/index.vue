@@ -24,7 +24,7 @@
     </status-cell>
 
     <div v-transfer-dom>
-      <x-dialog v-if="isShowExchangeModal" @modal-hidden="isShowExchangeModal = false">
+      <x-dialog v-model="isShowExchangeModal">
         <div slot="head-main" class="text-center">兑换确认</div>
         <div class="modal-main">
           <div class="gift-main">
@@ -54,8 +54,7 @@
     </div>
 
     <div v-transfer-dom>
-      <points-address v-if="isShowAddressModal" type="select"
-                      @modal-hidden="isShowAddressModal = false"
+      <points-address v-model="isShowAddressModal" type="select"
                       @address-selected="exchange"
       ></points-address>
     </div>

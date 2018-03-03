@@ -45,7 +45,7 @@
     /*background: url(./misc/background.jpg);*/
     color: $def-black-color;
     .points-top-main-wrapper {
-      background: url(./misc/bg-top.png) no-repeat;
+      background: url(./misc/bg-top.png) repeat-x;
     }
     .points-top-main {
       background: url(./misc/bg-top-texture.png);

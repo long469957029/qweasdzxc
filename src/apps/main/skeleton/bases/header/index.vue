@@ -40,7 +40,7 @@
               <div class="header-menu-body-agent-item">
                 <div class="header-menu-title">个人中心</div>
                 <a href="#/fc/fm" class="header-menu-item"><span class="header-menu-item-text">资金总览</span></a>
-                <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">帐变明细</span></a>
+                <a href="#/fc/ad" class="header-menu-item"><span class="header-menu-item-text">账变明细</span></a>
                 <a href="#/fc/rd" class="header-menu-item"><span class="header-menu-item-text">充提记录</span></a>
                 <a href="#/fc/td" class="header-menu-item"><span class="header-menu-item-text">投注记录</span></a>
               </div>
@@ -284,6 +284,10 @@
     },
 
     mounted(){
+      if(this.$route.query && this.$route.query.popupLogin){
+        this.$store.commit(types.TOGGLE_LOGIN_DIALOG,true)
+        this.$router.push('/')
+      }
       window.Global.m.subscribe('news', 'news:updating', this.renderMsgList)
       if (this.loginStatus) {  //登陆状态下 获取用户安全设置信息
         this.getAccountSafe()

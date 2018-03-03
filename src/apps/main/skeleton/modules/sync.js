@@ -335,17 +335,9 @@ const SyncModule = Base.Module.extend({
     window.store.commit(types.USER_CLEAR)
     if(ajaxOption && ajaxOption.url && !(ajaxOption.url.indexOf('acct/login/doauth.json')>=0)){
       //if 不是 oauth 接口，那么
-      let authorizeChecking = Global.memoryCache.get('authorizeChecking')
-      if (!window.store.getters.loginDialogStatus && !authorizeChecking ) {
-        Global.memoryCache.set('authorizeChecking', true)
-        Global.ui.notification.show('您的账户已登出,请重新登录！', {
-          modalDialogShadow:'modal-dialog-shadow',
-          event: function () {
-            window.store.commit(types.USER_LOGOUT_SUCCESS,{result:0})
-            Global.memoryCache.set('authorizeChecking', false)
-            window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-          }
-        });
+      if (!window.store.getters.loginDialogStatus) {
+        window.store.commit(types.TOGGLE_LOGOUT_DIALOG,false)
+        window.store.commit(types.TOGGLE_LOGOUT_NOTICE,true)
       }
     }
 
