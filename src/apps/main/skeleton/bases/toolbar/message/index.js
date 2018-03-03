@@ -480,6 +480,7 @@ const MessageView = Base.ItemView.extend({
             this.$('.js-select-panel-edit-num').html(res.root.prepareReveicer.length)
             this.$('.js-mess-contact-num').html(res.root.prepareReveicer.length)
             this.$('.js-select-panel-edit').addClass('edit')
+            this.$('.js-mess-select-container').addClass('edit')
             this.$('.js-mess-select-container').html(imService.getMessContact(res.root.prepareReveicer, 'edit'))
           }
           this.$('.js-mess-message-content').html(imService.getChatMessageByDateHtml(this.chatList.chatData, 'mess', res.root.messages.length, this.pageIndex, res.root.messageCount))
@@ -545,6 +546,7 @@ const MessageView = Base.ItemView.extend({
               this.$('.js-mess-select-container').html(imService.getMessContact(this.userList, res.root.prepareReveicer))
               this.$('.js-mess-select-allContact').addClass('hidden')
               this.$('.js-mess-clear-allContact').addClass('hidden')
+              this.$('.js-mess-select-container').addClass('edit')
               // 将获取的消息数据排序
               this.$('.js-mess-message-content').html(imService.getChatMessageByDateHtml(this.chatList.chatData, 'mess', res.root.messages.length, this.pageIndex, res.root.messageCount))
               // 再创建消息
@@ -740,8 +742,8 @@ const MessageView = Base.ItemView.extend({
   // 群发消息联系人选择
   selectMessContactHandler(e) {
     const $target = $(e.currentTarget)
-    const id = $target.data('id')
-    const type = $target.data('type')
+    const id = $target.attr('data-id')
+    const type = $target.attr('data-type')
     if (type === 'selected') {
       const cancelItem = _(this.messContactSelectedList).find({
         userId: id,

@@ -566,10 +566,12 @@
           font-size: 14px;
         }
         .panel-title-close {
-          top: 21px;
+          top: 20px;
         }
         &.edit {
           margin-bottom: 13px;
+          border-bottom: 1px solid #e6e6e6;
+          height: 35px;
         }
         //.btn-panel-title {
         //  background-color: #e5e5e5;
@@ -650,7 +652,7 @@
         float: left;
         position: relative;
         overflow: auto;
-        height: 437px;
+        height: 434px;
         .select-superior {
           cursor: pointer;
           padding-top: 10px;
@@ -658,6 +660,9 @@
           &.active, &:hover {
             color: $new-main-deep-color;
           }
+        }
+        &.edit{
+          height: 480px;
         }
         .select-sub {
           cursor: pointer;
