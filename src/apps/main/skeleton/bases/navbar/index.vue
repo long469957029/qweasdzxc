@@ -223,18 +223,21 @@
       > li {
         &:hover, &.active {
           .nav-channel-container {
+            display: block;
             animation-name: fadeInDown;
             animation-timing-function: ease;
             animation-duration: .5s;
             animation-fill-mode: forwards;
           }
           @keyframes fadeInDown {
-            from {
+            0% {
+              display: none;
               opacity: 0;
-              transform: translate(-50%, -25%) ;//scaleY(1)
+              transform: translate(-50%, -5%) ;//scaleY(1)
             }
 
-            to {
+            100% {
+              display: block;
               opacity: 1;
               transform: translate(-50%, 0px) ;//scaleY(1)
             }
@@ -246,8 +249,8 @@
     .nav-channel-container {
       position: absolute;
       background: #fcfcfc;
+      display: none;
       height: 180px;
-      z-index: -1;
       left: 50%;
       top: 70px;
       transform:  translate(-50%, -100%) ;//scaleY(0)
@@ -255,6 +258,7 @@
       width: 100%;
       margin: 0 auto;
       box-shadow: 0 1px 5px #ddd inset;
+      z-index: 0;
 
       .nav-channel-content {
         width: 1200px;

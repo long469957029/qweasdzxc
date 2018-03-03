@@ -507,6 +507,29 @@ const actionIntroduceApi = (then, fail) => {
     .catch(fail)
 }
 
+/**
+ * 获取用户已经获取的优惠券 （我的优惠券）
+ * @param couponType  1:充值卡, 2:加奖卡, 3:补贴卡, 4:反水卡, 5:代金券, 6:现金券
+ * @param couponStatus 0:未使用, 1:已使用, 2:已过期
+ * @param couponToken  选填, 券编号
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getUserCouponListApi = ({couponType,couponStatus,couponToken,pageSize = 12,pageIndex}, then, fail) => {
+  return $http({
+    url: '/mall/coupon/myCouponList.json',
+    data:{
+      couponType,
+      couponStatus,
+      couponToken,
+      pageSize,
+      pageIndex
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
 
 
 
@@ -537,4 +560,5 @@ export {
   giftExchangeConfirmApi,
   levelIntroduceApi,
   actionIntroduceApi,
+  getUserCouponListApi
 }

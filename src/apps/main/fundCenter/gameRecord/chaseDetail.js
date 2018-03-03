@@ -240,8 +240,8 @@ const BetDetailView = Base.ItemView.extend({
     const html = '<p>确定撤销本期追号？</p>'
     $(document).confirm({
       content: html,
-      size: 'modal-dialog-shadow',
       title: '温馨提示',
+      modalDialogShadow: 'modal-dialog-shadow',
       agreeCallback() {
         self.confirmCancelTrack(e)
       },

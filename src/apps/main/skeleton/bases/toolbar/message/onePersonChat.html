@@ -15,7 +15,15 @@
       <textarea v-model="deliveryLocation" class="js-chat-input chat-input" placeholder="请输入要发送的信息"
                 data-type="private"></textarea>
     </div>
-    <div class="sfa sfa-icon-smile-gray chat-footer-smile inline-block"></div>
+    <div class="js-chat-exp-pack sfa sfa-icon-smile-gray chat-footer-smile inline-block">
+      <div class="js-chat-exp-pack-inner chat-exp-pack-inner hidden">
+        <div class="chat-exp-pack-inner-panel clearfix">
+        <%_.chain(74).range().each(function(item,index){%>
+        <span class="js-chat-exp chat-exp face-<%=index+1%>" data-id="[-f<%=index+1%>-]"></span>
+        <%}).value()%>
+        </div>
+      </div>
+    </div>
     <div class="sfa sfa-icon-send-gray js-chat-footer-send chat-footer-send inline-block"></div>
   </div>
 </div>

@@ -1490,6 +1490,12 @@
     top: 0;
     right: -10px;
   }
+  .sfa-mmc-win {
+    .sfa-mmc-result-close {
+      top: 40px;
+      right: 0;
+    }
+  }
 
   .modal-result {
     width: 260px;

@@ -1,13 +1,23 @@
 import './index.scss'
+// import './emoji/emocss.min.css'
+// import './emoji/emoji.min.css'
+// import EmbedJS from 'embed-js'
+// import url from 'embed-plugin-url'
+// import emoji from 'embed-plugin-emoji'
 
 const imService = require('./imService')
+
+
+
 
 const MessageView = Base.ItemView.extend({
 
   template: require('./index.html'),
   adminTpl: require('./adminChat.html'),
-  onePersonTpl: require('./onePersonChat.html'),
-  massMessageTpl: require('./massMessageChat.html'),
+  // onePersonTpl: require('./onePersonChat.html'),
+  massMessageTpl: _.template(require('./massMessageChat.html'))(),
+  onePersonTpl: _.template(require('./onePersonChat.html'))(),
+  // massMessageTpl: require('./massMessageChat.html'),
 
   events: {
     'keyup .js-im-contact-search': 'searchCheckHandler',
@@ -41,6 +51,9 @@ const MessageView = Base.ItemView.extend({
     'click .js-mess-more-content': 'showMoreMessHandler',
     'click .js-admin-more-content': 'showMoreAdminHandler',
     'click .js-admin-message-change': 'changeToAdminMessageUrlHandler',
+
+    'click .js-chat-exp-pack': 'toggleExpPackHandler',
+    'click .js-chat-exp': 'selectExpHandler',
   },
   getChatTotalXhr (data) {
     return Global.sync.ajax({
@@ -105,6 +118,17 @@ const MessageView = Base.ItemView.extend({
     const acctInfo = Global.memoryCache.get('acctInfo')
     this.username = acctInfo.username
     this.contactUser = this.options.userId
+
+    // const x = new EmbedJS({
+    //   input: this.$('.js-chat-emoji-container')[0],
+    //   plugins: [
+    //     url(),
+    //     emoji()
+    //   ]
+    // })
+    // x.render()
+
+
 
     this.renderGetContactInfoXhr()
     this.renderGetRecentlyInfoXhr()
@@ -370,7 +394,7 @@ const MessageView = Base.ItemView.extend({
     if (typeContent !== '') {
       this.$('.js-chat-input').val('')
       const data = {
-        content: typeContent,
+        content: typeContent.replace(/\[\-f(\w+)\-\]/g, '<span class="chat-exp-text face-$1"></span>'),
         toUser: toUserId,
       }
       this.$('.js-chat-message-content-panel').append(imService.insertChat(this.userPic, this.username, typeContent))
@@ -379,7 +403,7 @@ const MessageView = Base.ItemView.extend({
         this.chatList.chatData = []
       }
       this.chatList.chatData.push({
-        content: typeContent,
+        content: typeContent.replace(/\[\-f(\w+)\-\]/g, '<span class="chat-exp-text face-$1"></span>'),//reqData.content.replace(/\[\-f(\w+)\-\]/g, '<span class="chat-exp face-$1"></span>'),
         fromUserHeadIconId: null,
         isRead: true,
         rid: null,
@@ -535,7 +559,7 @@ const MessageView = Base.ItemView.extend({
   sendMessMessageXhlHandle(gId, typeContent) {
     const sendData = {
       groupId: gId,
-      content: typeContent,
+      content: typeContent.replace(/\[\-f(\w+)\-\]/g, '<span class="chat-exp-text face-$1"></span>'),
     }
     this.sendMassChatXhr(sendData)
       .done((e) => {
@@ -870,6 +894,26 @@ const MessageView = Base.ItemView.extend({
   scrollbarBottomHandler() {
     const $div = this.$('.js-chat-message-content-panel')
     $div.scrollTop($div[0].scrollHeight)
+  },
+
+  toggleExpPackHandler: function(e) {
+    var $target = $(e.currentTarget);
+    if ($target.hasClass('disabled')) {
+      return;
+    }
+    this.$el.find('.js-chat-exp-pack-inner').toggleClass('hidden');
+  },
+  selectExpHandler: function(e) {
+    var $target = $(e.currentTarget);
+    var expId = $target.data('id');
+    var $content = ''
+    if(this.activePerson.type==='user'){
+      $content = this.$el.find('.js-chat-input')
+    }else{
+      $content = this.$el.find('.js-mess-input')
+    }
+    $content.val($content.val() + expId)
+      .trigger('input').trigger('propertychange');
   },
   // 关闭弹窗时销毁轮询
   onDestroy() {
