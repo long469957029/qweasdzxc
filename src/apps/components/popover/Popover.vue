@@ -176,7 +176,7 @@
 </script>
 
 <style lang="scss">
-  $pointer-size: 6px;
+  $pointer-size: 4px;
 
   .vue-popover {
     display: block;
@@ -216,7 +216,7 @@
       border-left: 1px solid transparent;
       border-right: 1px solid transparent;
       border-top: 1px solid #fff;
-      bottom: -$pointer-size;
+      bottom: -$pointer-size + 2;
       left: calc(50% - #{$pointer-size});
       filter: drop-shadow(0px 2px 2px rgba(52, 73, 94, 0.1));
     }

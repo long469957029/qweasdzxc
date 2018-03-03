@@ -15,26 +15,24 @@
     </div>
 
     <div class="relative" ref="body">
-      <table class="no-margin" :class="[tableClass, {'no-b-bottom': hasBorder}]">
-        <colgroup>
-          <col :width="col.width" v-for="col in colModel">
-        </colgroup>
-        <transition-group
-                          enter-active-class="animated-quick fadeIn"
-                          leave-active-class="animated-quick fadeOut"
-                          tag="tbody"
-        >
-          <tr v-for="(row, i) in showRows" :key="i" v-html="row" ref="bodyRows"></tr>
-        </transition-group>
+      <status-cell :status="loading" :has-data="showRows.length" :loading-tip="loadingTip" :transition="transition">
+        <table class="no-margin" :class="[tableClass, {'no-b-bottom': hasBorder}]">
+          <colgroup>
+            <col :width="col.width" v-for="col in colModel">
+          </colgroup>
+          <transition-group
+            enter-active-class="animated-quick fadeIn"
+            leave-active-class="animated-quick fadeOut"
+            tag="tbody"
+          >
+            <tr v-for="(row, i) in showRows" :key="i" v-html="row" ref="bodyRows"></tr>
+          </transition-group>
 
-      </table>
-
-      <div class="height-100" v-html="loading" v-show="_.isEmpty(showRows) && showLoading"></div>
-
-      <div class="empty-container text-center" v-show="_.isEmpty(showRows) && showEmpty">
-        <div class="empty-container-main" v-html="emptyTip">
-        </div>
-      </div>
+        </table>
+        <slot name="empty-tip" slot="empty-tip">
+          <div slot="empty-tip" v-if="emptyTip" v-html="emptyTip"></div>
+        </slot>
+      </status-cell>
     </div>
 
     <div class="js-wt-footer-main relative">
@@ -53,6 +51,11 @@
   export default {
     name: "static-grid",
 
+    model: {
+      prop: 'list',
+      event: 'change'
+    },
+
     props: {
       tableClass: {
         type: String,
@@ -63,6 +66,10 @@
         default: ''
       },
 
+      loadingTip: {
+        type: String,
+        default: ''
+      },
       emptyTip: {
         type: String,
         default: '暂无数据'
@@ -108,6 +115,10 @@
       scroll: {
         type: Boolean,
         default: true
+      },
+      transition: {
+        type: Boolean,
+        default: true
       }
     },
 
@@ -120,7 +131,7 @@
         showRows: [],
         innerRows: [],
         hasBorder: _.isUndefined(this.hasBorder) ? this.tableClass.indexOf('table-bordered') > -1 : this.hasBorder,
-        loading: Global.ui.loader.get(),
+        loading: this.initRemote ? 'loading' : 'completed'
       }
     },
 
@@ -136,6 +147,7 @@
           this.showRows = _.map(data, (item, index, data) => {
             return this.formatRowData(item, index, data)
           }, this)
+          this.$emit('change', this.showRows)
         },
         deep: true
       },
@@ -186,7 +198,7 @@
 
       $_getDataXhr() {
         this.clean()
-        // this.renderLoading()
+        this.loading = 'loading'
 
         $http({
           url: this.url,
@@ -213,6 +225,9 @@
             } else {
               this.renderFail()
             }
+          })
+          .finally(() => {
+            this.loading = 'completed'
           })
       },
 
@@ -279,6 +294,7 @@
 
       clean() {
         this.innerRows = []
+        this.$emit('change', [])
       },
 
       addFooterRows(rows, options) {

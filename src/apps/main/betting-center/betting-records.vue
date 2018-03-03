@@ -5,19 +5,32 @@
       <div class="font-md bc-records-tab" :class="{active: type === 'chase'}" @click="toggleTab('chase')">我的追号</div>
     </div>
     <div class="bc-records-tables">
-      <slot-static-grid v-show="type === 'betting'" :table-class="tableClass" :col-model="bettingOps.colModel" :height="height"
+      <slot-static-grid v-show="type === 'betting'" :table-class="tableClass" :col-model="bettingOps.colModel"
                    :url="bettingOps.url" :reqData="bettingOps.data" :abort="false" :data-prop="bettingOps.dataProp" :scroll="false"
-                   :emptyTip="bettingOps.emptyTip"
+                   :emptyTip="bettingOps.emptyTip" v-model="bettingList"
                    ref="bettingGrid">
         <betting-records-row slot="row" slot-scope="{row, index}" :key="index" :row="row" @update="update"></betting-records-row>
+        <div class="empty-tip-container" slot="empty-tip">
+          <span class="empty-tip"></span>
+          暂无记录
+        </div>
       </slot-static-grid>
-      <static-grid v-show="type === 'chase'" :table-class="tableClass" :col-model="chaseOps.colModel" :height="height"
+      <static-grid v-show="type === 'chase'" :table-class="tableClass" :col-model="chaseOps.colModel"
                    :url="chaseOps.url" :reqData="chaseOps.data" :abort="false" :data-prop="chaseOps.dataProp"
-                   :emptyTip="chaseOps.emptyTip" :scroll="false"
-                   ref="chaseGrid"></static-grid>
+                   :emptyTip="chaseOps.emptyTip" :scroll="false" v-model="chaseList"
+                   ref="chaseGrid">
+
+        <div class="empty-tip-container" slot="empty-tip">
+          <span class="empty-tip"></span>
+          暂无记录
+        </div>
+      </static-grid>
     </div>
-    <div class="more-records">
-      <router-link :to="type === 'betting' ? '/fc/td' : '/fc/cr'" class="btn btn-link text-auxiliary">更多记录>></router-link>
+    <div class="more-records" v-if="isShowMoreBetting">
+      <router-link to="/fc/td" class="btn btn-link text-auxiliary">更多记录>></router-link>
+    </div>
+    <div class="more-records" v-if="isShowMoreChase">
+      <router-link to="/fc/cr" class="btn btn-link text-auxiliary">更多记录>></router-link>
     </div>
   </div>
 </template>
@@ -45,6 +58,8 @@
         type: 'betting',
         tableClass: 'table table-similar table-center no-margin',
 
+        bettingList: [],
+        chaseList: [],
         bettingOps: {
           colModel: [
             {
@@ -183,6 +198,15 @@
         this.chaseOps.data.ticketId = this.ticketId
       }
     },
+
+    computed: {
+      isShowMoreBetting() {
+        return this.bettingList.length >= 5 && this.type === 'betting'
+      },
+      isShowMoreChase() {
+        return this.chaseList.length >= 5 && this.type !== 'betting'
+      }
+    },
     methods: {
       /**
        * 更新当前tab
@@ -198,6 +222,9 @@
       toggleTab(type) {
         this.type = type
         this.update()
+      },
+      toggleMoreRecords(isEmpty) {
+
       },
 
     },
@@ -261,4 +288,18 @@
       word-wrap: break-word;
     }
   }
+
+  .empty-tip-container {
+    .empty-tip {
+      background: url(./misc/record-empty.png);
+      width: 22px;
+      height: 22px;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 40px 0;
+      top: -2px;
+      position: relative;
+    }
+  }
+
 </style>

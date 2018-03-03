@@ -5,7 +5,9 @@
     >
       <form class="m-TB-lg" slot="search-panel" ref="searchForm">
         <control-group>
-          <control-cell title="时间"><div ref="timeset"></div></control-cell>
+          <control-cell title="时间">
+            <div ref="timeset"></div>
+          </control-cell>
           <control-cell title="类型">
             <select name="couponType" class="select control-select">
               <option value="">全部</option>
@@ -33,7 +35,18 @@
         <th>状态</th>
       </tr>
       <tr slot="tbody" slot-scope="{row, index}" :key="index">
-        <td>{{row.exchangeDate | toTime}}</td>
+        <td>
+          <span class="origin-icon" :class="{'lucky-icon': row.wayId === 1}" v-popover.top="{name: `origin-${index}`}">
+          <div v-transfer-dom>
+            <popover :name="`origin-${index}`" event="hover">
+              <div class="detail-popover">
+                幸运夺宝
+              </div>
+            </popover>
+          </div>
+          </span>
+          {{row.exchangeDate | toTime}}
+        </td>
         <td>{{row.couponType | formatCouponType}}</td>
         <td v-html="formatCouponDesc(row)"></td>
         <td>{{row.couponToken}}</td>
@@ -117,5 +130,23 @@
 </script>
 
 <style lang="scss" scoped>
+  .lucky-icon {
+    background: url(./misc/lucky-icon.png);
+  }
+
+  .origin-icon {
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .vue-popover.dropdown-position-top {
+    padding: 0 10px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 5px 0px    rgba(0, 0, 0, 0.15);
+    border: 1px solid #eeeeee;
+    color: #666666;
+  }
 
 </style>

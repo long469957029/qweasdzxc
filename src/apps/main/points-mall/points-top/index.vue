@@ -10,43 +10,37 @@
           </router-link>
         </div>
         <div class="sfa-pt-integral-mall"></div>
-        <div class="left-profile">
+        <div class="left-profile" v-if="isLogin">
           <div class="profile">
-            <img :src="userAvatar" class="avatar" />
-            <template v-if="isLogin">
+            <img :src="userAvatar" class="avatar"/>
+            <template>
               您好！{{username}}
             </template>
-            <template v-else>
-              您好！请先登录~
-            </template>
-            <div class="level" v-if="isLogin">
+            <div class="level">
               <span class="sfa" :class="`sfa-pt-level-${mallBasicInfo.levelId}`"></span>
             </div>
           </div>
           <div class="current-points">
             可用积分值：
             <span class="points-val" :class="{'letter-spacing': !isLogin}">
-              {{isLogin ? mallBasicInfo.fIntegral : '--'}}
+              {{mallBasicInfo.fIntegral}}
             </span>
           </div>
           <div class="level-up">
             <div class="level-up-top">
-              距离晋升还需：{{isLogin ? mallBasicInfo.fNextLevelIntegral : '--'}}
+              距离晋升还需：{{mallBasicInfo.fNextLevelIntegral}}
             </div>
             <div class="left-ball">
               <div class="bar">
                 <div class="current" :style="`width: ${mallBasicInfo.nextPercent}%`"></div>
               </div>
-              <template v-if="isLogin">
+              <template>
                 {{mallBasicInfo.nextLevelName}}
               </template>
             </div>
             <div class="level-tip">
-              <template v-if="isLogin">
+              <template>
                 升级到{{mallBasicInfo.nextLevelName}}即可享受{{mallBasicInfo.fNextDiscount}}折兑换特权
-              </template>
-              <template v-else>
-                升级后可享受更多的兑换特权
               </template>
             </div>
           </div>
@@ -54,8 +48,21 @@
             <span class="sfa sfa-pt-my-points"></span>
             我的积分与兑换
           </router-link>
-          <div class="points-exchange-btn" @click="login" v-else>
-            立即登录
+          <!--<div class="points-exchange-btn" @click="login" v-else>-->
+          <!--立即登录-->
+          <!--</div>-->
+        </div>
+        <div class="left-profile-unLogin" v-else>
+          <div class="profile-unLogin-img">
+            <div class="profile-unLogin-img-backend">
+              <img :src="userAvatar" class="avatar"/>
+            </div>
+          </div>
+          <div class="profile-unLogin-tips">
+            登录后即可查看个人信息详情
+          </div>
+          <div class="points-exchange-btn" @click="login">
+            马上登录
           </div>
         </div>
       </div>
@@ -151,7 +158,7 @@
       },
       showSignIn() {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号', {modalDialogShadow: 'modal-dialog-shadow'})
           return false
         }
         this.isShowSignIn = true
@@ -242,7 +249,32 @@
     .left-profile {
       padding-top: 20px;
     }
-
+    .left-profile-unLogin {
+      text-align: center;
+      padding: 26px;
+      margin: 0 auto;
+      .profile-unLogin-img-backend{
+        width: 88px;
+        height: 88px;
+        text-align: center;
+        background: #ffffff;
+        border-radius: 50px;
+        margin: 0 auto 25px;
+        .avatar{
+          margin-top: 4px;
+        }
+      }
+      .profile-unLogin-tips{
+        color: #ffffff;
+        font-size: 15px;
+        margin-bottom: 24px;
+      }
+      .points-exchange-btn{
+        color: #ffffff;
+        margin-left:0;
+        font-size: 15px;
+      }
+    }
     .level {
       margin-left: 15px;
       margin-top: 4px;
@@ -253,7 +285,7 @@
       line-height: 30px;
       margin-left: 10px;
       &.letter-spacing {
-       letter-spacing: 4px;
+        letter-spacing: 4px;
       }
     }
 
@@ -287,7 +319,7 @@
     .current {
       height: 100%;
       background-color: #f7ca95;
-      box-shadow: inset 0px 1px 2px 0px    rgba(0, 0, 0, 0.42);
+      box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.42);
       border-radius: 6px;
     }
 
@@ -375,7 +407,7 @@
       margin-top: -30px;
       transition: background-color .5s;
     }
-    .swiper-button-next,.swiper-button-prev {
+    .swiper-button-next, .swiper-button-prev {
       &:hover {
         background-color: rgba(0, 0, 0, 0.5);
       }
