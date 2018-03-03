@@ -149,7 +149,7 @@
 <style lang="scss" scoped>
   .main{
     width: 100%;
-    min-height: 500px;
+    min-height: 700px;
     border-top: 1px solid $third-line-color;
     position: relative;
     .go-point{
