@@ -35,7 +35,7 @@
         </div>
       </div>
       <div id="fullpage" class="" ref="fullpage">
-        <div class="section " id="section1">
+        <div class="section first-section " id="section1">
           <div class="panel basic-white">
             <div class="panel-main clearfix">
               <div class="clearfix ac-reg-body">
@@ -1945,5 +1945,8 @@
     50%{
       transform: rotate(15deg);
     }
+  }
+  .first-section{
+    z-index: 2;
   }
 </style>
