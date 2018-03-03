@@ -365,17 +365,17 @@
       left: 11%;
       /*width: 10%;*/
       margin-left: 0;
-      padding: 8px;
+      padding: 8px 15.5px;
       background: rgba(0, 0, 0, .4);
-      border-radius: 20px;
+      border-radius: 13px;
       position: absolute;
       display: block;
       z-index: 2;
-      bottom: 10px;
+      bottom: 20px;
       li {
         display: inline-block;
-        margin-left: 7px;
-        margin-right: 7px;
+        margin-left: 7.5px;
+        margin-right: 7.5px;
         width: 8px;
         height: 8px;
         border-radius: 50%;
@@ -435,12 +435,16 @@
         justify-content: center;
         position: relative;
         .db-slot-name {
-          padding: 10px 20px;
+          /*padding: 10px 20px;*/
+          width: 128px;
+          height: 33px;
+          text-align: center;
+          line-height: 33px;
           font-size: $font-md;
           color: $def-white-color;
-          background-color: #414a5c;
-          border-top-left-radius: 20px;
-          border-top-right-radius: 20px;
+          background-color: #42495c;
+          border-top-left-radius: 15px;
+          border-top-right-radius: 15px;
           position: absolute;
           bottom: 0px;
         }

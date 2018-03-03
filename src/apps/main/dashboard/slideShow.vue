@@ -156,7 +156,7 @@
     bottom: 20px;
     margin-bottom: 5px;
     padding: 5px 20px;
-    background: rgba(0, 0, 0, .4);
+    background: rgba(0, 0, 0, .2);
     border-radius: 20px;
   }
 
@@ -169,13 +169,13 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, .6);
-    margin-right: 15px;
-    margin-left: 15px;
+    background: rgba(255, 255, 255, .3);
+    margin-right: 25px;
+    margin-left: 25px;
     cursor: pointer;
   }
 
   .slide-pages li a.on {
-    background: rgba(255, 255, 255, .6);
+    background: rgba(255, 255, 255, .8);
   }
 </style>

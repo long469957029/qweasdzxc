@@ -66,6 +66,7 @@
       </div>
       <div class="footer-bg"></div>
     </div>
+    <div class="line"></div>
   </div>
 </template>
 
@@ -125,6 +126,15 @@ export default {
   display: none;
   height: 280px;
   background: #21232a;
+  .line{
+    position: absolute;
+    width: 1894px;
+    height: 0;
+    border: 1px dashed #262931;
+    top: 200px;
+    left: 50%;
+    margin-left: -947px;
+  }
 }
 
 .footer-content {
@@ -177,12 +187,27 @@ export default {
   li {
     height: 12px;
     border-right: #4d4f55;
-    padding: 0 20px;
+    padding: 0 24px;
     list-style: none;
-
+    position: relative;
+    &:after{
+      content: '';
+      width: 1px;
+      height: 12px;
+      background: $new-inverse-color;
+      position: absolute;
+      display: block;
+      right: 0;
+      top: 5px;
+    }
     &:nth-child(1) {
       padding-left: 0;
       padding-right: 20px;
+    }
+    &:last-child{
+      &:after{
+        display: none;
+      }
     }
   }
 

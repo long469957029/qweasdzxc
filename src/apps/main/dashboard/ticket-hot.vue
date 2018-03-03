@@ -5,7 +5,7 @@
       <li :class="[{active: ticketType === 2},'db-ticket-game-type-item']" @click="showTicket(2)">经典彩票</li>
     </ul>
     <router-link :to="ticketType === 1 ? `bc/2/${_.isEmpty(topHandicapTicket) ? 1 : topHandicapTicket.id}`
-                : `/bc/0/${_.isEmpty(topClassicalTicket) ? 1 : topClassicalTicket.id}`" class="db-ticket-more">更多彩种 >>
+                : `/bc/0/${_.isEmpty(topClassicalTicket) ? 1 : topClassicalTicket.id}`" class="db-ticket-more">更多彩种<span class="m-left-xs">>></span>
     </router-link>
     <div class="ticket-game-main" @mouseover="showArrow" @mouseout="showArrow">
       <transition name="arrow-left">
@@ -314,7 +314,7 @@
     margin: 7px 30px 27px;
     background: #ececec;
     border: 1px solid #e2e2e2;
-    border-radius: 3px;
+    border-radius: 15px;
   }
 
   .db-ticket-progress {
@@ -324,6 +324,6 @@
     height: 7px;
     background: #14b1bb;
     border: 1px solid #14b1bb;
-    border-radius: 3px;
+    border-radius: 15px;
   }
 </style>
