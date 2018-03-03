@@ -77,24 +77,32 @@
     },
 
     methods: {
-      getList() {
-        this.loadingStatus = 'loading'
+      getList({loading = true} = {loading: true}) {
+        if (loading) {
+          this.loadingStatus = 'loading'
+        }
         getAddressListApi(({data}) => {
           if (data && data.result === 0) {
             this.addressList = data.root
           }
         })
           .finally(() => {
-            this.loadingStatus = 'completed'
+            if (loading) {
+              this.loadingStatus = 'completed'
+            }
           })
       },
 
-      refresh() {
+      refresh({loading} = {loading: true}) {
         this.isShowAddressModal = false
-        this.getList()
+        this.getList({loading})
       },
 
       add() {
+        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
+          return false
+        }
         if (this.addressList.length > this.maxCount) {
           Global.ui.notification.show(`<div class="m-bottom-lg">地址已经达到最大数量!</div>`, {
             type: 'success',
@@ -130,7 +138,7 @@
               closeBtn: false,
             })
 
-            this.refresh()
+            this.refresh({loading: false})
           }
         })
       },

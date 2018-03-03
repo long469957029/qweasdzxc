@@ -466,7 +466,7 @@
   }
 
   .bc-select-item {
-    /*margin-bottom: 10px;*/
+    margin-bottom: 10px;
     display: inline-block;
   }
 
@@ -565,9 +565,6 @@
     }
     .select-item-title {
       margin-left: 10px;
-      > div {
-        min-width: 45px;
-      }
     }
     .bc-playArea-items {
       margin: 20px auto 0;

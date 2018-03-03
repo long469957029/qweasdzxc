@@ -138,10 +138,10 @@ module.exports = {
           } else {
             onlineCircle = ''
           }
-
+          let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close parents"></span>'
           const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
           itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="我的上级">` +
-            `<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span></div>`)
+            `<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span>${cancel}</div>`)
         } else {
           let status = ''
           if (active.type === 'user' && active.id === item.userId) {
@@ -159,7 +159,7 @@ module.exports = {
           const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
           itemHtml.push(`<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}`)
 
-          let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-close recently-message-close"></span>'
+          let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close"></span>'
           if (item.newMsgNum > 0) {
             cancel = ''
             itemHtml.push('<div class="recently-item-info inline-block">')
@@ -183,7 +183,7 @@ module.exports = {
         itemHtml.push('<span class="sfa sfa-avata-persons inline-block"></span>')
         itemHtml.push('<div class="recently-item-info inline-block no">')
         itemHtml.push('<div class="recently-name">群消息</div>')
-        itemHtml.push('</div><span class="js-recently-message-close sfa sfa-icon-im-close recently-message-close"></span></div></div>')
+        itemHtml.push('</div><span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close"></span></div></div>')
         html.push(itemHtml.join(''))
       }
       // html.push(itemsHtml.join(''))
@@ -275,8 +275,9 @@ module.exports = {
     html.push(`</div><div class="inline-block chat-item-time pull-right">${sendTime}</div>`)
     return html.join('')
   },
-  getMessContact(userlist) {
+  getMessContact(userlist, selectedList) {
     const html = []
+    // 不显示系统管理员与我的上级
     const admin = _(userlist).findWhere({
       userId: null,
       userName: '系统管理员',
@@ -285,37 +286,71 @@ module.exports = {
     const superior = _(sendList).findWhere({
       userName: '我的上级',
     })
-    if (superior !== null && superior !== undefined) {
-      html.push(`<div class="js-mess-select-contact select-superior" data-id='${superior.userId}' data-name="我的上级">我的上级</div>`)
-    }
+    // if (superior !== null && superior !== undefined) {
+    //   html.push(`<div class="js-mess-select-contact select-superior" data-id='${superior.userId}' data-name="我的上级">我的上级</div>`)
+    // }
     const subList = _(sendList).without(superior)
     if (subList.length > 0) {
-      html.push('<div class="select-sub"><span class="select-sub-img"><i class="fa fa-caret-right" aria-hidden="true"></i></span><span class="select-sub-text">我的下级</span></div>')
-      html.push('<div class="select-sub-container"><div class="select-sub-items">')
+      // html.push('<div class="select-sub"><span class="select-sub-img"><i class="fa fa-caret-right" aria-hidden="true"></i></span><span class="select-sub-text">我的下级</span></div>')
+      html.push('<div class="select-sub-container"><div class="js-select-sub-items select-sub-items">')
       _(subList).each((item) => {
-        html.push(`<div class="js-mess-select-contact select-sub-item" data-id='${item.userId}' data-name='${item.userName}'>${item.userName}` +
-          '<i class="fa fa-check pull-right select-sub-item-isSelect" aria-hidden="true"></i></div>')
+        let onlineCircle = '<span class="text-circle contact-status"></span>'
+        let offLineStatus = 'avatar-gray'
+        if (item.online) {
+          offLineStatus = ''
+        } else {
+          onlineCircle = ''
+        }
+        const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
+        let select = ''
+        let selected = 'hidden'
+        let userSelect = ''
+        if (selectedList !== undefined) {
+          const selectUser = _(selectedList).findWhere({
+            userId: item.userId,
+          })
+          if (selectUser !== undefined && selectUser !== '') {
+            select = 'hidden'
+            selected = ''
+            userSelect = 'selected'
+          } else {
+            select = ''
+            selected = 'hidden'
+          }
+        }
+        let action = 'js-select-sub-item '
+        if (selectedList === 'edit') {
+          select = 'hidden'
+          selected = 'hidden'
+          action = ''
+        }
+        html.push(`<div class="${action} select-sub-item" data-id='${item.userId}' data-name='${item.userName}' data-type="${userSelect}">` +
+          `<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar">` +
+          `<img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name">${item.userName}</span><label class="js-mess-select-contact sub-item-checkbox-panel ${select}"></label>` +
+          `<label class="js-mess-selected-contact sub-item-checkbox inline-block ${selected}"><checkbox></checkbox></label>` +
+          // '<i class="fa fa-check pull-right select-sub-item-isSelect" aria-hidden="true"></i>' +
+          '</div>')
       })
       html.push('</div></div>')
     }
     return html.join('')
   },
-  getMessSelectedHtml(userlist, groupId) {
-    const html = []
-    const admin = _(userlist).findWhere({
-      userId: null,
-      userName: '系统管理员',
-    })
-    const sendList = _(userlist).without(admin)
-    let cancel = ''
-    if (groupId === undefined) {
-      cancel = '<i class="js-selected-sub-item-cancel fa fa-times pull-right selected-sub-item-cancel" aria-hidden="true"></i>'
-    }
-    _(sendList).each((sub) => {
-      html.push(`<div class="js-selected-sub-item selected-sub-item" data-id='${sub.userId}'>${sub.userName}${cancel}</div>`)
-    })
-    return html.join('')
-  },
+  // getMessSelectedHtml(userlist, groupId) {
+  //   const html = []
+  //   const admin = _(userlist).findWhere({
+  //     userId: null,
+  //     userName: '系统管理员',
+  //   })
+  //   const sendList = _(userlist).without(admin)
+  //   let cancel = ''
+  //   if (groupId === undefined) {
+  //     cancel = '<i class="js-selected-sub-item-cancel fa fa-times pull-right selected-sub-item-cancel" aria-hidden="true"></i>'
+  //   }
+  //   _(sendList).each((sub) => {
+  //     html.push(`<div class="js-selected-sub-item selected-sub-item" data-id='${sub.userId}'>${sub.userName}${cancel}</div>`)
+  //   })
+  //   return html.join('')
+  // },
   getSelectMessContact(userlist, selectedList) {
     const html = []
     const admin = _(userlist).findWhere({

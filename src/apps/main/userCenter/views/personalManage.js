@@ -1,4 +1,5 @@
 const avatarCfg = require('../misc/avatarConfig')
+// const Parsley = require('parsleyjs')
 
 const PersonalManageView = Base.ItemView.extend({
 
@@ -11,8 +12,8 @@ const PersonalManageView = Base.ItemView.extend({
     'click .js-uc-reset': 'resetPageHandler',
     'click .js-uc-address-info': 'addressInfoHandler',
     'click .js-head-icon-info': 'headIconHandler',
+    'blur .js-uc-pl-birthday': 'checkBirthday',
   },
-
   getHeadIconXhr() {
     return Global.sync.ajax({
       url: '/acct/userinfo/headIconList.json',
@@ -72,7 +73,7 @@ const PersonalManageView = Base.ItemView.extend({
         if (res && res.result === 0) {
           self.$('.js-uc-userName').html(res.root.userName)
           self.$('.js-uc-uName').val(res.root.uName)
-          self.iconId = res.root.headIconId
+          self.iconId = res.root.headIconId || Global.memoryCache.get('acctInfo').headIcon
           self.$('.js-uc-regTime').html(_(res.root.userRegTime).toTime())
           if (!_.isNull(res.root.gender)) {
             self.$(`input[name="ucSex"][value=${res.root.gender}]`).attr('checked', true)
@@ -120,7 +121,7 @@ const PersonalManageView = Base.ItemView.extend({
       const self = this
       this.$headIconList.empty()
       const html = _(data).map((item) => {
-        return `<li class="icon-info js-head-icon-info ${Number(item.id) === self.iconId ? 'active' : ''}" 
+        return `<li class="icon-info js-head-icon-info ${Number(item.id) === Number(self.iconId) ? 'active' : ''}" 
             data-id="${item.id}"><img src="${item.logo}" class="head-img"></li>`
       })
       this.$headIconList.html(html.join(''))
@@ -174,8 +175,11 @@ const PersonalManageView = Base.ItemView.extend({
   },
   updatePersonalInfoHandler() {
     let validate  = this.$form.parsley().validate();
+    if(!this.checkBirthday()){
+      return false
+    }
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-      Global.ui.notification.show('试玩会员无法进行修改个人资料操作，请先注册正式游戏账号')
+      Global.ui.notification.show('试玩会员无法修改个人资料，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
       return false
     }
     const self = this
@@ -190,7 +194,7 @@ const PersonalManageView = Base.ItemView.extend({
         errorText: '省市区填写不完整',
       }
       this.$('.select-address').toggleClass('faild',true)
-      this.formateError(data)
+      _.formatError(data)
       return false
     }else{
       this.$('.select-address').toggleClass('faild',false)
@@ -220,12 +224,12 @@ const PersonalManageView = Base.ItemView.extend({
       })
       .done((res) => {
         if (res && res.result === 0) {
+          Vue.$global.bus.$emit('update:userInfo',{uName: self.$('.js-uc-uName').val(),headIconId: self.iconId})
           self.refresh()
           Global.ui.notification.show('修改个人信息成功', {
             type: 'success',
           })
           window.app.$store.dispatch(types.CHECK_LOGIN_STATUS)
-          Vue.$global.bus.$emit('update:userInfo',{uName: self.$('.js-uc-uName').val(),headIconId: self.iconId})
         } else {
           Global.ui.notification.show('修改个人信息失败')
         }
@@ -256,10 +260,25 @@ const PersonalManageView = Base.ItemView.extend({
     $target.addClass('active').siblings().removeClass('active')
     this.iconId = $target.data('id')
   },
-  formateError(data) {
-    const errorTpl = `<span class="text-hot"><i class="sfa sfa-error-icon m-right-xs vertical-middle"></i>${data.errorText}</span>`
-    data.el.html(errorTpl)
+
+
+  checkBirthday() {
+    let month = this.$('.js-bday1').parsley('destroy')
+    let day = this.$('.js-bday2').parsley('destroy')
+    if(month.isValid() && day.isValid()){
+      this.birthday = true
+      this.$('.js-uc-pm-birthday-error').html('')
+    }else{
+      this.birthday = false
+      const errorData = {
+        el: this.$('.js-uc-pm-birthday-error'),
+        errorText: '生日填写不完整',
+      }
+      _.formatError(errorData)
+    }
+    return this.birthday
   },
+
 })
 
 module.exports = PersonalManageView

@@ -178,13 +178,15 @@
 
     .record-action {
       text-align: left;
-      @include float-item(12px, $new-inverse-color, 50%, 35px, 0px);
+      @include float-item(12px, $new-inverse-color, 45%, 35px, 0px);
+      overflow: hidden;
     }
 
     .record-date {
       margin-left: -5px;
       text-align: right;
-      @include float-item(12px, $font-auxiliary-color, 50%, 35px, 0px);
+      @include float-item(12px, $font-auxiliary-color, 55%, 35px, 0px);
+      overflow: hidden;
     }
 
     .record-date {
@@ -192,7 +194,8 @@
     }
 
     .record-amount, .record-progress {
-      @include float-item(12px, $new-inverse-color, 30%, 35px, 0px);
+      @include float-item(12px, $new-inverse-color, 31%, 35px, 0px);
+      overflow: hidden;
     }
 
     .record-amount {
@@ -201,11 +204,12 @@
 
     .record-remark {
       @include float-item(12px, $font-auxiliary-color, 100%, 35px, 0px);
+      overflow: hidden;
     }
 
     .record-progress {
       float: right;
-      width: 69%;
+      width: 68%;
       //margin-left: 5px;
       .progress {
         float: left;
@@ -269,7 +273,7 @@
       }
     }
     .fc-rc-status-container {
-      float: left;
+      float: right;
       padding-top: 1px;
       font-size: 0;
       .fc-rc-status {
@@ -279,7 +283,7 @@
           width: 43px;
           height: 18px;
           //padding: 0px 2px;
-          padding: 1px 6px;
+          padding: 1px 3px;
           border: 1px solid #666666;
           border-radius: 3px;
         }
@@ -287,7 +291,7 @@
           width: 50px;
           height: 20px;
           //padding: 0px 2px;
-          padding: 1px 6px;
+          padding: 1px 3px;
           background: #14b1bb;
           color: #ffffff;
           border: 1px solid #14b1bb;

@@ -9,13 +9,13 @@
     background: $prominent-dialog-body;
     .nav-tabs {
       height: 54px;
-      padding: 0 192px;
+      padding: 0 200px;
       background: $new-main-deep-color;
       li {
-        margin: 0 13px;
+        margin: 0 5px;
         a {
           margin-top: 17px;
-          padding: 0px 13px;
+          padding: 0px 18px;
           border-radius: 5px;
           color: $def-white-color;
           line-height: 37px !important;
@@ -261,7 +261,7 @@
             }
             .fc-rc-leftBar-quickPay-select {
               width: 360px;
-              height: 170px;
+              //height: 170px;
               li {
                 cursor: pointer;
                 line-height: 85px;
@@ -281,6 +281,7 @@
               }
             }
             .fc-rc-leftBar-payMoney-fee {
+              margin: 42px 0 -26px;
               li {
                 list-style: none;
                 display: inline-block;
@@ -290,7 +291,7 @@
             }
 
             .fc-rc-leftBar-submit {
-              margin-top: 25px;
+              margin-top: 60px;
               .btn-fc-submit {
                 width: 360px;
                 height: 55px;
@@ -363,13 +364,13 @@
 .fc-re-banktransfer {
   width: 25px;
   height: 16px;
-  background-image: url('~base/images/v2/bank-creditCard.png');
+  background-image: url('~base/images/v2/bank-transferPay.png');
 }
 
 .fc-re-scancode {
   width: 22px;
   height: 23px;
-  background-image: url('~base/images/v2/bank-saoPay.png');
+  background-image: url('~base/images/v2/bank-scanCodePay.png');
 }
 
 .fc-re-qqscancode {
@@ -377,11 +378,6 @@
   height: 22px;
   background-image: url('~base/images/v2/bank-qqPay.png');
 }
-
-.fc-re-scancode {
-  background-image: url('~base/images/v2/bank-UnionPay.png');
-}
-
 .fc-re-jdPay {
   width: 22px;
   height: 23px;
@@ -677,7 +673,7 @@
   float: right;
   .fc-rc-rightBar-tips {
     margin-top: 18px;
-    height: 150px;
+    //height: 150px;
     border-bottom: 1px solid #e6e6e6;
     .fc-rc-rightBar-tips-img {
       float: left;
@@ -689,7 +685,7 @@
     .fc-rc-rightBar-tips-content {
       color: $font-auxiliary-color;
       display: block;
-      padding: 5px 0;
+      padding: 5px 0 10px;
     }
   }
   .fc-rc-rightBar-activity {
@@ -929,7 +925,7 @@
           }
           .fc-tr-quickPay-select {
             width: 360px;
-            height: 170px;
+            //height: 170px;
             li {
               cursor: pointer;
               line-height: 85px;
@@ -949,7 +945,7 @@
             }
           }
           .fc-rc-leftBar-submit {
-            margin-top: 25px;
+            margin-top: 60px;
           }
         }
         .fc-tr-amount-tips {
@@ -966,7 +962,7 @@
     text-align: center;
     .fc-tr-confirmView-title {
       margin-top: 60px;
-      padding: 0 180px;
+      padding: 0 160px;
       font-size: 14px;
       .text-back-title1 {
         color: $font-auxiliary-color;
@@ -987,8 +983,8 @@
       }
     }
     .fc-tr-confirmView-img {
-      margin-top: 160px;
-      margin-left: 287px;
+      margin-top: 104px;
+      //margin-left: 287px;
     }
     .fc-tr-confirmView-Tips {
       font-size: 18px;
@@ -1103,7 +1099,7 @@
             overflow: hidden;
             width: 320px;
             max-height: 251px;
-            transition: all .6s ease-out;
+            transition: all .2s ease-out;
             //height: 50px;
             background: #ffffff;
             border: 1px solid #cccccc;
@@ -1117,6 +1113,9 @@
             padding: 0 20px;
             .js-wd-bank-selected {
               height: 50px !important;
+            }
+            .wd-bank-selectedItem{
+              height: 50px;
             }
             .js-wd-bank-items {
               border-top: 1px solid #e6e6e6;
@@ -1269,7 +1268,7 @@
             color: #999999;
           }
           .fc-wd-submit {
-            margin-top: 25px;
+            margin-top: 60px;
           }
 
         }
@@ -1537,6 +1536,28 @@
   }
 }
 
-.text-account-fund {
-  color: #f09932;
+
+.fund-operate-close{
+  font-size: 25px;
+  font-weight: normal;
+  line-height: 17px;
+  color: $def-line-color;
+  outline: 0;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+  cursor: pointer;
+  &:hover, &:focus {
+    color: $def-line-color;
+    text-decoration: none;
+    outline: 0;
+  }
+  position: absolute;
+  top:13px;
+  right: 13px;
+  z-index: 2;
+
+  &.close-white {
+    color: #ffffff;
+  }
 }

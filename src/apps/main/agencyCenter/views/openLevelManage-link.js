@@ -28,7 +28,7 @@ const OpenAccountManageLinkView = SearchGrid.extend({
     _(this.options).extend({
       height: 624,
       title: '链接管理',
-      tableClass: 'table table-bordered table-center ac-auto-container',
+      tableClass: 'table table-bordered table-center ac-auto-container border-bottom',
       columns: [
         {
           name: '注册链接',

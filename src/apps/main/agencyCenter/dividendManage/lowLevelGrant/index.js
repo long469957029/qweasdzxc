@@ -110,9 +110,18 @@ const LowLevelView = Base.ItemView.extend({
     const preMonth = lastMonth.month() + 1
     const formatMonth = now.format('YYYY-MM')
     const lastFormatMonth = lastMonth.format('YYYY-MM')
+    const lastPreMonth = lastMonth.month()
+    const lastPreMonthMoment = moment().add('month', -2)
+    const lastPreFormatMonth = lastPreMonthMoment.format('YYYY-MM')
     const cycle = []
     if (type === 0) {
-      if (date > 15) {
+      if(date === 1){
+        cycle.push(`<option value="1" data-month="${lastFormatMonth}">${preMonth}月下半月</option>`)
+        cycle.push(`<option value="0" data-month="${lastFormatMonth}">${preMonth}月上半月</option>`)
+      } else if(date === 16){
+        cycle.push(`<option value="0" data-month="${formatMonth}">${month}月上半月</option>`)
+        cycle.push(`<option value="1" data-month="${lastFormatMonth}">${preMonth}月下半月</option>`)
+      } else if (date > 16) {
         cycle.push(`<option value="1" data-month="${formatMonth}">${month}月下半月</option>`)
         cycle.push(`<option value="0" data-month="${formatMonth}">${month}月上半月</option>`)
       } else {
@@ -121,8 +130,13 @@ const LowLevelView = Base.ItemView.extend({
       }
       this.$cycle.html(cycle.join(''))
     } else {
-      cycle.push(`<option value="1" data-month="${formatMonth}">${month}月</option>`)
-      cycle.push(`<option value="0" data-month="${lastFormatMonth}">${preMonth}月</option>`)
+      if(date === 1){
+        cycle.push(`<option value="1" data-month="${lastFormatMonth}">${preMonth}月</option>`)
+        cycle.push(`<option value="0" data-month="${lastPreFormatMonth}">${lastPreMonth}月</option>`)
+      }else{
+        cycle.push(`<option value="1" data-month="${formatMonth}">${month}月</option>`)
+        cycle.push(`<option value="0" data-month="${lastFormatMonth}">${preMonth}月</option>`)
+      }
       this.$cycle.html(cycle.join(''))
     }
   },

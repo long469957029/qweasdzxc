@@ -86,7 +86,7 @@ const BetDetailView = Base.ItemView.extend({
     this.$('.js-cd-info-total-no').html(info.chaseAllPeriods)
     this.$('.js-cd-info-isStop').html(Number(info.suspend) ? '是' : '否')
     const playData = info.chaseTicketPlayDetail[0]
-    this.$('.js-cd-content-play').html(`${playData.ticketLevelName}-${playData.ticketLevelName}`)
+    this.$('.js-cd-content-play').html(playData.playName)
     let betMethod = ''
     if (info.chaseTicketPlayDetail[0].moneyMethod === 10000) {
       betMethod = 2
@@ -107,8 +107,10 @@ const BetDetailView = Base.ItemView.extend({
   renderPlanGrid(row) {
     const self = this
     this.$('.js-cd-no-container').staticGrid({
-      tableClass: 'table table-bordered table-hover table-center',
+      tableClass: 'table  table-hover table-center fc-cd-chase-no-table',
       height: 230,
+      tableHeaderClass: 'fc-cd-chase-no-table-header',
+      tableBodyClass: 'fc-cd-chase-no-table-body',
       colModel: [
         {label: '', name: '', width: '2%'},
         {label: '奖期', name: 'ticketPlanId', width: '15%'},
@@ -126,7 +128,7 @@ const BetDetailView = Base.ItemView.extend({
           name: 'amount',
           width: '15%',
           formatter(val) {
-            return `<span class="text-bold-cool">${_(val).fixedConvert2yuan()}</span>`
+            return _(val).fixedConvert2yuan()
           },
         },
         {
@@ -152,7 +154,7 @@ const BetDetailView = Base.ItemView.extend({
             } else if (val === 0) {
               status = '未中奖'
             } else {
-              status = `<span class="text-bold-pleasant">${_(val).convert2yuan()}</span>`
+              status = `<span class="text-account-fund">${_(val).convert2yuan()}</span>`
             }
             return status
           },
@@ -180,9 +182,14 @@ const BetDetailView = Base.ItemView.extend({
   // 终止所有追号
   cancelAllBettingHandler(e) {
     const self = this
-    const html = '<p>确定停止追号？</p>'
+    const html = '<p>此操作将撤销该追号单下尚未开奖的投注单，是否继续？</p>'
     $(document).confirm({
       content: html,
+      size: 'modal-dialog-shadow',
+      title: '温馨提示',
+      footer: '<div class="text-center control-confirm-special m-top-md">' +
+      `<button type="button" class="btn btn-left confirm-agree btn-chase-confirm-agree" data-loading-text="保存中">确定</button>` +
+      `<button type="button" class="btn btn-link btn-right confirm-reject btn-chase-confirm-reject" data-dismiss="modal">取消</button></div>`,
       agreeCallback() {
         self.confirmCancelAllTrack(e)
       },
@@ -198,8 +205,12 @@ const BetDetailView = Base.ItemView.extend({
     })
       .done((res) => {
         if (res.result === 0) {
-          Global.ui.notification.show('终止追号成功', {
+          Global.ui.notification.show('撤单成功！', {
             type: 'success',
+            size: 'modal-dialog-shadow modal-xs',
+            hasFooter: false,
+            displayTime: 1000,
+            closeBtn: false,
           })
           // this.getChaseData()
           self.render()
@@ -207,9 +218,19 @@ const BetDetailView = Base.ItemView.extend({
           $('.js-fc-gr-tr-query').trigger('click'); //模拟点击事件刷新追号列表
           // self._getGridXhr()
         } else if (res.msg.indexOf('fail') !== -1) {
-          Global.ui.notification.show('终止追号失败!')
+          Global.ui.notification.show('撤单失败!', {
+            size: 'modal-dialog-shadow modal-xs',
+            hasFooter: false,
+            displayTime: 1000,
+            closeBtn: false,
+          })
         } else {
-          Global.ui.notification.show(`终止追号失败：${res.msg}`)
+          Global.ui.notification.show(`撤单失败：${res.msg}!`, {
+            size: 'modal-dialog-shadow modal-xs',
+            hasFooter: false,
+            displayTime: 1000,
+            closeBtn: false,
+          })
         }
       })
   },
@@ -219,6 +240,8 @@ const BetDetailView = Base.ItemView.extend({
     const html = '<p>确定撤销本期追号？</p>'
     $(document).confirm({
       content: html,
+      title: '温馨提示',
+      modalDialogShadow: 'modal-dialog-shadow',
       agreeCallback() {
         self.confirmCancelTrack(e)
       },
@@ -237,13 +260,30 @@ const BetDetailView = Base.ItemView.extend({
         if (res.result === 0) {
           Global.ui.notification.show('撤销追号成功', {
             type: 'success',
+            modalDialogShadow: 'modal-dialog-shadow',
+            size: 'modal-xs',
+            hasFooter: false,
+            displayTime: 1000,
+            closeBtn: false,
           })
           self.render()
           self.selectNoHandle()
         } else if (res.msg.indexOf('fail') !== -1) {
-          Global.ui.notification.show('撤销追号失败!')
+          Global.ui.notification.show('撤销追号失败!', {
+            modalDialogShadow: 'modal-dialog-shadow',
+            size: 'modal-xs',
+            hasFooter: false,
+            displayTime: 1000,
+            closeBtn: false,
+          })
         } else {
-          Global.ui.notification.show(`撤销追号失败：${res.msg}`)
+          Global.ui.notification.show(`撤销追号失败：${res.msg}`, {
+            modalDialogShadow: 'modal-dialog-shadow',
+            size: 'modal-xs',
+            hasFooter: false,
+            displayTime: 1000,
+            closeBtn: false,
+          })
         }
       })
   },

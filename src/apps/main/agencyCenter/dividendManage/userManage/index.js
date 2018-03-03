@@ -87,6 +87,7 @@ const ReportManageView = SearchGrid.extend({
     _(this.options).extend({
       height: 552,
       title: '签约用户管理',
+      tableClass: 'table table-bordered table-center border-bottom',
       columns: [
         {
           name: '签约用户',
@@ -135,6 +136,9 @@ const ReportManageView = SearchGrid.extend({
         }
       })
     SearchGrid.prototype.onRender.apply(this, arguments)
+    Vue.$global.bus.$on('sign:update',() => {
+      this._getGridXhr()
+    })
   },
 
   renderGrid(gridData) {
@@ -361,7 +365,7 @@ const ReportManageView = SearchGrid.extend({
       startOnLoading: false,
       height: 128,
       showHeader: false,
-      tableClass: 'table table-bordered table-center',
+      tableClass: 'table table-center',
       hasBorder: false,
       colModel: [
         {

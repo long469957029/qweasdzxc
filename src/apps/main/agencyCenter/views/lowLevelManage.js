@@ -22,6 +22,7 @@ const LowLevelManageView = SearchGrid.extend({
       footerClass: 'border-cool-top',
       height: 552,
       title: '下级管理',
+      tableClass: 'table table-bordered table-center border-bottom',
       columns: [
         {
           name: '用户名',
@@ -176,15 +177,15 @@ const LowLevelManageView = SearchGrid.extend({
       if (!acctInfo.merchant) {
         cell.push(`<a class="btn btn-link js-ac-point-up" data-userid="${rowInfo.userId}" data-username="${rowInfo.userName}">升点</a>`)
         cell.push('<a href="javascript:void(0);"  class="js-ac-llm-cp btn btn-link ">转账</a>')
-        cell.push(`<div class="llm-operator-sub"><a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
-        cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a></div>`)
+        cell.push(`<div class="llm-operator-sub"><a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="btn btn-link">投注</a>`)
+        cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="btn btn-link">账变</a></div>`)
       } else {
-        cell.push(`<a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
-        cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a>`)
+        cell.push(`<a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="btn btn-link">投注</a>`)
+        cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="btn btn-link">账变</a>`)
       }
     }else{
-      cell.push(`<div class="text-center"><a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="router btn btn-link">投注</a>`)
-      cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="router btn btn-link">账变</a></div>`)
+      cell.push(`<div class="text-center"><a href="${_.addHrefArgs('#/ac/tbr', 'name', rowInfo.userName)}" class="btn btn-link">投注</a>`)
+      cell.push(`<a href="${_.addHrefArgs('#/ac/tad', 'name', rowInfo.userName)}" class="btn btn-link">账变</a></div>`)
     }
 
     if (cell.length > 3) {
@@ -241,10 +242,7 @@ const LowLevelManageView = SearchGrid.extend({
         if (res && res.result === 0) {
           // 设置了则弹出验证框
           // $(document).verifyFundPwd({parentView:self});
-          Global.router.goTo(`ac/tr/${rowInfo.userId}?name=${rowInfo.userName}`, {
-            trigger: true,
-            replace: false,
-          })
+          Global.router.goTo(`ac/tr/${rowInfo.userId}?name=${rowInfo.userName}`)
         } else if (res && res.result === 1) {
           // 未设置则弹出链接到资金密码设置页面的提示框
           $(document).securityTip({

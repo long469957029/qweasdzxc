@@ -1,5 +1,3 @@
-
-
 $.widget('gl.confirm', {
 
   _currentSelItemMeta: {},
@@ -15,7 +13,10 @@ $.widget('gl.confirm', {
     content: '确定进行当前操作？',
     btnLeftText: '确定',
     btnRightText: '取消',
-    closeBtn: false
+    btnLeftStyle: '',
+    btnRightStyle: '',
+    closeBtn: false,
+    footer: ''
   },
 
   _create() {
@@ -24,8 +25,8 @@ $.widget('gl.confirm', {
     this.uuid = this.options.id || `confirm-${_.now()}`
     const body = []
     let footer = this.options.footer ? this.options.footer : `${'<div class="text-center control-confirm-special m-top-md">' +
-    '<button type="button" class="btn btn-left confirm-agree" data-loading-text="保存中">'}${this.options.btnLeftText}</button>` +
-    `<button type="button" class="btn btn-link btn-right confirm-reject" data-dismiss="modal">${this.options.btnRightText}</button></div>`
+      '<button type="button" class="btn btn-left confirm-agree" data-loading-text="保存中" ">'}${this.options.btnLeftText}</button>` +
+      `<button type="button" class="btn btn-link btn-right confirm-reject" data-dismiss="modal" ">${this.options.btnRightText}</button></div>`
 
     let data = {
       id: this.uuid,
@@ -47,16 +48,17 @@ $.widget('gl.confirm', {
 
       data = {
         size: 'modal-sm',
-        modalClass: 'modal-notification',
+        modalClass: 'modal-notification modal-dialog-shadow ',
         id: this.uuid,
         body: body.join(''),
-        closeBtn: this.options.closeBtn
+        closeBtn: this.options.closeBtn,
+        modalDialogShadow: this.options.closeBtn,
       }
     }
 
     this.$dialog = Global.ui.dialog.show(data)
 
-    this.$dialog.on('hidden.modal', function() {
+    this.$dialog.on('hidden.modal', function () {
       $(this).remove()
       self.destroy()
     })

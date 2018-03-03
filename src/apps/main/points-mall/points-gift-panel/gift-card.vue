@@ -28,14 +28,20 @@
         兑换积分：
         <span class="card-points-val">{{requireIntegral | convert2yuan}}</span>
       </div>
-      <button class="btn btn-exchange-btn" v-if="!isFinished" @click="$emit('exchange')">立即兑换</button>
+      <button class="btn btn-exchange-btn" @click="isLogin ? $emit('exchange') : login()">立即兑换</button>
     </div>
+    <div class="gift-masking" :class="{finished: isFinished}"></div>
   </div>
 </template>
 
 <script>
+
+  import {checkLogin} from 'build'
+
   export default {
     name: 'gift-card',
+
+    mixins: [checkLogin],
 
     props: [
       'itemDesc',
@@ -71,17 +77,22 @@
       }
     }
 
+    .gift-masking {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, .09);
+      display: none;
+    }
+
     &.finished {
-      background-color: #e5e5e5;
-      /*background-color: rgba(0, 0, 0, 0.1);*/
-      .card-intro {
-        border-bottom: 1px solid #c7c7c7;
-        /*background-color: rgba(0, 0, 0, 0.1);*/
-        background-color: #e5e5e5;
+      .gift-masking {
+        display: block;
       }
-      .gift-card-op {
-        background-color: #e5e5e5;
-        /*background-color: rgba(0, 0, 0, 0.1);*/
+      .card-brief {
+        white-space: nowrap;
       }
     }
 
@@ -103,6 +114,7 @@
     position: absolute;
     left: 43%;
     top: 60px;
+    z-index: 2;
   }
 
   .sfa-gift-level {
@@ -118,8 +130,9 @@
   }
 
   .gift-card-img {
-    height: 220px;
-    margin-bottom: 5px;
+    max-width: 100%;
+    max-height: 100%;
+    /*margin-bottom: 5px;*/
   }
 
   .gift-card-main {
@@ -127,6 +140,11 @@
     text-align: center;
     height: 300px;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding-bottom: 75px;
   }
 
   .card-left {
@@ -159,8 +177,10 @@
     align-content: baseline;
     position: absolute;
     bottom: 0;
+    left: 0;
     width: 100%;
     box-sizing: border-box;
+    background-color: #ffffff;
   }
 
   .card-price {

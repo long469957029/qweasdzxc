@@ -198,11 +198,11 @@ export default Base.ItemView.extend({
         const outHeight = this.$('.js-fm-out-select').height()
         const inHeight = this.$('.js-fm-in-select').height()
         if (outHeight > 100) {
-          this.$('.js-fm-out-select').removeClass('side-down')
+          this.$('.js-fm-out-select').removeClass('side-down').scrollTop(0)
           this.$('.js-fm-select-out-down').removeClass('up')
         }
         if (inHeight > 100) {
-          this.$('.js-fm-in-select').removeClass('side-down')
+          this.$('.js-fm-in-select').removeClass('side-down').scrollTop(0)
           this.$('.js-fm-select-in-down').removeClass('up')
         }
       }
@@ -268,7 +268,7 @@ export default Base.ItemView.extend({
       this.$('.js-fm-out-select').addClass('side-down')
       this.$('.js-fm-select-out-down').addClass('up')
     } else {
-      this.$('.js-fm-out-select').removeClass('side-down')
+      this.$('.js-fm-out-select').removeClass('side-down').scrollTop(0)
       this.$('.js-fm-select-out-down').removeClass('up')
     }
   },
@@ -279,7 +279,7 @@ export default Base.ItemView.extend({
       this.$('.js-fm-in-select').addClass('side-down')
       this.$('.js-fm-select-in-down').addClass('up')
     } else {
-      this.$('.js-fm-in-select').removeClass('side-down')
+      this.$('.js-fm-in-select').removeClass('side-down').scrollTop(0)
       this.$('.js-fm-select-in-down').removeClass('up')
     }
   },
@@ -493,7 +493,7 @@ export default Base.ItemView.extend({
   },
   submitPlatformTransferHandler() {
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-      Global.ui.notification.show('试玩会员无法进行转账操作，请先注册正式游戏账号')
+      Global.ui.notification.show('试玩会员无法进行转账操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
       return false
     }
     if (this.$('.js-fm-tradeNum').val() === '' || Number(this.$('.js-fm-tradeNum').val()) === 0) {

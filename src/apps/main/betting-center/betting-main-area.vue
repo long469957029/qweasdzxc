@@ -38,7 +38,8 @@
           </div>
         </div>
         <div class="m-LR-smd">
-          <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'" loading-tip="">
+          <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'"
+                       loading-tip="">
             <transition name="fade" mode="out-in"
                         enter-active-class="animated-quick fadeIn"
                         leave-active-class="animated-quick fadeOut"
@@ -78,7 +79,7 @@
               <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
               <span>元</span>
             </div>
-            <div class="pull-right m-right-sm">
+            <div class="pull-right">
               <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                       :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                 <span class="sfa sfa-btn-icon-bolt vertical-middle"></span>
@@ -106,8 +107,10 @@
                   <a href="javascript:void(0)" class="btn-link">{{row.formatBetNum | formatOpenNum}}</a>
                   <div v-transfer-dom>
                     <popover :name="`bet${index}`">
-                      <div class="title">详细号码</div>
-                      <div class="">{{row.betNum}}</div>
+                      <div class="detail-popover">
+                        <div class="title">详细号码：</div>
+                        <div class="content">{{row.formatBetNum}}</div>
+                      </div>
                     </popover>
                   </div>
                 </td>
@@ -120,8 +123,9 @@
                 <td v-html="row.operate"></td>
               </tr>
             </slot-static-grid>
-            <div class="font-sm m-top-md p-top-sm text-center bc-operate-section clearfix">
+            <div class="m-top-md p-top-sm text-center bc-operate-section clearfix">
               <div class="total-panel inline-block">
+                <span class="font-sm">
                 <span>
                   <span>预期奖金</span>
                   <animated-integer class="text-prominent"
@@ -139,18 +143,18 @@
                                     :value="bettingChoice.totalInfo.fTotalMoney"></animated-integer>
                   <span>元</span>
                 </span>
+                </span>
+                <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
+                                  :betting-money="bettingChoice.totalInfo.totalMoney"
+                                  v-model="totalVoucher" ref="totalBettingVouchers"
+                ></betting-vouchers>
               </div>
 
-              <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
-                                :betting-money="bettingChoice.totalInfo.totalMoney"
-                                v-model="totalVoucher" ref="totalBettingVouchers"
-              ></betting-vouchers>
-
-              <button class="bc-chase btn-link inline-block cursor-pointer m-left-md relative" @click="bettingChase"
+              <button class="bc-chase btn-link inline-block cursor-pointer relative" @click="bettingChase"
                       :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                 <span class="sfa sfa-checkmark vertical-middle"></span>
                 我要追号
-                <span class="ba-chase-tip">追号能提高中奖率</span>
+                <span class="ba-chase-tip">可提高中奖率</span>
               </button>
             </div>
             <div class="m-top-md p-top-sm text-center m-bottom-md">
@@ -170,27 +174,26 @@
     <!-- 追号 -->
 
     <div v-transfer-dom>
-      <x-dialog v-if="showChaseModal" @modal-hidden="showChaseModal = false">
-        <betting-chase slot="all" :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney" :ticket-info="ticketInfo"
+      <x-dialog v-model="showChaseModal">
+        <betting-chase slot="all" :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney"
+                       :ticket-info="ticketInfo"
                        :planId="bettingInfo.planId" :preview-list="bettingChoice.previewList"
                        :total-lottery="bettingChoice.totalLottery" ref="bettingChase"
                        @chaseComplete="chaseComplete"></betting-chase>
       </x-dialog>
-    </div>
-    <!--<div class="modal hide `" tabindex="-1" role="dialog" aria-hidden="false" ref="chaseModal" v-if="showChaseModal">-->
-    <!--</div>-->
 
-    <!-- 确认投注 -->
-    <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="confirm">
-      <betting-confirm :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
-                       :betting-list="bettingChoice.previewList" :type="`normal`"
-                       @bettingConfirm="bettingConfirm"></betting-confirm>
+      <!-- 确认投注 -->
+      <x-dialog v-model="showConfirmModal">
+        <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
+                         :betting-list="bettingChoice.previewList" :type="`normal`"
+                         @bettingConfirm="bettingConfirm"></betting-confirm>
+      </x-dialog>
     </div>
   </div>
 </template>
 
 <script>
-  import {formatOpenNum, TransferDom} from 'build'
+  import {formatOpenNum} from 'build'
 
   import betRulesConfig from './misc/betRulesConfig'
   import BettingRules from './betting-rules'
@@ -205,10 +208,6 @@
 
   export default {
     name: "betting-main-area",
-
-    directives: {
-      TransferDom
-    },
 
     props: {
       ticketInfo: Object,
@@ -266,6 +265,7 @@
         advanceShowMode: 'classic', //classic | single
 
         showChaseModal: false,
+        showConfirmModal: false,
 
         //总投注代金券
         totalVoucher: {},
@@ -276,6 +276,7 @@
         'playLevels'
       ]),
       ...mapState({
+        foundsLock: state => state.loginStore.foundsLock,
         bettingVouchers: 'bettingVouchers',
         bettingChoice: 'bettingChoice',
         bettingInfo: 'bettingInfo',
@@ -294,7 +295,7 @@
       },
 
       'bettingChoice.playId': {
-        handler: function (playId) {
+        handler(playId) {
           if (playId === -1) {
             return
           }
@@ -351,11 +352,14 @@
       'bettingInfo.planId': {
         handler: function (newPlanId, oldPlanId) {
           if (this.$el.offsetWidth && newPlanId !== '------------' && oldPlanId !== '------------' && !this.bettingInfo.pending) {
-            // Global.ui.notification.show(
-            //   `<span class="text-danger">${oldPlanId}</span>期已截止<br/>当前期为<span class="text-danger">${newPlanId}</span>期<br/>投注时请注意期号！`,
-            //   {id: 'ticketNotice', hasFooter: false, displayTime: 800},
-            // )
-            this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE,{show:true,dataInfo:{type:3, oldPlanId, newPlanId}})
+            this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE, {
+              show: true,
+              dataInfo: {
+                type: 3,
+                oldPlanId,
+                newPlanId
+              }
+            })
           }
         }
       },
@@ -368,18 +372,18 @@
         }
       },
       unit: {
-        handler: function (newVal) {
+        handler(newVal) {
           this.$store.commit(types.SET_UNIT, newVal)
         }
       },
       'bettingChoice.formatMaxMultiple': {
-        handler: function (newVal) {
+        handler(newVal) {
           $(this.$refs.multiRange).numRange('setRange', 1, newVal)
         }
       },
       'bettingChoice.previewList': {
-        handler(previewList) {
-          this.fPreviewList = _(previewList).map((previewInfo, index) => {
+        handler(currentPreviewList, prevPreviewList) {
+          this.fPreviewList = _(currentPreviewList).map((previewInfo, index) => {
             const title = `${previewInfo.levelName}_${previewInfo.playName}`
             const multipleDiv = `<div class="js-bc-preview-multiple-${index} p-top-xs"></div>`
             const modeSelect = `<select name="" class="js-bc-preview-unit select-default bc-unit-select-add">
@@ -395,7 +399,6 @@
               betNum: previewInfo.bettingNumber,
               note: `${previewInfo.statistics}注`,
               multiple: multipleDiv,
-              // multiple: previewInfo.multiple,
               mode: modeSelect,
               bettingMoney: `${previewInfo.fPrefabMoney}元`,
               bonus: `${previewInfo.fTotalBetBonus}元`,
@@ -404,29 +407,31 @@
           })
 
           this.$nextTick(() => {
-            _.each(this.$refs.lotteryGrid.getRows(), (row, index) => {
-              const $row = $(row)
-              const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
-              let betNumber = previewList[index].bettingNumber
+            if (currentPreviewList.length !== prevPreviewList.length) {
+              _.each(this.$refs.lotteryGrid.getRows(), (row, index) => {
+                const $row = $(row)
+                const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
 
-              if ($multipleAdd.numRange('instance')) {
-                $multipleAdd.numRange('numChange', previewList[index].multiple)
-              } else {
-                $multipleAdd.numRange({
-                  defaultValue: previewList[index].multiple,
-                  size: 'md',
-                  max: previewList[index].formatMaxMultiple,
-                  onChange: (num) => {
-                    this.$store.commit(types.SET_PREVIEW_MULTIPLE, {num, index})
-                  },
-                  onOverMax: (maxNum) => {
-                    //奖金限额一致
-                    Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
+                if ($multipleAdd.numRange('instance')) {
+                  $multipleAdd.numRange('setRange', 1, currentPreviewList[index].formatMaxMultiple)
+                  $multipleAdd.numRange('numChange', currentPreviewList[index].multiple)
+                } else {
+                  $multipleAdd.numRange({
+                    defaultValue: currentPreviewList[index].multiple,
+                    size: 'md',
+                    max: currentPreviewList[index].formatMaxMultiple,
+                    onChange: (num) => {
+                      this.$store.commit(types.SET_PREVIEW_MULTIPLE, {num, index})
+                    },
+                    onOverMax: (maxNum) => {
+                      //奖金限额一致
+                      Global.ui.notification.show(`您填写的倍数已超出平台限定的单注中奖限额<span class="text-pleasant">
                   ${_(this.bettingChoice.limitMoney).convert2yuan()}</span>元，已为您计算出本次最多可填写倍数为：<span class="text-pleasant">${maxNum}</span>倍`)
-                  },
-                })
-              }
-            });
+                    },
+                  })
+                }
+              });
+            }
           })
 
           this.$store.commit(types.CALCULATE_TOTAL)
@@ -463,7 +468,10 @@
         if (this.playRule.type === 'select') {
           this.$_addSelectLottery({type: 'buy'})
         } else {
-          this.$_addInputLottery({type: 'buy'})
+          const result = this.$_addInputLottery({type: 'buy'})
+          if (!result) {
+            return false
+          }
         }
 
         //do save
@@ -484,14 +492,14 @@
           return false
         }
 
-        // 腾讯分分彩，金额限制1000元
-        if (this.ticketId === 31 && _(this.bettingChoice.buyInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
-          Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-          this.$store.commit(types.EMPTY_BUY_BETTING)
-          return false
-        }
+        // // 腾讯分分彩，金额限制1000元
+        // if (this.ticketId === 31 && _(this.bettingChoice.buyInfo.totalMoney).formatDiv(10000) > ticketConfig.getComplete(31).info.betAmountLimit) {
+        //   Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
+        //   this.$store.commit(types.EMPTY_BUY_BETTING)
+        //   return false
+        // }
 
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
+        if (this.foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
         }
@@ -522,6 +530,7 @@
                 type: 'success',
                 hasFooter: false,
                 displayTime: 800,
+                size: 'modal-xs',
               })
             } else {
               if (res.msg.indexOf('余额不足') > -1) {
@@ -559,27 +568,25 @@
         }
 
 
-        // 腾讯分分彩，金额限制1000元
-        if (this.ticketId === 31 && this.bettingChoice.totalInfo.fTotalMoney > ticketConfig.getComplete(31).info.betAmountLimit) {
-          Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-          return false
-        }
+        // // 腾讯分分彩，金额限制1000元
+        // if (this.ticketId === 31 && this.bettingChoice.totalInfo.fTotalMoney > ticketConfig.getComplete(31).info.betAmountLimit) {
+        //   Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
+        //   return false
+        // }
 
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
+        if (this.foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
         }
 
-        $(this.$refs.confirm).modal({
-          backdrop: 'static',
-        })
+        this.showConfirmModal = true
       },
 
       bettingConfirm() {
         this.pushing = true
 
 
-        $(this.$refs.confirm).modal('hide')
+        this.showConfirmModal = false
 
         const useVoucher = !_.isEmpty(this.totalVoucher)
 
@@ -611,6 +618,7 @@
                 type: 'success',
                 hasFooter: false,
                 displayTime: 800,
+                size: 'modal-xs',
               })
             } else {
               if (res.msg.indexOf('余额不足') > -1) {
@@ -635,13 +643,13 @@
           return
         }
 
-        // 腾讯分分彩，金额限制1000元
-        if (this.ticketId === 31 && this.bettingChoice.totalInfo.fTotalMoney > ticketConfig.getComplete(31).info.betAmountLimit) {
-          Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
-          return false
-        }
+        // // 腾讯分分彩，金额限制1000元
+        // if (this.ticketId === 31 && this.bettingChoice.totalInfo.fTotalMoney > ticketConfig.getComplete(31).info.betAmountLimit) {
+        //   Global.ui.notification.show(`试运行期间，每期单笔投注不超过${ticketConfig.getComplete(31).info.betAmountLimit}元。`)
+        //   return false
+        // }
 
-        if (Global.memoryCache.get('acctInfo').foundsLock) {
+        if (this.foundsLock) {
           Global.ui.notification.show('资金已锁定，暂不能进行投注操作')
           return false
         }
@@ -692,6 +700,7 @@
               Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择  `)
             } else {
               Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
+
               this.$refs.areaSelect.empty()
             }
           } else {
@@ -702,34 +711,37 @@
         }
       },
 
-      $_addInputLottery(opt) {
-        const bettingInfo = this.$refs.areaInput.addBetting(opt)
+      $_addInputLottery({type} = {}) {
+        const checkResult = this.$refs.areaInput.delRepeat()
 
-        const result = this.bettingChoice.addPrevBetResult
-        if (result) {
-          if (!_.isEmpty(result)) {
-            if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
-              Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择`)
-            } else {
-              Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
-            }
-          }
-          const html = ['<div class=" max-height-smd overflow-auto">']
-          if (!_.isEmpty(bettingInfo.repeatNumbers)) {
-            html.push(`<p class="word-break">以下号码重复，已进行自动过滤<br />${bettingInfo.repeatNumbers.join(',')}</p>`)
-          }
-          if (!_.isEmpty(bettingInfo.errorNumbers)) {
-            html.push(`<p class="word-break">以下号码错误，已进行自动过滤<br />${bettingInfo.errorNumbers.join(',')}</p>`)
-          }
-          html.push('</div>')
-
-          if (html.length > 2) {
-            Global.ui.notification.show(html.join(''))
-          }
-
-          this.$refs.areaInput.empty()
+        //如果是快捷投注不满足条件 则格式化数据
+        //满足则不作处理
+        if (type === 'buy' && !checkResult) {
+          return false
         } else {
-          Global.ui.notification.show('号码选择不完整，请重新选择！')
+          this.$refs.areaInput.addBetting({type})
+
+          const result = this.bettingChoice.addPrevBetResult
+          if (result) {
+            if (!_.isEmpty(result)) {
+              if (result.maxBetNums && !_.isNull(result.maxBetNums)) {
+                Global.ui.notification.show(`超过玩法投注限制，该玩法最高投注注数为${result.maxBetNums} 注，请重新选择`)
+              } else {
+                Global.ui.notification.show('您选择的号码在号码篮已存在，将直接进行倍数累加')
+              }
+            }
+
+            this.$refs.areaInput.empty()
+
+            if (type === 'buy') {
+              return true
+            }
+          } else {
+            if (checkResult) {
+              Global.ui.notification.show('号码选择不完整，请重新选择！')
+            }
+            return false
+          }
         }
       },
 
@@ -747,7 +759,7 @@
       },
     },
 
-    mounted: function () {
+    mounted() {
       $(this.$refs.multiRange).numRange({
         onChange: (num) => {
           this.$store.commit(types.SET_MULTIPLE, num)
@@ -777,6 +789,8 @@
     text-decoration: none;
     font-size: 12px;
     color: #666666;
+    float: right;
+    margin-right: 86px;
   }
 
   .advance-play-des {
@@ -862,7 +876,6 @@
   }
 
   .bc-vouchers-select {
-    width: 106px;
     color: $new-inverse-color;
     border-radius: 5px;
     vertical-align: bottom;
@@ -871,16 +884,25 @@
     left: 10px;
   }
 
+  .bc-operate-section {
+    width: 878px;
+    //border: 1px solid $table-border-color;
+    border-top: 0;
+    padding: 5px 0;
+    margin-bottom: 4px;
+    display: flex;
+  }
+
   .ba-chase-tip {
     position: absolute;
-    width: 120px;
+    width: 93px;
     height: 19px;
     line-height: 19px;
     color: $def-white-color;
     background-color: $main-deep-color;
     text-align: center;
     font-size: $font-xs;
-    top: 3px;
+    top: 1px;
     left: 80px;
     border-radius: 3px;
     &:before {
@@ -891,7 +913,7 @@
       border: 5px transparent solid;
       border-right-color: $main-deep-color;
       left: -9px;
-      top: 3px;
+      top: 4px;
     }
   }
 
@@ -905,8 +927,7 @@
   }
 
   .bc-lottery-preview {
-    width: 878px;
-    margin-right: 10px;
+    width: 883px;
     border-radius: $globalBtnRadius;
     border: 1px solid $def-gray-color;
   }
@@ -917,10 +938,29 @@
 
   .total-panel {
     min-width: 450px;
+    margin-left: 150px;
+    flex: 1;
   }
 
   .bc-play-container.clearfix {
     display: flex;
   }
+
+  .detail-popover {
+    max-width: 350px;
+    max-height: 90px;
+    overflow-y: auto;
+    padding: 4px 0 4px 2px;
+
+    .title {
+      color: #14b1bb;
+      float: left;
+      margin-right: 5px;
+    }
+    .content {
+      word-wrap: break-word;
+    }
+  }
+
 
 </style>

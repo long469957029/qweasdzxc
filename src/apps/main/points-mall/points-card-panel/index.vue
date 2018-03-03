@@ -5,13 +5,15 @@
       <tool-cell type="select-group" v-model="couponStatus" :options="statusOps" title="兑换状态"></tool-cell>
       <tool-cell type="sort" v-model="sort" :options="sortOps" title="排序"></tool-cell>
     </x-toolbar>
-    <status-cell class="points-card-main" :has-data="cardList.length" :status="loadingStatus">
-      <points-card v-for="(item, index) in cardList" :key="index"
-                   :coupon-info="item"
-                   @exchange="openExchangeModal(arguments[0], item)"
-      ></points-card>
+    <status-cell :has-data="cardList.length" :status="loadingStatus">
+      <div class="points-card-main">
+        <points-card v-for="(item, index) in cardList" :key="index"
+                     :coupon-info="item"
+                     @exchange="openExchangeModal(arguments[0], item)"
+        ></points-card>
+      </div>
+      <x-pagination :page-size="12" :total-size="totalSize" v-model="pageIndex"></x-pagination>
     </status-cell>
-    <x-pagination :page-size="12" :total-size="totalSize" v-model="pageIndex"></x-pagination>
     <div class="points-tip">
       <div class="tip-title">优惠券说明</div>
       <ul class="tip-main">
@@ -24,7 +26,7 @@
     </div>
 
     <div v-transfer-dom>
-      <x-dialog v-if="isShowGetCard" @modal-hidden="isShowGetCard = false" width="482px">
+      <x-dialog v-model="isShowGetCard" width="482px">
         <div slot="head-main" class="text-center">兑换确认</div>
         <div class="modal-main">
           <div class="card-info">
@@ -93,17 +95,17 @@
     },
     {
       id: 2,
-      name: '加奖卡',
+      name: '加奖券',
       type: 'green'
     },
     {
       id: 3,
-      name: '补贴卡',
+      name: '补贴券',
       type: 'green'
     },
     {
       id: 4,
-      name: '返水卡',
+      name: '返水券',
       type: 'green'
     },
     {
@@ -148,7 +150,7 @@
           },
         ],
         sort: {
-          sortFlag: 1,
+          sortFlag: 3,
           sortType: 1
         },
         sortOps: [
@@ -183,7 +185,7 @@
 
     computed: {
       actualRequireIntegral() {
-        return _.chain(this.currentCardInfo.requireIntegral).mul(this.mallBasicInfo.fCurrentDiscount).formatDiv(100000, {fixed: 0}).value()
+        return _.chain(this.currentCardInfo.requireIntegral).mul(this.mallBasicInfo.fCurrentDiscount).convert2Point().value()
       },
       ...mapGetters([
         'mallBasicInfo'
@@ -209,8 +211,10 @@
     },
 
     methods: {
-      getData() {
-        this.loadingStatus = 'loading'
+      getData({loading = true} = {loading: true}) {
+        if (loading) {
+          this.loadingStatus = 'loading'
+        }
         getCouponListApi({
           sortFlag: this.sort.sortFlag,
           sortType: this.sort.sortType,
@@ -224,7 +228,9 @@
           }
         })
           .finally(() => {
-            this.loadingStatus = 'completed'
+            if (loading) {
+              this.loadingStatus = 'completed'
+            }
           })
       },
       exchangeCoupon() {
@@ -242,7 +248,7 @@
               closeBtn: false,
             })
 
-            this.getData()
+            this.getData({loading: false})
 
             this.$store.dispatch(types.GET_USER_MALL_INFO)
           } else {
@@ -260,7 +266,7 @@
 
       openExchangeModal(formatCouponInfo, cardInfo) {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
           return false
         }
         this.formatCouponInfo = formatCouponInfo

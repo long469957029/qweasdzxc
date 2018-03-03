@@ -37,6 +37,27 @@
         </div>
       </div>
     </div>
+
+    <div v-transfer-dom>
+      <x-dialog v-model="showCheckModal">
+        <div slot="head-main" class="text-center">提示</div>
+        <div class="check-modal">
+          <ul class="check-list">
+            <li class="check-cell" v-if="repeatNumbers.length">
+              <div class="check-title">以下号码重复，已进行自动去重</div>
+              <div class="check-content">{{repeatNumbers.join(',')}}</div>
+            </li>
+            <li class="check-cell" v-if="errorNumbers.length">
+              <div class="check-title">以下号码错误，已进行自动过滤</div>
+              <div class="check-content">{{errorNumbers.join(',')}}</div>
+            </li>
+          </ul>
+          <div class="btn-panel">
+            <button class="btn check-confirm-btn" @click="showCheckModal = false">确定</button>
+          </div>
+        </div>
+      </x-dialog>
+    </div>
   </div>
 </template>
 
@@ -57,7 +78,7 @@
       },
     },
 
-    data: function () {
+    data() {
       return {
         // 回车 逗号 分号 冒号 竖线 空白字符
         splitReg: /[\r\n,\;:\|\s]+/,
@@ -65,7 +86,10 @@
         coefficient: 1,
         numbers: '',
         splitNumbers: [],
-        type: 'input'
+        type: 'input',
+        showCheckModal: false,
+        repeatNumbers: [],
+        errorNumbers: [],
       }
     },
 
@@ -129,27 +153,24 @@
 
         this.numbers = validate.passNumbers.join(',')
 
-        const html = ['<div class=" max-height-smd overflow-auto">']
-        if (!_.isEmpty(repeat.repeatNumbers)) {
-          html.push(`<p class="word-break">以下号码重复，已进行自动过滤<br />${repeat.repeatNumbers.join(',')}</p>`)
-        }
-        if (!_.isEmpty(_.compact(validate.errorNumbers))) {
-          html.push(`<p class="word-break">以下号码错误，已进行自动过滤<br />${validate.errorNumbers.join(',')}</p>`)
-        }
-        html.push('</div>')
-
-        if (html.length > 2) {
-          Global.ui.notification.show(html.join(''))
-        }
+        this.repeatNumbers = repeat.repeatNumbers
+        this.errorNumbers = validate.errorNumbers
 
         this.$_statisticsLottery()
+
+        const hasError = this.repeatNumbers.length || this.errorNumbers.length
+
+        this.showCheckModal = hasError
+
+        this.blurInput()
+
+        return !hasError
       },
 
       empty() {
         $(this.$refs.fileTip).removeClass('hidden')
         $(this.$refs.numbersArea).addClass('hidden')
         this.numbers = ''
-        // this.$store.commit(types.SET_STATISTICS, 0)
       },
 
       create(createTimes) {
@@ -264,6 +285,66 @@
   .input-operate-area {
     margin-left: 30px;
     margin-top: 20px;
+  }
+
+
+  //错误弹窗
+  .check-modal {
+    .check-list {
+      width: 450px;
+      margin: 20px 10px 20px 20px;
+      box-sizing: border-box;
+      max-height: 153px;
+      overflow: auto;
+      list-style: none;
+    }
+
+    .check-cell {
+      padding-left: 20px;
+      position: relative;
+      margin-bottom: 20px;
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background: #cccccc;
+        top: 7px;
+        left: 7px;
+        border-radius: 50%;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    .check-title {
+      font-size: 14px;
+      color: #666666;
+      margin-bottom: 5px;
+    }
+
+    .check-content {
+      font-size: 14px;
+      color: #999999;
+      word-wrap: break-word;
+      padding-right: 15px;
+    }
+
+    .check-confirm-btn {
+      width: 108px;
+      height: 36px;
+      background-color: #14b1bb;
+      border-radius: 3px;
+      border: solid 1px #13a6af;
+    }
+
+    .btn-panel {
+      text-align: center;
+      margin-bottom: 30px;
+    }
   }
 
   .mmc {

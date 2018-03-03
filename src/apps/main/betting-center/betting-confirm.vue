@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog modal-confirm">
+  <div class="modal-confirm">
     <a class="close btn-close" data-dismiss="modal">×</a>
     <div class="modal-header">
       <span class="confirm-icon"></span>
@@ -28,7 +28,12 @@
           </li>
         </ul>
         <ul class="" v-else>
-          <li class="bc-betDetail-text" v-for="item in bettingList">{{item.playName}} | {{item.formatBettingNumber}}
+          <li class="bc-betDetail-text" v-for="item in bettingList">
+            {{item.playName}} &nbsp;| &nbsp;{{item.formatBettingNumber}} &nbsp;| &nbsp;
+            <template v-if="item.odds">
+              @{{item.odds}} &nbsp;| &nbsp;
+            </template>
+            {{item.fPrefabMoney}}元
           </li>
         </ul>
       </div>
@@ -64,11 +69,14 @@
       'bettingInfo.leftSecond': {
         handler(newVal, oldVal) {
           if (newVal) {
-            $(this.$refs.confirmCountdown).countdown(this.bettingInfo.leftTime + _.now(), function (event) {
-              $(this).html(event.strftime('%H:%M:%S'));
-            });
+            this.$nextTick(() => {
+              $(this.$refs.confirmCountdown).countdown(this.bettingInfo.leftTime + _.now(), function (event) {
+                $(this).html(event.strftime('%I:%M:%S'));
+              })
+            })
           }
-        }
+        },
+        immediate: true
       },
     },
 
@@ -87,6 +95,7 @@
   .modal-confirm {
     width: 540px;
     height: 460px;
+    border-radius: 5px;
     background-color: #ffffff;
     .modal-header {
       height: 40px;
@@ -94,6 +103,8 @@
       padding: 20px 0 0 20px;
       font-size: 16px;
       border-bottom: 1px solid #d7d7d7;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
     }
     .confirm-icon {
       background: url(misc/exclamation.png);
@@ -121,7 +132,8 @@
     .bc-confirm-list {
       width: 488px;
       height: 150px;
-      overflow: auto;
+      overflow-y: auto;
+      overflow-x: hidden;
       background-color: #f5f5f5;
       .bc-betDetail-text {
         position: relative;
@@ -145,6 +157,7 @@
       .confirm-content {
         display: inline-block;
         padding-left: 5px;
+        width: 377px;
       }
     }
 

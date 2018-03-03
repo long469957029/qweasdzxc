@@ -2,23 +2,23 @@
   <% if(isFirstBind){ %>
   <h3>1.验证资金密码</h3>
   <form class="js-uc-steps js-uc-cb-fund-form uc-cb-fund-form form-horizontal">
-    <div class="text-black font-sm text-center m-top-lg m-left--200" >请输入资金密码</div>
-    <div class="text-center m-top-md m-bottom-md m-left--200">
-      <div>
-        <input type="password" name="fundPwd" class="js-uc-cb-fundPwd uc-cb-fundPwd"
-               data-parsley-error-message="请输入资金密码" required>
-      </div>
+    <div class="text-black text-center cb-width-510 font-sm  m-top-lg">请输入资金密码</div>
+    <div class=" m-top-md text-center cb-width-510 m-bottom-md ">
+      <input type="password" name="fundPwd" class="js-uc-cb-fundPwd uc-cb-fundPwd"
+             data-parsley-errors-container=".js-uc-cb-fundPwd-error"
+             data-parsley-error-message="请输入资金密码" required>
+      <div class="js-uc-cb-fundPwd-error hidden text-center cb-width-510"></div>
+      <div class="js-uc-cb-vf-fundPwd-error text-center margin-md"></div>
     </div>
-    <div class="js-fundPwd-error text-center m-left--200"></div>
-    <div class="text-center m-top-lg">
-      <button type="button" class="js-uc-cb-btn btn btn-cool font-md m-left--200" data-loading-text="校验中">确定</button>
+    <div class="text-center cb-width-510 m-top-lg">
+      <button type="button" class="js-uc-cb-btn btn btn-cool font-md " data-loading-text="校验中">确定</button>
     </div>
   </form>
 
   <% } else { %>
   <h3>1.验证老银行卡</h3>
   <form class="js-uc-steps js-uc-cb-last-form uc-cb-last-form form-horizontal">
-    <div class="font-sm text-center text-cool m-top-lg m-bottom-md m-left--200" >·请提供最近绑定银行卡的信息</div>
+    <div class="font-sm text-center text-cool m-top-lg m-bottom-md m-left--200">·请提供最近绑定银行卡的信息</div>
     <div class="control-group">
       <label class="control-label">开户人姓名：</label>
       <div class="controls">
@@ -34,11 +34,12 @@
                data-parsley-num data-parsley-length="[13,19]"
                required>
         <div class="js-uc-vcm-card-error parsley-error-container inline-block" style="max-width: 350px"></div>
+        <div class="js-last-card-error text-left"></div>
       </div>
     </div>
-    <div class="js-last-card-error text-center m-left--200" ></div>
     <div class="text-center m-top-lg">
-      <button type="button" class="js-uc-cb-last-btn btn btn-cool font-md m-left--200" data-loading-text="校验中">确定</button>
+      <button type="button" class="js-uc-cb-last-btn btn btn-cool font-md m-left--200" data-loading-text="校验中">确定
+      </button>
     </div>
   </form>
   <% }%>
@@ -88,7 +89,7 @@
             <option value="">城市</option>
           </select>
         </div>
-        <div class="js-uc-cm-provence-error parsley-error-container inline-block" style="max-width: 350px"></div>
+        <div class="js-uc-cm-provence-error parsley-error-container inline-block" style="max-width: 350px;margin-left: -17px;"></div>
       </div>
     </div>
     <div class="control-group">
@@ -104,7 +105,9 @@
     </div>
     <div class="control-group text-center">
       <div class="js-uc-cm-error m-left--200"></div>
-      <button type="button" class="js-uc-cbCardBinding-check btn uc-cm-lg-btn m-left--200" data-loading-text="绑定中">绑定银行卡</button>
+      <button type="button" class="js-uc-cbCardBinding-check btn uc-cm-lg-btn m-left--200" data-loading-text="绑定中">
+        绑定银行卡
+      </button>
     </div>
 
   </form>

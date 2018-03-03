@@ -6,7 +6,8 @@
                   enter-active-class="animated-quick fadeIn"
                   leave-active-class="animated-quick fadeOut"
       >
-        <div :class="['sfa',`sfa-bc-${ticketInfo.type}-${ticketInfo.mark}`]" :key="`${ticketInfo.type}-${ticketInfo.mark}`"></div>
+        <div :class="['sfa',`sfa-bc-${ticketInfo.type}-${ticketInfo.mark}`]"
+             :key="`${ticketInfo.type}-${ticketInfo.mark}`"></div>
       </transition>
     </div>
     <div class="bc-curt-plan-main pull-left">
@@ -31,20 +32,23 @@
     <div class="bc-plan-main pull-left m-left-md">
       <div class="bc-plan-inner relative clearfix">
         <div class="bc-plan-title pull-left">
-          第 <span class="font-bold">{{bettingInfo.pending ? Number(bettingInfo.lastOpenId) + 1 : bettingInfo.lastOpenId}}</span> 期
+          第 <span class="font-bold">{{bettingInfo.pending ? Number(bettingInfo.lastOpenId) + 1 : bettingInfo.lastOpenId}}</span>
+          期
           <div>开奖号码</div>
         </div>
 
         <keep-alive>
           <opening-balls :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="bettingInfo.lastOpenNum"
-                         :default-opening="ticketInfo.defaultOpening"
-                         v-if="ticketInfo.openingType === 'balls'" @mouseover="calculateStatus = true"
-                         @mouseout="calculateStatus = false"
+                         ref="openingArea" :size="ticketInfo.ballSize"
+                         :default-opening="ticketInfo.defaultOpening" :auto-stop-rolling="!ticketInfo.openWhenTimeout"
+                         v-if="ticketInfo.openingType === 'balls'" @mouseover.native="calculateStatus = true"
+                         @mouseout.native="calculateStatus = false"
           ></opening-balls>
-          <opening-dices-panel class="inline-block" v-else-if="ticketInfo.openingType === 'dices'" :default-opening="ticketInfo.defaultOpening"
+          <opening-dices-panel class="inline-block" v-else-if="ticketInfo.openingType === 'dices'" ref="openingArea"
+                               :default-opening="ticketInfo.defaultOpening"
                                :opening-num="bettingInfo.lastOpenNum" :ticket-info="ticketInfo"
           ></opening-dices-panel>
-          <opening-mark6-balls :counts="ticketInfo.counts" :range="ticketInfo.range" :opening-balls="bettingInfo.lastOpenNum"
+          <opening-mark6-balls :counts="ticketInfo.counts" :opening-balls="bettingInfo.lastOpenNum" ref="openingArea"
                                :default-opening="ticketInfo.defaultOpening"
                                v-else-if="ticketInfo.openingType === 'mark-balls'"
           ></opening-mark6-balls>
@@ -69,14 +73,15 @@
         <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
         号码走势
       </a>
-      <router-link :to="{name: 'help', query: {page: ticketInfo.helpPage, tType: 2}}" class="router entry-list-des" target="_blank">
+      <router-link :to="{name: 'help', query: {page: ticketInfo.helpPage}}" class="router entry-list-des"
+                   target="_blank">
         <span class="sfa sfa-bc-icon-des vertical-middle"></span>
         游戏说明
       </router-link>
     </div>
-    <audio ref="overAudio" :src="audio.over"></audio>
+    <audio ref="countdownAudio" :src="audio.countdown"></audio>
     <audio ref="prizeAudio" :src="audio.prize"></audio>
-    <audio ref="openAudio" :src="audio.openCode"></audio>
+    <audio ref="openAudio" :src="audio.openBall"></audio>
   </div>
 </template>
 
@@ -87,13 +92,9 @@
   import OpeningDicesPanel from './opening-dices-panel'
 
 
-  import over from './misc/over.wav'
+  import countdown from './misc/countdown.mp3'
   import prize from './misc/prize.wav'
-  import openCode from './misc/openCode.wav'
-
-  let timer
-  let goToNextTimer
-  let nextTimer
+  import openBall from './misc/openBall.mp3'
 
   export default {
     name: "ticket-info-banner",
@@ -113,7 +114,11 @@
         //上期号码计算浮动框显示状态
         calculateStatus: false,
         countdown: {},
-        audio: {over, prize, openCode}
+        audio: {countdown, prize, openBall},
+        timer: null,
+        goToNextTimer: null,
+        nextTimer: null,
+        playCountdownTimer: null
       }
     },
 
@@ -122,9 +127,33 @@
         handler(newVal) {
           if (newVal) {
             this.$_updateCountdown()
+
+            //如果需要在倒计时结束就开始开奖则设置
+            if (this.checkRolling()) {
+              this.$refs.openingArea.rolling()
+            }
           }
         }
       },
+      'ticketInfo'() {
+        clearInterval(this.timer)
+        clearInterval(this.goToNextTimer)
+        clearInterval(this.nextTimer)
+        this.stopCountdownAudio()
+      },
+      'bettingInfo.lastOpenId'(current, prev) {
+        if (this.musicStatus) {
+          if (current !== '-' && prev !== '-') {
+            if (this.bettingInfo.prize > 0) {
+              // 播放中奖声音
+              this.$refs.prizeAudio.play()
+            } else {
+              // 播放开奖声音
+              this.$refs.openAudio.play()
+            }
+          }
+        }
+      }
     },
 
     computed: mapState({
@@ -186,35 +215,34 @@
       },
 
       $_renderCountdown() {
-        let times = 1
-
         return new AnimateCountdown({
           el: this.$refs.countdown,
         }).render().on('change:leftTime', (e) => {
-          times -= 1
-          if (times === 0) {
-            const leftTime = moment.duration(e.finalDate.getTime() - new Date().getTime()).asSeconds()
+          const leftTime = moment.duration(e.finalDate.getTime() - new Date().getTime()).asSeconds()
 
-            if (this.musicStatus) {
-              if (parseInt(leftTime, 10) === 3) { // 虽然是倒数5秒的声音，但是判断为3才能吻合
-                const url = window.location.href
-                const index1 = url.indexOf('#bc')
-                if (index1 > 0) {
-                  const str = url.substr(index1, url.length)
-                  if (str === (`#bc/${this.bettingInfo.ticketId}`)) {
-                    this.$refs.overAudio.play()
-                  }
-                }
-              }
+          if (this.musicStatus) {
+            if (Math.floor(leftTime) <= 4) { // 虽然是倒数5秒的声音，但是判断为3才能吻合
+              this.playCountdownAudio(Math.floor(leftTime))
             }
-
-            // self.trigger('change:leftTime', leftTime, totalSecond)
-            times = 1
           }
         })
       },
 
-      //TODO 倒计时逻辑里面包含了开奖音效逻辑
+      playCountdownAudio(countdown) {
+        this.playCountdownTimer = _.delay(() => {
+          if (countdown >= 0) {
+            this.$refs.countdownAudio.play()
+            this.playCountdownAudio(--countdown)
+          } else {
+            this.stopCountdownAudio()
+          }
+        }, 1000)
+      },
+
+      stopCountdownAudio() {
+        clearInterval(this.playCountdownTimer)
+      },
+
       $_updateCountdown() {
         const leftSecond = this.bettingInfo.leftSecond
         const sale = this.bettingInfo.sale
@@ -222,57 +250,32 @@
         const leftTime = nextTime
         this.bettingInfo.leftTime = leftTime
 
-        clearInterval(timer)
-        clearInterval(goToNextTimer)
-        clearInterval(nextTimer)
+        clearInterval(this.timer)
+        clearInterval(this.goToNextTimer)
+        clearInterval(this.nextTimer)
 
-        timer = _.delay(() => {
+        this.timer = _.delay(() => {
           this.$store.dispatch(types.GET_TICKET_INFO, {
             ticketId: this.bettingInfo.ticketId,
             type: this.bettingType
           })
-
-          if (this.musicStatus) {
-            const lastOpenIdNumCache = Global.cookieCache.get(`lastOpenId${this.bettingInfo.ticketId}`)
-
-            //
-            const url = window.location.href
-            const index1 = url.indexOf('#bc')
-            if (index1 > 0) {
-              const str = url.substr(index1, url.length)
-
-              if (str === (`#bc/${this.bettingInfo.ticketId}`)) {
-                if (this.bettingInfo.lastOpenId !== lastOpenIdNumCache) {
-                  Global.cookieCache.set(`lastOpenId${this.bettingInfo.ticketId}`, this.bettingInfo.lastOpenId)
-                  const bcTag = Global.cookieCache.get('bcTag')
-                  if (bcTag === str) {
-                    if (lastOpenIdNumCache !== null && lastOpenIdNumCache !== '') {
-                      if (this.bettingInfo.prize > 0) {
-                        // 播放中奖声音
-                        this.$refs.prizeAudio.play()
-                      } else {
-                        // 播放开奖声音
-                        this.$refs.openAudio.play()
-                      }
-                    }
-                  } else {
-                    Global.cookieCache.set('bcTag', str)
-                  }
-                }
-              }
-            }
-          }
-        }, 5300)
+        }, 7000)
 
         // 只有销售时才进行倒计时
         if (this.bettingInfo.sale) {
-          goToNextTimer = _.delay(() => {
+          this.goToNextTimer = _.delay(() => {
 
             this.$store.commit('GO_TO_NEXT_PLAN');
+
+            //如果需要在倒计时结束就开始开奖则设置
+            if (this.checkRolling()) {
+              this.$refs.openingArea.rolling()
+            }
+
           }, _(leftSecond).mul(1000))
 
           // 取得下一期的信息延迟一秒再做
-          nextTimer = _.delay(() => {
+          this.nextTimer = _.delay(() => {
             this.$store.dispatch(types.GET_TICKET_INFO, {
               ticketId: this.bettingInfo.ticketId,
               type: this.bettingType
@@ -280,12 +283,33 @@
           }, _(leftSecond + 1).mul(1000))
         }
 
-        // this.infoModel.set('leftSecond', 0, {
-        //   silent: true,
-        // })
-
         this.countdown.render(leftTime)
+      },
+
+      checkRolling() {
+        if (this.ticketInfo.openWhenTimeout) {
+          const distance = this.$_checkPlanIdDistance(this.bettingInfo.planId, this.bettingInfo.lastOpenId)
+          if (distance === 2 || distance === (this.ticketInfo.totalPriods - 1)) {
+            return true
+          } else {
+            return false
+          }
+        } else {
+          return false
+        }
+      },
+
+      $_checkPlanIdDistance(currentPlanId, lastPlanId) {
+        const current = currentPlanId.substr(-4)
+        const last = lastPlanId.substr(-4)
+        return Math.abs(Number(current) - Number(last))
       }
+    },
+
+    beforeDestroy() {
+      clearInterval(this.timer)
+      clearInterval(this.goToNextTimer)
+      clearInterval(this.nextTimer)
     },
 
     mounted() {

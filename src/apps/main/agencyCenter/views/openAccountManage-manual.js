@@ -391,7 +391,7 @@ const OpenAccountManageView = Base.ItemView.extend({
     const $target = $(e.currentTarget)
     if ($target.is(':checked')) {
       if(Global.memoryCache.get('acctInfo').foundsLock){
-        Global.ui.notification.show('资金已锁定，暂不能进行红包开户操作')
+        Global.ui.notification.show('资金已锁定，暂不能使用红包开户')
         $target.removeAttr('checked')
       }else{
         this.$acRedPackMoney.removeClass('hidden')

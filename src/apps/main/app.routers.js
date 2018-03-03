@@ -13,8 +13,8 @@ import pointsMallRouter from './points-mall/router'
 // import fishCenterRouter from 'fishCenter/router'
 // import sportCenterRouter from 'sportCenter/router'
 import agencyCenterRouter from 'agencyCenter/router'
-import newsCenterRouter from 'newsCenter/router'
-import dynamicCenterRouter from 'dynamicCenter/router'
+// import newsCenterRouter from 'newsCenter/router'
+// import dynamicCenterRouter from 'dynamicCenter/router'
 import fundCenterRouter from 'fundCenter/router'
 import gameCenterRouter from 'gameCenter/router'
 import analysisCenterRouter from './analysisCenter/router'
@@ -37,8 +37,8 @@ export const install = () => {
       ...activeCenterRouter,
       ...agencyCenterRouter,
       ...fundCenterRouter,
-      ...newsCenterRouter,
-      ...dynamicCenterRouter,
+      // ...newsCenterRouter,
+      // ...dynamicCenterRouter,
       ...analysisCenterRouter,
       ...dashboardRouter,
       // 手机投注

@@ -12,21 +12,79 @@ export default {
       config = _.isUndefined(params) ? {} : params
       params = {}
     }
+    const self = this
 
     return resolve({
       name: `temp${_.uniqueId()}`,
       template: `<div></div>`,
+
+      data() {
+        return {
+          prevRouter: '',
+          preventKeepLiveConflictRender: this.$route.meta && this.$route.meta.keepAlive
+        }
+      },
       mounted:() => {
         $('#main').toggle(true)
         $('#main-vue').toggle(false)
 
         viewPromise().then((view) => {
+          let _params = _.isFunction(params) ? params() : params
           if (config.parentRouter) {
-            this.changeSubReginView(view.default ? new view.default(params) : new view(params), config)
+            this.changeSubReginView(view.default ? new view.default(_params) : new view(_params), config)
           } else {
-            this.changeMainReginView(view.default ? new view.default(params) : new view(params), config)
+            this.changeMainReginView(view.default ? new view.default(_params) : new view(_params), config)
           }
         })
+      },
+
+      beforeRouteUpdate: (to, from, next) => {
+        if (to.path === from.path) {
+          viewPromise().then((view) => {
+            let _params = _.isFunction(params) ? params() : params
+            if (config.parentRouter) {
+              this.changeSubReginView(view.default ? new view.default(_params) : new view(_params), config)
+            } else {
+              this.changeMainReginView(view.default ? new view.default(_params) : new view(_params), config)
+            }
+          })
+        }
+        next()
+      },
+
+      beforeRouteLeave(to, from, next) {
+        this.prevRouter = to.path
+        next()
+      },
+
+      activated() {
+        $('#main').toggle(true)
+        $('#main-vue').toggle(false)
+
+
+        //2 在非子页面进入时重新render
+
+        if (this.preventKeepLiveConflictRender) {
+          this.preventKeepLiveConflictRender = false
+          return
+        }
+
+        if (this.$route.meta && this.$route.meta.subRouter && _.contains(this.$route.meta.subRouter, this.prevRouter)) {
+          return
+        }
+
+        viewPromise().then((view) => {
+          let _params = _.isFunction(params) ? params() : params
+          if (config.parentRouter) {
+            self.changeSubReginView(view.default ? new view.default(_params) : new view(_params), config)
+          } else {
+            self.changeMainReginView(view.default ? new view.default(_params) : new view(_params), config)
+          }
+        })
+      },
+      deactivated() {
+        // $('#main').toggle(false)
+        // $('#main-vue').toggle(true)
       },
       destroyed() {
         $('#main').toggle(false)
@@ -95,7 +153,8 @@ export default {
     if (currentView) {
       this._changeReginView(currentView, view, config)
     } else {
-      Global.appRouter.navigate(_(config.parentRouter).addHrefArgs('_t', _.now()), {trigger: true, replace: false})
+      window.router.push(`/${config.parentRouter}`)
+      // Global.appRouter.navigate(_(config.parentRouter).addHrefArgs('_t', _.now()), {trigger: true, replace: false})
     }
   },
 

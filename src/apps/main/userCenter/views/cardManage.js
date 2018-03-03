@@ -176,7 +176,7 @@ const CardManageView = Base.ItemView.extend({
 
     let rewardHtml = ''
     if(this.userBindInfo && this.userBindInfo.cardStatus === 0){
-      rewardHtml = `（<span class="text-prominent">+${_(this.userBindInfo.bindBankCardBonus).convert2yuan()}</span>元奖励）`
+      rewardHtml = `<span class="reward">（<span class="text-prominent">+${_(this.userBindInfo.bindBankCardBonus).convert2yuan()}</span>元奖励）</span>`
     }
     const cardAdd = `<li class="js-uc-cmBindCard-btn uc-cmCard-add" data-type="addBankCard"><span class="add-icon"></span>添加银行卡${rewardHtml}</li>`
 
@@ -327,7 +327,7 @@ const CardManageView = Base.ItemView.extend({
       })
   },
   _getErrorEl (text) {
-    return `<span class="text-hot"><i class="sfa sfa-error-icon m-right-xs vertical-sub"></i>${text}</span>`
+    return `<div class="m-top-sm"><i class="sfa sfa-error-icon  vertical-sub tooltip-icon"></i><div class="tooltip-inner">${text}</div></div>`
   },
   addCloseHandler() {
     this.$addCardContainer.addClass('hidden')

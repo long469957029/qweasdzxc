@@ -19,6 +19,8 @@ $.widget('gl.staticGrid', {
     abort: true,
     data: {},
     dataProp: 'root',
+    tableHeaderClass:'',
+    tableBodyClass: '',
   },
 
   _create(gridOps) {
@@ -36,6 +38,8 @@ $.widget('gl.staticGrid', {
       'hasBorder',
       'showHeader',
       'wrapperClass',
+      'tableHeaderClass',
+      'tableBodyClass',
     ))))
 
     this.$bodyDiv = this.element.find('.js-wt-body-main')

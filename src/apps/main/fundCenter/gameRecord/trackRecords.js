@@ -18,6 +18,7 @@ const TrackRecordsView = SearchGrid.extend({
   initialize () {
     _(this.options).extend({
       height: '504',
+      tableClass: 'table table-bordered table-center border-bottom',
       columns: [
         {
           name: '追号时间',
@@ -100,12 +101,12 @@ const TrackRecordsView = SearchGrid.extend({
     // 加上统计行
     this.grid.addFooterRows({
       trClass: 'tr-footer',
-      // columnEls: [
-      //   '<strong>所有页总计</strong>', '', '', '', '',
-      //   _(gridData.chaseMoneyTotal).convert2yuan(),
-      //   _(gridData.prizeMoneyTotal).convert2yuan(),
-      //   '',
-      // ],
+      columnEls: [
+        '<strong>所有页总计</strong>', '', '', '', '',
+        _(gridData.chaseMoneyTotal).convert2yuan(),
+        _(gridData.prizeMoneyTotal).convert2yuan(),
+        '',
+      ],
     }).hideLoading()
   },
 

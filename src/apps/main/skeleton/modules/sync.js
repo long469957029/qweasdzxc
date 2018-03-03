@@ -126,46 +126,16 @@ const SyncModule = Base.Module.extend({
       }
 
       // 因应二号改版偷跑 先忽略验证接口的错误
-      currentXhr.fail(function (xhr, resType, type) {
+      currentXhr.fail((xhr, resType, type) => {
         if (resType === 'error') {
-          if (type === 'Unauthorized') {
-            if (!_(ajaxOptions.data.token).isEmpty()) {
-              this.login = false;
-              Global.ui.notification.show('网络不给力，请稍后再试。', {
-                event: function () {
-                  // window.location.href = 'index.html';
-                }
-              });
-            } else if (ajaxOptions.autoLogout) {
-              window.store.commit(types.USER_CLEAR)
-            }
-          } else if (xhr.status == 401) {
-            window.store.commit(types.USER_CLEAR)
+          if (xhr.status == 401) {
+            this.reLogin(url)
           }
         }
       });
-      currentXhr.success(function (xhr, resType, type) {
+      currentXhr.success((xhr, resType, type) => {
         if (xhr && xhr.result == -1) {
-          // Global.cookieCache.clear('token')
-          // Global.cookieCache.clear('loginState')
-          // Global.cookieCache.clear('security')
-          // window.Global.m.publish('acct:loginOut')
-          // // 关闭oauth轮询监听
-          // window.Global.m.oauth.stop()
-          window.store.commit(types.USER_CLEAR)
-          if (!window.store.getters.loginDialogStatus) {
-            Global.ui.notification.show('您的账户已登出,请重新登录！', {
-              event: function () {
-                window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-                // window.location.href = ''
-              },
-              countDown: 3000
-            });
-          }
-          // setTimeout(function(){
-          //   // window.location.href = 'login.html';
-          //   window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-          // },3000);
+          this.reLogin(url)
         }
       });
       if (!this.login) {
@@ -296,20 +266,19 @@ const SyncModule = Base.Module.extend({
       // }
       promise.catch(({message}) => {
         if (message.indexOf('401') > -1) {
-          if (!window.app.$store.getters.loginDialogStatus) {
-            Global.ui.notification.show('您的账户已登出,请重新登录！', {
-              event: function () {
-                window.app.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-              }
-            });
-          }
-          window.store.commit(types.USER_CLEAR)
+          this.reLogin(url)
+        }
+      });
+      promise.then((data) => {
+        if (data && data.data && data.data.result == -1) {
+          this.reLogin(url)
         }
       });
 
       if (!this.login) {
         cancel()
       }
+
 
       return promise
     }
@@ -318,7 +287,7 @@ const SyncModule = Base.Module.extend({
   setLogout() {
     this.login = false
     // Global.cookieCache.clear('token')
-    window.app.$store.dispatch(types.DO_LOGOUT)
+    window.store.dispatch(types.DO_LOGOUT)
   },
 
   ajax() {
@@ -341,21 +310,37 @@ const SyncModule = Base.Module.extend({
     }
     return token
   },
-  checkTestAccountRequest(ajaxOptions){
+  checkTestAccountRequest(ajaxOptions) {
     if (window.Global.cookieCache.get('isTestUser')) {//
       let changeTokenUrl = _.find(needPostTestDataUrlConfig.getAll(), (item) => {
-        return ajaxOptions.url.indexOf(item)>=0
+        return ajaxOptions.url.indexOf(item) >= 0
       })
       if (changeTokenUrl === undefined) { //试玩账户，未特定要求的接口需要通过配置的通用token获取正式数据
-        ajaxOptions.data = _.extend({
-          token: window.store.state.components.universalToken,
-          tpName: window.store.state.loginStore.username,//试玩用户调用正式接口时，传递试玩用户名
-        }, ajaxOptions.data)
+        if (ajaxOptions.data instanceof FormData) {
+          ajaxOptions.data.append('token', window.store.state.components.universalToken)
+          ajaxOptions.data.append('tpName', window.store.state.loginStore.username)
+        } else {
+          ajaxOptions.data = _.extend({
+            token: window.store.state.components.universalToken,
+            tpName: window.store.state.loginStore.username,//试玩用户调用正式接口时，传递试玩用户名
+          }, ajaxOptions.data)
+        }
       } else {
         let host = _.getDomainWithNewPrefix(window.store.state.components.testServerPrefix)
         ajaxOptions.url = host + ajaxOptions.url
       }
     }
+  },
+  reLogin(ajaxOption) {
+    window.store.commit(types.USER_CLEAR)
+    if(ajaxOption && ajaxOption.url && !(ajaxOption.url.indexOf('acct/login/doauth.json')>=0)){
+      //if 不是 oauth 接口，那么
+      if (!window.store.getters.loginDialogStatus) {
+        window.store.commit(types.TOGGLE_LOGOUT_DIALOG,false)
+        window.store.commit(types.TOGGLE_LOGOUT_NOTICE,true)
+      }
+    }
+
   }
 })
 

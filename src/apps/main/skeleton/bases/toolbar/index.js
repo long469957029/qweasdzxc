@@ -12,7 +12,7 @@ const ToolbarView = Base.ItemView.extend({
 
   events: {
     'click .js-toolbar-option': 'openSidebarHandler', // 展开侧边栏
-    // 'click .js-sidebar-close': 'closeSidebarHandler', // 收起侧边栏
+    'click .js-sidebar-close': 'closeSidebarHandler', // 收起侧边栏
     'click .js-toolbar-scroll-to-top': 'scrollHandler', // 回滚到顶部
     'click .js-toolbar-feedback-dialog': 'feedbackDialogHandler', // 意见反馈弹窗
     // 'click .js-toolbar-im-dialog': 'imDialogHandler', // 站内信弹窗
@@ -30,6 +30,22 @@ const ToolbarView = Base.ItemView.extend({
     return Global.sync.ajax({
       url: '/info/newpack/info.json',
       data,
+    })
+  },
+  // 获取我的优惠券列表
+  getMyCouponListXhr (data) {
+    return Global.sync.ajax({
+      url: '/mall/coupon/myCouponList.json',
+      data,
+      abort: false
+    })
+  },
+  // 获取未读消息数目接口
+  getRecentChatStatXhr (data) {
+    return Global.sync.ajax({
+      url: '/acct/userChat/recentChatStat.json',
+      data,
+      abort: false
     })
   },
   onRender() {
@@ -57,24 +73,90 @@ const ToolbarView = Base.ItemView.extend({
     self.$container = self.$('.js-toolbar-option-container')
     self.$toption = self.$('.toolbar-option')
 
+    var timer;
+
+    Vue.$global.bus.$on('message-update', () => {
+      this.messageUpate()
+    })
+    window.Global.m.subscribe('acct', 'acct:login', () => {
+      // 定时器
+      self.timerHandler()
+      timer = setInterval(function () {
+        // 获取定时更新数据列表
+        clearInterval(timer);
+        self.timerHandler()
+      },600000);
+    })
+    window.Global.m.subscribe('acct', 'acct:loginOut', () => {
+      clearInterval(timer);
+    })
   },
-  //
-  // closeSidebarHandler(e) {
-  //   const $target = $(e.currentTarget)
-  //   const path = $target.data('id')
-  //   const self = this
-  //   self.$sidebar.closest('.js-toolbar-container').find('.js-toolbar-option').each((index, dom) => {
-  //     $(dom).removeClass('active')
-  //   })
-  //   self.$sidebar.closest('.js-toolbar-container').removeClass('open')
-  //   self.$closeMask.addClass('hidden')
-  //   if (path !== undefined) {
-  //     Global.router.goTo(path)
-  //   }
-  //
-  //   self.$container.css('margin-left','-48px')
-  //   self.$toption.css('border-radius','3px')
-  // },
+
+  timerHandler() {
+    var self = this;
+    // 获取未使用优惠券
+    self.getMyCouponListXhr()
+      .done(function (res) {
+        if (res && res.result == 0) {
+          if (!_(res.root.records).isNull() && !_(res.root.records).isEmpty()) {
+            self.$('.js-coupon-remind').removeClass('hidden');
+          }else {
+            self.$('.js-coupon-remind').addClass('hidden');
+          }
+        }else {
+          // Global.ui.notification.show(res.msg);
+          self.$('.js-coupon-remind').addClass('hidden');
+        }
+      });
+    this.messageUpate()
+  },
+
+  messageUpate() {
+    var self = this
+    // 获取未读消息
+    self.getRecentChatStatXhr()
+      .done(function (res) {
+        if (res && res.result == 0) {
+          if (res.root.records.length>0){
+            if (!_(res.root.records[0].newMsgNum).isNull() && res.root.records[0].newMsgNum != 0) {
+              self.$('.js-news-remind').removeClass('hidden');
+              var newMsgNum = '';
+              if (res.root.records[0].newMsgNum>99){
+                newMsgNum = 99;
+              }else {
+                newMsgNum = res.root.records[0].newMsgNum;
+              }
+              self.$('.js-news-remind').html(newMsgNum);
+              // self.$('.js-news-remind').html(res.root.records[0].newMsgNum);
+            }else {
+              self.$('.js-news-remind').addClass('hidden');
+            }
+          }else {
+            self.$('.js-news-remind').addClass('hidden');
+          }
+        }else {
+          // Global.ui.notification.show(res.msg);
+          self.$('.js-news-remind').addClass('hidden');
+        }
+      });
+  },
+
+  closeSidebarHandler(e) {
+    const $target = $(e.currentTarget)
+    const path = $target.data('id')
+    const self = this
+    self.$sidebar.closest('.js-toolbar-container').find('.js-toolbar-option').each((index, dom) => {
+      $(dom).removeClass('active')
+    })
+    self.$sidebar.closest('.js-toolbar-container').removeClass('open')
+    // self.$closeMask.addClass('hidden')
+    if (path !== undefined) {
+      Global.router.goTo(path)
+    }
+
+    self.$container.css('margin-left','-48px')
+    self.$toption.css('border-radius','3px')
+  },
 
   openSidebarHandler(e) {
     const self = this
@@ -148,6 +230,8 @@ const ToolbarView = Base.ItemView.extend({
               subject: $feedbackDialog.find('.js-feedback-title').val(),
               content: $feedbackDialog.find('.js-feedback-content').val(),
             },
+          }).always(() => {
+            $target2.button('reset')
           }).done((res) => {
             if (res && res.result === 0) {
               Global.ui.notification.show('提交成功。')
@@ -161,7 +245,7 @@ const ToolbarView = Base.ItemView.extend({
   },
 
   scrollHandler() {
-    $('html').animate({scrollTop: 0}, 'slow')
+    $('html,body').animate({scrollTop: 0}, 'slow')
   },
   logoutHandler() {
     Global.ui.loader.show()

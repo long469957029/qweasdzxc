@@ -1,6 +1,6 @@
 <template>
   <div class="points-card-wrapper" :class="displayType">
-    <div class="points-card" :class="[cardInfo.type, {finished: isFinished}]"
+    <div class="points-card" :class="[cardInfo.type, style]"
          @mouseout="toggleBtn(false)">
       <div class="points-card-inner" @mouseover="toggleBtn(true)">
         <div class="points-top">
@@ -12,11 +12,16 @@
             LV{{couponInfo.levelLimit}}
             <template v-if="1 === couponInfo.limitLevelType">以上</template>
           </div>
-          <div class="card-left" v-if="couponInfo.maxNum && couponInfo.maxNum - couponInfo.useNum > 0 && displayType === 'mall'"><!--displayType:mall 只在积分商城显示，侧边栏不显示-->
+          <div class="card-left" v-if="formateCardLeft"><!--displayType:mall 只在积分商城可兑换时显示，侧边栏不显示-->
             剩{{couponInfo.maxNum - couponInfo.useNum}}张
           </div>
-          <div class="card-time-end" v-if="displayType === 'show' && (couponInfo.validEndDate-couponInfo.sysTime)<10800000"></div><!--即将到期-->
-          <div v-else-if="isFinished" class="sfa-finished"></div>
+          <div :class="['card-time-end',{'lg': isMyCoupon}]" v-if="formateCardTimeEnd">
+            <div class="card-time-end-txt" :class="['card-time-end-'+cardInfo.type, style]">即将到期</div>
+          </div><!--即将到期-->
+          <div class="sfa-icon sfa-finished"></div>
+          <div class="sfa-icon sfa-grab-finished"></div>
+          <div class="sfa-icon sfa-has-use"></div>
+          <div class="sfa-icon sfa-has-expire"></div>
         </div>
         <div class="points-center">
           <div class="points-range">{{formatCouponInfo.mainDesc}}</div>
@@ -47,15 +52,22 @@
                 <div class="points-expire" v-else>
                   {{couponInfo.validStartDate | toTime('MM.DD H:mm')}}-{{couponInfo.validEndDate | toTime('MM.DD H:mm')}}
                 </div>
-                <div class="points-value" v-if="displayType === 'mall'">
+                <div class="points-value" v-if="displayType === 'mall' && !isMyCoupon">
                   <span class="sfa sfa-points"></span>
                   {{couponInfo.requireIntegral | convert2yuan}}积分
                 </div>
+                <div class="points-value" v-else-if="displayType === 'mall' && isMyCoupon">
+                  <span class="cursor-pointer" :data-clipboard-text="couponInfo.couponToken"
+                        ref="couponCopy"><span class="sfa sfa-mall-copy vertical-bottom m-right-xs"></span>券编号</span>
+                </div>
               </div>
             </div>
+            <div :class="`points-way way-${couponInfo.wayId}`" key="way" v-if="isMyCoupon && couponInfo.status === 0 && !_(couponInfo.wayId).isNull()">
+              <div :class="['points-way-detail',cardInfo.type]">{{formatCouponWay.text}}</div>
+            </div>
             <div v-show="showBtn" key="exchange" class="points-bottom-btn">
-              <button class="btn btn-white exchange-btn" v-if="couponInfo.couponStatus === 1" @click="$emit('exchange', formatCouponInfo)">立即兑换</button>
-              <button class="btn btn-white exchange-btn disabled" v-else>已兑换</button>
+              <button class="btn btn-white exchange-btn" v-if="couponInfo.couponStatus === 1"
+                      @click="isLogin ? $emit('exchange', formatCouponInfo) : login()">立即兑换</button>
             </div>
           </transition-group>
         </div>
@@ -66,37 +78,48 @@
 
 <script>
   import Countdown from '../countdown/index.vue'
+  import checkLogin from '../../mixins/check-login'
+  const Clipboard = require('clipboard')
   import {formatCoupon} from 'build'
 
   const CARD_TYPE = {
     '1': {
-      name: '充值券',
       type: 'blue'
     },
     '2': {
-      name: '加奖卡',
       type: 'green'
     },
     '3': {
-      name: '补贴卡',
       type: 'green'
     },
     '4': {
-      name: '返水卡',
       type: 'green'
     },
     '5': {
-      name: '代金券',
       type: 'gold'
     },
     '6': {
-      name: '现金券',
       type: 'red'
     },
   }
-
+  const CARD_WAY = {
+    '0': {
+      text:'积分商城兑换'
+    },
+    '1': {
+      text:'幸运夺宝中奖'
+    },
+    '2': {
+      text:'活动奖励'
+    },
+    '3': {
+      text:'平台赠送'
+    }
+  }
   export default {
     name: 'points-card',
+
+    mixins: [checkLogin],
 
     components: {
       Countdown,
@@ -109,6 +132,10 @@
       displayType: {
         type: String,
         default: 'mall'
+      },
+      isMyCoupon:{
+        type:Boolean,
+        default: false
       }
     },
     data() {
@@ -118,6 +145,13 @@
     },
 
     computed: {
+      formateCardLeft(){
+        return this.displayType === 'mall' && this.couponInfo.couponStatus === 1 && this.couponInfo.maxNum && !this.isMyCoupon
+      },
+      formateCardTimeEnd(){
+        return this.couponInfo.status === 0 && (this.displayType === 'show' || this.isMyCoupon)
+          && (_(this.couponInfo.validEndDate).sub(this.couponInfo.sysTime) < 10800000)
+      },
       formatCouponInfo() {
         return formatCoupon({
           bigShowNum: this.couponInfo.bigShowNum,
@@ -129,12 +163,28 @@
           gameType: this.couponInfo.gameType
         })
       },
+      formatCouponWay(){
+        return CARD_WAY[this.couponInfo.wayId]
+      },
       cardInfo() {
         return CARD_TYPE[this.couponInfo.couponType]
       },
       isFinished() {
-        return this.couponInfo.couponStatus === 3
+        //true代表已抢完或已兑换
+        return this.couponInfo.couponStatus !== 1
         // return this.couponInfo.maxNum && this.couponInfo.maxNum - this.couponInfo.useNum === 0
+      },
+      style() {
+        let className = ''
+        if(this.isMyCoupon){
+          className = this.couponInfo.status === 1 ? 'has-use' :
+            this.couponInfo.status === 2 ? 'has-expire' : ''
+        }else{
+          className = this.couponInfo.couponStatus === 3 ? 'finished' :
+            this.couponInfo.couponStatus === 2 ? 'grab-finished' : ''
+        }
+        return className
+
       },
       countdownTime() {
         if (this.couponInfo.validStartDate > this.couponInfo.sysTime) {
@@ -151,8 +201,16 @@
             this.showBtn = flag
           }
         }
-      }
+      },
     },
+    mounted(){
+      if(this.isMyCoupon){
+        const clipboard = new Clipboard(this.$refs.couponCopy);
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        });
+      }
+    }
   }
 </script>
 
@@ -200,7 +258,28 @@
     }
 
     &.finished {
-      opacity: .4;
+      opacity: .65;
+      .sfa-finished {
+        display: block;
+      }
+    }
+    &.grab-finished {
+      opacity: .65;
+      .sfa-grab-finished {
+        display: block;
+      }
+    }
+    &.has-use {
+      opacity: .65;
+      .sfa-has-use {
+        display: block;
+      }
+    }
+    &.has-expire {
+      opacity: .65;
+      .sfa-has-expire {
+        display: block;
+      }
     }
 
     .sfa-points {
@@ -208,15 +287,26 @@
       height: 23px;
       width: 23px;
     }
-    .sfa-finished {
-      background: url(./finished.png);
-      width: 97px;
-      height: 90px;
+    .sfa-icon{
+      width: 106px;
+      height: 106px;
       position: absolute;
       right: 13px;
-      top: 20px;
+      top: 10px;
+      display: none;
+      &.sfa-finished {
+         background: url(./finished.png) no-repeat;
+       }
+      &.sfa-grab-finished {
+        background: url(./grab-finished.png) no-repeat;
+      }
+      &.sfa-has-use {
+        background: url(./has-use.png) no-repeat;
+      }
+      &.sfa-has-expire {
+        background: url(./has-expire.png) no-repeat;
+      }
     }
-
     .card-value {
       font-size: 44px;
       color: #ffffff;
@@ -309,6 +399,61 @@
         top: 0;
         left: 10px;
       }
+      .points-way{
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        top: -3px;
+        right: 13px;
+        cursor: pointer;
+        z-index: 1;
+        &.way-0{
+          background: url('./icon-way-0.png') no-repeat;
+        }
+        &.way-1{
+          background: url('./icon-way-1.png') no-repeat;
+        }
+        &.way-2{
+          background: url('./icon-way-2.png') no-repeat;
+        }
+        &.way-3{
+          background: url('./icon-way-3.png') no-repeat;
+        }
+        .points-way-detail{
+          position: absolute;
+          width: 22px;
+          height: 27px;
+          background-color: #fafafa;
+          border-radius: 13px;
+          opacity: 0;
+          transition: width .5s;
+          top: -4px;
+          right: 0px;
+          z-index: 2;
+          font-size: $font-xs;
+          text-align: center;
+          line-height: 27px;
+          overflow: hidden;
+          &.green {
+            color: $green;
+          }
+          &.gold {
+            color: $gold;
+          }
+          &.red {
+            color: $red;
+          }
+          &.blue {
+            color: $blue;
+          }
+        }
+        &:hover{
+          .points-way-detail{
+            opacity: 1;
+            width: 120px;
+          }
+        }
+      }
     }
 
     .points-countdown-wrapper {
@@ -334,6 +479,51 @@
       line-height: 28px;
       text-align: center;
     }
+    .card-time-end {
+      background: url(./card-time-end.png) no-repeat;
+      width: 57px;
+      height: 53px;
+      position: absolute;
+      top: -7px;
+      right: 0;
+      overflow: hidden;
+      &.lg{
+        background: url(./card-time-end-lg.png) no-repeat;
+        width: 70px;
+        height: 66px;
+        top: -16px;
+        right: -7px;
+        .card-time-end-txt {
+          margin-left: 8px;
+          margin-top: 16px;
+          transform: rotate(43deg);
+        }
+      }
+      .card-time-end-txt {
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        transform: rotate(45deg);
+        margin-left: 9px;
+        margin-top: 10px;
+      }
+      .card-time-end-green {
+        /*color: #12bebe;*/
+        color: $green;
+      }
+      .card-time-end-gold {
+        /*color: #4182d4;*/
+        color: $gold;
+      }
+      .card-time-end-red {
+        /*color: #d25c5c;*/
+        color: $red;
+      }
+      .card-time-end-blue {
+        /*color: #cc985c;*/
+        color: $blue;
+      }
+    }
   }
   .show {
     width: 270px;
@@ -351,14 +541,6 @@
         height: 140px;
         margin: 0px;
         padding: 20px 0 10px 27px;
-        .card-time-end {
-          background: url(./card-time-end.png);
-          width: 57px;
-          height: 53px;
-          position: absolute;
-          top: -7px;
-          right: 0;
-        }
         .points-top {
           padding-top: 8px;
           padding-bottom: 0px;

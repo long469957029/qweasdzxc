@@ -5,24 +5,26 @@
       <tool-cell type="select-group" v-model="itemStatus" :options="itemStatusOps" title="兑换状态"></tool-cell>
       <tool-cell type="sort" v-model="sort" :options="sortOps" title="排序"></tool-cell>
     </x-toolbar>
-    <status-cell class="points-gift-main" :has-data="giftList.length" :status="loadingStatus">
-      <gift-card v-for="(gift, index) in giftList" :key="index"
-                 :itemDesc="gift.itemDesc"
-                 :itemName="gift.itemName"
-                 :limit-level-type="gift.limitLevelType"
-                 :levelLimit="gift.levelLimit"
-                 :picUrl="gift.picUrl"
-                 :refPrice="gift.refPrice"
-                 :requireIntegral="gift.requireIntegral"
-                 :useNum="gift.useNum"
-                 :maxNum="gift.maxNum"
-                 @exchange="openExchangeModal(gift)"
-      ></gift-card>
+    <status-cell :has-data="giftList.length" :status="loadingStatus">
+      <div class="points-gift-main">
+        <gift-card v-for="(gift, index) in giftList" :key="index"
+                   :itemDesc="gift.itemDesc"
+                   :itemName="gift.itemName"
+                   :limit-level-type="gift.limitLevelType"
+                   :levelLimit="gift.levelLimit"
+                   :picUrl="gift.picUrl"
+                   :refPrice="gift.refPrice"
+                   :requireIntegral="gift.requireIntegral"
+                   :useNum="gift.useNum"
+                   :maxNum="gift.maxNum"
+                   @exchange="openExchangeModal(gift)"
+        ></gift-card>
+      </div>
+      <x-pagination :page-size="12" :total-size="totalSize" v-model="pageIndex"></x-pagination>
     </status-cell>
-    <x-pagination :page-size="12" :total-size="totalSize" v-model="pageIndex"></x-pagination>
 
     <div v-transfer-dom>
-      <x-dialog v-if="isShowExchangeModal" @modal-hidden="isShowExchangeModal = false">
+      <x-dialog v-model="isShowExchangeModal">
         <div slot="head-main" class="text-center">兑换确认</div>
         <div class="modal-main">
           <div class="gift-main">
@@ -52,8 +54,7 @@
     </div>
 
     <div v-transfer-dom>
-      <points-address v-if="isShowAddressModal" type="select"
-                      @modal-hidden="isShowAddressModal = false"
+      <points-address v-model="isShowAddressModal" type="select"
                       @address-selected="exchange"
       ></points-address>
     </div>
@@ -115,7 +116,7 @@
         ],
 
         sort: {
-          sortFlag: 1,
+          sortFlag: 3,
           sortType: 1,
         },
         sortOps: [
@@ -153,7 +154,7 @@
 
     computed: {
       actualRequireIntegral() {
-        return Number(_.chain(this.currentGift.requireIntegral).mul(this.mallBasicInfo.fCurrentDiscount).mul(this.count).formatDiv(100000, {fixed: 0}).value())
+        return _.chain(this.currentGift.requireIntegral).mul(this.mallBasicInfo.fCurrentDiscount).mul(this.count).convert2Point().value()
       },
       ...mapGetters([
         'mallBasicInfo'
@@ -204,7 +205,7 @@
 
       openExchangeModal(giftInfo) {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
           return false
         }
         this.currentGift = giftInfo

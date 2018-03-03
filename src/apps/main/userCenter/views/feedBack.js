@@ -67,7 +67,7 @@ const FeedBackView = Base.ItemView.extend({
 
   checkFormHandler() {
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-      Global.ui.notification.show('试玩会员无法进行建议反馈操作，请先注册正式游戏账号')
+      Global.ui.notification.show('试玩会员无法进行建议反馈，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
       return false
     }
     const self = this
@@ -168,7 +168,7 @@ const FeedBackView = Base.ItemView.extend({
   },
 
   setError(data) {
-    const errorTpl = `<span class="text-hot"><span class="sfa sfa-error-icon vertical-sub m-right-sm"></span>${data}</span>`
+    const errorTpl = `<span class="text-hot"><span class="sfa sfa-error-icon vertical-sub"></span>${data}</span>`
     this.$feedError.html(errorTpl)
   },
   antiSqlValid(value) {

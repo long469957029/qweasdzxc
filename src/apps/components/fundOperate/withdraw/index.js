@@ -87,7 +87,8 @@ const WithdrawView = Base.ItemView.extend({
       if (!$target.hasClass('.js-wd-bank-select')) {
         const height =  this.$('.js-wd-bank-select').height()
         if (height > 100) {
-          this.$('.js-wd-bank-select').removeClass('side-down')
+          this.$('.js-wd-bank-select').removeClass('side-down').scrollTop(0)
+          this.$('.js-wd-bank-select').addClass('shrink')
           this.$('.js-select-bank-down').removeClass('up')
         }
       }
@@ -140,7 +141,7 @@ const WithdrawView = Base.ItemView.extend({
   },
   submitHandler() {
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-      Global.ui.notification.show('试玩会员无法进行提现操作，请先注册正式游戏账号')
+      Global.ui.notification.show('试玩会员无法进行提现操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
       return false
     }
     const self = this
@@ -256,7 +257,7 @@ const WithdrawView = Base.ItemView.extend({
       this.$('.js-wd-bank-select').removeClass('shrink')
       this.$('.js-select-bank-down').addClass('up')
     } else {
-      this.$('.js-wd-bank-select').removeClass('side-down')
+      this.$('.js-wd-bank-select').removeClass('side-down').scrollTop(0)
       this.$('.js-wd-bank-select').addClass('shrink')
       this.$('.js-select-bank-down').removeClass('up')
     }

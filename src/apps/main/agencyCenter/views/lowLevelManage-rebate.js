@@ -103,7 +103,7 @@ const LowLevelRebateView = Base.ItemView.extend({
     }
   },
   getError(text) {
-    const errorTpl = `<span class="text-hot"><span class="sfa sfa-error-icon vertical-sub m-right-xs"></span>${text}</span>`
+    const errorTpl = `<span class="text-hot"><span class="sfa sfa-error-icon vertical-sub"></span>${text}</span>`
     this.$lowLevelError.html(errorTpl)
   },
 })

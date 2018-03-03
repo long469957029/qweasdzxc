@@ -90,7 +90,7 @@
       },
       style() {
         return {
-          width: `${this.width}px`,
+          // width: `${this.width}px`,
           ...this.position
         }
       }
@@ -181,12 +181,12 @@
   .vue-popover {
     display: block;
     position: absolute;
-    background: #fff;
     color: #333333;
 
-    box-shadow: 0px 4px 20px 0px rgba(52, 73, 94, 0.2);
-    border: 1px solid $def-gray-color;
-    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 10px 0px    rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    border: solid 1px $def-gray-color;
     padding: 9px 14px;
 
     z-index: 998;

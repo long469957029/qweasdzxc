@@ -21,6 +21,7 @@ import SortGroup from './components/sort-group'
 import Dropdown from './components/dropdown'
 import StatusCell from './components/status-cell'
 import TimeoutCell from './components/timeout-cell'
+import XSelect from './components/x-select'
 
 //directives
 import TransferDom from './directives/transfer-dom'
@@ -29,6 +30,9 @@ import ClickOutside from './directives/click-outside'
 //plugins
 import BusPlugin from './plugins/bus/index.js'
 
+//mixins
+import checkLogin from './mixins/check-login'
+
 //filters
 import quick3Sum from './filters/quick3-sum'
 import twoSideType from './filters/two-side-type'
@@ -36,12 +40,13 @@ import formatOpenNum from './filters/format-open-num'
 import formatCouponType from './filters/format-coupon-type'
 import formatCoupon from './filters/format-coupon'
 import formatCouponStatus from './filters/format-coupon-status'
+import formatOptionals from './filters/format-optionals'
 
 export {
   /**
    * components
    */
-  AnimatedInteger,
+    AnimatedInteger,
   CustomCheckbox,
   StaticGrid,
   PointsCard,
@@ -64,25 +69,26 @@ export {
   Dropdown,
   StatusCell,
   TimeoutCell,
+  XSelect,
 
-  /**
-   * directives
-   */
+
+  //directives
   TransferDom,
   ClickOutside,
 
-  /**
-   * plugins
-   */
+  //plugins
   BusPlugin,
 
-  /**
-   * filter
-   */
+  //mixins
+  checkLogin,
+
+  //filters
   formatCouponType,
   formatOpenNum,
   formatCouponStatus,
   quick3Sum,
   twoSideType,
   formatCoupon,
+  formatOptionals,
+
 }

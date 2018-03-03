@@ -1,5 +1,3 @@
-
-
 const LoginPwdView = Base.ItemView.extend({
 
   template: require('userCenter/templates/passwordManage-login.html'),
@@ -15,11 +13,13 @@ const LoginPwdView = Base.ItemView.extend({
     // 'blur #newLoginPassword1': 'checkNewLoginPassword1',
   },
 
-  onRender () {
+  onRender() {
     this.$changeLoginPasswordForm = this.$('.js-uc-changeLoginPassword-form')
     this.$oldLoginPassword = this.$('#oldLoginPassword')
     this.$newLoginPassword = this.$('#newLoginPassword')
     this.$newLoginPassword1 = this.$('#newLoginPassword1')
+    this.$formContainer = this.$('.js-uc-changePwd-container')
+    this.$successTip = this.$('.js-uc-changeLpwd-success')
   },
 
   changeLoginPasswordHandler(e) {
@@ -45,17 +45,31 @@ const LoginPwdView = Base.ItemView.extend({
             Global.ui.notification.show('修改密码成功', {
               type: 'success',
             })
-            self.trigger('render:true')
+            // self.$formContainer.addClass('hidden')
+            // self.$successTip.removeClass('hidden')
+            setTimeout(() => {
+              self.trigger('render:true')
+              Global.m.publish('safe:updating')
+            }, 1000)
           } else if (res.msg === 'fail' && (res.root !== null)) {
-            Global.ui.notification.show(`验证失败，${res.root}`)
+            // Global.ui.notification.show(`验证失败，${res.root}`)
+            const errorData = {
+              el: this.$('.js-uc-pl-lp-error'),
+              errorText: `验证失败，${res.root}`,
+            }
+            _.formatError(errorData)
           } else {
-            Global.ui.notification.show(`验证失败，${res.msg}`)
+            const errorData = {
+              el: this.$('.js-uc-pl-lp-error'),
+              errorText: `验证失败，${res.msg}`,
+            }
+            _.formatError(errorData)
           }
         })
     }
   },
 
-  checkOldLoginPassword () {
+  checkOldLoginPassword() {
     const oldLoginPwVal = this.$oldLoginPassword.val()
     const $parentDiv = this.$oldLoginPassword.parent()
     let isValidate = false
@@ -72,7 +86,7 @@ const LoginPwdView = Base.ItemView.extend({
     return isValidate
   },
 
-  checkNewLoginPassword () {
+  checkNewLoginPassword() {
     const newLoginPwVal = this.$newLoginPassword.val()
     const $parentDiv = this.$newLoginPassword.parent()
     const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
@@ -95,7 +109,7 @@ const LoginPwdView = Base.ItemView.extend({
     }
     return isValidate
   },
-  checkNewLoginPassword1 () {
+  checkNewLoginPassword1() {
     const newLoginPwVal = this.$newLoginPassword.val()
     const newLoginPw1Val = this.$newLoginPassword1.val()
     const $parentDiv = this.$newLoginPassword1.parent()
@@ -116,15 +130,12 @@ const LoginPwdView = Base.ItemView.extend({
     return isValidate
   },
 
-  getErrorTooltip (errorText) {
-    const errorHtml =
-      `${'<div class="js-errorTooltip tooltip bottom parsley-errors-list filled">' +
-          '<div class="tooltip-inner"><span class="sfa sfa-error-icon vertical-middle m-right-xs"></span>'}${errorText}</div>` +
-      '</div>'
+  getErrorTooltip(errorText) {
+    const errorHtml =`<div class="js-errorTooltip tooltip bottom parsley-errors-list filled"><span class="sfa sfa-error-icon vertical-middle tooltip-icon"></span><div class="tooltip-inner">${errorText}</div></div>`
     return errorHtml
   },
 
-  strBetweenIsNumber (str, star, end) {
+  strBetweenIsNumber(str, star, end) {
     const strArr = str.split('').slice(star, end)
     let isHasNumber = true
     $.each(strArr, (index, item) => {
@@ -135,7 +146,7 @@ const LoginPwdView = Base.ItemView.extend({
     return isHasNumber
   },
 
-  changeEleClass ($ele, status) {
+  changeEleClass($ele, status) {
     if (status === 'success') {
       $ele.addClass('parsley-success').removeClass('parsley-error')
     } else if (status === 'error') {

@@ -56,7 +56,7 @@
                :class="{one:index===0,two:index===1,three:index===2,four:index===3,five:index===4}"></div>
           <div class="item-text-container inline-block">
             <div class="item-text"><span class="item-text-value">{{item.betMulti}}</span>倍流水返<span
-              class="item-text-value">{{_(item.bonusRate).formatDiv(100)}}%</span>充值额（不超过<span class="item-text-value">{{_(item.maxBonus).formatDiv(10000)}}</span>元)
+              class="item-text-value">{{_(item.bonusRate).formatDiv(100)}}%</span>充值额（最高<span class="item-text-value">{{_(item.maxBonus).formatDiv(10000)}}</span>元)
               +{{item.ticketCoupon.ticketName}}<span
                 class="item-text-value">{{_(item.ticketCoupon.amount).formatDiv(10000)}}</span>元代金券
             </div>
@@ -111,8 +111,14 @@
       return {
         showDoingTask: false,
         planList: '',
-        minRecharge: 0,
-        curItem: '',
+        minRecharge: 0.00,
+        curItem: {
+          betMulti: 0,
+          bonusRate: 0,
+          index: 0,
+          maxBonus: 0,
+          status: 0,
+        },
         betTotal: 0,
         rechargeTotal: 0,
         rechargeExp: 10000,
@@ -193,7 +199,7 @@
         this.planList = data.root.itemList
         this.rechargeTotal = data.root.rechargeTotal === 0 ? '0.00' : _(data.root.rechargeTotal).convert2yuan()
         this.betTotal = data.root.betTotal ? '0.00' : _(data.root.betTotal).convert2yuan()
-        this.minRecharge = data.root.recharge ? '0.00' : _(data.root.recharge).convert2yuan()
+        this.minRecharge = _(data.root.recharge).convert2yuan()
         this.fromTime = _(data.root.fromDate).toDate('M月D日')
         this.endTime = _(data.root.endDate).toDate('M月D日')
 

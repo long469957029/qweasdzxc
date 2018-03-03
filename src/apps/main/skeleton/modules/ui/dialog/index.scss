@@ -108,6 +108,9 @@
   //background-color: $def-white-color;
   //min-height: 200px;
 }
+.modal-dialog-shadow{
+  box-shadow: -4px 2px 24px 0px rgba(0, 0, 0, 0.1);
+}
 
 .modal-bet {
   border: 0;
@@ -214,6 +217,7 @@
     color: #ffffff;
   }
 }
+
 .close-md{
   width: 19px;
   height: 19px;

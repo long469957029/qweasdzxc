@@ -24,7 +24,7 @@
       <div class="reset-panel">
         <div class="reset-panel-title">
           <span class="title-img"></span>
-          <span>提示：您的登录密码已被重置，请重新设置新密码！</span>
+          <span>提示：{{type === 1 ? "此账户由上级开户生成，为保障您的账户安全，请修改初始密码！" : "您的登录密码已被重置，请重新设置新密码！"}}</span>
         </div>
         <div class="pwd-input-panel">
           <span class="pwd-desc">新登录密码：</span>
@@ -81,7 +81,8 @@
         errorIcon: 0,
         checkErrorIcon: 0,
         pwdTips: false,
-        userToken: ''
+        userToken: '',
+        type:1 // 重置密码类型  1代表开户  2代表后台重置
       }
     },
 
@@ -90,8 +91,7 @@
     components: {FooterCopyright},
 
     mounted () {
-      this.$nextTick(() => {
-      })
+      this.type = Number(_.getUrlParam('type'))
     },
 
     watch: {},
@@ -329,7 +329,7 @@
           line-height: 25px;
           width: 498px;
           font-size: 12px;
-          color: #666666;
+          color: $font-auxiliary-color;
           background-color: #fffcee;
           border: 1px solid #edd28b;
           margin-bottom: 45px;
@@ -343,7 +343,7 @@
         }
         .pwd-input-panel {
           font-size: 14px;
-          margin-top: 20px;
+          margin-top: 27px;
           .pwd-desc {
             color: #666666;
             width: 80px;
@@ -355,7 +355,7 @@
           }
           .pwd-input {
             background-color: #f9f9f9;
-            padding: 11px 10px;
+            padding: 11.5px 10px;
             border: 1px solid #cccccc;
             border-radius: 4px;
             outline-width: 0;
@@ -370,29 +370,29 @@
           }
         }
         .message-container {
-          margin: 10px 88px;
+          margin: 17px 88px;
           height: 14px;
           line-height: 14px;
           color: #999999;
           font-size: 12px;
           .message-text {
             vertical-align: top;
-            color: #cccccc;
+            color: #999999;
             &.error {
               color: #e84c4c;
             }
           }
           &.confirm {
             position: absolute;
-            top: 237px;
+            top: 246px;
           }
         }
         .reset-submit-container {
           padding: 30px 88px;
           position: absolute;
-          top: 250px;
+          top: 276px;
           .reset-submit {
-            padding: 10px 80px;
+            padding: 10.5px 81px;
             background-color: #14b1bb;
             color: #ffffff;
             font-size: 14px;

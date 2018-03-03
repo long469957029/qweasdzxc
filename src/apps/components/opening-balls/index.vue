@@ -1,5 +1,5 @@
 <template>
-  <div class="opening-balls">
+  <div class="opening-balls" :class="sizeStyle">
     <div class="ball-item-wrapper" v-for="i in counts" :key="i">
       <div class="text-circle">
         <div class="ball-item" ref="balls">
@@ -28,13 +28,21 @@
       },
       defaultOpening: {
         type: Array,
-        default: function() {
-          return['0', '0', '0', '0', '0']
+        default: function () {
+          return ['0', '0', '0', '0', '0']
         },
         required: true
       },
       openingBalls: {
         type: Array,
+      },
+      autoStopRolling: {
+        type: Boolean,
+        default: true
+      },
+      size: {
+        type: String,
+        default: 'normal'
       }
     },
     data() {
@@ -46,12 +54,34 @@
       }
     },
 
+    computed: {
+      sizeStyle() {
+        return this.size === 'normal' ? '' : 'sm'
+      }
+    },
+
     watch: {
       openingBalls: {
         handler(newOpeningBalls, oldOpeningBalls) {
-          if (!_.isEmpty(newOpeningBalls) && !_.isEqual(newOpeningBalls, oldOpeningBalls) && !_.compact(this.rollingStatus).length) {
-            this.rolling()
+          //正常模式 - 在号码开出后rolling
+          //手动模式 - 在手动rolling后 在开出号码后停止
+          if (!_.isEmpty(newOpeningBalls)) {
+            if (this.init) {
+              this.$_setInit()
+              return true
+            }
+
+            if (!_.isEqual(newOpeningBalls, oldOpeningBalls)) {
+              if (!this.autoStopRolling) {
+                for (let i = 0; i < this.counts; ++i) {
+                  this.$_easeOutRolling({delay: 0, i})
+                }
+              } else {
+                this.rolling()
+              }
+            }
           }
+
         }
       },
       '$route': {
@@ -59,47 +89,67 @@
           this.rollingStatus = R.repeat(false, this.counts)
           this.init = true
         }
+      },
+      sizeStyle: {
+        handler() {
+          this.$nextTick(() => {
+            this.$_updateSize()
+            this.$_setInit()
+            this.init = true
+          })
+        }
       }
     },
 
     methods: {
-      rolling() {
-        for(let i = 0; i < this.counts; ++i) {
-          if (this.init) {
-            this.$refs.balls[i].style.top = `${this.$_getDes(i)}px`
-          } else {
-            _.delay(() => {
-              this.rollingStatus[i] = true
-              this._rolling(this.$refs.balls[i], i, true)
-            }, 500 * i)
 
-            _.delay(() => {
-              Velocity(this.$refs.balls[i], 'stop')
-
-              Velocity(this.$refs.balls[i], {
-                top: -this.totalHeight + this.$_getDes(i)
-              }, {
-                duration: 0
-              })
-
-              Velocity(this.$refs.balls[i], {
-                top: this.$_getDes(i),
-              }, {
-                duration: 1500,
-                easing: 'ease-out',
-                complete: () => {
-                  this.rollingStatus[i] = false
-                }
-              })
-            }, 500 * i + 3500)
-          }
+      $_setInit() {
+        for (let i = 0; i < this.counts; ++i) {
+          this.$refs.balls[i].style.top = `${this.$_getDes(i)}px`
         }
 
         this.init = false
       },
 
+      rolling() {
+        if (!_.compact(this.rollingStatus).length) {
+          for (let i = 0; i < this.counts; ++i) {
+            this.rollingStatus[i] = true
+            _.delay(() => {
+              this._rolling(this.$refs.balls[i], i, true)
+            }, 500 * i)
+
+            if (this.autoStopRolling) {
+              this.$_easeOutRolling({i, delay: 3500})
+            }
+          }
+        }
+      },
+
+      $_easeOutRolling({delay, i} = {delay: 3500}) {
+        _.delay(() => {
+          Velocity(this.$refs.balls[i], 'stop')
+
+          Velocity(this.$refs.balls[i], {
+            top: -this.totalHeight + this.$_getDes(i)
+          }, {
+            duration: 0
+          })
+
+          Velocity(this.$refs.balls[i], {
+            top: this.$_getDes(i),
+          }, {
+            duration: 1500,
+            easing: 'ease-out',
+            complete: () => {
+              this.rollingStatus[i] = false
+            }
+          })
+        }, 500 * i + delay)
+      },
+
       $_getDes(i) {
-        return -this.perHeight * _.indexOf(this.range, this.openingBalls[i])
+        return -this.perHeight * _.indexOf(this.range, this.openingBalls[i] ? this.openingBalls[i] : this.defaultOpening[i])
       },
 
       _rolling(ball, i, init = false) {
@@ -114,12 +164,15 @@
             }
           }
         })
+      },
+      $_updateSize() {
+        this.totalHeight = this.$refs.balls[0].offsetHeight / 2
+        this.perHeight = this.totalHeight / this.range.length
       }
     },
 
     mounted() {
-      this.totalHeight = this.$refs.balls[0].offsetHeight / 2
-      this.perHeight = this.totalHeight / this.range.length
+      this.$_updateSize()
     }
   }
 </script>
@@ -127,37 +180,37 @@
 <style lang="scss" scoped>
 
 
-  .opening-balls{
+  .opening-balls {
     max-width: 295px;
     display: inline-block;
 
     .ball-item-wrapper {
       position: relative;
       display: inline-block;
-      &:after{
+      &:after {
         content: '';
         width: 18px;
         height: 4px;
         border-radius: 50%;
         background: rgba(0, 0, 0, 0.15);
-        box-shadow: 0 0 20px rgba(0,0,0,1);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 1);
         position: absolute;
-        top: 45px;
-        left: 11px;
-        transform: rotateX(65deg);
+        bottom: 5px;
+        left: 0;
+        transform: rotateX(65deg) translateX(50%);
       }
-      &:nth-of-type(n + 6) {
-        .text-circle {
-          margin-bottom: 0;
-        }
-      }
+      /*&:nth-of-type(n + 6) {*/
+        /*.text-circle {*/
+          /*margin-bottom: 0;*/
+        /*}*/
+      /*}*/
     }
 
     .ball-item {
       position: relative;
     }
 
-    .text-circle{
+    .text-circle {
       font-family: dokchamp, Tahoma, Arial, "Microsoft YaHei UI", "Microsoft Yahei", sans-serif;
       position: relative;
       overflow: hidden;
@@ -167,6 +220,21 @@
       height: 40px;
       line-height: 40px;
       text-align: center;
+    }
+
+    &.sm {
+      .text-circle {
+        margin-right: 14px;
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
+        line-height: 36px;
+      }
+
+      .text-circle-num {
+        height: 36px;
+        width: 36px;
+      }
     }
   }
 

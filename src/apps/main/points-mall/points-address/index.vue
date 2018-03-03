@@ -1,5 +1,5 @@
 <template>
-  <x-dialog @modal-hidden="$emit('modal-hidden')" width="610px" :options="modalOptions">
+  <x-dialog v-model="addressModal" width="610px" :options="modalOptions">
     <div slot="head-main">
       <template v-if="currentModal === 'select'">
         <div class="address-select-title">
@@ -90,8 +90,16 @@
       AddressSelect,
       XAddress
     },
-
+    model: {
+      prop: 'show',
+      event: 'change'
+    },
     props: {
+      show: {
+        type: Boolean,
+        default: false
+      },
+
       currentAddress: {
         type: Object,
         default() {
@@ -111,8 +119,9 @@
           backdrop: 'static'
         },
         addressInfo: {},
+        addressModal: false,
         name: this.currentAddress.name,
-        phone: this.currentAddress.phone,
+        phone: this.currentAddress.orgPhone,
         province: this.currentAddress.province,
         city: this.currentAddress.city,
         area: this.currentAddress.area,
@@ -136,9 +145,16 @@
         },
         immediate: true
       },
+      show(val) {
+        this.addressModal = val
+      },
+      addressModal(val) {
+        this.$emit('change', val)
+      }
     },
 
     computed: {
+
       title() {
         if (this.currentModal !== 'select') {
           return !this.rid ? '添加收货地址' : '修改收货地址'
@@ -148,10 +164,7 @@
 
     methods: {
       addressPush() {
-        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
-          return false
-        }
+
         this.parsley = $(this.$refs.form).parsley({
           trigger: 'change',
         })
@@ -227,7 +240,7 @@
       },
       edit(address) {
         this.name = address.name
-        this.phone = address.phone
+        this.phone = address.orgPhone
         this.province = address.province
         this.city = address.city
         this.area = address.area
@@ -249,8 +262,6 @@
       }
     },
 
-    mounted() {
-    }
   }
 </script>
 

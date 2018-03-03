@@ -427,7 +427,7 @@
     border: 1px dashed $def-gray-color;
     border-radius: $globalBtnRadius;
     font-size: $font-sm;
-    color: $def-black-color;
+    color: $font-auxiliary-color;
     text-align: center;
     cursor: pointer;
     padding-top: 33px;
@@ -442,6 +442,9 @@
       margin: 0 auto;
       margin-bottom: 15px;
     }
+    .reward{
+      color: $def-black-color;
+    }
     &:hover{
       border-color: transparent;
       color: $new-main-deep-color;
@@ -449,6 +452,9 @@
       .add-icon{
         background: url('./images/btn-card-add-hover.png') no-repeat;
         animation: flipInY 1s;
+      }
+      .reward{
+        color: $new-main-deep-color;
       }
     }
   }
@@ -571,6 +577,9 @@
 //绑定页
 .p-left-100{
   padding-left: 100px;
+}
+.cb-width-510{
+ width: 510px;
 }
 .m-left--180{
   margin-left: -180px;
@@ -909,12 +918,15 @@
     padding-top: 20px;
     padding-left: 200px;
   }
+  //.uc-changeLoginPassword-form{
+  //  padding-left: 80px;
+  //}
   //.security-main{
   //  min-height: 650px;
   //}
   .uc-step-container{
     .content{
-      height: 600px;
+      height: 450px;
     }
   }
   .uc-bind-main{
@@ -932,9 +944,6 @@
       line-height: 38px;
       font-size: 14px;
       cursor: pointer;
-    }
-    .error-text{
-      padding-left: 120px;
     }
   }
   .input1{

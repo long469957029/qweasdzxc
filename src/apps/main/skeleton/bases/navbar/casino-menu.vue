@@ -71,7 +71,7 @@
       },
       startGame(type,channelId,gameId){
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行转账操作，请先注册正式游戏账号')
+          Global.ui.notification.show('试玩会员无法进入该游戏，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
           return false
         }
         if(!this.getLoginStatus){
@@ -82,6 +82,10 @@
             .done((data) => {
                 if (data && data.result === 0) {
                   _(data.root).find((item) => {
+                    if (item.fundLock) {
+                      Global.ui.notification.show('资金已锁定，暂不能进入游戏')
+                      return false
+                    }
                     if (item.channelId === channelId && item.type === type) {
                       if (item.status === 0) {
                         flag = true

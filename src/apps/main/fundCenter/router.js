@@ -3,8 +3,7 @@ const AccountDetailsView = () => import(/* webpackChunkName: "fund-center" */ '.
 const FundRecordsView = () => import(/* webpackChunkName: "fund-center" */ './record')
 const FundManageView = () => import(/* webpackChunkName: "fund-center" */ './fundManage')
 const RebateRecordsView = () => import(/* webpackChunkName: "fund-center" */ './rebateRecord')
-const RechargeView = () => import(/* webpackChunkName: "fund-center" */ './recharge')
-const WithdrawView = () => import(/* webpackChunkName: "fund-center" */ './withdraw')
+
 const GameRecordView = () => import(/* webpackChunkName: "fund-center" */ './gameRecord/index')
 const BetDetailView = () => import(/* webpackChunkName: "fund-center" */ './gameRecord/betDetail')
 const ChaseDetailView = () => import(/* webpackChunkName: "fund-center" */ './gameRecord/chaseDetail')
@@ -21,34 +20,6 @@ export default [
       RouterController.async(resolve, FundManageView, {
         sidebar,
         activeMenu: 'fc/fm',
-      })
-    },
-  },
-  {
-    path: '/fc/re',
-    component: function(resolve) {
-      RouterController.async(resolve, RechargeView, {
-        main: {
-          title: '在线充值',
-          titleDes: '',
-        },
-        sidebar,
-        // activeMenu: 'fc/fm'
-      })
-    },
-  },
-  {
-    path: '/fc/wd',
-    component: function(resolve) {
-      RouterController.async(resolve, FundRecordsView,{
-        triggerTab: 'record-withdraw'
-      }, {
-        main: {
-          title: '充提记录',
-          titleDes: '充提记录只保留30天数据。',
-        },
-        sidebar,
-        activeMenu: '/fc/rd'
       })
     },
   },
@@ -75,6 +46,22 @@ export default [
           titleDes: '充提记录只保留30天数据。',
         },
         sidebar,
+        activeMenu: '/fc/rd',
+      })
+    },
+  },
+  {
+    path: '/fc/wd',
+    component: function(resolve) {
+      RouterController.async(resolve, FundRecordsView, {
+        triggerTab: 'record-withdraw'
+      },{
+        main: {
+          title: '充提记录',
+          titleDes: '充提记录只保留30天数据。',
+        },
+        sidebar,
+        activeMenu: '/fc/rd',
       })
     },
   },

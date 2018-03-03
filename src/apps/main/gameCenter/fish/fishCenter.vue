@@ -7,7 +7,7 @@
             <div class="fc-item-amount">
               AG余额：<span class="js-fc-agAmount">{{_(agAmount).formatDiv(10000, { fixed: 2 })}}</span>
             </div>
-            <div :class="['fc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">
+            <div :class="['fc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" data-toid="1" @click="showLogin">
               余额转帐
               <span class="fc-right-icon"></span>
             </div>
@@ -20,7 +20,7 @@
             <div class="fc-item-amount">
               GG余额：<span class="js-fc-ggAmount">{{_(ggAmount).formatDiv(10000, { fixed: 2 })}}</span>
             </div>
-            <div :class="['fc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" @click="showLogin">
+            <div :class="['fc-item-link', {'js-header-recharge':getLoginStatus}]" data-name="jsFcTransfer" data-toid="6" @click="showLogin">
               余额转帐
               <span class="fc-right-icon"></span>
             </div>
@@ -86,6 +86,10 @@
         )
       },
       startGame(type,channelId,gameId){
+        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+          Global.ui.notification.show('试玩会员无法进入该游戏，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
+          return false
+        }
         if(!this.getLoginStatus){
           this.showLogin()
         }else{
@@ -94,6 +98,10 @@
             .done((data) => {
                 if (data && data.result === 0) {
                   _(data.root).find((item) => {
+                    if (item.fundLock) {
+                      Global.ui.notification.show('资金已锁定，暂不能进入游戏')
+                      return false
+                    }
                     if (item.channelId === channelId && item.type === type) {
                       if (item.status === 0) {
                         flag = true

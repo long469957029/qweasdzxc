@@ -47,9 +47,4 @@ exports.install = function() {
 
   window.Global.module('m.news', NewsMediatorModule)
   window.Global.module('m.oauth', OauthMediatorModule)
-  // window.Global.module('m.rainActivity', RainActivityModule);
-  // window.Global.module('m.volcanicActivity', VolcanicActivityModule);
-  // window.Global.module('m.treadActivity', TreadActivityModule);
-  // window.Global.module('m.treeActivity', TreeActivityModule)
-  // window.Global.module('newbieActivity', NewbieActivityModule)
 }

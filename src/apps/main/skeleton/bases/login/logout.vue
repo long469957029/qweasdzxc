@@ -1,7 +1,6 @@
 <template>
 </template>
 <script>
-  import loginApi from 'api/login'
   export default{
     name: 'logout',
 

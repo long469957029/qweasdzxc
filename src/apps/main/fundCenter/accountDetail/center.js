@@ -18,6 +18,7 @@ const MoneyDetailView = SearchGrid.extend({
 
     _(this.options).extend({
       height: '515',
+      tableClass: 'table table-bordered table-center border-bottom',
       columns: [
         {
           name: '交易流水号',
@@ -111,9 +112,9 @@ const MoneyDetailView = SearchGrid.extend({
     // row.push(tradingStatusConfig.toZh(info.tradeType));
     row.push(info.tradeType)
     if (info.amount >= 0) {
-      row.push(`<span class="text-account-cut">+${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-prominent">+${_(info.amount).convert2yuan()}</span>`)
     } else {
-      row.push(`<span class="text-account-add">${_(info.amount).convert2yuan()}</span>`)
+      row.push(`<span class="text-cool">${_(info.amount).convert2yuan()}</span>`)
     }
 
     row.push(`<span class="">${_(info.balance).convert2yuan()}</span>`)

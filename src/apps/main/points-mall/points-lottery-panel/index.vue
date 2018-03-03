@@ -49,10 +49,10 @@
               </div>
             </div>
             <div class="task-button">
-              <button class="points-btn btn btn-orange" @click="lottery(0)" :disabled="pushing">
+              <button class="points-btn btn btn-orange" @click="isLogin ? lottery(0) : login()" :disabled="pushing || running">
                 {{currentIntegralRob | convert2yuan}} 积分夺宝
               </button>
-              <button class="currency-btn btn" @click="lottery(1)" :disabled="pushing">
+              <button class="currency-btn btn" @click="isLogin ? lottery(1) : login()" :disabled="pushing || running">
                 {{currentCashRob | convert2yuan}}元 现金夺宝
               </button>
             </div>
@@ -136,7 +136,7 @@
           <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 3">
             积分{{chest.integral | convert2yuan}}
           </div>
-          <button class="lucky-exchange-btn btn" @click="luckChest(chest)" :disabled="pushing">
+          <button class="lucky-exchange-btn btn" @click="isLogin ? luckChest(chest) : login()" :disabled="pushing || running">
             <span class="sfa sfa-pt-lucky-star-points"></span>
             <span class="lucky-exchange-title">{{chest.lucky}} 幸运值{{chest.rate === 10000 ? '兑换' : '碰运气'}}</span>
           </button>
@@ -146,7 +146,7 @@
 
     <div v-transfer-dom>
       <!-- 抽奖结果 中 -->
-      <x-dialog v-if="isShowPrized" @modal-hidden="isShowPrized = false" type="arc">
+      <x-dialog v-model="isShowPrized" type="arc">
         <div slot="head-main">恭喜您成功获得！</div>
         <div class="prize-main">
           <div class="prize-pic-wrapper">
@@ -190,7 +190,7 @@
         </div>
       </x-dialog>
 
-      <x-dialog v-if="isShowLose" @modal-hidden="isShowLose = false">
+      <x-dialog v-model="isShowLose">
         <div slot="all" class="lose-main">
           <a data-dismiss="modal" class="close btn-close">×</a>
           <div class="icon-smiley"></div>
@@ -202,7 +202,7 @@
       </x-dialog>
 
       <!-- 抽奖条件不满足 -->
-      <x-dialog v-if="isShowFailed" @modal-hidden="isShowFailed = false" type="arc">
+      <x-dialog v-model="isShowFailed" type="arc">
         <div slot="head-main">夺宝失败</div>
         <div class="fail-main">
           <div class="icon-chest"></div>
@@ -232,7 +232,7 @@
 
 <script>
   import {getTaskListApi, lotteryApi, luckyApi, addAddressToGiftApi} from 'api/points'
-  import {formatCoupon} from 'build'
+  import {formatCoupon, checkLogin} from 'build'
   import PointsAddress from '../points-address'
 
   const awardType = [
@@ -256,6 +256,8 @@
 
   export default {
     name: 'points-lottery',
+
+    mixins: [checkLogin],
 
     components: {
       PointsAddress
@@ -307,6 +309,7 @@
         lotteryResult: {},
         currentLotteryType: 0,
         loadingStatus: 'loading',
+        running: false,
 
         pushing: false,
       }
@@ -478,6 +481,7 @@
 
       startLotteryAnimation(lotteryResult, completed) {
         clearInterval(this.timer)
+        this.running = true
         this.lotteryRoll({
           times: 30
         }, () => {
@@ -490,6 +494,7 @@
 
           setTimeout(() => {
             this.normalRoll()
+            this.running = false
             completed()
           }, 1000)
         })
@@ -507,7 +512,7 @@
       },
       lottery(type) {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
           return false
         }
         this.pushing = true
@@ -577,7 +582,7 @@
 
       luckChest(chestInfo) {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
           return false
         }
         this.pushing = true

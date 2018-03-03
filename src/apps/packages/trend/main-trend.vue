@@ -236,13 +236,14 @@
         currentSearchIndex: 0,
         currentSplit: {},
         fPositions: [],
-        showPlanId: this.ticketId !== 19
+        showPlanId: true
       }
     },
 
     watch: {
       ticketId: {
         handler(ticketId) {
+          this.showPlanId = this.ticketId !== 19
           this.ticketInfo = ticketConfig.getById(ticketId)
           this.currentSplit = _.first(this.ticketInfo.trendOps.splitTrend)
           if (this.currentSplit) {
@@ -604,7 +605,7 @@
 
         _(this.ticketInfo.counts).times((index) => {
           Draw.DrawLine.color(colors);
-          Draw.DrawLine.add((parseInt(index) * num + 2), this.showPlanId ? 2 : 1, num, 0);
+          Draw.DrawLine.add((parseInt(index) * num + (this.showPlanId ? 2 : 1)), 2, num, 0);
         })
 
         Draw.DrawLine.draw(Draw.Chart.ini.default_has_line);
@@ -625,6 +626,7 @@
   .trend-center {
     background-color: #ffffff;
     min-width: 1366px;
+    min-height: 100%;
   }
   .trend-panel {
     height: 80px;

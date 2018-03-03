@@ -429,6 +429,9 @@ const MoneyTransferView = Base.ItemView.extend({
               bodyClass: 'no-border no-padding',
               closeBtn: false,
             })
+            if(this.options.username){
+              this.options.username = null
+            }
             self.render()
           } else if (_(res.root).isNumber()) {
             if (res.root > 0) {

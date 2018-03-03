@@ -237,7 +237,7 @@ const SignUserView = Base.ItemView.extend({
     this.TicketGrid = this.$ticketGrid.staticGrid({
       startOnLoading: false,
       // height: 80,
-      tableClass: 'table table-bordered table-center',
+      tableClass: 'table table-bordered table-center border-bottom',
       colModel: [
         { label: '序号', name: 'no', width: 90 },
         { label: '团队日均销量', name: 'betTotal', width: 399 },
@@ -303,7 +303,7 @@ const SignUserView = Base.ItemView.extend({
     this.GameGrid = this.$gameGrid.staticGrid({
       startOnLoading: false,
       // height: 80,
-      tableClass: 'table table-bordered table-center',
+      tableClass: 'table table-bordered table-center border-bottom',
       colModel,
       emptyTip: false,
       row: this._formatGameData(rebateList || []),
@@ -403,6 +403,7 @@ const SignUserView = Base.ItemView.extend({
         if (res && res.result === 0) {
           Global.ui.notification.show('操作成功！<br/>等待下级同意签约。')
           self.render()
+          Vue.$global.bus.$emit('sign:update')
           Global.router.goTo('ac/sum')
         } else {
           Global.ui.notification.show(res.msg || '')

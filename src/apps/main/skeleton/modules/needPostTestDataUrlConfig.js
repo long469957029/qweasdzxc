@@ -1,5 +1,6 @@
 /**
  * Created by bill on 2018/2/12.
+ * 需考虑不需要调用接口的配置优化
  */
 const urlList = [
   //账户（不能:保存用户信息,查看操作银行卡，）
@@ -22,6 +23,7 @@ const urlList = [
   '/ticket/chase/cancel.json',//
   '/ticket/bet/cancel.json',//撤单
   '/ticket/chase/cancel.json',//停止追号
+  'ticket/game/gameAndTicketHistory.json',//试玩右侧记录接口
   //资金（不能 充值，提现，转账）
   '/fund/balance/summary.json',
   '/info/gamereport/myprofit.json',//资金总览，个人数据总览

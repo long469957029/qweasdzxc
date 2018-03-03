@@ -78,6 +78,9 @@ const NotificationModule = Base.Module.extend({
 
     $dialog.on('hidden.modal', function() {
       // $(e.currentTarget).next('.modal-backdrop').remove().end().remove();
+      if (_(options.closeEvent).isFunction()) {
+        options.closeEvent()
+      }
       $(this).remove()
     })
 

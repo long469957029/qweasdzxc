@@ -12,7 +12,7 @@
               <option value="1">充值券</option>
               <option value="2">加奖券</option>
               <option value="3">补贴券</option>
-              <option value="4">反水券</option>
+              <option value="4">返水券</option>
               <option value="5">代金券</option>
               <option value="6">现金券</option>
             </select>
@@ -91,10 +91,7 @@
           ticketId: couponInfo.statTicketId,
           gameType: couponInfo.gameType
         })
-        let html = `${formatCouponInfo.mainDesc}`
-        if (formatCouponInfo.secondDesc) {
-           html += `<br/> ${formatCouponInfo.secondDesc}`
-        }
+        let html = `${formatCouponInfo.records}`
         return html
       }
     },

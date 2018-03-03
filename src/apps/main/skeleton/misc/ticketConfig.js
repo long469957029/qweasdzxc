@@ -64,6 +64,7 @@ const sscConfig = {
         periods: trendMmcPeriods,
         split: 1,
       },
+      abbreviated: true,
       trendType: 'old',
     }, bettingTypes.SSC),
     Object.assign({
@@ -73,11 +74,13 @@ const sscConfig = {
       badge: 'hot',
       showNumberDetail: false,
       openWhenTimeout: true,
+      totalPriods: 2800,
       trendOps: {
         distribution: true,
         periods: trendPeriods,
         split: 1,
       },
+      abbreviated: true,
       isOfficial: true,
     }, bettingTypes.SSC),
     Object.assign({
@@ -90,7 +93,8 @@ const sscConfig = {
         distribution: true,
         periods: trendPeriods,
         split: 1,
-      }
+      },
+      abbreviated: true,
     }, bettingTypes.SSC),
     Object.assign({
       id: 13,
@@ -101,7 +105,8 @@ const sscConfig = {
         distribution: true,
         periods: trendPeriods,
         split: 1,
-      }
+      },
+      abbreviated: true,
     }, bettingTypes.SSC),
     Object.assign({
       id: 1,
@@ -113,71 +118,7 @@ const sscConfig = {
         periods: trendLowPeriods,
         split: 1,
       },
-      isOfficial: true,
-    }, bettingTypes.SSC),
-    Object.assign({
-      id: 31,
-      mark: 'qqffc',
-      zhName: 'QQ分分彩',
-      badge: 'new',
-      showNumberDetail: false,
-      trendOps: {
-        distribution: true,
-        periods: trendPeriods,
-        split: 1,
-      },
-      isOfficial: true,
-    }, bettingTypes.SSC),
-    Object.assign({
-      id: 37,
-      mark: 'tx',
-      zhName: '腾讯分分彩',
-      badge: 'new',
-      showNumberDetail: false,
-      trendOps: {
-        distribution: true,
-        periods: trendPeriods,
-        split: 1,
-      },
-      isOfficial: true,
-    }, bettingTypes.SSC),
-    Object.assign({
-      id: 21,
-      mark: 'hg',
-      zhName: '韩国乐透1.5',
-      badge: '',
-      showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
-      trendOps: {
-        distribution: true,
-        periods: trendPeriods,
-        split: 1,
-      },
-      isOfficial: true,
-    }, bettingTypes.SSC),
-    Object.assign({
-      id: 27,
-      mark: 'dj',
-      zhName: '东京1.5分彩',
-      badge: '',
-      showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
-      trendOps: {
-        distribution: true,
-        periods: trendPeriods,
-        split: 1,
-      },
-      isOfficial: true,
-    }, bettingTypes.SSC),
-    Object.assign({
-      id: 25,
-      mark: 'xjp',
-      zhName: '新加坡2分彩',
-      badge: '',
-      showNumberDetail: true,
-      trendOps: {
-        distribution: true,
-        periods: trendPeriods,
-        split: 1,
-      },
+      abbreviated: true,
       isOfficial: true,
     }, bettingTypes.SSC),
     Object.assign({
@@ -191,6 +132,7 @@ const sscConfig = {
         periods: trendLowPeriods,
         split: 1,
       },
+      abbreviated: true,
       isOfficial: true,
     }, bettingTypes.SSC),
     Object.assign({
@@ -217,6 +159,75 @@ const sscConfig = {
         periods: trendLowPeriods,
         split: 1,
       },
+      abbreviated: true,
+      isOfficial: true,
+    }, bettingTypes.SSC),
+    Object.assign({
+      id: 21,
+      mark: 'hg',
+      zhName: '韩国乐透1.5',
+      badge: '',
+      showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
+      trendOps: {
+        distribution: true,
+        periods: trendPeriods,
+        split: 1,
+      },
+      isOfficial: true,
+    }, bettingTypes.SSC),
+    Object.assign({
+      id: 27,
+      mark: 'dj',
+      zhName: '东京1.5分彩',
+      badge: '',
+      showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
+      trendOps: {
+        distribution: true,
+        periods: trendPeriods,
+        split: 1,
+      },
+      abbreviated: true,
+      isOfficial: true,
+    }, bettingTypes.SSC),
+    Object.assign({
+      id: 25,
+      mark: 'xjp',
+      zhName: '新加坡2分彩',
+      badge: '',
+      showNumberDetail: true,
+      trendOps: {
+        distribution: true,
+        periods: trendPeriods,
+        split: 1,
+      },
+      isOfficial: true,
+    }, bettingTypes.SSC),
+    Object.assign({
+      id: 31,
+      mark: 'qqffc',
+      zhName: 'QQ分分彩',
+      badge: 'new',
+      showNumberDetail: false,
+      trendOps: {
+        distribution: true,
+        periods: trendPeriods,
+        split: 1,
+      },
+      abbreviated: true,
+      isOfficial: true,
+    }, bettingTypes.SSC),
+    Object.assign({
+      id: 37,
+      mark: 'tx',
+      zhName: '腾讯分分彩',
+      badge: 'new',
+      showNumberDetail: false,
+      trendOps: {
+        distribution: true,
+        periods: trendPeriods,
+        split: 1,
+      },
+      abbreviated: true,
       isOfficial: true,
     }, bettingTypes.SSC),
   ],
@@ -286,7 +297,9 @@ const threeDConfig = [
       distribution: true,
       periods: trendPeriods,
       split: 1,
-    }
+    },
+    abbreviated: true,
+    isOfficial: true,
   }, bettingTypes.THREED),
   Object.assign({
     id: 6,
@@ -356,7 +369,7 @@ const quickConfig = [
   Object.assign({
     id: 29,
     mark: 'jsk3',
-    zhName: '江苏快三',
+    zhName: '江苏快3',
     hasMargin: true,
     trendOps: {
       periods: trendLowPeriods,
@@ -380,46 +393,59 @@ const handicapMark6Config = [
     id: 34,
     mark: 'mark6',
     zhName: '香港六合彩',
-    badge: 'new',
+    // badge: 'new',
     isOfficial: true,
+    needSx: true
   }, bettingTypes.MARK6),
 ]
 
 const handicapSscConfig = [
-  Object.assign({
-    id: 1,
-    mark: 'cq',
-    zhName: '重庆时时彩',
-    badge: 'new',
-    roadBalls: true,
-    twoSide: true,
-    isOfficial: true,
-  }, bettingTypes.SSC),
-  Object.assign({
-    id: 10,
-    mark: 'ffc',
-    zhName: '无限分分彩',
-    badge: 'new',
-    twoSide: true,
-    roadBalls: true,
-  }, bettingTypes.SSC),
+  {
+    ...bettingTypes.SSC,
+    ...{
+      id: 1,
+      mark: 'cq',
+      zhName: '重庆时时彩',
+      // badge: 'new',
+      roadBalls: true,
+      twoSide: true,
+      isOfficial: true,
+      helpPage: 'SscPlayer',
+    },
+  },
+  {
+    ...bettingTypes.SSC,
+    ...{
+      id: 10,
+      mark: 'ffc',
+      zhName: '无限分分彩',
+      // badge: 'new',
+      twoSide: true,
+      roadBalls: true,
+      helpPage: 'SscPlayer',
+    }
+  },
 ]
 
 const handicapPk10Config = [
-  Object.assign({
-    id: 18,
-    mark: 'pk10',
-    zhName: 'PK10',
-    badge: 'new',
-    roadBalls: true,
-    twoSide: true,
-    isOfficial: true,
-  }, bettingTypes.PK10),
+  {
+    ...bettingTypes.PK10,
+    ...{
+      id: 18,
+      mark: 'pk10',
+      zhName: 'PK10',
+      // badge: 'new',
+      roadBalls: true,
+      twoSide: true,
+      isOfficial: true,
+      helpPage: 'Pk10Player',
+    }
+  }
 ]
 
 const lowConfig = {
   id: 'low',
-  title: '低频彩',
+  title: '3D<br />/<br />低频',
   icon: 'low',
   titleIcon: 'low_nav_icon',
   list: threeDConfig.concat(p5p3Config),
@@ -542,7 +568,9 @@ export default {
       handicap: {
         // 重庆时时彩  无限秒秒彩  无限分分彩  北京赛车/PK拾  香港六合彩
         list: [
-          ..._.filter(sscConfig.list, (item) => { return item.id === 1 || item.id === 10}),
+          ..._.filter(sscConfig.list, (item) => {
+            return item.id === 1 || item.id === 10
+          }),
           ...bjPKConfig.concat(this.getById(34)),
         ],
       },

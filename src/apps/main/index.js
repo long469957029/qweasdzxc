@@ -1,4 +1,7 @@
-const App = require('./app')
+import store from '../store'
+import App from './App.vue'
+import {sync} from 'vuex-router-sync'
+const OldApp = require('./app.js')
 const modules = require('skeleton/modules')
 
 import {
@@ -7,28 +10,13 @@ import {
   SearchGrid,
   AnimatedInteger,
   XDialog,
+  XSelect,
   StatusCell,
   BusPlugin,
   CustomCheckbox,
   Popover,
   TransferDom,
 } from 'build'
-
-import store from '../store'
-
-import MainHeader from 'skeleton/bases/header'
-import NavBar from 'skeleton/bases/navbar'
-import Login from 'skeleton/bases/login'
-import Logout from 'skeleton/bases/login/logout'
-import MainFooter from 'skeleton/bases/footer'
-import ResetPwd from 'skeleton/bases/login/resetPassWord'
-import LoginLauncher from 'skeleton/bases/loginLauncher'
-import FreeTrial from 'skeleton/bases/freeTrial'
-import DialogManage from 'skeleton/bases/dialogManage'
-import GameDownLoad from 'gameCenter/downLoad'
-import DesktopMessage from 'skeleton/bases/desktop-message'
-// import novicePackage from 'activity/novicePackageActivity'
-
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
 Object.defineProperty(Vue.prototype, '$', {value: $})
@@ -40,13 +28,14 @@ Vue.component('search-grid', SearchGrid)
 Vue.component('slot-static-grid', SlotStaticGrid)
 Vue.component('custom-checkbox', CustomCheckbox)
 Vue.component('animated-integer', AnimatedInteger)
+Vue.component('x-select', XSelect)
 Vue.component('x-dialog', XDialog)
 Vue.component('status-cell', StatusCell)
 Vue.directive('TransferDom', TransferDom)
 
 require('widgets')
 
-window.Global = App
+window.Global = OldApp
 window.Global.Prefab = Base.Prefab
 window.Global.appRouter = new Base.AppRouter()
 
@@ -62,6 +51,8 @@ const router = appRouters.install()
 
 window.store = store
 window.router = router
+
+sync(store, router)
 
 
 router.onReady(() => {
@@ -85,53 +76,36 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-App.start()
-
 // 开启菜单权限监听
 Global.ui.menu.start()
 
 
 // 进行系统OAuth校验
 
-Global.m.oauth.check()
-  .complete(() => {
-    window.app = new Vue({
-      el: '#main-wrapper',
-      components: {
-        MainHeader,
-        NavBar,
-        MainFooter,
-        Login,
-        Logout,
-        ResetPwd,
-        LoginLauncher,
-        FreeTrial,
-        DialogManage,
-        GameDownLoad,
-        DesktopMessage
-        // novicePackage,
-      },
-      store,
-      router,
-      computed: {
-        ...mapGetters([
-          'loginDialogStatus',
-          'logoutDialogStatus',
-          'resetPassWordDialogStatus',
-          'loginLauncherStatus',
-          'freeTrialStatus',
-          'getLoginStatus',
-          'gameDownLoadStatus',
-          'openDeskTopMsgStatus'
-        ]),
-      },
-    })
 
-    window.$route = app.$route
+store.dispatch(types.GET_MARK6_SX)
+  .then(() => {
 
-  })
-  .done((res) => {
-    if (res && res.result === 0) {
-      window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
-    }
+    Global.m.oauth.check()
+      .complete(() => {
+        window.app = new Vue({
+          el: '#app',
+          render: h => h(App),
+          store,
+          router,
+        })
+
+        /**
+         * @deprecated do not use it
+         */
+        window.$route = app.$route
+
+        OldApp.start()
+
+      })
+      .done((res) => {
+        if (res && res.result === 0) {
+          window.store.commit(types.USER_LOGIN_SUCCESS, res.root || {})
+        }
+      })
   })

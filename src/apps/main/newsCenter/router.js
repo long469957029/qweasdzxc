@@ -22,7 +22,7 @@ export default [
     path: '/nc/pn/detail/:noticeId',
     component: function() {
       RouterController.changeMainReginView(new PlatformNewsDetailView({
-        noticeId: $route.params.noticeId,
+        noticeId: store.state.route.params.noticeId,
       }), {
         main: {
           title: '消息中心',
@@ -60,8 +60,8 @@ export default [
     path: '/nc/il/detail/:titleId/:letterId',
     component: function() {
       RouterController.changeMainReginView(new InsideLetterDetailView({
-        titleId: $route.params.titleId,
-        letterId: $route.params.letterId,
+        titleId: store.state.route.params.titleId,
+        letterId: store.state.route.params.letterId,
       }), {
         main: {
           title: '消息中心',

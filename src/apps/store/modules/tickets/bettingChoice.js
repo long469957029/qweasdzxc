@@ -1,4 +1,5 @@
 import {pushBettingApi, pushChaseApi, pushMmcBettingApi} from 'api/betting'
+import {formatOptionals} from 'build'
 
 const initState = () => {
   return {
@@ -64,6 +65,7 @@ const actions = {
     type = 'previewList',
   }) {
     const bettingList = state[type]
+    let amount = 0
     const bet = _(bettingList).reduce((list, item) => {
       list.push({
         betNum: item.bettingNumber,
@@ -74,11 +76,13 @@ const actions = {
         betMethod: item.betMethod,
       })
 
+      amount += item.fPrefabMoney
+
       return list
     }, [])
 
     return pushBettingApi(
-      { planId, bet, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
+      { planId, bet, amount, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
       ({ data }) => {
         commit(types.PUSH_BETTING_SUCCESS, { res: data, type })
         return data
@@ -119,6 +123,8 @@ const actions = {
     bettingList,
     prevVoucher,
   }) {
+    let amount = 0
+
     const bet = _(bettingList).reduce((list, item) => {
       list.push({
         betNum: item.bettingNumber,
@@ -129,12 +135,15 @@ const actions = {
         betMethod: item.betMethod,
       })
 
+      amount += item.fPrefabMoney
+
       return list
     }, [])
 
+
     return new Promise((resolve) => {
       pushMmcBettingApi(
-        { bet, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
+        { bet, amount, couponRid: !_.isEmpty(prevVoucher) ? prevVoucher.rid : 0 },
         ({ data }) => {
           resolve(data)
         },
@@ -243,7 +252,11 @@ const mutations = {
 
     state.betBonus = state.fBetBonus = 0
   },
-  // indexs 被选中号码的索引
+  /**
+   * 更新奖金以及最大投注限制
+   * @param state
+   * @param indexs - 被选中号码们的索引
+   */
   [types.UPDATE_BONUS] (state, indexs) {
     const playInfo = state.playInfo
 
@@ -483,16 +496,19 @@ const mutations = {
       if (state.statistics && state.statistics !== 0) {
         statistics = state.statistics
       } else {
-        statistics = 1
+        statistics = bettingInfo.lotteryList.length
       }
 
+      //盘口的显示和普通玩法不一致 采用的格式化后的formattedList来显示
+      //并取消原先的formatBettingNumber参数
       const item = {
         levelName: state.levelName,
         playId: state.playId,
         playName: state.playName,
         bettingNumber: bettingInfo.format(bettingInfo.lotteryList),
         // 显示用
-        formatBettingNumber: bettingInfo.showFormat(bettingInfo.lotteryList),
+        formattedList: bettingInfo.showFormat(bettingInfo.lotteryList, state),
+        // formatBettingNumber: bettingInfo.showFormat(bettingInfo.lotteryList),
         type: bettingInfo.type,
         formatBonusMode: state.formatBonusMode,
         multiple: state.multiple,
@@ -515,10 +531,17 @@ const mutations = {
 
       // 计算prefabMoney 和 rebateMoney
 
-      item.prefabMoney = _.chain(bettingInfo.lotteryList).reduce((total, item) => { return total + item.betMoney }, 0)
-        .mul(item.statistics)
-        .mul(item.unit)
-        .value()
+      if (bettingInfo.calculateType === 'separate') {
+        item.prefabMoney = _.chain(bettingInfo.lotteryList).reduce((total, item) => { return total + item.betMoney }, 0)
+          .mul(item.unit)
+          .value()
+      } else if (bettingInfo.calculateType === 'unite') {
+        //只取一个价格
+        item.prefabMoney = _.chain(bettingInfo.lotteryList[0].betMoney)
+          .mul(item.statistics)
+          .mul(item.unit)
+          .value()
+      }
     })
 
     state.buyList = items.concat(state.buyList)
@@ -534,7 +557,11 @@ const formatBettingNumber = (bettingNumber, options) => {
   })
 
   if (!_.isEmpty(options.selectOptionals)) {
-    number += `${options.selectOptionals.join(',')}|`
+    if (options.type === 'display') {
+      number += `${formatOptionals(options.selectOptionals).join(',')}|`
+    } else {
+      number += `${options.selectOptionals.join(',')}|`
+    }
   }
 
   if (bettingNumber.length === 1) {

@@ -54,6 +54,10 @@ function addAll(rowsResult) {
   }, 0, this)
 }
 
+function handicapAddAll(rowsResult) {
+  return rowsResult[0].length
+}
+
 function _group(n, cTimes, factor) {
   let total = 1
 
@@ -417,7 +421,10 @@ function getValidateFunc(length, options) {
 
       // 长度验证
       if (numbers.length !== length) {
-        result.errorNumbers.push(number)
+        if (number) {
+          result.errorNumbers.push(number)
+        }
+
         return
       }
 
@@ -481,6 +488,7 @@ module.exports = {
   mulAllNotRepeat,
 
   addAll,
+  handicapAddAll,
 
   // 组选 不定位
   group,

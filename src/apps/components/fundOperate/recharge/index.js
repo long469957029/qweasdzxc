@@ -100,11 +100,11 @@ const RechargeView = Base.ItemView.extend({
         const outHeight = this.$('.js-fc-rc-payType-select').height()
         const inHeight = this.$('.js-fc-re-bankList-select').height()
         if (outHeight > 100) {
-          this.$('.js-fc-rc-payType-select').removeClass('side-down')
+          this.$('.js-fc-rc-payType-select').removeClass('side-down').scrollTop(0)
           this.$('.js-select-type-down').removeClass('up')
         }
         if (inHeight > 100) {
-          this.$('.js-fc-re-bankList-select').removeClass('side-down')
+          this.$('.js-fc-re-bankList-select').removeClass('side-down').scrollTop(0)
           this.$('.js-select-bank-down').removeClass('up')
         }
       }
@@ -210,8 +210,10 @@ const RechargeView = Base.ItemView.extend({
     this.$('input[name="bankId"]').val(this.$('.js-fc-rc-bank-selectedItem').data('id'))
     this.$('input[name="bankCode"]').val(this.$('.js-fc-rc-bank-selectedItem').data('code'))
     this.$('input[name="token"]').val(Global.cookieCache.get('token'))
+    this.$('.js-rc-money-input').removeAttr('data-parsley-type')
     if (this.parsley.validate()) {
       $form.submit()
+      this.$('.js-rc-money-input').attr('data-parsley-type','integer')
     } else {
       return false
     }
@@ -219,7 +221,7 @@ const RechargeView = Base.ItemView.extend({
   // 点击充值确定按钮下一步操作判断
   nextStepHandler() {
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-      Global.ui.notification.show('试玩会员无法进行充值操作，请先注册正式游戏账号')
+      Global.ui.notification.show('试玩会员无法进行充值操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
       return false
     }
     const paymentId = this.$('.js-fc-rc-payType-selectedItem').data('type')
@@ -370,7 +372,7 @@ const RechargeView = Base.ItemView.extend({
       this.$('.js-select-type-down').addClass('up')
       // this.$('.js-fc-rc-payType-items').removeClass('hidden')
     } else {
-      this.$('.js-fc-rc-payType-select').removeClass('side-down')
+      this.$('.js-fc-rc-payType-select').removeClass('side-down').scrollTop(0)
       this.$('.js-select-type-down').removeClass('up')
       // this.$('.js-fc-rc-payType-items').addClass('hidden')
     }
@@ -383,7 +385,7 @@ const RechargeView = Base.ItemView.extend({
       this.$('.js-fc-re-bankList-select').addClass('side-down')
       this.$('.js-select-bank-down').addClass('up')
     } else {
-      this.$('.js-fc-re-bankList-select').removeClass('side-down')
+      this.$('.js-fc-re-bankList-select').removeClass('side-down').scrollTop(0)
       this.$('.js-select-bank-down').removeClass('up')
     }
   },

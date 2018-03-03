@@ -6,7 +6,8 @@
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" @keydown="inputValidate" @blur="isInputing = false">
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney"
+               @keydown="inputValidate" @blur="isInputing = false">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                 :disabled="!canBet || pushing || !sale || pending">
           投注
@@ -23,7 +24,13 @@
           <div class="main-title" v-for="title in rule.title">{{title}}</div>
         </div>
         <div class="main" v-else>
-          <div class="main-title">{{rule.title}}</div>
+          <div class="main-title" v-if="!playRule.showItemOddsAtTitle">{{rule.title}}</div>
+          <div class="main-title main-title-odds" v-else="playRule.showItemOddsAtTitle">
+            {{rule.title}}
+            （ 赔率：
+            <animated-integer :value="_.convert2yuan(playInfo.betBonus[0].betMethodMin)"></animated-integer>
+            ）
+          </div>
         </div>
 
         <div class="side" v-if="rule.op.full">快捷组选</div>
@@ -36,7 +43,9 @@
             <div class="main-item" v-for="item in rowItem" v-if="item.row" :class="{selected: item.selected}"
                  @click="select(item)">
               <div class="main-item-left" v-if="!_.isEmpty(item)">
-                <span class="item" :class="item.style">{{item.title}}</span>
+                <span class="item" :class="item.style">
+                  {{item.title}}
+                </span>
 
                 <span class="item" v-if="item.row" v-for="num in item.row">
                     <span :class="num.style">{{num.title}}</span>
@@ -49,7 +58,8 @@
               </div>
             </div>
 
-            <div class="main-item" v-else :class="{selected: item.selected}" @click="select(item)">
+            <div class="main-item" v-else :class="{selected: item.selected, empty: _.isEmpty(item)}"
+                 @click="select(item)">
               <div :class="rule.showItemOdds ? 'main-item-left' : 'main-item-center'" v-if="!_.isEmpty(item)">
                 <span class="item" :class="item.style">{{item.title}}</span>
                 <span class="item odds" v-if="rule.showItemOdds">{{item.odds}}</span>
@@ -121,7 +131,8 @@
 
       <div class="betting-panel inline-block">
         金额
-        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney" @keydown="inputValidate" @blur="isInputing = false">
+        <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney"
+               @keydown="inputValidate" @blur="isInputing = false">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                 :disabled="!canBet || pushing || !sale || pending">
           投注
@@ -154,7 +165,7 @@
       pending: Boolean,
     },
 
-    data: function () {
+    data() {
       return {
         chips: [5, 10, 200, 5000, 10000],
         lotteryList: [],
@@ -163,6 +174,7 @@
         betMoney: null,
         canBet: false,
         isInputing: false,
+        showOverflow: false
       }
     },
 
@@ -171,14 +183,15 @@
         handler(list) {
           _.chain(list).pluck('items').each((itemGroup, index) => {
             _.each(itemGroup, (itemList) => {
-              if (list[index].showItemOdds) {
-                _.each(itemList, (item) => {
-                  const betBonus = _.findWhere(this.playInfo.betBonus, {betType: Number(item.num)})
-                  if (betBonus) {
+              _.each(itemList, (item) => {
+                const betBonus = _.findWhere(this.playInfo.betBonus, {betType: Number(item.num)})
+                if (betBonus) {
+                  if (list[index].showItemOdds) {
                     item.odds = _.convert2yuan(betBonus.betMethodMin)
                   }
-                })
-              }
+                  item.maxMultiple = betBonus.betMultiLimitMin
+                }
+              })
             })
           })
 
@@ -188,9 +201,9 @@
       'betMoney': {
         handler() {
           _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
-            if (item.selected && (!item.betMoney || this.isInputing)) {
+            if (item.selected && (!item.betMoney || this.isInputing) || this.playRule.calculateType === 'unite') {
               this.isInputing = true
-              item.betMoney = this.betMoney
+              this.$_setBetMoney(item, this.betMoney)
             }
           })
         }
@@ -200,26 +213,78 @@
           // let prevCanBet = this.canBet
           this.lotteryList = []
           this.canBet = false
-          _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
-            if (item.selected && item.betMoney) {
-              this.canBet = true
-              this.lotteryList.push(item)
-            }
-          })
+
+          /**
+           * 盘口有两种计算方式
+           * 1 每个格子独立计算
+           * 2 所有选中的格子统一计算 calculateType区分
+           */
+          switch (this.playRule.calculateType) {
+            case 'unite':
+              this.formatRuleListByUnite()
+              break;
+            case 'separate':
+              this.formatRuleListBySeparate()
+              break;
+            default:
+              console.error(`没有找到合适的格式化方法:${this.playRule.calculateType}`)
+              break;
+          }
 
           if (this.playRule.algorithm !== _.noop) {
             this.$_statisticsLottery()
           }
         },
         deep: true
+      },
+      showOverflow(isOverflow) {
+        if (isOverflow) {
+          Global.ui.notification.show('填写金额超过最大限额，已调整为最大投注额')
+          this.showOverflow = false
+        }
       }
     },
 
     methods: {
+      formatRuleListByUnite() {
+        // let lotteryNumList = []
+        if (!this.betMoney) {
+          return
+        }
+        _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
+          if (item.selected) {
+            this.canBet = true
+            this.lotteryList.push(item)
+          }
+        })
+      },
+
+      formatRuleListBySeparate() {
+        _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
+          if (item.selected && item.betMoney) {
+            this.canBet = true
+            this.lotteryList.push(item)
+          }
+        })
+      },
 
       select(item) {
-        item.selected = !item.selected
-        item.betMoney = item.selected ? this.betMoney : null
+        if (!_.isEmpty(item)) {
+          item.selected = !item.selected
+          this.$_setBetMoney(item, item.selected ? this.betMoney : null)
+        }
+      },
+
+      $_setBetMoney(item, betMoney) {
+        if (betMoney > item.maxMultiple) {
+          item.betMoney = item.maxMultiple
+          this.showOverflow = true
+          if (this.playRule.calculateType) {
+            this.betMoney = item.maxMultiple
+          }
+        } else {
+          item.betMoney = betMoney
+        }
       },
 
       inputBetMoney(item) {
@@ -227,6 +292,7 @@
           item.betMoney = null
         } else {
           item.selected = true
+          this.$_setBetMoney(item, item.betMoney)
         }
 
         this.$_clearNotBetSelect()
@@ -358,85 +424,19 @@
             })
             break
           case 'mouse':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['10', '22', '34', '46'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'cow':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['09', '21', '33', '45'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'tiger':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['08', '20', '32', '44'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'rabbit':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['07', '19', '31', '43'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'dragon':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['06', '18', '30', '42'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'snack':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['05', '17', '29', '41'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'horse':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['04', '16', '28', '40'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'sheep':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['03', '15', '27', '39'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'monkey':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['02', '14', '26', '38'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'chicken':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['01', '13', '25', '37', '49'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'dog':
-            _.filter(fItems, (num) => {
-              flag = _.indexOf(['12', '24', '36', '48'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
-              num.selected = flag
-            })
-            break
           case 'pig':
             _.filter(fItems, (num) => {
-              flag = _.indexOf(['11', '23', '35', '47'], num.num) > -1
+              flag = _.indexOf(this.numBySx(op).nums, num.num) > -1
               num.betMoney = flag ? this.betMoney : null
               num.selected = flag
             })
@@ -448,11 +448,13 @@
 
       //父组件调用
       lotteryBuy() {
+
         this.$store.commit(types.ADD_HANDICAP_BET, {
           bettingInfo: {
             lotteryList: this.lotteryList,
             format: this.playRule.format,
             showFormat: this.playRule.showFormat,
+            calculateType: this.playRule.calculateType,
           }
         })
 
@@ -469,6 +471,16 @@
         this.$store.commit(types.SET_STATISTICS, count)
       },
     },
+
+    computed: {
+      ...mapGetters([
+        'numBySx'
+      ])
+    },
+
+    beforeDestroy() {
+      this.clearAll()
+    }
   }
 </script>
 
@@ -492,6 +504,9 @@
         border-right: 1px solid #e6e6e6;
         width: 0;
         white-space: pre;
+        &.main-title-odds {
+          white-space: initial;
+        }
 
         &:last-child {
           border-right: none;
@@ -539,6 +554,9 @@
 
         &.selected {
           background-color: #fceed6;
+        }
+        &.empty {
+          cursor: default;
         }
         .main-item-left {
           width: 60%;
@@ -643,6 +661,7 @@
   .side-operate {
     cursor: pointer;
   }
+
   .main-item-right {
     display: flex;
     .item {

@@ -67,10 +67,10 @@
         }
       },
       startGame(type, channelId, gameId) {
-        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行转账操作，请先注册正式游戏账号')
-          return false
-        }
+        // if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+        //   Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号')
+        //   return false
+        // }
         if (!this.getLoginStatus) {
           this.showLogin()
         } else {
@@ -78,18 +78,19 @@
             .done((data) => {
                 if (data && data.result === 0) {
                   _(data.root).find((item) => {
-                    if (item.fundLock) {
-                      Global.ui.notification.show('资金已锁定，请先资金解锁')
-                      return false
-                    }
+                    // if (item.fundLock) {
+                    //   Global.ui.notification.show('资金已锁定，暂不能进入游戏')
+                    //   return false
+                    // }
                     if (item.channelId === channelId && item.type === type) {
                       if (item.status === 0) {
-                        this.$router.push({
-                          path: '/sc',
-                          query: {
-                            channelId
-                          }
-                        })
+                        // this.$router.push({
+                        //   path: '/sc',
+                        //   query: {
+                        //     channelId
+                        //   }
+                        // })
+                        Global.router.goTo('sc?channelId=' + channelId)
                       } else if (item.status === 1) {
                         Global.ui.notification.show('当前游戏处于关闭状态，您可以尝试其他游戏！')
                       } else if (item.status === 2) {

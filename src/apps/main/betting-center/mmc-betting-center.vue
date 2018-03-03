@@ -1,7 +1,7 @@
 <template>
   <div class="bc-main-wrapper clearfix">
     <div class="bc-main">
-      <betting-quick-nav :key="'quick-nav'" :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType" :component-type="componentType"></betting-quick-nav>
+      <betting-quick-nav v-show="false" :key="'quick-nav'" :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType" :component-type="componentType"></betting-quick-nav>
       <mmc-betting-main-area :ticket-info="ticketInfo" :ticket-id="ticketId" :component-type="componentType"></mmc-betting-main-area>
     </div>
   </div>

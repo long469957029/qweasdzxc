@@ -1,6 +1,9 @@
 /**
  * Created by steven on 2017/12/18.
  */
+
+import {formatOptionals} from 'build'
+
 require('./index.scss')
 
 const BetDetailView = Base.ItemView.extend({
@@ -37,7 +40,7 @@ const BetDetailView = Base.ItemView.extend({
           openNum = '用,户,撤,单'
         } else if (res.root.ticketBetStatus === 3) {
           openNum = '系,统,撤,单'
-        }else{
+        } else {
           openNum = res.root.openNum ? res.root.openNum : '等,待,开,奖'
         }
 
@@ -65,10 +68,24 @@ const BetDetailView = Base.ItemView.extend({
         self.$('.js-gr-bet-username').html(res.root.username)
         self.$('.js-gr-bet-tradeNo').html(res.root.ticketBetNo)
         self.$('.js-gr-time').html(_(res.root.betTime).toTime())
+
+        let playDesc = `${res.root.ticketName} - ${res.root.chaseTicketPlayDetail[0].playName}`
+
+        //增加任选处理逻辑
+        //如果是任选号码 将号码格式化，去除位数，并将位数接在玩法后
+        let splitNum = info.betNums.split('|')
+        let fotmattedNum = ''
+        if (splitNum.length > 1) {
+          playDesc += ` ${formatOptionals(splitNum[0]).join(',')}`
+          fotmattedNum = splitNum[1]
+        } else {
+          fotmattedNum = info.betNums
+        }
+
         // if (!res.root.handicap) {
         //   self.$('.js-gr-bet-play').html(`${res.root.ticketName}-${info.ticketLevelName}-${info.ticketPlayName}`)
         // } else {
-        self.$('.js-gr-bet-play').html(`${res.root.ticketName}- ${res.root.chaseTicketPlayDetail[0].playName}`)
+        self.$('.js-gr-bet-play').html(playDesc)
         // }
 
 
@@ -81,7 +98,7 @@ const BetDetailView = Base.ItemView.extend({
         self.$('.js-gr-bet-method').html(cell)
 
 
-        self.$('.js-gr-bet-content').html(info.betNums)
+        self.$('.js-gr-bet-content').html(fotmattedNum)
         let betMethod = ''
         if (info.moneyMethod === 10000) {
           betMethod = 2
@@ -94,11 +111,10 @@ const BetDetailView = Base.ItemView.extend({
         }
         self.$('.js-gr-ticketBetId').val(res.root.ticketBetId)
         let betMoneyDesc = ''
-        if (res.root.handicap) {
-          const betMoneyDesc = '（${betMethod}*${info.betMultiple}倍*${info.betNum}注）'
+        if (!res.root.handicap) {
+          betMoneyDesc = `<span class="m-left-md">(${_.convert2yuan(res.root.chaseTicketPlayDetail[0].moneyMethod * 2)}*${res.root.chaseTicketPlayDetail[0].betMultiple}倍*${res.root.chaseTicketPlayDetail[0].betNum}注)</span>`
         }
-        self.$('.js-gr-bet-money').html(`${_(res.root.betAllMoney).formatDiv(10000)}元${betMoneyDesc}
-<span class="m-left-md">(${_.convert2yuan(res.root.chaseTicketPlayDetail[0].moneyMethod*2)}*${res.root.chaseTicketPlayDetail[0].betMultiple}倍*${res.root.chaseTicketPlayDetail[0].betNum}注)</span>`
+        self.$('.js-gr-bet-money').html(`${_(res.root.betAllMoney).formatDiv(10000)}元${betMoneyDesc}`
         )
         if (res.root.canCancel && this.isSelf) {
           // self.$('.js-gr-bet-detail-win').addClass('hidden')
@@ -115,7 +131,7 @@ const BetDetailView = Base.ItemView.extend({
             self.$('.js-gr-bet-win').html(
               `<span class="text-account-cut">${_(res.root.money).formatDiv(10000)}</span>`
             )
-          } else if(openNum!=='等,待,开,奖'){
+          } else if (openNum !== '等,待,开,奖') {
             self.$('.js-gr-bet-win').html(
               `<span>${_(res.root.money).formatDiv(10000)}</span>`
             )
@@ -129,11 +145,11 @@ const BetDetailView = Base.ItemView.extend({
             self.$('.js-gr-bet-profit').html(
               `<span class="text-account-cut">${profit}</span>`
             )
-          } else if (profit === 0 &&  openNum!=='等,待,开,奖') {
+          } else if (profit === 0 && openNum !== '等,待,开,奖') {
             self.$('.js-gr-bet-profit').html(
               `<span>${profit}</span>`
             )
-          } else  if(openNum!=='等,待,开,奖'){
+          } else if (openNum !== '等,待,开,奖') {
             self.$('.js-gr-bet-profit').html(
               `<span class="text-account-add">${profit}</span>`
             )

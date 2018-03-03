@@ -79,7 +79,7 @@
                 <div class="welfare-top-item inline-block item3">奖励</div>
               </div>
               <div class="content-welfare-value">
-                <div class="content-welfare-value-item" v-for="bonus in bonusList">
+                <div class="content-welfare-value-item" v-for="bonus in bonusList" ref="welfareRows">
                   <div class="welfare-item inline-block item1">{{_(bonus.betAmount).formatDiv(10000)}}</div>
                   <div class="welfare-item inline-block item2"
                        :class="{active:bonus.bonus===curResult&&curAmount===bonus.betAmount}">
@@ -124,17 +124,16 @@
         </div>
         <div class="ws-footer-text">
           <div class="ws-text-circle">3</div>
-          在同等销量的情况下，贡献的亏损值不同，所获取的奖励也不同。 如在销量10000的情况下，
-          亏损300获得100元，亏损500获得120元，亏损1000则可获得160元奖励，以此类推。
+          在同等销量的情况下，贡献的亏损值不同，所获取的奖励也不同。
+          如在销量10000的情况下， 亏损300获得100元，亏损500获得120元，亏损1000则可获得160元奖励，以此类推。
         </div>
         <div class="ws-footer-text">
           <div class="ws-text-circle">4</div>
-          领取获得奖励需销量，亏损同时达标才能获得对应的奖励，如销量达到亏损未达到，
-          则以最低亏损段计算奖励： 如亏损达到销量未达到，则以最低销量计算奖励。
+          每天销量封顶100万，亏损奖励最高16000元，无限娱乐享有活动的最终解释和修改权。
         </div>
         <div class="ws-footer-text">
           <div class="ws-text-circle">5</div>
-          每天销量封顶100万，亏损奖励最高16000元，无限娱乐享有活动的最终解释和修改权。
+          该活动的最终解释权归无限娱乐所有。
         </div>
       </div>
     </div>
@@ -167,7 +166,21 @@
       this.initActivityData()
     },
 
-    watch: {},
+    watch: {
+      curResult() {
+          this.$nextTick(() => {
+            //找到active节点
+            //移动到这个位置中间
+            //屏幕一半高度 $(window).height() / 2
+
+            Velocity(document.body, 'scroll', {
+              offset: $(this.$refs.welfareRows).find('.active')[0].getBoundingClientRect().top - document.documentElement.getBoundingClientRect().top - $(window).height() / 2,
+              mobileHA: false
+            })
+          })
+
+      }
+    },
 
     computed: {},
 

@@ -100,6 +100,7 @@ const BettingRecordsView = SearchGrid.extend({
   },
 
   renderGrid(gridData) {
+    var self = this
     let num = 0
     const rowsData = _(gridData.betList).map(function (bet, index, betList) {
       return {
@@ -126,7 +127,7 @@ const BettingRecordsView = SearchGrid.extend({
     _(gridData.betList).each((items, index) => {
       if ((items.betNum).length >= 16) {
         const placement = index < 4 ? 'bottom' : 'top'
-        $('.js-uc-betDetail-betNum').eq(num).popover({
+        self.$('.js-uc-betDetail-betNum').eq(num).popover({
           // title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
           trigger: 'focus',
           html: true,

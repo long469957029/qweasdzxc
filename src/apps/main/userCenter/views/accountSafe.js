@@ -43,6 +43,8 @@ const AccountSafeView = Base.ItemView.extend({
     this.$settingPhoneNum = this.$('.js-setting-phone-num')
     this.$settingMailNum = this.$('.js-setting-mail-num')
     this.$loginPwd.html(new LoginPassWord().on('render:true', () => {
+      self.$('.js-setting-info').removeClass('active')
+      self.$('#setting-login-pwd').collapse('hide')
       self.onRender()
     }).render().el)
     const bindInfo = Global.cookieCache.get('userBindInfo')
@@ -93,7 +95,7 @@ const AccountSafeView = Base.ItemView.extend({
               self.$('.js-important-tip[data-type="mail"]').addClass('hidden')
               self.$settingMailNum.html(data.email)
             }
-            if(!_(bindInfo).isUndefined()){
+            if(bindInfo){
               if(bindInfo.phoneStatus === 0){
                 self.$('.js-reward[data-type="phone"]').html(`（<span class="text-prominent">+${_(bindInfo.bindPhoneBonus).convert2yuan()}</span>元奖励）`)
               }
@@ -102,9 +104,12 @@ const AccountSafeView = Base.ItemView.extend({
               }
             }
             self.$fundPwd.html(new FundPassWord({hasFundPassword: data.hasFundPassword}).on('render:true', () => {
+              self.$('.js-setting-info').removeClass('active')
+              self.$('#setting-fund-pwd').collapse('hide')
               self.render()
             }).render().el)
             self.$questionPwd.html(new QuestionPwd({hasSecurityQuestion: data.hasSecurityQuestion}).on('render:true', () => {
+              self.$('#setting-question-pwd').collapse('hide')
               self.render()
             }).render().el)
             self.$phonePwd.html(new PhoneBind({
@@ -115,6 +120,7 @@ const AccountSafeView = Base.ItemView.extend({
                 bindInfo.phoneStatus = 1
                 Global.cookieCache.set('userBindInfo', bindInfo)
               }
+              self.$('#setting-phone-pwd').collapse('hide')
               self.render()
             }).render().el)
             self.$mailPwd.html(new EmailBind({
@@ -125,6 +131,7 @@ const AccountSafeView = Base.ItemView.extend({
                 bindInfo.mailStatus = 1
                 Global.cookieCache.set('userBindInfo', bindInfo)
               }
+              self.$('#setting-mail-pwd').collapse('hide')
               self.render()
             }).render().el)
           }
@@ -150,7 +157,7 @@ const AccountSafeView = Base.ItemView.extend({
 
   settingBtnHandler(e) {
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-      Global.ui.notification.show('试玩会员无法进行安全设置操作，请先注册正式游戏账号')
+      Global.ui.notification.show('试玩会员无法进行安全设置，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
       return false
     }
     const $target = $(e.currentTarget)

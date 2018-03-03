@@ -23,6 +23,7 @@ const fishBetRecordView = SearchGrid.extend({
   initialize () {
     _(this.options).extend({
       height: '504',
+      tableClass: 'table table-bordered table-center border-bottom',
       columns: [
         {
           name: '注单编号',
@@ -103,14 +104,14 @@ const fishBetRecordView = SearchGrid.extend({
     // 加上统计行
     this.grid.addFooterRows({
       trClass: 'tr-footer',
-      // columnEls: [
-      //   '<strong>所有页总计</strong>',
-      //   '', '', '',
-      //   _(gridData.realBetTotal).fixedConvert2yuan(),
-      //   _(gridData.betTotal).fixedConvert2yuan(),
-      //   _(gridData.amountTotal).fixedConvert2yuan(),
-      //   _(gridData.profitTotal).convert2yuan(),
-      // ],
+      columnEls: [
+        '<strong>所有页总计</strong>',
+        '', '', '',
+        _(gridData.realBetTotal).fixedConvert2yuan(),
+        _(gridData.betTotal).fixedConvert2yuan(),
+        _(gridData.amountTotal).fixedConvert2yuan(),
+        _(gridData.profitTotal).convert2yuan(),
+      ],
     }).hideLoading()
   },
 

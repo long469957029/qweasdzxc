@@ -8,10 +8,10 @@ const FundPwdView = Base.ItemView.extend({
 
   events: {
     'click .js-uc-setFundPassword-submit': 'setFundPasswordHandler',
-    'blur #oldFundPassword': 'checkOldFundPassword',
-    'blur #newUpdateFundPassword': 'checkNewUpdateFundPassword',
-    'blur #newUpdateFundPassword1': 'checkNewUpdateFundPassword1',
-    'blur .js-login-pwd': 'checkLoginPassword',
+    // 'blur #oldFundPassword': 'checkOldFundPassword',
+    // 'blur #newUpdateFundPassword': 'checkNewUpdateFundPassword',
+    // 'blur #newUpdateFundPassword1': 'checkNewUpdateFundPassword1',
+    // 'blur .js-login-pwd': 'checkLoginPassword',
   },
 
   serializeData() {
@@ -21,8 +21,6 @@ const FundPwdView = Base.ItemView.extend({
   },
 
   onRender() {
-    // const self = this
-
     this.$setFundPasswordForm = this.$('.js-uc-setFundPassword-form')
 
     this.$oldFundPassword = this.$('#oldFundPassword')
@@ -44,7 +42,7 @@ const FundPwdView = Base.ItemView.extend({
 
         data: {
           payPwd: this.$('#newUpdateFundPassword').val(),
-          loginPwd:this.$('.js-login-pwd').val()
+          loginPwd:this.$loginPwd.val()
         },
       })
         .always(() => {
@@ -68,7 +66,11 @@ const FundPwdView = Base.ItemView.extend({
             Global.m.publish('safe:updating')
           } else {
             // fail
-            Global.ui.notification.show(res.msg)
+            const errorData = {
+              el: this.$('.js-uc-pl-fp-error'),
+              errorText: res.msg,
+            }
+            _.formatError(errorData)
           }
         })
     } else if (type === 'update' && clpValidate ) {
@@ -92,9 +94,18 @@ const FundPwdView = Base.ItemView.extend({
             self.trigger('render:true')
             Global.m.publish('safe:updating')
           } else if (_(res.root).isNumber && res.root > 0) {
-            Global.ui.notification.show(`验证失败，剩余&nbsp;${res.root}&nbsp;次机会`)
+            // Global.ui.notification.show(`验证失败，剩余&nbsp;${res.root}&nbsp;次机会`)
+            const errorData = {
+              el: this.$('.js-uc-pl-fp-error'),
+              errorText: `验证失败，剩余&nbsp;${res.root}&nbsp;次机会`,
+            }
+            _.formatError(errorData)
           } else {
-            Global.ui.notification.show(res.msg)
+            const errorData = {
+              el: this.$('.js-uc-pl-fp-error'),
+              errorText: res.msg,
+            }
+            _.formatError(errorData)
           }
         })
     }
@@ -186,7 +197,7 @@ const FundPwdView = Base.ItemView.extend({
   getErrorTooltip (errorText) {
     const errorHtml =
       `${'<div class="js-errorTooltip tooltip bottom parsley-errors-list filled">' +
-      '<div class="tooltip-inner"><span class="sfa sfa-error-icon vertical-middle m-right-xs"></span>'}${errorText}</div>` +
+      '<div class="tooltip-inner"><span class="sfa sfa-error-icon vertical-middle m-right-xs"  style="margin-top: -3px;"></span>'}${errorText}</div>` +
       '</div>'
     return errorHtml
   },

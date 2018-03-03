@@ -1,6 +1,6 @@
 /*!
- * The Final Countdown for jQuery v2.1.0 (http://hilios.github.io/jQuery.countdown/)
- * Copyright (c) 2015 Edson Hilios
+ * The Final Countdown for jQuery v2.2.0 (http://hilios.github.io/jQuery.countdown/)
+ * Copyright (c) 2016 Edson Hilios
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -26,11 +26,12 @@
     } else {
         factory(jQuery);
     }
-}(function($) {
+})(function($) {
     "use strict";
     var instances = [], matchers = [], defaultOptions = {
         precision: 100,
-        elapse: false
+        elapse: false,
+        defer: false
     };
     matchers.push(/^[0-9]*$/.source);
     matchers.push(/([0-9]{1,2}\/){2}[0-9]{4}( [0-9]{1,2}(:[0-9]{2}){2})?/.source);
@@ -56,12 +57,16 @@
         Y: "years",
         m: "months",
         n: "daysToMonth",
-        w: "weeks",
         d: "daysToWeek",
-        D: "totalDays",
+        w: "weeks",
+        W: "weeksToMonth",
         H: "hours",
         M: "minutes",
-        S: "seconds"
+        S: "seconds",
+        D: "totalDays",
+        I: "totalHours",
+        N: "totalMinutes",
+        T: "totalSeconds"
     };
     function escapedRegExp(str) {
         var sanitize = str.toString().replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
@@ -106,10 +111,10 @@
                 plural = format[1];
             }
         }
-        if (Math.abs(count) === 1) {
-            return singular;
-        } else {
+        if (Math.abs(count) > 1) {
             return plural;
+        } else {
+            return singular;
         }
     }
     var Countdown = function(el, finalDate, options) {
@@ -131,7 +136,9 @@
             }
         }
         this.setFinalDate(finalDate);
-        this.start();
+        if (this.options.defer === false) {
+            this.start();
+        }
     };
     $.extend(Countdown.prototype, {
         start: function() {
@@ -171,10 +178,10 @@
             this.finalDate = parseDateString(value);
         },
         update: function() {
-            //if (this.$el.closest("html").length === 0) {
-            //    this.remove();
-            //    return;
-            //}
+            if (this.$el.closest("html").length === 0) {
+                this.remove();
+                return;
+            }
             var hasEventsAttached = $._data(this.el, "events") !== undefined, now = new Date(), newTotalSecsLeft;
             newTotalSecsLeft = this.finalDate.getTime() - now.getTime();
             newTotalSecsLeft = Math.ceil(newTotalSecsLeft / 1e3);
@@ -192,10 +199,14 @@
                 days: Math.floor(this.totalSecsLeft / 60 / 60 / 24) % 7,
                 daysToWeek: Math.floor(this.totalSecsLeft / 60 / 60 / 24) % 7,
                 daysToMonth: Math.floor(this.totalSecsLeft / 60 / 60 / 24 % 30.4368),
-                totalDays: Math.floor(this.totalSecsLeft / 60 / 60 / 24),
                 weeks: Math.floor(this.totalSecsLeft / 60 / 60 / 24 / 7),
+                weeksToMonth: Math.floor(this.totalSecsLeft / 60 / 60 / 24 / 7) % 4,
                 months: Math.floor(this.totalSecsLeft / 60 / 60 / 24 / 30.4368),
-                years: Math.abs(this.finalDate.getFullYear() - now.getFullYear())
+                years: Math.abs(this.finalDate.getFullYear() - now.getFullYear()),
+                totalDays: Math.floor(this.totalSecsLeft / 60 / 60 / 24),
+                totalHours: Math.floor(this.totalSecsLeft / 60 / 60),
+                totalMinutes: Math.floor(this.totalSecsLeft / 60),
+                totalSeconds: this.totalSecsLeft
             };
             if (!this.options.elapse && this.totalSecsLeft === 0) {
                 this.stop();
@@ -232,4 +243,4 @@
             }
         });
     };
-}));
+});

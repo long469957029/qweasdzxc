@@ -20,14 +20,13 @@
         <div class="col-md-9 db-shadow carousel slide" @mouseover="clearGameInv"
              @mouseout="runGameInv">
           <ol class="db-carousel-indicators">
-            <li :class="{active: gameIndex === 1}" @click="gameGoTo(1)"></li>
-            <li :class="{active: gameIndex === 2}" @click="gameGoTo(2)"></li>
+            <li v-for="item in gameCount" :class="{active: gameIndex === item}" @click="gameGoTo(item)" :key="item"></li>
           </ol>
           <div class="dashboard-carousel-table  carousel-inner">
             <!-- 优惠讯息 真人-->
             <transition name="game-contant">
               <div class="dashboard-row-contant clearfix" v-show="gameIndex === 1">
-                <router-link to="rc" class="db-game-ad db-ah-ad"></router-link>
+                <router-link to="aa" class="db-game-ad db-ah-ad"></router-link>
                 <div class="carousel-table-content">
                   <div class="dashboard-row-inner">
                     <div class="content-item-2x db-ah-bjl clearfix">
@@ -68,7 +67,7 @@
                   <!--<div class="dashboard-row-inner">-->
                   <div class="col-md-6" v-for="item in PTGameList" :key="item.gameId">
                     <div class="content-item-1x">
-                      <span class="db-slot-icon new"></span>
+                      <!--<span class="db-slot-icon new"></span>-->
                       <div class="db-slot-name">{{item.gameName}}</div>
                       <img class="db-slot-img" :src="locUrl + item.imageUrl"/>
                       <div class="db-slot-mask">
@@ -76,6 +75,14 @@
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </transition>
+            <transition name="game-contant">
+              <div class="dashboard-row-contant clearfix" v-show="gameIndex === 3">
+                <router-link to="aa" class="db-game-ad db-gg-ad "></router-link>
+                <div class="carousel-table-content">
+                  <router-link to="fh" class="game-gg"></router-link>
                 </div>
               </div>
             </transition>
@@ -128,7 +135,7 @@
       return {
         gameIndex: 1,
         gameInvTime: 5000,
-        gameCount: 2,
+        gameCount: 3,
         PTGameList: [],
         mallList: [],
         handicapTicketList: [],
@@ -332,6 +339,9 @@
       &.db-slot-ad {
         background: url('./misc/db-slot-ad.png') no-repeat center;
       }
+      &.db-gg-ad {
+        background: url('./misc/db-gg-ad.png') no-repeat center;
+      }
     }
     .dashboard-row-contant {
       font-size: 0;
@@ -346,7 +356,7 @@
       border-left: 9px solid #fff;
       float: left;
       .content-item-1x {
-        background: url('./misc/db-slot-bg.png') no-repeat center;
+        /*background: url('./misc/db-slot-bg.png') no-repeat center;*/
         width: 295px;
         height: 216px;
         display: inline-block;
@@ -416,6 +426,12 @@
             transform: rotate(360deg);
           }
         }
+      }
+      .game-gg{
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: url("./misc/gg-game-bg.png") no-repeat;
       }
     }
 
