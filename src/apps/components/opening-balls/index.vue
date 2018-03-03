@@ -234,6 +234,7 @@
       .text-circle-num {
         height: 36px;
         width: 36px;
+        line-height: 36px;
       }
     }
   }

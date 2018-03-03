@@ -5,6 +5,7 @@ import AnimatedInteger from './components/animated-integer'
 import CustomCheckbox from './components/custom-checkbox'
 import XDialog from './components/x-dialog'
 import Popover from './components/popover'
+import Tooltip from './components/popover/Tooltip'
 import Countdown from './components/countdown/index.vue'
 import PointsCard from './components/points-card'
 import RadioGroup from './components/RadioGroup'
@@ -70,6 +71,7 @@ export {
   StatusCell,
   TimeoutCell,
   XSelect,
+  Tooltip,
 
 
   //directives

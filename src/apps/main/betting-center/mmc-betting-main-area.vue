@@ -219,12 +219,12 @@
                 <td v-else v-popover.right="{name: `bet${index}`}">
                   <a href="javascript:void(0)" class="btn-link">{{row.formatBetNum | formatOpenNum}}</a>
                   <div v-transfer-dom>
-                    <popover :name="`bet${index}`">
+                    <tooltip :name="`bet${index}`">
                       <div class="detail-popover">
                         <div class="title">详细号码：</div>
                         <div class="content">{{row.formatBetNum}}</div>
                       </div>
-                    </popover>
+                    </tooltip>
                   </div>
                 </td>
 
