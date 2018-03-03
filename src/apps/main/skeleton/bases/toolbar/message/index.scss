@@ -103,6 +103,7 @@
         }
         .content-leftBar-general {
           .content-leftBar-title {
+            border-bottom: 1px solid #d7d7d7;
             background-color: $new-main-body-color;
             .title-contact {
               position: relative;
@@ -180,7 +181,7 @@
 
               .contact-name {
                 margin-left: 17px;
-                font-size: 14px;
+                font-size: 12px;
                 color: $new-inverse-color;
                 vertical-align: top;
                 line-height: 38px;
@@ -240,7 +241,7 @@
               }
               .contact-name {
                 margin-left: 17px;
-                font-size: 14px;
+                font-size: 12px;
                 color: $new-inverse-color;
                 vertical-align: top;
                 line-height: 38px;
@@ -345,7 +346,7 @@
               position: relative;
               .contact-name {
                 margin-left: 17px;
-                font-size: 14px;
+                font-size: 12px;
                 color: $new-inverse-color;
                 vertical-align: top;
                 line-height: 38px;
@@ -385,7 +386,7 @@
               line-height: 25px;
               font-size: 14px;
             }
-            &.active {
+            &:active,&:focus,&:hover {
               .contact-footer-img {
                 background-position: 0;
                 background-image: url("~base/images/sprites/im/icon-persons-green.png");
@@ -721,14 +722,14 @@
               .sub-item-checkbox:after {
                 content: '\A0';
                 display: inline-block;
-                border: 3px solid #ffffff;
+                border: 2px solid #ffffff;
                 border-top-width: 0;
                 border-right-width: 0;
-                width: 6px;
+                width: 7px;
                 height: 3px;
                 -webkit-transform: rotate(-50deg);
                 position: absolute;
-                top: 3px;
+                top: 4px;
                 left: 3px;
               }
               &.active, &:hover {
@@ -868,6 +869,15 @@
   text-align: center;
   max-height: 462px;
   position: relative;
+  .chat-message-noContact{
+    margin-top: 208px;
+    margin-left: 240px;
+    font-size: 14px;
+    .chat-message-noContact-text{
+      margin-left: 28px;
+      text-align: left;
+    }
+  }
   .chat-message-content-panel {
     position: absolute;
     max-height: 100%;
