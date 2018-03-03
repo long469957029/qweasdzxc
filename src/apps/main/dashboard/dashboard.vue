@@ -26,7 +26,7 @@
             <!-- 优惠讯息 真人-->
             <transition name="game-contant">
               <div class="dashboard-row-contant clearfix" v-show="gameIndex === 1">
-                <router-link to="aa" class="db-game-ad db-ah-ad"></router-link>
+                <router-link to="rc" class="db-game-ad db-ah-ad"></router-link>
                 <div class="carousel-table-content">
                   <div class="dashboard-row-inner">
                     <div class="content-item-2x db-ah-bjl clearfix">
@@ -34,7 +34,7 @@
                         <div>百家乐游戏规则简单，是世界各地赌场中最受欢迎</div>
                         <div>的扑克游戏</div>
                       </div>
-                      <router-link to="rc" class="db-ah-play-btn db-ah-play-btn-blue">立即游戏</router-link>
+                      <div class="db-ah-play-btn db-ah-play-btn-blue" @click="startGame(1,1,1)">立即游戏</div>
                     </div>
                     <div class="clearfix"></div>
                   </div>
@@ -44,14 +44,14 @@
                         <div>游戏节奏明快，投注组合丰富</div>
                         <div>深受亚洲人喜爱</div>
                       </div>
-                      <router-link to="rc" class="db-ah-play-btn db-ah-play-btn-green ">立即游戏</router-link>
+                      <div class="db-ah-play-btn db-ah-play-btn-green "  @click="startGame(1,2,2)">立即游戏</div>
                     </div>
                     <div class="db-ah-lp clearfix">
                       <div class="content-text">
                         <div>游戏规则简单，投注方式多样</div>
                         <div>趣味十足</div>
                       </div>
-                      <router-link to="rc" class="db-ah-play-btn db-ah-play-btn-purple ">立即游戏</router-link>
+                      <div class="db-ah-play-btn db-ah-play-btn-purple "  @click="startGame(1,2,2)">立即游戏</div>
                     </div>
                     <div class="clearfix"></div>
                   </div>
@@ -62,7 +62,7 @@
             <!-- 优惠讯息 老虎机-->
             <transition name="game-contant">
               <div class="dashboard-row-contant clearfix" v-show="gameIndex === 2">
-                <router-link to="aa" class="db-game-ad db-slot-ad "></router-link>
+                <router-link to="sc" class="db-game-ad db-slot-ad "></router-link>
                 <div class="carousel-table-content">
                   <!--<div class="dashboard-row-inner">-->
                   <div class="col-md-6" v-for="item in PTGameList" :key="item.gameId">
@@ -71,7 +71,7 @@
                       <div class="db-slot-name">{{item.gameName}}</div>
                       <img class="db-slot-img" :src="locUrl + item.imageUrl"/>
                       <div class="db-slot-mask">
-                        <router-link to="aa" class="db-slot-play-btn"></router-link>
+                        <div class="db-slot-play-btn" @click="startGame(3,item.channelId,item.gameId)"></div>
                       </div>
                     </div>
                   </div>
@@ -80,9 +80,9 @@
             </transition>
             <transition name="game-contant">
               <div class="dashboard-row-contant clearfix" v-show="gameIndex === 3">
-                <router-link to="aa" class="db-game-ad db-gg-ad "></router-link>
+                <router-link to="fh" class="db-game-ad db-gg-ad "></router-link>
                 <div class="carousel-table-content">
-                  <router-link to="fh" class="game-gg"></router-link>
+                  <div class="game-gg" @click="startGame(1,1,5)"></div>
                 </div>
               </div>
             </transition>
@@ -118,11 +118,15 @@
   </div>
 </template>
 <script>
-  import { getIndexGameApi, getMallHotListApi } from 'api/dashboard'
+  import { getIndexGameApi } from 'api/dashboard'
   import slideShow from './slideShow'
   import notice from './notice'
   import ticketHot from './ticket-hot'
   import dashboardMall from './dashboard-mall'
+  import {
+    getGameListApi,
+    getGameUrlApi,
+  } from 'api/gameCenter'
   export default {
     name: "dashboard",
     components: {
@@ -183,11 +187,72 @@
         const width = num > 4000 ? '100%' : (num > 1000 ? `${_(num).div(4000)}%` : '25%')
         return `width:${width}`
       },
+      showLogin(){
+        this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+      },
+      startGame(type, channelId, gameId) {
+        if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
+          Global.ui.notification.show('试玩会员无法进入该游戏，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
+          return false
+        }
+        if (!this.getLoginStatus) {
+          this.showLogin()
+        } else {
+          let flag = false
+          if(channelId === 3){
+            Global.ui.notification.show('暂未开放，敬请期待')
+            return false
+          }
+          if (Global.memoryCache.get('acctInfo').foundsLock) {
+            Global.ui.notification.show('资金已锁定，暂不能进入游戏')
+            return false
+          }
+          getGameListApi()
+            .done((data) => {
+                if (data && data.result === 0) {
+                  _(data.root).find((item) => {
+                    if (item.channelId === channelId && item.type === type) {
+                      if (item.status === 0) {
+                        flag = true
+                        return true
+                      } else if (item.status === 1) {
+                        Global.ui.notification.show('当前游戏处于关闭状态，您可以尝试其他游戏！')
+                      } else if (item.status === 2) {
+                        Global.ui.notification.show(`平台官方维护中，维护时间：${
+                          _(item.mStart).toTime()}至${_(item.mEnd).toTime()}`)// ,{displayTime:2000}
+                      }
+                      return false
+                    }
+                  })
+                }
+              }
+            )
+          if (flag) {
+            let url = ''
+            getGameUrlApi({gameId})
+              .done((data) => {
+                if (data && data.result === 0) {
+                  if (data.root && data.root.url && !_.isEmpty(data.root.url)) {
+                    url = data.root.url
+                  }
+                }
+              })
+            let gameType = 0
+            if(type === 3){
+              gameType = channelId === 4 ? 3 : 6
+            }else{
+              gameType = gameId - 1
+            }
+            window.open(`./game.html?type=${gameType}&src=${url}`)
+          }
+        }
+      },
     },
     computed: {
       ...mapGetters([
         'topClassicalTicket',
-        'topHandicapTicket'
+        'topHandicapTicket',
+        'getLoginStatus'
       ])
     },
     mounted() {
@@ -333,6 +398,8 @@
       height: 442px;
       float: left;
       display: block;
+      margin-top: 9px;
+      margin-left: 9px;
       &.db-ah-ad {
         background: url('./misc/db-ah-ad.png') no-repeat center;
       }
@@ -344,17 +411,18 @@
       }
     }
     .dashboard-row-contant {
-      font-size: 0;
+      /*font-size: 0;*/
       /*display: inline-block;*/
-      margin: 9px;
+      /*margin: 9px;*/
       position: absolute;
     }
 
     .carousel-table-content {
       width: 609px;
       height: 442px;
-      border-left: 9px solid #fff;
       float: left;
+      margin-top: 9px;
+      margin-left: 9px;
       .content-item-1x {
         /*background: url('./misc/db-slot-bg.png') no-repeat center;*/
         width: 295px;
@@ -431,6 +499,7 @@
         display: block;
         width: 100%;
         height: 100%;
+        cursor: pointer;
         background: url("./misc/gg-game-bg.png") no-repeat;
       }
     }
@@ -487,6 +556,7 @@
       display: block;
       font-size: $font-md;
       transition: color, background .5s;
+      cursor: pointer;
       &:hover {
         color: $def-white-color;
       }
