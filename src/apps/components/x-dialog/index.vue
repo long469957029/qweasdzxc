@@ -100,9 +100,6 @@
       },
       hide() {
         $(this.$refs.modal).modal('hide')
-        _.delay(() => {
-          this.$emit('change', false)
-        }, 300)
       }
     },
 
