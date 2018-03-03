@@ -118,7 +118,7 @@
   }
 
   .slide-trans-enter {
-    transform: scale(1.5, 1.5);
+    transform: scale(1.2, 1.2);
     opacity: 1;
   }
 
