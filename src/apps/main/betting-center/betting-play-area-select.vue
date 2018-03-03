@@ -37,7 +37,7 @@
           <div class="bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList"
                v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
 
-            <div class="tab-toolbar" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
+            <div class="tab-toolbar bc-select-items" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
 
               <div class="select-item-title tab-title" v-if="fRule.row.title">
                 <div>{{fRule.row.title}}</div>
@@ -497,13 +497,17 @@
     }
   }
 
+  .bc-select-items {
+    flex: 1;
+  }
+
   .bc-quick-select {
-    width: 221px;
     height: 39px;
     border-top: 1px solid $def-gray-color;
     border-radius: 20px;
     background-color: $sec-line-color;
     margin-bottom: 0;
+    flex: 0 0 220px;
   }
 
   .num-split {
@@ -556,7 +560,7 @@
 
   .mmc {
     .bc-quick-select {
-      width: 172px;
+      flex: 0 0 172px;
     }
     .tab-toolbar {
       .tab-group {

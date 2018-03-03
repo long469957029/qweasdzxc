@@ -13,26 +13,28 @@
       </div>
     </div>
 
-    <div class="js-bc-numbers-container bc-textarea-main" @click="focusInput">
-      <div class="height-100 width-100 cursor-text" ref="fileTip">
-        <p style="font-size:12px;line-height:170%;">
-          说明：<br>
-          1、每一注号码之间的间隔符支持 回车 逗号[,] 分号[;] 冒号[:] 竖线 [|]<br>
-          2、文件格式必须是.txt格式。<br>
-          3、导入文本内容后将覆盖文本框中现有的内容。
-        </p>
+    <div class="input-play-area">
+      <div class="js-bc-numbers-container bc-textarea-main" @click="focusInput">
+        <div class="height-100 width-100 cursor-text" ref="fileTip">
+          <p style="font-size:12px;line-height:170%;">
+            说明：<br>
+            1、每一注号码之间的间隔符支持 回车 逗号[,] 分号[;] 冒号[:] 竖线 [|]<br>
+            2、文件格式必须是.txt格式。<br>
+            3、导入文本内容后将覆盖文本框中现有的内容。
+          </p>
+        </div>
+        <textarea class="height-100 width-100 no-resize no-padding no-margin no-border hidden" ref="numbersArea"
+                  @blur="blurInput" @keyup="betChange" v-model="numbers"></textarea>
       </div>
-      <textarea class="height-100 width-100 no-resize no-padding no-margin no-border hidden" ref="numbersArea"
-                @blur="blurInput" @keyup="betChange" v-model="numbers"></textarea>
-    </div>
 
-    <div class="input-operate-area">
-      <div class="m-bottom-md">
-        <button type="button" class="btn btn-white btn-linear bc-input-btn" @click="delRepeat">清理错误与重复</button>
-      </div>
-      <div class="m-bottom-md" ref="fileLoad"></div>
-      <div class="m-bottom-md">
-        <button type="button" class="btn btn-white btn-linear bc-input-btn" @click="empty">清空号码</button>
+      <div class="input-operate-area">
+        <div class="m-bottom-md">
+          <button type="button" class="btn btn-white btn-linear bc-input-btn" @click="delRepeat">清理错误与重复</button>
+        </div>
+        <div class="m-bottom-md" ref="fileLoad"></div>
+        <div class="m-bottom-md">
+          <button type="button" class="btn btn-white btn-linear bc-input-btn" @click="empty">清空号码</button>
+        </div>
       </div>
     </div>
 
@@ -270,6 +272,10 @@
 <style lang="scss" scoped>
   .play-area-input {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .input-play-area {
     display: flex;
   }
 

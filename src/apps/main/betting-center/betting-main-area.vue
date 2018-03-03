@@ -60,74 +60,71 @@
         <div class="div-line"></div>
 
         <div class="bottom-main-panel">
-        <div class="m-LR-smd m-top-md m-bottom-md">
-          <div class="form-inline m-TB-xs">
-            <select name="unit" class="select-default bc-unit-select" v-model="unit">
-              <option value="10000">元</option>
-              <option value="1000">角</option>
-              <option value="100">分</option>
-              <option value="10">厘</option>
-            </select>
-            <div class="inline-block m-left-smd">
-              <span class="vertical-middle bc-multi-range inline-block" ref="multiRange"></span>
-              <label class="m-left-xs">倍</label>
-            </div>
+          <div class="m-top-md m-bottom-md">
+            <div class="form-inline m-TB-xs">
+              <select name="unit" class="select-default bc-unit-select" v-model="unit">
+                <option value="10000">元</option>
+                <option value="1000">角</option>
+                <option value="100">分</option>
+                <option value="10">厘</option>
+              </select>
+              <div class="inline-block m-left-smd">
+                <span class="vertical-middle bc-multi-range inline-block" ref="multiRange"></span>
+                <label class="m-left-xs">倍</label>
+              </div>
 
-            <div class="prev-panel inline-block">
-              <span>共</span>
-              <animated-integer class="text-pleasant font-sm" :value="bettingChoice.statistics"></animated-integer>
-              <span>注，金额</span>
-              <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
-              <span>元</span>
-            </div>
-            <div class="pull-right">
-              <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
-                      :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
-                <span class="sfa sfa-btn-icon-bolt vertical-middle"></span>
-                快捷投注
-              </button>
-              <button class="btn btn-cool bc-md-btn m-bottom-xs" @click="lotteryAdd"
-                      :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
-                <span class="sfa sfa-btn-icon-add vertical-middle"></span> 添加号码
-              </button>
+              <div class="prev-panel inline-block">
+                <span>共</span>
+                <animated-integer class="text-pleasant font-sm" :value="bettingChoice.statistics"></animated-integer>
+                <span>注，金额</span>
+                <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
+                <span>元</span>
+              </div>
+              <div class="betting-panel pull-right">
+                <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
+                        :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+                  <span class="sfa sfa-btn-icon-bolt vertical-middle"></span>
+                  快捷投注
+                </button>
+                <button class="btn btn-cool bc-md-btn m-bottom-xs" @click="lotteryAdd"
+                        :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+                  <span class="sfa sfa-btn-icon-add vertical-middle"></span> 添加号码
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+          <div class="m-bottom-xs">
+            <div class="clearfix bc-margin-xs">
+              <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
+                                :init-remote="false"
+                                :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
+                                ref="lotteryGrid">
+                <tr slot="row" slot-scope="{row, index}" :key="index" ref="lotteryRows">
+                  <td>{{row.title}}</td>
 
-        </div>
+                  <td v-if="row.formatBetNum.length <= 20">{{row.formatBetNum}}</td>
+                  <td v-else v-popover.right="{name: `bet${index}`}">
+                    <a href="javascript:void(0)" class="btn-link">{{row.formatBetNum | formatOpenNum}}</a>
+                    <div v-transfer-dom>
+                      <popover :name="`bet${index}`">
+                        <div class="detail-popover">
+                          <div class="title">详细号码：</div>
+                          <div class="content">{{row.formatBetNum}}</div>
+                        </div>
+                      </popover>
+                    </div>
+                  </td>
 
-        <div class="m-bottom-xs m-left-md">
-          <div class="clearfix bc-margin-xs">
-            <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
-                              :init-remote="false"
-                              :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
-                              ref="lotteryGrid">
-              <tr slot="row" slot-scope="{row, index}" :key="index" ref="lotteryRows">
-                <td>{{row.title}}</td>
-
-                <td v-if="row.formatBetNum.length <= 20">{{row.formatBetNum}}</td>
-                <td v-else v-popover.right="{name: `bet${index}`}">
-                  <a href="javascript:void(0)" class="btn-link">{{row.formatBetNum | formatOpenNum}}</a>
-                  <div v-transfer-dom>
-                    <popover :name="`bet${index}`">
-                      <div class="detail-popover">
-                        <div class="title">详细号码：</div>
-                        <div class="content">{{row.formatBetNum}}</div>
-                      </div>
-                    </popover>
-                  </div>
-                </td>
-
-                <td>{{row.note}}</td>
-                <td v-html="row.multiple"></td>
-                <td v-html="row.mode"></td>
-                <td>{{row.bettingMoney}}</td>
-                <td>{{row.bonus}}</td>
-                <td v-html="row.operate"></td>
-              </tr>
-            </slot-static-grid>
-            <div class="m-top-md p-top-sm text-center bc-operate-section clearfix">
-              <div class="total-panel inline-block">
+                  <td>{{row.note}}</td>
+                  <td v-html="row.multiple"></td>
+                  <td v-html="row.mode"></td>
+                  <td>{{row.bettingMoney}}</td>
+                  <td>{{row.bonus}}</td>
+                  <td v-html="row.operate"></td>
+                </tr>
+              </slot-static-grid>
+              <div class="m-top-md p-top-sm text-center bc-operate-section clearfix">
+                <div class="total-panel inline-block">
                 <span class="font-sm">
                 <span>
                   <span>预期奖金</span>
@@ -147,23 +144,24 @@
                   <span>元</span>
                 </span>
                 </span>
-                <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
-                                  :betting-money="bettingChoice.totalInfo.totalMoney"
-                                  v-model="totalVoucher" ref="totalBettingVouchers"
-                ></betting-vouchers>
-              </div>
+                  <betting-vouchers class="bc-vouchers-select" v-if="!_.isEmpty(bettingVouchers.list)"
+                                    :betting-money="bettingChoice.totalInfo.totalMoney"
+                                    v-model="totalVoucher" ref="totalBettingVouchers"
+                  ></betting-vouchers>
+                </div>
 
-              <button class="bc-chase btn-link inline-block cursor-pointer relative" @click="bettingChase"
-                      :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
-                <span class="sfa sfa-checkmark vertical-middle"></span>
-                我要追号
-                <span class="ba-chase-tip">可提高中奖率</span>
-              </button>
-            </div>
-            <div class="m-top-md p-top-sm text-center m-bottom-md">
-              <button class="btn btn-orange bc-jb-btn" @click="lotteryConfirm"
-                      data-loading-text="提交中" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending"> 确认投注
-              </button>
+                <button class="bc-chase btn-link inline-block cursor-pointer relative" @click="bettingChase"
+                        :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
+                  <span class="sfa sfa-checkmark vertical-middle"></span>
+                  我要追号
+                  <span class="ba-chase-tip">可提高中奖率</span>
+                </button>
+              </div>
+              <div class="m-top-md p-top-sm text-center m-bottom-md">
+                <button class="btn btn-orange bc-jb-btn" @click="lotteryConfirm"
+                        data-loading-text="提交中" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending"> 确认投注
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -187,7 +185,8 @@
 
       <!-- 确认投注 -->
       <x-dialog v-model="showConfirmModal">
-        <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
+        <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo"
+                         :betting-choice="bettingChoice"
                          :betting-list="bettingChoice.previewList" :type="`normal`"
                          @bettingConfirm="bettingConfirm"></betting-confirm>
       </x-dialog>
@@ -794,7 +793,12 @@
     font-size: 12px;
     color: #666666;
     float: right;
-    margin-right: 86px;
+    margin-right: 93px;
+  }
+
+  .bottom-main-panel {
+    margin-left: $main-play-area-margin;
+    margin-right: $main-play-area-margin;
   }
 
   .advance-play-des {
@@ -810,6 +814,16 @@
     position: relative;
     vertical-align: top;
     float: right;
+  }
+
+  .betting-panel {
+    font-size: 0;
+    .btn {
+      margin-right: 10px;
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
   }
 
   .play-area-wrapper {
@@ -881,7 +895,6 @@
     width: 70px;
     height: 30px;
     padding-left: 12px;
-    margin-left: 5px;
     @include select-def;
   }
 
@@ -895,8 +908,6 @@
   }
 
   .bc-operate-section {
-    width: 878px;
-    //border: 1px solid $table-border-color;
     border-top: 0;
     padding: 5px 0;
     margin-bottom: 4px;
@@ -937,9 +948,9 @@
   }
 
   .bc-lottery-preview {
-    width: 883px;
     border-radius: $globalBtnRadius;
     border: 1px solid $def-gray-color;
+    overflow: hidden;
   }
 
   .prev-panel {
@@ -948,7 +959,7 @@
 
   .total-panel {
     min-width: 450px;
-    margin-left: 150px;
+    margin-left: 140px;
     flex: 1;
   }
 
