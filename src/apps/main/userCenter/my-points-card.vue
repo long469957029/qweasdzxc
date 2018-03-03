@@ -93,10 +93,12 @@
     watch:{
       couponStatus(){
         this.pageIndex = 0
+        this.couponToken = ''
         this.getCouponList()
       },
       couponType(){
         this.pageIndex = 0
+        this.couponToken = ''
         this.getCouponList()
       },
       pageIndex() {
@@ -129,7 +131,6 @@
       searchCoupon(){
         if(this.couponToken !== ''){
           this.pageIndex = 0
-          this.couponStatus = -1
           this.getCouponList()
         }else{
           this.$refs.searchInput.focus()
