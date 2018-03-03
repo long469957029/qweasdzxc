@@ -170,8 +170,8 @@
     height: 12px;
     border-radius: 50%;
     background: rgba(255, 255, 255, .3);
-    margin-right: 25px;
-    margin-left: 25px;
+    margin-right: 12.5px;
+    margin-left: 12.5px;
     cursor: pointer;
   }
 
