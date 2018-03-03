@@ -20,7 +20,7 @@
                 <ticket-menu></ticket-menu>
               </li>
               <li data-index="18">
-                <router-link :to="`/bc/2/${topHandicapTicket.id}`">两面盘
+                <router-link :to="`/bc/2/${topHandicapTicket.id}`">双面盘
                   <!--<div class="navbar-down-icon"></div>-->
                 </router-link>
               </li>

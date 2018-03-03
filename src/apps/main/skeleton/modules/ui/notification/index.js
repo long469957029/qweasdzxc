@@ -20,7 +20,7 @@ const NotificationModule = Base.Module.extend({
       id: 'notification',
       modalClass: 'modal-notification',
       hasFooter: true,
-      // event: _.noop
+      // event: _.noop,
       btnContent: '确认',
       countdown: 0,
       displayTime: 0, // 显示时间，0无限制。
@@ -78,6 +78,9 @@ const NotificationModule = Base.Module.extend({
 
     $dialog.on('hidden.modal', function() {
       // $(e.currentTarget).next('.modal-backdrop').remove().end().remove();
+      if (_(options.closeEvent).isFunction()) {
+        options.closeEvent()
+      }
       $(this).remove()
     })
 

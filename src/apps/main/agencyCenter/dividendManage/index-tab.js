@@ -20,14 +20,14 @@ const DividendManageTabView = TabView.extend({
         label: '签约用户管理',
         name: 'jsAcDmUserManage',
         id: 'jsAcDmUserManage',
-        router: 'ac/sum',
+        router: '/ac/sum',
         view: UserManageView,
       },
       {
         label: '+签约用户',
         name: 'jsAcDmSignUser',
         id: 'jsAcDmSignUser',
-        router: 'ac/su',
+        router: '/ac/su',
         view: SignUserView,
       }]
     _(this.options).extend({

@@ -543,7 +543,7 @@
   .chat-select-container {
     position: absolute;
     z-index: 2;
-    top: 50px;
+    //top: 50px;
     right: 0;
     background-color: white;
     box-shadow: -2px 0 10px #f6f6f6, 0 -2px 5px #f6f6f6;
@@ -677,6 +677,15 @@
               padding: 7px 0;
               cursor: pointer;
               position: relative;
+              .contact-status{
+                border: 1px solid #ffffff;
+                width: 9px;
+                height: 9px;
+                background-color: #62c655;
+                position: absolute;
+                margin-top: 30px;
+                margin-left: -15px;
+              }
               .select-sub-item-isSelect {
                 margin-right: 20px;
                 color: #999999;

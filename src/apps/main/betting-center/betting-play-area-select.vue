@@ -19,7 +19,7 @@
       <div class="select-item-title tab-title">
         <div>位置</div>
       </div>
-      <div class="tab-group no-margin inline-block">
+      <div class="tab-group no-padding inline-block">
         <div class="clearfix inline-block">
           <betting-play-area-position :optionals="playRule.optionals" v-model="selectOptionals"></betting-play-area-position>
         </div>
@@ -37,7 +37,7 @@
           <div class="bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList"
                v-if="fRule.row.isShow && (!playRule.page || (index < n * playRule.page && index >= (n - 1) * playRule.page))">
 
-            <div class="tab-toolbar" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
+            <div class="tab-toolbar bc-select-items" :class="[`tab-${playRule.style.numType}`, `tab-${playRule.style.position}`]">
 
               <div class="select-item-title tab-title" v-if="fRule.row.title">
                 <div>{{fRule.row.title}}</div>
@@ -51,7 +51,7 @@
                 </transition>
               </div>
 
-              <div class="tab-group no-margin inline-block">
+              <div class="tab-group no-padding inline-block">
                 <div v-for="n in fRule.row.totalPage" class="clearfix inline-block">
                   <div class="bc-select-item" v-for="(item, itemIndex) in fRule.row.fItems"
                        v-if="!fRule.row.page || (itemIndex < n * fRule.row.page && itemIndex >= (n - 1) * fRule.row.page)">
@@ -107,7 +107,9 @@
   export default {
     name: "betting-play-area-select",
 
-    components: {BettingPlayAreaPosition},
+    components: {
+      BettingPlayAreaPosition
+    },
 
     props: {
       playRule: Object,
@@ -122,7 +124,7 @@
       }
     },
 
-    data: function () {
+    data() {
       return {
         selectOptionals: [],
         lotteryList: [],
@@ -169,7 +171,7 @@
     },
 
     computed: mapState({
-      computedRuleList: function () {
+      computedRuleList() {
         return _(this.playRule.list).map((RuleItem) => {
           let fItems
           RuleItem.hasOp = _([RuleItem.op.all, RuleItem.op.big, RuleItem.op.small, RuleItem.op.odd, RuleItem.op.even, RuleItem.op.clear]).some()
@@ -441,7 +443,7 @@
 
 <style lang="scss" scoped>
   .bc-page-content {
-    min-height: 290px;
+    min-height: 286px;
     width: 100%;
     display: none;
     &.active {
@@ -461,13 +463,20 @@
   }
 
   .bc-playArea-items {
-    margin: 20px auto 20px auto;
+    margin: 0 auto 13px auto;
     min-height: 70px;
+    display: flex;
   }
 
   .bc-select-item {
     margin-bottom: 10px;
     display: inline-block;
+
+    &:last-of-type {
+      .tab {
+        margin-right: 0;
+      }
+    }
   }
 
   .miss-title {
@@ -488,17 +497,17 @@
     }
   }
 
+  .bc-select-items {
+    flex: 1;
+  }
+
   .bc-quick-select {
-    width: 221px;
     height: 39px;
     border-top: 1px solid $def-gray-color;
     border-radius: 20px;
     background-color: $sec-line-color;
     margin-bottom: 0;
-  }
-
-  .tab-default {
-    display: inline-block;
+    flex: 0 0 220px;
   }
 
   .num-split {
@@ -551,11 +560,11 @@
 
   .mmc {
     .bc-quick-select {
-      width: 172px;
+      flex: 0 0 172px;
     }
     .tab-toolbar {
       .tab-group {
-        margin-left: 10px;
+        padding-left: 10px;
       }
       &.tab-border {
         .tab {
@@ -569,7 +578,6 @@
     .bc-playArea-items {
       margin: 20px auto 0;
       min-height: 50px;
-      display: flex;
       align-items: center;
     }
   }

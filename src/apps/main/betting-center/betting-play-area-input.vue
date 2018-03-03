@@ -13,8 +13,8 @@
       </div>
     </div>
 
-    <div class="clearfix m-TB-md">
-      <div class="js-bc-numbers-container bc-textarea-main pull-left" @click="focusInput">
+    <div class="input-play-area">
+      <div class="js-bc-numbers-container bc-textarea-main" @click="focusInput">
         <div class="height-100 width-100 cursor-text" ref="fileTip">
           <p style="font-size:12px;line-height:170%;">
             说明：<br>
@@ -27,7 +27,7 @@
                   @blur="blurInput" @keyup="betChange" v-model="numbers"></textarea>
       </div>
 
-      <div class="input-operate-area pull-left">
+      <div class="input-operate-area">
         <div class="m-bottom-md">
           <button type="button" class="btn btn-white btn-linear bc-input-btn" @click="delRepeat">清理错误与重复</button>
         </div>
@@ -271,7 +271,12 @@
 
 <style lang="scss" scoped>
   .play-area-input {
-    padding: 0 15px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .input-play-area {
+    display: flex;
   }
 
   .bc-textarea-main {
@@ -280,6 +285,7 @@
     padding: 10px;
     border-radius: 5px;
     border: solid 1px #d7d7d7;
+    flex: 1 0 0;
   }
 
   .input-operate-area {

@@ -57,11 +57,11 @@ const PollingModule = Base.Module.extend({
           router: find.router,
           view: find.view,
         }
-      } 
+      }
       return _(current).extend({
         noParent: true,
       })
-    } 
+    }
     return _(this._polling).last()
   },
 

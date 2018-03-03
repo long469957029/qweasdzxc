@@ -6,14 +6,14 @@
 .bc-play-main {
   user-select: none;
   .bc-play-left {
-    width: 921px;
+    width: 920px;
     color: $inverse-color;
     border-right: 1px solid $def-line-color;
   }
   .bc-basic-rules {
     .tab-toolbar {
       margin-bottom: 0;
-      padding-left: 10px;
+      padding-left: 13px;
       position: relative;
       .tab.active {
         border-top-left-radius: 10px;
@@ -28,7 +28,8 @@
 
   .bc-missOptional-main {
     width: 100%;
-    margin: 15px 5px;
+    margin: 15px 0 30px;
+    font-size: 0;
     .bc-missOption-btn {
       width: 74px;
       height: 26px;
@@ -40,7 +41,7 @@
       line-height: 24px;
       display: inline-block;
       cursor: pointer;
-      margin-right: 5px;
+      margin-right: 10px;
       transition: all .3s ease-out;
       &.active {
         color: $def-white-color;
@@ -61,7 +62,7 @@
     }
 
     .table th, .table td {
-      padding: 6px 3px;
+      padding: 6px 1px;
       font-size: 12px;
     }
 
@@ -97,7 +98,7 @@
     font-size: $font-md;
     width: 180px;
     height: 48px;
-    border-bottom: 3px solid rgba(0, 0, 0, 0.4);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
     font-weight: 600;
   }
   .bc-bottom-area {

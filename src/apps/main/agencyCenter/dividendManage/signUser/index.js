@@ -401,10 +401,11 @@ const SignUserView = Base.ItemView.extend({
       })
       .done((res) => {
         if (res && res.result === 0) {
-          Global.ui.notification.show('操作成功！<br/>等待下级同意签约。')
-          self.render()
           Vue.$global.bus.$emit('sign:update')
-          Global.router.goTo('ac/sum')
+          window.router.push('/ac/sum')
+          // Global.router.back()
+          Global.ui.notification.show('操作成功！<br/>等待下级同意签约。')
+          // self.render()
         } else {
           Global.ui.notification.show(res.msg || '')
         }

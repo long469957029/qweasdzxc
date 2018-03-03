@@ -54,6 +54,12 @@ const MessageView = Base.ItemView.extend({
 
     'click .js-chat-exp-pack': 'toggleExpPackHandler',
     'click .js-chat-exp': 'selectExpHandler',
+    'click .js-chat-im-panel-content' : 'contentClickHandler',
+    'click .js-chat-select-container' : 'chatSelectContainerClickHandler'
+  },
+  chatSelectContainerClickHandler(e) {
+    e.stopPropagation()
+    e.preventDefault()
   },
   getChatTotalXhr (data) {
     return Global.sync.ajax({
@@ -504,7 +510,7 @@ const MessageView = Base.ItemView.extend({
         this.$('.js-select-panel-show').addClass('hidden')
         this.$('.chat-select-container').removeClass('sideLeft')
       }
-      this.$('.js-selected-sub-items').html('<div class="tooltip parsley-errors-list filled" id="parsley-id-4"><span class="sfa sfa-error-icon vertical-sub pull-left">' +
+      this.$('.chat-message-content').html('<div class="tooltip parsley-errors-list filled" id="parsley-id-4"><span class="sfa sfa-error-icon vertical-sub pull-left">' +
         '</span><div class="tooltip-inner parsley-required">请选择要发送的用户</div></div>')
       return false
     }
@@ -901,7 +907,10 @@ const MessageView = Base.ItemView.extend({
     if ($target.hasClass('disabled')) {
       return;
     }
+    $target.toggleClass('sfa-icon-smile-green')
     this.$el.find('.js-chat-exp-pack-inner').toggleClass('hidden');
+    e.stopPropagation()
+    e.preventDefault()
   },
   selectExpHandler: function(e) {
     var $target = $(e.currentTarget);
@@ -913,7 +922,16 @@ const MessageView = Base.ItemView.extend({
       $content = this.$el.find('.js-mess-input')
     }
     $content.val($content.val() + expId)
-      .trigger('input').trigger('propertychange');
+      .trigger('input').trigger('keyup');
+    $content.focus()
+  },
+  contentClickHandler() {
+    let $emoji = this.$('.js-chat-exp-pack')
+    let $emojiPanel = $emoji.find('.js-chat-exp-pack-inner')
+    if(!$emojiPanel.hasClass('hidden')){
+      $emoji.toggleClass('sfa-icon-smile-green',false);
+      $emojiPanel.toggleClass('hidden',true)
+    }
   },
   // 关闭弹窗时销毁轮询
   onDestroy() {
@@ -922,6 +940,7 @@ const MessageView = Base.ItemView.extend({
     clearInterval(this.recentlyPolling)
     Global.ui.notification.setPrevent(false)
   },
+
 })
 
 module.exports = MessageView

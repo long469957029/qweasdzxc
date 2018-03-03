@@ -16,7 +16,7 @@ const RouterModule = Base.Module.extend({
     $(document).off('click.sub-return').on('click.sub-return', 'a.sub-return,button.sub-return', (e) => {
       window.app.$router.back()
 
-      this.back()
+      // this.back()
     })
   },
 
@@ -42,7 +42,7 @@ const RouterModule = Base.Module.extend({
       }
 
 
-      Global.appRouter.navigate(this._history.pop(), { trigger: false, replace: true })
+      // Global.appRouter.navigate(this._history.pop(), { trigger: false, replace: true })
     } else if (superior.noParent && superior.parentRouter) {
       superior.view.destroy()
 
