@@ -30,7 +30,9 @@
           </tbody>
           <!--</transition-group>-->
         </table>
-        <div slot="empty-tip" v-if="emptyTip" v-html="emptyTip"></div>
+        <slot name="empty-tip" slot="empty-tip">
+          <div slot="empty-tip" v-if="emptyTip" v-html="emptyTip"></div>
+        </slot>
       </status-cell>
     </div>
     <div class="js-wt-footer-main relative">
@@ -49,7 +51,15 @@
   export default {
     name: "slot-static-grid",
 
+    model: {
+      prop: 'list',
+      event: 'change'
+    },
+
     props: {
+      list: {
+        type: Array
+      },
       tableClass: {
         type: String,
         default: 'table table-bordered '
@@ -139,6 +149,7 @@
       innerRows: {
         handler(data) {
           this.showRows = data
+          this.$emit('change', this.showRows)
         },
         deep: true
       },
@@ -222,6 +233,7 @@
 
       clean() {
         this.innerRows = []
+        this.$emit('change', [])
       },
 
       addFooterRows(rows, options) {
