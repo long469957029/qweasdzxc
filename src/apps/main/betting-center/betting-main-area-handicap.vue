@@ -25,7 +25,7 @@
     <div v-transfer-dom>
       <x-dialog v-model="showConfirmModal">
         <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo" :betting-choice="bettingChoice"
-                         :betting-list="bettingChoice.buyList[0].formattedList" :type="`handicap`"
+                         :betting-list="bettingChoice.buyList.length ? bettingChoice.buyList[0].formattedList : []" :type="`handicap`"
                          @bettingConfirm="bettingConfirm"></betting-confirm>
       </x-dialog>
     </div>

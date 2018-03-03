@@ -22,18 +22,16 @@ $tab-toolbar-circle-colors: (
 
 .tab-toolbar {
   margin-bottom: 7px;
+  display: flex;
   .tab-title {
-    float: left;
-    //font-weight: bold;
-    width: $tab-toolbar-title-width;
-
     height: $tab-toolbar-height;
     line-height: $tab-toolbar-height;
+    white-space: nowrap;
   }
 
   .tab-group {
     font-size: 0;
-    margin-left: 20px;
+    padding-left: 20px;
 
     .tab {
       font-size: 14px;
@@ -68,12 +66,7 @@ $tab-toolbar-circle-colors: (
 
     &.tab-pill-main {
       .tab-title {
-        float: left;
-        //font-weight: bold;
-        width: $tab-toolbar-title-width;
         font-size: 12px;
-        text-align: center;
-        margin-left: 10px;
 
         height: $tab-toolbar-height;
         line-height: $tab-toolbar-height;
@@ -81,13 +74,12 @@ $tab-toolbar-circle-colors: (
 
       .tab-group {
         font-size: 0;
-        margin-left: $tab-toolbar-title-width + 20;
         .tab {
-          padding: 0 9px;
+          padding: 0 7px;
           cursor: pointer;
           display: inline-block;
           text-align: center;
-          margin-right: $filter-xs;
+          margin-right: $filter-sm;
           min-width: 54px;
           height: $tab-toolbar-height;
           line-height: $tab-toolbar-height;
@@ -106,32 +98,23 @@ $tab-toolbar-circle-colors: (
   &.tab-circle {
     margin-bottom: 0;
     .tab-group{
-      margin-left: 75px;
+      //margin-left: 75px;
     }
     .tab-title {
       font-size: 14px;
       color: $def-black-color;
       line-height: 40px;
-      //text-align: center;
-      //background-position: 0px -419px;
       width: auto;
       height: 40px;
       margin-left: 5px;
-      //font-weight: bold;
-      //@include sprite($sfa-bc-tab-arrow);
 
       > div {
         margin-right: 10px;
         min-width: 56px;
       }
-
-      //&.active {
-      //  color: $new-light-color;
-      //  @include sprite($sfa-bc-tab-arrow-active);
-      //}
     }
     .tab {
-      margin: 0 5px;
+      //margin: 0 5px;
       padding: 0;
       font-size: 20px;
       line-height: 38px;
@@ -216,21 +199,16 @@ $tab-toolbar-circle-colors: (
       width: 22px;
       height: 40px;
       line-height: 36px;
-      //border: 1px solid $new-inverse-color;
       margin-right: 10px;
       float: left;
       color: $def-black-color;
 
       &:hover {
         color: $main-deep-color;
-        //border: 1px solid $color-pleasant;
-        //background-color: $color-pleasant;
       }
 
       &.active {
         color: $main-deep-color;
-        //border: 1px solid $color-pleasant;
-        //background-color: $color-pleasant;
       }
     }
   }

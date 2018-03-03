@@ -13,7 +13,7 @@
   .bc-basic-rules {
     .tab-toolbar {
       margin-bottom: 0;
-      padding-left: 10px;
+      padding-left: 13px;
       position: relative;
       .tab.active {
         border-top-left-radius: 10px;
@@ -28,7 +28,8 @@
 
   .bc-missOptional-main {
     width: 100%;
-    margin: 15px 5px;
+    margin: 15px 0 30px;
+    font-size: 0;
     .bc-missOption-btn {
       width: 74px;
       height: 26px;
@@ -40,7 +41,7 @@
       line-height: 24px;
       display: inline-block;
       cursor: pointer;
-      margin-right: 5px;
+      margin-right: 10px;
       transition: all .3s ease-out;
       &.active {
         color: $def-white-color;

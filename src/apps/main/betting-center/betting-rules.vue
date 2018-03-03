@@ -158,6 +158,9 @@
 <style lang="scss" scoped>
   .bc-basic-rules {
     height: 40px;
+    .tab-group {
+      padding-left: 0;
+    }
   }
   .mmc {
     background-color: transparent;
@@ -166,7 +169,7 @@
       color: $new-inverse-color;
     }
     .tab-toolbar {
-      margin-left: 15px;
+      padding-left: 13px;
     }
     .underline {
       position: absolute;

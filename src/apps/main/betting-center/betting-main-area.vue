@@ -37,7 +37,7 @@
             </a>
           </div>
         </div>
-        <div class="m-LR-smd">
+        <div class="play-area-wrapper">
           <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'"
                        loading-tip="">
             <transition name="fade" mode="out-in"
@@ -59,6 +59,7 @@
 
         <div class="div-line"></div>
 
+        <div class="bottom-main-panel">
         <div class="m-LR-smd m-top-md m-bottom-md">
           <div class="form-inline m-TB-xs">
             <select name="unit" class="select-default bc-unit-select" v-model="unit">
@@ -91,6 +92,8 @@
               </button>
             </div>
           </div>
+        </div>
+
         </div>
 
         <div class="m-bottom-xs m-left-md">
@@ -784,6 +787,7 @@
 
 <style lang="scss" scoped>
 
+  $main-play-area-margin: 30px;
 
   .bc-chase {
     text-decoration: none;
@@ -795,16 +799,22 @@
 
   .advance-play-des {
     width: 86px;
-    height: 23px;
+    height: 25px;
     display: inline-block;
     border: 1px solid #f0f0f0;
     border-radius: 15px;
-    line-height: 23px;
+    line-height: 25px;
     color: #8094A6;
     text-align: center;
-    margin: 5px 40px 0 0;
+    margin-top: 8px;
     position: relative;
     vertical-align: top;
+    float: right;
+  }
+
+  .play-area-wrapper {
+    margin-left: $main-play-area-margin;
+    margin-right: $main-play-area-margin;
   }
 
   .bc-advance-mode-single {
@@ -839,7 +849,7 @@
     .bc-advance-rules {
       color: #666666;
       max-width: 80%;
-      margin-left: 15px;
+      margin-left: $main-play-area-margin;
       flex: 1;
       .tab-toolbar {
         &:last-of-type {
