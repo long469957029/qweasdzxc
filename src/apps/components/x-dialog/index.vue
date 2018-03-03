@@ -1,8 +1,8 @@
 <template>
-  <transition
-    @after-enter="afterEnter"
-    leave-active-class="out"
-  >
+  <!--<transition-->
+    <!--@after-enter="afterEnter"-->
+    <!--leave-active-class="out"-->
+  <!--&gt;-->
     <div class="x-modal fade hide" :class="[type, styles]" ref="modal" :style="`width: ${width}`" role="dialog"
          aria-hidden="true">
       <slot name="all">
@@ -25,14 +25,23 @@
         </slot>
       </slot>
     </div>
-  </transition>
+  <!--</transition>-->
 </template>
 
 <script>
   export default {
     name: 'x-dialog',
 
+    model: {
+      prop: 'show',
+      event: 'change'
+    },
     props: {
+      show: {
+        type: Boolean,
+        default: false
+      },
+
       width: {
         type: String,
         default: 'auto'
@@ -57,20 +66,40 @@
       }
     },
 
+    watch: {
+      show (val) {
+        if (val) {
+          this.showModal()
+        } else {
+          this.hide()
+        }
+      }
+    },
+
+    mounted() {
+      // $(this.$refs.modal).modal(this.options)
+      //   .on('hidden.modal', () => {
+      //     this.$emit('modal-hidden')
+      //   })
+      //   .on('show', () => {
+      //     $(this.$refs.modal).addClass('in')
+      //   })
+      //   .on('shown', () => {
+      //     $(this.$refs.modal).addClass('in')
+      //   })
+    },
+
     methods: {
-      afterEnter() {
+      showModal() {
         $(this.$refs.modal).modal(this.options)
           .on('hidden.modal', () => {
-            this.$emit('modal-hidden')
+            this.$emit('change', false)
           })
-          .on('show', () => {
-            $(this.$refs.modal).addClass('in')
-          })
-          .on('shown', () => {
-            $(this.$refs.modal).addClass('in')
-          })
-
       },
+      hide() {
+        $(this.$refs.modal).modal('hide')
+        this.$emit('change', false)
+      }
     },
 
     beforeDestroy() {

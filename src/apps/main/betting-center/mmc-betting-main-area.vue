@@ -291,7 +291,7 @@
 
     <!-- 最后开奖结果 -->
     <div v-transfer-dom>
-      <x-dialog class="final-result" v-if="showFinalResult" styles="" @modal-hidden="showFinalResult = false">
+      <x-dialog class="final-result" v-model="showFinalResult" styles="">
         <div slot="all" class="final-result-wrapper">
           <div class="final-result-inner sfa-mmc-win" v-if="totalWinPrize">
             <span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>

@@ -146,7 +146,7 @@
 
     <div v-transfer-dom>
       <!-- 抽奖结果 中 -->
-      <x-dialog v-if="isShowPrized" @modal-hidden="isShowPrized = false" type="arc">
+      <x-dialog v-model="isShowPrized" type="arc">
         <div slot="head-main">恭喜您成功获得！</div>
         <div class="prize-main">
           <div class="prize-pic-wrapper">
@@ -190,7 +190,7 @@
         </div>
       </x-dialog>
 
-      <x-dialog v-if="isShowLose" @modal-hidden="isShowLose = false">
+      <x-dialog v-model="isShowLose">
         <div slot="all" class="lose-main">
           <a data-dismiss="modal" class="close btn-close">×</a>
           <div class="icon-smiley"></div>
@@ -202,7 +202,7 @@
       </x-dialog>
 
       <!-- 抽奖条件不满足 -->
-      <x-dialog v-if="isShowFailed" @modal-hidden="isShowFailed = false" type="arc">
+      <x-dialog v-model="isShowFailed" type="arc">
         <div slot="head-main">夺宝失败</div>
         <div class="fail-main">
           <div class="icon-chest"></div>

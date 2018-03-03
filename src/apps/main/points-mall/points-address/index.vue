@@ -1,5 +1,5 @@
 <template>
-  <x-dialog @modal-hidden="$emit('modal-hidden')" width="610px" :options="modalOptions">
+  <x-dialog v-model="addressModal" width="610px" :options="modalOptions">
     <div slot="head-main">
       <template v-if="currentModal === 'select'">
         <div class="address-select-title">
@@ -90,8 +90,16 @@
       AddressSelect,
       XAddress
     },
-
+    model: {
+      prop: 'show',
+      event: 'change'
+    },
     props: {
+      show: {
+        type: Boolean,
+        default: false
+      },
+
       currentAddress: {
         type: Object,
         default() {
@@ -111,6 +119,7 @@
           backdrop: 'static'
         },
         addressInfo: {},
+        addressModal: false,
         name: this.currentAddress.name,
         phone: this.currentAddress.orgPhone,
         province: this.currentAddress.province,
@@ -136,9 +145,16 @@
         },
         immediate: true
       },
+      show(val) {
+        this.addressModal = val
+      },
+      addressModal(val) {
+        this.$emit('change', val)
+      }
     },
 
     computed: {
+
       title() {
         if (this.currentModal !== 'select') {
           return !this.rid ? '添加收货地址' : '修改收货地址'
@@ -246,8 +262,6 @@
       }
     },
 
-    mounted() {
-    }
   }
 </script>
 
