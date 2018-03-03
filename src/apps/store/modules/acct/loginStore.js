@@ -190,7 +190,11 @@ const mutations = {
       // window.location.href = ''
       let hash = window.location.hash
       // if(hash.indexOf('/ac/dm')>-1){//处理
-      window.location.href = '/#/?popupLogin=true'
+      if(data.popupLogout){
+        window.router.push('/?popupLogin=true')
+      }else{
+        window.router.push('/')
+      }
       window.location.reload()
       // }else{
       //   window.router.push({name:'dashboard'})
