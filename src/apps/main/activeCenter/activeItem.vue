@@ -137,7 +137,8 @@ export default {
     height: 230px;
     z-index: 1;
     position: absolute;
-
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
     &.transparent {
       background: transparent;
     }
@@ -146,7 +147,8 @@ export default {
   .thumb {
     width: 530px;
     height: 230px;
-
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
     &.gray {
       filter: grayscale(100%);
     }
