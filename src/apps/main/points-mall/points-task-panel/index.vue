@@ -253,6 +253,7 @@
     flex: 1;
     justify-content: space-between;
     align-content: space-between;
+    height: 349px;
   }
 
   .task-card {
