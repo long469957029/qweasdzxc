@@ -39,7 +39,7 @@
     </div>
 
     <div v-transfer-dom>
-      <x-dialog v-if="showCheckModal" @modal-hidden="showCheckModal = false">
+      <x-dialog v-model="showCheckModal">
         <div slot="head-main" class="text-center">提示</div>
         <div class="check-modal">
           <ul class="check-list">

@@ -26,7 +26,7 @@
     </div>
 
     <div v-transfer-dom>
-      <x-dialog v-if="isShowGetCard" @modal-hidden="isShowGetCard = false" width="482px">
+      <x-dialog v-model="isShowGetCard" width="482px">
         <div slot="head-main" class="text-center">兑换确认</div>
         <div class="modal-main">
           <div class="card-info">

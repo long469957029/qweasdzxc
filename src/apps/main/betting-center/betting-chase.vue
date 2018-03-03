@@ -558,7 +558,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
                 type: 'success',
               })
             } else {
-              Global.ui.notification.show(`追号失败！错误原因：${res.msg}` || '')
+              Global.ui.notification.show(`${res.msg}` || '')
             }
           })
       },
