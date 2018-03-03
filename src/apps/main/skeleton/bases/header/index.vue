@@ -284,6 +284,10 @@
     },
 
     mounted(){
+      if(this.$route.query && this.$route.query.popupLogin){
+        this.$store.commit(types.TOGGLE_LOGIN_DIALOG,true)
+        this.$router.push('/')
+      }
       window.Global.m.subscribe('news', 'news:updating', this.renderMsgList)
       if (this.loginStatus) {  //登陆状态下 获取用户安全设置信息
         this.getAccountSafe()

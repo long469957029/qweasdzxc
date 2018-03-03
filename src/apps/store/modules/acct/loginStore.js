@@ -1,5 +1,5 @@
 import permissions from 'apps/main/directAccess'
-import avatarConfig from'userCenter/misc/avatarConfig'
+import avatarConfig from 'userCenter/misc/avatarConfig'
 import login from 'api/login'
 
 const initState = () => {
@@ -100,13 +100,13 @@ const getters = {
 
 // actions
 const actions = {
-  [types.DO_LOGOUT] ({commit}) {
+  [types.DO_LOGOUT]({commit}) {
     login.logout(({data}) => {
       return commit(types.USER_LOGOUT_SUCCESS, data)
     })
   },
 
-  [types.CHECK_LOGIN_STATUS] ({commit}) {
+  [types.CHECK_LOGIN_STATUS]({commit}) {
     return new Promise((resolve, reject) => {
       login.oauthCheckApi(({data}) => {
         resolve(data)
@@ -123,7 +123,8 @@ const actions = {
 // mutations
 const mutations = {
   // 用户登录成功
-  [types.USER_LOGIN_SUCCESS] (state, data) {
+  [types.USER_LOGIN_SUCCESS](state, data) {
+    Global.memoryCache.set('authorizeChecking', false)//点击确定后才允许重新弹窗
     this.commit(types.USER_OAUTH_SUCCESS, data)
     this.commit(types.USER_IS_VIP, data.vip)
     window.Global.m.publish('acct:login', data)//todo 待确认是否可以从USER_OAUTH_SUCCESS转移到此处
@@ -138,7 +139,8 @@ const mutations = {
   },
 
   // 用户oauth确认成功
-  [types.USER_OAUTH_SUCCESS] (state, data) {
+  [types.USER_OAUTH_SUCCESS](state, data) {
+    Global.memoryCache.set('authorizeChecking', false)//点击确定后才允许重新弹窗
     window.Global.memoryCache.set('acctInfo', data)
     window.Global.cookieCache.set('token', data.token, 160)
 
@@ -155,7 +157,7 @@ const mutations = {
   },
 
   // 清除用户数据
-  [types.USER_CLEAR] (state) {
+  [types.USER_CLEAR](state) {
     Object.assign(state, initState())
     Global.cookieCache.clear('token')
     Global.cookieCache.clear('loginState')
@@ -170,7 +172,7 @@ const mutations = {
     this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
     this.commit(types.USER_IS_VIP, 0)
   },
-  [types.USER_LOGOUT_SUCCESS] (state, data) {
+  [types.USER_LOGOUT_SUCCESS](state, data) {
     if (data && data.result === 0) {
       Object.assign(state, initState())
       Global.cookieCache.clear('token')
@@ -186,10 +188,16 @@ const mutations = {
       this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
       this.commit(types.USER_IS_VIP, 0)
       // window.location.href = ''
-      window.router.push('/')
+      let hash = window.location.hash
+      // if(hash.indexOf('/ac/dm')>-1){//处理
+      window.location.href = '/#/?popupLogin=true'
+      window.location.reload()
+      // }else{
+      //   window.router.push({name:'dashboard'})
+      // }
     }
   },
-  [types.TOGGLE_DO_LOGOUT] (state, data) {
+  [types.TOGGLE_DO_LOGOUT](state, data) {
     state.loginOutStatus = data
   },
 

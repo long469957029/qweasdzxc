@@ -19,12 +19,14 @@
     <main-footer></main-footer>
     <login v-if="loginDialogStatus"></login>
     <logout v-if="logoutDialogStatus"></logout>
+    <logout-notice v-if="logoutNoticeStatus"></logout-notice>
     <reset-pwd v-if="resetPassWordDialogStatus"></reset-pwd>
     <login-launcher v-if="loginLauncherStatus"></login-launcher>
     <free-trial v-if="freeTrialStatus"></free-trial>
     <dialog-manage v-if="getLoginStatus"></dialog-manage>
     <game-down-load v-if="gameDownLoadStatus"></game-down-load>
     <desktop-message v-if="openDeskTopMsgStatus"></desktop-message>
+
   </div>
 </template>
 
@@ -33,6 +35,7 @@
   import NavBar from 'skeleton/bases/navbar'
   import Login from 'skeleton/bases/login'
   import Logout from 'skeleton/bases/login/logout'
+  import LogoutNotice from 'skeleton/bases/login/logoutNotice'
   import MainFooter from 'skeleton/bases/footer'
   import ResetPwd from 'skeleton/bases/login/resetPassWord'
   import LoginLauncher from 'skeleton/bases/loginLauncher'
@@ -50,6 +53,7 @@
       MainFooter,
       Login,
       Logout,
+      LogoutNotice,
       ResetPwd,
       LoginLauncher,
       FreeTrial,
@@ -73,7 +77,8 @@
         'freeTrialStatus',
         'getLoginStatus',
         'gameDownLoadStatus',
-        'openDeskTopMsgStatus'
+        'openDeskTopMsgStatus',
+        'logoutNoticeStatus',
       ]),
     },
   }
