@@ -175,7 +175,7 @@
     <!-- 追号 -->
 
     <div v-transfer-dom>
-      <x-dialog v-model="showChaseModal">
+      <x-dialog v-model="showChaseModal" ref="chaseModal">
         <betting-chase slot="all" :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney" v-if="showChaseModal"
                        :ticket-info="ticketInfo"
                        :planId="bettingInfo.planId" :preview-list="bettingChoice.previewList"
@@ -184,7 +184,7 @@
       </x-dialog>
 
       <!-- 确认投注 -->
-      <x-dialog v-model="showConfirmModal">
+      <x-dialog v-model="showConfirmModal" ref="confirmModal">
         <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo" v-if="showConfirmModal"
                          :betting-choice="bettingChoice"
                          :betting-list="bettingChoice.previewList" :type="`normal`"
@@ -588,8 +588,7 @@
       bettingConfirm() {
         this.pushing = true
 
-
-        this.showConfirmModal = false
+        this.$refs.confirmModal.hide()
 
         const useVoucher = !_.isEmpty(this.totalVoucher)
 
@@ -665,7 +664,7 @@
       chaseComplete() {
         this.$refs.bettingRecords.update()
 
-        this.showChaseModal = false
+        this.$refs.chaseModal.hide()
       },
 
       lotteryClear() {
