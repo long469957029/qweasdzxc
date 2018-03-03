@@ -1,10 +1,21 @@
 <template>
-  <transition mode="out-in"
+  <transition mode="out-in" v-if="transition"
     enter-active-class="animated-02s fadeIn"
     leave-active-class="animated-02s fadeOut">
     <div class="status-cell" v-if="status === 'loading'" key="status-loading" :style="`height: ${height}`">
       <div class="loading-contianer">
-        <div class="ring"></div>
+        <div class='gl-loading-main vue-loader'>
+          <div class='tri invert'></div>
+          <div class='tri invert'></div>
+          <div class='tri'></div>
+          <div class='tri invert'></div>
+          <div class='tri invert'></div>
+          <div class='tri'></div>
+          <div class='tri invert'></div>
+          <div class='tri'></div>
+          <div class='tri invert'></div>
+        </div>
+        <!--<div class="ring"></div>-->
         <p>{{loadingTip}}</p>
       </div>
     </div>
@@ -20,6 +31,36 @@
       <slot></slot>
     </component>
   </transition>
+  <div v-else class="height-100">
+    <div class="status-cell" v-if="status === 'loading'" key="status-loading" :style="`height: ${height}`">
+      <div class="loading-contianer">
+        <div class='gl-loading-main vue-loader'>
+          <div class='tri invert'></div>
+          <div class='tri invert'></div>
+          <div class='tri'></div>
+          <div class='tri invert'></div>
+          <div class='tri invert'></div>
+          <div class='tri'></div>
+          <div class='tri invert'></div>
+          <div class='tri'></div>
+          <div class='tri invert'></div>
+        </div>
+        <!--<div class="ring"></div>-->
+        <p>{{loadingTip}}</p>
+      </div>
+    </div>
+    <div class="status-cell" v-else-if="!hasData" key="status-empty" :style="`height: ${height}`">
+      <div class="empty-container">
+        <slot name="empty-tip">
+          <div class="empty-icon"></div>
+          <p>{{emptyTip}}</p>
+        </slot>
+      </div>
+    </div>
+    <component :is="tag" v-else>
+      <slot></slot>
+    </component>
+  </div>
 </template>
 
 <script>
@@ -64,6 +105,11 @@
       height: {
         type: String,
         default: ''
+      },
+
+      transition: {
+        type: Boolean,
+        default: true,
       }
     }
   }
@@ -74,6 +120,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%;
   }
 
   .partial-loader {
@@ -85,6 +132,14 @@
     border-radius: 50%;
     animation: loadingA 1.7s infinite ease;
   }
+
+
+  .vue-loader {
+    position: static;
+    transform: translate(0, 0);
+    margin: 20px 10px;
+  }
+
 
   $color: #c4c4c4;
   .ring {

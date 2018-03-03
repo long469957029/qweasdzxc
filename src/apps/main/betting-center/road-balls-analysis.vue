@@ -396,6 +396,11 @@
     border-radius: 5px;
     overflow: hidden;
     border: solid 1px #d7d7d7;
+    margin-right: 20px;
+    transform: translateZ(0);
+    > .btn + .btn {
+      margin-left: 0;
+    }
   }
 
   .btn {
@@ -418,15 +423,9 @@
     }
   }
 
-  .btn-group {
-    margin-right: 20px;
-    > .btn + .btn {
-      margin-left: 0;
-    }
-  }
-
   .panel-advance {
     display: inline-block;
+    color: $def-gray-color;
   }
 
   .advance-btn {

@@ -11,73 +11,74 @@ $trih: $triw*.9;
   user-select: none;
   cursor: default;
 
-  .gl-loading-main {
+}
+
+.gl-loading-main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  height: $trih * 3;
+  width: $triw * 3;
+
+  .tri {
     position: absolute;
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-    height: $trih * 3;
-    width: $triw * 3;
-
-    .tri {
-      position: absolute;
-      animation: loading $anim-speed ease-in infinite;
+    animation: loading $anim-speed ease-in infinite;
+    border: {
+      top: $trih solid $tricolor;
+      left: $triw/2 solid transparent;
+      right: $triw/2 solid transparent;
+      bottom: 0;
+    }
+    &.invert {
       border: {
-        top: $trih solid $tricolor;
+        top: 0;
+        bottom: $trih solid $tricolor;
         left: $triw/2 solid transparent;
         right: $triw/2 solid transparent;
-        bottom: 0;
       }
-      &.invert {
-        border: {
-          top: 0;
-          bottom: $trih solid $tricolor;
-          left: $triw/2 solid transparent;
-          right: $triw/2 solid transparent;
-        }
-      }
-      &:nth-child(1) {
-        left: $triw;
-      }
-      &:nth-child(2) {
-        left: $triw/2;
-        top: $trih;
-        animation-delay: $anim-speed/6*-1;
-      }
-      &:nth-child(3) {
-        left: $triw;
-        top: $trih;
-      }
-      &:nth-child(4) {
-        left: $triw*1.5;
-        top: $trih;
-        animation-delay: $anim-speed/6*-5;
-      }
-      &:nth-child(5) {
-        top:$trih*2;
-        animation-delay: $anim-speed/6*-2;
-      }
-      &:nth-child(6) {
-        top:$trih*2;
-        left: $triw/2;
-        animation-delay: $anim-speed/6*-2;
-      }
-      &:nth-child(7) {
-        top:$trih*2;
-        left: $triw;
-        animation-delay: $anim-speed/6*-3;
-      }
-      &:nth-child(8) {
-        top:$trih*2;
-        left: $triw*1.5;
-        animation-delay: $anim-speed/6*-4;
-      }
-      &:nth-child(9) {
-        top:$trih*2;
-        left: $triw*2;
-        animation-delay: $anim-speed/6*-4;
-      }
+    }
+    &:nth-child(1) {
+      left: $triw;
+    }
+    &:nth-child(2) {
+      left: $triw/2;
+      top: $trih;
+      animation-delay: $anim-speed/6*-1;
+    }
+    &:nth-child(3) {
+      left: $triw;
+      top: $trih;
+    }
+    &:nth-child(4) {
+      left: $triw*1.5;
+      top: $trih;
+      animation-delay: $anim-speed/6*-5;
+    }
+    &:nth-child(5) {
+      top:$trih*2;
+      animation-delay: $anim-speed/6*-2;
+    }
+    &:nth-child(6) {
+      top:$trih*2;
+      left: $triw/2;
+      animation-delay: $anim-speed/6*-2;
+    }
+    &:nth-child(7) {
+      top:$trih*2;
+      left: $triw;
+      animation-delay: $anim-speed/6*-3;
+    }
+    &:nth-child(8) {
+      top:$trih*2;
+      left: $triw*1.5;
+      animation-delay: $anim-speed/6*-4;
+    }
+    &:nth-child(9) {
+      top:$trih*2;
+      left: $triw*2;
+      animation-delay: $anim-speed/6*-4;
     }
   }
 }
