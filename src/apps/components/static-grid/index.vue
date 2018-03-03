@@ -105,6 +105,10 @@
         type: Boolean,
         default: true
       },
+      scroll: {
+        type: Boolean,
+        default: true
+      }
     },
 
     data() {
@@ -145,10 +149,14 @@
     },
 
     mounted() {
+
       if (this.height > 0) {
-        $(this.$refs.body).slimScroll({
-          height: this.height,
-        })
+        if (this.scroll) {
+          $(this.$refs.body).slimScroll({
+            height: this.height,
+          })
+        }
+        this.$refs.body.style.height = `${this.height}px`
       }
 
 

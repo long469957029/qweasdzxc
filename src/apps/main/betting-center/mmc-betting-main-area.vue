@@ -1340,7 +1340,7 @@
     padding: 5px 10px;
     font-weight: 600;
     transform: translateY(-5px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
   }
 
   .opening-title {

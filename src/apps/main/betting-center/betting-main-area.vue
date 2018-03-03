@@ -5,10 +5,10 @@
     <div class="bc-play-container clearfix">
       <div class="bc-play-left basic-inverse pull-left">
         <div class="bc-play-select-area clearfix">
-          <betting-advance-rules v-show="advanceShowMode === 'classic'"
+          <betting-advance-rules v-show="advanceShowMode === 'classic' || !ticketInfo.notShowAdvance"
                                  @modeChange="modeChange"></betting-advance-rules>
 
-          <div class="bc-advance-mode-single" v-show="advanceShowMode === 'single'">
+          <div class="bc-advance-mode-single" v-show="advanceShowMode === 'single' && ticketInfo.notShowAdvance">
             <div class="bc-play-des">玩法说明：{{playInfo.playDes}}</div>
             <a class="advance-play-des" ref="winningExample">
               <span class="sfa sfa-bc-light vertical-middle"></span>
@@ -17,7 +17,7 @@
           </div>
 
           <div class="bc-advance-mode-main">
-            <div :class="advanceShowMode === 'single' ? 'advance-bonus-single' : 'advance-bonus'">
+            <div :class="advanceShowMode === 'single' && ticketInfo.notShowAdvance ? 'advance-bonus-single' : 'advance-bonus'">
               单注奖金：
               <div class="text-prominent font-sm inline-block">
                 <template v-if="bettingChoice.fBetBonus">
@@ -31,7 +31,7 @@
               </div>
               元
             </div>
-            <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic'">
+            <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic' || !ticketInfo.notShowAdvance">
               <span class="sfa sfa-bc-light vertical-middle"></span>
               玩法说明
             </a>
@@ -95,7 +95,7 @@
           </div>
           <div class="m-bottom-xs">
             <div class="clearfix bc-margin-xs">
-              <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
+              <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel" :transition="false"
                                 :init-remote="false"
                                 :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
                                 ref="lotteryGrid">
@@ -175,8 +175,8 @@
     <!-- 追号 -->
 
     <div v-transfer-dom>
-      <x-dialog v-model="showChaseModal">
-        <betting-chase slot="all" :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney"
+      <x-dialog v-model="showChaseModal" ref="chaseModal">
+        <betting-chase slot="all" :ticket-id="ticketId" :limit-money="bettingChoice.limitMoney" v-if="showChaseModal"
                        :ticket-info="ticketInfo"
                        :planId="bettingInfo.planId" :preview-list="bettingChoice.previewList"
                        :total-lottery="bettingChoice.totalLottery" ref="bettingChase"
@@ -184,8 +184,8 @@
       </x-dialog>
 
       <!-- 确认投注 -->
-      <x-dialog v-model="showConfirmModal">
-        <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo"
+      <x-dialog v-model="showConfirmModal" ref="confirmModal">
+        <betting-confirm slot="all" :ticket-info="ticketInfo" :betting-info="bettingInfo" v-if="showConfirmModal"
                          :betting-choice="bettingChoice"
                          :betting-list="bettingChoice.previewList" :type="`normal`"
                          @bettingConfirm="bettingConfirm"></betting-confirm>
@@ -258,7 +258,7 @@
               width: '8%'
             },
           ],
-          height: 145,
+          height: 152,
           showEmpty: true,
           emptyTip: '<div class="sfa sfa-bc-empty vertical-middle"></div> 暂未添加选号',
         },
@@ -531,6 +531,7 @@
               Global.ui.notification.show('投注成功！', {
                 type: 'success',
                 hasFooter: false,
+                closeBtn: false,
                 displayTime: 800,
                 size: 'modal-xs',
               })
@@ -587,8 +588,7 @@
       bettingConfirm() {
         this.pushing = true
 
-
-        this.showConfirmModal = false
+        this.$refs.confirmModal.hide()
 
         const useVoucher = !_.isEmpty(this.totalVoucher)
 
@@ -619,6 +619,7 @@
               Global.ui.notification.show('投注成功！', {
                 type: 'success',
                 hasFooter: false,
+                closeBtn: false,
                 displayTime: 800,
                 size: 'modal-xs',
               })
@@ -663,7 +664,7 @@
       chaseComplete() {
         this.$refs.bettingRecords.update()
 
-        this.showChaseModal = false
+        this.$refs.chaseModal.hide()
       },
 
       lotteryClear() {
@@ -944,13 +945,14 @@
     padding: 5px 10px;
     font-weight: 600;
     transform: translateY(-5px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
   }
 
   .bc-lottery-preview {
     border-radius: $globalBtnRadius;
     border: 1px solid $def-gray-color;
     overflow: hidden;
+    box-sizing: border-box;
   }
 
   .prev-panel {

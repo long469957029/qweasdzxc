@@ -51,7 +51,9 @@ const WithdrawView = Base.ItemView.extend({
         $.when(this.getActivityInfo(), this.getInfoXhr()).done(function (res1, res2) {
           if (res1[0] && res1[0].result === 0) {
             // 生成充值页广告
+
             Global.memoryCache.set('rechargeAc', res1[0].root.records)
+            self.ac = Global.memoryCache.get('rechargeAc')
           } else {
             Global.ui.notification.show('服务器异常')
           }
@@ -62,6 +64,7 @@ const WithdrawView = Base.ItemView.extend({
           }
         })
       } else {
+        this.ac = Global.memoryCache.get('rechargeAc')
         this.getInfoXhr()
           .always(() => {
             self.loadingFinish()
@@ -74,9 +77,10 @@ const WithdrawView = Base.ItemView.extend({
               Global.ui.notification.show('服务器异常')
             }
           })
+
       }
-      this.ac = Global.memoryCache.get('rechargeAc')
-      this.$('.jc-rc-activity').html(rechargeService.getFunActivity(Global.memoryCache.get('rechargeAc')))
+
+
     }
     // 监听click事件
     window.addEventListener('click', (e) => {

@@ -1,17 +1,17 @@
 <template>
   <div :class="componentType || ''">
     <div class="bc-missOptional-main" v-if="missOptional && _.find(playRule.topOp, op => op)">
-      <transition-group
-        enter-active-class="animated fadeInLeftBig"
-        leave-active-class="animated fadeOutLeftBig absolute"
-      >
+      <!--<transition-group-->
+        <!--enter-active-class="animated fadeInLeftBig"-->
+        <!--leave-active-class="animated fadeOutLeftBig absolute"-->
+      <!--&gt;-->
         <div class="inline-block transition" :key="'analysis'" v-if="playRule.analysisProps">
           <div class="bc-missOption-btn" @click="toggleCurrentMiss" :class="{active: showMiss}">当前遗漏</div>
           <div class="bc-missOption-btn" @click="toggleColdHot" :class="{active: showCold}">30期冷热</div>
         </div>
         <slot name="autoAdd" v-if="playRule.topOp.auto"></slot>
         <div class="bc-missOption-btn" :key="'clear'" @click="clearAllSelected" v-if="playRule.topOp.clear">清除选号</div>
-      </transition-group>
+      <!--</transition-group>-->
     </div>
 
     <!--选择位置-->
@@ -42,8 +42,8 @@
               <div class="select-item-title tab-title" v-if="fRule.row.title">
                 <div>{{fRule.row.title}}</div>
                 <transition
-                  enter-active-class="animated fadeIn"
-                  leave-active-class="animated fadeOut"
+                  enter-active-class="animated-quick fadeIn"
+                  leave-active-class="animated-quick fadeOut"
                   v-if="playRule.analysisProps && playRule.analysisProps.startPos <= index"
                 >
                   <div class="miss-title" v-if="showMiss && !_.isEmpty(currentMiss)">遗漏</div>
@@ -62,8 +62,8 @@
                   </span>
                     <transition
                       name="custom-classes-transition"
-                      enter-active-class="animated rotateIn"
-                      leave-active-class="animated rotateOut"
+                      enter-active-class="animated-quick fadeIn"
+                      leave-active-class="animated-quick fadeOut"
                       v-if="playRule.analysisProps && playRule.analysisProps.startPos <= index"
                     >
                       <div class="miss-item" :class="currentMiss[index - playRule.analysisProps.startPos][itemIndex].style"
@@ -458,12 +458,24 @@
       .bc-playArea-items {
         vertical-align: middle;
         text-align: center;
+        flex-direction: column;
       }
+      .bc-quick-select {
+        flex: 0 0 39px;
+      }
+      .tab-group {
+        padding: 0;
+      }
+    }
+    &.bc-page-content-center-2 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
   }
 
   .bc-playArea-items {
-    margin: 0 auto 13px auto;
+    margin: 0 auto 0 auto;
     min-height: 70px;
     display: flex;
   }
@@ -564,7 +576,7 @@
     }
     .tab-toolbar {
       .tab-group {
-        padding-left: 10px;
+        padding-left: 5px;
       }
       &.tab-border {
         .tab {
