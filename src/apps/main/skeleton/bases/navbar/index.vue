@@ -570,11 +570,13 @@
         &:hover, &:active {
           background: $new-main-deep-color;
           color: white !important;
+          border-color: $new-main-deep-color;
         }
         &.disabled {
           &:hover, &:active {
             background: $def-white-color;
             color: $def-black-color !important;
+            border-color: $def-gray-color;
           }
         }
       }

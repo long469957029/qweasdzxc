@@ -240,6 +240,7 @@ const TransferView = Base.ItemView.extend({
   },
   // 选择转出钱包
   selectFromGameHandler(e) {
+    const self = this
     const $target = $(e.currentTarget)
     this.$('.js-tr-out-select').removeClass('side-down').scrollTop(0)
     this.$('.js-tr-select-out-down').removeClass('up')
@@ -272,7 +273,7 @@ const TransferView = Base.ItemView.extend({
     toId = this.$('.js-tr-in-selectedItem').data('id')
     this.getPlatformInfoXhr({channelId: Number(toId) || Number(selectId) || '1'}).done((res) => {
       if (res.result === 0) {
-        self.plaftfromData = res.root
+        this.plaftfromData = res.root
         this.renderPlatformTransferTypeLimit()
       }
     })
