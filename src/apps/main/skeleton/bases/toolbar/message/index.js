@@ -8,8 +8,6 @@ import './index.scss'
 const imService = require('./imService')
 
 
-
-
 const MessageView = Base.ItemView.extend({
 
   template: require('./index.html'),
@@ -54,8 +52,8 @@ const MessageView = Base.ItemView.extend({
 
     'click .js-chat-exp-pack': 'toggleExpPackHandler',
     'click .js-chat-exp': 'selectExpHandler',
-    'click .js-chat-im-panel-content' : 'contentClickHandler',
-    'click .js-chat-select-container' : 'chatSelectContainerClickHandler'
+    'click .js-chat-im-panel-content': 'contentClickHandler',
+    'click .js-chat-select-container': 'chatSelectContainerClickHandler'
   },
   chatSelectContainerClickHandler(e) {
     e.stopPropagation()
@@ -135,7 +133,6 @@ const MessageView = Base.ItemView.extend({
     // x.render()
 
 
-
     this.renderGetContactInfoXhr()
     this.renderGetRecentlyInfoXhr()
     this.pollingContactInfoHandler()
@@ -185,7 +182,7 @@ const MessageView = Base.ItemView.extend({
     if (recentlyResult.num > 0) {
       this.$('.js-recently-newMessage-num').addClass('hasNum')
       this.$('.js-recently-newMessage-num').html(imService.getNewMessageNumHtml(this.newMessageNum))
-    } else if (this.$('.js-recently-newMessage-num').hasClass('hasNum')) {
+    } else {
       this.$('.js-recently-newMessage-num').removeClass('hasNum')
       this.$('.js-recently-newMessage-num').addClass('hidden')
     }
@@ -510,8 +507,9 @@ const MessageView = Base.ItemView.extend({
         this.$('.js-select-panel-show').addClass('hidden')
         this.$('.chat-select-container').removeClass('sideLeft')
       }
-      this.$('.chat-message-content').html('<div class="tooltip parsley-errors-list filled" id="parsley-id-4"><span class="sfa sfa-error-icon vertical-sub pull-left">' +
-        '</span><div class="tooltip-inner parsley-required">请选择要发送的用户</div></div>')
+      this.$('.chat-message-noContact').removeClass('hidden')
+      // this.$('.chat-message-content').html('<div class="chat-message-noContact"><div class="sfa sfa-info-icon vertical-sub pull-left">' +
+      //   '</div><div class="chat-message-noContact-text">请先添加联系人</div></div>')
       return false
     }
 
@@ -579,6 +577,7 @@ const MessageView = Base.ItemView.extend({
               if (res.result === 0) {
                 this.$('.js-mess-message-content').html(imService.getChatMessageByDateHtml(res.root.messages, 'mess', res.root.messages.length))
                 const $div = this.$('.js-mess-message-content')
+                this.$('.js-select-panel-edit').addClass('edit')
                 $div.scrollTop($div[0].scrollHeight)
               } else {
                 Global.ui.notification.show('未知错误')
@@ -631,28 +630,37 @@ const MessageView = Base.ItemView.extend({
   },
   // 删除近期联系人
   delRecentlyContactHandler(e) {
+    const $target = $(e.currentTarget)
     let delId = ''
     let type = ''
-    if (this.activePerson.type === 'user') {
-      delId = $(e.currentTarget).closest('.js-contact-onePerson').data('id')
+    if ($target.data('type') === 'user') {
+      delId = $target.data('id')
       type = 0
-    } else if (this.activePerson.type === 'group') {
-      delId = $(e.currentTarget).closest('.js-recently-mass-message').data('id')
+    } else if ($target.data('type') === 'group') {
+      delId = $target.data('id')
       type = 1
     }
     const data = {
       chatId: delId,
       chatType: type,
     }
+    const activePerson = {
+      type: $target.data('type'),
+      id: delId
+    }
+    $target.parent().remove()
+    this.recentlyList = imService.delRecentlyFromList(this.recentlyList, activePerson)
     this.delRecentlyContactXhr(data)
       .done((res) => {
         if (res.result === 0) {
-          this.recentlyList = imService.delRecentlyFromList(this.recentlyList, this.activePerson)
+          // this.recentlyList = imService.delRecentlyFromList(this.recentlyList, this.activePerson)
           this.renderRecentlyData()
         } else {
           Global.ui.notification.show('未知错误')
         }
       })
+    e.preventDefault()
+    e.stopPropagation()
   },
   // 管理员面板操作
   // 显示管理员面板
@@ -741,7 +749,7 @@ const MessageView = Base.ItemView.extend({
       this.messContactSelectedList = _(this.messContactSelectedList).without(cancelItem)
       $target.find('.js-mess-select-contact').removeClass('hidden')
       $target.find('.js-mess-selected-contact').addClass('hidden')
-      $target.data('type', '')
+      $target.attr('data-type', '')
     } else {
       const selectedItem = _(this.userList).findWhere({
         userId: id,
@@ -749,21 +757,33 @@ const MessageView = Base.ItemView.extend({
       this.messContactSelectedList.push(selectedItem)
       $target.find('.js-mess-select-contact').addClass('hidden')
       $target.find('.js-mess-selected-contact').removeClass('hidden')
-      $target.data('type', 'selected')
+      $target.attr('data-type', 'selected')
       // this.$('.js-selected-sub-items').html(imService.getMessContact(this.userList,this.messContactSelectedList))
     }
   },
   // 侧边栏添加所有选择联系人
-  selectAllMessContactHandler(){
+  selectAllMessContactHandler(e){
+    const $target = $(e.currentTarget)
+    const subItem=$target.closest('.js-chat-select-container').find('.js-select-sub-item[data-type="selected"]')
     this.$('.chat-select-container').removeClass('sideLeft')
-    this.$('.js-select-panel-edit-num').html(this.messContactSelectedList.length)
-    this.$('.js-select-panel-show').addClass('hidden')
-    this.$('.js-select-panel-edit').removeClass('hidden')
+    this.$('.js-select-panel-edit-num').html(subItem.length)
+    if (subItem.length > 0) {
+      this.$('.js-select-panel-show').addClass('hidden')
+      this.$('.js-select-panel-edit').removeClass('hidden')
+      if (!this.$('.chat-message-noContact').hasClass('hidden')) {
+        this.$('.chat-message-noContact').addClass('hidden')
+      }
+    } else if (!this.$('.js-select-panel-edit').hasClass('hidden')) {
+      this.$('.js-select-panel-show').removeClass('hidden')
+      this.$('.js-select-panel-edit').addClass('hidden')
+    }
   },
   // 群发消息取消选中联系人
   cancelMessContactHandler() {
     this.$('.chat-select-container').removeClass('sideLeft')
-    this.$('.js-select-panel-show').removeClass('hidden')
+    // if (!this.$('.js-select-panel-edit').hasClass('hidden')) {
+    //   this.$('.js-select-panel-show').removeClass('hidden')
+    // }
   },
   // 当点击用户时，取消当前选择的用户
   clearContainerActiveHandle() {
@@ -884,12 +904,15 @@ const MessageView = Base.ItemView.extend({
   showSelectPanelHandle(e) {
     const $target = $(e.currentTarget)
     this.$('.chat-select-container').addClass('sideLeft')
-    $target.addClass('hidden')
+    // $target.addClass('hidden')
     if ($target.hasClass('edit')) {
       this.$('.js-chat-person-panel-title').addClass('hidden')
       this.$('.js-search-panel').addClass('hidden')
       this.$('.js-mess-select-container-footer').addClass('hidden')
       this.$('.js-chat-person-panel-title-edit').removeClass('hidden')
+      this.$('.js-mess-contact-num').html(this.$('.js-select-panel-edit-num').html())
+      // this.$('.js-mess-contact-num').html(this.messContactSelectedList.length)
+      // this.$('.js-mess-select-container').html(imService.getMessContact(this.messContactSelectedList, 'edit'))
     }
     e.preventDefault()
     e.stopPropagation()
@@ -902,7 +925,7 @@ const MessageView = Base.ItemView.extend({
     $div.scrollTop($div[0].scrollHeight)
   },
 
-  toggleExpPackHandler: function(e) {
+  toggleExpPackHandler: function (e) {
     var $target = $(e.currentTarget);
     if ($target.hasClass('disabled')) {
       return;
@@ -912,13 +935,13 @@ const MessageView = Base.ItemView.extend({
     e.stopPropagation()
     e.preventDefault()
   },
-  selectExpHandler: function(e) {
+  selectExpHandler: function (e) {
     var $target = $(e.currentTarget);
     var expId = $target.data('id');
     var $content = ''
-    if(this.activePerson.type==='user'){
+    if (this.activePerson.type === 'user') {
       $content = this.$el.find('.js-chat-input')
-    }else{
+    } else {
       $content = this.$el.find('.js-mess-input')
     }
     $content.val($content.val() + expId)
@@ -928,9 +951,9 @@ const MessageView = Base.ItemView.extend({
   contentClickHandler() {
     let $emoji = this.$('.js-chat-exp-pack')
     let $emojiPanel = $emoji.find('.js-chat-exp-pack-inner')
-    if(!$emojiPanel.hasClass('hidden')){
-      $emoji.toggleClass('sfa-icon-smile-green',false);
-      $emojiPanel.toggleClass('hidden',true)
+    if (!$emojiPanel.hasClass('hidden')) {
+      $emoji.toggleClass('sfa-icon-smile-green', false);
+      $emojiPanel.toggleClass('hidden', true)
     }
   },
   // 关闭弹窗时销毁轮询
