@@ -24,11 +24,11 @@
           modalDialogShadow:'modal-dialog-shadow',
           event: function () {
             window.store.commit(types.TOGGLE_LOGOUT_NOTICE,false)
-            window.store.commit(types.USER_LOGOUT_SUCCESS,{result:0})
+            window.store.commit(types.USER_LOGOUT_SUCCESS,{result:0,popupLogout: true})
           },
           closeEvent: function () {
             window.store.commit(types.TOGGLE_LOGOUT_NOTICE,false)
-            window.store.commit(types.USER_LOGOUT_SUCCESS,{result:0})
+            window.store.commit(types.USER_LOGOUT_SUCCESS,{result:0,popupLogout: true})
           }
         });
 

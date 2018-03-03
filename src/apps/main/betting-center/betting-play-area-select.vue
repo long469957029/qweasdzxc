@@ -82,7 +82,7 @@
             </div>
 
             <div class="tab-toolbar tab-border tab-toolbar-sm bc-quick-select vertical-middle clearfix"
-                 :class="playRule.style.operate === 'block' ? 'm-center' : 'm-left-lg pull-right'"
+                 :class="playRule.style.operate === 'block' ? 'm-center' : ''"
                  v-if="fRule.row.hasOp">
               <div class="tab-group clearfix">
                 <span class="tab" @click="selectOperate('all', fRule.row)" v-if="fRule.row.op.all">全</span>

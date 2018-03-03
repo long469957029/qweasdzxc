@@ -445,7 +445,7 @@
           options.colModel.push({
             label: '期号',
             name: 'ticketPlanId',
-            width: '25%',
+            width: '30%',
             formatter: (ticketPlanId) => {
               if (this.ticketInfo.abbreviated) {
                 return ticketPlanId.substring(4)

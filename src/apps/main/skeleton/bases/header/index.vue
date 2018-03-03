@@ -501,11 +501,12 @@
         }
         .header-headshot {
           display: inline-block;
-          width: 32px;
-          height: 32px;
+          width: 27px;
+          height: 27px;
           margin: 4px 0 0;
           vertical-align: top;
-          /*float: left;*/
+          border: 2px solid #0D676e;
+          border-radius: 50%;
           > img {
             vertical-align: top;
           }
