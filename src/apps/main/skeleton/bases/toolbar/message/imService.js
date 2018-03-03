@@ -124,25 +124,36 @@ module.exports = {
     const html = []
     let newMsgNum = 0
     _(records).each((item) => {
+      newMsgNum += item.newMsgNum
       if (item.userId !== undefined && item.userId !== null && item.userId !== '') {
         const itemHtml = []
-        if (item.userId === parents) {
-          let status = ''
-          if (active.type === 'user' && active.id === parents) {
-            status = 'active'
-          }
-          let onlineCircle = '<span class="text-circle contact-status"></span>'
-          let offLineStatus = 'avatar-gray'
-          if (item.online) {
-            offLineStatus = ''
-          } else {
-            onlineCircle = ''
-          }
-          let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close parents"></span>'
-          const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
-          itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="我的上级">` +
-            `<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}<span class="contact-name" >我的上级</span>${cancel}</div>`)
-        } else {
+        // if (item.userId === parents) {
+        //   let status = ''
+        //   if (active.type === 'user' && active.id === parents) {
+        //     status = 'active'
+        //   }
+        //   let onlineCircle = '<span class="text-circle contact-status"></span>'
+        //   let offLineStatus = 'avatar-gray'
+        //   if (item.online) {
+        //     offLineStatus = ''
+        //   } else {
+        //     onlineCircle = ''
+        //   }
+        //   let cancel = `<span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close parents" data-type="user" data-id="${item.userId}"></span>`
+        //   const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
+        //   itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="我的上级">` +
+        //     `<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}`)
+        //   if (item.newMsgNum > 0) {
+        //     cancel = ''
+        //     itemHtml.push('<div class="recently-item-info inline-block">')
+        //     itemHtml.push(`<div class="recently-name">我的上级</div>`)
+        //     itemHtml.push(`<div class="recently-desc">${item.lastMessage}</div>`)
+        //     itemHtml.push(`</div><div class=" recently-item-info-num"><div class="recently-newMessage-num-text inline-block">${item.newMsgNum}</div></div>${cancel}</div>`)
+        //   } else {
+        //     itemHtml.push('<div class="recently-item-info inline-block no">')
+        //     itemHtml.push(`<div class="recently-name">我的上级</div></div>${cancel}</div>`)
+        //   }
+        // } else {
           let status = ''
           if (active.type === 'user' && active.id === item.userId) {
             status = 'active'
@@ -159,19 +170,18 @@ module.exports = {
           const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
           itemHtml.push(`<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}`)
 
-          let cancel = '<span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close"></span>'
+          let cancel = `<span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close" data-type="user" data-id="${item.userId}"></span>`
           if (item.newMsgNum > 0) {
             cancel = ''
             itemHtml.push('<div class="recently-item-info inline-block">')
             itemHtml.push(`<div class="recently-name">${item.userName}</div>`)
             itemHtml.push(`<div class="recently-desc">${item.lastMessage}</div>`)
             itemHtml.push(`</div><div class=" recently-item-info-num"><div class="recently-newMessage-num-text inline-block">${item.newMsgNum}</div></div>${cancel}</div>`)
-            newMsgNum += item.newMsgNum
           } else {
             itemHtml.push('<div class="recently-item-info inline-block no">')
             itemHtml.push(`<div class="recently-name">${item.userName}</div></div>${cancel}</div>`)
           }
-        }
+        // }
         html.push(itemHtml.join(''))
       } else if (item.groupId !== undefined && item.groupId !== null && item.groupId !== '') {
         const itemHtml = []
@@ -182,8 +192,10 @@ module.exports = {
         itemHtml.push(`<div class="js-recently-mass-message recently-item ${status}" data-id='${item.groupId}'>`)
         itemHtml.push('<span class="sfa sfa-avata-persons inline-block"></span>')
         itemHtml.push('<div class="recently-item-info inline-block no">')
+
         itemHtml.push(`<div class="recently-name">群消息(${item.groupSize})</div>`)
-        itemHtml.push('</div><span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close"></span></div></div>')
+        itemHtml.push(`</div><span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close" data-type="group" data-id="${item.groupId}"></span></div></div>`)
+
         html.push(itemHtml.join(''))
       }
       // html.push(itemsHtml.join(''))
