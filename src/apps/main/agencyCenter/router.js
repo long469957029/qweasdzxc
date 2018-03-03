@@ -351,7 +351,7 @@ export default [
           subReturn: true,
         },
         sidebar,
-        parentRouter: 'ac/sum',
+        parentRouter: '/ac/sum',
       })
     },
   },

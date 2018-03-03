@@ -70,6 +70,7 @@ export default {
         }
 
         if (this.$route.meta && this.$route.meta.subRouter && _.contains(this.$route.meta.subRouter, this.prevRouter)) {
+          Global.router.back()
           return
         }
 

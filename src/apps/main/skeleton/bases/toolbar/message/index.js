@@ -504,7 +504,7 @@ const MessageView = Base.ItemView.extend({
         this.$('.js-select-panel-show').addClass('hidden')
         this.$('.chat-select-container').removeClass('sideLeft')
       }
-      this.$('.js-selected-sub-items').html('<div class="tooltip parsley-errors-list filled" id="parsley-id-4"><span class="sfa sfa-error-icon vertical-sub pull-left">' +
+      this.$('.chat-message-content').html('<div class="tooltip parsley-errors-list filled" id="parsley-id-4"><span class="sfa sfa-error-icon vertical-sub pull-left">' +
         '</span><div class="tooltip-inner parsley-required">请选择要发送的用户</div></div>')
       return false
     }

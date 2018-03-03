@@ -241,7 +241,7 @@ const BetDetailView = Base.ItemView.extend({
     $(document).confirm({
       content: html,
       title: '温馨提示',
-      modalDialogShadow: 'modal-dialog-shadow',
+      size: 'modal-dialog-shadow',
       agreeCallback() {
         self.confirmCancelTrack(e)
       },
