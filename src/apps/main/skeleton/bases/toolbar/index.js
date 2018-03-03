@@ -100,6 +100,8 @@ const ToolbarView = Base.ItemView.extend({
         if (res && res.result == 0) {
           if (!_(res.root.records).isNull() && !_(res.root.records).isEmpty()) {
             self.$('.js-coupon-remind').removeClass('hidden');
+            Global.memoryCache.set('myPointsNoUse',res.root.dataTotal.noUseCount)
+            Vue.$global.bus.$emit('myPointsNoUse',res.root.dataTotal.noUseCount)
           }else {
             self.$('.js-coupon-remind').addClass('hidden');
           }

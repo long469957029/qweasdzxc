@@ -47,7 +47,12 @@
     <% if (!menu.needAuth || menu.auth) { %>
     <li role="presentation" class="<% if (menu.isActive) { %>active<% } %>">
       <a class="router" href="#<%=menu.router %>">
-        <%=menu.name %><% if(menu.id === 407 && (dividendStatus === 1 || dividendStatus === 3)) { %> <span class="js-ac-dm-tip ac-dm-tip">待签约</span> <%}%>
+        <%=menu.name %>
+        <% if(menu.id === 407 && (dividendStatus === 1 || dividendStatus === 3)) { %>
+        <span class="js-ac-dm-tip ac-dm-tip">待签约</span>
+        <%}else if(menu.id === 307){%>
+        <span class="js-my-points text-hot"><%=myPointsNoUse%></span>
+        <% } %>
       </a>
     </li>
     <% } %>

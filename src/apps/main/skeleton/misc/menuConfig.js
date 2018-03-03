@@ -45,8 +45,8 @@ const menuConfig = [
           {
             id: 504,
             router: '/fc/ad',
-            name: '账变明细',
-            quickShowName: '账变<br/>明细',
+            name: '帐变明细',
+            quickShowName: '帐变<br/>明细',
           },
           {
             id: 506,

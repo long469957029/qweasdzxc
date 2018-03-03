@@ -45,7 +45,7 @@ const CouponView = Base.ItemView.extend({
 
   fetchMyCoupon() {
     const self = this
-    self.getMyCouponListXhr({couponStatus:0, pageSize:9, pageIndex:0})
+    self.getMyCouponListXhr({couponStatus:0, pageIndex:0})
       .always(() => {
         self.loadingFinish()
       })
