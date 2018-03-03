@@ -135,6 +135,7 @@
         z-index: -1;
         top: 3px;
         left: 3px;
+        box-shadow: 0 0 4px rgba(0, 0, 0, .4);
       }
       &:after {
         content: '';

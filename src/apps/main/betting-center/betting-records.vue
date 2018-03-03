@@ -248,6 +248,7 @@
         border-bottom: 1px solid $def-line-color;
       }
       th {
+        background-color: #ffffff;
         color: $new-inverse-color;
       }
       tr {

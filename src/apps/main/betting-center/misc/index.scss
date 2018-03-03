@@ -19,6 +19,9 @@
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
       }
+      .tab-group {
+        margin-right: 0;
+      }
     }
   }
   .bc-play-area {
@@ -152,9 +155,9 @@
 
 .bc-side-area {
   position: relative;
-  width: 278px;
+  flex: 1;
   min-height: 845px;
-  left: -1px;
+  margin-left: -1px;
   border-left: 1px solid $def-line-color;
   box-sizing: border-box;
 }

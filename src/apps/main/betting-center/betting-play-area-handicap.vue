@@ -5,7 +5,7 @@
       <betting-chips-setting class="inline-block" @addBetMoney="addBetMoney" :chips="chips"></betting-chips-setting>
 
       <div class="betting-panel inline-block">
-        金额
+        <span class="panel-title">金额</span>
         <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney"
                @keydown="inputValidate" @blur="isInputing = false">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
@@ -130,7 +130,7 @@
       <betting-chips-setting class="inline-block" @addBetMoney="addBetMoney" :chips="chips"></betting-chips-setting>
 
       <div class="betting-panel inline-block">
-        金额
+        <span class="panel-title">金额</span>
         <input type="text" class="total-betting-input" v-model.number="betMoney" @keyup="inputTotalBetMoney"
                @keydown="inputValidate" @blur="isInputing = false">
         <button class="btn btn-orange m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
@@ -485,6 +485,9 @@
 </script>
 
 <style lang="scss" scoped>
+
+  $grid-border-color: $im-line-color;
+
   .handicap-grid {
     margin-bottom: 18px;
     .title {
@@ -493,15 +496,17 @@
       text-align: center;
       line-height: 38px;
       font-size: 14px;
-      border: 1px solid $def-gray-color;
+      border: 1px solid $grid-border-color;
+      margin-right: -1px;
     }
 
     .main {
       display: flex;
       flex-grow: 5;
+      margin-right: -1px;
       .main-title {
         flex-grow: 1;
-        border-right: 1px solid #e6e6e6;
+        border-right: 1px solid $grid-border-color;
         width: 0;
         white-space: pre;
         &.main-title-odds {
@@ -527,7 +532,7 @@
       display: flex;
       .main {
         display: flex;
-        border: 1px solid $def-gray-color;
+        border: 1px solid $grid-border-color;
         border-top: none;
         border-left: none;
       }
@@ -545,7 +550,7 @@
         line-height: 25px;
         height: 25px;
         display: flex;
-        border: 1px solid $def-gray-color;
+        border: 1px solid $grid-border-color;
         margin-right: -1px;
         border-top: none;
         font-size: 14px;
@@ -564,6 +569,8 @@
           text-align: left;
           box-sizing: border-box;
           line-height: 25px;
+          display: flex;
+          align-items: center;
         }
         .main-item-right {
           width: 40%;
@@ -609,12 +616,12 @@
       width: 144px;
       line-height: 43px;
       height: 43px;
-      border: 1px solid #cccccc;
+      border: 1px solid $grid-border-color;
       border-top: none;
 
       div {
         flex-grow: 1;
-        border-right: 1px solid #cccccc;
+        border-right: 1px solid $grid-border-color;
         text-align: center;
         margin-right: -1px;
         border-top: none;
@@ -633,6 +640,8 @@
 
     .odds {
       color: $prominent-color;
+      font-size: 12px;
+      vertical-align: top;
     }
   }
 
@@ -642,7 +651,11 @@
 
   .betting-panel {
     vertical-align: top;
-    font-size: 14px;
+    font-size: 0;
+    .panel-title {
+      font-size: 14px;
+      margin-right: 10px;
+    }
   }
 
   .total-betting-input {

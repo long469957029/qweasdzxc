@@ -16,7 +16,7 @@
         <!-- 路珠 -->
         <road-balls-analysis :ticket-info="ticketInfo" v-if="ticketInfo.roadBalls"></road-balls-analysis>
       </div>
-      <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule"
+      <betting-history class="bc-side-area" :ticket-info="ticketInfo" :play-rule="playRule"
                        :last-open-id="bettingInfo.lastOpenId"
                        ref="bettingHisotry"></betting-history>
     </div>
@@ -202,12 +202,8 @@
 </script>
 
 <style lang="scss" scoped>
-  .bc-play-main .bc-side-area {
-    width: 278px;
-    min-height: 845px;
-  }
 
-  .bc-play-container.clearfix {
+  .bc-play-container {
     display: flex;
   }
 </style>

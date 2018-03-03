@@ -258,7 +258,7 @@
               width: '8%'
             },
           ],
-          height: 145,
+          height: 152,
           showEmpty: true,
           emptyTip: '<div class="sfa sfa-bc-empty vertical-middle"></div> 暂未添加选号',
         },
@@ -951,6 +951,7 @@
     border-radius: $globalBtnRadius;
     border: 1px solid $def-gray-color;
     overflow: hidden;
+    box-sizing: border-box;
   }
 
   .prev-panel {
