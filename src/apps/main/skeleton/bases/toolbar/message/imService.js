@@ -193,7 +193,7 @@ module.exports = {
         itemHtml.push('<span class="sfa sfa-avata-persons inline-block"></span>')
         itemHtml.push('<div class="recently-item-info inline-block no">')
 
-        itemHtml.push(`<div class="recently-name">群消息(${item.groupSize})</div>`)
+        itemHtml.push(`<div class="recently-name">群消息(${item.groupSize}人)</div>`)
         itemHtml.push(`</div><span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close" data-type="group" data-id="${item.groupId}"></span></div></div>`)
 
         html.push(itemHtml.join(''))
