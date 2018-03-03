@@ -7,7 +7,8 @@
       </div>
       <div class="his-draw" ref="history">
         <div ref="historyInner">
-          <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height" table-class="table"
+          <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height"
+                       table-class="table"
                        :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
                        :emptyTip="gridOps.emptyTip"
                        ref="historyGrid"></static-grid>
@@ -21,54 +22,56 @@
       </div>
     </div>
   </div>
-  <div class="betting-history" v-else>
-    <div class="his-main">
-      <div class="his-top">
+  <div class="betting-history handicap" v-else>
+    <div class="his-main" :class="{reverse: currentPanel !== 'twoSide'}">
+      <!--开奖号码-->
+      <div class="his-top cursor-pointer" @click="togglePanel()">
         <span class="his-icon">
         <span class="sfa sfa-mmc-double-ball double-ball-sm vertical-middle"></span>
-        </span>
-        <span class="font-md text-default vertical-middle">{{title}}</span>
-        <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" :class="{up: currentPanel !== 'twoSide'}"
-              @click="togglePanel()"></span>
+        </span> <span class="font-md text-default vertical-middle">{{title}}</span>
+        <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" v-if="currentPanel === 'twoSide'"
+        ></span>
       </div>
-      <div class="his-draw" ref="history">
-        <div ref="historyInner">
-          <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height" table-class="table"
-                       :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
-                       :emptyTip="gridOps.emptyTip"
-                       ref="historyGrid"></static-grid>
-          <div class="text-center p-top-smd p-LR-xs border-top">
-            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
-                         target="_blank">
-              更多历史开奖
-            </router-link>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="his-main" v-if="ticketInfo.twoSide">
-      <div class="his-top">
+      <!--两面长龙-->
+      <div class="his-top cursor-pointer" @click="togglePanel()">
         <span class="his-icon">
         <span class="sfa sfa-mmc-two-side vertical-middle"></span>
         </span>
         <span class="font-md text-default vertical-middle">两面长龙排行</span>
-      </div>
-      <div class="his-draw two-side" ref="twoSide">
-        <div class="two-side-inner" ref="twoSideInner">
-          <div class="two-side-title">统计至第{{lastOpenId}}期</div>
-          <transition-group class="two-side-main"
-                            enter-active-class="animated-quick fadeIn"
-                            leave-active-class="animated-quick fadeOut"
-                            tag="div"
-          >
-            <div class="two-side-cell" v-for="(item, i) in twoSideList" :key="i">
-              <div class="cell-left">{{item.type | twoSideType(ticketInfo.type)}}------{{item.result}}</div>
-              <div class="cell-right">{{item.count}}期</div>
-            </div>
-          </transition-group>
-        </div>
+        <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" v-if="currentPanel !== 'twoSide'"
+        ></span>
       </div>
     </div>
+    <div class="his-draw" ref="history" v-show="currentPanel !== 'twoSide'">
+      <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height"
+                   table-class="table"
+                   :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
+                   :emptyTip="gridOps.emptyTip"
+                   ref="historyGrid"></static-grid>
+      <div class="text-center p-top-smd p-LR-xs border-top">
+        <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
+                     target="_blank">
+          更多历史开奖
+        </router-link>
+      </div>
+    </div>
+    <!--<div class="his-main" v-if="ticketInfo.twoSide">-->
+    <div class="his-draw two-side" v-show="currentPanel === 'twoSide'">
+      <div class="two-side-inner" ref="twoSideInner">
+        <div class="two-side-title">统计至第{{lastOpenId}}期</div>
+        <transition-group class="two-side-main"
+                          enter-active-class="animated-quick fadeIn"
+                          leave-active-class="animated-quick fadeOut"
+                          tag="div"
+        >
+          <div class="two-side-cell" v-for="(item, i) in twoSideList" :key="i">
+            <div class="cell-left">{{item.type | twoSideType(ticketInfo.type)}}------{{item.result}}</div>
+            <div class="cell-right">{{item.count}}期</div>
+          </div>
+        </transition-group>
+      </div>
+    </div>
+    <!--</div>-->
   </div>
 </template>
 
@@ -382,27 +385,27 @@
           this.currentPanel = this.currentPanel === 'record' ? 'twoSide' : 'record'
         }
 
-        if (this.currentPanel === 'record') {
-          Velocity(this.$refs.history, {
-            height: this.$refs.historyInner.offsetHeight,
-            opacity: 1,
-          })
-          if (this.$refs.twoSide) {
-            Velocity(this.$refs.twoSide, {
-              height: 0,
-              opacity: 0,
-            })
-          }
-        } else {
-          Velocity(this.$refs.history, {
-            height: 0,
-            opacity: 0,
-          })
-          Velocity(this.$refs.twoSide, {
-            height: this.$refs.twoSideInner.offsetHeight,
-            opacity: 1,
-          })
-        }
+        // if (this.currentPanel === 'record') {
+        //   Velocity(this.$refs.history, {
+        //     height: this.$refs.historyInner.offsetHeight,
+        //     opacity: 1,
+        //   })
+        //   if (this.$refs.twoSide) {
+        //     Velocity(this.$refs.twoSide, {
+        //       height: 0,
+        //       opacity: 0,
+        //     })
+        //   }
+        // } else {
+        //   Velocity(this.$refs.history, {
+        //     height: 0,
+        //     opacity: 0,
+        //   })
+        //   Velocity(this.$refs.twoSide, {
+        //     height: this.$refs.twoSideInner.offsetHeight,
+        //     opacity: 1,
+        //   })
+        // }
       },
 
       update() {
@@ -644,8 +647,9 @@
 <style lang="scss" scoped>
   .his-top {
     position: relative;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     padding: 15px 20px 15px 30px;
+    height: 26px;
     .arrow {
       position: relative;
       float: right;
@@ -657,7 +661,23 @@
     }
   }
 
+  .betting-history {
+    &.handicap {
+
+      .his-top {
+        padding: 10px 20px 10px 30px;
+      }
+    }
+  }
+
   .his-main {
+    display: flex;
+    flex-direction: column;
+
+    &.reverse {
+      flex-direction: column-reverse;
+    }
+
     th {
       position: relative;
       &:after {
