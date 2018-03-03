@@ -93,12 +93,16 @@
       showModal() {
         $(this.$refs.modal).modal(this.options)
           .on('hidden.modal', () => {
-            this.$emit('change', false)
+            _.delay(() => {
+              this.$emit('change', false)
+            }, 300)
           })
       },
       hide() {
         $(this.$refs.modal).modal('hide')
-        this.$emit('change', false)
+        _.delay(() => {
+          this.$emit('change', false)
+        }, 300)
       }
     },
 

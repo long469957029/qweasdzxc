@@ -106,7 +106,6 @@
   }
   .bc-bottom-area {
     width: 100%;
-    height: 257px;
     overflow: hidden;
   }
   .bc-records-tabs-list {
@@ -138,16 +137,21 @@
   }
   .bc-records-tables {
     width: 100%;
-    height: 168px;
     table {
       thead {
         border-bottom: 1px solid $def-line-color;
       }
       th {
         color: $new-inverse-color;
+        background: #ffffff;
       }
       tr {
         border-bottom: 1px dashed $sec-line-color;
+      }
+
+      td {
+        padding: 8px 3px 7px;
+        height: 25px;
       }
     }
   }

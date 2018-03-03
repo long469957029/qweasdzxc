@@ -6,17 +6,17 @@
     </div>
     <div class="bc-records-tables">
       <slot-static-grid v-show="type === 'betting'" :table-class="tableClass" :col-model="bettingOps.colModel" :height="height"
-                   :url="bettingOps.url" :reqData="bettingOps.data" :abort="false" :data-prop="bettingOps.dataProp"
+                   :url="bettingOps.url" :reqData="bettingOps.data" :abort="false" :data-prop="bettingOps.dataProp" :scroll="false"
                    :emptyTip="bettingOps.emptyTip"
                    ref="bettingGrid">
         <betting-records-row slot="row" slot-scope="{row, index}" :key="index" :row="row" @update="update"></betting-records-row>
       </slot-static-grid>
       <static-grid v-show="type === 'chase'" :table-class="tableClass" :col-model="chaseOps.colModel" :height="height"
                    :url="chaseOps.url" :reqData="chaseOps.data" :abort="false" :data-prop="chaseOps.dataProp"
-                   :emptyTip="chaseOps.emptyTip"
+                   :emptyTip="chaseOps.emptyTip" :scroll="false"
                    ref="chaseGrid"></static-grid>
     </div>
-    <div class="text-center font-sm m-top-sm">
+    <div class="more-records">
       <router-link :to="type === 'betting' ? '/fc/td' : '/fc/cr'" class="btn btn-link text-auxiliary">更多记录>></router-link>
     </div>
   </div>
@@ -41,7 +41,7 @@
 
     data() {
       return {
-        height: 125,
+        height: 204,
         type: 'betting',
         tableClass: 'table table-similar table-center no-margin',
 
@@ -83,7 +83,7 @@
           emptyTip: '最近无投注记录',
           url: '/ticket/bethistory/userbethistory.json',
           data: {
-            pageSize: 10,
+            pageSize: 5,
             ticketId: this.ticketId,
           },
           dataProp: 'root.betList',
@@ -170,7 +170,7 @@
           emptyTip: '最近无追号记录',
           url: 'ticket/bethistory/userchasehistory.json',
           data: {
-            pageSize: 20,
+            pageSize: 5,
             ticketId: this.ticketId,
           },
           dataProp: 'root.chaseList',
@@ -240,22 +240,12 @@
     }
   }
 
-  .bc-records-tables {
-    width: 100%;
-    height: 168px;
-    table {
-      thead {
-        border-bottom: 1px solid $def-line-color;
-      }
-      th {
-        background-color: #ffffff;
-        color: $new-inverse-color;
-      }
-      tr {
-        border-bottom: 1px dashed $sec-line-color;
-      }
-    }
+  .more-records {
+    text-align: center;
+    font-size: 14px;
+    margin: 20px 0;
   }
+
   .detail-popover {
     max-width: 350px;
     max-height: 90px;

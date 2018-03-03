@@ -371,6 +371,8 @@ const quickConfig = [
     mark: 'jsk3',
     zhName: '江苏快3',
     hasMargin: true,
+    //在只有一个进阶玩法的情况下直接展示玩法说明
+    notShowAdvance: true,
     trendOps: {
       periods: trendLowPeriods,
       distribution: true,

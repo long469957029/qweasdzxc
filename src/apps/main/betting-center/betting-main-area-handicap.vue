@@ -16,7 +16,7 @@
         <!-- 路珠 -->
         <road-balls-analysis :ticket-info="ticketInfo" v-if="ticketInfo.roadBalls"></road-balls-analysis>
       </div>
-      <betting-history class="bc-side-area" :ticket-info="ticketInfo" :play-rule="playRule"
+      <betting-history class="bc-side-area" :ticket-info="ticketInfo" :play-rule="playRule" :height="660"
                        :last-open-id="bettingInfo.lastOpenId"
                        ref="bettingHisotry"></betting-history>
     </div>
@@ -180,6 +180,7 @@
               Global.ui.notification.show('投注成功！', {
                 type: 'success',
                 hasFooter: false,
+                closeBtn: false,
                 displayTime: 800,
                 size: 'modal-xs',
               })
