@@ -66,8 +66,8 @@
                 </div>
               </div>
             </div>
-            <div :class="`points-way way-${couponInfo.wayId}`" key="way" v-if="isMyCoupon && couponInfo.status === 0 && !_(couponInfo.wayId).isNull()">
-              <div :class="['points-way-detail',cardInfo.type]">{{formatCouponWay.text}}</div>
+            <div :class="`points-way way-${couponInfo.wayId > 3 ? 3 : couponInfo.wayId}`" key="way" v-if="isMyCoupon && couponInfo.status === 0 && !_(couponInfo.wayId).isNull()">
+              <div :class="['points-way-detail',cardInfo.type]">{{formatCouponWay}}</div>
             </div>
             <div v-show="showBtn" key="exchange" class="points-bottom-btn">
               <button class="btn btn-white exchange-btn" v-if="couponInfo.couponStatus === 1"
@@ -169,8 +169,8 @@
           gameType: this.couponInfo.gameType
         })
       },
-      formatCouponWay(){
-        return CARD_WAY[this.couponInfo.wayId]
+      formatCouponWay(){  // 目前后台返回的获取方式 种类太多 如果id大于3  默认显示为平台赠送
+        return _(CARD_WAY[this.couponInfo.wayId]).isUndefined() ? '平台赠送' : CARD_WAY[this.couponInfo.wayId].text
       },
       cardInfo() {
         return CARD_TYPE[this.couponInfo.couponType]
