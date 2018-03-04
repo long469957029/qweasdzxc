@@ -76,7 +76,7 @@ const BetDetailView = Base.ItemView.extend({
         let splitNum = info.betNums.split('|')
         let fotmattedNum = ''
         if (splitNum.length > 1) {
-          playDesc += ` ${formatOptionals(splitNum[0]).join(',')}`
+          playDesc += `（${formatOptionals(splitNum[0]).join(',')}）`
           fotmattedNum = splitNum[1]
         } else {
           fotmattedNum = info.betNums

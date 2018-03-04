@@ -54,12 +54,15 @@
               <div class="opening-cell" v-for="(preview, index) in currentBettingList.bettingList">
                 <div class="opening-left">
                   <template v-if="preview.levelName !== preview.playName">
-                    <template v-if="preview.levelName == '任选'">
+                    <template v-if="preview.levelName === '任选'">
                       【{{preview.groupName}}_{{preview.playName}}】
                     </template>
                     <template v-else>
                       【{{preview.levelName}}_{{preview.playName}}】
                     </template>
+                  </template>
+                  <template v-else>
+                    【{{preview.playName}}】
                   </template>
                 </div>
 
