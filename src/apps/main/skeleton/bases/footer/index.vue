@@ -126,9 +126,10 @@ export default {
   /*display: none;*/
   height: 280px;
   background: #21232a;
+  overflow: hidden;
   .line{
     position: absolute;
-    width: 98%;
+    width: 20000px;
     height: 0;
     border: 1px dashed #262931;
     top: 200px;
