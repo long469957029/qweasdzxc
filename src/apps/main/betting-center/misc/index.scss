@@ -10,20 +10,6 @@
     color: $inverse-color;
     border-right: 1px solid $def-line-color;
   }
-  .bc-basic-rules {
-    .tab-toolbar {
-      margin-bottom: 0;
-      padding-left: 13px;
-      position: relative;
-      .tab.active {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-      }
-      .tab-group {
-        margin-right: 0;
-      }
-    }
-  }
   .bc-play-area {
     position: relative;
     min-height: 300px;
@@ -152,6 +138,7 @@
       td {
         padding: 8px 3px 7px;
         height: 25px;
+        white-space: nowrap;
       }
     }
   }

@@ -553,8 +553,13 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
 
               this.$emit('chaseComplete')
 
+
               Global.ui.notification.show('追号成功！', {
                 type: 'success',
+                hasFooter: false,
+                closeBtn: false,
+                displayTime: 800,
+                size: 'modal-xs',
               })
             } else {
               Global.ui.notification.show(`${res.msg}` || '')

@@ -50,13 +50,38 @@
 
     methods: {
       bettingCancel(betId) {
-        bettingCancelApi({betId}, ({data}) => {
-          if (data && data.result === 0) {
-            this.$emit('update')
-            Global.ui.notification.show('操作成功。')
-          } else {
-            Global.ui.notification.show('操作失败。')
-          }
+        const html = '<p>此操作将撤销当前投注单，是否继续？</p>'
+        $(document).confirm({
+          content: html,
+          size: 'modal-dialog-shadow',
+          title: '温馨提示',
+          footer: '<div class="text-center control-confirm-special m-top-md">' +
+          `<button type="button" class="btn btn-left confirm-agree btn-chase-confirm-agree" data-loading-text="保存中">确定</button>` +
+          `<button type="button" class="btn btn-link btn-right confirm-reject btn-chase-confirm-reject" data-dismiss="modal">取消</button></div>`,
+          agreeCallback: () => {
+            bettingCancelApi({betId}, ({data}) => {
+              if (data && data.result === 0) {
+                window.Global.m.publish('acct:cancelBet')
+                Vue.$global.bus.$emit('cancel-bet')
+                this.$emit('update')
+                Global.ui.notification.show('撤单成功！', {
+                  type: 'success',
+                  hasFooter: false,
+                  displayTime: 1000,
+                  closeBtn: false,
+                  size: 'modal-xs',
+                })
+              } else {
+                Global.ui.notification.show('撤单失败！' + res.msg, {
+                  type: 'success',
+                  hasFooter: false,
+                  displayTime: 1000,
+                  closeBtn: false,
+                  size: 'modal-xs',
+                })
+              }
+            })
+          },
         })
       }
     },
