@@ -1269,9 +1269,8 @@
   .bc-advance-mode-single {
     color: $prominent-secondary-btn-color;
     margin: 20px 0 0 20px;
-    flex: 1;
     .advance-play-des {
-      margin: -3px 4px 0 20px;
+      margin-top: -3px;
     }
   }
 
@@ -1285,9 +1284,7 @@
   }
 
   .advance-bonus-single {
-    margin-right: 40px;
     margin-top: 20px;
-    float: right;
   }
 
   .bc-play-select-area {
@@ -1318,7 +1315,7 @@
       font-size: $font-xs;
       color: $inverse-color;
       flex: 1 0 180px;
-      margin-right: 29px;
+      margin-right: 20px;
       text-align: right;
     }
   }

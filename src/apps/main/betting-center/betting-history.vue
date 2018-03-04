@@ -16,7 +16,8 @@
             <tr slot="ex-row" key="ex-row">
               <td colspan="3">
                 <div class="text-center p-TB-smd border-top">
-                  <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
+                  <router-link class="btn btn-link more-analysis"
+                               :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
                                target="_blank">
                     更多历史开奖
                   </router-link>
@@ -54,12 +55,15 @@
                    :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
                    ref="historyGrid">
         <tr slot="ex-row" key="ex-row">
-          <div class="text-center p-TB-smd border-top">
-            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
-                         target="_blank">
-              更多历史开奖
-            </router-link>
-          </div>
+          <td colspan="3">
+            <div class="text-center p-TB-smd border-top">
+              <router-link class="btn btn-link more-analysis"
+                           :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
+                           target="_blank">
+                更多历史开奖
+              </router-link>
+            </div>
+          </td>
         </tr>
       </static-grid>
     </div>

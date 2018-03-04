@@ -67,35 +67,35 @@
           colModel: [
             {
               label: '投注时间',
-              width: '12%',
+              width: '167',
             },
             {
               label: '玩法',
-              width: '10%',
+              width: '143',
             },
             {
               label: '期号',
-              width: '10%',
+              width: '143',
             },
             {
               label: '开奖号码 ',
-              width: '14%',
+              width: '168',
             },
             {
               label: '投注内容 ',
-              width: '12%',
+              width: '143',
             },
             {
               label: '投注金额',
-              width: '10%',
+              width: '143',
             },
             {
               label: '状态',
-              width: '10%',
+              width: '143',
             },
             {
               label: '操作 ',
-              width: '10%',
+              width: '143',
             },
           ],
           emptyTip: '最近无投注记录',
@@ -103,6 +103,8 @@
           data: {
             pageSize: 5,
             ticketId: this.ticketId,
+            startTime: _(moment().startOf('day')).toTime(),
+            endTime: _(moment().endOf('day')).toTime(),
           },
           dataProp: 'root.betList',
         },
@@ -111,7 +113,7 @@
             {
               label: '追号时间',
               name: 'chaseTime',
-              width: '12%',
+              width: '167',
               formatter(val) {
                 return _(val).toTime()
               },
@@ -119,7 +121,7 @@
             {
               label: '彩种',
               name: 'ticketName',
-              width: '10%',
+              width: '120',
               formatter(val) {
                 return val
               },
@@ -127,17 +129,17 @@
             {
               label: '玩法',
               name: 'playName',
-              width: '10%',
+              width: '120',
             },
             {
               label: '开始奖期',
               name: 'ticketPlanId',
-              width: '12%',
+              width: '144',
             },
             {
               label: '追号进度',
               name: 'chaseAllPeriods',
-              width: '12%',
+              width: '140',
               formatter(val, index, bet) {
                 return `${bet.chaseBetCount}/${bet.chaseAllPeriods}`
               },
@@ -145,7 +147,7 @@
             {
               label: '追号总金额',
               name: 'chaseAllMoney',
-              width: '12%',
+              width: '140',
               formatter(val, index, bet) {
                 return `${_(bet.chaseBetMoney).convert2yuan()}/${_(bet.chaseAllMoney).convert2yuan()}`
               },
@@ -153,7 +155,7 @@
             {
               label: '中奖金额',
               name: 'chasePrizeMoney',
-              width: '12%',
+              width: '140',
               formatter(val) {
                 return val === 0 ? '0' : _(val).fixedConvert2yuan()
               },
@@ -161,7 +163,7 @@
             {
               label: '追号状态',
               name: 'chaseStatus',
-              width: '10%',
+              width: '143',
               formatter(val) {
                 let html = ''
                 if (val === 0) {
@@ -179,7 +181,7 @@
             {
               label: '操作',
               name: 'ticketChaseId',
-              width: '10%',
+              width: '120',
               formatter(val, index, bet) {
                 return `<a class="btn-link btn-link-inverse js-gl-chase-detail-dialog"  data-id="${bet.ticketChaseId}" >查看</a>`
               },
@@ -190,6 +192,8 @@
           data: {
             pageSize: 5,
             ticketId: this.ticketId,
+            startTime: _(moment().startOf('day')).toTime(),
+            endTime: _(moment().endOf('day')).toTime(),
           },
           dataProp: 'root.chaseList',
         }

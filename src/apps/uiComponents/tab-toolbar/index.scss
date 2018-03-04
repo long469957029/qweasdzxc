@@ -79,7 +79,7 @@ $tab-toolbar-circle-colors: (
           cursor: pointer;
           display: inline-block;
           text-align: center;
-          margin-right: $filter-sm;
+          margin-right: 6px;
           min-width: 54px;
           height: $tab-toolbar-height;
           line-height: $tab-toolbar-height;
@@ -102,7 +102,7 @@ $tab-toolbar-circle-colors: (
     }
     .tab-title {
       font-size: 14px;
-      color: $new-inverse-color;
+      color: $def-black-color;
       line-height: 40px;
       width: auto;
       height: 40px;

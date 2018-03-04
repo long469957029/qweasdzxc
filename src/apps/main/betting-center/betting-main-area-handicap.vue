@@ -1,22 +1,20 @@
 <template>
   <div class="width-100 bc-play-main">
-    <betting-rules :initial-rules="playLevels"></betting-rules>
+    <betting-rules :initial-rules="playLevels" :component-type="componentType"></betting-rules>
 
     <div class="bc-play-container clearfix">
-      <div class="bc-play-left">
-        <betting-advance-rules :type="'single-hidden'"></betting-advance-rules>
-        <div class="m-LR-smd">
-          <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
-            <betting-play-area-handicap :play-info="playInfo" :play-rule="playRule" :ticket-info="ticketInfo"
-                                        :pushing="pushing" :sale="bettingInfo.sale" :pending="bettingInfo.pending"
-                                        ref="area" @lotteryBuy="lotteryBuy"></betting-play-area-handicap>
-          </div>
+      <div class="bc-play-left" ref="playArea">
+        <betting-advance-rules :type="'single-hidden'" :show-title="false"></betting-advance-rules>
+        <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
+          <betting-play-area-handicap :play-info="playInfo" :play-rule="playRule" :ticket-info="ticketInfo"
+                                      :pushing="pushing" :sale="bettingInfo.sale" :pending="bettingInfo.pending"
+                                      ref="area" @lotteryBuy="lotteryBuy"></betting-play-area-handicap>
         </div>
 
         <!-- 路珠 -->
         <road-balls-analysis :ticket-info="ticketInfo" v-if="ticketInfo.roadBalls"></road-balls-analysis>
       </div>
-      <betting-history class="bc-side-area" :ticket-info="ticketInfo" :play-rule="playRule" :height="660"
+      <betting-history class="bc-side-area" :ticket-info="ticketInfo" :play-rule="playRule" :height="computedHistoryHeight"
                        :last-open-id="bettingInfo.lastOpenId"
                        ref="bettingHisotry"></betting-history>
     </div>
@@ -46,6 +44,7 @@
     props: {
       ticketInfo: Object,
       ticketId: Number,
+      componentType: String,
     },
     components: {
       BettingRules,
@@ -57,6 +56,7 @@
     },
     data() {
       return {
+        historyHeight: 0,
         unit: 10000,
         playRule: {},
         playInfo: {},
@@ -75,7 +75,10 @@
       }),
       ...mapGetters([
         'playLevels',
-      ])
+      ]),
+      computedHistoryHeight() {
+        return this.historyHeight > 0 ? this.historyHeight - 124 : 0
+      }
     },
 
     watch: {
@@ -90,12 +93,14 @@
 
           this.playInfo = this.$store.getters.playInfo(playId, this.bettingChoice.groupId);
 
-          const playInfo = this.playInfo
-
-          this.$store.commit(types.SET_MAX_BONUS, playInfo.betMethodMax)
-          this.$store.commit(types.SET_PLAY_INFO, playInfo)
+          this.$store.commit(types.SET_MAX_BONUS, this.playInfo.betMethodMax)
+          this.$store.commit(types.SET_PLAY_INFO, this.playInfo)
 
           this.clearAll()
+
+          this.$nextTick(() => {
+            this.historyHeight = this.$refs.playArea.offsetHeight
+          })
         },
       },
       'bettingInfo.planId': {
@@ -126,7 +131,11 @@
     },
 
     methods: {
-
+      selectAreaChange() {
+        this.$nextTick(() => {
+          this.historyHeight = this.$refs.playArea.offsetHeight
+        })
+      },
       clearAll() {
         this.$refs.area.clearAll()
       },
@@ -203,8 +212,12 @@
 </script>
 
 <style lang="scss" scoped>
+  .bc-play-left {
+    padding: 0 15px 80px;
+  }
 
   .bc-play-container {
     display: flex;
   }
+
 </style>

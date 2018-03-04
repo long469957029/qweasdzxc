@@ -129,6 +129,19 @@
     .tab-group {
       padding-left: 0;
     }
+
+    .tab-toolbar {
+      margin-bottom: 0;
+      padding-left: 13px;
+      position: relative;
+      .tab.active {
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+      }
+      .tab-group {
+        margin-right: 0;
+      }
+    }
   }
   .mmc {
     background-color: transparent;
@@ -150,6 +163,13 @@
     .tab-toolbar.tab-pill.tab-pill-deep .tab {
       padding: 0 8px 0 9px;
     }
+  }
+
+  .handicap {
+    .tab-toolbar.tab-pill.tab-pill-deep .tab {
+      padding: 0 15px;
+    }
+
   }
 
 </style>
