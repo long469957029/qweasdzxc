@@ -179,13 +179,7 @@ const _bindBetDetailHandler = () => {
                   })
                   $dialog.modal('hide')
                 } else {
-                  Global.ui.notification.show('撤单失败！'+res.msg,{
-                    type: 'success',
-                    hasFooter: false,
-                    displayTime: 1000,
-                    closeBtn: false,
-                    size: 'modal-xs',
-                  })
+                  Global.ui.notification.show('撤单失败！'+res.msg)
                 }
               })
             }
