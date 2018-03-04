@@ -25,7 +25,12 @@
           <li class="bc-betDetail-text" v-for="item in bettingList">
             <span class="confirm-title">
               <template v-if="item.levelName !== item.playName">
-              {{item.levelName}}{{item.playName}}
+                <template v-if="item.levelName == '任选'">
+                  {{item.groupName}}{{item.playName}}
+                </template>
+                <template v-else>
+                  {{item.levelName}}{{item.playName}}
+                </template>
               </template>
               <template v-else>
               {{item.playName}}

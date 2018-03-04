@@ -1,6 +1,6 @@
 <template>
   <div :class="componentType || ''">
-    <div class="bc-missOptional-main" v-if="missOptional && _.find(playRule.topOp, op => op)">
+    <div class="bc-missOptional-main" :class="{'has-optional' : !_.isEmpty(playRule.optionals)}" v-if="missOptional && _.find(playRule.topOp, op => op)">
       <!--<transition-group-->
         <!--enter-active-class="animated fadeInLeftBig"-->
         <!--leave-active-class="animated fadeOutLeftBig absolute"-->
@@ -15,7 +15,7 @@
     </div>
 
     <!--选择位置-->
-    <div class="tab-toolbar tab-circle tab-default" v-if="!_.isEmpty(playRule.optionals)">
+    <div class="tab-optionals tab-toolbar tab-circle" v-if="!_.isEmpty(playRule.optionals)">
       <div class="select-item-title tab-title">
         <div>位置</div>
       </div>
@@ -580,10 +580,20 @@
   .cbutton {
     transition: all .3s ease-out;
   }
+  .tab-optionals {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .has-optional {
+    margin: 15px 0;
+  }
+
 
   /*mmc*/
 
   .mmc {
+    padding: 20px 0;
     .bc-quick-select {
       flex: 0 0 172px;
     }
@@ -597,6 +607,9 @@
         }
       }
     }
+    .tab-optionals {
+      margin-top: 0;
+    }
     .bc-playArea-items {
       margin: 0 auto 0 auto;
       min-height: 70px;
@@ -607,9 +620,14 @@
           margin-bottom: 0;
         }
       }
+      &:first-of-type {
+        .bc-select-item {
+          margin-bottom: 10px;
+        }
+      }
     }
     .bc-page-content {
-      margin: 37px 0;
+      margin: 20px 0;
     }
   }
 </style>

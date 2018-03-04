@@ -238,6 +238,7 @@
       ],
     },
     mark6: {
+      cols: ['20%', '50%'],
       pageSize: 15,
       formats: [
         function (val) {
@@ -404,7 +405,7 @@
           this.$refs.historyGrid.update()
         }
       },
-      generateGridOptions({pageSize = 15, dataProp = 'root.openedList', formats} = {}) {
+      generateGridOptions({pageSize = 15, dataProp = 'root.openedList', formats, cols} = {}) {
         const url = this.ticketInfo.id !== 19 ? '/ticket/ticketmod/openhistory.json' : '/ticket/bet/openHistory.json'
         const options = {
           tableClass: this.tableClass,
@@ -435,7 +436,7 @@
           options.colModel.push({
             label: '期号',
             name: 'ticketPlanId',
-            width: '24%',
+            width: cols ? cols[0] : '24%',
             formatter: (ticketPlanId) => {
               if (this.ticketInfo.abbreviated) {
                 return ticketPlanId.substring(4)
@@ -448,7 +449,7 @@
           options.colModel.push({
             label: '开奖号码',
             name: 'ticketOpenNum',
-            width: '48%',
+            width: cols ? cols[1] : '48%',
             formatter: formats && formats[0] ? (val, index, list) => {
               return formats[0].apply(this, [val, index, list])
             } : null,

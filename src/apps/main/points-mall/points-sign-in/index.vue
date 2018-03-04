@@ -78,7 +78,7 @@
               连续签到时间
             </div>
             <div class="btn-panel">
-              <button class="btn confirm-btn" data-dismiss="modal">确定</button>
+              <button class="btn confirm-btn" data-dismiss="modal">返回</button>
             </div>
           </div>
         </div>
