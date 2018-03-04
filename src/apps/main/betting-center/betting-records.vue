@@ -103,6 +103,8 @@
           data: {
             pageSize: 5,
             ticketId: this.ticketId,
+            startTime: _(moment().startOf('day')).toTime(),
+            endTime: _(moment().endOf('day')).toTime(),
           },
           dataProp: 'root.betList',
         },
@@ -190,6 +192,8 @@
           data: {
             pageSize: 5,
             ticketId: this.ticketId,
+            startTime: _(moment().startOf('day')).toTime(),
+            endTime: _(moment().endOf('day')).toTime(),
           },
           dataProp: 'root.chaseList',
         }

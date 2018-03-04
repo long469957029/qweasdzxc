@@ -279,7 +279,7 @@
     },
 
     methods: {
-      beforeEnter: function (el) {
+      beforeEnter(el) {
         el.style.opacity = 0
         // el.style.transform = 'translateY(200px)'
         Velocity(el, {
@@ -288,7 +288,7 @@
           duration: 0,
         })
       },
-      enter: function (el, done) {
+      enter(el, done) {
         Velocity(el, {
           translateY: '0px',
           opacity: .5,
@@ -315,7 +315,7 @@
           complete: done
         })
       },
-      leave: function (el, done) {
+      leave(el, done) {
         Velocity(el, {
           translateY: '200px',
           opacity: 0,
@@ -378,10 +378,7 @@
 </script>
 
 <style lang="scss" scoped>
-
-
   .road-balls-analysis {
-    margin: 0 15px 90px;
     background-color: #f0f0f0;
     border-radius: 5px;
     border: solid 1px #e6e6e6;

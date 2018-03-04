@@ -615,7 +615,7 @@
         display: inline-block;
         width: 26px;
         height: 26px;
-        line-height: 26px;
+        line-height: 25px;
         border-radius: 50%;
         text-align: center;
         font-size: 12px;

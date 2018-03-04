@@ -165,4 +165,11 @@
     }
   }
 
+  .handicap {
+    .tab-toolbar.tab-pill.tab-pill-deep .tab {
+      padding: 0 15px;
+    }
+
+  }
+
 </style>

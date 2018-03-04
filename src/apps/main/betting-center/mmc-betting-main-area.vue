@@ -1315,7 +1315,7 @@
       font-size: $font-xs;
       color: $inverse-color;
       flex: 1 0 180px;
-      margin-right: 29px;
+      margin-right: 20px;
       text-align: right;
     }
   }

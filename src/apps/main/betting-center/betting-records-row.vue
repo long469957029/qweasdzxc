@@ -72,7 +72,7 @@
                   size: 'modal-xs',
                 })
               } else {
-                Global.ui.notification.show('撤单失败！' + res.msg, {
+                Global.ui.notification.show('撤单失败！' + data.msg, {
                   type: 'success',
                   hasFooter: false,
                   displayTime: 1000,
