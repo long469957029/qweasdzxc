@@ -30,6 +30,7 @@
     <transition
       name="custom-classes-transition"
       enter-active-class="fadeIn animated"
+      @after-enter="$emit('after-enter')"
     >
       <template v-if="show">
         <div class="bc-page-content active" :class="`bc-page-content-${playRule.style.position}`" v-for="n in totalPage"
@@ -480,6 +481,12 @@
     margin: 0 auto 0 auto;
     min-height: 70px;
     display: flex;
+    &:last-of-type {
+      min-height: initial;
+      .bc-select-item {
+        margin-bottom: 0;
+      }
+    }
   }
 
   .bc-select-item {
@@ -586,13 +593,8 @@
         }
       }
     }
-    .select-item-title {
-      margin-left: 10px;
-    }
-    .bc-playArea-items {
-      margin: 20px auto 0;
-      min-height: 50px;
-      align-items: center;
+    .bc-page-content {
+      margin: 37px 0;
     }
   }
 </style>

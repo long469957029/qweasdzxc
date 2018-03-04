@@ -145,25 +145,25 @@
                 </a>
               </div>
             </div>
-            <div class="m-LR-smd">
+            <div class="play-area-wrapper" ref="playArea">
               <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'"
                            loading-tip="">
                 <transition name="fade" mode="out-in"
                             enter-active-class="animated-quick fadeIn"
                             leave-active-class="animated-quick fadeOut"
                 >
-                  <betting-play-area-select :component-type="componentType" :play-rule="playRule"
+                  <betting-play-area-select :component-type="componentType" :play-rule="playRule" @after-enter="selectAreaChange"
                                             :ticket-info="ticketInfo" ref="areaSelect" :miss-optional="false"
                                             v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
                   </betting-play-area-select>
-                  <betting-play-area-input :component-type="componentType" :play-rule="playRule" ref="areaInput"
+                  <betting-play-area-input :component-type="componentType" :play-rule="playRule" ref="areaInput" @after-enter="selectAreaChange"
                                            v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
                 </transition>
               </status-cell>
             </div>
           </div>
 
-          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="462"
+          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="computedHistoryHeight"
                            title="最近开奖号码"
                            ref="bettingHisotry"></betting-history>
         </div>
@@ -206,7 +206,7 @@
           </div>
         </div>
 
-        <div class="m-bottom-xs m-left-md">
+        <div class="m-left-md">
           <div class="sfa-mmc-betting-record">
             <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel" :transition="false"
                               :init-remote="false"
@@ -239,7 +239,7 @@
           </div>
         </div>
 
-        <div class="bottom-panel text-inverse">
+        <div class="total-bottom-panel text-inverse">
           <div class="total-panel">
             <span class="font-sm">
             <span>
@@ -347,6 +347,7 @@
     },
     data() {
       return {
+        historyHeight: 0,
         lever: false,
         unit: 10000,
         continuousOpenSelectList: [
@@ -451,6 +452,9 @@
       }
     },
     computed: {
+      computedHistoryHeight() {
+        return this.historyHeight > 0 ? this.historyHeight + 40 : 0
+      },
       currentBettingList() {
         return this.currentBettingMode === 'buyList' ? {
           bettingList: this.bettingChoice.buyList,
@@ -582,6 +586,8 @@
             content: `<div class="font-sm text-default">中奖举例：<span class="text-inverse">${playInfo.playExample.replace(/\|/g, '<br />')}</span></div>`,
             placement: 'bottom',
           })
+
+
         },
       },
       unit: {
@@ -663,6 +669,11 @@
     },
 
     methods: {
+      selectAreaChange() {
+        this.$nextTick(() => {
+          this.historyHeight = this.$refs.playArea.offsetHeight
+        })
+      },
       /**
        * 重新选号
        */
@@ -1070,6 +1081,13 @@
     align-items: center;
   }
 
+  .total-bottom-panel {
+    padding: 10px 70px 20px 60px;
+    display: flex;
+    flex: 1;
+    align-items: center;
+  }
+
   .bottom-panel-top {
     flex: 1;
   }
@@ -1176,7 +1194,6 @@
     }
     .bc-side-area {
       width: 250px;
-      min-height: 545px;
     }
     .bc-basic-rules {
       .tab-toolbar {
@@ -1328,7 +1345,7 @@
 
   .bottom-lg-btn {
     position: absolute;
-    top: 260px;
+    top: 210px;
     left: 338px;
     background-color: transparent;
     z-index: 3;
@@ -1446,6 +1463,11 @@
 
   .total-panel {
     flex: 1;
+  }
+
+  .play-area-wrapper {
+    margin-left: $main-play-area-margin;
+    margin-right: $main-play-area-margin;
   }
 
   .text-circle {

@@ -227,8 +227,7 @@
         </div>
       </x-dialog>
 
-      <points-address v-if="isShowAddressModal" type="select"
-                      @modal-hidden="isShowAddressModal = false"
+      <points-address v-model="isShowAddressModal" type="select" v-if="isShowAddressModal" ref="pointsAddress"
                       @address-selected="addAddress"
       ></points-address>
 
@@ -664,6 +663,7 @@
           addressId: addressInfo.rid,
         }, ({data}) => {
           if (data && data.result === 0) {
+            this.$refs.pointsAddress.hide()
             this.isShowAddressModal = false
             this.$store.dispatch(types.GET_USER_MALL_INFO)
 

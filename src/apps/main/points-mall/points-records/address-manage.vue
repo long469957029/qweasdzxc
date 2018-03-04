@@ -50,7 +50,8 @@
       </div>
     </div>
     <div v-transfer-dom>
-      <points-address v-if="isShowAddressModal" :current-address="address" @operate-complete="refresh" @modal-hidden="isShowAddressModal = false"></points-address>
+      <points-address v-model="isShowAddressModal" v-if="isShowAddressModal"
+                      :current-address="address" @operate-complete="refresh"></points-address>
     </div>
   </status-cell>
 </template>

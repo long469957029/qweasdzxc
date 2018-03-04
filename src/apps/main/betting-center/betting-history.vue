@@ -402,7 +402,6 @@
       },
       generateGridOptions({pageSize = 15, dataProp = 'root.openedList', formats} = {}) {
         const url = this.ticketInfo.id !== 19 ? '/ticket/ticketmod/openhistory.json' : '/ticket/bet/openHistory.json'
-        const _pageSize = this.ticketInfo.id !== 19 ? 9 : pageSize
         const options = {
           tableClass: this.tableClass,
           url,
@@ -412,7 +411,7 @@
           height: this.height,
           colModel: [],
           data: {
-            pageSize: _pageSize,
+            pageSize,
             ticketId: this.ticketInfo.id,
           },
           dataProp: dataProp,
@@ -422,7 +421,7 @@
           options.colModel.push({
             label: '开奖号码',
             name: 'ticketOpenNum',
-            width: '50%',
+            width: '40%',
             formatter: formats && formats[0] ? (val, index, list) => {
               return formats[0].apply(this, [val, index, list])
             } : null,
@@ -458,19 +457,11 @@
           options.colModel.push({
             label: fromData.name,
             name: fromData.keyName,
-            width: '18%',
+            width: this.ticketInfo.id !== 19 ? '18%' : '25%',
             formatter: formats && formats[1] ? (val, index, list) => {
               return formats[1].apply(this, [val, index, list])
             } : null,
           })
-          // options.colModel.push({
-          //   label: '形态',
-          //   name: 'ticketOpenNum',
-          //   width: '18%',
-          //   formatter: ops.formats && ops.formats[2] ? (val, index, list) => {
-          //     return ops.formats[2].apply(this, [val, index, list])
-          //   } : null,
-          // })
         }
 
         return options

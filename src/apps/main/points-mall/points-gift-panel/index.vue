@@ -54,7 +54,7 @@
     </div>
 
     <div v-transfer-dom>
-      <points-address v-model="isShowAddressModal" type="select"
+      <points-address v-model="isShowAddressModal" type="select" v-if="isShowAddressModal" ref="pointsAddress"
                       @address-selected="exchange"
       ></points-address>
     </div>
@@ -247,7 +247,7 @@
           addressId: addressInfo.rid,
         }, ({data}) => {
           if (data && data.result === 0) {
-            this.isShowAddressModal = false
+            this.$refs.pointsAddress.hide()
             this.isShowExchangeModal = false
             this.$store.dispatch(types.GET_USER_MALL_INFO)
 
@@ -263,7 +263,7 @@
             })
           } else {
             Global.ui.notification.show(data.msg)
-            this.isShowAddressModal = false
+            this.$refs.pointsAddress.hide()
             this.isShowExchangeModal = false
           }
         })

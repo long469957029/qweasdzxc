@@ -103,6 +103,7 @@
         handler(newVal) {
           this.selectOptionals = []
           this.lotteryList = []
+          this.empty()
         }
       },
       selectOptionals: {
