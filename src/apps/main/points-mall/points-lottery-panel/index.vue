@@ -227,8 +227,7 @@
         </div>
       </x-dialog>
 
-      <points-address v-if="isShowAddressModal" type="select"
-                      @modal-hidden="isShowAddressModal = false"
+      <points-address v-model="isShowAddressModal" type="select" v-if="isShowAddressModal" ref="pointsAddress"
                       @address-selected="addAddress"
       ></points-address>
 
@@ -451,11 +450,14 @@
       },
 
       normalRoll({speed = 1000} = {speed: 1000}) {
-        clearInterval(this.timer)
-        this.timer = setInterval(() => {
-
-          this.changeActiveAward()
-        }, speed)
+        this.currentAwards.forEach((award) => {
+          award.selected = false
+        })
+        // clearInterval(this.timer)
+        // this.timer = setInterval(() => {
+        //
+        //   this.changeActiveAward()
+        // }, speed)
       },
 
       changeActiveAward() {
@@ -664,6 +666,7 @@
           addressId: addressInfo.rid,
         }, ({data}) => {
           if (data && data.result === 0) {
+            this.$refs.pointsAddress.hide()
             this.isShowAddressModal = false
             this.$store.dispatch(types.GET_USER_MALL_INFO)
 
@@ -701,7 +704,7 @@
     },
 
     mounted() {
-      this.normalRoll()
+      // this.normalRoll()
       this.winnerRoll()
       this.getData()
     },
@@ -957,7 +960,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 135px;
+    margin-bottom: 100px;
   }
 
   .lucky-title {

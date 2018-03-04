@@ -3,7 +3,7 @@
     <div class="his-main">
       <div class="his-top">
         <span class="sfa sfa-mmc-double-ball vertical-middle"></span>
-        <span class="font-md text-default vertical-middle">{{title}}</span>
+        <span class="font-sm text-default vertical-middle">{{title}}</span>
       </div>
       <div class="his-draw" ref="history">
         <div ref="historyInner">
@@ -11,13 +11,19 @@
                        table-class="table"
                        :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
                        :emptyTip="gridOps.emptyTip"
-                       ref="historyGrid"></static-grid>
-          <div class="text-center p-TB-smd border-top">
-            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
-                         target="_blank">
-              更多历史开奖
-            </router-link>
-          </div>
+                       ref="historyGrid">
+
+            <tr slot="ex-row" key="ex-row">
+              <td colspan="3">
+                <div class="text-center p-TB-smd border-top">
+                  <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
+                               target="_blank">
+                    更多历史开奖
+                  </router-link>
+                </div>
+              </td>
+            </tr>
+          </static-grid>
         </div>
       </div>
     </div>
@@ -28,7 +34,7 @@
       <div class="his-top cursor-pointer" @click="togglePanel()">
         <span class="his-icon">
         <span class="sfa sfa-mmc-double-ball double-ball-sm vertical-middle"></span>
-        </span> <span class="font-md text-default vertical-middle">{{title}}</span>
+        </span> <span class="font-sm text-default vertical-middle">{{title}}</span>
         <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" v-if="currentPanel === 'twoSide'"
         ></span>
       </div>
@@ -37,7 +43,7 @@
         <span class="his-icon">
         <span class="sfa sfa-mmc-two-side vertical-middle"></span>
         </span>
-        <span class="font-md text-default vertical-middle">两面长龙排行</span>
+        <span class="font-sm text-default vertical-middle">两面长龙排行</span>
         <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" v-if="currentPanel !== 'twoSide'"
         ></span>
       </div>
@@ -46,13 +52,16 @@
       <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height" empty-tip=""
                    table-class="table"
                    :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
-                   ref="historyGrid"></static-grid>
-      <div class="text-center p-TB-smd border-top">
-        <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
-                     target="_blank">
-          更多历史开奖
-        </router-link>
-      </div>
+                   ref="historyGrid">
+        <tr slot="ex-row" key="ex-row">
+          <div class="text-center p-TB-smd border-top">
+            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
+                         target="_blank">
+              更多历史开奖
+            </router-link>
+          </div>
+        </tr>
+      </static-grid>
     </div>
     <!--<div class="his-main" v-if="ticketInfo.twoSide">-->
     <div class="his-draw two-side" v-show="currentPanel === 'twoSide'">
@@ -317,7 +326,7 @@
       },
       height: {
         type: Number,
-        default: 700,
+        default: 745,
       },
     },
 
@@ -392,9 +401,10 @@
         }
       },
       generateGridOptions({pageSize = 15, dataProp = 'root.openedList', formats} = {}) {
+        const url = this.ticketInfo.id !== 19 ? '/ticket/ticketmod/openhistory.json' : '/ticket/bet/openHistory.json'
         const options = {
           tableClass: this.tableClass,
-          url: this.ticketInfo.id !== 19 ? '/ticket/ticketmod/openhistory.json' : '/ticket/bet/openHistory.json',
+          url,
           // emptyTip: '最近无开奖记录',
           emptyTip: '',
           abort: false,
@@ -411,7 +421,7 @@
           options.colModel.push({
             label: '开奖号码',
             name: 'ticketOpenNum',
-            width: '50%',
+            width: '40%',
             formatter: formats && formats[0] ? (val, index, list) => {
               return formats[0].apply(this, [val, index, list])
             } : null,
@@ -421,7 +431,7 @@
           options.colModel.push({
             label: '期号',
             name: 'ticketPlanId',
-            width: '26%',
+            width: '24%',
             formatter: (ticketPlanId) => {
               if (this.ticketInfo.abbreviated) {
                 return ticketPlanId.substring(4)
@@ -434,7 +444,7 @@
           options.colModel.push({
             label: '开奖号码',
             name: 'ticketOpenNum',
-            width: '50%',
+            width: '48%',
             formatter: formats && formats[0] ? (val, index, list) => {
               return formats[0].apply(this, [val, index, list])
             } : null,
@@ -447,19 +457,11 @@
           options.colModel.push({
             label: fromData.name,
             name: fromData.keyName,
-            width: '18%',
+            width: this.ticketInfo.id !== 19 ? '22%' : '25%',
             formatter: formats && formats[1] ? (val, index, list) => {
               return formats[1].apply(this, [val, index, list])
             } : null,
           })
-          // options.colModel.push({
-          //   label: '形态',
-          //   name: 'ticketOpenNum',
-          //   width: '18%',
-          //   formatter: ops.formats && ops.formats[2] ? (val, index, list) => {
-          //     return ops.formats[2].apply(this, [val, index, list])
-          //   } : null,
-          // })
         }
 
         return options

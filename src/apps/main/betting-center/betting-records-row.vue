@@ -7,7 +7,7 @@
 
     <td v-if="formattedBetNum.length <= 20">{{formattedBetNum}}</td>
     <td v-else v-popover.right="{name: row.ticketTradeNo}">
-      <a href="javascript:void(0)" class="btn-link">{{formattedBetNum | formatOpenNum}}</a>
+      <a href="javascript:void(0)" class="btn-link btn-link-reverse">{{formattedBetNum | formatOpenNum}}</a>
       <div v-transfer-dom>
         <popover :name="row.ticketTradeNo">
           <div class="detail-popover">
