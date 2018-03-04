@@ -57,7 +57,7 @@
           </status-cell>
         </div>
 
-        <div class="div-line"></div>
+        <div class="div-line m-top-md"></div>
 
         <div class="bottom-main-panel">
           <div class="m-top-md m-bottom-md">
@@ -104,7 +104,7 @@
 
                   <td v-if="row.formatBetNum.length <= 20">{{row.formatBetNum}}</td>
                   <td v-else v-popover.right="{name: `bet${index}`}">
-                    <a href="javascript:void(0)" class="btn-link">{{row.formatBetNum | formatOpenNum}}</a>
+                    <a href="javascript:void(0)" class="btn-link btn-link-reverse">{{row.formatBetNum | formatOpenNum}}</a>
                     <div v-transfer-dom>
                       <popover :name="`bet${index}`">
                         <div class="detail-popover">
@@ -123,7 +123,7 @@
                   <td v-html="row.operate"></td>
                 </tr>
               </slot-static-grid>
-              <div class="m-top-md p-top-sm text-center bc-operate-section clearfix">
+              <div class="bc-operate-section">
                 <div class="total-panel inline-block">
                 <span class="font-sm">
                 <span>
@@ -863,7 +863,7 @@
 
     .bc-advance-rules {
       color: #666666;
-      max-width: 80%;
+      max-width: 78%;
       margin-left: $main-play-area-margin;
       flex: 1;
       .tab-toolbar {
@@ -912,7 +912,9 @@
     border-top: 0;
     padding: 5px 0;
     margin-bottom: 4px;
+    margin-top: 20px;
     display: flex;
+    text-align: center;
   }
 
   .ba-chase-tip {
@@ -987,7 +989,7 @@
 
   .total-btn-panel {
     text-align: center;
-    margin: 35px 0 30px;
+    margin: 25px 0 20px;
   }
 
 

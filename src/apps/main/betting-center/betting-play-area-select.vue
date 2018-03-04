@@ -31,7 +31,7 @@
       name="custom-classes-transition"
       enter-active-class="fadeIn animated"
     >
-      <div v-if="show">
+      <template v-if="show">
         <div class="bc-page-content active" :class="`bc-page-content-${playRule.style.position}`" v-for="n in totalPage"
              v-show="n === 1">
           <div class="bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList"
@@ -95,7 +95,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </template>
     </transition>
   </div>
 </template>

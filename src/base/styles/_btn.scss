@@ -170,6 +170,13 @@ button.btn.btn-xs, input[type="submit"].btn.btn-xs {
     }
   }
 
+  &.btn-link-reverse {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   @include btn-links($font-colors);
 }
 .btn-im{

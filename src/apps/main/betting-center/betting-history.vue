@@ -11,13 +11,19 @@
                        table-class="table"
                        :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
                        :emptyTip="gridOps.emptyTip"
-                       ref="historyGrid"></static-grid>
-          <div class="text-center p-TB-smd border-top">
-            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
-                         target="_blank">
-              更多历史开奖
-            </router-link>
-          </div>
+                       ref="historyGrid">
+
+            <tr slot="ex-row" key="ex-row">
+              <td colspan="3">
+                <div class="text-center p-TB-smd border-top">
+                  <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
+                               target="_blank">
+                    更多历史开奖
+                  </router-link>
+                </div>
+              </td>
+            </tr>
+          </static-grid>
         </div>
       </div>
     </div>
@@ -46,13 +52,16 @@
       <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height" empty-tip=""
                    table-class="table"
                    :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
-                   ref="historyGrid"></static-grid>
-      <div class="text-center p-TB-smd border-top">
-        <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
-                     target="_blank">
-          更多历史开奖
-        </router-link>
-      </div>
+                   ref="historyGrid">
+        <tr slot="ex-row" key="ex-row">
+          <div class="text-center p-TB-smd border-top">
+            <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
+                         target="_blank">
+              更多历史开奖
+            </router-link>
+          </div>
+        </tr>
+      </static-grid>
     </div>
     <!--<div class="his-main" v-if="ticketInfo.twoSide">-->
     <div class="his-draw two-side" v-show="currentPanel === 'twoSide'">
@@ -317,7 +326,7 @@
       },
       height: {
         type: Number,
-        default: 700,
+        default: 745,
       },
     },
 
@@ -392,16 +401,18 @@
         }
       },
       generateGridOptions({pageSize = 15, dataProp = 'root.openedList', formats} = {}) {
+        const url = this.ticketInfo.id !== 19 ? '/ticket/ticketmod/openhistory.json' : '/ticket/bet/openHistory.json'
+        const _pageSize = this.ticketInfo.id !== 19 ? 9 : pageSize
         const options = {
           tableClass: this.tableClass,
-          url: this.ticketInfo.id !== 19 ? '/ticket/ticketmod/openhistory.json' : '/ticket/bet/openHistory.json',
+          url,
           // emptyTip: '最近无开奖记录',
           emptyTip: '',
           abort: false,
           height: this.height,
           colModel: [],
           data: {
-            pageSize,
+            pageSize: _pageSize,
             ticketId: this.ticketInfo.id,
           },
           dataProp: dataProp,

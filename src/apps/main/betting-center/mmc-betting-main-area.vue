@@ -163,7 +163,7 @@
             </div>
           </div>
 
-          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="403"
+          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="462"
                            title="最近开奖号码"
                            ref="bettingHisotry"></betting-history>
         </div>
@@ -618,7 +618,7 @@
               multiple: multipleDiv,
               mode: modeSelect,
               bettingMoney: `${previewInfo.fPrefabMoney}元`,
-              bonus: `${previewInfo.fBetBonus}元`,
+              bonus: `${previewInfo.fTotalBetBonus}元`,
               operate: `<div class="js-lottery-delete lottery-preview-del icon-block m-right-md pull-right" data-index="${index}"></div>`,
             }
           }, this)
@@ -1280,7 +1280,7 @@
 
     .bc-advance-rules {
       color: #666666;
-      max-width: 80%;
+      max-width: 78%;
       margin-left: $main-play-area-margin;
       flex: 1;
       .tab-toolbar {
