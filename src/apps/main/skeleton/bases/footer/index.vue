@@ -123,7 +123,7 @@ export default {
   bottom: 0;
   right: 0;
   left: 0;
-  display: none;
+  /*display: none;*/
   height: 280px;
   background: #21232a;
   .line{
