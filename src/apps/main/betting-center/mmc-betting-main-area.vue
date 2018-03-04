@@ -115,10 +115,10 @@
             <betting-rules class="inline-block" :component-type="componentType"
                            :initial-rules="playLevels"></betting-rules>
             <div class="bc-play-select-area clearfix">
-              <betting-advance-rules v-show="advanceShowMode === 'classic'"
+              <betting-advance-rules v-show="advanceShowMode === 'classic' || !ticketInfo.notShowAdvance"
                                      @modeChange="modeChange"></betting-advance-rules>
 
-              <div class="bc-advance-mode-single" v-show="advanceShowMode === 'single'">
+              <div class="bc-advance-mode-single" v-show="advanceShowMode === 'single' && ticketInfo.notShowAdvance">
                 <div class="bc-play-des">玩法说明：{{playInfo.playDes}}</div>
                 <a class="advance-play-des" ref="winningExample">
                   <span class="sfa sfa-bc-light vertical-middle"></span>
@@ -127,7 +127,7 @@
               </div>
 
               <div class="bc-advance-mode-main">
-                <div :class="advanceShowMode === 'single' ? 'advance-bonus-single' : 'advance-bonus'">
+                <div :class="advanceShowMode === 'single' && ticketInfo.notShowAdvance ? 'advance-bonus-single' : 'advance-bonus'">
                   单注奖金：
                   <template v-if="bettingChoice.fBetBonus">
                     <animated-integer class="text-prominent font-sm" :value="bettingChoice.fBetBonus"></animated-integer>
@@ -139,7 +139,7 @@
                   </template>
                   元
                 </div>
-                <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic'">
+                <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic' || !ticketInfo.notShowAdvance">
                   <span class="sfa sfa-bc-light vertical-middle"></span>
                   玩法说明
                 </a>
@@ -208,7 +208,7 @@
 
         <div class="m-bottom-xs m-left-md">
           <div class="sfa-mmc-betting-record">
-            <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
+            <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel" :transition="false"
                               :init-remote="false"
                               :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
                               ref="lotteryGrid">
@@ -294,11 +294,11 @@
       <x-dialog class="final-result" v-model="showFinalResult" styles="">
         <div slot="all" class="final-result-wrapper">
           <div class="final-result-inner sfa-mmc-win" v-if="totalWinPrize">
-            <span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>
+            <!--<span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>-->
             <div class="winning-result">总计中奖金额为：<span class="winning-prize">{{fTotalWinPrize}}</span> 元</div>
           </div>
           <div class="final-result-inner sfa-mmc-lose" v-else>
-            <span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>
+            <!--<span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>-->
             <!--<div class="lose-result">-->
             <!--祝您下次好运！-->
             <!--</div>-->
@@ -599,7 +599,7 @@
         handler(previewList) {
           let totalMoney = 0
           this.fPreviewList = _(previewList).map(function (previewInfo, index) {
-            const title = `${previewInfo.levelName}_${previewInfo.playName}`
+            const title = previewInfo.levelName !== previewInfo.playName ? `${previewInfo.levelName}_${previewInfo.playName}` : previewInfo.playName
             const multipleDiv = `<div class="js-bc-preview-multiple-${index} p-top-xs"></div>`
             const modeSelect = `<select name="" class="js-bc-preview-unit select-default bc-unit-select-add">
               <option value="10000" ${previewInfo.unit === 10000 ? 'selected' : ''}>元</option>
@@ -1254,7 +1254,7 @@
     margin: 20px 0 0 20px;
     flex: 1;
     .advance-play-des {
-      margin: 0 0 0 20px;
+      margin: -3px 4px 0 20px;
     }
   }
 

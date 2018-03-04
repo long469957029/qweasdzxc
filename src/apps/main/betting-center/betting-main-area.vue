@@ -386,7 +386,7 @@
       'bettingChoice.previewList': {
         handler(currentPreviewList, prevPreviewList) {
           this.fPreviewList = _(currentPreviewList).map((previewInfo, index) => {
-            const title = `${previewInfo.levelName}_${previewInfo.playName}`
+            const title = previewInfo.levelName !== previewInfo.playName ? `${previewInfo.levelName}_${previewInfo.playName}` : previewInfo.playName
             const multipleDiv = `<div class="js-bc-preview-multiple-${index} p-top-xs"></div>`
             const modeSelect = `<select name="" class="js-bc-preview-unit select-default bc-unit-select-add">
               <option value="10000" ${previewInfo.unit === 10000 ? 'selected' : ''}>元</option>
@@ -837,7 +837,7 @@
     margin: 20px 0 0 20px;
     flex: 1;
     .advance-play-des {
-      margin: 0 0 0 20px;
+      margin: -3px 4px 0 20px;
     }
   }
 

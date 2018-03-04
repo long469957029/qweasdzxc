@@ -23,13 +23,15 @@
                       <!-- 谢谢惠顾 -->
                       <div class="icon-task-smiley" v-if="award.awardTypeId === 0"></div>
                       <!-- 券 -->
-                      <div class="points-ticket sfa" :class="`sfa-pt-${award.style1}`" v-else-if="award.awardTypeId === 1">
+                      <div class="points-ticket sfa" :class="`sfa-pt-${award.style1}`"
+                           v-else-if="award.awardTypeId === 1">
                         <span class="task-item-title">{{award.couponName}}</span>
                         <span class="task-item-val" v-if="award.conditionType === 2">{{award.bigShowNum}}%</span>
-                        <span class="task-item-val" v-else><span class="task-item-unit">¥</span>{{award.bigShowNum}}</span>
+                        <span class="task-item-val" v-else><span
+                          class="task-item-unit">¥</span>{{award.bigShowNum}}</span>
                       </div>
                       <!-- 商品 -->
-                      <img :src="award.picUrl" class="task-gift-pic" v-else-if="award.awardTypeId === 2" />
+                      <img :src="award.picUrl" class="task-gift-pic" v-else-if="award.awardTypeId === 2"/>
                       <!-- 积分 -->
                       <div class="sfa-pt-task-points" v-else-if="award.awardTypeId === 3"></div>
                     </div>
@@ -42,14 +44,16 @@
                       </template>
                     </div>
                     <div class="task-badge" v-else-if="award.awardTypeId === 2">{{award.itemName}}</div>
-                    <div class="task-badge" v-else-if="award.awardTypeId === 3">积分 {{award.integral | convert2yuan}}</div>
+                    <div class="task-badge" v-else-if="award.awardTypeId === 3">积分 {{award.integral | convert2yuan}}
+                    </div>
                     <div class="task-badge" v-else>{{award.desc}}</div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="task-button">
-              <button class="points-btn btn btn-orange" @click="isLogin ? lottery(0) : login()" :disabled="pushing || running">
+              <button class="points-btn btn btn-orange" @click="isLogin ? lottery(0) : login()"
+                      :disabled="pushing || running">
                 {{currentIntegralRob | convert2yuan}} 积分夺宝
               </button>
               <button class="currency-btn btn" @click="isLogin ? lottery(1) : login()" :disabled="pushing || running">
@@ -114,7 +118,7 @@
                   <!--<span class="lucky-val" >{{chest.conditionNumber}}{{chest.conditionUnit}}</span>-->
                 </div>
                 <!-- 商品 -->
-                <img :src="chest.picUrl" class="gift-pic" v-else-if="chest.awardTypeId === 2" />
+                <img :src="chest.picUrl" class="gift-pic" v-else-if="chest.awardTypeId === 2"/>
                 <!--<div class="sfa-pt-task-points" ></div>-->
                 <!-- 积分 -->
                 <div class="sfa-pt-task-points" v-else-if="chest.awardTypeId === 3"></div>
@@ -136,7 +140,8 @@
           <div class="lucky-prize-name" v-else-if="chest.awardTypeId === 3">
             积分{{chest.integral | convert2yuan}}
           </div>
-          <button class="lucky-exchange-btn btn" @click="isLogin ? luckChest(chest) : login()" :disabled="pushing || running">
+          <button class="lucky-exchange-btn btn" @click="isLogin ? luckChest(chest) : login()"
+                  :disabled="pushing || running">
             <span class="sfa sfa-pt-lucky-star-points"></span>
             <span class="lucky-exchange-title">{{chest.lucky}} 幸运值{{chest.rate === 10000 ? '兑换' : '碰运气'}}</span>
           </button>
@@ -154,15 +159,17 @@
             <template v-if="lotteryResult.awardTypeId === 1">
               <div class="points-ticket sfa" :class="`sfa-pt-${lotteryResult.style1}`" v-if="currentLotteryType === 0">
                 <span class="task-item-title">{{lotteryResult.couponName}}</span>
-                <span class="task-item-val" v-if="lotteryResult.conditionType === 2">{{lotteryResult.bigShowNum}}%</span>
-                <span class="task-item-val" v-else><span class="task-item-unit">¥</span>{{lotteryResult.bigShowNum}}</span>
+                <span class="task-item-val"
+                      v-if="lotteryResult.conditionType === 2">{{lotteryResult.bigShowNum}}%</span>
+                <span class="task-item-val" v-else><span
+                  class="task-item-unit">¥</span>{{lotteryResult.bigShowNum}}</span>
               </div>
               <div class="sfa lucky-container" :class="`sfa-pt-${lotteryResult.style2}`" v-else>
                 <span class="lucky-type">{{lotteryResult.couponName}}</span>
               </div>
             </template>
             <!-- 商品 -->
-            <img :src="lotteryResult.picUrl" class="prize-pic" v-else-if="lotteryResult.awardTypeId === 2" />
+            <img :src="lotteryResult.picUrl" class="prize-pic" v-else-if="lotteryResult.awardTypeId === 2"/>
             <!-- 积分 -->
             <div class="icon-points" v-else="lotteryResult.awardTypeId === 3"></div>
 
@@ -512,9 +519,15 @@
       },
       lottery(type) {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号', {modalDialogShadow: 'modal-dialog-shadow'})
           return false
         }
+
+        if (type === 1 && this.foundsLock) {
+          Global.ui.notification.show('资金已锁定，暂不能进行现金夺宝')
+          return false
+        }
+
         this.pushing = true
         this.currentType = type
         this.currentLotteryType = 0
@@ -582,7 +595,7 @@
 
       luckChest(chestInfo) {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
+          Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号', {modalDialogShadow: 'modal-dialog-shadow'})
           return false
         }
         this.pushing = true
@@ -670,6 +683,9 @@
     },
 
     computed: {
+      ...mapState({
+        foundsLock: state => state.loginStore.foundsLock,
+      }),
       currentAwards() {
         return this.currentLottery === 0 ? this.awards : this.awards10
       },
@@ -765,6 +781,7 @@
     width: 100px;
     height: 100px;
   }
+
   .task-badge {
     height: 35px;
     background-color: #6d7a8f;
@@ -1039,13 +1056,14 @@
     align-items: center;
     justify-content: center;
   }
+
   .sfa-pt-lucky-star-points {
     margin-top: -3px;
   }
+
   .lucky-exchange-title {
     margin-left: -14px;
   }
-
 
   .x-switch {
     position: relative;
@@ -1053,7 +1071,7 @@
     width: 270px;
     height: 50px;
     background-color: #edeef0;
-    box-shadow: 0px 1px 0px 0px    rgba(0, 0, 0, 0.1),    inset 0px 2px 2px 0px    rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.1), inset 0px 2px 2px 0px rgba(0, 0, 0, 0.15);
     border-radius: 25px;
     display: flex;
 
@@ -1099,7 +1117,7 @@
     width: 50%;
     height: 100%;
     background-color: #14b1bb;
-    box-shadow: 0px 0px 3px 2px    rgba(65, 210, 219, 0.31);
+    box-shadow: 0px 0px 3px 2px rgba(65, 210, 219, 0.31);
     border-radius: 26px;
   }
 
@@ -1172,12 +1190,14 @@
       height: 98px;
     }
   }
+
   .lucky-points-prize {
     display: flex;
     font-size: 16px;
     color: #666666;
     align-items: center;
   }
+
   //积分不足
   .icon-points-title {
     background-image: url(./misc/icon-points-title.png);
@@ -1185,6 +1205,7 @@
     height: 23px;
     margin-right: 5px;
   }
+
   //余额不足
   .icon-balance-not-enough {
     background-image: url(./misc/icon-balance-not-enough.png);

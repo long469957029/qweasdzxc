@@ -382,28 +382,6 @@
         } else {
           this.currentPanel = this.currentPanel === 'record' ? 'twoSide' : 'record'
         }
-
-        // if (this.currentPanel === 'record') {
-        //   Velocity(this.$refs.history, {
-        //     height: this.$refs.historyInner.offsetHeight,
-        //     opacity: 1,
-        //   })
-        //   if (this.$refs.twoSide) {
-        //     Velocity(this.$refs.twoSide, {
-        //       height: 0,
-        //       opacity: 0,
-        //     })
-        //   }
-        // } else {
-        //   Velocity(this.$refs.history, {
-        //     height: 0,
-        //     opacity: 0,
-        //   })
-        //   Velocity(this.$refs.twoSide, {
-        //     height: this.$refs.twoSideInner.offsetHeight,
-        //     opacity: 1,
-        //   })
-        // }
       },
 
       update() {
