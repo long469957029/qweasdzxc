@@ -78,6 +78,10 @@ const SlotCenterView = Base.ItemView.extend({
 
   initialize() {
     this.throttleQuery = _.throttle(this.searchHandler.bind(this), 1000, true)
+    this.subscribe('acct', 'acct:login', () => {
+      this.$('.js-show-login').addClass('js-header-recharge')
+      this.$('.js-header-recharge').removeClass('js-show-login')
+    })
   },
 
   onRender() {

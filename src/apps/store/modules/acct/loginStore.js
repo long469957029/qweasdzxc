@@ -189,11 +189,12 @@ const mutations = {
       this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
       this.commit(types.USER_IS_VIP, 0)
       let hash = window.location.hash
-      hash = hash.substring(1,hash.length)
+      let ind = hash.indexOf('?')
+      hash = hash.substring(1,ind>0?ind:hash.length)
       if(data.popupLogin){
         window.router.push(hash+'?popupLogin=true')
       }else{
-        window.router.push(hash+'?popupLogin=false')
+        window.router.push(hash)
       }
       window.location.reload()
     }
