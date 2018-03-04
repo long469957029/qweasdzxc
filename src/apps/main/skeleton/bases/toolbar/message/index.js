@@ -111,7 +111,8 @@ const MessageView = Base.ItemView.extend({
     this.pageIndex = 0
     this.activePerson = []
     this.chatList = []
-    this.messContactSelectedList = []
+    this.messContactSelectedList = []  //临时选中的待发送联系人名单
+    this.finalMessContactSelectedList = [] //最终确定的待发送联系人名单
     this.recentlyList = []
     this.newMessageNum = 0
     this.chatLastRecordId = ''
@@ -435,6 +436,7 @@ const MessageView = Base.ItemView.extend({
     this.clearContainerActiveHandle()
     this.activePerson = []
     this.messContactSelectedList = []
+    this.finalMessContactSelectedList = []
     this.pageIndex = 0
     this.chatList = []
     this.chatLastRecordId = ''
@@ -453,6 +455,7 @@ const MessageView = Base.ItemView.extend({
     $target.addClass('active')
     // 初始化数据
     this.messContactSelectedList = []
+    this.finalMessContactSelectedList  = []
     this.chatList = []
     this.chatLastRecordId = ''
     this.pageIndex = 0
@@ -500,7 +503,7 @@ const MessageView = Base.ItemView.extend({
   sendMessMessageHandle() {
     const typeContent = this.$('.js-mess-input').val()
     // const userContainer = this.$('.js-selected-sub-item')
-    const userContainer = this.messContactSelectedList
+    const userContainer = this.finalMessContactSelectedList
     const userList = []
     if (userContainer.length === 0) {
       if (this.$('.js-select-panel-hidden').is(':hidden')) {
@@ -781,6 +784,7 @@ const MessageView = Base.ItemView.extend({
       this.$('.js-select-panel-show').removeClass('hidden')
       this.$('.js-select-panel-edit').addClass('hidden')
     }
+    this.finalMessContactSelectedList = this.messContactSelectedList
   },
   // 群发消息取消选中联系人
   cancelMessContactHandler() {
