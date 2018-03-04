@@ -128,7 +128,7 @@ export default {
   background: #21232a;
   .line{
     position: absolute;
-    width: 100%;
+    width: 98%;
     height: 0;
     border: 1px dashed #262931;
     top: 200px;

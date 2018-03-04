@@ -284,7 +284,7 @@
     },
 
     mounted(){
-      if(this.$route.query && this.$route.query.popupLogin){
+      if(this.$route.query && this.$route.query.popupLogin==='true'){
         this.$store.commit(types.TOGGLE_LOGIN_DIALOG,true)
         this.$router.push('/')
       }

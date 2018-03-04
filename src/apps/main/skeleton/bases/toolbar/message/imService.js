@@ -12,7 +12,7 @@ module.exports = {
       status = 'active'
     }
     html.push(`<div class="js-contact-systemAdmin  person-item ${status}" data-name="系统管理员" data-id="admin" ><span class="sfa sfa-avata-admin"></span>` +
-      '<span class="js-contact-online-status"></span><span class="js-contact-admin contact-name">系统管理员</span></div>')
+      '<span class="js-contact-online-status"></span><span class=" contact-name">系统管理员</span></div>')
     return html.join('')
   },
   // 获取左边联系人我的上级样式
@@ -154,33 +154,33 @@ module.exports = {
         //     itemHtml.push(`<div class="recently-name">我的上级</div></div>${cancel}</div>`)
         //   }
         // } else {
-          let status = ''
-          if (active.type === 'user' && active.id === item.userId) {
-            status = 'active'
-          }
-          itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="${item.userName}" >`)
+        let status = ''
+        if (active.type === 'user' && active.id === item.userId) {
+          status = 'active'
+        }
+        itemHtml.push(`<div class="js-contact-onePerson recently-item ${status}" data-id="${item.userId}" data-name="${item.userName}" >`)
 
-          let onlineCircle = '<span class="text-circle contact-status"></span>'
-          let offLineStatus = 'avatar-gray'
-          if (item.online) {
-            offLineStatus = ''
-          } else {
-            onlineCircle = ''
-          }
-          const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
-          itemHtml.push(`<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}`)
+        let onlineCircle = '<span class="text-circle contact-status"></span>'
+        let offLineStatus = 'avatar-gray'
+        if (item.online) {
+          offLineStatus = ''
+        } else {
+          onlineCircle = ''
+        }
+        const avatarPic = avatarConf.get(_(item.headIconId).toString()).logo
+        itemHtml.push(`<span class="sfa sfa-avatar-online ${offLineStatus} person-item-avatar"><img src='${avatarPic}'  /></span>${onlineCircle}`)
 
-          let cancel = `<span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close" data-type="user" data-id="${item.userId}"></span>`
-          if (item.newMsgNum > 0) {
-            cancel = ''
-            itemHtml.push('<div class="recently-item-info inline-block">')
-            itemHtml.push(`<div class="recently-name">${item.userName}</div>`)
-            itemHtml.push(`<div class="recently-desc">${item.lastMessage}</div>`)
-            itemHtml.push(`</div><div class=" recently-item-info-num"><div class="recently-newMessage-num-text inline-block">${item.newMsgNum}</div></div>${cancel}</div>`)
-          } else {
-            itemHtml.push('<div class="recently-item-info inline-block no">')
-            itemHtml.push(`<div class="recently-name">${item.userName}</div></div>${cancel}</div>`)
-          }
+        let cancel = `<span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close" data-type="user" data-id="${item.userId}"></span>`
+        if (item.newMsgNum > 0) {
+          cancel = ''
+          itemHtml.push('<div class="recently-item-info inline-block">')
+          itemHtml.push(`<div class="recently-name">${item.userName}</div>`)
+          itemHtml.push(`<div class="recently-desc">${item.lastMessage}</div>`)
+          itemHtml.push(`</div><div class=" recently-item-info-num"><div class="recently-newMessage-num-text inline-block">${item.newMsgNum}</div></div>${cancel}</div>`)
+        } else {
+          itemHtml.push('<div class="recently-item-info inline-block no">')
+          itemHtml.push(`<div class="recently-name">${item.userName}</div></div>${cancel}</div>`)
+        }
         // }
         html.push(itemHtml.join(''))
       } else if (item.groupId !== undefined && item.groupId !== null && item.groupId !== '') {
@@ -197,8 +197,17 @@ module.exports = {
         itemHtml.push(`</div><span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close" data-type="group" data-id="${item.groupId}"></span></div></div>`)
 
         html.push(itemHtml.join(''))
+      } else if (!item.groupId && !item.groupName && !item.userId) {
+        html.push(`<div class="recently-item"><div class="js-contact-systemAdmin " data-name="系统管理员" data-id="admin" >`)
+        html.push('<span class="sfa sfa-avata-admin"></span>')
+        html.push('<div class="recently-item-info inline-block no"><span class=" contact-name">系统管理员</span></div>')
+        if(item.newMsgNum>0){
+          html.push(`<div class=" recently-item-info-num"><div class="recently-newMessage-num-text inline-block">${item.newMsgNum}</div></div>`)
+        }else{
+          html.push('<span class="js-recently-message-close sfa sfa-icon-im-contact-close recently-message-close" data-type="user" data-id=""></span>')
+        }
+        html.push('</div></div>')
       }
-      // html.push(itemsHtml.join(''))
     })
     return {
       result: html.join(''),

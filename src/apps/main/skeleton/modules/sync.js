@@ -332,9 +332,9 @@ const SyncModule = Base.Module.extend({
     }
   },
   reLogin(ajaxOption) {
-    window.store.commit(types.USER_CLEAR)
     if(ajaxOption && ajaxOption.url && !(ajaxOption.url.indexOf('acct/login/doauth.json')>=0)){
       //if 不是 oauth 接口，那么
+      window.store.commit(types.USER_CLEAR)
       if (!window.store.getters.loginDialogStatus) {
         window.store.commit(types.TOGGLE_LOGOUT_DIALOG,false)
         window.store.commit(types.TOGGLE_LOGOUT_NOTICE,true)
