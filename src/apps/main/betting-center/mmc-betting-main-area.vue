@@ -541,6 +541,7 @@
           Velocity(this.$refs.mainInner, {
             opacity: 1,
             complete: () => {
+              this.$refs.mainInner.style.height = 'auto'
               this.$refs.mainInner.style.visibility = 'initial'
             }
           })
@@ -597,7 +598,9 @@
             placement: 'bottom',
           })
 
-
+          this.$nextTick(() => {
+            this.mainHeight = this.$refs.main.offsetHeight
+          })
         },
       },
       unit: {
@@ -1381,8 +1384,10 @@
     font-weight: normal;
     letter-spacing: -1px;
     color: #fffdc9;
-    margin-right: 20px;
-    line-height: 22px;
+    line-height: 24px;
+    height: 40px;
+    width: 200px;
+    margin: 0 auto;
     .opening-title-inner {
       color: #ffc600;
     }
@@ -1393,7 +1398,7 @@
     position: relative;
     z-index: 2;
     text-align: center;
-    top: 50px;
+    top: 35px;
   }
 
   .opening-panel {
