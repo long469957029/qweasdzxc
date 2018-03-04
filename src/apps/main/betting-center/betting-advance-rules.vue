@@ -1,5 +1,5 @@
 <template>
-  <div class="bc-advance-rules">
+  <div class="bc-advance-rules" :class="componentType">
     <div class="tab-toolbar tab-pill tab-pill-main" v-for="(rules, index) in rulesList" v-show="show">
       <div class="tab-title" v-if="showTitle && rules.title">{{rules.title}}</div>
       <div :class="['tab-group',  !rules.title || !showTitle ? 'no-padding' : '']">
@@ -24,10 +24,14 @@
       showTitle: {
         type: Boolean,
         default: true
+      },
+      componentType: {
+        type: String,
+        default: ''
       }
     },
 
-    data: function () {
+    data() {
       return {
         rulesList: [],
         show: true,
@@ -90,9 +94,16 @@
   }
 </script>
 
-<style lang="" scoped>
+<style lang="scss" scoped>
   .bc-advance-rules {
     padding-top: 15px;
+
+    &.handicap {
+      .tab-toolbar {
+        margin-bottom: 15px;
+      }
+    }
   }
+
 
 </style>

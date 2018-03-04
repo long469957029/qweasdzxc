@@ -413,6 +413,8 @@ const mutations = {
       let item = {
         levelName: state.levelName,
         playId: state.playId,
+        groupId: state.groupId,
+        groupName: state.groupName,
         playName: state.playName,
         bettingNumber: formatBettingNumber(bettingInfo.lotteryList, {
           selectOptionals: bettingInfo.selectOptionals,
