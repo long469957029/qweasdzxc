@@ -532,6 +532,7 @@ const MessageView = Base.ItemView.extend({
               const gId = res.root.groupId
               this.recentlyList.unshift({
                 groupId: gId,
+                groupSize: userContainer.length,
               })
               this.activePerson = {
                 type: 'group',
@@ -772,6 +773,7 @@ const MessageView = Base.ItemView.extend({
     if (subItem.length > 0) {
       this.$('.js-select-panel-show').addClass('hidden')
       this.$('.js-select-panel-edit').removeClass('hidden')
+      this.$('.js-select-panel-edit').addClass('edit')
       if (!this.$('.chat-message-noContact').hasClass('hidden')) {
         this.$('.chat-message-noContact').addClass('hidden')
       }
@@ -910,6 +912,14 @@ const MessageView = Base.ItemView.extend({
     if ($target.hasClass('edit')) {
       this.$('.js-chat-person-panel-title').addClass('hidden')
       this.$('.js-search-panel').addClass('hidden')
+      //分阶段隐藏，先隐藏未选中的联系人
+      let $unSelected = this.$('.js-mess-selected-contact.hidden')
+      $unSelected.closest('.js-select-sub-item').addClass('hidden')
+      //分阶段隐藏，再隐藏选中的标识，及触发事件的样式，防止选中事件触发样式显隐
+      this.$('.js-select-sub-item').removeClass('js-select-sub-item')
+      this.$('.js-mess-select-contact').addClass('hidden')
+      this.$('.js-mess-selected-contact').addClass('hidden')
+
       this.$('.js-mess-select-container-footer').addClass('hidden')
       this.$('.js-chat-person-panel-title-edit').removeClass('hidden')
       this.$('.js-mess-contact-num').html(this.$('.js-select-panel-edit-num').html())
