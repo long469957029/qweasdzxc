@@ -28,7 +28,7 @@
           },
           closeEvent: function () {
             window.store.commit(types.TOGGLE_LOGOUT_NOTICE,false)
-            window.store.commit(types.USER_LOGOUT_SUCCESS,{result:0,popupLogin: true})
+            window.store.commit(types.USER_LOGOUT_SUCCESS,{result:0,popupLogin: false})
           }
         });
 
