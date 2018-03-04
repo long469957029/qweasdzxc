@@ -534,14 +534,17 @@
 
           Velocity(this.$refs.main, {
             height: this.mainHeight,
+          }, {
             complete: () => {
-              this.$refs.main.style.height = 'auto'
+              _.delay(() => {
+                this.$refs.main.style.height = ''
+              }, 1)
             }
           })
           Velocity(this.$refs.mainInner, {
             opacity: 1,
+          }, {
             complete: () => {
-              this.$refs.mainInner.style.height = 'auto'
               this.$refs.mainInner.style.visibility = 'initial'
             }
           })
