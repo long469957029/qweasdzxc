@@ -102,7 +102,7 @@ $tab-toolbar-circle-colors: (
     }
     .tab-title {
       font-size: 14px;
-      color: $def-black-color;
+      color: $new-inverse-color;
       line-height: 40px;
       width: auto;
       height: 40px;
@@ -121,7 +121,7 @@ $tab-toolbar-circle-colors: (
       width: 38px;
       border-radius: 50%;
       border: 1px solid $def-gray-color;
-      color: $def-black-color;
+      color: $new-inverse-color;
       background-color: $sec-line-color;
 
       &:hover {
@@ -199,7 +199,7 @@ $tab-toolbar-circle-colors: (
       height: 40px;
       line-height: 36px;
       float: left;
-      color: $def-black-color;
+      color: $new-inverse-color;
 
       &:hover {
         color: $main-deep-color;

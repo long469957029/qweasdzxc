@@ -26,6 +26,7 @@
             tag="tbody"
           >
             <tr v-for="(row, i) in showRows" :key="i" v-html="row" ref="bodyRows"></tr>
+            <slot name="ex-row"></slot>
           </transition-group>
 
         </table>
@@ -85,6 +86,10 @@
         default: true
       },
       height: {
+        type: Number,
+        default: 0
+      },
+      minHeight: {
         type: Number,
         default: 0
       },
@@ -158,19 +163,38 @@
           }, this)
         }
       },
+      height: {
+        handler() {
+          this.$nextTick(() => {
+            if (this.height > 0) {
+              if (this.scroll) {
+                $(this.$refs.body).slimScroll({
+                  height: this.height,
+                })
+              }
+              this.$refs.body.style.height = `${this.height}px`
+            } else {
+              this.$refs.body.style.height = ''
+            }
+          })
+        },
+        immediate: true
+      },
+      minHeight: {
+        handler() {
+          this.$nextTick(() => {
+            if (this.minHeight > 0) {
+              this.$refs.body.style.minHeight = `${this.minHeight}px`
+            } else {
+              this.$refs.body.style.minHeight = ''
+            }
+          })
+        },
+        immediate: true
+      }
     },
 
     mounted() {
-
-      if (this.height > 0) {
-        if (this.scroll) {
-          $(this.$refs.body).slimScroll({
-            height: this.height,
-          })
-        }
-        this.$refs.body.style.height = `${this.height}px`
-      }
-
 
       if (this.url && this.initRemote) {
         this.$_getDataXhr()

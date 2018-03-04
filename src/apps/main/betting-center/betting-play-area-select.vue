@@ -443,7 +443,7 @@
 
 <style lang="scss" scoped>
   .bc-page-content {
-    min-height: 286px;
+    min-height: 245px;
     width: 100%;
     display: none;
     &.active {

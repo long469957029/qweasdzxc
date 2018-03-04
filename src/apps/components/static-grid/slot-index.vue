@@ -27,6 +27,7 @@
           <!--&gt;-->
           <tbody ref="tbody">
           <slot name="row" v-for="(row, index) in showRows" :row="row" :rows="showRows" :index="index"></slot>
+          <slot name="ex-row"></slot>
           </tbody>
           <!--</transition-group>-->
         </table>
@@ -89,6 +90,10 @@
         default: true
       },
       height: {
+        type: Number,
+        default: 0
+      },
+      minHeight: {
         type: Number,
         default: 0
       },
@@ -158,19 +163,38 @@
           this.showRows = this.innerRows
         }
       },
+      height: {
+        handler() {
+          this.$nextTick(() => {
+            if (this.height > 0) {
+              if (this.scroll) {
+                $(this.$refs.body).slimScroll({
+                  height: this.height,
+                })
+              }
+              this.$refs.body.style.height = `${this.height}px`
+            } else {
+              this.$refs.body.style.height = ''
+            }
+          })
+        },
+        immediate: true
+      },
+      minHeight: {
+        handler() {
+          this.$nextTick(() => {
+            if (this.minHeight > 0) {
+              this.$refs.body.style.minHeight = `${this.minHeight}px`
+            } else {
+              this.$refs.body.style.minHeight = ''
+            }
+          })
+        },
+        immediate: true
+      }
     },
 
     mounted() {
-      if (this.height > 0) {
-        if (this.scroll) {
-          $(this.$refs.body).slimScroll({
-            height: this.height,
-          })
-        }
-        this.$refs.body.style.height = `${this.height}px`
-      }
-
-
       if (this.url && this.initRemote) {
         this.$_getDataXhr()
       } else if (_.isEmpty(this.showRows)) {
@@ -253,7 +277,7 @@
       },
 
       getRows() {
-        return this.$refs.tbody.children || []
+        return this.$refs.tbody && this.$refs.tbody.children || []
       },
 
       toggleEmpty(flag) {

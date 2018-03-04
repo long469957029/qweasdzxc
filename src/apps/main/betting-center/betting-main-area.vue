@@ -157,7 +157,7 @@
                   <span class="ba-chase-tip">可提高中奖率</span>
                 </button>
               </div>
-              <div class="m-top-md p-top-sm text-center m-bottom-md">
+              <div class="total-btn-panel">
                 <button class="btn btn-orange bc-jb-btn" @click="lotteryConfirm"
                         data-loading-text="提交中" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending"> 确认投注
                 </button>
@@ -409,13 +409,13 @@
           })
 
           this.$nextTick(() => {
-            if (currentPreviewList.length !== prevPreviewList.length) {
+            // if (currentPreviewList.length !== prevPreviewList.length) {
               _.each(this.$refs.lotteryGrid.getRows(), (row, index) => {
                 const $row = $(row)
                 const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
 
                 if ($multipleAdd.numRange('instance')) {
-                  $multipleAdd.numRange('setRange', 1, currentPreviewList[index].formatMaxMultiple)
+                  $multipleAdd.numRange('setRange', 1, currentPreviewList[index].formatMaxMultiple, {numChange: false})
                   $multipleAdd.numRange('numChange', currentPreviewList[index].multiple)
                 } else {
                   $multipleAdd.numRange({
@@ -433,7 +433,7 @@
                   })
                 }
               });
-            }
+            // }
           })
 
           this.$store.commit(types.CALCULATE_TOTAL)
@@ -983,6 +983,11 @@
     .content {
       word-wrap: break-word;
     }
+  }
+
+  .total-btn-panel {
+    text-align: center;
+    margin: 35px 0 30px;
   }
 
 

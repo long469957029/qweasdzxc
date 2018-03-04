@@ -5,32 +5,35 @@
       <div class="font-md bc-records-tab" :class="{active: type === 'chase'}" @click="toggleTab('chase')">我的追号</div>
     </div>
     <div class="bc-records-tables">
-      <slot-static-grid v-show="type === 'betting'" :table-class="tableClass" :col-model="bettingOps.colModel"
+      <slot-static-grid v-show="type === 'betting'" :table-class="tableClass" :col-model="bettingOps.colModel" :min-height="minHeight"
                    :url="bettingOps.url" :reqData="bettingOps.data" :abort="false" :data-prop="bettingOps.dataProp" :scroll="false"
                    :emptyTip="bettingOps.emptyTip" v-model="bettingList"
                    ref="bettingGrid">
         <betting-records-row slot="row" slot-scope="{row, index}" :key="index" :row="row" @update="update"></betting-records-row>
+        <tr class="more-records" slot="ex-row" v-if="isShowMoreBetting">
+          <td colspan="8">
+            <router-link to="/fc/td" class="btn btn-link text-auxiliary">更多记录>></router-link>
+          </td>
+        </tr>
         <div class="empty-tip-container" slot="empty-tip">
           <span class="empty-tip"></span>
           暂无记录
         </div>
       </slot-static-grid>
-      <static-grid v-show="type === 'chase'" :table-class="tableClass" :col-model="chaseOps.colModel"
+      <static-grid v-show="type === 'chase'" :table-class="tableClass" :col-model="chaseOps.colModel" :min-height="minHeight"
                    :url="chaseOps.url" :reqData="chaseOps.data" :abort="false" :data-prop="chaseOps.dataProp"
                    :emptyTip="chaseOps.emptyTip" :scroll="false" v-model="chaseList"
                    ref="chaseGrid">
-
+        <tr class="more-records" slot="ex-row" v-if="isShowMoreChase" key="ex-row">
+          <td colspan="9">
+            <router-link to="/fc/cr" class="btn btn-link text-auxiliary">更多记录>></router-link>
+          </td>
+        </tr>
         <div class="empty-tip-container" slot="empty-tip">
           <span class="empty-tip"></span>
           暂无记录
         </div>
       </static-grid>
-    </div>
-    <div class="more-records" v-if="isShowMoreBetting">
-      <router-link to="/fc/td" class="btn btn-link text-auxiliary">更多记录>></router-link>
-    </div>
-    <div class="more-records" v-if="isShowMoreChase">
-      <router-link to="/fc/cr" class="btn btn-link text-auxiliary">更多记录>></router-link>
     </div>
   </div>
 </template>
@@ -54,7 +57,7 @@
 
     data() {
       return {
-        height: 204,
+        minHeight: 102,
         type: 'betting',
         tableClass: 'table table-similar table-center no-margin',
 
@@ -201,10 +204,10 @@
 
     computed: {
       isShowMoreBetting() {
-        return this.bettingList.length >= 5 && this.type === 'betting'
+        return this.bettingList.length > 0 && this.type === 'betting'
       },
       isShowMoreChase() {
-        return this.chaseList.length >= 5 && this.type !== 'betting'
+        return this.chaseList.length > 0 && this.type !== 'betting'
       }
     },
     methods: {
@@ -223,10 +226,6 @@
         this.type = type
         this.update()
       },
-      toggleMoreRecords(isEmpty) {
-
-      },
-
     },
     mounted() {
       Vue.$global.bus.$on('cancel-bet', () => {
@@ -270,7 +269,8 @@
   .more-records {
     text-align: center;
     font-size: 14px;
-    margin: 20px 0;
+    margin: 8px 0;
+    border-bottom: 0 !important;
   }
 
   .detail-popover {
