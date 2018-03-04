@@ -111,7 +111,7 @@
           </form>
         </div>
         <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :table-class="lotteryGridOps.tableClass"
-                     :col-model="lotteryGridOps.colModel"
+                     :col-model="lotteryGridOps.colModel" :init-remote="false"
                      :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="chaseList"
                      ref="normalGrid"></static-grid>
       </div>
@@ -156,7 +156,6 @@
 
     components: {
       RadioGroup,
-      StaticGrid,
     },
 
     props: {

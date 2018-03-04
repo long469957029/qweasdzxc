@@ -111,7 +111,7 @@
       <div class="mmc-lottery-main-inner" ref="mainInner">
 
         <div class="bc-play-container clearfix">
-          <div class="bc-play-left pull-left">
+          <div class="bc-play-left">
             <betting-rules class="inline-block" :component-type="componentType"
                            :initial-rules="playLevels"></betting-rules>
             <div class="bc-play-select-area clearfix">
@@ -1274,7 +1274,7 @@
   }
 
   .bc-play-select-area {
-    min-height: 70px;
+    min-height: 87px;
     display: flex;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
 

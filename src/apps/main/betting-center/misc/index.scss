@@ -160,7 +160,7 @@
 .bc-side-area {
   position: relative;
   flex: 1;
-  min-height: 845px;
+  //min-height: 845px;
   margin-left: -1px;
   border-left: 1px solid $def-line-color;
   box-sizing: border-box;
@@ -217,15 +217,15 @@
     background-color: transparent;
   }
   .open-nums {
-    //max-width: 150px;
+
     span {
       width: 20px;
       height: 20px;
       border: 1px solid $third-line-color;
       border-radius: 50%;
       text-align: center;
+      margin-right: 3px;
       line-height: 20px;
-      margin-left: 4px;
       margin-bottom: 2px;
       display: inline-block;
     }

@@ -246,11 +246,11 @@
               label: '玩法', width: '15%',
             },
             {
-              label: '投注内容', width: '17%',
+              label: '投注内容', width: '18.5%',
             },
             {label: '注数', width: '10%'},
             {label: '倍数', width: '12.5%'},
-            {label: '模式', width: '12.5%'},
+            {label: '模式', width: '11%'},
             {label: '投注金额', width: '12.5%'},
             {label: '预期奖金', width: '12.5%'},
             {
@@ -857,7 +857,7 @@
   }
 
   .bc-play-select-area {
-    min-height: 70px;
+    min-height: 87px;
     display: flex;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
 

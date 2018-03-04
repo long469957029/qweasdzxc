@@ -7,12 +7,12 @@
       </div>
       <div class="his-draw" ref="history">
         <div ref="historyInner">
-          <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height"
+          <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height" empty-tip=""
                        table-class="table"
                        :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
                        :emptyTip="gridOps.emptyTip"
                        ref="historyGrid"></static-grid>
-          <div class="text-center p-top-smd p-LR-xs border-top">
+          <div class="text-center p-TB-smd border-top">
             <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
                          target="_blank">
               更多历史开奖
@@ -43,12 +43,11 @@
       </div>
     </div>
     <div class="his-draw" ref="history" v-show="currentPanel !== 'twoSide'">
-      <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height"
+      <static-grid :wrapper-class="gridOps.wrapperClass" :col-model="gridOps.colModel" :height="height" empty-tip=""
                    table-class="table"
                    :url="gridOps.url" :reqData="gridOps.data" :init-remote="false" :data-prop="gridOps.dataProp"
-                   :emptyTip="gridOps.emptyTip"
                    ref="historyGrid"></static-grid>
-      <div class="text-center p-top-smd p-LR-xs border-top">
+      <div class="text-center p-TB-smd border-top">
         <router-link class="btn btn-link more-analysis" :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}"
                      target="_blank">
           更多历史开奖
@@ -298,7 +297,6 @@
   }
 
   export default {
-    components: {StaticGrid},
     name: "betting-history",
 
     props: {
@@ -445,7 +443,7 @@
           options.colModel.push({
             label: '期号',
             name: 'ticketPlanId',
-            width: '30%',
+            width: '26%',
             formatter: (ticketPlanId) => {
               if (this.ticketInfo.abbreviated) {
                 return ticketPlanId.substring(4)

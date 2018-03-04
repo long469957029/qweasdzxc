@@ -15,7 +15,7 @@
     </div>
 
     <div class="relative" ref="body">
-      <status-cell :status="loading" :has-data="showRows.length" :loading-tip="loadingTip" :transition="transition">
+      <status-cell :status="loading" :has-data="showRows.length" :loading-tip="loadingTip" :transition="transition" :empty-tip="emptyTip">
         <table class="no-margin" :class="[tableClass, {'no-b-bottom': hasBorder}]">
           <colgroup>
             <col :width="col.width" v-for="col in colModel">
