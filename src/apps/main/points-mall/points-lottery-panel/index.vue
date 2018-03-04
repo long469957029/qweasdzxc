@@ -79,12 +79,17 @@
               <div class="lottery-list-main-inner" v-for="user in recentUser" :key="user.uid">
                 <span class="lottery-list-left">恭喜 {{user.userName}}获得</span>
                 <span class="lottery-list-right" v-if="user.awardTypeId === 1">
-                  <span class="lottery-list-right-val">{{user.bigShowNum}}{{user.conditionUnit}}</span>{{user.couponName}}
+                  <template v-if="user.subType === 0">
+                    {{user.bonusName}}
+                  </template>
+                  <template v-else>
+                    <span class="lottery-list-right-val">{{user.bigShowNum}}{{user.conditionUnit}}</span>{{user.couponName}}
+                  </template>
                 </span>
                 <span class="lottery-list-right" v-if="user.awardTypeId === 2">
                   {{user.bonusName}}
                 </span>
-                <span class="lottery-list-right" v-if="user.awardTypeId === 3">
+                <span class="lottery-list-right" v-if="user.awardTypeId === 3 ">
                   <!-- 旧资料 -->
                   <template v-if="user.subType === 0">
                     {{user.bonusName}}

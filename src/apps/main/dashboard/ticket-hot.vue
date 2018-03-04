@@ -120,7 +120,8 @@
 
       },
       progressWidth(num) {
-        const width = num > 4000 ? '100%' : (num > 1000 ? `${_(num).div(4000)}%` : '25%')
+        num = 1252
+        const width = num > 4000 ? '100%' : (num > 1000 ? `${_(num*100).div(4000)}%` : '25%')
         return `width:${width}`
       },
       getTicketLogo(id) {
