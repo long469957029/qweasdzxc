@@ -133,7 +133,7 @@
       getIndexTicketApi(
         ({data}) => {
           if (data && data.result === 0) {
-            if(data.root.handicapTickets && data.root.handicapTickets.length > 3 && data.root.handicapTickets.length < 5){
+            if(data.root.handicapTickets && data.root.handicapTickets.length > 3 && data.root.handicapTickets.length < 6){
               this.handicapTicketList = data.root.handicapTickets
               this.handicapTicketList = [...this.handicapTicketList, ..._.cloneDeep(this.handicapTicketList)]
             }else{
@@ -143,7 +143,7 @@
               item.uid = _.uniqueId()
             })
 
-            if(data.root.classicTickets && data.root.classicTickets.length > 3 && data.root.classicTickets.length < 5){
+            if(data.root.classicTickets && data.root.classicTickets.length > 3 && data.root.classicTickets.length < 6){
               this.classicTicketList = data.root.classicTickets
               this.classicTicketList = [...this.classicTicketList, ..._.cloneDeep(this.classicTicketList)]
             }else{
