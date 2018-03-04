@@ -1,5 +1,5 @@
 <template>
-  <div class="bc-advance-rules p-top-smd pull-left">
+  <div class="bc-advance-rules p-top-smd">
     <div class="tab-toolbar tab-pill tab-pill-main" v-for="(rules, index) in rulesList" v-show="show">
       <div class="tab-title" v-if="rules.title">{{rules.title}}</div>
       <div :class="['tab-group',  !rules.title ? 'no-margin' : '']">

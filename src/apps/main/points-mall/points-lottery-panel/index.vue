@@ -450,11 +450,14 @@
       },
 
       normalRoll({speed = 1000} = {speed: 1000}) {
-        clearInterval(this.timer)
-        this.timer = setInterval(() => {
-
-          this.changeActiveAward()
-        }, speed)
+        this.currentAwards.forEach((award) => {
+          award.selected = false
+        })
+        // clearInterval(this.timer)
+        // this.timer = setInterval(() => {
+        //
+        //   this.changeActiveAward()
+        // }, speed)
       },
 
       changeActiveAward() {
@@ -701,7 +704,7 @@
     },
 
     mounted() {
-      this.normalRoll()
+      // this.normalRoll()
       this.winnerRoll()
       this.getData()
     },
@@ -957,7 +960,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 135px;
+    margin-bottom: 100px;
   }
 
   .lucky-title {

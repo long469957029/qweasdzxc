@@ -217,14 +217,14 @@
 
                 <td v-if="row.formatBetNum.length <= 20">{{row.formatBetNum}}</td>
                 <td v-else v-popover.right="{name: `bet${index}`}">
-                  <a href="javascript:void(0)" class="btn-link">{{row.formatBetNum | formatOpenNum}}</a>
+                  <a href="javascript:void(0)" class="btn-link btn-link-reverse">{{row.formatBetNum | formatOpenNum}}</a>
                   <div v-transfer-dom>
-                    <tooltip :name="`bet${index}`">
+                    <popover :name="`bet${index}`">
                       <div class="detail-popover">
                         <div class="title">详细号码：</div>
                         <div class="content">{{row.formatBetNum}}</div>
                       </div>
-                    </tooltip>
+                    </popover>
                   </div>
                 </td>
 
@@ -1200,8 +1200,8 @@
         margin-bottom: 0;
         padding-left: 10px;
         .tab.active {
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
+          border-top-left-radius: 6px;
+          border-top-right-radius: 6px;
         }
       }
     }
@@ -1294,12 +1294,11 @@
     min-height: 87px;
     display: flex;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
+    justify-content: space-between;
 
     .bc-advance-rules {
       color: #666666;
-      max-width: 78%;
       margin-left: $main-play-area-margin;
-      flex: 1;
       .tab-toolbar {
         &:last-of-type {
           margin-bottom: 3px;
@@ -1318,6 +1317,9 @@
     .bc-advance-mode-main {
       font-size: $font-xs;
       color: $inverse-color;
+      flex: 1 0 180px;
+      margin-right: 29px;
+      text-align: right;
     }
   }
 

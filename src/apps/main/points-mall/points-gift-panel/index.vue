@@ -278,7 +278,7 @@
 
 <style lang="scss" scoped>
   .points-gift-panel {
-    margin-bottom: 80px;
+    margin-bottom: 100px;
   }
   .points-gift-main {
     display: flex;

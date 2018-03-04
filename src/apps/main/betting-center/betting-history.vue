@@ -3,7 +3,7 @@
     <div class="his-main">
       <div class="his-top">
         <span class="sfa sfa-mmc-double-ball vertical-middle"></span>
-        <span class="font-md text-default vertical-middle">{{title}}</span>
+        <span class="font-sm text-default vertical-middle">{{title}}</span>
       </div>
       <div class="his-draw" ref="history">
         <div ref="historyInner">
@@ -34,7 +34,7 @@
       <div class="his-top cursor-pointer" @click="togglePanel()">
         <span class="his-icon">
         <span class="sfa sfa-mmc-double-ball double-ball-sm vertical-middle"></span>
-        </span> <span class="font-md text-default vertical-middle">{{title}}</span>
+        </span> <span class="font-sm text-default vertical-middle">{{title}}</span>
         <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" v-if="currentPanel === 'twoSide'"
         ></span>
       </div>
@@ -43,7 +43,7 @@
         <span class="his-icon">
         <span class="sfa sfa-mmc-two-side vertical-middle"></span>
         </span>
-        <span class="font-md text-default vertical-middle">两面长龙排行</span>
+        <span class="font-sm text-default vertical-middle">两面长龙排行</span>
         <span class="arrow cursor-pointer sfa sfa-mmc-down-arrow" v-if="currentPanel !== 'twoSide'"
         ></span>
       </div>
@@ -431,7 +431,7 @@
           options.colModel.push({
             label: '期号',
             name: 'ticketPlanId',
-            width: '26%',
+            width: '24%',
             formatter: (ticketPlanId) => {
               if (this.ticketInfo.abbreviated) {
                 return ticketPlanId.substring(4)
@@ -444,7 +444,7 @@
           options.colModel.push({
             label: '开奖号码',
             name: 'ticketOpenNum',
-            width: '50%',
+            width: '48%',
             formatter: formats && formats[0] ? (val, index, list) => {
               return formats[0].apply(this, [val, index, list])
             } : null,
@@ -457,7 +457,7 @@
           options.colModel.push({
             label: fromData.name,
             name: fromData.keyName,
-            width: this.ticketInfo.id !== 19 ? '18%' : '25%',
+            width: this.ticketInfo.id !== 19 ? '22%' : '25%',
             formatter: formats && formats[1] ? (val, index, list) => {
               return formats[1].apply(this, [val, index, list])
             } : null,

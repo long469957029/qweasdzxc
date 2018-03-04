@@ -402,7 +402,7 @@
         const cy = _.findWhere(row.limits, {name: 'conflict-y'});
 
         // 纵向不允许冲突
-        if (!num.selected && !_.isEmpty(cy)) {
+        if (!num.selected && !_.isEmpty(cy) && toSelected) {
           _.each(this.formattedRuleList, rule => {
             if (row !== rule.row) {
               _.each(rule.row.fItems, item => {
@@ -482,9 +482,13 @@
     min-height: 70px;
     display: flex;
     &:last-of-type {
-      min-height: initial;
       .bc-select-item {
         margin-bottom: 0;
+      }
+    }
+    &:first-of-type {
+      .bc-select-item {
+        margin-bottom: 10px;
       }
     }
   }
@@ -590,6 +594,17 @@
       &.tab-border {
         .tab {
           width: 17px;
+        }
+      }
+    }
+    .bc-playArea-items {
+      margin: 0 auto 0 auto;
+      min-height: 70px;
+      display: flex;
+      &:last-of-type {
+        min-height: initial;
+        .bc-select-item {
+          margin-bottom: 0;
         }
       }
     }
