@@ -120,7 +120,7 @@
             .title-recently {
               position: relative;
               cursor: pointer;
-              height: 34px;
+              height: 32px;
               width: 112px;
               color: $new-inverse-color;
               font-size: 14px;
@@ -801,7 +801,7 @@
     width: 420px;
     overflow: auto;
     position: relative;
-    //height: 23px;
+    height: 23px;
     .chat-input {
       border: 0;
       outline-width: 0;
@@ -959,10 +959,10 @@
 }
 
 .chat-admin-content {
-  height: 439px;
+  height: 510px;
   flex-grow: 1;
   width: 100%;
-  border-bottom: 1px solid $def-line-color;
+  //border-bottom: 1px solid $def-line-color;
   text-align: center;
   position: relative;
   .chat-admin-content-panel {
