@@ -72,12 +72,7 @@
                   size: 'modal-xs',
                 })
               } else {
-                Global.ui.notification.show('撤单失败！' + data.msg, {
-                  hasFooter: false,
-                  displayTime: 1000,
-                  closeBtn: false,
-                  size: 'modal-xs',
-                })
+                Global.ui.notification.show('撤单失败！' + data.msg)
               }
             })
           },
