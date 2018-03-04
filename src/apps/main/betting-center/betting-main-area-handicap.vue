@@ -3,7 +3,7 @@
     <betting-rules :initial-rules="playLevels"></betting-rules>
 
     <div class="bc-play-container clearfix">
-      <div class="bc-play-left pull-left">
+      <div class="bc-play-left">
         <betting-advance-rules :type="'single-hidden'"></betting-advance-rules>
         <div class="m-LR-smd">
           <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">

@@ -58,11 +58,12 @@ $.widget('gl.numRange', {
     }
 
     this.$number.val(currentNumber)
+    this.options.onChange(Number(currentNumber))
   },
 
   // common APIs
 
-  setRange(min, max) {
+  setRange(min, max, {numChange = true} = {numChange: true}) {
     min = Number(min) || 0
     max = Number(max) || 0
 
@@ -77,8 +78,9 @@ $.widget('gl.numRange', {
     this.options.min = min
     this.options.max = max
 
-    this.numChange(Number(this.$number.val()) || 0)
-    this.options.onChange(Number(this.$number.val()))
+    if (numChange) {
+      this.numChange(Number(this.$number.val()) || 0)
+    }
   },
 
   // event handlers

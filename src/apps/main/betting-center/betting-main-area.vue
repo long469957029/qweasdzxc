@@ -157,7 +157,7 @@
                   <span class="ba-chase-tip">可提高中奖率</span>
                 </button>
               </div>
-              <div class="m-top-md p-top-sm text-center m-bottom-md">
+              <div class="total-btn-panel">
                 <button class="btn btn-orange bc-jb-btn" @click="lotteryConfirm"
                         data-loading-text="提交中" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending"> 确认投注
                 </button>
@@ -246,11 +246,11 @@
               label: '玩法', width: '15%',
             },
             {
-              label: '投注内容', width: '17%',
+              label: '投注内容', width: '18.5%',
             },
             {label: '注数', width: '10%'},
             {label: '倍数', width: '12.5%'},
-            {label: '模式', width: '12.5%'},
+            {label: '模式', width: '11%'},
             {label: '投注金额', width: '12.5%'},
             {label: '预期奖金', width: '12.5%'},
             {
@@ -386,7 +386,7 @@
       'bettingChoice.previewList': {
         handler(currentPreviewList, prevPreviewList) {
           this.fPreviewList = _(currentPreviewList).map((previewInfo, index) => {
-            const title = `${previewInfo.levelName}_${previewInfo.playName}`
+            const title = previewInfo.levelName !== previewInfo.playName ? `${previewInfo.levelName}_${previewInfo.playName}` : previewInfo.playName
             const multipleDiv = `<div class="js-bc-preview-multiple-${index} p-top-xs"></div>`
             const modeSelect = `<select name="" class="js-bc-preview-unit select-default bc-unit-select-add">
               <option value="10000" ${previewInfo.unit === 10000 ? 'selected' : ''}>元</option>
@@ -409,13 +409,13 @@
           })
 
           this.$nextTick(() => {
-            if (currentPreviewList.length !== prevPreviewList.length) {
+            // if (currentPreviewList.length !== prevPreviewList.length) {
               _.each(this.$refs.lotteryGrid.getRows(), (row, index) => {
                 const $row = $(row)
                 const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
 
                 if ($multipleAdd.numRange('instance')) {
-                  $multipleAdd.numRange('setRange', 1, currentPreviewList[index].formatMaxMultiple)
+                  $multipleAdd.numRange('setRange', 1, currentPreviewList[index].formatMaxMultiple, {numChange: false})
                   $multipleAdd.numRange('numChange', currentPreviewList[index].multiple)
                 } else {
                   $multipleAdd.numRange({
@@ -433,7 +433,7 @@
                   })
                 }
               });
-            }
+            // }
           })
 
           this.$store.commit(types.CALCULATE_TOTAL)
@@ -837,7 +837,7 @@
     margin: 20px 0 0 20px;
     flex: 1;
     .advance-play-des {
-      margin: 0 0 0 20px;
+      margin: -3px 4px 0 20px;
     }
   }
 
@@ -857,7 +857,7 @@
   }
 
   .bc-play-select-area {
-    min-height: 70px;
+    min-height: 87px;
     display: flex;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
 
@@ -983,6 +983,11 @@
     .content {
       word-wrap: break-word;
     }
+  }
+
+  .total-btn-panel {
+    text-align: center;
+    margin: 35px 0 30px;
   }
 
 

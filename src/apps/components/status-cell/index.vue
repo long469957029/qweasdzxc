@@ -21,7 +21,7 @@
     </div>
     <div class="status-cell" v-else-if="!hasData" key="status-empty" :style="`height: ${height}`">
       <div class="empty-container">
-        <slot name="empty-tip">
+        <slot name="empty-tip" v-if="emptyTip">
           <div class="empty-icon"></div>
           <p>{{emptyTip}}</p>
         </slot>
@@ -51,7 +51,7 @@
     </div>
     <div class="status-cell" v-else-if="!hasData" key="status-empty" :style="`height: ${height}`">
       <div class="empty-container">
-        <slot name="empty-tip">
+        <slot name="empty-tip" v-if="emptyTip">
           <div class="empty-icon"></div>
           <p>{{emptyTip}}</p>
         </slot>

@@ -443,13 +443,14 @@
 
 <style lang="scss" scoped>
   .bc-page-content {
-    min-height: 286px;
+    min-height: 245px;
     width: 100%;
     display: none;
     &.active {
       display: block;
     }
     &.bc-page-content-center {
+      min-height: 300px;
       &.active {
         display: flex;
         justify-content: space-around;
@@ -468,6 +469,7 @@
       }
     }
     &.bc-page-content-center-2 {
+      min-height: 300px;
       display: flex;
       flex-direction: column;
       justify-content: center;
