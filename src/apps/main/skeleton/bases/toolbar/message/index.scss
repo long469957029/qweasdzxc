@@ -801,7 +801,7 @@
     width: 420px;
     overflow: auto;
     position: relative;
-    height: 23px;
+    min-height: 23px;
     .chat-input {
       border: 0;
       outline-width: 0;
