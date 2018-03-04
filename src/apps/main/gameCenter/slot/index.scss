@@ -456,7 +456,9 @@
     .user {
       margin-bottom: 2px;
       margin-top: 2px;
-
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space:nowrap;
     }
 
     .game {
@@ -466,8 +468,6 @@
       height: 20px;
       overflow: hidden;
       text-overflow: ellipsis;
-      word-break: keep-all;
-      word-wrap: normal;
       white-space:nowrap;
     }
   }
