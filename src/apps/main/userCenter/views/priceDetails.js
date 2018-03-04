@@ -271,8 +271,14 @@ const TrackRecordsView = TabView.extend({
             bonusMaxHtml += `${numArr.join('/')}：${_(item.sumVal).convert2yuan()}<br/>`
           })
 
+          //pk10龙虎最高奖金
+          if (!bonusMax) {
+            bonusMaxHtml = _.convert2yuan(play.ticketPlayMaxBonus)
+          }
+
           bonusMin = bonusMinHtml
           bonusMax = `<span class="text-prominent">${bonusMaxHtml}</span>`
+
         } else {
           const bonusMinObj = _(play.betBonus).min((bonus) => { return bonus.betMethodMin })
           const bonusMaxObj = _(play.betBonus).max((bonus) => { return bonus.betMethodMin })
