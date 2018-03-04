@@ -439,6 +439,9 @@
         position: relative;
         .db-slot-name {
           /*padding: 10px 20px;*/
+          position: absolute;
+          bottom: 0px;
+          left: 83px;
           width: 128px;
           height: 33px;
           text-align: center;
@@ -448,25 +451,27 @@
           background-color: #42495c;
           border-top-left-radius: 15px;
           border-top-right-radius: 15px;
-          position: absolute;
-          bottom: 0px;
+
         }
         .db-slot-img {
+          position: relative;
           display: block;
           width: 100%;
           height: 100%;
         }
         .db-slot-mask {
           position: absolute;
+          left: 0;
           width: 100%;
           height: 100%;
           background: rgba(0, 0, 0, .4);
-          display: flex;
+          display: block;
           justify-content: center;
           align-items: center;
           opacity: 0;
           transition: opacity .5s;
           .db-slot-play-btn {
+            margin: 50px 0 0 108px;
             width: 80px;
             height: 80px;
             background: url("./misc/db-slot-btn.png") no-repeat;

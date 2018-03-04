@@ -1948,5 +1948,6 @@
   }
   .first-section{
     z-index: 2;
+    overflow: hidden;
   }
 </style>

@@ -153,6 +153,7 @@ const mutations = {
     data.fLastLoginTime = _(data.lastLoginTime).toTime()
     data.fLoginTime = _(data.loginTime).toTime()
     data.headIcon = _(data.headIcon).toString()
+    window.store.commit(types.TOGGLE_LOGOUT_NOTICE,false)
     Object.assign(state, data)
   },
 
@@ -187,18 +188,13 @@ const mutations = {
       window.Global.m.news.stop()
       this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
       this.commit(types.USER_IS_VIP, 0)
-      // window.location.href = ''
       let hash = window.location.hash
-      // if(hash.indexOf('/ac/dm')>-1){//处理
-      if(data.popupLogout){
-        window.router.push('/?popupLogin=true')
+      if(data.popupLogin){
+        window.router.push(hash+'?popupLogin=true')
       }else{
-        window.router.push('/')
+        window.router.push(hash+'?popupLogin=false')
       }
       window.location.reload()
-      // }else{
-      //   window.router.push({name:'dashboard'})
-      // }
     }
   },
   [types.TOGGLE_DO_LOGOUT](state, data) {
