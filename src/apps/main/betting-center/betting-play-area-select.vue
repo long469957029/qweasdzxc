@@ -593,6 +593,7 @@
   /*mmc*/
 
   .mmc {
+    padding: 20px 0;
     .bc-quick-select {
       flex: 0 0 172px;
     }
@@ -605,6 +606,9 @@
           width: 17px;
         }
       }
+    }
+    .tab-optionals {
+      margin-top: 0;
     }
     .bc-playArea-items {
       margin: 0 auto 0 auto;
@@ -623,7 +627,7 @@
       }
     }
     .bc-page-content {
-      margin: 37px 0;
+      margin: 20px 0;
     }
   }
 </style>
