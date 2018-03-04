@@ -66,7 +66,10 @@
                 sx: this.sxNameByNum(ball)
               }
             })
-            this.rolling()
+
+            this.$nextTick(() => {
+              this.rolling()
+            })
           }
         },
         immediate: true
