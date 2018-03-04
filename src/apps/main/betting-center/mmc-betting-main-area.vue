@@ -53,7 +53,14 @@
             <div class="opening-group" ref="previewGroup">
               <div class="opening-cell" v-for="(preview, index) in currentBettingList.bettingList">
                 <div class="opening-left">
-                  【{{preview.levelName}}_{{preview.playName}}】
+                  <template v-if="preview.levelName !== preview.playName">
+                    <template v-if="preview.levelName == '任选'">
+                      【{{preview.groupName}}_{{preview.playName}}】
+                    </template>
+                    <template v-else>
+                      【{{preview.levelName}}_{{preview.playName}}】
+                    </template>
+                  </template>
                 </div>
 
                 <div class="opening-center" v-if="preview.formatBettingNumber.length <= 20">{{preview.formatBettingNumber}}</div>
@@ -111,14 +118,14 @@
       <div class="mmc-lottery-main-inner" ref="mainInner">
 
         <div class="bc-play-container clearfix">
-          <div class="bc-play-left pull-left">
+          <div class="bc-play-left">
             <betting-rules class="inline-block" :component-type="componentType"
                            :initial-rules="playLevels"></betting-rules>
             <div class="bc-play-select-area clearfix">
-              <betting-advance-rules v-show="advanceShowMode === 'classic'"
+              <betting-advance-rules v-show="advanceShowMode === 'classic' || !ticketInfo.notShowAdvance"
                                      @modeChange="modeChange"></betting-advance-rules>
 
-              <div class="bc-advance-mode-single" v-show="advanceShowMode === 'single'">
+              <div class="bc-advance-mode-single" v-show="advanceShowMode === 'single' && ticketInfo.notShowAdvance">
                 <div class="bc-play-des">玩法说明：{{playInfo.playDes}}</div>
                 <a class="advance-play-des" ref="winningExample">
                   <span class="sfa sfa-bc-light vertical-middle"></span>
@@ -127,7 +134,7 @@
               </div>
 
               <div class="bc-advance-mode-main">
-                <div :class="advanceShowMode === 'single' ? 'advance-bonus-single' : 'advance-bonus'">
+                <div :class="advanceShowMode === 'single' && ticketInfo.notShowAdvance ? 'advance-bonus-single' : 'advance-bonus'">
                   单注奖金：
                   <template v-if="bettingChoice.fBetBonus">
                     <animated-integer class="text-prominent font-sm" :value="bettingChoice.fBetBonus"></animated-integer>
@@ -139,31 +146,31 @@
                   </template>
                   元
                 </div>
-                <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic'">
+                <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic' || !ticketInfo.notShowAdvance">
                   <span class="sfa sfa-bc-light vertical-middle"></span>
                   玩法说明
                 </a>
               </div>
             </div>
-            <div class="m-LR-smd">
+            <div class="play-area-wrapper" ref="playArea">
               <status-cell class="bc-play-area clearfix" :status="_.isEmpty(playRule) ? 'loading' : 'completed'"
                            loading-tip="">
                 <transition name="fade" mode="out-in"
                             enter-active-class="animated-quick fadeIn"
                             leave-active-class="animated-quick fadeOut"
                 >
-                  <betting-play-area-select :component-type="componentType" :play-rule="playRule"
+                  <betting-play-area-select :component-type="componentType" :play-rule="playRule" @after-enter="selectAreaChange"
                                             :ticket-info="ticketInfo" ref="areaSelect" :miss-optional="false"
                                             v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
                   </betting-play-area-select>
-                  <betting-play-area-input :component-type="componentType" :play-rule="playRule" ref="areaInput"
+                  <betting-play-area-input :component-type="componentType" :play-rule="playRule" ref="areaInput" @after-enter="selectAreaChange"
                                            v-else-if="!_.isEmpty(playRule) && playRule.type === 'input'"></betting-play-area-input>
                 </transition>
               </status-cell>
             </div>
           </div>
 
-          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="403"
+          <betting-history class="bc-side-area pull-right" :ticket-info="ticketInfo" :play-rule="playRule" :height="computedHistoryHeight"
                            title="最近开奖号码"
                            ref="bettingHisotry"></betting-history>
         </div>
@@ -206,9 +213,9 @@
           </div>
         </div>
 
-        <div class="m-bottom-xs m-left-md">
+        <div class="m-left-md">
           <div class="sfa-mmc-betting-record">
-            <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel"
+            <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :col-model="lotteryGridOps.colModel" :transition="false"
                               :init-remote="false"
                               :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="fPreviewList"
                               ref="lotteryGrid">
@@ -217,14 +224,14 @@
 
                 <td v-if="row.formatBetNum.length <= 20">{{row.formatBetNum}}</td>
                 <td v-else v-popover.right="{name: `bet${index}`}">
-                  <a href="javascript:void(0)" class="btn-link">{{row.formatBetNum | formatOpenNum}}</a>
+                  <a href="javascript:void(0)" class="btn-link btn-link-reverse">{{row.formatBetNum | formatOpenNum}}</a>
                   <div v-transfer-dom>
-                    <tooltip :name="`bet${index}`">
+                    <popover :name="`bet${index}`">
                       <div class="detail-popover">
                         <div class="title">详细号码：</div>
                         <div class="content">{{row.formatBetNum}}</div>
                       </div>
-                    </tooltip>
+                    </popover>
                   </div>
                 </td>
 
@@ -239,7 +246,7 @@
           </div>
         </div>
 
-        <div class="bottom-panel text-inverse">
+        <div class="total-bottom-panel text-inverse">
           <div class="total-panel">
             <span class="font-sm">
             <span>
@@ -294,11 +301,11 @@
       <x-dialog class="final-result" v-model="showFinalResult" styles="">
         <div slot="all" class="final-result-wrapper">
           <div class="final-result-inner sfa-mmc-win" v-if="totalWinPrize">
-            <span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>
+            <!--<span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>-->
             <div class="winning-result">总计中奖金额为：<span class="winning-prize">{{fTotalWinPrize}}</span> 元</div>
           </div>
           <div class="final-result-inner sfa-mmc-lose" v-else>
-            <span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>
+            <!--<span class="final-result-close sfa sfa-mmc-result-close" @click="showFinalResult = false"></span>-->
             <!--<div class="lose-result">-->
             <!--祝您下次好运！-->
             <!--</div>-->
@@ -347,6 +354,7 @@
     },
     data() {
       return {
+        historyHeight: 0,
         lever: false,
         unit: 10000,
         continuousOpenSelectList: [
@@ -451,6 +459,9 @@
       }
     },
     computed: {
+      computedHistoryHeight() {
+        return this.historyHeight > 0 ? this.historyHeight + 40 : 0
+      },
       currentBettingList() {
         return this.currentBettingMode === 'buyList' ? {
           bettingList: this.bettingChoice.buyList,
@@ -582,6 +593,8 @@
             content: `<div class="font-sm text-default">中奖举例：<span class="text-inverse">${playInfo.playExample.replace(/\|/g, '<br />')}</span></div>`,
             placement: 'bottom',
           })
+
+
         },
       },
       unit: {
@@ -599,7 +612,9 @@
         handler(previewList) {
           let totalMoney = 0
           this.fPreviewList = _(previewList).map(function (previewInfo, index) {
-            const title = `${previewInfo.levelName}_${previewInfo.playName}`
+            let levelName = previewInfo.levelName === '任选' ? previewInfo.groupName : previewInfo.levelName;
+            let title = levelName !== previewInfo.playName ? `${levelName}_${previewInfo.playName}` : previewInfo.playName
+
             const multipleDiv = `<div class="js-bc-preview-multiple-${index} p-top-xs"></div>`
             const modeSelect = `<select name="" class="js-bc-preview-unit select-default bc-unit-select-add">
               <option value="10000" ${previewInfo.unit === 10000 ? 'selected' : ''}>元</option>
@@ -618,7 +633,7 @@
               multiple: multipleDiv,
               mode: modeSelect,
               bettingMoney: `${previewInfo.fPrefabMoney}元`,
-              bonus: `${previewInfo.fBetBonus}元`,
+              bonus: `${previewInfo.fTotalBetBonus}元`,
               operate: `<div class="js-lottery-delete lottery-preview-del icon-block m-right-md pull-right" data-index="${index}"></div>`,
             }
           }, this)
@@ -663,6 +678,11 @@
     },
 
     methods: {
+      selectAreaChange() {
+        this.$nextTick(() => {
+          this.historyHeight = this.$refs.playArea.offsetHeight
+        })
+      },
       /**
        * 重新选号
        */
@@ -1070,6 +1090,13 @@
     align-items: center;
   }
 
+  .total-bottom-panel {
+    padding: 10px 70px 20px 60px;
+    display: flex;
+    flex: 1;
+    align-items: center;
+  }
+
   .bottom-panel-top {
     flex: 1;
   }
@@ -1176,15 +1203,14 @@
     }
     .bc-side-area {
       width: 250px;
-      min-height: 545px;
     }
     .bc-basic-rules {
       .tab-toolbar {
         margin-bottom: 0;
         padding-left: 10px;
         .tab.active {
-          border-top-left-radius: 10px;
-          border-top-right-radius: 10px;
+          border-top-left-radius: 6px;
+          border-top-right-radius: 6px;
         }
       }
     }
@@ -1230,7 +1256,8 @@
   .sfa-mmc-content-bottom {
     position: relative;
     text-align: center;
-    top: -230px;
+    margin-top: -115px;
+    top: -115px;
     left: 32px;
   }
 
@@ -1252,9 +1279,8 @@
   .bc-advance-mode-single {
     color: $prominent-secondary-btn-color;
     margin: 20px 0 0 20px;
-    flex: 1;
     .advance-play-des {
-      margin: 0 0 0 20px;
+      margin-top: -3px;
     }
   }
 
@@ -1268,21 +1294,18 @@
   }
 
   .advance-bonus-single {
-    margin-right: 40px;
     margin-top: 20px;
-    float: right;
   }
 
   .bc-play-select-area {
-    min-height: 70px;
+    min-height: 87px;
     display: flex;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
+    justify-content: space-between;
 
     .bc-advance-rules {
       color: #666666;
-      max-width: 80%;
       margin-left: $main-play-area-margin;
-      flex: 1;
       .tab-toolbar {
         &:last-of-type {
           margin-bottom: 3px;
@@ -1301,6 +1324,9 @@
     .bc-advance-mode-main {
       font-size: $font-xs;
       color: $inverse-color;
+      flex: 1 0 180px;
+      margin-right: 20px;
+      text-align: right;
     }
   }
 
@@ -1328,7 +1354,7 @@
 
   .bottom-lg-btn {
     position: absolute;
-    top: 260px;
+    top: 210px;
     left: 338px;
     background-color: transparent;
     z-index: 3;
@@ -1446,6 +1472,11 @@
 
   .total-panel {
     flex: 1;
+  }
+
+  .play-area-wrapper {
+    margin-left: $main-play-area-margin;
+    margin-right: $main-play-area-margin;
   }
 
   .text-circle {

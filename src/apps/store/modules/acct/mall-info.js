@@ -31,6 +31,7 @@ const initState = () => {
 const getters = {
   //商城首页显示的基本信息
   mallBasicInfo: state => {
+    let nextPercent = _(_(state.totalIntegral - state.currentLevelintegral).div(state.nexTLevelintegral - state.currentLevelintegral)).mul(100)
     return {
       levelId: state.levelId,
       fIntegral: _.convert2yuan(state.integral, {fixed: 0}),
@@ -39,7 +40,7 @@ const getters = {
       fTotalIntegral: _.convert2yuan(state.totalIntegral),
       fCurrentDiscount: _.formatDiv(state.currentDiscount, 1000),
       fNextDiscount: _.formatDiv(state.nextDiscount, 1000),
-      nextPercent: _(_(state.totalIntegral - state.currentLevelintegral).div(state.nexTLevelintegral - state.currentLevelintegral)).mul(100)
+      nextPercent: nextPercent<0? 0: nextPercent
     }
   }
 }

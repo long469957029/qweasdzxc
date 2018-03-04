@@ -125,7 +125,7 @@
       </div>
     </div>
 
-    <div class="total-panel" v-if="_.indexOf(playRule.bettingArea, 'bottom') !== -1">
+    <div class="total-panel bottom-panel" v-if="_.indexOf(playRule.bettingArea, 'bottom') !== -1">
 
       <betting-chips-setting class="inline-block" @addBetMoney="addBetMoney" :chips="chips"></betting-chips-setting>
 
@@ -314,7 +314,9 @@
           this.betMoney = null
           if (!this.playRule.showMoneyInput) {
             _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
-              item.betMoney = null
+              if (!_.isEmpty(item)) {
+                item.betMoney = null
+              }
             })
           }
         }
@@ -332,8 +334,10 @@
 
       $_clearNotBetSelect() {
         _.chain(this.formattedRuleList).pluck('items').flatten().each((item) => {
-          if (!item.betMoney) {
-            item.selected = false
+          if (!_.isEmpty(item)) {
+            if (!item.betMoney) {
+              item.selected = false
+            }
           }
         })
       },
@@ -523,7 +527,7 @@
       width: 144px;
       position: relative;
       margin-top: 1px;
-      right: 1px;
+      /*right: 1px;*/
     }
 
     .body {
@@ -535,6 +539,9 @@
         border: 1px solid $grid-border-color;
         border-top: none;
         border-left: none;
+        z-index: 1;
+        position: relative;
+        background: #ffff;
       }
       .main-row {
         display: flex;
@@ -579,9 +586,12 @@
         .main-item-center {
           text-align: center;
           flex-grow: 1;
+          .item {
+            margin: 0;
+          }
         }
         .item {
-          margin: 0 4px 0 0;
+          margin: 0 6px 0 0;
         }
       }
       .red {
@@ -599,15 +609,17 @@
       .gray {
         background-color: #f0f0f0;
         color: $new-inverse-color;
+        border: 1px solid #cccccc;
       }
       .circle {
         display: inline-block;
-        width: 24px;
-        height: 24px;
-        line-height: 24px;
+        width: 26px;
+        height: 26px;
+        line-height: 25px;
         border-radius: 50%;
         text-align: center;
         font-size: 12px;
+        box-sizing: border-box;
       }
     }
 
@@ -640,13 +652,16 @@
 
     .odds {
       color: $prominent-color;
-      font-size: 12px;
+      font-size: 14px;
       vertical-align: top;
     }
   }
 
   .total-panel {
     margin: 10px;
+    &.bottom-panel {
+      padding-top: 10px;
+    }
   }
 
   .betting-panel {

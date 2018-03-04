@@ -1,8 +1,8 @@
 <template>
-  <div class="bc-advance-rules p-top-smd pull-left">
+  <div class="bc-advance-rules" :class="componentType">
     <div class="tab-toolbar tab-pill tab-pill-main" v-for="(rules, index) in rulesList" v-show="show">
-      <div class="tab-title" v-if="rules.title">{{rules.title}}</div>
-      <div :class="['tab-group',  !rules.title ? 'no-margin' : '']">
+      <div class="tab-title" v-if="showTitle && rules.title">{{rules.title}}</div>
+      <div :class="['tab-group',  !rules.title || !showTitle ? 'no-padding' : '']">
       <span class="tab" :class="{active: rule.selected}" v-for="rule in rules.playList"
             @click="ruleChange(rule, rules, index)">
         <span class="tab-inner">{{rule.title}}</span>
@@ -21,10 +21,17 @@
         type: String,
         default: 'normal'
       },
-
+      showTitle: {
+        type: Boolean,
+        default: true
+      },
+      componentType: {
+        type: String,
+        default: ''
+      }
     },
 
-    data: function () {
+    data() {
       return {
         rulesList: [],
         show: true,
@@ -87,6 +94,16 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .bc-advance-rules {
+    padding-top: 15px;
+
+    &.handicap {
+      .tab-toolbar {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
 
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div :class="componentType || ''">
-    <div class="bc-missOptional-main" v-if="missOptional && _.find(playRule.topOp, op => op)">
+    <div class="bc-missOptional-main" :class="{'has-optional' : !_.isEmpty(playRule.optionals)}" v-if="missOptional && _.find(playRule.topOp, op => op)">
       <!--<transition-group-->
         <!--enter-active-class="animated fadeInLeftBig"-->
         <!--leave-active-class="animated fadeOutLeftBig absolute"-->
@@ -15,7 +15,7 @@
     </div>
 
     <!--选择位置-->
-    <div class="tab-toolbar tab-circle tab-default" v-if="!_.isEmpty(playRule.optionals)">
+    <div class="tab-optionals tab-toolbar tab-circle" v-if="!_.isEmpty(playRule.optionals)">
       <div class="select-item-title tab-title">
         <div>位置</div>
       </div>
@@ -30,8 +30,9 @@
     <transition
       name="custom-classes-transition"
       enter-active-class="fadeIn animated"
+      @after-enter="$emit('after-enter')"
     >
-      <div v-if="show">
+      <template v-if="show">
         <div class="bc-page-content active" :class="`bc-page-content-${playRule.style.position}`" v-for="n in totalPage"
              v-show="n === 1">
           <div class="bc-playArea-items clearfix" v-for="(fRule, index) in formattedRuleList"
@@ -95,7 +96,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </template>
     </transition>
   </div>
 </template>
@@ -401,7 +402,7 @@
         const cy = _.findWhere(row.limits, {name: 'conflict-y'});
 
         // 纵向不允许冲突
-        if (!num.selected && !_.isEmpty(cy)) {
+        if (!num.selected && !_.isEmpty(cy) && toSelected) {
           _.each(this.formattedRuleList, rule => {
             if (row !== rule.row) {
               _.each(rule.row.fItems, item => {
@@ -443,13 +444,14 @@
 
 <style lang="scss" scoped>
   .bc-page-content {
-    min-height: 286px;
+    min-height: 245px;
     width: 100%;
     display: none;
     &.active {
       display: block;
     }
     &.bc-page-content-center {
+      min-height: 300px;
       &.active {
         display: flex;
         justify-content: space-around;
@@ -468,6 +470,7 @@
       }
     }
     &.bc-page-content-center-2 {
+      min-height: 300px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -478,6 +481,16 @@
     margin: 0 auto 0 auto;
     min-height: 70px;
     display: flex;
+    &:last-of-type {
+      .bc-select-item {
+        margin-bottom: 0;
+      }
+    }
+    &:first-of-type {
+      .bc-select-item {
+        margin-bottom: 10px;
+      }
+    }
   }
 
   .bc-select-item {
@@ -567,10 +580,20 @@
   .cbutton {
     transition: all .3s ease-out;
   }
+  .tab-optionals {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .has-optional {
+    margin: 15px 0;
+  }
+
 
   /*mmc*/
 
   .mmc {
+    padding: 20px 0;
     .bc-quick-select {
       flex: 0 0 172px;
     }
@@ -584,13 +607,27 @@
         }
       }
     }
-    .select-item-title {
-      margin-left: 10px;
+    .tab-optionals {
+      margin-top: 0;
     }
     .bc-playArea-items {
-      margin: 20px auto 0;
-      min-height: 50px;
-      align-items: center;
+      margin: 0 auto 0 auto;
+      min-height: 70px;
+      display: flex;
+      &:last-of-type {
+        min-height: initial;
+        .bc-select-item {
+          margin-bottom: 0;
+        }
+      }
+      &:first-of-type {
+        .bc-select-item {
+          margin-bottom: 10px;
+        }
+      }
+    }
+    .bc-page-content {
+      margin: 20px 0;
     }
   }
 </style>

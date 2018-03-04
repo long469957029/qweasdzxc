@@ -1,8 +1,8 @@
 <template>
   <div id="js-bc-main" class="bc-main">
-    <betting-quick-nav :key="'quick-nav'" :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType" :componentType="''"></betting-quick-nav>
+    <betting-quick-nav :key="'quick-nav'" :ticket-list="ticketList" :ticket-id="ticketId" :ticket-type="ticketType" :componentType="componentType"></betting-quick-nav>
     <ticket-info-banner :ticket-info="ticketInfo" :betting-type="ticketType"></ticket-info-banner>
-    <betting-main-area-handicap :ticket-info="ticketInfo" :ticket-id="ticketId"
+    <betting-main-area-handicap :ticket-info="ticketInfo" :ticket-id="ticketId" :componentType="componentType"
                                 v-if="ticketType === 2"></betting-main-area-handicap>
     <betting-main-area :ticket-info="ticketInfo" :ticket-id="ticketId" v-else></betting-main-area>
   </div>
@@ -31,9 +31,14 @@
 
     data() {
       return {
-        bettingType: 1,
         ticketInfo: {},
         ticketList: ticketConfig.getCompleteAll(),
+      }
+    },
+
+    computed: {
+      componentType() {
+        return this.ticketType === 2 ? 'handicap' : ''
       }
     },
     watch: {

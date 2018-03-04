@@ -14,15 +14,15 @@
                 </a>
               </li>
               <li data-index="1">
-                <router-link :to="`/bc/0/${topClassicalTicket.id}`">彩票
+                <a @click.prevent="goTo(`/bc/0/${topClassicalTicket.id}`)">彩票
                   <!--<div class="navbar-down-icon"></div>-->
-                </router-link>
+                </a>
                 <ticket-menu></ticket-menu>
               </li>
               <li data-index="18">
-                <router-link :to="`/bc/2/${topHandicapTicket.id}`">双面盘
+                <a @click.prevent="goTo(`/bc/2/${topHandicapTicket.id}`)">双面盘
                   <!--<div class="navbar-down-icon"></div>-->
-                </router-link>
+                </a>
               </li>
               <li data-index="2">
                 <a href="#/rc" class="js-navbar-tab ">娱乐场
@@ -88,11 +88,24 @@
         'topClassicalTicket',
         'topHandicapTicket'
       ]),
+      loginStatus(){
+        return this.$store.getters.getLoginStatus
+      },
     },
 
     filters: {},
 
     methods: {
+      goTo(router){
+        if(this.loginStatus){
+          this.$router.push(router)
+        }else{
+          this.showLogin()
+        }
+      },
+      showLogin() {
+        this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+      },
 //      navItemHover(e){
 //        const self = this
 //        const $target = $(e.currentTarget)

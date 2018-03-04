@@ -48,38 +48,6 @@
       ruleChange(rule, index) {
         this.$_ruleSelect(rule, index)
       },
-      // beforeEnter(el) {
-      //   el.style.opacity = 0
-      //   Velocity(el, {
-      //     translateY: -150,
-      //   }, {
-      //     duration: 0,
-      //   })
-      // },
-      // enter(el, done) {
-      //   Velocity(el, {
-      //     opacity: 1,
-      //     translateY: 0,
-      //   }, {
-      //     duration: 500,
-      //   })
-      //   Velocity(el, {
-      //     translateY: -10,
-      //   }, {
-      //     loop: 2,
-      //     duration: 100,
-      //     complete: done
-      //   })
-      // },
-      // leave(el, done) {
-      //   Velocity(el, {
-      //     opacity: 0,
-      //     translateY: -150,
-      //   }, {
-      //     duration: 500,
-      //     complete: done
-      //   })
-      // }
       $_ruleSelect(rule, index) {
         if (!rule) {
           return
@@ -161,6 +129,19 @@
     .tab-group {
       padding-left: 0;
     }
+
+    .tab-toolbar {
+      margin-bottom: 0;
+      padding-left: 13px;
+      position: relative;
+      .tab.active {
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+      }
+      .tab-group {
+        margin-right: 0;
+      }
+    }
   }
   .mmc {
     background-color: transparent;
@@ -169,7 +150,7 @@
       color: $new-inverse-color;
     }
     .tab-toolbar {
-      padding-left: 13px;
+      padding-left: 20px;
     }
     .underline {
       position: absolute;
@@ -180,8 +161,15 @@
       bottom: 0;
     }
     .tab-toolbar.tab-pill.tab-pill-deep .tab {
-      padding: 0 3px;
+      padding: 0 8px 0 9px;
     }
+  }
+
+  .handicap {
+    .tab-toolbar.tab-pill.tab-pill-deep .tab {
+      padding: 0 15px;
+    }
+
   }
 
 </style>

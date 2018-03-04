@@ -66,7 +66,7 @@ router.beforeEach((to, from, next) => {
   if (store.getters.checkPermission(to.path)) {
     next()
   } else {
-    store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+    // store.commit(types.TOGGLE_LOGIN_DIALOG, true)
     next('/') // 否则全部重定向到首页
   }
 })

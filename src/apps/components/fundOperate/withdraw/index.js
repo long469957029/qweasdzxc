@@ -272,7 +272,10 @@ const WithdrawView = Base.ItemView.extend({
     const cardId = $target.data('cardid')
     this.$('.js-wd-bank-select').removeClass('side-down').scrollTop(0)
     this.$('.js-select-bank-down').removeClass('up')
+    this.$('.js-wd-bank-select').addClass('shrink')
     this.initWithdrawData(this.withdrawData, cardId)
+    e.preventDefault()
+    e.stopPropagation()
   },
   redirect() {
     const self = this

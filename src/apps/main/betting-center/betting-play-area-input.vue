@@ -6,7 +6,7 @@
       <div class="select-item-title tab-title">
         <div>位置</div>
       </div>
-      <div class="tab-group no-margin inline-block">
+      <div class="tab-group no-padding inline-block">
         <div class="clearfix inline-block">
           <betting-play-area-position :optionals="playRule.optionals" v-model="selectOptionals"></betting-play-area-position>
         </div>
@@ -103,6 +103,7 @@
         handler(newVal) {
           this.selectOptionals = []
           this.lotteryList = []
+          this.empty()
         }
       },
       selectOptionals: {
@@ -271,12 +272,13 @@
 
 <style lang="scss" scoped>
   .play-area-input {
-    margin-top: 20px;
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
   }
   .input-play-area {
     display: flex;
+    margin-top: 10px;
   }
 
   .bc-textarea-main {

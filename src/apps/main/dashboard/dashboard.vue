@@ -20,7 +20,8 @@
         <div class="col-md-9 db-shadow carousel slide" @mouseover="clearGameInv"
              @mouseout="runGameInv">
           <ol class="db-carousel-indicators">
-            <li v-for="item in gameCount" :class="{active: gameIndex === item}" @click="gameGoTo(item)" :key="item"></li>
+            <li v-for="item in gameCount" :class="{active: gameIndex === item}" @click="gameGoTo(item)"
+                :key="item"></li>
           </ol>
           <div class="dashboard-carousel-table  carousel-inner">
             <!-- 优惠讯息 真人-->
@@ -44,14 +45,14 @@
                         <div>游戏节奏明快，投注组合丰富</div>
                         <div>深受亚洲人喜爱</div>
                       </div>
-                      <div class="db-ah-play-btn db-ah-play-btn-green "  @click="startGame(1,2,2)">立即游戏</div>
+                      <div class="db-ah-play-btn db-ah-play-btn-green " @click="startGame(1,2,2)">立即游戏</div>
                     </div>
                     <div class="db-ah-lp clearfix">
                       <div class="content-text">
                         <div>游戏规则简单，投注方式多样</div>
                         <div>趣味十足</div>
                       </div>
-                      <div class="db-ah-play-btn db-ah-play-btn-purple "  @click="startGame(1,2,2)">立即游戏</div>
+                      <div class="db-ah-play-btn db-ah-play-btn-purple " @click="startGame(1,2,2)">立即游戏</div>
                     </div>
                     <div class="clearfix"></div>
                   </div>
@@ -109,7 +110,9 @@
         <div class="col-md-3">
           <div class="db-activity db-shadow">
             <div class="db-block-border"></div>
-            <div class="db-activity-content"></div>
+            <router-link to="/aa">
+              <div class="db-activity-content"></div>
+            </router-link>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -118,7 +121,7 @@
   </div>
 </template>
 <script>
-  import { getIndexGameApi } from 'api/dashboard'
+  import {getIndexGameApi} from 'api/dashboard'
   import slideShow from './slideShow'
   import notice from './notice'
   import ticketHot from './ticket-hot'
@@ -127,6 +130,7 @@
     getGameListApi,
     getGameUrlApi,
   } from 'api/gameCenter'
+
   export default {
     name: "dashboard",
     components: {
@@ -135,7 +139,7 @@
       ticketHot,
       dashboardMall
     },
-    data () {
+    data() {
       return {
         gameIndex: 1,
         gameInvTime: 5000,
@@ -152,25 +156,25 @@
       }
     },
     methods: {
-      gameGoTo(index){
+      gameGoTo(index) {
         this.gameIndex = index > this.gameCount ? 1 : index
       },
-      runGameInv(){
+      runGameInv() {
         this.gameInv = setInterval(() => {
           this.gameGoTo(this.gameIndex + 1)
         }, this.gameInvTime)
       },
-      clearGameInv(){
+      clearGameInv() {
         clearInterval(this.gameInv)
       },
-      showTicket(type){
+      showTicket(type) {
         this.ticketCount = type === 1 ? this.handicapTicketList.length : this.classicTicketLIst.length
         this.ticketType = type
       },
-      showArrow(){
+      showArrow() {
         this.showArrowBtn = !this.showArrowBtn
       },
-      ticketSwitch(type){
+      ticketSwitch(type) {
         const arr = this.ticketType === 1 ? this.handicapTicketList : this.classicTicketLIst
         if (type === 'left') {
           arr.unshift(arr.pop())
@@ -183,23 +187,23 @@
           this.classicTicketLIst = arr
         }
       },
-      progressWidth(num){
+      progressWidth(num) {
         const width = num > 4000 ? '100%' : (num > 1000 ? `${_(num).div(4000)}%` : '25%')
         return `width:${width}`
       },
-      showLogin(){
+      showLogin() {
         this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
       },
       startGame(type, channelId, gameId) {
         if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-          Global.ui.notification.show('试玩会员无法进入该游戏，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
+          Global.ui.notification.show('试玩会员无法进入该游戏，请先注册正式游戏账号', {modalDialogShadow: 'modal-dialog-shadow'})
           return false
         }
         if (!this.getLoginStatus) {
           this.showLogin()
         } else {
           let flag = false
-          if(channelId === 3){
+          if (channelId === 3) {
             Global.ui.notification.show('暂未开放，敬请期待')
             return false
           }
@@ -238,9 +242,9 @@
                 }
               })
             let gameType = 0
-            if(type === 3){
+            if (type === 3) {
               gameType = channelId === 4 ? 3 : 6
-            }else{
+            } else {
               gameType = gameId - 1
             }
             window.open(`./game.html?type=${gameType}&src=${url}`)
@@ -287,7 +291,6 @@
     transform: translateX(-900px);
     @include transition-cfg;
   }
-
 
   body, .carousel-table-content {
     background: $def-white-color;
@@ -337,7 +340,7 @@
       text-align: right;
       background: url('./misc/db-notice.png') no-repeat center;
       position: relative;
-      &:after{
+      &:after {
         content: '';
         display: block;
         height: 100%;
@@ -436,6 +439,9 @@
         position: relative;
         .db-slot-name {
           /*padding: 10px 20px;*/
+          position: absolute;
+          bottom: 0px;
+          left: 83px;
           width: 128px;
           height: 33px;
           text-align: center;
@@ -445,25 +451,27 @@
           background-color: #42495c;
           border-top-left-radius: 15px;
           border-top-right-radius: 15px;
-          position: absolute;
-          bottom: 0px;
+
         }
         .db-slot-img {
+          position: relative;
           display: block;
           width: 100%;
           height: 100%;
         }
         .db-slot-mask {
           position: absolute;
+          left: 0;
           width: 100%;
           height: 100%;
           background: rgba(0, 0, 0, .4);
-          display: flex;
+          display: block;
           justify-content: center;
           align-items: center;
           opacity: 0;
           transition: opacity .5s;
           .db-slot-play-btn {
+            margin: 50px 0 0 108px;
             width: 80px;
             height: 80px;
             background: url("./misc/db-slot-btn.png") no-repeat;
@@ -499,7 +507,7 @@
           }
         }
       }
-      .game-gg{
+      .game-gg {
         display: block;
         width: 100%;
         height: 100%;
@@ -538,7 +546,7 @@
       width: 295px;
       height: 197px;
     }
-    .content-text{
+    .content-text {
       display: block;
       font-size: $font-xs;
       color: $new-inverse-color;

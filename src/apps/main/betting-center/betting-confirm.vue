@@ -23,7 +23,19 @@
       <div class="bc-confirm-list">
         <ul class="" v-if="type === 'normal'">
           <li class="bc-betDetail-text" v-for="item in bettingList">
-            <span class="confirm-title">{{item.levelName}}{{item.playName}} | </span>
+            <span class="confirm-title">
+              <template v-if="item.levelName !== item.playName">
+                <template v-if="item.levelName == '任选'">
+                  {{item.groupName}}{{item.playName}}
+                </template>
+                <template v-else>
+                  {{item.levelName}}{{item.playName}}
+                </template>
+              </template>
+              <template v-else>
+              {{item.playName}}
+              </template>
+              | </span>
             <span class="confirm-content"> {{item.formatBettingNumber}} | {{item.statistics}}注 | {{item.fPrefabMoney}}元</span>
           </li>
         </ul>

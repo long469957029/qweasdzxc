@@ -170,6 +170,15 @@ button.btn.btn-xs, input[type="submit"].btn.btn-xs {
     }
   }
 
+  &.btn-link-reverse {
+    //投注页字体颜色暂时修改，目前只有投注页使用
+    color: #666666;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   @include btn-links($font-colors);
 }
 .btn-im{

@@ -111,7 +111,7 @@
           </form>
         </div>
         <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :table-class="lotteryGridOps.tableClass"
-                     :col-model="lotteryGridOps.colModel"
+                     :col-model="lotteryGridOps.colModel" :init-remote="false"
                      :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="chaseList"
                      ref="normalGrid"></static-grid>
       </div>
@@ -156,7 +156,6 @@
 
     components: {
       RadioGroup,
-      StaticGrid,
     },
 
     props: {
@@ -554,8 +553,13 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
 
               this.$emit('chaseComplete')
 
+
               Global.ui.notification.show('追号成功！', {
                 type: 'success',
+                hasFooter: false,
+                closeBtn: false,
+                displayTime: 800,
+                size: 'modal-xs',
               })
             } else {
               Global.ui.notification.show(`${res.msg}` || '')
