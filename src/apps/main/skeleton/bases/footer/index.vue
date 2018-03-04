@@ -23,8 +23,8 @@
               <span>下载手机APP：</span>
               <!--<router-link to="mb" ><div class="android-icon"></div></router-link>-->
               <!--<router-link to="mb" ><div class="ios-icon"></div></router-link>-->
-              <a class="android-icon" href="mb"></a>
-              <a class="ios-icon" href="mb"></a>
+              <a class="android-icon" href="#/mb"></a>
+              <a class="ios-icon" href="#/mb"></a>
             </span>
           </div>
           <p>Copyright © 2016-2017 无限娱乐 版权所有</p>
@@ -128,7 +128,7 @@ export default {
   background: #21232a;
   .line{
     position: absolute;
-    width: 1894px;
+    width: 100%;
     height: 0;
     border: 1px dashed #262931;
     top: 200px;
