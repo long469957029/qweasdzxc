@@ -742,7 +742,7 @@ const MessageView = Base.ItemView.extend({
   // 群发消息联系人选择
   selectMessContactHandler(e) {
     const $target = $(e.currentTarget)
-    const id = $target.attr('data-id')
+    const id = Number($target.attr('data-id'))
     const type = $target.attr('data-type')
     if (type === 'selected') {
       const cancelItem = _(this.messContactSelectedList).find({
