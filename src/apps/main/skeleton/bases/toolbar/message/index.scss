@@ -502,7 +502,6 @@
         position: absolute;
         right: 97px;
         margin-top: -3px;
-        width: 29px !important;
       }
       .btn-chat-hidden {
         right: 14px;
@@ -962,7 +961,7 @@
   height: 439px;
   flex-grow: 1;
   width: 100%;
-  border-bottom: 1px solid $def-line-color;
+  //border-bottom: 1px solid $def-line-color;
   text-align: center;
   position: relative;
   .chat-admin-content-panel {
