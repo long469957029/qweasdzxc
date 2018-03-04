@@ -4,7 +4,7 @@
 
     <div class="bc-play-container clearfix">
       <div class="bc-play-left" ref="playArea">
-        <betting-advance-rules :type="'single-hidden'"></betting-advance-rules>
+        <betting-advance-rules :type="'single-hidden'" :show-title="false"></betting-advance-rules>
         <div class="bc-play-area clearfix" :class="!_.isEmpty(playRule) ? 'loaded' : ''">
           <betting-play-area-handicap :play-info="playInfo" :play-rule="playRule" :ticket-info="ticketInfo"
                                       :pushing="pushing" :sale="bettingInfo.sale" :pending="bettingInfo.pending"
