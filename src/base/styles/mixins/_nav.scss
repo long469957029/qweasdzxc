@@ -1,6 +1,6 @@
 @mixin nav-tab($props) {
 
-  $borderColor: $def-gray-color;
+  $borderColor: $im-line-color;
   $color: map_get($props, color);
   $bgColor: map_get($props, bg-color);
   $activeColor: map_get($props, active-color);
