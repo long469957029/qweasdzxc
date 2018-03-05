@@ -149,12 +149,24 @@
 
     watch: {},
 
-    computed: {},
+    computed: {
+      loginStatus(){
+        return this.$store.getters.getLoginStatus
+      },
+    },
 
     filters: {},
 
     methods: {
+      showLogin() {
+        this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+//        this.openLoginDialog()
+      },
       confirmTask(amount, limit, index){
+        if(!this.loadingStatus){
+          this.showLogin()
+          return false
+        }
         if(_(this.planList).findIndex((item) => {return item.status === 1}) > -1){
           Global.ui.notification.show('当前任务未完成，不可领取新任务')
           return false
