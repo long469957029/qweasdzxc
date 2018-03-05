@@ -1,6 +1,7 @@
 
 
 import './index.scss'
+const avatarConf = require('userCenter/misc/avatarConfig')
 
 const SlotCenterView = Base.ItemView.extend({
 
@@ -78,6 +79,10 @@ const SlotCenterView = Base.ItemView.extend({
 
   initialize() {
     this.throttleQuery = _.throttle(this.searchHandler.bind(this), 1000, true)
+    this.subscribe('acct', 'acct:login', () => {
+      this.$('.js-show-login').addClass('js-header-recharge')
+      this.$('.js-header-recharge').removeClass('js-show-login')
+    })
   },
 
   onRender() {
@@ -165,9 +170,8 @@ const SlotCenterView = Base.ItemView.extend({
       .done((res) => {
         if (res.root && res.result === 0) {
           const { records } = res.root
-
           const html = _.map(records, (record) => {
-            return self.rewardTpl(record)
+            return self.rewardTpl(_.extend(record,{headIcon: avatarConf.get(_(record.headIcon).toString()).logo}))
           })
 
           self.$rewardList.html(html)

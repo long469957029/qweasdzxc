@@ -54,12 +54,15 @@
               <div class="opening-cell" v-for="(preview, index) in currentBettingList.bettingList">
                 <div class="opening-left">
                   <template v-if="preview.levelName !== preview.playName">
-                    <template v-if="preview.levelName == '任选'">
+                    <template v-if="preview.levelName === '任选'">
                       【{{preview.groupName}}_{{preview.playName}}】
                     </template>
                     <template v-else>
                       【{{preview.levelName}}_{{preview.playName}}】
                     </template>
+                  </template>
+                  <template v-else>
+                    【{{preview.playName}}】
                   </template>
                 </div>
 
@@ -531,12 +534,16 @@
 
           Velocity(this.$refs.main, {
             height: this.mainHeight,
+          }, {
             complete: () => {
-              this.$refs.main.style.height = 'auto'
+              _.delay(() => {
+                this.$refs.main.style.height = ''
+              }, 1)
             }
           })
           Velocity(this.$refs.mainInner, {
             opacity: 1,
+          }, {
             complete: () => {
               this.$refs.mainInner.style.visibility = 'initial'
             }
@@ -594,7 +601,9 @@
             placement: 'bottom',
           })
 
-
+          this.$nextTick(() => {
+            this.mainHeight = this.$refs.main.offsetHeight
+          })
         },
       },
       unit: {
@@ -1378,8 +1387,10 @@
     font-weight: normal;
     letter-spacing: -1px;
     color: #fffdc9;
-    margin-right: 20px;
-    line-height: 22px;
+    line-height: 24px;
+    height: 40px;
+    width: 200px;
+    margin: 0 auto;
     .opening-title-inner {
       color: #ffc600;
     }
@@ -1390,7 +1401,7 @@
     position: relative;
     z-index: 2;
     text-align: center;
-    top: 50px;
+    top: 35px;
   }
 
   .opening-panel {

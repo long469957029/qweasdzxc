@@ -178,7 +178,7 @@ const CardManageView = Base.ItemView.extend({
     if(this.userBindInfo && this.userBindInfo.cardStatus === 0){
       rewardHtml = `<span class="reward">（<span class="text-prominent">+${_(this.userBindInfo.bindBankCardBonus).convert2yuan()}</span>元奖励）</span>`
     }
-    const cardAdd = `<li class="js-uc-cmBindCard-btn uc-cmCard-add" data-type="addBankCard"><span class="add-icon"></span>添加银行卡${rewardHtml}</li>`
+    const cardAdd = `<li class="js-uc-cmBindCard-btn uc-cmCard-add" data-type="addBankCard"><span class="add-icon"></span>添加银行卡${(cardList && cardList.length>0)?'':rewardHtml}</li>`
 
     if (size === 0) {
       return cardAdd

@@ -27,10 +27,19 @@ const urlList = [
     url: '/ticket/game/prizeList.json',
   },
   {
-    url:'/info/game/userInfo.json'
+    url: '/info/game/userInfo.json'
   },
   {
-    url:'/info/game/userInfo.json'
+    url: '/info/game/userInfo.json'
+  },
+  {
+    url: '/info/activityCenter/detail.json'
+  },
+  {
+    url: '/info/rechargetarget/info.json'
+  },
+  {
+    url: '/info/bettarget/info.json'
   }
 ]
 module.exports = {

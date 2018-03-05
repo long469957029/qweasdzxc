@@ -86,7 +86,6 @@
         dataTotal:{},
         totalSize:0,
         pageIndex:0,
-
         loading:'loading'
       }
     },

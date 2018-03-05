@@ -1,3 +1,4 @@
+import {formatOptionals} from 'build'
 const SearchGrid = require('com/searchGrid')
 
 import Timeset from 'com/timeset'
@@ -126,12 +127,23 @@ const BettingRecordsView = SearchGrid.extend({
 
     _(gridData.betList).each((items, index) => {
       if ((items.betNum).length >= 16) {
+        //增加任选处理逻辑
+        //如果是任选号码 将号码格式化，去除位数，并将位数接在玩法后
+        let splitNum = items.betNum.split('|')
+        let fotmattedNum = ''
+        if (splitNum.length > 1) {
+          fotmattedNum += ` ${formatOptionals(splitNum[0]).join(',')}|`
+          fotmattedNum += splitNum[1]
+        } else {
+          fotmattedNum = items.betNum
+        }
+
         const placement = index < 4 ? 'bottom' : 'top'
         self.$('.js-uc-betDetail-betNum').eq(num).popover({
           // title: '详细号码<span class="js-uc-betDetail-off" style="float:right;cursor:pointer">X</span>',
           trigger: 'focus',
           html: true,
-          content: `<span class="inline-block text-account-add m-right-sm">详细号码：</span><span class="js-pf-popover inline-block word-break ">${items.betNum}</span>`,
+          content: `<span class="inline-block text-account-add m-right-sm">详细号码：</span><span class="js-pf-popover inline-block word-break ">${fotmattedNum}</span>`,
           placement,
         })
         num += 1
@@ -171,7 +183,18 @@ const BettingRecordsView = SearchGrid.extend({
     if ((rowInfo.betNum).length >= 16) {
       row.push(`<a tabindex="${index}" class="js-uc-betDetail-betNum btn-link btn-link-cool" data-id="folder">详细号码</a>`)
     } else {
-      row.push(rowInfo.betNum)
+      //增加任选处理逻辑
+      //如果是任选号码 将号码格式化，去除位数，并将位数接在玩法后
+      let splitNum = rowInfo.betNum.split('|')
+      let fotmattedNum = ''
+      if (splitNum.length > 1) {
+        fotmattedNum += ` ${formatOptionals(splitNum[0]).join(',')}|`
+        fotmattedNum += splitNum[1]
+      } else {
+        fotmattedNum = rowInfo.betNum
+      }
+
+      row.push(fotmattedNum)
     }
     // 投注金额
     row.push(_(rowInfo.betTotalMoney).fixedConvert2yuan())
