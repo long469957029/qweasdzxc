@@ -202,16 +202,17 @@
           this.errorMsg = '请输入密码'
           return false
         } else {
-          const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
-          if (this.password.length < 9 && this.strBetweenIsNumber(this.password, 0, 7)) {
+          // const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
+          // if (this.password.length < 9 && this.strBetweenIsNumber(this.password, 0, 7)) {
+           //  this.passwordError = true
+           // this.showErrorMsg = true
+           //  this.pwdSuccess = false
+           //  this.errorMsg = '用户名或密码错误'
+           //  return false
+          if (this.password.length < 6 || this.password.length > 20) {
+          // } else if (!pwReg.test(this.password)) {
             this.passwordError = true
-           this.showErrorMsg = true
-            this.pwdSuccess = false
-            this.errorMsg = '用户名或密码错误'
-            return false
-          } else if (!pwReg.test(this.password)) {
-            this.passwordError = true
-           this.showErrorMsg = true
+            this.showErrorMsg = true
             this.pwdSuccess = false
             this.errorMsg = '用户名或密码错误'
             return false
