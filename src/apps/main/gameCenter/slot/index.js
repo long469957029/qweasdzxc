@@ -1,6 +1,7 @@
 
 
 import './index.scss'
+const avatarConf = require('userCenter/misc/avatarConfig')
 
 const SlotCenterView = Base.ItemView.extend({
 
@@ -169,9 +170,9 @@ const SlotCenterView = Base.ItemView.extend({
       .done((res) => {
         if (res.root && res.result === 0) {
           const { records } = res.root
-
+          // let records1 = [{"userName":"guo***","gameName":"富裕人生","prize":8274000,"headIcon":"19"},]
           const html = _.map(records, (record) => {
-            return self.rewardTpl(record)
+            return self.rewardTpl(_.extend(record,{headIcon: avatarConf.get(_(record.headIconId).toString()).logo}))
           })
 
           self.$rewardList.html(html)
