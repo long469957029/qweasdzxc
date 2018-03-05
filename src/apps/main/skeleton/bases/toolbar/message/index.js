@@ -704,7 +704,7 @@ const MessageView = Base.ItemView.extend({
   pollingContactInfoHandler() {
     this.contactPolling = setInterval(() => {
       this.renderGetContactInfoXhr()
-    }, 5000)
+    }, 30000)
     this.recentlyPolling = setInterval(() => {
       this.renderGetRecentlyInfoXhr()
     }, 5000)
