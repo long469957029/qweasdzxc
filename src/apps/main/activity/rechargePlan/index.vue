@@ -163,7 +163,7 @@
 //        this.openLoginDialog()
       },
       confirmTask(amount, limit, index){
-        if(!this.loadingStatus){
+        if(!this.loginStatus){
           this.showLogin()
           return false
         }
