@@ -7,10 +7,10 @@ $pg-filter: 5px !default;
 $mall-pg-filter: 12px !default;
 
 $pg-item: (
-  color: $font-inverse,
+  color: $font-auxiliary-color,
   bg-color: $font-default,
   hover-color: $font-default,
-  bg-hover-color: $font-light-pleasant,
+  bg-hover-color: $new-main-deep-color,
   active-color: $font-default,
   bg-active-color: $color-pleasant,
   disabled-color: #888888,
@@ -27,7 +27,7 @@ $mall-pg-item: (
   bg-disabled-color: $font-default
 );
 .foot-nav{
-  font-size:14px;
+  font-size:12px;
   color:#666666;
 }
 .pagination {
@@ -43,17 +43,19 @@ $mall-pg-item: (
         margin-left: $pg-filter;
         > {
           span {
-            padding: 7px 10px;
+            padding: 6.5px 10px;
             line-height: 15px;
             display: inline-block;
             cursor: pointer;
             border: 1px solid #cccccc;
             background-color: transparent;
-            border-radius: 5px;
+            border-radius: 3px;
             color: map_get($pg-item, color);
+            font-size: $font-sm;
             &:hover, &:focus {
               background-color: map_get($pg-item, bg-hover-color);
               color: map_get($pg-item, hover-color);
+              border-color: map_get($pg-item, bg-hover-color);
             }
           }
         }
@@ -62,7 +64,7 @@ $mall-pg-item: (
         span {
           background-color: #14b1bb;
           color: map_get($pg-item, active-color);
-          //cursor: default;
+          border-color: map_get($pg-item, bg-hover-color);
         }
       }
       .disabled > {

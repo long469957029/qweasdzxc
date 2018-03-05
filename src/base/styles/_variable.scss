@@ -614,14 +614,14 @@ $modals: (
 $tables: (
   default: (
     th-bg-color: $new-main-body-color,
-    th-color: $def-black-color,
+    th-color: $new-inverse-color,
     td-bg-color: $def-white-color,
     td-bg-hover-color: $new-main-body-color,
     td-color: $inverse-color
   ),
   similar: (
     th-bg-color: $new-main-body-color,
-    th-color: $def-black-color,
+    th-color: $new-inverse-color,
     td-bg-color: $def-white-color,
     td-bg-hover-color: $def-white-color,
     td-color: $new-inverse-color

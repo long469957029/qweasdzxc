@@ -14,9 +14,11 @@
       font-size: 0;
       vertical-align: middle;
       .btn {
-        min-width: 24px;
+        min-width: 46px;
         margin-right: 8px;
         border:1px solid $third-line-color;
+        font-size: $font-xs;
+        color: $new-inverse-color;
         &.active{
           border-color: $new-main-deep-color;
           color: $new-main-deep-color;
