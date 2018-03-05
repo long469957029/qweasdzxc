@@ -218,19 +218,9 @@ const BetDetailView = Base.ItemView.extend({
           $('.js-fc-gr-tr-query').trigger('click'); //模拟点击事件刷新追号列表
           // self._getGridXhr()
         } else if (res.msg.indexOf('fail') !== -1) {
-          Global.ui.notification.show('撤单失败!', {
-            size: 'modal-dialog-shadow modal-xs',
-            hasFooter: false,
-            displayTime: 1000,
-            closeBtn: false,
-          })
+          Global.ui.notification.show('撤单失败!')
         } else {
-          Global.ui.notification.show(`撤单失败：${res.msg}!`, {
-            size: 'modal-dialog-shadow modal-xs',
-            hasFooter: false,
-            displayTime: 1000,
-            closeBtn: false,
-          })
+          Global.ui.notification.show(`撤单失败：${res.msg}!`)
         }
       })
   },

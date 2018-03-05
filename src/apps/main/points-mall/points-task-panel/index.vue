@@ -227,6 +227,9 @@
   .point-task-cell {
     display: flex;
     margin-bottom: 45px;
+    &:last-of-type {
+      margin-bottom: 100px;
+    }
   }
 
   .daily-prize {

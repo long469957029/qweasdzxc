@@ -25,7 +25,7 @@
     flex-direction: column;
     border: 1px solid #e6e6e6;
     margin-top: 30px;
-    margin-bottom: 160px;
+    margin-bottom: 100px;
     background: #ffffff;
   }
   .text-wait {

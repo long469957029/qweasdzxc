@@ -66,8 +66,13 @@ router.beforeEach((to, from, next) => {
   if (store.getters.checkPermission(to.path)) {
     next()
   } else {
-    store.commit(types.TOGGLE_LOGIN_DIALOG, true)
-    next('/') // 否则全部重定向到首页
+    let popupLogin = _.getUrlParam('popupLogin')
+    if((to.query && to.query.popupLogin==='true')|| popupLogin=='true' ){
+        store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+      // this.$router.push('/')
+    }
+
+    next({path:'/',query:to.query}) // 否则全部重定向到首页
   }
 })
 //临时解决popover框bug

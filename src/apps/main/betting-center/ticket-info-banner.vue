@@ -343,14 +343,10 @@
         color: $def-white-color;
         margin-top: 10px;
         text-align: center;
-        &.entry-list-open {
+        background-color: #129fa8;
+        transition: all .3s;
+        &:hover {
           background-color: #108e96;
-        }
-        &.entry-list-trend {
-          background-color: #129fa8;
-        }
-        &.entry-list-des {
-          background-color: #129fa8;
         }
       }
     }

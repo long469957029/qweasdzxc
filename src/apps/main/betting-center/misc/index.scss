@@ -10,20 +10,6 @@
     color: $inverse-color;
     border-right: 1px solid $def-line-color;
   }
-  .bc-basic-rules {
-    .tab-toolbar {
-      margin-bottom: 0;
-      padding-left: 13px;
-      position: relative;
-      .tab.active {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-      }
-      .tab-group {
-        margin-right: 0;
-      }
-    }
-  }
   .bc-play-area {
     position: relative;
     min-height: 300px;
@@ -46,7 +32,7 @@
       cursor: pointer;
       margin-right: 10px;
       transition: all .3s ease-out;
-      &.active {
+      &:hover, &.active {
         color: $def-white-color;
         background-color: $main-deep-color;
         border-color: $main-deep-color;
@@ -152,6 +138,7 @@
       td {
         padding: 8px 3px 7px;
         height: 25px;
+        white-space: nowrap;
       }
     }
   }
@@ -160,7 +147,7 @@
 .bc-side-area {
   position: relative;
   flex: 1;
-  min-height: 845px;
+  //min-height: 845px;
   margin-left: -1px;
   border-left: 1px solid $def-line-color;
   box-sizing: border-box;
@@ -217,15 +204,15 @@
     background-color: transparent;
   }
   .open-nums {
-    //max-width: 150px;
+
     span {
       width: 20px;
       height: 20px;
       border: 1px solid $third-line-color;
       border-radius: 50%;
       text-align: center;
+      margin-right: 3px;
       line-height: 20px;
-      margin-left: 4px;
       margin-bottom: 2px;
       display: inline-block;
     }

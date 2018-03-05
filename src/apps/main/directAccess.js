@@ -21,7 +21,7 @@ const permissionsList = [
     needLogin: false,
   },
   {
-    path: '/ac',
+    path: '/ac/',
     mame: 'team',
     needLogin: true,
   },

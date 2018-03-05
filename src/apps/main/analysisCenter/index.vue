@@ -154,7 +154,7 @@
                       :class="item.style">{{item.title}}</span>
               </template>
               <opening-mark6-balls v-if="analysis.numCol.num === 'mark6'" class="opening-mark6-balls-sm no-shadow"
-                                   :counts="ticketInfo.counts" :range="ticketInfo.range"
+                                   :counts="ticketInfo.counts" :range="ticketInfo.range()"
                                    :opening-balls="opening.fTicketOpenNum"
                                    :default-opening="ticketInfo.defaultOpening"
               ></opening-mark6-balls>

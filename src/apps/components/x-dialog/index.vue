@@ -67,13 +67,18 @@
     },
 
     watch: {
-      show (val) {
-        if (val) {
-          this.showModal()
-        } else {
-          this.hide()
-        }
-      }
+      show: {
+        handler(val) {
+          this.$nextTick(() => {
+            if (val) {
+              this.showModal()
+            } else {
+              this.hide()
+            }
+          })
+        },
+        immediate: true
+      },
     },
 
     mounted() {

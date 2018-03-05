@@ -108,6 +108,7 @@
               this.couponList = data.root.records
               this.dataTotal = data.root.dataTotal
               this.totalSize = data.root.rowCount
+              Global.memoryCache.set('myPointsNoUse',data.root.dataTotal.noUseCount)
               Vue.$global.bus.$emit('myPointsNoUse',data.root.dataTotal.noUseCount)
               this.loading = 'completed'
             }

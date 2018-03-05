@@ -1196,3 +1196,11 @@
     padding: 20px;
   }
 }
+
+.message-sub-title{
+  max-width: 650px;
+  height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

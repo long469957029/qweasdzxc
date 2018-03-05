@@ -321,7 +321,7 @@
 
   .tip-main {
     margin-left: 22px;
-    margin-bottom: 80px;
+    margin-bottom: 100px;
     li {
       font-size: 14px;
       line-height: 35px;

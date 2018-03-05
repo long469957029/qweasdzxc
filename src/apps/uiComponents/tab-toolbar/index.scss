@@ -55,7 +55,7 @@ $tab-toolbar-circle-colors: (
         line-height: 36px;
         height: 36px;
         min-width: 45px;
-        padding: 0 10px;
+        padding: 0 11px;
         margin: 4px 0 0 0;
         &.active {
           color: #16a4aa;
@@ -79,7 +79,7 @@ $tab-toolbar-circle-colors: (
           cursor: pointer;
           display: inline-block;
           text-align: center;
-          margin-right: $filter-sm;
+          margin-right: 6px;
           min-width: 54px;
           height: $tab-toolbar-height;
           line-height: $tab-toolbar-height;
@@ -121,7 +121,7 @@ $tab-toolbar-circle-colors: (
       width: 38px;
       border-radius: 50%;
       border: 1px solid $def-gray-color;
-      color: $def-black-color;
+      color: $new-inverse-color;
       background-color: $sec-line-color;
 
       &:hover {
@@ -199,7 +199,7 @@ $tab-toolbar-circle-colors: (
       height: 40px;
       line-height: 36px;
       float: left;
-      color: $def-black-color;
+      color: $new-inverse-color;
 
       &:hover {
         color: $main-deep-color;

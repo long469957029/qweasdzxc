@@ -23,8 +23,8 @@
               <span>下载手机APP：</span>
               <!--<router-link to="mb" ><div class="android-icon"></div></router-link>-->
               <!--<router-link to="mb" ><div class="ios-icon"></div></router-link>-->
-              <a class="android-icon" href="mb"></a>
-              <a class="ios-icon" href="mb"></a>
+              <a class="android-icon" href="#/mb"></a>
+              <a class="ios-icon" href="#/mb"></a>
             </span>
           </div>
           <p>Copyright © 2016-2017 无限娱乐 版权所有</p>
@@ -43,7 +43,7 @@
           <div class="desc-company">
             <p>
               作为行业挑战者，无限娱乐始终将品牌信誉作为发展的第一要务，
-              从游戏选择，产品设计，运营服务的创新上从未妥协。实力让情怀
+              在游戏选择，产品设计，运营服务的创新上从未妥协。实力让情怀
               落地，厚积薄发才能带给用户最极致的游戏体验。
             </p>
           </div>
@@ -123,12 +123,13 @@ export default {
   bottom: 0;
   right: 0;
   left: 0;
-  display: none;
+  /*display: none;*/
   height: 280px;
   background: #21232a;
+  overflow: hidden;
   .line{
     position: absolute;
-    width: 1894px;
+    width: 20000px;
     height: 0;
     border: 1px dashed #262931;
     top: 200px;

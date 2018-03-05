@@ -4,9 +4,9 @@
       <li :class="[{active: ticketType === 1},'db-ticket-game-type-item']" @click="showTicket(1)">双面盘</li>
       <li :class="[{active: ticketType === 2},'db-ticket-game-type-item']" @click="showTicket(2)">经典彩票</li>
     </ul>
-    <router-link :to="ticketType === 1 ? `bc/2/${_.isEmpty(topHandicapTicket) ? 1 : topHandicapTicket.id}`
-                : `/bc/0/${_.isEmpty(topClassicalTicket) ? 1 : topClassicalTicket.id}`" class="db-ticket-more">更多彩种<span class="sfa sfa-more-arrow-right-double"></span>
-    </router-link>
+    <a href="javascript:void(0)" @click="goTo(ticketType === 1 ? `bc/2/${_.isEmpty(topHandicapTicket) ? 1 : topHandicapTicket.id}`
+    : `/bc/0/${_.isEmpty(topClassicalTicket) ? 1 : topClassicalTicket.id}`)"  class="db-ticket-more">更多彩种<span class="sfa sfa-more-arrow-right-double"></span>
+    </a>
     <div class="ticket-game-main" @mouseover="showArrow" @mouseout="showArrow">
       <transition name="arrow-left">
         <a class="db-ticket-arrow left" @click="ticketSwitch('left')"
@@ -20,8 +20,8 @@
         <transition-group name="ticketGroup" tag="div">
           <div class="db-ticket-item" v-for="item in handicapTicketList" :key="item.uid">
             <!--<div :class="`db-ticket-logo sfa-bc-new-ssc-${item.ticketId}`"></div>-->
-            <router-link :to="`bc/2/${item.ticketId}`"
-                         :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></router-link>
+            <a href="javascript:void(0)" @click="goTo(`bc/2/${item.ticketId}`)"
+                         :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></a>
             <div class="db-ticket-name">{{item.ticketName}}</div>
             <div class="db-ticket-num">
               <animated-integer :value="item.userBetCount"></animated-integer>
@@ -37,8 +37,8 @@
       <div :class="['db-ticket-game-type-container',{'left': ticketCount > 3}]" v-show="ticketType === 2">
         <transition-group name="ticketGroupClassic" tag="div">
           <div class="db-ticket-item" v-for="item in classicTicketList" :key="item.uid">
-            <router-link :to="`bc/0/${item.ticketId}`"
-                         :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></router-link>
+            <a href="javascript:void(0)" @click="goTo(`bc/0/${item.ticketId}`)"
+                         :class="['db-ticket-logo',`${getTicketLogo(item.ticketId)}`]"></a>
             <div class="db-ticket-name">{{item.ticketName}}</div>
             <div class="db-ticket-num">
               <animated-integer :value="item.userBetCount"></animated-integer>
@@ -77,8 +77,21 @@
         'topClassicalTicket',
         'topHandicapTicket'
       ]),
+      loginStatus(){
+        return this.$store.getters.getLoginStatus
+      },
     },
     methods: {
+      goTo(router){
+        if(this.loginStatus){
+          this.$router.push(router)
+        }else{
+          this.showLogin()
+        }
+      },
+      showLogin() {
+        this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+      },
       showTicket(type) {
         this.ticketCount = type === 1 ? this.handicapTicketList.length : this.classicTicketList.length
         this.ticketType = type
@@ -107,7 +120,7 @@
 
       },
       progressWidth(num) {
-        const width = num > 4000 ? '100%' : (num > 1000 ? `${_(num).div(4000)}%` : '25%')
+        const width = num > 4000 ? '100%' : (num > 1000 ? `${_(num*100).div(4000)}%` : '25%')
         return `width:${width}`
       },
       getTicketLogo(id) {
@@ -119,7 +132,7 @@
       getIndexTicketApi(
         ({data}) => {
           if (data && data.result === 0) {
-            if(data.root.handicapTickets && data.root.handicapTickets.length > 3 && data.root.handicapTickets.length < 5){
+            if(data.root.handicapTickets && data.root.handicapTickets.length > 3 && data.root.handicapTickets.length < 6){
               this.handicapTicketList = data.root.handicapTickets
               this.handicapTicketList = [...this.handicapTicketList, ..._.cloneDeep(this.handicapTicketList)]
             }else{
@@ -129,7 +142,7 @@
               item.uid = _.uniqueId()
             })
 
-            if(data.root.classicTickets && data.root.classicTickets.length > 3 && data.root.classicTickets.length < 5){
+            if(data.root.classicTickets && data.root.classicTickets.length > 3 && data.root.classicTickets.length < 6){
               this.classicTicketList = data.root.classicTickets
               this.classicTicketList = [...this.classicTicketList, ..._.cloneDeep(this.classicTicketList)]
             }else{

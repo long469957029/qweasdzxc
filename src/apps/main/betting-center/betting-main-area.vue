@@ -57,7 +57,7 @@
           </status-cell>
         </div>
 
-        <div class="div-line"></div>
+        <div class="div-line m-top-md"></div>
 
         <div class="bottom-main-panel">
           <div class="m-top-md m-bottom-md">
@@ -104,7 +104,7 @@
 
                   <td v-if="row.formatBetNum.length <= 20">{{row.formatBetNum}}</td>
                   <td v-else v-popover.right="{name: `bet${index}`}">
-                    <a href="javascript:void(0)" class="btn-link">{{row.formatBetNum | formatOpenNum}}</a>
+                    <a href="javascript:void(0)" class="btn-link btn-link-reverse">{{row.formatBetNum | formatOpenNum}}</a>
                     <div v-transfer-dom>
                       <popover :name="`bet${index}`">
                         <div class="detail-popover">
@@ -123,7 +123,7 @@
                   <td v-html="row.operate"></td>
                 </tr>
               </slot-static-grid>
-              <div class="m-top-md p-top-sm text-center bc-operate-section clearfix">
+              <div class="bc-operate-section">
                 <div class="total-panel inline-block">
                 <span class="font-sm">
                 <span>
@@ -157,7 +157,7 @@
                   <span class="ba-chase-tip">可提高中奖率</span>
                 </button>
               </div>
-              <div class="m-top-md p-top-sm text-center m-bottom-md">
+              <div class="total-btn-panel">
                 <button class="btn btn-orange bc-jb-btn" @click="lotteryConfirm"
                         data-loading-text="提交中" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending"> 确认投注
                 </button>
@@ -246,11 +246,11 @@
               label: '玩法', width: '15%',
             },
             {
-              label: '投注内容', width: '17%',
+              label: '投注内容', width: '18.5%',
             },
             {label: '注数', width: '10%'},
             {label: '倍数', width: '12.5%'},
-            {label: '模式', width: '12.5%'},
+            {label: '模式', width: '11%'},
             {label: '投注金额', width: '12.5%'},
             {label: '预期奖金', width: '12.5%'},
             {
@@ -386,7 +386,9 @@
       'bettingChoice.previewList': {
         handler(currentPreviewList, prevPreviewList) {
           this.fPreviewList = _(currentPreviewList).map((previewInfo, index) => {
-            const title = `${previewInfo.levelName}_${previewInfo.playName}`
+            let levelName = previewInfo.levelName === '任选' ? previewInfo.groupName : previewInfo.levelName;
+            let title = levelName !== previewInfo.playName ? `${levelName}_${previewInfo.playName}` : previewInfo.playName
+
             const multipleDiv = `<div class="js-bc-preview-multiple-${index} p-top-xs"></div>`
             const modeSelect = `<select name="" class="js-bc-preview-unit select-default bc-unit-select-add">
               <option value="10000" ${previewInfo.unit === 10000 ? 'selected' : ''}>元</option>
@@ -409,13 +411,13 @@
           })
 
           this.$nextTick(() => {
-            if (currentPreviewList.length !== prevPreviewList.length) {
+            // if (currentPreviewList.length !== prevPreviewList.length) {
               _.each(this.$refs.lotteryGrid.getRows(), (row, index) => {
                 const $row = $(row)
                 const $multipleAdd = $row.find(`.js-bc-preview-multiple-${index}`)
 
                 if ($multipleAdd.numRange('instance')) {
-                  $multipleAdd.numRange('setRange', 1, currentPreviewList[index].formatMaxMultiple)
+                  $multipleAdd.numRange('setRange', 1, currentPreviewList[index].formatMaxMultiple, {numChange: false})
                   $multipleAdd.numRange('numChange', currentPreviewList[index].multiple)
                 } else {
                   $multipleAdd.numRange({
@@ -433,7 +435,7 @@
                   })
                 }
               });
-            }
+            // }
           })
 
           this.$store.commit(types.CALCULATE_TOTAL)
@@ -835,9 +837,8 @@
   .bc-advance-mode-single {
     color: $prominent-secondary-btn-color;
     margin: 20px 0 0 20px;
-    flex: 1;
     .advance-play-des {
-      margin: 0 0 0 20px;
+      margin-top: -3px;
     }
   }
 
@@ -851,21 +852,19 @@
   }
 
   .advance-bonus-single {
-    margin-right: 40px;
     margin-top: 20px;
-    float: right;
   }
 
   .bc-play-select-area {
-    min-height: 70px;
+    min-height: 87px;
     display: flex;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
+    justify-content: space-between;
+
 
     .bc-advance-rules {
       color: #666666;
-      max-width: 80%;
       margin-left: $main-play-area-margin;
-      flex: 1;
       .tab-toolbar {
         &:last-of-type {
           margin-bottom: 3px;
@@ -884,6 +883,9 @@
     .bc-advance-mode-main {
       font-size: $font-xs;
       color: $inverse-color;
+      flex: 1 0 180px;
+      margin-right: 20px;
+      text-align: right;
     }
   }
 
@@ -912,7 +914,9 @@
     border-top: 0;
     padding: 5px 0;
     margin-bottom: 4px;
+    margin-top: 20px;
     display: flex;
+    text-align: center;
   }
 
   .ba-chase-tip {
@@ -983,6 +987,11 @@
     .content {
       word-wrap: break-word;
     }
+  }
+
+  .total-btn-panel {
+    text-align: center;
+    margin: 25px 0 20px;
   }
 
 

@@ -1,5 +1,5 @@
 <template>
-  <x-dialog v-model="addressModal" width="610px" :options="modalOptions">
+  <x-dialog v-model="addressModal" width="610px" :options="modalOptions" ref="modal">
     <div slot="head-main">
       <template v-if="currentModal === 'select'">
         <div class="address-select-title">
@@ -145,8 +145,11 @@
         },
         immediate: true
       },
-      show(val) {
-        this.addressModal = val
+      show: {
+        handler(val) {
+          this.addressModal = val
+        },
+        immediate: true
       },
       addressModal(val) {
         this.$emit('change', val)
@@ -210,6 +213,10 @@
             }
           }
         })
+      },
+
+      hide() {
+        this.$refs.modal.hide()
       },
 
       addressSelected(selectedAddress) {

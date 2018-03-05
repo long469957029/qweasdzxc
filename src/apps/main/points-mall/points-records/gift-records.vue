@@ -68,8 +68,7 @@
     </search-grid>
 
     <div v-transfer-dom>
-      <points-address v-if="isShowAddressModal" type="select"
-                      @modal-hidden="isShowAddressModal = false"
+      <points-address v-model="isShowAddressModal" v-if="isShowAddressModal" type="select"
                       @address-selected="addAddress"
       ></points-address>
     </div>

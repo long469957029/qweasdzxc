@@ -23,7 +23,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 160px;
+    margin-bottom: 100px;
     background: #ffffff;
   }
   .text-wait {

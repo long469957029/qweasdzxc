@@ -67,7 +67,7 @@ const RecordView = Base.ItemView.extend({
       }
 
       // html.push(`<div class="recent-game-item-list"><div class="js-gl-bet-detail-dialog recent-game-item " data-id="${game.ticketTradeNo}"></div></div>`)
-      html.push(`<div class="recent-game-item-list"><div class="js-gl-bet-detail-dialog recent-game-item " data-id="${game.ticketTradeNo}">`)
+      html.push(`<div class="recent-game-item-list"><div class="${game.type===1?'js-gl-bet-detail-dialog ': ' '} recent-game-item " data-id="${game.ticketTradeNo}">`)
       html.push(`<div class="game-title">${game.name}-${game.playName}</div>`)
       html.push(`<div class="game-amount">${betAmount}</div>`)
       html.push(`<div class="game-date">${createTime}</div>`)
