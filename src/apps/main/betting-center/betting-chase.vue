@@ -368,7 +368,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
         if (this.chasePlans > this.chaseList.length) {
           const chasePlans = this.plans.slice(0, this.chasePlans > 15 ? this.chasePlans : 15)
 
-          this.chaseList = _(chasePlans).map((chasePlan, index) => this.$_create(chasePlan, this.chasePlans > index, init))
+          this.chaseList = _(chasePlans).map((chasePlan, index) => this.$_create(chasePlan, this.chasePlans > index, false))
         } else {
           _(this.chaseList).each((item, index) => item.selected = this.chasePlans > index)
         }

@@ -5,7 +5,7 @@
   $linearColor: map_get($props, linear-color);
   $borderColor: map_get($props, border-color);
   $hover: map_get($props, hover);
-  $focus: map_get($props, focus);
+  //$focus: map_get($props, focus);
   $active: map_get($props, active);
 
   color: $color;
@@ -15,10 +15,10 @@
     color: map_get($hover, color);
     background-color: map_get($hover, bg-color);
   }
-  &:focus{
-    color: map_get($focus, color);
-    background-color: map_get($focus, bg-color);
-  }
+  //&:focus{
+  //  color: map_get($focus, color);
+  //  background-color: map_get($focus, bg-color);
+  //}
   &.active, &:active {
     color: map_get($active, color);
     background-color: map_get($active, bg-color);
@@ -28,9 +28,9 @@
     &:hover {
       background: map_get($hover, linear-color);
     }
-    &:focus{
-      background: map_get($focus, linear-color);
-    }
+    //&:focus{
+    //  background: map_get($focus, linear-color);
+    //}
     &.active, &:active {
       background: map_get($active, linear-color);
     }

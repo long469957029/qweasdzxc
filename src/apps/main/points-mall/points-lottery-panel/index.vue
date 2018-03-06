@@ -4,11 +4,11 @@
       <status-cell class="lottery-panel" :has-data="currentAwards.length" :status="loadingStatus">
         <div class="lottery-panel-main">
           <div class="x-switch">
-            <input type="radio" class="switch-input" v-model.number="currentLottery" value="0" id="week">
+            <input type="radio" class="switch-input" v-model.number="currentLottery" value="0" id="week" :disabled="pushing || running">
             <label for="week" class="switch-label switch-label-off">
               {{cashRob | convert2yuan}}元夺宝
             </label>
-            <input type="radio" class="switch-input" v-model.number="currentLottery" value="1" id="month">
+            <input type="radio" class="switch-input" v-model.number="currentLottery" value="1" id="month" :disabled="pushing || running">
             <label for="month" class="switch-label switch-label-on">
               {{cashRob10 | convert2yuan}}元夺宝
             </label>
@@ -35,7 +35,7 @@
                       <!-- 积分 -->
                       <div class="sfa-pt-task-points" v-else-if="award.awardTypeId === 3"></div>
                     </div>
-                    <div class="task-badge" :title="award.desc">{{award.fDesc}}</div>
+                    <div class="task-badge" :title="award.fDesc">{{award.fDesc}}</div>
                   </div>
                 </div>
               </div>
@@ -855,16 +855,19 @@
     position: relative;
     padding: 30px 44px;
     box-sizing: border-box;
+    z-index: 2;
 
     &:nth-of-type(4) {
       flex: 50% 0 0;
       left: 59px;
       top: -87px;
+      z-index: 1;
     }
     &:nth-of-type(5) {
       flex: 50% 0 0;
       right: 59px;
       top: -87px;
+      z-index: 1;
     }
     &:nth-of-type(n + 6) {
       top: -175px;

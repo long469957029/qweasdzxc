@@ -99,7 +99,7 @@
   import banner from './banner.png'
 
   import SignIn from '../points-sign-in'
-  import {getSignInInfoApi, signInApi} from 'api/points'
+  import {getSignInInfoApi} from 'api/points'
 
   export default {
     name: 'points-top',
@@ -125,6 +125,17 @@
         bannerStatus: 'loading',
         isShowSignIn: false,
         isReceiveToday: true,
+      }
+    },
+
+    watch: {
+      isLogin: {
+        handler() {
+          if (this.isLogin) {
+            this.getSignInInfo()
+          }
+        },
+        immediate: true
       }
     },
 
@@ -189,7 +200,6 @@
         .finally(() => {
           this.bannerStatus = 'completed'
         })
-      this.getSignInInfo()
     }
   }
 </script>
