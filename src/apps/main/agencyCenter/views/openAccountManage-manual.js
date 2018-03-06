@@ -293,7 +293,7 @@ const OpenAccountManageView = Base.ItemView.extend({
     const copyText = '账号：'+data.userName+
       '\n密码：'+data.loginPwd+
       '\n返点：'+_(data.rebate).formatDiv(10,{fixed:1})+
-      '\n网址：'+_('/login.html').toLink()
+      '\n网址：'+_('/index.html').toLink()
 
     const $dialog = Global.ui.dialog.show({
       closeBtn: false,
