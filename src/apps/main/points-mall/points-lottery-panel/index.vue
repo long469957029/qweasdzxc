@@ -35,18 +35,7 @@
                       <!-- 积分 -->
                       <div class="sfa-pt-task-points" v-else-if="award.awardTypeId === 3"></div>
                     </div>
-                    <div class="task-badge" v-if="award.awardTypeId === 1">
-                      <template v-if="award.type === 601">
-                        现金{{award.bigShowNum}}{{award.conditionUnit}}
-                      </template>
-                      <template v-else>
-                        {{award.mainDesc}}
-                      </template>
-                    </div>
-                    <div class="task-badge" v-else-if="award.awardTypeId === 2">{{award.itemName}}</div>
-                    <div class="task-badge" v-else-if="award.awardTypeId === 3">积分 {{award.integral | convert2yuan}}
-                    </div>
-                    <div class="task-badge" v-else>{{award.desc}}</div>
+                    <div class="task-badge" :title="award.desc">{{award.fDesc}}</div>
                   </div>
                 </div>
               </div>
@@ -224,7 +213,7 @@
           </div>
           <div class="lucky-points-prize" v-else>
             <div class="icon-balance-not-enough"></div>
-            您的积分不足以本次夺宝！
+            您的余额不足以本次夺宝！
           </div>
         </div>
         <div class="btn-panel">
@@ -368,6 +357,8 @@
                   ticketId: award.statTicketId,
                   gameType: award.gameType
                 }))
+              } else if (award.awardTypeId === 2) {
+
               }
             })
 
@@ -688,14 +679,39 @@
           }
         })
       },
+      $_formatAwards(awards) {
+        return awards.map((award) => {
+          if (award.awardTypeId === 1) {
+            if (award.type === 601) {
+              award.fDesc = `现金${award.bigShowNum}${award.conditionUnit}`
+            } else {
+              award.fDesc = award.mainDesc
+            }
+          } else if (award.awardTypeId === 2) {
+            award.fDesc = award.itemName
+          } else if (award.awardTypeId === 3) {
+            award.fDesc = `积分 ${_.convert2yuan(award.integral)}`
+          } else {
+            award.fDesc = award.desc
+          }
+
+          return award
+        })
+      }
     },
 
     computed: {
       ...mapState({
         foundsLock: state => state.loginStore.foundsLock,
       }),
+      fAwards() {
+        return this.$_formatAwards(this.awards)
+      },
+      fAwards10() {
+        return this.$_formatAwards(this.awards10)
+      },
       currentAwards() {
-        return this.currentLottery === 0 ? this.awards : this.awards10
+        return this.currentLottery === 0 ? this.fAwards : this.fAwards10
       },
       currentCashRob() {
         return this.currentLottery === 0 ? this.cashRob : this.cashRob10
@@ -797,7 +813,14 @@
     text-align: center;
     line-height: 35px;
     position: relative;
-    z-index: 1,
+    z-index: 1;
+    padding: 0 17px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 136px;
+    margin: 0 auto;
+    box-sizing: border-box;
   }
 
   .points-ticket {
@@ -830,21 +853,21 @@
 
   .task-cell-wrapper {
     position: relative;
-    padding: 30px;
+    padding: 30px 44px;
     box-sizing: border-box;
 
     &:nth-of-type(4) {
       flex: 50% 0 0;
-      left: 54px;
-      top: -82px;
+      left: 59px;
+      top: -87px;
     }
     &:nth-of-type(5) {
       flex: 50% 0 0;
-      right: 54px;
-      top: -82px;
+      right: 59px;
+      top: -87px;
     }
     &:nth-of-type(n + 6) {
-      top: -167px;
+      top: -175px;
     }
   }
 

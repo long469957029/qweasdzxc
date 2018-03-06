@@ -6,11 +6,11 @@
         <!--leave-active-class="animated fadeOutLeftBig absolute"-->
       <!--&gt;-->
         <div class="inline-block transition" :key="'analysis'" v-if="playRule.analysisProps">
-          <div class="bc-missOption-btn" @click="toggleCurrentMiss" :class="{active: showMiss}">当前遗漏</div>
-          <div class="bc-missOption-btn" @click="toggleColdHot" :class="{active: showCold}">30期冷热</div>
+          <div v-ripple class="bc-missOption-btn" @click="toggleCurrentMiss" :class="{active: showMiss}">当前遗漏</div>
+          <div v-ripple class="bc-missOption-btn" @click="toggleColdHot" :class="{active: showCold}">30期冷热</div>
         </div>
         <slot name="autoAdd" v-if="playRule.topOp.auto"></slot>
-        <div class="bc-missOption-btn" :key="'clear'" @click="clearAllSelected" v-if="playRule.topOp.clear">清除选号</div>
+        <div v-ripple class="bc-missOption-btn" :key="'clear'" @click="clearAllSelected" v-if="playRule.topOp.clear">清除选号</div>
       <!--</transition-group>-->
     </div>
 
@@ -56,7 +56,7 @@
                 <div v-for="n in fRule.row.totalPage" class="clearfix inline-block">
                   <div class="bc-select-item" v-for="(item, itemIndex) in fRule.row.fItems"
                        v-if="!fRule.row.page || (itemIndex < n * fRule.row.page && itemIndex >= (n - 1) * fRule.row.page)">
-                  <span class="cbutton cbutton--effect-novak tab" @click="selectNumber(item, fRule.row)"
+                  <span v-ripple class="tab" @click="selectNumber(item, fRule.row)"
                         :class="[fRule.limit, {active: item.selected, clearfix: playRule.style.row !== 1 && Math.ceil(fRule.row.fItem / itemIndex) === playRule.style.row}]">
                     <span v-if="!fRule.row.doubleNum">{{item.title}}</span>
                     <span v-else>{{item.title[0]}}<i class="num-split"></i>{{item.title[1]}}</span>
@@ -248,10 +248,23 @@
               num: row.num
             })
           })
+
+          this.$_updateBonus(this.formattedRuleList[index].row)
           // }
         })
 
         this.$_statisticsLottery()
+      },
+
+      $_updateBonus(row) {
+        const indexs = []
+        _(row.fItems).each((item, index) => {
+          if (item.selected) {
+            indexs.push(index)
+          }
+        })
+
+        this.$store.commit(types.UPDATE_BONUS, indexs)
       },
 
       selectOperate(op, row) {
@@ -423,14 +436,7 @@
 
         this.$_statisticsLottery()
 
-        const indexs = []
-        _(row.fItems).each((item, index) => {
-          if (item.selected) {
-            indexs.push(index)
-          }
-        })
-
-        this.$store.commit(types.UPDATE_BONUS, indexs)
+        this.$_updateBonus(row)
       },
 
       $_selectNumbers(nums, row, toSelected = true) {

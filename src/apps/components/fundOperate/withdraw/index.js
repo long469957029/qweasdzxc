@@ -40,12 +40,13 @@ const WithdrawView = Base.ItemView.extend({
       url: '/info/activityCenter/fundList.json',
     })
   },
-  onRender() {
-    const self = this
-    const securityStatus = Global.cookieCache.get('security')
-    if (securityStatus !== 1) {
-      this.$('.js-fc-wd-set-view').html(withdrawService.getPreWithdrawTips(securityStatus))
-    } else {
+
+  render() {
+     const self = this
+    //const securityStatus = Global.cookieCache.get('security')
+    // if (securityStatus !== 1) {
+    //   this.$('.js-fc-wd-set-view').html(withdrawService.getPreWithdrawTips(securityStatus))
+    // } else {
       const ac = Global.memoryCache.get('rechargeAc')
       if (!ac) {
         $.when(this.getActivityInfo(), this.getInfoXhr()).done(function (res1, res2) {
@@ -72,7 +73,28 @@ const WithdrawView = Base.ItemView.extend({
           .done((res) => {
             const data = res && res.root || {}
             if (res && res.result === 0) {
-              self.initPanelCss(data)
+              //
+              self._ensureViewIsIntact()
+
+              self.triggerMethod('before:render', self)
+
+              self._renderTemplate()
+
+              self.triggerMethod('render', self)
+
+
+                // 判断是否绑定银行卡，0：银行卡与密码都未绑定，1：银行卡与密码都已绑定，2：只绑定资金密码，3：只绑定银行卡
+                let status = 0
+                if (res.root.hasBankCard && res.root.hasMoneyPwd) {
+                  self.initPanelCss(data)
+                  status = 1
+                } else if (!res.root.hasBankCard && res.root.hasMoneyPwd) {
+                  status = 2
+                } else if (res.root.hasBankCard && !res.root.hasMoneyPwd) {
+                  status = 3
+                }
+
+             this.$('.js-fc-wd-set-view').html(withdrawService.getPreWithdrawTips(status))
             } else {
               Global.ui.notification.show('服务器异常')
             }
@@ -81,7 +103,7 @@ const WithdrawView = Base.ItemView.extend({
       }
 
 
-    }
+    // }
     // 监听click事件
     window.addEventListener('click', (e) => {
       const $target = $(e.target)
