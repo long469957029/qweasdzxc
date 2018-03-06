@@ -99,6 +99,7 @@
   import banner from './banner.png'
 
   import SignIn from '../points-sign-in'
+  import {getSignInInfoApi, signInApi} from 'api/points'
 
   export default {
     name: 'points-top',
@@ -122,7 +123,8 @@
           },
         ],
         bannerStatus: 'loading',
-        isShowSignIn: false
+        isShowSignIn: false,
+        isReceiveToday: true,
       }
     },
 
@@ -161,8 +163,19 @@
           Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号', {modalDialogShadow: 'modal-dialog-shadow'})
           return false
         }
+        if (this.isReceiveToday) {
+          Global.ui.notification.show('您今日已经签到过了！', {modalDialogShadow: 'modal-dialog-shadow'})
+          return false
+        }
         this.isShowSignIn = true
-      }
+      },
+      getSignInInfo() {
+        getSignInInfoApi(({data}) => {
+          if (data && data.result === 0) {
+            this.isReceiveToday = resData.isReceiveToday
+          }
+        })
+      },
     },
 
     mounted() {
@@ -176,6 +189,7 @@
         .finally(() => {
           this.bannerStatus = 'completed'
         })
+      this.getSignInInfo()
     }
   }
 </script>
@@ -253,25 +267,25 @@
       text-align: center;
       padding: 26px;
       margin: 0 auto;
-      .profile-unLogin-img-backend{
+      .profile-unLogin-img-backend {
         width: 88px;
         height: 88px;
         text-align: center;
         background: #ffffff;
         border-radius: 50px;
         margin: 0 auto 25px;
-        .avatar{
+        .avatar {
           margin-top: 4px;
         }
       }
-      .profile-unLogin-tips{
+      .profile-unLogin-tips {
         color: #ffffff;
         font-size: 15px;
         margin-bottom: 24px;
       }
-      .points-exchange-btn{
+      .points-exchange-btn {
         color: #ffffff;
-        margin-left:0;
+        margin-left: 0;
         font-size: 15px;
       }
     }
