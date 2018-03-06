@@ -227,7 +227,9 @@
               }
             } else {
               if(e){//通过点击事件调用时才弹窗，否则不用弹出消息
-                Global.ui.notification.show(data.msg)
+                Global.ui.notification.show(data.msg,{
+                  modalDialogShadow: 'modal-dialog-shadow',
+                })
               }
               this.$emit('next')
             }
@@ -282,7 +284,9 @@
               this.couponsStatus = 1
 //              Global.ui.notification.show('代金券领取成功！')
             } else {
-              Global.ui.notification.show(data.msg)
+              Global.ui.notification.show(data.msg,{
+                size: 'modal-dialog-shadow',
+              })
             }
           })
       },

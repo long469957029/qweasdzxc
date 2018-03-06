@@ -9,7 +9,8 @@
               {{checking ? '检查中' : isReceiveToday ? '已签到' : '签到中'}}
             </div>
             <div class="state-bottom">
-              <span class="state-points-val">+{{integral | convert2yuan}}</span> 积分
+              <div class="state-points-val inline-block" :class="{'bounce':showIntegral}">+{{integral | convert2yuan}}</div>
+              积分
             </div>
           </div>
         </div>
@@ -109,6 +110,7 @@
         mainTl: null,
         currentStep: 0,
         checking: true,
+        showIntegral: false,
       }
     },
 
@@ -117,7 +119,6 @@
         this.stepTo(currentCombo > 5 ? 4 : currentCombo - 1)
       }
     },
-
     computed: {
       stepList() {
         return _.times(5, (index) => {
@@ -129,17 +130,24 @@
         })
       }
     },
-
+    created (){
+      setTimeout(() => {
+        this.showIntegral = true;
+      }, 500);
+    },
     methods: {
       stepTo(index) {
-          //先恢复原本大小
-          // this.animateToDefault();
+        //先恢复原本大小
+        // this.animateToDefault();
 
-          // _.each(this.$refs.radialProgress, (radialProgress) => {
-          //   $(radialProgress).removeClass('active')
-          // })
+        // _.each(this.$refs.radialProgress, (radialProgress) => {
+        //   $(radialProgress).removeClass('active')
+        // })
 
-        this.mainTl.tweenTo(`stopPoint-${index}`, {onComplete: this.animateToActive, onCompleteParams: [this.$refs.radialProgress[index]]});
+        this.mainTl.tweenTo(`stopPoint-${index}`, {
+          onComplete: this.animateToActive,
+          onCompleteParams: [this.$refs.radialProgress[index]]
+        });
       },
 
       animateToActive(el) {
@@ -242,6 +250,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
     }
 
     .sign-state {
@@ -280,10 +290,14 @@
     .state-bottom {
       font-size: 16px;
       color: #14b1bb;
+
     }
 
     .state-points-val {
       font-size: 24px;
+    }
+    .bounce{
+      animation: bounce-in 1s;
     }
 
     .sign-state-wrapper {
@@ -511,6 +525,8 @@
     background-color: #13afb9;
     color: #ffffff;
     position: relative;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
     &:before, &:after {
       content: '';
       display: block;
@@ -559,6 +575,17 @@
       box-shadow: 0 0 0 10px rgba($color, 0.2),
       0 0 0 20px rgba($color, 0.2),
       0 0 0 30px rgba($color, 0);
+    }
+  }
+  @keyframes bounce-in {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.3);
+    }
+    100% {
+      transform: scale(1);
     }
   }
 </style>

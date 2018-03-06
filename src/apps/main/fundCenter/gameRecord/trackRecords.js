@@ -113,7 +113,7 @@ const TrackRecordsView = SearchGrid.extend({
   formatRowData(rowInfo) {
     const row = []
     // 追号时间
-    row.push(`<button class="js-gl-chase-detail-dialog btn btn-link" data-no='${rowInfo.ticketTradeNo}' data-id='${rowInfo.ticketChaseId}'>${_(rowInfo.chaseTime).toTime()}</button>`)
+    row.push(`<button class="js-gl-chase-detail-dialog btn btn-link gl-chase-detail-dialog-date" data-no='${rowInfo.ticketTradeNo}' data-id='${rowInfo.ticketChaseId}'>${_(rowInfo.chaseTime).toTime()}</button>`)
     // 彩种<
     row.push(rowInfo.ticketName)
     // 玩法
