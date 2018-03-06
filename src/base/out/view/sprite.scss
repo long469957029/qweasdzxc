@@ -1,0 +1,14 @@
+%svg-common {
+	background: url("svg/sprite.view.svg") no-repeat;
+}
+
+.svg-test {
+	@extend %svg-common;
+	background-position: 0 0;
+}
+
+.svg-test-dims {
+	width: 500px;
+	height: 500px;
+}
+

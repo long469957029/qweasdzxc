@@ -68,6 +68,10 @@ _.mixin({
     }
   },
 
+  zhLength(str) {
+    return str.replace(/[\u4e00-\u9fa5]/g, '**').length
+  },
+
   fixedConvert2yuan(money, options) {
     options = _.extend({}, {
       fixed: 3,

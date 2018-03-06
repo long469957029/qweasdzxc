@@ -16,6 +16,7 @@ import {
   CustomCheckbox,
   Popover,
   TransferDom,
+  Ripple,
 } from 'build'
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -32,6 +33,7 @@ Vue.component('x-select', XSelect)
 Vue.component('x-dialog', XDialog)
 Vue.component('status-cell', StatusCell)
 Vue.directive('TransferDom', TransferDom)
+Vue.directive('Ripple', Ripple)
 
 require('widgets')
 

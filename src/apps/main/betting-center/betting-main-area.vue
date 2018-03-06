@@ -47,7 +47,7 @@
               <keep-alive>
                 <betting-play-area-select :play-rule="playRule" :ticket-info="ticketInfo" ref="areaSelect"
                                           v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
-                  <div slot="autoAdd" class="bc-missOption-btn" :key="'autoBet'" data-times="1" @click="autoAdd">机选一注
+                  <div v-ripple slot="autoAdd" class="bc-missOption-btn" :key="'autoBet'" data-times="1" @click="autoAdd">机选一注
                   </div>
                 </betting-play-area-select>
                 <betting-play-area-input :play-rule="playRule" ref="areaInput"
@@ -81,12 +81,12 @@
                 <span>元</span>
               </div>
               <div class="betting-panel pull-right">
-                <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
+                <button v-ripple class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                         :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                   <span class="sfa sfa-btn-icon-bolt vertical-middle"></span>
                   快捷投注
                 </button>
-                <button class="btn btn-cool bc-md-btn m-bottom-xs" @click="lotteryAdd"
+                <button v-ripple class="btn btn-cool bc-md-btn m-bottom-xs" @click="lotteryAdd"
                         :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                   <span class="sfa sfa-btn-icon-add vertical-middle"></span> 添加号码
                 </button>
@@ -158,7 +158,7 @@
                 </button>
               </div>
               <div class="total-btn-panel">
-                <button class="btn btn-orange bc-jb-btn" @click="lotteryConfirm"
+                <button v-ripple class="btn btn-orange bc-jb-btn" @click="lotteryConfirm"
                         data-loading-text="提交中" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending"> 确认投注
                 </button>
               </div>
@@ -883,7 +883,7 @@
     .bc-advance-mode-main {
       font-size: $font-xs;
       color: $inverse-color;
-      flex: 1 0 180px;
+      flex: 1 0 185px;
       margin-right: 20px;
       text-align: right;
     }

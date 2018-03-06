@@ -73,7 +73,7 @@ const getRoadBallsApi = ({ ticketId, types, locations, limit = 100 }, then) => {
  */
 const getTwoSideApi = ({ ticketId, isOfficial }, then) => {
   return Global.sync.ajax({
-    url: 'http://trend.ybf01.com/trends/trend/twoSideList.json',
+    url: 'http://trend.ybf01.com/trends/trend/twoSideListP2.json',
     data: {
       ticketId: isOfficial ? ticketId : ticketId + 10000,
     },

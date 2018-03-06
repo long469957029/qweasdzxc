@@ -1333,7 +1333,7 @@
     .bc-advance-mode-main {
       font-size: $font-xs;
       color: $inverse-color;
-      flex: 1 0 180px;
+      flex: 1 0 185px;
       margin-right: 20px;
       text-align: right;
     }

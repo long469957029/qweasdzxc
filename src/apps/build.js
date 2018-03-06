@@ -27,6 +27,8 @@ import XSelect from './components/x-select'
 //directives
 import TransferDom from './directives/transfer-dom'
 import ClickOutside from './directives/click-outside'
+import Inview from './directives/inview'
+import Ripple from './directives/ripple'
 
 //plugins
 import BusPlugin from './plugins/bus/index.js'
@@ -44,10 +46,8 @@ import formatCouponStatus from './filters/format-coupon-status'
 import formatOptionals from './filters/format-optionals'
 
 export {
-  /**
-   * components
-   */
-    AnimatedInteger,
+  //components
+  AnimatedInteger,
   CustomCheckbox,
   StaticGrid,
   PointsCard,
@@ -77,6 +77,9 @@ export {
   //directives
   TransferDom,
   ClickOutside,
+  Inview,
+  Ripple,
+
 
   //plugins
   BusPlugin,
