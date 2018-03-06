@@ -261,14 +261,17 @@
       line-height: normal;
       position: relative;
       > div {
-        width: 502px;
+        width: 100%;
         margin: 0 auto;
         height: 310px;
         overflow: hidden;
       }
       .list-info {
         width: 502px;
-        margin-top: 20px;
+        height: 290px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 20px 19px 0px;
         display: inline-block;
         position: absolute;
       }
@@ -289,10 +292,10 @@
         color: $new-inverse-color;
         margin-top: 10px;
         border-top: 1px dashed $im-line-color;
-        width: 100%;
-        height: 182px;
-        overflow-y: auto;
-        overflow-x: hidden;
+        width: 97%;
+        /*height: 182px;*/
+        /*overflow-y: auto;*/
+        /*overflow-x: hidden;*/
         padding: 20px 10px 0px;
       }
       .page {
