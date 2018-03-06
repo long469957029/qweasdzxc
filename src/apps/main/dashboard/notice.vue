@@ -290,7 +290,7 @@
       .detail {
         font-size: $font-sm;
         color: $new-inverse-color;
-        /*margin-top: 10px;*/
+        margin-top: 10px;
         border-top: 1px dashed $im-line-color;
         width: 97%;
         /*height: 182px;*/
