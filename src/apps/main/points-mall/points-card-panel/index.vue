@@ -326,6 +326,18 @@
       font-size: 14px;
       line-height: 35px;
       color: #666666;
+      list-style: none;
+      position: relative;
+      &:before{
+        content: '';
+        width: 4px;
+        height: 4px;
+        background: $new-main-deep-color;
+        display: block;
+        position: absolute;
+        top: 15px;
+        left: -20px;
+      }
     }
   }
 

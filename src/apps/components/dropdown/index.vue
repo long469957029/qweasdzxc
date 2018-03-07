@@ -1,6 +1,6 @@
 <template>
   <a href="javascript:void(0)" class="tool-dropdown">
-    <div class="title">{{selected.name}} <span class="fa fa-chevron-down"></span></div>
+    <div class="title">{{selected.name}} <span class="sfa sfa-mall-arrow-type-down v-middle"></span></div>
     <ul class="dropdown">
       <li class="dropdown-item" v-for="(option, index) in options" :key="index" @click="select(option)">{{option.name}}</li>
     </ul>

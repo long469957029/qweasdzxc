@@ -456,7 +456,7 @@
         &.slot {
           width: 430px;
           height: 149px;
-          padding: 31px 0 0 50px;
+          padding: 15px 0 0 50px;
         }
         &.fish {
           width: 392px;
@@ -496,14 +496,14 @@
 
         &.icon-slot-pt {
           background-image: url('./images/icon-slot-pt.png');
-          width: 227px;
-          height: 119px;
+          width: 243px;
+          height: 150px;
         }
 
         &.icon-slot-mg {
           background-image: url('./images/icon-slot-mg.png');
-          width: 223px;
-          height: 139px;
+          width: 243px;
+          height: 150px;
         }
 
         &.icon-fish-ag {

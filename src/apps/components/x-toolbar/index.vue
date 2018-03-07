@@ -17,9 +17,20 @@
   .tool-cell {
     margin-right: 30px;
     padding-right: 30px;
-    border-right: 1px solid $def-gray-color;
+    position: relative;
+    &:after{
+      content: '';
+      width: 1px;
+      height: 14px;
+      background: $def-gray-color;
+      top: 5px;
+      right: 0px;
+      position: absolute;
+    }
     &:last-of-type {
-      border-right: 0;
+      &:after{
+        display: none;
+      }
     }
   }
 </style>
