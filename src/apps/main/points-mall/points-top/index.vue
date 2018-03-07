@@ -139,6 +139,17 @@
       }
     },
 
+    watch: {
+      isLogin: {
+        handler() {
+          if (this.isLogin) {
+            this.getSignInInfo()
+          }
+        },
+        immediate: true
+      }
+    },
+
     computed: {
       swiperOption() {
         let swiperOption = {
