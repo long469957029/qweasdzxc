@@ -171,11 +171,11 @@
       getSignInInfo() {
         getSignInInfoApi(({data}) => {
           if (data && data.result === 0) {
-            if (data.root.isReceiveToday) {
-              Global.ui.notification.show('您今日已经签到过了！', {modalDialogShadow: 'modal-dialog-shadow'})
-            }else{
+            // if (data.root.isReceiveToday) {
+            //   Global.ui.notification.show('您今日已经签到过了！', {modalDialogShadow: 'modal-dialog-shadow'})
+            // }else{
               this.isShowSignIn = true
-            }
+            // }
           }
         })
       },
