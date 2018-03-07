@@ -40,7 +40,7 @@ const fontConfig = require('./font-config.json')
 
 const dllConfig = require('./webpack.dll.config');
 
-let serverIP = 'http://game.hr4g.com'
+let serverIP = 'http://forev3.5x5x.com'
 
 let packageConfig
 let projectPath
