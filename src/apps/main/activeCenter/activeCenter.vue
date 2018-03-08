@@ -5,15 +5,21 @@
     </div>
     <div class="aa-container">
       <active-navbar @fetchData="queryActivity" :activityType="activityType" :isFetching="queryFetching"></active-navbar>
-      <active-timeline :timelineHeight="timelineHeight" :filterActivityList="filterActivityList"></active-timeline>
-      <div>
-        <active-item :filterActivityList="filterActivityList" @openDetailDialog="openDetailDialog" :isFetching="openDialogFetching"></active-item>
+      <div v-if="filterActivityList.length > 0">
+        <active-timeline :timelineHeight="timelineHeight" :filterActivityList="filterActivityList"></active-timeline>
+        <div>
+          <active-item :filterActivityList="filterActivityList" @openDetailDialog="openDetailDialog" :isFetching="openDialogFetching"></active-item>
+        </div>
+        <div class="timeline-add" v-show="showAddMoreBtn">
+          <div :class="`add-btn ${fetchMoreFetching ? 'disabled' : ''}`" @click="fetchMore">点击加载更多</div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
       </div>
-      <div class="timeline-add" v-show="showAddMoreBtn">
-        <div :class="`add-btn ${fetchMoreFetching ? 'disabled' : ''}`" @click="fetchMore">点击加载更多</div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+      <div class="empty-content" v-else>
+        <span class="icon"></span>
+        <div class="text">暂无活动，敬请期待...</div>
       </div>
     </div>
     <div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="detailDialog" v-show="showDetailDialog">
@@ -187,9 +193,28 @@ export default {
 
 .aa-container {
   padding-bottom: 100px;
+  min-height: 660px;
   @include center-container(1200px);
   * {
     box-sizing: border-box;
+  }
+  .empty-content{
+    width: 250px;
+    height: 240px;
+    margin: 0 auto;
+    margin-top: 145px;
+    .icon {
+      display: block;
+      width: 250px;
+      height: 201px;
+      background: url("./misc/empty-icon.png") no-repeat;
+    }
+    .text{
+      font-size: $font-sm;
+      color: $font-auxiliary-color;
+      text-align: center;
+      margin-top: 10px;
+    }
   }
 }
 
