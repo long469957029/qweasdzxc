@@ -65,8 +65,8 @@
           </div>
           <div class="js-header-announcement header-announcement active">
             <span class="sfa sfa-announcement "></span><span class="header-announcement-title ">消息</span>
-            <span :class="'js-header-announcement-num header-announcement-num '+ (newRowCount>9?'header-announcement-num-two':'')"
-                  v-if="newRowCount > 0">{{newRowCount}}</span>
+            <span :class="'js-header-announcement-num header-announcement-num '+ (newRowCount> 9 ? 'header-announcement-num-two' : '')"
+                  v-if="newRowCount > 0">{{newRowCount > 99 ? '99' : newRowCount}}</span>
             <div class="header-announcement-place" @click="goToAnnouncement"></div>
             <div class="js-header-announcement-body header-announcement-body">
               <div class="header-announcement-content">

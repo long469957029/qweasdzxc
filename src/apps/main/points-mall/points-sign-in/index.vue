@@ -69,7 +69,7 @@
             签到规则
           </div>
           <div class="main">
-            <p>1、首次签到获得积分 <span class="combo-state-val">5</span></p>
+            <p>1、首次签到获得积分 <span class="combo-state-val">{{_(integral).convert2yuan()}}</span></p>
             <p v-for="(cfg, index) in cfgs" :key="index" v-if="cfg.day !== 0">
               {{index + 2}}、连续签到 <span class="combo-state-val">{{cfg.day}}</span> 天后积分奖励增至
               <span class="combo-state-val">{{cfg.integral | convert2yuan}}</span>
@@ -180,7 +180,10 @@
         getSignInInfoApi(({data}) => {
           if (data && data.result === 0) {
             const resData = data.root
-            this.cfgs = [...this.cfgs, ...resData.cfgs]
+            this.cfgs[0].integral = resData.integral
+            this.cfgs = [...this.cfgs, ..._(resData.cfgs).filter((item) => {
+              return !_(this.cfgs).findWhere(item)
+            })]
             this.combo = resData.combo
             this.currentDate = resData.currentDate
             this.integral = resData.integral
@@ -512,7 +515,7 @@
   }
 
   .circle-ripple {
-    animation: ripple 0.7s linear infinite;
+    animation: ripple 1s linear infinite;
   }
 
   .detail-header {

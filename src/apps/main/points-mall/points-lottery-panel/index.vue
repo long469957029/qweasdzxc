@@ -875,11 +875,11 @@
   }
 
   .lottery-list {
-    flex: 30%;
+    flex: 28.4%;
     /* margin-top: 115px; */
     border: solid 5px #edeef0;
     border-radius: 15px;
-    margin: 115px 20px 0;
+    margin: 115px 30px 0 20px;
     box-sizing: border-box;
     height: 483px;
   }
@@ -902,6 +902,16 @@
     height: 1px;
     background-color: #b9e9ec;
     margin: 0 auto;
+    position: relative;
+    &:after{
+      content: '';
+      width: 123px;
+      height: 4px;
+      background: #b9e9ec;
+      position: absolute;
+      top: -1.5px;
+      left: 90px;
+    }
   }
 
   .lottery-list-main {

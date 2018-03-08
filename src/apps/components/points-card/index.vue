@@ -428,6 +428,7 @@
         box-shadow: 0px 1px 38px 0px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
         font-size: 16px;
+        border: none;
       }
       .points-bottom-btn {
         display: flex;

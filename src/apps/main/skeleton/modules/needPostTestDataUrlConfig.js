@@ -24,6 +24,8 @@ const urlList = [
   '/ticket/bet/cancel.json',//撤单
   '/ticket/chase/cancel.json',//停止追号
   'ticket/game/gameAndTicketHistory.json',//试玩右侧记录接口
+  '/ticket/ticketmod/openHistoryDetail.json', // 秒秒彩遗漏走势
+  '/ticket/ticketmod/trendDetail.json', // 秒秒彩遗漏走势
   //资金（不能 充值，提现，转账）
   '/fund/balance/summary.json',
   '/info/gamereport/myprofit.json',//资金总览，个人数据总览

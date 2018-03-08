@@ -157,22 +157,21 @@ const ReportManageView = SearchGrid.extend({
       this.renderBread()
     }
     //
-    // this.grid.addFooterRows({
-    //  trClass: 'tr-footer',
-    //  columnEls: [
-    //    '<strong>总计</strong>',
-    //    _(gridData.rechargeTotal).convert2yuan({fixed:2}),
-    //    _(gridData.withdrawTotal).convert2yuan({fixed:2}),
-    //    _(gridData.betTotal).fixedConvert2yuan(),
-    //    _(gridData.prizeTotal).convert2yuan(),
-    //    _(gridData.bonusTotal).convert2yuan(),
-    //    _(gridData.activityTotal).convert2yuan(),
-    //    _(gridData.profitAndLossTotal).convert2yuan(),
-    //    ''
-    //  ]
-    // })
-    //  .hideLoading();
-    this.grid.hideLoading()
+    this.grid.addFooterRows({
+     trClass: 'tr-footer',
+     columnEls: [
+       '<strong>总计</strong>',
+       _(gridData.rechargeTotal).convert2yuan({fixed:2}),
+       _(gridData.withdrawTotal).convert2yuan({fixed:2}),
+       _(gridData.betTotal).fixedConvert2yuan(),
+       _(gridData.prizeTotal).convert2yuan(),
+       _(gridData.rebateTotal).convert2yuan(),
+       _(gridData.activityTotal).convert2yuan(),
+       _(gridData.profitTotal).convert2yuan()
+     ]
+    })
+     .hideLoading();
+    // this.grid.hideLoading()
   },
 
   formatRowData(rowInfo) {

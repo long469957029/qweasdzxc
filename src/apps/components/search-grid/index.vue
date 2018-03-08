@@ -174,6 +174,7 @@
         color: #333333;
         vertical-align: middle;
         border-bottom: 1px solid $border;
+        font-weight: normal;
       }
 
     }

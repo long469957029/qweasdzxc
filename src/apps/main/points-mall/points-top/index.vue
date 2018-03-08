@@ -124,21 +124,12 @@
         ],
         bannerStatus: 'loading',
         isShowSignIn: false,
-        isReceiveToday: true,
+        isReceiveToday: false,
       }
     },
 
     watch: {
-      isLogin: {
-        handler() {
-          if (this.isLogin) {
-            this.getSignInInfo()
-          }
-        },
-        immediate: true
-      }
     },
-
     computed: {
       swiperOption() {
         let swiperOption = {
@@ -174,16 +165,17 @@
           Global.ui.notification.show('试玩会员无法进行此操作，请先注册正式游戏账号', {modalDialogShadow: 'modal-dialog-shadow'})
           return false
         }
-        if (this.isReceiveToday) {
-          Global.ui.notification.show('您今日已经签到过了！', {modalDialogShadow: 'modal-dialog-shadow'})
-          return false
-        }
-        this.isShowSignIn = true
+        this.getSignInInfo()
+
       },
       getSignInInfo() {
         getSignInInfoApi(({data}) => {
           if (data && data.result === 0) {
-            this.isReceiveToday = resData.isReceiveToday
+            if (data.root.isReceiveToday) {
+              Global.ui.notification.show('您今日已经签到过了！', {modalDialogShadow: 'modal-dialog-shadow'})
+            }else{
+              this.isShowSignIn = true
+            }
           }
         })
       },
@@ -194,6 +186,7 @@
         if (data && data.result === 0) {
           if (!_.isEmpty(data.root)) {
             this.bannerList = data.root
+
           }
         }
       })
