@@ -181,7 +181,9 @@
           if (data && data.result === 0) {
             const resData = data.root
             this.cfgs[0].integral = resData.integral
-            this.cfgs = [...this.cfgs, ...resData.cfgs]
+            this.cfgs = [...this.cfgs, ..._(resData.cfgs).filter((item) => {
+              return !_(this.cfgs).findWhere(item)
+            })]
             this.combo = resData.combo
             this.currentDate = resData.currentDate
             this.integral = resData.integral
@@ -513,7 +515,7 @@
   }
 
   .circle-ripple {
-    animation: ripple 0.7s linear infinite;
+    animation: ripple 1s linear infinite;
   }
 
   .detail-header {
