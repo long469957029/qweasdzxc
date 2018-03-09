@@ -362,7 +362,7 @@
             break
           case 'odd':
             _.filter(fItems, (num) => {
-              flag = num.num % 2
+              flag = num.num % 2 && num.num != 49
               num.betMoney = flag ? this.betMoney : null
               num.selected = flag
             })
