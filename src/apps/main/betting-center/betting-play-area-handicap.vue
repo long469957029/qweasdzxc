@@ -348,7 +348,7 @@
         switch (op) {
           case 'big':
             _.filter(fItems, (num, index) => {
-              flag = index >= Math.floor((fItems.length) / 2)
+              flag = index >= Math.floor((fItems.length) / 2) && index < 48
               num.betMoney = flag ? this.betMoney : null
               num.selected = flag
             })

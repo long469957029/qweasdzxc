@@ -965,7 +965,7 @@
 
   .total-panel {
     min-width: 450px;
-    margin-left: 140px;
+    margin-left: 120px;
     flex: 1;
   }
 
