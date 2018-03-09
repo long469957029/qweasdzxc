@@ -11,12 +11,16 @@ const initState = () => {
       //   "validStartDate": 1517370920705,
       //   "validEndDate": 1517821199000
       // },
-    ]
+    ],
+    voucherNum:0
   }
 }
 
 // getters
 const getters = {
+  selectedVoucher: state => {
+    return state.voucherNum
+  }
 }
 
 // actions
@@ -44,6 +48,9 @@ const mutations = {
     if (data && data.result === 0) {
       state.list = data.root || []
     }
+  },
+  [types.SELECTED_VOUCHERS] (state, data) {
+     state.voucherNum = data
   },
 }
 

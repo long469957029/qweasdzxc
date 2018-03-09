@@ -18,6 +18,7 @@
         </div>
         <transition-group name="flip-list" tag="div" class="vouchers-main">
           <div class="vouchers-unit" v-for="item in fList" :key="item.rid" @click="select(item)">
+            <div :class="['vouchers-checkbox',item.selected ? 'sfa-bc-vouchers-check-on' : 'sfa-bc-vouchers-check-def']"></div>
             <div class="unit-left" :class="[item.available ? 'sfa-bc-vouchers-usable' : 'sfa-bc-vouchers-disabled', {selected: item.selected}]"
             >
               ¥{{item.bonus | convert2yuan}}
@@ -162,6 +163,8 @@
             this.$emit('input', item.selected ? item : {})
           }
         })
+        const bonus = _(this.fList).findWhere({selected: true}) ? _(this.fList).findWhere({selected: true}).bonus : 0
+        this.$store.commit(types.SELECTED_VOUCHERS,bonus)
       }
     },
 
@@ -318,6 +321,9 @@
       &:last-of-type {
         margin-bottom: 0;
       }
+    }
+    .vouchers-checkbox{
+      margin: 8px 15px 0px 5px;
     }
 
     .unit-expired {
