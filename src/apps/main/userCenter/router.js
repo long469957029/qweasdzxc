@@ -77,9 +77,11 @@ export default [
   {
     path: '/uc/mg',
     component: function(resolve) {
-      RouterController.async(resolve, MyMessageViewInfo, {
-        noticeId: _.getUrlParam('id'),
-        triggerTab: 'jsSystemMessage',
+      RouterController.async(resolve, MyMessageViewInfo, () => {
+        return {
+          noticeId: _.getUrlParam('id'),
+          triggerTab: 'jsSystemMessage'
+        }
       }, {
         sidebar,
       })
