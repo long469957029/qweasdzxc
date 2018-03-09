@@ -214,9 +214,12 @@ const RechargeView = Base.ItemView.extend({
     this.$('input[name="bankCode"]').val(this.$('.js-fc-rc-bank-selectedItem').data('code'))
     this.$('input[name="token"]').val(Global.cookieCache.get('token'))
     this.$('.js-rc-money-input').removeAttr('data-parsley-type')
+    var range = this.$('.js-rc-money-input').attr('data-parsley-range')
+    this.$('.js-rc-money-input').removeAttr('data-parsley-range')
     if (this.parsley.validate()) {
       $form.submit()
       this.$('.js-rc-money-input').attr('data-parsley-type','integer')
+      this.$('.js-rc-money-input').attr('data-parsley-range',range)
     } else {
       return false
     }
