@@ -71,7 +71,7 @@
           <div class="main">
             <p>1、首次签到获得积分 <span class="combo-state-val">{{_(integral).convert2yuan()}}</span></p>
             <p v-for="(cfg, index) in cfgs" :key="index" v-if="cfg.day !== 0">
-              {{index + 2}}、连续签到 <span class="combo-state-val">{{cfg.day}}</span> 天后积分奖励增至
+              {{index + 1}}、连续签到 <span class="combo-state-val">{{cfg.day}}</span> 天后积分奖励增至
               <span class="combo-state-val">{{cfg.integral | convert2yuan}}</span>
             </p>
             <div class="detail-tip">
