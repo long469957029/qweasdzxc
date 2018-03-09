@@ -19,7 +19,7 @@
         <transition-group name="flip-list" tag="div" class="vouchers-main">
           <div class="vouchers-unit" v-for="item in fList" :key="item.rid" @click="select(item)">
             <div :class="['vouchers-checkbox',item.selected ? 'sfa-bc-vouchers-check-on' : 'sfa-bc-vouchers-check-def']"></div>
-            <div class="unit-left" :class="[item.available ? 'sfa-bc-vouchers-usable' : 'sfa-bc-vouchers-disabled', {selected: item.selected}]"
+            <div class="unit-left" :class="[item.available ? 'sfa-bc-vouchers-usable' : 'sfa-bc-vouchers-disabled']"
             >
               ¥{{item.bonus | convert2yuan}}
             </div>
