@@ -1551,7 +1551,7 @@
   }
 
   .bc-vouchers-select {
-    width: 106px;
+    /*width: 106px;*/
     color: $new-inverse-color;
     border-radius: 5px;
     vertical-align: bottom;
