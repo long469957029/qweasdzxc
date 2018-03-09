@@ -455,7 +455,7 @@
       inputFocus(type){
         if (type === 1) {
           if (this.userStatus !== 2) {
-            this.userErrorText = '4-16个字符，支持中英文和数字,不能以数字开头'
+            this.userErrorText = '4-16个字符，支持英文和数字,不能以数字开头'
           }
         } else if (type === 2) {
           if (this.pwdStatus !== 2) {
