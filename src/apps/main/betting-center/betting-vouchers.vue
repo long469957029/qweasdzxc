@@ -183,7 +183,7 @@
         }
       }),
       hasUse(){
-        return _(this.list).findWhere({available: true})
+        return _(this.list).findWhere({available: true}) && !_(this.list).findWhere({selected: true})
       },
       selectBonus(){
         return _(this.list).findWhere({selected: true}) ? _(_(this.list).findWhere({selected: true}).bonus).convert2yuan() + '元' : ''
@@ -204,14 +204,14 @@
     position: relative;
 
     .bc-vouchers{
-      min-width: 70px;
+      min-width: 60px;
       height: 24px;
       line-height: 24px;
       background: url("./misc/vouchers-bg.png") no-repeat;
       background-size: 100% 100%;
       color: $def-white-color;
       font-size: $font-xs;
-      padding: 0px 5px;
+      padding: 0px 10px;
       cursor: pointer;
       position: relative;
       text-align: center;
@@ -235,7 +235,7 @@
     .vouchers-popover {
       position: absolute;
       top: 40px;
-      left: 5px;
+      left: 0px;
       z-index: 10;
       display: none;
       padding: 15px 15px 5px;
