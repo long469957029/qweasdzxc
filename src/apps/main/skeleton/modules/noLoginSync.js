@@ -40,6 +40,12 @@ const urlList = [
   },
   {
     url: '/info/bettarget/info.json'
+  },
+  {
+    url: '/ticket/ticketmod/openHistoryDetail.json',
+  },
+  {
+    url: '/ticket/ticketmod/ticketlist.json',
   }
 ]
 module.exports = {
