@@ -204,7 +204,7 @@
     position: relative;
 
     .bc-vouchers{
-      min-width: 80px;
+      min-width: 70px;
       height: 24px;
       line-height: 24px;
       background: url("./misc/vouchers-bg.png") no-repeat;
@@ -214,14 +214,15 @@
       padding: 0px 5px;
       cursor: pointer;
       position: relative;
+      text-align: center;
       .sfa{
         transform: translateY(-2px);
       }
       &.active{
         &:after{
           content: '';
-          width: 10px;
-          height: 10px;
+          width: 8px;
+          height: 8px;
           background: #fc3c44;
           border-radius: 50%;
           position: absolute;
