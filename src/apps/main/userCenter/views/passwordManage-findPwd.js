@@ -257,9 +257,7 @@ const findPwdView = Base.ItemView.extend({
 
   // 组装错误提示框
   _getErrorMsg (text) {
-    return `${'<ul class="parsley-errors-list filled font-sm text-center m-top-smd">' +
-      '<li class="login-error-message parsley-required">'}${text}</li>` +
-      '</ul>'
+    return `<div class="text-hot"><span class="sfa sfa-error-icon vertical-middle m-right-xs"></span>${text}</div>`
   },
 })
 
