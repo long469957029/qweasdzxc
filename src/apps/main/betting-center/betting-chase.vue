@@ -110,10 +110,48 @@
             </div>
           </form>
         </div>
-        <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :table-class="lotteryGridOps.tableClass"
+        <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :table-class="lotteryGridOps.tableClass"
                      :col-model="lotteryGridOps.colModel" :init-remote="false"
                      :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="chaseList"
-                     ref="normalGrid"></static-grid>
+                     ref="normalGrid">
+          <tr slot="row" slot-scope="{row, index}" :key="index">
+            <td>{{index + 1}}</td>
+            <td>
+              <label class="no-margin font-xs inline-block">
+                <span class="custom-checkbox">
+                  <input type="checkbox" :id="`chaseId-${row.ticketPlanId}`" v-model="row.selected">
+                  <label :for="`chaseId-${row.ticketPlanId}`" class="checkbox-label"></label>
+                </span>{{row.ticketPlanId}}
+              </label>
+              <template v-if="index === 0 && row.ticketPlanId === planId">
+                <span class="badge">当前期</span>
+              </template>
+            </td>
+            <td>
+              <template v-if="row.selected">
+                <input type="text" class="js-gl-monitor input-xs text-circle"
+                       data-monitor-type="number" :data-monitor-range="`[1, ${maxMultiple}]`"
+                       :disabled="!row.selected" v-model="row.multiple" /> 倍
+              </template>
+              <template v-else>
+                <input type="text" class="js-gl-monitor input-xs text-circle"
+                       data-monitor-type="number" :data-monitor-range="`[1, ${maxMultiple}]`"
+                       :disabled="!row.selected" /> 倍
+              </template>
+            </td>
+            <td>
+              <template v-if="row.selected">
+                <span class="text-prominent">{{_.mul(row.betMoney, row.multiple) | convert2yuan}}</span>
+              </template>
+              <template v-else>
+                0
+              </template>
+            </td>
+            <td>
+              {{row.formatTicketEndtime}}
+            </td>
+          </tr>
+        </slot-static-grid>
       </div>
     </div>
     <div class="modal-footer">
@@ -215,47 +253,23 @@
           colModel: [
             {
               label: '序号',
-              name: 'index',
               width: '15%',
-              formatter: (val, index) => {
-                return index + 1
-              },
             },
             {
               label: `<label class="no-margin font-xs"><span class="custom-checkbox">
 <input type="checkbox" id="js-bc-select-all" name="selectAll" value=""> <label for="js-bc-select-all" class="checkbox-label"></label></span>追号期数</label>`,
-              name: 'ticketPlanId',
               width: '25%',
-              formatter: (val, index, row) => {
-                const id = _.uniqueId()
-                let fVal = `<label class="no-margin font-xs inline-block"><span class="custom-checkbox">
-<input type="checkbox" id="${id}" name="selectAll" class="js-bc-select" ${row.selected ? 'checked' : ''}> <label for="${id}" class="checkbox-label"></label></span>${val}</label>`
-                if (index === 0 && val === this.planId) {
-                  return `${fVal} <span class="badge">当前期</span>`
-                }
-                return fVal
-              },
             },
             {
               label: '倍数',
-              name: 'multiple',
               width: '20%',
-              formatter: (val, index, row) => {
-                return `<input type="text" class="js-bc-single-plan-multiple js-gl-monitor input-xs text-circle"
-data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.selected ? '' : 'disabled'} value="${row.selected ? val : ''}" /> 倍`
-              },
             },
             {
               label: '金额',
-              name: 'betMoney',
               width: '20%',
-              formatter: (val, index, row) => {
-                return row.selected ? `<span class="text-prominent">${_(val).convert2yuan()}</span>` : '0'
-              },
             },
             {
               label: '开奖时间',
-              name: 'formatTicketEndtime',
               width: '20%'
             },
           ],
@@ -292,7 +306,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
       chaseList: {
         handler() {
           this.selectedChaseList = _.where(this.chaseList, {selected: true})
-          this.totalMoney = _.chain(this.selectedChaseList).reduce((total, item) => total + item.betMoney, 0).value()
+          this.totalMoney = _.chain(this.selectedChaseList).reduce((total, item) => total + _.mul(item.betMoney, item.multiple), 0).value()
           this.fTotalMoney = _.convert2yuan(this.totalMoney)
         },
         deep: true
@@ -395,7 +409,8 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
               item.multiple = this.maxMultiple
             }
 
-            item.betMoney = _(this.basicBettingMoney).mul(item.multiple)
+            // item.betMoney = _(this.basicBettingMoney).mul(item.multiple)
+            item.betMoney = this.basicBettingMoney
           })
         })
       },
