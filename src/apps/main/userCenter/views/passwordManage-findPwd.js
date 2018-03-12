@@ -45,9 +45,8 @@ const findPwdView = Base.ItemView.extend({
     this.$findFundPasswordContainer = this.$('.js-ac-findFundPasswordContainer')
     this.$NoCardInfo = this.$('.js-ac-noCard-info')
 
-
     // 初始化分步操作控件js-findFundPassword-div
-    // this._initSteps()
+    this._initSteps()
 
     this.$validate = this.$('.js-ac-validate')
 
@@ -63,7 +62,6 @@ const findPwdView = Base.ItemView.extend({
           const hasBankCard = !!self.responseData.hasBankCard
 
           if (hasBankCard) {
-            self._initSteps()
             self.$findFundPasswordContainer.removeClass('hidden')
           } else {
             self.$NoCardInfo.removeClass('hidden')
