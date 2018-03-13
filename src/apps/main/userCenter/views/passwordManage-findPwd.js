@@ -11,7 +11,7 @@ const findPwdView = Base.ItemView.extend({
 
   startOnLoading:true,
 
-  className: 'uc-change-pwd-view',
+  // className: 'uc-change-pwd-view',
 
   events: {
     // 选择找回资金密码的方式

@@ -179,7 +179,7 @@ const AccountSafeView = Base.ItemView.extend({
       }).render().el)
     }else{
       self.$fundPwd.html(new FindFundPWD({
-        loadingHeight:200
+        loadingHeight:280
       }).on('render:true', () => {
         self.$('.js-setting-info').removeClass('active')
         self.$('#setting-fund-pwd').collapse('hide')
