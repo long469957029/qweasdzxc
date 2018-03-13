@@ -242,6 +242,9 @@ const findPwdView = Base.ItemView.extend({
         .done((res) => {
           if (res.result === 0) {
             self.$findFundPasswordContainer.steps('goTo', 2)
+            setTimeout(() => {
+              self.trigger('render:true')
+            },1500)
           } else {
             self.$('.js-ac-resetNotice-div').html(self._getErrorMsg(`重置失败，${res.msg}`))
           }
