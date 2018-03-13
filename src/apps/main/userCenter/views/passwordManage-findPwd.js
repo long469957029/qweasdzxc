@@ -9,6 +9,10 @@ const findPwdView = Base.ItemView.extend({
   // 构造通过银行卡信息找回资金密码页面
   byCITpl: _.template(require('userCenter/templates/passwordManage-byCI.html')),
 
+  startOnLoading:true,
+
+  className: 'uc-change-pwd-view',
+
   events: {
     // 选择找回资金密码的方式
     'click .js-ac-findBySQBtn': 'findBySqHandler',
@@ -39,42 +43,17 @@ const findPwdView = Base.ItemView.extend({
     const self = this
     // 找回资金密码Container
     this.$findFundPasswordContainer = this.$('.js-ac-findFundPasswordContainer')
+    this.$NoCardInfo = this.$('.js-ac-noCard-info')
 
     // 初始化分步操作控件js-findFundPassword-div
     this._initSteps()
 
-    this.$selectWay = this.$('.js-ac-selectWay')
     this.$validate = this.$('.js-ac-validate')
 
     // 获取展示不同找回密码方式页面的区域
-    this.$resetContainer = this.$('.js-ac-validate')
+    // this.$resetContainer = this.$('.js-ac-validate')
 
     const $findWayContainer = this.$('.js-ac-findWayContainer')
-
-    Global.sync.ajax({
-      url: '/acct/usersecurity/getsecurity.json',
-    })
-      .fail(() => {
-      //  Global.ui.notification.show('获取密保问题配置信息失败');
-      })
-      .done((res) => {
-        if (res && res.result === 0) {
-          // 0表示密保问题不存在，则不能通过密保问题找回资金密码
-          // 隐藏立即找回按钮
-          self.$('.js-ac-findBySQBtn').addClass('hidden')
-          // 显示为不可用的提示文字
-          self.$('.js-ac-findBySQ-notice').removeClass('hidden')
-          $findWayContainer.removeClass('hidden')
-        } else if (res && res.result === 1) {
-          // 1表示密保问题存在
-          self.$('.js-ac-findBySQBtn').removeClass('hidden')
-          // 显示为不可用的提示文字
-          self.$('.js-ac-findBySQ-notice').addClass('hidden')
-          $findWayContainer.removeClass('hidden')
-        } else {
-          // 其他情况隐藏该页面
-        }
-      })
 
     this.getRechargeBaseInfoXhr()
       .done((res) => {
@@ -83,20 +62,14 @@ const findPwdView = Base.ItemView.extend({
           const hasBankCard = !!self.responseData.hasBankCard
 
           if (hasBankCard) {
-            // 0表示密保问题不存在，则不能通过密保问题找回资金密码
-            // 隐藏立即找回按钮
-            self.$('.js-ac-findByCIBtn').removeClass('hidden')
-            // 显示为不可用的提示文字
-            self.$('.js-ac-findByCI-notice').addClass('hidden')
-            $findWayContainer.removeClass('hidden')
+            self.$findFundPasswordContainer.removeClass('hidden')
           } else {
-            // 1表示密保问题存在
-            self.$('.js-ac-findByCIBtn').addClass('hidden')
-            // 显示为不可用的提示文字
-            self.$('.js-ac-findByCI-notice').removeClass('hidden')
-            $findWayContainer.removeClass('hidden')
+            self.$NoCardInfo.removeClass('hidden')
           }
         }
+      })
+      .always(() => {
+        self.loadingFinish()
       })
   },
 
@@ -154,7 +127,7 @@ const findPwdView = Base.ItemView.extend({
   inputCardInfoHandler(e) {
     const self = this
     const $target = $(e.currentTarget)
-    const clpValidate = this.$resetContainer.parsley().validate()
+    const clpValidate = this.$validate.parsley().validate()
 
     if (clpValidate) {
       // 设置按钮为处理中状态
@@ -269,6 +242,9 @@ const findPwdView = Base.ItemView.extend({
         .done((res) => {
           if (res.result === 0) {
             self.$findFundPasswordContainer.steps('goTo', 2)
+            setTimeout(() => {
+              self.trigger('render:true')
+            },1500)
           } else {
             self.$('.js-ac-resetNotice-div').html(self._getErrorMsg(`重置失败，${res.msg}`))
           }
@@ -284,9 +260,7 @@ const findPwdView = Base.ItemView.extend({
 
   // 组装错误提示框
   _getErrorMsg (text) {
-    return `${'<ul class="parsley-errors-list filled font-sm text-center m-top-smd">' +
-      '<li class="login-error-message parsley-required">'}${text}</li>` +
-      '</ul>'
+    return `<div class="text-hot"><span class="sfa sfa-error-icon vertical-middle m-right-xs"></span>${text}</div>`
   },
 })
 
