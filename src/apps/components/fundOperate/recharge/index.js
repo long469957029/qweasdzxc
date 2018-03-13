@@ -196,7 +196,7 @@ const RechargeView = Base.ItemView.extend({
     this.$('.js-payMoney-feeLimit-value').html(feeList.fareValue)
     this.$('.js-payMoney-feeAccount-value').html(feeList.amountValue)
     // 7 返回温馨提示
-    this.$('.js-rc-tips-content').html(rechargeService.get(type, feeData.min, feeData.max, feeData.limit, feeData.maxLimit))
+    this.$('.js-rc-tips-content').html(rechargeService.get(type, feeData.min, feeData.max, feeData.limit, feeData.maxLimit,feeData.feeOpen))
     // 8 输入框归位
     const nameTop = this.$('.fc-rc-leftBar-bottom-area').css('top')
     if (nameTop > 205) {
