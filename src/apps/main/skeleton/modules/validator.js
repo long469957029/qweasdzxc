@@ -129,8 +129,8 @@ var ValidatorModule = Base.Module.extend({
 
 
     ParsleyValidator.addValidator('password', function (value, selector) {
-      return !(!isNaN(password) && password.length < 9);
-    }, 46).addMessage('zh_cn', 'password', '不能是9位以下的纯数字（≤8个阿拉伯数字）');
+      return !(!isNaN(value) && value.length < 9);
+    }, 46).addMessage('zh_cn', 'password', '不能是9位以下的纯数字');
 
   }
 });
