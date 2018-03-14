@@ -34,7 +34,7 @@ const getters = {
     let nextPercent = _(_(state.totalIntegral - state.currentLevelintegral).div(state.nexTLevelintegral - state.currentLevelintegral)).mul(100)
     return {
       levelId: state.levelId,
-      fIntegral: _.convert2yuan(state.integral, {fixed: 0}),
+      fIntegral: Math.floor(_.div(state.integral,10000)),
       fNextLevelIntegral: _.convert2yuan(state.nexTLevelintegral - state.totalIntegral, {fixed: 0}),
       nextLevelName: state.nextLevelName,
       fTotalIntegral: _.convert2yuan(state.totalIntegral),
