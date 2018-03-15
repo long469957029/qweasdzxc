@@ -269,7 +269,6 @@
       },
       valCode(){
         if(this.sendCode){
-          console.log( 'val:'+this.codeVal)
           if (this.codeVal && this.codeVal !== '' && this.codeVal.length === 4) {
             this.sendCode = false
             valCodeXhr({
