@@ -78,6 +78,8 @@
                 <animated-integer class="text-pleasant font-sm" :value="bettingChoice.statistics"></animated-integer>
                 <span>注，金额</span>
                 <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
+                <span>元，预期奖金</span>
+                <animated-integer class="text-prominent font-sm" :value="bettingChoice.fTotalBetBonus"></animated-integer>
                 <span>元</span>
               </div>
               <div class="betting-panel pull-right">

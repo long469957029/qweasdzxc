@@ -509,7 +509,8 @@
 
       _calculate(item, multiple, prevTotalMultiple) {
         // 当期投入
-        const betMoney = _(this.basicBettingMoney).mul(multiple)
+        // const betMoney = _(this.basicBettingMoney).mul(multiple)
+        const betMoney = this.basicBettingMoney
         // 当期奖金
         const basicMaxBonus = _(this.basicMaxBonus).mul(multiple)
         // 累计投入
