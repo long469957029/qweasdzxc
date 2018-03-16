@@ -176,11 +176,18 @@
             <template v-else>
               <!--预期奖金-->
               <td>
-                {{row.expectBonus | convert2yuan}}
+                <template v-if="row.selected">
+                  {{row.expectBonus | convert2yuan}}
+                </template>
+                <template v-else>
+                  0
+                </template>
               </td>
               <!--预期奖金-->
               <td>
-                {{_.formatMul(row.bonusRate, 100, {fixed: 1, clear: false})}}%
+                <template v-if="row.selected">
+                  {{_.formatMul(row.bonusRate, 100, {fixed: 1, clear: false})}}%
+                </template>
               </td>
             </template>
           </tr>
