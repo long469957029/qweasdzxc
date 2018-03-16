@@ -2,14 +2,18 @@
   <div :class="wrapperClass">
     <div v-if="showHeader">
       <table class="no-margin" :class="[tableClass, {'no-b-bottom': hasBorder}]">
-        <colgroup>
+        <colgroup v-if="colgroup">
+          <col :width="col" v-for="col in colgroup">
+        </colgroup>
+        <colgroup v-else>
           <col :width="col.width" v-for="col in colModel">
         </colgroup>
-
         <thead>
-        <tr>
-          <th :width="col.width" v-for="col in colModel" v-html="col.label"></th>
-        </tr>
+        <slot name="thead">
+          <tr>
+            <th :width="col.width" v-for="col in colModel" v-html="col.label"></th>
+          </tr>
+        </slot>
         </thead>
       </table>
     </div>
@@ -17,7 +21,10 @@
     <div class="relative" ref="body">
       <status-cell :status="loading" :has-data="showRows.length" :loading-tip="loadingTip" :transition="transition">
         <table class="no-margin" :class="[tableClass, {'no-b-bottom': hasBorder}]">
-          <colgroup>
+          <colgroup v-if="colgroup">
+            <col :width="col" v-for="col in colgroup">
+          </colgroup>
+          <colgroup v-else>
             <col :width="col.width" v-for="col in colModel">
           </colgroup>
           <!--<transition-group-->
@@ -38,7 +45,10 @@
     </div>
     <div class="js-wt-footer-main relative">
       <table class="no-margin" :class="tableClass">
-        <colgroup>
+        <colgroup v-if="colgroup">
+          <col :width="col" v-for="col in colgroup">
+        </colgroup>
+        <colgroup v-else>
           <col :width="col.width" v-for="col in colModel">
         </colgroup>
         <tbody></tbody>
@@ -100,6 +110,9 @@
       url: {
         type: String,
         default: '',
+      },
+      colgroup: {
+        type: Array,
       },
       colModel: {
         type: Array,
@@ -209,14 +222,6 @@
     methods: {
       update() {
         this.$_getDataXhr()
-      },
-      setHeight(height) {
-        this.height = height
-        if (this.height > 0) {
-          $(this.$refs.body).slimScroll({
-            height: this.height,
-          })
-        }
       },
 
       $_getDataXhr() {

@@ -42,6 +42,18 @@ const total = (half, nums) => {
   }
 }
 
+const specialCode = (half, nums) => {
+  const total = nums
+  const size = compareSize(half, total)
+  const singleAndDouble = checkSingleAndDouble(total)
+
+  return {
+    total,
+    size,
+    singleAndDouble,
+  }
+}
+
 const twoPositionTotal = (half, num1Pos, num2Pos, nums) => {
   return total(half, [nums[num1Pos], nums[num2Pos]])
 }
@@ -138,7 +150,7 @@ export const mark6 = {
   numCol: {
     num: 'mark6',
   },
-  specialCode: _.partial(total, 25),
+  specialCode: _.partial(specialCode, 25),
   total: _.partial(total, 175),
 }
 

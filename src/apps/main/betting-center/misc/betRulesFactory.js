@@ -1,4 +1,5 @@
 import betFormat from './betFormat'
+import betMaxPrize from './bet-max-prize'
 
 const op = {
   all: {
@@ -61,6 +62,8 @@ function addRule(ids, {
   validate,
   formatToNum = false,
   create = _.noop,
+  maxPrizeAlgorithm = betMaxPrize.normal,
+  maxPrizeAlgorithmProps = {},
   style = {
     numType: 'circle',
     position: 'default',
@@ -94,6 +97,8 @@ function addRule(ids, {
       analysisProps,
       algorithm,
       algorithmProps,
+      maxPrizeAlgorithm,
+      maxPrizeAlgorithmProps,
       style,
       create,
       topOp: TopOp[topOp],

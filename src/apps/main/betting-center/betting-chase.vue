@@ -111,9 +111,29 @@
           </form>
         </div>
         <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :table-class="lotteryGridOps.tableClass"
-                     :col-model="lotteryGridOps.colModel" :init-remote="false"
-                     :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="chaseList"
+                     :colgroup="totalChaseType === 'profit' ? ['10%', '25%', '15%', '20%', '15%', '15%'] : ['15%', '25%', '20%', '20%', '20%']" :init-remote="false"
+                     :height="gridHeight" :emptyTip="lotteryGridOps.emptyTip" :rows="chaseList"
                      ref="normalGrid">
+          <tr slot="thead">
+            <th>序号</th>
+            <th>
+              <label class="no-margin font-xs">
+                <span class="custom-checkbox">
+                  <input type="checkbox" id="js-bc-select-all" v-model="selectAll">
+                  <label for="js-bc-select-all" class="checkbox-label"></label>
+                </span>追号期数
+              </label>
+            </th>
+            <th>倍数</th>
+            <th>金额</th>
+            <template v-if="totalChaseType !== 'profit'">
+              <th>开奖时间</th>
+            </template>
+            <template v-else>
+              <th>预期盈利</th>
+              <th>利润率</th>
+            </template>
+          </tr>
           <tr slot="row" slot-scope="{row, index}" :key="index">
             <td>{{index + 1}}</td>
             <td>
@@ -147,9 +167,22 @@
                 0
               </template>
             </td>
-            <td>
-              {{row.formatTicketEndtime}}
-            </td>
+            <template v-if="totalChaseType !== 'profit'">
+              <!--开奖时间-->
+              <td>
+                {{row.formatTicketEndtime}}
+              </td>
+            </template>
+            <template v-else>
+              <!--预期奖金-->
+              <td>
+                {{row.expectBonus | convert2yuan}}
+              </td>
+              <!--预期奖金-->
+              <td>
+                {{_.formatMul(row.bonusRate, 100, {fixed: 1, clear: false})}}
+              </td>
+            </template>
           </tr>
         </slot-static-grid>
       </div>
@@ -187,10 +220,10 @@
 </template>
 
 <script>
-  import {RadioGroup, StaticGrid} from 'build'
+  import {RadioGroup} from 'build'
 
   export default {
-    name: "betting-chase",
+    name: 'betting-chase',
 
     components: {
       RadioGroup,
@@ -225,6 +258,7 @@
         rate: 50,
         amount: 100,
         suspend: true,
+        totalChaseType: 'normal',
         chaseType: 'rate',
         totalMoney: 0,
         fTotalMoney: 0,
@@ -250,32 +284,10 @@
         lotteryGridOps: {
           wrapperClass: 'border-top',
           tableClass: 'table table-bordered chase-table',
-          colModel: [
-            {
-              label: '序号',
-              width: '15%',
-            },
-            {
-              label: `<label class="no-margin font-xs"><span class="custom-checkbox">
-<input type="checkbox" id="js-bc-select-all" name="selectAll" value=""> <label for="js-bc-select-all" class="checkbox-label"></label></span>追号期数</label>`,
-              width: '25%',
-            },
-            {
-              label: '倍数',
-              width: '20%',
-            },
-            {
-              label: '金额',
-              width: '20%',
-            },
-            {
-              label: '开奖时间',
-              width: '20%'
-            },
-          ],
-          startOnLoading: false,
-          height: 300,
+          colgroup: ['15%', '25%', '20%', '20%', '20%'],
         },
+        gridHeight: 300,
+        selectAll: false,
         chaseList: [],
         selectedChaseList: [],
         pushing: false
@@ -310,6 +322,9 @@
           this.fTotalMoney = _.convert2yuan(this.totalMoney)
         },
         deep: true
+      },
+      selectAll(checked) {
+        _.each(this.chaseList, item => item.selected = checked)
       }
     },
 
@@ -351,7 +366,7 @@
           totalPrefabMoney += params.prefabMoney
 
           params.basicBettingMoney = _(params.basicBettingMoney).add(params.prefabMoney)
-          params.basicMaxBonus = _(params.basicMaxBonus).add(_(previewInfo.formatMaxBonus).div(previewInfo.multiple))
+          params.basicMaxBonus = _(params.basicMaxBonus).add(_(previewInfo.totalBetBonus).div(previewInfo.multiple))
 
           category.playId.push(previewInfo.playId)
           category.betMethod.push(previewInfo.betMethod)
@@ -389,6 +404,7 @@
 
         //按照规则改变倍率
         this.$nextTick(() => {
+          let prevTotalMultiple = 0
           let currentGaps = this.gaps
           let times = 1
           let multiple = 1
@@ -410,7 +426,11 @@
             }
 
             // item.betMoney = _(this.basicBettingMoney).mul(item.multiple)
-            item.betMoney = this.basicBettingMoney
+
+            this._calculate(item, multiple, prevTotalMultiple)
+            // item.betMoney = this.basicBettingMoney
+
+            prevTotalMultiple += item.multiple
           })
         })
       },
@@ -509,7 +529,8 @@
 
       _calculate(item, multiple, prevTotalMultiple) {
         // 当期投入
-        const betMoney = _(this.basicBettingMoney).mul(multiple)
+        // const betMoney = _(this.basicBettingMoney).mul(multiple)
+        const betMoney = this.basicBettingMoney
         // 当期奖金
         const basicMaxBonus = _(this.basicMaxBonus).mul(multiple)
         // 累计投入
@@ -531,7 +552,7 @@
 
       clearAll() {
         _.each(this.chaseList, item => item.selected = false)
-        $(this.$el).find('#js-bc-select-all').prop('checked', false)
+        this.selectAll = false
       },
 
       chaseConfirm() {
@@ -539,16 +560,6 @@
           Global.ui.notification.show('试玩会员无法进行追号操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
           return false
         }
-        // // 腾讯分分彩，金额限制1000元
-        // if (this.ticketId === 31) {
-        //   const chasePlan = _(this.selectedChaseList).find((item) => {
-        //     return _(item.betMoney).formatDiv(10000) > this.ticketInfo.betAmountLimit
-        //   })
-        //   if (chasePlan) {
-        //     Global.ui.notification.show(`试运行期间，每期单笔投注不超过${this.ticketInfo.betAmountLimit}元。`)
-        //     return false
-        //   }
-        // }
 
         this.pushing = true
 
@@ -595,18 +606,8 @@
 
     mounted() {
       $(this.$el).on('shown', '.chase-nav a', (e) => {
-        if (e.currentTarget.dataset.name === 'profit') {
-          this.$refs.normalGrid.setHeight(264)
-        } else {
-          this.$refs.normalGrid.setHeight(300)
-        }
-      })
-
-      $(this.$el).on('change', '#js-bc-select-all', (e) => {
-        _.each(this.chaseList, item => item.selected = e.target.checked)
-      })
-      $(this.$el).on('change', '.js-bc-select', (e) => {
-        this.chaseList[$(e.currentTarget).closest('tr').index()].selected = e.target.checked
+        this.gridHeight = e.currentTarget.dataset.name === 'profit' ? 264 : 300;
+        this.totalChaseType = e.currentTarget.dataset.name
       })
 
       this.init()
@@ -690,7 +691,6 @@
     .chase-input {
       padding: 4px 5px 5px;
       text-align: center;
-      vertical-align: top;
       border-radius: 30px;
       width: 60px;
     }

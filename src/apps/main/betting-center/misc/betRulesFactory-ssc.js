@@ -1,4 +1,5 @@
 import factory from './betRulesFactory'
+import betMaxPrize from './bet-max-prize'
 
 const algorithm = require('./betRulesAlgorithm')
 
@@ -207,6 +208,11 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 2,
     },
+    maxPrizeAlgorithm: betMaxPrize.group,
+    maxPrizeAlgorithmProps: {
+      n: 5,
+      k: 2
+    },
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {
       outerSort: true,
@@ -225,6 +231,11 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 3,
+    },
+    maxPrizeAlgorithm: betMaxPrize.group,
+    maxPrizeAlgorithmProps: {
+      n: 5,
+      k: 3
     },
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(3, {
@@ -365,6 +376,11 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 1,
     },
+    maxPrizeAlgorithm: betMaxPrize.group,
+    maxPrizeAlgorithmProps: {
+      n: 4,
+      k: 1
+    },
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(1),
   })
@@ -381,6 +397,11 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 2,
+    },
+    maxPrizeAlgorithm: betMaxPrize.group,
+    maxPrizeAlgorithmProps: {
+      n: 4,
+      k: 2
     },
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {
@@ -601,6 +622,11 @@ function _create(ticketId) {
         mainRow: 0,
         cTimes: 1,
       },
+      maxPrizeAlgorithm: betMaxPrize.group,
+      maxPrizeAlgorithmProps: {
+        n: 3,
+        k: 1
+      },
       list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(1),
     })
@@ -617,6 +643,11 @@ function _create(ticketId) {
       algorithmProps: {
         mainRow: 0,
         cTimes: 2,
+      },
+      maxPrizeAlgorithm: betMaxPrize.group,
+      maxPrizeAlgorithmProps: {
+        n: 3,
+        k: 2
       },
       list: factory.createList(['号码']),
       create: algorithm.getCreateFunc(2, {
@@ -890,6 +921,7 @@ function _create(ticketId) {
       startPos: 0,
     },
     algorithm: algorithm.addAll,
+    maxPrizeAlgorithm: betMaxPrize.addAll,
     list: factory.createList(['万位', '千位', '百位', '十位', '个位']),
     create: algorithm.getCreateFunc(1, {
       matching: true,
@@ -1238,6 +1270,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '670151'], {
     keyPosition: [null, null, null, '十位', '个位'],
     algorithm: algorithm.mulAll,
+    maxPrizeAlgorithm: betMaxPrize.daxiaodanshuang,
     list: factory.createList(['十位', '个位'], {
       items: danshuang,
       operate: 'none',
@@ -1255,6 +1288,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '670152'], {
     keyPosition: [null, null, '百位', '十位', '个位'],
     algorithm: algorithm.mulAll,
+    maxPrizeAlgorithm: betMaxPrize.daxiaodanshuang,
     list: factory.createList(['百位', '十位', '个位'], {
       items: danshuang,
       operate: 'none',
@@ -1272,6 +1306,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '670153'], {
     keyPosition: ['万位', '千位', null, null, null],
     algorithm: algorithm.mulAll,
+    maxPrizeAlgorithm: betMaxPrize.daxiaodanshuang,
     list: factory.createList(['万位', '千位'], {
       items: danshuang,
       operate: 'none',
@@ -1288,6 +1323,7 @@ function _create(ticketId) {
   factory.addRule([ticketId, '670154'], {
     keyPosition: ['万位', '千位', '百位', null, null],
     algorithm: algorithm.mulAll,
+    maxPrizeAlgorithm: betMaxPrize.daxiaodanshuang,
     list: factory.createList(['万位', '千位', '百位'], {
       items: danshuang,
       operate: 'none',
@@ -1316,6 +1352,11 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 1,
     },
+    maxPrizeAlgorithm: betMaxPrize.group,
+    maxPrizeAlgorithmProps: {
+      n: 5,
+      k: 1
+    },
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(1),
   })
@@ -1333,6 +1374,10 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
+    },
+    maxPrizeAlgorithm: betMaxPrize.addAllRow,
+    maxPrizeAlgorithmProps: {
+      max: 2
     },
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(1),

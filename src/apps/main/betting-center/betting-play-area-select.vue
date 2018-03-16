@@ -316,36 +316,31 @@
       addBetting({type = 'normal', results = []} = {}) {
         if (type === 'auto') {
           _.each(results, (result) => {
-            this.$store.commit(types.ADD_PREV_BET, {
-              bettingInfo: {
-                lotteryList: result.lotteryList,
-                selectOptionals: result.selectOptionals,
-                statistics: result.statistics,
-                format: this.playRule.format
-              },
-              options: {
-                type
-              }
-            })
+            this.$_addBetting({type, result})
           })
         } else {
-          this.$store.commit(types.ADD_PREV_BET, {
-            bettingInfo: {
-              lotteryList: this.lotteryList,
-              selectOptionals: this.selectOptionals,
-              format: this.playRule.format
-            },
-            options: {
-              type
-            }
-          })
+          this.$_addBetting({type, result: this})
         }
+      },
+
+      $_addBetting({type, result}) {
+        this.$store.commit(types.ADD_PREV_BET, {
+          bettingInfo: {
+            lotteryList: result.lotteryList,
+            selectOptionals: result.selectOptionals,
+            statistics: result.statistics,
+            format: this.playRule.format,
+          },
+          options: {
+            type
+          }
+        })
       },
 
       empty() {
         this.lotteryList = []
 
-        this.clearAllSelected();
+        this.clearAllSelected()
       },
 
       $_calculateCoefficient() {
@@ -388,6 +383,11 @@
             count = Math.round(_(this.coefficient).mul(this.playRule.algorithm.call(this.playRule, this.lotteryList) || 0))
           }
         }
+
+        this.$store.commit(types.SET_MAX_PRIZE_MULTIPLE, this.playRule.maxPrizeAlgorithm({
+          lotteryList: this.lotteryList,
+          ...this.playRule.maxPrizeAlgorithmProps
+        }))
 
         this.$store.commit(types.SET_STATISTICS, count)
       },
@@ -434,9 +434,9 @@
           this.$_calculateCoefficient(this.playRule.optionals)
         }
 
-        this.$_statisticsLottery()
-
         this.$_updateBonus(row)
+
+        this.$_statisticsLottery()
       },
 
       $_selectNumbers(nums, row, toSelected = true) {
