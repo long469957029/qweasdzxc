@@ -1,4 +1,5 @@
 import factory from './betRulesFactory'
+import betMaxPrize from './bet-max-prize'
 
 const algorithm = require('./betRulesAlgorithm')
 
@@ -280,6 +281,11 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 2,
     },
+    maxPrizeAlgorithm: betMaxPrize.group,
+    maxPrizeAlgorithmProps: {
+      n: 3,
+      k: 2
+    },
     list: factory.createList([''], {
       items: six,
       operate: 'clear',
@@ -315,6 +321,11 @@ function _create(ticketId) {
       items: six,
       operate: 'clear',
     }),
+    maxPrizeAlgorithm: betMaxPrize.group,
+    maxPrizeAlgorithmProps: {
+      n: 3,
+      k: 1
+    },
     topOp: 'none',
     style: {
       numType: 'square',

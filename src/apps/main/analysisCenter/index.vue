@@ -360,7 +360,7 @@
 
         if (this.analysis.specialCode) {
           _.each(this.openedList, item => {
-            item.specialCode = this.analysis.specialCode([_(item.fTicketOpenNum).last()])
+            item.specialCode = this.analysis.specialCode(_(item.fTicketOpenNum).last())
             item.fSpecialCode = {
               total: {
                 title: item.specialCode.total,

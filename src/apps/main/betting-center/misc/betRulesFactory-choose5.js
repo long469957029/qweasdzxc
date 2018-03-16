@@ -245,6 +245,11 @@ function _create(ticketId) {
     list: factory.createList(['号码'], {
       items: eleven,
     }),
+    maxPrizeAlgorithm: betMaxPrize.group,
+    maxPrizeAlgorithmProps: {
+      n: 3,
+      k: 1
+    },
     create: algorithm.getCreateFunc(1, {
       range: eleven,
       matching: true,
@@ -287,6 +292,11 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 1,
     },
+    maxPrizeAlgorithm: betMaxPrize.nInN,
+    maxPrizeAlgorithmProps: {
+      n: 5,
+      k: 1
+    },
     list: factory.createList(['号码'], {
       items: eleven,
     }),
@@ -307,6 +317,11 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 2,
+    },
+    maxPrizeAlgorithm: betMaxPrize.nInN,
+    maxPrizeAlgorithmProps: {
+      n: 5,
+      k: 2
     },
     list: factory.createList(['选二中二'], {
       items: eleven,
@@ -330,6 +345,11 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 3,
     },
+    maxPrizeAlgorithm: betMaxPrize.nInN,
+    maxPrizeAlgorithmProps: {
+      n: 5,
+      k: 3
+    },
     list: factory.createList(['选三中三'], {
       items: eleven,
     }),
@@ -351,6 +371,11 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 4,
+    },
+    maxPrizeAlgorithm: betMaxPrize.nInN,
+    maxPrizeAlgorithmProps: {
+      n: 5,
+      k: 4
     },
     list: factory.createList(['选四中四'], {
       items: eleven,
@@ -374,6 +399,11 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 5,
     },
+    maxPrizeAlgorithm: betMaxPrize.nInN,
+    maxPrizeAlgorithmProps: {
+      n: 5,
+      k: 5
+    },
     list: factory.createList(['选五中五'], {
       items: eleven,
     }),
@@ -395,6 +425,12 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 6,
+    },
+    maxPrizeAlgorithm: betMaxPrize.overNInN,
+    maxPrizeAlgorithmProps: {
+      min: 6,
+      n: 6,
+      k: 1
     },
     list: factory.createList(['选六中五'], {
       items: eleven,
@@ -418,6 +454,12 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 7,
     },
+    maxPrizeAlgorithm: betMaxPrize.overNInN,
+    maxPrizeAlgorithmProps: {
+      min: 7,
+      n: 6,
+      k: 2
+    },
     list: factory.createList(['选七中五'], {
       items: eleven,
     }),
@@ -439,6 +481,12 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 8,
+    },
+    maxPrizeAlgorithm: betMaxPrize.overNInN,
+    maxPrizeAlgorithmProps: {
+      min: 8,
+      n: 6,
+      k: 3
     },
     list: factory.createList(['选八中五'], {
       items: eleven,

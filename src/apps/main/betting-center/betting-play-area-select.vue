@@ -340,7 +340,7 @@
       empty() {
         this.lotteryList = []
 
-        this.clearAllSelected();
+        this.clearAllSelected()
       },
 
       $_calculateCoefficient() {
