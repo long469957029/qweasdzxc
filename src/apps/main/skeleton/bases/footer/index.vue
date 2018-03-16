@@ -50,8 +50,10 @@
           <div class="follow">
             <span class="follow-list">
               <span>关注我们：</span>
-              <div class="wechat-icon"></div>
-              <div class="weibo-icon"></div>
+              <div class="wechat-icon icon"></div>
+              <a href="https://weibo.com/6456736183/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" class="weibo-icon icon" target="_blank"></a>
+              <a href="https://www.facebook.com/wx.wx.547389" class="facebook-icon icon" target="_blank"></a>
+              <a href="https://twitter.com/wx_game" class="twitter-icon icon" target="_blank"></a>
             </span>
           </div>
           <div class="duty">
@@ -259,7 +261,7 @@ export default {
       margin-right: 10px;
     }
 
-    > div {
+    .icon {
       margin-right: 10px;
     }
   }
@@ -320,6 +322,26 @@ export default {
   &:hover,
   &:active {
     background: url("./images/weibo-icon-active.png");
+  }
+}
+.facebook-icon {
+  width: 28px;
+  height: 28px;
+  background: url("./images/facebook-icon.png");
+
+  &:hover,
+  &:active {
+    background: url("./images/facebook-icon-active.png");
+  }
+}
+.twitter-icon {
+  width: 28px;
+  height: 28px;
+  background: url("./images/twitter-icon.png");
+
+  &:hover,
+  &:active {
+    background: url("./images/twitter-icon-active.png");
   }
 }
 
