@@ -144,8 +144,8 @@ const LowLevelManageView = SearchGrid.extend({
     const row = []
     const sameUserId = rowInfo.userId === this.userParentId
     const textClass = sameUserId ? 'text-pleasant' : ''
-    const freeze = (rowInfo.userStatus === 100 || rowInfo.userStatus === 101) ? '<span class="sfa sfa-freeze vertical-sub m-right-xs"></span>'
-      : (rowInfo.userStatus === 103 ? '<span class="sfa sfa-recycling vertical-sub m-right-xs"></span>' : '')
+    const freeze = (rowInfo.userStatus === 100 || rowInfo.userStatus === 101) ? '<span class="ac-icon ac-freeze">冻</span>'
+      : (rowInfo.userStatus === 103 ? '<span class="ac-icon ac-recycling">收</span>' : '')
     const online = rowInfo.online ? '<span class="text-circle-online inline-block"></span>' : ''
     if (!sameUserId && rowInfo.userSubAcctNum) {
       row.push(`${freeze}<a class="js-pf-sub js-low-sub btn-link ${textClass}" data-label="${rowInfo.userName}" data-user-parent-id="${rowInfo.userId}" href="javascript:void(0)">${
