@@ -180,7 +180,7 @@
               </td>
               <!--预期奖金-->
               <td>
-                {{_.formatMul(row.bonusRate, 100, {fixed: 1, clear: false})}}
+                {{_.formatMul(row.bonusRate, 100, {fixed: 1, clear: false})}}%
               </td>
             </template>
           </tr>
@@ -320,6 +320,12 @@
           this.selectedChaseList = _.where(this.chaseList, {selected: true})
           this.totalMoney = _.chain(this.selectedChaseList).reduce((total, item) => total + _.mul(item.betMoney, item.multiple), 0).value()
           this.fTotalMoney = _.convert2yuan(this.totalMoney)
+        },
+        deep: true
+      },
+      selectedChaseList: {
+        handler() {
+          this.updateProfit()
         },
         deep: true
       },
@@ -524,6 +530,17 @@
           }
 
           prevTotalMultiple += multiple
+        })
+      },
+
+      updateProfit() {
+        let prevTotalMultiple = 0
+        _.each(this.selectedChaseList, item => {
+
+          this._calculate(item, Number(item.multiple), prevTotalMultiple)
+          // item.betMoney = this.basicBettingMoney
+
+          prevTotalMultiple += Number(item.multiple)
         })
       },
 
