@@ -154,9 +154,9 @@ const TicketDividView = SearchGrid.extend({
       operate.push('<button class="js-ac-grant btn btn-link btn-link-pleasant">发放</button>')
     }
 
-    if (rowInfo.status === grantConfig.getByName('DONE').id) {
-      operate.push(`<a href="#fc/ad?tradeNo=${rowInfo.tradeNo}" class="btn btn-link btn-link-pleasant">查看</a>`)
-    }
+    // if (rowInfo.status === grantConfig.getByName('DONE').id) {
+    //   operate.push(`<a href="#fc/ad?tradeNo=${rowInfo.tradeNo}" class="btn btn-link btn-link-pleasant">查看</a>`)
+    // }
 
     // operate.push('<button class="js-ac-detail btn btn-link btn-link-cool">明细</button>');
     row.push(operate.join(''))

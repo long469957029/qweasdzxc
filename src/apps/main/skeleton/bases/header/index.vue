@@ -14,7 +14,7 @@
                   <!--enter-active-class="animated-general fadeInRightBig"-->
                   <!--leave-active-class="animated-general fadeOutRightBig"-->
       <!--&gt;-->
-        <div class="header-not-login pull-right" v-if="!loginStatus" key="login">
+        <div class="header-not-login pull-right" v-if="!getLoginStatus" key="login">
           <button type="button" class="header-game " @click="showFreeTrial">免费试玩</button>
           <button type="button" class="header-login " @click="showLogin">登录</button>
         </div>
@@ -126,8 +126,8 @@
       userInfo(userInfo) {
         this.showUserInfo(userInfo)
       },
-      loginStatus(loginStatus){
-        if (loginStatus) {
+      getLoginStatus(){
+        if (this.getLoginStatus) {
           this.getUserSecurityInfo()
           this.getUserBindInfo()
         }
@@ -153,11 +153,12 @@
         }
       },
       ...mapGetters([
-        'userAvatar'
+        'userAvatar',
+        'getLoginStatus'
       ]),
-      loginStatus(){
-        return this.$store.getters.getLoginStatus
-      },
+      // loginStatus(){
+      //   return this.$store.getters.getLoginStatus
+      // },
     },
 
     filters: {},
@@ -291,8 +292,9 @@
         this.$router.replace(this.$route.path)
       }
       window.Global.m.subscribe('news', 'news:updating', this.renderMsgList)
-      if (this.loginStatus) {  //登陆状态下 获取用户安全设置信息
+      if (this.getLoginStatus) {  //登陆状态下 获取用户安全设置信息
         this.getAccountSafe()
+        this.getUserBindInfo()
       }
       this.judgeIsTestUser()
       Vue.$global.bus.$on('update:newRowCount',()=>{
