@@ -35,6 +35,23 @@
   .table tbody tr td:last-child {
     text-align: left;
   }
+  .ac-icon{
+    width: 16px;
+    height: 16px;
+    font-size: $font-xs;
+    border-radius: 3px;
+    text-align: center;
+    display: inline-block;
+    color: $def-white-color;
+    margin-right: 5px;
+    line-height: 16px;
+    &.ac-freeze{
+      background-color: #8094a6;
+    }
+    &.ac-recycling{
+      background-color: #8f80a6;
+    }
+  }
 }
 
 .ac-register {
