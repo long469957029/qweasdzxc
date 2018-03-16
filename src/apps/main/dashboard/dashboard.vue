@@ -71,8 +71,8 @@
                       <!--<span class="db-slot-icon new"></span>-->
                       <div class="db-slot-name">{{item.gameName}}</div>
                       <img class="db-slot-img" :src="locUrl + item.imageUrl"/>
-                      <div class="db-slot-mask">
-                        <div class="db-slot-play-btn" @click="startGame(3,item.channelId,item.gameId)"></div>
+                      <div class="db-slot-mask" @click="startGame(3,item.channelId,item.gameId)">
+                        <div class="db-slot-play-btn"></div>
                       </div>
                     </div>
                   </div>
@@ -469,6 +469,7 @@
           justify-content: center;
           align-items: center;
           opacity: 0;
+          cursor: pointer;
           transition: opacity .5s;
           .db-slot-play-btn {
             margin: 50px 0 0 108px;
@@ -476,7 +477,6 @@
             height: 80px;
             background: url("./misc/db-slot-btn.png") no-repeat;
             border-radius: 50%;
-            cursor: pointer;
             transition: transform .5s;
           }
         }
