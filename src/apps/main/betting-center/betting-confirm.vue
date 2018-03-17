@@ -51,7 +51,8 @@
       </div>
       <div class="total">
         总计 <span class="text-pleasant">{{bettingChoice.totalInfo.totalLottery}}</span> 注，
-        总共 <span class="text-pleasant">{{bettingChoice.totalInfo.fTotalMoney}}</span> 元
+        总共 <span class="text-prominent">{{bettingChoice.totalInfo.fTotalMoney}}</span> 元
+        <span v-if="selectedVoucher > 0">，代金券返现<span class="m-LR-xs text-prominent">{{selectedVoucher | convert2yuan}}</span>元</span>
       </div>
     </div>
     <div class="modal-footer">
@@ -91,7 +92,11 @@
         immediate: true
       },
     },
-
+    computed:{
+      ...mapGetters([
+        'selectedVoucher'
+      ])
+    },
     methods: {
       bettingConfirm() {
         this.$emit('bettingConfirm')

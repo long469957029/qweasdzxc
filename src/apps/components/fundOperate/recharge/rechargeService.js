@@ -17,13 +17,13 @@ module.exports = {
     return lastPayInfo[0]
   },
   // 生成温馨提示语句
-  get(id, min, max, fee, maxFee) {
+  get(id, min, max, fee, maxFee, feeOpen) {
     const onceMinCharge = `单次充值金额最低<span class="text-account-fund">${min}</span>元，`
     const onceMaxCharge = `最高<span class="text-account-fund">${max}</span>元，`
     const feeTips = `收取<span class="text-account-fund">${fee}%</span>手续费，`
     const maxFeeTips = `最高不超过<span class="text-account-fund">${maxFee}</span>元`
     let feeTotalTips = ''
-    if (fee === 0 ) {
+    if (fee === 0 || !feeOpen) {
       feeTotalTips = '免手续费'
     } else {
       feeTotalTips = `${feeTips}${maxFeeTips}`
@@ -128,6 +128,7 @@ module.exports = {
       limit: feeLimit,
       maxLimit: maxFeeLimit,
       charge: feeChargeAmount,
+      feeOpen:payInfo.feeOpen
     }
   },
   // 获取支付列表信息并分类

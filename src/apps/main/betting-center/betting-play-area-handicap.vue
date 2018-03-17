@@ -40,7 +40,7 @@
           <div class="main-row" v-for="rowItem in rule.items">
 
             <!--根据是否存在子项进行区别渲染-->
-            <div class="main-item" v-for="item in rowItem" v-if="item.row" :class="{selected: item.selected}"
+            <div class="main-item" v-for="item in rowItem" v-if="item.row" :class="{selected: item.selected}" v-ripple="'rgba(216, 137, 45, .3)'"
                  @click="select(item)">
               <div class="main-item-left" v-if="!_.isEmpty(item)">
                 <span class="item" :class="item.style">
@@ -58,7 +58,7 @@
               </div>
             </div>
 
-            <div class="main-item" v-else :class="{selected: item.selected, empty: _.isEmpty(item)}"
+            <div class="main-item" v-else :class="{selected: item.selected, empty: _.isEmpty(item)}" v-ripple="'rgba(216, 137, 45, .3)'"
                  @click="select(item)">
               <div :class="rule.showItemOdds ? 'main-item-left' : 'main-item-center'" v-if="!_.isEmpty(item)">
                 <span class="item" :class="item.style">{{item.title}}</span>
@@ -348,7 +348,7 @@
         switch (op) {
           case 'big':
             _.filter(fItems, (num, index) => {
-              flag = index >= Math.floor((fItems.length) / 2)
+              flag = index >= Math.floor((fItems.length) / 2) && index < 48
               num.betMoney = flag ? this.betMoney : null
               num.selected = flag
             })
@@ -362,7 +362,7 @@
             break
           case 'odd':
             _.filter(fItems, (num) => {
-              flag = num.num % 2
+              flag = num.num % 2 && num.num != 49
               num.betMoney = flag ? this.betMoney : null
               num.selected = flag
             })

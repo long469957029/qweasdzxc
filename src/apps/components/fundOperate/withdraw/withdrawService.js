@@ -111,9 +111,9 @@ module.exports = {
     html.push('<div class=" fc-wd-set-view"><div class="fc-wd-set-img sfa sfa-icon-recharge-warning"></div>')
     html.push(`<div class="fc-wd-set-tips">为了您的资金安全，提现前请先<span class="jc-wd-set-tips-text wd-set-tips-text">${tips}</span></div><div class="fc-wd-set-goTo">`)
     if (status === 3 || status === 0) {
-      html.push('<button class="js-wd-goTo-fundPwd btn btn-wd-submit">去设置</button></div></div>')
+      html.push('<button class="js-wd-goTo-fundPwd btn btn-wd-submit font-sm">去设置</button></div></div>')
     } else if (status === 2) {
-      html.push('<button class="js-wd-goTo-bankCard btn btn-wd-submit">去绑定</button></div></div>')
+      html.push('<button class="js-wd-goTo-bankCard btn btn-wd-submit font-sm">去绑定</button></div></div>')
     }
     return html.join('')
 

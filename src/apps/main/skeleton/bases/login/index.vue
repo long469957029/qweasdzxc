@@ -340,6 +340,7 @@
           border: 1px solid #e6e6e6;
           padding-left: 68px;
           border-radius: 4px;
+          font-size: 14px;
           outline: 0;
           color: $font-auxiliary-color;
           &.active, &:focus, &:active {
@@ -437,6 +438,7 @@
         color: $def-white-color;
         border: 1px solid #14b1bb;
         outline: 0;
+        font-size: 14px;
       }
       .btn-forgot-pwd {
         color: $new-inverse-color;

@@ -30,6 +30,11 @@ const permissionsList = [
     mame: 'notice',
     needLogin: true,
   },
+  {
+    path: '/points/records/',
+    mame: 'points',
+    needLogin: true,
+  },
 ]
 
 module.exports = {

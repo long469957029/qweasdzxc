@@ -24,6 +24,8 @@ const runSequence = require('run-sequence')
 // css sprite
 const spritesmith = require('gulp.spritesmith')
 
+svgSprite = require('gulp-svg-sprite');
+
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 
@@ -38,7 +40,7 @@ const fontConfig = require('./font-config.json')
 
 const dllConfig = require('./webpack.dll.config');
 
-let serverIP = 'http://forehead.5x5x.com'
+let serverIP = 'http://forev3.5x5x.com'
 
 let packageConfig
 let projectPath
@@ -129,14 +131,14 @@ gulp.task('server.webpack', () => {
     publicPath: packageConfig.output.publicPath,
     hot: true,
     historyApiFallback: true,
-    inline:true,
-    progress:false,
+    inline: true,
+    progress: false,
     proxy,
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000,
     },
-    headers: { 'X-Custom-Header': 'yes' },
+    headers: {'X-Custom-Header': 'yes'},
     stats: {
       colors: true,
     },
@@ -194,7 +196,7 @@ gulp.task('image.min', () => {
   gulp.src('./src/**/*.{png,jpg,gif,ico}')
     .pipe(cache(imagemin({
       progressive: true,
-      svgoPlugins: [{ removeViewBox: false }],
+      svgoPlugins: [{removeViewBox: false}],
       use: [pngquant({
         // quality: '70-80'
       })],
@@ -241,7 +243,7 @@ gulp.task('build.sprite', (callback) => {
           imgOpts: {quality: 75},
           algorithm: 'binary-tree',
           cssSpritesheetName: info.name,
-          cssVarMap (sprite) {
+          cssVarMap(sprite) {
             sprite.name = `sfa-${sprite.name}`
           },
         }))
@@ -320,12 +322,12 @@ gulp.task('zip', () => {
 })
 
 //编译dll
-gulp.task('dll:prepare', function(callback) {
+gulp.task('dll:prepare', function (callback) {
   del('./src/dist/dll/*');
   global.DLL = 1;
 
-  webpack(dllConfig, function(err, stats) {
-    if(err) throw new gutil.PluginError("webpack", err);
+  webpack(dllConfig, function (err, stats) {
+    if (err) throw new gutil.PluginError("webpack", err);
     gutil.log("[webpack]", stats.toString({
       // output options
     }));
@@ -353,7 +355,7 @@ gulp.task('font.minimal', (cb) => {
         text: fontInfo.text,
         hinting: false,
       }))
-    if (fontInfo.font.indexOf('otf') > -1 ) {
+    if (fontInfo.font.indexOf('otf') > -1) {
       fontmin.use(Fontmin.otf2ttf())
     }
     if (_(fontInfo.targets).contains('eot')) {
@@ -398,6 +400,32 @@ gulp.task('font.minimal', (cb) => {
       // => { contents: <Buffer 00 01 00 ...> }
     })
   })
+})
+
+gulp.task('build:svg', (callback) => {
+  gulp.src('./src/base/svgs/*.svg')
+    .pipe(svgSprite({
+      // shape: {
+      //   dimension: {			// Set maximum dimensions
+      //     maxWidth: 32,
+      //     maxHeight: 32
+      //   },
+      //   spacing: {			// Add padding
+      //     padding: 10
+      //   },
+      //   dest: 'intermediate-svg'	// Keep the intermediate files
+      // },
+      mode: {
+        view: {			// Activate the «view» mode
+          bust: false,
+          render: {
+            scss: true		// Activate Scss output (with default options)
+          }
+        },
+        symbol: true		// Activate the «symbol» mode
+      }
+    }))
+    .pipe(gulp.dest('./src/base/out'))
 })
 gulp.task('font.dest', (callback) => {
   const imports = []

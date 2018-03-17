@@ -102,7 +102,7 @@
                          v-model="chaseType">
                   <label for="jsBcChaseType3"></label>
                 </div>
-                利润金额
+                利润金额>=
                 <input name="amount" type="text" class="js-gl-monitor bc-monitor chase-input" autocomplete="off"
                        data-monitor-type="number" data-monitor-range="[1, 999999]" v-model="amount"/>
               </label>
@@ -110,10 +110,88 @@
             </div>
           </form>
         </div>
-        <static-grid :wrapper-class="lotteryGridOps.wrapperClass" :table-class="lotteryGridOps.tableClass"
-                     :col-model="lotteryGridOps.colModel" :init-remote="false"
-                     :height="lotteryGridOps.height" :emptyTip="lotteryGridOps.emptyTip" :rows="chaseList"
-                     ref="normalGrid"></static-grid>
+        <slot-static-grid :wrapper-class="lotteryGridOps.wrapperClass" :table-class="lotteryGridOps.tableClass"
+                     :colgroup="totalChaseType === 'profit' ? ['10%', '25%', '15%', '20%', '15%', '15%'] : ['15%', '25%', '20%', '20%', '20%']" :init-remote="false"
+                     :height="gridHeight" :emptyTip="lotteryGridOps.emptyTip" :rows="chaseList"
+                     ref="normalGrid">
+          <tr slot="thead">
+            <th>序号</th>
+            <th>
+              <label class="no-margin font-xs">
+                <span class="custom-checkbox">
+                  <input type="checkbox" id="js-bc-select-all" v-model="selectAll">
+                  <label for="js-bc-select-all" class="checkbox-label"></label>
+                </span>追号期数
+              </label>
+            </th>
+            <th>倍数</th>
+            <th>金额</th>
+            <template v-if="totalChaseType !== 'profit'">
+              <th>开奖时间</th>
+            </template>
+            <template v-else>
+              <th>预期盈利</th>
+              <th>利润率</th>
+            </template>
+          </tr>
+          <tr slot="row" slot-scope="{row, index}" :key="index">
+            <td>{{index + 1}}</td>
+            <td>
+              <label class="no-margin font-xs inline-block">
+                <span class="custom-checkbox">
+                  <input type="checkbox" :id="`chaseId-${row.ticketPlanId}`" v-model="row.selected">
+                  <label :for="`chaseId-${row.ticketPlanId}`" class="checkbox-label"></label>
+                </span>{{row.ticketPlanId}}
+              </label>
+              <template v-if="index === 0 && row.ticketPlanId === planId">
+                <span class="badge">当前期</span>
+              </template>
+            </td>
+            <td>
+              <template v-if="row.selected">
+                <input type="text" class="js-gl-monitor input-xs text-circle"
+                       data-monitor-type="number" :data-monitor-range="`[1, ${maxMultiple}]`"
+                       :disabled="!row.selected" v-model="row.multiple" /> 倍
+              </template>
+              <template v-else>
+                <input type="text" class="js-gl-monitor input-xs text-circle"
+                       data-monitor-type="number" :data-monitor-range="`[1, ${maxMultiple}]`"
+                       :disabled="!row.selected" /> 倍
+              </template>
+            </td>
+            <td>
+              <template v-if="row.selected">
+                <span class="text-prominent">{{_.mul(row.betMoney, row.multiple) | convert2yuan}}</span>
+              </template>
+              <template v-else>
+                0
+              </template>
+            </td>
+            <template v-if="totalChaseType !== 'profit'">
+              <!--开奖时间-->
+              <td>
+                {{row.formatTicketEndtime}}
+              </td>
+            </template>
+            <template v-else>
+              <!--预期奖金-->
+              <td>
+                <template v-if="row.selected">
+                  {{row.expectBonus | convert2yuan}}
+                </template>
+                <template v-else>
+                  0
+                </template>
+              </td>
+              <!--预期奖金-->
+              <td>
+                <template v-if="row.selected">
+                  {{_.formatMul(row.bonusRate, 100, {fixed: 1, clear: false})}}%
+                </template>
+              </td>
+            </template>
+          </tr>
+        </slot-static-grid>
       </div>
     </div>
     <div class="modal-footer">
@@ -149,10 +227,10 @@
 </template>
 
 <script>
-  import {RadioGroup, StaticGrid} from 'build'
+  import {RadioGroup} from 'build'
 
   export default {
-    name: "betting-chase",
+    name: 'betting-chase',
 
     components: {
       RadioGroup,
@@ -187,6 +265,7 @@
         rate: 50,
         amount: 100,
         suspend: true,
+        totalChaseType: 'normal',
         chaseType: 'rate',
         totalMoney: 0,
         fTotalMoney: 0,
@@ -212,56 +291,10 @@
         lotteryGridOps: {
           wrapperClass: 'border-top',
           tableClass: 'table table-bordered chase-table',
-          colModel: [
-            {
-              label: '序号',
-              name: 'index',
-              width: '15%',
-              formatter: (val, index) => {
-                return index + 1
-              },
-            },
-            {
-              label: `<label class="no-margin font-xs"><span class="custom-checkbox">
-<input type="checkbox" id="js-bc-select-all" name="selectAll" value=""> <label for="js-bc-select-all" class="checkbox-label"></label></span>追号期数</label>`,
-              name: 'ticketPlanId',
-              width: '25%',
-              formatter: (val, index, row) => {
-                const id = _.uniqueId()
-                let fVal = `<label class="no-margin font-xs inline-block"><span class="custom-checkbox">
-<input type="checkbox" id="${id}" name="selectAll" class="js-bc-select" ${row.selected ? 'checked' : ''}> <label for="${id}" class="checkbox-label"></label></span>${val}</label>`
-                if (index === 0 && val === this.planId) {
-                  return `${fVal} <span class="badge">当前期</span>`
-                }
-                return fVal
-              },
-            },
-            {
-              label: '倍数',
-              name: 'multiple',
-              width: '20%',
-              formatter: (val, index, row) => {
-                return `<input type="text" class="js-bc-single-plan-multiple js-gl-monitor input-xs text-circle"
-data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.selected ? '' : 'disabled'} value="${row.selected ? val : ''}" /> 倍`
-              },
-            },
-            {
-              label: '金额',
-              name: 'betMoney',
-              width: '20%',
-              formatter: (val, index, row) => {
-                return row.selected ? `<span class="text-prominent">${_(val).convert2yuan()}</span>` : '0'
-              },
-            },
-            {
-              label: '开奖时间',
-              name: 'formatTicketEndtime',
-              width: '20%'
-            },
-          ],
-          startOnLoading: false,
-          height: 300,
+          colgroup: ['15%', '25%', '20%', '20%', '20%'],
         },
+        gridHeight: 300,
+        selectAll: false,
         chaseList: [],
         selectedChaseList: [],
         pushing: false
@@ -292,10 +325,19 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
       chaseList: {
         handler() {
           this.selectedChaseList = _.where(this.chaseList, {selected: true})
-          this.totalMoney = _.chain(this.selectedChaseList).reduce((total, item) => total + item.betMoney, 0).value()
+          this.totalMoney = _.chain(this.selectedChaseList).reduce((total, item) => total + _.mul(item.betMoney, item.multiple), 0).value()
           this.fTotalMoney = _.convert2yuan(this.totalMoney)
         },
         deep: true
+      },
+      selectedChaseList: {
+        handler() {
+          this.updateProfit()
+        },
+        deep: true
+      },
+      selectAll(checked) {
+        _.each(this.chaseList, item => item.selected = checked)
       }
     },
 
@@ -337,7 +379,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
           totalPrefabMoney += params.prefabMoney
 
           params.basicBettingMoney = _(params.basicBettingMoney).add(params.prefabMoney)
-          params.basicMaxBonus = _(params.basicMaxBonus).add(_(previewInfo.formatMaxBonus).div(previewInfo.multiple))
+          params.basicMaxBonus = _(params.basicMaxBonus).add(_(previewInfo.totalBetBonus).div(previewInfo.multiple))
 
           category.playId.push(previewInfo.playId)
           category.betMethod.push(previewInfo.betMethod)
@@ -368,13 +410,14 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
         if (this.chasePlans > this.chaseList.length) {
           const chasePlans = this.plans.slice(0, this.chasePlans > 15 ? this.chasePlans : 15)
 
-          this.chaseList = _(chasePlans).map((chasePlan, index) => this.$_create(chasePlan, this.chasePlans > index, init))
+          this.chaseList = _(chasePlans).map((chasePlan, index) => this.$_create(chasePlan, this.chasePlans > index, false))
         } else {
           _(this.chaseList).each((item, index) => item.selected = this.chasePlans > index)
         }
 
         //按照规则改变倍率
         this.$nextTick(() => {
+          let prevTotalMultiple = 0
           let currentGaps = this.gaps
           let times = 1
           let multiple = 1
@@ -395,7 +438,12 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
               item.multiple = this.maxMultiple
             }
 
-            item.betMoney = _(this.basicBettingMoney).mul(item.multiple)
+            // item.betMoney = _(this.basicBettingMoney).mul(item.multiple)
+
+            this._calculate(item, multiple, prevTotalMultiple)
+            // item.betMoney = this.basicBettingMoney
+
+            prevTotalMultiple += item.multiple
           })
         })
       },
@@ -492,9 +540,21 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
         })
       },
 
+      updateProfit() {
+        let prevTotalMultiple = 0
+        _.each(this.selectedChaseList, item => {
+
+          this._calculate(item, Number(item.multiple), prevTotalMultiple)
+          // item.betMoney = this.basicBettingMoney
+
+          prevTotalMultiple += Number(item.multiple)
+        })
+      },
+
       _calculate(item, multiple, prevTotalMultiple) {
         // 当期投入
-        const betMoney = _(this.basicBettingMoney).mul(multiple)
+        // const betMoney = _(this.basicBettingMoney).mul(multiple)
+        const betMoney = this.basicBettingMoney
         // 当期奖金
         const basicMaxBonus = _(this.basicMaxBonus).mul(multiple)
         // 累计投入
@@ -516,7 +576,7 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
 
       clearAll() {
         _.each(this.chaseList, item => item.selected = false)
-        $(this.$el).find('#js-bc-select-all').prop('checked', false)
+        this.selectAll = false
       },
 
       chaseConfirm() {
@@ -524,16 +584,6 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
           Global.ui.notification.show('试玩会员无法进行追号操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
           return false
         }
-        // // 腾讯分分彩，金额限制1000元
-        // if (this.ticketId === 31) {
-        //   const chasePlan = _(this.selectedChaseList).find((item) => {
-        //     return _(item.betMoney).formatDiv(10000) > this.ticketInfo.betAmountLimit
-        //   })
-        //   if (chasePlan) {
-        //     Global.ui.notification.show(`试运行期间，每期单笔投注不超过${this.ticketInfo.betAmountLimit}元。`)
-        //     return false
-        //   }
-        // }
 
         this.pushing = true
 
@@ -580,18 +630,8 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
 
     mounted() {
       $(this.$el).on('shown', '.chase-nav a', (e) => {
-        if (e.currentTarget.dataset.name === 'profit') {
-          this.$refs.normalGrid.setHeight(264)
-        } else {
-          this.$refs.normalGrid.setHeight(300)
-        }
-      })
-
-      $(this.$el).on('change', '#js-bc-select-all', (e) => {
-        _.each(this.chaseList, item => item.selected = e.target.checked)
-      })
-      $(this.$el).on('change', '.js-bc-select', (e) => {
-        this.chaseList[$(e.currentTarget).closest('tr').index()].selected = e.target.checked
+        this.gridHeight = e.currentTarget.dataset.name === 'profit' ? 264 : 300;
+        this.totalChaseType = e.currentTarget.dataset.name
       })
 
       this.init()
@@ -675,7 +715,6 @@ data-monitor-type="number" data-monitor-range="[1, ${this.maxMultiple}]" ${row.s
     .chase-input {
       padding: 4px 5px 5px;
       text-align: center;
-      vertical-align: top;
       border-radius: 30px;
       width: 60px;
     }

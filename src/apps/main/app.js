@@ -88,7 +88,7 @@ const _bindFundOperatorDialogHandler = () => {
       $fundOperateDialog.find('.js-fund-operate-dialog').after('<div class="js-fund-vip-panel fund-vip-panel">' +
         '<div class="js-fund-vip fund-vip"></div><div class="js-fund-vip-tips fund-vip-tips"></div></div><input class="js-vip-tips-active" type="hidden">')
     }
-    $fundOperateDialog.on('hidden.modal', () => {
+    $fundOperateDialog.on('hidden.modal', function(){
       $(this).remove()
       rechargeView.destroy()
     })
@@ -141,7 +141,7 @@ const _bindBetDetailHandler = () => {
     const editBetDetailView = new BetDetailView({tradeno: tradeNo})
     $selectContainer.html(editBetDetailView.render().el)
 
-    $dialog.on('hidden.modal', () => {
+    $dialog.on('hidden.modal', function() {
       $(this).remove()
       editBetDetailView.destroy()
     })

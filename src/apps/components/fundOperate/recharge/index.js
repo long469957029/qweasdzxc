@@ -196,7 +196,7 @@ const RechargeView = Base.ItemView.extend({
     this.$('.js-payMoney-feeLimit-value').html(feeList.fareValue)
     this.$('.js-payMoney-feeAccount-value').html(feeList.amountValue)
     // 7 返回温馨提示
-    this.$('.js-rc-tips-content').html(rechargeService.get(type, feeData.min, feeData.max, feeData.limit, feeData.maxLimit))
+    this.$('.js-rc-tips-content').html(rechargeService.get(type, feeData.min, feeData.max, feeData.limit, feeData.maxLimit,feeData.feeOpen))
     // 8 输入框归位
     const nameTop = this.$('.fc-rc-leftBar-bottom-area').css('top')
     if (nameTop > 205) {
@@ -214,9 +214,12 @@ const RechargeView = Base.ItemView.extend({
     this.$('input[name="bankCode"]').val(this.$('.js-fc-rc-bank-selectedItem').data('code'))
     this.$('input[name="token"]').val(Global.cookieCache.get('token'))
     this.$('.js-rc-money-input').removeAttr('data-parsley-type')
+    var range = this.$('.js-rc-money-input').attr('data-parsley-range')
+    this.$('.js-rc-money-input').removeAttr('data-parsley-range')
     if (this.parsley.validate()) {
       $form.submit()
       this.$('.js-rc-money-input').attr('data-parsley-type','integer')
+      this.$('.js-rc-money-input').attr('data-parsley-range',range)
     } else {
       return false
     }

@@ -385,7 +385,8 @@
   .address-add {
     width: 343px;
     height: 202px;
-    border: solid 2px #e6e6e6;
+    border: dashed 2px #e6e6e6;
+    border-radius: 5px;
     background-color: #f8f8f8;
     display: flex;
     justify-content: center;

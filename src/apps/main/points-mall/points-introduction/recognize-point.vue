@@ -120,12 +120,12 @@
       <tr>
         <td rowspan="2">投注</td>
         <td>彩票投注</td>
-        <td>充值积分比约为：{{actionList[13]}}</td>
+        <td>投注积分比约为：{{actionList[13]}}</td>
         <td>无限制</td>
       </tr>
       <tr>
         <td>真人投注</td>
-        <td>充值积分比约为：{{actionList[14]}}</td>
+        <td>投注积分比约为：{{actionList[14]}}</td>
         <td>无限制</td>
       </tr>
 
@@ -256,7 +256,7 @@
   .intro-table {
     margin-bottom: 80px;
     thead tr th {
-      background-color: rgba(58, 127, 135, 0.7);
+      background-color: #72a2a8;
       opacity: 0.7;
       color: #ffffff;
       font-size: 14px;

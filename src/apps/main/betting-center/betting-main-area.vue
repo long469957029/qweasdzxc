@@ -10,10 +10,19 @@
 
           <div class="bc-advance-mode-single" v-show="advanceShowMode === 'single' && ticketInfo.notShowAdvance">
             <div class="bc-play-des">玩法说明：{{playInfo.playDes}}</div>
-            <a class="advance-play-des" ref="winningExample">
+            <a class="advance-play-des" v-popover.bottom="{name: 'winningExample'}">
               <span class="sfa sfa-bc-light vertical-middle"></span>
               中奖示例
             </a>
+            <div v-transfer-dom>
+              <popover name="winningExample" event="hover">
+                <div class="example-popover">
+                  <div class="text-default">中奖举例：
+                    <span class="text-inverse" v-if="playInfo.playExample" v-html="playInfo.playExample.replace(/\|/g, '<br />')"></span>
+                  </div>
+                </div>
+              </popover>
+            </div>
           </div>
 
           <div class="bc-advance-mode-main">
@@ -31,10 +40,24 @@
               </div>
               元
             </div>
-            <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic' || !ticketInfo.notShowAdvance">
+            <a class="advance-play-des" v-show="advanceShowMode === 'classic' || !ticketInfo.notShowAdvance"
+               v-popover.bottom="{name: 'playExample'}"
+            >
               <span class="sfa sfa-bc-light vertical-middle"></span>
               玩法说明
             </a>
+            <div v-transfer-dom>
+              <popover name="playExample" event="hover">
+                <div class="example-popover">
+                  <div class="bc-popover-exp text-default">
+                    玩法说明：<span class="text-inverse">{{playInfo.playDes}}</span>
+                  </div>
+                  <div class="text-default">
+                    中奖举例：<span class="text-inverse" v-if="playInfo.playExample" v-html="playInfo.playExample.replace(/\|/g, '<br />')"></span>
+                  </div>
+                </div>
+              </popover>
+            </div>
           </div>
         </div>
         <div class="play-area-wrapper">
@@ -47,7 +70,7 @@
               <keep-alive>
                 <betting-play-area-select :play-rule="playRule" :ticket-info="ticketInfo" ref="areaSelect"
                                           v-if="!_.isEmpty(playRule) && playRule.type === 'select'">
-                  <div slot="autoAdd" class="bc-missOption-btn" :key="'autoBet'" data-times="1" @click="autoAdd">机选一注
+                  <div v-ripple slot="autoAdd" class="bc-missOption-btn" :key="'autoBet'" data-times="1" @click="autoAdd">机选一注
                   </div>
                 </betting-play-area-select>
                 <betting-play-area-input :play-rule="playRule" ref="areaInput"
@@ -78,15 +101,17 @@
                 <animated-integer class="text-pleasant font-sm" :value="bettingChoice.statistics"></animated-integer>
                 <span>注，金额</span>
                 <animated-integer class="text-prominent font-sm" :value="bettingChoice.fPrefabMoney"></animated-integer>
+                <span>元，预期奖金</span>
+                <animated-integer class="text-prominent font-sm" :value="bettingChoice.fTotalBetBonus"></animated-integer>
                 <span>元</span>
               </div>
               <div class="betting-panel pull-right">
-                <button class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
+                <button v-ripple class="btn btn-orange bc-md-btn m-bottom-xs" data-loading-text="提交中" @click="lotteryBuy"
                         :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                   <span class="sfa sfa-btn-icon-bolt vertical-middle"></span>
                   快捷投注
                 </button>
-                <button class="btn btn-cool bc-md-btn m-bottom-xs" @click="lotteryAdd"
+                <button v-ripple class="btn btn-cool bc-md-btn m-bottom-xs" @click="lotteryAdd"
                         :disabled="pushing || !bettingInfo.sale || bettingInfo.pending">
                   <span class="sfa sfa-btn-icon-add vertical-middle"></span> 添加号码
                 </button>
@@ -158,7 +183,7 @@
                 </button>
               </div>
               <div class="total-btn-panel">
-                <button class="btn btn-orange bc-jb-btn" @click="lotteryConfirm"
+                <button v-ripple class="btn btn-orange bc-jb-btn" @click="lotteryConfirm"
                         data-loading-text="提交中" :disabled="pushing || !bettingInfo.sale || bettingInfo.pending"> 确认投注
                 </button>
               </div>
@@ -312,31 +337,6 @@
           this.$store.commit(types.SET_MAX_BONUS, playInfo.betMethodMax)
           this.$store.commit(types.SET_PLAY_INFO, playInfo)
 
-          // 中奖举例
-          if ($(this.$refs.playExample).data('popover')) {
-            $(this.$refs.playExample).popover('destroy')
-          }
-          if ($(this.$refs.winningExample).data('popover')) {
-            $(this.$refs.winningExample).popover('destroy')
-          }
-
-          $(this.$refs.playExample).popover({
-            trigger: 'hover',
-            container: this.$el,
-            html: true,
-            content: `<div class="bc-popover-exp font-sm text-default">玩法说明：<span class="text-inverse">${playInfo.playDes}</span></div>
-<div class="font-sm text-default">中奖举例：<span class="text-inverse">${playInfo.playExample.replace(/\|/g, '<br />')}</span></div>`,
-            placement: 'bottom',
-          })
-
-          $(this.$refs.winningExample).popover({
-            trigger: 'hover',
-            container: this.$el,
-            html: true,
-            content: `<div class="font-sm text-default">中奖举例：<span class="text-inverse">${playInfo.playExample.replace(/\|/g, '<br />')}</span></div>`,
-            placement: 'bottom',
-          })
-
           if (this.playRule.analysisProps) {
             this.$store.dispatch(types.GET_COLD_HOT, {
               ticketId: this.ticketId,
@@ -352,7 +352,7 @@
         },
       },
       'bettingInfo.planId': {
-        handler: function (newPlanId, oldPlanId) {
+        handler(newPlanId, oldPlanId) {
           if (this.$el.offsetWidth && newPlanId !== '------------' && oldPlanId !== '------------' && !this.bettingInfo.pending) {
             this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE, {
               show: true,
@@ -883,7 +883,7 @@
     .bc-advance-mode-main {
       font-size: $font-xs;
       color: $inverse-color;
-      flex: 1 0 180px;
+      flex: 1 0 185px;
       margin-right: 20px;
       text-align: right;
     }
@@ -965,12 +965,16 @@
 
   .total-panel {
     min-width: 450px;
-    margin-left: 140px;
+    margin-left: 120px;
     flex: 1;
   }
 
   .bc-play-container.clearfix {
     display: flex;
+  }
+
+  .example-popover {
+    max-width: 320px;
   }
 
   .detail-popover {

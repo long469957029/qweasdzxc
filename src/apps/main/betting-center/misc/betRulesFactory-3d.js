@@ -1,4 +1,5 @@
 import factory from './betRulesFactory'
+import betMaxPrize from './bet-max-prize'
 
 const algorithm = require('./betRulesAlgorithm')
 
@@ -238,6 +239,7 @@ function _create(ticketId) {
       startPos: 0,
     },
     algorithm: algorithm.addAll,
+    maxPrizeAlgorithm: betMaxPrize.addAll,
     list: factory.createList(['百位', '十位', '个位']),
     create: algorithm.getCreateFunc(1, {
       matching: true,
@@ -260,6 +262,11 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 1,
     },
+    maxPrizeAlgorithm: betMaxPrize.group,
+    maxPrizeAlgorithmProps: {
+      n: 3,
+      k: 1
+    },
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(1),
   })
@@ -276,6 +283,11 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 2,
+    },
+    maxPrizeAlgorithm: betMaxPrize.group,
+    maxPrizeAlgorithmProps: {
+      n: 3,
+      k: 2
     },
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {

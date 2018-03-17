@@ -1,6 +1,7 @@
 import store from '../store'
 import App from './App.vue'
 import {sync} from 'vuex-router-sync'
+import cookieListener from 'skeleton/cookieListener'
 const OldApp = require('./app.js')
 const modules = require('skeleton/modules')
 
@@ -16,6 +17,7 @@ import {
   CustomCheckbox,
   Popover,
   TransferDom,
+  Ripple,
 } from 'build'
 
 Object.defineProperty(Vue.prototype, '_', {value: _})
@@ -32,6 +34,7 @@ Vue.component('x-select', XSelect)
 Vue.component('x-dialog', XDialog)
 Vue.component('status-cell', StatusCell)
 Vue.directive('TransferDom', TransferDom)
+Vue.directive('Ripple', Ripple)
 
 require('widgets')
 
@@ -114,3 +117,20 @@ store.dispatch(types.GET_MARK6_SX)
         }
       })
   })
+
+// const tokenStatusListener = new cookieListener('token', function(status) {
+//   if(status == cookieListener.prototype.DELETED && document.visibilityState==='visible') {
+//     console.log('监听到非可见tab页的token丢失，刷新页面:' + windown.location.href)
+//     window.location.reload()
+//   }
+// });
+
+var cl = new cookieListener('token', function(status) {
+  //&& (window.store.getters.loginDialogStatus|| window.store.getters.logoutDialogStatus || window.store.getters.logoutNoticeStatus)
+  if(status == cookieListener.prototype.CREATED && document.visibilityState!=='visible' ) {
+    console.log('监听到非可见tab页的token丢失，刷新页面:' + window.location.href)
+    window.location.reload()
+  }else if(status == cookieListener.prototype.DELETED && document.visibilityState!=='visible'){
+    window.store.commit(types.TOGGLE_LOGOUT_NOTICE,false)
+  }
+});

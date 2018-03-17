@@ -41,6 +41,9 @@ const initState = () => {
     maxMultiple: 100,
     formatMaxMultiple: 100,
     limitMoney: 0,
+    maxPrizeMultiple: 0,
+    totalBetBonus: 0,
+    fTotalBetBonus: 0,
   }
 }
 
@@ -207,6 +210,12 @@ const mutations = {
     state.multiple = Number(num)
     $_calculateByPrefab(state)
   },
+  [types.SET_MAX_PRIZE_MULTIPLE] (state, maxPrizeMultiple) {
+    state.maxPrizeMultiple = maxPrizeMultiple
+    $_calculateByPrefab(state)
+
+    this.commit(types.UPDATE_FORMAT_MAX_MULTIPLE)
+  },
   [types.SET_UNIT] (state, unit) {
     state.unit = Number(unit)
 
@@ -236,8 +245,7 @@ const mutations = {
       this.commit(types.SET_CLAMP_BONUS, playInfo)
     }
 
-    state.formatMaxMultiple = _(state.maxMultiple).chain().mul(10000).div(state.unit)
-      .value()
+    this.commit(types.UPDATE_FORMAT_MAX_MULTIPLE)
   },
   [types.SET_CLAMP_BONUS](state, playInfo) {
     state.maxBetBonus = _.chain(playInfo.betBonus).map('betMethodMax').max().value()
@@ -287,7 +295,11 @@ const mutations = {
       .convert2yuan()
       .value()
 
-    state.formatMaxMultiple = _(state.maxMultiple).chain().mul(10000).div(state.unit)
+    this.commit(types.UPDATE_FORMAT_MAX_MULTIPLE)
+  },
+
+  [types.UPDATE_FORMAT_MAX_MULTIPLE](state) {
+    state.formatMaxMultiple = _(state.maxMultiple).chain().mul(10000).div(state.maxPrizeMultiple).div(state.unit)
       .value()
   },
 
@@ -298,6 +310,7 @@ const mutations = {
     state.fPrefabMoney = 0
     state.fRebateMoney = 0
     state.statistics = 0
+    this.commit(types.SET_MAX_PRIZE_MULTIPLE, 0)
   },
 
   [types.SET_PREVIEW_MULTIPLE](state, { num, index }) {
@@ -441,11 +454,9 @@ const mutations = {
         formatMaxMultiple: state.formatMaxMultiple,
         maxBonus: state.maxBonus,
         formatMaxBonus: state.formatMaxBonus,
+        //最大奖金倍数
+        maxPrizeMultiple: state.maxPrizeMultiple
       }
-
-      // if (options.type === 'auto') {
-      //   $_calculateByPrefab(item)
-      // }
 
       // 判断是否有相同的投注,几个方面比较playId,unit,betMethod,bettingNumber
       if (options.type !== 'buy') {
@@ -623,11 +634,14 @@ const $_calculateByPrefab = (data) => {
     .convert2yuan()
     .value()
 
-  data.fTotalBetBonus = _.formatMul(data.fBetBonus, data.multiple)
+  data.totalBetBonus = _.chain(data.betBonus).formatMul(data.multiple).formatMul(data.maxPrizeMultiple).value()
+  data.fTotalBetBonus = _(data.totalBetBonus).chain().div(10000).mul(data.unit)
+    .convert2yuan()
+    .value()
 }
 
 
-const $_setUnit = (unit, { maxMultiple }) => {
+const $_setUnit = (unit, { maxMultiple, maxPrizeMultiple }) => {
   let formatUnit = ''
   switch (unit) {
     case 10000:
@@ -646,7 +660,7 @@ const $_setUnit = (unit, { maxMultiple }) => {
       break
   }
 
-  const formatMaxMultiple = _(maxMultiple).chain().mul(10000).div(unit)
+  const formatMaxMultiple = _(maxMultiple).chain().mul(10000).div(maxPrizeMultiple).div(unit)
     .value()
 
   return {

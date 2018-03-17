@@ -3,7 +3,7 @@
     <div class="tab-toolbar tab-pill tab-pill-deep">
       <div class="tab-title" v-if="title">{{title}}</div>
       <div :class="['tab-group',  !title ? 'no-margin' : '']">
-        <span class="tab" :class="{active: rule.selected}" v-for="(rule, index) in rules" ref="tabs" @click="ruleChange(rule, index)"
+        <span v-ripple class="tab" :class="{active: rule.selected}" v-for="(rule, index) in rules" ref="tabs" @click="ruleChange(rule, index)"
             :key="index">
           <span class="tab-inner">{{rule.title}}</span>
         </span>

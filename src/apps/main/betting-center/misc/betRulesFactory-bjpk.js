@@ -1,4 +1,5 @@
 import factory from './betRulesFactory'
+import betMaxPrize from './bet-max-prize'
 
 const algorithm = require('./betRulesAlgorithm')
 
@@ -233,6 +234,7 @@ function _create(ticketId) {
       playSeriesId: 20019,
       startPos: 0,
     },
+    maxPrizeAlgorithm: betMaxPrize.addAllNotRepeat,
     list: factory.createList(['冠军', '亚军', '季军', '第四名', '第五名'], {
       items: ten,
     }),
@@ -251,6 +253,7 @@ function _create(ticketId) {
       playSeriesId: 20019,
       startPos: -5,
     },
+    maxPrizeAlgorithm: betMaxPrize.addAllNotRepeat,
     list: factory.createList(['第六名', '第七名', '第八名', '第九名', '第十名'], {
       items: ten,
     }),
@@ -368,7 +371,7 @@ function _create(ticketId) {
 
 
   // =========================
-  // 大小单双
+  // 单双
 
   factory.addRule([ticketId, '070101'], {
     algorithm: algorithm.addAll,
@@ -380,6 +383,7 @@ function _create(ticketId) {
     format: {symbol: ' '},
     formatToNum: true,
     analysis: false,
+    maxPrizeAlgorithm: betMaxPrize.daxiaodanshuangAdd,
     create: algorithm.getCreateFunc(1, {
       range: danshuang,
       matching: true,

@@ -57,6 +57,7 @@ define((require, exports, module) => {
       }
 
       $target.val(val)
+      $target[0].dispatchEvent(new Event('input'))
 
       if ($target.data('gl.monitor.val') != $target.val()) {
         if (val < min || val > max || (val == min || val == max) && !test) {

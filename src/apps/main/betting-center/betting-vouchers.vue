@@ -1,22 +1,25 @@
 <template>
   <div class="betting-vouchers" v-click-outside="hidePopover">
-    <div class="sfa-bc-vouchers" @click.stop.prevent="togglePopover"></div>
+    <div :class="['bc-vouchers',{'active': hasUse}]" @click.stop.prevent="togglePopover">
+      代金券{{selectBonus}}
+      <span class="sfa sfa-bc-vouchers-arrow"></span>
+    </div>
     <div class="vouchers-popover" :class="{in: show}">
       <div class="arrow"></div>
       <div class="popover-content">
         <div class="vouchers-title">
+          <div class="title-left">
+            选择代金券<span class="text-auxiliary">（当前<span class="text-prominent">{{_.where(list, {available: true}).length}}</span>张可用）</span>
+          </div>
           <label>
             <custom-checkbox v-model="systemRecommend"></custom-checkbox>
             系统推荐
           </label>
-          <div class="title-right">
-            代金券 <span class="text-prominent">{{list.length}}</span> 张，
-            <span class="text-prominent">{{_.where(list, {available: true}).length}}</span> 张可用
-          </div>
         </div>
         <transition-group name="flip-list" tag="div" class="vouchers-main">
           <div class="vouchers-unit" v-for="item in fList" :key="item.rid" @click="select(item)">
-            <div class="unit-left" :class="[item.available ? 'sfa-bc-vouchers-usable' : 'sfa-bc-vouchers-disabled', {selected: item.selected}]"
+            <div :class="['vouchers-checkbox',item.selected ? 'sfa-bc-vouchers-check-on' : 'sfa-bc-vouchers-check-def']"></div>
+            <div class="unit-left" :class="[item.available ? 'sfa-bc-vouchers-usable' : 'sfa-bc-vouchers-disabled']"
             >
               ¥{{item.bonus | convert2yuan}}
             </div>
@@ -160,6 +163,8 @@
             this.$emit('input', item.selected ? item : {})
           }
         })
+        const bonus = _(this.fList).findWhere({selected: true}) ? _(this.fList).findWhere({selected: true}).bonus : 0
+        this.$store.commit(types.SELECTED_VOUCHERS,bonus)
       }
     },
 
@@ -176,7 +181,13 @@
             return !item.available
           }).value()
         }
-      })
+      }),
+      hasUse(){
+        return _(this.list).findWhere({available: true}) && !_(this.list).findWhere({selected: true})
+      },
+      selectBonus(){
+        return _(this.list).findWhere({selected: true}) ? _(_(this.list).findWhere({selected: true}).bonus).convert2yuan() + '元' : ''
+      }
     },
 
     beforeDestroy() {
@@ -192,10 +203,39 @@
     display: inline-block;
     position: relative;
 
+    .bc-vouchers{
+      min-width: 60px;
+      height: 24px;
+      line-height: 24px;
+      background: url("./misc/vouchers-bg.png") no-repeat;
+      background-size: 100% 100%;
+      color: $def-white-color;
+      font-size: $font-xs;
+      padding: 0px 10px;
+      cursor: pointer;
+      position: relative;
+      text-align: center;
+      .sfa{
+        transform: translateY(-2px);
+      }
+      &.active{
+        &:after{
+          content: '';
+          width: 8px;
+          height: 8px;
+          background: #fc3c44;
+          border-radius: 50%;
+          position: absolute;
+          top: -4px;
+          right: -4px;
+          display: block;
+        }
+      }
+    }
     .vouchers-popover {
       position: absolute;
       top: 40px;
-      left: 5px;
+      left: 0px;
       z-index: 10;
       display: none;
       padding: 15px 15px 5px;
@@ -245,16 +285,17 @@
       padding-bottom: 5px;
       margin-bottom: 15px;
       border-bottom: 1px dashed $im-line-color;
+      justify-content: space-between;
     }
 
     .vouchers-title label {
-      flex: 1;
+      /*flex: 1;*/
       font-size: 12px;
       color: #333333;
     }
 
-    .title-right {
-      color: $font-auxiliary-color;
+    .title-left {
+      color: $def-black-color;
     }
 
     .unit-left {
@@ -281,6 +322,9 @@
       &:last-of-type {
         margin-bottom: 0;
       }
+    }
+    .vouchers-checkbox{
+      margin: 8px 15px 0px 5px;
     }
 
     .unit-expired {

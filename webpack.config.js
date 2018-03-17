@@ -15,7 +15,7 @@ const DEV = process.env.NODE_ENV !== 'production'
 const appConfig = {
   entry: {
     main: './src/apps/main/index.js',
-    // login: './src/apps/packages/login/login.js',
+    login: './src/apps/packages/login-new/login.js',
     register: './src/apps/packages/register/index.js',
     // vendor: './src/vendor/build.core.js',
     base: './src/base/build.base.js',
@@ -56,11 +56,11 @@ const appConfig = {
       template: './entry/index.html',
       chunks: ['common', 'base', 'main'],
     },
-    // login: {
-    //   title: '无限娱乐',
-    //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'login'],
-    // },
+    login: {
+      title: '无限娱乐',
+      template: './entry/package.html',
+      chunks: ['common', 'vendor', 'base', 'login'],
+    },
     register: {
       title: '无限娱乐',
       template: './entry/package-vue.html',

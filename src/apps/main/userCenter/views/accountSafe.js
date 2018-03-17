@@ -3,6 +3,7 @@ import FundPassWord from './passwordManage-fundPwd'
 import QuestionPwd from './securityQuestion'
 import PhoneBind from './phoneBinding'
 import EmailBind from './mailBinding'
+import FindFundPWD from './passwordManage-findPwd'
 
 const AccountSafeView = Base.ItemView.extend({
 
@@ -13,6 +14,7 @@ const AccountSafeView = Base.ItemView.extend({
   events: {
     'click .js-setting-btn': 'settingBtnHandler',
     'click .js-setting-info-close': 'settingBtnHandler',
+    'click .js-change-fund-btn': 'changeFundHandler'
   },
 
   className: '',
@@ -72,7 +74,8 @@ const AccountSafeView = Base.ItemView.extend({
             if (data.hasFundPassword) {
               self.$('.js-setting-icon[data-type="fund"]').addClass('active')
               self.$('.js-setting-btn[data-type="fund"]').html('修改')
-              self.$('.js-setting-info-title[data-type="fund"]').html('修改资金密码')
+              self.$('.js-setting-info-title[data-type="fund"]').addClass('hidden')
+              self.$('.js-change-fund').removeClass('hidden')
               self.$('.js-important-tip[data-type="fund"]').addClass('hidden')
             }
             if (data.hasSecurityQuestion) {
@@ -163,7 +166,27 @@ const AccountSafeView = Base.ItemView.extend({
     const $target = $(e.currentTarget)
     $target.parents('.js-setting-info').toggleClass('active').siblings().removeClass('active')
   },
-
+  changeFundHandler(e){
+    const $target = $(e.currentTarget)
+    const type = $target.data('type')
+    const self = this
+    $target.addClass('active').siblings().removeClass('active')
+    if(type === 'change'){
+      self.$fundPwd.html(new FundPassWord({hasFundPassword: true}).on('render:true', () => {
+        self.$('.js-setting-info').removeClass('active')
+        self.$('#setting-fund-pwd').collapse('hide')
+        self.render()
+      }).render().el)
+    }else{
+      self.$fundPwd.html(new FindFundPWD({
+        loadingHeight:280
+      }).on('render:true', () => {
+        self.$('.js-setting-info').removeClass('active')
+        self.$('#setting-fund-pwd').collapse('hide')
+        self.render()
+      }).render().el)
+    }
+  }
 })
 
 module.exports = AccountSafeView

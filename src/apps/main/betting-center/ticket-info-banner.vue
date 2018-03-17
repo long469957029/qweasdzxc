@@ -64,16 +64,16 @@
       </div>
     </div>
     <div class="bc-entry-list pull-right m-right-md">
-      <router-link :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}" target="_blank" class="entry-list-open">
+      <router-link v-ripple :to="{name: 'analysis', params: {ticketId: ticketInfo.id}}" target="_blank" class="entry-list-open">
         <!--跳转到历史分析-->
         <span class="sfa sfa-bc-icon-open-num vertical-middle"></span>
         开奖号码
       </router-link>
-      <a :href="`trend.html?ticketId=${ticketInfo.id}`" target="_blank" class="entry-list-trend">
+      <a v-ripple :href="`trend.html?ticketId=${ticketInfo.id}`" target="_blank" class="entry-list-trend" v-if="ticketInfo.trend">
         <span class="sfa sfa-bc-icon-trend vertical-middle"></span>
         号码走势
       </a>
-      <router-link :to="{name: 'help', query: {page: ticketInfo.helpPage}}" class="router entry-list-des"
+      <router-link v-ripple :to="{name: 'help', query: {page: ticketInfo.helpPage}}" class="router entry-list-des"
                    target="_blank">
         <span class="sfa sfa-bc-icon-des vertical-middle"></span>
         游戏说明

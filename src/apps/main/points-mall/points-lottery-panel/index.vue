@@ -4,11 +4,11 @@
       <status-cell class="lottery-panel" :has-data="currentAwards.length" :status="loadingStatus">
         <div class="lottery-panel-main">
           <div class="x-switch">
-            <input type="radio" class="switch-input" v-model.number="currentLottery" value="0" id="week">
+            <input type="radio" class="switch-input" v-model.number="currentLottery" value="0" id="week" :disabled="pushing || running">
             <label for="week" class="switch-label switch-label-off">
               {{cashRob | convert2yuan}}元夺宝
             </label>
-            <input type="radio" class="switch-input" v-model.number="currentLottery" value="1" id="month">
+            <input type="radio" class="switch-input" v-model.number="currentLottery" value="1" id="month" :disabled="pushing || running">
             <label for="month" class="switch-label switch-label-on">
               {{cashRob10 | convert2yuan}}元夺宝
             </label>
@@ -35,18 +35,7 @@
                       <!-- 积分 -->
                       <div class="sfa-pt-task-points" v-else-if="award.awardTypeId === 3"></div>
                     </div>
-                    <div class="task-badge" v-if="award.awardTypeId === 1">
-                      <template v-if="award.type === 601">
-                        现金{{award.bigShowNum}}{{award.conditionUnit}}
-                      </template>
-                      <template v-else>
-                        {{award.mainDesc}}
-                      </template>
-                    </div>
-                    <div class="task-badge" v-else-if="award.awardTypeId === 2">{{award.itemName}}</div>
-                    <div class="task-badge" v-else-if="award.awardTypeId === 3">积分 {{award.integral | convert2yuan}}
-                    </div>
-                    <div class="task-badge" v-else>{{award.desc}}</div>
+                    <div class="task-badge" :title="award.fDesc">{{award.fDesc}}</div>
                   </div>
                 </div>
               </div>
@@ -224,7 +213,7 @@
           </div>
           <div class="lucky-points-prize" v-else>
             <div class="icon-balance-not-enough"></div>
-            您的积分不足以本次夺宝！
+            您的余额不足以本次夺宝！
           </div>
         </div>
         <div class="btn-panel">
@@ -368,6 +357,8 @@
                   ticketId: award.statTicketId,
                   gameType: award.gameType
                 }))
+              } else if (award.awardTypeId === 2) {
+
               }
             })
 
@@ -688,14 +679,39 @@
           }
         })
       },
+      $_formatAwards(awards) {
+        return awards.map((award) => {
+          if (award.awardTypeId === 1) {
+            if (award.type === 601) {
+              award.fDesc = `现金${award.bigShowNum}${award.conditionUnit}`
+            } else {
+              award.fDesc = award.mainDesc
+            }
+          } else if (award.awardTypeId === 2) {
+            award.fDesc = award.itemName
+          } else if (award.awardTypeId === 3) {
+            award.fDesc = `积分 ${_.convert2yuan(award.integral)}`
+          } else {
+            award.fDesc = award.desc
+          }
+
+          return award
+        })
+      }
     },
 
     computed: {
       ...mapState({
         foundsLock: state => state.loginStore.foundsLock,
       }),
+      fAwards() {
+        return this.$_formatAwards(this.awards)
+      },
+      fAwards10() {
+        return this.$_formatAwards(this.awards10)
+      },
       currentAwards() {
-        return this.currentLottery === 0 ? this.awards : this.awards10
+        return this.currentLottery === 0 ? this.fAwards : this.fAwards10
       },
       currentCashRob() {
         return this.currentLottery === 0 ? this.cashRob : this.cashRob10
@@ -797,7 +813,14 @@
     text-align: center;
     line-height: 35px;
     position: relative;
-    z-index: 1,
+    z-index: 1;
+    padding: 0 17px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 136px;
+    margin: 0 auto;
+    box-sizing: border-box;
   }
 
   .points-ticket {
@@ -830,30 +853,33 @@
 
   .task-cell-wrapper {
     position: relative;
-    padding: 30px;
+    padding: 30px 44px;
     box-sizing: border-box;
+    z-index: 2;
 
     &:nth-of-type(4) {
       flex: 50% 0 0;
-      left: 54px;
-      top: -82px;
+      left: 59px;
+      top: -87px;
+      z-index: 1;
     }
     &:nth-of-type(5) {
       flex: 50% 0 0;
-      right: 54px;
-      top: -82px;
+      right: 59px;
+      top: -87px;
+      z-index: 1;
     }
     &:nth-of-type(n + 6) {
-      top: -167px;
+      top: -175px;
     }
   }
 
   .lottery-list {
-    flex: 30%;
+    flex: 28.4%;
     /* margin-top: 115px; */
     border: solid 5px #edeef0;
     border-radius: 15px;
-    margin: 115px 20px 0;
+    margin: 115px 30px 0 20px;
     box-sizing: border-box;
     height: 483px;
   }
@@ -876,6 +902,16 @@
     height: 1px;
     background-color: #b9e9ec;
     margin: 0 auto;
+    position: relative;
+    &:after{
+      content: '';
+      width: 123px;
+      height: 4px;
+      background: #b9e9ec;
+      position: absolute;
+      top: -1.5px;
+      left: 90px;
+    }
   }
 
   .lottery-list-main {

@@ -177,6 +177,7 @@
 
 <style lang="scss">
   $pointer-size: 4px;
+  $border-color: #cccccc;
 
   .vue-popover {
     display: block;
@@ -185,8 +186,8 @@
 
     background-color: #ffffff;
     box-shadow: 0px 2px 10px 0px    rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
     border: solid 1px $def-gray-color;
+    border-radius: 5px;
     padding: 9px 14px;
 
     z-index: 998;
@@ -204,12 +205,11 @@
     }
 
     &.dropdown-position-bottom:before {
-      border-left: 1px solid transparent;
-      border-right: 1px solid transparent;
-      border-bottom: 1px solid #fff;
+      border: 1px solid $border-color;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
       top: -$pointer-size;
       left: calc(50% - #{$pointer-size});
-      filter: drop-shadow(0px -2px 2px rgba(52, 73, 94, 0.1));
     }
 
     &.dropdown-position-top:before {

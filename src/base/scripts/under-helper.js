@@ -9,6 +9,7 @@ math.import(require('mathjs/lib/function/arithmetic/subtract'))
 math.import(require('mathjs/lib/function/arithmetic/multiply'))
 math.import(require('mathjs/lib/function/arithmetic/divide'))
 math.import(require('mathjs/lib/function/arithmetic/floor'))
+math.import(require('mathjs/lib/function/probability/combinations'))
 
 const gameConfig = require('skeleton/misc/gameConfig')
 
@@ -27,6 +28,8 @@ _.mixin({
       return word.substring(0, 1).toUpperCase() + word.substring(1)
     })
   },
+
+  combinations: math.combinations,
 
   serializeObject(serializeArray) {
     return _(serializeArray).reduce((obj, prop) => {
@@ -66,6 +69,10 @@ _.mixin({
       unique,
       repeat,
     }
+  },
+
+  zhLength(str) {
+    return str.replace(/[\u4e00-\u9fa5]/g, '**').length
   },
 
   fixedConvert2yuan(money, options) {

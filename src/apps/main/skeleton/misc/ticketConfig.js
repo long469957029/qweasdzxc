@@ -56,7 +56,7 @@ const sscConfig = {
   list: [
     Object.assign({
       id: 19,
-      mark: 'wx',
+      mark: 'mmc',
       zhName: '无限秒秒彩',
       badge: '',
       trendOps: {

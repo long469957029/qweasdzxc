@@ -55,7 +55,7 @@
             <col width="70">
           </template>
           <!--总和-->
-          <col width="300" v-if="analysis.total">
+          <col width="300" v-if="!analysis.doubleHead && analysis.total">
           <!--龙虎-->
           <col width="167" v-if="analysis.longHu">
           <!--形态-->
@@ -360,7 +360,7 @@
 
         if (this.analysis.specialCode) {
           _.each(this.openedList, item => {
-            item.specialCode = this.analysis.specialCode([_(item.fTicketOpenNum).last()])
+            item.specialCode = this.analysis.specialCode(_(item.fTicketOpenNum).last())
             item.fSpecialCode = {
               total: {
                 title: item.specialCode.total,

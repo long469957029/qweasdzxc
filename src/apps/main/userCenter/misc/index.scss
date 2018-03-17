@@ -911,6 +911,39 @@
       .close{
         font-size:30px;
       }
+      .change-fund-btn{
+        padding: 0px 23px;
+        font-size: $font-sm;
+        color: $new-inverse-color;
+        position: relative;
+        cursor: pointer;
+        &.active{
+          color: $new-main-deep-color;
+          &:before{
+            content: '';
+            width: 70px;
+            height: 2px;
+            background-color: $new-main-deep-color;
+            bottom: -6px;
+            left: 16px;
+            position: absolute;
+          }
+        }
+        &:after{
+          content: '';
+          width: 1px;
+          height: 13px;
+          background-color: $im-line-color;
+          position: absolute;
+          top: 3px;
+          right: 0px;
+        }
+        &:last-child{
+          &:after{
+            display: none;
+          }
+        }
+      }
     }
   }
   .uc-change-pwd-view{
@@ -918,6 +951,15 @@
     margin: 0 auto;
     padding-top: 20px;
     padding-left: 200px;
+    .as-security-add-notice{
+      width: 530px;
+      text-align: center;
+      font-size: $font-xs;
+      color: $new-inverse-color;
+    }
+    .find-fund-pwd-error{
+      padding-left: 120px;
+    }
   }
   //.uc-changeLoginPassword-form{
   //  padding-left: 80px;
@@ -970,6 +1012,25 @@
   .input-disable{
     background-color: $third-line-color;
     color: $def-black-color;
+  }
+  .ac-noCard-info{
+    width: 100%;
+    padding-top: 60px;
+    //text-align: center;
+    .sfa{
+      margin-bottom: 32px;
+      //margin-left: 200px;
+    }
+    .info-text{
+      font-size: $font-sm;
+      color: $new-inverse-color;
+      margin-bottom: 113px;
+      .no-card-service{
+        margin: 0 3px;
+        color: $prominent-color;
+        text-decoration: underline;
+      }
+    }
   }
 }
 
