@@ -18,6 +18,7 @@ const ToolbarView = Base.ItemView.extend({
     // 'click .js-toolbar-im-dialog': 'imDialogHandler', // 站内信弹窗
     'click .js-logout': 'logoutHandler', // 退出登录
     'click .js-novice-package': 'openNovicePackageHandler',//新手礼包弹窗
+    'click .js-new-im-dialog': 'imDialogHandler' //新版站内信弹窗
 
   },
 
@@ -85,7 +86,7 @@ const ToolbarView = Base.ItemView.extend({
         // 获取定时更新数据列表
         clearInterval(timer);
         self.timerHandler()
-      },600000);
+      }, 600000);
     })
     window.Global.m.subscribe('acct', 'acct:loginOut', () => {
       clearInterval(timer);
@@ -100,12 +101,12 @@ const ToolbarView = Base.ItemView.extend({
         if (res && res.result == 0) {
           if (!_(res.root.records).isNull() && !_(res.root.records).isEmpty()) {
             self.$('.js-coupon-remind').removeClass('hidden');
-            Global.memoryCache.set('myPointsNoUse',res.root.dataTotal.noUseCount)
-            Vue.$global.bus.$emit('myPointsNoUse',res.root.dataTotal.noUseCount)
-          }else {
+            Global.memoryCache.set('myPointsNoUse', res.root.dataTotal.noUseCount)
+            Vue.$global.bus.$emit('myPointsNoUse', res.root.dataTotal.noUseCount)
+          } else {
             self.$('.js-coupon-remind').addClass('hidden');
           }
-        }else {
+        } else {
           // Global.ui.notification.show(res.msg);
           self.$('.js-coupon-remind').addClass('hidden');
         }
@@ -119,24 +120,24 @@ const ToolbarView = Base.ItemView.extend({
     self.getRecentChatStatXhr()
       .done(function (res) {
         if (res && res.result == 0) {
-          if (res.root.records.length>0){
+          if (res.root.records.length > 0) {
             if (!_(res.root.records[0].newMsgNum).isNull() && res.root.records[0].newMsgNum != 0) {
               self.$('.js-news-remind').removeClass('hidden');
               var newMsgNum = '';
-              if (res.root.records[0].newMsgNum>99){
+              if (res.root.records[0].newMsgNum > 99) {
                 newMsgNum = 99;
-              }else {
+              } else {
                 newMsgNum = res.root.records[0].newMsgNum;
               }
               self.$('.js-news-remind').html(newMsgNum);
               // self.$('.js-news-remind').html(res.root.records[0].newMsgNum);
-            }else {
+            } else {
               self.$('.js-news-remind').addClass('hidden');
             }
-          }else {
+          } else {
             self.$('.js-news-remind').addClass('hidden');
           }
-        }else {
+        } else {
           // Global.ui.notification.show(res.msg);
           self.$('.js-news-remind').addClass('hidden');
         }
@@ -156,8 +157,8 @@ const ToolbarView = Base.ItemView.extend({
       Global.router.goTo(path)
     }
 
-    self.$container.css('margin-left','-48px')
-    self.$toption.css('border-radius','3px')
+    self.$container.css('margin-left', '-48px')
+    self.$toption.css('border-radius', '3px')
   },
 
   openSidebarHandler(e) {
@@ -174,9 +175,9 @@ const ToolbarView = Base.ItemView.extend({
 
     self.renderSidebarViewHandler(option)
 
-    self.$container.css('margin-left','-36px')
-    self.$toption.css('border-top-right-radius','0px')
-    self.$toption.css('border-bottom-right-radius','0px')
+    self.$container.css('margin-left', '-36px')
+    self.$toption.css('border-top-right-radius', '0px')
+    self.$toption.css('border-bottom-right-radius', '0px')
   },
 
   renderSidebarViewHandler(option) {
@@ -245,7 +246,9 @@ const ToolbarView = Base.ItemView.extend({
         }
       })
   },
-
+  imDialogHandler(){
+    window.app.$store.commit(types.TOGGLE_IM_DIALOG, true)
+  },
   scrollHandler() {
     $('html,body').animate({scrollTop: 0}, 'slow')
   },

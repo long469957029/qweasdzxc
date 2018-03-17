@@ -26,6 +26,7 @@
     <dialog-manage v-if="getLoginStatus"></dialog-manage>
     <game-down-load v-if="gameDownLoadStatus"></game-down-load>
     <desktop-message v-if="openDeskTopMsgStatus"></desktop-message>
+    <im-dialog v-if="openImDialogStatus"></im-dialog>
 
   </div>
 </template>
@@ -43,6 +44,7 @@
   import DialogManage from 'skeleton/bases/dialogManage'
   import GameDownLoad from 'gameCenter/downLoad'
   import DesktopMessage from 'skeleton/bases/desktop-message'
+  import ImDialog from 'skeleton/bases/toolbar/im'
 
   export default {
     name: 'app-entry',
@@ -59,7 +61,8 @@
       FreeTrial,
       DialogManage,
       GameDownLoad,
-      DesktopMessage
+      DesktopMessage,
+      ImDialog
     },
 
     data() {
@@ -79,6 +82,7 @@
         'gameDownLoadStatus',
         'openDeskTopMsgStatus',
         'logoutNoticeStatus',
+        'openImDialogStatus',
       ]),
     },
   }

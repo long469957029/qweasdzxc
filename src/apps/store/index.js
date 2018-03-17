@@ -12,6 +12,7 @@ import topTickets from './modules/tickets/topTickets'
 import loginStore from './modules/acct/loginStore'
 import mallInfo from './modules/acct/mall-info'
 import components from './modules/global/components'
+import im from './modules/acct/im'
 
 Vue.use(Vuex)
 
@@ -32,6 +33,7 @@ const store = new Vuex.Store({
     mark6,
     mallInfo,
     components,
+    im,
   },
   strict: debug,
 })
@@ -51,6 +53,7 @@ if (module.hot) {
     './modules/acct/loginStore',
     './modules/acct/mall-info',
     './modules/global/components',
+    './modules/acct/im',
   ], () => {
     const actions = require('./actions').default
     const getters = require('./getters').default
@@ -65,6 +68,7 @@ if (module.hot) {
     const loginStore = require('./modules/acct/loginStore').default
     const mallInfo = require('./modules/acct/mall-info').default
     const components = require('./modules/global/components').default
+    const im = require('./modules/acct/im').default
 
     store.hotUpdate({
       actions,
@@ -81,6 +85,7 @@ if (module.hot) {
         loginStore,
         mallInfo,
         components,
+        im,
       }
     })
   })
