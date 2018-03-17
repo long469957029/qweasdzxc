@@ -72,8 +72,15 @@
     },
 
     watch: {
-      '$route'(to) {
-        this.currentView = to.query.page
+      '$route': {
+        handler(to) {
+          this.currentView = to.query.page
+          Velocity(document.body, 'scroll', {
+            offset: 0,
+            mobileHA: false
+          })
+        },
+        immediate: true
       }
     },
 
