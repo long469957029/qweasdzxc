@@ -10,10 +10,19 @@
 
           <div class="bc-advance-mode-single" v-show="advanceShowMode === 'single' && ticketInfo.notShowAdvance">
             <div class="bc-play-des">玩法说明：{{playInfo.playDes}}</div>
-            <a class="advance-play-des" ref="winningExample">
+            <a class="advance-play-des" v-popover.bottom="{name: 'winningExample'}">
               <span class="sfa sfa-bc-light vertical-middle"></span>
               中奖示例
             </a>
+            <div v-transfer-dom>
+              <popover name="winningExample" event="hover">
+                <div class="example-popover">
+                  <div class="text-default">中奖举例：
+                    <span class="text-inverse" v-if="playInfo.playExample" v-html="playInfo.playExample.replace(/\|/g, '<br />')"></span>
+                  </div>
+                </div>
+              </popover>
+            </div>
           </div>
 
           <div class="bc-advance-mode-main">
@@ -31,10 +40,24 @@
               </div>
               元
             </div>
-            <a class="advance-play-des" ref="playExample" v-show="advanceShowMode === 'classic' || !ticketInfo.notShowAdvance">
+            <a class="advance-play-des" v-show="advanceShowMode === 'classic' || !ticketInfo.notShowAdvance"
+               v-popover.bottom="{name: 'playExample'}"
+            >
               <span class="sfa sfa-bc-light vertical-middle"></span>
               玩法说明
             </a>
+            <div v-transfer-dom>
+              <popover name="playExample" event="hover">
+                <div class="example-popover">
+                  <div class="bc-popover-exp text-default">
+                    玩法说明：<span class="text-inverse">{{playInfo.playDes}}</span>
+                  </div>
+                  <div class="text-default">
+                    中奖举例：<span class="text-inverse" v-if="playInfo.playExample" v-html="playInfo.playExample.replace(/\|/g, '<br />')"></span>
+                  </div>
+                </div>
+              </popover>
+            </div>
           </div>
         </div>
         <div class="play-area-wrapper">
@@ -314,31 +337,6 @@
           this.$store.commit(types.SET_MAX_BONUS, playInfo.betMethodMax)
           this.$store.commit(types.SET_PLAY_INFO, playInfo)
 
-          // 中奖举例
-          if ($(this.$refs.playExample).data('popover')) {
-            $(this.$refs.playExample).popover('destroy')
-          }
-          if ($(this.$refs.winningExample).data('popover')) {
-            $(this.$refs.winningExample).popover('destroy')
-          }
-
-          $(this.$refs.playExample).popover({
-            trigger: 'hover',
-            container: this.$el,
-            html: true,
-            content: `<div class="bc-popover-exp font-sm text-default">玩法说明：<span class="text-inverse">${playInfo.playDes}</span></div>
-<div class="font-sm text-default">中奖举例：<span class="text-inverse">${playInfo.playExample.replace(/\|/g, '<br />')}</span></div>`,
-            placement: 'bottom',
-          })
-
-          $(this.$refs.winningExample).popover({
-            trigger: 'hover',
-            container: this.$el,
-            html: true,
-            content: `<div class="font-sm text-default">中奖举例：<span class="text-inverse">${playInfo.playExample.replace(/\|/g, '<br />')}</span></div>`,
-            placement: 'bottom',
-          })
-
           if (this.playRule.analysisProps) {
             this.$store.dispatch(types.GET_COLD_HOT, {
               ticketId: this.ticketId,
@@ -354,7 +352,7 @@
         },
       },
       'bettingInfo.planId': {
-        handler: function (newPlanId, oldPlanId) {
+        handler(newPlanId, oldPlanId) {
           if (this.$el.offsetWidth && newPlanId !== '------------' && oldPlanId !== '------------' && !this.bettingInfo.pending) {
             this.$store.commit(types.TOGGLE_DESKTOP_MESSAGE, {
               show: true,
@@ -973,6 +971,10 @@
 
   .bc-play-container.clearfix {
     display: flex;
+  }
+
+  .example-popover {
+    max-width: 320px;
   }
 
   .detail-popover {

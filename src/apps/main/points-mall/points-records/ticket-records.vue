@@ -104,8 +104,8 @@
           ticketId: couponInfo.statTicketId,
           gameType: couponInfo.gameType
         })
-        let html = `${formatCouponInfo.records}`
-        return html
+
+        return `${formatCouponInfo.records}`
       }
     },
 
