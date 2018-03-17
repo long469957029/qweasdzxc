@@ -34,6 +34,14 @@
 
     mounted() {
       this.$store.dispatch(types.GET_USER_MALL_INFO)
+    },
+    beforeRouteEnter (to, from, next) {
+      Velocity(document.body, 'scroll', {
+        offset: 0,
+        mobileHA: false
+      })
+
+      next()
     }
   }
 </script>

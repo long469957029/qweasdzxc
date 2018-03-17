@@ -183,6 +183,10 @@
           this.currentView = to.query.page
 
           this.checkTab(Number(this.$_getTType(this.currentView)))
+          Velocity(document.body, 'scroll', {
+            offset: 0,
+            mobileHA: false
+          })
         },
         immediate: true
       }
