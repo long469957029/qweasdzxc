@@ -102,7 +102,7 @@
                          v-model="chaseType">
                   <label for="jsBcChaseType3"></label>
                 </div>
-                利润金额
+                利润金额>=
                 <input name="amount" type="text" class="js-gl-monitor bc-monitor chase-input" autocomplete="off"
                        data-monitor-type="number" data-monitor-range="[1, 999999]" v-model="amount"/>
               </label>
