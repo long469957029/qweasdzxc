@@ -310,6 +310,9 @@
         _.each(this.formattedRuleList, formattedRule => _.each(formattedRule.row.fItems, num => {
           num.selected = false
         }))
+
+        this.$_statisticsLottery()
+        // this.lotteryList = []
       },
 
       //自定义事件
@@ -338,8 +341,6 @@
       },
 
       empty() {
-        this.lotteryList = []
-
         this.clearAllSelected()
       },
 
@@ -386,7 +387,8 @@
 
         this.$store.commit(types.SET_MAX_PRIZE_MULTIPLE, this.playRule.maxPrizeAlgorithm({
           lotteryList: this.lotteryList,
-          ...this.playRule.maxPrizeAlgorithmProps
+          ...this.playRule.maxPrizeAlgorithmProps,
+          count
         }))
 
         this.$store.commit(types.SET_STATISTICS, count)

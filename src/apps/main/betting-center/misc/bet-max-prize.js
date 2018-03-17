@@ -1,5 +1,5 @@
-const normal = () => {
-  return 1
+const normal = ({count}) => {
+  return count ? 1 : 0
 }
 
 const addAll = ({lotteryList}) => {
@@ -8,7 +8,7 @@ const addAll = ({lotteryList}) => {
       ++multiple
     }
     return multiple
-  }, 0) || 1
+  }, 0)
 }
 
 const group = ({lotteryList, n, k}) => {
@@ -21,19 +21,19 @@ const group = ({lotteryList, n, k}) => {
   count -= (k - 1)
 
   count = polygonal(count, k)
-  return count || 1
+  return count
 }
 
 const daxiaodanshuang = ({lotteryList}) => {
   return _.reduce(lotteryList, (count, lotteryRow) => {
     return count * $_daxiaodanshuang(lotteryRow)
-  }, 1) || 1
+  }, 1)
 }
 
 const daxiaodanshuangAdd = ({lotteryList}) => {
   return _.reduce(lotteryList, (count, lotteryRow) => {
     return count + $_daxiaodanshuang(lotteryRow)
-  }, 0) || 1
+  }, 0)
 }
 
 const $_daxiaodanshuang = (lotteryRow) => {
@@ -58,16 +58,22 @@ const addAllNotRepeat = ({lotteryList}) => {
 
   let existNumberList = []
   _.each(lotteryList, (lotteryRow) => {
-    existNumberList = [...existNumberList, ..._.pluck(lotteryRow, 'num')]
+    if (lotteryRow.length) {
+      const usableNumList = _.difference(_.pluck(lotteryRow, 'num'), existNumberList)
+
+      if (usableNumList.length) {
+        existNumberList = [...existNumberList, usableNumList[0]]
+      }
+    }
   })
 
-  let maxMultiple = _.uniq(existNumberList).length
+  let maxMultiple = existNumberList.length
 
   if (maxMultiple > selectedRow) {
     maxMultiple = selectedRow
   }
 
-  return maxMultiple || 1
+  return maxMultiple
 }
 
 const addAllRow = ({lotteryList, max}) => {
@@ -75,7 +81,7 @@ const addAllRow = ({lotteryList, max}) => {
   if (count > max) {
     count = max
   }
-  return count || 1
+  return count
 }
 
 
@@ -90,7 +96,7 @@ const nInN = ({lotteryList, n, k}) => {
     }
   }
 
-  return currentMultiple || 1
+  return currentMultiple
 }
 
 const overNInN = ({lotteryList, n, k, min}) => {
@@ -102,10 +108,10 @@ const overNInN = ({lotteryList, n, k, min}) => {
   }
 
   if (currentMultiple < 0) {
-    currentMultiple = 1
+    currentMultiple = 0
   }
 
-  return currentMultiple || 1
+  return currentMultiple
 }
 
 

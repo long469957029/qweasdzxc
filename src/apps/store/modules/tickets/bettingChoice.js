@@ -41,7 +41,7 @@ const initState = () => {
     maxMultiple: 100,
     formatMaxMultiple: 100,
     limitMoney: 0,
-    maxPrizeMultiple: 1,
+    maxPrizeMultiple: 0,
     totalBetBonus: 0,
     fTotalBetBonus: 0,
   }
@@ -212,7 +212,6 @@ const mutations = {
   },
   [types.SET_MAX_PRIZE_MULTIPLE] (state, maxPrizeMultiple) {
     state.maxPrizeMultiple = maxPrizeMultiple
-
     $_calculateByPrefab(state)
 
     this.commit(types.UPDATE_FORMAT_MAX_MULTIPLE)
@@ -300,8 +299,8 @@ const mutations = {
   },
 
   [types.UPDATE_FORMAT_MAX_MULTIPLE](state) {
-    state.formatMaxMultiple = Math.floor(_(state.maxMultiple).chain().mul(10000).div(state.maxPrizeMultiple).div(state.unit)
-      .value())
+    state.formatMaxMultiple = _(state.maxMultiple).chain().mul(10000).div(state.maxPrizeMultiple).div(state.unit)
+      .value()
   },
 
   // 清空选择
@@ -311,7 +310,7 @@ const mutations = {
     state.fPrefabMoney = 0
     state.fRebateMoney = 0
     state.statistics = 0
-    this.commit(types.SET_MAX_PRIZE_MULTIPLE, 1)
+    this.commit(types.SET_MAX_PRIZE_MULTIPLE, 0)
   },
 
   [types.SET_PREVIEW_MULTIPLE](state, { num, index }) {
@@ -661,8 +660,8 @@ const $_setUnit = (unit, { maxMultiple, maxPrizeMultiple }) => {
       break
   }
 
-  const formatMaxMultiple = Math.floor(_(maxMultiple).chain().mul(10000).div(maxPrizeMultiple).div(unit)
-    .value())
+  const formatMaxMultiple = _(maxMultiple).chain().mul(10000).div(maxPrizeMultiple).div(unit)
+    .value()
 
   return {
     formatUnit,
