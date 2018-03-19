@@ -221,7 +221,7 @@ const MessageView = Base.ItemView.extend({
     let data = []
     if (id === 'admin') {
       data = {
-        pageSize: 20,
+        pageSize: 30,
       }
     } else {
       data = {

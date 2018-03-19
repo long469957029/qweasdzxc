@@ -17,7 +17,6 @@
         <div class="chat-mess-add pull-right"
              v-if="showPanelButtonStatus===0"
              @click.stop="showMessSelectPanel(-1)">
-          <span class="btn-chat-hidden-logo sfa sfa-icon-mess-contacts"></span>
           <span class="btn-chat-hidden">添加联系人</span>
         </div>
         <div class="chat-mess-edit pull-right " @click.stop="showMessSelectPanel(-2)"
@@ -170,22 +169,8 @@
               content: this.messageInput,
               toUser: this.getContactUserInfo.userId
             })
-//            const sendText = [{
-//              content: this.messageInput,
-//              userName: this.username,
-//              headIcon: this.userAvatar,
-//              sendTime: new Date(),
-//            }]
-//            this.$store.commit(types.IS_SEND, sendText)
             this.messageInput = ''
           } else if (this.sendType === 'mess') {
-//            const sendText = [{
-//              content: this.messageInput,
-//              userName: '群发消息',
-//              headIcon: this.userAvatar,
-//              sendTime: new Date(),
-//            }]
-//            this.$store.commit(types.IS_SEND, sendText)
             if (this.getMessContactSelected.length === 0) {
               this.showNoContactPanel = true
             } else if (this.getMessContactSelected.length > 0) {
