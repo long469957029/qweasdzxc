@@ -8,3 +8,4 @@ error
 webpack-assets.json
 .project
 .package-lock.json
+docs/_book/

@@ -2,13 +2,15 @@ const _ = require('underscore');
 const path = require('path');
 const webpack = require('webpack');
 
+// const HappyPack = require('happypack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const AssetsPlugin = require('assets-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
+
+// const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
 
 const DEV = process.env.NODE_ENV !== 'production'
 
@@ -43,13 +45,10 @@ const appConfig = {
     // update15: './src/apps/packages/update/update15.js',
     // rebateDesc: './src/apps/packages/rebateDescription/rebateDescription.js',
     logger: './src/apps/packages/logger/index.js',
-    game:'./src/apps/packages/game/index.js',
-    game_error:'./src/apps/packages/game_error/index.js'
+    game: './src/apps/packages/game/index.js',
+    game_error: './src/apps/packages/game_error/index.js'
   },
   port: 3002,
-  commonChunks: {
-    common: [],
-  },
   entries: {
     index: {
       title: '无限娱乐',
@@ -238,7 +237,6 @@ let output = {
 };
 
 if (DEV) {
-
   output.publicPath = appConfig.output.publicPath;
   // output.publicPath = 'http://localhost:' + appConfig.port + appConfig.output.publicPath;
   output.filename = '[name].bundle.js';
@@ -282,6 +280,76 @@ let plugins = [
   }),
   new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /zh-cn/),
 
+  // new HappyPack({
+  //   id: 'js',
+  //   threadPool: happyThreadPool,
+  //   loaders: ['babel-loader'],
+  // }),
+  // new HappyPack({
+  //   id: 'vue',
+  //   threadPool: happyThreadPool,
+  //   loaders: [
+  //     {
+  //       loader: 'vue-loader',
+  //       options: {
+  //         loaders: {
+  //           js: 'babel-loader',
+  //           scss: [
+  //             'style-loader',
+  //             'css-loader',
+  //             'postcss-loader',
+  //             'sass-loader',
+  //             {
+  //               loader: 'sass-resources-loader',
+  //               options: {
+  //                 resources: './src/base/styles/_variable.scss',
+  //               },
+  //             },
+  //           ],
+  //         },
+  //       }
+  //     }
+  //   ]
+  // }),
+  // new HappyPack({
+  //   id: 'scss',
+  //   threadPool: happyThreadPool,
+  //   loaders: [
+  //     'style-loader',
+  //     'css-loader',
+  //     'postcss-loader',
+  //     'sass-loader',
+  //     {
+  //       loader: 'sass-resources-loader',
+  //       options: {
+  //         resources: './src/base/styles/_variable.scss',
+  //       },
+  //     },
+  //   ],
+  // }),
+  new webpack.optimize.SplitChunksPlugin({
+    chunks: 'all',
+    minSize: 30000,
+    minChunks: 1,
+    maxAsyncRequests: 5,
+    maxInitialRequests: 3,
+    name: true,
+    cacheGroups: {
+      default: {
+        minChunks: 2,
+        priority: -20,
+        reuseExistingChunk: true,
+      },
+      common: {
+        name: 'common',
+        chunks: 'initial',
+        minChunks: 2,
+        test: /[\\/]node_modules[\\/]/,
+        priority: -5,
+        reuseExistingChunk: true,
+      },
+    }
+  })
 ];
 
 if (process.env.NODE_ENV === 'analyse') {
@@ -297,24 +365,23 @@ plugins.push(new webpack.DllReferencePlugin({
 }));
 
 if (DEV) {
-  //plugins.push(new CommonsChunkPlugin('vendor.js', appConfig.commonChunks));
-  _(appConfig.commonChunks).each(function (commonChunk, name) {
-    plugins.push(new CommonsChunkPlugin({
-      name: name,
-      filename: name + '.js',
-      //filename: name + '.js',
-      chunks: _(commonChunk).isEmpty() ? Infinity : commonChunk
-    }));
-  });
+  // _(appConfig.commonChunks).each(function (commonChunk, name) {
+  //   plugins.push(new CommonsChunkPlugin({
+  //     name: name,
+  //     filename: name + '.js',
+  //     //filename: name + '.js',
+  //     chunks: _(commonChunk).isEmpty() ? Infinity : commonChunk
+  //   }));
+  // });
   plugins.push(new webpack.HotModuleReplacementPlugin());
 } else {
-  _(appConfig.commonChunks).each(function (commonChunk, name) {
-    plugins.push(new CommonsChunkPlugin({
-      name: name,
-      filename: name + '.[hash].js',
-      chunks: _(commonChunk).isEmpty() ? Infinity : commonChunk
-    }));
-  });
+  // _(appConfig.commonChunks).each(function (commonChunk, name) {
+  //   plugins.push(new CommonsChunkPlugin({
+  //     name: name,
+  //     filename: name + '.[hash].js',
+  //     chunks: _(commonChunk).isEmpty() ? Infinity : commonChunk
+  //   }));
+  // });
 
   plugins.push(new ExtractTextPlugin('[name].[hash].styles.css'));
   plugins.push(new AssetsPlugin());
@@ -388,33 +455,37 @@ const modules = {
     // },
     {
       test: /\.vue$/,
-      use: {
-        loader: 'vue-loader',
-        options: {
-          loaders: {
-            js: 'babel-loader',
-            scss: [
-              'style-loader',
-              'css-loader',
-              'postcss-loader',
-              'sass-loader',
-              {
-                loader: 'sass-resources-loader',
-                options: {
-                  resources: './src/base/styles/_variable.scss',
+      type: 'javascript/auto',
+      use: [
+        {
+          loader: 'vue-loader',
+          options: {
+            loaders: {
+              js: 'babel-loader',
+              scss: [
+                'style-loader',
+                'css-loader',
+                'postcss-loader',
+                'sass-loader',
+                {
+                  loader: 'sass-resources-loader',
+                  options: {
+                    resources: './src/base/styles/_variable.scss',
+                  },
                 },
-              },
-            ],
-          },
+              ],
+            },
+          }
         }
-      },
+      ],
+      // use: 'happypack/loader?id=vue',
       include: [path.join(__dirname, 'src')]
     },
     {
       test: /\.js$/,
-      use: {
-        loader: 'babel-loader',
-      },
+      type: 'javascript/auto',
+      use: ['babel-loader'],
+      // use: 'happypack/loader?id=js',
       include: DEV ? [path.join(__dirname, 'src')] : [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules', 'ramda')],
       exclude: /jquery|jqmeter|turn.html4/,
     },
@@ -424,6 +495,7 @@ const modules = {
 if (DEV) {
   modules.rules.push({
     test: /\.scss$/,
+    // use: 'happypack/loader?id=scss',
     use: [
       'style-loader',
       'css-loader',
@@ -462,6 +534,7 @@ if (DEV) {
         },
       ]
     }),
+
     include: [path.join(__dirname, 'src')],
   });
 
@@ -475,6 +548,7 @@ if (DEV) {
 }
 
 module.exports = {
+  mode: DEV ? 'development' : 'production',
   devtool: DEV ? 'eval-source-map' : false,
   entry,
   output,

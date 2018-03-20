@@ -2,10 +2,10 @@ let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let webpack = require('webpack');
 let path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-
 const DEV = process.env.NODE_ENV !== 'production'
 
 module.exports = {
+  mode: 'production',
   context: __dirname,
   output: {
     path: path.join(__dirname, 'src/dll'),
@@ -32,7 +32,19 @@ module.exports = {
     ]
   },
   plugins: [
-    new UglifyJsPlugin(),
+    new webpack.DefinePlugin({
+      DEBUG: Boolean(DEV),
+      'process.env': {
+        NODE_ENV: DEV ? '"dev"' : '"production"'
+      }
+    }),
+    new UglifyJsPlugin({
+      sourceMap: true,
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.optimize.minimize(),
     new webpack.DllPlugin({
       path: path.join(__dirname, 'src/dll', '[name]-manifest.json'),
       name: '[name]_library'

@@ -1,6 +1,6 @@
 {
-  "name": "global-pc",
-  "version": "0.1.0",
+  "name": "global-wx-pc",
+  "version": "3.0.1",
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.37",
     "@tweenjs/tween.js": "^17.1.1",
@@ -19,6 +19,7 @@
     "mathjs": "^3.20.1",
     "moment": "^2.20.1",
     "moment-duration-format": "^2.2.1",
+    "paper": "^0.11.5",
     "promise.prototype.finally": "^3.1.0",
     "underscore": "~1.8.3",
     "underscore.string": "~3.2.2",
@@ -33,14 +34,16 @@
   "scripts": {
     "dev": "gulp server",
     "analysis": "cross-env NODE_ENV=analyse gulp server",
-    "dll:prepare": "gulp dll:prepare",
+    "dll:prepare": "cross-env NODE_ENV=production gulp dll:prepare",
     "release": "cross-env NODE_ENV=production gulp release",
     "sprite:all": "gulp build.sprite --target all",
     "sprite:normal": "gulp build.sprite --target sprites",
     "sprite:mmc": "gulp build.sprite --target spritesMMC",
     "sprite:bc": "gulp build.sprite --target spritesBC",
     "sprite:pt": "gulp build.sprite --target spritesPT",
-    "lint": "./node_modules/eslint/bin/eslint.js src/ --fix"
+    "lint": "./node_modules/eslint/bin/eslint.js src/ --fix",
+    "docs": "cd docs && gitbook install && gitbook serve",
+    "docs:deploy": "cd docs && ./deploy.sh"
   },
   "lint-staged": {
     "linters": {
@@ -56,7 +59,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.37",
     "@babel/preset-env": "^7.0.0-beta.36",
     "@babel/preset-es2015": "^7.0.0-beta.36",
-    "add-asset-html-webpack-plugin": "^2.1.2",
+    "add-asset-html-webpack-plugin": "^2.1.3",
     "assets-webpack-plugin": "^3.5.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
@@ -72,8 +75,8 @@
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-plugin-import": "^2.7.0",
     "expose-loader": "^0.7.0",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^0.8.4",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
     "font-awesome": "^4.4.0",
     "font-awesome-webpack": "0.0.5-beta.2",
     "fontmin": "^0.9.6",
@@ -91,8 +94,9 @@
     "gulp-util": "^3.0.6",
     "gulp-zip": "^3.2.0",
     "gulp.spritesmith": "^6.9.0",
+    "happypack": "^5.0.0-beta.1",
     "html-loader": "^0.3.0",
-    "html-webpack-plugin": "^2.30.1",
+    "html-webpack-plugin": "^3.0.7",
     "http-rewrite-middleware": "^0.1.6",
     "husky": "^0.14.3",
     "imagemin-pngquant": "^5.0.1",
@@ -113,19 +117,21 @@
     "raw-loader": "^0.5.1",
     "run-sequence": "^0.3.6",
     "sass-loader": "^6.0.6",
-    "sass-resources-loader": "^1.3.1",
+    "sass-resources-loader": "^1.3.3",
     "style-loader": "^0.19.1",
     "sugarss": "^1.0.1",
     "tiny-emitter": "^1.0.1",
     "typed-function": "^0.10.3",
+    "uglifyjs-webpack-plugin": "^1.2.4",
     "url-loader": "^0.5.6",
     "url-pattern": "^0.6.0",
     "vinyl-buffer": "^1.0.1",
-    "vue-loader": "^13.5.0",
+    "vue-loader": "^13.7.1",
     "vue-template-compiler": "^2.5.13",
-    "webpack": "^3.10.0",
+    "webpack": "^4.1.1",
     "webpack-bundle-analyzer": "^2.9.1",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-cli": "^2.0.12",
+    "webpack-dev-server": "^2.11.2"
   },
   "engines": {
     "node": ">=8.9.3"

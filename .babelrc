@@ -21,7 +21,6 @@
     }
   },
   "ignore": [
-    "createjs-2015.11.26.min.js",
     "**/*.min.js",
     "**/jQuery*.js",
     "**/jquery*.js"
