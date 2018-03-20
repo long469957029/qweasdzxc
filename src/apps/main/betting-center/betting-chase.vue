@@ -55,7 +55,7 @@
               <label class="control-label m-left-lg">起始倍数</label>
               <input name="startMultiple" type="text" class="js-gl-monitor bc-monitor chase-input"
                      data-monitor-type="number" autocomplete="off"
-                     v-model="startMultiple"/> 倍
+                     v-model.number="startMultiple"/> 倍
               <label class="control-label m-left-lg">每隔</label>
               <input name="gaps" type="text" class="js-gl-monitor bc-monitor chase-input" autocomplete="off"
                      data-monitor-type="number" data-monitor-range="[1, 99999]" v-model="gaps"/>
@@ -80,7 +80,7 @@
               <label class="control-label m-left-lg">起始倍数</label>
               <input name="startMultiple" type="text" class="js-gl-monitor bc-monitor chase-input"
                      data-monitor-type="number" autocomplete="off"
-                     v-model="startMultiple"/> 倍
+                     v-model.number="startMultiple"/> 倍
               <button type="button" class="chase-create btn btn-cool pull-right" @click="chaseRateCreate()"
                       :disabled="!plans.length || pushing">生成追号计划
               </button>
@@ -440,7 +440,7 @@
 
             // item.betMoney = _(this.basicBettingMoney).mul(item.multiple)
 
-            this._calculate(item, multiple, prevTotalMultiple)
+            this._calculate(item,item.multiple, prevTotalMultiple)
             // item.betMoney = this.basicBettingMoney
 
             prevTotalMultiple += item.multiple
