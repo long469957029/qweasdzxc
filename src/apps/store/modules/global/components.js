@@ -12,6 +12,7 @@ const initState = () => {
     openLoginLauncher: false,
     openFreeTrialDialog: false,
     openGameDownLoadDialog: false,
+    openImDialog:false,
 
     token: '',
     gameDownLoadId: '',
@@ -21,6 +22,7 @@ const initState = () => {
     deskTopData: {},
     testServerPrefix: 'testv3',
     universalToken: '000-000-000-000-player125',
+
   }
 }
 
@@ -64,6 +66,9 @@ const getters = {
   },
   openDeskTopData: (state) => {
     return state.deskTopData
+  },
+  openImDialogStatus: (state) => {
+    return state.openImDialog
   }
 }
 
@@ -115,7 +120,9 @@ const mutations = {
     state.openDeskTopMsg = data.show
     state.deskTopData = data.dataInfo
   },
-
+  [types.TOGGLE_IM_DIALOG](state, data) {
+    state.openImDialog = data
+  },
 }
 
 export default {

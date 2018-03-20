@@ -1107,21 +1107,21 @@
     transition: background-color .1s;
   }
 }
-
-.chat-exp-text {
-  display: inline-block;
-  vertical-align: top;
-  width: 20px;
-  height: 20px;
-  @for $i from 1 through 74 {
-    &.face-#{$i} {
-      background-image: url(~base/images/face/face-#{$i}.gif) ;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-    }
-  }
-}
+//
+//.chat-exp-text {
+//  display: inline-block;
+//  vertical-align: top;
+//  width: 20px;
+//  height: 20px;
+//  @for $i from 1 through 74 {
+//    &.face-#{$i} {
+//      background-image: url(~base/images/face/face-#{$i}.gif) ;
+//      background-repeat: no-repeat;
+//      background-position: center;
+//      background-size: contain;
+//    }
+//  }
+//}
 
 .btn-chase-confirm-agree {
   width: 110px;

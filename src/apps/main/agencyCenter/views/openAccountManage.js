@@ -73,7 +73,7 @@ const OnlineRechargeView = TabView.extend({
         $limitList.removeClass('hidden')
       }
     }else{
-      $limitList.parents().prev().addClass('hidden')
+      // $limitList.parents().prev().addClass('hidden')
     }
   },
 })

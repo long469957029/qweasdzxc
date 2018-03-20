@@ -113,6 +113,7 @@ export const TOGGLE_RESET_INIT_PWD = 'TOGGLE_RESET_INIT_PWD' // 首次登陆修�
 export const TOGGLE_GMAE_DOWN_LOAD = 'TOGGLE_GMAE_DOWN_LOAD' //第三方游戏手机端下载弹窗
 export const TOGGLE_NOVICE_PACKAGE = 'TOGGLE_NOVICE_PACKAGE' // 新手礼包弹窗
 export const TOGGLE_DESKTOP_MESSAGE = 'TOGGLE_DESKTOP_MESSAGE' //桌面消息通知
+export const TOGGLE_IM_DIALOG = 'TOGGLE_IM_DIALOG' //站内消息弹窗
 
 //试玩开关
 export const SET_REQUEST_FROM_TEST_SERVER = 'SET_REQUEST_FROM_TEST_SERVER'
@@ -120,3 +121,35 @@ export const SET_REQUEST_FROM_TEST_SERVER = 'SET_REQUEST_FROM_TEST_SERVER'
 //商城
 export const GET_USER_MALL_INFO = 'GET_USER_MALL_INFO'
 export const GET_USER_MALL_INFO_SUCCESS = 'GET_USER_MALL_INFO_SUCCESS'
+
+// 站内信
+export const GET_IM_RECENTLY_CONTACT = 'GET_IM_RECENTLY_CONTACT' // 获取近期联系人列表
+export const GET_IM_RECENTLY_CONTACT_SUCCESS = 'GET_IM_RECENTLY_CONTACT_SUCCESS' // 获取近期联系人列表成功，处理数据
+export const GET_IN_CONTACT = 'GET_IN_CONTACT' // 获取联系人列表
+export const GET_IN_CONTACT_SUCCESS = 'GET_IN_CONTACT_SUCCESS' // 获取联系人列表成功，处理数据
+export const TOGGLE_IM_CONTACT_PANEL = 'TOGGLE_IM_CONTACT_PANEL' // 判断显示左侧联系人面板
+export const CONTACT_SEARCH_NAME = 'CONTACT_SEARCH_NAME' // 提交联系人搜索框数据
+export const CLEAR_CONTACT_SEARCH_NAME = 'CLEAR_CONTACT_SEARCH_NAME' // 清空联系人搜索框数据
+export const TOGGLE_MESSAGE_PANEL = 'TOGGLE_MESSAGE_PANEL' // 判断显示右侧消息面板
+export const UPDATE_CONTACT_USER_INFO = 'UPDATE_CONTACT_USER_INFO' // 更新当前聊天对象信息
+export const CLEAR_IM_PROCESS = 'CLEAR_IM_PROCESS' // 清空站内信进程及数据
+export const GET_MESS_CONTACT = 'GET_MESS_CONTACT' // 获取群聊联系人信息
+export const UPDATE_MESS_CONTACT = 'UPDATE_MESS_CONTACT' // 更新群聊联系人信息
+export const TOGGLE_MESS_CONTACT_PANEL = 'TOGGLE_MESS_CONTACT_PANEL' // 打开群聊联系人面板
+export const ADD_MESS_CONTACT = 'ADD_MESS_CONTACT' // 群聊选中联系人
+export const CLICK_MESS_SELECT_PANEL_OUTSIDE = 'CLICK_MESS_SELECT_PANEL_OUTSIDE' // 点击群聊联系人选择外部区域事件
+export const CLICK_OPEN_MESS_CONTACT_PANEL = 'CLICK_OPEN_MESS_CONTACT_PANEL' // 点击按钮显示群聊联系人面板事件
+export const GET_IM_CONTACT_CHAT = 'GET_IM_CONTACT_CHAT' // 获取联系人聊天内容
+export const GET_IM_CONTACT_CHAT_SUCCESS = 'GET_IM_CONTACT_CHAT_SUCCESS' // 获取联系人聊天内容成功
+export const GET_IM_MESS_CHAT = 'GET_IM_MESS_CHAT' // 获取联系人群聊内容
+export const GET_IM_MESS_CHAT_SUCCESS = 'GET_IM_MESS_CHAT_SUCCESS' // 获取联系人群聊内容成功
+export const SEND_PEASONAL_CHAT = 'SEND_PEASONAL_CHAT' // 发送私聊消息
+export const SEND_PEASONAL_CHAT_SUCCESS = 'SEND_PEASONAL_CHAT_SUCCESS' // 发送私聊消息
+export const SEND_MESS_CHAT = 'SEND_MESS_CHAT' // 发送群聊消息
+export const SEND_MESS_CHAT_SUCCESS = 'SEND_MESS_CHAT_SUCCESS' // 发送群聊消息成功
+export const CREATE_MESS_GROUP = 'CREATE_MESS_GROUP' // 创建群聊组
+export const CREATE_MESS_GROUP_SUCCESS = 'CREATE_MESS_GROUP_SUCCESS' // 创建群聊组成功
+export const CLOSE_RENCENTLY_RECORD = 'CLOSE_RENCENTLY_RECORD' // 删除近期聊天
+export const CLOSE_RENCENTLY_RECORD_SUCCESS = 'CLOSE_RENCENTLY_RECORD_SUCCESS' // 删除近期聊天
+export const IS_SEND = 'IS_SEND' //发送消息
+
