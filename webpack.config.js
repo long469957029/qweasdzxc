@@ -2,15 +2,18 @@ const _ = require('underscore');
 const path = require('path');
 const webpack = require('webpack');
 
-// const HappyPack = require('happypack');
+const HappyPack = require('happypack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const AssetsPlugin = require('assets-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssoWebpackPlugin = require('csso-webpack-plugin').default;
+const CompressionPlugin = require("compression-webpack-plugin");
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 
-// const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
+const happyThreadPool = HappyPack.ThreadPool({size: 5});
 
 const DEV = process.env.NODE_ENV !== 'production'
 
@@ -53,164 +56,144 @@ const appConfig = {
     index: {
       title: '无限娱乐',
       template: './entry/index.html',
-      chunks: ['common', 'base', 'main'],
+      chunks: ['default', 'commons', 'base', 'main'],
     },
     login: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['common', 'vendor', 'base', 'login'],
+      chunks: ['default', 'commons', 'vendor', 'base', 'login'],
     },
     register: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['common', 'base', 'register'],
+      chunks: ['default', 'commons', 'base', 'register'],
     },
     trend: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['common', 'base', 'trend'],
+      chunks: ['default', 'commons', 'base', 'trend'],
     },
     change: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['common', 'base', 'change'],
+      chunks: ['default', 'commons', 'base', 'change'],
     },
     resetInitPwd: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['common', 'base', 'resetInitPwd'],
+      chunks: ['default', 'commons', 'base', 'resetInitPwd'],
     },
     // charge: {
     //   title: '充值结果',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'charge'],
-    // },
-    // mmc: {
-    //   title: '无限娱乐',
-    //   template: './entry/package.html',
-    //   chunks: ['common', 'base', 'mmc'],
+    //   chunks: ['default', 'commons', 'vendor', 'base', 'charge'],
     // },
     resetPassword: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['common', 'base', 'resetPassword'],
+      chunks: ['default', 'commons', 'base', 'resetPassword'],
     },
     updateUserInfo: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['common', 'base', 'updateUserInfo'],
+      chunks: ['default', 'commons', 'base', 'updateUserInfo'],
     },
-    // charge: {
-    //   title: '充值结果',
-    //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'charge'],
-    // },
-    // mmc: {
-    //   title: '无限娱乐',
-    //   template: './entry/package.html',
-    //   chunks: ['common', 'base', 'mmc'],
-    // },
-    // merchants: {
-    //   title: '无限娱乐',
-    //   template: './entry/merchants.html',
-    //   chunks: ['common', 'vendor', 'base', 'merchants'],
-    // },
+    logger: {
+      title: '无限在线娱乐',
+      template: './src/apps/packages/logger/index.html',
+      chunks: ['default', 'commons', 'logger'],
+    },
+    game: {
+      title: '无限娱乐',
+      template: './entry/package-game.html',
+      chunks: ['default', 'commons', 'base', 'game']
+    },
+    game_error: {
+      title: '无限娱乐',
+      template: './entry/package-game.html',
+      chunks: ['default', 'commons', 'base', 'game_error']
+    },
     // resetPassword: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'resetPassword'],
+    //   chunks: ['default', 'commons', 'vendor', 'base', 'resetPassword'],
     // },
     // 404: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'base', '404'],
+    //   chunks: ['default', 'commons', 'base', '404'],
     // },
     // changeUrl: {
     //   title: '线路检测',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'changeUrl'],
+    //   chunks: ['default', 'commons', 'vendor', 'base', 'changeUrl'],
     // },
     //
     // leaflets: {
     //   title: '宣传页',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'leaflets'],
+    //   chunks: ['default', 'commons', 'vendor', 'base', 'leaflets'],
     // },
     // client: {
     //  title: '无限娱乐 - 客户端下载',
     //  template: './entry/package.html',
-    //  chunks: ['common', 'base', 'client']
+    //  chunks: ['default', 'commons', 'base', 'client']
     // },
     // download: {
     //   title: '无限娱乐 - 客户端下载',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'base', 'download'],
+    //   chunks: ['default', 'commons', 'base', 'download'],
     // },
     // dragonAndTiger: {
     //   title: '无限娱乐 - 龙虎彩',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'base', 'dragonAndTiger'],
+    //   chunks: ['default', 'commons', 'base', 'dragonAndTiger'],
     // },
     // oneYear: {
     //   title: '无限娱乐周年庆',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'oneYear'],
+    //   chunks: ['default', 'commons', 'vendor', 'base', 'oneYear'],
     // },
     // vip: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'vip'],
+    //   chunks: ['default', 'commons', 'vendor', 'base', 'vip'],
     // },
     // expedition: {
     //   title: '无限娱乐 携手共进 远征星辰',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'expedition'],
+    //   chunks: ['default', 'commons', 'vendor', 'base', 'expedition'],
     // },
     // newDownload: {
     //   title: '无限娱乐 - 客户端下载',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'base', 'newDownload'],
+    //   chunks: ['default', 'commons', 'base', 'newDownload'],
     // },
     // integration: {
     //   title: '无限娱乐 - integration',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'base', 'integration'],
+    //   chunks: ['default', 'commons', 'base', 'integration'],
     // },
     // binding: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'base', 'binding'],
+    //   chunks: ['default', 'commons', 'base', 'binding'],
     // },
     // regist: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'regist'],
+    //   chunks: ['default', 'commons', 'vendor', 'base', 'regist'],
     // },
     // update: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'update15'],
+    //   chunks: ['default', 'commons', 'vendor', 'base', 'update15'],
     // },
     // rebateDesc: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['common', 'vendor', 'base', 'rebateDesc'],
+    //   chunks: ['default', 'commons', 'vendor', 'base', 'rebateDesc'],
     // },
-    logger: {
-      title: '无限在线娱乐',
-      template: './src/apps/packages/logger/index.html',
-      chunks: ['common', 'logger'],
-    },
-    game: {
-      title: '无限娱乐',
-      template: './entry/package-game.html',
-      chunks: ['common', 'base', 'game']
-    },
-    game_error: {
-      title: '无限娱乐',
-      template: './entry/package-game.html',
-      chunks: ['common', 'base', 'game_error']
-    },
   },
   output: {
     path: 'main',
@@ -253,12 +236,6 @@ let plugins = [
   // new webpack.ResolverPlugin(
   //   new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
   // ),
-  new webpack.DefinePlugin({
-    DEBUG: Boolean(DEV),
-    'process.env': {
-      NODE_ENV: DEV ? '"dev"' : '"production"'
-    }
-  }),
   new webpack.ProvidePlugin({
     Vue: ['vue/dist/vue.esm.js', 'default'],
     mapState: ['vuex', 'mapState'],
@@ -280,11 +257,11 @@ let plugins = [
   }),
   new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /zh-cn/),
 
-  // new HappyPack({
-  //   id: 'js',
-  //   threadPool: happyThreadPool,
-  //   loaders: ['babel-loader'],
-  // }),
+  new HappyPack({
+    id: 'js',
+    threadPool: happyThreadPool,
+    loaders: ['babel-loader'],
+  }),
   // new HappyPack({
   //   id: 'vue',
   //   threadPool: happyThreadPool,
@@ -311,22 +288,22 @@ let plugins = [
   //     }
   //   ]
   // }),
-  // new HappyPack({
-  //   id: 'scss',
-  //   threadPool: happyThreadPool,
-  //   loaders: [
-  //     'style-loader',
-  //     'css-loader',
-  //     'postcss-loader',
-  //     'sass-loader',
-  //     {
-  //       loader: 'sass-resources-loader',
-  //       options: {
-  //         resources: './src/base/styles/_variable.scss',
-  //       },
-  //     },
-  //   ],
-  // }),
+  new HappyPack({
+    id: 'scss',
+    threadPool: happyThreadPool,
+    loaders: [
+      'style-loader',
+      'css-loader',
+      'postcss-loader',
+      'sass-loader',
+      {
+        loader: 'sass-resources-loader',
+        options: {
+          resources: './src/base/styles/_variable.scss',
+        },
+      },
+    ],
+  }),
   new webpack.optimize.SplitChunksPlugin({
     chunks: 'all',
     minSize: 30000,
@@ -335,13 +312,14 @@ let plugins = [
     maxInitialRequests: 3,
     name: true,
     cacheGroups: {
-      default: {
-        minChunks: 2,
-        priority: -20,
-        reuseExistingChunk: true,
-      },
-      common: {
-        name: 'common',
+      default: false,
+      // default: {
+      //   minChunks: 2,
+      //   priority: -20,
+      //   reuseExistingChunk: true,
+      // },
+      commons: {
+        name: 'commons',
         chunks: 'initial',
         minChunks: 2,
         test: /[\\/]node_modules[\\/]/,
@@ -357,44 +335,33 @@ if (process.env.NODE_ENV === 'analyse') {
 }
 
 plugins.push(new webpack.DllReferencePlugin({
-  // context: path.join(__dirname, 'src', 'vendor'),
   context: __dirname,
-  // scope: 'vendorDLL',
   manifest: require('./src/dll/vendor-manifest.json'),
   extensions: ['', '.js']
 }));
 
 if (DEV) {
-  // _(appConfig.commonChunks).each(function (commonChunk, name) {
-  //   plugins.push(new CommonsChunkPlugin({
-  //     name: name,
-  //     filename: name + '.js',
-  //     //filename: name + '.js',
-  //     chunks: _(commonChunk).isEmpty() ? Infinity : commonChunk
-  //   }));
-  // });
   plugins.push(new webpack.HotModuleReplacementPlugin());
 } else {
-  // _(appConfig.commonChunks).each(function (commonChunk, name) {
-  //   plugins.push(new CommonsChunkPlugin({
-  //     name: name,
-  //     filename: name + '.[hash].js',
-  //     chunks: _(commonChunk).isEmpty() ? Infinity : commonChunk
-  //   }));
-  // });
+  // plugins.push(new ExtractTextPlugin('[name].[hash].styles.css'));
+  plugins.push(new MiniCssExtractPlugin({
+    // Options similar to the same options in webpackOptions.output
+    // both options are optional
+    filename: "[name].[hash].styles.css",
+    chunkFilename: "[id].[hash].styles.css"
+  }))
+  plugins.push(new CssoWebpackPlugin())
 
-  plugins.push(new ExtractTextPlugin('[name].[hash].styles.css'));
   plugins.push(new AssetsPlugin());
   plugins.push(new UglifyJsPlugin({
     sourceMap: true,
-    compress: {
-      warnings: false
-    }
+    // compress: {
+    //   warnings: false
+    // }
   }));
+  plugins.push(new CompressionPlugin())
 }
 
-// 生成静态入口html，插件存在bug，无法根据chunks的顺序插入，而是按照了entry的id的顺序，不可控
-// 暂时用数字标明顺序
 _(appConfig.entries).each(function (entryInfo, entryName) {
   plugins.push(new HtmlWebpackPlugin({
     title: entryInfo.title,
@@ -461,8 +428,10 @@ const modules = {
           loader: 'vue-loader',
           options: {
             loaders: {
-              js: 'babel-loader',
-              scss: [
+              js: 'happypack/loader?id=js',
+              // js: 'babel-loader',
+              // scss: 'happypack/loader?id=scss',
+              scss: DEV ? [
                 'style-loader',
                 'css-loader',
                 'postcss-loader',
@@ -473,19 +442,30 @@ const modules = {
                     resources: './src/base/styles/_variable.scss',
                   },
                 },
-              ],
+              ] : [
+                'style-loader',
+                MiniCssExtractPlugin.loader,
+                'css-loader',
+                'postcss-loader',
+                'sass-loader',
+                {
+                  loader: 'sass-resources-loader',
+                  options: {
+                    resources: './src/base/styles/_variable.scss',
+                  },
+                },
+              ]
             },
           }
         }
       ],
-      // use: 'happypack/loader?id=vue',
       include: [path.join(__dirname, 'src')]
     },
     {
       test: /\.js$/,
       type: 'javascript/auto',
-      use: ['babel-loader'],
-      // use: 'happypack/loader?id=js',
+      // use: ['babel-loader'],
+      use: 'happypack/loader?id=js',
       include: DEV ? [path.join(__dirname, 'src')] : [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules', 'ramda')],
       exclude: /jquery|jqmeter|turn.html4/,
     },
@@ -495,19 +475,19 @@ const modules = {
 if (DEV) {
   modules.rules.push({
     test: /\.scss$/,
-    // use: 'happypack/loader?id=scss',
-    use: [
-      'style-loader',
-      'css-loader',
-      'postcss-loader',
-      'sass-loader',
-      {
-        loader: 'sass-resources-loader',
-        options: {
-          resources: './src/base/styles/_variable.scss',
-        },
-      },
-    ],
+    use: 'happypack/loader?id=scss',
+    // use: [
+    //   'style-loader',
+    //   'css-loader',
+    //   'postcss-loader',
+    //   'sass-loader',
+    //   {
+    //     loader: 'sass-resources-loader',
+    //     options: {
+    //       resources: './src/base/styles/_variable.scss',
+    //     },
+    //   },
+    // ],
     include: [path.join(__dirname, 'src')],
   });
 
@@ -520,30 +500,45 @@ if (DEV) {
 
   modules.rules.push({
     test: /\.scss$/,
-    use: ExtractTextPlugin.extract({
-      fallback: "style-loader",
-      use: [
-        'css-loader',
-        'postcss-loader',
-        'sass-loader',
-        {
-          loader: 'sass-resources-loader',
-          options: {
-            resources: './src/base/styles/_variable.scss',
-          },
+    use: [
+      'style-loader',
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'postcss-loader',
+      'sass-loader',
+      {
+        loader: 'sass-resources-loader',
+        options: {
+          resources: './src/base/styles/_variable.scss',
         },
-      ]
-    }),
+      },
+    ],
 
+    // use: ExtractTextPlugin.extract({
+    //   fallback: "style-loader",
+    //   use: [
+    //     'css-loader',
+    //     'postcss-loader',
+    //     'sass-loader',
+    //     {
+    //       loader: 'sass-resources-loader',
+    //       options: {
+    //         resources: './src/base/styles/_variable.scss',
+    //       },
+    //     },
+    //   ]
+    // }),
     include: [path.join(__dirname, 'src')],
   });
 
   modules.rules.push({
     test: /\.css$/,
-    use: ExtractTextPlugin.extract({
-      fallback: "style-loader",
-      use: ['css-loader', 'postcss-loader']
-    })
+    use: [
+      'style-loader',
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'postcss-loader'
+    ]
   });
 }
 

@@ -12,7 +12,6 @@ const cache = require('gulp-cache')
 const pump = require('pump')
 const minimist = require('minimist')
 const buffer = require('vinyl-buffer');
-const csso = require('gulp-csso');
 
 const _ = require('underscore')
 
@@ -130,8 +129,9 @@ gulp.task('server.webpack', () => {
   new WebpackDevServer(webpack(packageConfig), {
     publicPath: packageConfig.output.publicPath,
     hot: true,
+    clientLogLevel: 'error',
     historyApiFallback: true,
-    inline: true,
+    // inline: true,
     progress: false,
     proxy,
     watchOptions: {
@@ -140,7 +140,25 @@ gulp.task('server.webpack', () => {
     },
     headers: {'X-Custom-Header': 'yes'},
     stats: {
+      assets: false,
+      cached: false,
+      cachedAssets: false,
+      children: false,
+      chunks: false,
+      chunkModules: false,
+      chunkOrigins: false,
       colors: true,
+      depth: false,
+      entrypoints: true,
+      hash: false,
+      maxModules: 15,
+      modules: false,
+      performance: true,
+      reasons: false,
+      // source: false,
+      timings: true,
+      // version: false,
+      warnings: true,
     },
     // 取消框架域名检测
     disableHostCheck: true
@@ -171,6 +189,7 @@ gulp.task('release', (cb) => {
     'release.clean',
     'release.build',
     ['release.js', 'release.css', 'release.assets', 'release.html'],
+    // 'cp.vendor',
     'zip',
     cb
   )
@@ -286,6 +305,13 @@ gulp.task('release.build', (callback) => {
   })
 })
 
+
+gulp.task('cp.vendor', (cb) => {
+  return pump([
+    gulp.src([`./src/dll/*.+(gz)`]),
+    gulp.dest(path.join('./www/', projectPath))
+  ], cb)
+})
 // 压缩转移js
 gulp.task('release.js', (cb) => {
   return pump([
@@ -297,7 +323,7 @@ gulp.task('release.js', (cb) => {
 // 压缩转移css
 gulp.task('release.css', () => {
   return gulp.src([`./dist/${projectPath}/*.css`])
-    .pipe(csso())
+    // .pipe(csso())
     .pipe(gulp.dest(path.join('./www/', projectPath)))
 })
 
@@ -308,7 +334,7 @@ gulp.task('release.assets', () => {
   // .pipe(gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath + '/' + packageConfig.output.publicPath)));
 })
 
-// 压缩转移css
+// 转移html
 gulp.task('release.html', () => {
   return gulp.src([`./dist/${projectPath}/*.html`])
     .pipe(gulp.dest(path.join('./www/', projectPath)))

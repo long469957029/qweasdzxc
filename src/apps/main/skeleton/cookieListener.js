@@ -1,6 +1,6 @@
 const cookieListener = function(cookieName, callback) {
   var self = this;
-  console.log("cookieListener1:"+this)
+  // console.log("cookieListener1:"+this)
   this.cookieName = cookieName;
   this.callback = callback;
   this.cookieRegistry = [];

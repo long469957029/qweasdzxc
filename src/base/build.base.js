@@ -1,6 +1,4 @@
-require('./build.base.style')
+require('./styles/style')
 require('./build.base.dll')
-
-require('font-awesome-webpack')
 
 require('./scripts/under-helper')

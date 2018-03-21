@@ -78,7 +78,6 @@ const actions = {}
 // mutations
 const mutations = {
   [types.TOGGLE_LOGIN_DIALOG](state, data) {
-    console.log(this)
     state.openLoginDialog = data
   },
   [types.TOGGLE_LOGOUT_DIALOG](state, data) {
