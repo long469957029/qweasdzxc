@@ -334,11 +334,13 @@ if (process.env.NODE_ENV === 'analyse') {
   plugins.push(new BundleAnalyzerPlugin())
 }
 
-plugins.push(new webpack.DllReferencePlugin({
-  context: __dirname,
-  manifest: require('./src/dll/vendor-manifest.json'),
-  extensions: ['', '.js']
-}));
+if (process.env.NODE_ENV !== 'test') {
+  plugins.push(new webpack.DllReferencePlugin({
+    context: __dirname,
+    manifest: require('./src/dll/vendor-manifest.json'),
+    extensions: ['', '.js']
+  }));
+}
 
 if (DEV) {
   plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -459,14 +461,15 @@ const modules = {
           }
         }
       ],
-      include: [path.join(__dirname, 'src')]
+      include: [path.join(__dirname, 'src'), path.join(__dirname, 'test')]
     },
     {
       test: /\.js$/,
       type: 'javascript/auto',
       // use: ['babel-loader'],
       use: 'happypack/loader?id=js',
-      include: DEV ? [path.join(__dirname, 'src')] : [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules', 'ramda')],
+      include: DEV ? [path.join(__dirname, 'src'), path.join(__dirname, 'test')] :
+        [path.join(__dirname, 'src'), path.join(__dirname, 'test'), path.join(__dirname, 'node_modules', 'ramda')],
       exclude: /jquery|jqmeter|turn.html4/,
     },
   ]
@@ -558,6 +561,7 @@ module.exports = {
     ],
     extensions: ['.js', '.vue', '.scss', '.html'],
     alias: {
+      '@': path.resolve(__dirname, 'src'),
       packages: 'apps/packages',
       build: 'apps/build.js',
       com: 'apps/components',

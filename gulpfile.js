@@ -188,7 +188,7 @@ gulp.task('release', (cb) => {
   runSequence(
     'release.clean',
     'release.build',
-    ['release.js', 'release.css', 'release.assets', 'release.html'],
+    'release.move',
     // 'cp.vendor',
     'zip',
     cb
@@ -313,31 +313,11 @@ gulp.task('cp.vendor', (cb) => {
   ], cb)
 })
 // 压缩转移js
-gulp.task('release.js', (cb) => {
+gulp.task('release.move', (cb) => {
   return pump([
-    gulp.src([`./dist/${projectPath}/*.js`]),
+    gulp.src([`./dist/${projectPath}/*`]),
     gulp.dest(path.join('./www/', projectPath))
   ], cb)
-})
-
-// 压缩转移css
-gulp.task('release.css', () => {
-  return gulp.src([`./dist/${projectPath}/*.css`])
-    // .pipe(csso())
-    .pipe(gulp.dest(path.join('./www/', projectPath)))
-})
-
-// 压缩转移其它资源 assets
-gulp.task('release.assets', () => {
-  return gulp.src([`./dist/${projectPath}/*.+(jpg|png|gif|eot|woff|svg|tff|eot|woff2|swf|ico|mp3|wav)`])
-    .pipe(gulp.dest(path.join('./www/', projectPath)))
-  // .pipe(gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath + '/' + packageConfig.output.publicPath)));
-})
-
-// 转移html
-gulp.task('release.html', () => {
-  return gulp.src([`./dist/${projectPath}/*.html`])
-    .pipe(gulp.dest(path.join('./www/', projectPath)))
 })
 
 // 打压缩包，默认打www/main程序包，gulp zip --package=external，打external文件夹下的压缩包，gulp zip --package=all，将mian和external两个文件夹下的所有文件一起打包
