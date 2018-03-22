@@ -9,4 +9,5 @@ webpack-assets.json
 .project
 .package-lock.json
 docs/_book/
-test/unit/coverage/**
+test/unit/coverage
+.test
