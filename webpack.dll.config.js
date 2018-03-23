@@ -3,14 +3,13 @@ let path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-// const CompressionPlugin = require("compression-webpack-plugin")
 const DEV = process.env.NODE_ENV !== 'production'
 
 module.exports = {
-  mode: DEV ? 'development' : 'production',
+  mode: process.env.NODE_ENV,
   context: __dirname,
   output: {
-    path: path.join(__dirname, 'src/dll'),
+    path: path.join(__dirname, `src/dll/${process.env.NODE_ENV}`),
     filename: '[name].js',
     library: '[name]_library',
   },
@@ -37,7 +36,7 @@ module.exports = {
     new webpack.DefinePlugin({
       DEBUG: Boolean(DEV),
       'process.env': {
-        NODE_ENV: DEV ? '"dev"' : '"production"'
+        NODE_ENV: DEV ? '"development"' : '"production"'
       }
     }),
     new UglifyJsPlugin({
@@ -50,7 +49,7 @@ module.exports = {
     }),
     // new webpack.optimize.minimize(),
     new webpack.DllPlugin({
-      path: path.join(__dirname, 'src/dll', '[name]-manifest.json'),
+      path: path.join(__dirname, `src/dll/${process.env.NODE_ENV}`, '[name]-manifest.json'),
       name: '[name]_library'
     }),
     new webpack.ProvidePlugin({

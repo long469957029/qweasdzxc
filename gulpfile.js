@@ -30,36 +30,16 @@ const WebpackDevServer = require('webpack-dev-server')
 
 const argv = minimist(process.argv.slice(2))
 
-const webpackConfig = require('./webpack.config')
 const Fontmin = require('fontmin')
 const zip = require('gulp-zip')
 const fs = require('fs')
 const rename = require('gulp-rename')
 const fontConfig = require('./font-config.json')
 
-const dllConfig = require('./webpack.dll.config');
-
 let serverIP = 'http://forev3.5x5x.com'
 
-let packageConfig
-let projectPath
-const zipPath = []
-
-switch (argv.package) {
-  case 'main':
-    packageConfig = webpackConfig
-    projectPath = 'main'
-    zipPath.push('www/main/**')
-    break
-  case 'all':
-    zipPath.push('www/main/*')
-    break
-  default:
-    packageConfig = webpackConfig
-    projectPath = 'main'
-    zipPath.push('www/main/**')
-    break
-}
+let projectPath = 'main'
+const zipPath = ['www/main/**']
 
 gulp.task('server', () => {
   runSequence(['server.webpack', 'server.mockup'])
@@ -67,6 +47,7 @@ gulp.task('server', () => {
 
 // Start a webpack-dev-server
 gulp.task('server.webpack', () => {
+  const webpackConfig = require('./webpack.config')
 
   let proxy = {}
 
@@ -110,8 +91,8 @@ gulp.task('server.webpack', () => {
     // },
   })
 
-  new WebpackDevServer(webpack(packageConfig), {
-    publicPath: packageConfig.output.publicPath,
+  new WebpackDevServer(webpack(webpackConfig), {
+    publicPath: webpackConfig.output.publicPath,
     hot: true,
     // clientLogLevel: 'error',
     historyApiFallback: true,
@@ -146,12 +127,12 @@ gulp.task('server.webpack', () => {
     },
     // 取消框架域名检测
     disableHostCheck: true
-  }).listen(packageConfig.devServer.port, 'localhost', (err) => {
+  }).listen(webpackConfig.devServer.port, 'localhost', (err) => {
     if (err) {
       console.log(err)
     }
 
-    console.log(`Listening at localhost:${packageConfig.devServer.port}`)
+    console.log(`Listening at localhost:${webpackConfig.devServer.port}`)
   })
 })
 
@@ -180,8 +161,9 @@ gulp.task('release', (cb) => {
 })
 
 gulp.task('webpack', (callback) => {
+  const webpackConfig = require('./webpack.config')
 
-  webpack(packageConfig, (err, stats) => {
+  webpack(webpackConfig, (err, stats) => {
     if (err) throw new gutil.PluginError('webpack', err)
     gutil.log('[webpack]', stats.toString({
       // output options
@@ -280,7 +262,9 @@ gulp.task('release.clean', (callback) => {
 gulp.task('release.build', (callback) => {
   del(`./dist/${projectPath}/*`)
 
-  webpack(packageConfig, (err, stats) => {
+  const webpackConfig = require('./webpack.config')
+
+  webpack(webpackConfig, (err, stats) => {
     if (err) throw new gutil.PluginError('webpack', err)
     gutil.log('[webpack]', stats.toString({
       // output options
@@ -313,8 +297,9 @@ gulp.task('zip', () => {
 
 //编译dll
 gulp.task('dll:prepare', function (callback) {
-  del('./src/dist/dll/*');
-  global.DLL = 1;
+  const dllConfig = require('./webpack.dll.config');
+
+  del(`./src/dist/dll/${process.env.NODE_ENV}*`);
 
   webpack(dllConfig, function (err, stats) {
     if (err) throw new gutil.PluginError("webpack", err);

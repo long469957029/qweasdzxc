@@ -14,12 +14,6 @@ const getters = {
 
     state.playLevels.forEach((rule) => {
 
-      //暂时去除不中玩法
-
-      if (rule.playLevelId === 3423) {
-        return
-      }
-
       normalList.push({
         type: 'normal',
         id: rule.playLevelId,

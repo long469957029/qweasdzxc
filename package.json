@@ -30,10 +30,12 @@
     "eslint"
   ],
   "scripts": {
-    "dev": "gulp server",
-    "analysis": "cross-env NODE_ENV=analyse gulp server",
+    "start": "npm run dev",
+    "dev": "NODE_ENV=development gulp server",
+    "analysis": "cross-env NODE_ENV=development MODE=analyse gulp server",
+    "dll:prepare": "npm run dll:prepare:dev & npm run dll:prepare:prd",
     "dll:prepare:dev": "cross-env NODE_ENV=development gulp dll:prepare",
-    "dll:prepare": "cross-env NODE_ENV=production gulp dll:prepare",
+    "dll:prepare:prd": "cross-env NODE_ENV=production gulp dll:prepare",
     "release": "cross-env NODE_ENV=production gulp release",
     "sprite:all": "gulp build.sprite --target all",
     "sprite:normal": "gulp build.sprite --target sprites",
@@ -43,7 +45,7 @@
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "docs": "cd docs && gitbook install && gitbook serve",
     "docs:deploy": "cd docs && ./deploy.sh",
-    "unit": "cross-env BABEL_ENV=test NODE_ENV=test karma start test/unit/karma.conf.js --single-run"
+    "unit": "cross-env BABEL_ENV=test NODE_ENV=development karma start test/unit/karma.conf.js --single-run"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.37",

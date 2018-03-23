@@ -330,14 +330,14 @@ let plugins = [
   })
 ];
 
-if (process.env.NODE_ENV === 'analyse') {
+if (process.env.MODE === 'analyse') {
   plugins.push(new BundleAnalyzerPlugin())
 }
 
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.BABEL_ENV !== 'test') {
   plugins.push(new webpack.DllReferencePlugin({
     context: __dirname,
-    manifest: require('./src/dll/vendor-manifest.json'),
+    manifest: require(`./src/dll/${process.env.NODE_ENV}/vendor-manifest.json`),
     extensions: ['', '.js']
   }));
 }
@@ -379,13 +379,13 @@ _(appConfig.entries).each(function (entryInfo, entryName) {
 
 plugins.push(new AddAssetHtmlPlugin([
   {
-    filepath: path.resolve('./src/dll/*.styles.css'),
+    filepath: path.resolve(`./src/dll/${process.env.NODE_ENV}/*.styles.css`),
     typeOfAsset: 'css',
     hash: true,
     includeSourcemap: false
   },
   {
-    filepath: path.resolve('./src/dll/*.js'),
+    filepath: path.resolve(`./src/dll/${process.env.NODE_ENV}/*.js`),
     hash: true,
     includeSourcemap: false
   }
