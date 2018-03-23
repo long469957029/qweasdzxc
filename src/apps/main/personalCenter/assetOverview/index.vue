@@ -223,7 +223,7 @@
           const beforeOutSelected = this.transferOutSelected.channelId
           this.formatOutPanel(beforeInSelected)
           this.formatInPanel(beforeOutSelected)
-          this.
+//          this.
         }
       },
       searchPersonalData(){
