@@ -99,7 +99,11 @@ const PhoneBindingView = Base.ItemView.extend({
           self.$changeError.html('')
         } else {
           $target.html('重新发送')
-          _.formatError({ errorText: res.msg === 'fail' ? '验证码发送失败' : res.msg, el: type === 'add' ? self.$bindError : self.$changeError })
+          const dataError = {
+            errorText: `绑定失败！${res.msg === '验证码发送失败' ? '验证码发送失败' : res.msg}`,
+            el: type === 'add' ? self.$bindError : self.$changeError,
+          }
+          _.formatError(dataError)
         }
       })
     }

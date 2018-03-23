@@ -1,4 +1,3 @@
-
 const navItemType = {
   dropdown: 1,
   outerLink: 2,
@@ -38,8 +37,9 @@ const menuConfig = [
           {
             id: 500,
             router: '/fc/fm',
+            // router: '/fm/ao',
             name: '资金总览',
-            notShow: true,
+            // notShow: true,
             quickShowName: '资金<br/>总览',
           },
           {
