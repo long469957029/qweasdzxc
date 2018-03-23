@@ -55,6 +55,7 @@ const initState = () => {
     fLastLoginTime: '',
     fLoginTime: '',
     vip: '',
+    userSecurityInfo: [],
   }
 }
 
@@ -95,6 +96,9 @@ const getters = {
       }
     })
     return isPass
+  },
+  userSecurityInfo: (state) => {
+    return state.userSecurityInfo
   },
 }
 
@@ -153,7 +157,7 @@ const mutations = {
     data.fLastLoginTime = _(data.lastLoginTime).toTime()
     data.fLoginTime = _(data.loginTime).toTime()
     data.headIcon = _(data.headIcon).toString()
-    window.store.commit(types.TOGGLE_LOGOUT_NOTICE,false)
+    window.store.commit(types.TOGGLE_LOGOUT_NOTICE, false)
     Object.assign(state, data)
   },
 
@@ -190,10 +194,10 @@ const mutations = {
       this.commit(types.USER_IS_VIP, 0)
       let hash = window.location.hash
       let ind = hash.indexOf('?')
-      hash = hash.substring(1,ind>0?ind:hash.length)
-      if(data.popupLogin){
-        window.router.push(hash+'?popupLogin=true')
-      }else{
+      hash = hash.substring(1, ind > 0 ? ind : hash.length)
+      if (data.popupLogin) {
+        window.router.push(hash + '?popupLogin=true')
+      } else {
         window.router.push(hash)
       }
       window.location.reload()
@@ -202,7 +206,9 @@ const mutations = {
   [types.TOGGLE_DO_LOGOUT](state, data) {
     state.loginOutStatus = data
   },
-
+  [types.USER_SECURITY_INFO](state, data) {
+    state.userSecurityInfo = data
+  },
 }
 
 export default {

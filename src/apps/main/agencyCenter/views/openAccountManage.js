@@ -72,7 +72,8 @@ const OnlineRechargeView = TabView.extend({
         $limitList.html(`您目前拥有${html.join('，')}，此后奖金组配额无限制`)
         $limitList.removeClass('hidden')
       }
-    }else{
+    } else {
+      $('.js-portlet-line').addClass('hidden')
       // $limitList.parents().prev().addClass('hidden')
     }
   },

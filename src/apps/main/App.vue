@@ -27,7 +27,6 @@
     <game-down-load v-if="gameDownLoadStatus"></game-down-load>
     <desktop-message v-if="openDeskTopMsgStatus"></desktop-message>
     <im-dialog v-if="openImDialogStatus"></im-dialog>
-
   </div>
 </template>
 

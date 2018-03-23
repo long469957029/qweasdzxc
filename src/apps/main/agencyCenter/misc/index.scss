@@ -35,7 +35,7 @@
   .table tbody tr td:last-child {
     text-align: left;
   }
-  .ac-icon{
+  .ac-icon {
     width: 16px;
     height: 16px;
     font-size: $font-xs;
@@ -45,10 +45,10 @@
     color: $def-white-color;
     margin-right: 5px;
     line-height: 16px;
-    &.ac-freeze{
+    &.ac-freeze {
       background-color: #8094a6;
     }
-    &.ac-recycling{
+    &.ac-recycling {
       background-color: #8f80a6;
     }
   }
@@ -253,8 +253,13 @@
     }
     .manual-rebate-sign {
       color: #aaaaaa;
-      position: relative;
       right: 25px;
+      position: absolute;
+      top: 11px;
+      left: 370px;
+    }
+    .control-group {
+      position: relative;
     }
   }
   .ac-openAccountManual-form {
@@ -311,6 +316,9 @@
       text-decoration: underline;
       cursor: pointer;
       padding-left: 5px;
+      position: absolute;
+      top: 7px;
+      right: 0;
     }
     .ac-red-pack-text {
       width: 243px;
@@ -652,7 +660,7 @@
     th {
       font-size: $font-xs;
     }
-    td{
+    td {
       position: relative;
     }
   }
@@ -676,23 +684,23 @@
       font-size: 30px;
     }
   }
-  .confirm-password{
+  .confirm-password {
     margin-top: 30px;
     text-align: center;
     display: inline-block;
     margin-left: 70px;
     margin-bottom: 10px;
-    label{
+    label {
       color: $def-black-color;
     }
-    .pwd-input{
+    .pwd-input {
       width: 244px;
       height: 30px;
       background-color: #f9f9f9;
       border-radius: 3px;
     }
   }
-  .error-info{
+  .error-info {
     //margin-top: 10px;
     margin-left: 148px;
   }
