@@ -237,7 +237,7 @@
 </style>
 
 <style lang="scss">
-  @import '../../../gameCenter/misc/mixin';
+  @import '../../../game-center/misc/mixin';
   //公共样式 begin
   .gl-main-navbar {
     .nav {

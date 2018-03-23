@@ -42,7 +42,7 @@
   import LoginLauncher from 'skeleton/bases/loginLauncher'
   import FreeTrial from 'skeleton/bases/freeTrial'
   import DialogManage from 'skeleton/bases/dialogManage'
-  import GameDownLoad from 'gameCenter/downLoad'
+  import GameDownLoad from './game-center/downLoad'
   import DesktopMessage from 'skeleton/bases/desktop-message'
   import ImDialog from 'skeleton/bases/toolbar/im'
 

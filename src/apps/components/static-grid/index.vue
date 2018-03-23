@@ -14,8 +14,9 @@
       </table>
     </div>
 
-    <div class="relative" ref="body">
-      <status-cell :status="loading" :has-data="showRows.length" :loading-tip="loadingTip" :transition="transition" :empty-tip="emptyTip">
+    <div class="body-wrapper" ref="body">
+      <status-cell :status="loading" :has-data="showRows.length" :loading-tip="loadingTip" :transition="transition"
+                   :empty-tip="emptyTip">
         <table class="no-margin" :class="[tableClass, {'no-b-bottom': hasBorder}]">
           <colgroup>
             <col :width="col.width" v-for="col in colModel">
@@ -36,7 +37,7 @@
       </status-cell>
     </div>
 
-    <div class="js-wt-footer-main relative">
+    <div class="body-wrapper">
       <table class="no-margin" :class="tableClass">
         <colgroup>
           <col :width="col.width" v-for="col in colModel">
@@ -356,6 +357,5 @@
   }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
 </style>

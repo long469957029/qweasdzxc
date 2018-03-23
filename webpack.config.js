@@ -56,143 +56,143 @@ const appConfig = {
     index: {
       title: '无限娱乐',
       template: './entry/index.html',
-      chunks: ['default', 'commons', 'base', 'main'],
+      chunks: ['commons', 'base', 'main'],
     },
     login: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['default', 'commons', 'vendor', 'base', 'login'],
+      chunks: ['commons', 'vendor', 'base', 'login'],
     },
     register: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['default', 'commons', 'base', 'register'],
+      chunks: ['commons', 'base', 'register'],
     },
     trend: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['default', 'commons', 'base', 'trend'],
+      chunks: ['commons', 'base', 'trend'],
     },
     change: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['default', 'commons', 'base', 'change'],
+      chunks: ['commons', 'base', 'change'],
     },
     resetInitPwd: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['default', 'commons', 'base', 'resetInitPwd'],
+      chunks: ['commons', 'base', 'resetInitPwd'],
     },
     // charge: {
     //   title: '充值结果',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'charge'],
+    //   chunks: ['commons', 'vendor', 'base', 'charge'],
     // },
     resetPassword: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['default', 'commons', 'base', 'resetPassword'],
+      chunks: ['commons', 'base', 'resetPassword'],
     },
     updateUserInfo: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['default', 'commons', 'base', 'updateUserInfo'],
+      chunks: ['commons', 'base', 'updateUserInfo'],
     },
     logger: {
       title: '无限在线娱乐',
       template: './src/apps/packages/logger/index.html',
-      chunks: ['default', 'commons', 'logger'],
+      chunks: ['commons', 'logger'],
     },
     game: {
       title: '无限娱乐',
       template: './entry/package-game.html',
-      chunks: ['default', 'commons', 'base', 'game']
+      chunks: ['commons', 'base', 'game']
     },
     game_error: {
       title: '无限娱乐',
       template: './entry/package-game.html',
-      chunks: ['default', 'commons', 'base', 'game_error']
+      chunks: ['commons', 'base', 'game_error']
     },
     // resetPassword: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'resetPassword'],
+    //   chunks: ['commons', 'vendor', 'base', 'resetPassword'],
     // },
     // 404: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', '404'],
+    //   chunks: ['commons', 'base', '404'],
     // },
     // changeUrl: {
     //   title: '线路检测',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'changeUrl'],
+    //   chunks: ['commons', 'vendor', 'base', 'changeUrl'],
     // },
     //
     // leaflets: {
     //   title: '宣传页',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'leaflets'],
+    //   chunks: ['commons', 'vendor', 'base', 'leaflets'],
     // },
     // client: {
     //  title: '无限娱乐 - 客户端下载',
     //  template: './entry/package.html',
-    //  chunks: ['default', 'commons', 'base', 'client']
+    //  chunks: ['commons', 'base', 'client']
     // },
     // download: {
     //   title: '无限娱乐 - 客户端下载',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', 'download'],
+    //   chunks: ['commons', 'base', 'download'],
     // },
     // dragonAndTiger: {
     //   title: '无限娱乐 - 龙虎彩',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', 'dragonAndTiger'],
+    //   chunks: ['commons', 'base', 'dragonAndTiger'],
     // },
     // oneYear: {
     //   title: '无限娱乐周年庆',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'oneYear'],
+    //   chunks: ['commons', 'vendor', 'base', 'oneYear'],
     // },
     // vip: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'vip'],
+    //   chunks: ['commons', 'vendor', 'base', 'vip'],
     // },
     // expedition: {
     //   title: '无限娱乐 携手共进 远征星辰',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'expedition'],
+    //   chunks: ['commons', 'vendor', 'base', 'expedition'],
     // },
     // newDownload: {
     //   title: '无限娱乐 - 客户端下载',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', 'newDownload'],
+    //   chunks: ['commons', 'base', 'newDownload'],
     // },
     // integration: {
     //   title: '无限娱乐 - integration',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', 'integration'],
+    //   chunks: ['commons', 'base', 'integration'],
     // },
     // binding: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', 'binding'],
+    //   chunks: ['commons', 'base', 'binding'],
     // },
     // regist: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'regist'],
+    //   chunks: ['commons', 'vendor', 'base', 'regist'],
     // },
     // update: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'update15'],
+    //   chunks: ['commons', 'vendor', 'base', 'update15'],
     // },
     // rebateDesc: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'rebateDesc'],
+    //   chunks: ['commons', 'vendor', 'base', 'rebateDesc'],
     // },
   },
   output: {

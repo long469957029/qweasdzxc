@@ -67,22 +67,6 @@ gulp.task('server', () => {
 
 // Start a webpack-dev-server
 gulp.task('server.webpack', () => {
-  // let proxy = [
-  //   {
-  //     path: '*.json',
-  //     target: serverIP,
-  //     changeOrigin: true,
-  //   },
-  //   {
-  //     path: 'mock/*.json',
-  //     target: 'http://localhost:7070/',
-  //   },
-  //   {
-  //     path: '*',
-  //     target: serverIP,
-  //     changeOrigin: true,
-  //   },
-  // ]
 
   let proxy = {}
 
@@ -129,9 +113,9 @@ gulp.task('server.webpack', () => {
   new WebpackDevServer(webpack(packageConfig), {
     publicPath: packageConfig.output.publicPath,
     hot: true,
-    clientLogLevel: 'error',
+    // clientLogLevel: 'error',
     historyApiFallback: true,
-    // inline: true,
+    inline: true,
     progress: false,
     proxy,
     watchOptions: {
@@ -150,14 +134,14 @@ gulp.task('server.webpack', () => {
       colors: true,
       depth: false,
       entrypoints: true,
-      hash: false,
+      hash: true,
       maxModules: 15,
       modules: false,
       performance: true,
       reasons: false,
-      // source: false,
+      source: false,
       timings: true,
-      // version: false,
+      version: false,
       warnings: true,
     },
     // 取消框架域名检测

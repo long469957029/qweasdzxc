@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@import '../../../../gameCenter/misc/mixin';
+@import '../../../../game-center/misc/mixin';
 
 @mixin float-item($font-size, $color, $width, $height, $margin) {
   font-size: $font-size;

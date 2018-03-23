@@ -174,7 +174,7 @@ export default {
 }
 </script>
 <style lang='scss' scoped>
-@import "../gameCenter/misc/mixin";
+@import "../game-center/misc/mixin";
 
 .aa-banner {
   @include banner-background("misc/aa-banner.png");
