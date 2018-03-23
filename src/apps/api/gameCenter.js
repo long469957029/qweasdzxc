@@ -29,10 +29,9 @@ const getSummaryApi = (then,fail) => {
 /**
  * 点击游戏的时候 获取游戏地址
  * @param gameId
- * @param type
+ * @param type - 0 正式 1 试玩
  * @param device
  * @param then
- * @param fail
  * @returns {*|Promise.<T>}
  */
 const getGameUrlApi = ({gameId,type = 0 ,device = 0}) => {

@@ -33,7 +33,7 @@ const channelList = [
   },
   {
     channelId: 7,
-    channelName: '188体育',
+    channelName: '体育',
   },
 ]
 const gameTypeList = [

@@ -78,7 +78,13 @@ const TeamBettingRecordView = TabView.extend({
           view: GameRecordView,
           options: { channelId: 6, type: 4, userName: this.options.userName },
         },
-
+        {
+          label: '体育',
+          name: 'jsFcMdPlatform',
+          id: 'jsFcMdPlatform',
+          view: GameRecordView,
+          options: { channelId: 7, type: 4, userName: this.options.userName },
+        },
       ],
     })
   },

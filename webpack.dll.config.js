@@ -7,7 +7,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const DEV = process.env.NODE_ENV !== 'production'
 
 module.exports = {
-  mode: 'production',
+  mode: DEV ? 'development' : 'production',
   context: __dirname,
   output: {
     path: path.join(__dirname, 'src/dll'),
