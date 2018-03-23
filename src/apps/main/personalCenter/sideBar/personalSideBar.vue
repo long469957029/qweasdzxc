@@ -34,7 +34,7 @@
       </div>
       <ul class="sidebar-list">
         <router-link role="presentation" v-for="item in module.child"
-                     :class="{active:item.id===currentView}" :to="{name: item.name}" tag="li">{{item.title}}
+                     :class="{active:item.id===currentView}" :to="{name: item.name}" tag="li" :key="item.id">{{item.title}}
         </router-link>
       </ul>
     </template>
