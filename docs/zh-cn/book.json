@@ -1,0 +1,11 @@
+{
+  "title": "WX",
+  "gitbook": ">3.0.0",
+  "plugins": ["prism", "theme-vuejs", "-fontsettings", "-highlight"],
+  "links": {
+    "sharing": {
+      "facebook": false,
+      "twitter": false
+    }
+  }
+}

@@ -25,16 +25,18 @@ export default {
         }
       },
       mounted:() => {
-        $('#main').toggle(true)
-        $('#main-vue').toggle(false)
+        _.delay(() => {
+          $('#main').toggle(true)
+          $('#main-vue').toggle(false)
 
-        viewPromise().then((view) => {
-          let _params = _.isFunction(params) ? params() : params
-          if (config.parentRouter) {
-            this.changeSubReginView(view.default ? new view.default(_params) : new view(_params), config)
-          } else {
-            this.changeMainReginView(view.default ? new view.default(_params) : new view(_params), config)
-          }
+          viewPromise().then((view) => {
+            let _params = _.isFunction(params) ? params() : params
+            if (config.parentRouter) {
+              this.changeSubReginView(view.default ? new view.default(_params) : new view(_params), config)
+            } else {
+              this.changeMainReginView(view.default ? new view.default(_params) : new view(_params), config)
+            }
+          })
         })
       },
 
@@ -84,8 +86,8 @@ export default {
         })
       },
       deactivated() {
-        // $('#main').toggle(false)
-        // $('#main-vue').toggle(true)
+        $('#main').toggle(false)
+        $('#main-vue').toggle(true)
       },
       destroyed() {
         $('#main').toggle(false)

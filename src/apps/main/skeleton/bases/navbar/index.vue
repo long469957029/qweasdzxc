@@ -346,9 +346,10 @@
         &.eleven {
           width: 101px;
         }
-        &.3d {
-          width: 101px;
-        }
+        //不符合语法
+        /*&.3d {*/
+          /*width: 101px;*/
+        /*}*/
         &.happy {
           width: 101px;
         }

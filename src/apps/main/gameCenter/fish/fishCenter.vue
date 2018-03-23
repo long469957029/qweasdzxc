@@ -176,7 +176,7 @@
   }
 
   .fc-bg {
-    @include banner-background('./images/fc-bg.png');
+    @include banner-background('./images/fc-bg.jpg');
     width: 100%;
     height: 852px;
     opacity: 0;

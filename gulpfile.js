@@ -12,7 +12,6 @@ const cache = require('gulp-cache')
 const pump = require('pump')
 const minimist = require('minimist')
 const buffer = require('vinyl-buffer');
-const csso = require('gulp-csso');
 
 const _ = require('underscore')
 
@@ -130,8 +129,9 @@ gulp.task('server.webpack', () => {
   new WebpackDevServer(webpack(packageConfig), {
     publicPath: packageConfig.output.publicPath,
     hot: true,
+    clientLogLevel: 'error',
     historyApiFallback: true,
-    inline: true,
+    // inline: true,
     progress: false,
     proxy,
     watchOptions: {
@@ -140,7 +140,25 @@ gulp.task('server.webpack', () => {
     },
     headers: {'X-Custom-Header': 'yes'},
     stats: {
+      assets: false,
+      cached: false,
+      cachedAssets: false,
+      children: false,
+      chunks: false,
+      chunkModules: false,
+      chunkOrigins: false,
       colors: true,
+      depth: false,
+      entrypoints: true,
+      hash: false,
+      maxModules: 15,
+      modules: false,
+      performance: true,
+      reasons: false,
+      // source: false,
+      timings: true,
+      // version: false,
+      warnings: true,
     },
     // 取消框架域名检测
     disableHostCheck: true
@@ -170,7 +188,8 @@ gulp.task('release', (cb) => {
   runSequence(
     'release.clean',
     'release.build',
-    ['release.js', 'release.css', 'release.assets', 'release.html'],
+    'release.move',
+    // 'cp.vendor',
     'zip',
     cb
   )
@@ -286,32 +305,19 @@ gulp.task('release.build', (callback) => {
   })
 })
 
-// 压缩转移js
-gulp.task('release.js', (cb) => {
+
+gulp.task('cp.vendor', (cb) => {
   return pump([
-    gulp.src([`./dist/${projectPath}/*.js`]),
+    gulp.src([`./src/dll/*.+(gz)`]),
     gulp.dest(path.join('./www/', projectPath))
   ], cb)
 })
-
-// 压缩转移css
-gulp.task('release.css', () => {
-  return gulp.src([`./dist/${projectPath}/*.css`])
-    .pipe(csso())
-    .pipe(gulp.dest(path.join('./www/', projectPath)))
-})
-
-// 压缩转移其它资源 assets
-gulp.task('release.assets', () => {
-  return gulp.src([`./dist/${projectPath}/*.+(jpg|png|gif|eot|woff|svg|tff|eot|woff2|swf|ico|mp3|wav)`])
-    .pipe(gulp.dest(path.join('./www/', projectPath)))
-  // .pipe(gulp.dest(path.join('./www/', packageConfig.output.path + packageConfig.output.publicPath + '/' + packageConfig.output.publicPath)));
-})
-
-// 压缩转移css
-gulp.task('release.html', () => {
-  return gulp.src([`./dist/${projectPath}/*.html`])
-    .pipe(gulp.dest(path.join('./www/', projectPath)))
+// 压缩转移js
+gulp.task('release.move', (cb) => {
+  return pump([
+    gulp.src([`./dist/${projectPath}/*`]),
+    gulp.dest(path.join('./www/', projectPath))
+  ], cb)
 })
 
 // 打压缩包，默认打www/main程序包，gulp zip --package=external，打external文件夹下的压缩包，gulp zip --package=all，将mian和external两个文件夹下的所有文件一起打包

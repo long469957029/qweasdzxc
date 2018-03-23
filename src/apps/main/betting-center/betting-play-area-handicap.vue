@@ -347,83 +347,84 @@
         let flag
         switch (op) {
           case 'big':
-            _.filter(fItems, (num, index) => {
+            _.each(fItems, (num, index) => {
               flag = index >= Math.floor((fItems.length) / 2) && index < 48
-              num.betMoney = flag ? this.betMoney : null
+
               num.selected = flag
+
+              return flag
             })
             break
           case 'small':
-            _.filter(fItems, (num, index) => {
+            _.each(fItems, (num, index) => {
               flag = index < Math.floor((fItems.length) / 2)
-              num.betMoney = flag ? this.betMoney : null
+
               num.selected = flag
             })
             break
           case 'odd':
-            _.filter(fItems, (num) => {
-              flag = num.num % 2 && num.num != 49
-              num.betMoney = flag ? this.betMoney : null
+            _.each(fItems, (num) => {
+              flag = num.num % 2 && num.num !== 49
+
               num.selected = flag
             })
             break
           case 'even':
-            _.filter(fItems, (num) => {
+            _.each(fItems, (num) => {
               flag = !(num.num % 2)
-              num.betMoney = flag ? this.betMoney : null
+
               num.selected = flag
             })
             break
           case 'add_big':
-            _.filter(fItems, (num) => {
+            _.each(fItems, (num) => {
               flag = _.indexOf(['07', '08', '09', '16', '17', '18', '19', '25', '26', '27', '28', '29', '34', '35',
                 '36', '37', '38', '39', '43', '44', '45', '46', '47', '48'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
+
               num.selected = flag
             })
             break
           case 'add_small':
-            _.filter(fItems, (num) => {
+            _.each(fItems, (num) => {
               flag = _.indexOf(['01', '02', '03', '04', '05', '06', '10', '11', '12', '13', '14', '15', '20', '21',
                 '22', '23', '24', '30', '31', '32', '33', '40', '41', '42'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
+
               num.selected = flag
             })
             break
           case 'add_odd':
-            _.filter(fItems, (num) => {
+            _.each(fItems, (num) => {
               flag = _.indexOf(['01', '03', '05', '07', '09', '10', '12', '14', '16', '18', '21', '23', '25', '27',
                 '29', '30', '32', '34', '36', '38', '41', '43', '45', '47'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
+
               num.selected = flag
             })
             break
           case 'add_even':
-            _.filter(fItems, (num) => {
+            _.each(fItems, (num) => {
               flag = _.indexOf(['02', '04', '06', '08', '11', '13', '15', '17', '19', '20', '22', '24', '26', '28',
                 '31', '33', '35', '37', '39', '40', '42', '44', '46', '48'], num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
               num.selected = flag
             })
             break
           case 'red':
-            _.filter(fItems, (num) => {
+            _.each(fItems, (num) => {
               flag = num.style.indexOf('red') > -1
-              num.betMoney = flag ? this.betMoney : null
+
               num.selected = flag
             })
             break
           case 'blue':
-            _.filter(fItems, (num) => {
+            _.each(fItems, (num) => {
               flag = num.style.indexOf('blue') > -1
-              num.betMoney = flag ? this.betMoney : null
+
               num.selected = flag
             })
             break
           case 'green':
-            _.filter(fItems, (num) => {
+            _.each(fItems, (num) => {
               flag = num.style.indexOf('green') > -1
-              num.betMoney = flag ? this.betMoney : null
+
               num.selected = flag
             })
             break
@@ -439,15 +440,19 @@
           case 'chicken':
           case 'dog':
           case 'pig':
-            _.filter(fItems, (num) => {
+            _.each(fItems, (num) => {
               flag = _.indexOf(this.numBySx(op).nums, num.num) > -1
-              num.betMoney = flag ? this.betMoney : null
+
               num.selected = flag
             })
             break
           default:
             break
         }
+
+        _.each(fItems, (num) => {
+          this.$_setBetMoney(num, num.selected ? this.betMoney : null)
+        })
       },
 
       //父组件调用

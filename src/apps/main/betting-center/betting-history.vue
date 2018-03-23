@@ -310,6 +310,9 @@
     return formType;
   }
 
+  //接口访问频率限制
+  const callTimeLimit = 500
+
   export default {
     name: "betting-history",
 
@@ -339,7 +342,8 @@
       return {
         tableClass: 'table table-center table-default',
         currentPanel: this.ticketInfo.twoSide ? 'twoSide' : 'record',
-        twoSideList: []
+        twoSideList: [],
+        timeLimit: false
       }
     },
 
@@ -380,14 +384,22 @@
 
     methods: {
       twoSideUpdate() {
-        getTwoSideApi({
-          ticketId: this.ticketInfo.id,
-          isOfficial: this.ticketInfo.isOfficial
-        }, (data) => {
-          if (data && data.result === 0) {
-            this.twoSideList = data.root.slice(0, 10)
-          }
-        })
+        if (!this.timeLimit) {
+          getTwoSideApi({
+            ticketId: this.ticketInfo.id,
+            isOfficial: this.ticketInfo.isOfficial
+          }, (data) => {
+            if (data && data.result === 0) {
+              this.twoSideList = data.root.slice(0, 10)
+            }
+          })
+
+          this.timeLimit = true
+          _.delay(() => {
+            this.timeLimit = false
+          }, this.callTimeLimit)
+
+        }
       },
 
       togglePanel(currentPanel) {
