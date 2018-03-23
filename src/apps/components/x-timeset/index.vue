@@ -25,8 +25,8 @@
   </div>
 </template>
 <script>
-  import datePicker from 'vue-bootstrap-datetimepicker'
-  import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
+//  import datePicker from 'vue-bootstrap-datetimepicker'
+//  import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css'
   export default{
     name: 'index',
 
