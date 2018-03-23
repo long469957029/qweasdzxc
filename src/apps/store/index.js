@@ -13,6 +13,7 @@ import loginStore from './modules/acct/loginStore'
 import mallInfo from './modules/acct/mall-info'
 import components from './modules/global/components'
 import im from './modules/acct/im'
+import fundManage from './modules/personal/fundManage'
 
 Vue.use(Vuex)
 
@@ -34,6 +35,7 @@ const store = new Vuex.Store({
     mallInfo,
     components,
     im,
+    fundManage,
   },
   strict: debug,
 })
@@ -54,6 +56,7 @@ if (module.hot) {
     './modules/acct/mall-info',
     './modules/global/components',
     './modules/acct/im',
+    './modules/personal/fundManage',
   ], () => {
     const actions = require('./actions').default
     const getters = require('./getters').default
@@ -69,6 +72,7 @@ if (module.hot) {
     const mallInfo = require('./modules/acct/mall-info').default
     const components = require('./modules/global/components').default
     const im = require('./modules/acct/im').default
+    const fundManage = require('./modules/personal/fundManage').default
 
     store.hotUpdate({
       actions,
@@ -86,6 +90,7 @@ if (module.hot) {
         mallInfo,
         components,
         im,
+        fundManage,
       }
     })
   })

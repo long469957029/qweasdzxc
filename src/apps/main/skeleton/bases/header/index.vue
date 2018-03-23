@@ -243,6 +243,7 @@
             if (data && data.result === 0) {
               Global.memoryCache.set('accountSafe', data.root)
               Global.m.publish('safe:updating', data.root)
+              this.$store.commit(types.USER_SECURITY_INFO, data.root)
             }
           }
         )

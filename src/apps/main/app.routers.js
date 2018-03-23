@@ -21,6 +21,8 @@ import analysisCenterRouter from './analysisCenter/router'
 import mobileBetCenterRouter from './mobileBetCenter/router'
 import aboutUsRouter from './aboutUs/router'
 import helpRouter from './help-center/router'
+import personalCenterRouter from './personalCenter/router'
+
 
 Vue.use(VueRouter)
 
@@ -50,6 +52,8 @@ export const install = () => {
       ...gameCenterRouter,
       ...helpRouter,
       ...pointsMallRouter,
+      // 资金管理
+      ...personalCenterRouter,
     ],
     // scrollBehavior (to, from, savedPosition) {
     //   if (savedPosition) {

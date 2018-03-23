@@ -52,10 +52,10 @@ const OpenAccountManageView = Base.ItemView.extend({
       .done((res) => {
         if (res && res.result === 0) {
           const data = res.root
-          self.$acAutoReBate.val(_(0).formatDiv(10, { fixed: 1 }))
-          self.rebateMin = _(0).formatDiv(10, { fixed: 1 })
-          self.rebateMax = _(data.maxRebateBeUse).formatDiv(10, { fixed: 1 })
-          const subRebateRangePrompt = `${'0～'}${_(data.maxRebateBeUse > 130 ? 130 : data.maxRebateBeUse).formatDiv(10, { fixed: 1 })}`
+          self.$acAutoReBate.val(_(0).formatDiv(10, {fixed: 1}))
+          self.rebateMin = _(0).formatDiv(10, {fixed: 1})
+          self.rebateMax = _(data.maxRebateBeUse).formatDiv(10, {fixed: 1})
+          const subRebateRangePrompt = `${'0～'}${_(data.maxRebateBeUse > 130 ? 130 : data.maxRebateBeUse).formatDiv(10, {fixed: 1})}`
           self.$acBonusRangePrompt.html(subRebateRangePrompt)
           self._parentView.renderLimit(res.root.quotaList)
         }
@@ -64,6 +64,9 @@ const OpenAccountManageView = Base.ItemView.extend({
   // event handlers
   // 新增链接
   addLinkHandler() {
+    if ($('.parsley-errors-list')) {
+      $('.parsley-errors-list').remove()
+    }
     const rebateValidate = this.$acOpenAccountAutoForm.parsley().validate()
     if (!rebateValidate) {
       return
@@ -88,9 +91,9 @@ const OpenAccountManageView = Base.ItemView.extend({
           redpackNum: this.$acRedNum.val(),
         })
         const preStatus = window.Global.cookieCache.get('security')
-        if(preStatus === 1 || preStatus === 2){
+        if (preStatus === 1 || preStatus === 2) {
           this.saveConfirmDialog(data)
-        }else{
+        } else {
           $(document).securityTip({
             content: '资金密码未设置，请先设置资金密码后再进行红包开户',
             hasMoneyPwd: false,
@@ -121,15 +124,15 @@ const OpenAccountManageView = Base.ItemView.extend({
     })
       .done((res) => {
         if (res.result === 0) {
-          if(urlType === 2){
+          if (urlType === 2) {
             this.$dialog.modal('hide')
           }
-          Global.ui.notification.show('开户链接已生成！', { type: 'success' })
+          Global.ui.notification.show('开户链接已生成！', {type: 'success'})
           self.render()
         } else {
-          if(urlType === 2){
+          if (urlType === 2) {
             self.$confirmError.removeClass('hidden')
-            let errorText= ''
+            let errorText = ''
             if (res.root != null && _(res.root).isNumber()) {
               if (res.root > 0) {
                 errorText = `验证失败,剩余${res.root}次机会。`
@@ -137,10 +140,10 @@ const OpenAccountManageView = Base.ItemView.extend({
                 errorText = '验证失败,请一个小时后再验证！'
               }
               self.$confirmErrorText.html(errorText)
-            }else{
+            } else {
               self.$confirmErrorText.html(res.msg === 'fail' ? '资金密码错误' : res.msg)
             }
-          }else{
+          } else {
             Global.ui.notification.show(res.msg === 'fail' ? '链接生成失败' : res.msg)
           }
         }
@@ -169,10 +172,10 @@ const OpenAccountManageView = Base.ItemView.extend({
     this.$confirmErrorText = this.$dialog.find('.js-error-text')
     this.$dialog.off('click.save').on('click.save', '.js-confrim-btn', () => {
       // $dialog.modal('hide')
-      if($pwdInput.val() === ''){
+      if ($pwdInput.val() === '') {
         self.$confirmError.removeClass('hidden')
         self.$confirmErrorText.html('请输入资金密码')
-      }else{
+      } else {
         _(data).extend({
           moneyPwd: $pwdInput.val()
         })
@@ -186,6 +189,9 @@ const OpenAccountManageView = Base.ItemView.extend({
   inputRebateHandler(e) {
     const $target = $(e.currentTarget)
     const rebate = Number($target.val())
+    if ($('.parsley-errors-list')) {
+      $('.parsley-errors-list').remove()
+    }
     if (rebate !== '' && _(rebate).isFinite()) {
       const myReg = /^(0|[1-9][0-9]*)(.\d{1})?$/
       const reg = myReg.test(rebate)
@@ -202,8 +208,7 @@ const OpenAccountManageView = Base.ItemView.extend({
         this.$acManualRebateInfo.html(this.getErrorTooltip(`返点可配置范围${this.rebateMin}~${this.rebateMax}`))
       } else {
         this.changeEleClass(this.$acAutoReBate, 'success')
-        this.$acManualRebateInfo.html('<span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>' +
-          `返点可配置范围${this.rebateMin}~${this.rebateMax}`)
+        this.$acManualRebateInfo.html(`<span class="sfa sfa-error-gray-icon vertical-sub m-right-xs"></span>返点可配置范围${this.rebateMin}~${this.rebateMax}`)
       }
     } else {
       $target.val(this.rebateMin)
@@ -274,7 +279,7 @@ const OpenAccountManageView = Base.ItemView.extend({
     const ticket = $target.data('ticket')
     const rebate = Number(this.$('.js-ac-auto-rebate').val())
     if (_(rebate).isNumber() && _(rebate).isFinite()) {
-      Global.router.goTo(`ac/oam/pd/${ticket}?rebate=${rebate}`, { trigger: true, replace: false })
+      Global.router.goTo(`ac/oam/pd/${ticket}?rebate=${rebate}`, {trigger: true, replace: false})
     } else {
       Global.ui.notification.show('请输入有效的返点值。')
     }
@@ -289,10 +294,10 @@ const OpenAccountManageView = Base.ItemView.extend({
   checkboxHandler(e) {
     const $target = $(e.currentTarget)
     if ($target.is(':checked')) {
-      if(Global.memoryCache.get('acctInfo').foundsLock){
+      if (Global.memoryCache.get('acctInfo').foundsLock) {
         Global.ui.notification.show('资金已锁定，暂不能使用红包开户')
         $target.removeAttr('checked')
-      }else{
+      } else {
         this.$acRedTypeTab.removeClass('hidden')
         this.$acAutoRedInfo.removeClass('hidden')
       }

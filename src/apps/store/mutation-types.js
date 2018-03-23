@@ -101,6 +101,7 @@ export const DO_LOGOUT = "DO_LOGOUT"
 export const COMMIT_USER_TOKEN = 'COMMIT_USER_TOKEN'
 export const USER_IS_VIP = 'USER_IS_VIP'
 export const CHECK_LOGIN_STATUS = 'CHECK_LOGIN_STATUS'
+export const USER_SECURITY_INFO = 'USER_SECURITY_INFO'
 
 // 全局弹窗相关
 export const TOGGLE_LOGIN_DIALOG = 'TOGGLE_LOGIN_DIALOG'
@@ -153,3 +154,4 @@ export const CLOSE_RENCENTLY_RECORD = 'CLOSE_RENCENTLY_RECORD' // 删除近期�
 export const CLOSE_RENCENTLY_RECORD_SUCCESS = 'CLOSE_RENCENTLY_RECORD_SUCCESS' // 删除近期聊天
 export const IS_SEND = 'IS_SEND' //发送消息
 
+// 个人中心

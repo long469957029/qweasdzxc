@@ -92,7 +92,7 @@ const MailBindingView = Base.ItemView.extend({
       }
       this.sendValidataCodeXhr(url, data).done((res) => {
         if (res && res.result === 0) {
-          self.$email.attr('disabled',true)
+          self.$email.attr('disabled', true)
           $target.html('<span class="js-uc-pm-mobile-countdown">60</span>秒后重发')
           $target.data('status', 1)
           self.sendCodeCountdown($target, $('.js-uc-pm-mobile-countdown'))
@@ -100,10 +100,15 @@ const MailBindingView = Base.ItemView.extend({
           self.$changeError.html('')
         } else {
           $target.html('重新发送')
-          _.formatError({
-            errotText: res.msg === 'fail' ? '验证码发送失败' : res.msg,
+          const dataError = {
+            errorText: `绑定失败！${res.msg === '验证码发送失败' ? '验证码发送失败' : res.msg}`,
             el: type === 'add' ? self.$bindError : self.$changeError,
-          })
+          }
+          _.formatError(dataError)
+          // _.formatError({
+          //   errotText: res.msg === 'fail' ? '验证码发送失败' : res.msg,
+          //   el: type === 'add' ? self.$bindError : self.$changeError,
+          // })
         }
       })
     }
@@ -129,50 +134,50 @@ const MailBindingView = Base.ItemView.extend({
         .always(() => {
           $target.button('reset')
         }).done((res) => {
-          if (res && res.result === 0) {
-            Global.m.oauth.check()
-            if (res.root.success === 0) {
-              if (type === 'add') {
-                Global.ui.notification.show('恭喜您，邮箱绑定成功！')
-                self.trigger('render:true')
-                Global.m.publish('safe:updating')
-              } else {
-                self.$email.removeAttr('disabled')
-                const num = $target.data('num')
-                self.$changeContainer.steps('goTo', num)
-                if (num === 2) {
-                  setTimeout(() => {
-                    self.trigger('render:true')
-                  }, 2000)
-                }
-              }
+        if (res && res.result === 0) {
+          Global.m.oauth.check()
+          if (res.root.success === 0) {
+            if (type === 'add') {
+              Global.ui.notification.show('恭喜您，邮箱绑定成功！')
+              self.trigger('render:true')
+              Global.m.publish('safe:updating')
             } else {
-              const data = {
-                errorText: '您的验证码有误，请输入正确的验证码！',
+              self.$email.removeAttr('disabled')
+              const num = $target.data('num')
+              self.$changeContainer.steps('goTo', num)
+              if (num === 2) {
+                setTimeout(() => {
+                  self.trigger('render:true')
+                }, 2000)
               }
-              if (type === 'add') {
-                self.$verificationCode.focus()
-                data.el = self.$bindError
-              } else {
-                self.$lastVerificationCode.focus()
-                data.el = self.$changeError
-              }
-              _.formatError(data)
-              // Global.ui.notification.show('您的验证码有误，请输入正确的验证码！', { displayTime: 2000 })// (res.msg === 'fail' || res.msg === 'ok') ? '' : res.msg
             }
           } else {
             const data = {
-              errorText: `绑定失败！${res.msg === 'fail' ? '' : res.msg}`,
+              errorText: '您的验证码有误，请输入正确的验证码！',
             }
             if (type === 'add') {
+              self.$verificationCode.focus()
               data.el = self.$bindError
             } else {
+              self.$lastVerificationCode.focus()
               data.el = self.$changeError
             }
             _.formatError(data)
-            // Global.ui.notification.show(`绑定失败！${res.msg === 'fail' ? '' : res.msg}`, { displayTime: 2000 })
+            // Global.ui.notification.show('您的验证码有误，请输入正确的验证码！', { displayTime: 2000 })// (res.msg === 'fail' || res.msg === 'ok') ? '' : res.msg
           }
-        })
+        } else {
+          const data = {
+            errorText: `绑定失败！${res.msg === 'fail' ? '' : res.msg}`,
+          }
+          if (type === 'add') {
+            data.el = self.$bindError
+          } else {
+            data.el = self.$changeError
+          }
+          _.formatError(data)
+          // Global.ui.notification.show(`绑定失败！${res.msg === 'fail' ? '' : res.msg}`, { displayTime: 2000 })
+        }
+      })
     }
   },
 })
