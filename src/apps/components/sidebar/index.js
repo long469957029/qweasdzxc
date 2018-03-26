@@ -7,7 +7,8 @@ const SidebarView = Base.ItemView.extend({
   template: require('./index.html'),
 
   events: {
-    'click .js-user-info-safe-up':'changeUrlHandler',
+    'click .js-user-info-safe-up': 'changeUrlHandler',
+    'click .js-sidebar-li': 'refreshPageHandler',
   },
 
   initialize() {
@@ -50,11 +51,11 @@ const SidebarView = Base.ItemView.extend({
     this.subscribe('safe', 'safe:updating', () => {
       self._onRender()
     })
-    Vue.$global.bus.$on('update:userInfo',(data)=>{
+    Vue.$global.bus.$on('update:userInfo', (data) => {
       this.$userName.html(data.uName)
-      this.$userAvatar.attr('src',avatarCfg.get(data.headIconId.toString()).logo)
+      this.$userAvatar.attr('src', avatarCfg.get(data.headIconId.toString()).logo)
     })
-    Vue.$global.bus.$on('myPointsNoUse',(data)=>{
+    Vue.$global.bus.$on('myPointsNoUse', (data) => {
       this.$myPoints.html((_(data).isUndefined() || data === 0) ? '' : `(${data})`)
     })
   },
@@ -88,6 +89,14 @@ const SidebarView = Base.ItemView.extend({
   },
   changeUrlHandler(){
     Global.router.goTo('uc/pl')
+  },
+  refreshPageHandler(e){
+    const $target = $(e.currentTarget)
+    const path = $target.find('a').attr('href').slice(2)
+    if (path === 'fc/td') {
+      // Global.router.goTo(path)
+      $('.js-refresh-betting-record').trigger('click')
+    }
   },
 })
 

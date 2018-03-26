@@ -53,7 +53,7 @@
                   </div>
                 </div>
                 <div class="reg-info pull-left">
-                  <form action="javascript:void(0);" id="jsRegisterForm" class="js-re-registerForm form-horizontal">
+                  <form action="javascript:void(0);" id="jsRegisterForm" class="js-re-registerForm form-horizontal" autocomplete="off">
                     <div class="input-control">
                       <div class="input-icon name"></div>
                       <input type="text" class="register-input" name="userName" v-model.trim="userName"
@@ -70,7 +70,7 @@
                       <div class="input-icon pwd"></div>
                       <input type="password" class="register-input" name="userName" v-model.trim="passWord"
                              @focus="inputFocus(2)" @blur="inputBlur(2)"
-                             placeholder="请设置您的密码" autocomplete="off"/>
+                             placeholder="请设置您的密码" disableautocomplete autocomplete="off"/>
                       <span class="input-check" v-if="pwdStatus === 3"></span>
                     </div>
                     <div :class="['error-text',{'text-hot': pwdStatus === 2}]">
