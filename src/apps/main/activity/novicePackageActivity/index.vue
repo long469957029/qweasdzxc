@@ -1,160 +1,162 @@
 <template>
   <!--<div class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="false" ref="novicePackageModal">-->
-  <div v-transfer-dom>
-    <x-dialog v-model="novicePackageModal">
-      <div class="x-modal-novicePackage" v-if="novicePackageModal" slot="all">
-        <!--<div class="modal-dialog modal-novicePackage">-->
-        <div class="novice-header">
-          <a class="btn-close btn-np" data-dismiss="modal" @click="closeDialog"></a>
+  <!--<div v-transfer-dom>-->
+  <!--<x-dialog v-model="novicePackageModal">-->
+  <!--<div class="x-modal-novicePackage" v-if="novicePackageModal" slot="all">-->
+  <!--<div class="modal-dialog modal-novicePackage">-->
+  <div>
+    <div class="novice-header">
+      <a class="btn-close btn-np" data-dismiss="modal" @click="closeDialog"></a>
+    </div>
+    <div class="novice-body">
+      <div class="novice-item">
+        <div class="item-num">01
         </div>
-        <div class="novice-body">
-          <div class="novice-item">
-            <div class="item-num">01
-            </div>
-            <div class="novice-item-panel">
-              <div class="novice-item-panel-header">
-              </div>
-              <div class="novice-item-panel-body">
-                <div class="item-panel-body">
-                  <div class="panel-header">
-                    <span class="header-text1">¥</span>
-                    <span class="header-text2">{{couponsAmount}}</span>
-                    <span class="header-text3">代金券</span>
-                  </div>
-                  <div class="panel-content">
-                    <div class="panel-content-coupons" :class="{first:index===0,second:index===1}"
-                         v-for="(item,index) in couponsList">
-                      <div class="coupons-text1">{{item.ticketName}}</div>
-                      <div class="panel-content-coupons-value">
-                        <span class="coupons-text2">¥</span>
-                        <span class="coupons-text3">{{_(item.amount).formatDiv(10000)}}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="panel-footer" @click="reviceCoupons">立即领取</div>
-                </div>
-              </div>
-            </div>
-            <div class="novice-item-recived-panel" v-if="couponsStatus===1">
-              <div class="empty-left"></div>
-              <div class="empty-right"></div>
-              <div class="novice-item-recived-body">
-              </div>
-            </div>
+        <div class="novice-item-panel">
+          <div class="novice-item-panel-header">
           </div>
-          <div class="novice-item">
-            <div class="item-num">02
-            </div>
-            <div class="novice-item-panel">
-              <div class="novice-item-panel-header">
+          <div class="novice-item-panel-body">
+            <div class="item-panel-body">
+              <div class="panel-header">
+                <span class="header-text1">¥</span>
+                <span class="header-text2">{{couponsAmount}}</span>
+                <span class="header-text3">代金券</span>
               </div>
-              <div class="novice-item-panel-body">
-                <div class="item-panel-body">
-                  <div class="panel-header">
-                    <span class="header-text1">¥</span>
-                    <span class="header-text2">{{rechargeBonus}}</span>
-                    <span class="header-text3">首充奖励</span>
+              <div class="panel-content">
+                <div class="panel-content-coupons" :class="{first:index===0,second:index===1}"
+                     v-for="(item,index) in couponsList">
+                  <div class="coupons-text1">{{item.ticketName}}</div>
+                  <div class="panel-content-coupons-value">
+                    <span class="coupons-text2">¥</span>
+                    <span class="coupons-text3">{{_(item.amount).formatDiv(10000)}}</span>
                   </div>
-                  <div class="panel-content">
-                    <div class="panel-content-img-panel">
-                      <div class="panel-content-img recharge"></div>
-                    </div>
-                    <div class="panel-content-text-panel">
-                      <div class="panel-content-text">首次充值任意金额即可返<span
-                        class="panel-content-text red">{{rechargeBonus}}元，</span></div>
-                      <div class="panel-content-text">该奖励自首次登录之日起</div>
-                      <div class="panel-content-text"><span class="panel-content-text red">3天</span>内有效</div>
-                    </div>
-                  </div>
-                  <div class="js-header-recharge panel-footer" @click="closeDialog">立即充值</div>
                 </div>
               </div>
-            </div>
-            <div class="novice-item-recived-panel" v-if="rechargeStatus===1">
-              <div class="empty-left"></div>
-              <div class="empty-right"></div>
-              <div class="novice-item-recived-body">
-
-              </div>
-            </div>
-          </div>
-          <div class="novice-item">
-            <div class="item-num">03
-            </div>
-            <div class="novice-item-panel">
-              <div class="novice-item-panel-header">
-              </div>
-              <div class="novice-item-panel-body">
-                <div class="item-panel-body">
-                  <div class="panel-header">
-                    <span class="header-text2">{{betLimit}}</span>
-                    <span class="header-text1">%</span>
-                    <span class="header-text3">投注返水</span>
-                  </div>
-                  <div class="panel-content">
-                    <div class="panel-content-img-panel">
-                      <div class="panel-content-img bet"></div>
-                    </div>
-                    <div class="panel-content-text-panel">
-                      <div class="panel-content-text">自首次登录之日起<span class="panel-content-text red">3天</span>内的投注</div>
-                      <div class="panel-content-text">额，平台将按<span class="panel-content-text red">{{betLimit}}%</span>的比例
-                      </div>
-                      <div class="panel-content-text">结算奖励（仅计算彩票投注）</div>
-                    </div>
-                  </div>
-                  <div class="panel-footer"><a href="#/bc/0/19" @click="closeDialog">立即投注</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="novice-item-recived-panel" v-if="betStatus===1">
-              <div class="empty-left"></div>
-              <div class="empty-right"></div>
-              <div class="novice-item-recived-body">
-              </div>
-            </div>
-          </div>
-          <div class="novice-item">
-            <div class="item-num">04
-            </div>
-            <div class="novice-item-panel">
-              <div class="novice-item-panel-header">
-              </div>
-              <div class="novice-item-panel-body">
-                <div class="item-panel-body">
-                  <div class="panel-header">
-                    <span class="header-text1">¥</span>
-                    <span class="header-text2">{{bindBonus}}</span>
-                    <span class="header-text3">额外奖励</span>
-                  </div>
-                  <div class="panel-content">
-                    <div class="panel-content-img-panel">
-                      <div class="panel-content-img add"></div>
-                    </div>
-                    <div class="panel-content-text-panel">
-                      <div class="panel-content-text">1、手机号码认证：<span
-                        class="panel-content-text red">奖励{{phoneBonus}}元</span></div>
-                      <div class="panel-content-text">2、电子邮箱认证：<span
-                        class="panel-content-text red">奖励{{emailBonus}}元</span></div>
-                      <div class="panel-content-text">3、绑定银行卡：<span
-                        class="panel-content-text red">奖励{{cardBonus}}元</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="panel-footer" @click="closeDialog"><a href="#/uc/pl" @click="closeDialog">去完善资料</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="novice-item-recived-panel" v-if="bindStatus===1">
-              <div class="empty-left"></div>
-              <div class="empty-right"></div>
-              <div class="novice-item-recived-body">
-              </div>
+              <div class="panel-footer" @click="reviceCoupons">立即领取</div>
             </div>
           </div>
         </div>
-        <div class="novice-footer"></div>
+        <div class="novice-item-recived-panel" v-if="couponsStatus===1">
+          <div class="empty-left"></div>
+          <div class="empty-right"></div>
+          <div class="novice-item-recived-body">
+          </div>
+        </div>
       </div>
-    </x-dialog>
+      <div class="novice-item">
+        <div class="item-num">02
+        </div>
+        <div class="novice-item-panel">
+          <div class="novice-item-panel-header">
+          </div>
+          <div class="novice-item-panel-body">
+            <div class="item-panel-body">
+              <div class="panel-header">
+                <span class="header-text1">¥</span>
+                <span class="header-text2">{{rechargeBonus}}</span>
+                <span class="header-text3">首充奖励</span>
+              </div>
+              <div class="panel-content">
+                <div class="panel-content-img-panel">
+                  <div class="panel-content-img recharge"></div>
+                </div>
+                <div class="panel-content-text-panel">
+                  <div class="panel-content-text">首次充值任意金额即可返<span
+                    class="panel-content-text red">{{rechargeBonus}}元，</span></div>
+                  <div class="panel-content-text">该奖励自首次登录之日起</div>
+                  <div class="panel-content-text"><span class="panel-content-text red">3天</span>内有效</div>
+                </div>
+              </div>
+              <div class="js-header-recharge panel-footer" @click="closeDialog">立即充值</div>
+            </div>
+          </div>
+        </div>
+        <div class="novice-item-recived-panel" v-if="rechargeStatus===1">
+          <div class="empty-left"></div>
+          <div class="empty-right"></div>
+          <div class="novice-item-recived-body">
+
+          </div>
+        </div>
+      </div>
+      <div class="novice-item">
+        <div class="item-num">03
+        </div>
+        <div class="novice-item-panel">
+          <div class="novice-item-panel-header">
+          </div>
+          <div class="novice-item-panel-body">
+            <div class="item-panel-body">
+              <div class="panel-header">
+                <span class="header-text2">{{betLimit}}</span>
+                <span class="header-text1">%</span>
+                <span class="header-text3">投注返水</span>
+              </div>
+              <div class="panel-content">
+                <div class="panel-content-img-panel">
+                  <div class="panel-content-img bet"></div>
+                </div>
+                <div class="panel-content-text-panel">
+                  <div class="panel-content-text">自首次登录之日起<span class="panel-content-text red">3天</span>内的投注</div>
+                  <div class="panel-content-text">额，平台将按<span class="panel-content-text red">{{betLimit}}%</span>的比例
+                  </div>
+                  <div class="panel-content-text">结算奖励（仅计算彩票投注）</div>
+                </div>
+              </div>
+              <div class="panel-footer"><a href="#/bc/0/19" @click="closeDialog">立即投注</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="novice-item-recived-panel" v-if="betStatus===1">
+          <div class="empty-left"></div>
+          <div class="empty-right"></div>
+          <div class="novice-item-recived-body">
+          </div>
+        </div>
+      </div>
+      <div class="novice-item">
+        <div class="item-num">04
+        </div>
+        <div class="novice-item-panel">
+          <div class="novice-item-panel-header">
+          </div>
+          <div class="novice-item-panel-body">
+            <div class="item-panel-body">
+              <div class="panel-header">
+                <span class="header-text1">¥</span>
+                <span class="header-text2">{{bindBonus}}</span>
+                <span class="header-text3">额外奖励</span>
+              </div>
+              <div class="panel-content">
+                <div class="panel-content-img-panel">
+                  <div class="panel-content-img add"></div>
+                </div>
+                <div class="panel-content-text-panel">
+                  <div class="panel-content-text">1、手机号码认证：<span
+                    class="panel-content-text red">奖励{{phoneBonus}}元</span></div>
+                  <div class="panel-content-text">2、电子邮箱认证：<span
+                    class="panel-content-text red">奖励{{emailBonus}}元</span></div>
+                  <div class="panel-content-text">3、绑定银行卡：<span
+                    class="panel-content-text red">奖励{{cardBonus}}元</span>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-footer" @click="closeDialog"><a href="#/uc/pl" @click="closeDialog">去完善资料</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="novice-item-recived-panel" v-if="bindStatus===1">
+          <div class="empty-left"></div>
+          <div class="empty-right"></div>
+          <div class="novice-item-recived-body">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="novice-footer"></div>
+    <!--</div>-->
+    <!--</x-dialog>-->
+    <!--</div>-->
   </div>
 </template>
 <script>
@@ -189,10 +191,10 @@
     },
 
     props: {
-      needCallBack: {   // 用户首次登录的时候  关闭弹窗 需要回调父级
-        type: Boolean,
-        default: false
-      },
+//      needCallBack: {   // 用户首次登录的时候  关闭弹窗 需要回调父级
+//        type: Boolean,
+//        default: false
+//      },
 
     },
 
@@ -203,17 +205,19 @@
     },
 
     watch: {
-      novicePackageStatus(){
+//      novicePackageStatus(){
+//        if (this.novicePackageStatus) {
+//          this.novicePackageModal = true
+//        }
+//      },
+//      novicePackageStatus: {
 //        handler(){
-        if (this.novicePackageStatus && !this.novicePackageModal) {
-          this.openActivityDialog()
-        } else {
-          this.novicePackageModal = false
-          this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, false)
+//          if (this.novicePackageStatus && !this.novicePackageModal) {
+//            this.openActivityDialog()
 //          }
-        }
+//        },
 //        immediate: true
-      },
+//      },
     },
 
     computed: {
@@ -233,46 +237,39 @@
               if (data.root.status === 1 || data.root.status === 0) {
                 // 活动相关，新手活动首次登录
                 this.data = data
-                if (this.needCallBack) {
-                  const hasShow = this.localStorage.get(this.userId + 'NovicePackageActivity')
-                  if (!hasShow) {
-                    /** valid 是否首次登录,首次登录会自动弹出活动界面 */
-                    this.localStorage.set(this.userId + 'NovicePackageActivity', true)
-                    this.openActivityDialog()
-                  } else {
-                    this.$emit('next')
-                  }
-                } else {
-                  this.openActivityDialog()
-                }
-              } else {
-                this.$emit('next')
+                this.openActivityDialog()
+//                const hasShow = this.localStorage.get(this.userId + 'NovicePackageActivity')
+//                if (!hasShow) {
+//                  /** valid 是否首次登录,首次登录会自动弹出活动界面 */
+//                  this.localStorage.set(this.userId + 'NovicePackageActivity', true)
+//
+//                }
               }
-            } else {
-              if (e) {//通过点击事件调用时才弹窗，否则不用弹出消息
-                Global.ui.notification.show(data.msg, {
-                  modalDialogShadow: 'modal-dialog-shadow',
-                })
-              }
-              this.$emit('next')
             }
+//            else {
+//              if (e) {//通过点击事件调用时才弹窗，否则不用弹出消息
+//                Global.ui.notification.show(data.msg, {
+//                  modalDialogShadow: 'modal-dialog-shadow',
+//                })
+//              }
+//              this.$emit('next')
+//            }
           }
         )
       },
       openActivityDialog(){
-        this.$nextTick(() => {
-          this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, true)
-          this.initActivityData(this.data.root)
-          $(this.$refs.novicePackageModal).modal({
-            backdrop: 'static',
-          })
-            .on('hidden.modal', () => {
-              this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, false)
-              if (this.needCallBack) {
-                this.$emit('next')
-              }
-            })
-        })
+        this.novicePackageModal = true
+        this.initActivityData(this.data.root)
+//          $(this.$refs.novicePackageModal).modal({
+//            backdrop: 'static',
+//          })
+//            .on('hidden.modal', () => {
+//              this.novicePackageModal = false
+//              this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, false)
+//              if (this.needCallBack) {
+//                this.$emit('next')
+//              }
+//            })
       },
       initActivityData(data){
         let couponsHeight = data.itemList.length
@@ -317,10 +314,8 @@
           })
       },
       closeDialog(){
+//        this.novicePackageModal = false
         this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, false)
-        if (this.needCallBack) {
-          this.$emit('next')
-        }
       },
     }
   }

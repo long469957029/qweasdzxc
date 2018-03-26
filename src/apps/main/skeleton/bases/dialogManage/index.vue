@@ -5,9 +5,15 @@
     <keep-alive>
       <ticket-vouchers v-if="showIndex === 3" :key="3" @next="showNext"></ticket-vouchers>
     </keep-alive>
-    <novice-package v-if="showIndex === 4" :key="4" :need-call-back="showIndex === 4 ? true : false" @next="showNext"></novice-package>
-    <!--<novice-package v-if="showIndex === 4" :key="4" @next="showNext"></novice-package>-->
-
+    <div v-transfer-dom>
+      <x-dialog v-model="novicePackageModal">
+        <div class="x-modal-novicePackage" v-if="novicePackageModal" slot="all">
+          <novice-package></novice-package>
+          <!--<novice-package v-if="showIndex === 4" :key="4" :need-call-back="showIndex === 4 ? true : false"-->
+        </div>
+      </x-dialog>
+    </div>
+    <!--@next="showNext"></novice-package>-->
   </div>
 </template>
 <script>
@@ -23,17 +29,40 @@
     },
     data(){
       return {
-        showIndex: 1  //弹窗顺序
+        showIndex: 1,  //弹窗顺序
+        localStorage: new Base.Storage({
+          name: 'appstorage',
+          type: 'local',
+        }),
+        novicePackageModal: false,
+        userId: Global.memoryCache.get('acctInfo').userId,
       }
     },
     computed: {
-//      ...mapGetters([
-//        'novicePackageStatus'
-//      ])
+      ...mapGetters([
+        'novicePackageStatus'
+      ])
     },
     methods: {
       showNext(){
         this.showIndex += 1
+      }
+    },
+    watch: {
+      showIndex(){
+        if (this.showIndex === 4) {
+          const hasShow = this.localStorage.get(this.userId + 'NovicePackageActivity')
+          if (!hasShow) {
+            /** valid 是否首次登录,首次登录会自动弹出活动界面 */
+            this.localStorage.set(this.userId + 'NovicePackageActivity', true)
+            this.novicePackageModal = true
+//            this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, true)
+          }
+          this.showIndex = 5
+        }
+      },
+      novicePackageStatus(){
+        this.novicePackageModal = this.novicePackageStatus
       }
     }
   }
