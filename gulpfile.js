@@ -4,12 +4,10 @@
  */
 const gulp = require('gulp')
 const gutil = require('gulp-util')
-const path = require('path')
 const del = require('del')
 const imagemin = require('gulp-imagemin')
 const pngquant = require('imagemin-pngquant')
 const cache = require('gulp-cache')
-const pump = require('pump')
 const minimist = require('minimist')
 const buffer = require('vinyl-buffer');
 
@@ -40,6 +38,10 @@ let serverIP = 'http://forev3.5x5x.com'
 
 let projectPath = 'main'
 const zipPath = ['www/main/**']
+
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = 'development'
+}
 
 gulp.task('server', () => {
   runSequence(['server.webpack', 'server.mockup'])
@@ -153,8 +155,6 @@ gulp.task('release', (cb) => {
   runSequence(
     'release.clean',
     'release.build',
-    'release.move',
-    // 'cp.vendor',
     'zip',
     cb
   )
@@ -252,7 +252,6 @@ gulp.task('build.sprite', (callback) => {
 // 清理dist
 gulp.task('release.clean', (callback) => {
   del.sync([
-    `./dist/${projectPath}/*`,
     `./www/${projectPath}/*`,
   ])
   callback()
@@ -260,7 +259,7 @@ gulp.task('release.clean', (callback) => {
 
 // 编译生产版本
 gulp.task('release.build', (callback) => {
-  del(`./dist/${projectPath}/*`)
+  del(`./www/${projectPath}/*`)
 
   const webpackConfig = require('./webpack.config')
 
@@ -274,20 +273,6 @@ gulp.task('release.build', (callback) => {
 })
 
 
-gulp.task('cp.vendor', (cb) => {
-  return pump([
-    gulp.src([`./src/dll/*.+(gz)`]),
-    gulp.dest(path.join('./www/', projectPath))
-  ], cb)
-})
-// 压缩转移js
-gulp.task('release.move', (cb) => {
-  return pump([
-    gulp.src([`./dist/${projectPath}/*`]),
-    gulp.dest(path.join('./www/', projectPath))
-  ], cb)
-})
-
 // 打压缩包，默认打www/main程序包，gulp zip --package=external，打external文件夹下的压缩包，gulp zip --package=all，将mian和external两个文件夹下的所有文件一起打包
 gulp.task('zip', () => {
   return gulp.src(zipPath)
@@ -299,7 +284,7 @@ gulp.task('zip', () => {
 gulp.task('dll:prepare', function (callback) {
   const dllConfig = require('./webpack.dll.config');
 
-  del(`./src/dist/dll/${process.env.NODE_ENV}*`);
+  del(`./src/dll/${process.env.NODE_ENV}/*`);
 
   webpack(dllConfig, function (err, stats) {
     if (err) throw new gutil.PluginError("webpack", err);

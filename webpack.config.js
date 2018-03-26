@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 const HappyPack = require('happypack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const AssetsPlugin = require('assets-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssoWebpackPlugin = require('csso-webpack-plugin').default;
@@ -11,42 +11,23 @@ const CompressionPlugin = require("compression-webpack-plugin");
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 const happyThreadPool = HappyPack.ThreadPool({size: 5});
 
-const DEV = process.env.NODE_ENV !== 'production'
+const DEV = process.env.NODE_ENV !== 'production';
 
 const appConfig = {
   entry: {
     main: './src/apps/main/index.js',
     login: './src/apps/packages/login-new/login.js',
     register: './src/apps/packages/register/index.js',
-    // vendor: './src/vendor/build.core.js',
     base: './src/base/build.base.js',
     trend: './src/apps/packages/trend/index.js',
     change: './src/apps/packages/change/index.js',
     resetInitPwd: './src/apps/packages/resetInitPwd/index.js',
-    // trendOld: './src/apps/packages/trend/old/index.js',
-    // resetPassword: './src/apps/packages/resetPassword/resetPassword.js',
     updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
-    // merchants: './src/apps/packages/merchants/index.js',
     // 404: './src/apps/packages/404/index.js',
-    // mmc: './src/apps/packages/mmc/index.js',
-    // charge: './src/apps/packages/charge/index.js',
-    // changeUrl: './src/apps/packages/changeUrl/index.js',
-    // leaflets: './src/apps/packages/leaflets/index.js',
-    // download: './src/apps/packages/download/index.js',
-    // dragonAndTiger: './src/apps/packages/dragonAndTiger/index.js',
-    // oneYear: './src/apps/packages/oneYear/index.js',
-    // vip: './src/apps/packages/vip/index.js',
-    // expedition: './src/apps/packages/expedition/index.js',
-    // newDownload: './src/apps/packages/newDownload/index.js',
-    // integration: './src/apps/packages/integration/index.js',
-    // binding: './src/apps/packages/binding/index.js',
-    // regist: './src/apps/packages/registers/index.js',
-    // update15: './src/apps/packages/update/update15.js',
-    // rebateDesc: './src/apps/packages/rebateDescription/rebateDescription.js',
     logger: './src/apps/packages/logger/index.js',
     game: './src/apps/packages/game/index.js',
     game_error: './src/apps/packages/game_error/index.js'
@@ -83,11 +64,6 @@ const appConfig = {
       template: './entry/package-vue.html',
       chunks: ['commons', 'base', 'resetInitPwd'],
     },
-    // charge: {
-    //   title: '充值结果',
-    //   template: './entry/package.html',
-    //   chunks: ['commons', 'vendor', 'base', 'charge'],
-    // },
     resetPassword: {
       title: '无限娱乐',
       template: './entry/package.html',
@@ -113,11 +89,6 @@ const appConfig = {
       template: './entry/package-game.html',
       chunks: ['commons', 'base', 'game_error']
     },
-    // resetPassword: {
-    //   title: '无限娱乐',
-    //   template: './entry/package.html',
-    //   chunks: ['commons', 'vendor', 'base', 'resetPassword'],
-    // },
     // 404: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
@@ -127,12 +98,6 @@ const appConfig = {
     //   title: '线路检测',
     //   template: './entry/package.html',
     //   chunks: ['commons', 'vendor', 'base', 'changeUrl'],
-    // },
-    //
-    // leaflets: {
-    //   title: '宣传页',
-    //   template: './entry/package.html',
-    //   chunks: ['commons', 'vendor', 'base', 'leaflets'],
     // },
     // client: {
     //  title: '无限娱乐 - 客户端下载',
@@ -144,36 +109,6 @@ const appConfig = {
     //   template: './entry/package.html',
     //   chunks: ['commons', 'base', 'download'],
     // },
-    // dragonAndTiger: {
-    //   title: '无限娱乐 - 龙虎彩',
-    //   template: './entry/package.html',
-    //   chunks: ['commons', 'base', 'dragonAndTiger'],
-    // },
-    // oneYear: {
-    //   title: '无限娱乐周年庆',
-    //   template: './entry/package.html',
-    //   chunks: ['commons', 'vendor', 'base', 'oneYear'],
-    // },
-    // vip: {
-    //   title: '无限娱乐',
-    //   template: './entry/package.html',
-    //   chunks: ['commons', 'vendor', 'base', 'vip'],
-    // },
-    // expedition: {
-    //   title: '无限娱乐 携手共进 远征星辰',
-    //   template: './entry/package.html',
-    //   chunks: ['commons', 'vendor', 'base', 'expedition'],
-    // },
-    // newDownload: {
-    //   title: '无限娱乐 - 客户端下载',
-    //   template: './entry/package.html',
-    //   chunks: ['commons', 'base', 'newDownload'],
-    // },
-    // integration: {
-    //   title: '无限娱乐 - integration',
-    //   template: './entry/package.html',
-    //   chunks: ['commons', 'base', 'integration'],
-    // },
     // binding: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
@@ -183,16 +118,6 @@ const appConfig = {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
     //   chunks: ['commons', 'vendor', 'base', 'regist'],
-    // },
-    // update: {
-    //   title: '无限娱乐',
-    //   template: './entry/package.html',
-    //   chunks: ['commons', 'vendor', 'base', 'update15'],
-    // },
-    // rebateDesc: {
-    //   title: '无限娱乐',
-    //   template: './entry/package.html',
-    //   chunks: ['commons', 'vendor', 'base', 'rebateDesc'],
     // },
   },
   output: {
@@ -216,7 +141,7 @@ let entry = _(appConfig.entry).reduce(function (entries, entry, entryName) {
 
 //==============output================
 let output = {
-  path: path.join(__dirname, 'dist/' + appConfig.output.path)
+  path: path.join(__dirname, 'www/' + appConfig.output.path)
 };
 
 if (DEV) {
@@ -262,32 +187,6 @@ let plugins = [
     threadPool: happyThreadPool,
     loaders: ['babel-loader'],
   }),
-  // new HappyPack({
-  //   id: 'vue',
-  //   threadPool: happyThreadPool,
-  //   loaders: [
-  //     {
-  //       loader: 'vue-loader',
-  //       options: {
-  //         loaders: {
-  //           js: 'babel-loader',
-  //           scss: [
-  //             'style-loader',
-  //             'css-loader',
-  //             'postcss-loader',
-  //             'sass-loader',
-  //             {
-  //               loader: 'sass-resources-loader',
-  //               options: {
-  //                 resources: './src/base/styles/_variable.scss',
-  //               },
-  //             },
-  //           ],
-  //         },
-  //       }
-  //     }
-  //   ]
-  // }),
   new HappyPack({
     id: 'scss',
     threadPool: happyThreadPool,
@@ -411,6 +310,7 @@ const modules = {
       test: /\.(ttf|eot|svg|swf|mp3|wav)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       use: 'file-loader'
     },
+
     {
       test: /(.*)\.html$/,
       use: ['html-loader'],
@@ -516,21 +416,6 @@ if (DEV) {
         },
       },
     ],
-
-    // use: ExtractTextPlugin.extract({
-    //   fallback: "style-loader",
-    //   use: [
-    //     'css-loader',
-    //     'postcss-loader',
-    //     'sass-loader',
-    //     {
-    //       loader: 'sass-resources-loader',
-    //       options: {
-    //         resources: './src/base/styles/_variable.scss',
-    //       },
-    //     },
-    //   ]
-    // }),
     include: [path.join(__dirname, 'src')],
   });
 
