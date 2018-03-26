@@ -160,9 +160,6 @@ if (DEV) {
 
 //==============plugins================
 let plugins = [
-  // new webpack.ResolverPlugin(
-  //   new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
-  // ),
   new webpack.ProvidePlugin({
     Vue: ['vue/dist/vue.esm.js', 'default'],
     mapState: ['vuex', 'mapState'],
