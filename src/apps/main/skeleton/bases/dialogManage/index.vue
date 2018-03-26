@@ -5,7 +5,8 @@
     <keep-alive>
       <ticket-vouchers v-if="showIndex === 3" :key="3" @next="showNext"></ticket-vouchers>
     </keep-alive>
-    <novice-package v-if="(showIndex === 4 || novicePackageStatus)" :key="4" :need-call-back="showIndex === 4 ? true : false" @next="showNext"></novice-package>
+    <novice-package v-if="showIndex === 4" :key="4" :need-call-back="showIndex === 4 ? true : false" @next="showNext"></novice-package>
+    <!--<novice-package v-if="showIndex === 4" :key="4" @next="showNext"></novice-package>-->
 
   </div>
 </template>
@@ -25,10 +26,10 @@
         showIndex: 1  //弹窗顺序
       }
     },
-    computed:{
-      ...mapGetters([
-        'novicePackageStatus'
-      ])
+    computed: {
+//      ...mapGetters([
+//        'novicePackageStatus'
+//      ])
     },
     methods: {
       showNext(){

@@ -195,6 +195,8 @@ const OpenAccountManageView = Base.ItemView.extend({
     if (rebate !== '' && _(rebate).isFinite()) {
       const myReg = /^(0|[1-9][0-9]*)(.\d{1})?$/
       const reg = myReg.test(rebate)
+      this.rebateMin = this.rebateMin === undefined ? 0 : this.rebateMin
+      this.rebateMax = this.rebateMax === undefined ? 0 : this.rebateMax
       if (!reg) {
         this.changeEleClass(this.$acAutoReBate, 'error')
         this.$acManualRebateInfo.html(this.getErrorTooltip('值最多能精确到小数点后一位'))

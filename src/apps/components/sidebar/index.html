@@ -45,7 +45,7 @@
   <ul class="sidebar-list">
     <% _(item.list).each(function(menu) { %>
     <% if (!menu.needAuth || menu.auth) { %>
-    <li role="presentation" class="<% if (menu.isActive) { %>active<% } %>">
+    <li role="presentation" class="<% if (menu.isActive) { %>active<% } %> js-sidebar-li">
       <a class="router" href="#<%=menu.router %>">
         <%=menu.name %>
         <% if(menu.id === 407 && (dividendStatus === 1 || dividendStatus === 3)) { %>
