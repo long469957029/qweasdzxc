@@ -15,6 +15,8 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 const happyThreadPool = HappyPack.ThreadPool({size: 5});
 
+const serverIP = 'http://forev3.5x5x.com'
+
 const DEV = process.env.NODE_ENV !== 'production';
 
 const appConfig = {
@@ -481,7 +483,55 @@ module.exports = {
   plugins,
   module: modules,
   devServer: {
-    port: appConfig.port
+    port: appConfig.port,
+    publicPath: appConfig.output.publicPath,
+    hot: true,
+    // clientLogLevel: 'error',
+    historyApiFallback: true,
+    inline: true,
+    progress: false,
+    proxy: {
+      '**/*.json': {
+        target: serverIP,
+        changeOrigin: true,
+      },
+      '/acct/imgcode/code': {
+        target: serverIP,
+        changeOrigin: true,
+      },
+      '/info/imgs/': {
+        target: serverIP,
+        changeOrigin: true,
+      },
+    },
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000,
+    },
+    headers: {'X-Custom-Header': 'yes'},
+    stats: {
+      assets: false,
+      cached: false,
+      cachedAssets: false,
+      children: false,
+      chunks: false,
+      chunkModules: false,
+      chunkOrigins: false,
+      colors: true,
+      depth: false,
+      entrypoints: true,
+      hash: true,
+      maxModules: 15,
+      modules: false,
+      performance: true,
+      reasons: false,
+      source: false,
+      timings: true,
+      version: false,
+      warnings: true,
+    },
+    // 取消框架域名检测
+    disableHostCheck: true
   }
 };
 

@@ -31,8 +31,8 @@
   ],
   "scripts": {
     "start": "npm run dev",
-    "dev": "NODE_ENV=development gulp server",
-    "analysis": "cross-env NODE_ENV=development MODE=analyse gulp server",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js",
+    "analysis": "cross-env NODE_ENV=development MODE=analyse npm start",
     "dll:prepare": "npm run dll:prepare:dev & npm run dll:prepare:prd",
     "dll:prepare:dev": "cross-env NODE_ENV=development gulp dll:prepare",
     "dll:prepare:prd": "cross-env NODE_ENV=production gulp dll:prepare",
@@ -45,7 +45,10 @@
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "docs": "cd docs && gitbook install && gitbook serve",
     "docs:deploy": "cd docs && ./deploy.sh",
-    "unit": "cross-env BABEL_ENV=test NODE_ENV=development karma start test/unit/karma.conf.js --single-run"
+    "e2e": "cross-env NODE_ENV=development node test/e2e/runner.js",
+    "e2e-dev": "cross-env NODE_ENV=development node test/e2e/runner.js --dev",
+    "unit": "cross-env BABEL_ENV=test NODE_ENV=development karma start test/unit/karma.conf.js --single-run",
+    "test": "npm run unit && npm run e2e-dev"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-beta.37",
@@ -91,6 +94,7 @@
     "babel-eslint": "^8.2.2",
     "babel-loader": "^8.0.0-beta.2",
     "babel-plugin-istanbul": "^4.1.5",
+    "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "chromedriver": "^2.37.0",
     "compression-webpack-plugin": "^1.1.11",
@@ -174,6 +178,7 @@
     "vue-server-renderer": "^2.5.16",
     "webpack": "^4.1.1",
     "webpack-bundle-analyzer": "^2.11.1",
+    "webpack-cli": "^2.0.13",
     "webpack-dev-server": "^3.1.1",
     "webpack-merge": "^4.1.2"
   },
