@@ -79,7 +79,7 @@ const quickPay = [
     pic: require('base/images/v2/bank-aliPay-pay.png'),
     sortId: 11,
     risky: true,
-    changeAmount: true,
+    changeAmount: false,
   },
   {
     type: 6,
