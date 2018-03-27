@@ -1,5 +1,5 @@
 <template>
-  <div class="change-center">
+  <div class="change-center" @click="clickOutArea">
     <div class="change-header">
       <div class="change-title">
         <div class="inline-block">
@@ -10,14 +10,14 @@
           </div>
         </div>
         <div class="change-title-panel inline-block">
-          <div class="change-title-features inline-block" v-on:click="doCollect">
+          <div class="change-title-features inline-block" v-on:click.stop="doCollect">
             <div class="title-img-con inline-block"><i class="fa fa-heart" aria-hidden="true"></i></div>
             <div class="title-text inline-block">收藏我们</div>
           </div>
-          <div class="change-title-features inline-block" v-on:click="openAppDownload">
+          <div class="change-title-features inline-block" v-on:click.stop="openAppDownload">
             <div class="title-img-download inline-block"><i class="fa fa-mobile" aria-hidden="true"></i></div>
             <div class="title-text inline-block">APP下载</div>
-            <div class="title-app-download-panel" v-show="appDownload">
+            <div class="title-app-download-panel" v-if="appDownload">
               <div class="title-app-download-text">
                 手机扫一扫下载
               </div>
@@ -27,7 +27,7 @@
             </div>
           </div>
 
-          <div class="change-title-features-service customService inline-block">
+          <div class="change-title-features-service customService inline-block" @click.stop="">
             <a href="javascript:void(0)"
                onclick="newwin = window.open('https://szzero.livechatvalue.com/chat/chatClient/chatbox.jsp?companyID=576264&amp;configID=53412&amp;jid=9259996324&amp;s=1&amp;enterurl=http%3A%2F%2Fforehead.5x5x.com%2Flogin.html','service','width=800,height=680'); newwin.moveTo(100,50);"
                title="联系客服">
@@ -182,6 +182,11 @@
 
     filters: {},
     methods: {
+      clickOutArea(){
+        if (this.appDownload) {
+          this.appDownload = false
+        }
+      },
       urlConnectTest (urlList) {
         const servers = urlList
 

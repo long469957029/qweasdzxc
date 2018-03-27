@@ -229,7 +229,7 @@
     filters: {},
 
     methods: {
-      getActivityData(e){
+      getActivityData(){
         activityInfo.getNovicePackageInfo(
           ({data}) => {
             if (data && data.result === 0) {
@@ -244,6 +244,9 @@
 //                  this.localStorage.set(this.userId + 'NovicePackageActivity', true)
 //
 //                }
+              } else if (data.root.status === 2) {
+                this.novicePackageModal = false
+                this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, false)
               }
             }
 //            else {

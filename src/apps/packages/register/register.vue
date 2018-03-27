@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="clickOutArea">
     <div class="loading" v-show="loading">
       <img src="../download/images/wx/loading.gif" width="150" height="150">
     </div>
@@ -12,12 +12,12 @@
           </div>
           <div class="pull-right down-btn">
             <span class="vertical-top">手机端下载</span>
-            <a class="icon android" @click="qrtype !== 1 ? qrtype = 1 : qrtype = 0"></a>
-            <a class="icon ios" @click="qrtype !== 2 ? qrtype = 2 : qrtype = 0"></a>
-            <div class="qrcode ios" v-show="qrtype === 2">
+            <a class="icon android" @click.stop="qrtype !== 1 ? qrtype = 1 : qrtype = 0"></a>
+            <a class="icon ios" @click.stop="qrtype !== 2 ? qrtype = 2 : qrtype = 0"></a>
+            <div class="qrcode ios" v-if="qrtype === 2">
               <div class="qrimg"></div>
             </div>
-            <div class="qrcode android" v-show="qrtype === 1">
+            <div class="qrcode android" v-if="qrtype === 1">
               <div class="qrimg"></div>
             </div>
           </div>
@@ -53,11 +53,12 @@
                   </div>
                 </div>
                 <div class="reg-info pull-left">
-                  <form action="javascript:void(0);" id="jsRegisterForm" class="js-re-registerForm form-horizontal" autocomplete="off">
+                  <form action="javascript:void(0);" id="jsRegisterForm" class="js-re-registerForm form-horizontal"
+                        autocomplete="off">
                     <div class="input-control">
                       <div class="input-icon name"></div>
                       <input type="text" class="register-input" name="userName" v-model.trim="userName"
-                             @focus="inputFocus(1)" @blur="inputBlur(1)"
+                             @focus="inputFocus(1)"
                              placeholder="请设置您的账号" autocomplete="off"/>
                       <span class="input-check" v-if="userStatus === 3"></span>
                     </div>
@@ -68,9 +69,10 @@
                     </div>
                     <div class="input-control">
                       <div class="input-icon pwd"></div>
-                      <input type="password" class="register-input" name="userName" v-model.trim="passWord"
-                             @focus="inputFocus(2)" @blur="inputBlur(2)"
-                             placeholder="请设置您的密码" disableautocomplete autocomplete="off"/>
+                      <input type="text" onfocus="this.type='password'" class="register-input" name="userName"
+                             v-model.trim="passWord"
+                             @focus="inputFocus(2)" @blur="inputBlur(2)" autocomplete="off"
+                             placeholder="请设置您的密码"/>
                       <span class="input-check" v-if="pwdStatus === 3"></span>
                     </div>
                     <div :class="['error-text',{'text-hot': pwdStatus === 2}]">
@@ -163,7 +165,8 @@
               <div class="sub-title">玩法更新最快，平台衔接最稳</div>
             </div>
             <div class="section-content">
-              <div :class="['game-info',{'active': gameIndex === 1}]" @mouseover="gameHover(1)" @mouseout="startGameChange">
+              <div :class="['game-info',{'active': gameIndex === 1}]" @mouseover="gameHover(1)"
+                   @mouseout="startGameChange">
                 <div class="game-logo one"></div>
                 <div class="game-title">彩票平台</div>
                 <div class="game-text">
@@ -175,7 +178,8 @@
                   </ul>
                 </div>
               </div>
-              <div :class="['game-info',{'active': gameIndex === 2}]" @mouseover="gameHover(2)" @mouseout="startGameChange">
+              <div :class="['game-info',{'active': gameIndex === 2}]" @mouseover="gameHover(2)"
+                   @mouseout="startGameChange">
                 <div class="game-logo two"></div>
                 <div class="game-title">真人视讯</div>
                 <div class="game-text">
@@ -186,7 +190,8 @@
                   </ul>
                 </div>
               </div>
-              <div :class="['game-info',{'active': gameIndex === 3}]" @mouseover="gameHover(3)" @mouseout="startGameChange">
+              <div :class="['game-info',{'active': gameIndex === 3}]" @mouseover="gameHover(3)"
+                   @mouseout="startGameChange">
                 <div class="game-logo three"></div>
                 <div class="game-title">电子游戏</div>
                 <div class="game-text">
@@ -196,7 +201,8 @@
                   </ul>
                 </div>
               </div>
-              <div :class="['game-info',{'active': gameIndex === 4}]" @mouseover="gameHover(4)" @mouseout="startGameChange">
+              <div :class="['game-info',{'active': gameIndex === 4}]" @mouseover="gameHover(4)"
+                   @mouseout="startGameChange">
                 <div class="game-logo four"></div>
                 <div class="game-title">捕鱼游戏</div>
                 <div class="game-text">
@@ -206,7 +212,8 @@
                   </ul>
                 </div>
               </div>
-              <div :class="['game-info',{'active': gameIndex === 5}]" @mouseover="gameHover(5)" @mouseout="startGameChange">
+              <div :class="['game-info',{'active': gameIndex === 5}]" @mouseover="gameHover(5)"
+                   @mouseout="startGameChange">
                 <div class="game-logo five"></div>
                 <div class="game-title">体育平台</div>
                 <div class="game-text">
@@ -252,7 +259,7 @@
                 <div class="banner">
                   <swiper :options="swiperOption" ref="myPhoneSwiper">
                     <swiper-slide v-for="(item, i) in phoneBannerCfg" :key="i">
-                        <img :src="item.url"/>
+                      <img :src="item.url"/>
                     </swiper-slide>
                   </swiper>
                 </div>
@@ -398,26 +405,31 @@
             clickable: true
           },
         },
-        gameIndex:1,
-        fiveIndex:0,
-        phoneBannerCfg:[
+        gameIndex: 1,
+        fiveIndex: 0,
+        phoneBannerCfg: [
           {
-            url:require('./images/section-4-banner1.png')
+            url: require('./images/section-4-banner1.png')
           },
           {
-            url:require('./images/section-4-banner2.png')
+            url: require('./images/section-4-banner2.png')
           },
           {
-            url:require('./images/section-4-banner3.png')
+            url: require('./images/section-4-banner3.png')
           }
         ],
-        redPackNum:0,
-        showRedPack:false,
-        redPackTime:60,
+        redPackNum: 0,
+        showRedPack: false,
+        redPackTime: 60,
         qrtype: 0
       }
     },
     methods: {
+      clickOutArea(){
+        if (this.qrtype === 1 || this.qrtype === 2) {
+          this.qrtype = 0
+        }
+      },
       init(){
         $(this.$refs.fullpage).fullpage({
           verticalCentered: false,
@@ -429,7 +441,7 @@
             const selectorContent = `#section${index} .section-content`
             $(selectorHeader).addClass('active')
             $(selectorContent).addClass('active')
-            if(index === 3){
+            if (index === 3) {
               this.startGameChange()
             }
           },
@@ -472,6 +484,7 @@
 
         }
       },
+
       checkNameExist(){
         if (this.userName === '') {
           this.userStatus = 2
@@ -613,16 +626,16 @@
       },
       showPromiseDailog(){
         this.showPromise = !this.showPromise
-        if(this.showPromise){
+        if (this.showPromise) {
           $.fn.fullpage.setAllowScrolling(false)
-        }else{
+        } else {
           $.fn.fullpage.setAllowScrolling(true)
         }
       },
       runTime(){
         this.redPackTimeInv = setInterval(() => {
           this.redPackTime -= 1
-          if(this.redPackTime < 0){
+          if (this.redPackTime < 0) {
             clearInterval(this.redPackTimeInv)
             this.showRedPack = false
           }
@@ -640,11 +653,11 @@
       sendLinkViewApi({linkId: this.linkId})
       checkLinkTypeApi({linkUrl: this.linkId},
         ({data}) => {
-          if(data && data.result === 0){
-            if(data.root.type === 5){
+          if (data && data.result === 0) {
+            if (data.root.type === 5) {
               recieveRedpackApi({linkId: this.linkId},
                 ({data}) => {
-                  if(data && data.result === 0 && data.root){
+                  if (data && data.result === 0 && data.root) {
                     this.redPackNum = _(data.root.redpackAmount).convert2yuan()
                     this.showRedPack = true
                     this.runTime()
@@ -663,29 +676,31 @@
   $main-border-color: #007e90 !default;
   $input-placeholder: #0297ad !default;
 
-  .redPack-enter-active{
+  .redPack-enter-active {
     animation: jumpDown .8s;
   }
-  .redPack-leave-active{
+
+  .redPack-leave-active {
     opacity: 0;
     transform: translateY(-50%);
     transition: all .5s;
   }
 
   @keyframes jumpDown {
-    from{
+    from {
       opacity: 0;
       transform: translate3d(0, -10%, 0);
     }
-    40%,to{
+    40%, to {
       opacity: 1;
       transform: translate3d(0, 0, 0);
     }
-    70%{
+    70% {
       transform: translate3d(0, -15px, 0);
     }
 
   }
+
   .reg-ad {
     display: inline-block;
     width: 332px;
@@ -693,22 +708,22 @@
     overflow: hidden;
     margin-top: 55px;
     margin-right: 50px;
-    .banner{
+    .banner {
       width: 340px;
       height: 155px;
       background: url('./images/banner-1.png') no-repeat;
     }
-    .title{
+    .title {
       font-size: $font-md;
       margin-top: 20px;
     }
-    .line{
+    .line {
       width: 28px;
       height: 3px;
       margin-top: 15px;
       background: $new-main-deep-color;
     }
-    .text{
+    .text {
       margin-top: 15px;
       font-size: $font-xs;
     }
@@ -887,14 +902,16 @@
       height: 100%;
     }
   }
-  .section{
-    &:nth-of-type(odd){
+
+  .section {
+    &:nth-of-type(odd) {
       background-color: $title-gray;
     }
-    &:nth-of-type(even){
+    &:nth-of-type(even) {
       background-color: $def-white-color;
     }
   }
+
   #section1, #section2, #section3, #section4, #section5 {
     /*background: url(images/section-bg.png) no-repeat;*/
     /*background-size: 100% 100%;*/
@@ -1074,7 +1091,7 @@
     .section-header {
       width: 1099px;
       height: 180px;
-      .title{
+      .title {
         background: url("./images/brand.png") no-repeat center;
       }
     }
@@ -1101,7 +1118,7 @@
           }
         }
       }
-      .left{
+      .left {
         opacity: 0;
       }
       .right {
@@ -1137,7 +1154,7 @@
     .section-header {
       width: 1099px;
       height: 182px;
-      .title{
+      .title {
         background: url('./images/entertainment.png') no-repeat center;
       }
     }
@@ -1151,14 +1168,14 @@
       justify-content: center;
       align-items: center;
       z-index: 1;
-      .game-info{
+      .game-info {
         width: 240px;
         height: 173px;
         transition: height .5s;
         cursor: pointer;
         overflow: hidden;
         position: relative;
-        &.active{
+        &.active {
           height: 405px;
           .game-logo {
             &.one {
@@ -1177,51 +1194,51 @@
               background: url("./images/game-five-active.png") no-repeat;
             }
           }
-          .game-text{
+          .game-text {
             transition: opacity .5s;
             opacity: 1;
           }
         }
-        .game-title{
+        .game-title {
           width: 100%;
           text-align: center;
           color: $def-white-color;
           position: absolute;
           font-size: 20px;
-          top:49%;
+          top: 49%;
           z-index: 2;
         }
-        .game-logo{
+        .game-logo {
           width: 240px;
           height: 173px;
           position: absolute;
           transition: background .5s;
-          &.one{
+          &.one {
             background: url("./images/game-one.png") no-repeat;
           }
-          &.two{
+          &.two {
             background: url("./images/game-two.png") no-repeat;
           }
-          &.three{
+          &.three {
             background: url("./images/game-three.png") no-repeat;
           }
-          &.four{
+          &.four {
             background: url("./images/game-four.png") no-repeat;
           }
-          &.five{
+          &.five {
             background: url("./images/game-five.png") no-repeat;
           }
         }
-        .game-text{
+        .game-text {
           position: absolute;
-          top:145px;
+          top: 145px;
           width: 240px;
           height: 227px;
           background: url("./images/game-text-bg.png") no-repeat;
           opacity: 0;
-          ul{
+          ul {
             padding-top: 89px;
-            li{
+            li {
               width: 40%;
               font-size: $font-sm;
               text-align: center;
@@ -1254,7 +1271,7 @@
       width: 1265px;
       height: 180px;
       transform: translateY(90px);
-      .title{
+      .title {
         background: url('./images/mobile.png') no-repeat center;
       }
     }
@@ -1266,11 +1283,11 @@
       transform: translateY(50px);
       opacity: 0;
       position: relative;
-      .btn-list{
+      .btn-list {
         display: flex;
         width: 656px;
         margin: 0 auto;
-        .info{
+        .info {
           width: 160px;
           height: 40px;
           background-color: $def-white-color;
@@ -1281,56 +1298,56 @@
           margin-left: 24px;
           color: $new-inverse-color;
           cursor: pointer;
-          transition:  background-color .5s;
-          &:hover{
+          transition: background-color .5s;
+          &:hover {
             background-color: $new-main-deep-color;
             border-color: $new-main-deep-color;
             color: $def-white-color;
-            .icon{
-              &.apple{
+            .icon {
+              &.apple {
                 background: url("./images/apple-active.png") no-repeat;
               }
-              &.android{
+              &.android {
                 background: url("./images/android-active.png") no-repeat;
               }
-              &.windows{
+              &.windows {
                 background: url("./images/pc-active.png") no-repeat;
               }
-              &.web-phone{
+              &.web-phone {
                 background: url("./images/webphone-active.png") no-repeat;
               }
             }
           }
         }
-        .icon{
+        .icon {
           display: inline-block;
           vertical-align: middle;
           transform: translateY(-3px);
           margin-right: 5px;
           transition: background .5s;
-          &.apple{
+          &.apple {
             width: 21px;
             height: 25px;
             background: url("./images/apple.png") no-repeat;
           }
-          &.android{
+          &.android {
             width: 23px;
             height: 24px;
             background: url("./images/android.png") no-repeat;
           }
-          &.windows{
+          &.windows {
             width: 25px;
             height: 24px;
             background: url("./images/pc.png") no-repeat;
           }
-          &.web-phone{
+          &.web-phone {
             width: 15px;
             height: 25px;
             background: url("./images/webphone.png") no-repeat;
           }
         }
       }
-      .content{
+      .content {
         width: 689px;
         height: 360px;
         background: url("./images/ball-bg.png") no-repeat;
@@ -1338,7 +1355,7 @@
         top: 140px;
         left: 50%;
         margin-left: -345px;
-        .hand{
+        .hand {
           width: 793px;
           height: 381px;
           background: url("./images/section-4-hand.png") no-repeat;
@@ -1347,7 +1364,7 @@
           left: 152px;
           z-index: 3;
         }
-        .phone{
+        .phone {
           width: 544px;
           height: 373px;
           background: url("./images/section-4-phone.png") no-repeat;
@@ -1356,7 +1373,7 @@
           top: 43px;
           left: 171px;
         }
-        .banner{
+        .banner {
           width: 409px;
           height: 233px;
           position: absolute;
@@ -1377,7 +1394,7 @@
       width: 1099px;
       height: 180px;
       transform: translateY(140px);
-      .title{
+      .title {
         background: url("./images/confidence.png") no-repeat center;
       }
     }
@@ -1387,56 +1404,56 @@
       margin: 0 auto;
       padding-top: 250px;
       opacity: 0;
-      .info-list{
+      .info-list {
         display: flex;
-        .info{
+        .info {
           width: 280px;
           height: 226px;
           margin-left: 20px;
           cursor: pointer;
           padding-top: 54px;
-          .logo{
+          .logo {
             width: 69px;
             height: 69px;
             margin: 0 auto;
           }
-          .title{
+          .title {
             font-size: $font-md;
             color: $def-white-color;
             text-align: center;
             margin-top: 30px;
           }
-          .sub-title{
+          .sub-title {
             font-size: $font-xs;
             color: $def-white-color;
             text-align: center;
             margin-top: 20px;
           }
-          &.one{
+          &.one {
             background: url("./images/section-five-one.png") no-repeat;
-            .logo{
+            .logo {
               background: url("./images/section-five-logo-one.png") no-repeat;
             }
           }
-          &.two{
+          &.two {
             background: url("./images/section-five-two.png") no-repeat;
-            .logo{
+            .logo {
               background: url("./images/section-five-logo-two.png") no-repeat;
             }
           }
-          &.three{
+          &.three {
             background: url("./images/section-five-three.png") no-repeat;
-            .logo{
+            .logo {
               background: url("./images/section-five-logo-three.png") no-repeat;
             }
           }
-          &.four{
+          &.four {
             background: url("./images/section-five-four.png") no-repeat;
-            .logo{
+            .logo {
               background: url("./images/section-five-logo-four.png") no-repeat;
             }
           }
-          &.active{
+          &.active {
             animation: flipInY .8s;
             background: $new-main-deep-color;
           }
@@ -1454,7 +1471,7 @@
     height: 90px;
     background-color: #ffffff;
     box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.08);
-    top:0;
+    top: 0;
     left: 0;
     z-index: 10;
 
@@ -1500,18 +1517,18 @@
           background: url("./images/icon-ios.png") no-repeat;
         }
       }
-      .qrcode{
+      .qrcode {
         width: 150px;
         height: 158px;
         background: url("./images/qrcode-bg.png") no-repeat;
         position: absolute;
-        &.ios{
+        &.ios {
           left: 74px;
         }
-        &.android{
+        &.android {
           left: 27px;
         }
-        .qrimg{
+        .qrimg {
           width: 100px;
           height: 100px;
           background: url("./images/qrcode.png") center;
@@ -1521,13 +1538,13 @@
         }
       }
     }
-    .register-red-pack{
+    .register-red-pack {
       position: absolute;
       width: 124px;
       height: 219px;
       top: 90px;
       left: -40px;
-      .line-left{
+      .line-left {
         width: 12px;
         height: 54px;
         background: url("./images/line-left.png") no-repeat;
@@ -1535,7 +1552,7 @@
         left: 50px;
         z-index: 3;
       }
-      .line-right{
+      .line-right {
         width: 11px;
         height: 53px;
         background: url("./images/line-right.png") no-repeat;
@@ -1544,7 +1561,7 @@
         left: 62px;
         z-index: 1;
       }
-      .red-main{
+      .red-main {
         width: 124px;
         height: 165px;
         background: url("./images/red-pack-bg.png") no-repeat;
@@ -1552,33 +1569,33 @@
         position: relative;
         top: -68px;
         animation: rotateRed 4s infinite;
-        transform-origin:50% 5%;
-        .red-title{
+        transform-origin: 50% 5%;
+        .red-title {
           width: 85px;
           height: 14px;
           background: url("./images/title.png") no-repeat;
           margin: 54px 0px 0px 19px;
         }
-        .red-money{
+        .red-money {
           width: 80%;
           margin: 0 auto;
           text-align: center;
           font-size: $font-xs;
           color: rgba(111, 35, 28, 0.8);
           margin-top: 15px;
-          .num{
+          .num {
             font-size: 24px;
             color: #eeb10c;
             margin-top: 15px;
           }
         }
-        .red-time{
+        .red-time {
           text-align: center;
           font-size: $font-xs;
           margin-top: 23px;
-          .time{
+          .time {
             margin: 0px 3px;
-            font-size:13px;
+            font-size: 13px;
           }
         }
       }
@@ -1938,15 +1955,17 @@
       transform: none;
     }
   }
+
   @keyframes rotateRed {
-    0%,100%{
+    0%, 100% {
       transform: rotate(-15deg);
     }
-    50%{
+    50% {
       transform: rotate(15deg);
     }
   }
-  .first-section{
+
+  .first-section {
     z-index: 2;
     overflow: hidden;
   }
