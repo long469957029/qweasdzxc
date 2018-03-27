@@ -43,6 +43,10 @@ const AliAndBankTransfer = Base.ItemView.extend({
 
           const clipboard = new Clipboard('.jc-rc-info-copy');
           clipboard.on('success', function(e) {
+            $(e.trigger).find('span').addClass('copySuccess')
+            setTimeout(() => {
+              $(e.trigger).find('span').removeClass('copySuccess')
+            },2000)
             e.clearSelection();
           });
 

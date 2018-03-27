@@ -20,6 +20,7 @@
   import RedPackAccount from 'com/redpackAccountDialog'
   import NovicePackage from 'activity/novicePackageActivity'
   import TicketVouchers from 'com/redpackAccountDialog/ticket-vouchers'
+  import activityInfo from 'api/activity'
   export default{
     name: 'dialog-manage',
     components: {
@@ -54,8 +55,14 @@
           const hasShow = this.localStorage.get(this.userId + 'NovicePackageActivity')
           if (!hasShow) {
             /** valid 是否首次登录,首次登录会自动弹出活动界面 */
-            this.localStorage.set(this.userId + 'NovicePackageActivity', true)
-            this.novicePackageModal = true
+            activityInfo.getNovicePackageInfo(
+              ({data}) => {
+                if (data.root.status === 1 || data.root.status === 0) {
+                  this.novicePackageModal = true
+                  this.localStorage.set(this.userId + 'NovicePackageActivity', true)
+                }
+              }
+            )
 //            this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, true)
           }
           this.showIndex = 5
@@ -63,6 +70,8 @@
       },
       novicePackageStatus(){
         this.novicePackageModal = this.novicePackageStatus
+
+
       }
     }
   }

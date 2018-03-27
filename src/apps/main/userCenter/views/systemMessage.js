@@ -1,4 +1,3 @@
-
 const SystemMessageView = Base.ItemView.extend({
 
   template: require('userCenter/templates/systemMessage.html'),
@@ -9,6 +8,7 @@ const SystemMessageView = Base.ItemView.extend({
 
   events: {
     'click .js-message-btn': 'messageBtnHandler',
+    'click .js-system-message-clear-all': 'allMessageToReadHandler'
   },
 
   setNoticeEntry() {
@@ -16,7 +16,11 @@ const SystemMessageView = Base.ItemView.extend({
       url: '/acct/usernotice/entryNoticeList.json',
     })
   },
-
+  setAllMessageToRead() {
+    return Global.sync.ajax({
+      url: '/acct/usernotice/saveAllNoticeToRead.json',
+    })
+  },
   getNoticeListXhr(data) {
     _(data).extend({
       version: 1,
@@ -40,7 +44,7 @@ const SystemMessageView = Base.ItemView.extend({
     this.$page = this.$('.js-system-message-page')
     this.canClick = true
     this.setNoticeEntry()
-    this.getNoticeList({ pageIndex: 0 })
+    this.getNoticeList({pageIndex: 0})
     // console.log(this.options.noticeId)
   },
 
@@ -69,7 +73,7 @@ const SystemMessageView = Base.ItemView.extend({
       })
   },
   parentRenderUnread() {
-    this._parentView.renderUnread({ unReadNotice: this.unReadNotice, newFeedbackCount: this.newFeedbackCount })
+    this._parentView.renderUnread({unReadNotice: this.unReadNotice, newFeedbackCount: this.newFeedbackCount})
   },
 
   formateNoticeList(data) {
@@ -79,7 +83,8 @@ const SystemMessageView = Base.ItemView.extend({
                   <div class="message-top cursor-pointer clearfix js-message-btn" data-toggle="collapse"
                data-target="#message-info-${item.noticeId}" data-parent="#accordion1" data-noticeid="${item.noticeId}" data-read="${item.isRead}">
                     <div class="pull-left m-top-md m-left-md">
-                      <div class="message-title js-message-title-${item.noticeId} ${item.new ? 'new' : ''} ${Number(item.isRead) === 0 ? 'unRead' : ''} font-sm">${item.title}</div>
+                      <div class="message-title js-message-title-${item.noticeId} ${item.new ? 'new' : ''} ${Number(item.isRead) === 0 ? 'unRead' : ''} font-sm">${item.title}
+                      <div class="${Number(item.isRead) === 0 ? 'unReadIcon' : ''}"></div></div>
                       <div class="message-sub-title text-auxiliary">${item.desc}</div>
                     </div>
                     <div class="pull-right m-right-md p-top-md">
@@ -92,7 +97,8 @@ const SystemMessageView = Base.ItemView.extend({
                   </div>
                 </div>`
       })
-      this.$systemMessageMain.html(list.join(''))
+      const clearAllNotice = '<div class="js-system-message-clear-all system-message-clear-all">全部标记已读</div>' + list.join('')
+      this.$systemMessageMain.html(clearAllNotice)
     }
   },
   initPage(count) {
@@ -102,13 +108,40 @@ const SystemMessageView = Base.ItemView.extend({
         pageSize: 10,
         totalSize: count,
         onPaginationChange: (num) => {
-          self.getNoticeList({ pageIndex: num })
+          self.getNoticeList({pageIndex: num})
         },
       })
       this.pagination = this.$page.pagination('instance')
     }
   },
-
+  allMessageToReadHandler(){
+    const self = this
+    this.setAllMessageToRead()
+      .always(() => {
+        self.loadingFinish()
+      })
+      .done((res) => {
+        if (res && res.result === 0) {
+          this.getNoticeList({pageIndex: 0})
+          Global.ui.notification.show('标记已读操作成功！', {
+            type: 'success',
+            hasFooter: false,
+            closeBtn: false,
+            displayTime: 800,
+            size: 'modal-xs',
+          })
+        }
+      })
+      .fail((res) => {
+        Global.ui.notification.show(res.msg === 'fail' ? '标记已读操作失败！' : res.msg, {
+          type: 'fail',
+          hasFooter: false,
+          closeBtn: false,
+          displayTime: 800,
+          size: 'modal-xs',
+        })
+      })
+  },
   _setRead(idList) {
     // const self = this
     return Global.sync.ajax({
@@ -122,7 +155,7 @@ const SystemMessageView = Base.ItemView.extend({
     })
   },
   messageBtnHandler(e) {
-    if(this.canClick){
+    if (this.canClick) {
       this.canClick = false
       const self = this
       const $target = $(e.currentTarget)
@@ -138,6 +171,7 @@ const SystemMessageView = Base.ItemView.extend({
           if (self._setRead(id)) {
             $target.data('read', 1)
             self.$(`.js-message-title-${id}`).removeClass('unRead')
+            self.$(`.js-message-title-${id}`).children().removeClass('unReadIcon')
             self.unReadNotice -= 1
             self.parentRenderUnread()
           }
@@ -146,9 +180,9 @@ const SystemMessageView = Base.ItemView.extend({
         $target.parents('.js-system-message-list').removeClass('active')
         $target.find('.js-message-btn-a').removeClass('active')
       }
-      setTimeout(() =>{
+      setTimeout(() => {
         this.canClick = true
-      },500)
+      }, 500)
     }
   },
 })
