@@ -24,112 +24,12 @@ const fs = require('fs')
 const rename = require('gulp-rename')
 const fontConfig = require('./font-config.json')
 
-// let serverIP = 'http://forev3.5x5x.com'
-
 let projectPath = 'main'
 const zipPath = ['www/main/**']
 
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = 'development'
 }
-
-// gulp.task('server', () => {
-//   runSequence(['server.webpack', 'server.mockup'])
-// })
-//
-// // Start a webpack-dev-server
-// gulp.task('server.webpack', () => {
-//   const webpackConfig = require('./webpack.config')
-//
-//   let proxy = {}
-//
-//   if (argv.mockup) {
-//     _(mockupConfig.routers).each((json, pathInfo) => {
-//       proxy[pathInfo] = {
-//         target: 'http://localhost:7070/',
-//         path: json
-//       }
-//       // return {
-//       //   path: pathInfo,
-//       // }
-//     })
-//   }
-//
-//   Object.assign(proxy, {
-//     '**/*.json': {
-//       target: serverIP,
-//       changeOrigin: true,
-//     },
-//     'mock/*.json': {
-//       target: 'http://localhost:7070/',
-//     },
-//     '/acct/imgcode/code': {
-//       target: serverIP,
-//       changeOrigin: true,
-//     },
-//     '/info/imgs/': {
-//       target: serverIP,
-//       changeOrigin: true,
-//     },
-//   })
-//
-//   new WebpackDevServer(webpack(webpackConfig), {
-//     publicPath: webpackConfig.output.publicPath,
-//     hot: true,
-//     // clientLogLevel: 'error',
-//     historyApiFallback: true,
-//     inline: true,
-//     progress: false,
-//     proxy,
-//     watchOptions: {
-//       aggregateTimeout: 300,
-//       poll: 1000,
-//     },
-//     headers: {'X-Custom-Header': 'yes'},
-//     stats: {
-//       assets: false,
-//       cached: false,
-//       cachedAssets: false,
-//       children: false,
-//       chunks: false,
-//       chunkModules: false,
-//       chunkOrigins: false,
-//       colors: true,
-//       depth: false,
-//       entrypoints: true,
-//       hash: true,
-//       maxModules: 15,
-//       modules: false,
-//       performance: true,
-//       reasons: false,
-//       source: false,
-//       timings: true,
-//       version: false,
-//       warnings: true,
-//     },
-//     // 取消框架域名检测
-//     disableHostCheck: true
-//   }).listen(webpackConfig.devServer.port, 'localhost', (err) => {
-//     if (err) {
-//       console.log(err)
-//     }
-//
-//     console.log(`Listening at localhost:${webpackConfig.devServer.port}`)
-//   })
-// })
-//
-// // 启动mockup服务器
-// gulp.task('server.mockup', (callback) => {
-//   if (argv.mockup) {
-//     mockup(gulp, {
-//       port: 7070,
-//       proxyRouters: mockupConfig,
-//     })()
-//   } else {
-//     console.log("mockup server doesn't running")
-//     callback()
-//   }
-// })
 
 gulp.task('release', (cb) => {
   runSequence(

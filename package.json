@@ -47,7 +47,7 @@
     "docs:deploy": "cd docs && ./deploy.sh",
     "e2e": "cross-env NODE_ENV=development node test/e2e/runner.js",
     "e2e-dev": "cross-env NODE_ENV=development node test/e2e/runner.js --dev",
-    "unit": "cross-env BABEL_ENV=test NODE_ENV=development karma start test/unit/karma.conf.js --single-run",
+    "unit": "karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit && npm run e2e-dev"
   },
   "dependencies": {
