@@ -23,6 +23,7 @@ export default Base.ItemView.extend({
     'focus .js-fc-fm-change': 'focusInOutStatusHandler',
     'click .js-fc-fm-info-btn': 'searchPeopleInfoHandler',
     'click .js-fc-fm-wd-bankCard-img': 'changeUrlHandler',
+    'click .js-fc-fm-channel-amount': 'refreshAmountHandler'
   },
   refreshHandler(e) {
     e.stopPropagation()
@@ -94,6 +95,7 @@ export default Base.ItemView.extend({
   initialize() {
     // const acctInfo = Global.memoryCache.get('acctInfo')
     this.AccountXhr = this.getFundSummaryXhr()
+    this.isRefreshIng = false
   },
   onRender() {
     const self = this
@@ -207,7 +209,12 @@ export default Base.ItemView.extend({
         }
       }
     }, false)
+
+    this.dataLoading = '<div class="spinner"> <div class="rect1"></div>' +
+      ' <div class="rect2"></div> <div class="rect3"></div> ' +
+      '<div class="rect4"></div> <div class="rect5"></div> </div>'
   },
+
   renderAccountInfo() {
     const self = this
     $.when(this.AccountXhr).done((res) => {
@@ -255,6 +262,27 @@ export default Base.ItemView.extend({
         self.$Profit.html(_(res.root.profit).format2yuan())
       }
     })
+  },
+  // 刷新钱包
+  refreshAmountHandler(e){
+    if (!this.isRefreshIng) {
+      const $target = $(e.currentTarget)
+      $target.addClass('hidden')
+      $target.closest('li').append(this.dataLoading)
+      const type = $target.data('type')
+      this.isRefreshIng = true
+      this.getFundSummaryXhr().done((res) => {
+        if (res.result === 0) {
+          const amount = _(res.root.gameBalance).findWhere({
+            channelId: type
+          }).balance
+          $target.html(_(amount).format2yuan())
+          $target.closest('li').find('.spinner').remove()
+          $target.removeClass('hidden')
+          this.isRefreshIng = false
+        }
+      })
+    }
   },
   changeFromTOHandler() {
     const fromChannel = this.$from.val()
@@ -495,7 +523,7 @@ export default Base.ItemView.extend({
   },
   submitPlatformTransferHandler() {
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
-      Global.ui.notification.show('试玩会员无法进行转账操作，请先注册正式游戏账号',{modalDialogShadow:'modal-dialog-shadow'})
+      Global.ui.notification.show('试玩会员无法进行转账操作，请先注册正式游戏账号', {modalDialogShadow: 'modal-dialog-shadow'})
       return false
     }
     if (this.$('.js-fm-tradeNum').val() === '' || Number(this.$('.js-fm-tradeNum').val()) === 0) {

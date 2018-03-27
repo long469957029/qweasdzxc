@@ -69,9 +69,9 @@
                     </div>
                     <div class="input-control">
                       <div class="input-icon pwd"></div>
-                      <input type="text" onfocus="this.type='password'" class="register-input" name="userName"
+                      <input :type="passwordInputType" class="register-input" name="userName"
                              v-model.trim="passWord"
-                             @focus="inputFocus(2)" @blur="inputBlur(2)" autocomplete="off"
+                             @focus="inputFocus(2)" v-on:blur="inputBlur(2)" autocomplete="off"
                              placeholder="请设置您的密码"/>
                       <span class="input-check" v-if="pwdStatus === 3"></span>
                     </div>
@@ -421,7 +421,9 @@
         redPackNum: 0,
         showRedPack: false,
         redPackTime: 60,
-        qrtype: 0
+        qrtype: 0,
+        passwordInputType: 'text'
+
       }
     },
     methods: {
@@ -470,6 +472,7 @@
             this.userErrorText = '4-16个字符，支持英文和数字,不能以数字开头'
           }
         } else if (type === 2) {
+          this.passwordInputType = 'password'
           if (this.pwdStatus !== 2) {
             this.pwdErrorText = '6-20位字符组成（不含空格），区分大小写，不能是9位以下的纯数字'
           }
