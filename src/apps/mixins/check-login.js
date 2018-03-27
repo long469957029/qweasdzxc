@@ -8,7 +8,7 @@ export default {
 
   methods: {
     login() {
-      this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
+      window.store.commit(types.TOGGLE_LOGIN_DIALOG, true)
     },
   }
 }

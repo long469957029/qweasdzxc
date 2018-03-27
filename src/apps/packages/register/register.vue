@@ -212,7 +212,7 @@
                 <div class="game-text">
                   <ul>
                     <li>沙巴体育</li>
-                    <li>188体育</li>
+                    <li>体育</li>
                   </ul>
                 </div>
               </div>

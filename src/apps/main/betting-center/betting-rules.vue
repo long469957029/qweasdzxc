@@ -28,7 +28,7 @@
       },
     },
 
-    data: function () {
+    data () {
       return {
         rules: []
       }
@@ -61,7 +61,7 @@
           type: types.SET_LEVEL,
           levelId: rule.id,
           levelName: rule.title
-        });
+        })
 
         if (this.$refs.underline) {
           Velocity(this.$refs.underline, {

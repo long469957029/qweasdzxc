@@ -13,6 +13,7 @@ const getters = {
     const normalList = []
 
     state.playLevels.forEach((rule) => {
+
       normalList.push({
         type: 'normal',
         id: rule.playLevelId,

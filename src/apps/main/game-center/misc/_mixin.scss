@@ -1,0 +1,107 @@
+// 圆形
+@mixin circle($diameter) {
+  width: $diameter;
+  height: $diameter;
+  border-radius: $diameter;
+  background: white;
+  color: $font-dark;
+  font-size: 16px;
+  text-align: center;
+  line-height: 60px;
+}
+
+// 水平居中
+@mixin center-container($width) {
+  position: relative;
+  box-sizing: border-box;
+  width: $width;
+  margin: 0 auto;
+  height: 100%;
+  *zoom: 1;
+  &:before {
+    display: table;
+    line-height: 0;
+    content: "";
+  }
+  &:after {
+    display: table;
+    line-height: 0;
+    content: "";
+    clear: both;
+  }
+}
+
+@mixin banner-background($url) {
+  position: relative;
+  background: url($url) no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+@mixin inline-block {
+  display: inline-block;
+  vertical-align: top;
+}
+
+// 调整 layout 间距用
+@mixin row($margin) {
+  margin-left: -($margin);
+  margin-right: -($margin);
+}
+
+// 调整 layout 间距用
+@mixin with-margin($margin) {
+  margin-left: $margin;
+  margin-right: $margin;
+}
+
+// 水平垂直置中
+@mixin center-center {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+}
+
+@mixin inline-block-list {
+  display: inline-block;
+  vertical-align: top;
+}
+
+// 垂直置中
+@mixin horizontal-center {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin border-box {
+  * {
+    box-sizing: border-box;
+  }
+}
+
+// 背景图片暗色遮罩
+@mixin mask($height, $opacity) {
+  position: absolute;
+  width: 100%;
+  height: $height;
+  background: rgba(0, 0, 0, $opacity);
+  z-index: 1;
+}
+
+@mixin button($width, $height, $background, $color, $font-size) {
+  @include inline-block;
+  background: $background;
+  border: none;
+  text-align: center;
+  width: $width;
+  height: $height;
+  line-height: $height;
+  font-size: $font-size;
+  color: $color;
+  padding: 0;
+  cursor: pointer;
+}

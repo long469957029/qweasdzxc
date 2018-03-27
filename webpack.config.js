@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 const HappyPack = require('happypack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const AssetsPlugin = require('assets-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssoWebpackPlugin = require('csso-webpack-plugin').default;
@@ -11,42 +11,25 @@ const CompressionPlugin = require("compression-webpack-plugin");
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 const happyThreadPool = HappyPack.ThreadPool({size: 5});
 
-const DEV = process.env.NODE_ENV !== 'production'
+const serverIP = 'http://forev3.5x5x.com'
+
+const DEV = process.env.NODE_ENV !== 'production';
 
 const appConfig = {
   entry: {
     main: './src/apps/main/index.js',
     login: './src/apps/packages/login-new/login.js',
     register: './src/apps/packages/register/index.js',
-    // vendor: './src/vendor/build.core.js',
     base: './src/base/build.base.js',
     trend: './src/apps/packages/trend/index.js',
     change: './src/apps/packages/change/index.js',
     resetInitPwd: './src/apps/packages/resetInitPwd/index.js',
-    // trendOld: './src/apps/packages/trend/old/index.js',
-    // resetPassword: './src/apps/packages/resetPassword/resetPassword.js',
     updateUserInfo: './src/apps/packages/updateUserInfo/updateUserInfo.js',
-    // merchants: './src/apps/packages/merchants/index.js',
     // 404: './src/apps/packages/404/index.js',
-    // mmc: './src/apps/packages/mmc/index.js',
-    // charge: './src/apps/packages/charge/index.js',
-    // changeUrl: './src/apps/packages/changeUrl/index.js',
-    // leaflets: './src/apps/packages/leaflets/index.js',
-    // download: './src/apps/packages/download/index.js',
-    // dragonAndTiger: './src/apps/packages/dragonAndTiger/index.js',
-    // oneYear: './src/apps/packages/oneYear/index.js',
-    // vip: './src/apps/packages/vip/index.js',
-    // expedition: './src/apps/packages/expedition/index.js',
-    // newDownload: './src/apps/packages/newDownload/index.js',
-    // integration: './src/apps/packages/integration/index.js',
-    // binding: './src/apps/packages/binding/index.js',
-    // regist: './src/apps/packages/registers/index.js',
-    // update15: './src/apps/packages/update/update15.js',
-    // rebateDesc: './src/apps/packages/rebateDescription/rebateDescription.js',
     logger: './src/apps/packages/logger/index.js',
     game: './src/apps/packages/game/index.js',
     game_error: './src/apps/packages/game_error/index.js'
@@ -56,143 +39,87 @@ const appConfig = {
     index: {
       title: '无限娱乐',
       template: './entry/index.html',
-      chunks: ['default', 'commons', 'base', 'main'],
+      chunks: ['commons', 'base', 'main'],
     },
     login: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['default', 'commons', 'vendor', 'base', 'login'],
+      chunks: ['commons', 'vendor', 'base', 'login'],
     },
     register: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['default', 'commons', 'base', 'register'],
+      chunks: ['commons', 'base', 'register'],
     },
     trend: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['default', 'commons', 'base', 'trend'],
+      chunks: ['commons', 'base', 'trend'],
     },
     change: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['default', 'commons', 'base', 'change'],
+      chunks: ['commons', 'base', 'change'],
     },
     resetInitPwd: {
       title: '无限娱乐',
       template: './entry/package-vue.html',
-      chunks: ['default', 'commons', 'base', 'resetInitPwd'],
+      chunks: ['commons', 'base', 'resetInitPwd'],
     },
-    // charge: {
-    //   title: '充值结果',
-    //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'charge'],
-    // },
     resetPassword: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['default', 'commons', 'base', 'resetPassword'],
+      chunks: ['commons', 'base', 'resetPassword'],
     },
     updateUserInfo: {
       title: '无限娱乐',
       template: './entry/package.html',
-      chunks: ['default', 'commons', 'base', 'updateUserInfo'],
+      chunks: ['commons', 'base', 'updateUserInfo'],
     },
     logger: {
       title: '无限在线娱乐',
       template: './src/apps/packages/logger/index.html',
-      chunks: ['default', 'commons', 'logger'],
+      chunks: ['commons', 'logger'],
     },
     game: {
       title: '无限娱乐',
       template: './entry/package-game.html',
-      chunks: ['default', 'commons', 'base', 'game']
+      chunks: ['commons', 'base', 'game']
     },
     game_error: {
       title: '无限娱乐',
       template: './entry/package-game.html',
-      chunks: ['default', 'commons', 'base', 'game_error']
+      chunks: ['commons', 'base', 'game_error']
     },
-    // resetPassword: {
-    //   title: '无限娱乐',
-    //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'resetPassword'],
-    // },
     // 404: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', '404'],
+    //   chunks: ['commons', 'base', '404'],
     // },
     // changeUrl: {
     //   title: '线路检测',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'changeUrl'],
-    // },
-    //
-    // leaflets: {
-    //   title: '宣传页',
-    //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'leaflets'],
+    //   chunks: ['commons', 'vendor', 'base', 'changeUrl'],
     // },
     // client: {
     //  title: '无限娱乐 - 客户端下载',
     //  template: './entry/package.html',
-    //  chunks: ['default', 'commons', 'base', 'client']
+    //  chunks: ['commons', 'base', 'client']
     // },
     // download: {
     //   title: '无限娱乐 - 客户端下载',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', 'download'],
-    // },
-    // dragonAndTiger: {
-    //   title: '无限娱乐 - 龙虎彩',
-    //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', 'dragonAndTiger'],
-    // },
-    // oneYear: {
-    //   title: '无限娱乐周年庆',
-    //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'oneYear'],
-    // },
-    // vip: {
-    //   title: '无限娱乐',
-    //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'vip'],
-    // },
-    // expedition: {
-    //   title: '无限娱乐 携手共进 远征星辰',
-    //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'expedition'],
-    // },
-    // newDownload: {
-    //   title: '无限娱乐 - 客户端下载',
-    //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', 'newDownload'],
-    // },
-    // integration: {
-    //   title: '无限娱乐 - integration',
-    //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', 'integration'],
+    //   chunks: ['commons', 'base', 'download'],
     // },
     // binding: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'base', 'binding'],
+    //   chunks: ['commons', 'base', 'binding'],
     // },
     // regist: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'regist'],
-    // },
-    // update: {
-    //   title: '无限娱乐',
-    //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'update15'],
-    // },
-    // rebateDesc: {
-    //   title: '无限娱乐',
-    //   template: './entry/package.html',
-    //   chunks: ['default', 'commons', 'vendor', 'base', 'rebateDesc'],
+    //   chunks: ['commons', 'vendor', 'base', 'regist'],
     // },
   },
   output: {
@@ -216,7 +143,7 @@ let entry = _(appConfig.entry).reduce(function (entries, entry, entryName) {
 
 //==============output================
 let output = {
-  path: path.join(__dirname, 'dist/' + appConfig.output.path)
+  path: path.join(__dirname, 'www/' + appConfig.output.path)
 };
 
 if (DEV) {
@@ -262,32 +189,6 @@ let plugins = [
     threadPool: happyThreadPool,
     loaders: ['babel-loader'],
   }),
-  // new HappyPack({
-  //   id: 'vue',
-  //   threadPool: happyThreadPool,
-  //   loaders: [
-  //     {
-  //       loader: 'vue-loader',
-  //       options: {
-  //         loaders: {
-  //           js: 'babel-loader',
-  //           scss: [
-  //             'style-loader',
-  //             'css-loader',
-  //             'postcss-loader',
-  //             'sass-loader',
-  //             {
-  //               loader: 'sass-resources-loader',
-  //               options: {
-  //                 resources: './src/base/styles/_variable.scss',
-  //               },
-  //             },
-  //           ],
-  //         },
-  //       }
-  //     }
-  //   ]
-  // }),
   new HappyPack({
     id: 'scss',
     threadPool: happyThreadPool,
@@ -330,14 +231,14 @@ let plugins = [
   })
 ];
 
-if (process.env.NODE_ENV === 'analyse') {
+if (process.env.MODE === 'analyse') {
   plugins.push(new BundleAnalyzerPlugin())
 }
 
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.BABEL_ENV !== 'test') {
   plugins.push(new webpack.DllReferencePlugin({
     context: __dirname,
-    manifest: require('./src/dll/vendor-manifest.json'),
+    manifest: require(`./src/dll/${process.env.NODE_ENV}/vendor-manifest.json`),
     extensions: ['', '.js']
   }));
 }
@@ -379,13 +280,13 @@ _(appConfig.entries).each(function (entryInfo, entryName) {
 
 plugins.push(new AddAssetHtmlPlugin([
   {
-    filepath: path.resolve('./src/dll/*.styles.css'),
+    filepath: path.resolve(`./src/dll/${process.env.NODE_ENV}/*.styles.css`),
     typeOfAsset: 'css',
     hash: true,
     includeSourcemap: false
   },
   {
-    filepath: path.resolve('./src/dll/*.js'),
+    filepath: path.resolve(`./src/dll/${process.env.NODE_ENV}/*.js`),
     hash: true,
     includeSourcemap: false
   }
@@ -411,6 +312,7 @@ const modules = {
       test: /\.(ttf|eot|svg|swf|mp3|wav)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       use: 'file-loader'
     },
+
     {
       test: /(.*)\.html$/,
       use: ['html-loader'],
@@ -516,21 +418,6 @@ if (DEV) {
         },
       },
     ],
-
-    // use: ExtractTextPlugin.extract({
-    //   fallback: "style-loader",
-    //   use: [
-    //     'css-loader',
-    //     'postcss-loader',
-    //     'sass-loader',
-    //     {
-    //       loader: 'sass-resources-loader',
-    //       options: {
-    //         resources: './src/base/styles/_variable.scss',
-    //       },
-    //     },
-    //   ]
-    // }),
     include: [path.join(__dirname, 'src')],
   });
 
@@ -596,7 +483,55 @@ module.exports = {
   plugins,
   module: modules,
   devServer: {
-    port: appConfig.port
+    port: appConfig.port,
+    publicPath: appConfig.output.publicPath,
+    hot: true,
+    // clientLogLevel: 'error',
+    historyApiFallback: true,
+    inline: true,
+    progress: false,
+    proxy: {
+      '**/*.json': {
+        target: serverIP,
+        changeOrigin: true,
+      },
+      '/acct/imgcode/code': {
+        target: serverIP,
+        changeOrigin: true,
+      },
+      '/info/imgs/': {
+        target: serverIP,
+        changeOrigin: true,
+      },
+    },
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000,
+    },
+    headers: {'X-Custom-Header': 'yes'},
+    stats: {
+      assets: false,
+      cached: false,
+      cachedAssets: false,
+      children: false,
+      chunks: false,
+      chunkModules: false,
+      chunkOrigins: false,
+      colors: true,
+      depth: false,
+      entrypoints: true,
+      hash: true,
+      maxModules: 15,
+      modules: false,
+      performance: true,
+      reasons: false,
+      source: false,
+      timings: true,
+      version: false,
+      warnings: true,
+    },
+    // 取消框架域名检测
+    disableHostCheck: true
   }
 };
 

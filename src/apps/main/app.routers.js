@@ -8,20 +8,14 @@ import activityRouter from './activity/router'
 import activeCenterRouter from './activeCenter/router'
 import pointsMallRouter from './points-mall/router'
 
-// import realCenterRouter from 'realCenter/router'
-// import slotCenterRouter from 'slotCenter/router'
-// import fishCenterRouter from 'fishCenter/router'
-// import sportCenterRouter from 'sportCenter/router'
 import agencyCenterRouter from 'agencyCenter/router'
-// import newsCenterRouter from 'newsCenter/router'
-// import dynamicCenterRouter from 'dynamicCenter/router'
 import fundCenterRouter from 'fundCenter/router'
-import gameCenterRouter from 'gameCenter/router'
+import gameCenterRouter from './game-center/router'
 import analysisCenterRouter from './analysisCenter/router'
 import mobileBetCenterRouter from './mobileBetCenter/router'
 import aboutUsRouter from './aboutUs/router'
 import helpRouter from './help-center/router'
-import personalCenterRouter from './personalCenter/router'
+// import personalCenterRouter from './personalCenter/router'
 
 
 Vue.use(VueRouter)
@@ -53,7 +47,7 @@ export const install = () => {
       ...helpRouter,
       ...pointsMallRouter,
       // 资金管理
-      ...personalCenterRouter,
+      // ...personalCenterRouter,
     ],
     // scrollBehavior (to, from, savedPosition) {
     //   if (savedPosition) {

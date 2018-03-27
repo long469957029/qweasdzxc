@@ -10,4 +10,6 @@ webpack-assets.json
 .package-lock.json
 docs/_book/
 test/unit/coverage
+test/e2e/reports
 .test
+selenium-debug.log

@@ -18,7 +18,7 @@
       </table>
     </div>
 
-    <div class="relative" ref="body">
+    <div class="body-wrapper" ref="body">
       <status-cell :status="loading" :has-data="showRows.length" :loading-tip="loadingTip" :transition="transition">
         <table class="no-margin" :class="[tableClass, {'no-b-bottom': hasBorder}]">
           <colgroup v-if="colgroup">
@@ -43,7 +43,7 @@
         </slot>
       </status-cell>
     </div>
-    <div class="js-wt-footer-main relative">
+    <div class="body-wrapper">
       <table class="no-margin" :class="tableClass">
         <colgroup v-if="colgroup">
           <col :width="col" v-for="col in colgroup">
@@ -296,6 +296,5 @@
   }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
 </style>

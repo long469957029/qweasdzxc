@@ -38,11 +38,11 @@ const wallet = [
     name: 'gg',
     zhName: 'GG',
   },
-  // {
-  //   id: 7,
-  //   name: '188',
-  //   zhName: '188体育钱包',
-  // },
+  {
+    id: 7,
+    name: 'sports',
+    zhName: '体育',
+  },
 ]
 
 module.exports = {

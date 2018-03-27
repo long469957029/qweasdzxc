@@ -7,11 +7,11 @@
           <div class="gl-main-navbar">
             <a href="#/?dashboard=1" class="navbar-logo"></a>
             <ul class="nav js-navbar-nav" style="position: static">
-
               <li data-index="1">
-                <a href="#/?dashboard=1">首页
-                  <!--<div class="navbar-down-icon"></div>-->
-                </a>
+                <router-link :to="{name: 'gameSports'}">
+                  体育
+                  <img class="sports-icon" src="./images/world-cup.png">
+                </router-link>
               </li>
               <li data-index="1">
                 <a @click.prevent="goTo(`/bc/0/${topClassicalTicket.id}`)">彩票
@@ -169,6 +169,7 @@
       line-height: $nav-height;
       text-align: center;
       padding: 0 10px;
+
       .navbar-down-icon {
         background: url('./images/navbar-down-icon.png') no-repeat left;
         width: 11px;
@@ -226,10 +227,17 @@
         z-index: 11;
       }*/
   }
+
+  .sports-icon {
+    position: absolute;
+    top: 16px;
+    left: -10px;
+  }
+
 </style>
 
 <style lang="scss">
-  @import '../../../gameCenter/misc/mixin';
+  @import '../../../game-center/misc/mixin';
   //公共样式 begin
   .gl-main-navbar {
     .nav {
@@ -599,6 +607,4 @@
 
     }
   }
-
-
 </style>

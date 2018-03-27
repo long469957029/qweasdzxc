@@ -1,0 +1,13 @@
+<div class="sc-win-item">
+  <img class="win-item-avator" src="<%=headIcon%>" />
+  <div class="win-item-name">
+    <div class="user"><%= userName %></div>
+    <div class="game"><%= gameName %></div>
+  </div>
+  <div class="win-item-amount">
+    <div class="title">获得奖励</div>
+    <div class="amount">
+      <span class="unit">￥</span><span><%= _(prize).formatDiv(10000, {fixed: 2}) %></span>
+    </div>
+  </div>
+</div>
