@@ -226,9 +226,6 @@ const pushMmcBettingApi = ({bet, amount, couponRid = 0}, then, fail) => {
 
 /**
  * 秒秒彩模拟开奖
- * @param planId
- * @param bet
- * @param usePack
  * @param then
  * @param fail
  * @returns {*|Promise<T>}

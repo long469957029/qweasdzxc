@@ -388,6 +388,7 @@
         this.$store.commit(types.SET_MAX_PRIZE_MULTIPLE, this.playRule.maxPrizeAlgorithm({
           lotteryList: this.lotteryList,
           ...this.playRule.maxPrizeAlgorithmProps,
+          selectOptionals: this.selectOptionals,
           count
         }))
 

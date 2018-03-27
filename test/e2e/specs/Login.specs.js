@@ -11,8 +11,6 @@ module.exports = {
       .url(devServer)
       .waitForElementVisible('.main-top', 5000)
       .assert.elementPresent('.dashboard-banner')
-      // .assert.containsText('h1', 'Welcome to Your Vue.js App')
-      // .assert.elementCount('img', 1)
       .end()
   }
 }

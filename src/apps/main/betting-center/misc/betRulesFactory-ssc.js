@@ -942,6 +942,10 @@ function _create(ticketId) {
     algorithmProps: {
       coefficient: 2,
     },
+    maxPrizeAlgorithm: betMaxPrize.combinations,
+    maxPrizeAlgorithmProps: {
+      k: 2
+    },
     list: factory.createList(['万位', '千位', '百位', '十位', '个位']),
     create: algorithm.getCreateFunc(2, {
       repeat: true,
@@ -954,6 +958,10 @@ function _create(ticketId) {
     type: 'input',
     validate: algorithm.getValidateFunc(2),
     optionals: algorithm.getOptionals(2),
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 2
+    },
     create: algorithm.getCreateFunc(2, {
       slice: [1],
       repeat: true,
@@ -968,6 +976,10 @@ function _create(ticketId) {
       selectCount: 2,
     },
     optionals: algorithm.getOptionals(2),
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 2
+    },
     list: factory.createList(['号码'], {
       items: _.range(19),
       operate: 'none',
@@ -990,6 +1002,10 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 2,
     },
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 2
+    },
     optionals: algorithm.getOptionals(2),
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(2, {
@@ -1005,6 +1021,10 @@ function _create(ticketId) {
       acceptRepeat: 0,
       innerSort: true,
     }),
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 2
+    },
     optionals: algorithm.getOptionals(2),
     create: algorithm.getCreateFunc(2, {
       slice: [1],
@@ -1024,6 +1044,10 @@ function _create(ticketId) {
       operate: 'none',
     }),
     analysis: false,
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 2
+    },
     create: algorithm.getCreateFunc(1, {
       range: _.range(1, 18),
     }),
@@ -1043,6 +1067,10 @@ function _create(ticketId) {
     algorithmProps: {
       coefficient: 3,
     },
+    maxPrizeAlgorithm: betMaxPrize.combinations,
+    maxPrizeAlgorithmProps: {
+      k: 3
+    },
     list: factory.createList(['万位', '千位', '百位', '十位', '个位']),
     create: algorithm.getCreateFunc(3, {
       repeat: true,
@@ -1055,6 +1083,10 @@ function _create(ticketId) {
     type: 'input',
     validate: algorithm.getValidateFunc(3),
     optionals: algorithm.getOptionals(3),
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 3
+    },
     create: algorithm.getCreateFunc(3, {
       slice: [2],
       repeat: true,
@@ -1074,6 +1106,10 @@ function _create(ticketId) {
       operate: 'none',
     }),
     analysis: false,
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 3
+    },
     create: algorithm.getCreateFunc(1, {
       range: _.range(28),
     }),
@@ -1090,6 +1126,10 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 2,
+    },
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 3
     },
     optionals: algorithm.getOptionals(3),
     list: factory.createList(['号码']),
@@ -1110,6 +1150,10 @@ function _create(ticketId) {
       mainRow: 0,
       cTimes: 3,
     },
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 3
+    },
     optionals: algorithm.getOptionals(3),
     list: factory.createList(['号码']),
     create: algorithm.getCreateFunc(3, {
@@ -1128,6 +1172,10 @@ function _create(ticketId) {
       innerSort: true,
     }),
     analysis: false,
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 3
+    },
     optionals: algorithm.getOptionals(3),
     create: algorithm.getCreateFunc(3, {
       outerSort: true,
@@ -1146,6 +1194,10 @@ function _create(ticketId) {
       items: _.range(1, 27),
       operate: 'none',
     }),
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 3
+    },
     analysis: false,
     create: algorithm.getCreateFunc(1, {
       range: _.range(1, 27),
@@ -1166,6 +1218,10 @@ function _create(ticketId) {
     algorithmProps: {
       coefficient: 4,
     },
+    maxPrizeAlgorithm: betMaxPrize.combinations,
+    maxPrizeAlgorithmProps: {
+      k: 4
+    },
     list: factory.createList(['万位', '千位', '百位', '十位', '个位']),
     create: algorithm.getCreateFunc(4, {
       repeat: true,
@@ -1178,6 +1234,10 @@ function _create(ticketId) {
     type: 'input',
     validate: algorithm.getValidateFunc(4),
     optionals: algorithm.getOptionals(4),
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 4
+    },
     create: algorithm.getCreateFunc(4, {
       slice: [3],
       repeat: true,
@@ -1196,6 +1256,10 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 4,
+    },
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 4
     },
     optionals: algorithm.getOptionals(4),
     list: factory.createList(['号码']),
@@ -1217,6 +1281,10 @@ function _create(ticketId) {
       mainRow: 1,
       cTimes: 2,
     },
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 4
+    },
     optionals: algorithm.getOptionals(4),
     list: factory.createList(['二重号位', '单号位']),
     create: algorithm.getCreateFunc(3, {
@@ -1235,6 +1303,10 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 2,
+    },
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 4
     },
     optionals: algorithm.getOptionals(4),
     list: factory.createList(['二重号位']),
@@ -1255,6 +1327,10 @@ function _create(ticketId) {
     algorithmProps: {
       mainRow: 0,
       cTimes: 1,
+    },
+    maxPrizeAlgorithm: betMaxPrize.optional,
+    maxPrizeAlgorithmProps: {
+      k: 4
     },
     optionals: algorithm.getOptionals(4),
     list: factory.createList(['三重号位', '单号位']),
