@@ -1,5 +1,3 @@
-
-
 let Chart
 
 import Timeset from 'com/timeset'
@@ -194,6 +192,8 @@ const TeamOverviewView = Base.ItemView.extend({
       tooltip: {
         trigger: 'axis',
       },
+
+      width: '1090',
       color: [
         '#e6c1ae',
         '#bacce7',
@@ -207,7 +207,7 @@ const TeamOverviewView = Base.ItemView.extend({
       ],
       legend: {
         data: ['充值', '提现', '投注', '派奖', '返点', '返水', '佣金', '活动', '盈亏'],
-        right: 90,
+        right: 0,
         selected: {
           充值: true,
           提现: true,
@@ -240,6 +240,9 @@ const TeamOverviewView = Base.ItemView.extend({
       yAxis: [
         {
           type: 'value',
+          gridLines: {
+            color: "#d7d7d7",
+          },
         },
       ],
       series: [
@@ -378,7 +381,7 @@ const TeamOverviewView = Base.ItemView.extend({
           const ydata = res.root || []
           if (!_.isEmpty(ydata)) {
             _(option.series).each((item, index) => {
-              option.series[index].data = _(_(ydata).findWhere({ id: item.id }).data).map((info) => {
+              option.series[index].data = _(_(ydata).findWhere({id: item.id}).data).map((info) => {
                 return _(info).convert2yuan()
               })
             })
