@@ -114,6 +114,57 @@ const overNInN = ({lotteryList, n, k, min}) => {
   return currentMultiple
 }
 
+const combinations = ({lotteryList, k})  => {
+  let maxMultiple = 0
+
+  const n = addAll({lotteryList})
+
+  if (n >= k) {
+    maxMultiple = _.combinations(n, k)
+  }
+
+  return maxMultiple
+}
+
+// 任选玩法只负责计算出系数，其它仍旧交给各自的算法计算
+const optional = ({lotteryList, selectOptionals, k, count}) => {
+  let maxMultiple = 0
+  let _n = selectOptionals.length - k + 1
+
+  if (count > 0 && _n > 0) {
+    maxMultiple = polygonal(_n, k)
+  }
+
+  return maxMultiple
+}
+
+const inputNInN = ({lotteryList, n, k, count}) => {
+  if (count === 0) {
+    return 0
+  }
+
+  let numList = {}
+
+  _.each(lotteryList, lottery => {
+    lottery.split(' ').forEach(num => {
+      if (numList[num]) {
+        ++numList[num]
+      } else {
+        numList[num] = 1
+      }
+    })
+  })
+
+  let selectedNumList = _.chain(numList).values().sortBy((count) => {
+    return -count
+  }).value().slice(0, n)
+  let maxMultiple = _.reduce(selectedNumList, (maxMultiple, num) => {
+    maxMultiple += num
+    return maxMultiple
+  }, 0)
+
+  return Math.floor(maxMultiple / k)
+}
 
 //k代表k+2形数，循环k次
 const polygonal = (count, k) => {
@@ -141,6 +192,9 @@ export {
   addAllRow,
   nInN,
   overNInN,
+  combinations,
+  optional,
+  inputNInN,
 }
 
 export default {
@@ -153,4 +207,7 @@ export default {
   addAllRow,
   nInN,
   overNInN,
+  combinations,
+  optional,
+  inputNInN,
 }

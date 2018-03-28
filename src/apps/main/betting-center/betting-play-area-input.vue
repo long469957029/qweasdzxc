@@ -159,7 +159,7 @@
 
         this.$_statisticsLottery()
 
-        const hasError = this.repeatNumbers.length || this.errorNumbers.length
+        const hasError = !!(this.repeatNumbers.length || this.errorNumbers.length)
 
         this.showCheckModal = hasError
 
@@ -222,6 +222,14 @@
 
       $_statisticsLottery() {
         const validated = this.$_validate(this.$_split())
+
+        this.$store.commit(types.SET_MAX_PRIZE_MULTIPLE, this.playRule.maxPrizeAlgorithm({
+          lotteryList: validated.passNumbers,
+          ...this.playRule.maxPrizeAlgorithmProps,
+          selectOptionals: this.selectOptionals,
+          count: validated.statistics
+        }))
+
         this.$store.commit(types.SET_STATISTICS, validated && validated.statistics || 0)
       },
 
@@ -266,6 +274,10 @@
 
         return result
       }
+    },
+
+    activated() {
+      this.empty()
     }
   }
 </script>
