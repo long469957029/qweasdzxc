@@ -102,13 +102,16 @@ const nInN = ({lotteryList, n, k}) => {
 const overNInN = ({lotteryList, n, k, min}) => {
   const maxMultiple = _.combinations(n, k)
   let _n = _.flatten(lotteryList).length - min + 1
-  let currentMultiple = polygonal(_n, k)
-  if(currentMultiple > maxMultiple) {
-    currentMultiple = maxMultiple
-  }
+  let currentMultiple = 0
+  if (_n > 0) {
+    currentMultiple = polygonal(_n, k)
+    if(currentMultiple > maxMultiple) {
+      currentMultiple = maxMultiple
+    }
 
-  if (currentMultiple < 0) {
-    currentMultiple = 0
+    if (currentMultiple < 0) {
+      currentMultiple = 0
+    }
   }
 
   return currentMultiple
