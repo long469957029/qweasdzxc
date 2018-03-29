@@ -79,7 +79,7 @@ const appConfig = {
     logger: {
       title: '无限在线娱乐',
       template: './src/apps/packages/logger/index.html',
-      chunks: ['commons', 'logger'],
+      chunks: ['commons', 'base', 'logger'],
     },
     game: {
       title: '无限娱乐',

@@ -101,7 +101,7 @@ const MailBindingView = Base.ItemView.extend({
         } else {
           $target.html('重新发送')
           const dataError = {
-            errorText: `绑定失败！${res.msg === '验证码发送失败' ? '验证码发送失败' : res.msg}`,
+            errorText: `${res.msg === '该邮箱已在平台绑定，请更换其他邮箱！' ? res.msg : '验证码发送失败，请再次点击发送！'}`,
             el: type === 'add' ? self.$bindError : self.$changeError,
           }
           _.formatError(dataError)
