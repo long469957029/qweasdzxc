@@ -161,12 +161,39 @@ const inputNInN = ({lotteryList, n, k, count}) => {
   let selectedNumList = _.chain(numList).values().sortBy((count) => {
     return -count
   }).value().slice(0, n)
+
+  // let maxNumberList = []
+  //
+  // let selectedNumList = _.chain(numList).pairs().sortBy(count => {return -count[1]}).value()
+  //
+  // let maxNumber = []
+
+  // _.reduce(selectedNumList, (preCount, count) => {
+  //   if (maxNumber.length === n) {
+  //
+  //   }
+  //
+  //   if (maxNumber.length < n) {
+  //     maxNumber.push(count[0])
+  //   }
+  //   if (maxNumber.length === n) {
+  //     maxNumberList.push(_.cloneDeep(maxNumber))
+  //   }
+  //   return count[1]
+  // }, -1)
+
   let maxMultiple = _.reduce(selectedNumList, (maxMultiple, num) => {
     maxMultiple += num
     return maxMultiple
   }, 0)
 
-  return Math.floor(maxMultiple / k)
+  maxMultiple = Math.floor(maxMultiple / k)
+
+  // if (maxMultiple > _.last(selectedNumList)) {
+  //   maxMultiple = _.last(selectedNumList)
+  // }
+
+  return maxMultiple
 }
 
 //k代表k+2形数，循环k次
