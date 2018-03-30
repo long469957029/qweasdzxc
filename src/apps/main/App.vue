@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <main-footer></main-footer>
+    <main-footer v-if="footer"></main-footer>
     <login v-if="loginDialogStatus"></login>
     <logout v-if="logoutDialogStatus"></logout>
     <logout-notice v-if="logoutNoticeStatus"></logout-notice>
@@ -70,7 +70,17 @@
       }
     },
 
+    watch: {
+      toolbar(isShow) {
+        Global.toolbarRegin.currentView.toggle(isShow)
+      }
+    },
+
     computed: {
+      ...mapState({
+        footer: state => _.isUndefined(state.route.meta.footer) ? true : state.route.meta.footer,
+        toolbar: state => _.isUndefined(state.route.meta.toolbar) ? true : state.route.meta.toolbar,
+      }),
       ...mapGetters([
         'loginDialogStatus',
         'logoutDialogStatus',

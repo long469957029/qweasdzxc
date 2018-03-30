@@ -4,10 +4,6 @@ const MMCBettingCenter = () => import(/* webpackChunkName: "betting-center" */ '
 
 export default [
   {
-    path: '/bc/19',
-    redirect: '/bc/0/19',
-  },
-  {
     path: '/bc/0/19',
     component: MMCBettingCenter,
     props: (route) => ({
