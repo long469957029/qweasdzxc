@@ -256,7 +256,9 @@
 
       $_split() {
         const contents = _(this.numbers).trim()
-        return contents.split(this.playRule.splitReg || this.splitReg)
+        return _.filter(contents.split(this.playRule.splitReg || this.splitReg), (nums) => {
+          return nums.length
+        })
       },
 
       $_validate(numberList) {
