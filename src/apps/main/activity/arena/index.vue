@@ -29,11 +29,11 @@
         <div class="daily-content">
           <div class="daily-table-wrapper">
             <div class="daily-top">
-              <div class="daily-left">
+              <div class="daily-left" @click="toggleTop(0)" v-show="currentTop === 1">
                 <span class="arrow"></span>
                 昨日排行
               </div>
-              <div class="daily-right">
+              <div class="daily-right" @click="toggleTop(1)" v-show="currentTop === 0">
                 今日排行
                 <span class="arrow right"></span>
               </div>
@@ -47,7 +47,9 @@
               </div>
               <div class="flex-body flex-row" v-for="userInfo in currentTop10">
                 <div class="flex-td" style="width: 98px">
-                  <template v-if="userInfo.ranking > 3">{{userInfo.ranking}}</template>
+                  <template v-if="!userInfo.ranking">
+                  </template>
+                  <template v-else-if="userInfo.ranking > 3">{{userInfo.ranking}}</template>
                   <template v-else>
                     <span :class="`top-${userInfo.ranking}`"></span>
                   </template>
@@ -56,12 +58,12 @@
                 <div class="flex-td" style="width: 170px" v-html="userInfo.bet"></div>
                 <div class="flex-td point-money" style="width: 170px" v-html="userInfo.amount"></div>
               </div>
-              <div class="flex-body flex-row">
-                <div class="flex-td" style="width: 98px">29</div>
-                <div class="flex-td" style="width: 170px">polo</div>
-                <div class="flex-td" style="width: 170px">1560.000</div>
-                <div class="flex-td point-money" style="width: 170px">1563.000</div>
-              </div>
+              <!--<div class="flex-body flex-row">-->
+                <!--<div class="flex-td" style="width: 98px">29</div>-->
+                <!--<div class="flex-td" style="width: 170px">polo</div>-->
+                <!--<div class="flex-td" style="width: 170px">1560.000</div>-->
+                <!--<div class="flex-td point-money" style="width: 170px">1563.000</div>-->
+              <!--</div>-->
             </div>
           </div>
           <div class="yesterday-history" :class="{'prized-top-empty': _.isEmpty(yesterdayTop3)}">
@@ -72,18 +74,22 @@
                 </div>
                 <div class="top-unit-right">
                   <div class="top-unit-cell">冠军：{{topUser.userName}}</div>
-                  <div class="top-unit-cell">中奖金额：<span class="point-money">{{topUser.prize | fixedConvert2yuan}}</span>元</div>
-                  <div class="top-unit-cell">奖励金额：<span class="point-money">{{topUser.amount | fixedConvert2yuan}}</span>元</div>
+                  <div class="top-unit-cell">中奖金额：<span class="point-money">{{topUser.prize | fixedConvert2yuan}}</span>元
+                  </div>
+                  <div class="top-unit-cell">奖励金额：<span
+                    class="point-money">{{topUser.amount | fixedConvert2yuan}}</span>元
+                  </div>
                 </div>
-                <div class="top-unit-cheat light" :class="`top-unit-cheat-${index + 1}`" @click="getCheat(topUser)"></div>
+                <div class="top-unit-cheat light" :class="`top-unit-cheat-${index + 1}`"
+                     @click="getCheat(topUser)"></div>
               </div>
               <div class="yesterday-unit yesterday-self-unit">
                 <div class="top-unit-left">
                   <img :src="userAvatar" class="user-avatar"/>
                 </div>
                 <div class="top-unit-right">
-                  <div class="top-unit-cell">我的排名：NO.12</div>
-                  <div class="top-unit-cell">中奖金额：<span class="point-money">38000.000</span>元</div>
+                  <div class="top-unit-cell">我的排名：NO.{{userPrize.ranking}}</div>
+                  <div class="top-unit-cell">中奖金额：<span class="point-money">{{userPrize.amount | fixedCounvert2yuan}}</span>元</div>
                 </div>
               </div>
             </div>
@@ -104,14 +110,44 @@
               </div>
               <div class="flex-body flex-row" v-for="userInfo in formatWeeklyTop10">
                 <div class="flex-td" style="width: 98px">
-                  <template v-if="userInfo.ranking > 3">{{userInfo.ranking}}</template>
+                  <template v-if="!userInfo.ranking">
+                    <span class="no-val"></span>
+                    <span class="no-val"></span>
+                  </template>
+                  <template v-else-if="userInfo.ranking > 3">{{userInfo.ranking}}</template>
                   <template v-else>
                     <span :class="`top-${userInfo.ranking}`"></span>
                   </template>
                 </div>
-                <div class="flex-td" style="width: 136px" v-html="userInfo.userName"></div>
-                <div class="flex-td" style="width: 136px" v-html="userInfo.bet"></div>
-                <div class="flex-td" style="width: 136px"><span class="point-money" v-html="userInfo.amount"></span></div>
+                <div class="flex-td" style="width: 136px">
+                  <template v-if="userInfo.userName">
+                    {{userInfo.userName}}
+                  </template>
+                  <template v-else>
+                    <span class="no-val"></span>
+                    <span class="no-val"></span>
+                  </template>
+                </div>
+                <div class="flex-td" style="width: 136px">
+                  <template v-if="userInfo.bet">
+                    {{userInfo.bet}}
+                  </template>
+                  <template v-else>
+                    <span class="no-val"></span>
+                    <span class="no-val"></span>
+                  </template>
+                </div>
+                <div class="flex-td" style="width: 136px">
+                  <template v-if="userInfo.amount">
+                    <span class="point-money">
+                      {{userInfo.amount}}
+                    </span>
+                  </template>
+                  <template v-else>
+                    <span class="no-val"></span>
+                    <span class="no-val"></span>
+                  </template>
+                </div>
               </div>
               <div class="flex-body flex-row">
                 <div class="flex-td" style="width: 98px">29</div>
@@ -131,7 +167,14 @@
                 <div class="flex-td" style="flex: 0 0 136px">周一投注额</div>
               </div>
               <div class="flex-body flex-row" v-for="i in 10">
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
+                <div class="flex-td" style="flex: 0 0 136px">
+                  <!--<template v-if="">-->
+                  <!---->
+                  <!--</template>-->
+                  <!--<template v-else>-->
+                  <!---->
+                  <!--</template>-->
+                </div>
                 <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
                 <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
                 <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
@@ -193,7 +236,8 @@
             </div>
             <div class="modal-btn-group">
               <div class="btn-cancel" data-dismiss="modal">再想想</div>
-              <router-link tag="div" class="btn-confirm" :to="{path: `/bc/0/${receivedCoupon.ticketId}`}">去使用</router-link>
+              <router-link tag="div" class="btn-confirm" :to="{path: `/bc/0/${receivedCoupon.ticketId}`}">去使用
+              </router-link>
             </div>
           </div>
         </div>
@@ -216,7 +260,8 @@
               {{currentCheat.betNum}}
             </div>
             <div class="modal-btn-group">
-              <router-link tag="div" class="btn-confirm" :to="{path: `/bc/0/${currentCheat.ticketId}`}">立即投注</router-link>
+              <router-link tag="div" class="btn-confirm" :to="{path: `/bc/0/${currentCheat.ticketId}`}">立即投注
+              </router-link>
             </div>
             <div class="cheat-tip">
               * 注：大神投注情况每天都在变化，该投注仅供参考
@@ -246,7 +291,6 @@
         receiveCoupon: null,
         amount: 0,
 
-
         //昨日中奖大神
         /**
          * "ticketName": "无限分分彩",
@@ -260,11 +304,21 @@
          * "ticketPlayId": 10040101
          */
         yesterdayTop3: [],
+        //周榜
         week10: {},
+        //今日昨日榜
         top10: [],
+
+        myInfo: {},
+        myNum: 0,
+        myYesterdayInfo: {},
+        myYesterdayNum: 0,
+
+
+        //当前秘籍
         currentCheat: {},
 
-        currentTop: 'today',
+        currentTop: 1,
 
         getTicketModal: false,
         getCheatModal: false
@@ -280,7 +334,7 @@
 
       receivedCoupon() {
         if (this.receiveCoupon && this.amount) {
-          return  {
+          return {
             ticketName: ticketConfig.getComplete(this.receiveCoupon).info.zhName,
             fAmount: _.convert2yuan(this.amount),
             ticketId: this.receiveCoupon
@@ -291,27 +345,53 @@
       },
 
       formatWeeklyTop10() {
-        if (this.week10) {
-          _.map(this.week10.week, (userBetInfo, index) => {
-            return this.formatUserInfo(userBetInfo, index)
+        if (this.week10.week) {
+          return _.times(10, (index) => {
+            return this.formatUserInfo(this.week10.week[index], index)
           })
-        } else {
-          return {
-
-          }
         }
       },
-      currentTop10() {
-        if (this.top10) {
-          return _.map(this.top10, (userBetInfo, index) => {
-            return this.formatUserInfo(userBetInfo, index)
+      formatWeeklyTop10Right() {
+        if (this.week10) {
+          return _.times(10, (index) => {
+            return [
+              this.getBet(this.week10.sunday, index),
+              this.getBet(this.week10.saturday, index),
+              this.getBet(this.week10.friday, index),
+              this.getBet(this.week10.thursday, index),
+              this.getBet(this.week10.wednesday, index),
+              this.getBet(this.week10.tuesday, index),
+              this.getBet(this.week10.monday, index),
+            ]
           })
-        } else {
-          return {
+        }
+      },
+      //当前投注榜
+      currentTop10() {
+        let currentTop10 = []
+        if (this.top10[this.currentTop]) {
+          currentTop10 = _.times(10, (index) => {
+            return this.formatUserInfo(this.top10[this.currentTop][index], index)
+          })
 
+          if (this.currentTop === 1) {
+            currentTop10.push({
+              ranking: this.myNum,
+              userName: this.myInfo.userName,
+              bet: _.fixedConvert2yuan(this.myInfo.bet),
+              amount: _.fixedConvert2yuan(this.myInfo.amount)
+            })
+          } else {
+            currentTop10.push({
+              ranking: this.myYesterdayNum,
+              userName: this.myYesterdayInfo.userName,
+              bet: _.fixedConvert2yuan(this.myYesterdayInfo.bet),
+              amount: _.fixedConvert2yuan(this.myYesterdayInfo.amount)
+            })
           }
         }
 
+        return currentTop10
       },
       ...mapGetters([
         'userAvatar',
@@ -319,12 +399,22 @@
     },
 
     methods: {
+      getBet(daydata, index) {
+        if (daydata && daydata[index]) {
+          return _.fixedConvert2yuan(daydata[index].bet)
+        } else {
+          return 0
+        }
+      },
+      toggleTop(currentTop) {
+        this.currentTop = currentTop
+      },
       formatUserInfo(userBetInfo, index) {
         return {
-          ranking: index + 1,
-          userName: userBetInfo.userName,
-          bet: _.fixedConvert2yuan(userBetInfo.bet),
-          amount: _.fixedConvert2yuan(userBetInfo.amount)
+          ranking: userBetInfo ? index + 1 : null,
+          userName: userBetInfo && userBetInfo.userName ? userBetInfo.userName : null,
+          bet: userBetInfo && userBetInfo.bet ? _.fixedConvert2yuan(userBetInfo.bet) : null,
+          amount: userBetInfo && userBetInfo.amount ? _.fixedConvert2yuan(userBetInfo.amount) : null
         }
       },
       getTicket(ticketId) {
@@ -363,7 +453,11 @@
       getDailyList() {
         getDailyListApi(({data}) => {
           if (data && data.result === 0) {
-            this.top10 = data.root.dataList
+            this.top10 = [data.root.yesterdayList, data.root.dataList]
+            this.myInfo = data.root.myInfo
+            this.myNum = data.root.myNum
+            this.myYesterdayInfo = data.root.myYesterdayInfo
+            this.myYesterdayNum = data.root.myYesterdayNum
           }
         })
       },
@@ -395,7 +489,8 @@
 
       getYesterdayTop3Api(({data}) => {
         if (data && data.result === 0) {
-          this.yesterdayTop3 = data.root
+          this.yesterdayTop3 = data.root.prizeList
+          this.userPrize = data.root.userPrize
         } else {
           Global.ui.notification.show(`<div class="m-bottom-lg">获取昨日前三失败！${data.msg}</div>`)
         }
@@ -653,17 +748,6 @@
         width: 552px;
         overflow-x: auto;
       }
-      .no-val {
-        width: 17px;
-        height: 1px;
-        margin-right: 5px;
-        background-color: #fbb5b5;
-
-        &:last-of-type {
-          margin-right: 0;
-        }
-      }
-
       .flex-table {
         .flex-td {
           color: #eba9a9;
@@ -688,6 +772,17 @@
           }
         }
       }
+    }
+  }
+
+  .no-val {
+    width: 17px;
+    height: 1px;
+    margin-right: 5px;
+    background-color: #fbb5b5;
+
+    &:last-of-type {
+      margin-right: 0;
     }
   }
 
@@ -915,7 +1010,7 @@
     }
   }
 
-  @keyframes flash{
+  @keyframes flash {
     0% {
       opacity: .1;
     }
