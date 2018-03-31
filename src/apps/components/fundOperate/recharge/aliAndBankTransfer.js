@@ -46,7 +46,7 @@ const AliAndBankTransfer = Base.ItemView.extend({
             $(e.trigger).find('span').addClass('copySuccess')
             setTimeout(() => {
               $(e.trigger).find('span').removeClass('copySuccess')
-            },2000)
+            },1000)
             e.clearSelection();
           });
 

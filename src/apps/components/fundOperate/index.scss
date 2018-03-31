@@ -608,8 +608,8 @@
           font-size: $font-xs;
           color: $new-inverse-color;
           width: 50px;
-          right: 0;
-          top: 28px;
+          top: 2px;
+          right: -60px;
           &:before {
             content: '';
             width: 0px;
@@ -618,9 +618,9 @@
             border-bottom-color: $def-white-color;
             display: block;
             position: absolute;
-            top: -10px;
-            left: 50%;
-            margin-left: -5px;
+            //top: -10px;
+            //left: 50%;
+            margin-left: -10px;
           }
           &.copySuccess {
             display: block;
