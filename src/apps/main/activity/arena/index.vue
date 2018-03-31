@@ -30,14 +30,14 @@
           <div class="daily-table-wrapper">
             <div class="daily-top">
               <div class="daily-top-title" :class="[currentTop === 1 ? 'today' : 'yesterday']"></div>
-              <div class="daily-left" @click="toggleTop(0)" v-show="currentTop === 1">
-                <span class="arrow"></span>
-                昨日排行
-              </div>
-              <div class="daily-right" @click="toggleTop(1)" v-show="currentTop === 0">
-                今日排行
-                <span class="arrow right"></span>
-              </div>
+              <!--<div class="daily-left" @click="toggleTop(0)" v-show="currentTop === 1">-->
+                <!--<span class="arrow"></span>-->
+                <!--昨日排行-->
+              <!--</div>-->
+              <!--<div class="daily-right" @click="toggleTop(1)" v-show="currentTop === 0">-->
+                <!--今日排行-->
+                <!--<span class="arrow right"></span>-->
+              <!--</div>-->
             </div>
             <div class="daily-table flex-table">
               <div class="flex-title flex-row">
@@ -160,46 +160,32 @@
             </div>
             <div class="flex-table table-right">
               <div class="flex-title flex-row">
-                <div class="flex-td" style="flex: 0 0 98px">排名</div>
-                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
-                <div class="flex-td" style="flex: 0 0 136px">周日投注额</div>
+                <div class="flex-td" style="flex: 0 0 274px">周日排行榜</div>
 
-                <div class="flex-td" style="flex: 0 0 98px">排名</div>
-                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
-                <div class="flex-td" style="flex: 0 0 136px">周六投注额</div>
+                <div class="flex-td" style="flex: 0 0 274px">周六排行榜</div>
 
-                <div class="flex-td" style="flex: 0 0 98px">排名</div>
-                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
-                <div class="flex-td" style="flex: 0 0 136px">周五投注额</div>
+                <div class="flex-td" style="flex: 0 0 274px">周五排行榜</div>
 
-                <div class="flex-td" style="flex: 0 0 98px">排名</div>
-                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
-                <div class="flex-td" style="flex: 0 0 136px">周四投注额</div>
+                <div class="flex-td" style="flex: 0 0 274px">周四排行榜</div>
 
-                <div class="flex-td" style="flex: 0 0 98px">排名</div>
-                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
-                <div class="flex-td" style="flex: 0 0 136px">周三投注额</div>
+                <div class="flex-td" style="flex: 0 0 274px">周三排行榜</div>
 
-                <div class="flex-td" style="flex: 0 0 98px">排名</div>
-                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
-                <div class="flex-td" style="flex: 0 0 136px">周二投注额</div>
+                <div class="flex-td" style="flex: 0 0 274px">周二排行榜</div>
 
-                <div class="flex-td" style="flex: 0 0 98px">排名</div>
-                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
-                <div class="flex-td" style="flex: 0 0 136px">周一投注额</div>
+                <div class="flex-td" style="flex: 0 0 274px">周一排行榜</div>
               </div>
               <div class="flex-body flex-row" v-for="weekUserInfo in formatWeeklyTop10Right">
                 <template v-for="userInfo in weekUserInfo">
-                  <div class="flex-td" style="flex: 0 0 98px">
-                    <template v-if="!userInfo.ranking">
-                      <span class="no-val"></span>
-                      <span class="no-val"></span>
-                    </template>
-                    <template v-else-if="userInfo.ranking > 3">{{userInfo.ranking}}</template>
-                    <template v-else>
-                      <span :class="`top-${userInfo.ranking}`"></span>
-                    </template>
-                  </div>
+                  <!--<div class="flex-td" style="flex: 0 0 98px">-->
+                    <!--<template v-if="!userInfo.ranking">-->
+                      <!--<span class="no-val"></span>-->
+                      <!--<span class="no-val"></span>-->
+                    <!--</template>-->
+                    <!--<template v-else-if="userInfo.ranking > 3">{{userInfo.ranking}}</template>-->
+                    <!--<template v-else>-->
+                      <!--<span :class="`top-${userInfo.ranking}`"></span>-->
+                    <!--</template>-->
+                  <!--</div>-->
 
                   <div class="flex-td" style="flex: 0 0 136px">
                     <template v-if="userInfo.userName">
@@ -224,10 +210,6 @@
               </div>
               <div class="flex-body flex-row">
                 <template v-for="i in 7">
-                  <div class="flex-td" style="flex: 0 0 98px">
-                    <span class="no-val"></span>
-                    <span class="no-val"></span>
-                  </div>
                   <div class="flex-td" style="flex: 0 0 136px">
                     <span class="no-val"></span>
                     <span class="no-val"></span>
