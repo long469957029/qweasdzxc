@@ -29,6 +29,7 @@
         <div class="daily-content">
           <div class="daily-table-wrapper">
             <div class="daily-top">
+              <div class="daily-top-title" :class="[currentTop === 1 ? 'today' : 'yesterday']"></div>
               <div class="daily-left" @click="toggleTop(0)" v-show="currentTop === 1">
                 <span class="arrow"></span>
                 昨日排行
@@ -88,7 +89,14 @@
                   <img :src="userAvatar" class="user-avatar"/>
                 </div>
                 <div class="top-unit-right">
-                  <div class="top-unit-cell">我的排名：NO.{{userPrize.ranking}}</div>
+                  <div class="top-unit-cell">我的排名：
+                    <template v-if="userPrize.ranking">
+                      NO.{{userPrize.ranking}}
+                    </template>
+                    <template v-else>
+                      无排行
+                    </template>
+                    </div>
                   <div class="top-unit-cell">中奖金额：<span class="point-money">{{userPrize.amount | fixedCounvert2yuan}}</span>元</div>
                 </div>
               </div>
@@ -149,53 +157,86 @@
                   </template>
                 </div>
               </div>
-              <div class="flex-body flex-row">
-                <div class="flex-td" style="width: 98px">29</div>
-                <div class="flex-td" style="width: 136px">polo</div>
-                <div class="flex-td" style="width: 136px">1620.000</div>
-                <div class="flex-td" style="width: 136px"><span class="point-money">1563.000</span></div>
-              </div>
             </div>
             <div class="flex-table table-right">
               <div class="flex-title flex-row">
+                <div class="flex-td" style="flex: 0 0 98px">排名</div>
+                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
                 <div class="flex-td" style="flex: 0 0 136px">周日投注额</div>
+
+                <div class="flex-td" style="flex: 0 0 98px">排名</div>
+                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
                 <div class="flex-td" style="flex: 0 0 136px">周六投注额</div>
+
+                <div class="flex-td" style="flex: 0 0 98px">排名</div>
+                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
                 <div class="flex-td" style="flex: 0 0 136px">周五投注额</div>
+
+                <div class="flex-td" style="flex: 0 0 98px">排名</div>
+                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
                 <div class="flex-td" style="flex: 0 0 136px">周四投注额</div>
+
+                <div class="flex-td" style="flex: 0 0 98px">排名</div>
+                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
                 <div class="flex-td" style="flex: 0 0 136px">周三投注额</div>
+
+                <div class="flex-td" style="flex: 0 0 98px">排名</div>
+                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
                 <div class="flex-td" style="flex: 0 0 136px">周二投注额</div>
+
+                <div class="flex-td" style="flex: 0 0 98px">排名</div>
+                <div class="flex-td" style="flex: 0 0 136px">用户名</div>
                 <div class="flex-td" style="flex: 0 0 136px">周一投注额</div>
               </div>
-              <div class="flex-body flex-row" v-for="i in 10">
-                <div class="flex-td" style="flex: 0 0 136px">
-                  <!--<template v-if="">-->
-                  <!---->
-                  <!--</template>-->
-                  <!--<template v-else>-->
-                  <!---->
-                  <!--</template>-->
-                </div>
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
-                <div class="flex-td" style="flex: 0 0 136px">
-                  <span class="no-val"></span>
-                  <span class="no-val"></span>
-                </div>
+              <div class="flex-body flex-row" v-for="weekUserInfo in formatWeeklyTop10Right">
+                <template v-for="userInfo in weekUserInfo">
+                  <div class="flex-td" style="flex: 0 0 98px">
+                    <template v-if="!userInfo.ranking">
+                      <span class="no-val"></span>
+                      <span class="no-val"></span>
+                    </template>
+                    <template v-else-if="userInfo.ranking > 3">{{userInfo.ranking}}</template>
+                    <template v-else>
+                      <span :class="`top-${userInfo.ranking}`"></span>
+                    </template>
+                  </div>
+
+                  <div class="flex-td" style="flex: 0 0 136px">
+                    <template v-if="userInfo.userName">
+                      {{userInfo.userName}}
+                    </template>
+                    <template v-else>
+                      <span class="no-val"></span>
+                      <span class="no-val"></span>
+                    </template>
+                  </div>
+
+                  <div class="flex-td" style="flex: 0 0 136px">
+                    <template v-if="userInfo.bet">
+                      {{userInfo.bet}}
+                    </template>
+                    <template v-else>
+                      <span class="no-val"></span>
+                      <span class="no-val"></span>
+                    </template>
+                  </div>
+                </template>
               </div>
               <div class="flex-body flex-row">
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
-                <div class="flex-td" style="flex: 0 0 136px">15620.000</div>
-                <div class="flex-td" style="flex: 0 0 136px">
-                  <span class="no-val"></span>
-                  <span class="no-val"></span>
-                </div>
+                <template v-for="i in 7">
+                  <div class="flex-td" style="flex: 0 0 98px">
+                    <span class="no-val"></span>
+                    <span class="no-val"></span>
+                  </div>
+                  <div class="flex-td" style="flex: 0 0 136px">
+                    <span class="no-val"></span>
+                    <span class="no-val"></span>
+                  </div>
+                  <div class="flex-td" style="flex: 0 0 136px">
+                    <span class="no-val"></span>
+                    <span class="no-val"></span>
+                  </div>
+                </template>
               </div>
             </div>
           </div>
@@ -206,14 +247,20 @@
         <div class="rule-title" ref="ruleTitle"></div>
         <ul class="rules">
           <li class="rule">
-            本期参与擂台的彩种包括：无限秒秒彩、QQ30秒、无限分分彩、11选5分分彩、无限三分彩、韩国乐透1.5、东京1.5分彩、新加坡2分彩！<br>
-            以上8个彩种每天综合的投注额将作为活动条件；
+            本期参与擂台的彩种包括：
+            <template v-for="(ticketInfo, index) in formatTicketList">
+              {{ticketInfo.info.zhName}}
+              <template v-if="formatTicketList.length !== index + 1">
+                、
+              </template>
+            </template>
+            ！以上{{formatTicketList.length}}个彩种每天综合的投注额将作为活动条件；
           </li>
           <li class="rule">
-            每天在以上8个彩种中的投注额之和达到前十的用户都将登上TOP10榜单，并在次日获得对应的彩金奖励；
+            每天在以上{{formatTicketList.length}}个彩种中的投注额之和达到前十的用户都将登上TOP10榜单，并在次日获得对应的彩金奖励；
           </li>
           <li class="rule">
-            每天在这8个彩种中中奖最高的三位用户将获得额外加奖奖励，并受所有用户膜拜，获得中奖秘籍（最多中奖的投注号码）；
+            每天在这{{formatTicketList.length}}个彩种中中奖最高的三位用户将获得额外加奖奖励，并受所有用户膜拜，获得中奖秘籍（最多中奖的投注号码）；
           </li>
           <li class="rule">
             每天参与活动前都可在活动页免费领取一张您想投注的彩种的代金券，代金券金额随机发放；
@@ -309,11 +356,11 @@
         //今日昨日榜
         top10: [],
 
+        //日榜个人信息
         myInfo: {},
         myNum: 0,
         myYesterdayInfo: {},
         myYesterdayNum: 0,
-
 
         //当前秘籍
         currentCheat: {},
@@ -321,7 +368,9 @@
         currentTop: 1,
 
         getTicketModal: false,
-        getCheatModal: false
+        getCheatModal: false,
+
+        timer: null
       }
     },
 
@@ -345,26 +394,35 @@
       },
 
       formatWeeklyTop10() {
+        let formatWeeklyTop10 = []
+
         if (this.week10.week) {
-          return _.times(10, (index) => {
+          formatWeeklyTop10 = _.times(10, (index) => {
             return this.formatUserInfo(this.week10.week[index], index)
           })
-        }
-      },
-      formatWeeklyTop10Right() {
-        if (this.week10) {
-          return _.times(10, (index) => {
-            return [
-              this.getBet(this.week10.sunday, index),
-              this.getBet(this.week10.saturday, index),
-              this.getBet(this.week10.friday, index),
-              this.getBet(this.week10.thursday, index),
-              this.getBet(this.week10.wednesday, index),
-              this.getBet(this.week10.tuesday, index),
-              this.getBet(this.week10.monday, index),
-            ]
+
+          formatWeeklyTop10.push({
+            ranking: this.week10.myNum,
+            userName: this.week10.myInfo ? this.week10.myInfo.userName : '',
+            bet: this.week10.myInfo ? _.fixedConvert2yuan(this.week10.myInfo.bet) : null,
+            amount: this.week10.myInfo ? _.fixedConvert2yuan(this.week10.myInfo.amount) : null
           })
         }
+
+        return formatWeeklyTop10
+      },
+      formatWeeklyTop10Right() {
+        return _.times(10, (index) => {
+          return [
+            this.formatUserInfo((this.week10.sunday || [])[index], index),
+            this.formatUserInfo((this.week10.saturday || [])[index], index),
+            this.formatUserInfo((this.week10.friday || [])[index], index),
+            this.formatUserInfo((this.week10.thursday || [])[index], index),
+            this.formatUserInfo((this.week10.wednesday || [])[index], index),
+            this.formatUserInfo((this.week10.tuesday || [])[index], index),
+            this.formatUserInfo((this.week10.monday || [])[index], index),
+          ]
+        })
       },
       //当前投注榜
       currentTop10() {
@@ -434,10 +492,9 @@
 
       getCheat(topUser) {
         this.currentCheat = {
-          ticketName: topUser.ticketName,
+          ticketName: ticketConfig.getComplete(topUser.ticketId).info.zhName,
           playName: `${topUser.groupName}_${topUser.playName}`,
           betNum: topUser.betNum,
-          //todo 等待后端数据
           ticketId: topUser.ticketId
         }
         this.getCheatModal = true
@@ -487,6 +544,12 @@
 
       this.getWeeklyList()
 
+      this.timer = setInterval(() => {
+        this.getDailyList()
+
+        this.getWeeklyList()
+      }, 10000)
+
       getYesterdayTop3Api(({data}) => {
         if (data && data.result === 0) {
           this.yesterdayTop3 = data.root.prizeList
@@ -496,6 +559,10 @@
         }
       })
 
+    },
+
+    beforeDestroy() {
+      clearInterval(this.timer)
     }
   }
 </script>
@@ -607,6 +674,18 @@
         line-height: 75px;
         display: flex;
         position: relative;
+
+        .daily-top-title {
+          position: absolute;
+          background-image: url(./assets/prized-daily-today.png);
+          width: 262px;
+          height: 36px;
+          top: 23px;
+          left: 178px;
+          &.yesterday {
+            background-image: url(./assets/prized-daily-yesterday.png);
+          }
+        }
       }
 
       .daily-content {
@@ -634,6 +713,7 @@
           align-items: center;
           flex: 0 0 80px;
           position: absolute;
+          margin-top: 3px;
         }
 
         .arrow {
@@ -764,7 +844,9 @@
 
       .table-right {
         .flex-body {
-          background-color: #5a252b;
+          .flex-td {
+            background-color: #5a252b;
+          }
           &:last-of-type {
             .flex-td {
               background-color: #3e181b;
