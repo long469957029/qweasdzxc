@@ -1,16 +1,32 @@
-const mainActivity = () => import(/* webpackChunkName: "main-activity" */ './main-activity')
-const rechargeSalesActivity = () => import(/* webpackChunkName: "recharge-sales-activity" */ './rechargeSalesActivity/index')
-const betPlanActivity = () => import(/* webpackChunkName: "recharge-sales-activity" */ './betPlanActivity/index')
-const welfareSharingPlan = () => import(/* webpackChunkName: "recharge-sales-activity" */ './welfareSharingPlan/index')
-const rechargePlan = () => import(/* webpackChunkName: "recharge-sales-activity" */ './rechargePlan/index')
+const RechargeSalesActivity = () => import(/* webpackChunkName: "recharge-sales-activity" */ './rechargeSalesActivity')
+const BetPlanActivity = () => import(/* webpackChunkName: "recharge-sales-activity" */ './betPlanActivity')
+const WelfareSharingPlan = () => import(/* webpackChunkName: "recharge-sales-activity" */ './welfareSharingPlan')
+const RechargePlan = () => import(/* webpackChunkName: "recharge-sales-activity" */ './rechargePlan')
+const ArenaActivity = () => import(/* webpackChunkName: "arena-activity" */ './arena')
 
 export default [
-  { path: '/act/', component: mainActivity,
-    children: [
-      { path: 'rechargeSales', component: rechargeSalesActivity },
-      { path: 'betPlan', component: betPlanActivity },
-      { path: 'welfareSharingPlan', component: welfareSharingPlan },
-      { path: 'rechargePlan', component: rechargePlan },
-    ]
+  {
+    path: '/act/rechargeSales',
+    component: RechargeSalesActivity,
+  },
+  {
+    path: '/act/betPlan',
+    component: BetPlanActivity
+  },
+  {
+    path: '/act/welfareSharingPlan',
+    component: WelfareSharingPlan
+  },
+  {
+    path: '/act/rechargePlan',
+    component: RechargePlan
+  },
+  {
+    path: '/act/arena',
+    component: ArenaActivity,
+    meta: {
+      footer: false,
+      toolbar: false
+    }
   }
 ]

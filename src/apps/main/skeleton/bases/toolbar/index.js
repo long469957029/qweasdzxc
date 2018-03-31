@@ -144,6 +144,10 @@ const ToolbarView = Base.ItemView.extend({
       });
   },
 
+  toggle(isShow) {
+    this.$el.toggle(isShow)
+  },
+
   closeSidebarHandler(e) {
     const $target = $(e.currentTarget)
     const path = $target.data('id')

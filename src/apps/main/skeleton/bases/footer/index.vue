@@ -27,7 +27,7 @@
               <a class="ios-icon" href="#/mb"></a>
             </span>
           </div>
-          <p>Copyright © 2016-2017 无限娱乐 版权所有</p>
+          <p>Copyright © 2016-2018 无限娱乐 版权所有</p>
           <p>无限娱乐郑重提示：彩票有风险，投注需谨慎，未满18周岁的青少年禁止购买</p>
           <div class="desc-bottom">
             <span class="cooperator-list">

@@ -58,6 +58,7 @@ const sscConfig = {
       id: 19,
       mark: 'mmc',
       zhName: '无限秒秒彩',
+      showName: '无限<br>秒秒彩',
       badge: '',
       trendOps: {
         distribution: true,
@@ -71,6 +72,7 @@ const sscConfig = {
       id: 32,
       mark: 'qq30s',
       zhName: 'QQ30秒',
+      showName: 'QQ30秒',
       badge: 'hot',
       showNumberDetail: false,
       openWhenTimeout: true,
@@ -87,6 +89,7 @@ const sscConfig = {
       id: 10,
       mark: 'ffc',
       zhName: '无限分分彩',
+      showName: '无限<br>分分彩',
       badge: 'hot',
       // badge: 'fire',
       trendOps: {
@@ -100,6 +103,7 @@ const sscConfig = {
       id: 13,
       mark: 'sfc',
       zhName: '无限三分彩',
+      showName: '无限<br>三分彩',
       badge: '',
       trendOps: {
         distribution: true,
@@ -112,6 +116,7 @@ const sscConfig = {
       id: 1,
       mark: 'cq',
       zhName: '重庆时时彩',
+      showName: '重庆<br>时时彩',
       badge: 'hot',
       trendOps: {
         distribution: true,
@@ -125,6 +130,7 @@ const sscConfig = {
       id: 3,
       mark: 'xj',
       zhName: '新疆时时彩',
+      showName: '新疆<br>时时彩',
       badge: '',
       showNumberDetail: true,
       trendOps: {
@@ -139,6 +145,7 @@ const sscConfig = {
       id: 9,
       mark: 'hlj',
       zhName: '黑龙江时时彩',
+      showName: '黑龙江<br>时时彩',
       badge: '',
       showNumberDetail: true,
       trendOps: {
@@ -152,6 +159,7 @@ const sscConfig = {
       id: 8,
       mark: 'tj',
       zhName: '天津时时彩',
+      showName: '天津<br>时时彩',
       badge: '',
       showNumberDetail: true,
       trendOps: {
@@ -166,6 +174,7 @@ const sscConfig = {
       id: 21,
       mark: 'hg',
       zhName: '韩国乐透1.5',
+      showName: '韩国<br>乐透1.5',
       badge: '',
       showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
       trendOps: {
@@ -179,6 +188,7 @@ const sscConfig = {
       id: 27,
       mark: 'dj',
       zhName: '东京1.5分彩',
+      showName: '东京<br>1.5分彩',
       badge: '',
       showNumberDetail: true, // 鼠标滑过开奖号码显示尾号详情
       trendOps: {
@@ -193,6 +203,7 @@ const sscConfig = {
       id: 25,
       mark: 'xjp',
       zhName: '新加坡2分彩',
+      showName: '新加坡<br>2分彩',
       badge: '',
       showNumberDetail: true,
       trendOps: {
@@ -206,6 +217,7 @@ const sscConfig = {
       id: 31,
       mark: 'qqffc',
       zhName: 'QQ分分彩',
+      showName: 'QQ<br>分分彩',
       badge: 'new',
       showNumberDetail: false,
       trendOps: {
@@ -220,6 +232,7 @@ const sscConfig = {
       id: 37,
       mark: 'tx',
       zhName: '腾讯分分彩',
+      showName: '腾讯<br>分分彩',
       badge: 'new',
       showNumberDetail: false,
       trendOps: {
@@ -243,6 +256,7 @@ const oneFiveConfig = {
       id: 14,
       mark: 'ffc',
       zhName: '11选5分分彩',
+      showName: '11选5<br>分分彩',
       badge: '',
       trendOps: {
         distribution: true,
@@ -254,6 +268,7 @@ const oneFiveConfig = {
       id: 5,
       mark: 'sd',
       zhName: '山东11选5',
+      showName: '山东<br>11选5',
       trendOps: {
         distribution: true,
         periods: trendLowPeriods,
@@ -265,6 +280,7 @@ const oneFiveConfig = {
       id: 4,
       mark: 'gd',
       zhName: '广东11选5',
+      showName: '广东<br>11选5',
       trendOps: {
         distribution: true,
         periods: trendLowPeriods,
@@ -276,6 +292,7 @@ const oneFiveConfig = {
       id: 11,
       mark: 'jx',
       zhName: '江西11选5',
+      showName: '江西<br>11选5',
       trendOps: {
         distribution: true,
         periods: trendLowPeriods,
@@ -290,6 +307,7 @@ const threeDConfig = [
     id: 36,
     mark: '3d-ffc',
     zhName: 'QQ3D分分彩',
+    showName: 'QQ<br>3D分分彩',
     hasMargin: true,
     badge: 'new',
     abbreviated: true,
@@ -305,6 +323,7 @@ const threeDConfig = [
     id: 6,
     mark: '3d',
     zhName: '3D',
+    showName: '3D',
     hasMargin: true,
     trendOps: {
       distribution: true,
@@ -329,6 +348,7 @@ const p5p3Config = [
     id: 7,
     mark: 'p5p3',
     zhName: 'P3/P5',
+    showName: 'P3/P5',
     hasMargin: true,
     trendOps: {
       distribution: true,
@@ -344,6 +364,7 @@ const bjPKConfig = [
     id: 18,
     mark: 'pk10',
     zhName: 'PK10',
+    showName: 'PK10',
     hasMargin: true,
     badge: 'hot',
     trendOps: {
@@ -370,6 +391,7 @@ const quickConfig = [
     id: 29,
     mark: 'jsk3',
     zhName: '江苏快3',
+    showName: '江苏快3',
     hasMargin: true,
     //在只有一个进阶玩法的情况下直接展示玩法说明
     notShowAdvance: true,
@@ -395,6 +417,7 @@ const handicapMark6Config = [
     id: 34,
     mark: 'mark6',
     zhName: '香港六合彩',
+    showName: '香港<br>六合彩',
     // badge: 'new',
     isOfficial: true,
     needSx: true
@@ -408,6 +431,7 @@ const handicapSscConfig = [
       id: 1,
       mark: 'cq',
       zhName: '重庆时时彩',
+      showName: '重庆<br>时时彩',
       abbreviated: true,
       // badge: 'new',
       roadBalls: true,
@@ -422,6 +446,7 @@ const handicapSscConfig = [
       id: 10,
       mark: 'ffc',
       zhName: '无限分分彩',
+      showName: '无限<br>分分彩',
       abbreviated: true,
       // badge: 'new',
       twoSide: true,
@@ -438,6 +463,7 @@ const handicapPk10Config = [
       id: 18,
       mark: 'pk10',
       zhName: 'PK10',
+      showName: 'PK10',
       // badge: 'new',
       roadBalls: true,
       twoSide: true,

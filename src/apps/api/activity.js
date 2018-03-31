@@ -1,6 +1,85 @@
 const PAGESIZE = 6
 const PAGEINDEX = 0
 
+/**
+ * 彩种擂台赛 - 获取代金券列表接口
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getTicketListApi = (then, fail) => {
+  return $http({
+    url: '/info/redpack/redActTikcets.json'
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
+ * 彩种擂台赛 - 获取代金券接口
+ * @param ticketId
+ * @param then
+ * @param fail
+ * @returns {*|Promise<T>}
+ */
+const getTicketCouponApi = ({ticketId}, then, fail) => {
+  return $http({
+    url: '/info/redpack/getTicketCoupon.json',
+    data: {
+      ticketId
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
+ * 彩种擂台赛 - 获取日榜数据
+ * @param then
+ * @param fail
+ * @returns {*}
+ */
+const getDailyListApi = (then, fail) => {
+  return $http({
+    url: '/info/redpack/dailylist.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+/**
+ * 彩种擂台赛 - 获取周榜数据
+ * @param then
+ * @param fail
+ * @returns {*}
+ */
+const getWeeklyListApi = (then, fail) => {
+  return $http({
+    url: '/info/redpack/weeklylist.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+const getYesterdayTop3Api = (then, fail) => {
+  return $http({
+    url: '/info/redpack/yestoday.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+
+
+export {
+  getTicketListApi,
+  getTicketCouponApi,
+  getDailyListApi,
+  getWeeklyListApi,
+  getYesterdayTop3Api
+}
+
+
+
 export default {
   getActivityList({activityType = '', pageSize = PAGESIZE, pageIndex = PAGEINDEX}, then, fail) {
     return $http({
