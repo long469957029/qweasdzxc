@@ -535,11 +535,11 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    maxPrizeAlgorithm: betMaxPrize.inputNInN,
-    maxPrizeAlgorithmProps: {
-      n: 5,
-      k: 2
-    },
+    // maxPrizeAlgorithm: betMaxPrize.inputNInN,
+    // maxPrizeAlgorithmProps: {
+    //   n: 5,
+    //   k: 2
+    // },
     format: {symbol: ' '},
     create: algorithm.getCreateFunc(2, {
       range: eleven,
@@ -559,11 +559,11 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    maxPrizeAlgorithm: betMaxPrize.inputNInN,
-    maxPrizeAlgorithmProps: {
-      n: 5,
-      k: 3
-    },
+    // maxPrizeAlgorithm: betMaxPrize.inputNInN,
+    // maxPrizeAlgorithmProps: {
+    //   n: 5,
+    //   k: 3
+    // },
     format: {symbol: ' '},
     create: algorithm.getCreateFunc(3, {
       range: eleven,
@@ -583,11 +583,11 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    maxPrizeAlgorithm: betMaxPrize.inputNInN,
-    maxPrizeAlgorithmProps: {
-      n: 5,
-      k: 4
-    },
+    // maxPrizeAlgorithm: betMaxPrize.inputNInN,
+    // maxPrizeAlgorithmProps: {
+    //   n: 5,
+    //   k: 4
+    // },
     format: {symbol: ' '},
     create: algorithm.getCreateFunc(4, {
       range: eleven,
@@ -607,11 +607,11 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    maxPrizeAlgorithm: betMaxPrize.inputNInN,
-    maxPrizeAlgorithmProps: {
-      n: 5,
-      k: 5
-    },
+    // maxPrizeAlgorithm: betMaxPrize.inputNInN,
+    // maxPrizeAlgorithmProps: {
+    //   n: 5,
+    //   k: 5
+    // },
     format: {symbol: ' '},
     create: algorithm.getCreateFunc(5, {
       range: eleven,
@@ -631,11 +631,11 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    maxPrizeAlgorithm: betMaxPrize.inputNInN,
-    maxPrizeAlgorithmProps: {
-      n: 5,
-      k: 5
-    },
+    // maxPrizeAlgorithm: betMaxPrize.inputNInN,
+    // maxPrizeAlgorithmProps: {
+    //   n: 5,
+    //   k: 5
+    // },
     format: {symbol: ' '},
     create: algorithm.getCreateFunc(6, {
       range: eleven,
@@ -655,11 +655,11 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    maxPrizeAlgorithm: betMaxPrize.inputNInN,
-    maxPrizeAlgorithmProps: {
-      n: 5,
-      k: 5
-    },
+    // maxPrizeAlgorithm: betMaxPrize.inputNInN,
+    // maxPrizeAlgorithmProps: {
+    //   n: 5,
+    //   k: 5
+    // },
     format: {symbol: ' '},
     create: algorithm.getCreateFunc(7, {
       range: eleven,
@@ -679,11 +679,11 @@ function _create(ticketId) {
       split: ' ',
       innerSplit: ' ',
     }),
-    maxPrizeAlgorithm: betMaxPrize.inputNInN,
-    maxPrizeAlgorithmProps: {
-      n: 5,
-      k: 5
-    },
+    // maxPrizeAlgorithm: betMaxPrize.inputNInN,
+    // maxPrizeAlgorithmProps: {
+    //   n: 5,
+    //   k: 5
+    // },
     format: {symbol: ' '},
     create: algorithm.getCreateFunc(6, {
       range: eleven,
