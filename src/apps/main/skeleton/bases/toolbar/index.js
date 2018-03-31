@@ -6,6 +6,10 @@ import CouponView from './coupon' // 我的优惠券
 // import MessageView from './message' // 站内消息
 import FeedbackView from './feedback' // 意见反馈
 
+import {
+  getTicketListApi,
+} from 'api/activity'
+
 const ToolbarView = Base.ItemView.extend({
 
   template: require('./index.html'),
@@ -28,7 +32,7 @@ const ToolbarView = Base.ItemView.extend({
   serializeData() {
   },
   getNovicePackgeXhr(data) {
-    return Global.sync.ajax({
+    return $http({
       url: '/info/newpack/info.json',
       data,
     })
@@ -53,10 +57,44 @@ const ToolbarView = Base.ItemView.extend({
     const self = this
     this.subscribe('acct', 'acct:login', () => {
       $('.js-toolbar-option-operation-container').removeClass('hidden')
-      this.getNovicePackgeXhr().done((res) => {
-        if (res.result === 0) {
-          if (res.root.status === 0 || res.root.status === 1) {
+      const def1 = this.getNovicePackgeXhr().then(({data}) => {
+        if (data.result === 0) {
+          if (data.root.status === 0 || data.root.status === 1) {
+            return true
+          }
+        } else {
+          return false
+        }
+      })
+
+      const def2 = getTicketListApi(({data}) => {
+        if (data && data.result === 0) {
+          return true
+        } else {
+          return false
+        }
+      })
+
+      Promise.all([def1, def2]).then((result) => {
+        const result1 = result[0]
+        const result2 = result[1]
+        if (result1 && result2) {
+          setInterval(() => {
+            this.$('.js-novice-package').addClass('hidden')
+            this.$('.js-arena-package').removeClass('hidden')
+          }, 3000)
+          _.delay(() => {
+            setInterval(() => {
+              this.$('.js-novice-package').removeClass('hidden')
+              this.$('.js-arena-package').addClass('hidden')
+            }, 3000)
+          }, 3000)
+        } else {
+          if (result1) {
             this.$('.js-novice-package').removeClass('hidden')
+          }
+          if (result1) {
+            this.$('.js-arena-package').removeClass('hidden')
           }
         }
       })

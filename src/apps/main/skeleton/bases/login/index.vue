@@ -23,7 +23,7 @@
                  :class="{'parsley-error': passwordError,'parsley-success':pwdSuccess}"
                  @blur="verifyPwd" @keyup.enter="userLogin"
                  placeholder="请输入您的密码" v-model="password"
-                 autocomplete="off"  required></div>
+                 autocomplete="off" required></div>
         <div class="login-input-item" :class="{'hidden':!showCodeItem}">
           <div class="login-verity-img sfa sfa-icon-verify">
           </div>
@@ -55,12 +55,13 @@
 </template>
 <script>
   import loginApi from 'api/login'
+
   const Encryption = require('com/encryption')
 
-  export default{
+  export default {
     name: 'login',
 
-    data () {
+    data() {
       return {
         showErrorMsg: false,
         usernameError: false,
@@ -90,7 +91,7 @@
     filters: {},
 
     methods: {
-      userLogin(){
+      userLogin() {
         const encryption = new Encryption()
         const param = encryption.encryptSha(`${new Date().valueOf()}`)
         const entPassword = encryption.encrypt(this.password, param)
@@ -139,6 +140,10 @@
             if (status === 0 || status === 100 || status === 102) {
               this.$store.commit(types.USER_LOGIN_SUCCESS, acctInfo)
               this.closeDialog()
+
+              if (this.$route.query.redirect) {
+                this.$router.replace(this.$route.query.redirect)
+              }
             } else if (status === 104 || status === 105 || status === 106) { // 104 重置密码 105 手工开户 106 后台开户
               const type = status === 104 ? 2 : 1
               $(this.$refs.loginModal).modal('hide')
@@ -170,7 +175,7 @@
       forgotPwd() {
         this.$store.commit(types.TOGGLE_RESET_PASSWORD_DIALOG, true)
       },
-      verifyUserName(){
+      verifyUserName() {
         if (this.username === '') {
           this.usernameError = true
           this.showErrorMsg = true
@@ -194,7 +199,7 @@
         }
         return true
       },
-      verifyPwd(){
+      verifyPwd() {
         if (this.password === '') {
           this.passwordError = true
           this.showErrorMsg = true
@@ -204,13 +209,13 @@
         } else {
           // const pwReg = /^[0-9a-zA-Z\~\!\@\#\$\%\^&\*\(\)\-\=\_\+\[\]\{\}\\\|\;\'\:\"\,\.\<\>\/\?]{6,20}$/
           // if (this.password.length < 9 && this.strBetweenIsNumber(this.password, 0, 7)) {
-           //  this.passwordError = true
-           // this.showErrorMsg = true
-           //  this.pwdSuccess = false
-           //  this.errorMsg = '用户名或密码错误'
-           //  return false
+          //  this.passwordError = true
+          // this.showErrorMsg = true
+          //  this.pwdSuccess = false
+          //  this.errorMsg = '用户名或密码错误'
+          //  return false
           if (this.password.length < 6 || this.password.length > 20) {
-          // } else if (!pwReg.test(this.password)) {
+            // } else if (!pwReg.test(this.password)) {
             this.passwordError = true
             this.showErrorMsg = true
             this.pwdSuccess = false
@@ -220,7 +225,7 @@
         }
         return true
       },
-      verifyCode(){
+      verifyCode() {
         if (this.code === '') {
           this.codeError = true
           this.showErrorMsg = true
@@ -261,7 +266,7 @@
         return true
       },
       // 刷新登录表单验证码
-      refreshValCode () {
+      refreshValCode() {
 //        const url = window.self.location.toString()
 //        const codeChangeUrl = `${url.substring(0, url.indexOf('/', url.indexOf('://', 0) + 3))}/acct/imgcode/code`
         const codeChangeUrl = '/acct/imgcode/code'
@@ -271,14 +276,14 @@
         this.code = ''
       },
       // 点击刷新登录表单验证码
-      clickRefreshValCode(){
+      clickRefreshValCode() {
         if (this.toCircle) {
           this.toCircle = false
         }
         this.toCircle = true
         this.refreshValCode()
       },
-      strBetweenIsNumber (str, star, end) {
+      strBetweenIsNumber(str, star, end) {
         const strArr = str.split('').slice(star, end)
         let isHasNumber = true
         $.each(strArr, (index, item) => {
@@ -289,11 +294,11 @@
         return isHasNumber
       },
 
-      closeDialog(){
+      closeDialog() {
         $(this.$refs.loginModal).modal('hide')
       },
     },
-    mounted(){
+    mounted() {
       this.$nextTick(() => {
 //          this.$refs.showLogin.init()
         $(this.$refs.loginModal).modal({
