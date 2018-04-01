@@ -94,7 +94,7 @@ const ToolbarView = Base.ItemView.extend({
           if (result1) {
             this.$('.js-novice-package').removeClass('hidden')
           }
-          if (result1) {
+          if (result2) {
             this.$('.js-arena-package').removeClass('hidden')
           }
         }
