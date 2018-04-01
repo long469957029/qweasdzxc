@@ -60,6 +60,7 @@ const ToolbarView = Base.ItemView.extend({
       const def1 = this.getNovicePackgeXhr().then(({data}) => {
         if (data.result === 0) {
           if (data.root.status === 0 || data.root.status === 1) {
+            this.$('.js-novice-package').removeClass('hidden')
             return true
           }
         } else {
@@ -82,12 +83,12 @@ const ToolbarView = Base.ItemView.extend({
           setInterval(() => {
             this.$('.js-novice-package').addClass('hidden')
             this.$('.js-arena-package').removeClass('hidden')
-          }, 3000)
+          }, 6000)
           _.delay(() => {
             setInterval(() => {
               this.$('.js-novice-package').removeClass('hidden')
               this.$('.js-arena-package').addClass('hidden')
-            }, 3000)
+            }, 6000)
           }, 3000)
         } else {
           if (result1) {
