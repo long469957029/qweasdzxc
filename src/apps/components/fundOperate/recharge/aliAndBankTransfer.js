@@ -46,7 +46,7 @@ const AliAndBankTransfer = Base.ItemView.extend({
             $(e.trigger).find('span').addClass('copySuccess')
             setTimeout(() => {
               $(e.trigger).find('span').removeClass('copySuccess')
-            },2000)
+            },1000)
             e.clearSelection();
           });
 
@@ -55,7 +55,7 @@ const AliAndBankTransfer = Base.ItemView.extend({
             console.error('Trigger:', e.trigger);
           });
         } else {
-          Global.ui.notification.show('未知错误')
+          Global.ui.notification.show('网络异常，请稍后再试。')
         }
       })
     // 请求充值页广告
