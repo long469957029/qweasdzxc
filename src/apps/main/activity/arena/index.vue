@@ -108,7 +108,7 @@
                     </template>
                   </div>
                   <div class="top-unit-cell">昨日中奖金额：<span
-                    class="point-money">{{userPrize.amount | fixedCounvert2yuan}}</span>元
+                    class="point-money">{{userPrize.amount | fixedConvert2yuan}}</span>元
                   </div>
                 </div>
               </div>

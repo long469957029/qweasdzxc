@@ -31,7 +31,7 @@
           </div>
           <div class="list-body">
             <transition-group name="list-detail" tag="div">
-              <div class="list-info" v-for="(item, index) in noticeList" :key="item.bulletionId"
+              <div class="list-info" v-for="(item, index) in noticeList" :key="item.bulletionId" ref="noticeList"
                    v-show="detailPage === index">
                 <div class="title">{{item.title}}</div>
                 <div class="time">{{_(item.time).toTime()}}</div>
@@ -138,6 +138,17 @@
           this.detailPage = index
         }
       },
+    },
+    watch: {
+      showNoticeModal(isShow) {
+        if (isShow) {
+          this.$nextTick(() => {
+            $(this.$refs.noticeList).on('click', 'a', () => {
+              $(this.$refs.noticeModal).modal('hide')
+            })
+          })
+        }
+      }
     },
     mounted() {
       this.getNotice()
