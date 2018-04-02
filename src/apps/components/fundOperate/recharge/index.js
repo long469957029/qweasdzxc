@@ -130,7 +130,7 @@ const RechargeView = Base.ItemView.extend({
     this.$('.js-fc-rc-payType-items').html(paymentData.items)
 
     // 2 遍历获取上一次支付信息
-    const lastPayInfo = rechargeService.getPaymentInfo(type, data)
+    const lastPayInfo = rechargeService.getPaymentInfo(paymentData.type, data)
     const feeData = rechargeService.doFeeData(lastPayInfo)
 
 
