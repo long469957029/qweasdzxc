@@ -653,7 +653,7 @@
 
     .activity-tip {
       background-image: url(./assets/top-tip.png);
-      width: 357px;
+      width: 272px;
       height: 21px;
       margin: 200px auto 0 auto;
     }
