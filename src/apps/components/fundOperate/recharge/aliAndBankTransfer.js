@@ -55,7 +55,7 @@ const AliAndBankTransfer = Base.ItemView.extend({
             console.error('Trigger:', e.trigger);
           });
         } else {
-          Global.ui.notification.show('未知错误')
+          Global.ui.notification.show('网络异常，请稍后再试。')
         }
       })
     // 请求充值页广告
