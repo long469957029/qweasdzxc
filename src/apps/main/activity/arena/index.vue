@@ -6,7 +6,7 @@
     <div class="float-rule-toolbar" @click="scrollToRule"></div>
     <div class="main-content">
       <div class="activity-date">
-        [ 活动时间：2018年3月1日-3月31日 ]
+        [ 活动时间：{{_.toDate(cfg.fromDate, 'YYYY年MM月DD日')}}-{{_.toDate(cfg.endDate, 'MM月DD日')}} ]
       </div>
       <div class="activity-tip"></div>
 
@@ -31,12 +31,12 @@
             <div class="daily-top">
               <div class="daily-top-title" :class="[currentTop === 1 ? 'today' : 'yesterday']"></div>
               <!--<div class="daily-left" @click="toggleTop(0)" v-show="currentTop === 1">-->
-                <!--<span class="arrow"></span>-->
-                <!--昨日排行-->
+              <!--<span class="arrow"></span>-->
+              <!--昨日排行-->
               <!--</div>-->
               <!--<div class="daily-right" @click="toggleTop(1)" v-show="currentTop === 0">-->
-                <!--今日排行-->
-                <!--<span class="arrow right"></span>-->
+              <!--今日排行-->
+              <!--<span class="arrow right"></span>-->
               <!--</div>-->
             </div>
             <div class="daily-table flex-table">
@@ -60,10 +60,10 @@
                 <div class="flex-td point-money" style="width: 170px" v-html="userInfo.amount"></div>
               </div>
               <!--<div class="flex-body flex-row">-->
-                <!--<div class="flex-td" style="width: 98px">29</div>-->
-                <!--<div class="flex-td" style="width: 170px">polo</div>-->
-                <!--<div class="flex-td" style="width: 170px">1560.000</div>-->
-                <!--<div class="flex-td point-money" style="width: 170px">1563.000</div>-->
+              <!--<div class="flex-td" style="width: 98px">29</div>-->
+              <!--<div class="flex-td" style="width: 170px">polo</div>-->
+              <!--<div class="flex-td" style="width: 170px">1560.000</div>-->
+              <!--<div class="flex-td point-money" style="width: 170px">1563.000</div>-->
               <!--</div>-->
             </div>
           </div>
@@ -71,10 +71,20 @@
             <div class="yesterday-top-3" v-if="!_.isEmpty(yesterdayTop3)">
               <div class="yesterday-unit" v-for="(topUser, index) in yesterdayTop3">
                 <div class="top-unit-left">
-                  <img :src="userAvatar" class="user-avatar"/>
+                  <img :src="topUser.headIcon" class="user-avatar"/>
                 </div>
                 <div class="top-unit-right">
-                  <div class="top-unit-cell">冠军：{{topUser.userName}}</div>
+                  <div class="top-unit-cell">
+                    <template v-if="index === 0">
+                      冠军
+                    </template>
+                    <template v-else-if="index">
+                      亚军
+                    </template>
+                    <template v-else>
+                      季军
+                    </template>
+                    ：{{topUser.userName}}</div>
                   <div class="top-unit-cell">中奖金额：<span class="point-money">{{topUser.prize | fixedConvert2yuan}}</span>元
                   </div>
                   <div class="top-unit-cell">奖励金额：<span
@@ -89,15 +99,17 @@
                   <img :src="userAvatar" class="user-avatar"/>
                 </div>
                 <div class="top-unit-right">
-                  <div class="top-unit-cell">我的排名：
+                  <div class="top-unit-cell">我的昨日排名：
                     <template v-if="userPrize.ranking">
                       NO.{{userPrize.ranking}}
                     </template>
                     <template v-else>
                       无排行
                     </template>
-                    </div>
-                  <div class="top-unit-cell">中奖金额：<span class="point-money">{{userPrize.amount | fixedCounvert2yuan}}</span>元</div>
+                  </div>
+                  <div class="top-unit-cell">昨日中奖金额：<span
+                    class="point-money">{{userPrize.amount | fixedCounvert2yuan}}</span>元
+                  </div>
                 </div>
               </div>
             </div>
@@ -113,7 +125,7 @@
               <div class="flex-title flex-row">
                 <div class="flex-td" style="width: 98px">排名</div>
                 <div class="flex-td" style="width: 136px">用户名</div>
-                <div class="flex-td" style="width: 136px">总额投注</div>
+                <div class="flex-td" style="width: 136px">投注总额</div>
                 <div class="flex-td" style="width: 136px">奖励金额</div>
               </div>
               <div class="flex-body flex-row" v-for="userInfo in formatWeeklyTop10">
@@ -158,67 +170,74 @@
                 </div>
               </div>
             </div>
-            <div class="flex-table table-right">
-              <div class="flex-title flex-row">
-                <div class="flex-td" style="flex: 0 0 274px">周日排行榜</div>
-
-                <div class="flex-td" style="flex: 0 0 274px">周六排行榜</div>
-
-                <div class="flex-td" style="flex: 0 0 274px">周五排行榜</div>
-
-                <div class="flex-td" style="flex: 0 0 274px">周四排行榜</div>
-
-                <div class="flex-td" style="flex: 0 0 274px">周三排行榜</div>
-
-                <div class="flex-td" style="flex: 0 0 274px">周二排行榜</div>
-
-                <div class="flex-td" style="flex: 0 0 274px">周一排行榜</div>
+            <div class="table-right-wrapper">
+              <div class="scroll-toolbar">
+                <div class="scroll-arrow left" @click="scrollLeft"></div>
+                <div class="scroll-arrow right" @click="scrollRight"></div>
               </div>
-              <div class="flex-body flex-row" v-for="weekUserInfo in formatWeeklyTop10Right">
-                <template v-for="userInfo in weekUserInfo">
-                  <!--<div class="flex-td" style="flex: 0 0 98px">-->
+              <div class="flex-table table-right" ref="tableRight">
+
+                <div class="flex-title flex-row">
+                  <div class="flex-td" style="flex: 0 0 274px">周日排行榜</div>
+
+                  <div class="flex-td" style="flex: 0 0 274px">周六排行榜</div>
+
+                  <div class="flex-td" style="flex: 0 0 274px">周五排行榜</div>
+
+                  <div class="flex-td" style="flex: 0 0 274px">周四排行榜</div>
+
+                  <div class="flex-td" style="flex: 0 0 274px">周三排行榜</div>
+
+                  <div class="flex-td" style="flex: 0 0 274px">周二排行榜</div>
+
+                  <div class="flex-td" style="flex: 0 0 274px">周一排行榜</div>
+                </div>
+                <div class="flex-body flex-row" v-for="weekUserInfo in formatWeeklyTop10Right">
+                  <template v-for="userInfo in weekUserInfo">
+                    <!--<div class="flex-td" style="flex: 0 0 98px">-->
                     <!--<template v-if="!userInfo.ranking">-->
-                      <!--<span class="no-val"></span>-->
-                      <!--<span class="no-val"></span>-->
+                    <!--<span class="no-val"></span>-->
+                    <!--<span class="no-val"></span>-->
                     <!--</template>-->
                     <!--<template v-else-if="userInfo.ranking > 3">{{userInfo.ranking}}</template>-->
                     <!--<template v-else>-->
-                      <!--<span :class="`top-${userInfo.ranking}`"></span>-->
+                    <!--<span :class="`top-${userInfo.ranking}`"></span>-->
                     <!--</template>-->
-                  <!--</div>-->
+                    <!--</div>-->
 
-                  <div class="flex-td" style="flex: 0 0 136px">
-                    <template v-if="userInfo.userName">
-                      {{userInfo.userName}}
-                    </template>
-                    <template v-else>
-                      <span class="no-val"></span>
-                      <span class="no-val"></span>
-                    </template>
-                  </div>
+                    <div class="flex-td" style="flex: 0 0 136px">
+                      <template v-if="userInfo.userName">
+                        {{userInfo.userName}}
+                      </template>
+                      <template v-else>
+                        <span class="no-val"></span>
+                        <span class="no-val"></span>
+                      </template>
+                    </div>
 
-                  <div class="flex-td" style="flex: 0 0 136px">
-                    <template v-if="userInfo.bet">
-                      {{userInfo.bet}}
-                    </template>
-                    <template v-else>
+                    <div class="flex-td" style="flex: 0 0 136px">
+                      <template v-if="userInfo.bet">
+                        {{userInfo.bet}}
+                      </template>
+                      <template v-else>
+                        <span class="no-val"></span>
+                        <span class="no-val"></span>
+                      </template>
+                    </div>
+                  </template>
+                </div>
+                <div class="flex-body flex-row">
+                  <template v-for="i in 7">
+                    <div class="flex-td" style="flex: 0 0 136px">
                       <span class="no-val"></span>
                       <span class="no-val"></span>
-                    </template>
-                  </div>
-                </template>
-              </div>
-              <div class="flex-body flex-row">
-                <template v-for="i in 7">
-                  <div class="flex-td" style="flex: 0 0 136px">
-                    <span class="no-val"></span>
-                    <span class="no-val"></span>
-                  </div>
-                  <div class="flex-td" style="flex: 0 0 136px">
-                    <span class="no-val"></span>
-                    <span class="no-val"></span>
-                  </div>
-                </template>
+                    </div>
+                    <div class="flex-td" style="flex: 0 0 136px">
+                      <span class="no-val"></span>
+                      <span class="no-val"></span>
+                    </div>
+                  </template>
+                </div>
               </div>
             </div>
           </div>
@@ -250,6 +269,13 @@
           <li class="rule">
             除了每日排名外，活动中还将同时推出周榜单，七天为一周，周榜单累积过去七天中投注前十的用户，但只为周榜单前三的用户发放高额的奖励。
           </li>
+          <li class="rule">
+            每天参与活动前都可在活动页免费领取一张您想投注的彩种的代金券，代金券金额随机发放，同一IP仅派发一张；
+          </li>
+          <li class="rule">
+            在榜单排行中如投注金额相同，则以先达到投注的用户排在前，参与活动的用户在彩种中的投注注数不得高于总注数的70%，无限娱乐享有该活动的最终解释权与修改权。
+          </li>
+
         </ul>
       </div>
     </div>
@@ -264,7 +290,6 @@
               代金券<span class="text-money">{{receivedCoupon.fAmount}}元</span>，快去使用吧！
             </div>
             <div class="modal-btn-group">
-              <div class="btn-cancel" data-dismiss="modal">再想想</div>
               <router-link tag="div" class="btn-confirm" :to="{path: `/bc/0/${receivedCoupon.ticketId}`}">去使用
               </router-link>
             </div>
@@ -303,6 +328,8 @@
 </template>
 
 <script>
+  import avatarConfig from 'userCenter/misc/avatarConfig'
+
   import {
     getTicketListApi,
     getTicketCouponApi,
@@ -311,27 +338,23 @@
     getYesterdayTop3Api
   } from 'api/activity'
 
+  import {
+    checkLogin
+  } from 'build'
+
   export default {
     name: 'arena-activity',
 
+    mixins: [checkLogin],
+
     data() {
       return {
-        ticketList: [1, 10, 18, 8],
+        cfg: {},
+        ticketList: [],
         receiveCoupon: null,
         amount: 0,
 
         //昨日中奖大神
-        /**
-         * "ticketName": "无限分分彩",
-         * "groupName": "中三",
-         * "playName": "直选复式",
-         * "betNum": "-,5 6 7 8 9,0 1 2 3 4,0 1 2 3 4,-",
-         * "userName": "son*",
-         * "prize": 78240000,
-         * "amount": 1110000,
-         * "userId": 100058,
-         * "ticketPlayId": 10040101
-         */
         yesterdayTop3: [],
         //周榜
         week10: {},
@@ -349,8 +372,12 @@
 
         currentTop: 1,
 
+        userPrize: {},
+
         getTicketModal: false,
         getCheatModal: false,
+
+        currentRightIndex: 0,
 
         timer: null
       }
@@ -449,6 +476,35 @@
       toggleTop(currentTop) {
         this.currentTop = currentTop
       },
+
+      scrollLeft() {
+        if (this.currentRightIndex > 0) {
+          --this.currentRightIndex
+        }
+        $(this.$refs.tableRight).animate({
+          scrollLeft: 276 * this.currentRightIndex
+        })
+        // Velocity(this.$refs.tableRight, 'scroll', {
+        //   offset: 0,
+        //   axis: 'x',
+        //   mobileHA: false
+        // })
+      },
+
+      scrollRight() {
+        if (this.currentRightIndex < 5) {
+          ++this.currentRightIndex
+        }
+        $(this.$refs.tableRight).animate({
+          scrollLeft: 276 * this.currentRightIndex
+        })
+        // Velocity(this.$refs.tableRight, 'scroll', {
+        //   offset: 276,
+        //   axis: 'x',
+        //   mobileHA: false
+        // })
+      },
+
       formatUserInfo(userBetInfo, index) {
         return {
           ranking: userBetInfo ? index + 1 : null,
@@ -467,7 +523,7 @@
 
             this.getTicketModal = true
           } else {
-            Global.ui.notification.show(`<div class="m-bottom-lg">领取失败！${data.msg}</div>`)
+            Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
           }
         })
       },
@@ -517,6 +573,7 @@
         if (data && data.result === 0) {
           this.ticketList = data.root.tickets
           this.receiveCoupon = data.root.receiveCoupon
+          this.cfg = data.root.cfg
         } else {
           Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
         }
@@ -535,12 +592,28 @@
       getYesterdayTop3Api(({data}) => {
         if (data && data.result === 0) {
           this.yesterdayTop3 = data.root.prizeList
+          this.yesterdayTop3 = _.map(data.root.prizeList, (prizeInfo) => {
+            prizeInfo.headIcon = avatarConfig.get(prizeInfo.headIconId ? prizeInfo.headIconId.toString() : '1').logo
+            return prizeInfo
+          })
+
           this.userPrize = data.root.userPrize
         } else {
           Global.ui.notification.show(`<div class="m-bottom-lg">获取昨日前三失败！${data.msg}</div>`)
         }
       })
+    },
 
+    beforeRouteEnter(to, from, next) {
+      if (!window.store.getters.isLogin) {
+        checkLogin.methods.login()
+        next({
+          path: '/',
+          query: {redirect: to.fullPath}
+        })
+      } else {
+        next()
+      }
     },
 
     beforeDestroy() {
@@ -580,7 +653,7 @@
 
     .activity-tip {
       background-image: url(./assets/top-tip.png);
-      width: 357px;
+      width: 272px;
       height: 21px;
       margin: 200px auto 0 auto;
     }
@@ -595,25 +668,31 @@
       display: flex;
       justify-content: center;
       margin-top: 40px;
+
       .ticket-icon {
         background-image: url(./assets/ticket-icon.png);
         width: 113px;
         height: 112px;
         margin: 0 auto 22px auto;
         transition: all .3s;
-        &:hover {
-          transform: translateY(-10px);
-        }
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .ticket-unit {
         padding: 0 10px;
+
+        &:hover {
+          .ticket-icon {
+            transform: translateY(-10px);
+          }
+        }
       }
 
       .ticket-name {
         color: #ffeee0;
         font-size: 16px;
-        padding-top: 35px;
       }
 
       .ticket-btn {
@@ -811,8 +890,15 @@
         overflow-x: auto;
       }
       .flex-table {
+        .flex-title {
+          .flex-td {
+            background-color: #310f12;
+            font-size: 16px;
+          }
+        }
         .flex-td {
           color: #eba9a9;
+          border-color: #48171b;
         }
         .flex-body {
           background-color: #6a2c33;
@@ -825,6 +911,7 @@
       }
 
       .table-right {
+        position: relative;
         .flex-body {
           .flex-td {
             background-color: #5a252b;
@@ -868,7 +955,7 @@
       margin: 0 auto;
       .rule {
         font-size: 16px;
-        line-height: 30px;
+        line-height: 24px;
         color: #7b9ab8;
         padding-left: 30px;
         margin-bottom: 16px;
@@ -1103,4 +1190,54 @@
       opacity: .1;
     }
   }
+
+  .table-right-wrapper {
+    position: relative;
+
+    &:hover {
+      .scroll-arrow {
+        opacity: 1;
+        &.left {
+          opacity: 1;
+          transform: translateX(0px);
+        }
+        &.right {
+          opacity: 1;
+          transform: rotate(180deg) translateX(0px);
+        }
+      }
+    }
+  }
+
+  .scroll-toolbar {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    text-align: left;
+    z-index: 1;
+
+    .scroll-arrow {
+      background-image: url(./assets/scroll-left.png);
+      width: 31px;
+      height: 31px;
+      cursor: pointer;
+      transition: all .5s;
+      opacity: 0;
+
+      &.left {
+        display: inline-block;
+        left: 20px;
+        position: absolute;
+        transform: translateX(10px);
+      }
+
+      &.right {
+        position: absolute;
+        right: 20px;
+        display: inline-block;
+        transform: rotate(180deg) translateX(10px);
+      }
+    }
+  }
+
 </style>
