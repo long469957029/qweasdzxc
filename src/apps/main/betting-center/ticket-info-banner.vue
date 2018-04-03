@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="bc-plan-main pull-left m-left-md">
-      <div class="bc-plan-inner relative clearfix">
+      <div class="bc-plan-inner relative">
         <div class="bc-plan-title pull-left">
           第 <span class="font-bold">{{bettingInfo.pending ? Number(bettingInfo.lastOpenId) + 1 : bettingInfo.lastOpenId}}</span>
           期
