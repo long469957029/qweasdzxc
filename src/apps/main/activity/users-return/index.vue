@@ -66,6 +66,7 @@
       width: 1100px;
       height: 100%;
       margin: 0 auto;
+      position: relative;
       .text{
         width: 710px;
         height: 341px;
@@ -83,6 +84,9 @@
         width: 459px;
         height: 390px;
         background: url("./assets/money.png") no-repeat;
+        position: absolute;
+        right: -78px;
+        top: 172px;
       }
     }
   }
