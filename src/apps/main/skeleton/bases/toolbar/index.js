@@ -3,7 +3,7 @@ import './index.scss'
 import FundView from './fund' // 资金管理
 import RecordView from './record' // 游戏记录
 import CouponView from './coupon' // 我的优惠券
-// import MessageView from './message' // 站内消息
+import MessageView from './message' // 站内消息
 import FeedbackView from './feedback' // 意见反馈
 
 import {
@@ -237,12 +237,12 @@ const ToolbarView = Base.ItemView.extend({
       case 3: // 我的优惠券
         self.$sidebar.html(new CouponView({}).render().el)
         break
-      // case 4: // 站内消息
-      //         // self.$sidebar.html(new MessageView({}).render().el)
-      //   break
-      // case 5: // 意见反馈
-      //         // self.$sidebar.html(new FeedbackView({}).render().el)
-      //   break
+      case 4: // 站内消息
+        self.$sidebar.html(new MessageView({}).render().el)
+        break
+      case 5: // 意见反馈
+        self.$sidebar.html(new FeedbackView({}).render().el)
+        break
 
       default:
         break
