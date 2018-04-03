@@ -58,7 +58,7 @@
                     <div class="input-control">
                       <div class="input-icon name"></div>
                       <input type="text" class="register-input" name="userName" v-model.trim="userName"
-                             @focus="inputFocus(1)"
+                             @focus="inputFocus(1)" v-on:blur="inputBlur(1)"
                              placeholder="请设置您的账号" autocomplete="off"/>
                       <span class="input-check" v-if="userStatus === 3"></span>
                     </div>
