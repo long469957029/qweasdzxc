@@ -116,7 +116,7 @@
     methods: {
       getHeatMapConfig(hostname) {
         return _.find(heatMap, (config) => {
-          return config.hostname.indexOf(hostname) !== 1
+          return config.hostname.indexOf(hostname) !== -1
         })
       }
     }
