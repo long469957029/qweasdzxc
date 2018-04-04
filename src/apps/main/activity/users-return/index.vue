@@ -3,7 +3,7 @@
     <div class="header">
       <div class="main clearfix">
         <div class="text"></div>
-        <div class="time">活动时间：{{fromDate}} --- {{endDate}}</div>
+        <div class="time">活动时间：{{_(fromDate).toTime('YYYY年MM月DD日')}} --- {{_(endDate).toTime('MM月DD日')}}</div>
         <div class="money"></div>
       </div>
     </div>
@@ -59,9 +59,12 @@
             </div>
           </div>
           <div class="detail-list">
-            <div class="detail-info" v-for="item in 5" :key="item">
-              <div class="info-title">元老彩金</div>
-              <div class="info-content">3元现金</div>
+            <div class="detail-info" v-for="(item,index) in userAmountList" :key="item.resultType">
+              <div class="info-title">{{formatDetailName(index)}}</div>
+              <div class="info-content" v-if="item.amount>0 && index <= 1">{{item.amount | convert2yuan}}元现金</div>
+              <div class="info-content" v-if="item.amount>0 && index === 2">充
+                {{item.limit | convert2yuan}}返{{item.amount | convert2yuan}}元</div>
+              <div class="info-content" v-if="item.amount>0 && index >= 3">中奖额*{{item.amount | convert2yuan}}%</div>
               <div class="tip-icon"></div>
               <div class="detail-btn">领取</div>
             </div>
@@ -146,9 +149,10 @@
       formatTime(){
         const time = []
         for(let i=1;i<8;i++){
+          const timeAdd = moment(this.fromDate).add(i,'days')
           time.push({
-            time: this.fromDate + i * 86400000,
-            expired: false
+            time: timeAdd,
+            expired: moment(this.systemDate).subtract(timeAdd) >= 1
           })
         }
         return time
@@ -173,6 +177,29 @@
             break
           case 4:
             name = '至尊'
+            break
+          default:
+            break
+        }
+        return name
+      },
+      formatDetailName(index){
+        let name = ''
+        switch (index){
+          case 0:
+            name = '元老彩金'
+            break
+          case 1:
+            name = '活跃彩金'
+            break
+          case 2:
+            name = '充值返利卡'
+            break
+          case 3:
+            name = '投注返水卡'
+            break
+          case 4:
+            name = '中奖加奖卡'
             break
           default:
             break
@@ -209,8 +236,9 @@
             }else{
               //this.systemDate = root.systemDate
               this.bagStatus = root.bagStatus
-              this.fromDate = _(root.fromDate).toTime('YYYY年MM月DD日')
-              this.endDate = _(root.endDate).toTime('MM月DD日')
+              this.fromDate = root.fromDate
+              this.endDate = root.endDate
+              this.userAmountList = root.userAmountList
               if(this.bagStatus === 0){
                 this.packageType = root.packageType
                 this.userRegTime = root.userRegTime
