@@ -13,11 +13,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
+//sentry sourcemap upload
+const SentryCliPlugin = require('@sentry/webpack-plugin');
+// const SentryPlugin = require('webpack-sentry-plugin');
+
 const happyThreadPool = HappyPack.ThreadPool({size: 5});
 
 const serverIP = 'http://forev3.5x5x.com'
 
 const DEV = process.env.NODE_ENV !== 'production';
+
+const PROJECT_VERSION = require('./package.json').version
 
 const appConfig = {
   entry: {
@@ -156,6 +162,7 @@ if (DEV) {
   output.publicPath = '.' + appConfig.output.publicPath;
   output.filename = '[name].[hash].bundle.js';
   output.chunkFilename = '[name].[hash].bundle.js';
+  output.sourceMapFilename = '[name].[hash].js.map';
 }
 
 //==============plugins================
@@ -260,6 +267,21 @@ if (DEV) {
     // }
   }));
   plugins.push(new CompressionPlugin())
+
+  plugins.push(new SentryCliPlugin({
+    release: PROJECT_VERSION,
+    // include: './www/main',
+    ignoreFile: '.sentrycliignore',
+    ignore: ['node_modules', 'webpack.config.js'],
+  }))
+  // plugins.push(new SentryPlugin({
+  //   baseSentryURL: 'http://sentry.5x5x.com/api/0/',
+  //   organization: 'sentry',
+  //   project: 'wx-front',
+  //   // include: './www/main',
+  //   apiKey: 'd7d1f505291d4f658af062ac6a7edc5aec68a9cbd4fd45b9861ecb7e3e1f3844',
+  //   release: PROJECT_VERSION
+  // }))
 }
 
 _(appConfig.entries).each(function (entryInfo, entryName) {
@@ -431,7 +453,7 @@ if (DEV) {
 
 module.exports = {
   mode: DEV ? 'development' : 'production',
-  devtool: DEV ? 'eval-source-map' : false,
+  devtool: DEV ? 'eval-source-map' : 'source-map',
   entry,
   output,
   externals: {

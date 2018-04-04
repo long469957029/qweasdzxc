@@ -136,7 +136,8 @@ gulp.task('release.build', (callback) => {
 // 打压缩包，打www/main程序包
 gulp.task('zip', () => {
   return gulp.src(zipPath)
-    .pipe(zip('forehead_wx_v3.zip'))
+    .pipe(zip('forehead_wx_v3.zip')
+    )
     .pipe(gulp.dest('www'))
 })
 

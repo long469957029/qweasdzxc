@@ -98,6 +98,7 @@
     mounted() {
       const heatMapConfig = this.getHeatMapConfig(window.location.hostname)
 
+      raven
       if (heatMapConfig) {
         (function (h, o, t, j, a, r) {
           h.hj = h.hj || function () {
