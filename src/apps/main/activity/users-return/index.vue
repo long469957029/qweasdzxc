@@ -3,15 +3,85 @@
     <div class="header">
       <div class="main clearfix">
         <div class="text"></div>
-        <div class="time">活动时间：2018年3月28日 --- 4月28日</div>
+        <div class="time">活动时间：{{fromDate}} --- {{endDate}}</div>
         <div class="money"></div>
       </div>
     </div>
     <div class="container">
-      <div class="title"></div>
-      <div class="content"></div>
+      <div class="title" v-if="!showDetail">你的注册时间为{{registeTime}}天，可领取【{{giftPackageName(packageType)}}礼包】</div>
+      <div class="title detail" v-if="showDetail">亲爱的会员，您好！以下是您打开【{{giftPackageName(packageType)}}礼包】的奖励</div>
+      <div class="content">
+        <div class="gift-list" v-if="!showDetail">
+          <transition-group name="gift-list">
+            <div class="gift-content" v-for="item in giftPackageList" :key="item.resultType">
+              <div class="gift-info clearfix">
+                <div class="mask" v-if="packageType !== item.resultType"></div>
+                <div class="info-title">{{giftPackageName(item.resultType)}}礼包</div>
+                <div class="info-time">{{item.minLimit}}天≥注册时间>{{item.maxLimit}}天</div>
+                <div class="info-icon" :class="`gift-icon-${item.resultType}`"></div>
+                <div class="info-detail">
+                  <div class="reward" v-if="item.list[0].amount > 0">
+                    元老彩金{{_(item.list[0].amount).convert2yuan()}}元
+                  </div>
+                  <div class="reward" v-if="item.list[1].amount > 0">
+                    活跃彩金{{_(item.list[1].amount).convert2yuan()}}元
+                  </div>
+                  <div class="reward" v-if="item.list[2].amount > 0">
+                    三天充值返利卡
+                    <div class="reward-info">
+                      充值{{_(item.list[2].limit).convert2yuan()}}返{{_(item.list[2].amount).convert2yuan()}}元</div>
+                  </div>
+                  <div class="reward" v-if="item.list[3].amount > 0">
+                    五天投注返水卡
+                    <div class="reward-info">投注额*{{_(item.list[3].amount).convert2yuan()}}%</div>
+                  </div>
+                  <div class="reward" v-if="item.list[4].amount > 0">
+                    七天中奖加奖卡
+                    <div class="reward-info">中奖额*{{_(item.list[4].amount).convert2yuan()}}%</div>
+                  </div>
+                </div>
+              </div>
+              <div :class="['num',{active:packageType === item.resultType}]">
+                已派发礼包：<span class="num-big">205个</span>
+              </div>
+              <div class="gift-button" :class="{disabled:packageType !== item.resultType}"
+                   @click="packageType === item.resultType ? getGift : ''">马上领取</div>
+            </div>
+          </transition-group>
+        </div>
+        <div class="gift-detail" v-if="showDetail">
+          <div class="date-list">
+            <div class="date-item" v-for="item in 7" :key="item">
+              <div class="date-icon">
+                <div class="light"></div>
+              </div>
+              <div class="date-num">3.14</div>
+            </div>
+          </div>
+          <div class="detail-list">
+            <div class="detail-info" v-for="item in 5" :key="item">
+              <div class="info-title">元老彩金</div>
+              <div class="info-content">3元现金</div>
+              <div class="tip-icon"></div>
+              <div class="detail-btn">领取</div>
+            </div>
+          </div>
+          <div class="text-tip">
+            注* 领取奖金以及返现的奖励，可以在我的
+            <router-link class="link" :to="{path: '/fc/ad'}">个人中心-账变明细</router-link> 中查看详情</div>
+        </div>
+      </div>
       <div class="rule">
-
+        <div class="rule-title">活动规则：</div>
+        <p>活动期间，可根据您在平台上注册的时长领取相应的礼包。</p>
+        <p>每个礼包都将包括元老级彩金奖励、活跃奖金、三天的充值返利卡、五天的投注返奖卡、七天的中奖加奖卡五种奖励，
+          但每个礼包中的奖励均不一样。</p>
+        <p>用户在领取礼包后，元老奖金和活跃奖金会由系统自动发放（元老奖金：需有投注记录；活跃奖金：活跃天数≥10天）；
+          其他的奖励由用户每天在活动中进行手动领取。</p>
+        <p>同一IP仅限一个账号领取，相同IP不同账号再次领取时会提示领取失败。</p>
+        <p>新用户暂无法参与该活动，需注册满 3 天以上、在第 4 天可参与该活动。</p>
+        <p>该活动最终解释权归无限娱乐所有，如有任何作弊/刷奖行为，一经发现将直接冻结账号。
+          如对活动有任何疑问，请咨询在线客服，预祝您新的一年旗开得胜，金银缠身！</p>
       </div>
       <div class="bottom-decoration"></div>
     </div>
@@ -22,6 +92,11 @@
 </template>
 <script>
 
+  import {
+    getGiftPackageListApi,
+    getGiftPackageApi,
+    getDouseApi
+  } from 'api/activity'
   import {
     checkLogin
   } from 'build'
@@ -35,22 +110,123 @@
       return{
         mouseX:0,
         mouseY:0,
+        showDetail:true,
+        systemDate: null,//系统时间
+        fromDate: null,//活动开始时间
+        endDate: null,//活动结束时间
+        itemList:[],//注册时间列表
+        amountList:[], //礼包奖品列表
+        userAmountList:[], //用户已经领取的礼包详情
+        packageType:0,//用户可领取的礼包类型 1白金，2黄金，3钻石，4至尊
+        bagStatus:0,//用户是否领取礼包 0 未领取，1已领取
+        userRegTime:0,//用户注册时间
       }
     },
     computed:{
-      changeXY: function () {
+      changeXY() {
         return `transform: translate(-${this.mouseX/10}px, -${this.mouseY/10}px);`
+      },
+      registeTime(){
+        return moment(_(this.systemDate).sub(this.userRegTime)).dayOfYear()
+      },
+      giftPackageList(){
+        this.amountList.forEach((item) => {
+          const type = item.resultType % 10 - 1
+          if (type >= 0) {
+            if (!this.itemList[type].list) {
+              this.itemList[type].list = []
+            }
+            this.itemList[type].list.push(item)
+          } else {
+            //报错
+          }
+        })
+        return this.itemList
+      },
+      formatTime(){
+        const time = []
+        for(let i=1;i<8;i++){
+          time.push({
+            time: this.fromDate + i * 86400000,
+            expired: false
+          })
+        }
+        return time
       }
     },
     methods:{
       updateXY(event){
-        this.mouseX = event.offsetX;
-        this.mouseY = event.offsetY;
+        // this.mouseX = event.offsetX;
+        // this.mouseY = event.offsetY;
+      },
+      giftPackageName(id){
+        let name = ''
+        switch (id){
+          case 1:
+            name = '白银'
+            break
+          case 2:
+            name = '黄金'
+            break
+          case 3:
+            name = '钻石'
+            break
+          case 4:
+            name = '至尊'
+            break
+          default:
+            break
+        }
+        return name
+      },
+      getGift(){
+        getGiftPackageApi(
+          ({data}) => {
+            if(data && data.result === 0){
+              this.showDetail = true
+            }else{
+              Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
+            }
+          },
+          ({data}) => {
+            Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
+          }
+        )
       }
     },
 
     mounted(){
-
+      getGiftPackageListApi(
+        ({data}) => {
+          if(data && data.result === 0){
+            const root = data.root
+            if(root.status === 0){
+              Global.ui.notification.show(`<div class="m-bottom-lg">该活动还未开启！</div>`)
+            }else if(root.status === 2){
+              Global.ui.notification.show(`<div class="m-bottom-lg">该活动已经结束！</div>`)
+            }else if(!root.available){
+              Global.ui.notification.show(`<div class="m-bottom-lg">当前IP已经领取过礼包！</div>`)
+            }else{
+              //this.systemDate = root.systemDate
+              this.bagStatus = root.bagStatus
+              this.fromDate = _(root.fromDate).toTime('YYYY年MM月DD日')
+              this.endDate = _(root.endDate).toTime('MM月DD日')
+              if(this.bagStatus === 0){
+                this.packageType = root.packageType
+                this.userRegTime = root.userRegTime
+                this.itemList = root.itemList
+                this.amountList = root.amountList
+              }else{
+                this.showDetail = true
+              }
+            }
+          }else{
+            Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
+          }
+        },
+        ({data}) => {
+          Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
+        })
     },
 
     beforeRouteEnter(to, from, next) {
@@ -74,6 +250,7 @@
     min-width: 1100px;
     background: linear-gradient(to bottom,#ffe5f4,#cff8fd);
     overflow-x: hidden;
+    position: relative;
   }
   .header{
     width: 100%;
@@ -113,10 +290,12 @@
     width: 1081px;
     height: 1337px;
     background: url("./assets/main-bg.png") no-repeat;
-    position: relative;
-    top: -651px;
+    position: absolute;
+    top: 399px;
     z-index: 2;
     margin: 0 auto;
+    left: 50%;
+    margin-left: -540px;
     &:before{
       content: '';
       display: block;
@@ -146,12 +325,313 @@
       bottom: -67px;
       left: -4px;
     }
+    .title{
+      width: 100%;
+      height: 24px;
+      text-align: center;
+      font-size: 20px;
+      color: #ffeca4;
+      margin-top: 75px;
+      margin-bottom: 43px;
+      background: url("./assets/title-bg.png") no-repeat center;
+      &.detail{
+        background: url("./assets/title-detail-bg.png") no-repeat center;
+      }
+    }
     .content{
       width: 942px;
       height: 664px;
       background-color: #5a162d;
       border-radius: 5px;
       margin: 0 auto;
+      .gift-content{
+        width: 194px;
+        height: 606px;
+        display: inline-block;
+        margin-top: 24px;
+        margin-left: 30px;
+      }
+      .gift-info{
+        width: 100%;
+        height: 490px;
+        background: url("./assets/info-bg.png") no-repeat;
+        position: relative;
+        .mask{
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,.4);
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 2;
+        }
+        .info-title{
+          width: 141px;
+          height: 38px;
+          margin-top: 16px;
+          margin-left: 27px;
+          font-size: 20px;
+          color: #ffeca4;
+          text-align: center;
+          line-height: 34px;
+          background: url("./assets/info-title-bg.png") no-repeat;
+        }
+        .info-time{
+          width: 100%;
+          text-align: center;
+          font-size: 14px;
+          color: #ffeca4;
+          margin-top: 11px;
+        }
+        .info-icon{
+          position: absolute;
+          &.gift-icon-1{
+            width: 94px;
+            height: 92px;
+            background: url("./assets/gift-1.png") no-repeat;
+            top: 104px;
+            left: 50px;
+          }
+          &.gift-icon-2{
+            width: 100px;
+            height: 78px;
+            background: url("./assets/gift-2.png") no-repeat;
+            top: 115px;
+            left: 47px;
+          }
+          &.gift-icon-3{
+            width: 85px;
+            height: 103px;
+            background: url("./assets/gift-3.png") no-repeat;
+            top: 92px;
+            left: 54.5px;
+          }
+          &.gift-icon-4{
+            width: 82px;
+            height: 90px;
+            background: url("./assets/gift-4.png") no-repeat;
+            top: 108px;
+            left: 50px;
+          }
+        }
+        .info-detail{
+          font-size: 16px;
+          color: #f5d869;
+          padding-left: 55px;
+          margin-top: 145px;
+          .reward{
+            margin-top: 15px;
+            position: relative;
+            &:before{
+              content: '';
+              background-color: #f5d869;
+              width: 10px;
+              height: 10px;
+              display: block;
+              position: absolute;
+              transform: rotate(45deg);
+              top: 6px;
+              left: -30px;
+            }
+            .reward-info{
+              font-size: 12px;
+              margin-top: 5px;
+            }
+          }
+        }
+      }
+      .num{
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        color: #d01d59;
+        margin-top: 28px;
+        &.active{
+          color: #ffeca4;
+        }
+        .num-big{
+          font-size: 20px;
+        }
+      }
+      .gift-button{
+        width: 184px;
+        height: 53px;
+        text-align: center;
+        line-height: 53px;
+        font-size: 24px;
+        color: #371314;
+        cursor: pointer;
+        margin-top: 15px;
+        margin-left: 5px;
+        background: url("./assets/gift-button-bg.png") no-repeat;
+        &.disabled{
+          cursor: default;
+          background: url("./assets/gift-button-disable.png") no-repeat;
+        }
+      }
+      .date-list{
+        width: 675px;
+        margin: 0 auto;
+        padding-top: 50px;
+        .date-item{
+          width: 80px;
+          height: 135px;
+          margin-right: 19px;
+          display: inline-block;
+          cursor: pointer;
+          &:last-child{
+            margin-right: 0;
+          }
+          &:hover{
+            .date-icon{
+              transition: background .5s;
+              background: url("./assets/date-icon-hover.png");
+              .light{
+                box-shadow: 0 0 120px #db9321;
+              }
+            }
+          }
+          .disabled{
+            .date-icon{
+              background: url("./assets/date-icon-disabled.png");
+              .light{
+                box-shadow: 0 0 120px #cbcbcb;
+              }
+            }
+          }
+        }
+        .date-icon{
+          background: url("./assets/date-icon.png");
+          width: 67px;
+          height: 82px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: background .5s;
+          .light{
+            width: 50px;
+            height: 50px;
+            box-shadow: 0 0 120px #db9321;
+            z-index: 2;
+            border-radius: 50%;
+          }
+        }
+        .date-num{
+          width: 80px;
+          height: 25px;
+          background-color: #a10052;
+          border-radius: 3px;
+          color: #ffeca4;
+          font-size: 14px;
+          text-align: center;
+          line-height: 25px;
+          margin-top: 12px;
+          &.disabled{
+            background-color: #aaaaaa;
+            color: #371314;
+          }
+        }
+      }
+      .detail-list{
+        width: 910px;
+        margin: 0 auto;
+      }
+      .detail-info{
+        width: 173px;
+        height: 267px;
+        background: url("./assets/detail-info.png") no-repeat;
+        display: inline-block;
+        position: relative;
+        border: 1px solid transparent;
+        margin-top: 40px;
+        margin-right: 8px;
+        &:last-child{
+          margin-right: 0;
+        }
+        &:hover{
+          border-color: #d03c70;
+        }
+        .info-title{
+          font-size: 16px;
+          color: #ffeca4;
+          text-align: center;
+          margin-top: 25px;
+        }
+        .info-content{
+          font-size: 20px;
+          color: #ffeca4;
+          text-align: center;
+          margin-top: 78px;
+        }
+        .tip-icon{
+          position: absolute;
+          width: 82px;
+          height: 48px;
+          top: 70px;
+          left: 65px;
+          background: url("./assets/tip-icon.png") no-repeat;
+        }
+        .detail-btn{
+          width: 125px;
+          height: 39px;
+          margin: 0 auto;
+          margin-top: 53px;
+          text-align: center;
+          line-height: 39px;
+          background: url("./assets/info-btn.png") no-repeat;
+          font-size: 18px;
+          color: #371314;
+          cursor: pointer;
+          &.over-time{
+            background: url("./assets/info-btn-over-time.png") no-repeat;
+            cursor: default;
+          }
+          &.disabled{
+            background: url("./assets/info-btn-disabled.png") no-repeat;
+            cursor: default;
+          }
+          &.has-get{
+            background: url("./assets/info-btn-has-get.png") no-repeat;
+            cursor: default;
+          }
+        }
+      }
+      .text-tip{
+        font-size: 14px;
+        color: #ffeca4;
+        margin-left: 32px;
+        margin-top: 69px;
+        .link{
+          color: #00ffcc;
+        }
+      }
+    }
+    .rule{
+      width: 758px;
+      margin-left: 100px;
+      margin-top: 83px;
+      .rule-title{
+        font-size: 20px;
+        letter-spacing: 0px;
+        color: #ffeca4;
+        margin-bottom: 27px;
+      }
+      p{
+        padding-left: 20px;
+        font-size: 14px;
+        color: #c2b06b;
+        &:before{
+          content: '';
+          width: 6px;
+          height: 6px;
+          background-color: #bca667;
+          display: block;
+          position: relative;
+          top: 12px;
+          left: -19px;
+        }
+      }
     }
   }
   .bottom-flower{
@@ -169,7 +649,8 @@
     background: url("./assets/flower-bg.png") no-repeat;
     position: absolute;
     top: 30%;
-    right: 0;
+    left: 50%;
+    margin-left: -909px;
   }
   .footer{
     width: 100%;
