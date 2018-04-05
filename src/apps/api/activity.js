@@ -111,7 +111,18 @@ const getDouseApi = ({resultType}, then, fail) => {
     .then(then)
     .catch(fail)
 }
-
+/**
+ * 获取虚拟礼包数量
+ * @param then
+ * @param fail
+ */
+const getVirtualNumApi = (then, fail) => {
+  return $http({
+    url: '/info/userpack/giftNum.json'
+  })
+    .then(then)
+    .catch(fail)
+}
 export {
   getTicketListApi,
   getTicketCouponApi,
@@ -120,7 +131,8 @@ export {
   getYesterdayTop3Api,
   getGiftPackageListApi,
   getGiftPackageApi,
-  getDouseApi
+  getDouseApi,
+  getVirtualNumApi
 }
 
 

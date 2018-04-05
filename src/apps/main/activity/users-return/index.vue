@@ -42,7 +42,7 @@
                 </div>
               </div>
               <div :class="['num',{active:packageType === item.resultType}]">
-                已派发礼包：<span class="num-big">205个</span>
+                已派发礼包：<span class="num-big">{{getTotal(item.resultType)}}个</span>
               </div>
               <div class="gift-button" :class="{disabled:packageType !== item.resultType}"
                    @click="packageType === item.resultType ? getGift : ''">马上领取</div>
@@ -51,23 +51,29 @@
         </div>
         <div class="gift-detail" v-if="showDetail">
           <div class="date-list">
-            <div class="date-item" v-for="item in 7" :key="item">
+            <div :class="['date-item',{'disabled': item.expired}]" v-for="(item,index) in formatTime" :key="item.time"
+                 @click="filterTime(index + 1)">
               <div class="date-icon">
                 <div class="light"></div>
               </div>
-              <div class="date-num">3.14</div>
+              <div class="date-num">{{item.time | toTime('M.DD')}}</div>
             </div>
           </div>
           <div class="detail-list">
-            <div class="detail-info" v-for="(item,index) in userAmountList" :key="item.resultType">
-              <div class="info-title">{{formatDetailName(index)}}</div>
-              <div class="info-content" v-if="item.amount>0 && index <= 1">{{item.amount | convert2yuan}}元现金</div>
-              <div class="info-content" v-if="item.amount>0 && index === 2">充
-                {{item.limit | convert2yuan}}返{{item.amount | convert2yuan}}元</div>
-              <div class="info-content" v-if="item.amount>0 && index >= 3">中奖额*{{item.amount | convert2yuan}}%</div>
-              <div class="tip-icon"></div>
-              <div class="detail-btn">领取</div>
-            </div>
+            <transition-group name="amount-list" tag="div">
+              <div class="detail-info" v-for="(item,index) in filterUserAmountList" :key="item.resultType">
+                <div class="info-title">{{formatDetailName(item.resultType)}}</div>
+                <div class="info-content" v-if="item.amount>0 && (parseInt(item.resultType / 10) === 1 || parseInt(item.resultType / 10) === 2)">
+                  {{item.amount | convert2yuan}}元现金</div>
+                <div class="info-content" v-if="item.amount>0 && parseInt(item.resultType / 10) === 3">充
+                  {{item.limit | convert2yuan}}返{{item.amount | convert2yuan}}元</div>
+                <div class="info-content" v-if="item.amount>0 && (parseInt(item.resultType / 10) === 4 || parseInt(item.resultType / 10) === 5)">
+                  中奖额*{{item.amount | convert2yuan}}%</div>
+                <div class="tip-icon" v-if="item.status === 3"></div>
+                <div class="detail-btn" :class="formatBtnClass(item.status).className" @click="item.status === 0 ? getPrize(item.resultType) : ''">
+                  {{formatBtnClass(item.status).btnText}}</div>
+              </div>
+            </transition-group>
           </div>
           <div class="text-tip">
             注* 领取奖金以及返现的奖励，可以在我的
@@ -91,6 +97,47 @@
     <div class="bottom-flower"></div>
     <div class="flower" ref="flower" :style=changeXY></div>
     <div class="footer"></div>
+
+    <div v-transfer-dom>
+      <x-dialog v-model="getGiftStatus" styles="">
+        <div class="modal-big-size clearfix" slot="all">
+          <a data-dismiss="modal" class="modal-close btn-close"></a>
+          <div class="dialog-tip">
+            <div class="text">仅限3月15日使用</div>
+          </div>
+          <div class="dialog-container">
+            <div class="dialog-title">{{dialogTitle}}</div>
+            <div class="content">
+              <div class="get-gift-msg" v-if="getGiftMsg">
+                <div v-if="!getCardError">
+                  <div class="text-center">恭喜您，成功领取<span class="special">“{{giftPackageName(packageType)}}礼包”</span></div>
+                  <div class="text-center">快使用礼包中的奖励吧！</div>
+                  <div class="get-gift-btn" @click="showDetail = !showDetail" data-dismiss="modal">查看礼包</div>
+                </div>
+                <div v-if="getCardError">
+                  <div class="text-center">未达到充值条件，不可领取，快去充值后领取吧</div>
+                  <div class="text-center">{{getPrizeInfo}}</div>
+                  <div class="btn-list">
+                    <div class="card-btn btn-yellow js-header-recharge" data-name="jsFcRecharge" data-dismiss="modal">去充值</div>
+                    <div class="card-btn btn-pink" data-dismiss="modal">确认</div>
+                  </div>
+                </div>
+              </div>
+              <div class="get-card-msg" v-if="getCardMsg">
+                <div class="get-card-info clearfix">
+                  <div class="card-name">{{formatDetailName(resultType)}}</div>
+                  <div class="card-info">{{getPrizeInfo}}</div>
+                </div>
+                <div class="btn-list">
+                  <router-link :to="{path: '/fc/ad'}" class="card-btn btn-yellow" data-dismiss="modal" tag="div">查看</router-link>
+                  <div class="card-btn btn-pink" data-dismiss="modal">继续领取</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </x-dialog>
+    </div>
   </div>
 </template>
 <script>
@@ -98,7 +145,8 @@
   import {
     getGiftPackageListApi,
     getGiftPackageApi,
-    getDouseApi
+    getDouseApi,
+    getVirtualNumApi
   } from 'api/activity'
   import {
     checkLogin
@@ -113,7 +161,7 @@
       return{
         mouseX:0,
         mouseY:0,
-        showDetail:true,
+        showDetail:false,
         systemDate: null,//系统时间
         fromDate: null,//活动开始时间
         endDate: null,//活动结束时间
@@ -123,6 +171,23 @@
         packageType:0,//用户可领取的礼包类型 1白金，2黄金，3钻石，4至尊
         bagStatus:0,//用户是否领取礼包 0 未领取，1已领取
         userRegTime:0,//用户注册时间
+        filterUserAmountList:[],
+        getGiftStatus: false, //dialog弹窗显示隐藏
+        getGiftMsg:false,// 获取礼包提示
+        getCardMsg:false,//获取卡提示
+        getCardError:false,//获取卡错误提示
+        dialogTitle:'领取成功',
+        resultType:21,//领取卡的类型id
+        giftNum:[]//已发放礼包数量
+      }
+    },
+    watch:{
+      getGiftStatus(){
+        if(this.getGiftStatus === false){
+          this.getGiftMsg = false
+          this.getCardMsg = false
+          this.getCardError = false
+        }
       }
     },
     computed:{
@@ -148,14 +213,19 @@
       },
       formatTime(){
         const time = []
-        for(let i=1;i<8;i++){
+        const sub = moment(moment(this.endDate).diff(this.fromDate)).dayOfYear()
+        for(let i=0;i<sub -1 ;i++){
           const timeAdd = moment(this.fromDate).add(i,'days')
           time.push({
             time: timeAdd,
-            expired: moment(this.systemDate).subtract(timeAdd) >= 1
+            expired: moment(moment(this.systemDate).diff(timeAdd)).dayOfYear() - 1 >= 1 &&
+              moment(moment(this.systemDate).diff(timeAdd)).dayOfYear() - 1 <= 31
           })
         }
         return time
+      },
+      getPrizeInfo(){
+        return _(this.userAmountList).where({resultType: this.resultType})
       }
     },
     methods:{
@@ -185,20 +255,21 @@
       },
       formatDetailName(index){
         let name = ''
-        switch (index){
-          case 0:
+        const num = parseInt(index / 10)
+        switch (num){
+          case 1:
             name = '元老彩金'
             break
-          case 1:
+          case 2:
             name = '活跃彩金'
             break
-          case 2:
+          case 3:
             name = '充值返利卡'
             break
-          case 3:
+          case 4:
             name = '投注返水卡'
             break
-          case 4:
+          case 5:
             name = '中奖加奖卡'
             break
           default:
@@ -210,7 +281,8 @@
         getGiftPackageApi(
           ({data}) => {
             if(data && data.result === 0){
-              this.showDetail = true
+              this.getGiftStatus = true
+              // this.showDetail = true
             }else{
               Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
             }
@@ -219,42 +291,171 @@
             Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
           }
         )
+      },
+      filterTime(index){
+        this.filterUserAmountList = []
+        setTimeout(() => {
+          this.filterUserAmountList = [...this.userAmountList].reverse()
+          this.filterUserAmountList = _(this.filterUserAmountList).filter((item) => {
+            return item.validity >= index
+          })
+        },300)
+      },
+      formatPrizeStatus(day,status,timeDiff){
+        let statusNum = 0
+        if(status !== 1){     // status 0:未领取 1：已领取 2：已过期 3:进行中
+          if(timeDiff > day) {
+            statusNum = 2
+          }else{
+            statusNum = status
+          }
+        }else if(timeDiff <= day){
+          statusNum = 3
+        }else{
+          statusNum = status
+        }
+        return statusNum
+      },
+      formatBtnClass(status){
+        let className = ''
+        let btnText = '领取'
+        switch (status){
+          case 1:
+            className = 'disabled'
+            btnText = '已领取'
+            break
+          case 2:
+            className = 'disabled'
+            btnText = '已过期'
+            break
+          case 3:
+            className = 'disabled'
+            btnText = '未开启'
+            break
+          case 4:
+            className = 'disabled'
+            btnText = '已领取'
+            break
+        }
+        return {
+          className,
+          btnText
+        }
+      },
+      getPrize(resultType){
+        getDouseApi({resultType},
+          ({data}) => {
+            if(data && data.result === 0){
+              this.resultType = resultType
+              this.getCardMsg = true
+            }else{
+              Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
+            }
+          },
+          ({data}) => {
+            Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
+          }
+        )
+      },
+      getTotal(resultType){
+        return _(this.giftNum).where({resultType:resultType}).total
+      },
+      initData(){
+        getGiftPackageListApi(
+          ({data}) => {
+            if(data && data.result === 0){
+              const root = data.root
+              if(root.status === 0){
+                Global.ui.notification.show(`<div class="m-bottom-lg">该活动还未开启！</div>`)
+              }else if(root.status === 2){
+                Global.ui.notification.show(`<div class="m-bottom-lg">该活动已经结束！</div>`)
+              }else if(!root.available){
+                Global.ui.notification.show(`<div class="m-bottom-lg">当前IP已经领取过礼包！</div>`)
+              }else{
+                this.systemDate = moment().unix() * 1000 //root.systemDate
+                this.bagStatus = root.bagStatus
+                this.fromDate = root.fromDate
+                this.endDate = root.endDate
+                this.userAmountList = root.userAmountList
+                this.filterUserAmountList = [...this.userAmountList].reverse()
+                const timeDiff = moment(moment(this.systemDate).diff(this.startDate)).dayOfYear() - 1
+                if(this.userAmountList.length > 3){
+                  this.userAmountList.forEach((item,index) => {
+                    switch (index){  // status 0:未领取 1：已领取 2：已过期 3：未开启 4:进行中
+                      case 0:
+                        item.status = root.packageStatus
+                        item.validity = 1
+                        break
+                      case 1:
+                        item.status = root.packageStatus1
+                        item.validity = 1
+                        break
+                      case 2:
+                        item.status = this.formatPrizeStatus(3,root.packageStatus2,timeDiff)
+                        item.validity = 3
+                        break
+                      case 3:
+                        item.status = this.formatPrizeStatus(5,root.packageStatus3,timeDiff)
+                        item.validity = 5
+                        break
+                      case 4:
+                        item.status = this.formatPrizeStatus(7,root.packageStatus4,timeDiff)
+                        item.validity = 7
+                        break
+                    }
+                  })
+                }else{
+                  this.userAmountList.forEach((item,index) => {
+                    switch (index){
+                      case 0:
+                        item.status = this.formatPrizeStatus(3,root.packageStatus2,timeDiff)
+                        item.validity = 3
+                        break
+                      case 1:
+                        item.status = this.formatPrizeStatus(5,root.packageStatus3,timeDiff)
+                        item.validity = 5
+                        break
+                      case 2:
+                        item.status = this.formatPrizeStatus(7,root.packageStatus4,timeDiff)
+                        item.validity = 7
+                        break
+                    }
+                  })
+                }
+                if(this.bagStatus === 0){
+                  this.packageType = root.packageType
+                  this.userRegTime = root.userRegTime
+                  this.itemList = root.itemList
+                  this.amountList = root.amountList
+                }else{
+                  this.showDetail = true
+                }
+              }
+            }else{
+              Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
+            }
+          },
+          ({data}) => {
+            Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
+          })
+      },
+      getVirtualNum(){
+        // getVirtualNumApi(
+        //   ({data}) => {
+        //     if(data && data.result === 0){
+        //       this.giftNum = data.root
+        //     }
+        //   }
+        // )
       }
     },
 
     mounted(){
-      getGiftPackageListApi(
-        ({data}) => {
-          if(data && data.result === 0){
-            const root = data.root
-            if(root.status === 0){
-              Global.ui.notification.show(`<div class="m-bottom-lg">该活动还未开启！</div>`)
-            }else if(root.status === 2){
-              Global.ui.notification.show(`<div class="m-bottom-lg">该活动已经结束！</div>`)
-            }else if(!root.available){
-              Global.ui.notification.show(`<div class="m-bottom-lg">当前IP已经领取过礼包！</div>`)
-            }else{
-              //this.systemDate = root.systemDate
-              this.bagStatus = root.bagStatus
-              this.fromDate = root.fromDate
-              this.endDate = root.endDate
-              this.userAmountList = root.userAmountList
-              if(this.bagStatus === 0){
-                this.packageType = root.packageType
-                this.userRegTime = root.userRegTime
-                this.itemList = root.itemList
-                this.amountList = root.amountList
-              }else{
-                this.showDetail = true
-              }
-            }
-          }else{
-            Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
-          }
-        },
-        ({data}) => {
-          Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
-        })
+      this.initData()
+      this.getVirtualNum()
+      this.timeInv = setInterval(() => {
+        this.getVirtualNum()
+      },30000)
     },
 
     beforeRouteEnter(to, from, next) {
@@ -268,10 +469,24 @@
         next()
       }
     },
+    beforeDestroy(){
+      clearInterval(this.timeInv)
+    }
   }
 
 </script>
 <style lang="scss" scoped>
+  .amount-list-enter{
+    transform: translateX(910px);
+
+  }
+  .amount-list-leave-to{
+    transform: translateX(-910px);
+
+  }
+  .amount-list-enter-active,.amount-list-leave-active{
+    transition: all .5s;
+  }
   .user-main{
     width: 100%;
     height: 2000px;
@@ -519,12 +734,16 @@
               }
             }
           }
-          .disabled{
+          &.disabled{
             .date-icon{
               background: url("./assets/date-icon-disabled.png");
               .light{
                 box-shadow: 0 0 120px #cbcbcb;
               }
+            }
+            .date-num{
+              background-color: #aaaaaa;
+              color: #371314;
             }
           }
         }
@@ -555,15 +774,17 @@
           text-align: center;
           line-height: 25px;
           margin-top: 12px;
-          &.disabled{
-            background-color: #aaaaaa;
-            color: #371314;
-          }
         }
       }
       .detail-list{
         width: 910px;
         margin: 0 auto;
+        overflow: hidden;
+        height: 309px;
+        >div{
+          display: flex;
+          flex-direction: row-reverse;
+        }
       }
       .detail-info{
         width: 173px;
@@ -685,6 +906,114 @@
     height: 747px;
     position: absolute;
     bottom: 0;
-    background: url("./assets/bg-bottom.png") no-repeat center;
+    background: url('./assets/bg-bottom.png') no-repeat center;
+  }
+  .modal-big-size{
+    width: 644px;
+    height: 458px;
+    background: url("./assets/modal-big-bg.png") no-repeat;
+    position: relative;
+    .dialog-title{
+      font-size: 24px;
+      color: #902b4e;
+      text-align: center;
+      margin-top: 120px;
+    }
+    .modal-close{
+      top: 80px;
+      right: 80px;
+    }
+    .content{
+      width: 100%;
+      height: 100%;
+      font-size: 16px;
+      color: #902b4e;
+      .special{
+        font-size: 18px;
+        color: #cd4977;
+      }
+      .get-gift-msg{
+        margin-top: 45px;
+        div{
+          line-height: 35px;
+        }
+        .get-gift-btn{
+          width: 164px;
+          height: 48px;
+          background: url("./assets/dialog-btn-yellow.png") no-repeat;
+          background-size: cover;
+          text-align: center;
+          line-height: 48px;
+          font-size: 18px;
+          color: #622022;
+          margin: 0 auto;
+          margin-top: 37px;
+          cursor: pointer;
+        }
+      }
+      .get-card-msg{
+        margin-top: 16px;
+        .get-card-info{
+          width: 226px;
+          height: 111px;
+          background: url(./assets/dialog-get-card-bg.png) no-repeat;
+          margin: 0 auto;
+        }
+        .card-name{
+          text-align: center;
+          margin-top: 25px;
+        }
+        .card-info{
+          text-align: center;
+          font-size: 24px;
+          color: #cd4977;
+          margin-top: 10px;
+        }
+      }
+      .btn-list{
+        margin-top: 22px;
+        text-align: center;
+        .card-btn{
+          display: inline-block;
+          text-align: center;
+          width: 134px;
+          height: 46px;
+          background-size: cover;
+          line-height: 46px;
+          font-size: 18px;
+          cursor: pointer;
+          &.btn-yellow{
+            margin-right: 35px;
+            background: url(./assets/dialog-btn-yellow.png) no-repeat;
+            color: #622022;
+          }
+          &.btn-pink{
+            background: url(./assets/dialog-btn-pink.png) no-repeat;
+            color: #fffefe;
+          }
+        }
+      }
+    }
+  }
+  .modal-close{
+    width: 16px;
+    height: 16px;
+    background: url("./assets/close.png") no-repeat;
+    position: absolute;
+    cursor: pointer;
+  }
+  .dialog-tip{
+    width: 143px;
+    height: 155px;
+    background: url(./assets/dialog-tip-bg.png) no-repeat;
+    position: absolute;
+    top: 60px;
+    left: 57px;
+    .text{
+      font-size: 14px;
+      color: #ffffff;
+      transform: rotate(-48deg);
+      margin-top: 40px;
+    }
   }
 </style>
