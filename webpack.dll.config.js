@@ -7,6 +7,7 @@ const DEV = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   mode: process.env.NODE_ENV,
+  devtool: 'source-map',
   context: __dirname,
   output: {
     path: path.join(__dirname, `src/dll/${process.env.NODE_ENV}`),
@@ -22,9 +23,9 @@ module.exports = {
       'underscore',
       'lodash',
       'jquery-slimscroll',
-      'gsap',
       'jquery',
       'velocity-animate',
+      'raven-js',
       './src/base/build.base.dll.js',
       './src/vendor/build.core.js',
       './src/vendor/scripts/md5',
@@ -43,7 +44,7 @@ module.exports = {
       sourceMap: true,
       uglifyOptions: {
         compress: {
-          warnings: false
+          inline: false
         }
       },
     }),

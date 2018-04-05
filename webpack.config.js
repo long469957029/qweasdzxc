@@ -15,7 +15,6 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 //sentry sourcemap upload
 const SentryCliPlugin = require('@sentry/webpack-plugin');
-// const SentryPlugin = require('webpack-sentry-plugin');
 
 const happyThreadPool = HappyPack.ThreadPool({size: 5});
 
@@ -162,7 +161,7 @@ if (DEV) {
   output.publicPath = '.' + appConfig.output.publicPath;
   output.filename = '[name].[hash].bundle.js';
   output.chunkFilename = '[name].[hash].bundle.js';
-  output.sourceMapFilename = '[name].[hash].js.map';
+  // output.sourceMapFilename = '[name].[hash].js.map';
 }
 
 //==============plugins================
@@ -179,6 +178,7 @@ let plugins = [
     R: 'ramda',
     slimScroll: 'jquery-slimscroll',
     Velocity: 'velocity-animate',
+    Raven: 'raven-js',
     RouterController: ['RouterController', 'default'],
 
     consts: 'consts',
@@ -262,15 +262,18 @@ if (DEV) {
   plugins.push(new AssetsPlugin());
   plugins.push(new UglifyJsPlugin({
     sourceMap: true,
-    // compress: {
-    //   warnings: false
-    // }
+    // uglifyOptions: {
+    //   compress: {
+    //     inline: false,
+    //     // warnings: false
+    //   }
+    // },
   }));
   plugins.push(new CompressionPlugin())
 
   plugins.push(new SentryCliPlugin({
     release: PROJECT_VERSION,
-    // include: './www/main',
+    include: './www/main',
     ignoreFile: '.sentrycliignore',
     ignore: ['node_modules', 'webpack.config.js'],
   }))
@@ -307,7 +310,7 @@ plugins.push(new AddAssetHtmlPlugin([
   {
     filepath: path.resolve(`./src/dll/${process.env.NODE_ENV}/*.js`),
     hash: true,
-    includeSourcemap: false
+    includeSourcemap: true
   }
 ]));
 

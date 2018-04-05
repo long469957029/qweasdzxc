@@ -25,7 +25,6 @@ const rename = require('gulp-rename')
 const fontConfig = require('./font-config.json')
 
 let projectPath = 'main'
-const zipPath = ['www/main/**']
 
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = 'development'
@@ -135,7 +134,7 @@ gulp.task('release.build', (callback) => {
 
 // 打压缩包，打www/main程序包
 gulp.task('zip', () => {
-  return gulp.src(zipPath)
+  return gulp.src(['www/main/*', '!www/main/*.map', '!www/main/*.map.gz', '!www/main/*.css.map', '!www/main/*.css.map.gz'])
     .pipe(zip('forehead_wx_v3.zip')
     )
     .pipe(gulp.dest('www'))
