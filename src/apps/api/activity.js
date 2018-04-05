@@ -103,7 +103,7 @@ const getGiftPackageApi = (then, fail) => {
  */
 const getDouseApi = ({resultType}, then, fail) => {
   return $http({
-    url: '/info/userpack/doget.json',
+    url: '/info/userpack/douse.json',
     data:{
       resultType
     }

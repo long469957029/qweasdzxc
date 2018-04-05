@@ -13,31 +13,31 @@
       <div class="content">
         <div class="gift-list" v-if="!showDetail">
           <transition-group name="gift-list">
-            <div class="gift-content" v-for="item in giftPackageList" :key="item.resultType">
+            <div class="gift-content" v-for="(item, index) in giftPackageList" :key="item.resultType">
               <div class="gift-info clearfix">
                 <div class="mask" v-if="packageType !== item.resultType"></div>
                 <div class="info-title">{{giftPackageName(item.resultType)}}礼包</div>
-                <div class="info-time">{{item.minLimit}}天≥注册时间>{{item.maxLimit}}天</div>
+                <div class="info-time">{{item.minLimit}}天≥注册时间<span v-if="index < 3">{{item.maxLimit}}天</span></div>
                 <div class="info-icon" :class="`gift-icon-${item.resultType}`"></div>
                 <div class="info-detail">
                   <div class="reward" v-if="item.list[0].amount > 0">
-                    元老彩金{{_(item.list[0].amount).convert2yuan()}}元
+                    元老彩金{{item.list[0].amount | convert2yuan}}元
                   </div>
                   <div class="reward" v-if="item.list[1].amount > 0">
-                    活跃彩金{{_(item.list[1].amount).convert2yuan()}}元
+                    活跃彩金{{item.list[1].amount | convert2yuan}}元
                   </div>
                   <div class="reward" v-if="item.list[2].amount > 0">
                     三天充值返利卡
                     <div class="reward-info">
-                      充值{{_(item.list[2].limit).convert2yuan()}}返{{_(item.list[2].amount).convert2yuan()}}元</div>
+                      充值{{item.list[2].limit | convert2yuan}}返{{item.list[2].amount | convert2yuan}}元</div>
                   </div>
                   <div class="reward" v-if="item.list[3].amount > 0">
                     五天投注返水卡
-                    <div class="reward-info">投注额*{{_(item.list[3].amount).convert2yuan()}}%</div>
+                    <div class="reward-info">投注额*{{item.list[3].amount | convert2yuan}}%</div>
                   </div>
                   <div class="reward" v-if="item.list[4].amount > 0">
                     七天中奖加奖卡
-                    <div class="reward-info">中奖额*{{_(item.list[4].amount).convert2yuan()}}%</div>
+                    <div class="reward-info">中奖额*{{item.list[4].amount | convert2yuan}}%</div>
                   </div>
                 </div>
               </div>
@@ -45,32 +45,33 @@
                 已派发礼包：<span class="num-big">{{getTotal(item.resultType)}}个</span>
               </div>
               <div class="gift-button" :class="{disabled:packageType !== item.resultType}"
-                   @click="packageType === item.resultType ? getGift : ''">马上领取</div>
+                   @click="Number(packageType) === Number(item.resultType) ? getGift() : ''">马上领取</div>
             </div>
           </transition-group>
         </div>
         <div class="gift-detail" v-if="showDetail">
           <div class="date-list">
-            <div :class="['date-item',{'disabled': item.expired}]" v-for="(item,index) in formatTime" :key="item.time"
-                 @click="filterTime(index + 1)">
+            <div :class="['date-item',{'disabled': item.dayStatus === 0,'active': today === item.day}]"
+                 v-for="item in dayList" :key="item.day"
+                 @click="filterPrize(item.day)">
               <div class="date-icon">
                 <div class="light"></div>
               </div>
-              <div class="date-num">{{item.time | toTime('M.DD')}}</div>
+              <div class="date-num">{{formatTime(item.day)}}</div>
             </div>
           </div>
           <div class="detail-list">
             <transition-group name="amount-list" tag="div">
-              <div class="detail-info" v-for="(item,index) in filterUserAmountList" :key="item.resultType">
-                <div class="info-title">{{formatDetailName(item.resultType)}}</div>
-                <div class="info-content" v-if="item.amount>0 && (parseInt(item.resultType / 10) === 1 || parseInt(item.resultType / 10) === 2)">
+              <div class="detail-info" v-for="(item,index) in prizeList" :key="item.resultType" v-if="item.show === 1">
+                <div class="info-title">{{formatDetailName(item.resultType).name}}</div>
+                <div class="info-content" v-if="(parseInt(item.resultType / 10) === 1 || parseInt(item.resultType / 10) === 2)">
                   {{item.amount | convert2yuan}}元现金</div>
-                <div class="info-content" v-if="item.amount>0 && parseInt(item.resultType / 10) === 3">充
+                <div class="info-content" v-if="parseInt(item.resultType / 10) === 3">充
                   {{item.limit | convert2yuan}}返{{item.amount | convert2yuan}}元</div>
-                <div class="info-content" v-if="item.amount>0 && (parseInt(item.resultType / 10) === 4 || parseInt(item.resultType / 10) === 5)">
+                <div class="info-content" v-if="(parseInt(item.resultType / 10) === 4 || parseInt(item.resultType / 10) === 5)">
                   中奖额*{{item.amount | convert2yuan}}%</div>
-                <div class="tip-icon" v-if="item.status === 3"></div>
-                <div class="detail-btn" :class="formatBtnClass(item.status).className" @click="item.status === 0 ? getPrize(item.resultType) : ''">
+                <div class="tip-icon" v-if="item.status === 2 && item.day === today"></div>
+                <div class="detail-btn" :class="formatBtnClass(item.status).className" @click="item.status === 1 ? getPrize(item.resultType) : ''">
                   {{formatBtnClass(item.status).btnText}}</div>
               </div>
             </transition-group>
@@ -116,7 +117,7 @@
                 </div>
                 <div v-if="getCardError">
                   <div class="text-center">未达到充值条件，不可领取，快去充值后领取吧</div>
-                  <div class="text-center">{{getPrizeInfo}}</div>
+                  <div class="text-center">{{formatDetailName(resultType).info}}}</div>
                   <div class="btn-list">
                     <div class="card-btn btn-yellow js-header-recharge" data-name="jsFcRecharge" data-dismiss="modal">去充值</div>
                     <div class="card-btn btn-pink" data-dismiss="modal">确认</div>
@@ -125,8 +126,8 @@
               </div>
               <div class="get-card-msg" v-if="getCardMsg">
                 <div class="get-card-info clearfix">
-                  <div class="card-name">{{formatDetailName(resultType)}}</div>
-                  <div class="card-info">{{getPrizeInfo}}</div>
+                  <div class="card-name">{{formatDetailName(resultType).name}}</div>
+                  <div class="card-info">{{formatDetailName(resultType).info}}</div>
                 </div>
                 <div class="btn-list">
                   <router-link :to="{path: '/fc/ad'}" class="card-btn btn-yellow" data-dismiss="modal" tag="div">查看</router-link>
@@ -178,7 +179,10 @@
         getCardError:false,//获取卡错误提示
         dialogTitle:'领取成功',
         resultType:21,//领取卡的类型id
-        giftNum:[]//已发放礼包数量
+        giftNum:[],//已发放礼包数量
+        dayList:[],//日期列表
+        prizeList:[],//日期对应的礼品列表
+        today:''
       }
     },
     watch:{
@@ -211,27 +215,29 @@
         })
         return this.itemList
       },
-      formatTime(){
-        const time = []
-        const sub = moment(moment(this.endDate).diff(this.fromDate)).dayOfYear()
-        for(let i=0;i<sub -1 ;i++){
-          const timeAdd = moment(this.fromDate).add(i,'days')
-          time.push({
-            time: timeAdd,
-            expired: moment(moment(this.systemDate).diff(timeAdd)).dayOfYear() - 1 >= 1 &&
-              moment(moment(this.systemDate).diff(timeAdd)).dayOfYear() - 1 <= 31
-          })
-        }
-        return time
-      },
+      // formatTime(){
+      //   const time = []
+      //   const sub = moment(moment(this.endDate).diff(this.fromDate)).dayOfYear()
+      //   for(let i=0;i<sub -1 ;i++){
+      //     const timeAdd = moment(this.fromDate).add(i,'days')
+      //     time.push({
+      //       time: timeAdd,
+      //       expired: moment(moment(this.systemDate).diff(timeAdd)).dayOfYear() - 1 >= 1 &&
+      //         moment(moment(this.systemDate).diff(timeAdd)).dayOfYear() - 1 <= 31
+      //     })
+      //   }
+      //   return time
+      // },
       getPrizeInfo(){
-        return _(this.userAmountList).where({resultType: this.resultType})
+        return _(_(this.dayList).where({day: this.today}).dayItem).filter((item) => {
+          return item.resultType === this.resultType
+        })
       }
     },
     methods:{
       updateXY(event){
-        // this.mouseX = event.offsetX;
-        // this.mouseY = event.offsetY;
+        this.mouseX = event.clientX;
+        this.mouseY = event.clientY;
       },
       giftPackageName(id){
         let name = ''
@@ -255,6 +261,10 @@
       },
       formatDetailName(index){
         let name = ''
+        let info = ''
+        const Obj = _(_(this.dayList).where({day: this.today}).dayItem).filter((item) => {
+          return item.resultType === this.resultType
+        })
         const num = parseInt(index / 10)
         switch (num){
           case 1:
@@ -265,24 +275,31 @@
             break
           case 3:
             name = '充值返利卡'
+            info = `充${_(Obj.limit).convert2yuan()}返${_(Obj.amount).convert2yuan()}元`
             break
           case 4:
             name = '投注返水卡'
+            info = `中奖额*${_(Obj.amount).convert2yuan()}%`
             break
           case 5:
             name = '中奖加奖卡'
+            info = `中奖额*${_(Obj.amount).convert2yuan()}%`
             break
           default:
             break
         }
-        return name
+        return {
+          name,
+          info
+        }
       },
       getGift(){
         getGiftPackageApi(
           ({data}) => {
             if(data && data.result === 0){
               this.getGiftStatus = true
-              // this.showDetail = true
+              this.getGiftMsg = true
+              this.initData()
             }else{
               Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
             }
@@ -292,49 +309,40 @@
           }
         )
       },
-      filterTime(index){
-        this.filterUserAmountList = []
+      formatTime(day){
+        return _(moment(day).valueOf()).toTime('M.DD')
+      },
+      // filterTime(index){
+      //   this.filterUserAmountList = []
+      //   setTimeout(() => {
+      //     this.filterUserAmountList = [...this.userAmountList].reverse()
+      //     this.filterUserAmountList = _(this.filterUserAmountList).filter((item) => {
+      //       return item.validity >= index
+      //     })
+      //   },300)
+      // },
+      filterPrize(day){
+        this.prizeList = []
+        this.today = day
         setTimeout(() => {
-          this.filterUserAmountList = [...this.userAmountList].reverse()
-          this.filterUserAmountList = _(this.filterUserAmountList).filter((item) => {
-            return item.validity >= index
-          })
+          this.prizeList = _(this.dayList).where({day})[0].dayItem
         },300)
       },
-      formatPrizeStatus(day,status,timeDiff){
-        let statusNum = 0
-        if(status !== 1){     // status 0:未领取 1：已领取 2：已过期 3:进行中
-          if(timeDiff > day) {
-            statusNum = 2
-          }else{
-            statusNum = status
-          }
-        }else if(timeDiff <= day){
-          statusNum = 3
-        }else{
-          statusNum = status
-        }
-        return statusNum
-      },
-      formatBtnClass(status){
+      formatBtnClass(status){ // 0：未领取，1：已领取，2：已过期，3：未开启
         let className = ''
         let btnText = '领取'
         switch (status){
           case 1:
-            className = 'disabled'
+            className = 'has-get'
             btnText = '已领取'
             break
           case 2:
-            className = 'disabled'
+            className = 'over-time'
             btnText = '已过期'
             break
           case 3:
             className = 'disabled'
             btnText = '未开启'
-            break
-          case 4:
-            className = 'disabled'
-            btnText = '已领取'
             break
         }
         return {
@@ -345,11 +353,15 @@
       getPrize(resultType){
         getDouseApi({resultType},
           ({data}) => {
+            this.resultType = resultType
             if(data && data.result === 0){
-              this.resultType = resultType
+              this.getGiftStatus = true
               this.getCardMsg = true
             }else{
-              Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
+              this.getGiftStatus = true
+              this.getCardError = true
+              this.dialogTitle = '很抱歉！'
+              //Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
             }
           },
           ({data}) => {
@@ -376,59 +388,22 @@
                 this.bagStatus = root.bagStatus
                 this.fromDate = root.fromDate
                 this.endDate = root.endDate
-                this.userAmountList = root.userAmountList
-                this.filterUserAmountList = [...this.userAmountList].reverse()
-                const timeDiff = moment(moment(this.systemDate).diff(this.startDate)).dayOfYear() - 1
-                if(this.userAmountList.length > 3){
-                  this.userAmountList.forEach((item,index) => {
-                    switch (index){  // status 0:未领取 1：已领取 2：已过期 3：未开启 4:进行中
-                      case 0:
-                        item.status = root.packageStatus
-                        item.validity = 1
-                        break
-                      case 1:
-                        item.status = root.packageStatus1
-                        item.validity = 1
-                        break
-                      case 2:
-                        item.status = this.formatPrizeStatus(3,root.packageStatus2,timeDiff)
-                        item.validity = 3
-                        break
-                      case 3:
-                        item.status = this.formatPrizeStatus(5,root.packageStatus3,timeDiff)
-                        item.validity = 5
-                        break
-                      case 4:
-                        item.status = this.formatPrizeStatus(7,root.packageStatus4,timeDiff)
-                        item.validity = 7
-                        break
-                    }
-                  })
-                }else{
-                  this.userAmountList.forEach((item,index) => {
-                    switch (index){
-                      case 0:
-                        item.status = this.formatPrizeStatus(3,root.packageStatus2,timeDiff)
-                        item.validity = 3
-                        break
-                      case 1:
-                        item.status = this.formatPrizeStatus(5,root.packageStatus3,timeDiff)
-                        item.validity = 5
-                        break
-                      case 2:
-                        item.status = this.formatPrizeStatus(7,root.packageStatus4,timeDiff)
-                        item.validity = 7
-                        break
-                    }
-                  })
-                }
-                if(this.bagStatus === 0){
-                  this.packageType = root.packageType
-                  this.userRegTime = root.userRegTime
-                  this.itemList = root.itemList
-                  this.amountList = root.amountList
-                }else{
+                this.dayList = _(root.dayList).filter((item) => {
+                  return item.dayItem = item.dayItem.reverse()
+                })
+                this.prizeList = _(this.dayList).where({isToday: 1})[0].dayItem
+                this.today = _(this.dayList).where({isToday: 1})[0].day
+                this.packageType = root.packageType
+                this.userRegTime = root.userRegTime
+                this.itemList = [...root.itemList]
+                this.amountList = [...root.amountList]
+                if(this.bagStatus === 1){
                   this.showDetail = true
+                }else{
+                  this.getVirtualNum()
+                  this.timeInv = setInterval(() => {
+                    this.getVirtualNum()
+                  },30000)
                 }
               }
             }else{
@@ -440,22 +415,25 @@
           })
       },
       getVirtualNum(){
-        // getVirtualNumApi(
-        //   ({data}) => {
-        //     if(data && data.result === 0){
-        //       this.giftNum = data.root
-        //     }
-        //   }
-        // )
+        getVirtualNumApi(
+          ({data}) => {
+            if(data && data.result === 0){
+              this.giftNum = data.root
+            }
+          }
+        )
       }
     },
 
     mounted(){
       this.initData()
-      this.getVirtualNum()
-      this.timeInv = setInterval(() => {
-        this.getVirtualNum()
-      },30000)
+      this.$nextTick(() => {
+        Velocity(this.$refs.flower, {
+          blur: 0,
+          'margin-left': '-909px',
+          'margin-top': 0
+        })
+      })
     },
 
     beforeRouteEnter(to, from, next) {
@@ -500,17 +478,19 @@
     height: 1054px;
     background: url("./assets/header-bg.png") no-repeat center;
     background-position-y: -110px;
+    animation: brightness 1s ease-in-out both 1;
     .main{
       width: 1100px;
       height: 100%;
       margin: 0 auto;
       position: relative;
       .text{
-        width: 710px;
+        width: 0px;
         height: 341px;
-        background: url("./assets/header-text.png") no-repeat center;
+        background: url("./assets/header-text.png") no-repeat;
         margin-left: 50px;
         margin-top: -35px;
+        animation: showHeader 1.5s .5s forwards;
       }
       .time{
         font-size: $font-md;
@@ -525,7 +505,7 @@
         position: absolute;
         right: -78px;
         top: 172px;
-        animation: tada 1s;
+        animation: tada 1s 1s;
       }
     }
   }
@@ -725,7 +705,7 @@
           &:last-child{
             margin-right: 0;
           }
-          &:hover{
+          &:hover,&.active{
             .date-icon{
               transition: background .5s;
               background: url("./assets/date-icon-hover.png");
@@ -795,7 +775,7 @@
         border: 1px solid transparent;
         margin-top: 40px;
         margin-right: 8px;
-        &:last-child{
+        &:first-child{
           margin-right: 0;
         }
         &:hover{
@@ -899,7 +879,10 @@
     position: absolute;
     top: 30%;
     left: 50%;
-    margin-left: -909px;
+    margin-left: -609px;
+    margin-top: -500px;
+    transition: all .6s linear;
+    filter: blur(20px);
   }
   .footer{
     width: 100%;
@@ -1014,6 +997,26 @@
       color: #ffffff;
       transform: rotate(-48deg);
       margin-top: 40px;
+    }
+  }
+  @keyframes showHeader {
+    0%{
+      width: 0;
+      opacity: 0;
+    }
+    100%{
+      width: 710px;
+      opacity: 1;
+    }
+  }
+  @keyframes brightness {
+    0% {
+      opacity: 0;
+      filter: brightness(300%);
+    }
+    100% {
+      opacity: 1;
+      filter: brightness(100%);
     }
   }
 </style>
