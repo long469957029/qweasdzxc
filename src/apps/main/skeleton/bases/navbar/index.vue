@@ -8,11 +8,11 @@
             <a href="#/?dashboard=1" class="navbar-logo"></a>
             <ul class="nav js-navbar-nav" style="position: static">
               <li data-index="1">
-                <!--<a href="#/?dashboard=1">首页</a>-->
-                <router-link :to="{name: 'gameSports'}">
-                  体育
-                  <img class="sports-icon" src="./images/world-cup.png">
-                </router-link>
+                <a href="#/?dashboard=1">首页</a>
+                <!--<router-link :to="{name: 'gameSports'}">-->
+                  <!--体育-->
+                  <!--<img class="sports-icon" src="./images/world-cup.png">-->
+                <!--</router-link>-->
               </li>
               <li data-index="1">
                 <a @click.prevent="goTo(`/bc/0/${topClassicalTicket.id}`)">彩票
