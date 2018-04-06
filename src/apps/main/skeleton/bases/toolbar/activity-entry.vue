@@ -94,7 +94,7 @@
     cursor: pointer;
   }
   .arena-package {
-    background-img: url('misc/arena-package.gif');
+    background-image: url('misc/arena-package.gif');
     background-repeat: no-repeat;
     background-position-x: -17px;
     width: 70px;
@@ -106,7 +106,7 @@
     cursor: pointer;
   }
   .user-return-package {
-    background-img: url('misc/user-return-package.gif');
+    background-image: url('misc/user-return-package.gif');
     background-repeat: no-repeat;
     background-position-x: -17px;
     width: 70px;
