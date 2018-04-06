@@ -262,42 +262,42 @@ $toolbar-option-width: 36px;
 }
 
 .activity-panel {
-  .novice-package {
-    background: url('misc/acbar-novice-package.gif') no-repeat;
-    width: 70px;
-    height: 110px;
-    display: block;
-    position: absolute;
-    //right: -2px;
-    right: 0px;
-    top: -118px;
-    cursor: pointer;
-    //animation: fade-act linear 5s 3s infinite;
-  }
-  .arena-package {
-    background: url('misc/arena-package.gif') no-repeat;
-    background-position-x: -17px;
-    width: 70px;
-    height: 110px;
-    display: block;
-    position: absolute;
-    //right: -2px;
-    right: 0px;
-    top: -118px;
-    cursor: pointer;
-    //animation: fade-act linear 5s infinite;
-  }
-  .user-return-package {
-    background: url('misc/user-return-package.gif') no-repeat;
-    //background-position-x: -17px;
-    width: 87px;
-    height: 120px;
-    display: block;
-    position: absolute;
-    right: 0px;
-    top: -118px;
-    cursor: pointer;
-  }
+  //.novice-package {
+  //  background: url('misc/acbar-novice-package.gif') no-repeat;
+  //  width: 70px;
+  //  height: 110px;
+  //  display: block;
+  //  position: absolute;
+  //  //right: -2px;
+  //  right: 0px;
+  //  top: -118px;
+  //  cursor: pointer;
+  //  //animation: fade-act linear 5s 3s infinite;
+  //}
+  //.arena-package {
+  //  background: url('misc/arena-package.gif') no-repeat;
+  //  background-position-x: -17px;
+  //  width: 70px;
+  //  height: 110px;
+  //  display: block;
+  //  position: absolute;
+  //  //right: -2px;
+  //  right: 0px;
+  //  top: -118px;
+  //  cursor: pointer;
+  //  //animation: fade-act linear 5s infinite;
+  //}
+  //.user-return-package {
+  //  background: url('misc/user-return-package.gif') no-repeat;
+  //  //background-position-x: -17px;
+  //  width: 87px;
+  //  height: 120px;
+  //  display: block;
+  //  position: absolute;
+  //  right: 0px;
+  //  top: -118px;
+  //  cursor: pointer;
+  //}
 }
 
 @keyframes fade-act {

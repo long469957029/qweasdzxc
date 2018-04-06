@@ -3,8 +3,8 @@
     <div class="novice-package" @click="showNovicePackage" v-show="isShow === 1"></div>
     <!--<router-link :to="{path: '/act/arena'}" class="arena-package" v-show="isShow === 2"></router-link>-->
     <!--<router-link :to="{path: '/act/userReturn'}" class="user-return-package" v-show="isShow === 3"></router-link>-->
-    <a href="#/act/arena" class="js-arena-package arena-package" v-show="isShow === 2"></a>
-    <a href="#/act/userReturn" class="js-user-return-package user-return-package" v-show="isShow === 3"></a>
+    <a href="#/act/arena" class="arena-package" v-show="isShow === 2"></a>
+    <a href="#/act/userReturn" class="user-return-package" v-show="isShow === 3"></a>
   </div>
 </template>
 <script>
