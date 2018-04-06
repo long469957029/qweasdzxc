@@ -379,7 +379,7 @@
         )
       },
       getTotal(resultType){
-        return _(this.giftNum).where({resultType:resultType})[0].total
+        return this.giftNum && !_(this.giftNum).isEmpty() ? _(this.giftNum).where({resultType:resultType})[0].total : 0
       },
       initData(){
         getGiftPackageListApi(
