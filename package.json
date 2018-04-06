@@ -1,6 +1,6 @@
 {
   "name": "global-wx-pc",
-  "version": "3.0.1",
+  "version": "3.0.6-alpha",
   "description": "A globalbestsoft's font-end project",
   "repository": {
     "type": "git",
@@ -71,6 +71,7 @@
     "moment-duration-format": "^2.2.1",
     "paper": "^0.11.5",
     "promise.prototype.finally": "^3.1.0",
+    "raven-js": "^3.24.0",
     "underscore": "~1.8.3",
     "underscore.string": "^3.3.4",
     "velocity-animate": "^1.5.1",
@@ -87,6 +88,8 @@
     "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.37",
     "@babel/preset-env": "^7.0.0-beta.36",
     "@babel/preset-es2015": "^7.0.0-beta.36",
+    "@sentry/cli": "^1.30.3",
+    "@sentry/webpack-plugin": "^1.5.0",
     "@vue/test-utils": "^1.0.0-beta.12",
     "add-asset-html-webpack-plugin": "^2.1.3",
     "assets-webpack-plugin": "^3.5.1",

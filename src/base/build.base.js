@@ -1,4 +1,7 @@
-require('./styles/style')
-require('./build.base.dll')
+import './raven'
+import './heatmap'
+import './styles/style'
+import './build.base.dll'
 
-require('./scripts/under-helper')
+import './scripts/under-helper'
+

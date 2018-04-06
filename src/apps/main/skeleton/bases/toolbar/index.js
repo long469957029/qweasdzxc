@@ -259,11 +259,11 @@ const ToolbarView = Base.ItemView.extend({
         self.$sidebar.html(new CouponView({}).render().el)
         break
       // case 4: // 站内消息
-      //         // self.$sidebar.html(new MessageView({}).render().el)
+      //   self.$sidebar.html(new MessageView({}).render().el)
       //   break
-      // case 5: // 意见反馈
-      //         // self.$sidebar.html(new FeedbackView({}).render().el)
-      //   break
+      case 5: // 意见反馈
+        self.$sidebar.html(new FeedbackView({}).render().el)
+        break
 
       default:
         break
