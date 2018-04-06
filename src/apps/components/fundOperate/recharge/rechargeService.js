@@ -140,10 +140,8 @@ module.exports = {
       paymentType: type,
     })
     if (selectedData === undefined) {
-      type = 1
-      selectedData = _(data).findWhere({
-        paymentType: 1,
-      })
+      selectedData = data[0]
+      type = selectedData.paymentType;
     }
     const logo = quickPayConfig.get(selectedData.paymentType).className
     const name = quickPayConfig.get(selectedData.paymentType).zhName
