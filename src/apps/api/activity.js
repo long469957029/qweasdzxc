@@ -123,6 +123,18 @@ const getVirtualNumApi = (then, fail) => {
     .then(then)
     .catch(fail)
 }
+/**
+ * 获取新手礼包活动配置
+ * @param then
+ * @param fail
+ */
+const getNovicePackageInfoApi = (then, fail) => {
+  return $http({
+    url: '/info/newpack/info.json',
+  })
+    .then(then)
+    .catch(fail)
+}
 export {
   getTicketListApi,
   getTicketCouponApi,
@@ -132,7 +144,8 @@ export {
   getGiftPackageListApi,
   getGiftPackageApi,
   getDouseApi,
-  getVirtualNumApi
+  getVirtualNumApi,
+  getNovicePackageInfoApi
 }
 
 

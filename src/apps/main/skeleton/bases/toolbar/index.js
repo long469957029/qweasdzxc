@@ -1,5 +1,5 @@
 import './index.scss'
-
+// import ActivityEntry from './activity-entry'
 import FundView from './fund' // 资金管理
 import RecordView from './record' // 游戏记录
 import CouponView from './coupon' // 我的优惠券
@@ -10,6 +10,7 @@ import {
   getTicketListApi,
   getGiftPackageListApi
 } from 'api/activity'
+import {PointsCard} from "@/apps/build";
 
 const ToolbarView = Base.ItemView.extend({
 
@@ -138,6 +139,14 @@ const ToolbarView = Base.ItemView.extend({
           }
         }
       })
+      // this.app = new Vue({
+      //   template: `<div><activity-entry></activity-entry></div>`,
+      //   components: {
+      //     ActivityEntry
+      //   },
+      //   store: window.store,
+      //   el: this.$el.find('#js-activity-panel')[0],
+      // })
     })
     const token = Global.cookieCache.get('token')
     if (token && token !== '' && token !== undefined && token !== null) {
