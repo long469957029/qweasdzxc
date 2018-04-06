@@ -42,11 +42,11 @@ module.exports = {
     }),
     new UglifyJsPlugin({
       sourceMap: true,
-      uglifyOptions: {
-        compress: {
-          inline: false
-        }
-      },
+      // uglifyOptions: {
+        // compress: {
+        //   inline: false
+        // }
+      // },
     }),
     // new webpack.optimize.minimize(),
     new webpack.DllPlugin({
@@ -61,6 +61,7 @@ module.exports = {
       bootstrap: 'bootstrap',
       _: 'underscore',
       R: 'ramda',
+      Raven: 'raven-js',
       slimScroll: 'jquery-slimscroll',
       Velocity: 'velocity-animate',
     }),

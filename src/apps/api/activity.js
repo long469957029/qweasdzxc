@@ -69,13 +69,70 @@ const getYesterdayTop3Api = (then, fail) => {
     .catch(fail)
 }
 
-
+// 老用户回归活动
+/**
+ * 获取回归礼包列表
+ * @param then
+ * @param fail
+ */
+const getGiftPackageListApi = (then, fail) => {
+  return $http({
+    url: '/info/userpack/info.json',
+  })
+    .then(then)
+    .catch(fail)
+}
+/**
+ * 领取回归礼包
+ * @param
+ * @param then
+ * @param fail
+ */
+const getGiftPackageApi = (then, fail) => {
+  return $http({
+    url: '/info/userpack/doget.json'
+  })
+    .then(then)
+    .catch(fail)
+}
+/**
+ * 领取各种卡，需要传值resultType
+ * @param resultType
+ * @param then
+ * @param fail
+ */
+const getDouseApi = ({resultType}, then, fail) => {
+  return $http({
+    url: '/info/userpack/douse.json',
+    data:{
+      resultType
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+/**
+ * 获取虚拟礼包数量
+ * @param then
+ * @param fail
+ */
+const getVirtualNumApi = (then, fail) => {
+  return $http({
+    url: '/info/userpack/giftNum.json'
+  })
+    .then(then)
+    .catch(fail)
+}
 export {
   getTicketListApi,
   getTicketCouponApi,
   getDailyListApi,
   getWeeklyListApi,
-  getYesterdayTop3Api
+  getYesterdayTop3Api,
+  getGiftPackageListApi,
+  getGiftPackageApi,
+  getDouseApi,
+  getVirtualNumApi
 }
 
 

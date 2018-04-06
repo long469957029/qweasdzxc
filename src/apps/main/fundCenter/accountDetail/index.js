@@ -62,13 +62,13 @@ const AccountDetailsView = TabView.extend({
           view: PlatfomrMoneyDetailView,
           options: { channelId: channelId.gg },
         },
-        // {
-        //   label: '体育',
-        //   name: 'jsFcMdPlatform',
-        //   id: 'jsFcMdPlatform',
-        //   view: PlatfomrMoneyDetailView,
-        //   options: { channelId: channelId.sport },
-        // },
+        {
+          label: '体育',
+          name: 'jsFcMdPlatform',
+          id: 'jsFcMdPlatform',
+          view: PlatfomrMoneyDetailView,
+          options: { channelId: channelId.sport },
+        },
       ],
     })
   },

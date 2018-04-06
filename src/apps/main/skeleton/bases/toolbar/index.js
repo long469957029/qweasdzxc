@@ -8,6 +8,7 @@ import FeedbackView from './feedback' // 意见反馈
 
 import {
   getTicketListApi,
+  getGiftPackageListApi
 } from 'api/activity'
 
 const ToolbarView = Base.ItemView.extend({
@@ -76,27 +77,64 @@ const ToolbarView = Base.ItemView.extend({
         }
       })
 
-      Promise.all([def1, def2]).then((result) => {
+      const def3 = getGiftPackageListApi(({data}) => {
+        if (data && data.result === 0) {
+          if(moment(_(data.root.systemDate || moment().unix() * 1000).sub(data.root.userRegTime)).dayOfYear() > 3){
+            return true
+          }else{
+            return false
+          }
+        } else {
+          return false
+        }
+      })
+
+      Promise.all([def1, def2, def3]).then((result) => {
         const result1 = result[0]
         const result2 = result[1]
-        if (result1 && result2) {
+        const result3 = result[2]
+        if (result1 && result2 && result3) {
           setInterval(() => {
             this.$('.js-novice-package').addClass('hidden')
             this.$('.js-arena-package').removeClass('hidden')
-          }, 6000)
+            this.$('.js-user-return-package').addClass('hidden')
+          }, 15000)
           _.delay(() => {
             setInterval(() => {
               this.$('.js-novice-package').removeClass('hidden')
               this.$('.js-arena-package').addClass('hidden')
-            }, 6000)
-          }, 3000)
-        } else {
+              this.$('.js-user-return-package').addClass('hidden')
+            }, 15000)
+          }, 5000)
+          _.delay(() => {
+            setInterval(() => {
+              this.$('.js-novice-package').addClass('hidden')
+              this.$('.js-arena-package').addClass('hidden')
+              this.$('.js-user-return-package').removeClass('hidden')
+            }, 15000)
+          }, 10000)
+        } else if(result1 && result2){
+          setInterval(() => {
+            this.$('.js-novice-package').addClass('hidden')
+            this.$('.js-arena-package').removeClass('hidden')
+            this.$('.js-user-return-package').addClass('hidden')
+          }, 10000)
+          _.delay(() => {
+            setInterval(() => {
+              this.$('.js-novice-package').removeClass('hidden')
+              this.$('.js-arena-package').addClass('hidden')
+              this.$('.js-user-return-package').addClass('hidden')
+            }, 10000)
+          }, 5000)
+        }else{
           if (result1) {
             this.$('.js-novice-package').removeClass('hidden')
           }
           if (result2) {
-            this.$('.js-aren' +
-              'a-package').removeClass('hidden')
+            this.$('.js-arena-package').removeClass('hidden')
+          }
+          if (result3) {
+            this.$('.js-user-return-package').removeClass('hidden')
           }
         }
       })

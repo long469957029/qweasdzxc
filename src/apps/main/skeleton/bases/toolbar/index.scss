@@ -287,6 +287,17 @@ $toolbar-option-width: 36px;
     cursor: pointer;
     //animation: fade-act linear 5s infinite;
   }
+  .user-return-package {
+    background: url('misc/user-return-package.gif') no-repeat;
+    //background-position-x: -17px;
+    width: 87px;
+    height: 120px;
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: -118px;
+    cursor: pointer;
+  }
 }
 
 @keyframes fade-act {
