@@ -267,9 +267,9 @@
       formatDetailName(index){
         let name = ''
         let info = ''
-        const Obj = _(_(this.dayList).where({day: this.today}).dayItem).filter((item) => {
-          return item.resultType === this.resultType
-        })
+        const Obj = _(_(this.dayList).where({day: this.today})[0].dayItem).filter((item) => {
+          return item.resultType === index
+        })[0]
         const num = parseInt(index / 10)
         switch (num){
           case 1:
