@@ -42,9 +42,9 @@
         window.app.$store.commit(types.TOGGLE_NOVICE_PACKAGE, true)
       },
       changeIndex(){
-        this.isShow = this.showList[this.index].id
+        this.isShow = this.showList[this.index]
         this.index += 1
-        if(this.index > this.showList.length){
+        if(this.index > this.showList.length -1){
           this.index = 0
         }
       }
@@ -63,6 +63,9 @@
            }
          }
         })
+      })
+      this.showList = _(this.showList).sortBy((item) => {
+        return item
       })
       clearInterval(this.timer)
       this.timer = setInterval(() => {
