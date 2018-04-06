@@ -96,21 +96,25 @@ const ToolbarView = Base.ItemView.extend({
         if (result1 && result2 && result3) {
           setInterval(() => {
             this.$('.js-novice-package').addClass('hidden')
-            this.$('.js-arena-package').removeClass('hidden')
-            this.$('.js-user-return-package').addClass('hidden')
+            this.$('.js-arena-package').addClass('hidden')
+            this.$('.js-user-return-package').removeClass('hidden')
+
           }, 15000)
           _.delay(() => {
+            //新人
             setInterval(() => {
-              this.$('.js-novice-package').removeClass('hidden')
-              this.$('.js-arena-package').addClass('hidden')
+              //排行榜
+              this.$('.js-novice-package').addClass('hidden')
+              this.$('.js-arena-package').removeClass('hidden')
               this.$('.js-user-return-package').addClass('hidden')
             }, 15000)
           }, 5000)
           _.delay(() => {
+            //回归
             setInterval(() => {
-              this.$('.js-novice-package').addClass('hidden')
+              this.$('.js-novice-package').removeClass('hidden')
               this.$('.js-arena-package').addClass('hidden')
-              this.$('.js-user-return-package').removeClass('hidden')
+              this.$('.js-user-return-package').addClass('hidden')
             }, 15000)
           }, 10000)
         } else if(result1 && result2){

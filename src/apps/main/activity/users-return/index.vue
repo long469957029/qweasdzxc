@@ -729,10 +729,17 @@
           &:last-child{
             margin-right: 0;
           }
-          &:hover,&.active{
+          &:hover{
             .date-icon{
-              transition: background .5s;
-              background: url("./assets/date-icon-hover.png");
+              background: url("./assets/date-icon-hover.png") no-repeat center;
+              .light{
+                box-shadow: 0 0 120px #db9321;
+              }
+            }
+          }
+          &.active{
+            .date-icon{
+              background: url("./assets/date-icon-active.png") center center;
               .light{
                 box-shadow: 0 0 120px #db9321;
               }
@@ -740,7 +747,7 @@
           }
           &.disabled{
             .date-icon{
-              background: url("./assets/date-icon-disabled.png");
+              background: url("./assets/date-icon-disabled.png") no-repeat center;
               .light{
                 box-shadow: 0 0 120px #cbcbcb;
               }
@@ -752,14 +759,13 @@
           }
         }
         .date-icon{
-          background: url("./assets/date-icon.png");
-          width: 67px;
-          height: 82px;
+          background: url("./assets/date-icon.png") no-repeat center;
+          width: 84px;
+          height: 100px;
           margin: 0 auto;
           display: flex;
           justify-content: center;
           align-items: center;
-          transition: background .5s;
           .light{
             width: 50px;
             height: 50px;
