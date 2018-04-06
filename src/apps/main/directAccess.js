@@ -35,6 +35,11 @@ const permissionsList = [
     mame: 'points',
     needLogin: true,
   },
+  {
+    path: '/act/',
+    mame: 'activity',
+    needLogin: true,
+  },
 ]
 
 module.exports = {

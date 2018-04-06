@@ -98,34 +98,34 @@ const ToolbarView = Base.ItemView.extend({
             this.$('.js-novice-package').addClass('hidden')
             this.$('.js-arena-package').removeClass('hidden')
             this.$('.js-user-return-package').addClass('hidden')
-          }, 9000)
+          }, 15000)
           _.delay(() => {
             setInterval(() => {
               this.$('.js-novice-package').removeClass('hidden')
               this.$('.js-arena-package').addClass('hidden')
               this.$('.js-user-return-package').addClass('hidden')
-            }, 9000)
-          }, 3000)
+            }, 15000)
+          }, 5000)
           _.delay(() => {
             setInterval(() => {
               this.$('.js-novice-package').addClass('hidden')
               this.$('.js-arena-package').addClass('hidden')
               this.$('.js-user-return-package').removeClass('hidden')
-            }, 9000)
-          }, 6000)
+            }, 15000)
+          }, 10000)
         } else if(result1 && result2){
           setInterval(() => {
             this.$('.js-novice-package').addClass('hidden')
             this.$('.js-arena-package').removeClass('hidden')
             this.$('.js-user-return-package').addClass('hidden')
-          }, 6000)
+          }, 10000)
           _.delay(() => {
             setInterval(() => {
               this.$('.js-novice-package').removeClass('hidden')
               this.$('.js-arena-package').addClass('hidden')
               this.$('.js-user-return-package').addClass('hidden')
-            }, 6000)
-          }, 3000)
+            }, 10000)
+          }, 5000)
         }else{
           if (result1) {
             this.$('.js-novice-package').removeClass('hidden')
