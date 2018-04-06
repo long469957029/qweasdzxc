@@ -103,8 +103,8 @@
       <x-dialog v-model="getGiftStatus" styles="">
         <div class="modal-big-size clearfix" slot="all">
           <a data-dismiss="modal" class="modal-close btn-close"></a>
-          <div class="dialog-tip">
-            <div class="text" v-if="getCardMsg && !getCardError">仅限{{formatTime(today,'M月DD日')}}使用</div>
+          <div class="dialog-tip" v-if="getCardMsg && !getCardError">
+            <div class="text">仅限{{formatTime(today,'M月DD日')}}使用</div>
           </div>
           <div class="dialog-container">
             <div class="dialog-title">{{dialogTitle}}</div>
@@ -411,9 +411,6 @@
                   this.showDetail = true
                 }else{
                   this.getVirtualNum()
-                  this.timeInv = setInterval(() => {
-                    this.getVirtualNum()
-                  },30000)
                 }
               }
             }else{
@@ -425,13 +422,19 @@
           })
       },
       getVirtualNum(){
-        getVirtualNumApi(
-          ({data}) => {
-            if(data && data.result === 0){
-              this.giftNum = data.root
+        if(!this.showDetail){
+          getVirtualNumApi(
+            ({data}) => {
+              if(data && data.result === 0){
+                this.giftNum = data.root
+              }
             }
-          }
-        )
+          ).finally(() => {
+            setTimeout(() => {
+              this.getVirtualNum()
+            },30000)
+          })
+        }
       }
     },
 
