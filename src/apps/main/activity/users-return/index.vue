@@ -274,9 +274,11 @@
         switch (num){
           case 1:
             name = '元老彩金'
+            info = `${_(Obj.amount).convert2yuan()}元现金`
             break
           case 2:
             name = '活跃彩金'
+            info = `${_(Obj.amount).convert2yuan()}元现金`
             break
           case 3:
             name = '充值返利卡'
