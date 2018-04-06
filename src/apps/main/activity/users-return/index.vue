@@ -100,7 +100,7 @@
     <div class="footer"></div>
 
     <div v-transfer-dom>
-      <x-dialog v-model="getGiftStatus" styles="">
+      <x-dialog v-model="getGiftStatus" :options="modalOptions" styles="">
         <div class="modal-big-size clearfix" slot="all">
           <a data-dismiss="modal" class="modal-close btn-close"></a>
           <div class="dialog-tip" v-if="getCardMsg && !getCardError">
@@ -113,7 +113,7 @@
                 <div v-if="!getCardError">
                   <div class="text-center">恭喜您，成功领取<span class="special">“{{giftPackageName(packageType)}}礼包”</span></div>
                   <div class="text-center">快使用礼包中的奖励吧！</div>
-                  <div class="get-gift-btn" @click="showDetail = !showDetail" data-dismiss="modal">查看礼包</div>
+                  <div class="get-gift-btn" @click="initData" data-dismiss="modal">查看礼包</div>
                 </div>
                 <div v-if="getCardError">
                   <div class="text-center">{{errorText}}</div>
@@ -122,7 +122,7 @@
                     <div class="card-btn btn-yellow js-header-recharge" data-name="jsFcRecharge"
                          data-dismiss="modal" v-if="parseInt(resultType / 10) === 3">去充值</div>
                     <router-link class="card-btn btn-yellow" :to="{path: '/bc/0/10'}"
-                         data-dismiss="modal" v-else>去投注</router-link>
+                                 data-dismiss="modal" v-else>去投注</router-link>
                     <div class="card-btn btn-pink" data-dismiss="modal">确认</div>
                   </div>
                 </div>
@@ -164,6 +164,9 @@
 
     data(){
       return{
+        modalOptions: {
+          backdrop: 'static'
+        },
         mouseX:0,
         mouseY:0,
         showDetail:false,
