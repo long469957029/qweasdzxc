@@ -42,11 +42,11 @@
         window.app.$store.commit(types.TOGGLE_NOVICE_PACKAGE, true)
       },
       changeIndex(){
-        this.isShow = this.showList[this.index].id
         this.index += 1
-        if(this.index > this.showList.length){
+        if(this.index > this.showList.length -1){
           this.index = 0
         }
+        this.isShow = this.showList[this.index]
       }
     },
     mounted(){
@@ -56,14 +56,25 @@
            if(item.id === 1){
              if(data.data.root.status === 0 || data.data.root.status === 1){
                this.showList.push(item.id)
-               this.isShow = item.id
+               if(this.isFirst){
+                 this.isShow = item.id
+                 this.isFirst = false
+               }
              }
            }else{
              this.showList.push(item.id)
+             if(this.isFirst){
+               this.isShow = item.id
+               this.isFirst = false
+             }
            }
          }
         })
       })
+      this.showList = _(this.showList).sortBy((item) => {
+        return item
+      })
+      // this.isShow = this.showList[0]
       clearInterval(this.timer)
       this.timer = setInterval(() => {
         this.changeIndex()

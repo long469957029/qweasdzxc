@@ -1,5 +1,5 @@
 import './index.scss'
-// import ActivityEntry from './activity-entry'
+import ActivityEntry from './activity-entry'
 import FundView from './fund' // 资金管理
 import RecordView from './record' // 游戏记录
 import CouponView from './coupon' // 我的优惠券
@@ -59,98 +59,98 @@ const ToolbarView = Base.ItemView.extend({
     const self = this
     this.subscribe('acct', 'acct:login', () => {
       $('.js-toolbar-option-operation-container').removeClass('hidden')
-      const def1 = this.getNovicePackgeXhr().then(({data}) => {
-        if (data.result === 0) {
-          if (data.root.status === 0 || data.root.status === 1) {
-            this.$('.js-novice-package').removeClass('hidden')
-            return true
-          }
-        } else {
-          return false
-        }
-      })
-
-      const def2 = getTicketListApi(({data}) => {
-        if (data && data.result === 0) {
-          return true
-        } else {
-          return false
-        }
-      })
-
-      const def3 = getGiftPackageListApi(({data}) => {
-        if (data && data.result === 0) {
-          if(moment(_(data.root.systemDate || moment().unix() * 1000).sub(data.root.userRegTime)).dayOfYear() > 3){
-            return true
-          }else{
-            return false
-          }
-        } else {
-          return false
-        }
-      })
-
-      Promise.all([def1, def2, def3]).then((result) => {
-        const result1 = result[0]
-        const result2 = result[1]
-        const result3 = result[2]
-        if (result1 && result2 && result3) {
-          setInterval(() => {
-            this.$('.js-novice-package').addClass('hidden')
-            this.$('.js-arena-package').addClass('hidden')
-            this.$('.js-user-return-package').removeClass('hidden')
-
-          }, 15000)
-          _.delay(() => {
-            //新人
-            setInterval(() => {
-              //排行榜
-              this.$('.js-novice-package').addClass('hidden')
-              this.$('.js-arena-package').removeClass('hidden')
-              this.$('.js-user-return-package').addClass('hidden')
-            }, 15000)
-          }, 5000)
-          _.delay(() => {
-            //回归
-            setInterval(() => {
-              this.$('.js-novice-package').removeClass('hidden')
-              this.$('.js-arena-package').addClass('hidden')
-              this.$('.js-user-return-package').addClass('hidden')
-            }, 15000)
-          }, 10000)
-        } else if(result1 && result2){
-          setInterval(() => {
-            this.$('.js-novice-package').addClass('hidden')
-            this.$('.js-arena-package').removeClass('hidden')
-            this.$('.js-user-return-package').addClass('hidden')
-          }, 10000)
-          _.delay(() => {
-            setInterval(() => {
-              this.$('.js-novice-package').removeClass('hidden')
-              this.$('.js-arena-package').addClass('hidden')
-              this.$('.js-user-return-package').addClass('hidden')
-            }, 10000)
-          }, 5000)
-        }else{
-          if (result1) {
-            this.$('.js-novice-package').removeClass('hidden')
-          }
-          if (result2) {
-            this.$('.js-arena-package').removeClass('hidden')
-          }
-          if (result3) {
-            this.$('.js-user-return-package').removeClass('hidden')
-          }
-        }
-      })
-      // this.app = new Vue({
-      //   template: `<div><activity-entry></activity-entry></div>`,
-      //   components: {
-      //     ActivityEntry
-      //   },
-      //   store: window.store,
-      //   el: this.$el.find('#js-activity-panel')[0],
+      // const def1 = this.getNovicePackgeXhr().then(({data}) => {
+      //   if (data.result === 0) {
+      //     if (data.root.status === 0 || data.root.status === 1) {
+      //       this.$('.js-novice-package').removeClass('hidden')
+      //       return true
+      //     }
+      //   } else {
+      //     return false
+      //   }
       // })
+      //
+      // const def2 = getTicketListApi(({data}) => {
+      //   if (data && data.result === 0) {
+      //     return true
+      //   } else {
+      //     return false
+      //   }
+      // })
+      //
+      // const def3 = getGiftPackageListApi(({data}) => {
+      //   if (data && data.result === 0) {
+      //     if(moment(_(data.root.systemDate || moment().unix() * 1000).sub(data.root.userRegTime)).dayOfYear() > 3){
+      //       return true
+      //     }else{
+      //       return false
+      //     }
+      //   } else {
+      //     return false
+      //   }
+      // })
+      //
+      // Promise.all([def1, def2, def3]).then((result) => {
+      //   const result1 = result[0]
+      //   const result2 = result[1]
+      //   const result3 = result[2]
+      //   if (result1 && result2 && result3) {
+      //     setInterval(() => {
+      //       this.$('.js-novice-package').addClass('hidden')
+      //       this.$('.js-arena-package').addClass('hidden')
+      //       this.$('.js-user-return-package').removeClass('hidden')
+      //
+      //     }, 15000)
+      //     _.delay(() => {
+      //       //新人
+      //       setInterval(() => {
+      //         //排行榜
+      //         this.$('.js-novice-package').addClass('hidden')
+      //         this.$('.js-arena-package').removeClass('hidden')
+      //         this.$('.js-user-return-package').addClass('hidden')
+      //       }, 15000)
+      //     }, 5000)
+      //     _.delay(() => {
+      //       //回归
+      //       setInterval(() => {
+      //         this.$('.js-novice-package').removeClass('hidden')
+      //         this.$('.js-arena-package').addClass('hidden')
+      //         this.$('.js-user-return-package').addClass('hidden')
+      //       }, 15000)
+      //     }, 10000)
+      //   } else if(result1 && result2){
+      //     setInterval(() => {
+      //       this.$('.js-novice-package').addClass('hidden')
+      //       this.$('.js-arena-package').removeClass('hidden')
+      //       this.$('.js-user-return-package').addClass('hidden')
+      //     }, 10000)
+      //     _.delay(() => {
+      //       setInterval(() => {
+      //         this.$('.js-novice-package').removeClass('hidden')
+      //         this.$('.js-arena-package').addClass('hidden')
+      //         this.$('.js-user-return-package').addClass('hidden')
+      //       }, 10000)
+      //     }, 5000)
+      //   }else{
+      //     if (result1) {
+      //       this.$('.js-novice-package').removeClass('hidden')
+      //     }
+      //     if (result2) {
+      //       this.$('.js-arena-package').removeClass('hidden')
+      //     }
+      //     if (result3) {
+      //       this.$('.js-user-return-package').removeClass('hidden')
+      //     }
+      //   }
+      // })
+      this.app = new Vue({
+        template: `<div><activity-entry></activity-entry></div>`,
+        components: {
+          ActivityEntry
+        },
+        store: window.store,
+        el: this.$el.find('#js-activity-panel')[0],
+      })
     })
     const token = Global.cookieCache.get('token')
     if (token && token !== '' && token !== undefined && token !== null) {
