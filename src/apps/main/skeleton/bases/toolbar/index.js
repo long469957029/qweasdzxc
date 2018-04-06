@@ -79,7 +79,11 @@ const ToolbarView = Base.ItemView.extend({
 
       const def3 = getGiftPackageListApi(({data}) => {
         if (data && data.result === 0) {
-          return true
+          if(moment(_(data.systemDate).sub(data.userRegTime)).dayOfYear() > 3){
+            return true
+          }else{
+            return false
+          }
         } else {
           return false
         }
@@ -89,7 +93,7 @@ const ToolbarView = Base.ItemView.extend({
         const result1 = result[0]
         const result2 = result[1]
         const result3 = result[2]
-        if (result1 && result2) {
+        if (result1 && result2 && result3) {
           setInterval(() => {
             this.$('.js-novice-package').addClass('hidden')
             this.$('.js-arena-package').removeClass('hidden')
@@ -109,7 +113,20 @@ const ToolbarView = Base.ItemView.extend({
               this.$('.js-user-return-package').removeClass('hidden')
             }, 9000)
           }, 6000)
-        } else {
+        } else if(result1 && result2){
+          setInterval(() => {
+            this.$('.js-novice-package').addClass('hidden')
+            this.$('.js-arena-package').removeClass('hidden')
+            this.$('.js-user-return-package').addClass('hidden')
+          }, 6000)
+          _.delay(() => {
+            setInterval(() => {
+              this.$('.js-novice-package').removeClass('hidden')
+              this.$('.js-arena-package').addClass('hidden')
+              this.$('.js-user-return-package').addClass('hidden')
+            }, 6000)
+          }, 3000)
+        }else{
           if (result1) {
             this.$('.js-novice-package').removeClass('hidden')
           }
