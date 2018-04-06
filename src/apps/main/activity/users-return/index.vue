@@ -57,7 +57,7 @@
               <div class="date-icon">
                 <div class="light"></div>
               </div>
-              <div class="date-num">{{formatTime(item.day)}}</div>
+              <div class="date-num">{{formatTime(item.day,'M.DD')}}</div>
             </div>
           </div>
           <div class="detail-list">
@@ -70,8 +70,8 @@
                   {{item.limit | convert2yuan}}返{{item.amount | convert2yuan}}元</div>
                 <div class="info-content" v-if="(parseInt(item.resultType / 10) === 4 || parseInt(item.resultType / 10) === 5)">
                   中奖额*{{item.amount | convert2yuan}}%</div>
-                <div class="tip-icon" v-if="item.status === 2 && item.day === today"></div>
-                <div class="detail-btn" :class="formatBtnClass(item.status).className" @click="item.status === 1 ? getPrize(item.resultType) : ''">
+                <div class="tip-icon" v-if="item.status === 1 && item.day === today"></div>
+                <div class="detail-btn" :class="formatBtnClass(item.status).className" @click="item.status === 0 ? getPrize(item.resultType) : ''">
                   {{formatBtnClass(item.status).btnText}}</div>
               </div>
             </transition-group>
@@ -104,7 +104,7 @@
         <div class="modal-big-size clearfix" slot="all">
           <a data-dismiss="modal" class="modal-close btn-close"></a>
           <div class="dialog-tip">
-            <div class="text">仅限3月15日使用</div>
+            <div class="text" v-if="getCardMsg && !getCardError">仅限{{formatTime(today,'M月DD日')}}使用</div>
           </div>
           <div class="dialog-container">
             <div class="dialog-title">{{dialogTitle}}</div>
@@ -116,10 +116,13 @@
                   <div class="get-gift-btn" @click="showDetail = !showDetail" data-dismiss="modal">查看礼包</div>
                 </div>
                 <div v-if="getCardError">
-                  <div class="text-center">未达到充值条件，不可领取，快去充值后领取吧</div>
-                  <div class="text-center">{{formatDetailName(resultType).info}}}</div>
+                  <div class="text-center">{{errorText}}</div>
+                  <div class="text-center card-info">{{formatDetailName(resultType).info}}</div>
                   <div class="btn-list">
-                    <div class="card-btn btn-yellow js-header-recharge" data-name="jsFcRecharge" data-dismiss="modal">去充值</div>
+                    <div class="card-btn btn-yellow js-header-recharge" data-name="jsFcRecharge"
+                         data-dismiss="modal" v-if="parseInt(resultType / 10) === 3">去充值</div>
+                    <router-link class="card-btn btn-yellow" :to="{path: '/bc/0/10'}"
+                         data-dismiss="modal" v-else>去投注</router-link>
                     <div class="card-btn btn-pink" data-dismiss="modal">确认</div>
                   </div>
                 </div>
@@ -130,7 +133,8 @@
                   <div class="card-info">{{formatDetailName(resultType).info}}</div>
                 </div>
                 <div class="btn-list">
-                  <router-link :to="{path: '/fc/ad'}" class="card-btn btn-yellow" data-dismiss="modal" tag="div">查看</router-link>
+                  <router-link :to="{path: parseInt(resultType / 10) === 3 ? '/fc/ad' : '/'}" class="card-btn btn-yellow" data-dismiss="modal"
+                               tag="div">查看</router-link>
                   <div class="card-btn btn-pink" data-dismiss="modal">继续领取</div>
                 </div>
               </div>
@@ -182,7 +186,8 @@
         giftNum:[],//已发放礼包数量
         dayList:[],//日期列表
         prizeList:[],//日期对应的礼品列表
-        today:''
+        today:'',
+        errorText:''//领取失败错误提示
       }
     },
     watch:{
@@ -299,7 +304,7 @@
             if(data && data.result === 0){
               this.getGiftStatus = true
               this.getGiftMsg = true
-              this.initData()
+              //this.initData()
             }else{
               Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
             }
@@ -309,8 +314,8 @@
           }
         )
       },
-      formatTime(day){
-        return _(moment(day).valueOf()).toTime('M.DD')
+      formatTime(day,format){
+        return _(moment(day).valueOf()).toTime(format)
       },
       // filterTime(index){
       //   this.filterUserAmountList = []
@@ -351,16 +356,20 @@
         }
       },
       getPrize(resultType){
-        getDouseApi({resultType},
+        const type = parseInt(resultType / 10)
+        getDouseApi({resultType:type},
           ({data}) => {
             this.resultType = resultType
             if(data && data.result === 0){
               this.getGiftStatus = true
               this.getCardMsg = true
+              this.initData()
             }else{
               this.getGiftStatus = true
               this.getCardError = true
+              this.getGiftMsg = true
               this.dialogTitle = '很抱歉！'
+              this.errorText = data.msg
               //Global.ui.notification.show(`<div class="m-bottom-lg">${data.msg}</div>`)
             }
           },
@@ -370,7 +379,7 @@
         )
       },
       getTotal(resultType){
-        return _(this.giftNum).where({resultType:resultType}).total
+        return _(this.giftNum).where({resultType:resultType})[0].total
       },
       initData(){
         getGiftPackageListApi(
@@ -388,9 +397,10 @@
                 this.bagStatus = root.bagStatus
                 this.fromDate = root.fromDate
                 this.endDate = root.endDate
-                this.dayList = _(root.dayList).filter((item) => {
-                  return item.dayItem = item.dayItem.reverse()
-                })
+                // this.dayList = _(root.dayList).filter((item) => {
+                //   return item.dayItem = item.dayItem.reverse()
+                // })
+                this.dayList = root.dayList
                 this.prizeList = _(this.dayList).where({isToday: 1})[0].dayItem
                 this.today = _(this.dayList).where({isToday: 1})[0].day
                 this.packageType = root.packageType
@@ -762,8 +772,9 @@
         overflow: hidden;
         height: 309px;
         >div{
-          display: flex;
-          flex-direction: row-reverse;
+          /*display: flex;*/
+          /*flex-direction: row-reverse;*/
+          text-align: center;
         }
       }
       .detail-info{
@@ -775,7 +786,7 @@
         border: 1px solid transparent;
         margin-top: 40px;
         margin-right: 8px;
-        &:first-child{
+        &:last-child{
           margin-right: 0;
         }
         &:hover{
@@ -946,12 +957,12 @@
           text-align: center;
           margin-top: 25px;
         }
-        .card-info{
-          text-align: center;
-          font-size: 24px;
-          color: #cd4977;
-          margin-top: 10px;
-        }
+      }
+      .card-info{
+        text-align: center;
+        font-size: 24px;
+        color: #cd4977;
+        margin-top: 10px;
       }
       .btn-list{
         margin-top: 22px;
