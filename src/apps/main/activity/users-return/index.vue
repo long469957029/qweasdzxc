@@ -69,7 +69,7 @@
                 <div class="info-content" v-if="parseInt(item.resultType / 10) === 3">充
                   {{item.limit | convert2yuan}}返{{item.amount | convert2yuan}}元</div>
                 <div class="info-content" v-if="(parseInt(item.resultType / 10) === 4 || parseInt(item.resultType / 10) === 5)">
-                  中奖额*{{item.amount | convert2yuan}}%</div>
+                  {{parseInt(item.resultType / 10) === 4 ? '投注' : '中奖'}}额*{{item.amount | convert2yuan}}%</div>
                 <div class="tip-icon" v-if="item.status === 1 && item.day === today"></div>
                 <div class="detail-btn" :class="formatBtnClass(item.status).className" @click="item.status === 0 ? getPrize(item.resultType) : ''">
                   {{formatBtnClass(item.status).btnText}}</div>
@@ -284,7 +284,7 @@
             break
           case 4:
             name = '投注返水卡'
-            info = `中奖额*${_(Obj.amount).convert2yuan()}%`
+            info = `投注额*${_(Obj.amount).convert2yuan()}%`
             break
           case 5:
             name = '中奖加奖卡'
