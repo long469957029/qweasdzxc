@@ -393,7 +393,7 @@
               }else if(!root.available){
                 Global.ui.notification.show(`<div class="m-bottom-lg">当前IP已经领取过礼包！</div>`)
               }else{
-                this.systemDate = moment().unix() * 1000 //root.systemDate
+                this.systemDate = root.systemDate || moment().unix() * 1000 //root.systemDate
                 this.bagStatus = root.bagStatus
                 this.fromDate = root.fromDate
                 this.endDate = root.endDate

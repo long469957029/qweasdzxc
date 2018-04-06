@@ -79,7 +79,7 @@ const ToolbarView = Base.ItemView.extend({
 
       const def3 = getGiftPackageListApi(({data}) => {
         if (data && data.result === 0) {
-          if(moment(_(data.systemDate).sub(data.userRegTime)).dayOfYear() > 3){
+          if(moment(_(data.root.systemDate || moment().unix() * 1000).sub(data.root.userRegTime)).dayOfYear() > 3){
             return true
           }else{
             return false
