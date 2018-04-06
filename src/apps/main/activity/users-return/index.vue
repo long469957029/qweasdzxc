@@ -73,7 +73,7 @@
                 <div class="tip-icon" v-if="item.status === 1 && item.day === today"></div>
                 <div class="detail-btn" :class="item.status === 0 ? 'disabled' : 'has-get'"
                      v-if="(parseInt(item.resultType / 10) === 1 || parseInt(item.resultType / 10) === 2)">
-                  {{item.status === 0 ? '未达标' : '已领取'}}</div>
+                  {{item.status === 0 ? '未达标' : (item.status === 1 ? '已领取' : '已过期')}}</div>
                 <div class="detail-btn" :class="formatBtnClass(item.status).className"
                      @click="item.status === 0 ? getPrize(item.resultType) : ''" v-else>
                   {{formatBtnClass(item.status).btnText}}</div>
