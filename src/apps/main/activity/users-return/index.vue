@@ -71,7 +71,11 @@
                 <div class="info-content" v-if="(parseInt(item.resultType / 10) === 4 || parseInt(item.resultType / 10) === 5)">
                   {{parseInt(item.resultType / 10) === 4 ? '投注' : '中奖'}}额*{{item.amount | convert2yuan}}%</div>
                 <div class="tip-icon" v-if="item.status === 1 && item.day === today"></div>
-                <div class="detail-btn" :class="formatBtnClass(item.status).className" @click="item.status === 0 ? getPrize(item.resultType) : ''">
+                <div class="detail-btn" :class="item.status === 0 ? 'disabled' : 'has-get'"
+                     v-if="(parseInt(item.resultType / 10) === 1 || parseInt(item.resultType / 10) === 2)">
+                  {{item.status === 0 ? '未达标' : '已领取'}}</div>
+                <div class="detail-btn" :class="formatBtnClass(item.status).className"
+                     @click="item.status === 0 ? getPrize(item.resultType) : ''" v-else>
                   {{formatBtnClass(item.status).btnText}}</div>
               </div>
             </transition-group>
@@ -86,7 +90,7 @@
         <p>活动期间，可根据您在平台上注册的时长领取相应的礼包。</p>
         <p>每个礼包都将包括元老级彩金奖励、活跃奖金、三天的充值返利卡、五天的投注返奖卡、七天的中奖加奖卡五种奖励，
           但每个礼包中的奖励均不一样。</p>
-        <p>用户在领取礼包后，元老奖金和活跃奖金会由系统自动发放（元老奖金：需有投注记录；活跃奖金：活跃天数≥10天）；
+        <p>用户在领取礼包后，元老奖金和活跃奖金会由系统自动发放（元老奖金：需有投注记录；活跃奖金：活跃天数≥{{activeDay}}天）；
           其他的奖励由用户每天在活动中进行手动领取。</p>
         <p>同一IP仅限一个账号领取，相同IP不同账号再次领取时会提示领取失败。</p>
         <p>新用户暂无法参与该活动，需注册满 3 天以上、在第 4 天可参与该活动。</p>
@@ -100,7 +104,7 @@
     <div class="footer"></div>
 
     <div v-transfer-dom>
-      <x-dialog v-model="getGiftStatus" :options="modalOptions" styles="">
+      <x-dialog v-model="getGiftStatus" :options="modalOptions" styles="" ref="modal">
         <div class="modal-big-size clearfix" slot="all">
           <a data-dismiss="modal" class="modal-close btn-close"></a>
           <div class="dialog-tip" v-if="getCardMsg && !getCardError">
@@ -190,7 +194,8 @@
         dayList:[],//日期列表
         prizeList:[],//日期对应的礼品列表
         today:'',
-        errorText:''//领取失败错误提示
+        errorText:'',//领取失败错误提示
+        activeDay:0,
       }
     },
     watch:{
@@ -412,6 +417,7 @@
                 this.userRegTime = root.userRegTime
                 this.itemList = [...root.itemList]
                 this.amountList = [...root.amountList]
+                this.activeDay = _(this.dayList[0].dayItem[1].limit).convert2yuan()
                 if(this.bagStatus === 1){
                   this.showDetail = true
                 }else{
