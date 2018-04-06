@@ -17,7 +17,7 @@
               <div class="gift-info clearfix">
                 <div class="mask" v-if="packageType !== item.resultType"></div>
                 <div class="info-title">{{giftPackageName(item.resultType)}}礼包</div>
-                <div class="info-time">{{item.minLimit}}天≥注册时间><span v-if="index < 3">{{item.maxLimit}}天</span></div>
+                <div class="info-time"><span v-if="index < 3">{{item.maxLimit}}天≥</span>注册时间>{{item.minLimit}}天</div>
                 <div class="info-icon" :class="`gift-icon-${item.resultType}`"></div>
                 <div class="info-detail">
                   <div class="reward" v-if="item.list[0].amount > 0">
@@ -379,7 +379,7 @@
         )
       },
       getTotal(resultType){
-        return _(this.giftNum).where({resultType:resultType})[0].total
+        return this.giftNum && !_(this.giftNum).isEmpty() ? _(this.giftNum).where({resultType:resultType})[0].total : 0
       },
       initData(){
         getGiftPackageListApi(
