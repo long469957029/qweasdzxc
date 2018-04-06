@@ -8,6 +8,7 @@ import FeedbackView from './feedback' // 意见反馈
 
 import {
   getTicketListApi,
+  getGiftPackageListApi
 } from 'api/activity'
 
 const ToolbarView = Base.ItemView.extend({
@@ -76,27 +77,47 @@ const ToolbarView = Base.ItemView.extend({
         }
       })
 
-      Promise.all([def1, def2]).then((result) => {
+      const def3 = getGiftPackageListApi(({data}) => {
+        if (data && data.result === 0) {
+          return true
+        } else {
+          return false
+        }
+      })
+
+      Promise.all([def1, def2, def3]).then((result) => {
         const result1 = result[0]
         const result2 = result[1]
+        const result3 = result[2]
         if (result1 && result2) {
           setInterval(() => {
             this.$('.js-novice-package').addClass('hidden')
             this.$('.js-arena-package').removeClass('hidden')
-          }, 6000)
+            this.$('.js-user-return-package').addClass('hidden')
+          }, 9000)
           _.delay(() => {
             setInterval(() => {
               this.$('.js-novice-package').removeClass('hidden')
               this.$('.js-arena-package').addClass('hidden')
-            }, 6000)
+              this.$('.js-user-return-package').addClass('hidden')
+            }, 9000)
           }, 3000)
+          _.delay(() => {
+            setInterval(() => {
+              this.$('.js-novice-package').addClass('hidden')
+              this.$('.js-arena-package').addClass('hidden')
+              this.$('.js-user-return-package').removeClass('hidden')
+            }, 9000)
+          }, 6000)
         } else {
           if (result1) {
             this.$('.js-novice-package').removeClass('hidden')
           }
           if (result2) {
-            this.$('.js-aren' +
-              'a-package').removeClass('hidden')
+            this.$('.js-arena-package').removeClass('hidden')
+          }
+          if (result3) {
+            this.$('.js-user-return-package').removeClass('hidden')
           }
         }
       })
