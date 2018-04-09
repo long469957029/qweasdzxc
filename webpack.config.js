@@ -37,7 +37,8 @@ const appConfig = {
     // 404: './src/apps/packages/404/index.js',
     logger: './src/apps/packages/logger/index.js',
     game: './src/apps/packages/game/index.js',
-    game_error: './src/apps/packages/game_error/index.js'
+    game_error: './src/apps/packages/game_error/index.js',
+    charge:'./src/apps/packages/charge/index.js'
   },
   port: 3002,
   entries: {
@@ -95,6 +96,11 @@ const appConfig = {
       title: '无限娱乐',
       template: './entry/package-game.html',
       chunks: ['commons', 'base', 'game_error']
+    },
+    charge: {
+      title: '无限娱乐',
+      template: './entry/package-vue.html',
+      chunks: ['commons', 'base', 'charge']
     },
     // 404: {
     //   title: '无限娱乐',

@@ -17,7 +17,7 @@
               <div class="gift-info clearfix">
                 <div class="mask" v-if="packageType !== item.resultType"></div>
                 <div class="info-title">{{giftPackageName(item.resultType)}}礼包</div>
-                <div class="info-time">{{item.minLimit}}天≥注册时间<span v-if="index < 3">{{item.maxLimit}}天</span></div>
+                <div class="info-time"><span v-if="index < 3">{{item.maxLimit}}天≥</span>注册时间>{{index === 0 ? 3 : item.minLimit}}天</div>
                 <div class="info-icon" :class="`gift-icon-${item.resultType}`"></div>
                 <div class="info-detail">
                   <div class="reward" v-if="item.list[0].amount > 0">
@@ -69,9 +69,13 @@
                 <div class="info-content" v-if="parseInt(item.resultType / 10) === 3">充
                   {{item.limit | convert2yuan}}返{{item.amount | convert2yuan}}元</div>
                 <div class="info-content" v-if="(parseInt(item.resultType / 10) === 4 || parseInt(item.resultType / 10) === 5)">
-                  中奖额*{{item.amount | convert2yuan}}%</div>
+                  {{parseInt(item.resultType / 10) === 4 ? '投注' : '中奖'}}额*{{item.amount | convert2yuan}}%</div>
                 <div class="tip-icon" v-if="item.status === 1 && item.day === today"></div>
-                <div class="detail-btn" :class="formatBtnClass(item.status).className" @click="item.status === 0 ? getPrize(item.resultType) : ''">
+                <div class="detail-btn" :class="item.status === 0 ? 'disabled' : 'has-get'"
+                     v-if="(parseInt(item.resultType / 10) === 1 || parseInt(item.resultType / 10) === 2)">
+                  {{item.status === 0 ? '未达标' : (item.status === 1 ? '已领取' : '已过期')}}</div>
+                <div class="detail-btn" :class="formatBtnClass(item.status).className"
+                     @click="item.status === 0 ? getPrize(item.resultType) : ''" v-else>
                   {{formatBtnClass(item.status).btnText}}</div>
               </div>
             </transition-group>
@@ -86,7 +90,7 @@
         <p>活动期间，可根据您在平台上注册的时长领取相应的礼包。</p>
         <p>每个礼包都将包括元老级彩金奖励、活跃奖金、三天的充值返利卡、五天的投注返奖卡、七天的中奖加奖卡五种奖励，
           但每个礼包中的奖励均不一样。</p>
-        <p>用户在领取礼包后，元老奖金和活跃奖金会由系统自动发放（元老奖金：需有投注记录；活跃奖金：活跃天数≥10天）；
+        <p>用户在领取礼包后，元老奖金和活跃奖金会由系统自动发放（元老奖金：需有投注记录；活跃奖金：活跃天数≥{{activeDay}}天）；
           其他的奖励由用户每天在活动中进行手动领取。</p>
         <p>同一IP仅限一个账号领取，相同IP不同账号再次领取时会提示领取失败。</p>
         <p>新用户暂无法参与该活动，需注册满 3 天以上、在第 4 天可参与该活动。</p>
@@ -100,11 +104,11 @@
     <div class="footer"></div>
 
     <div v-transfer-dom>
-      <x-dialog v-model="getGiftStatus" styles="">
+      <x-dialog v-model="getGiftStatus" :options="modalOptions" styles="" ref="modal">
         <div class="modal-big-size clearfix" slot="all">
           <a data-dismiss="modal" class="modal-close btn-close"></a>
-          <div class="dialog-tip">
-            <div class="text" v-if="getCardMsg && !getCardError">仅限{{formatTime(today,'M月DD日')}}使用</div>
+          <div class="dialog-tip" v-if="getCardMsg && !getCardError">
+            <div class="text">仅限{{formatTime(today,'M月DD日')}}使用</div>
           </div>
           <div class="dialog-container">
             <div class="dialog-title">{{dialogTitle}}</div>
@@ -113,7 +117,7 @@
                 <div v-if="!getCardError">
                   <div class="text-center">恭喜您，成功领取<span class="special">“{{giftPackageName(packageType)}}礼包”</span></div>
                   <div class="text-center">快使用礼包中的奖励吧！</div>
-                  <div class="get-gift-btn" @click="showDetail = !showDetail" data-dismiss="modal">查看礼包</div>
+                  <div class="get-gift-btn" @click="initData" data-dismiss="modal">查看礼包</div>
                 </div>
                 <div v-if="getCardError">
                   <div class="text-center">{{errorText}}</div>
@@ -122,7 +126,7 @@
                     <div class="card-btn btn-yellow js-header-recharge" data-name="jsFcRecharge"
                          data-dismiss="modal" v-if="parseInt(resultType / 10) === 3">去充值</div>
                     <router-link class="card-btn btn-yellow" :to="{path: '/bc/0/10'}"
-                         data-dismiss="modal" v-else>去投注</router-link>
+                                 data-dismiss="modal" v-else>去投注</router-link>
                     <div class="card-btn btn-pink" data-dismiss="modal">确认</div>
                   </div>
                 </div>
@@ -164,6 +168,9 @@
 
     data(){
       return{
+        modalOptions: {
+          backdrop: 'static'
+        },
         mouseX:0,
         mouseY:0,
         showDetail:false,
@@ -187,7 +194,8 @@
         dayList:[],//日期列表
         prizeList:[],//日期对应的礼品列表
         today:'',
-        errorText:''//领取失败错误提示
+        errorText:'',//领取失败错误提示
+        activeDay:0,
       }
     },
     watch:{
@@ -267,16 +275,18 @@
       formatDetailName(index){
         let name = ''
         let info = ''
-        const Obj = _(_(this.dayList).where({day: this.today}).dayItem).filter((item) => {
-          return item.resultType === this.resultType
-        })
+        const Obj = _(_(this.dayList).where({day: this.today})[0].dayItem).filter((item) => {
+          return item.resultType === index
+        })[0]
         const num = parseInt(index / 10)
         switch (num){
           case 1:
             name = '元老彩金'
+            info = `${_(Obj.amount).convert2yuan()}元现金`
             break
           case 2:
             name = '活跃彩金'
+            info = `${_(Obj.amount).convert2yuan()}元现金`
             break
           case 3:
             name = '充值返利卡'
@@ -284,7 +294,7 @@
             break
           case 4:
             name = '投注返水卡'
-            info = `中奖额*${_(Obj.amount).convert2yuan()}%`
+            info = `投注额*${_(Obj.amount).convert2yuan()}%`
             break
           case 5:
             name = '中奖加奖卡'
@@ -347,7 +357,7 @@
             break
           case 3:
             className = 'disabled'
-            btnText = '未开启'
+            btnText = '未开始'
             break
         }
         return {
@@ -379,7 +389,7 @@
         )
       },
       getTotal(resultType){
-        return _(this.giftNum).where({resultType:resultType})[0].total
+        return this.giftNum && !_(this.giftNum).isEmpty() ? _(this.giftNum).where({resultType:resultType})[0].total : 0
       },
       initData(){
         getGiftPackageListApi(
@@ -393,7 +403,7 @@
               }else if(!root.available){
                 Global.ui.notification.show(`<div class="m-bottom-lg">当前IP已经领取过礼包！</div>`)
               }else{
-                this.systemDate = moment().unix() * 1000 //root.systemDate
+                this.systemDate = root.systemDate || moment().unix() * 1000 //root.systemDate
                 this.bagStatus = root.bagStatus
                 this.fromDate = root.fromDate
                 this.endDate = root.endDate
@@ -407,13 +417,11 @@
                 this.userRegTime = root.userRegTime
                 this.itemList = [...root.itemList]
                 this.amountList = [...root.amountList]
+                this.activeDay = _(this.dayList[0].dayItem[1].limit).convert2yuan()
                 if(this.bagStatus === 1){
                   this.showDetail = true
                 }else{
                   this.getVirtualNum()
-                  this.timeInv = setInterval(() => {
-                    this.getVirtualNum()
-                  },30000)
                 }
               }
             }else{
@@ -425,13 +433,19 @@
           })
       },
       getVirtualNum(){
-        getVirtualNumApi(
-          ({data}) => {
-            if(data && data.result === 0){
-              this.giftNum = data.root
+        if(!this.showDetail){
+          getVirtualNumApi(
+            ({data}) => {
+              if(data && data.result === 0){
+                this.giftNum = data.root
+              }
             }
-          }
-        )
+          ).finally(() => {
+            setTimeout(() => {
+              this.getVirtualNum()
+            },30000)
+          })
+        }
       }
     },
 
@@ -715,10 +729,17 @@
           &:last-child{
             margin-right: 0;
           }
-          &:hover,&.active{
+          &:hover{
             .date-icon{
-              transition: background .5s;
-              background: url("./assets/date-icon-hover.png");
+              background: url("./assets/date-icon-hover.png") no-repeat center;
+              .light{
+                box-shadow: 0 0 120px #db9321;
+              }
+            }
+          }
+          &.active{
+            .date-icon{
+              background: url("./assets/date-icon-active.png") center center;
               .light{
                 box-shadow: 0 0 120px #db9321;
               }
@@ -726,7 +747,7 @@
           }
           &.disabled{
             .date-icon{
-              background: url("./assets/date-icon-disabled.png");
+              background: url("./assets/date-icon-disabled.png") no-repeat center;
               .light{
                 box-shadow: 0 0 120px #cbcbcb;
               }
@@ -738,14 +759,13 @@
           }
         }
         .date-icon{
-          background: url("./assets/date-icon.png");
-          width: 67px;
-          height: 82px;
+          background: url("./assets/date-icon.png") no-repeat center;
+          width: 84px;
+          height: 100px;
           margin: 0 auto;
           display: flex;
           justify-content: center;
           align-items: center;
-          transition: background .5s;
           .light{
             width: 50px;
             height: 50px;

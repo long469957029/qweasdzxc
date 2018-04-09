@@ -57,9 +57,11 @@
             /** valid 是否首次登录,首次登录会自动弹出活动界面 */
             activityInfo.getNovicePackageInfo(
               ({data}) => {
-                if (data && data.root && data.root.status === 1 || data.root.status === 0) {
-                  this.novicePackageModal = true
-                  this.localStorage.set(this.userId + 'NovicePackageActivity', true)
+                if(data && !_.isUndefined(data)){
+                  if (data.root && (data.root.status === 1 || data.root.status === 0)) {
+                    this.novicePackageModal = true
+                    this.localStorage.set(this.userId + 'NovicePackageActivity', true)
+                  }
                 }
               }
             )

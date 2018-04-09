@@ -3,7 +3,7 @@ const BetPlanActivity = () => import(/* webpackChunkName: "recharge-sales-activi
 const WelfareSharingPlan = () => import(/* webpackChunkName: "recharge-sales-activity" */ './welfareSharingPlan')
 const RechargePlan = () => import(/* webpackChunkName: "recharge-sales-activity" */ './rechargePlan')
 const ArenaActivity = () => import(/* webpackChunkName: "arena-activity" */ './arena')
-const UserReturnActivity = () => import(/* webpackChunkName: "arena-activity" */ './users-return')
+const UserReturnActivity = () => import(/* webpackChunkName: "users-return-activity" */ './users-return')
 
 export default [
   {

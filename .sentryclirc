@@ -1,5 +1,5 @@
 [defaults]
-project=wx-front
+project=wx-pc
 url=http://sentry.5x5x.com/
 org=sentry
 
