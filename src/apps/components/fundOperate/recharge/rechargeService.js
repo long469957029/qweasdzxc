@@ -3,6 +3,8 @@
  */
 const quickPayConfig = require('com/fundOperate/quickPayConfig')
 const bankConfig = require('com/fundOperate/bankConfig')
+const advImg1 = require('../misc/adv-1.png')
+const advImg2 = require('../misc/adv-2.png')
 
 module.exports = {
   // 获取当前充值使用类型数据
@@ -87,8 +89,8 @@ module.exports = {
   // 获取充值页广告
   getFunActivity(activityList) {
     const definePic = []
-    definePic.push('/info/imgs/public/27137')
-    definePic.push('/info/imgs/public/27136')
+    definePic.push(advImg1)
+    definePic.push(advImg2)
     const viewHtml = '<a class="js-rc-close-dialog fc-rc-rightBar-ac-link btn-link" >查看更多优惠>></a>'
     const activityHtml = []
     let activityLength = 2

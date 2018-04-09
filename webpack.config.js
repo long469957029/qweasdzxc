@@ -18,7 +18,7 @@ const SentryCliPlugin = require('@sentry/webpack-plugin');
 
 const happyThreadPool = HappyPack.ThreadPool({size: 5});
 
-const serverIP = 'http://forev3.5x5x.com'
+const serverIP = 'http://game.hr4g.com'
 
 const DEV = process.env.NODE_ENV !== 'production';
 
