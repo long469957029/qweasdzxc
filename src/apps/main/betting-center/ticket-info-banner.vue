@@ -287,13 +287,9 @@
       },
 
       checkRolling() {
-        if (this.ticketInfo.openWhenTimeout) {
+        if (this.ticketInfo && this.ticketInfo.openWhenTimeout) {
           const distance = this.$_checkPlanIdDistance(this.bettingInfo.planId, this.bettingInfo.lastOpenId)
-          if (distance === 2 || distance === (this.ticketInfo.totalPriods - 1)) {
-            return true
-          } else {
-            return false
-          }
+          return distance === 2 || distance === (this.ticketInfo.totalPriods - 1);
         } else {
           return false
         }
