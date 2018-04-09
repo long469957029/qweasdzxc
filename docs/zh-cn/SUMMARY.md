@@ -9,3 +9,5 @@
 - [业务模块](business-module.md)
 - [外部组件](external-components.md)
 - [核心组件](components.md)
+- [Sentry 监控相关](sentry.md)
+- [持续集成](continuous-integration.md)
