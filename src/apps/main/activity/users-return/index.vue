@@ -210,7 +210,8 @@
         return `transform: translate(-${this.mouseX/10}px, -${this.mouseY/10}px);`
       },
       registeTime(){
-        return moment(_(this.systemDate).sub(this.userRegTime)).dayOfYear() - 1
+        //return moment(_(this.systemDate).sub(this.userRegTime)).dayOfYear() - 1
+        return parseInt(_(this.systemDate).sub(this.userRegTime) / (1000 * 60 * 60 * 24))
       },
       giftPackageList(){
         this.amountList.forEach((item) => {
