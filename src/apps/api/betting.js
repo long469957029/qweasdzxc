@@ -54,7 +54,7 @@ const getTicketRulesApi = ({ ticketId, type = 0, version = 1 }, then, fail) => {
  * @returns {* | Promise<T>}
  * @param couponRid
  */
-const pushBettingApi = ({ planId, bet, amount, couponRid = 0 }, then, fail) => {
+const pushBettingApi = ({ planId, bet, amount, couponRid = 0}, then, fail) => {
   const usePack = !!couponRid ? 1 : 0
   return $http({
     url: '/ticket/bet/bet.json',
@@ -64,7 +64,8 @@ const pushBettingApi = ({ planId, bet, amount, couponRid = 0 }, then, fail) => {
       bet,
       amount,
       usePack,
-      couponRid
+      couponRid,
+      version: 2
     },
   })
     .then(then)
@@ -101,7 +102,7 @@ const getPlansApi = ({ ticketId }, then, fail) => {
  * @returns {*|Promise<T>}
  */
 const pushChaseApi = ({
-  plan, play, suspend, usePack, amount,
+  plan, play, suspend, usePack, amount
 }, then, fail) => {
   return $http({
     url: '/ticket/chase/chase.json',
@@ -112,6 +113,7 @@ const pushChaseApi = ({
       suspend,
       usePack,
       amount,
+      version: 2
     },
   })
     .then(then)
@@ -217,7 +219,8 @@ const pushMmcBettingApi = ({bet, amount, couponRid = 0}, then, fail) => {
       bet,
       amount,
       usePack,
-      couponRid
+      couponRid,
+      version: 2
     }
   })
     .then(then)
