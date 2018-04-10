@@ -345,15 +345,15 @@
       .container-list {
         position: relative;
         float: left;
-        height: 150px;
+        height: 170px;
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         &.constantly {
-          width: 355px;
+          width: 345px;
         }
         &.eleven {
-          width: 180px;
+          width: 195px;
         }
         //不符合语法
         /*&.3d {*/
