@@ -319,7 +319,7 @@
         float: left;
         height: 162px;
         display: inline-block;
-        padding: 18px 0 0;
+        padding: 6px 0 0;
         border-right: 1px solid #f0f0f0;
       }
       .nav-channel-list-container {
@@ -350,10 +350,10 @@
         flex-direction: column;
         flex-wrap: wrap;
         &.constantly {
-          width: 404px;
+          width: 355px;
         }
         &.eleven {
-          width: 101px;
+          width: 180px;
         }
         //不符合语法
         /*&.3d {*/
@@ -366,7 +366,7 @@
           display: inline-block;
           vertical-align: middle;
           list-style-type: none;
-          width: 101px;
+          width: 90px;
           height: 34px;
           position: relative;
           line-height: 34px;
