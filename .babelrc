@@ -20,6 +20,14 @@
       ]
     },
     "test": {
+      "presets": [
+        ["@babel/preset-env", {
+          "targets": {
+            "browsers": ["> 2%", "ie 11", "safari >= 7", "firefox > 50"]
+          },
+          "useBuiltIns": "usage"
+        }]
+      ],
       "plugins": [
         "@babel/plugin-syntax-dynamic-import",
         "@babel/plugin-proposal-object-rest-spread",

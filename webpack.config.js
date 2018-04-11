@@ -254,7 +254,9 @@ if (process.env.BABEL_ENV !== 'test') {
 }
 
 if (DEV) {
-  plugins.push(new webpack.HotModuleReplacementPlugin());
+  if (process.env.BABEL_ENV !== 'test') {
+    plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
 } else {
   // plugins.push(new ExtractTextPlugin('[name].[hash].styles.css'));
   plugins.push(new MiniCssExtractPlugin({

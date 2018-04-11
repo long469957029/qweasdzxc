@@ -47,7 +47,7 @@
     "docs:deploy": "cd docs && ./deploy.sh",
     "e2e": "cross-env NODE_ENV=development node test/e2e/runner.js",
     "e2e-dev": "cross-env NODE_ENV=development node test/e2e/runner.js --dev",
-    "unit": "karma start test/unit/karma.conf.js --single-run",
+    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit && npm run e2e-dev"
   },
   "dependencies": {
@@ -84,9 +84,9 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.36",
+    "@babel/core": "^7.0.0-beta.44",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0-beta.37",
-    "@babel/preset-env": "^7.0.0-beta.36",
+    "@babel/preset-env": "^7.0.0-beta.44",
     "@babel/preset-es2015": "^7.0.0-beta.36",
     "@sentry/cli": "^1.30.3",
     "@sentry/webpack-plugin": "^1.5.0",
