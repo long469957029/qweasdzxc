@@ -176,7 +176,7 @@
     height: 180px;
     right: 0;
     box-sizing: border-box;
-    padding: 30px 28px;
+    padding: 15px 28px;
     z-index: 2;
     display: flex;
     background-color: $new-main-deep-color;
@@ -204,7 +204,7 @@
     }
     .ticket-info {
       margin-left: 13px;
-      padding: 5px 15px 5px 30px;
+      padding: 5px 40px 5px 30px;
       border-radius: 20px;
       position: relative;
       transition: 0.3s background linear;
@@ -213,9 +213,9 @@
       color: $def-white-color;
       cursor: pointer;
 
-      &:nth-of-type(11) {
-        margin-bottom: 20px;
-      }
+      /*&:nth-of-type(11) {*/
+        /*margin-bottom: 20px;*/
+      /*}*/
       &:before {
         content: ' ';
         width: 0;

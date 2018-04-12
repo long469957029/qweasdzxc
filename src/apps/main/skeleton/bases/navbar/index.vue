@@ -8,11 +8,11 @@
             <a href="#/?dashboard=1" class="navbar-logo"></a>
             <ul class="nav js-navbar-nav" style="position: static">
               <li data-index="1">
-                <a href="#/?dashboard=1">首页</a>
-                <!--<router-link :to="{name: 'gameSports'}">-->
-                  <!--体育-->
-                  <!--<img class="sports-icon" src="./images/world-cup.png">-->
-                <!--</router-link>-->
+                <!--<a href="#/?dashboard=1">首页</a>-->
+                <router-link :to="{name: 'gameSports'}">
+                  体育
+                  <img class="sports-icon" src="./images/world-cup.png">
+                </router-link>
               </li>
               <li data-index="1">
                 <a @click.prevent="goTo(`/bc/0/${topClassicalTicket.id}`)">彩票
@@ -319,7 +319,7 @@
         float: left;
         height: 162px;
         display: inline-block;
-        padding: 18px 0 0;
+        padding: 6px 0 0;
         border-right: 1px solid #f0f0f0;
       }
       .nav-channel-list-container {
@@ -345,15 +345,15 @@
       .container-list {
         position: relative;
         float: left;
-        height: 150px;
+        height: 170px;
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         &.constantly {
-          width: 404px;
+          width: 345px;
         }
         &.eleven {
-          width: 101px;
+          width: 195px;
         }
         //不符合语法
         /*&.3d {*/
@@ -366,7 +366,7 @@
           display: inline-block;
           vertical-align: middle;
           list-style-type: none;
-          width: 101px;
+          width: 90px;
           height: 34px;
           position: relative;
           line-height: 34px;

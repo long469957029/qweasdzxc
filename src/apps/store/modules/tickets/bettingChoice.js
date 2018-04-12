@@ -379,7 +379,7 @@ const mutations = {
     const totalInfo = _(list).reduce((info, item) => {
       info.totalLottery = _(info.totalLottery).add(item.statistics)
       info.totalMoney = _(info.totalMoney).add(item.prefabMoney)
-      info.totalBetBonus = _(info.totalBetBonus).add(item.formatMaxBonus)
+      info.totalBetBonus = _(info.totalBetBonus).add(item.totalBetBonus)
       return info
     }, {
       totalLottery: 0,
@@ -634,10 +634,8 @@ const $_calculateByPrefab = (data) => {
     .convert2yuan()
     .value()
 
-  data.totalBetBonus = _.chain(data.betBonus).formatMul(data.multiple).formatMul(data.maxPrizeMultiple).value()
-  data.fTotalBetBonus = _(data.totalBetBonus).chain().div(10000).mul(data.unit)
-    .convert2yuan()
-    .value()
+  data.totalBetBonus = _.chain(data.betBonus).formatMul(data.multiple).formatMul(data.maxPrizeMultiple).div(10000).mul(data.unit).value()
+  data.fTotalBetBonus = _(data.totalBetBonus).convert2yuan()
 }
 
 
