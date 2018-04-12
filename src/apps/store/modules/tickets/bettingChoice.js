@@ -379,7 +379,7 @@ const mutations = {
     const totalInfo = _(list).reduce((info, item) => {
       info.totalLottery = _(info.totalLottery).add(item.statistics)
       info.totalMoney = _(info.totalMoney).add(item.prefabMoney)
-      info.totalBetBonus = _(info.totalBetBonus).add(item.formatMaxBonus)
+      info.totalBetBonus = _(info.totalBetBonus).add(item.totalBetBonus)
       return info
     }, {
       totalLottery: 0,
