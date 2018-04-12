@@ -1,8 +1,8 @@
 <template>
   <div class="points-charge-panel">
-    <div class="sfa-pt-wait"></div>
-    <div class="text-wait">敬请期待</div>
-    <div class="text-brief">更多功能正在努力开拓中...</div>
+    <div class="nav">
+
+    </div>
   </div>
 </template>
 
@@ -11,6 +11,25 @@
     name: 'points-charge-panel',
     data() {
       return {
+        navList:[
+          {
+            id:1,
+            name:'话费充值',
+            icon:'phone-money'
+          },
+          {
+            id:2,
+            name:'流量充值',
+            icon:'phone-flow'
+          },
+          {
+            id:3,
+            name:'QQ充值',
+            icon:'qq-charge'
+          }
+        ],
+        index:1,
+
       }
     },
   }
