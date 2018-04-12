@@ -23,6 +23,7 @@ const zip = require('gulp-zip')
 const fs = require('fs')
 const rename = require('gulp-rename')
 const fontConfig = require('./font-config.json')
+const fs   = require('fs')
 
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = 'development'
@@ -117,6 +118,14 @@ gulp.task('build.sprite', (callback) => {
 // 编译生产版本
 gulp.task('release.build', (callback) => {
   del(`./www/main/*`)
+
+  if (!fs.existsSync('www')) {
+    fs.mkdirSync('www')
+  }
+
+  if (!fs.existsSync('www/main')) {
+    fs.mkdirSync('www/main')
+  }
 
   const webpackConfig = require('./webpack.config')
 
