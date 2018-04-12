@@ -634,10 +634,8 @@ const $_calculateByPrefab = (data) => {
     .convert2yuan()
     .value()
 
-  data.totalBetBonus = _.chain(data.betBonus).formatMul(data.multiple).formatMul(data.maxPrizeMultiple).value()
-  data.fTotalBetBonus = _(data.totalBetBonus).chain().div(10000).mul(data.unit)
-    .convert2yuan()
-    .value()
+  data.totalBetBonus = _.chain(data.betBonus).formatMul(data.multiple).formatMul(data.maxPrizeMultiple).div(10000).mul(data.unit).value()
+  data.fTotalBetBonus = _(data.totalBetBonus).convert2yuan()
 }
 
 
