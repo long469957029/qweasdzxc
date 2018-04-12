@@ -23,7 +23,6 @@ const zip = require('gulp-zip')
 const fs = require('fs')
 const rename = require('gulp-rename')
 const fontConfig = require('./font-config.json')
-const fs   = require('fs')
 
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = 'development'
