@@ -1,19 +1,45 @@
 <template>
   <div class="points-charge-panel">
     <div class="nav-list-charge">
-      <div class="nav" :class="{active: item.id === type}" v-for="item in navList" :key="item.id"
-           @click="type = item.id">
+      <div class="nav" :class="{active: item.id === rechargeType}" v-for="item in navList" :key="item.id"
+           @click="rechargeType = item.id">
         <span class="sfa m-right-smd" :class='`sfa-${item.icon}`'></span>
         {{item.name}}
       </div>
     </div>
-    <div class="container">
-
+    <div class="container-charge">
+      <div class="main">
+        <div>
+          <label class="title">手机号码：</label>
+          <input type="text" name="number" class="number-input" v-model="rechargeNum"
+                 :placeholder="rechargeType === 3 ? '请输入QQ号' : '支持移动／联通／电信／京东通信'">
+        </div>
+        <div class="m-top-lg" v-if="rechargeType === 3">
+          <label class="title">选择种类：</label>
+        </div>
+        <div class="m-top-lg">
+          <label class="title">{{rechargeType === 2 ? '流量面值' : '充值面值'}}：</label>
+          <div class="amount-list">
+            <div class="amount-info">300元</div>
+          </div>
+        </div>
+        <div class="m-top-lg" v-if="rechargeType === 2">
+          <label class="title">流量类型：</label>
+        </div>
+        <div class="m-top-lg">
+          <label class="title">兑换积分：</label>
+          <label class="integral-text"><span><animated-integer :value="999"></animated-integer></span>积分</label>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import {
+    getRechargeCfgApi,
+    setRechargeApi
+  } from 'api/points'
   export default {
     name: 'points-charge-panel',
     data() {
@@ -35,10 +61,16 @@
             icon: 'qq-charge'
           }
         ],
-        type: 1,
+        rechargeType: 1,
         typeList:[],
+        amountList:[], //充值面值列表
+        rechargeNum:'',
+        integral:0,
       }
     },
+    mounted(){
+      getRechargeCfgApi({rechargeType: this.rechargeType})
+    }
   }
 </script>
 
@@ -87,9 +119,46 @@
     }
   }
 
-  .container {
+  .container-charge {
     width: 940px;
     height: 100%;
+    .main{
+      margin-top: 92px;
+      margin-left: 154px;
+    }
+    .title{
+      font-size: 14px;
+      color: #333333;
+    }
+    .number-input{
+      width: 426px;
+      height: 30px;
+      background-color: #ffffff;
+      border: solid 1px #cccccc;
+    }
+    .integral-text{
+      font-size: 14px;
+      color: #e84c4c;
+      border-radius: 0;
+      span{
+        font-size: 20px;
+        margin-right: 5px;
+      }
+    }
+    .amount-list{
+      display: inline-flex;
+    }
+    .amount-info{
+      width: 94px;
+      height: 38px;
+      background-color: #ffffff;
+      border: solid 1px #cccccc;
+      text-align: center;
+      line-height: 40px;
+      font-size: 18px;
+      color: #333333;
+      cursor: pointer;
+    }
   }
 
 </style>
