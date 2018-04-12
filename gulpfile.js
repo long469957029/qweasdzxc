@@ -118,14 +118,6 @@ gulp.task('build.sprite', (callback) => {
 gulp.task('release.build', (callback) => {
   del(`./www/main/*`)
 
-  if (!fs.existsSync('www')) {
-    fs.mkdirSync('www')
-  }
-
-  if (!fs.existsSync('www/main')) {
-    fs.mkdirSync('www/main')
-  }
-
   const webpackConfig = require('./webpack.config')
 
   webpack(webpackConfig, (err, stats) => {
