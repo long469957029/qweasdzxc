@@ -570,16 +570,23 @@ const getRechargeCfgApi = ({rechargeType}, then, fail) => {
     .then(then)
     .catch(fail)
 }
-
-const setRechargeApi = ({}, then, fail) => {
+/**
+ *
+ * @param num 充值号码
+ * @param rechargeType 充值大类型
+ * @param type 充值小类型
+ * @param amount 充值金额
+ * @param then
+ * @param fail
+ */
+const setRechargeApi = ({num,rechargeType,type,amount}, then, fail) => {
   return $http({
     url: '/mall/coupon/myCouponList.json',
     data:{
-      couponType,
-      couponStatus,
-      couponToken,
-      pageSize,
-      pageIndex
+      num,
+      rechargeType,
+      type,
+      amount
     }
   })
     .then(then)
