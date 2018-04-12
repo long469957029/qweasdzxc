@@ -154,21 +154,19 @@ let entry = _(appConfig.entry).reduce(function (entries, entry, entryName) {
 
 //==============output================
 let output = {
-  path: path.join(__dirname, 'www/' + appConfig.output.path)
+  path: path.resolve(__dirname, 'www/' + appConfig.output.path),
+  publicPath: appConfig.output.publicPath
 };
 
-// if (DEV) {
-  output.publicPath = appConfig.output.publicPath;
+if (DEV) {
   // output.publicPath = 'http://localhost:' + appConfig.port + appConfig.output.publicPath;
   output.filename = '[name].bundle.js';
   output.chunkFilename = '[name].bundle.js';
-// } else {
-//   //临时解决绝对路径在线上无法找到css中下级资源的问题
-//   output.publicPath = '.' + appConfig.output.publicPath;
-//   output.filename = '[name].[hash].bundle.js';
-//   output.chunkFilename = '[name].[hash].bundle.js';
-//   // output.sourceMapFilename = '[name].[hash].js.map';
-// }
+} else {
+  output.filename = '[name].[hash].bundle.js';
+  output.chunkFilename = '[name].[hash].bundle.js';
+  // output.sourceMapFilename = '[name].[hash].js.map';
+}
 
 //==============plugins================
 let plugins = [
