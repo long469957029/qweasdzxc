@@ -35,15 +35,23 @@
         <transition name="type-animate">
           <div class="m-bottom-sm">
             <label class="title">{{rechargeType === 2 ? '流量面值' : '充值面值'}}：</label>
-            <!--<div :class="['amount-list',{'large': rechargeType === 3}]">-->
-            <div class="amount-list">
-              <div :class="['amount-info',{'active': item.amount === amount}]" v-for="(item,index) in amountList" :key="index"
+            <div :class="['amount-list',{'large': amountList.length > 8}]">
+            <!--<div class="amount-list">-->
+              <div :class="['amount-info',{'active': item.amount === amount,'size-md':rechargeType === 3}]" v-for="(item,index) in amountList" :key="index"
                    @click="chooseAmount(item.integral,item.amount)">{{getConfigName(1,item.amount)}}</div>
+              <div :class="['amount-info','amount-info-more',{'active': amount > 8}]" v-if="moreAmountList.length > 0">
+                <div class="click-div"  @click="showMoreAmount = !showMoreAmount"></div>
+                <div class="amount-name">{{moreAmount}}</div>
+                <ul class="more-amount-list" v-show="showMoreAmount">
+                  <li class="more-amount-info" v-for="(item,index) in moreAmountList" :key="index"
+                      @click="chooseAmount(item.integral,item.amount)">{{getConfigName(1,item.amount)}}</li>
+                </ul>
+              </div>
             </div>
           </div>
         </transition>
         <transition name="type-animate">
-          <div class="m-bottom-lg clearfix" v-if="rechargeType === 2">
+          <div class="m-bottom-md clearfix" v-if="rechargeType === 2">
             <label class="title pull-left m-top-sm">流量类型：</label>
             <div class="type-list pull-left">
               <div :class="['type-info', 'type-info-large',{'active': item.type === type}]" v-for="item in typeList" :key="item.type"
@@ -51,7 +59,7 @@
             </div>
           </div>
         </transition>
-        <div class="m-bottom-lg">
+        <div class="m-bottom-md">
           <label class="title">兑换积分：</label>
           <label class="integral-text">
             <span><animated-integer :value="integral | convert2yuan"></animated-integer></span>积分
@@ -143,6 +151,13 @@
         moreAmount:'更多面值',
         showMoreType:false,
         showMoreAmount:false
+      }
+    },
+    watch: {
+      getLoginStatus(){
+        if(this.getLoginStatus){
+          this.getCfg()
+        }
       }
     },
     computed:{
@@ -392,6 +407,54 @@
         position: relative;
         &:after{
           @include active-after;
+        }
+      }
+      &.size-md{
+        width: 108px;
+      }
+      &.amount-info-more{
+        position: relative;
+        background-color: #f5f5f5;
+        transform: translateX(-3px);
+        text-align: left;
+        display: inline-flex;
+        .click-div{
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        &:before{
+          content: '';
+          background: url(./misc/icon-down.png);
+          width: 10px;
+          height: 6px;
+          display: block;
+          position: absolute;
+          top: 50%;
+          margin-top: -3px;
+          right: 10px;
+        }
+        .more-amount-list{
+          position: absolute;
+          width: 100%;
+          border: 1px solid #cccccc;
+          border-top-color: transparent;
+          left: -1px;
+          top: 40px;
+          .more-amount-info{
+            width: 100%;
+            list-style: none;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+            transition: background-color .5s;
+            &:hover{
+              background-color: #f5f5f5;
+            }
+          }
         }
       }
     }

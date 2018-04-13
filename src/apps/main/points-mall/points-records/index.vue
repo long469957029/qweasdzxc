@@ -80,7 +80,7 @@
               currentTab = 2
               break;
             case 'pointsRecords':
-              currentTab = 2
+              currentTab = 3
               break;
             default:
               this.$nextTick(() => {
