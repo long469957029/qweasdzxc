@@ -40,10 +40,10 @@
       title: '礼物兑换记录',
       name: 'giftRecords'
     },
-    // {
-    //   title: '电话／QQ充值记录',
-    //   name: 'chargeRecords'
-    // },
+    {
+      title: '电话／QQ充值记录',
+      name: 'chargeRecords'
+    },
     {
       title: '积分明细',
       name: 'pointsRecords'

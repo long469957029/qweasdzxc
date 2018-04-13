@@ -562,7 +562,7 @@ const getUserCouponListApi = ({couponType,couponStatus,couponToken,pageSize = 12
  */
 const getRechargeCfgApi = ({rechargeType}, then, fail) => {
   return $http({
-    url: '/maill/recharge/phonedetail.json',
+    url: '/mall/recharge/conf.json',
     data:{
       rechargeType
     }
@@ -581,12 +581,42 @@ const getRechargeCfgApi = ({rechargeType}, then, fail) => {
  */
 const setRechargeApi = ({num,rechargeType,type,amount}, then, fail) => {
   return $http({
-    url: '/mall/coupon/myCouponList.json',
+    url: '/mall/recharge/submit.json',
     data:{
       num,
       rechargeType,
       type,
       amount
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+/**
+ * 获取用户兑换记录
+ * @param startDate
+ * @param endDate
+ * @param pageIndex
+ * @param pageSize
+ * @param rechargeType
+ * @param then
+ * @param fail
+ */
+const getRechargeDetailApi = ({
+  startDate = '',
+  endDate = '',
+  pageIndex = 0,
+  pageSize = 10,
+  rechargeType = '',
+},then, fail) => {
+  return $http({
+    url: '/mall/recharge/record.json',
+    data:{
+      startDate,
+      endDate,
+      pageIndex,
+      pageSize,
+      rechargeType
     }
   })
     .then(then)
@@ -621,5 +651,6 @@ export {
   actionIntroduceApi,
   getUserCouponListApi,
   getRechargeCfgApi,
-  setRechargeApi
+  setRechargeApi,
+  getRechargeDetailApi
 }
