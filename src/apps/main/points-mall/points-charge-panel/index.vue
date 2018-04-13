@@ -12,39 +12,45 @@
         <div class="m-bottom-lg">
           <label class="title">{{rechargeType === 3 ? 'QQ号码' : '手机号码'}}：</label>
           <input type="text" name="number" class="number-input" v-model="rechargeNum"
-                 :placeholder="rechargeType === 3 ? '请输入QQ号' : '支持移动／联通／电信／京东通信'">
+                 :placeholder="rechargeType === 3 ? '请输入QQ号' : '请输入充值手机号码'">
           <label class="error-info" v-if="showError">*{{errorText}}</label>
         </div>
-        <div class="m-bottom-sm clearfix" v-if="rechargeType === 3">
-          <label class="title pull-left m-top-sm">选择种类：</label>
-          <div class="type-list pull-left">
-            <div :class="['type-info',{'active': item.type === type}]" v-for="item in typeList" :key="item.type"
-                 @click="changeType(1,item.type)">{{getConfigName(2,item.type)}}</div>
-            <div :class="['type-info','type-info-more',{'active': type > 8}]" v-if="moreTypeList.length > 0">
-              <div class="click-div"  @click="showMoreType = !showMoreType"></div>
-              <div class="type-name">{{moreText}}</div>
-              <ul class="more-type-list" v-show="showMoreType">
-                <li class="more-type-info" v-for="item in moreTypeList" :key="item.type"
-                    @click="changeType(2,item.type)">{{getConfigName(2,item.type)}}</li>
-              </ul>
+        <transition name="type-animate">
+          <div class="m-bottom-sm clearfix" v-if="rechargeType === 3">
+            <label class="title pull-left m-top-sm">选择种类：</label>
+            <div class="type-list pull-left">
+              <div :class="['type-info',{'active': item.type === type}]" v-for="item in typeList" :key="item.type"
+                   @click="changeType(1,item.type)">{{getConfigName(2,item.type)}}</div>
+              <div :class="['type-info','type-info-more',{'active': type > 8}]" v-if="moreTypeList.length > 0">
+                <div class="click-div"  @click="showMoreType = !showMoreType"></div>
+                <div class="type-name">{{moreText}}</div>
+                <ul class="more-type-list" v-show="showMoreType">
+                  <li class="more-type-info" v-for="item in moreTypeList" :key="item.type"
+                      @click="changeType(2,item.type)">{{getConfigName(2,item.type)}}</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="m-bottom-sm">
-          <label class="title">{{rechargeType === 2 ? '流量面值' : '充值面值'}}：</label>
-          <!--<div :class="['amount-list',{'large': rechargeType === 3}]">-->
-          <div class="amount-list">
-            <div :class="['amount-info',{'active': item.amount === amount}]" v-for="(item,index) in amountList" :key="index"
-                 @click="chooseAmount(item.integral,item.amount)">{{getConfigName(1,item.amount)}}</div>
+        </transition>
+        <transition name="type-animate">
+          <div class="m-bottom-sm">
+            <label class="title">{{rechargeType === 2 ? '流量面值' : '充值面值'}}：</label>
+            <!--<div :class="['amount-list',{'large': rechargeType === 3}]">-->
+            <div class="amount-list">
+              <div :class="['amount-info',{'active': item.amount === amount}]" v-for="(item,index) in amountList" :key="index"
+                   @click="chooseAmount(item.integral,item.amount)">{{getConfigName(1,item.amount)}}</div>
+            </div>
           </div>
-        </div>
-        <div class="m-bottom-lg clearfix" v-if="rechargeType === 2">
-          <label class="title pull-left m-top-sm">流量类型：</label>
-          <div class="type-list pull-left">
-            <div :class="['type-info', 'type-info-large',{'active': item.type === type}]" v-for="item in typeList" :key="item.type"
-              @click="changeType(1,item.type)">{{getConfigName(2,item.type)}}</div>
+        </transition>
+        <transition name="type-animate">
+          <div class="m-bottom-lg clearfix" v-if="rechargeType === 2">
+            <label class="title pull-left m-top-sm">流量类型：</label>
+            <div class="type-list pull-left">
+              <div :class="['type-info', 'type-info-large',{'active': item.type === type}]" v-for="item in typeList" :key="item.type"
+                   @click="changeType(1,item.type)">{{getConfigName(2,item.type)}}</div>
+            </div>
           </div>
-        </div>
+        </transition>
         <div class="m-bottom-lg">
           <label class="title">兑换积分：</label>
           <label class="integral-text">
@@ -62,22 +68,22 @@
         <div class="modal-main">
           <div class="card-info">
             <div class="card-title">{{rechargeName}}</div>
-              <div class="card-cell">
+            <div class="card-cell">
               <span class="card-cell-title">
                 {{rechargeType === 3 ? 'QQ号码' : '手机号码'}}：
               </span>
-                <span class="card-cell-val">
+              <span class="card-cell-val">
                 <span class="text-prominent">{{rechargeNum}}</span>
               </span>
-              </div>
-              <div class="card-cell">
+            </div>
+            <div class="card-cell">
               <span class="card-cell-title">
                 充值详情：
               </span>
               <span class="card-cell-val">
                 {{rechargeDetail}}
               </span>
-              </div>
+            </div>
           </div>
           <div class="card-brief">
             本次兑换将花费 <span class="text-prominent">{{integral | convert2yuan}}</span> 积分
@@ -209,7 +215,7 @@
         }
         this.showMoreType = false
         this.amountList = _(typeList).findWhere({type}).amountList,
-        this.integral = this.amountList[0].integral
+          this.integral = this.amountList[0].integral
         this.amount = this.amountList[0].amount
       },
       exchange(){
@@ -239,22 +245,22 @@
       },
       exchangeRecharge(){
         setRechargeApi({num:this.rechargeNum,
-          rechargeType:this.rechargeType,
-          type:this.type,
-          amount:this.amount},
+            rechargeType:this.rechargeType,
+            type:this.type,
+            amount:this.amount},
           ({data}) => {
-           if(data && data.result === 0){
-             Global.ui.notification.show('<div class="m-bottom-lg">兑换成功!</div>', {
-               type: 'success',
-               hasFooter: false,
-               displayTime: 1000,
-               size: 'modal-xs',
-               bodyClass: 'no-border no-padding',
-               closeBtn: false,
-             })
-           }else{
-             Global.ui.notification.show(data.msg === 'fail' ? '充值失败！请稍后重试！' : data.msg)
-           }
+            if(data && data.result === 0){
+              Global.ui.notification.show('<div class="m-bottom-lg">兑换成功!</div>', {
+                type: 'success',
+                hasFooter: false,
+                displayTime: 1000,
+                size: 'modal-xs',
+                bodyClass: 'no-border no-padding',
+                closeBtn: false,
+              })
+            }else{
+              Global.ui.notification.show(data.msg === 'fail' ? '充值失败！请稍后重试！' : data.msg)
+            }
           },
           ({data}) => {
             Global.ui.notification.show(data.msg === 'fail' ? '充值失败！请稍后重试！' : data.msg)
@@ -268,6 +274,16 @@
 </script>
 
 <style lang="scss" scoped>
+  .type-animate-enter{
+    transform: translateX(10px);
+    opacity: 0;
+  }
+  /*.type-animate-leave-to{*/
+    /*opacity: 0;*/
+  /*}*/
+  .type-animate-enter-active {
+    transition: all .5s;
+  }
   @mixin active-after{
     content: '';
     width: 20px;
