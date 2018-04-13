@@ -189,13 +189,13 @@
               }else{
                 if(typeList.length > 10){
                   this.typeList = typeList.slice(0,9)
-                  this.moreTypeList = typeList.slice(9,typeList.length - 1)
+                  this.moreTypeList = typeList.slice(9,typeList.length)
                 }else{
                   this.typeList = typeList
                 }
                 if(this.typeList[0].amountList.length > 10){
                   this.amountList = this.typeList[0].amountList.slice(0,9)
-                  this.moreAmountList = this.typeList[0].amountList.slice(9,this.typeList[0].amountList.length - 1)
+                  this.moreAmountList = this.typeList[0].amountList.slice(9,this.typeList[0].amountList.length)
                 }else{
                   this.amountList = this.typeList[0].amountList
                 }
