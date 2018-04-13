@@ -1,0 +1,79 @@
+before_script:
+   - which node && node --version
+   - which npm && npm --version
+
+stages:
+  - test
+  - build
+  - deploy
+cache:
+  key: "forehead_wx_v3_ref"
+  untracked: true
+  paths:
+  - node_modules/
+
+prepare:
+  tags:
+    - build
+  stage: build
+  only:
+    - develop
+    - master
+  script:
+    - echo "prepare env"
+    - npm i --cache
+
+test:
+  tags:
+    - test
+  stage: test
+  only:
+    - deploy
+    - master
+  script:
+    - echo "prepare to test"
+    - npm run unit
+
+build-release:
+  tags:
+    - build
+  stage: build
+  only:
+    - master
+    - develop
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    expire_in: 1 week
+    paths:
+    - www/*.zip
+  script:
+    - echo "prepare to build"
+    - npm run release
+
+# 部署测试服务器 
+deploy-test:
+  tags:
+    - deploy
+  stage: deploy
+  only:
+    - develop
+  script:
+    - echo "prepare to move release to test"
+    - sshpass -p "Global@123" scp -r www/forehead_wx_v3.zip root@10.0.5.201:/data/html
+    - echo "prepare to decompress"
+    - sshpass -p "Global@123" ssh root@10.0.5.201 "unzip -o /data/html/forehead_wx_v3.zip -d /data/html/www/forehead"
+
+# 部署生产服务器 1
+deploy-production:
+  tags:
+    - deploy
+  stage: deploy
+  only:
+    - master
+  script:
+    - echo "prepare to move release to share disk"
+    - day=`date +'%Y%m%d'`
+    - echo "mkdir $day"
+    - echo -e "smbclient -U "polo"%fdcsd6616 //10.0.10.230/global$ << EOF \n cd 技术部共享\2号迭代CR \n mkdir $day \n cd $day \n put www/forehead_wx_v3.zip forehead_wx_v3.zip \n EOF" | bash
+    - echo "move release to share disk done"
+    
