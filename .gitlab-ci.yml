@@ -17,8 +17,7 @@ prepare:
     - build
   stage: build
   only:
-    - develop
-    - master
+    - build/ref
   script:
     - echo "prepare env"
     - npm i --cache
