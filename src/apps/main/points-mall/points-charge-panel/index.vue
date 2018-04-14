@@ -539,7 +539,7 @@
           border: 1px solid #cccccc;
           border-top-color: transparent;
           left: -1px;
-          top: 40px;
+          top: 37px;
           .more-type-info{
             width: 100%;
             list-style: none;
@@ -548,6 +548,14 @@
             line-height: 30px;
             cursor: pointer;
             transition: background-color .5s;
+            /*border: 1px solid #cccccc;*/
+            /*margin-top: 5px;*/
+            &:nth-child(odd){
+              animation: fadeInLeft .5s;
+            }
+            &:nth-child(even){
+              animation: fadeInRight .5s;
+            }
             &:hover{
               background-color: #f5f5f5;
             }
