@@ -39,14 +39,14 @@
             <!--<div class="amount-list">-->
               <div :class="['amount-info',{'active': item.amount === amount,'size-md':rechargeType === 3}]" v-for="(item,index) in amountList" :key="index"
                    @click="chooseAmount(item.integral,item.amount)">{{getConfigName(1,item.amount)}}</div>
-              <div :class="['amount-info','amount-info-more',{'active': amount > 8}]" v-if="moreAmountList.length > 0">
-                <div class="click-div"  @click="showMoreAmount = !showMoreAmount"></div>
-                <div class="amount-name">{{moreAmount}}</div>
-                <ul class="more-amount-list" v-show="showMoreAmount">
-                  <li class="more-amount-info" v-for="(item,index) in moreAmountList" :key="index"
-                      @click="chooseAmount(item.integral,item.amount)">{{getConfigName(1,item.amount)}}</li>
-                </ul>
-              </div>
+              <!--<div :class="['amount-info','amount-info-more',{'active': amount > 8,'size-md':rechargeType === 3}]" v-if="moreAmountList.length > 0">-->
+                <!--<div class="click-div"  @click="showMoreAmount = !showMoreAmount"></div>-->
+                <!--<div class="amount-name">{{moreAmount}}</div>-->
+                <!--<ul class="more-amount-list" v-show="showMoreAmount">-->
+                  <!--<li class="more-amount-info" v-for="(item,index) in moreAmountList" :key="index"-->
+                      <!--@click="chooseAmount(item.integral,item.amount)">{{getConfigName(1,item.amount)}}</li>-->
+                <!--</ul>-->
+              <!--</div>-->
             </div>
           </div>
         </transition>
@@ -193,12 +193,12 @@
                 }else{
                   this.typeList = typeList
                 }
-                if(this.typeList[0].amountList.length > 10){
-                  this.amountList = this.typeList[0].amountList.slice(0,9)
-                  this.moreAmountList = this.typeList[0].amountList.slice(9,this.typeList[0].amountList.length)
-                }else{
-                  this.amountList = this.typeList[0].amountList
-                }
+                // if(this.typeList[0].amountList.length > 10){
+                //   this.amountList = this.typeList[0].amountList.slice(0,9)
+                //   this.moreAmountList = this.typeList[0].amountList.slice(9,this.typeList[0].amountList.length)
+                // }else{
+                this.amountList = this.typeList[0].amountList
+                // }
                 this.integral = this.amountList[0].integral
               }
             }else{
@@ -221,6 +221,7 @@
       chooseAmount(integral,amount){
         this.amount = amount
         this.integral = integral
+        // this.showMoreAmount = false
       },
       changeType(num,type){ // num用于区分类型列表 1表示正常类型列表 2表示多出来的类型列表
         this.type = type
@@ -230,7 +231,7 @@
         }
         this.showMoreType = false
         this.amountList = _(typeList).findWhere({type}).amountList,
-          this.integral = this.amountList[0].integral
+        this.integral = this.amountList[0].integral
         this.amount = this.amountList[0].amount
       },
       exchange(){
@@ -409,15 +410,19 @@
           @include active-after;
         }
       }
-      &.size-md{
-        width: 108px;
-      }
       &.amount-info-more{
         position: relative;
         background-color: #f5f5f5;
-        transform: translateX(-3px);
         text-align: left;
         display: inline-flex;
+        font-size: 16px;
+        .amount-name{
+          margin-left: 7px;
+          width: 70px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
         .click-div{
           width: 100%;
           height: 100%;
@@ -455,6 +460,12 @@
               background-color: #f5f5f5;
             }
           }
+        }
+      }
+      &.size-md{
+        width: 108px;
+        .amount-name{
+          margin-left: 15px;
         }
       }
     }
@@ -522,6 +533,7 @@
         .more-type-list{
           position: absolute;
           width: 100%;
+          background-color: #ffffff;
           border: 1px solid #cccccc;
           border-top-color: transparent;
           left: -1px;
