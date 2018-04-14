@@ -154,7 +154,7 @@
 
         this.numbers = validate.passNumbers.join(',')
 
-        this.repeatNumbers = repeat.repeatNumbers
+        this.repeatNumbers = [...repeat.repeatNumbers, ...validate.repeatNumbers]
         this.errorNumbers = validate.errorNumbers
 
         this.$_statisticsLottery()
