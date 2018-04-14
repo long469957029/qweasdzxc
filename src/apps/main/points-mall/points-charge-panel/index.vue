@@ -213,6 +213,7 @@
       changeRechargeType(index){
         this.typeList = []
         this.rechargeType = index
+        this.rechargeNum = ''
         this.getCfg()
       },
       getConfigName(type,id){
@@ -266,6 +267,7 @@
             amount:this.amount},
           ({data}) => {
             if(data && data.result === 0){
+              this.rechargeNum = ''
               Global.ui.notification.show('<div class="m-bottom-lg">兑换成功!</div>', {
                 type: 'success',
                 hasFooter: false,
