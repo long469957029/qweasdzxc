@@ -28,7 +28,7 @@
       <tr slot="tbody" slot-scope="{row, index}" :key="index">
         <td>{{row.rechargeTime | toTime}}</td>
         <td>
-          {{row.rechargeType === 1 ? '话费充值' : (row.rechargeType === 1 ? '流量充值' : 'QQ充值')}}
+          {{row.rechargeType === 1 ? '话费充值' : (row.rechargeType === 2 ? '流量充值' : 'QQ充值')}}
         </td>
         <td>
             {{row.num}}
