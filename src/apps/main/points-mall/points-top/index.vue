@@ -129,6 +129,11 @@
     },
 
     watch: {
+      getLoginStatus() {
+        if(this.getLoginStatus){
+          this.$store.dispatch(types.GET_USER_MALL_INFO)
+        }
+      }
     },
     computed: {
       swiperOption() {
@@ -150,6 +155,7 @@
         return swiperOption
       },
       ...mapGetters([
+        'getLoginStatus',
         'username',
         'userAvatar',
         'mallBasicInfo'
