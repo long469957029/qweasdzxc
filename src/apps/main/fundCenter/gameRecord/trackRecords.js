@@ -78,9 +78,9 @@ const TrackRecordsView = SearchGrid.extend({
       el: this.$('.js-uc-ticket-select-group'),
     })
 
-    this.$('select[name=chaseStatus]').html(_(betStatusConfig.get()).map((betStatus) => {
-      return `<option value="${betStatus.id}">${betStatus.zhName}</option>`
-    }).join(''))
+    // this.$('select[name=chaseStatus]').html(_(betStatusConfig.get()).map((betStatus) => {
+    //   return `<option value="${betStatus.id}">${betStatus.zhName}</option>`
+    // }).join(''))
 
     SearchGrid.prototype.onRender.apply(this, arguments)
   },

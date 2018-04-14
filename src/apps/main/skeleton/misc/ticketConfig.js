@@ -312,18 +312,18 @@ const oneFiveConfig = {
       },
       isOfficial: true,
     }, bettingTypes.CHOOSE15),
-    Object.assign({
-      id: 40,
-      mark: 'hn',
-      zhName: '河南11选5',
-      showName: '河南<br>11选5',
-      trendOps: {
-        distribution: true,
-        periods: trendLowPeriods,
-        split: 2,
-      },
-      isOfficial: true,
-    }, bettingTypes.CHOOSE15),
+    // Object.assign({
+    //   id: 40,
+    //   mark: 'hn',
+    //   zhName: '河南11选5',
+    //   showName: '河南<br>11选5',
+    //   trendOps: {
+    //     distribution: true,
+    //     periods: trendLowPeriods,
+    //     split: 2,
+    //   },
+    //   isOfficial: true,
+    // }, bettingTypes.CHOOSE15),
     Object.assign({
       id: 41,
       mark: 'bj',
