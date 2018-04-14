@@ -33,7 +33,7 @@
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/5')">山东11选5</a></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/4')">广东11选5</a></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/11')">江西11选5</a></li>
-          <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/40')">河南11选5</a></li>
+          <!--<li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/40')">河南11选5</a></li>-->
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/23')">江苏11选5</a></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/41')">北京11选5</a></li>
         </ul>
