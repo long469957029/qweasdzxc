@@ -219,7 +219,7 @@ const getCfgName = (rechargeType,type,id) => { //获取各个配置名称 type�
       arr = [...qqTypeArr]
     }
   }
-  return _(arr).where({id})[0].name
+  return _(arr).where({id})[0] ? _(arr).where({id})[0].name : ''
 }
 
 export {
