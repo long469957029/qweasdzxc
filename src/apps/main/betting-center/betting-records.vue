@@ -157,7 +157,7 @@
               name: 'chasePrizeMoney',
               width: '140',
               formatter(val) {
-                return val === 0 ? '0' : _(val).fixedConvert2yuan()
+                return val === 0 || _.isNull(val) ? '0' : _(val).fixedConvert2yuan()
               },
             },
             {
