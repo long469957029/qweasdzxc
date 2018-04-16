@@ -63,7 +63,7 @@
   import SscLottery from "./sscLottery";//时时彩玩法
   import SyxwLottery from "./syxwLottery";//11选5玩法
   import DpLottery from "./dpLottery";//3D/低频彩玩法
-  import Pk10Lottery from "./Pk10Lottery";//PK拾玩法
+  import Pk10Lottery from "./pk10Lottery";//PK拾玩法
   import KsLottery from "./ksLottery";//快三玩法
   import SscPlayer from "./sscPlayer";//时时彩玩法
   import Pk10Player from "./pk10Player";//PK10玩法

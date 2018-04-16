@@ -80,7 +80,7 @@
       </tr>
 
       <tr>
-        <td rowspan="2">充值券</td>
+        <td rowspan="2">投注券</td>
         <td>投注满返</td>
         <td>· 投注达到优惠券指定额度后返利</td>
       </tr>

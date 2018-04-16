@@ -24,8 +24,6 @@ const fs = require('fs')
 const rename = require('gulp-rename')
 const fontConfig = require('./font-config.json')
 
-let projectPath = 'main'
-
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = 'development'
 }
@@ -118,7 +116,7 @@ gulp.task('build.sprite', (callback) => {
 
 // 编译生产版本
 gulp.task('release.build', (callback) => {
-  del(`./www/${projectPath}/*`)
+  del(`./www/main/*`)
 
   const webpackConfig = require('./webpack.config')
 

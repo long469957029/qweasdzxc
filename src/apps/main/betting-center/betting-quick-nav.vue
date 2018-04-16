@@ -153,8 +153,14 @@
       display: flex;
       flex-direction: row;
       height: 100%;
+      float: left;
       &:first-of-type {
-        flex-grow: 1;
+        /*flex-grow: 3;*/
+        width: 480px;
+      }
+      &:nth-of-type(2) {
+        /*flex-grow: 2;*/
+        width: 300px;
       }
     }
 
@@ -176,9 +182,9 @@
     height: 180px;
     right: 0;
     box-sizing: border-box;
-    padding: 30px 28px;
+    padding: 15px 28px;
     z-index: 2;
-    display: flex;
+    /*display: flex;*/
     background-color: $new-main-deep-color;
 
     i {
@@ -204,7 +210,7 @@
     }
     .ticket-info {
       margin-left: 13px;
-      padding: 5px 15px 5px 30px;
+      padding: 5px 20px 5px 30px;
       border-radius: 20px;
       position: relative;
       transition: 0.3s background linear;
@@ -213,9 +219,9 @@
       color: $def-white-color;
       cursor: pointer;
 
-      &:nth-of-type(11) {
-        margin-bottom: 20px;
-      }
+      /*&:nth-of-type(11) {*/
+        /*margin-bottom: 20px;*/
+      /*}*/
       &:before {
         content: ' ';
         width: 0;
@@ -241,7 +247,7 @@
       height: 100px;
       background-color: $def-white-color;
       opacity: .5;
-      margin: 10px 25px;
+      margin: 10px 15px;
     }
   }
 

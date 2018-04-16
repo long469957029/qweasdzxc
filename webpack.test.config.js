@@ -26,6 +26,6 @@ const webpackConfig = merge(baseWebpackConfig, {
 })
 
 // no need for app entry during tests
-delete webpackConfig.entry
+webpackConfig.entry = undefined
 
 module.exports = webpackConfig

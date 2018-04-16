@@ -21,7 +21,6 @@
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/21')">韩国乐透1.5</a></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/27')">东京1.5分彩</a></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/25')">新加坡2分彩</a></li>
-          <li></li>
 
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/31')">QQ分分彩</a><i class="sfa sfa-badge-new"></i>
           </li>
@@ -34,6 +33,9 @@
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/5')">山东11选5</a></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/4')">广东11选5</a></li>
           <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/11')">江西11选5</a></li>
+          <!--<li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/40')">河南11选5</a></li>-->
+          <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/23')">江苏11选5</a></li>
+          <li><span class="navbar-ticket-chavon"></span> <a href="javascript:void(0);" @click="goTo('/bc/0/41')">北京11选5</a></li>
         </ul>
 
         <div class="classic-title">3D/低频</div>

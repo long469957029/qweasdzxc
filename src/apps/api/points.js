@@ -555,9 +555,73 @@ const getUserCouponListApi = ({couponType,couponStatus,couponToken,pageSize = 12
     .then(then)
     .catch(fail)
 }
-
-
-
+/**
+ * 获取话费/流量/qq充值配置信息
+ * @param then
+ * @param fail
+ */
+const getRechargeCfgApi = ({rechargeType}, then, fail) => {
+  return $http({
+    url: '/mall/recharge/conf.json',
+    data:{
+      rechargeType
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+/**
+ *
+ * @param num 充值号码
+ * @param rechargeType 充值大类型
+ * @param type 充值小类型
+ * @param amount 充值金额
+ * @param then
+ * @param fail
+ */
+const setRechargeApi = ({num,rechargeType,type,amount}, then, fail) => {
+  return $http({
+    url: '/mall/recharge/submit.json',
+    data:{
+      num,
+      rechargeType,
+      type,
+      amount
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+/**
+ * 获取用户兑换记录
+ * @param startDate
+ * @param endDate
+ * @param pageIndex
+ * @param pageSize
+ * @param rechargeType
+ * @param then
+ * @param fail
+ */
+const getRechargeDetailApi = ({
+  startDate = '',
+  endDate = '',
+  pageIndex = 0,
+  pageSize = 10,
+  rechargeType = '',
+},then, fail) => {
+  return $http({
+    url: '/mall/recharge/record.json',
+    data:{
+      startDate,
+      endDate,
+      pageIndex,
+      pageSize,
+      rechargeType
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
 
 export {
   getMallBannerApi,
@@ -585,5 +649,8 @@ export {
   giftExchangeConfirmApi,
   levelIntroduceApi,
   actionIntroduceApi,
-  getUserCouponListApi
+  getUserCouponListApi,
+  getRechargeCfgApi,
+  setRechargeApi,
+  getRechargeDetailApi
 }
