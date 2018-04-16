@@ -140,6 +140,7 @@ const TeamOverviewView = Base.ItemView.extend({
         format: 'YYYY-MM-DD',
       },
       showIcon: true,
+      minDate:_(moment().subtract(30, 'days')).toTime()
     }).render()
 
     this.timeset.$startDate.on('dp.change', () => {

@@ -80,6 +80,7 @@ const MoneyDetailView = SearchGrid.extend({
         format: 'YYYY-MM-DD',
       },
       showIcon: true,
+      minDate:_(moment().subtract(30, 'days')).toTime()
     }).render()
 
     this.$('input[name="username"]').val(this.options.userName)

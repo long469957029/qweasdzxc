@@ -120,6 +120,7 @@ const gameRecordView = SearchGrid.extend({
         format: 'YYYY-MM-DD',
       },
       showIcon: true,
+      minDate:_(moment().subtract(30, 'days')).toTime()
     }).render()
     this.$('input[name="username"]').val(this.options.userName)
     this.$('.js-subUser').attr('id', `js-ac-br-gr-subUser-${this.options.channelId}${this.options.type}`)
