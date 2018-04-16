@@ -77,6 +77,7 @@ const BettingRecordsView = SearchGrid.extend({
       endDefaultDate: _(moment().endOf('day')).toTime(),
       size: 'timer-record-input',
       showIcon: true,
+      minDate:_(moment().subtract(30, 'days')).toTime()
     }).render()
 
     // 初始化彩种选择

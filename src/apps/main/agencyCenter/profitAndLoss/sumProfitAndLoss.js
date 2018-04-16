@@ -110,6 +110,7 @@ const ReportManageView = SearchGrid.extend({
         format: 'YYYY-MM-DD',
       },
       showIcon: true,
+      minDate:_(moment().subtract(35, 'days')).toTime()
     }).render()
 
     new TicketSelectGroup({
