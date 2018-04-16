@@ -1,5 +1,5 @@
-const _ = require('underscore');
 const path = require('path');
+const _ = require('underscore');
 const webpack = require('webpack');
 
 const HappyPack = require('happypack');
@@ -154,17 +154,15 @@ let entry = _(appConfig.entry).reduce(function (entries, entry, entryName) {
 
 //==============output================
 let output = {
-  path: path.join(__dirname, 'www/' + appConfig.output.path)
+  path: path.resolve(__dirname, 'www/' + appConfig.output.path),
+  publicPath: appConfig.output.publicPath
 };
 
 if (DEV) {
-  output.publicPath = appConfig.output.publicPath;
   // output.publicPath = 'http://localhost:' + appConfig.port + appConfig.output.publicPath;
   output.filename = '[name].bundle.js';
   output.chunkFilename = '[name].bundle.js';
 } else {
-  //临时解决绝对路径在线上无法找到css中下级资源的问题
-  output.publicPath = '.' + appConfig.output.publicPath;
   output.filename = '[name].[hash].bundle.js';
   output.chunkFilename = '[name].[hash].bundle.js';
   // output.sourceMapFilename = '[name].[hash].js.map';
@@ -254,7 +252,9 @@ if (process.env.BABEL_ENV !== 'test') {
 }
 
 if (DEV) {
-  plugins.push(new webpack.HotModuleReplacementPlugin());
+  if (process.env.BABEL_ENV !== 'test') {
+    plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
 } else {
   // plugins.push(new ExtractTextPlugin('[name].[hash].styles.css'));
   plugins.push(new MiniCssExtractPlugin({
@@ -283,14 +283,6 @@ if (DEV) {
     ignoreFile: '.sentrycliignore',
     ignore: ['node_modules', 'webpack.config.js'],
   }))
-  // plugins.push(new SentryPlugin({
-  //   baseSentryURL: 'http://sentry.5x5x.com/api/0/',
-  //   organization: 'sentry',
-  //   project: 'wx-front',
-  //   // include: './www/main',
-  //   apiKey: 'd7d1f505291d4f658af062ac6a7edc5aec68a9cbd4fd45b9861ecb7e3e1f3844',
-  //   release: PROJECT_VERSION
-  // }))
 }
 
 _(appConfig.entries).each(function (entryInfo, entryName) {
@@ -345,7 +337,7 @@ const modules = {
       test: /(.*)\.html$/,
       use: ['html-loader'],
       include: [
-        path.join(__dirname, 'src/apps')
+        path.resolve(__dirname, 'src/apps')
       ]
     },
     // {
@@ -391,15 +383,15 @@ const modules = {
           }
         }
       ],
-      include: [path.join(__dirname, 'src'), path.join(__dirname, 'test')]
+      include: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'test')]
     },
     {
       test: /\.js$/,
       type: 'javascript/auto',
       // use: ['babel-loader'],
       use: 'happypack/loader?id=js',
-      include: DEV ? [path.join(__dirname, 'src'), path.join(__dirname, 'test')] :
-        [path.join(__dirname, 'src'), path.join(__dirname, 'test'), path.join(__dirname, 'node_modules', 'ramda')],
+      include: DEV ? [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'test')] :
+        [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'test'), path.resolve(__dirname, 'node_modules', 'ramda')],
       exclude: /jquery|jqmeter|turn.html4/,
     },
   ]
@@ -421,7 +413,7 @@ if (DEV) {
     //     },
     //   },
     // ],
-    include: [path.join(__dirname, 'src')],
+    include: [path.resolve(__dirname, 'src')],
   });
 
   modules.rules.push({
@@ -446,7 +438,7 @@ if (DEV) {
         },
       },
     ],
-    include: [path.join(__dirname, 'src')],
+    include: [path.resolve(__dirname, 'src')],
   });
 
   modules.rules.push({
@@ -510,6 +502,7 @@ module.exports = {
   },
   plugins,
   module: modules,
+  stats: 'errors-only',
   devServer: {
     port: appConfig.port,
     publicPath: appConfig.output.publicPath,

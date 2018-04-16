@@ -10,7 +10,13 @@
     </span>
     <span class="vertical-sub">
       <label class="m-left-sm">类型:</label>
-      <select name="chaseStatus" class="select-record-select"></select>
+      <select name="chaseStatus" class="select-record-select">
+        <option value="-1">全部</option>
+        <option value="0">未开始</option>
+        <option value="1">进行中</option>
+        <option value="2">已完成</option>
+        <option value="3">已终止</option>
+      </select>
     </span>
     <button type="submit" class="btn js-fc-gr-tr-query button-record-button vertical-sub">查询</button>
     <button type="reset" class="btn btn-link btn-link-inverse no-underline"><span class="sfa sfa-btn-icon-reset vertical-middle m-right-xs"></span>重置</button>
