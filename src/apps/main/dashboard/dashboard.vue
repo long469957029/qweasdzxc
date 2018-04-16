@@ -313,6 +313,8 @@
     height: 450px;
     overflow: hidden;
     position: relative;
+    min-width: 1200px;
+    margin: 0 auto;
   }
 
   .db-bulletin-container {

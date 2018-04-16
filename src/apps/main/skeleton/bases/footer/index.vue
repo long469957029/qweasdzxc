@@ -129,6 +129,7 @@ export default {
   height: 280px;
   background: #21232a;
   overflow: hidden;
+  min-width: 1200px;
   .line{
     position: absolute;
     width: 20000px;
