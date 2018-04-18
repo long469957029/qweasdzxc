@@ -31,10 +31,10 @@ const channelList = [
     channelId: 6,
     channelName: 'GG',
   },
-  // {
-  //   channelId: 7,
-  //   channelName: '体育',
-  // },
+  {
+    channelId: 7,
+    channelName: '体育',
+  },
 ]
 const gameTypeList = [
   {
