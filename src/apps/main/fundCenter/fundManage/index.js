@@ -171,11 +171,11 @@ export default Base.ItemView.extend({
     this.$('.js-fm-in-selected').html(toData.toSelected)
     this.$('.js-fm-in-items').html(toData.toItems)
 
-    this.platformParsley = this.$('.js-fc-fm-form').parsley({
-      errorsWrapper: '<div class="tooltip parsley-errors-list"><span class="sfa sfa-error-icon vertical-sub pull-left"></div>',
-      errorTemplate: '<div class="tooltip-inner">',
-      trigger: 'change',
-    })
+    // this.platformParsley = this.$('.js-fc-fm-form').parsley({
+    //   errorsWrapper: '<div class="tooltip parsley-errors-list"><span class="sfa sfa-error-icon vertical-sub pull-left"></div>',
+    //   errorTemplate: '<div class="tooltip-inner">',
+    //   trigger: 'change',
+    // })
     const $from = this.$('.js-fm-out-selectedItem').data('id')
     const $to = this.$('.js-fm-in-selectedItem').data('id')
     this.getPlatformInfoXhr({channelId: Number($to) || Number($from) || '1'}).always(() => {
@@ -480,6 +480,8 @@ export default Base.ItemView.extend({
     }
     // var valMin = _(data.minMoney).convert2yuan();
     // var valMax = _(data.maxMoney).convert2yuan();
+    this.minMoney = data.minMoney
+    this.maxMoney = data.maxMoney
     let valMin = data.minMoney
     let valMax = data.maxMoney
     let valTradeNum = data.tradeNum
@@ -488,14 +490,14 @@ export default Base.ItemView.extend({
     // let desTradeNum = ''
 
     if (valMin === 0) {
-      valMin = 1
+      this.minMoney = valMin = 1
       // desMin = '（单笔最低转账金额无限制'
     }
     // else {
     //   desMin = `（最低转账金额<span class="js-fc-tf-minLimit text-pleasant">${valMin}</span>元`
     // }
     if (valMax === 0) {
-      valMax = 5000000
+      this.maxMoney = valMax = 5000000
       // desMax = ',最高转账金额无限制'
     }
     // else {
@@ -512,8 +514,8 @@ export default Base.ItemView.extend({
     const amountList = transferService.getQuickAmountHtml(data.amount)
     // this.$('.js-fm-out-money').val(amountList.amount)
     //  遍历取快捷金额配置
-    this.$('.js-fm-out-money').attr('data-parsley-range', `[${valMin},${valMax}]`)
-    this.$('.js-fm-out-money').attr('data-parsley-max', _(data.validBalance).format2yuan())
+    // this.$('.js-fm-out-money').attr('data-parsley-range', `[${valMin},${valMax}]`)
+    // this.$('.js-fm-out-money').attr('data-parsley-max', _(data.validBalance).format2yuan())
     this.$('.js-fm-tradeNum').val(valTradeNum)
     if (valTradeNum === 0) {
       this.$('.js-fc-tf-button').prop('disabled', true)
@@ -522,6 +524,7 @@ export default Base.ItemView.extend({
     }
   },
   submitPlatformTransferHandler() {
+    this.$('.js-fc-fm-error-container').html('')
     if (window.Global.cookieCache.get('isTestUser')) {//试玩账号操作时提示
       Global.ui.notification.show('试玩会员无法进行转账操作，请先注册正式游戏账号', {modalDialogShadow: 'modal-dialog-shadow'})
       return false
@@ -531,9 +534,22 @@ export default Base.ItemView.extend({
         '<span class="parsley-error-text">可转账次数不足。</span><div>')
       return false
     }
-    if (!this.platformParsley.validate()) {
+    const moneyVal =  this.$('.js-fm-out-money').val().trim()
+    if(moneyVal === ''){
+      this.$('.js-fc-fm-error-container').html(`<div class="parsley-error-line">
+          <span class="sfa sfa-error-icon vertical-sub pull-left"></span>
+          <span class="parsley-error-text text-hot">请输入转账金额</span><div>`)
       return false
     }
+    if(moneyVal > this.maxMoney || moneyVal < this.minMoney){
+      this.$('.js-fc-fm-error-container').html(`<div class="parsley-error-line">
+          <span class="sfa sfa-error-icon vertical-sub pull-left"></span>
+          <span class="parsley-error-text text-hot">转账金额范围在${this.minMoney}和${this.maxMoney}之间。</span><div>`)
+      return false
+    }
+    // if (!this.platformParsley.validate()) {
+    //   return false
+    // }
     // this.#$.button('loading')
     this.getPlatformTransferXhr({
       // moneyPwd: this.$('.js-fc-tfp-payPwd').val(),
@@ -549,7 +565,7 @@ export default Base.ItemView.extend({
           })
         } else {
           this.$('.js-fc-fm-error-container').html('<div class="parsley-error-line"><span class="sfa sfa-error-icon vertical-sub pull-left"></span>' +
-            `<span class="parsley-error-text">${res.msg}</span><div>`)
+            `<span class="parsley-error-text text-hot">${res.msg}</span><div>`)
         }
       })
   },
