@@ -38,8 +38,22 @@ build-release:
     - build
   stage: build
   only:
-    - master
     - develop
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    expire_in: 3 days
+    paths:
+    - www/*.zip
+  script:
+    - echo "prepare to build"
+    - npm run release
+
+build-release-production:
+  tags:
+    - build
+  stage: build
+  only:
+    - master
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     expire_in: 1 week
@@ -47,9 +61,9 @@ build-release:
     - www/*.zip
   script:
     - echo "prepare to build"
-    - npm run release
+    - npm run release:production
 
-# 部署测试服务器 
+# 部署测试服务器
 deploy-test:
   tags:
     - deploy
@@ -75,4 +89,4 @@ deploy-production:
     - echo "mkdir $day"
     - echo -e "smbclient -U "polo"%fdcsd6616 //10.0.10.230/global$ << EOF \n cd 技术部共享\2号迭代CR \n mkdir $day \n cd $day \n put www/forehead_wx_v3.zip forehead_wx_v3.zip \n EOF" | bash
     - echo "move release to share disk done"
-    
+
