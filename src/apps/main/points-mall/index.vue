@@ -52,6 +52,7 @@
   .points-mall {
     /*background: url(./misc/background.jpg);*/
     color: $def-black-color;
+    min-width: 1200px;
     .points-top-main-wrapper {
       background: url(./misc/bg-top.png) repeat-x;
     }

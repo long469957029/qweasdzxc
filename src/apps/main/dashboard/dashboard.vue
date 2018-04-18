@@ -319,6 +319,7 @@
 
   .db-bulletin-container {
     width: 100%;
+    min-width: 1200px;
     background: #fff;
     border-bottom: 1px solid #dcdcdc;
     margin-bottom: 30px;

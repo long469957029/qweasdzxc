@@ -242,6 +242,7 @@
   .rc-bg {
     @include banner-background('./images/rc-bg.png');
     width: 100%;
+    min-width: 1200px;
     height: 850px;
 
     * {

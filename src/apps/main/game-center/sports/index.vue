@@ -70,6 +70,7 @@
     background-size: cover;
     background: url(./bg.jpg) no-repeat top center;
     width: 100%;
+    min-width: 1200px;
     height: 970px;
   }
   .iframe {
