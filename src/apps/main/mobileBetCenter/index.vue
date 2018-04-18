@@ -86,6 +86,7 @@
   .center-body {
     display: block;
     min-height: 584px;
+    min-width: 1200px;
     position: relative;
     background-color: #f9f9f9;
     .center-content {
