@@ -328,10 +328,10 @@ const TransferView = Base.ItemView.extend({
   //   setInterval(this.redirect())
   // },
   preStepHandler() {
-    if (this.cur > 0) {
+    if (!this.isDestroyed && this.cur > 0) {
       this.slide(this.conInnerConWidth, this.cur - 1)
+      this.render()
     }
-    this.render()
   },
   redirect() {
     const self = this
@@ -341,9 +341,11 @@ const TransferView = Base.ItemView.extend({
       time -= 1
       this.$('.js-tr-leftSecond').text(time)
       if (time < 0) {
-        self.countDownSecond = time
-        clearInterval(self.countdown)
-        this.preStepHandler()
+        if(self){
+          self.countDownSecond = time
+          clearInterval(self.countdown)
+          this.preStepHandler()
+        }
       }
     }, 1000)
   },
