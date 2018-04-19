@@ -140,6 +140,13 @@ const mutations = {
     Object.assign(state, data)
 
     Global.m.oauth.check()
+
+    this.commit(types.TRACKING_USER)
+  },
+
+  [types.TRACKING_USER](state) {
+    //tracking users
+    Raven.setUserContext(state)
   },
 
   // 用户oauth确认成功
@@ -157,8 +164,10 @@ const mutations = {
     data.fLastLoginTime = _(data.lastLoginTime).toTime()
     data.fLoginTime = _(data.loginTime).toTime()
     data.headIcon = _(data.headIcon).toString()
-    window.store.commit(types.TOGGLE_LOGOUT_NOTICE, false)
+    this.commit(types.TOGGLE_LOGOUT_NOTICE, false)
     Object.assign(state, data)
+
+    this.commit(types.TRACKING_USER)
   },
 
   // 清除用户数据

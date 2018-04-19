@@ -20,13 +20,15 @@
             <label class="title pull-left m-top-sm">选择种类：</label>
             <div class="type-list pull-left">
               <div :class="['type-info',{'active': item.type === type}]" v-for="item in typeList" :key="item.type"
-                   @click="changeType(1,item.type)">{{getConfigName(2,item.type)}}</div>
+                   @click="changeType(1,item.type)">{{getConfigName(2,item.type)}}
+              </div>
               <div :class="['type-info','type-info-more',{'active': type > 8}]" v-if="moreTypeList.length > 0">
-                <div class="click-div"  @click="showMoreType = !showMoreType"></div>
+                <div class="click-div" @click="showMoreType = !showMoreType"></div>
                 <div class="type-name">{{moreText}}</div>
                 <ul class="more-type-list" v-show="showMoreType">
                   <li class="more-type-info" v-for="item in moreTypeList" :key="item.type"
-                      @click="changeType(2,item.type)">{{getConfigName(2,item.type)}}</li>
+                      @click="changeType(2,item.type)">{{getConfigName(2,item.type)}}
+                  </li>
                 </ul>
               </div>
             </div>
@@ -36,16 +38,18 @@
           <div class="m-bottom-sm">
             <label class="title">{{rechargeType === 2 ? '流量面值' : '充值面值'}}：</label>
             <div :class="['amount-list',{'large': amountList.length > 8}]">
-            <!--<div class="amount-list">-->
-              <div :class="['amount-info',{'active': item.amount === amount,'size-md':rechargeType === 3}]" v-for="(item,index) in amountList" :key="index"
-                   @click="chooseAmount(item.integral,item.amount)">{{getConfigName(1,item.amount)}}</div>
+              <!--<div class="amount-list">-->
+              <div :class="['amount-info',{'active': item.amount === amount,'size-md':rechargeType === 3}]"
+                   v-for="(item,index) in amountList" :key="index"
+                   @click="chooseAmount(item.integral,item.amount)">{{getConfigName(1,item.amount)}}
+              </div>
               <!--<div :class="['amount-info','amount-info-more',{'active': amount > 8,'size-md':rechargeType === 3}]" v-if="moreAmountList.length > 0">-->
-                <!--<div class="click-div"  @click="showMoreAmount = !showMoreAmount"></div>-->
-                <!--<div class="amount-name">{{moreAmount}}</div>-->
-                <!--<ul class="more-amount-list" v-show="showMoreAmount">-->
-                  <!--<li class="more-amount-info" v-for="(item,index) in moreAmountList" :key="index"-->
-                      <!--@click="chooseAmount(item.integral,item.amount)">{{getConfigName(1,item.amount)}}</li>-->
-                <!--</ul>-->
+              <!--<div class="click-div"  @click="showMoreAmount = !showMoreAmount"></div>-->
+              <!--<div class="amount-name">{{moreAmount}}</div>-->
+              <!--<ul class="more-amount-list" v-show="showMoreAmount">-->
+              <!--<li class="more-amount-info" v-for="(item,index) in moreAmountList" :key="index"-->
+              <!--@click="chooseAmount(item.integral,item.amount)">{{getConfigName(1,item.amount)}}</li>-->
+              <!--</ul>-->
               <!--</div>-->
             </div>
           </div>
@@ -54,8 +58,10 @@
           <div class="m-bottom-md clearfix" v-if="rechargeType === 2">
             <label class="title pull-left m-top-sm">流量类型：</label>
             <div class="type-list pull-left">
-              <div :class="['type-info', 'type-info-large',{'active': item.type === type}]" v-for="item in typeList" :key="item.type"
-                   @click="changeType(1,item.type)">{{getConfigName(2,item.type)}}</div>
+              <div :class="['type-info', 'type-info-large',{'active': item.type === type}]" v-for="item in typeList"
+                   :key="item.type"
+                   @click="changeType(1,item.type)">{{getConfigName(2,item.type)}}
+              </div>
             </div>
           </div>
         </transition>
@@ -113,6 +119,7 @@
   import {
     getCfgName
   } from './config'
+
   export default {
     name: 'points-charge-panel',
     data() {
@@ -135,73 +142,85 @@
           }
         ],
         rechargeType: 1, //充值大类型（话费、流量、qq）
-        typeList:[],    //充值类型列表
-        amountList:[], //充值面值列表
-        rechargeNum:'', //充值号码
-        integral:0,
-        type:0, //充值小类型（流量类型，qq会员 q币等）
-        amount:0,//充值金额
-        userIntegral:0, //用户可用积分值
-        showError:false,
-        errorText:'',
-        showDialog:false,
-        moreTypeList:[],
-        moreAmountList:[],
-        moreText:'更多种类',
-        moreAmount:'更多面值',
-        showMoreType:false,
-        showMoreAmount:false
+        typeList: [],    //充值类型列表
+        amountList: [], //充值面值列表
+        rechargeNum: '', //充值号码
+        integral: 0,
+        type: 0, //充值小类型（流量类型，qq会员 q币等）
+        amount: 0,//充值金额
+        userIntegral: 0, //用户可用积分值
+        showError: false,
+        errorText: '',
+        showDialog: false,
+        moreTypeList: [],
+        moreAmountList: [],
+        moreText: '更多种类',
+        moreAmount: '更多面值',
+        showMoreType: false,
+        showMoreAmount: false
       }
     },
     watch: {
-      getLoginStatus(){
-        if(this.getLoginStatus){
+      getLoginStatus() {
+        if (this.getLoginStatus) {
           this.getCfg()
         }
       }
     },
-    computed:{
+    computed: {
       ...mapGetters([
         'getLoginStatus'
       ]),
-      rechargeName(){
-        return _(this.navList).findWhere({id:this.rechargeType}).name
+      rechargeName() {
+        return _(this.navList).findWhere({id: this.rechargeType}).name
       },
-      rechargeDetail(){
-        if(this.rechargeType === 1){
-          return this.getConfigName(1,this.amount)
-        }else{
-          return this.getConfigName(2,this.type) + '-' + this.getConfigName(1,this.amount)
+      rechargeDetail() {
+        if (this.rechargeType === 1) {
+          return this.getConfigName(1, this.amount)
+        } else {
+          return this.getConfigName(2, this.type) + '-' + this.getConfigName(1, this.amount)
         }
       }
     },
-    methods:{
-      getCfg(){
+    methods: {
+      getCfg() {
         getRechargeCfgApi({rechargeType: this.rechargeType},
           ({data}) => {
-            if(data && data.result === 0){
+            if (data && data.result === 0) {
               this.type = 0
               this.userIntegral = data.root.userIntegral
               const typeList = data.root.typeList
-              if(this.rechargeType === 1){
+              if (this.rechargeType === 1) {
                 this.amountList = typeList[0].amountList
-                this.integral = this.amountList[0].integral
-              }else{
-                if(typeList.length > 10){
-                  this.typeList = typeList.slice(0,9)
-                  this.moreTypeList = typeList.slice(9,typeList.length)
-                }else{
+                if (!_.isEmpty(typeList[0].amountList)) {
+                  this.integral = this.amountList[0].integral
+                } else {
+                  Raven.captureMessage('话费／流量／QQ充值 没有获取到面值配置', {
+                    level: 'warning'
+                  });
+                }
+
+              } else {
+                if (typeList.length > 10) {
+                  this.typeList = typeList.slice(0, 9)
+                  this.moreTypeList = typeList.slice(9, typeList.length)
+                } else {
                   this.typeList = typeList
                 }
                 // if(this.typeList[0].amountList.length > 10){
                 //   this.amountList = this.typeList[0].amountList.slice(0,9)
                 //   this.moreAmountList = this.typeList[0].amountList.slice(9,this.typeList[0].amountList.length)
                 // }else{
-                this.amountList = this.typeList[0].amountList
-                // }
-                this.integral = this.amountList[0].integral
+                if (!_.isEmpty(this.amountList[0])) {
+                  this.amountList = this.typeList[0].amountList
+                  this.integral = this.amountList[0].integral
+                } else {
+                  Raven.captureMessage('话费／流量／QQ充值 没有获取到面值配置', {
+                    level: 'warning'
+                  });
+                }
               }
-            }else{
+            } else {
               Global.ui.notification.show(data.msg === 'fail' ? '获取配置信息失败' : data.msg)
             }
           },
@@ -210,63 +229,65 @@
           }
         )
       },
-      changeRechargeType(index){
+      changeRechargeType(index) {
         this.typeList = []
         this.rechargeType = index
         this.rechargeNum = ''
         this.getCfg()
       },
-      getConfigName(type,id){
-        return getCfgName(this.rechargeType,type,id)
+      getConfigName(type, id) {
+        return getCfgName(this.rechargeType, type, id)
       },
-      chooseAmount(integral,amount){
+      chooseAmount(integral, amount) {
         this.amount = amount
         this.integral = integral
         // this.showMoreAmount = false
       },
-      changeType(num,type){ // num用于区分类型列表 1表示正常类型列表 2表示多出来的类型列表
+      changeType(num, type) { // num用于区分类型列表 1表示正常类型列表 2表示多出来的类型列表
         this.type = type
         const typeList = num === 1 ? this.typeList : this.moreTypeList
-        if(num === 2){
-          this.moreText = this.getConfigName(2,type)
+        if (num === 2) {
+          this.moreText = this.getConfigName(2, type)
         }
         this.showMoreType = false
         this.amountList = _(typeList).findWhere({type}).amountList,
-        this.integral = this.amountList[0].integral
+          this.integral = this.amountList[0].integral
         this.amount = this.amountList[0].amount
       },
-      exchange(){
-        if(!this.getLoginStatus){
-          this.$store.commit(types.TOGGLE_LOGIN_DIALOG,true)
+      exchange() {
+        if (!this.getLoginStatus) {
+          this.$store.commit(types.TOGGLE_LOGIN_DIALOG, true)
           return false
         }
         let reg = ''
-        if(this.rechargeType === 3){
+        if (this.rechargeType === 3) {
           reg = /^[1-9][0-9]{4,15}$/
-        }else{
+        } else {
           reg = /^[0-9]{11,11}$/
         }
-        if(this.rechargeNum === ''){
+        if (this.rechargeNum === '') {
           this.showError = true
           this.errorText = `请输入正确${this.rechargeType === 3 ? 'QQ' : '手机'}号`
-        }else if(!reg.test(this.rechargeNum)){
+        } else if (!reg.test(this.rechargeNum)) {
           this.showError = true
           this.errorText = `您输入的${this.rechargeType === 3 ? 'QQ' : '手机'}号有误，请重新输入`
-        }else if(this.userIntegral < this.integral){
+        } else if (this.userIntegral < this.integral) {
           this.showError = false
           Global.ui.notification.show('您的积分不足以本次兑换！')
-        }else{
+        } else {
           this.showError = false
           this.showDialog = true
         }
       },
-      exchangeRecharge(){
-        setRechargeApi({num:this.rechargeNum,
-            rechargeType:this.rechargeType,
-            type:this.type,
-            amount:this.amount},
+      exchangeRecharge() {
+        setRechargeApi({
+            num: this.rechargeNum,
+            rechargeType: this.rechargeType,
+            type: this.type,
+            amount: this.amount
+          },
           ({data}) => {
-            if(data && data.result === 0){
+            if (data && data.result === 0) {
               this.rechargeNum = ''
               Global.ui.notification.show('<div class="m-bottom-lg">兑换成功!</div>', {
                 type: 'success',
@@ -276,7 +297,7 @@
                 bodyClass: 'no-border no-padding',
                 closeBtn: false,
               })
-            }else{
+            } else {
               Global.ui.notification.show(data.msg === 'fail' ? '充值失败！请稍后重试！' : data.msg)
             }
           },
@@ -285,24 +306,26 @@
           })
       }
     },
-    mounted(){
+    mounted() {
       this.getCfg()
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  .type-animate-enter{
+  .type-animate-enter {
     transform: translateX(10px);
     opacity: 0;
   }
+
   /*.type-animate-leave-to{*/
-    /*opacity: 0;*/
+  /*opacity: 0;*/
   /*}*/
   .type-animate-enter-active {
     transition: all .5s;
   }
-  @mixin active-after{
+
+  @mixin active-after {
     content: '';
     width: 20px;
     height: 16px;
@@ -310,8 +333,9 @@
     background: url("./misc/check.png") no-repeat;
     position: absolute;
     bottom: 0;
-    right:0;
+    right: 0;
   }
+
   .points-charge-panel {
     height: 700px;
     display: flex;
@@ -341,9 +365,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      &.active{
+      &.active {
         background-color: $def-white-color;
-        &:before{
+        &:before {
           content: '';
           width: 2px;
           height: 100%;
@@ -359,40 +383,40 @@
   .container-charge {
     width: 940px;
     height: 100%;
-    .main{
+    .main {
       margin-top: 92px;
       margin-left: 154px;
     }
-    .title{
+    .title {
       font-size: 14px;
       color: #333333;
     }
-    .number-input{
+    .number-input {
       width: 426px;
       height: 30px;
       background-color: #ffffff;
       border: solid 1px #cccccc;
     }
-    .integral-text{
+    .integral-text {
       font-size: 14px;
       color: #e84c4c;
       border-radius: 0;
-      span{
+      span {
         font-size: 20px;
         margin-right: 5px;
       }
     }
-    .amount-list{
+    .amount-list {
       display: inline-flex;
       width: 520px;
       /*height: 107px;*/
       flex-wrap: wrap;
       align-content: space-between;
-      &.large{
+      &.large {
         width: 650px;
       }
     }
-    .amount-info{
+    .amount-info {
       width: 94px;
       height: 38px;
       background-color: #ffffff;
@@ -405,34 +429,34 @@
       margin-bottom: 27px;
       margin-right: 19px;
       transition: border-color .5s;
-      &.active{
+      &.active {
         border-color: #e84c4c;
         position: relative;
-        &:after{
+        &:after {
           @include active-after;
         }
       }
-      &.amount-info-more{
+      &.amount-info-more {
         position: relative;
         background-color: #f5f5f5;
         text-align: left;
         display: inline-flex;
         font-size: 16px;
-        .amount-name{
+        .amount-name {
           margin-left: 7px;
           width: 70px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        .click-div{
+        .click-div {
           width: 100%;
           height: 100%;
           position: absolute;
           top: 0;
           left: 0;
         }
-        &:before{
+        &:before {
           content: '';
           background: url(./misc/icon-down.png);
           width: 10px;
@@ -443,14 +467,14 @@
           margin-top: -3px;
           right: 10px;
         }
-        .more-amount-list{
+        .more-amount-list {
           position: absolute;
           width: 100%;
           border: 1px solid #cccccc;
           border-top-color: transparent;
           left: -1px;
           top: 40px;
-          .more-amount-info{
+          .more-amount-info {
             width: 100%;
             list-style: none;
             text-align: center;
@@ -458,24 +482,24 @@
             line-height: 30px;
             cursor: pointer;
             transition: background-color .5s;
-            &:hover{
+            &:hover {
               background-color: #f5f5f5;
             }
           }
         }
       }
-      &.size-md{
+      &.size-md {
         width: 108px;
-        .amount-name{
+        .amount-name {
           margin-left: 15px;
         }
       }
     }
-    .type-list{
+    .type-list {
       width: 700px;
       /*display: inline-block;*/
     }
-    .type-info{
+    .type-info {
       width: 108px;
       height: 38px;
       background-color: #ffffff;
@@ -488,40 +512,40 @@
       display: inline-block;
       margin-right: 20px;
       margin-bottom: 27px;
-      &.type-info-large{
+      &.type-info-large {
         width: 420px;
         padding-left: 20px;
         text-align: left;
         margin-bottom: 14px;
       }
-      &.active{
+      &.active {
         border-color: #e84c4c;
         position: relative;
-        &:after{
+        &:after {
           @include active-after;
         }
       }
-      &.type-info-more{
+      &.type-info-more {
         position: relative;
         background-color: #f5f5f5;
         transform: translateX(-3px);
         text-align: left;
         display: inline-flex;
-        .type-name{
+        .type-name {
           margin-left: 15px;
           width: 70px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        .click-div{
+        .click-div {
           width: 100%;
           height: 100%;
           position: absolute;
           top: 0;
           left: 0;
         }
-        &:before{
+        &:before {
           content: '';
           background: url(./misc/icon-down.png);
           width: 10px;
@@ -532,7 +556,7 @@
           margin-top: -3px;
           right: 10px;
         }
-        .more-type-list{
+        .more-type-list {
           position: absolute;
           width: 100%;
           background-color: #ffffff;
@@ -540,7 +564,7 @@
           border-top-color: transparent;
           left: -1px;
           top: 37px;
-          .more-type-info{
+          .more-type-info {
             width: 100%;
             list-style: none;
             text-align: center;
@@ -550,20 +574,20 @@
             transition: background-color .5s;
             /*border: 1px solid #cccccc;*/
             /*margin-top: 5px;*/
-            &:nth-child(odd){
+            &:nth-child(odd) {
               animation: fadeInLeft .5s;
             }
-            &:nth-child(even){
+            &:nth-child(even) {
               animation: fadeInRight .5s;
             }
-            &:hover{
+            &:hover {
               background-color: #f5f5f5;
             }
           }
         }
       }
     }
-    .get-button{
+    .get-button {
       width: 140px;
       height: 40px;
       background-color: #e84c4c;
@@ -575,11 +599,12 @@
       cursor: pointer;
       margin-left: 76px;
     }
-    .error-info{
+    .error-info {
       color: #e84c4c;
       font-size: 12px;
     }
   }
+
   .modal-main {
     display: flex;
     flex-direction: column;

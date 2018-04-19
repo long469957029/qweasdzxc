@@ -3,7 +3,7 @@
     <status-cell :status="loading" :has-data="true" loading-tip="" :transition="false"
                  v-if="loading !== 'completed'"
     ></status-cell>
-    <iframe v-show="loading === 'completed'" class="iframe" scrolling="no" :src="src" @load="loaded" ref="iframe" :height="height"></iframe>
+    <iframe v-show="loading === 'completed'" class="iframe" :src="src" @load="loaded" ref="iframe" :height="height"></iframe>
   </div>
 </template>
 
@@ -70,11 +70,12 @@
     background-size: cover;
     background: url(./bg.jpg) no-repeat top center;
     width: 100%;
+    min-width: 1200px;
     height: 970px;
   }
   .iframe {
     width: 1310px;
     border: 0;
-    overflow: hidden;
+    overflow: auto;
   }
 </style>

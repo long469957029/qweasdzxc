@@ -10,6 +10,7 @@
   @include border-box();
   @include banner-background('./images/sc-banner.jpg');
   width: 100%;
+  min-width: 1200px;
   height: 540px;
 
   .sc-banner-hot {
@@ -107,6 +108,7 @@
   @include center-container(1200px);
   @include border-box();
   width: 100%;
+  min-width: 1200px;
   height: 50px;
   background: $new-main-deep-color;
 }

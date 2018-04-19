@@ -236,7 +236,13 @@ let plugins = [
         reuseExistingChunk: true,
       },
     }
-  })
+  }),
+  new webpack.DefinePlugin({
+    'process.env': {
+      ENVIRONMENT: JSON.stringify(process.env.ENVIRONMENT),
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+    }
+  }),
 ];
 
 if (process.env.MODE === 'analyse') {

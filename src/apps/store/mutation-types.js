@@ -155,3 +155,6 @@ export const CLOSE_RENCENTLY_RECORD_SUCCESS = 'CLOSE_RENCENTLY_RECORD_SUCCESS' /
 export const IS_SEND = 'IS_SEND' //发送消息
 
 // 个人中心
+
+
+export const TRACKING_USER = 'TRACKING_USER' //tracking用户信息
