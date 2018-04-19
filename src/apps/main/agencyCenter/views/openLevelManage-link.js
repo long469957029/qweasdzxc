@@ -1,4 +1,4 @@
-require('../../../../base/scripts/jquery.qrcode.min')
+require('../misc/jquery.qrcode.min')
 var Clipboard = require('clipboard')
 const SearchGrid = require('com/searchGrid')
 
