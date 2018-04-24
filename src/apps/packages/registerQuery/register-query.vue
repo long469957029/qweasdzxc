@@ -27,7 +27,7 @@
         <col width="100"><!--手机-->
         <col width="100"><!--qq-->
         <col width="100"><!--微信-->
-        <col width="100"><!--注册时间-->
+        <col width="120"><!--注册时间-->
       </colgroup>
       <thead>
       <th>用户名</th>
@@ -42,7 +42,7 @@
         <td>{{user.phoneNo}}</td>
         <td>{{user.qqNo}}</td>
         <td>{{user.webchat}}</td>
-        <td>{{toTime(user.regTime)}}</td>
+        <td>{{user.regTime|toTime}}</td>
       </tr>
       </tbody>
     </table>
