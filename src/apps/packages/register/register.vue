@@ -36,7 +36,7 @@
       </div>
       <div id="fullpage" class="" ref="fullpage">
         <div class="section first-section " id="section1">
-          <div class="panel basic-white">
+          <div class="panel basic-white" :class="{'large': showQQAndPhone}">
             <div class="panel-main clearfix">
               <div class="clearfix ac-reg-body">
                 <div class="reg-ad pull-right">
@@ -55,19 +55,19 @@
                 <div class="reg-info pull-left">
                   <form action="javascript:void(0);" id="jsRegisterForm" class="js-re-registerForm form-horizontal"
                         autocomplete="off">
-                    <div class="input-control">
+                    <div class="input-control" :class="{'md-size': showQQAndPhone}">
                       <div class="input-icon name"></div>
                       <input type="text" class="register-input" name="userName" v-model.trim="userName"
                              @focus="inputFocus(1)" v-on:blur="inputBlur(1)"
                              placeholder="请设置您的账号" autocomplete="off"/>
                       <span class="input-check" v-if="userStatus === 3"></span>
                     </div>
-                    <div :class="['error-text',{'text-hot': userStatus === 2}]">
+                    <div :class="['error-text',{'text-hot': userStatus === 2,'md-size': showQQAndPhone}]">
                     <span
                       :class="['sfa',{'sfa-error-gray-icon': userStatus === 1 && userErrorText !== '','sfa-error-icon': userStatus === 2 && userErrorText !== ''}]"></span>
                       {{userErrorText}}
                     </div>
-                    <div class="input-control">
+                    <div class="input-control" :class="{'md-size': showQQAndPhone}">
                       <div class="input-icon pwd"></div>
                       <input :type="passwordInputType" class="register-input" name="userName"
                              v-model.trim="passWord"
@@ -75,39 +75,82 @@
                              placeholder="请设置您的密码"/>
                       <span class="input-check" v-if="pwdStatus === 3"></span>
                     </div>
-                    <div :class="['error-text',{'text-hot': pwdStatus === 2}]">
+                    <div :class="['error-text',{'text-hot': pwdStatus === 2,'md-size': showQQAndPhone}]">
                     <span
                       :class="['sfa',{'sfa-error-gray-icon': pwdStatus === 1 && pwdErrorText !== '','sfa-error-icon': pwdStatus === 2 && pwdErrorText !== ''}]"></span>
                       {{pwdErrorText}}
                     </div>
-                    <div class="input-control">
+                    <div class="input-control" :class="{'md-size': showQQAndPhone}">
                       <div class="input-icon code"></div>
                       <input type="text" class="register-input code-input" name="userName" v-model.trim="codeVal"
                              @change="codeValVerification" placeholder="请输入验证码" autocomplete="off"/>
-                      <img class="var-code" :src="codeSrc" @click="refreshValCode">
+                      <img class="var-code" :class="{'md-size':showQQAndPhone}" :src="codeSrc" @click="refreshValCode">
                       <span class="input-check" v-if="codeStatus === 3"></span>
                     </div>
-                    <div :class="['error-text',{'text-hot': codeStatus === 2}]">
+                    <div :class="['error-text',{'text-hot': codeStatus === 2,'md-size': showQQAndPhone}]">
                     <span
                       :class="['sfa',{'sfa-error-gray-icon': codeStatus === 1 && codeErrorText !== '' ,'sfa-error-icon': codeStatus === 2 && codeErrorText !== '' }]"></span>
                       {{codeErrorText}}
                     </div>
-                    <div class="m-bottom-sm clearfix width-reg">
+                    <template v-if="showQQAndPhone">
+                     <div class="input-control" :class="{'md-size': showQQAndPhone}">
+                      <div class="input-icon phone"></div>
+                      <input type="text" class="register-input" name="phone"
+                             v-model.trim="phone" v-on:blur="inputBlur(3)" autocomplete="off"
+                             placeholder="请填写联系电话"/>
+                      <span class="input-tip">*非必填</span>
+                    </div>
+                    <div :class="['error-text',{'text-hot': phoneStatus === 2,'md-size': showQQAndPhone}]">
+                    <span
+                      :class="['sfa',{'sfa-error-gray-icon': phoneStatus === 1 && phoneErrorText !== '','sfa-error-icon': phoneStatus === 2 && phoneErrorText !== ''}]"></span>
+                      {{phoneErrorText}}
+                    </div>
+                    <div class="input-control" :class="{'md-size': showQQAndPhone}">
+                      <div class="input-icon qq"></div>
+                      <input type="text" class="register-input" name="qq"
+                             v-model.trim="qqNumber" v-on:blur="inputBlur(4)" autocomplete="off"
+                             placeholder="请填写QQ号码"/>
+                      <span class="input-tip">*必填</span>
+                    </div>
+                    <div :class="['error-text',{'text-hot': qqStatus === 2,'md-size': showQQAndPhone}]">
+                    <span
+                      :class="['sfa',{'sfa-error-gray-icon': qqStatus === 1 && qqErrorText !== '','sfa-error-icon': qqStatus === 2 && qqErrorText !== ''}]"></span>
+                      {{qqErrorText}}
+                    </div>
+                      <div class="input-control" :class="{'md-size': showQQAndPhone}">
+                        <div class="input-icon we-chat"></div>
+                        <input type="text" class="register-input" name="weChat"
+                               v-model.trim="weChatNum"
+                               v-on:blur="inputBlur(5)" autocomplete="off"
+                               placeholder="请填写微信号码"/>
+                        <span class="input-tip">*必填</span>
+                      </div>
+                      <div :class="['error-text',{'text-hot': weChatStatus === 2,'md-size': showQQAndPhone}]">
+                    <span
+                      :class="['sfa',{'sfa-error-gray-icon': weChatStatus === 1 && weChatErrorText !== '','sfa-error-icon': weChatStatus === 2 && weChatErrorText !== ''}]"></span>
+                        {{weChatErrorText}}
+                      </div>
+                    </template>
+                    <div class="m-bottom-sm clearfix promise-div">
                       <div class="pull-left">
                         <custom-checkbox v-model="agree"></custom-checkbox>
                       </div>
                       <span class="promise-hint pull-right">*我确定我已年满18岁，并已阅读和接受<a class="js-promise-open promise-link"
                                                                                   @click="showPromiseDailog">无限娱乐平台的政策及隐私声明协议。</a></span>
                     </div>
-
-                    <div class="text-left m-top-lg">
+                    <div class="btn-div" :class="{'md-size':showQQAndPhone}">
                       <button class="btn btn-cool ac-reg-btn" :disabled="!agree" @click="register"
                               data-loading-text="保存中">立即注册
                       </button>
                     </div>
-                    <div class="width-reg text-center m-top-md">
-                    <span class="text-auxiliary">已有账号?<a class="text-inverse m-left-xs"
+                    <div class="width-reg" :class="{'md-size':showQQAndPhone}">
+                    <span class="text-auxiliary" v-if="!showQQAndPhone">已有账号?<a class="text-inverse m-left-xs"
                                                          href="/index.html">请登录</a></span>
+                      <span class="clearfix text-auxiliary" v-else>
+                        <span class="pull-left">已有账号?</span>
+                        <span class="pull-right"><a class="text-inverse m-left-xs"
+                                 href="/index.html">请登录</a></span>
+                      </span>
                     </div>
                   </form>
                 </div>
@@ -386,9 +429,18 @@
         pwdErrorText: '',
         codeStatus: 1,
         codeErrorText: '',
+        phoneStatus:1,
+        phoneErrorText:'',
+        qqStatus:1,
+        qqErrorText:'',
+        weChatStatus:1,
+        weChatErrorText:'',
         userName: '',
         passWord: '',
         codeVal: '',
+        phone:'',
+        qqNumber:'',
+        weChatNum:'',
         agree: false,
         showPromise: false,
         swiperOption: {
@@ -422,8 +474,11 @@
         showRedPack: false,
         redPackTime: 60,
         qrtype: 0,
-        passwordInputType: 'text'
-
+        passwordInputType: 'text',
+        showQQAndPhone:false,  //特殊linkid需要显示qq 手机号 微信输入框
+        linkIdCfg:[
+          '729fe685061a40efbbda039b6f3f5cb9'
+        ]
       }
     },
     methods: {
@@ -483,8 +538,12 @@
           this.checkNameExist()
         } else if (type === 2) {
           this.valPassword()
-        } else {
-
+        } else if(type === 3){
+          this.checkPhoneNumber()
+        } else if(type === 4){
+          this.checkQQNumber()
+        } else if(type === 5){
+          this.checkWeChatNum()
         }
       },
 
@@ -564,6 +623,44 @@
           )
         }
       },
+      checkPhoneNumber(){
+        const phoneReg = /^[0-9]{11,11}$/
+        if(this.phone != '' && !phoneReg.test(this.phone)){
+          this.phoneStatus = 2
+          this.phoneErrorText = '您输入的手机号码格式不正确！请重新输入'
+          return false
+        }
+        this.phoneStatus = 3
+        this.phoneErrorText = ''
+        return true
+      },
+      checkQQNumber(){
+        const reg = /^[1-9][0-9]{4,15}$/
+        if(this.qqNumber === ''){
+          this.qqStatus = 2
+          this.qqErrorText = '请输入QQ号码'
+          return false
+        }else if(!reg.test(this.qqNumber)){
+          this.qqStatus = 2
+          this.qqErrorText = '您输入的QQ号码格式不正确！请重新输入'
+          return false
+        }else{
+          this.qqStatus = 3
+          this.qqErrorText = ''
+          return true
+        }
+      },
+      checkWeChatNum(){
+        if(this.weChatNum === ''){
+          this.weChatStatus = 2
+          this.weChatErrorText = '请输入微信号码'
+          return false
+        }else{
+          this.weChatStatus = 3
+          this.weChatErrorText = ''
+          return true
+        }
+      },
       strBetweenIsNumber (str, star, end) {
         const strArr = str.split('').slice(star, end)
         let isHasNumber = true
@@ -591,7 +688,20 @@
           this.codeErrorText = '请输入正确的验证码'
           return false
         }
-        registerApi({userName: this.userName, loginPwd: this.passWord, linkId: this.linkId},
+        if(this.showQQAndPhone){
+          if(!this.checkPhoneNumber()){
+            return false
+          }
+          if(!this.checkQQNumber()){
+            return false
+          }
+          if(!this.checkWeChatNum()){
+            return false
+          }
+        }
+
+        registerApi({userName: this.userName, loginPwd: this.passWord, linkId: this.linkId,
+            qqNum:this.qqNumber,phoneNo:this.phone,webchat:this.weChatNum},
           ({data}) => {
             if (data && data.result === 0) {
               window.Global.cookieCache.set('token', data.root.token, 150)
@@ -671,6 +781,7 @@
           }
         }
       )
+      this.showQQAndPhone = _(this.linkIdCfg).indexOf(this.linkId) > -1 ? true : false
     },
   }
 </script>
@@ -754,6 +865,9 @@
     position: relative;
     top: 140px;
     z-index: 1;
+    &.large{
+      height: 626px;
+    }
 
     .ac-reg-body {
 
@@ -777,6 +891,23 @@
         border-radius: 3px;
         border: solid 1px $im-line-color;
         position: relative;
+        &.md-size{
+          height: 40px;
+          .register-input {
+            height: 32px;
+          }
+          .input-icon{
+            width: 30px;
+            height: 30px;
+            margin: 6px 10px 0;
+            &.name,&.pwd,&.code{
+              background-size: 60% !important;
+            }
+          }
+          .input-check{
+            top: 11px;
+          }
+        }
         .input-icon {
           width: 50px;
           height: 50px;
@@ -789,6 +920,15 @@
           }
           &.code {
             background: url("./images/validation-icon.png") center no-repeat;
+          }
+          &.qq {
+            background: url("./images/qq-icon.png") center no-repeat;
+          }
+          &.phone {
+            background: url("./images/phone-icon.png") center no-repeat;
+          }
+          &.we-chat {
+            background: url("./images/wechat-icon.png") center no-repeat;
           }
         }
         .register-input {
@@ -809,6 +949,15 @@
           right: -25px;
           top: 15px;
         }
+        .input-tip{
+          display: inline-block;
+          color: #cccccc;
+          position: absolute;
+          right: -55px;
+          top: 11px;
+          text-align: left;
+          width: 50px;
+        }
       }
       .error-text {
         width: 439px;
@@ -816,6 +965,10 @@
         line-height: 40px;
         .sfa {
           transform: translateY(2px);
+        }
+        &.md-size{
+          height: 30px;
+          line-height: 30px;
         }
       }
 
@@ -850,9 +1003,19 @@
         text-decoration: underline;
         cursor: pointer;
       }
-
+      .promise-div{
+        width: 378px;
+      }
       .width-reg {
         width: 378px;
+        text-align: center;
+        margin-top: 20px;
+        &.md-size{
+          display: inline-block;
+          width: 115px;
+          vertical-align: top;
+          padding-left: 10px;
+        }
       }
       .help-inline {
         font-size: 12px;
@@ -865,11 +1028,27 @@
         position: absolute;
         top: 0;
         right: 0;
+        &.md-size{
+          height: 40px;
+        }
       }
-      .ac-reg-btn {
-        width: 380px;
-        height: 54px;
+      .btn-div{
+        text-align: left;
+        margin-top: 40px;
+        &.md-size{
+          margin-top: 10px;
+          display: inline-block;
+          .ac-reg-btn {
+            width: 256px;
+            height: 42px;
+          }
+        }
+        .ac-reg-btn {
+          width: 380px;
+          height: 54px;
+        }
       }
+
       .ac-reg-button {
         width: 260px;
         height: 50px;

@@ -25,7 +25,7 @@ const checkNameExistApi = ({username}, then, fail) => {
  * @param fail
  * @returns {*|Promise.<T>}
  */
-const registerApi = ({userName,loginPwd,linkId}, then, fail) => {
+const registerApi = ({userName,loginPwd,linkId,qqNum = '',phoneNo = '',webchat = ''}, then, fail) => {
   return $http({
     type: 'POST',
     url: '/acct/reg/doreg.json',
@@ -33,7 +33,10 @@ const registerApi = ({userName,loginPwd,linkId}, then, fail) => {
     data:{
       userName,
       loginPwd,
-      linkId
+      linkId,
+      qqNum,
+      phoneNo,
+      webchat
     },
   })
     .then(then)
