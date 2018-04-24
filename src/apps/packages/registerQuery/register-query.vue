@@ -42,7 +42,7 @@
         <td>{{user.phoneNo}}</td>
         <td>{{user.qqNo}}</td>
         <td>{{user.webchat}}</td>
-        <td>{{user.regTime}}</td>
+        <td>{{toTime(user.regTime)}}</td>
       </tr>
       </tbody>
     </table>
@@ -113,8 +113,7 @@
           ({data}) => {
             if (data && data.result === 0) {
               this.userList = (data.root && data.root.records) || []
-              this.totalSize = data.rowCount||0
-              // this.urlConnectTest(this.userList)
+              this.totalSize = (data.root && data.root.rowCount)||0
             }else{
               Global.ui.notification.show(data.msg)
             }
