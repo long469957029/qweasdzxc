@@ -21,6 +21,60 @@
   </style>
   <script type="text/javascript">
   </script>
+
+  <script>
+
+    (function(){
+      var mobile_flag = isMobile(); // true为PC端，false为手机端
+
+      if(mobile_flag){
+        var goToMobile = confirm('是否前往触屏版？')
+        if(goToMobile){
+          window.location.href = getMobileDomain();
+        }
+      }
+    })();
+
+    function isMobile() {
+      var userAgentInfo = navigator.userAgent;
+
+      var mobileAgents = [ "Android", "iPhone", "SymbianOS", "Windows Phone", "iPad","iPod"];
+
+      var mobile_flag = false;
+
+      //根据userAgent判断是否是手机
+      for (var v = 0; v < mobileAgents.length; v++) {
+        if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
+          mobile_flag = true;
+          break;
+        }
+      }
+
+      var screen_width = window.screen.width;
+      var screen_height = window.screen.height;
+
+      //根据屏幕分辨率判断是否是手机
+      if(screen_width < 500 && screen_height < 800){
+        mobile_flag = true;
+      }
+
+      return mobile_flag;
+    }
+    function getMobileDomain(){
+      let hostName = window.location.hostname
+      let hostNameAttrArr = hostName.split('.')
+      let newHostNameAttrArr = []
+      newHostNameAttrArr.unshift(hostNameAttrArr.pop())
+      newHostNameAttrArr.unshift(hostNameAttrArr.pop())
+      let secondDomain = hostNameAttrArr.pop()
+      secondDomain = 'm'
+      newHostNameAttrArr.unshift(secondDomain)
+      console.log(newHostNameAttrArr.join('.'))
+      return 'http://' + newHostNameAttrArr.join('.')
+    }
+
+
+  </script>
 </head>
 
 <body class="loading">
