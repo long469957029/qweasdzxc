@@ -114,7 +114,7 @@
             if (data && data.result === 0) {
               this.userList = (data.root && data.root.records) || []
               this.totalSize = data.rowCount||0
-              this.urlConnectTest(this.userList)
+              // this.urlConnectTest(this.userList)
             }else{
               Global.ui.notification.show(data.msg)
             }
