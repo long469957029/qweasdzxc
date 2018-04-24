@@ -178,11 +178,18 @@ const mutations = {
     Global.cookieCache.clear('security')
     Global.cookieCache.clear('isTestUser')
     Global.cookieCache.clear('userBindInfo')
-    window.Global.m.publish('acct:loginOut')
     // 关闭oauth轮询监听
-    window.Global.m.oauth.stop()
-    // 开启消息监听
-    window.Global.m.news.stop()
+    if(window.Global.m ){
+      window.Global.m.publish('acct:loginOut')
+      if(window.Global.m.oauth) {
+        // 关闭oauth轮询监听
+        window.Global.m.oauth.stop()
+      }
+      if(window.Global.m.news){
+        // 关闭消息监听
+        window.Global.m.news.stop()
+      }
+    }
     this.commit(types.TOGGLE_LOGOUT_DIALOG, false)
     this.commit(types.USER_IS_VIP, 0)
   },
