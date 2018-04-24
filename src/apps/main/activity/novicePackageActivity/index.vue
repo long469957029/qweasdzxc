@@ -139,6 +139,7 @@
                   <div class="panel-content-text">3、绑定银行卡：<span
                     class="panel-content-text red">奖励{{cardBonus}}元</span>
                   </div>
+                  <div class="panel-content-text">注：完成首冲24小时内发放</div>
                 </div>
               </div>
               <div class="panel-footer" @click="closeDialog"><a href="#/uc/pl" @click="closeDialog">去完善资料</a></div>
@@ -161,10 +162,11 @@
 </template>
 <script>
   import activityInfo from 'api/activity'
-  export default{
+
+  export default {
     name: 'novice-package',
 
-    data () {
+    data() {
       return {
         couponsList: [],
         couponsAmount: 0,
@@ -200,7 +202,7 @@
 
     components: {},
 
-    mounted () {
+    mounted() {
       this.getActivityData()
     },
 
@@ -229,7 +231,7 @@
     filters: {},
 
     methods: {
-      getActivityData(){
+      getActivityData() {
         activityInfo.getNovicePackageInfo(
           ({data}) => {
             if (data && data.result === 0) {
@@ -260,7 +262,7 @@
           }
         )
       },
-      openActivityDialog(){
+      openActivityDialog() {
         this.novicePackageModal = true
         this.initActivityData(this.data.root)
 //          $(this.$refs.novicePackageModal).modal({
@@ -274,7 +276,7 @@
 //              }
 //            })
       },
-      initActivityData(data){
+      initActivityData(data) {
         let couponsHeight = data.itemList.length
         let coupons = []
         if (couponsHeight <= 2) {
@@ -300,7 +302,7 @@
         this.bindStatus = data.bindStatus
         this.couponsStatus = data.couponStatus
       },
-      reviceCoupons(){
+      reviceCoupons() {
         activityInfo.doNovicePackage(
           ({data}) => {
             if (data && data.result === 0) {
@@ -316,7 +318,7 @@
             }
           })
       },
-      closeDialog(){
+      closeDialog() {
 //        this.novicePackageModal = false
         this.$store.commit(types.TOGGLE_NOVICE_PACKAGE, false)
       },
@@ -432,11 +434,11 @@
                 }
               }
               .panel-content {
-                height: 162px;
+                height: 167px;
                 border-bottom: 1px dashed #f2e3c8;
                 margin: 0 14px;
                 width: 174px;
-                padding-top: 15px;
+                padding-top: 0px;
                 .panel-content-img-panel {
                   width: 64px;
                   height: 64px;
