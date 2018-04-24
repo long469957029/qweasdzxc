@@ -624,7 +624,7 @@
         }
       },
       checkPhoneNumber(){
-        const phoneReg = /^[0-9]{11,11}$/
+        const phoneReg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])+\d{8}$/
         if(this.phone != '' && !phoneReg.test(this.phone)){
           this.phoneStatus = 2
           this.phoneErrorText = '您输入的手机号码格式不正确！请重新输入'
@@ -651,9 +651,14 @@
         }
       },
       checkWeChatNum(){
+        const reg = /^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}$/
         if(this.weChatNum === ''){
           this.weChatStatus = 2
           this.weChatErrorText = '请输入微信号码'
+          return false
+        }else if(!reg.test(this.weChatNum)){
+          this.weChatStatus = 2
+          this.weChatErrorText = '您输入的微信号码格式不正确！请重新输入'
           return false
         }else{
           this.weChatStatus = 3
