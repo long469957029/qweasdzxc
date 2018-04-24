@@ -60,7 +60,7 @@
       return {
         userList: [],
         username: '',
-        linkId: '1698f36287e3409aa0c338f23c4613c8',//729fe685061a40efbbda039b6f3f5cb9
+        linkId: '729fe685061a40efbbda039b6f3f5cb',//729fe685061a40efbbda039b6f3f5cb9
         // mobile:'',
         // qq:'',
         // wechat:'',
@@ -79,6 +79,10 @@
 
     watch: {},
     mounted() {
+      let id = _.getUrlParam('linkId');
+      if(id){
+        this.linkId = id
+      }
       this.getUserList();
       // $(this.$refs.date).datetimepicker({
       //   format: 'YYYY-MM-DD',
@@ -111,6 +115,8 @@
               this.userList = (data.root && data.root.records) || []
               this.totalSize = data.rowCount||0
               this.urlConnectTest(this.userList)
+            }else{
+              Global.ui.notification.show(data.msg)
             }
           },
           () => {
