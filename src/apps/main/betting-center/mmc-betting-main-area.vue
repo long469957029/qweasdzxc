@@ -98,23 +98,25 @@
                                                                                               :value="fTotalWinPrize"></animated-integer>元
               </span>
             </div>
-            <transition-group class="opening-group" ref="openingGroup" name="opening-cell" tag="div">
-              <div class="opening-cell" v-for="(openingResult, i) in fOpeningResultList" :key="openingResult.index">
-                <div class="opening-left">{{openingResult.title}}</div>
-                <div class="opening-center" v-if="!openingResult.completed">
-                  --------- 正在开奖 ---------
-                </div>
-                <div class="opening-center" v-else>
+            <div ref="openingGroup" class="opening-group">
+              <transition-group name="opening-cell" tag="div">
+                <div class="opening-cell" v-for="(openingResult, i) in fOpeningResultList" :key="openingResult.index">
+                  <div class="opening-left">{{openingResult.title}}</div>
+                  <div class="opening-center" v-if="!openingResult.completed">
+                    --------- 正在开奖 ---------
+                  </div>
+                  <div class="opening-center" v-else>
                   <span class="text-circle text-circle-xs"
                         :class="{'circle-winning': (!opening && i === 0) || (opening && i === 1)}"
                         v-for="num in openingResult.fOpenCode">{{num}}</span>
+                  </div>
+                  <div class="opening-right text-prominent " v-if="openingResult.completed && openingResult.winPrize">
+                    中奖{{openingResult.fWinPrize}}元
+                  </div>
+                  <div class="opening-right" v-else>{{openingResult.completed ? '未中奖' : ''}}</div>
                 </div>
-                <div class="opening-right text-prominent " v-if="openingResult.completed && openingResult.winPrize">
-                  中奖{{openingResult.fWinPrize}}元
-                </div>
-                <div class="opening-right" v-else>{{openingResult.completed ? '未中奖' : ''}}</div>
-              </div>
-            </transition-group>
+              </transition-group>
+            </div>
           </div>
         </div>
       </div>
@@ -1038,6 +1040,7 @@
         opacity: 1,
         railOpacity: 1,
       })
+
       $(this.$refs.openingGroup).slimScroll({
         height: 310,
         railVisible: true,
@@ -1050,7 +1053,7 @@
       })
     },
 
-    destroyed() {
+    beforeDestroy() {
       clearInterval(this.flashTimer)
     }
   }
@@ -1389,6 +1392,7 @@
     height: 40px;
     width: 200px;
     margin: 0 auto;
+    white-space: nowrap;
     .opening-title-inner {
       color: #ffc600;
     }

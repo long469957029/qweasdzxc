@@ -97,5 +97,7 @@
 </script>
 
 <style scoped>
-
+  .main-top{
+    min-width: 1200px;
+  }
 </style>

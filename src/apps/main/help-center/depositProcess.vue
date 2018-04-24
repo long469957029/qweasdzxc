@@ -9,6 +9,7 @@
           <div @click="checkTab(1)" :class="['res-desc-btn',{'activity': tType === 1}]">银行卡转账</div>
           <div @click="checkTab(2)" :class="['res-desc-btn',{'activity': tType === 2}]">微信转账</div>
           <div @click="checkTab(3)" :class="['res-desc-btn',{'activity': tType === 3}]">支付宝转账</div>
+          <div @click="checkTab(4)" :class="['res-desc-btn',{'activity': tType === 4}]">支付宝条码充值</div>
         </div>
         <!--银行卡转账-->
         <div v-if="tType === 1">
@@ -147,6 +148,36 @@
             如在支付中有任何疑问，欢迎咨询在线客服，我们将竭诚为您服务！
           </div>
         </div>
+        <div v-if="tType === 4">
+          <div class="res-desc">
+            为方便各位玩家随时补给，平台提供更多元的充值方式，新增【支付宝条码支付】，单笔充值金额最高1000，收取1％手续费。以下为相关存款流程：
+          </div>
+          <div class="res-desc res-desc-weight">
+            第一步：首先打开支付宝APP，点击支付宝上方“付钱”。
+          </div>
+          <div class="res-desc">
+            <img src="./misc/ali-code-1.png" width="60%" />
+          </div>
+          <div class="res-desc res-desc-weight">
+            第二步：向商家付钱条码下方点击“查看数字”。
+          </div>
+          <div class="res-desc">
+            <img src="./misc/ali-code-2.png" width="60%" />
+          </div>
+          <div class="res-desc res-desc-weight">
+            第三步：显示条码和18位付款码数字，在支付页面输入18位付款码数字点击立即支付。
+          </div>
+          <div class="res-desc">
+            <img src="./misc/ali-code-3.png" width="60%" />
+            <img src="./misc/ali-code-4.png" width="60%" />
+          </div>
+          <div class="res-desc res-desc-weight">
+            第四步：完成支付。
+          </div>
+          <div class="res-desc">
+            <img src="./misc/ali-code-5.png" width="60%" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -220,7 +251,8 @@
         width: 100%;
         height: 30px;
         .res-desc-btn {
-          width: 80px;
+          /*width: 80px;*/
+          padding: 0 10px;
           height: 26px;
           line-height: 26px;
           text-align: center;

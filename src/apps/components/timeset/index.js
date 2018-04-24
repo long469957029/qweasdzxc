@@ -37,6 +37,7 @@ Base.Prefab.Timeset = Base.PrefabView.extend({
     _.defaults(this.options.startOps, {
       format: 'YYYY-MM-DD H:mm:ss',
       useCurrent: false,
+      minDate: this.options.minDate,
       maxDate: this.options.endDate.toDate(),
       locale: moment.locale('zh-cn')
     })
@@ -44,6 +45,7 @@ Base.Prefab.Timeset = Base.PrefabView.extend({
     _.defaults(this.options.endOps, {
       format: 'YYYY-MM-DD H:mm:ss',
       useCurrent: false,
+      minDate: this.options.minDate,
       maxDate: this.options.endDate.toDate(),
       locale: moment.locale('zh-cn')
     })

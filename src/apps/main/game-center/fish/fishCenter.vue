@@ -159,6 +159,7 @@
     @include border-box();
     @include banner-background('./images/fc-bg-dark.png');
     width: 100%;
+    min-width: 1200px;
     height: 852px;
     overflow: hidden;
   }

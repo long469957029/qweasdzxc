@@ -1,6 +1,6 @@
 {
   "name": "global-wx-pc",
-  "version": "3.0.6-alpha",
+  "version": "3.0.7-beta",
   "description": "A globalbestsoft's font-end project",
   "repository": {
     "type": "git",
@@ -36,7 +36,8 @@
     "dll:prepare": "npm run dll:prepare:dev & npm run dll:prepare:prd",
     "dll:prepare:dev": "cross-env NODE_ENV=development gulp dll:prepare",
     "dll:prepare:prd": "cross-env NODE_ENV=production gulp dll:prepare",
-    "release": "cross-env NODE_ENV=production gulp release",
+    "release": "cross-env NODE_ENV=production ENVIRONMENT=staging gulp release",
+    "release:production": "cross-env NODE_ENV=production ENVIRONMENT=production gulp release",
     "sprite:all": "gulp build.sprite --target all",
     "sprite:normal": "gulp build.sprite --target sprites",
     "sprite:mmc": "gulp build.sprite --target spritesMMC",

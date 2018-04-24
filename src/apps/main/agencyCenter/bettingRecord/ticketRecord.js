@@ -82,6 +82,7 @@ const teamBettingRecordView = SearchGrid.extend({
       endDefaultDate: _(moment().endOf('day')).toTime(),
       showIcon: true,
       size: 'input-ml',
+      minDate:_(moment().subtract(30, 'days')).toTime()
     }).render()
     this.$('input[name="userName"]').val(this.options.userName)
 
