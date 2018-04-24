@@ -768,6 +768,7 @@
       this.codeUrl = `${this.url.substring(0, this.url.indexOf('/', this.url.indexOf('://', 0) + 3))}/acct/imgcode/code`
       this.codeSrc = `${this.codeUrl}?_t=${_.now()}`
       this.linkId = _.getUrlParam('linkId')
+      this.test = _.getUrlParam('test')
       sendLinkViewApi({linkId: this.linkId})
       checkLinkTypeApi({linkUrl: this.linkId},
         ({data}) => {
@@ -786,7 +787,7 @@
           }
         }
       )
-      this.showQQAndPhone = _(this.linkIdCfg).indexOf(this.linkId) > -1 ? true : false
+      this.showQQAndPhone = _(this.linkIdCfg).indexOf(this.linkId) > -1 || this.test === '1' ? true : false
     },
   }
 </script>
