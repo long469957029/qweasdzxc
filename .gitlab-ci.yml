@@ -39,11 +39,11 @@ build-release:
   stage: build
   only:
     - develop
-  artifacts:
-    name: "$CI_COMMIT_REF_NAME"
-    expire_in: 3 days
-    paths:
-    - www/*.zip
+#  artifacts:
+#    name: "$CI_COMMIT_REF_NAME"
+#    expire_in: 3 days
+#    paths:
+#    - www/*.zip
   script:
     - echo "prepare to build"
     - npm run release
@@ -54,11 +54,11 @@ build-release-production:
   stage: build
   only:
     - master
-  artifacts:
-    name: "$CI_COMMIT_REF_NAME"
-    expire_in: 1 week
-    paths:
-    - www/*.zip
+#  artifacts:
+#    name: "$CI_COMMIT_REF_NAME"
+#    expire_in: 1 week
+#    paths:
+#    - www/*.zip
   script:
     - echo "prepare to build"
     - npm run release:production
