@@ -60,7 +60,7 @@
       return {
         userList: [],
         username: '',
-        linkId: '729fe685061a40efbbda039b6f3f5cb',//729fe685061a40efbbda039b6f3f5cb9
+        linkId: '729fe685061a40efbbda039b6f3f5cb9',//729fe685061a40efbbda039b6f3f5cb9
         // mobile:'',
         // qq:'',
         // wechat:'',
