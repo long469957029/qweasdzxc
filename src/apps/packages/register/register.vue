@@ -704,7 +704,6 @@
           //   return false
           // }
         }
-
         registerApi({userName: this.userName, loginPwd: this.passWord, linkId: this.linkId,
             qqNum:this.qqNumber},
           ({data}) => {
