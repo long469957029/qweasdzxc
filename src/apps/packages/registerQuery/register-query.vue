@@ -24,24 +24,24 @@
     <table>
       <colgroup>
         <col width="100"><!--用户名-->
-        <col width="100"><!--手机-->
+        <!--<col width="100">&lt;!&ndash;手机&ndash;&gt;-->
         <col width="100"><!--qq-->
-        <col width="100"><!--微信-->
+        <!--<col width="100">&lt;!&ndash;微信&ndash;&gt;-->
         <col width="120"><!--注册时间-->
       </colgroup>
       <thead>
       <th>用户名</th>
-      <th>手机</th>
+      <!--<th>手机</th>-->
       <th>QQ</th>
-      <th>微信</th>
+      <!--<th>微信</th>-->
       <th>注册时间</th>
       </thead>
       <tbody>
       <tr v-for="user in userList">
         <td>{{user.username}}</td>
-        <td>{{user.phoneNo}}</td>
+        <!--<td>{{user.phoneNo}}</td>-->
         <td>{{user.qqNo}}</td>
-        <td>{{user.webchat}}</td>
+        <!--<td>{{user.webchat}}</td>-->
         <td>{{user.regTime|toTime}}</td>
       </tr>
       </tbody>
