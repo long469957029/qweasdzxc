@@ -139,7 +139,7 @@
                   <div class="panel-content-text">3、绑定银行卡：<span
                     class="panel-content-text red">奖励{{cardBonus}}元</span>
                   </div>
-                  <div class="panel-content-text">注：完成首冲24小时内发放</div>
+                  <div class="panel-content-text">注：完成首充24小时内发放</div>
                 </div>
               </div>
               <div class="panel-footer" @click="closeDialog"><a href="#/uc/pl" @click="closeDialog">去完善资料</a></div>
