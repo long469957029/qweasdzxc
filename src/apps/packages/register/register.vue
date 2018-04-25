@@ -36,7 +36,7 @@
       </div>
       <div id="fullpage" class="" ref="fullpage">
         <div class="section first-section " id="section1">
-          <div class="panel basic-white" :class="{'large': showQQAndPhone}">
+          <div class="panel basic-white">
             <div class="panel-main clearfix">
               <div class="clearfix ac-reg-body">
                 <div class="reg-ad pull-right">
@@ -93,18 +93,18 @@
                       {{codeErrorText}}
                     </div>
                     <template v-if="showQQAndPhone">
-                     <div class="input-control" :class="{'md-size': showQQAndPhone}">
-                      <div class="input-icon phone"></div>
-                      <input type="text" class="register-input" name="phone"
-                             v-model.trim="phone" v-on:blur="inputBlur(3)" autocomplete="off"
-                             placeholder="请填写联系电话"/>
-                      <span class="input-tip">*非必填</span>
-                    </div>
-                    <div :class="['error-text',{'text-hot': phoneStatus === 2,'md-size': showQQAndPhone}]">
-                    <span
-                      :class="['sfa',{'sfa-error-gray-icon': phoneStatus === 1 && phoneErrorText !== '','sfa-error-icon': phoneStatus === 2 && phoneErrorText !== ''}]"></span>
-                      {{phoneErrorText}}
-                    </div>
+                     <!--<div class="input-control" :class="{'md-size': showQQAndPhone}">-->
+                      <!--<div class="input-icon phone"></div>-->
+                      <!--<input type="text" class="register-input" name="phone"-->
+                             <!--v-model.trim="phone" v-on:blur="inputBlur(3)" autocomplete="off"-->
+                             <!--placeholder="请填写联系电话"/>-->
+                      <!--<span class="input-tip">*非必填</span>-->
+                    <!--</div>-->
+                    <!--<div :class="['error-text',{'text-hot': phoneStatus === 2,'md-size': showQQAndPhone}]">-->
+                    <!--<span-->
+                      <!--:class="['sfa',{'sfa-error-gray-icon': phoneStatus === 1 && phoneErrorText !== '','sfa-error-icon': phoneStatus === 2 && phoneErrorText !== ''}]"></span>-->
+                      <!--{{phoneErrorText}}-->
+                    <!--</div>-->
                     <div class="input-control" :class="{'md-size': showQQAndPhone}">
                       <div class="input-icon qq"></div>
                       <input type="text" class="register-input" name="qq"
@@ -117,19 +117,19 @@
                       :class="['sfa',{'sfa-error-gray-icon': qqStatus === 1 && qqErrorText !== '','sfa-error-icon': qqStatus === 2 && qqErrorText !== ''}]"></span>
                       {{qqErrorText}}
                     </div>
-                      <div class="input-control" :class="{'md-size': showQQAndPhone}">
-                        <div class="input-icon we-chat"></div>
-                        <input type="text" class="register-input" name="weChat"
-                               v-model.trim="weChatNum"
-                               v-on:blur="inputBlur(5)" autocomplete="off"
-                               placeholder="请填写微信号码"/>
-                        <span class="input-tip">*必填</span>
-                      </div>
-                      <div :class="['error-text',{'text-hot': weChatStatus === 2,'md-size': showQQAndPhone}]">
-                    <span
-                      :class="['sfa',{'sfa-error-gray-icon': weChatStatus === 1 && weChatErrorText !== '','sfa-error-icon': weChatStatus === 2 && weChatErrorText !== ''}]"></span>
-                        {{weChatErrorText}}
-                      </div>
+                      <!--<div class="input-control" :class="{'md-size': showQQAndPhone}">-->
+                        <!--<div class="input-icon we-chat"></div>-->
+                        <!--<input type="text" class="register-input" name="weChat"-->
+                               <!--v-model.trim="weChatNum"-->
+                               <!--v-on:blur="inputBlur(5)" autocomplete="off"-->
+                               <!--placeholder="请填写微信号码"/>-->
+                        <!--<span class="input-tip">*必填</span>-->
+                      <!--</div>-->
+                      <!--<div :class="['error-text',{'text-hot': weChatStatus === 2,'md-size': showQQAndPhone}]">-->
+                    <!--<span-->
+                      <!--:class="['sfa',{'sfa-error-gray-icon': weChatStatus === 1 && weChatErrorText !== '','sfa-error-icon': weChatStatus === 2 && weChatErrorText !== ''}]"></span>-->
+                        <!--{{weChatErrorText}}-->
+                      <!--</div>-->
                     </template>
                     <div class="m-bottom-sm clearfix promise-div">
                       <div class="pull-left">
@@ -694,19 +694,18 @@
           return false
         }
         if(this.showQQAndPhone){
-          if(!this.checkPhoneNumber()){
-            return false
-          }
+          // if(!this.checkPhoneNumber()){
+          //   return false
+          // }
           if(!this.checkQQNumber()){
             return false
           }
-          if(!this.checkWeChatNum()){
-            return false
-          }
+          // if(!this.checkWeChatNum()){
+          //   return false
+          // }
         }
-
         registerApi({userName: this.userName, loginPwd: this.passWord, linkId: this.linkId,
-            qqNum:this.qqNumber,phoneNo:this.phone,webchat:this.weChatNum},
+            qqNum:this.qqNumber},
           ({data}) => {
             if (data && data.result === 0) {
               window.Global.cookieCache.set('token', data.root.token, 150)
@@ -871,9 +870,9 @@
     position: relative;
     top: 140px;
     z-index: 1;
-    &.large{
-      height: 626px;
-    }
+    /*&.large{*/
+      /*height: 626px;*/
+    /*}*/
 
     .ac-reg-body {
 
