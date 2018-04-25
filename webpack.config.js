@@ -38,7 +38,8 @@ const appConfig = {
     logger: './src/apps/packages/logger/index.js',
     game: './src/apps/packages/game/index.js',
     game_error: './src/apps/packages/game_error/index.js',
-    charge:'./src/apps/packages/charge/index.js'
+    charge:'./src/apps/packages/charge/index.js',
+    registerQuery: './src/apps/packages/registerQuery'
   },
   port: 3002,
   entries: {
@@ -102,6 +103,11 @@ const appConfig = {
       template: './entry/package-vue.html',
       chunks: ['commons', 'base', 'charge']
     },
+    registerQuery:{
+      title: '无限娱乐',
+      template: './entry/package-vue.html',
+      chunks: ['commons','base','vendor', 'registerQuery']
+    }
     // 404: {
     //   title: '无限娱乐',
     //   template: './entry/package.html',
