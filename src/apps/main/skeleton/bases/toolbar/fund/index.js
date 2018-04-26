@@ -52,7 +52,7 @@ const FundView = Base.ItemView.extend({
       } else if (channelId === 6) {
         self.$('.jc-sidebar-gg').html(_(game.balance).format2yuan()) // gg余额
       } else if (channelId === 7) {
-        self.$('.jc-sidebar-sports').html(_(game.balance).format2yuan()) // gg余额
+        self.$('.jc-sidebar-sports').html(_(game.balance).format2yuan()) // 体育余额
       }
     })
   },
