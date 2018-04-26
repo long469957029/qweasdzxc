@@ -772,7 +772,7 @@
       checkLinkTypeApi({linkUrl: this.linkId},
         ({data}) => {
           if (data && data.result === 0) {
-            if(data.root.isBeyond){
+            if(data.root.beyond){
               this.showQQAndPhone = true
             }
             if (data.root.type === 5) {
