@@ -476,9 +476,9 @@
         qrtype: 0,
         passwordInputType: 'text',
         showQQAndPhone:false,  //特殊linkid需要显示qq 手机号 微信输入框
-        linkIdCfg:[
-          '729fe685061a40efbbda039b6f3f5cb9'
-        ]
+        // linkIdCfg:[
+        //   '729fe685061a40efbbda039b6f3f5cb9'
+        // ]
       }
     },
     methods: {
@@ -773,6 +773,9 @@
       checkLinkTypeApi({linkUrl: this.linkId},
         ({data}) => {
           if (data && data.result === 0) {
+            if(data.root.isBeyond){
+              this.showQQAndPhone = true
+            }
             if (data.root.type === 5) {
               recieveRedpackApi({linkId: this.linkId},
                 ({data}) => {
@@ -787,7 +790,7 @@
           }
         }
       )
-      this.showQQAndPhone = _(this.linkIdCfg).indexOf(this.linkId) > -1 ? true : false
+      // this.showQQAndPhone = _(this.linkIdCfg).indexOf(this.linkId) > -1 ? true : false
     },
   }
 </script>
