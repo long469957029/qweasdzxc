@@ -83,6 +83,7 @@
       if(id){
         this.linkId = id
       }
+      this.username = _.getUrlParam('username');
       this.getUserList();
       // $(this.$refs.date).datetimepicker({
       //   format: 'YYYY-MM-DD',
@@ -95,14 +96,18 @@
       //   this.resetData()
       // })
     },
-    computed: {},
+    computed: {
+      // ...mapGetters([
+      //   'username'
+      //   ])
+    },
     filters: {},
     methods: {
       getUserList() {
         getSpecialRegisterIdUserListApi(
           {
             username: this.username,
-            linkId: this.linkId,
+            // linkId: this.linkId,
             // mobile:this.mobile,
             // qq:this.qq,
             // wechat:this.wechat,
