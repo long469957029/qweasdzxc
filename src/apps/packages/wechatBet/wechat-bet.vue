@@ -47,7 +47,6 @@
   </div>
 </template>
 <script>
-  import {getSpecialRegisterIdUserListApi} from 'api/other'
   import {XPagination} from 'build'
 
   export default {
@@ -71,21 +70,7 @@
 
     watch: {},
     mounted() {
-      let id = _.getUrlParam('linkId');
-      if(id){
-        this.linkId = id
-      }
-      this.getUserList();
-      // $(this.$refs.date).datetimepicker({
-      //   format: 'YYYY-MM-DD',
-      //   useCurrent: false,
-      //   minDate: _(moment().endOf('day').add('-6', 'days')).toDate(),
-      //   maxDate: _(moment().endOf('day')).toDate(),
-      // }).on('dp.change', (e) => {
-      //   this.pageSize = ''
-      //   this.date = e.currentTarget.value
-      //   this.resetData()
-      // })
+
     },
     computed: {
       ...mapState({
@@ -94,32 +79,6 @@
     },
     filters: {},
     methods: {
-      getUserList() {
-        getSpecialRegisterIdUserListApi(
-          {
-            username: this.username,
-            linkId: this.linkId,
-            // mobile:this.mobile,
-            // qq:this.qq,
-            // wechat:this.wechat,
-            // time:this.time,
-            pageSize: this.pageSize,
-            pageIndex: this.pageIndex
-          },
-          ({data}) => {
-            if (data && data.result === 0) {
-              this.userList = (data.root && data.root.records) || []
-              this.totalSize = (data.root && data.root.rowCount)||0
-            }else{
-              Global.ui.notification.show(data.msg)
-            }
-          },
-          () => {
-            //this.userList = [{name: 'smile11111',qqNo: '888888',phoneNo: '012-222222',webchat: 'avi',regTime:'1524479846653'}]
-            Global.ui.notification.show('数据请求失败')
-          }
-        )
-      },
 
     },
 
