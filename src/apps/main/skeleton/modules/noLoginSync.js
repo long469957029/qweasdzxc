@@ -46,6 +46,8 @@ const urlList = [
   },
   {
     url: '/ticket/ticketmod/ticketlist.json',
+  }, {
+    url: '/acct/usernotice/getMallAdvertise.json'
   }
 ]
 module.exports = {
