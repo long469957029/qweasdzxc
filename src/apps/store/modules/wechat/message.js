@@ -15,7 +15,7 @@ const actions = {
 const mutations = {
   [types.UPDATE_DATACHED_MESSAGE_LIST] (state, messageList) {
     if (messageList && messageList.length>0) {
-      state.messageList.push(messageList)
+      state.messageList = state.messageList.concat(messageList)
     }
   },
 }
