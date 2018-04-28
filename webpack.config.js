@@ -39,7 +39,8 @@ const appConfig = {
     game: './src/apps/packages/game/index.js',
     game_error: './src/apps/packages/game_error/index.js',
     charge:'./src/apps/packages/charge/index.js',
-    registerQuery: './src/apps/packages/registerQuery'
+    registerQuery: './src/apps/packages/registerQuery',
+    wechatBet: './src/apps/packages/wechatBet'
   },
   port: 3002,
   entries: {
@@ -107,6 +108,11 @@ const appConfig = {
       title: '无限娱乐',
       template: './entry/package-vue.html',
       chunks: ['commons','base','vendor', 'registerQuery']
+    },
+    wechatBet: {
+      title: '微信龙虎',
+      template: './entry/package-vue.html',
+      chunks: ['commons','base','vendor','wechatBet']
     }
     // 404: {
     //   title: '无限娱乐',
@@ -190,7 +196,6 @@ let plugins = [
     Velocity: 'velocity-animate',
     Raven: 'raven-js',
     RouterController: ['RouterController', 'default'],
-
     consts: 'consts',
     types: 'types',
     ticketConfig: ['ticketConfig', 'default'],

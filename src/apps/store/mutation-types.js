@@ -158,3 +158,6 @@ export const IS_SEND = 'IS_SEND' //发送消息
 
 
 export const TRACKING_USER = 'TRACKING_USER' //tracking用户信息
+
+//wechatmessage  微信投注
+export const UPDATE_DATACHED_MESSAGE_LIST = 'UPDATE_DATACHED_MESSAGE_LIST'//更新store中未持久的信息列表
