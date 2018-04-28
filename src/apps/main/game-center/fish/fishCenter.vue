@@ -98,7 +98,7 @@
             .done((data) => {
                 if (data && data.result === 0) {
                   _(data.root).find((item) => {
-                    if (item.fundLock) {
+                    if (Global.memoryCache.get('acctInfo').foundsLock) {
                       Global.ui.notification.show('资金已锁定，暂不能进入游戏')
                       return false
                     }
