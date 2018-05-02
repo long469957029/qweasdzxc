@@ -3,7 +3,7 @@
     <div class="main-head">
       <div class="head-content clearfix">
         <div class="logo"></div>
-        <div class="time">活动时间:2018.13.14 ---- 2018.05.21</div>
+        <div class="time">活动时间:{{startTime}} ---- {{endTime}}</div>
         <div class="money money1"></div>
         <div class="money money2"></div>
         <div class="money money3"></div>
@@ -11,75 +11,247 @@
     </div>
     <div class="container">
       <div class="nav-tab">
-        <div class="tab" :class="{active:item === 2}" v-for="item in 4" :key="item">
-          <div class="mask" v-if="item === 1"></div>
-          <div class="tip" :class="{on:item === 1,over:item === 2,'not-open': item === 3,'expired':item === 4}"></div>
-          <div class="title">第一季度</div>
-          <div class="time">时间：2017.11.14～2017.11.14</div>
-          <div class="money">亏损：-- --</div>
-          <div class="money">奖励：-- --</div>
+        <div class="tab" :class="{active:item === item.status === 1}" v-for="(item,index) in quarterCfgList"
+             :key="index" @click="getUserDetail(index)">
+          <div class="mask" v-if="item.status === 0"></div>
+          <div class="tip" :class="{on:item.status === 1,over:item.status === 0,'not-open': item.status === 2}"></div>
+          <div class="title">{{quarterName[index]}}</div>
+          <div class="time">时间：{{item.beginDate}}～{{item.toDate}}</div>
+          <div class="money">亏损：{{formatProfitBonus(item.userDetail,'profit')}}</div>
+          <div class="money">奖励：{{formatProfitBonus(item.userDetail,'bonus')}}</div>
         </div>
       </div>
       <div class="content-info clearfix">
         <div class="data-formula">
-          <div class="data-info">团队亏损:
-            <span class="num"><animated-integer :value="teamLoss | convert2yuan"></animated-integer></span></div>
+          <div class="data-info">亏损-分红:
+            <span class="num"><animated-integer :value="profitSubDivid"></animated-integer></span></div>
           <div class="icon-x"></div>
           <div class="data-info">奖励比例:
-            <span class="num"><animated-integer :value="rewardRate | convert2yuan"></animated-integer></span></div>
+            <span class="num"><animated-integer :value="_(userDetail ? userDetail.bonusRate : 0).div(100)"></animated-integer></span></div>
           <div class="icon-equal"></div>
           <div class="data-info">奖励金额:
-            <span class="num"><animated-integer :value="rewardNum | convert2yuan"></animated-integer></span></div>
+            <span class="num"><animated-integer :value="userDetail ? userDetail.bonus : 0 | convert2yuan"></animated-integer></span></div>
         </div>
         <div class="button-program">
-          <div class="get-button" :class="formateQuarterGetStatus"></div>
-          <div class="quarter-program">
+          <div class="get-button" :class="formateQuarterGetStatus" @click="quarterGetStatus === 1 ? getBonus(1) : ''"></div>
+          <div class="quarter-program" @click="showDialog(1)">
             <span class="icon-program"></span>
             季度奖励方案>
           </div>
         </div>
         <div class="contribution">
-          贡献率=（盈亏-分红）/(投注-中奖-返点)=
-          <span class="num"><animated-integer :value="profitRate | convert2yuan"></animated-integer></span>
+          <div>贡献率=（盈亏-分红）/(投注-中奖-返点)=
+            <span class="num"><animated-integer :value="_(userDetail ? userDetail.profitRate : 0).div(100)"></animated-integer></span>
+          </div>
+          <div class="font-xs m-top-sm">注：团队盈亏为正时，团队亏损为0； 团队盈亏为负时，团队亏损为团队盈亏的绝对值</div>
         </div>
         <div class="datail-table">
           <div class="line"></div>
           <div class="tr">
-            <div class="td">团队投注：</div>
-            <div class="td">团队中奖：</div>
-            <div class="td">团队返点：</div>
+            <div class="td">团队投注：<animated-integer :value="userDetail ? userDetail.bet : 0 | convert2yuan"></animated-integer></div>
+            <div class="td">团队中奖：<animated-integer :value="userDetail ? userDetail.prize : 0 | convert2yuan"></animated-integer></div>
+            <div class="td">团队返点：<animated-integer :value="userDetail ? userDetail.rebate : 0 | convert2yuan"></animated-integer></div>
           </div>
           <div class="line"></div>
           <div class="tr">
-            <div class="td">活动成本:  1314</div>
-            <div class="td">团队盈亏:  1314</div>
-            <div class="td">团队分红:  1314</div>
+            <div class="td">活动成本：<animated-integer :value="userDetail ? userDetail.activity : 0 | convert2yuan"></animated-integer></div>
+            <div class="td">团队盈亏：<animated-integer :value="userDetail ? userDetail.profit : 0 | convert2yuan"></animated-integer></div>
+            <div class="td">团队分红：<animated-integer :value="userDetail ? userDetail.divid : 0 | convert2yuan"></animated-integer></div>
           </div>
           <div class="line"></div>
         </div>
       </div>
+      <div class="year-count">
+        <div class="year-info">
+          <div class="left">
+            <div class="year-statistics">年度奖励统计：<animated-integer :value="yearBonus | convert2yuan"></animated-integer></div>
+            <div class="year-program" @click="showDialog(2)">
+              <span class="icon-program"></span>
+              年度奖励方案>
+            </div>
+          </div>
+          <div class="get-button right" :class="formateYearGetStatus" @click="yearGetStatus === 1 ? getBonus(2) : ''"></div>
+        </div>
+        <div class="clearfix">
+          <div class="schedule">
+            <div class="title">年度亏损</div>
+            <div class="prograss">
+              <div class="prograss-info" :style="{width: '50%'}">30000</div>
+            </div>
+          </div>
+          <div class="schedule">
+            <div class="title">贡献率</div>
+            <div class="prograss">
+              <div class="prograss-info" :style="{width: '50%'}">30000</div>
+            </div>
+          </div>
+          <div class="schedule">
+            <div class="title">奖励比例</div>
+            <div class="prograss">
+              <div class="prograss-info" :style="{width: '50%'}">30000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-transfer-dom>
+      <x-dialog v-model="dialogStatus" styles="" ref="modal">
+        <div class="modal-annual-size clearfix" slot="all">
+          <a data-dismiss="modal" class="modal-close btn-close"></a>
+          <div class="dialog-title">{{dialogTitle}}度奖励方案</div>
+          <div class="dialog-table">
+            <div class="tr title-line">
+              <div class="td">亏损金额</div>
+              <div class="td">净亏损率</div>
+              <div class="td">奖励金额</div>
+            </div>
+            <div class="tr" v-for="(item,index) in tableList" :key="index">
+              <div class="td">{{item.profit | convert2yuan}}</div>
+              <div class="td">{{_(item.profitRate).div(100)}}</div>
+              <div class="td">{{item.bonusRate | convert2yuan}}</div>
+            </div>
+          </div>
+        </div>
+      </x-dialog>
     </div>
   </div>
 </template>
 <script>
+  import {
+    getAnnualRewardfgApi,
+    getQuarterRewardApi,
+    getYearRewardApi
+  } from 'api/activity'
   export default {
     name:'annual-reward',
     data(){
       return{
         startTime:'',
         endTime:'',
-        teamLoss:0,
-        rewardRate:0,
-        rewardNum:0,
+        // bonusRate:0,//奖励比例
+        // bonus:0,//奖励金额
         quarterGetStatus:0,//0未达标1未领取2已领取
         yearGetStatus:0,//0未达标1未领取2已领取
-        profitRate:0,//贡献率
+        // profitRate:0,//贡献率
+        // profit:0,//团队盈亏
+        // bet:0,//团队投注
+        // prize:0,//团队中奖
+        // rebate:0,//团队返点
+        // activity:0,//活动成本
+        // divid:0,//团队分红
+        yearBonus:0,//年度统计
+        yearProfit:0,//团队亏损
+        yearBonusRate:0,//奖励比例
+        yearProfitRate:0,//年度贡献率
+        dialogStatus:false,
+        dialogTitle:'季',
+        //quarterTabList:[],//tab切换列表
+        quarterCfgList:[],//季度奖励配置
+        yearCfgList:[],// 年度奖励配置
+        isLastYear:0,
+        showLastYear:false,
+        tableList:[],//弹窗列表
+        quarterIndex:0,//当前是第几季度
+        userDetail:{},//当前季度用户详情
+        quarterName:[
+          '第一季度',
+          '第二季度',
+          '第三季度',
+          '第四季度'
+        ]
       }
     },
     computed:{
       formateQuarterGetStatus(){
         return this.quarterGetStatus === 0 ? 'disable' : (this.quarterGetStatus === 1 ? 'get' : 'has-get')
+      },
+      formateYearGetStatus(){
+        return this.yearGetStatus === 0 ? 'disable' : (this.yearGetStatus === 1 ? 'get' : 'has-get')
+      },
+      profitSubDivid(){
+        if(_(this.userDetail).isNull || this.userDetail.profit > 0){
+          return 0
+        }else{
+          return _(this.userDetail.profit - this.userDetail.divid).convert2yuan()
+        }
       }
+    },
+    methods:{
+      getConfig(){
+        getAnnualRewardfgApi({isLastYear: this.isLastYear},
+          ({data}) => {
+            if(data.result === 0){
+              const root = data.root
+              this.startTime = _(root.fromDate).toTime('YYYY.MM.DD')
+              this.endTime = _(root.endDate).toTime('YYYY.MM.DD')
+              this.quarterCfgList = [...root.quarterCfgList]
+              if(this.quarterCfgList.userDetail){
+                const quarterIndex = _(this.quarterCfgList).findIndex({status:1})
+                //this.userDetail = _(this.quarterCfgList).findWhere({status:1}).userDetail
+                this.getUserDetail(quarterIndex)
+              }
+              this.yearCfgList = [...root.yearCfgList]
+              this.showLastYear = this.yearCfgList.lastYearOpen
+              const yearUserDetail = this.yearCfgList.userDetail
+              if(yearUserDetail){
+                this.yearBonus = yearUserDetail.bonus
+                this.yearProfit = yearUserDetail.profit
+                this.yearBonusRate = yearUserDetail.bonusRate
+                this.yearProfitRate = yearUserDetail.profitRate
+                this.yearGetStatus = yearUserDetail.getStatus
+              }
+            }
+          },
+          ({data}) => {
+            Global.ui.notification.show(data.msg === 'fail' ? '获取活动配置失败' : data.msg)
+          }
+        )
+      },
+      getUserDetail(index){
+        this.userDetail = this.quarterCfgList[index].userDetail
+        this.quarterGetStatus = this.userDetail.getStatus
+        this.quarterIndex = index
+      },
+      formatProfitBonus(data,name){
+        if(!_(data).isNull){
+          if(name === 'profit'){
+            return data.profit > 0 ? 0 : _(data.profit).convert2yuan()
+          }else{
+            return _(data.bonus).convert2yuan()
+          }
+        }else{
+          return '-- --'
+        }
+      },
+      showDialog(type){ // 1代表季度 2代表年度
+        if(type === 1){
+          this.tableList = this.quarterCfgList[this.quarterIndex].itemList
+          this.dialogTitle = '季'
+        }else{
+          this.tableList = this.yearCfgList[0].itemList
+          this.dialogTitle = '年'
+        }
+         this.dialogStatus = true
+      },
+      getBonus(type){
+        const api = type === 1 ? getQuarterRewardApi : getYearRewardApi
+        api({isLastYear:this.isLastYear},
+          ({data}) => {
+            if(data.result === 0){
+              Global.ui.notification.show('领取奖励成功')
+              this.getConfig()
+            }else{
+              Global.ui.notification.show(data.msg === 'fail' ? '领取奖励失败' : data.msg)
+            }
+          },
+          ({data}) => {
+            Global.ui.notification.show(data.msg === 'fail' ? '领取奖励失败' : data.msg)
+          }
+        )
+      }
+    },
+    mounted(){
+      this.getConfig()
     }
   }
 </script>
@@ -90,6 +262,19 @@
     height: 100%;
     min-width: 1100px;
     background: url("./assets/main-bg.png");
+    position: relative;
+    z-index: 1;
+    &:before{
+      content: '';
+      width: 100%;
+      height: 463px;
+      background: url("./assets/bg-bottom.png") no-repeat center;
+      position: absolute;
+      bottom: 0;
+      display: block;
+      left: 0;
+      z-index: -1;
+    }
   }
   .main-head{
     width: 100%;
@@ -140,6 +325,7 @@
   .container{
     width: 1100px;
     margin: 0 auto;
+    z-index: 2;
     .nav-tab{
       width: 100%;
       height: 200px;
@@ -151,6 +337,7 @@
       height: 185px;
       background: url("./assets/tab-bg.png") no-repeat;
       position: relative;
+      cursor: pointer;
       &.active{
         &:after{
           content: '';
@@ -232,12 +419,13 @@
     }
     .content-info{
       width: 1100px;
-      height: 458px;
+      height: 495px;
       //background-color: #3b3b6d;
       background: rgba(59,59,109,.45);
       box-shadow: 0px 4px 16px 0px
       rgba(21, 21, 46, 0.72);
       border-radius: 20px;
+      margin-bottom: 40px;
       .data-formula{
         display: flex;
         width: 100%;
@@ -279,20 +467,7 @@
         align-items: center;
         justify-content: center;
         padding-left: 100px;
-        .get-button{
-          width: 218px;
-          height: 85px;
-          cursor: pointer;
-          &.get{
-            background: url("./assets/button-get.png") no-repeat;
-          }
-          &.disable{
-            background: url("./assets/button-disable.png") no-repeat;
-          }
-          &.has-get{
-            background: url("./assets/button-has-get.png") no-repeat;
-          }
-        }
+
         .quarter-program{
           color: #cfb58e;
           font-size: 16px;
@@ -301,12 +476,6 @@
           margin-left: 48px;
           cursor: pointer;
           text-decoration: underline;
-          .icon-program{
-            background: url("./assets/icon-program.png") no-repeat;
-            width: 30px;
-            height: 34px;
-            margin-right: 9px;
-          }
         }
       }
       .contribution{
@@ -338,7 +507,177 @@
             line-height: 65px;
             font-size: 16px;
             color: #656695;
+            padding-left: 10%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
+        }
+      }
+    }
+    .icon-program{
+      display: inline-block;
+      background: url("./assets/icon-program.png") no-repeat;
+      width: 30px;
+      height: 34px;
+      margin-right: 9px;
+    }
+    .get-button{
+      width: 218px;
+      height: 85px;
+      cursor: pointer;
+      &.get{
+        background: url("./assets/button-get.png") no-repeat;
+      }
+      &.disable{
+        background: url("./assets/button-disable.png") no-repeat;
+      }
+      &.has-get{
+        background: url("./assets/button-has-get.png") no-repeat;
+      }
+    }
+    .year-count{
+      width: 1100px;
+      margin: 0 auto;
+      padding-bottom: 100px;
+      .year-info{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .left{
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+      }
+      .right{
+        margin-right: 10px;
+      }
+      .year-statistics{
+        font-size: 26px;
+        color: #cdb38d;
+      }
+      .year-program{
+        display: flex;
+        align-items: center;
+        margin-left: 84px;
+        font-size: 16px;
+        color: #cfb58e;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+      .schedule{
+        width: 1080px;
+        height: 24px;
+        margin: 40px auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .title{
+          width: 110px;
+          font-size: 24px;
+          color: #cdb38d;
+          padding-left: 35px;
+          position: relative;
+          &:before{
+            content: '';
+            display: block;
+            background: url("./assets/icon-diamond.png") no-repeat;
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            left: 0;
+            top: 3px;
+          }
+        }
+        .prograss{
+          width: 884px;
+          height: 22px;
+          background-color: #343464;
+          box-shadow: 0px 1px 1px 0px
+          #61618f,
+          inset 0px 1px 1px 0px
+          rgba(0, 0, 0, 0.71);
+          border-radius: 11px;
+          position: relative;
+          .prograss-info{
+            position: absolute;
+            height: 100%;
+            background-color: #cdb38d;
+            border-radius: 11px;
+            text-align: right;
+            padding-right: 20px;
+            color: #70180a;
+            font-size: 16px;
+            line-height: 22px;
+          }
+        }
+      }
+    }
+  }
+  .modal-annual-size{
+    width: 730px;
+    max-height: 450px;
+    padding-bottom: 20px;
+    background: url("./assets/dialog-bg.png");
+    position: relative;
+    .modal-close{
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      background: url("./assets/dialog-close.png") no-repeat;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+    .dialog-title{
+      width: 308px;
+      height: 65px;
+      background: url("./assets/dialog-title.png") no-repeat;
+      position: absolute;
+      top: -27.5px;
+      left: 50%;
+      margin-left: -154px;
+      color: #70180a;
+      font-family: ltthj;
+      font-size: 30px;
+      text-align: center;
+      line-height: 65px;
+    }
+    .dialog-table{
+      width: 664px;
+      /*height: 412px;*/
+      border: solid 1px #c1c1ff;
+      margin: 57px auto 30px;
+      .tr{
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom:1px solid #ffffff;
+        .td{
+          width: 33.3%;
+          font-size: 14px;
+          color: #c1c1ff;
+          border-right:1px solid #ffffff;
+          text-align: center;
+          &:last-child{
+            border: none;
+          }
+        }
+        &.title-line{
+          height: 50px;
+          line-height: 50px;
+          background-color: #242451;
+          .td{
+            color: #cfb58e;
+          }
+        }
+        &:last-child{
+          border: none;
         }
       }
     }
