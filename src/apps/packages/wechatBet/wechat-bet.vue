@@ -5,7 +5,6 @@
         <span class="data-title">用户名</span>
         <input type="text" name="username" class="input"/>
         <span class="data-title">链接ID</span>
-        <input type="text" name="linkId" :value="linkId" class="input hidden"/>
 
         <!--<span class="data-title">手机</span>http://game.5x5x.info/register.html?linkId=729fe685061a40efbbda039b6f3f5cb9-->
         <!--<input type="text" name="mobile" class="input"/>-->
@@ -18,7 +17,6 @@
         <!--<input type="text" ref="date" v-model="date"/>-->
         <!--<span class="timer-calendar sfa-icon-time" @click="$($refs.date).data('DateTimePicker').show()"></span>-->
         <!--</div>-->
-        <button type="button" class="query" @click="getUserList">查询</button>
       </div>
     </form>
     <table>
@@ -38,7 +36,7 @@
       <tr v-for="message in messageList">
         <td>{{message.groupName}}</td>
         <td>{{message.date}}</td>
-        <td>{{message.useruname}}</td>
+        <td>{{message.nickName}}</td>
         <td>{{message.content}}</td>
       </tr>
       </tbody>
@@ -74,7 +72,7 @@
     },
     computed: {
       ...mapState({
-        messageList: state => state.wechat.messageList,
+        messageList: state => state.wechatMessage.messageList,
       }),
     },
     filters: {},

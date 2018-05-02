@@ -37,3 +37,4 @@ window.Global.module('ui.dialog', DialogModule)
     el: '#main',
   })
 
+window.store.commit(types.UPDATE_DATACHED_MESSAGE_LIST,[{nickName:'abc',date:'2017-02-01',content:'abc',groupName:'dd'},{nickName:'efg',date:'2017-02-01',content:'abc',groupName:'ddd'}])
