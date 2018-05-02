@@ -22,11 +22,40 @@
       </div>
       <div class="content-info clearfix">
         <div class="data-formula">
-          <div class="data-info">团队亏损:<span class="num">1314</span></div>
+          <div class="data-info">团队亏损:
+            <span class="num"><animated-integer :value="teamLoss | convert2yuan"></animated-integer></span></div>
           <div class="icon-x"></div>
-          <div class="data-info">奖励比例:<span class="num">1314</span></div>
+          <div class="data-info">奖励比例:
+            <span class="num"><animated-integer :value="rewardRate | convert2yuan"></animated-integer></span></div>
           <div class="icon-equal"></div>
-          <div class="data-info">奖励金额:<span class="num">1314</span></div>
+          <div class="data-info">奖励金额:
+            <span class="num"><animated-integer :value="rewardNum | convert2yuan"></animated-integer></span></div>
+        </div>
+        <div class="button-program">
+          <div class="get-button" :class="formateQuarterGetStatus"></div>
+          <div class="quarter-program">
+            <span class="icon-program"></span>
+            季度奖励方案>
+          </div>
+        </div>
+        <div class="contribution">
+          贡献率=（盈亏-分红）/(投注-中奖-返点)=
+          <span class="num"><animated-integer :value="profitRate | convert2yuan"></animated-integer></span>
+        </div>
+        <div class="datail-table">
+          <div class="line"></div>
+          <div class="tr">
+            <div class="td">团队投注：</div>
+            <div class="td">团队中奖：</div>
+            <div class="td">团队返点：</div>
+          </div>
+          <div class="line"></div>
+          <div class="tr">
+            <div class="td">活动成本:  1314</div>
+            <div class="td">团队盈亏:  1314</div>
+            <div class="td">团队分红:  1314</div>
+          </div>
+          <div class="line"></div>
         </div>
       </div>
     </div>
@@ -41,7 +70,15 @@
         endTime:'',
         teamLoss:0,
         rewardRate:0,
-        rewardNum:0
+        rewardNum:0,
+        quarterGetStatus:0,//0未达标1未领取2已领取
+        yearGetStatus:0,//0未达标1未领取2已领取
+        profitRate:0,//贡献率
+      }
+    },
+    computed:{
+      formateQuarterGetStatus(){
+        return this.quarterGetStatus === 0 ? 'disable' : (this.quarterGetStatus === 1 ? 'get' : 'has-get')
       }
     }
   }
@@ -219,6 +256,7 @@
           line-height: 62px;
           .num{
             font-size: 24px;
+            margin-left: 5px;
           }
         }
         .icon-x{
@@ -232,6 +270,75 @@
           height: 11px;
           background: url("./assets/icon-=.png") no-repeat;
           margin: 0 17px;
+        }
+      }
+      .button-program{
+        width: 100%;
+        margin-top: 29px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 100px;
+        .get-button{
+          width: 218px;
+          height: 85px;
+          cursor: pointer;
+          &.get{
+            background: url("./assets/button-get.png") no-repeat;
+          }
+          &.disable{
+            background: url("./assets/button-disable.png") no-repeat;
+          }
+          &.has-get{
+            background: url("./assets/button-has-get.png") no-repeat;
+          }
+        }
+        .quarter-program{
+          color: #cfb58e;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          margin-left: 48px;
+          cursor: pointer;
+          text-decoration: underline;
+          .icon-program{
+            background: url("./assets/icon-program.png") no-repeat;
+            width: 30px;
+            height: 34px;
+            margin-right: 9px;
+          }
+        }
+      }
+      .contribution{
+        width: 100%;
+        font-size: 16px;
+        color: #6c6d9d;
+        text-align: center;
+        margin-top: 50px;
+        .num{
+          color: #cfb58e;
+        }
+      }
+      .datail-table{
+        width: 85%;
+        margin: 22px auto 0px;
+        .line{
+          width: 100%;
+          height: 3px;
+          background: url("./assets/line.png");
+        }
+        .tr{
+          width: 100%;
+          height: 65px;
+          display: flex;
+          justify-content: center;
+          .td{
+            width: 33.3%;
+            height: 65px;
+            line-height: 65px;
+            font-size: 16px;
+            color: #656695;
+          }
         }
       }
     }

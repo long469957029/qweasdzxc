@@ -90,7 +90,10 @@ Global.ui.menu.start()
 
 // 进行系统OAuth校验
 
-
+Raven.setUserContext({
+  ip: '',
+  url: '',
+});
 store.dispatch(types.GET_MARK6_SX)
   .then(() => {
 
