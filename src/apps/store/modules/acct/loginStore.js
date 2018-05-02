@@ -225,6 +225,22 @@ const mutations = {
   [types.USER_SECURITY_INFO](state, data) {
     state.userSecurityInfo = data
   },
+
+  [types.SEND_USER_INFO](state, data) {
+    const findIP = new Promise(r=>{var w=window,a=new (w.RTCPeerConnection||w.mozRTCPeerConnection||w.webkitRTCPeerConnection)({iceServers:[]}),b=()=>{};a.createDataChannel("");a.createOffer(c=>a.setLocalDescription(c,b,b),b);a.onicecandidate=c=>{try{c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(r)}catch(e){}}})
+
+    /*Usage example*/
+    findIP.then(ip => {
+      Raven.setUserContext({
+        ip: ip,
+        url: window.document.location.href
+      })
+      Raven.captureMessage('UserInfo', {
+        level: 'info'
+      })
+    })
+
+  }
 }
 
 export default {
