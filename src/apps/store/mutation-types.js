@@ -158,3 +158,7 @@ export const IS_SEND = 'IS_SEND' //发送消息
 
 
 export const TRACKING_USER = 'TRACKING_USER' //tracking用户信息
+
+
+//sentry数据行为
+export const SEND_USER_INFO = 'SEND_USER_INFO'
