@@ -76,23 +76,30 @@
           <div class="schedule">
             <div class="title">年度亏损</div>
             <div class="prograss">
-              <div class="prograss-info" :style="{width: '50%'}">30000</div>
+              <div class="prograss-info" :style="{width: yearProfit >= 0 ? '' : `${_(Number(yearProfit)).convert2yuan()/10000000*100}%`}">
+                {{yearProfit >= 0 ? 0 : yearProfit | convert2yuan}}
+              </div>
             </div>
           </div>
           <div class="schedule">
             <div class="title">贡献率</div>
             <div class="prograss">
-              <div class="prograss-info" :style="{width: '50%'}">30000</div>
+              <div class="prograss-info" :style="{width: `${_(yearProfitRate).div(10000)*100 > 3 ? _(yearProfitRate).div(10000)*100 : 3}%`}">
+                {{_(yearProfitRate).div(100)}}%</div>
             </div>
           </div>
           <div class="schedule">
             <div class="title">奖励比例</div>
             <div class="prograss">
-              <div class="prograss-info" :style="{width: '50%'}">30000</div>
+              <div class="prograss-info" :style="{width: `${_(yearBonusRate).div(10000)*100 > 3 ? _(yearBonusRate).div(10000)*100 : 3}%`}">
+                {{_(yearBonusRate).div(100)}}%</div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="last-year" v-if="showLastYear" @click="changLastYear">
+      <div class="text">{{isLastYear === 0 ? '上年度活动' : '本年度活动'}}</div>
     </div>
     <div v-transfer-dom>
       <x-dialog v-model="dialogStatus" styles="" ref="modal">
@@ -128,17 +135,8 @@
       return{
         startTime:'',
         endTime:'',
-        // bonusRate:0,//奖励比例
-        // bonus:0,//奖励金额
         quarterGetStatus:0,//0未达标1未领取2已领取
         yearGetStatus:0,//0未达标1未领取2已领取
-        // profitRate:0,//贡献率
-        // profit:0,//团队盈亏
-        // bet:0,//团队投注
-        // prize:0,//团队中奖
-        // rebate:0,//团队返点
-        // activity:0,//活动成本
-        // divid:0,//团队分红
         yearBonus:0,//年度统计
         yearProfit:0,//团队亏损
         yearBonusRate:0,//奖励比例
@@ -169,10 +167,10 @@
         return this.yearGetStatus === 0 ? 'disable' : (this.yearGetStatus === 1 ? 'get' : 'has-get')
       },
       profitSubDivid(){
-        if(_(this.userDetail).isNull || this.userDetail.profit > 0){
+        if(_(this.userDetail).isNull() || this.userDetail.profit > 0){
           return 0
         }else{
-          return _(this.userDetail.profit - this.userDetail.divid).convert2yuan()
+          return _(this.userDetail.profit + this.userDetail.divid).convert2yuan()
         }
       }
     },
@@ -185,14 +183,14 @@
               this.startTime = _(root.fromDate).toTime('YYYY.MM.DD')
               this.endTime = _(root.endDate).toTime('YYYY.MM.DD')
               this.quarterCfgList = [...root.quarterCfgList]
-              if(this.quarterCfgList.userDetail){
-                const quarterIndex = _(this.quarterCfgList).findIndex({status:1})
+              const quarterIndex = _(this.quarterCfgList).findIndex({status:1})
+              if(this.quarterCfgList[quarterIndex].userDetail){
                 //this.userDetail = _(this.quarterCfgList).findWhere({status:1}).userDetail
                 this.getUserDetail(quarterIndex)
               }
               this.yearCfgList = [...root.yearCfgList]
-              this.showLastYear = this.yearCfgList.lastYearOpen
-              const yearUserDetail = this.yearCfgList.userDetail
+              this.showLastYear = this.yearCfgList[0].lastYearOpen
+              const yearUserDetail = this.yearCfgList[0].userDetail
               if(yearUserDetail){
                 this.yearBonus = yearUserDetail.bonus
                 this.yearProfit = yearUserDetail.profit
@@ -209,11 +207,13 @@
       },
       getUserDetail(index){
         this.userDetail = this.quarterCfgList[index].userDetail
-        this.quarterGetStatus = this.userDetail.getStatus
+        if(this.userDetail){
+          this.quarterGetStatus = this.userDetail.getStatus
+        }
         this.quarterIndex = index
       },
       formatProfitBonus(data,name){
-        if(!_(data).isNull){
+        if(!_(data).isNull()){
           if(name === 'profit'){
             return data.profit > 0 ? 0 : _(data.profit).convert2yuan()
           }else{
@@ -248,6 +248,10 @@
             Global.ui.notification.show(data.msg === 'fail' ? '领取奖励失败' : data.msg)
           }
         )
+      },
+      changLastYear(){
+        this.isLastYear = this.isLastYear === 0 ? 1 : 0
+        this.getConfig()
       }
     },
     mounted(){
@@ -601,13 +605,15 @@
           rgba(0, 0, 0, 0.71);
           border-radius: 11px;
           position: relative;
+          overflow: hidden;
           .prograss-info{
+            /*min-width: 50px;*/
             position: absolute;
             height: 100%;
             background-color: #cdb38d;
             border-radius: 11px;
             text-align: right;
-            padding-right: 20px;
+            padding:0px 10px;
             color: #70180a;
             font-size: 16px;
             line-height: 22px;
@@ -680,6 +686,23 @@
           border: none;
         }
       }
+    }
+  }
+  .last-year{
+    position: fixed;
+    width: 75px;
+    height: 180px;
+    background: url("./assets/last-year.png") no-repeat;
+    top: 50%;
+    margin-top: -90px;
+    right: 50px;
+    cursor: pointer;
+    .text{
+      color: #1c1c38;
+      writing-mode: vertical-lr;
+      font-size: 22px;
+      font-family: ltthj;
+      transform: translate(42px,-15px);
     }
   }
 </style>

@@ -25,7 +25,7 @@
     "font": "ltthj.ttf",
     "dest": "./src/base/fonts",
     "target": "ltthj",
-    "text": "一二三四第季度年奖励方案",
+    "text": "一二三四第季度年奖励方案上活动",
     "targets": [
       "woff",
       "eot",
