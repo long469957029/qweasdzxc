@@ -12,7 +12,7 @@
     <div class="container">
       <div class="nav-tab">
         <div class="tab" :class="{active:item === item.status === 1}" v-for="(item,index) in quarterCfgList"
-             :key="index" @click="getUserDetail(index)">
+             :key="index" @click="item.status != 2 && index != 0 ? getUserDetail(index) : ''">
           <div class="mask" v-if="item.status === 0"></div>
           <div class="tip" :class="{on:item.status === 1,over:item.status === 0,'not-open': item.status === 2}"></div>
           <div class="title">{{quarterName[index]}}</div>
@@ -184,9 +184,11 @@
               this.endTime = _(root.endDate).toTime('YYYY.MM.DD')
               this.quarterCfgList = [...root.quarterCfgList]
               const quarterIndex = _(this.quarterCfgList).findIndex({status:1})
-              if(this.quarterCfgList[quarterIndex].userDetail){
+              if(quarterIndex > -1 && this.quarterCfgList[quarterIndex].userDetail){
                 //this.userDetail = _(this.quarterCfgList).findWhere({status:1}).userDetail
                 this.getUserDetail(quarterIndex)
+              }else{
+                this.userDetail = null
               }
               this.yearCfgList = [...root.yearCfgList]
               this.showLastYear = this.yearCfgList[0].lastYearOpen
@@ -197,6 +199,8 @@
                 this.yearBonusRate = yearUserDetail.bonusRate
                 this.yearProfitRate = yearUserDetail.profitRate
                 this.yearGetStatus = yearUserDetail.getStatus
+              }else{
+                this.userDetail = null
               }
             }
           },
@@ -702,7 +706,7 @@
       writing-mode: vertical-lr;
       font-size: 22px;
       font-family: ltthj;
-      transform: translate(42px,-15px);
+      transform: translate(42px,25px);
     }
   }
 </style>
