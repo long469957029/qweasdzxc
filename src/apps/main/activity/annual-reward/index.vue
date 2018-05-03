@@ -41,7 +41,7 @@
         </div>
         <div class="contribution">
           <div>贡献率=（亏损-分红）/(投注-中奖-返点)=
-            <span class="num"><animated-integer :value="_(userDetail ? userDetail.profitRate : 0).div(100)"></animated-integer></span>
+            <span class="num"><animated-integer :value="_(userDetail ? userDetail.profitRate : 0).div(100)"></animated-integer>%</span>
           </div>
           <div class="font-xs m-top-sm">注：团队盈亏为正时，团队亏损为0； 团队盈亏为负时，团队亏损为团队盈亏的绝对值</div>
         </div>
