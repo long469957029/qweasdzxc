@@ -76,7 +76,7 @@
           <div class="schedule">
             <div class="title">年度亏损</div>
             <div class="prograss">
-              <div class="prograss-info" :style="{width: yearProfit >= 0 ? '' : `${_(Number(yearProfit)).convert2yuan()/10000000*100}%`}">
+              <div class="prograss-info" :style="{width: yearProfit >= 0 ? '' : `${_(Math.abs(yearProfit)).convert2yuan()/10000000*100}%`}">
                 {{yearProfit >= 0 ? 0 : yearProfit | convert2yuan}}
               </div>
             </div>
@@ -84,14 +84,14 @@
           <div class="schedule">
             <div class="title">贡献率</div>
             <div class="prograss">
-              <div class="prograss-info" :style="{width: `${_(yearProfitRate).div(10000)*100 > 3 ? _(yearProfitRate).div(10000)*100 : 3}%`}">
+              <div class="prograss-info" :style="{width: `${_(yearProfitRate).div(100) > 3 ? _(yearProfitRate).div(100) : 3}%`}">
                 {{_(yearProfitRate).div(100)}}%</div>
             </div>
           </div>
           <div class="schedule">
             <div class="title">奖励比例</div>
             <div class="prograss">
-              <div class="prograss-info" :style="{width: `${_(yearBonusRate).div(10000)*100 > 3 ? _(yearBonusRate).div(10000)*100 : 3}%`}">
+              <div class="prograss-info" :style="{width: `${_(yearBonusRate).div(100) > 3 ? _(yearBonusRate).div(100) : 3}%`}">
                 {{_(yearBonusRate).div(100)}}%</div>
             </div>
           </div>
@@ -219,7 +219,7 @@
       formatProfitBonus(data,name){
         if(!_(data).isNull()){
           if(name === 'profit'){
-            return data.profit > 0 ? 0 : _(data.profit).convert2yuan()
+            return data.profit > 0 ? 0 : Math.abs(_(data.profit).convert2yuan())
           }else{
             return _(data.bonus).convert2yuan()
           }
