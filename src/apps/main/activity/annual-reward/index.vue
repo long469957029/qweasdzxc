@@ -110,12 +110,12 @@
             <div class="tr title-line">
               <div class="td">亏损金额</div>
               <div class="td">净亏损率</div>
-              <div class="td">奖励金额</div>
+              <div class="td">奖励比例</div>
             </div>
             <div class="tr" v-for="(item,index) in tableList" :key="index">
               <div class="td">{{item.profit | convert2yuan}}</div>
-              <div class="td">{{_(item.profitRate).div(100)}}</div>
-              <div class="td">{{item.bonusRate | convert2yuan}}</div>
+              <div class="td">{{_(item.profitRate).div(100)}}%</div>
+              <div class="td">{{_(item.bonusRate).div(100)}}%</div>
             </div>
           </div>
         </div>
@@ -288,6 +288,7 @@
     width: 100%;
     height: 524px;
     background: url("./assets/header-bg.png") no-repeat center;
+    animation: zoomIn 1s;
     .head-content{
       width: 1100px;
       height: 524px;
@@ -300,11 +301,15 @@
       background: url("./assets/head-logo.png") no-repeat;
       margin-top: 80px;
       margin-left: 120px;
+      opacity: 0;
+      animation: lightSpeedIn 1s 1s forwards;
     }
     .time{
       font-size: 15px;
       color: #fefefe;
       margin-left: 220px;
+      opacity: 0;
+      animation: slideInDown-time 1s 2s forwards;
     }
     .money{
       position: absolute;
@@ -313,6 +318,7 @@
         height: 107px;
         background: url("./assets/money1.png") no-repeat;
         top: 285px;
+        animation: moneyFly 5s infinite;
       }
       &.money2{
         width: 170px;
@@ -320,6 +326,7 @@
         background: url("./assets/money2.png") no-repeat;
         top: 236px;
         left: 568px;
+        animation: moneyFly 5s .5s infinite;
       }
       &.money3{
         width: 100px;
@@ -327,6 +334,7 @@
         background: url("./assets/money3.png") no-repeat;
         right: 0;
         top: 150px;
+        animation: moneyFly 5s 1s infinite;
       }
     }
   }
@@ -707,6 +715,27 @@
       font-size: 22px;
       font-family: ltthj;
       transform: translate(42px,25px);
+    }
+  }
+  @keyframes moneyFly {
+    0%,100%{
+      transform: translate(0px,0px);
+    }
+    50%{
+      transform: translate(0px,-10px);
+    }
+  }
+  @keyframes slideInDown-time {
+    from {
+      -webkit-transform: translate3d(0, -100%, 0);
+      transform: translate3d(0, -100%, 0);
+      visibility: visible;
+      opacity: 0;
+    }
+    to {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
     }
   }
 </style>
