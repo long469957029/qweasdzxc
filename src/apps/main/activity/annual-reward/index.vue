@@ -170,7 +170,7 @@
         if(_(this.userDetail).isNull() || this.userDetail.profit > 0){
           return 0
         }else{
-          return _(this.userDetail.profit + this.userDetail.divid).convert2yuan()
+          return Math.abs(_(this.userDetail.profit + this.userDetail.divid).convert2yuan())
         }
       }
     },
