@@ -77,7 +77,7 @@
             <div class="title">年度亏损</div>
             <div class="prograss">
               <div class="prograss-info" :style="{width: yearProfit >= 0 ? '' : `${_(Math.abs(yearProfit)).convert2yuan()/10000000*100}%`}">
-                {{yearProfit >= 0 ? 0 : yearProfit | convert2yuan}}
+                {{yearProfit >= 0 ? 0 : Match.abs(yearProfit) | convert2yuan}}
               </div>
             </div>
           </div>
