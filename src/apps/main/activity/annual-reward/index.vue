@@ -76,7 +76,7 @@
           <div class="schedule">
             <div class="title">年度亏损</div>
             <div class="prograss">
-              <div class="prograss-info" :style="{width: yearProfit >= 0 ? '' : `${_(Math.abs(yearProfit)).convert2yuan()/10000000*100}%`}">
+              <div class="prograss-info" :style="{width: yearProfit >= 0 ? '' : formateYearProfitPro}">
                 {{yearProfit >= 0 ? 0 : Match.abs(yearProfit) | convert2yuan}}
               </div>
             </div>
@@ -172,6 +172,10 @@
         }else{
           return Math.abs(_(this.userDetail.profit + this.userDetail.divid).convert2yuan())
         }
+      },
+      formateYearProfitPro(){
+        const width = _(Math.abs(this.yearProfit)).convert2yuan()/10000000*100
+        return width > 15 ? width : ''
       }
     },
     methods:{
