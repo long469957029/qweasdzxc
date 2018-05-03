@@ -302,14 +302,14 @@
       margin-top: 80px;
       margin-left: 120px;
       opacity: 0;
-      animation: lightSpeedIn 1s 1s forwards;
+      animation: lightSpeedIn 1s .8s forwards;
     }
     .time{
       font-size: 15px;
       color: #fefefe;
       margin-left: 220px;
       opacity: 0;
-      animation: slideInDown-time 1s 2s forwards;
+      animation: slideInDown-time 1s 1.8s forwards;
     }
     .money{
       position: absolute;
@@ -342,6 +342,8 @@
     width: 1100px;
     margin: 0 auto;
     z-index: 2;
+    opacity: 0;
+    animation: slideInUp-opacity 1s 1.8s forwards;
     .nav-tab{
       width: 100%;
       height: 200px;
@@ -729,6 +731,19 @@
     from {
       -webkit-transform: translate3d(0, -100%, 0);
       transform: translate3d(0, -100%, 0);
+      visibility: visible;
+      opacity: 0;
+    }
+    to {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+  }
+  @keyframes slideInUp-opacity {
+    from {
+      -webkit-transform: translate3d(0, 100%, 0);
+      transform: translate3d(0, 100%, 0);
       visibility: visible;
       opacity: 0;
     }
