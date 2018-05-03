@@ -27,7 +27,7 @@
             <span class="num"><animated-integer :value="profitSubDivid"></animated-integer></span></div>
           <div class="icon-x"></div>
           <div class="data-info">奖励比例:
-            <span class="num"><animated-integer :value="_(userDetail ? userDetail.bonusRate : 0).div(100)"></animated-integer></span></div>
+            <span class="num"><animated-integer :value="_(userDetail ? userDetail.bonusRate : 0).div(100)"></animated-integer></span>%</div>
           <div class="icon-equal"></div>
           <div class="data-info">奖励金额:
             <span class="num"><animated-integer :value="userDetail ? userDetail.bonus : 0 | convert2yuan"></animated-integer></span></div>
@@ -109,7 +109,7 @@
           <div class="dialog-table">
             <div class="tr title-line">
               <div class="td">亏损金额</div>
-              <div class="td">净亏损率</div>
+              <div class="td">贡献率</div>
               <div class="td">奖励比例</div>
             </div>
             <div class="tr" v-for="(item,index) in tableList" :key="index">
