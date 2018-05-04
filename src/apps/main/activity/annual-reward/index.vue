@@ -192,6 +192,7 @@
                 this.getUserDetail(quarterIndex)
               }else{
                 this.userDetail = null
+                this.quarterGetStatus = 0
               }
               this.yearCfgList = [...root.yearCfgList]
               this.showLastYear = this.isLastYear === 0 ? this.yearCfgList[0].lastYearOpen : true
@@ -246,7 +247,9 @@
       },
       getBonus(type){
         const api = type === 1 ? getQuarterRewardApi : getYearRewardApi
-        api({isLastYear:this.isLastYear},
+        const beginDate = type === 1 ? this.quarterCfgList[this.quarterIndex].beginDate : this.yearCfgList[0].beginDate
+        const toDate = type === 1 ? this.quarterCfgList[this.quarterIndex].toDate : this.yearCfgList[0].toDate
+        api({isLastYear:this.isLastYear,beginDate,toDate},
           ({data}) => {
             if(data.result === 0){
               Global.ui.notification.show('领取奖励成功')
