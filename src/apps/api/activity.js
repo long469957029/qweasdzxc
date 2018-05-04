@@ -158,11 +158,13 @@ const getAnnualRewardfgApi = ({isLastYear = 0}, then, fail) => {
  * @param then
  * @param fail
  */
-const getQuarterRewardApi = ({isLastYear = 0}, then, fail) => {
+const getQuarterRewardApi = ({isLastYear = 0,beginDate,toDate}, then, fail) => {
   return $http({
     url: '/info/quarterandyearbonus/getQuarter.json',
     data:{
       isLastYear,
+      beginDate,
+      toDate,
       activityId:59
     }
   })
@@ -175,11 +177,13 @@ const getQuarterRewardApi = ({isLastYear = 0}, then, fail) => {
  * @param then
  * @param fail
  */
-const getYearRewardApi = ({isLastYear = 0}, then, fail) => {
+const getYearRewardApi = ({isLastYear = 0,beginDate,toDate}, then, fail) => {
   return $http({
     url: '/info/quarterandyearbonus/getYear.json',
     data:{
       isLastYear,
+      beginDate,
+      toDate,
       activityId:59
     }
   })
