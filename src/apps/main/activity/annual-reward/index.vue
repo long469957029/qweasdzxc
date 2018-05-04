@@ -84,14 +84,14 @@
           <div class="schedule">
             <div class="title">贡献率</div>
             <div class="prograss">
-              <div class="prograss-info" :style="{width: `${_(yearProfitRate).div(100) > 3 ? _(yearProfitRate).div(100) : 3}%`}">
+              <div class="prograss-info" :style="{width: `${formateProfitPro(yearProfitRate)}%`}">
                 {{_(yearProfitRate).div(100)}}%</div>
             </div>
           </div>
           <div class="schedule">
             <div class="title">奖励比例</div>
             <div class="prograss">
-              <div class="prograss-info" :style="{width: `${_(yearBonusRate).div(100) > 3 ? _(yearBonusRate).div(100) : 3}%`}">
+              <div class="prograss-info" :style="{width: `${formateProfitPro(yearBonusRate)}%`}">
                 {{_(yearBonusRate).div(100)}}%</div>
             </div>
           </div>
@@ -176,7 +176,7 @@
       formateYearProfitPro(){
         const width = _(Math.abs(this.yearProfit)).convert2yuan()/10000000*100
         return width > 15 ? (width > 100 ? '100' : width) : ''
-      }
+      },
     },
     methods:{
       getConfig(){
@@ -264,6 +264,9 @@
       changLastYear(){
         this.isLastYear = this.isLastYear === 0 ? 1 : 0
         this.getConfig()
+      },
+      formateProfitPro(data){
+        return data > 0 ? (_(data).div(100) > 5 ? _(data).div(100) : 5) : 3
       }
     },
     mounted(){
