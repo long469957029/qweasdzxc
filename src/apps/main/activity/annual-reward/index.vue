@@ -175,7 +175,7 @@
       },
       formateYearProfitPro(){
         const width = _(Math.abs(this.yearProfit)).convert2yuan()/10000000*100
-        return width > 15 ? (width > 100 ? '100' : width) : ''
+        return width > 15 ? (width >= 100 ? '98' : width) : ''
       },
     },
     methods:{
@@ -268,7 +268,7 @@
         this.getConfig()
       },
       formateProfitPro(data){
-        return data > 0 ? (_(data).div(100) > 5 ? _(data).div(100) : 5) : 3
+        return data > 0 ? (_(data).div(100) > 5 ? (_(data).div(100) > 98 ? 98 : _(data).div(100)) : 5) : 3
       }
     },
     mounted(){
