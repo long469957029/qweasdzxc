@@ -175,7 +175,7 @@
       },
       formateYearProfitPro(){
         const width = _(Math.abs(this.yearProfit)).convert2yuan()/10000000*100
-        return width > 15 ? width : ''
+        return width > 15 ? (width > 100 ? '100' : width) : ''
       }
     },
     methods:{
