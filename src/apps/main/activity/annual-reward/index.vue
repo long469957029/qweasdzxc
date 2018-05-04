@@ -206,6 +206,8 @@
               }else{
                 this.userDetail = null
               }
+            }else{
+              Global.ui.notification.show(data.msg === 'fail' ? '获取活动配置失败' : data.msg)
             }
           },
           ({data}) => {
@@ -217,6 +219,8 @@
         this.userDetail = this.quarterCfgList[index].userDetail
         if(this.userDetail){
           this.quarterGetStatus = this.userDetail.getStatus
+        }else{
+          this.quarterGetStatus = 0
         }
         this.quarterIndex = index
       },
