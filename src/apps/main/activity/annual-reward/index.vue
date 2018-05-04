@@ -76,7 +76,7 @@
           <div class="schedule">
             <div class="title">年度亏损</div>
             <div class="prograss">
-              <div class="prograss-info" :style="{width: yearProfit >= 0 ? '' : formateYearProfitPro}">
+              <div class="prograss-info" :style="{width: `${yearProfit >= 0 ? '' : formateYearProfitPro}%`}">
                 {{yearProfit >= 0 ? 0 : Math.abs(yearProfit) | convert2yuan}}
               </div>
             </div>
