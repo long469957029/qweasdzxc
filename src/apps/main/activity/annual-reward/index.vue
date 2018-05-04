@@ -11,7 +11,7 @@
     </div>
     <div class="container">
       <div class="nav-tab">
-        <div class="tab" :class="{active:item === item.status === 1}" v-for="(item,index) in quarterCfgList"
+        <div class="tab" :class="{active: item.status === 1,onActive:quarterIndex === index}" v-for="(item,index) in quarterCfgList"
              :key="index" @click="item.status != 2 && index != 0 ? getUserDetail(index) : ''">
           <div class="mask" v-if="item.status === 0"></div>
           <div class="tip" :class="{on:item.status === 1,over:item.status === 0,'not-open': item.status === 2}"></div>
@@ -187,7 +187,7 @@
               this.startTime = _(root.fromDate).toTime('YYYY.MM.DD')
               this.endTime = _(root.endDate).toTime('YYYY.MM.DD')
               this.quarterCfgList = [...root.quarterCfgList]
-              const quarterIndex = _(this.quarterCfgList).findIndex({status:1})
+              const quarterIndex = this.quarterIndex =  _(this.quarterCfgList).findIndex({status:1})
               if(quarterIndex > -1 && this.quarterCfgList[quarterIndex].userDetail){
                 //this.userDetail = _(this.quarterCfgList).findWhere({status:1}).userDetail
                 this.getUserDetail(quarterIndex)
@@ -365,6 +365,14 @@
       position: relative;
       cursor: pointer;
       &.active{
+        .title{
+          color: #70180a;
+        }
+        .time,.money{
+          color: #cfb58e;
+        }
+      }
+      &.onActive{
         &:after{
           content: '';
           display: block;
@@ -375,12 +383,6 @@
           bottom: -14px;
           left: 50%;
           margin-left: -10.5px;
-        }
-        .title{
-          color: #70180a;
-        }
-        .time,.money{
-          color: #cfb58e;
         }
       }
       .title{
