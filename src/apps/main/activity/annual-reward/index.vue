@@ -106,16 +106,18 @@
         <div class="modal-annual-size clearfix" slot="all">
           <a data-dismiss="modal" class="modal-close btn-close"></a>
           <div class="dialog-title">{{dialogTitle}}度奖励方案</div>
-          <div class="dialog-table">
-            <div class="tr title-line">
-              <div class="td">亏损金额</div>
-              <div class="td">贡献率</div>
-              <div class="td">奖励比例</div>
-            </div>
-            <div class="tr" v-for="(item,index) in tableList" :key="index">
-              <div class="td">{{item.profit | convert2yuan}}</div>
-              <div class="td">{{_(item.profitRate).div(100)}}%</div>
-              <div class="td">{{_(item.bonusRate).div(100)}}%</div>
+          <div class="dialog-content">
+            <div class="dialog-table">
+              <div class="tr title-line">
+                <div class="td">亏损金额</div>
+                <div class="td">贡献率</div>
+                <div class="td">奖励比例</div>
+              </div>
+              <div class="tr" v-for="(item,index) in tableList" :key="index">
+                <div class="td">{{item.profit | convert2yuan}}</div>
+                <div class="td">{{_(item.profitRate).div(100)}}%</div>
+                <div class="td">{{_(item.bonusRate).div(100)}}%</div>
+              </div>
             </div>
           </div>
         </div>
@@ -175,7 +177,7 @@
       },
       formateYearProfitPro(){
         const width = _(Math.abs(this.yearProfit)).convert2yuan()/10000000*100
-        return width > 15 ? (width > 100 ? '100' : width) : ''
+        return width > 15 ? (width >= 100 ? '98' : width) : ''
       },
     },
     methods:{
@@ -268,7 +270,7 @@
         this.getConfig()
       },
       formateProfitPro(data){
-        return data > 0 ? (_(data).div(100) > 5 ? _(data).div(100) : 5) : 3
+        return data > 0 ? (_(data).div(100) > 5 ? (_(data).div(100) > 98 ? 98 : _(data).div(100)) : 5) : 3
       }
     },
     mounted(){
@@ -654,6 +656,8 @@
   .modal-annual-size{
     width: 730px;
     max-height: 450px;
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
     padding-bottom: 20px;
     background: url("./assets/dialog-bg.png");
     position: relative;
@@ -680,11 +684,21 @@
       text-align: center;
       line-height: 65px;
     }
+    .dialog-content{
+      width: 100%;
+      max-height: 363px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      margin: 57px auto 30px;
+      /*border-top: solid 1px #c1c1ff;*/
+      /*border-bottom: solid 1px #c1c1ff;*/
+    }
     .dialog-table{
       width: 664px;
       /*height: 412px;*/
       border: solid 1px #c1c1ff;
-      margin: 57px auto 30px;
+      /*margin: 57px auto 30px;*/
+      margin: 0 auto;
       .tr{
         width: 100%;
         height: 40px;
