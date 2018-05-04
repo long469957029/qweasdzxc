@@ -14,6 +14,7 @@ import mallInfo from './modules/acct/mall-info'
 import components from './modules/global/components'
 import im from './modules/acct/im'
 import fundManage from './modules/personal/fundManage'
+import wechatMessage from './modules/wechat/message'
 
 Vue.use(Vuex)
 
@@ -36,6 +37,7 @@ const store = new Vuex.Store({
     components,
     im,
     fundManage,
+    wechatMessage,
   },
   strict: debug,
 })

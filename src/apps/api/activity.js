@@ -135,6 +135,61 @@ const getNovicePackageInfoApi = (then, fail) => {
     .then(then)
     .catch(fail)
 }
+/**
+ * 获取季度年度奖励配置
+ * @param isLastYear //查看前一年 默认false
+ * @param then
+ * @param fail
+ */
+const getAnnualRewardfgApi = ({isLastYear = 0}, then, fail) => {
+  return $http({
+    url: '/info/quarterandyearbonus/info.json',
+    data:{
+      isLastYear,
+      activityId:59
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+/**
+ * 获取季度奖励
+ * @param isLastYear
+ * @param then
+ * @param fail
+ */
+const getQuarterRewardApi = ({isLastYear = 0,beginDate,toDate}, then, fail) => {
+  return $http({
+    url: '/info/quarterandyearbonus/getQuarter.json',
+    data:{
+      isLastYear,
+      beginDate,
+      toDate,
+      activityId:59
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
+/**
+ * 获取年度奖励
+ * @param isLastYear
+ * @param then
+ * @param fail
+ */
+const getYearRewardApi = ({isLastYear = 0,beginDate,toDate}, then, fail) => {
+  return $http({
+    url: '/info/quarterandyearbonus/getYear.json',
+    data:{
+      isLastYear,
+      beginDate,
+      toDate,
+      activityId:59
+    }
+  })
+    .then(then)
+    .catch(fail)
+}
 export {
   getTicketListApi,
   getTicketCouponApi,
@@ -145,7 +200,10 @@ export {
   getGiftPackageApi,
   getDouseApi,
   getVirtualNumApi,
-  getNovicePackageInfoApi
+  getNovicePackageInfoApi,
+  getAnnualRewardfgApi,
+  getQuarterRewardApi,
+  getYearRewardApi
 }
 
 

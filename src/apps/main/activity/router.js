@@ -4,7 +4,7 @@ const WelfareSharingPlan = () => import(/* webpackChunkName: "recharge-sales-act
 const RechargePlan = () => import(/* webpackChunkName: "recharge-sales-activity" */ './rechargePlan')
 const ArenaActivity = () => import(/* webpackChunkName: "arena-activity" */ './arena')
 const UserReturnActivity = () => import(/* webpackChunkName: "users-return-activity" */ './users-return')
-
+const AnnualReward = () => import(/* webpackChunkName:"annual-reward" */ './annual-reward')
 export default [
   {
     path: '/act/rechargeSales',
@@ -33,6 +33,14 @@ export default [
   {
     path: '/act/userReturn',
     component: UserReturnActivity,
+    meta: {
+      footer: false,
+      toolbar: false
+    }
+  },
+  {
+    path: '/act/annualReward',
+    component: AnnualReward,
     meta: {
       footer: false,
       toolbar: false
