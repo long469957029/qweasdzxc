@@ -189,7 +189,6 @@
               this.quarterCfgList = [...root.quarterCfgList]
               const quarterIndex = this.quarterIndex =  _(this.quarterCfgList).findIndex({status:1})
               if(quarterIndex > -1 && this.quarterCfgList[quarterIndex].userDetail){
-                //this.userDetail = _(this.quarterCfgList).findWhere({status:1}).userDetail
                 this.getUserDetail(quarterIndex)
               }else{
                 this.userDetail = null
