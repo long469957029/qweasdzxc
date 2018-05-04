@@ -195,7 +195,7 @@
                 this.userDetail = null
               }
               this.yearCfgList = [...root.yearCfgList]
-              this.showLastYear = this.yearCfgList[0].lastYearOpen
+              this.showLastYear = this.isLastYear === 0 ? this.yearCfgList[0].lastYearOpen : true
               const yearUserDetail = this.yearCfgList[0].userDetail
               if(yearUserDetail){
                 this.yearBonus = yearUserDetail.bonus
