@@ -30,16 +30,30 @@ const AliAndBankTransfer = Base.ItemView.extend({
       .done((res) => {
         if (res.result === 0) {
           const root = res.root
-          self.$('.jc-rc-info-name').html(root.name)
-          self.$('.jc-rc-info-cardNo').html(root.cardNo)
-          self.$('.jc-rc-info-bank').html(root.bankName)
-          self.$('.jc-rc-info-bankAddress').html(root.bankBranchName)
-          self.$('.jc-rc-info-amount').html(_(root.amount).convert2yuan())
-          self.$('.jc-rc-info-keyword').html(root.keyword)
-          self.$('.jc-rc-info-copy-name').attr('data-clipboard-text',root.name)
-          self.$('.jc-rc-info-copy-cardNo').attr('data-clipboard-text',root.cardNo)
-          self.$('.jc-rc-info-copy-amount').attr('data-clipboard-text',_(root.amount).convert2yuan())
-          self.$('.jc-rc-info-copy-keyword').attr('data-clipboard-text',root.keyword)
+          if(root.bankId != 102){
+            self.$('.js-rc-aliAndBankTransfer-info').removeClass('hidden')
+            self.$('.js-fc-re-gotoAliPay').removeClass('hidden')
+            self.$('.js-rc-ali-title').removeClass('ali-title')
+            self.$('.jc-rc-info-name').html(root.name)
+            self.$('.jc-rc-info-cardNo').html(root.cardNo)
+            self.$('.jc-rc-info-bank').html(root.bankName)
+            self.$('.jc-rc-info-bankAddress').html(root.bankBranchName)
+            self.$('.jc-rc-info-amount').html(_(root.amount).convert2yuan())
+            self.$('.jc-rc-info-keyword').html(root.keyword)
+            self.$('.jc-rc-info-copy-name').attr('data-clipboard-text',root.name)
+            self.$('.jc-rc-info-copy-cardNo').attr('data-clipboard-text',root.cardNo)
+            self.$('.jc-rc-info-copy-amount').attr('data-clipboard-text',_(root.amount).convert2yuan())
+            self.$('.jc-rc-info-copy-keyword').attr('data-clipboard-text',root.keyword)
+          }else{
+            self.$('.js-rc-aliScanCode-info').removeClass('hidden')
+            self.$('.js-fc-re-gotoAliPay').addClass('hidden')
+            self.$('.js-rc-ali-title').addClass('ali-title')
+            self.$('.js-ali-qr-code').attr('src',root.cardNo)
+            self.$('.js-rc-ali-user-name').html(root.name)
+            self.$('.js-rc-ali-amount').html('<span class="sfa sfa-jpy"></span>' + _(root.amount).convert2yuan())
+            self.$('.jc-rc-info-keyword').html(root.keyword)
+            self.$('.jc-rc-info-copy-keyword').attr('data-clipboard-text',root.keyword)
+          }
 
           const clipboard = new Clipboard('.jc-rc-info-copy');
           clipboard.on('success', function(e) {
