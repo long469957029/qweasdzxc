@@ -50,7 +50,7 @@ const AliAndBankTransfer = Base.ItemView.extend({
             self.$('.js-rc-ali-title').addClass('ali-title')
             self.$('.js-ali-qr-code').attr('src',root.cardNo)
             self.$('.js-rc-ali-user-name').html(root.name)
-            self.$('.js-rc-ali-amount').html('<span class="sfa sfa-jpy"></span>' + _(root.amount).convert2yuan())
+            self.$('.js-rc-ali-amount').html('<i class="fa fa-jpy"></i>' + _(root.amount).convert2yuan())
             self.$('.jc-rc-info-keyword').html(root.keyword)
             self.$('.jc-rc-info-copy-keyword').attr('data-clipboard-text',root.keyword)
           }
