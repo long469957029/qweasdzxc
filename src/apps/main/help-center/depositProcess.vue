@@ -10,6 +10,7 @@
           <div @click="checkTab(2)" :class="['res-desc-btn',{'activity': tType === 2}]">微信转账</div>
           <div @click="checkTab(3)" :class="['res-desc-btn',{'activity': tType === 3}]">支付宝转账</div>
           <div @click="checkTab(4)" :class="['res-desc-btn',{'activity': tType === 4}]">支付宝条码充值</div>
+          <div @click="checkTab(5)" :class="['res-desc-btn',{'activity': tType === 5}]">支付宝扫码转账</div>
         </div>
         <!--银行卡转账-->
         <div v-if="tType === 1">
@@ -176,6 +177,32 @@
           </div>
           <div class="res-desc">
             <img src="./misc/ali-code-5.png" width="60%" />
+          </div>
+        </div>
+        <div v-if="tType === 5">
+          <div class="res-desc res-desc-weight">
+            第一步：点击“支付宝转账”
+          </div>
+          <div class="res-desc">
+            <img src="./misc/ali-scan-1.png" width="60%" />
+          </div>
+          <div class="res-desc res-desc-weight">
+            第二步：跳转至支付宝二维码扫码页面
+          </div>
+          <div class="res-desc">
+            <img src="./misc/ali-scan-2.png" width="60%" />
+          </div>
+          <div class="res-desc res-desc-weight">
+            第三步：点击支付宝首页“扫一扫”
+          </div>
+          <div class="res-desc">
+            <img src="./misc/ali-scan-3.png" width="60%" />
+          </div>
+          <div class="res-desc res-desc-weight">
+            第四步：扫码识别二维码后填写发起充值“金额”和“附言”确认转账。<span class="text-hot">(请正确填写充值“金额”和“附言”，如有误无法自动到账）</span>
+          </div>
+          <div class="res-desc">
+            <img src="./misc/ali-scan-4.png" width="60%" />
           </div>
         </div>
       </div>
