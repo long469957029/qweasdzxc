@@ -186,6 +186,9 @@ const formatRange = ({statType, ticketId, gameType}) => {
         case 4:
           range = '捕鱼游戏'
           break;
+        case 7:
+          range = '体育投注'
+          break;
       }
     }
   }
