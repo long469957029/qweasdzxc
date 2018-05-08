@@ -184,25 +184,25 @@
             第一步：点击“支付宝转账”
           </div>
           <div class="res-desc">
-            <img src="./misc/ali-scan-1.png" width="60%" />
+            <img src="./misc/ali-scan-1.png" />
           </div>
           <div class="res-desc res-desc-weight">
             第二步：跳转至支付宝二维码扫码页面
           </div>
           <div class="res-desc">
-            <img src="./misc/ali-scan-2.png" width="60%" />
+            <img src="./misc/ali-scan-2.png" />
           </div>
           <div class="res-desc res-desc-weight">
             第三步：点击支付宝首页“扫一扫”
           </div>
           <div class="res-desc">
-            <img src="./misc/ali-scan-3.png" width="60%" />
+            <img src="./misc/ali-scan-3.png" />
           </div>
           <div class="res-desc res-desc-weight">
             第四步：扫码识别二维码后填写发起充值“金额”和“附言”确认转账。<span class="text-hot">(请正确填写充值“金额”和“附言”，如有误无法自动到账）</span>
           </div>
           <div class="res-desc">
-            <img src="./misc/ali-scan-4.png" width="60%" />
+            <img src="./misc/ali-scan-4.png"/>
           </div>
         </div>
       </div>
