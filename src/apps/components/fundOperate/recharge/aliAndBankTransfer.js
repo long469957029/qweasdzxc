@@ -32,7 +32,9 @@ const AliAndBankTransfer = Base.ItemView.extend({
           const root = res.root
           if(root.bankId != 102){
             self.$('.js-rc-aliAndBankTransfer-info').removeClass('hidden')
-            self.$('.js-fc-re-gotoAliPay').removeClass('hidden')
+            if(self.options.type === 6){
+              self.$('.js-fc-re-gotoAliPay').removeClass('hidden')
+            }
             self.$('.js-rc-ali-title').removeClass('ali-title')
             self.$('.jc-rc-info-name').html(root.name)
             self.$('.jc-rc-info-cardNo').html(root.cardNo)
