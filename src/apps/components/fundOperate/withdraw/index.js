@@ -41,7 +41,7 @@ const WithdrawView = Base.ItemView.extend({
     })
   },
 
-  render() {
+  onRender() {
      const self = this
     //const securityStatus = Global.cookieCache.get('security')
     // if (securityStatus !== 1) {
