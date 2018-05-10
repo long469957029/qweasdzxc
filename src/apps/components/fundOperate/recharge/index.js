@@ -149,7 +149,7 @@ const RechargeView = Base.ItemView.extend({
       // 判断其他类型div状态并控制显示
       if (this.$('.jc-rc-leftBar-subType-area').is(':hidden')) {
         this.$('.jc-rc-leftBar-subType-area').removeClass('hidden')
-        this.$('.jc-rc-leftBar-bottom-area').css('top', '205px')
+        // this.$('.jc-rc-leftBar-bottom-area').css('top', '205px')
       }
       if (!this.$('.jc-rc-leftBar-aliPay-select').is(':hidden')) {
         this.$('.jc-rc-leftBar-aliPay-select').addClass('hidden')
@@ -163,7 +163,7 @@ const RechargeView = Base.ItemView.extend({
     } else if (type === 6) { // 支付宝转账 ，显示存款人姓名
       if (this.$('.jc-rc-leftBar-subType-area').is(':hidden')) {
         this.$('.jc-rc-leftBar-subType-area').removeClass('hidden')
-        this.$('.jc-rc-leftBar-bottom-area').css('top', '205px')
+        // this.$('.jc-rc-leftBar-bottom-area').css('top', '205px')
       }
       if (!this.$('.js-fc-re-bankList-select').is(':hidden')) {
         this.$('.js-fc-re-bankList-select').addClass('hidden')
@@ -178,7 +178,7 @@ const RechargeView = Base.ItemView.extend({
       if (!this.$('.jc-rc-leftBar-subType-area').is(':hidden')) {
         this.$('.jc-rc-leftBar-subType-area').addClass('hidden')
       }
-      this.$('.jc-rc-leftBar-bottom-area').css('top', '125px')
+      // this.$('.jc-rc-leftBar-bottom-area').css('top', '125px')
       if (nameRequired !== undefined && nameRequired === 'required') {
         this.$('.js-rc-aliPay-name').attr('required', false)
       }
@@ -200,7 +200,7 @@ const RechargeView = Base.ItemView.extend({
     // 8 输入框归位
     const nameTop = this.$('.fc-rc-leftBar-bottom-area').css('top')
     if (nameTop > 205) {
-      this.$('.jc-rc-leftBar-bottom-area').css('top', '205px')
+      // this.$('.jc-rc-leftBar-bottom-area').css('top', '205px')
       this.$('.js-rc-aliPay-name-text').removeClass('hidden')
     }
   },
