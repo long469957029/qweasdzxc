@@ -90,3 +90,17 @@ deploy-production:
     - echo -e "smbclient -U "polo"%fdcsd6616 //10.0.10.230/global$ << EOF \n cd 技术部共享\2号迭代CR \n mkdir $day \n cd $day \n put www/forehead_wx_v3.zip forehead_wx_v3.zip \n EOF" | bash
     - echo "move release to share disk done"
 
+codequality:
+  image: docker:stable
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+  script:
+    - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
+    - docker run
+        --env SOURCE_CODE="$PWD"
+        --volume "$PWD":/code
+        --volume /var/run/docker.sock:/var/run/docker.sock
+        "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
+  artifacts:
+    paths: [codeclimate.json]
