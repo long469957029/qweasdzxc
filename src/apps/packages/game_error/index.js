@@ -6,8 +6,13 @@ $.widget('gl.noFound', {
 
   _create() {
     this.element.html(_(this.template).template()())
-    this.element.find('.js-not-found-a').attr('href',document.location.protocol + '//' + window.location.host + '/index.html')
+    this._on({
+      'click .js-not-found-a': 'windowHrefHandler',
+    })
   },
+  windowHrefHandler(){
+    window.location.href = '/index.html'
+  }
 })
 
 $(document).ready(() => {
