@@ -50,6 +50,7 @@ const WithdrawView = Base.ItemView.extend({
       const ac = Global.memoryCache.get('rechargeAc')
       if (!ac) {
         $.when(this.getActivityInfo(), this.getInfoXhr()).done(function (res1, res2) {
+          self._renderTemplate()
           if (res1[0] && res1[0].result === 0) {
             // 生成充值页广告
 
