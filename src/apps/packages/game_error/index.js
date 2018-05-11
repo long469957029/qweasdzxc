@@ -5,13 +5,17 @@ $.widget('gl.noFound', {
   template: require('./index.html'),
 
   _create() {
-    this.element.html(_(this.template).template()())
     this._on({
       'click .js-not-found-a': 'windowHrefHandler',
     })
+    this.element.html(_(this.template).template()())
   },
   windowHrefHandler(){
-    window.location.href = '/index.html'
+    if(window != top){
+      top.location.href = '/index.html'
+    }else{
+      window.location.href = '/index.html'
+    }
   }
 })
 
