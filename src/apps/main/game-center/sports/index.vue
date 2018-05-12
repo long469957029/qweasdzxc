@@ -55,7 +55,10 @@
         Global.ui.notification.show('试玩会员无法进入该游戏，请先注册正式游戏账号', {modalDialogShadow: 'modal-dialog-shadow'})
         return false
       }
-
+      if (Global.memoryCache.get('acctInfo').foundsLock) {
+        Global.ui.notification.show('资金已锁定，暂不能进入游戏')
+        return false
+      }
       next()
     }
   }

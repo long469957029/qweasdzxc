@@ -46,9 +46,10 @@
         float: left;
         .fc-rc-recharge-leftBar {
           .fc-rc-leftBar-payType-select {
-            position: absolute;
-            top: 48px;
+            //position: absolute;
+            //top: 48px;
             z-index: 10;
+            margin-top: 20px;
             .fc-rc-payment-select {
               overflow: hidden;
               width: 320px;
@@ -130,10 +131,13 @@
 
           }
           .fc-rc-leftBar-subType-area {
-            position: absolute;
-            top: 125px;
-            height: 95px;
+            //position: absolute;
+            //top: 125px;
+            //height: 95px;
+            //height: 52px;
             z-index: 8;
+            margin-top: 20px;
+            position: relative;
             .fc-rc-bank-select {
               margin-top: 3px;
               width: 360px;
@@ -217,7 +221,7 @@
                 color: #333333;
                 z-index: 9;
                 position: absolute;
-                top: 11px;
+                top: 16px;
                 left: 20px;
               }
               .js-rc-aliPay-name {
@@ -229,12 +233,14 @@
             }
           }
           .fc-rc-leftBar-bottom-area {
-            position: absolute;
-            top: 205px;
+            //position: absolute;
+            //top: 205px;
+            margin-top: 20px;
             .no-subType {
               top: 125px !important;
             }
             .fc-rc-leftBar-payMoney-Input {
+              position: relative;
               .js-rc-money-Title {
                 font-size: 14px;
                 color: #333333;
@@ -638,6 +644,38 @@
           font-size: 18px;
         }
       }
+      .qr-code{
+        width: 176px;
+        height: 176px;
+        margin: 15px auto;
+        .ali-qr-code{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .rc-ali-user-name{
+        width: 100%;
+        font-size: 14px;
+        //margin-top: 15px;
+        text-align: center;
+      }
+      .rc-ali-amount{
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        .amount-detail{
+          color: #f09932;
+          font-size: 18px;
+        }
+      }
+      .ali-line{
+        width: 100%;
+        height: 1px;
+        background-color: #e6e6e6;
+        margin: 15px 0px;
+      }
     }
     .rc-aliAndBankTransfer-tips {
       margin-top: 15px;
@@ -669,6 +707,9 @@
     .fc-rc-aliAndBankView-title {
       margin-top: 30px;
       cursor: pointer;
+      &.ali-title{
+        margin-top: 88px;
+      }
       .title-left {
         font-size: 14px;
         color: $def-gray-color;

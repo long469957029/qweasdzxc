@@ -7,39 +7,55 @@
       </div>
     </div>
     <div class="rc-aliAndBankTransfer-info">
-      <li>
-        <div class="inline-block info-name">收款银行</div>
-        <div class="inline-block jc-rc-info-bank info-value"></div>
-      </li>
-      <li>
-        <div class="inline-block info-name">开户行地址</div>
-        <div class="inline-block jc-rc-info-bankAddress info-value"></div>
-      </li>
-      <li>
-        <div class="inline-block info-name">收款户名</div>
-        <div class="inline-block jc-rc-info-name info-value"></div>
-        <a class="inline-block jc-rc-info-copy jc-rc-info-copy-name info-copy btn">复制<span
-          class="copy-status">复制成功</span></a>
+      <div class="js-rc-aliAndBankTransfer-info hidden">
+        <li>
+          <div class="inline-block info-name">收款银行</div>
+          <div class="inline-block jc-rc-info-bank info-value"></div>
+        </li>
+        <li>
+          <div class="inline-block info-name">开户行地址</div>
+          <div class="inline-block jc-rc-info-bankAddress info-value"></div>
+        </li>
+        <li>
+          <div class="inline-block info-name">收款户名</div>
+          <div class="inline-block jc-rc-info-name info-value"></div>
+          <a class="inline-block jc-rc-info-copy jc-rc-info-copy-name info-copy btn">复制<span
+            class="copy-status">复制成功</span></a>
 
-      </li>
-      <li>
-        <div class="inline-block info-name">收款账号</div>
-        <div class="inline-block jc-rc-info-cardNo info-value"></div>
-        <a class="inline-block jc-rc-info-copy jc-rc-info-copy-cardNo info-copy btn">复制<span
-          class="copy-status">复制成功</span></a>
-      </li>
-      <li>
-        <div class="inline-block info-name">充值金额</div>
-        <div class="inline-block jc-rc-info-amount info-value"></div>
-        <a type="text" class="inline-block jc-rc-info-copy jc-rc-info-copy-amount info-copy btn"><span
-          class="copy-status">复制成功</span>复制</a>
-      </li>
-      <li>
-        <div class="inline-block info-name">附言</div>
-        <div class="inline-block jc-rc-info-keyword info-value">Ad1345</div>
-        <a type="text" class="inline-block jc-rc-info-copy jc-rc-info-copy-keyword info-copy btn"><span
-          class="copy-status">复制成功</span>复制</a>
-      </li>
+        </li>
+        <li>
+          <div class="inline-block info-name">收款账号</div>
+          <div class="inline-block jc-rc-info-cardNo info-value"></div>
+          <a class="inline-block jc-rc-info-copy jc-rc-info-copy-cardNo info-copy btn">复制<span
+            class="copy-status">复制成功</span></a>
+        </li>
+        <li>
+          <div class="inline-block info-name">充值金额</div>
+          <div class="inline-block jc-rc-info-amount info-value"></div>
+          <a type="text" class="inline-block jc-rc-info-copy jc-rc-info-copy-amount info-copy btn"><span
+            class="copy-status">复制成功</span>复制</a>
+        </li>
+        <li>
+          <div class="inline-block info-name">附言</div>
+          <div class="inline-block jc-rc-info-keyword info-value">Ad1345</div>
+          <a type="text" class="inline-block jc-rc-info-copy jc-rc-info-copy-keyword info-copy btn"><span
+            class="copy-status">复制成功</span>复制</a>
+        </li>
+      </div>
+      <div class="js-rc-aliScanCode-info hidden">
+        <div class="qr-code">
+          <img src="" class="js-ali-qr-code ali-qr-code" />
+        </div>
+        <div class="rc-ali-user-name js-rc-ali-user-name"></div>
+        <div class="rc-ali-amount">转账金额：<span class="js-rc-ali-amount amount-detail"></span></div>
+        <div class="rc-ali-post-script">
+          <div class="inline-block info-name">附言</div>
+          <div class="inline-block jc-rc-info-keyword info-value">Ad1345</div>
+          <a type="text" class="inline-block jc-rc-info-copy jc-rc-info-copy-keyword info-copy btn"><span
+            class="copy-status">复制成功</span>复制</a>
+        </div>
+        <div class="ali-line"></div>
+      </div>
     </div>
     <div class="rc-aliAndBankTransfer-tips ">
       <div class="inline-block title-left">
@@ -52,9 +68,9 @@
     <div class="rc-aliAndBankTransfer-submit">
       <button type="button" class="js-fc-re-gotoAliPay btn btn-fc-recharge-submit hidden">去支付宝转账</button>
     </div>
-    <div class="fc-rc-aliAndBankView-title">
+    <div class="fc-rc-aliAndBankView-title js-rc-ali-title">
       <!--<span class="title-left"></span>-->
-      <span class="js-fc-rc-pre title-right"><< 重新选择支付方式</span>
+      <span class="js-fc-rc-pre title-right text-auxiliary"><< 重新选择支付方式</span>
     </div>
   </div>
   <div class="inline-block fc-rc-recharge-rightBar">
