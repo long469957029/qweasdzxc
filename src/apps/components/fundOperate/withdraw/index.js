@@ -50,7 +50,7 @@ const WithdrawView = Base.ItemView.extend({
       const ac = Global.memoryCache.get('rechargeAc')
       if (!ac) {
         $.when(this.getActivityInfo(), this.getInfoXhr()).done(function (res1, res2) {
-          self._renderTemplate()
+          // self._renderTemplate()
           if (res1[0] && res1[0].result === 0) {
             // 生成充值页广告
 
@@ -60,7 +60,19 @@ const WithdrawView = Base.ItemView.extend({
             Global.ui.notification.show('服务器异常')
           }
           if (res2[0].result === 0) {
-            self.initPanelCss(res2[0].root)
+            self._renderTemplate()
+            let status = 0
+            if (res2[0].root.hasBankCard && res2[0].root.hasMoneyPwd) {
+              self.initPanelCss(res2[0].root)
+              status = 1
+            } else if (!res2[0].root.hasBankCard && res2[0].root.hasMoneyPwd) {
+              status = 2
+            } else if (res2[0].root.hasBankCard && !res2[0].root.hasMoneyPwd) {
+              status = 3
+            }
+
+            self.$('.js-fc-wd-set-view').html(withdrawService.getPreWithdrawTips(status))
+            //self.initPanelCss(res2[0].root)
           } else {
             Global.ui.notification.show('服务器异常')
           }
@@ -95,7 +107,7 @@ const WithdrawView = Base.ItemView.extend({
                   status = 3
                 }
 
-             this.$('.js-fc-wd-set-view').html(withdrawService.getPreWithdrawTips(status))
+             self.$('.js-fc-wd-set-view').html(withdrawService.getPreWithdrawTips(status))
             } else {
               Global.ui.notification.show('服务器异常')
             }
